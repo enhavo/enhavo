@@ -8,8 +8,9 @@
 
 namespace Enhavo\Bundle\NavigationBundle\Entity;
 
+use Sylius\Component\Resource\Model\ResourceInterface;
 
-class Link
+class Link implements ResourceInterface
 {
     /**
      * @var integer

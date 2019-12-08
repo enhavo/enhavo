@@ -1,0 +1,39 @@
+-
+    name: Main
+    code: main_nav
+    content:
+        -
+            type: page
+            label: Home
+            link: home
+        -
+            type: page
+            label: Articles
+            link: articles
+        -
+            type: page
+            label: Calendar
+            link: calendar
+        -
+            type: page
+            label: Slider
+            link: slider
+        -
+            type: page
+            label: Philosophy
+            link: philosophy
+        -
+            type: page
+            label: About
+            link: about
+#        -
+#            type: submenu
+#            content:
+#                -
+#                    type: link
+#                    label: Product 1
+#                    link: /products/product1
+#                -
+#                    type: link
+#                    label: Product 2
+#                    link: /products/product2

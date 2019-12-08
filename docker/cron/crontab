@@ -1,1 +1,1 @@
-*/1 * * * * /var/www/app/console enhavo:search:index
+*/1 * * * * /var/www/bin/console enhavo:search:index

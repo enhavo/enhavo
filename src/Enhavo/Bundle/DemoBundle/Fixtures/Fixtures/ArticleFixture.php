@@ -10,8 +10,11 @@
 namespace Enhavo\Bundle\DemoBundle\Fixtures\Fixtures;
 
 use Enhavo\Bundle\ArticleBundle\Entity\Article;
-use Enhavo\Bundle\CategoryBundle\Entity\Category;
+use Enhavo\Bundle\CommentBundle\Entity\Comment;
+use Enhavo\Bundle\CommentBundle\Entity\Thread;
 use Enhavo\Bundle\DemoBundle\Fixtures\AbstractFixture;
+use Enhavo\Bundle\TaxonomyBundle\Entity\Taxonomy;
+use Enhavo\Bundle\TaxonomyBundle\Entity\Term;
 
 class ArticleFixture extends AbstractFixture
 {
@@ -26,19 +29,73 @@ class ArticleFixture extends AbstractFixture
         $article->setPublic($args['public']);
         $article->setPublicationDate(new \DateTime());
         $article->setPicture($this->createImage($args['picture']));
-        $article->setContent($this->createContainer($args['container']));
+        $article->setContent($this->createContent($args['content']));
         foreach($args['categories'] as $category) {
-            $article->addCategory($this->getCategory($category));
+            $resource = $this->getCategory($category);
+            if ($resource) {
+                $article->addCategory($resource);
+            }
         }
+
+        $article->setThread($this->createThread());
+
         $this->translate($article);
         return $article;
     }
 
-    function getCategory($name)
+    function createThread()
     {
-        return $this->manager->getRepository('EnhavoCategoryBundle:Category')->findOneBy([
+        $thread = $this->container->get('enhavo_comment.factory.thread')->createNew();
+
+        return $thread;
+    }
+
+    function getCategory($name): ?Term
+    {
+        $term = $this->manager->getRepository('EnhavoTaxonomyBundle:Term')->findOneBy([
             'name' => $name
         ]);
+
+        if (!$term) {
+            $term = $this->createTerm($name);
+        }
+
+        return $term;
+    }
+
+    function createTerm($name)
+    {
+        /** @var Term $term */
+        $term = $this->container->get('enhavo_taxonomy.factory.term')->createNew();
+        $term->setName($name);
+        $term->setSlug('/' . strtolower($name));
+        $term->setTaxonomy($this->getTaxonomy('article_category'));
+
+        return $term;
+    }
+
+    function getTaxonomy($name)
+    {
+        $taxonomy = $this->manager->getRepository('EnhavoTaxonomyBundle:Taxonomy')->findOneBy([
+            'name' => $name
+        ]);
+
+        if (!$taxonomy) {
+            $taxonomy = $this->createTaxonomy($name);
+        }
+
+        return $taxonomy;
+    }
+
+    function createTaxonomy($name)
+    {
+        /** @var Taxonomy $taxonomy */
+        $taxonomy = $this->container->get('enhavo_taxonomy.factory.taxonomy')->createNew();
+        $taxonomy->setName($name);
+
+        $this->manager->persist($taxonomy);
+
+        return $taxonomy;
     }
 
     /**

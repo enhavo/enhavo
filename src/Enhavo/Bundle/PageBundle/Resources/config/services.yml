@@ -42,6 +42,7 @@ services:
             - { name: enhavo.menu, alias: page }
 
     enhavo_page.factory.page:
+        public: true
         class: '%enhavo_page.factory.page.class%'
         arguments:
             - '%enhavo_page.model.page.class%'

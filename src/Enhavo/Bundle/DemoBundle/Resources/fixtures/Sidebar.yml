@@ -1,0 +1,12 @@
+-
+    name: Article Sidebar
+    code: article_sidebar
+    content:
+        -
+            type: article_list
+-
+    name: Calendar Sidebar
+    code: calendar_sidebar
+    content:
+        -
+            type: calendar

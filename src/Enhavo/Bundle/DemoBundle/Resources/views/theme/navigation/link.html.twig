@@ -1,0 +1,5 @@
+<a class="{% if navigation_node_is_active(node) %}active{% endif %}"
+   target="_{{ node.configuration.target }}"
+   href="{{ node.content.link }}">
+    {{ node.label }}
+</a>

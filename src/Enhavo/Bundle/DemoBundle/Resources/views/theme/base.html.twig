@@ -20,6 +20,7 @@
             {{ encore_entry_link_tags('base', null, webpack_build()) }}
         {% endblock %}
     </head>
+    {% block body %}
     <body class="{% block body_class %}{% endblock %}">
         {#Cart Sidebar#}
         <div class="cart-sidebar" data-cart-sidebar>
@@ -105,31 +106,7 @@
         </div>
         <header>
             {% block navigation %}
-            <div class="container">
-                <nav class="main-menu">
-                    <div class="menu-btn" data-show-menu>
-                        <div>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-                    </div>
-                    <a href="/" class="logo">ACME</a>
-                    <ul class="menu-items" data-menu-items>
-                        <li class="active"><a href="">Home</a></li>
-                        <li><a href="">Company</a></li>
-                        <li><a href="">Blog</a></li>
-                        <li><a href="">About</a></li>
-                        <li><a href="">Contact</a></li>
-                    </ul>
-                    <ul class="shop-menu">
-                        <li class="login">
-                            <a href="">Login</a>
-                        </li>
-                        <li><a href="" data-show-cart>Cart</a></li>
-                    </ul>
-                </nav>
-            </div>
+                {{ widget('navigation', {'navigation': 'main_nav'}) }}
             {% endblock %}
         </header>
         <main>
@@ -183,4 +160,5 @@
             {{ encore_entry_script_tags('base', null, webpack_build()) }}
         {% endblock %}
     </body>
+    {% endblock %}
 </html>

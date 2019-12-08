@@ -11,14 +11,15 @@ namespace Enhavo\Bundle\DemoBundle\Fixtures;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Enhavo\Bundle\BlockBundle\Entity\Block;
-use Enhavo\Bundle\BlockBundle\Entity\Container;
+use Enhavo\Bundle\BlockBundle\Entity\Node;
+use Enhavo\Bundle\BlockBundle\Factory\BlockFactory;
+use Enhavo\Bundle\BlockBundle\Factory\NodeFactory;
 use Enhavo\Bundle\BlockBundle\Model\Block\PictureBlock;
 use Enhavo\Bundle\BlockBundle\Model\Block\TextBlock;
 use Enhavo\Bundle\BlockBundle\Model\Block\TextPictureBlock;
-use Enhavo\Bundle\BlockBundle\Model\BlockTypeInterface;
+use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
+use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 use Enhavo\Bundle\RoutingBundle\Entity\Route;
-use Enhavo\Bundle\TranslationBundle\Translator\Translator;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\PropertyAccess\PropertyAccess;
@@ -54,11 +55,12 @@ abstract class AbstractFixture implements FixtureInterface, OrderedFixtureInterf
     public function loadData($name) {
 
         $file = sprintf('%s/../Resources/fixtures/%s.yml', __DIR__ , $name);
+
         if(!file_exists($file)) {
             throw new \Exception(sprintf('fixtures file "%s" not found for name "%s"', $file, $name));
         }
 
-        $data = Yaml::parse($file);
+        $data = Yaml::parseFile($file);
 
         $items = [];
         foreach ($data as $args) {
@@ -89,7 +91,9 @@ abstract class AbstractFixture implements FixtureInterface, OrderedFixtureInterf
     {
         $path = sprintf('%s/../Resources/images/%s', __DIR__, $path);
         $file = $this->container->get('enhavo_media.factory.file')->createFromPath($path);
-        return $this->container->get('enhavo_media.media.media_manager')->saveFile($file);
+        $this->container->get('enhavo_media.media.media_manager')->saveFile($file);
+
+        return $file;
     }
 
     /**
@@ -136,31 +140,90 @@ abstract class AbstractFixture implements FixtureInterface, OrderedFixtureInterf
 
     /**
      * @param $container
-     * @return Container
+     * @return NodeInterface
      */
-    protected function createContainer($container)
+    protected function createContent($container)
     {
-        $containerEntity = new Container();
+        /** @var NodeFactory $nodeFactory */
+        $nodeFactory = $this->container->get('enhavo_block.factory.node');
+        $containerEntity = $nodeFactory->createNew();
+
+        $position = 0;
         foreach($container as $fields) {
-            $blockEntity = new Block();
+            $node = $nodeFactory->createNew();
             $type = $fields['type'];
             unset($fields['type']);
-            $blockEntity->setBlockType($this->createBlockType($type, $fields));
-            $containerEntity->addBlock($blockEntity);
+
+            $content = false;
+            $setter = 'content';
+            if (isset($fields['content'])) {
+                $content = $fields['content'];
+                unset($fields['content']);
+            }
+            if (isset($fields['setter'])) {
+                $setter = $fields['setter'];
+                unset($fields['setter']);
+            }
+            $block = $this->createBlockType($type, $fields);
+
+            if ($content !== false) {
+                $subNode = $this->createContent($content);
+                if ($setter !== false) {
+                    $accessor = PropertyAccess::createPropertyAccessor();
+                    $accessor->setValue($block, $setter, $subNode);
+                }
+            }
+
+            $node->setName($type);
+            $node->setBlock($block);
+            $node->setPosition($position++);
+            $containerEntity->addChild($node);
         }
         $this->translate($containerEntity);
         return $containerEntity;
     }
 
+    protected function createNodes(NodeInterface $parent, array $container)
+    {
+        /** @var NodeFactory $nodeFactory */
+        $nodeFactory = $this->container->get('enhavo_block.factory.node');
+        $nodes = [];
+        $position = 0;
+        foreach($container as $fields) {
+            $node = $nodeFactory->createNew();
+            $type = $fields['type'];
+            unset($fields['type']);
+
+            $content = false;
+            if (isset($fields['content'])) {
+                $content = $fields['content'];
+                unset($fields['content']);
+            }
+            $block = $this->createBlockType($type, $fields);
+
+            $node->setName($type);
+            $node->setBlock($block);
+            $node->setPosition($position++);
+
+            if ($content !== false) {
+                $this->createNodes($node, $content);
+            }
+
+            $parent->addChild($node);
+        }
+    }
+
     /**
      * @param $type
      * @param $fields
-     * @return BlockTypeInterface
+     * @return BlockInterface
      */
     protected function createBlockType($type, $fields)
     {
-        $factory = $this->container->get('enhavo_block.factory.block_type');
-        $itemType = $factory->create($type);
+        /** @var BlockFactory $factory */
+        $factory = $this->container->get('enhavo_block.factory.block');
+        $itemType = $factory->createNew($type);
+
         $this->setFields($type, $itemType, $fields);
         $this->translate($itemType);
         return $itemType;
@@ -189,12 +252,20 @@ abstract class AbstractFixture implements FixtureInterface, OrderedFixtureInterf
                 $blockType->setTitle($fields['title']);
                 $blockType->setText($fields['text']);
                 break;
+            case('sidebar_column'):
+                $code = $fields['code'];
+                $sidebar = $this->manager->getRepository('EnhavoSidebarBundle:Sidebar')->findOneBy([
+                    'code' => $code
+                ]);
+                $blockType->setSidebar($sidebar);
+                break;
         }
     }
 
     protected function createRoute($url, $content)
     {
-        $route = new Route();
+        $route = $this->container->get('enhavo_demo.factory.route')->createNew();
+        $route->setName(preg_replace('/ */', '', strtolower($content->getTitle())));
         $route->setStaticPrefix($url);
         $route->setContent($content);
         $this->translate($route);
@@ -204,20 +275,20 @@ abstract class AbstractFixture implements FixtureInterface, OrderedFixtureInterf
     protected function translate($entity)
     {
         /** @var Translator $translator */
-        $translator = $this->container->get('enhavo_translation.translator');
-        $metadata = $translator->getMetadata($entity);
-
-        if($metadata === null) {
-            return;
-        }
-
-        $accessor = PropertyAccess::createPropertyAccessor();
-        foreach($metadata->getProperties() as $property) {
-            $formData = $accessor->getValue($entity, $property->getName());
-            $translationData = $translator->normalizeToTranslationData($entity, $property->getName(), $formData);
-            $translator->addTranslationData($entity, $property->getName(), $translationData);
-            $normalizeData = $translator->normalizeToModelData($entity, $property->getName(), $formData);
-            $accessor->setValue($entity, $property->getName(), $normalizeData);
-        }
+//        $translator = $this->container->get('enhavo_translation.translator');
+//        $metadata = $translator->getMetadata($entity);
+//
+//        if($metadata === null) {
+//            return;
+//        }
+//
+//        $accessor = PropertyAccess::createPropertyAccessor();
+//        foreach($metadata->getProperties() as $property) {
+//            $formData = $accessor->getValue($entity, $property->getName());
+//            $translationData = $translator->normalizeToTranslationData($entity, $property->getName(), $formData);
+//            $translator->addTranslationData($entity, $property->getName(), $translationData);
+//            $normalizeData = $translator->normalizeToModelData($entity, $property->getName(), $formData);
+//            $accessor->setValue($entity, $property->getName(), $normalizeData);
+//        }
     }
 }

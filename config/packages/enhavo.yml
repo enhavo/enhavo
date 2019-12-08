@@ -12,10 +12,12 @@ enhavo_app:
             type: slider
         newsletter:
             type: newsletter
+#        subscribers:
+#            type: newsletter_subscriber
         calendar:
             type: calendar
-        shop:
-            type: shop
+#        shop:
+#            type: shop
         navigation:
             type: navigation
         redirect:
@@ -24,17 +26,17 @@ enhavo_app:
             type: media_library
         sidebar:
             type: sidebar
-        template:
-            type: template
-        theme:
-            type: theme
+#        template:
+#            type: template
+#        theme:
+#            type: theme
 
 enhavo_block:
     blocks:
         picture:
             type: picture
-        gallery:
-            type: gallery
+#        gallery: fixme does not work right now
+#            type: gallery
         text:
             type: text
         text_picture:
@@ -51,8 +53,8 @@ enhavo_block:
             type: three_column
         article_list:
             type: article_list
-        article_teaser:
-            type: article_teaser
+#        article_teaser:
+#            type: article_teaser
         sidebar_column:
             type: sidebar_column
         template:
@@ -67,7 +69,7 @@ enhavo_block:
             type: slider
         newsletter_subscribe:
             type: newsletter_subscribe
-        shop_product_list:
-            type: shop_product_list
+#        shop_product_list: fixme does not work right now
+#            type: shop_product_list
         comment:
             type: comment
