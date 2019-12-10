@@ -21,7 +21,7 @@ class SearchWidgetType extends AbstractWidgetType
         return 'search';
     }
 
-    public function createViewData($options, $resource = null)
+    public function createViewData(array $options, $resource = null)
     {
         return [];
     }

@@ -21,7 +21,7 @@ class SliderWidgetType extends AbstractWidgetType
         return 'slider';
     }
 
-    public function createViewData($options, $resource = null)
+    public function createViewData(array $options, $resource = null)
     {
         $repository = $this->container->get('enhavo_slider.repository.slide');
         $slides = $repository->findPublished();
