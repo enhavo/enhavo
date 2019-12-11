@@ -18,7 +18,7 @@ class NavigationWidgetType extends AbstractWidgetType
         return 'navigation';
     }
 
-    public function createViewData($options, $resource = null)
+    public function createViewData(array $options, $resource = null)
     {
         $navigation = $this->container->get('enhavo_navigation.repository.navigation')->findOneBy([
             'code' => $options['navigation']

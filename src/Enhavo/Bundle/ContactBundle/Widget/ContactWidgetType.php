@@ -36,7 +36,7 @@ class ContactWidgetType extends AbstractWidgetType
         return 'contact';
     }
 
-    public function createViewData($options, $resource = null)
+    public function createViewData(array $options, $resource = null)
     {
         $configuration = $this->configurationFactory->create($options['name']);
         $form = $this->formFactory->create($configuration->getForm());

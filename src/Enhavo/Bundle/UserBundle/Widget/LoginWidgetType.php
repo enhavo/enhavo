@@ -24,7 +24,7 @@ class LoginWidgetType extends AbstractWidgetType
         return 'login';
     }
 
-    public function createViewData($options, $resource = null)
+    public function createViewData(array $options, $resource = null)
     {
         if($options['csrf_token']) {
             $token = $options['csrf_token'];
