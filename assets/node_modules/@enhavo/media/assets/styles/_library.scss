@@ -1,5 +1,6 @@
 @import "~compass-mixins/lib/_animate.scss";
 @import "~compass-mixins/lib/_compass.scss";
+@import "~@enhavo/app/assets/styles/variables";
 
 .media-library {min-height: 485px; background-color:$grey1;position:relative;padding:15px;margin:15px;
   &.drop-zone {

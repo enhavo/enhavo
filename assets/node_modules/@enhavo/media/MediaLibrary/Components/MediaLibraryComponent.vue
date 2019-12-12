@@ -1,7 +1,6 @@
 <template>
-    <div class="media-library">
-        <div ref="dropzone" class="dropzone" v-show="data.dropZone"></div>
-        <input v-once type="file" ref="upload" v-show="false">
+    <div class="media-library" v-bind:class="{ 'drop-zone': data.dropZone }" ref="mediaLibrary">
+        <input v-once type="file" multiple ref="upload" v-show="false">
         <ul class="media-library-file-list">
             <li v-for="item in data.items" @click="open(item)">
                 <div class="filename">{{ item.data.name }}</div>
@@ -63,7 +62,7 @@ export default class MediaLibraryComponent extends Vue
                     this.getMediaLibrary().setProgress(progress);
                 }
             },
-            dropZone: this.$refs.dropzone,
+            dropZone: this.$refs.mediaLibrary,
             pasteZone: null
         });
 
@@ -75,6 +74,7 @@ export default class MediaLibraryComponent extends Vue
         });
 
         $(document).bind('dragleave drop', (e) => {
+            console.log("dragleave",e);
             e.preventDefault();
             e.stopPropagation();
             this.getMediaLibrary().hideDropZone()
