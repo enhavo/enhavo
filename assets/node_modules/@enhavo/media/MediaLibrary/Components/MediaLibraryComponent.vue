@@ -74,6 +74,7 @@ export default class MediaLibraryComponent extends Vue
         });
 
         $(document).bind('dragleave drop', (e) => {
+            if(e.target === this.$refs.mediaLibrary) return;
             e.preventDefault();
             e.stopPropagation();
             this.getMediaLibrary().hideDropZone()
