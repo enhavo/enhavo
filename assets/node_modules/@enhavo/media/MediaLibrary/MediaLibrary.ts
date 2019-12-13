@@ -94,9 +94,21 @@ export default class MediaLibrary
         }
     }
 
+    showDropZoneActive() {
+        if(!this.data.dropZoneActive) {
+            this.data.dropZoneActive = true;
+        }
+    }
+
     hideDropZone() {
         if(this.data.dropZone) {
             this.data.dropZone = false;
+        }
+    }
+
+    hideDropZoneActive() {
+        if(this.data.dropZoneActive) {
+            this.data.dropZoneActive = false;
         }
     }
 

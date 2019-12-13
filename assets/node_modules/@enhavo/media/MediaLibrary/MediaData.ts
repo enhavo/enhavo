@@ -5,6 +5,7 @@ export default class MediaData
     items: MediaItem[];
     progress: number;
     dropZone: boolean = false;
+    dropZoneActive: boolean = false;
     loading: boolean = false;
     page: number = 1;
     count: number;
