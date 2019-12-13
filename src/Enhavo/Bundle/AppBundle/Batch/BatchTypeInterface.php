@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Batch;
 
+use Enhavo\Bundle\AppBundle\Exception\BatchExecutionException;
 use Enhavo\Bundle\AppBundle\Type\TypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,6 +18,7 @@ interface BatchTypeInterface extends TypeInterface
      * @param $options array
      * @param $resources
      * @return void
+     * @throws BatchExecutionException
      */
     public function execute(array $options, $resources);
 

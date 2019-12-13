@@ -64,7 +64,7 @@ export default class UrlBatch extends AbstractBatch
         return this.application.getView();
     }
 
-    private getUrl()
+    protected getUrl()
     {
         let route = this.route;
         if(!route) {

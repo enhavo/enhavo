@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Batch;
 
+use Enhavo\Bundle\AppBundle\Exception\BatchExecutionException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class Batch
@@ -56,6 +57,7 @@ class Batch
 
     /**
      * @param $resources
+     * @throws BatchExecutionException
      */
     public function execute($resources)
     {

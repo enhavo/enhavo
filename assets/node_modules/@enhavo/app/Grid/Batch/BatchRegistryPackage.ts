@@ -2,6 +2,7 @@ import RegistryPackage from "@enhavo/core/RegistryPackage";
 import ApplicationInterface from "@enhavo/app/ApplicationInterface";
 import UrlFactory from "@enhavo/app/Grid/Batch/Factory/UrlFactory";
 import ModalFactory from "@enhavo/app/Grid/Batch/Factory/ModalFactory";
+import FormFactory from "@enhavo/app/Grid/Batch/Factory/FormFactory";
 
 export default class BatchRegistryPackage extends RegistryPackage
 {
@@ -9,5 +10,6 @@ export default class BatchRegistryPackage extends RegistryPackage
         super();
         this.register('batch-url', null, new UrlFactory(application));
         this.register('batch-modal', null, new ModalFactory(application));
+        this.register('batch-form', null, new FormFactory(application));
     }
 }

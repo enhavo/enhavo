@@ -2,30 +2,21 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Batch;
 
-use Enhavo\Bundle\AppBundle\Batch\AbstractBatchType;
+use Enhavo\Bundle\AppBundle\Batch\AbstractFormBatchType;
+use Enhavo\Bundle\AppBundle\Exception\BatchExecutionException;
 use Enhavo\Bundle\NewsletterBundle\Entity\Newsletter;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SendTestType extends AbstractBatchType
+class SendTestType extends AbstractFormBatchType
 {
     /**
      * @param array $options
      * @param Newsletter[] $resources
+     * @throws BatchExecutionException
      */
     public function execute(array $options, $resources)
     {
 
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function createViewData(array $options, $resource = null)
-    {
-        $data = parent::createViewData($options, $resource);
-        $data['modal'] = $options['modal'];
-        $data['modal_options'] = $options['modal_options'];
-        return $data;
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -35,10 +26,8 @@ class SendTestType extends AbstractBatchType
         $resolver->setDefaults([
             'label' => 'newsletter.batch.action.send_test',
             'translation_domain' => 'EnhavoNewsletterBundle',
-            'permission' => 'ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_SEND',
-            'component' => 'batch-modal',
-            'modal' => 'newsletter-test-modal',
-            'modal_options' => []
+            'permission' => 'ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_SEND_TEST',
+            'form_route' => 'enhavo_newsletter_newsletter_test_form',
         ]);
     }
 
