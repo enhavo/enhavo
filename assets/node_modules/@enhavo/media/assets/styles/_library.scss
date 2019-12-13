@@ -4,6 +4,9 @@
 
 .media-library {min-height: 485px; background-color:$grey1;position:relative;padding:15px;margin:15px;
   &.drop-zone {
+    &.drop-zone-active {
+      &:before {background:$color1;}
+    }
     &:after {content:"";position:absolute;top:25px;left:25px;right:25px;bottom:25px;border:8px dashed #fff;z-index:2;border-radius:25px;}
     &:before {content:"";position:absolute;top:0;left:0;right:0;bottom:0;background-color:#ddd;z-index:1;}
   }

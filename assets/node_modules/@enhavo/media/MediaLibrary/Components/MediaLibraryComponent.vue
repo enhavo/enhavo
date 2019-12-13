@@ -1,5 +1,5 @@
 <template>
-    <div class="media-library" v-bind:class="{ 'drop-zone': data.dropZone }" ref="mediaLibrary">
+    <div class="media-library" v-bind:class="{ 'drop-zone': data.dropZone, 'drop-zone-active': data.dropZoneActive }" ref="mediaLibrary">
         <input v-once type="file" multiple ref="upload" v-show="false">
         <ul class="media-library-file-list">
             <li v-for="item in data.items" @click="open(item)">
@@ -69,15 +69,34 @@ export default class MediaLibraryComponent extends Vue
         $(document).bind('dragover', (e) =>  {
             e.preventDefault();
             e.stopPropagation();
-            this.getMediaLibrary().showDropZone()
-
+            this.getMediaLibrary().showDropZone();
         });
 
-        $(document).bind('dragleave drop', (e) => {
-            if(e.target === this.$refs.mediaLibrary) return;
+        $(this.$refs.mediaLibrary).bind('dragover', (e) =>  {
             e.preventDefault();
             e.stopPropagation();
-            this.getMediaLibrary().hideDropZone()
+            this.getMediaLibrary().showDropZone();
+            this.getMediaLibrary().showDropZoneActive();
+        });
+
+        $(document).bind('dragleave', (e) => {
+            if($(document).find(e.target).length > 0) return;
+            e.preventDefault();
+            e.stopPropagation();
+            this.getMediaLibrary().hideDropZone();
+        });
+
+         $(this.$refs.mediaLibrary).bind('dragleave', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            this.getMediaLibrary().hideDropZoneActive();
+        });
+
+        $(document).bind('drop', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            this.getMediaLibrary().hideDropZone();
+            this.getMediaLibrary().hideDropZoneActive();
         });
     }
 
