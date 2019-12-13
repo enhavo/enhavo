@@ -80,7 +80,7 @@ export default class MediaLibraryComponent extends Vue
         });
 
         $(document).bind('dragleave', (e) => {
-            if($(document).find(e.target).length > 0) return;
+            if($(document).find('.app-view').length > 0 && $(document).find('.app-view').find(e.target).length > 0) return;
             e.preventDefault();
             e.stopPropagation();
             this.getMediaLibrary().hideDropZone();
