@@ -9,7 +9,7 @@ Enhavo\Bundle\NewsletterBundle\Entity\Receiver:
                 strategy: AUTO
 
     fields:
-        eMail:
+        email:
             type: string
             nullable: true
 
@@ -32,11 +32,6 @@ Enhavo\Bundle\NewsletterBundle\Entity\Receiver:
             nullable: false
 
     manyToOne:
-        subscriber:
-            cascade: ['persist', 'refresh', 'remove']
-            targetEntity: Enhavo\Bundle\NewsletterBundle\Entity\Subscriber
-            joinColumn:
-                onDelete: CASCADE
         newsletter:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\NewsletterBundle\Entity\Newsletter

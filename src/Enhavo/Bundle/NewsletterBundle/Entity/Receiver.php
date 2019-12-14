@@ -21,7 +21,7 @@ class Receiver implements ResourceInterface
     /**
      * @var string
      */
-    private $eMail;
+    private $email;
 
     /**
      * @var \DateTime
@@ -34,7 +34,7 @@ class Receiver implements ResourceInterface
     private $sentAt;
 
     /**
-     * @var Collection
+     * @var array
      */
     private $parameters;
 
@@ -42,11 +42,6 @@ class Receiver implements ResourceInterface
      * @var string
      */
     private $token;
-
-    /**
-     * @var Subscriber $subscriber
-     */
-    private $subscriber;
 
     /**
      * @var Collection $trackings
@@ -79,17 +74,17 @@ class Receiver implements ResourceInterface
     /**
      * @return string
      */
-    public function getEMail(): string
+    public function getEmail(): string
     {
-        return $this->eMail;
+        return $this->email;
     }
 
     /**
-     * @param string $eMail
+     * @param string $email
      */
-    public function setEMail(string $eMail): void
+    public function setEmail(string $email): void
     {
-        $this->eMail = $eMail;
+        $this->email = $email;
     }
 
     /**
@@ -125,17 +120,17 @@ class Receiver implements ResourceInterface
     }
 
     /**
-     * @return Collection
+     * @return array
      */
-    public function getParameters(): Collection
+    public function getParameters(): array
     {
         return $this->parameters;
     }
 
     /**
-     * @param Collection $parameters
+     * @param array $parameters
      */
-    public function setParameters(Collection $parameters): void
+    public function setParameters(array $parameters): void
     {
         $this->parameters = $parameters;
     }
@@ -157,25 +152,10 @@ class Receiver implements ResourceInterface
     }
 
     /**
-     * @return Subscriber
-     */
-    public function getSubscriber(): Subscriber
-    {
-        return $this->subscriber;
-    }
-
-    /**
-     * @param Subscriber $subscriber
-     */
-    public function setSubscriber(Subscriber $subscriber): void
-    {
-        $this->subscriber = $subscriber;
-    }
-
-    /**
      * Add tracking
      *
      * @param \Enhavo\Bundle\NewsletterBundle\Entity\Tracking $tracking
+     * @return Receiver
      */
     public function addTracking(Tracking $tracking): Receiver
     {
@@ -201,7 +181,7 @@ class Receiver implements ResourceInterface
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getTrackings()
+    public function getTracking()
     {
         return $this->tracking;
     }
@@ -220,5 +200,10 @@ class Receiver implements ResourceInterface
     public function setNewsletter(Newsletter $newsletter): void
     {
         $this->newsletter = $newsletter;
+    }
+
+    public function isSent()
+    {
+        return $this->getSentAt() !== null;
     }
 }

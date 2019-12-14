@@ -4,12 +4,9 @@
 namespace Enhavo\Bundle\NewsletterBundle\Newsletter;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Enhavo\Bundle\NewsletterBundle\Entity\Group;
-use Enhavo\Bundle\NewsletterBundle\Entity\Newsletter;
-use Enhavo\Bundle\NewsletterBundle\Entity\Subscriber;
-use Enhavo\Bundle\NewsletterBundle\Entity\Tracking;
 use Enhavo\Bundle\NewsletterBundle\Exception\SendException;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
+use Enhavo\Bundle\NewsletterBundle\Provider\ProviderInterface;
 use FOS\UserBundle\Util\TokenGeneratorInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
@@ -56,13 +53,19 @@ class NewsletterManager
      */
     private $logger;
 
+    /**
+     * @var ProviderInterface
+     */
+    private $provider;
+
     public function __construct(
         EntityManagerInterface $em,
         \Swift_Mailer $mailer,
         $from,
         $templates,
         SecureUrlTokenGenerator $tokenGenerator,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        ProviderInterface $provider
     ) {
         $this->em = $em;
         $this->mailer = $mailer;
@@ -70,57 +73,86 @@ class NewsletterManager
         $this->from = $from;
         $this->tokenGenerator = $tokenGenerator;
         $this->logger = $logger;
+        $this->provider = $provider;
     }
 
     /**
-     * @param Newsletter $newsletter
-     * @param Group $group
+     * @param NewsletterInterface $newsletter
      * @throws SendException
      */
-    public function prepareReceivers(Newsletter $newsletter, Group $group)
+    public function prepare(NewsletterInterface $newsletter)
     {
-        if($newsletter->getSent()) {
-            throw new SendException(sprintf('Newsletter with id "%s" already sent', $newsletter->getId()));
+        if($newsletter->isPrepared()) {
+            throw new SendException(sprintf('Newsletter with id "%s" already prepared', $newsletter->getId()));
         }
+        $receivers = $this->provider->getReceivers($newsletter);
+        foreach($receivers as $receiver) {
+            $this->em->persist($receiver);
 
-        $subscribers = $group->getSubscriber();
+            if(!$receiver->getToken()) {
+                $receiver->setToken($this->tokenGenerator->generateToken());
+            }
 
-        $newsletter->setSent(true);
-        $newsletter->setSentAt(new \DateTime());
-
-        foreach ($subscribers as $subscriber) {
-            $this->createReceiver($subscriber, $newsletter);
+            $receiver->setNewsletter($newsletter);
         }
-
+        $newsletter->setState(NewsletterInterface::STATE_PREPARED);
+        $newsletter->setStartAt(new \DateTime());
         $this->em->flush();
     }
 
-    public function sendToReceivers()
+    public function send(NewsletterInterface $newsletter)
     {
-        $receivers = $this->em
-            ->getRepository('EnhavoNewsletterBundle:Receiver')
-            ->findBy([
-                'sentAt' => null
-            ]);
-
-        $this->logger->info(sprintf('"%s" prepared receiver found', count($receivers)));
-        foreach($receivers as $receiver) {
-            $this->sendNewsletter($receiver);
-            $this->em->flush();
+        if(!$newsletter->isPrepared()) {
+            throw new SendException(sprintf(
+                'Newsletter with id "%s" is not prepared yet. Prepare the newsletter first before sending',
+                $newsletter->getId())
+            );
         }
+
+        if($newsletter->isSent()) {
+            throw new SendException(sprintf('Newsletter with id "%s" already sent', $newsletter->getId()));
+        }
+
+        $this->logger->info(sprintf('"%s" prepared receiver found', count($newsletter->getReceivers())));
+
+        $newsletter->setState(NewsletterInterface::STATE_SENDING);
+
+        foreach($newsletter->getReceivers() as $receiver) {
+            if(!$receiver->isSent()) {
+                if($this->sendNewsletter($receiver)) {
+                    $receiver->setSentAt(new \DateTime());
+                    $this->em->flush();
+                }
+            }
+        }
+
+        $sent = true;
+        foreach($newsletter->getReceivers() as $receiver) {
+            if(!$receiver->isSent()) {
+                $sent = false;
+                break;
+            }
+        }
+
+        if($sent) {
+            $newsletter->setState(NewsletterInterface::STATE_SENT);
+            $newsletter->setFinishAt(new \DateTime());
+            $this->em->flush();
+            return true;
+        }
+        return false;
     }
 
     private function sendNewsletter(Receiver $receiver)
     {
-        $message = new \Swift_Message();
+        $message = $this->mailer->createMessage();
         $message
             ->setSubject($receiver->getNewsletter()->getSubject())
             ->setContentType("text/html")
             ->setFrom($this->from)
             ->setTo($receiver->getEmail())
-            ->setBody($this->render($receiver->getNewsletter()));
-
-        $receiver->setSentAt(new \DateTime());
+            ->setBody($this->render($receiver->getNewsletter(), $receiver->getParameters()));
+        return $this->mailer->send($message);
     }
 
     public function sendTest(NewsletterInterface $newsletter, string $email)
@@ -131,17 +163,20 @@ class NewsletterManager
             ->setContentType("text/html")
             ->setFrom($this->from)
             ->setTo($email)
-            ->setBody($this->render($newsletter));
+            ->setBody($this->render($newsletter, $this->provider->getTestParameters()));
         return $this->mailer->send($message);
     }
 
-    private function render(NewsletterInterface $newsletter)
+    private function render(NewsletterInterface $newsletter, array $parameters = [])
     {
         $templateManager = $this->container->get('enhavo_app.template.manager');
         $template = $this->getTemplate($newsletter->getTemplate());
         $content = $this->container->get('twig')->render($templateManager->getTemplate($template), [
-            'resource' => $newsletter
+            'resource' => $newsletter,
+            'newsletter' => $newsletter,
+            'parameters' => $parameters
         ]);
+
         return $content;
     }
 
@@ -155,25 +190,5 @@ class NewsletterManager
             throw new \Exception(sprintf('No template found for key "%s"', $key));
         }
         return $this->templates[$key]['template'];
-    }
-
-    private function createReceiver(Subscriber $subscriber, Newsletter $newsletter)
-    {
-        $receiver = new Receiver();
-        $receiver->setToken($this->tokenGenerator->generateToken());
-        $receiver->setEMail($subscriber->getEmail());
-        $receiver->setSubscriber($subscriber);
-        $receiver->setNewsletter($newsletter);
-        $this->addTracking($receiver,'prepared');
-
-        $this->em->persist($receiver);
-    }
-
-    private function addTracking(Receiver $receiver, $type)
-    {
-        $tracking = new Tracking();
-        $tracking->setDate(new \DateTime());
-        $tracking->setType($type);
-        $receiver->addTracking($tracking);
     }
 }

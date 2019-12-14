@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\NewsletterBundle;
 
+use Enhavo\Bundle\NewsletterBundle\DependencyInjection\Compiler\ProviderCompilerPass;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Enhavo\Bundle\AppBundle\Type\TypeCompilerPass;
@@ -24,5 +25,7 @@ class EnhavoNewsletterBundle extends Bundle
         $container->addCompilerPass(
             new TypeCompilerPass('enhavo_newsletter.storage_collector', 'enhavo.newsletter_storage')
         );
+
+        $container->addCompilerPass(new ProviderCompilerPass);
     }
 }
