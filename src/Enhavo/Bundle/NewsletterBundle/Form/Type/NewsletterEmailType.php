@@ -5,6 +5,8 @@ namespace Enhavo\Bundle\NewsletterBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class NewsletterEmailType extends AbstractType
 {
@@ -12,7 +14,8 @@ class NewsletterEmailType extends AbstractType
     {
         $builder->add('email', EmailType::class, array(
             'label' => 'form.label.email',
-            'translation_domain' => 'EnhavoNewsletterBundle'
+            'translation_domain' => 'EnhavoNewsletterBundle',
+            'constraints' => [new NotBlank(), new Email()]
         ));
     }
 }
