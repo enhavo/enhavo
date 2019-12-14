@@ -22,7 +22,7 @@ class SendType extends AbstractBatchType
     {
         $newsletterManager = $this->container->get('enhavo_newsletter.manager');
         foreach($resources as $resource) {
-            $newsletterManager->send($resource);
+            $newsletterManager->prepare($resource);
         }
     }
 

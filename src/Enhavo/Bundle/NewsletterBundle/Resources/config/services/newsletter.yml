@@ -13,6 +13,10 @@ services:
         tags:
             - { name: enhavo.batch, alias: newsletter_send_test }
 
+    enhavo_newsletter.manager:
+        public: true
+        alias: Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager
+
     Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager:
         public: true
         class: Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager
@@ -77,3 +81,10 @@ services:
             - { name: console.command, command: 'enhavo:newsletter:send' }
 
     Enhavo\Bundle\NewsletterBundle\Provider\SubscriberProvider:
+
+    Enhavo\Bundle\NewsletterBundle\Column\NewsletterStateColumnType:
+        public: true
+        tags:
+            - { name: enhavo.column, alias: 'newsletter_state' }
+        calls:
+            - [setContainer, ['@service_container']]
