@@ -99,12 +99,10 @@ enhavo_newsletter_newsletter_table:
                         type: text
                         label: newsletter.label.title
                         property: title
-                        width: 10
-                    sent:
-                        type: boolean
-                        label: newsletter.label.sent
-                        property: sent
-                        width: 2
+                        width: 8
+                    state:
+                        type: newsletter_state
+                        width: 4
 
 enhavo_newsletter_newsletter_delete:
     options:

@@ -54,7 +54,7 @@ Enhavo\Bundle\NewsletterBundle\Entity\Newsletter:
         receivers:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\NewsletterBundle\Entity\Receiver
-            mappedBy: receiver
+            mappedBy: newsletter
             orphanRemoval: true
 
     manyToOne:

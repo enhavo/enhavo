@@ -20,12 +20,15 @@ newsletter:
         already_sent: 'Newsletter wurde bereits versendet'
     view: 'Anzeigen'
   label:
-    sent: 'gesendet'
+    sent: 'Gesendet'
     id: 'ID'
     title: 'Titel'
     newsletter: 'Newsletter'
     content: 'Inhalt'
     default: 'Default'
+    created: 'Erstellt'
+    prepared: 'Vorbereitet'
+    sending: 'Senden'
   form:
     label:
       subject: 'Betreff'
