@@ -167,7 +167,7 @@ class NewsletterManager
         return $this->mailer->send($message);
     }
 
-    private function render(NewsletterInterface $newsletter, array $parameters = [])
+    public function render(NewsletterInterface $newsletter, array $parameters = [])
     {
         $templateManager = $this->container->get('enhavo_app.template.manager');
         $template = $this->getTemplate($newsletter->getTemplate());
