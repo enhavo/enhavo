@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Batch;
 
+use Enhavo\Bundle\AppBundle\Exception\BatchExecutionException;
 use Enhavo\Bundle\AppBundle\Exception\TypeMissingException;
 use Enhavo\Bundle\AppBundle\Type\TypeCollector;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -108,6 +109,11 @@ class BatchManager
         return $batch;
     }
 
+    /**
+     * @param Batch $batch
+     * @param $resources
+     * @throws BatchExecutionException
+     */
     public function executeBatch(Batch $batch, $resources)
     {
         $batch->execute($resources);

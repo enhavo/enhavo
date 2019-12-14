@@ -41,6 +41,12 @@ services:
             - '%enhavo_newsletter.cleverreach.mapping%'
             - '@event_dispatcher'
 
+    enhavo_newsletter.provider_collector:
+        class: Enhavo\Bundle\AppBundle\Type\TypeCollector
+        arguments:
+            - '@service_container'
+            - 'Provider'
+
     enhavo_newsletter.add_subscriber_listener:
         class: Enhavo\Bundle\NewsletterBundle\EventListener\SubscriberSubscriber
         arguments:

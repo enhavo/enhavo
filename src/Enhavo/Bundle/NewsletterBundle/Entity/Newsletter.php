@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 use Enhavo\Bundle\RoutingBundle\Model\Slugable;
@@ -38,14 +39,14 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
     private $content;
 
     /**
-     * @var boolean
+     * @var \DateTime
      */
-    private $sent;
+    private $startAt;
 
     /**
      * @var \DateTime
      */
-    private $sentAt;
+    private $finishAt;
 
     /**
      * @var \DateTime
@@ -65,14 +66,19 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
     /**
      * @var Collection
      */
-    private $receiver;
+    private $receivers;
+
+    /**
+     * @var string
+     */
+    private $state = NewsletterInterface::STATE_CREATED;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->receiver = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->receivers = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -180,46 +186,6 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
     }
 
     /**
-     * Set sent
-     *
-     * @param boolean $sent
-     *
-     * @return Newsletter
-     */
-    public function setSent($sent)
-    {
-        $this->sent = $sent;
-
-        return $this;
-    }
-
-    /**
-     * Get sent
-     *
-     * @return boolean
-     */
-    public function getSent()
-    {
-        return $this->sent;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getSentAt(): \DateTime
-    {
-        return $this->sentAt;
-    }
-
-    /**
-     * @param \DateTime $sentAt
-     */
-    public function setSentAt(\DateTime $sentAt): void
-    {
-        $this->sentAt = $sentAt;
-    }
-
-    /**
      * @return \DateTime
      */
     public function getCreatedAt(): \DateTime
@@ -233,6 +199,38 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
     public function setCreatedAt(\DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getStartAt(): \DateTime
+    {
+        return $this->startAt;
+    }
+
+    /**
+     * @param \DateTime $startAt
+     */
+    public function setStartAt(\DateTime $startAt): void
+    {
+        $this->startAt = $startAt;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getFinishAt(): \DateTime
+    {
+        return $this->finishAt;
+    }
+
+    /**
+     * @param \DateTime $finishAt
+     */
+    public function setFinishAt(\DateTime $finishAt): void
+    {
+        $this->finishAt = $finishAt;
     }
 
     /**
@@ -275,9 +273,8 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
      */
     public function addReceiver(Receiver $receiver)
     {
-        $this->receiver[] = $receiver;
+        $this->receivers[] = $receiver;
         $receiver->setNewsletter($this);
-
         return $this;
     }
 
@@ -288,7 +285,7 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
      */
     public function removeReceiver(Receiver $receiver)
     {
-        $this->receiver->removeElement($receiver);
+        $this->receivers->removeElement($receiver);
         $receiver->setNewsletter(null);
     }
 
@@ -299,6 +296,35 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
      */
     public function getReceivers()
     {
-        return $this->receiver;
+        return $this->receivers;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPrepared(): bool
+    {
+        return $this->state != NewsletterInterface::STATE_CREATED;
+    }
+
+    public function isSent()
+    {
+        return $this->state == NewsletterInterface::STATE_SENT;
+    }
+
+    /**
+     * @return string
+     */
+    public function getState(): string
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param string $state
+     */
+    public function setState(string $state): void
+    {
+        $this->state = $state;
     }
 }

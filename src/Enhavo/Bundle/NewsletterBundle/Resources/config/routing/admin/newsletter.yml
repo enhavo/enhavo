@@ -99,12 +99,10 @@ enhavo_newsletter_newsletter_table:
                         type: text
                         label: newsletter.label.title
                         property: title
-                        width: 10
-                    sent:
-                        type: boolean
-                        label: newsletter.label.sent
-                        property: sent
-                        width: 2
+                        width: 8
+                    state:
+                        type: newsletter_state
+                        width: 4
 
 enhavo_newsletter_newsletter_delete:
     options:
@@ -158,7 +156,7 @@ enhavo_newsletter_newsletter_resource_preview:
 enhavo_newsletter_newsletter_send:
     options:
         expose: true
-    path: /admin/newsletter/newsletter/{id}/send
+    path: /enhavo/newsletter/newsletter/{id}/send
     methods: [POST]
     defaults:
         _controller: enhavo_newsletter.controller.newsletter:sendAction
@@ -166,7 +164,17 @@ enhavo_newsletter_newsletter_send:
 enhavo_newsletter_newsletter_test:
     options:
         expose: true
-    path: /admin/newsletter/newsletter/test
+    path: /enhavo/newsletter/newsletter/test
     methods: [POST]
     defaults:
         _controller: enhavo_newsletter.controller.newsletter:testAction
+
+enhavo_newsletter_newsletter_test_form:
+    options:
+        expose: true
+    path: /enhavo/newsletter/newsletter/test/form
+    methods: [GET]
+    controller: enhavo_app.controller.modal:formAction
+    defaults:
+        _config:
+            form: Enhavo\Bundle\NewsletterBundle\Form\Type\NewsletterEmailType

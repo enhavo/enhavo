@@ -5,6 +5,8 @@ export default class ModalBatch extends AbstractBatch
 {
     public application: ApplicationInterface;
     public modal: any;
+    public provideData: boolean;
+    public provideKey: string;
 
     public constructor(application: ApplicationInterface) {
         super();
@@ -13,6 +15,12 @@ export default class ModalBatch extends AbstractBatch
 
     async execute(ids: number[]): Promise<boolean>
     {
+        if(this.provideData) {
+            this.modal[this.provideKey ? this.provideKey : 'data'] = {
+                ids: ids,
+                type: this.key
+            }
+        }
         this.application.getModalManager().push(this.modal);
         return false;
     }

@@ -72,7 +72,8 @@ abstract class AbstractBatchType extends AbstractType implements BatchTypeInterf
             'hidden' => false,
             'confirm_message' => null,
             'component' => 'batch-url',
-            'route' => null
+            'route' => null,
+            'route_parameters' => null,
         ]);
 
         $resolver->setRequired(['label']);

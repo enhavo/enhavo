@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\AppBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Batch\BatchManager;
 use Enhavo\Bundle\AppBundle\Event\ResourceEvents;
+use Enhavo\Bundle\AppBundle\Exception\BatchExecutionException;
 use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactoryInterface;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceDeleteHandlerInterface;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceUpdateHandlerInterface;
@@ -388,7 +389,12 @@ class ResourceController extends BaseController
         if($batch === null) {
             throw $this->createNotFoundException();
         }
-        $this->batchManager->executeBatch($batch, $resources);
+
+        try {
+            $this->batchManager->executeBatch($batch, $resources);
+        } catch (BatchExecutionException $e) {
+            return new JsonResponse($e->getMessage(), 400);
+        }
 
         return new JsonResponse();
     }

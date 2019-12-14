@@ -30,6 +30,7 @@ class EnhavoNewsletterExtension extends AbstractResourceExtension
 
         $container->setParameter('enhavo_newsletter.storage', $config['storage']['default']);
         $container->setParameter('enhavo_newsletter.strategy', $config['strategy']['default']);
+        $container->setParameter('enhavo_newsletter.provider', $config['provider']);
 
         if(isset($config['forms'])) {
             $container->setParameter('enhavo_newsletter.forms', $config['forms']);

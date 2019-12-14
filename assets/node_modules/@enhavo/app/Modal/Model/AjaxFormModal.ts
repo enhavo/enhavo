@@ -9,7 +9,8 @@ export default class AjaxFormModal extends AbstractModal
     public routeParameters: object;
     public actionRoute: string;
     public actionRouteParameters: object;
-    public actionHandler: (modal: AjaxFormModal, data: any) => Promise<boolean>;
+    public actionUrl: string;
+    public actionHandler: (modal: AjaxFormModal, data: any, error: string) => Promise<boolean>;
     public element: HTMLElement = null;
     public saveLabel: string = 'enhavo_app.save';
     public closeLabel: string = 'enhavo_app.abort';
@@ -43,7 +44,7 @@ export default class AjaxFormModal extends AbstractModal
             }
             axios.post(this.getActionUrl(), URI.buildQuery(data)).then((responseData) => {
                 if(this.actionHandler) {
-                    this.actionHandler(this, responseData)
+                    this.actionHandler(this, responseData, null)
                         .then((value) => {
                             resolve(value);
                         })
@@ -54,17 +55,33 @@ export default class AjaxFormModal extends AbstractModal
                     resolve(false);
                 }
                 this.loading = false;
-            }).catch(() => {
-                reject();
+            }).catch((error) => {
+                if(this.actionHandler) {
+                    this.actionHandler(this, error.response, error)
+                        .then((value) => {
+                            resolve(value);
+                        })
+                        .catch(() => {
+                            reject();
+                        });
+                } else {
+                    reject();
+                }
+                this.loading = false;
             });
         });
     }
 
     private getActionUrl()
     {
+        if(this.actionUrl) {
+            return this.actionUrl;
+        }
+
         if(this.actionRoute) {
             return this.application.getRouter().generate(this.actionRoute, this.actionRouteParameters);
         }
+
         return this.application.getRouter().generate(this.route, this.routeParameters);
     }
 }

@@ -23,18 +23,20 @@ Enhavo\Bundle\NewsletterBundle\Entity\Newsletter:
                     style: default
                     updatable: false
                     fields: ['title']
-
         subject:
             type: string
             length: 255
             nullable: true
-        sent:
-            type: boolean
+        state:
+            type: string
             nullable: true
         template:
             type: string
             nullable: true
-        sentAt:
+        startAt:
+            type: datetime
+            nullable: true
+        finishAt:
             type: datetime
             nullable: true
         createdAt:
@@ -49,10 +51,10 @@ Enhavo\Bundle\NewsletterBundle\Entity\Newsletter:
             targetEntity: Enhavo\Bundle\BlockBundle\Model\NodeInterface
 
     oneToMany:
-        receiver:
+        receivers:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\NewsletterBundle\Entity\Receiver
-            mappedBy: receiver
+            mappedBy: newsletter
             orphanRemoval: true
 
     manyToOne:

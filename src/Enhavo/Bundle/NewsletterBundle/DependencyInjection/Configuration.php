@@ -5,6 +5,7 @@ namespace Enhavo\Bundle\NewsletterBundle\DependencyInjection;
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\NewsletterBundle\Entity\Group;
 use Enhavo\Bundle\NewsletterBundle\Form\Type\GroupType;
+use Enhavo\Bundle\NewsletterBundle\Provider\SubscriberProvider;
 use Enhavo\Bundle\NewsletterBundle\Repository\GroupRepository;
 use Sylius\Component\Resource\Factory\Factory;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -22,15 +23,12 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('enhavo_newsletter');
+        $treeBuilder = new TreeBuilder('enhavo_newsletter');
+        $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
             ->children()
-                // Driver used by the resource bundle
                 ->scalarNode('driver')->defaultValue('doctrine/orm')->end()
-
-                // Object manager used by the resource bundle, if not specified "default" will used
                 ->scalarNode('object_manager')->defaultValue('default')->end()
             ->end()
             ->children()
@@ -138,9 +136,8 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-
-                ->variableNode('forms')
-                ->end()
+                ->variableNode('forms')->end()
+                ->scalarNode('provider')->defaultValue(SubscriberProvider::class)->end()
             ->end()
         ;
 

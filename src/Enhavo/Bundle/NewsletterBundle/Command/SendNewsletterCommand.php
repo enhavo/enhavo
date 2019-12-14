@@ -10,6 +10,8 @@ namespace Enhavo\Bundle\NewsletterBundle\Command;
 
 use Doctrine\ORM\EntityManager;
 
+use Enhavo\Bundle\NewsletterBundle\Entity\Newsletter;
+use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager;
 use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\Console\Command\Command;
@@ -56,10 +58,17 @@ class SendNewsletterCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->manager = $this->container->get('enhavo.newsletter.newsletter_manager');
+        $this->manager = $this->container->get(NewsletterManager::class);
 
-        $output->writeln('Start sending newsletter to receivers');
-        $this->manager->sendToReceivers();
-        $output->writeln('Finish sending newsletter to receivers');
+        $newsletters = $this->em->getRepository(Newsletter::class)->findBy([
+            'state' => NewsletterInterface::STATE_PREPARED
+        ]);
+
+        foreach($newsletters as $newsletter) {
+            $output->writeln(sprintf('Start sending newsletter "%s"', $newsletter->getTitle()));
+            $this->manager->send($newsletter);
+        }
+
+        $output->writeln('Finish sending');
     }
 }
