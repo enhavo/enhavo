@@ -39,6 +39,9 @@ newsletter:
   batch:
     action:
       send: 'Send'
+      send_test: 'Send Testmail'
+    error:
+      email: 'Email invalid'
     message:
       confirm:
         send: 'Do you really want to send all selected newsletters?'
@@ -71,5 +74,6 @@ subscriber:
 group:
   label:
       group: Group
+      groups: Groups
       name: 'Name'
       code: 'Code'

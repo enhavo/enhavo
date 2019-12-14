@@ -39,6 +39,9 @@ newsletter:
   batch:
     action:
       send: 'Senden'
+      send_test: 'Testmail Senden'
+    error:
+      email: 'Email Adresse ungültig'
     message:
       confirm:
         send: 'Wollen sie wirklich alle ausgewählten Newsletter versenden?'
@@ -71,5 +74,6 @@ subscriber:
 group:
   label:
       group: Gruppe
+      groups: Gruppen
       name: 'Name'
       code: 'Code'
