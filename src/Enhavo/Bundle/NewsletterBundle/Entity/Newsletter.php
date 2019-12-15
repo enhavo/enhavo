@@ -21,11 +21,6 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
     /**
      * @var string
      */
-    private $title;
-
-    /**
-     * @var string
-     */
     private $slug;
 
     /**
@@ -90,30 +85,6 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set title
-     *
-     * @param string $title
-     *
-     * @return Newsletter
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
-    /**
-     * Get title
-     *
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
     }
 
     /**
