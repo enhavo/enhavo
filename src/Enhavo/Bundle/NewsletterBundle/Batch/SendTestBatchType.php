@@ -10,7 +10,7 @@ use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SendTestType extends AbstractFormBatchType
+class SendTestBatchType extends AbstractFormBatchType
 {
     /**
      * @param array $options

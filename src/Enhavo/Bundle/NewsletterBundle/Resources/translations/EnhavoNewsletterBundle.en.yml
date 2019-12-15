@@ -22,13 +22,15 @@ newsletter:
   label:
     sent: 'Sent'
     id: 'ID'
-    title: 'Title'
     newsletter: 'Newsletter'
     content: 'Content'
     default: 'Default'
     created: 'Created'
     prepared: 'Prepared'
     sending: 'Sending'
+    meta: 'Meta'
+    state: 'State'
+    subject: 'Subject'
   form:
     label:
       subject: 'Subject'
@@ -70,10 +72,9 @@ subscriber:
     error:
       valid: 'E-Mail not valid'
       sent_again: 'Please confirm your registration'
-
 group:
   label:
-      group: Group
-      groups: Groups
-      name: 'Name'
-      code: 'Code'
+    group: Group
+    groups: Groups
+    name: 'Name'
+    code: 'Code'

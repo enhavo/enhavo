@@ -44,6 +44,8 @@ class NewsletterStateColumnType extends AbstractColumnType
         parent::configureOptions($resolver);
         $resolver->setDefaults([
             'component' => 'column-state',
+            'label' => 'newsletter.label.state',
+            'translation_domain' => 'EnhavoNewsletterBundle',
         ]);
     }
 

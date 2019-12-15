@@ -12,7 +12,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @since 04/07/16
  * @author gseidel
  */
-class SendType extends AbstractBatchType
+class SendBatchType extends AbstractBatchType
 {
     /**
      * @param array $options

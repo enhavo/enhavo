@@ -1,5 +1,8 @@
 enhavo_newsletter:
-    send:
-        message:
-            form_changed: 'Der Newsletter-Inhalt hat sich geändert. Bitte speichern Sie zuerst, bevor Sie senden'
+  send:
+    action:
+      send: 'Senden'
+    message:
+      form_changed: 'Der Newsletter-Inhalt hat sich geändert. Bitte speichern Sie zuerst, bevor Sie senden'
+      confirm: 'Wollen Sie den Newsletter jetzt verschicken?'
 

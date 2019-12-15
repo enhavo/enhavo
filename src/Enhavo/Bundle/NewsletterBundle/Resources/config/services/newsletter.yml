@@ -1,12 +1,12 @@
 services:
-    Enhavo\Bundle\NewsletterBundle\Batch\SendType:
+    Enhavo\Bundle\NewsletterBundle\Batch\SendBatchType:
         public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.batch, alias: newsletter_send }
 
-    Enhavo\Bundle\NewsletterBundle\Batch\SendTestType:
+    Enhavo\Bundle\NewsletterBundle\Batch\SendTestBatchType:
         public: true
         calls:
             - [setContainer, ['@service_container']]

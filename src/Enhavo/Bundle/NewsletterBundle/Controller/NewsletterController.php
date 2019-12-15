@@ -45,40 +45,20 @@ class NewsletterController extends ResourceController
 
     public function sendAction(Request $request)
     {
-        $id = $request->get('id');
+        /** @var RequestConfiguration $configuration */
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+        /** @var NewsletterInterface $newsletter */
+        $newsletter = $this->singleResourceProvider->get($configuration, $this->repository);
 
-        $newsletter = $this->getDoctrine()
-            ->getRepository('EnhavoNewsletterBundle:Newsletter')
-            ->find($id);
-
-        if($newsletter === null) {
-            throw $this->createNotFoundException();
-        }
-
-        $group = $newsletter->getGroup();
-
-        if(!$group) {
-            return new JsonResponse([
-                'type' => 'error',
-                'message' => $this->get('translator')->trans('newsletter.action.send.error.no_group', [], 'EnhavoNewsletterBundle')
-            ], 400);
-        }
-
-        if($newsletter->getSent()) {
+        if($newsletter->isPrepared()) {
             return new JsonResponse([
                 'type' => 'error',
                 'message' => $this->get('translator')->trans('newsletter.action.send.error.already_sent', [], 'EnhavoNewsletterBundle')
             ], 400);
         }
 
-        $manager = $this->get('enhavo.newsletter.newsletter_manager');
-        $manager->prepareReceivers($newsletter, $group);
-
-        $newsletter->setSent(true);
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($newsletter);
-        $em->flush();
+        $newsletterManager = $this->get(NewsletterManager::class);
+        $newsletterManager->prepare($newsletter);
 
         return new JsonResponse([
             'type' => 'success',
@@ -90,8 +70,6 @@ class NewsletterController extends ResourceController
     {
         /** @var RequestConfiguration $configuration */
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
-
-        $this->appEventDispatcher->dispatchInitEvent(ResourceEvents::INIT_PREVIEW, $configuration);
 
         if($request->query->has('id')) {
             $request->attributes->set('id', $request->query->get('id'));

@@ -38,11 +38,6 @@ class NewsletterType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title', TextType::class, array(
-            'label' => 'form.label.title',
-            'translation_domain' => 'EnhavoAppBundle'
-        ));
-
         $builder->add('slug', TextType::class, array(
             'label' => 'newsletter.form.label.slug',
             'translation_domain' => 'EnhavoNewsletterBundle'
@@ -54,7 +49,7 @@ class NewsletterType extends AbstractType
         ));
 
         $builder->add('groups', AutoCompleteEntityType::class, [
-            'label' => 'newsletter.form.label.groups',
+            'label' => 'group.label.groups',
             'translation_domain' => 'EnhavoNewsletterBundle',
             'multiple' => true,
             'class' => GroupInterface::class,

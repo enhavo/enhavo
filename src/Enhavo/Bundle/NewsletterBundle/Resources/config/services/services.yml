@@ -100,12 +100,12 @@ services:
         tags:
             - { name: enhavo.action, alias: newsletter_send }
 
-    Enhavo\Bundle\NewsletterBundle\Action\TestMailActionType:
+    Enhavo\Bundle\NewsletterBundle\Action\SendTestActionType:
         public: true
         arguments:
             - '@translator'
         tags:
-            - { name: enhavo.action, alias: newsletter_test_mail }
+            - { name: enhavo.action, alias: newsletter_send_test }
 
     Enhavo\Bundle\NewsletterBundle\Block\SubscribeBlockType:
         public: true

@@ -6,7 +6,9 @@ enhavo_app:
     preview: 'Preview'
     save: 'Save'
     abort: 'Close'
+    cancel: 'Cancel'
     open_homepage: 'Open Homepage'
+    error: 'Error occurred'
     batch:
         label:
             placeholder: 'Choose Batch'

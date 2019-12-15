@@ -57,12 +57,16 @@ enhavo_newsletter_newsletter_update:
                         translation_domain: EnhavoNewsletterBundle
                         template: admin/resource/content/content.html.twig
                         full_width: true
+                    meta:
+                        label: newsletter.label.meta
+                        translation_domain: EnhavoNewsletterBundle
+                        template: admin/resource/newsletter/meta.html.twig
                 actions:
                     preview:
                         type: preview
                         route: enhavo_newsletter_newsletter_preview
-                    test_mail:
-                        type: newsletter_test_mail
+                    send_test:
+                        type: newsletter_send_test
                     send:
                         type: newsletter_send
 
@@ -74,10 +78,10 @@ enhavo_newsletter_newsletter_table:
         _controller: enhavo_newsletter.controller.newsletter:tableAction
         _sylius:
             filters:
-                title:
+                subject:
                     type: text
-                    property: title
-                    label: newsletter.label.title
+                    property: subject
+                    label: newsletter.label.subject
                     translation_domain: EnhavoNewsletterBundle
             viewer:
                 translation_domain: EnhavoNewsletterBundle
@@ -95,10 +99,10 @@ enhavo_newsletter_newsletter_table:
                             translation_domain: EnhavoNewsletterBundle
                             permission: ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_SEND
                 columns:
-                    title:
-                        type: text
-                        label: newsletter.label.title
-                        property: title
+                    subject:
+                        type: property
+                        label: newsletter.form.label.subject
+                        property: subject
                         width: 8
                     state:
                         type: newsletter_state
