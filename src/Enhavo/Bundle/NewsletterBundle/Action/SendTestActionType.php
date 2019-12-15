@@ -13,7 +13,7 @@ class SendTestActionType extends ModalActionType implements ActionTypeInterface
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'component' => 'modal-action',
+            'component' => 'newsletter-send-test',
             'modal' => [
                 'component' => 'ajax-form-modal',
                 'route' => 'enhavo_newsletter_newsletter_test_form',
@@ -27,6 +27,6 @@ class SendTestActionType extends ModalActionType implements ActionTypeInterface
 
     public function getType()
     {
-        return 'newsletter_send_test_mail';
+        return 'newsletter_send_test';
     }
 }

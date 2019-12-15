@@ -30,12 +30,16 @@ enhavo_newsletter_newsletter_create:
                         translation_domain: EnhavoNewsletterBundle
                         template: admin/resource/content/content.html.twig
                         full_width: true
+                    meta:
+                        label: newsletter.label.meta
+                        translation_domain: EnhavoNewsletterBundle
+                        template: admin/resource/newsletter/meta.html.twig
                 actions:
                     preview:
                         type: preview
                         route: enhavo_newsletter_newsletter_preview
-                    test_mail:
-                        type: newsletter_test_mail
+                    send_test:
+                        type: newsletter_send_test
 
 enhavo_newsletter_newsletter_update:
     options:
