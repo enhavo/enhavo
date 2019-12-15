@@ -5,9 +5,12 @@ namespace Enhavo\Bundle\NewsletterBundle\Batch;
 use Enhavo\Bundle\AppBundle\Batch\AbstractFormBatchType;
 use Enhavo\Bundle\AppBundle\Exception\BatchExecutionException;
 use Enhavo\Bundle\NewsletterBundle\Entity\Newsletter;
+use Enhavo\Bundle\NewsletterBundle\Form\Type\NewsletterEmailType;
+use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
+use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SendTestType extends AbstractFormBatchType
+class SendTestBatchType extends AbstractFormBatchType
 {
     /**
      * @param array $options
@@ -16,7 +19,22 @@ class SendTestType extends AbstractFormBatchType
      */
     public function execute(array $options, $resources)
     {
+        $manager = $this->container->get(NewsletterManager::class);
+        $request = $this->container->get('request_stack')->getMasterRequest();
+        $translator = $this->container->get('translator');
+        $form = $this->container->get('form.factory')->create(NewsletterEmailType::class);
 
+        $form->handleRequest($request);
+        if(!$form->isValid()) {
+            throw new BatchExecutionException($translator->trans('newsletter.batch.error.email', [], 'EnhavoNewsletterBundle'));
+        }
+
+        $data = $form->getData();
+
+        /** @var NewsletterInterface $resource */
+        foreach($resources as $resource) {
+            $manager->sendTest($resource, $data['email']);
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver)

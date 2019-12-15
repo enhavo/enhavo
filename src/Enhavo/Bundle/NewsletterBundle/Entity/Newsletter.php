@@ -21,11 +21,6 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
     /**
      * @var string
      */
-    private $title;
-
-    /**
-     * @var string
-     */
     private $slug;
 
     /**
@@ -59,9 +54,9 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
     private $template;
 
     /**
-     * @var Group $group
+     * @var Collection
      */
-    private $group;
+    private $groups;
 
     /**
      * @var Collection
@@ -79,6 +74,7 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
     public function __construct()
     {
         $this->receivers = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -89,30 +85,6 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set title
-     *
-     * @param string $title
-     *
-     * @return Newsletter
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
-    /**
-     * Get title
-     *
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
     }
 
     /**
@@ -250,19 +222,27 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
     }
 
     /**
-     * @return Group
+     * @return Collection
      */
-    public function getGroup(): ?Group
+    public function getGroups(): Collection
     {
-        return $this->group;
+        return $this->groups;
     }
 
     /**
-     * @param Group $group
+     * @param mixed $group
      */
-    public function setGroup(Group $group): void
+    public function addGroup($group)
     {
-        $this->group = $group;
+        $this->groups->add($group);
+    }
+
+    /**
+     * @param mixed $group
+     */
+    public function removeGroup($group)
+    {
+        $this->groups->removeElement($group);
     }
 
     /**

@@ -52,7 +52,7 @@ enhavo_newsletter_subscriber_table:
         _controller: enhavo_newsletter.controller.subscriber:tableAction
         _sylius:
             filters:
-                title:
+                email:
                     type: text
                     property: email
                     label: subscriber.label.email

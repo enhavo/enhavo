@@ -1,8 +1,5 @@
 {% if form.template is defined %}{{ form_row(form.template) }}{% endif %}
 {% if form.link is defined %}{{ form_row(form.link) }}{% endif %}
 {% if form.route is defined %}{{ form_row(form.route) }}{% endif %}
-{{ form_row(form.title) }}
-{% if form.slug is defined %}{{ form_row(form.slug) }}{% endif %}
 {{ form_row(form.subject) }}
-{% if form.group is defined %}{{ form_row(form.group) }}{% endif %}
-{{ form_row(form.group) }}
+{% if form.groups is defined %}{{ form_row(form.groups) }}{% endif %}

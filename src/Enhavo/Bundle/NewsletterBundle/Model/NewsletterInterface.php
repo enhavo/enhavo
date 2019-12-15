@@ -27,22 +27,6 @@ interface NewsletterInterface
     public function getId();
 
     /**
-     * Set title
-     *
-     * @param string $title
-     *
-     * @return NewsletterInterface
-     */
-    public function setTitle($title);
-
-    /**
-     * Get title
-     *
-     * @return string
-     */
-    public function getTitle();
-
-    /**
      * @return string
      */
     public function getSlug();

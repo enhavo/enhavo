@@ -14,22 +14,22 @@ class Subscriber implements ResourceInterface, SubscriberInterface
     /**
      * @var integer
      */
-    protected $id;
+    private $id;
 
     /**
      * @var string
      */
-    protected $email;
+    private $email;
 
     /**
      * @var \DateTime
      */
-    protected $createdAt;
+    private $createdAt;
 
     /**
      * @var string
      */
-    protected $token;
+    private $token;
 
     /**
      * @var bool
@@ -42,9 +42,9 @@ class Subscriber implements ResourceInterface, SubscriberInterface
     private $activatedAt;
 
     /**
-     * @var Group
+     * @var Collection
      */
-    private $group;
+    private $groups;
 
     /**
      * @var string
@@ -57,17 +57,11 @@ class Subscriber implements ResourceInterface, SubscriberInterface
     private $condition;
 
     /**
-     * @var Collection
-     */
-    private $receiver;
-
-    /**
      * Constructor
      */
     public function __construct()
     {
-        $this->group = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->receiver = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -274,41 +268,6 @@ class Subscriber implements ResourceInterface, SubscriberInterface
     public function setType($type)
     {
         $this->type = $type;
-    }
-
-    /**
-     * Add receiver
-     *
-     * @param \Enhavo\Bundle\NewsletterBundle\Entity\Receiver $receiver
-     * @return Subscriber
-     */
-    public function addReceiver(Receiver $receiver)
-    {
-        $this->receiver[] = $receiver;
-        $receiver->setSubscriber($this);
-
-        return $this;
-    }
-
-    /**
-     * Remove receiver
-     *
-     * @param \Enhavo\Bundle\NewsletterBundle\Entity\Receiver $receiver
-     */
-    public function removeReceiver(Receiver $receiver)
-    {
-        $this->receiver->removeElement($receiver);
-        $receiver->setSubscriber(null);
-    }
-
-    /**
-     * Get group
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getReceivers()
-    {
-        return $this->receiver;
     }
 
     public function __toString()

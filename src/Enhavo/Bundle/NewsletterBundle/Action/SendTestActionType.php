@@ -6,16 +6,18 @@ use Enhavo\Bundle\AppBundle\Action\ActionTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Enhavo\Bundle\AppBundle\Action\Type\ModalActionType;
 
-class TestMailActionType extends ModalActionType implements ActionTypeInterface
+class SendTestActionType extends ModalActionType implements ActionTypeInterface
 {
     public function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'component' => 'modal-action',
+            'component' => 'newsletter-send-test',
             'modal' => [
-                'component' => 'newsletter-test-modal',
+                'component' => 'ajax-form-modal',
+                'route' => 'enhavo_newsletter_newsletter_test_form',
+                'actionRoute' => 'enhavo_newsletter_newsletter_test'
             ],
             'label' => 'newsletter.action.test_mail.label',
             'translation_domain' => 'EnhavoNewsletterBundle',
@@ -25,6 +27,6 @@ class TestMailActionType extends ModalActionType implements ActionTypeInterface
 
     public function getType()
     {
-        return 'newsletter_test_mail';
+        return 'newsletter_send_test';
     }
 }

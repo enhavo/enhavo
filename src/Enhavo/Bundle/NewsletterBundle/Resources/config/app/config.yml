@@ -118,7 +118,7 @@ enhavo_routing:
             generators:
                 slug:
                     type: slug
-                    property: title
+                    property: subject
 
 doctrine:
     orm:

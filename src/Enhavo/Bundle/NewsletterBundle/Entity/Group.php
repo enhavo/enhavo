@@ -33,9 +33,9 @@ class Group implements GroupInterface, ResourceInterface
     private $code;
 
     /**
-     * @var SubscriberInterface
+     * @var Collection
      */
-    private $subscriber;
+    private $subscribers;
 
     /**
      * @var Collection
@@ -47,7 +47,7 @@ class Group implements GroupInterface, ResourceInterface
      */
     public function __construct()
     {
-        $this->subscriber = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->subscribers = new \Doctrine\Common\Collections\ArrayCollection();
         $this->newsletters = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -100,7 +100,7 @@ class Group implements GroupInterface, ResourceInterface
      */
     public function addSubscriber(SubscriberInterface $subscriber): GroupInterface
     {
-        $this->subscriber[] = $subscriber;
+        $this->subscribers[] = $subscriber;
 
         return $this;
     }
@@ -112,7 +112,7 @@ class Group implements GroupInterface, ResourceInterface
      */
     public function removeSubscriber(SubscriberInterface $subscriber)
     {
-        $this->subscriber->removeElement($subscriber);
+        $this->subscribers->removeElement($subscriber);
     }
 
     /**
@@ -122,30 +122,31 @@ class Group implements GroupInterface, ResourceInterface
      */
     public function getSubscriber()
     {
-        return $this->subscriber;
+        return $this->subscribers;
     }
 
     /**
      * Add newsletter
      *
-     * @param NewsletterInterface $newsletter
+     * @param Newsletter $newsletter
      * @return GroupInterface
      */
-    public function addNewsletter(NewsletterInterface $newsletter): GroupInterface
+    public function addNewsletter(Newsletter $newsletter): GroupInterface
     {
         $this->newsletters[] = $newsletter;
-
+        $newsletter->getGroups()->add($this);
         return $this;
     }
 
     /**
      * Remove newsletter
      *
-     * @param NewsletterInterface $newsletter
+     * @param Newsletter $newsletter
      */
-    public function removeNewsletter(NewsletterInterface $newsletter)
+    public function removeNewsletter(Newsletter $newsletter)
     {
         $this->newsletters->removeElement($newsletter);
+        $newsletter->getGroups()->remove($this);
     }
 
     /**

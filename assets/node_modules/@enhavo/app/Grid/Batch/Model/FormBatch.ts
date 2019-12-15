@@ -11,10 +11,16 @@ export default class FormBatch extends UrlBatch
 
     async execute(ids: number[]): Promise<boolean>
     {
+        let idData = {};
+        for(let i in ids) {
+            idData[i] = ids[i];
+        }
+
         this.modal.data = {
-            ids: ids,
+            ids: idData,
             type: this.key
         };
+
         this.modal.actionUrl = this.getUrl();
         this.modal.actionHandler = (modal: AjaxFormModal, data: any, error: string) => {
             return new Promise((resolve, reject) => {

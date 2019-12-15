@@ -21,16 +21,18 @@ class SubscriberProvider implements ProviderInterface
             throw new \InvalidArgumentException('Newsletter type is not supported by provider');
         }
 
+        $subscribers = [];
         $receivers = [];
-
-        $group = $newsletter->getGroup();
-        if($group) {
-            $subscribers = $group->getSubscriber();
-            foreach ($subscribers as $subscriber) {
-                $this->createReceiver($subscriber);
+        $groups = $newsletter->getGroups();
+        foreach ($groups as $group) {
+            /** @var Subscriber $subscriber */
+            foreach ($group->getSubscriber() as $subscriber) {
+                if(!isset($subscribers[$subscriber->getId()])) {
+                    $subscribers[$subscriber->getId()] = $subscriber;
+                    $receivers[] = $this->createReceiver($subscriber);
+                }
             }
         }
-
         return $receivers;
     }
 

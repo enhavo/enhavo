@@ -5,3 +5,9 @@ Enhavo\Bundle\NewsletterBundle\Entity\Subscriber:
             - NotBlank: ~
     constraints:
         - Enhavo\Bundle\NewsletterBundle\Validator\Constraints\SubscriberExists:
+
+
+Enhavo\Bundle\NewsletterBundle\Entity\Newsletter:
+    properties:
+        subject:
+            - NotBlank: ~

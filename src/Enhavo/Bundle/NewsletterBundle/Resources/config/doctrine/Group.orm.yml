@@ -18,11 +18,10 @@ Enhavo\Bundle\NewsletterBundle\Entity\Group:
             nullable: false
 
     manyToMany:
-        subscriber:
+        subscribers:
             targetEntity: Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface
-            mappedBy: group
+            mappedBy: groups
 
-    oneToMany:
         newsletters:
             targetEntity: Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface
-            mappedBy: newsletters
+            mappedBy: groups

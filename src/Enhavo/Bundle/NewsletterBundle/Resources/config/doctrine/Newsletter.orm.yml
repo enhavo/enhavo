@@ -9,10 +9,6 @@ Enhavo\Bundle\NewsletterBundle\Entity\Newsletter:
                 strategy: AUTO
 
     fields:
-        title:
-            type: string
-            length: 255
-            nullable: true
         slug:
             type: string
             length: 255
@@ -22,7 +18,7 @@ Enhavo\Bundle\NewsletterBundle\Entity\Newsletter:
                     separator: -
                     style: default
                     updatable: false
-                    fields: ['title']
+                    fields: ['subject']
         subject:
             type: string
             length: 255
@@ -57,9 +53,17 @@ Enhavo\Bundle\NewsletterBundle\Entity\Newsletter:
             mappedBy: newsletter
             orphanRemoval: true
 
-    manyToOne:
-        group:
+    manyToMany:
+        groups:
             cascade: ['persist', 'refresh']
             targetEntity: Enhavo\Bundle\NewsletterBundle\Model\GroupInterface
+            joinTable:
+                name: newsletter_newsletter_group
+                joinColumns:
+                    newsletter_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    group_id:
+                        referencedColumnName: id
 
     lifecycleCallbacks: { }

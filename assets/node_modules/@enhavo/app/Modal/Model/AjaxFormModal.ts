@@ -1,7 +1,6 @@
 import AbstractModal from "@enhavo/app/Modal/Model/AbstractModal";
 import axios from "axios";
 import * as _ from "lodash";
-import * as URI from 'urijs';
 
 export default class AjaxFormModal extends AbstractModal
 {
@@ -42,7 +41,7 @@ export default class AjaxFormModal extends AbstractModal
             if(this.data) {
                 data = _.extend(data, this.data)
             }
-            axios.post(this.getActionUrl(), URI.buildQuery(data)).then((responseData) => {
+            axios.post(this.getActionUrl(), this.buildQuery(data)).then((responseData) => {
                 if(this.actionHandler) {
                     this.actionHandler(this, responseData, null)
                         .then((value) => {
@@ -83,5 +82,22 @@ export default class AjaxFormModal extends AbstractModal
         }
 
         return this.application.getRouter().generate(this.route, this.routeParameters);
+    }
+
+    private buildQuery(obj: object, prefix: string = ''): string
+    {
+        let args = [];
+        if(typeof(obj) == 'object') {
+            for(let i in obj) {
+                if(prefix == '') {
+                    args[args.length] = this.buildQuery(obj[i], encodeURIComponent(i));
+                } else {
+                    args[args.length] = this.buildQuery(obj[i], prefix+'['+encodeURIComponent(i)+']');
+                }
+            }
+        } else {
+            args[args.length]=prefix+'='+encodeURIComponent(obj);
+        }
+        return args.join('&');
     }
 }
