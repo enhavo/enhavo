@@ -65,7 +65,7 @@ class SendNewsletterCommand extends Command
         ]);
 
         foreach($newsletters as $newsletter) {
-            $output->writeln(sprintf('Start sending newsletter "%s"', $newsletter->getTitle()));
+            $output->writeln(sprintf('Start sending newsletter "%s"', $newsletter->getSubject()));
             $this->manager->send($newsletter);
         }
 
