@@ -55,23 +55,26 @@ class SendNewsletterCommand extends Command
         $this
             ->setName('enhavo:newsletter:send')
             ->setDescription('sends a newsletters to its connected receiver')
-            ->addOption('limit', null, InputOption::VALUE_REQUIRED, 'how many newsletters should be sent at max?', null);
+            ->addOption('limit', null, InputOption::VALUE_REQUIRED, 'how many emails should be sent at max?', null);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $limit = $input->getOption('limit');
-        $limit = is_numeric($limit) ? $limit : null;
+        $limit = is_numeric($limit) ? intval($limit) : null;
 
         $this->manager = $this->container->get(NewsletterManager::class);
 
-        $newsletters = $this->em->getRepository(Newsletter::class)->findBy([
-            'state' => NewsletterInterface::STATE_PREPARED
-        ], [], $limit);
+        $newsletters = $this->em->getRepository(Newsletter::class)->findNotSentNewsletters();
+
+        $mailsSent = 0;
 
         foreach($newsletters as $newsletter) {
+            if($mailsSent === $limit){
+                return;
+            }
             $output->writeln(sprintf('Start sending newsletter "%s"', $newsletter->getSubject()));
-            $this->manager->send($newsletter);
+            $mailsSent += $this->manager->send($newsletter, is_numeric($limit) ? $limit - $mailsSent : null);
         }
 
         $output->writeln('Finish sending');

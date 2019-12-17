@@ -1,6 +1,7 @@
 Enhavo\Bundle\NewsletterBundle\Entity\Newsletter:
     type: entity
     table: newsletter_newsletter
+    repositoryClass: Enhavo\Bundle\NewsletterBundle\Repository\NewsletterRepository
     id:
         id:
             type: integer
