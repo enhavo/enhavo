@@ -45,7 +45,7 @@ class Configuration implements ConfigurationInterface
                                         ->scalarNode('model')->defaultValue('Enhavo\Bundle\NewsletterBundle\Entity\Newsletter')->end()
                                         ->scalarNode('controller')->defaultValue('Enhavo\Bundle\NewsletterBundle\Controller\NewsletterController')->end()
                                         ->scalarNode('repository')->defaultValue('Enhavo\Bundle\NewsletterBundle\Repository\NewsletterRepository')->end()
-                                        ->scalarNode('factory')->defaultValue('Sylius\Component\Resource\Factory\Factory')->end()
+                                        ->scalarNode('factory')->defaultValue('Enhavo\Bundle\NewsletterBundle\Factory\NewsletterFactory')->end()
                                         ->scalarNode('form')->defaultValue('Enhavo\Bundle\NewsletterBundle\Form\Type\NewsletterType')->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()

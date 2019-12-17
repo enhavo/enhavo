@@ -88,3 +88,10 @@ services:
             - { name: enhavo.column, alias: 'newsletter_state' }
         calls:
             - [setContainer, ['@service_container']]
+
+    enhavo_newsletter.factory.newsletter:
+        public: true
+        class: '%enhavo_newsletter.factory.newsletter.class%'
+        arguments:
+            - '%enhavo_newsletter.model.newsletter.class%'
+            - '@enhavo_block.factory.node'
