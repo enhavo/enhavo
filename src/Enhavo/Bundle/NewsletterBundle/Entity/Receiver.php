@@ -104,9 +104,9 @@ class Receiver implements ResourceInterface
     }
 
     /**
-     * @return \DateTime
+     * @return null|\DateTime
      */
-    public function getSentAt(): \DateTime
+    public function getSentAt(): ?\DateTime
     {
         return $this->sentAt;
     }
