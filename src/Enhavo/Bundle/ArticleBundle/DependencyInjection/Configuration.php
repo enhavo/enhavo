@@ -4,10 +4,10 @@ namespace Enhavo\Bundle\ArticleBundle\DependencyInjection;
 
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\ArticleBundle\Entity\Article;
+use Enhavo\Bundle\ArticleBundle\Factory\ArticleFactory;
 use Enhavo\Bundle\ArticleBundle\Form\Type\ArticleType;
 use Enhavo\Bundle\ArticleBundle\Repository\ArticleRepository;
 use Enhavo\Bundle\FormBundle\Serializer\Mock\Resource;
-use Sylius\Component\Resource\Factory\Factory;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -46,7 +46,7 @@ class Configuration implements ConfigurationInterface
                                         ->scalarNode('model')->defaultValue(Article::class)->end()
                                         ->scalarNode('controller')->defaultValue(ResourceController::class)->end()
                                         ->scalarNode('repository')->defaultValue(ArticleRepository::class)->end()
-                                        ->scalarNode('factory')->defaultValue(Factory::class)->end()
+                                        ->scalarNode('factory')->defaultValue(ArticleFactory::class)->end()
                                         ->scalarNode('form')->defaultValue(ArticleType::class)->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
