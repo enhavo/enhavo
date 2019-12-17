@@ -66,6 +66,9 @@ enhavo_newsletter_newsletter_update:
                         translation_domain: EnhavoNewsletterBundle
                         template: admin/resource/newsletter/meta.html.twig
                 actions:
+                    duplicate:
+                        type: duplicate
+                        route: enhavo_newsletter_newsletter_duplicate
                     preview:
                         type: preview
                         route: enhavo_newsletter_newsletter_preview
@@ -119,6 +122,15 @@ enhavo_newsletter_newsletter_delete:
     methods: [POST]
     defaults:
         _controller: enhavo_newsletter.controller.newsletter:deleteAction
+
+enhavo_newsletter_newsletter_duplicate:
+    options:
+        expose: true
+    path: /enhavo/newsletter/newsletter/duplicate/{id}
+    defaults:
+        _controller: enhavo_newsletter.controller.newsletter:duplicateAction
+        _sylius:
+            redirect: enhavo_newsletter_newsletter_update
 
 enhavo_newsletter_newsletter_batch:
     options:

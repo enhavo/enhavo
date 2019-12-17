@@ -71,4 +71,12 @@ services:
         calls:
             - [setContainer, ['@service_container']]
 
+    enhavo_article.factory.article:
+        public: true
+        class: '%enhavo_article.factory.article.class%'
+        arguments:
+            - '%enhavo_article.model.article.class%'
+            - '@enhavo_block.factory.node'
+            - '@Enhavo\Bundle\RoutingBundle\Factory\RouteFactory'
+            - '@enhavo_media.factory.file'
 

@@ -16,6 +16,7 @@ use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager;
 use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
@@ -53,16 +54,20 @@ class SendNewsletterCommand extends Command
     {
         $this
             ->setName('enhavo:newsletter:send')
-            ->setDescription('sends a newsletters to its connected receiver');
+            ->setDescription('sends a newsletters to its connected receiver')
+            ->addOption('limit', null, InputOption::VALUE_REQUIRED, 'how many newsletters should be sent at max?', null);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $limit = $input->getOption('limit');
+        $limit = is_numeric($limit) ? $limit : null;
+
         $this->manager = $this->container->get(NewsletterManager::class);
 
         $newsletters = $this->em->getRepository(Newsletter::class)->findBy([
             'state' => NewsletterInterface::STATE_PREPARED
-        ]);
+        ], [], $limit);
 
         foreach($newsletters as $newsletter) {
             $output->writeln(sprintf('Start sending newsletter "%s"', $newsletter->getSubject()));

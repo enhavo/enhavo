@@ -64,6 +64,9 @@ enhavo_article_article_update:
                         translation_domain: EnhavoArticleBundle
                         template: admin/resource/content/meta.html.twig
                 actions:
+                    duplicate:
+                        type: duplicate
+                        route: enhavo_article_article_duplicate
                     preview:
                         type: preview
                         route: enhavo_article_article_preview
@@ -128,6 +131,15 @@ enhavo_article_article_delete:
     methods: [POST]
     defaults:
         _controller: enhavo_article.controller.article:deleteAction
+
+enhavo_article_article_duplicate:
+    options:
+        expose: true
+    path: /enhavo/article/article/duplicate/{id}
+    defaults:
+        _controller: enhavo_article.controller.article:duplicateAction
+        _sylius:
+            redirect: enhavo_article_article_update
 
 enhavo_article_article_batch:
     options:
