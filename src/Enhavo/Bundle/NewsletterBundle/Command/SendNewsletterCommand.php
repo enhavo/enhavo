@@ -22,9 +22,6 @@ use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 class SendNewsletterCommand extends Command
 {
-    const CACHE_NEWSLETTER_TOKEN_NAME = 'newsletter_token';
-    const CACHE_NEWSLETTER_TOKEN_EXPIRES_AFTER = 300;
-
     use ContainerAwareTrait;
     use LockableTrait;
 
