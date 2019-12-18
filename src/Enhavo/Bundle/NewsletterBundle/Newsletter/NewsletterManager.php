@@ -100,7 +100,7 @@ class NewsletterManager
         $this->em->flush();
     }
 
-    public function send(NewsletterInterface $newsletter)
+    public function send(NewsletterInterface $newsletter, $limit = null)
     {
         if(!$newsletter->isPrepared()) {
             throw new SendException(sprintf(
@@ -117,11 +117,17 @@ class NewsletterManager
 
         $newsletter->setState(NewsletterInterface::STATE_SENDING);
 
+        $mailsSent = 0;
+
         foreach($newsletter->getReceivers() as $receiver) {
+            if($mailsSent === $limit){
+                break;
+            }
             if(!$receiver->isSent()) {
                 if($this->sendNewsletter($receiver)) {
                     $receiver->setSentAt(new \DateTime());
                     $this->em->flush();
+                    $mailsSent++;
                 }
             }
         }
@@ -138,9 +144,8 @@ class NewsletterManager
             $newsletter->setState(NewsletterInterface::STATE_SENT);
             $newsletter->setFinishAt(new \DateTime());
             $this->em->flush();
-            return true;
         }
-        return false;
+        return $mailsSent;
     }
 
     private function sendNewsletter(Receiver $receiver)
