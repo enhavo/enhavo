@@ -132,8 +132,6 @@ class NewsletterManager
             }
         }
 
-        //TODO: was passiert, wenn es finale errors gibt, falsche mail adresse / postfach voll, ...
-
         $sent = true;
         foreach($newsletter->getReceivers() as $receiver) {
             if(!$receiver->isSent()) {
