@@ -16,7 +16,8 @@
     "enhavo/app-bundle": "dev-master",
     "enhavo/form-bundle": "dev-master",
     "enhavo/block-bundle": "dev-master",
-    "guzzlehttp/guzzle": "^6.2"
+    "guzzlehttp/guzzle": "^6.2",
+    "symfony/lock": "^4.2"
   },
   "autoload": {
     "psr-4": { "Enhavo\\Bundle\\NewsletterBundle\\": "" }
