@@ -22,6 +22,9 @@ use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 class SendNewsletterCommand extends Command
 {
+    const CACHE_NEWSLETTER_TOKEN_NAME = 'newsletter_token';
+    const CACHE_NEWSLETTER_TOKEN_EXPIRES_AFTER = 300;
+
     use ContainerAwareTrait;
 
     /**
@@ -42,6 +45,7 @@ class SendNewsletterCommand extends Command
     /**
      * SendNewsletterCommand constructor.
      * @param EntityManager $em
+     * @param Logger $logger
      */
     public function __construct(EntityManager $em, Logger $logger)
     {
@@ -60,10 +64,17 @@ class SendNewsletterCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $limit = $input->getOption('limit');
-        $limit = is_numeric($limit) ? intval($limit) : null;
+        if($this->isToken()){
+            $output->writeln('Skip sending because token is set.');
+            return;
+        }
+
+        $this->setToken();
 
         $this->manager = $this->container->get(NewsletterManager::class);
+
+        $limit = $input->getOption('limit');
+        $limit = is_numeric($limit) ? intval($limit) : null;
 
         $newsletters = $this->em->getRepository(Newsletter::class)->findNotSentNewsletters();
 
@@ -71,12 +82,51 @@ class SendNewsletterCommand extends Command
 
         foreach($newsletters as $newsletter) {
             if($mailsSent === $limit){
-                return;
+                break;
             }
             $output->writeln(sprintf('Start sending newsletter "%s"', $newsletter->getSubject()));
             $mailsSent += $this->manager->send($newsletter, is_numeric($limit) ? $limit - $mailsSent : null);
         }
-
+        
         $output->writeln('Finish sending');
+
+        $this->unsetToken();
+    }
+
+    private function isToken()
+    {
+        $cacheItem = $this->getCacheItem();
+
+        return $cacheItem->isHit() && $cacheItem->get();
+    }
+
+    private function setToken()
+    {
+        $cache = $this->getCache();
+        $cacheItem = $this->getCacheItem();
+
+        $cacheItem->set(true);
+        $cacheItem->expiresAfter(self::CACHE_NEWSLETTER_TOKEN_EXPIRES_AFTER);
+        $cache->save($cacheItem);
+    }
+
+    private function unsetToken()
+    {
+        $cache = $this->getCache();
+        $cacheItem = $this->getCacheItem();
+
+        $cacheItem->set(false);
+        $cache->save($cacheItem);
+    }
+
+    private function getCacheItem()
+    {
+        $cache = $this->getCache();
+        return $cache->getItem(self::CACHE_NEWSLETTER_TOKEN_NAME);
+    }
+
+    private function getCache()
+    {
+        return $this->container->get('cache.app');
     }
 }
