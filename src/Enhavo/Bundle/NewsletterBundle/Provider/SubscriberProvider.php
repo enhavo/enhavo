@@ -43,6 +43,7 @@ class SubscriberProvider implements ProviderInterface
         $receiver->setParameters([
 
         ]);
+        return $receiver;
     }
 
     public function getTestParameters()

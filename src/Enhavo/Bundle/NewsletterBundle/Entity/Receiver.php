@@ -138,7 +138,7 @@ class Receiver implements ResourceInterface
     /**
      * @return string
      */
-    public function getToken(): string
+    public function getToken(): ?string
     {
         return $this->token;
     }
@@ -146,7 +146,7 @@ class Receiver implements ResourceInterface
     /**
      * @param string $token
      */
-    public function setToken(string $token): void
+    public function setToken(?string $token): void
     {
         $this->token = $token;
     }
