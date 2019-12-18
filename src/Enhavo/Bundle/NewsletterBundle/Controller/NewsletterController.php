@@ -41,7 +41,8 @@ class NewsletterController extends ResourceController
     public function showResourceAction(Newsletter $contentDocument)
     {
         $manager = $this->get(NewsletterManager::class);
-        return new Response($manager->render($contentDocument));
+        $content = $manager->render($contentDocument, $manager->getTestParameters());
+        return new Response($content);
     }
 
     public function sendAction(Request $request)

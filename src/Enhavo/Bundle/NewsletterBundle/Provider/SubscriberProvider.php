@@ -49,7 +49,8 @@ class SubscriberProvider implements ProviderInterface
     public function getTestParameters()
     {
         return [
-
+            'firstName' => 'Foo',
+            'lastName' => 'Bar',
         ];
     }
 }

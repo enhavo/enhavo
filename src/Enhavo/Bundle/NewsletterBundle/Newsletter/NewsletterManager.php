@@ -58,6 +58,11 @@ class NewsletterManager
      */
     private $provider;
 
+    /**
+     * @var ParameterParserInterface
+     */
+    private $parameterParser;
+
     public function __construct(
         EntityManagerInterface $em,
         \Swift_Mailer $mailer,
@@ -65,7 +70,8 @@ class NewsletterManager
         $templates,
         SecureUrlTokenGenerator $tokenGenerator,
         LoggerInterface $logger,
-        ProviderInterface $provider
+        ProviderInterface $provider,
+        ParameterParserInterface $parameterParser
     ) {
         $this->em = $em;
         $this->mailer = $mailer;
@@ -74,6 +80,7 @@ class NewsletterManager
         $this->tokenGenerator = $tokenGenerator;
         $this->logger = $logger;
         $this->provider = $provider;
+        $this->parameterParser = $parameterParser;
     }
 
     /**
@@ -172,6 +179,11 @@ class NewsletterManager
         return $this->mailer->send($message);
     }
 
+    public function getTestParameters()
+    {
+        return $this->provider->getTestParameters();
+    }
+
     public function render(NewsletterInterface $newsletter, array $parameters = [])
     {
         $templateManager = $this->container->get('enhavo_app.template.manager');
@@ -181,6 +193,8 @@ class NewsletterManager
             'newsletter' => $newsletter,
             'parameters' => $parameters
         ]);
+
+        $content = $this->parameterParser->parse($content, $parameters);
 
         return $content;
     }
