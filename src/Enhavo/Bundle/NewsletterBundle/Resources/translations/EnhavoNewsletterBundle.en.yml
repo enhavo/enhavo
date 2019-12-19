@@ -12,6 +12,7 @@ newsletter:
       label: 'Test Mail'
       success: 'Test mail successfully sent'
       error: 'An error occured while sending test mail'
+      invalid: 'Email is invalid'
     send:
       label: 'Send'
       success: 'Newsletter successfully sent!'
@@ -31,6 +32,7 @@ newsletter:
     meta: 'Meta'
     state: 'State'
     subject: 'Subject'
+    email: 'Email'
   form:
     label:
       subject: 'Subject'

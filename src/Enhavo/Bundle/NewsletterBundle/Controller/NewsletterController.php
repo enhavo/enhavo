@@ -4,7 +4,6 @@ namespace Enhavo\Bundle\NewsletterBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
-use Enhavo\Bundle\AppBundle\Event\ResourceEvents;
 use Enhavo\Bundle\AppBundle\Template\TemplateTrait;
 use Enhavo\Bundle\NewsletterBundle\Entity\Newsletter;
 use Enhavo\Bundle\NewsletterBundle\Form\Type\NewsletterEmailType;
@@ -87,7 +86,7 @@ class NewsletterController extends ResourceController
         $form = $this->resourceFormFactory->create($configuration, $resource);
         $submittedFormData = [];
         parse_str($request->get('form'), $submittedFormData);
-        $form->submit($submittedFormData);
+        $form->submit(isset($submittedFormData[$form->getName()]) ? $submittedFormData[$form->getName()] : []);
 
         $emailForm = $this->createForm(NewsletterEmailType::class);
         $emailForm->handleRequest($request);
@@ -95,8 +94,8 @@ class NewsletterController extends ResourceController
         if(!$emailForm->isValid()) {
             return new JsonResponse([
                 'type' => 'error',
-                'message' => $this->get('translator')->trans('newsletter.action.test_mail.error', [], 'EnhavoNewsletterBundle')
-            ]);
+                'message' => $this->get('translator')->trans('newsletter.action.test_mail.invalid', [], 'EnhavoNewsletterBundle')
+            ], 400);
         }
 
         $manager = $this->get(NewsletterManager::class);
@@ -111,7 +110,7 @@ class NewsletterController extends ResourceController
             return new JsonResponse([
                 'type' => 'error',
                 'message' => $this->get('translator')->trans('newsletter.action.test_mail.error', [], 'EnhavoNewsletterBundle')
-            ]);
+            ], 400);
         }
     }
 }

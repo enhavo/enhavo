@@ -13,7 +13,7 @@ class NewsletterEmailType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('email', EmailType::class, array(
-            'label' => 'form.label.email',
+            'label' => 'newsletter.label.email',
             'translation_domain' => 'EnhavoNewsletterBundle',
             'constraints' => [new NotBlank(), new Email()]
         ));
