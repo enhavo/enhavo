@@ -35,7 +35,11 @@
                 if(close) {
                     this.modal.close();
                 }
-            }) ;
+            }).catch((close: boolean) => {
+                if(close) {
+                    this.modal.close();
+                }
+            });
         }
 
         private getFormData(): object

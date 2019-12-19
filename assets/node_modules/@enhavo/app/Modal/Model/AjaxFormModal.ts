@@ -51,7 +51,7 @@ export default class AjaxFormModal extends AbstractModal
                             reject();
                         });
                 } else {
-                    resolve(false);
+                    resolve();
                 }
                 this.loading = false;
             }).catch((error) => {

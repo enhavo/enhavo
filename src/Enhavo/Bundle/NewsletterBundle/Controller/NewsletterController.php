@@ -94,8 +94,8 @@ class NewsletterController extends ResourceController
         if(!$emailForm->isValid()) {
             return new JsonResponse([
                 'type' => 'error',
-                'message' => $this->get('translator')->trans('newsletter.action.test_mail.error', [], 'EnhavoNewsletterBundle')
-            ]);
+                'message' => $this->get('translator')->trans('newsletter.action.test_mail.invalid', [], 'EnhavoNewsletterBundle')
+            ], 400);
         }
 
         $manager = $this->get(NewsletterManager::class);
@@ -110,7 +110,7 @@ class NewsletterController extends ResourceController
             return new JsonResponse([
                 'type' => 'error',
                 'message' => $this->get('translator')->trans('newsletter.action.test_mail.error', [], 'EnhavoNewsletterBundle')
-            ]);
+            ], 400);
         }
     }
 }
