@@ -2,7 +2,6 @@ import AbstractAction from "@enhavo/app/Action/Model/AbstractAction";
 import * as $ from 'jquery';
 import Message from "@enhavo/app/FlashMessage/Message";
 import AjaxFormModal from "@enhavo/app/Modal/Model/AjaxFormModal";
-import {IndexApplication} from "@enhavo/app/Index/IndexApplication";
 
 export default class NewsletterSendTestAction extends AbstractAction
 {
