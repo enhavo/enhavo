@@ -72,8 +72,11 @@
     }
   }
   .upload-input {display: none;}
-  .upload-button { margin-top:8px;
+  .upload-button,.download-button { margin-top:8px;
     &:after {content: '\f236';font-family: "enhavo-icons";position:absolute;top:8px;right:20px;}
-    + .upload-button {margin-left:7px;}
+    + .btn {margin-left:7px;}
+  }
+  .download-button {
+    &:after {content: '\f232';}
   }
 }

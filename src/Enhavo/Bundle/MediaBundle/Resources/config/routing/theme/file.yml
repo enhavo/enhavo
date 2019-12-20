@@ -20,6 +20,8 @@ enhavo_media_file_download:
         _controller: enhavo_media.controller.file:downloadAction
         _method: GET
         filename: ~
+    options:
+        expose: true
 
 enhavo_media_file_show:
     path:  /file/show/{id}/{shortMd5Checksum}/{filename}

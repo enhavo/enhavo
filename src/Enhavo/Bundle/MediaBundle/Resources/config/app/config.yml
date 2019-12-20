@@ -2,6 +2,7 @@ twig:
     form_themes:
         - '@EnhavoMedia/admin/form/media/media.html.twig'
         - '@EnhavoMedia/admin/form/media/image-cropper.html.twig'
+        - '@EnhavoMedia/admin/form/media/download.html.twig'
 
 doctrine:
     orm:
