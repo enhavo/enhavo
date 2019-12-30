@@ -26,4 +26,12 @@ export default class MediaRouter
             filename: file.filename
         }, absolute);
     }
+
+    generateDownload(file: File, absolute?: boolean) {
+        return this.router.generate('enhavo_media_file_download', {
+            id: file.id,
+            shortMd5Checksum: file.md5Checksum,
+            filename: file.filename
+        }, absolute);
+    }
 }

@@ -6,6 +6,8 @@ import ImageCropperExtension from "@enhavo/media/Extension/ImageCropperExtension
 import ImageCropperConfiguration from "@enhavo/media/Extension/ImageCropperConfiguration";
 import MediaItem from "@enhavo/media/Type/MediaItem";
 import ApplicationInterface from "@enhavo/app/ApplicationInterface";
+import MediaRouter from "@enhavo/media/MediaRouter";
+import DownloadExtension from "@enhavo/media/Extension/DownloadExtension";
 
 export default class MediaLoader extends AbstractLoader
 {
@@ -18,6 +20,7 @@ export default class MediaLoader extends AbstractLoader
         this.application = application;
         this.bindDragAndDrop();
         this.initImageCropper();
+        this.initDownload();
     }
 
     public insert(element: HTMLElement): void
@@ -65,6 +68,13 @@ export default class MediaLoader extends AbstractLoader
                 this.application.getView().open(url, 'media-image-cropper')
             };
             new ImageCropperExtension(item, config);
+        });
+    }
+
+    private initDownload()
+    {
+        $(document).on('mediaAddItem', (event, item) => {
+            new DownloadExtension(new MediaRouter(this.application.getRouter()), item);
         });
     }
 }

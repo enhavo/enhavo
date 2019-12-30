@@ -2,8 +2,7 @@ import 'select2'
 import 'select2/select2.css'
 import FormType from "@enhavo/app/Form/FormType";
 import AutoCompleteConfig from "@enhavo/form/Type/AutoCompleteConfig";
-import Sortable from "sortablejs";
-
+import Sortable = require('sortablejs');
 
 export default class AutoCompleteType extends FormType
 {
