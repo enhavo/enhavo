@@ -3,7 +3,7 @@ default:
         Behat\Symfony2Extension:
           kernel:
             class: App\Kernel
-            bootstrap: features/bootstrap/bootstrap.php
+            bootstrap: tests/config/bootstrap.php
 
         Behat\MinkExtension:
           sessions:
