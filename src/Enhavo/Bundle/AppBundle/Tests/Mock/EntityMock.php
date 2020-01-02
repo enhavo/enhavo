@@ -6,10 +6,9 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AppBundle\Mock;
+namespace Enhavo\Bundle\AppBundle\Tests\Mock;
 
 use Sylius\Component\Resource\Model\ResourceInterface;
-use PHPUnit\Framework\TestCase;
 
 class EntityMock implements ResourceInterface
 {

@@ -6,7 +6,7 @@
  * Time: 21:53
  */
 
-namespace Enhavo\Behat\Context;
+namespace Enhavo\Bundle\AppBundle\Behat\Context;
 
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Symfony2Extension\Context\KernelAwareContext;

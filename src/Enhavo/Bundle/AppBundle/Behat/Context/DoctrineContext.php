@@ -6,7 +6,7 @@
  * Time: 16:12
  */
 
-namespace Enhavo\Behat\Context;
+namespace Enhavo\Bundle\AppBundle\Behat\Context;
 
 
 class DoctrineContext extends KernelContext

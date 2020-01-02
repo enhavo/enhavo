@@ -1,7 +1,8 @@
 <?php
 
-namespace Enhavo\Behat\Context;
+namespace Enhavo\Bundle\SearchBundle\Behat\Context;
 
+use Enhavo\Bundle\AppBundle\Behat\Context\KernelContext;
 use Enhavo\Bundle\AppBundle\Metadata\MetadataRepository;
 use Enhavo\Bundle\PageBundle\Entity\Page;
 use Enhavo\Bundle\SearchBundle\Metadata\Metadata;

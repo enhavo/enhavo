@@ -11,12 +11,12 @@
   ],
   "autoload": {
     "psr-4": {
-      "": "src/"
+      "Enhavo\\": "src/Enhavo"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "": "tests/"
+      "App\\": "tests/src"
     }
   },
   "require": {

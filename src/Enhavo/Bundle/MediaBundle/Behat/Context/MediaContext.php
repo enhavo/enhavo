@@ -6,9 +6,9 @@
  * @author gseidel
  */
 
-namespace Enhavo\Behat\Context;
+namespace Enhavo\Bundle\MediaBundle\Behat\Context;
 
-use Enhavo\Bundle\MediaBundle\Content\Content;
+use Enhavo\Bundle\AppBundle\Behat\Context\KernelContext;
 use Enhavo\Bundle\MediaBundle\Content\ContentInterface;
 use Enhavo\Bundle\MediaBundle\Content\PathContent;
 use Enhavo\Bundle\MediaBundle\Filter\FilterInterface;

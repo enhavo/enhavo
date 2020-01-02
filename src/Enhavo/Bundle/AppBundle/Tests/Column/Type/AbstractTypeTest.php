@@ -6,7 +6,7 @@
  * Time: 11:58
  */
 
-namespace Enhavo\Bundle\AppBundle\Column\Type;
+namespace Enhavo\Bundle\AppBundle\Tests\Column\Type;
 
 use Enhavo\Bundle\AppBundle\Column\Column;
 use PHPUnit\Framework\TestCase;

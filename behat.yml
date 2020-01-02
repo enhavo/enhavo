@@ -2,7 +2,7 @@ default:
     extensions:
         Behat\Symfony2Extension:
           kernel:
-            class: Enhavo\Kernel
+            class: App\Kernel
             bootstrap: features/bootstrap/bootstrap.php
 
         Behat\MinkExtension:
@@ -12,17 +12,17 @@ default:
 
     formatters:
         pretty:
-            verbose:  true
-            paths:    false
+            verbose: true
+            paths: false
             snippets: false
 
     suites:
         enhavo:
             contexts:
-                - Enhavo\Behat\Context\UserContext:
-                - Enhavo\Behat\Context\EmailContext:
-                - Enhavo\Behat\Context\MediaContext:
-                - Enhavo\Behat\Context\DoctrineContext:
-                - Enhavo\Behat\Context\NavigationContext:
-                - Enhavo\Behat\Context\SearchContext:
-                - Behat\MinkExtension\Context\MinkContext
+                - Enhavo\Bundle\UserBundle\Behat\Context\UserContext:
+                - Enhavo\Bundle\AppBundle\Behat\Context\EmailContext:
+                - Enhavo\Bundle\MediaBundle\Behat\Context\MediaContext:
+                - Enhavo\Bundle\AppBundle\Behat\Context\DoctrineContext:
+                - Enhavo\Bundle\NavigationBundle\Behat\Context\NavigationContext:
+                - Enhavo\Bundle\SearchBundle\Behat\Context\SearchContext:
+                - Behat\MinkExtension\Context\MinkContext:

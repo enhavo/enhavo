@@ -1,7 +1,8 @@
 <?php
 
-namespace Enhavo\Behat\Context;
+namespace Enhavo\Bundle\UserBundle\Behat\Context;
 
+use Enhavo\Bundle\AppBundle\Behat\Context\KernelContext;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Behat\Gherkin\Node\TableNode;

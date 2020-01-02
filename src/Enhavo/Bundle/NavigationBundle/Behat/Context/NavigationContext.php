@@ -6,8 +6,9 @@
  * Time: 16:12
  */
 
-namespace Enhavo\Behat\Context;
+namespace Enhavo\Bundle\NavigationBundle\Behat\Context;
 
+use Enhavo\Bundle\AppBundle\Behat\Context\KernelContext;
 use Enhavo\Bundle\NavigationBundle\Entity\Node;
 use Enhavo\Bundle\PageBundle\Entity\Page;
 use PHPUnit\Framework\Assert;

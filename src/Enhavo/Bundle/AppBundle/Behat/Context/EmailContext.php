@@ -1,6 +1,6 @@
 <?php
 
-namespace Enhavo\Behat\Context;
+namespace Enhavo\Bundle\AppBundle\Behat\Context;
 
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Mink\Exception\UnsupportedDriverActionException;
