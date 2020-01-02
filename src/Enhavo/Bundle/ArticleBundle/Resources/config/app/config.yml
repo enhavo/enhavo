@@ -1,3 +1,8 @@
+cmf_routing:
+    dynamic:
+        controllers_by_class:
+            Enhavo\Bundle\ArticleBundle\Entity\Article: enhavo_article.controller.article:showResourceAction
+
 enhavo_content:
     sitemap:
         collectors:
