@@ -90,3 +90,7 @@ batch:
     label: 'Löschen'
     message:
       confirm: 'Wollen sie wirklich alle ausgewählten Elemente löschen?'
+  assign:
+    label: 'Zuweisen'
+    error:
+        assign: 'Fehler beim zuweisen'
