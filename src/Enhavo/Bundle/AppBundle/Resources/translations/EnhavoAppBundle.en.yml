@@ -77,3 +77,7 @@ batch:
     label: 'Delete'
     message:
       confirm: 'Do you really want to delete all selected items?'
+  assign:
+      label: 'Assign'
+      error:
+          assign: 'Error while assigning'

@@ -15,6 +15,13 @@ services:
         tags:
             - { name: enhavo.batch, alias: delete }
 
+    Enhavo\Bundle\AppBundle\Batch\Type\AssignBatchType:
+        public: true
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.batch, alias: assign }
+
     enhavo_app.batch_manager:
         class: Enhavo\Bundle\AppBundle\Batch\BatchManager
         public: true

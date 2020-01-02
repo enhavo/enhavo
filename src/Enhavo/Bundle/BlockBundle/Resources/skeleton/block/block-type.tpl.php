@@ -22,7 +22,7 @@ class <?= $name_camel ?>BlockType extends AbstractBlockType
             'repository' => '<?= $name_camel ?>Block::class',
             'template' => 'theme/block/<?= $name_kebab ?>.html.twig',
             'label' => '<?= $name_camel ?>',
-            'translationDomain' => <?= $translation_domain ? "'".$translation_domain."'" : null ?>,
+            'translationDomain' => <?= $translation_domain ? "'".$translation_domain."'" : 'null' ?>,
             'groups' => ['default', 'content']
         ]);
     }
