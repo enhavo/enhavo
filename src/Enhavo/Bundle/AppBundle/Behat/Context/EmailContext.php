@@ -3,11 +3,7 @@
 namespace Enhavo\Bundle\AppBundle\Behat\Context;
 
 use Behat\Gherkin\Node\PyStringNode;
-use Behat\Mink\Exception\UnsupportedDriverActionException;
-use Behat\Mink\Exception\ExpectationException;
 use Behat\Symfony2Extension\Driver\KernelDriver;
-use PHPUnit_Framework_Assert as Assert;
-use PHPUnit_Framework_ExpectationFailedException as AssertException;
 
 
 /**

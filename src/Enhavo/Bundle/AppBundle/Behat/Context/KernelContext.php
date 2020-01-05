@@ -16,7 +16,7 @@ use Doctrine\ORM\EntityManagerInterface;
  * @since 27/01/16
  * @author gseidel
  */
-class KernelContext extends RawMinkContext implements Context, KernelAwareContext, SnippetAcceptingContext
+class KernelContext implements Context, KernelAwareContext
 {
     /**
      * @var KernelInterface

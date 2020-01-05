@@ -19,11 +19,6 @@ use Symfony\Component\Yaml\Yaml;
 class HttpContext implements KernelAwareContext
 {
     /**
-     * @var KernelInterface
-     */
-    private $kernel;
-
-    /**
      * @var Response
      */
     private $response;
