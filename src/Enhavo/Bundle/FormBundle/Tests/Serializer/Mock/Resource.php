@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\FormBundle\Serializer\Mock;
+namespace Enhavo\Bundle\FormBundle\Tests\Serializer\Mock;
 
 use Doctrine\Common\Collections\ArrayCollection;
 

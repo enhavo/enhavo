@@ -1,7 +1,8 @@
 <?php
 
-namespace Enhavo\Bundle\FormBundle\Form\Type;
+namespace Enhavo\Bundle\FormBundle\Tests\Form\Type;
 
+use Enhavo\Bundle\FormBundle\Form\Type\PositionType;
 use Symfony\Component\Form\Test\TypeTestCase;
 
 class PositionTypeTest extends TypeTestCase

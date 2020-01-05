@@ -1,7 +1,8 @@
 <?php
 
-namespace Enhavo\Bundle\FormBundle\Form\Type;
+namespace Enhavo\Bundle\FormBundle\Tests\Form\Type;
 
+use Enhavo\Bundle\FormBundle\Form\Type\ListType;
 use Symfony\Component\Form\Test\TypeTestCase;
 
 class ListTypeTest extends TypeTestCase

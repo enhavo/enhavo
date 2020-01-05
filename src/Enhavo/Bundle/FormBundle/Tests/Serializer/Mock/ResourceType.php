@@ -7,7 +7,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\FormBundle\Serializer\Mock;
+namespace Enhavo\Bundle\FormBundle\Tests\Serializer\Mock;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;

@@ -1,8 +1,9 @@
 <?php
 
-namespace Enhavo\Bundle\AppBundle\Column\Type;
+namespace Enhavo\Bundle\AppBundle\Tests\Column\Type;
 
-use Enhavo\Bundle\AppBundle\Mock\EntityMock;
+use Enhavo\Bundle\AppBundle\Column\Type\ListType;
+use Enhavo\Bundle\AppBundle\Tests\Mock\EntityMock;
 
 class ListTypeTest extends AbstractTypeTest
 {

@@ -1,8 +1,9 @@
 <?php
 
-namespace Enhavo\Bundle\FormBundle\Form\Type;
+namespace Enhavo\Bundle\FormBundle\Tests\Form\Type;
 
 use Enhavo\Bundle\FormBundle\Form\Helper\EntrypointFileManager;
+use Enhavo\Bundle\FormBundle\Form\Type\WysiwygType;
 use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
 

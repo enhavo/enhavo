@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Controller;
 
-use Enhavo\Bundle\AppBundle\Mock\EntityMock;
+use Enhavo\Bundle\AppBundle\Tests\Mock\EntityMock;
 use Enhavo\Bundle\AppBundle\Viewer\ViewFactory;
 use FOS\RestBundle\View\View;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceDeleteHandlerInterface;

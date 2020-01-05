@@ -1,9 +1,9 @@
 <?php
 
-namespace Enhavo\Bundles\AppBundle\Security\Roles;
+namespace Enhavo\Bundles\AppBundle\Tests\Security\Roles;
 
 use Enhavo\Bundle\AppBundle\Security\Roles\RoleUtil;
-use Enhavo\Bundle\AppBundle\Mock\EntityMock;
+use Enhavo\Bundle\AppBundle\Tests\Mock\EntityMock;
 use PHPUnit\Framework\TestCase;
 
 class RoleUtilTest extends TestCase
