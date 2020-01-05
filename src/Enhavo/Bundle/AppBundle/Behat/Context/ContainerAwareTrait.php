@@ -1,0 +1,33 @@
+<?php
+
+namespace Enhavo\Bundle\AppBundle\Behat\Context;
+
+use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
+/**
+ * DefaultContext.php
+ *
+ * @since 27/01/16
+ * @author gseidel
+ */
+trait ContainerAwareTrait
+{
+    use KernelAwareTrait;
+    /**
+     * @return ContainerInterface
+     */
+    public function getContainer()
+    {
+        return $this->kernel->getContainer()->get('test.service_container');
+    }
+
+    /**
+     * @param $id
+     * @return object
+     */
+    public function get($id)
+    {
+        return $this->getContainer()->get($id);
+    }
+}

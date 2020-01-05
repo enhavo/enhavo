@@ -2,7 +2,9 @@
 
 namespace Enhavo\Bundle\UserBundle\Behat\Context;
 
+use Enhavo\Bundle\AppBundle\Behat\Context\ContainerAwareTrait;
 use Enhavo\Bundle\AppBundle\Behat\Context\KernelContext;
+use Enhavo\Bundle\AppBundle\Behat\Context\ManagerAwareTrait;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Behat\Gherkin\Node\TableNode;
@@ -14,6 +16,8 @@ use Enhavo\Bundle\UserBundle\Entity\Group;
  */
 class UserContext extends KernelContext
 {
+    use ManagerAwareTrait;
+
     /**
      * @Given following users
      */

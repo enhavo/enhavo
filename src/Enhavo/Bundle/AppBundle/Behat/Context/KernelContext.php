@@ -18,38 +18,5 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 class KernelContext implements Context, KernelAwareContext
 {
-    /**
-     * @var KernelInterface
-     */
-    protected $kernel;
-
-    public function setKernel(KernelInterface $kernel)
-    {
-        $this->kernel = $kernel;
-    }
-
-    /**
-     * @return ContainerInterface
-     */
-    public function getContainer()
-    {
-        return $this->kernel->getContainer()->get('test.service_container');
-    }
-
-    /**
-     * @return EntityManagerInterface
-     */
-    public function getManager()
-    {
-        return $this->getContainer()->get('doctrine.orm.entity_manager');
-    }
-
-    /**
-     * @param $id
-     * @return object
-     */
-    public function get($id)
-    {
-        return $this->getContainer()->get($id);
-    }
+    use KernelAwareTrait;
 }

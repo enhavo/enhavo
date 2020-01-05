@@ -18,6 +18,8 @@ use Symfony\Component\Yaml\Yaml;
 
 class HttpContext implements KernelAwareContext
 {
+    use KernelAwareTrait;
+
     /**
      * @var Response
      */

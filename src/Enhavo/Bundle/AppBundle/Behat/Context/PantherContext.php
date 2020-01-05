@@ -60,7 +60,7 @@ class PantherContext implements Context
      */
     public function takeScreenshot($name)
     {
-        self::$client->takeScreenshot(sprintf('%s.png', $name));
+        $this->getClient()->takeScreenshot(sprintf('%s.png', $name));
     }
 
     /**
@@ -124,7 +124,7 @@ class PantherContext implements Context
     {
         $found = false;
         $this->getClient()->getCrawler()->filter('*')->each(function($element) use ($text, &$found) {
-            if(strpos($element->text(), $text)) {
+            if(strpos($element->text(), $text) !== false) {
                 $found = true;
                 return false;
             }
@@ -133,6 +133,44 @@ class PantherContext implements Context
 
         if(!$found) {
             throw new AssertionFailedError(sprintf('%s not found in any node', $text));
+        }
+    }
+
+
+    /**
+     * @Then I save DOM
+     */
+    public function saveDOM()
+    {
+        $html = $this->getClient()->getCrawler()->html();
+        return;
+    }
+
+    /**
+     * Checks, that page contains specified text
+     * Example: Then I should see "Who is the Batman?" in ".test"
+     * Example: And I should see "Who is the Batman?" in ".test"
+     *
+     * @Then I should see :text in :selector
+     */
+    public function assertPageContainsTextInElement($text, $selector)
+    {
+        $found = false;
+        $elements = $this->getClient()->getCrawler()->filter($selector);
+        if($elements->count() === 0) {
+            throw new AssertionFailedError(sprintf('No element found with selector %s', $selector));
+        }
+
+        $elements->each(function($element) use ($text, &$found) {
+            if(strpos($element->text(), $text) !== false) {
+                $found = true;
+                return false;
+            }
+            return true;
+        });
+
+        if(!$found) {
+            throw new AssertionFailedError(sprintf('Text %s not found in elements %s', $text, $selector));
         }
     }
 
