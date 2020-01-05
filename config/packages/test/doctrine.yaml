@@ -23,6 +23,6 @@ doctrine:
             App:
                 is_bundle: false
                 type: yml
-                dir: '%kernel.project_dir%/tests/config/doctrine'
+                dir: '%kernel.project_dir%/config/test/doctrine'
                 prefix: 'App\Entity'
                 alias: App
