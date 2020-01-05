@@ -2,13 +2,8 @@ default:
     extensions:
         Behat\Symfony2Extension:
           kernel:
-            class: App\Kernel
-            bootstrap: tests/config/bootstrap.php
-
-        Behat\MinkExtension:
-          sessions:
-            default:
-              symfony2: ~
+            class: Enhavo\Kernel
+            bootstrap: config/test/bootstrap.php
 
     formatters:
         pretty:
@@ -17,12 +12,14 @@ default:
             snippets: false
 
     suites:
-        enhavo:
+        web:
             contexts:
+                - Enhavo\Bundle\AppBundle\Behat\Context\PantherContext:
                 - Enhavo\Bundle\UserBundle\Behat\Context\UserContext:
                 - Enhavo\Bundle\AppBundle\Behat\Context\EmailContext:
                 - Enhavo\Bundle\MediaBundle\Behat\Context\MediaContext:
                 - Enhavo\Bundle\AppBundle\Behat\Context\DoctrineContext:
                 - Enhavo\Bundle\NavigationBundle\Behat\Context\NavigationContext:
                 - Enhavo\Bundle\SearchBundle\Behat\Context\SearchContext:
-                - Behat\MinkExtension\Context\MinkContext:
+            filters:
+                tags: "@web"
