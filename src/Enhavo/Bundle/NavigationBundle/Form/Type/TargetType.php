@@ -19,8 +19,8 @@ class TargetType extends AbstractType
         $resolver->setDefaults([
             'label' => 'target',
             'choices' => [
-                '_self' => 'self',
-                '_blank' => 'blank',
+                'self' => '_self',
+                'blank' => '_blank',
             ]
         ]);
     }
