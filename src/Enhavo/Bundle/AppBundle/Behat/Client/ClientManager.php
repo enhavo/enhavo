@@ -139,4 +139,9 @@ class ClientManager
     {
         return $this->pantherClients;
     }
+
+    public function getBaseUri()
+    {
+        return $this->baseUri;
+    }
 }

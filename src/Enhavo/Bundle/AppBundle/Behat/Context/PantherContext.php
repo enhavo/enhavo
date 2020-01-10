@@ -36,14 +36,6 @@ class PantherContext implements Context, ClientAwareContext
     }
 
     /**
-     * @Given I am logged in as admin
-     */
-    public function iAmLoggedInAsAdmin()
-    {
-
-    }
-
-    /**
      * Opens homepage
      * Example: Given I am on "/"
      * Example: When I go to "/"
@@ -54,7 +46,7 @@ class PantherContext implements Context, ClientAwareContext
      */
     public function iAmOnHomepage()
     {
-
+        $this->getClient()->request('GET', '/');
     }
 
     /**

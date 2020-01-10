@@ -2,11 +2,17 @@
 
 namespace Enhavo\Bundle\UserBundle\Behat\Context;
 
-use Enhavo\Bundle\AppBundle\Behat\Context\ContainerAwareTrait;
-use Enhavo\Bundle\AppBundle\Behat\Context\KernelContext;
+use Behat\Behat\Context\Context;
+use Behat\Symfony2Extension\Context\KernelAwareContext;
+use Enhavo\Bundle\AppBundle\Behat\Context\ClientAwareContext;
+use Enhavo\Bundle\AppBundle\Behat\Context\ClientAwareTrait;
+use Enhavo\Bundle\AppBundle\Behat\Context\KernelAwareTrait;
 use Enhavo\Bundle\AppBundle\Behat\Context\ManagerAwareTrait;
-use Enhavo\Bundle\AppBundle\Behat\Context\PantherContext;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Enhavo\Bundle\UserBundle\Behat\Exception\UserLoginException;
+use Enhavo\Bundle\UserBundle\Model\UserInterface;
+use function League\Uri\parse;
+use Symfony\Component\BrowserKit\Cookie;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Behat\Gherkin\Node\TableNode;
 use Enhavo\Bundle\UserBundle\Entity\User;
@@ -15,9 +21,10 @@ use Enhavo\Bundle\UserBundle\Entity\Group;
 /**
  * Defines application features from the specific context.
  */
-class UserContext extends KernelContext
+class UserContext implements Context, ClientAwareContext, KernelAwareContext
 {
     use ManagerAwareTrait;
+    use ClientAwareTrait;
 
     /**
      * @Given following users
@@ -61,21 +68,45 @@ class UserContext extends KernelContext
         $em->flush();
     }
 
+
     /**
-     * @Given no active session
+     * @Given /^I am logged in as user "([^""]*)"$/
+     * @throws UserLoginException
      */
-    public function clearSession()
+    public function iAmLoggedInAsUser($username)
     {
-        /** @var Session $session */
-        $session = $this->get('session');
-        $session->invalidate();
+        /** @var RouterInterface $router */
+        $router = $this->get(RouterInterface::class);
+        $crawler = $this->getClient()->request('GET', $router->generate('enhavo_user_test_security_login', [
+            'username' => $username
+        ]));
+        $text = $crawler->filter('body')->text();
+        if($text !== 'Ok') {
+            throw UserLoginException::invalidUser($username);
+        }
+    }
+
+    /**
+     * @Given /^I am logged in as admin$/
+     */
+    public function iAmLoggedInAsAdmin()
+    {
+        $this->iAmLoggedInAsUser('admin@enhavo.com');
+    }
+
+    /**
+     * @Given /^I am not logged in$/
+     */
+    public function iAmNotLoggedIn()
+    {
+        $this->getClient()->getCookieJar()->clear();
     }
 
     /**
      * @param Group $group
      * @return User
      */
-    public function createAdminUser($group)
+    private function createAdminUser($group)
     {
         $user = new User();
         $user->setEmail('admin@enhavo.com');
@@ -88,7 +119,7 @@ class UserContext extends KernelContext
     /**
      * @return Group
      */
-    public function createAdminGroup()
+    private function createAdminGroup()
     {
         $roles = $this->get('security.roles.provider')->getRoles();
         $group = new Group();
@@ -103,8 +134,7 @@ class UserContext extends KernelContext
         return $group;
     }
 
-
-    protected function findOrCreateUser($username, $email)
+    private function findOrCreateUser($username, $email)
     {
         $user = $this->get('enhavo_user.repository.user')->findOneBy([
             'username' => $username
@@ -120,42 +150,10 @@ class UserContext extends KernelContext
         return $user;
     }
 
-    protected function findUser($username)
+    private function findUser($username): UserInterface
     {
         return $this->get('enhavo_user.repository.user')->findOneBy([
             'username' => $username
         ]);
-    }
-
-    /**
-     * @Given /^I am logged in as user "([^""]*)"$/
-     */
-    public function iAmLoggedInAsUser($username)
-    {
-        $user = $this->findUser($username);
-        $token = new UsernamePasswordToken($user, $user->getPassword(), 'administration', $user->getRoles());
-
-        $session = $this->get('session');
-        $session->set('_security_user', serialize($token));
-        $session->save();
-
-        $this->getSession()->setCookie($session->getName(), $session->getId());
-        $this->get('security.token_storage')->setToken($token);
-    }
-
-    /**
- * @Given /^I am logged in as admin$/
- */
-    public function iAmLoggedInAsAdmin()
-    {
-        $this->iAmLoggedInAsUser('admin@enhavo.com');
-    }
-
-    /**
-     * @Given /^I am not logged in$/
-     */
-    public function iAmNotLoggedIn()
-    {
-        $this->getSession()->restart();
     }
 }
