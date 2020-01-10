@@ -5,6 +5,7 @@ namespace Enhavo\Bundle\UserBundle\Behat\Context;
 use Enhavo\Bundle\AppBundle\Behat\Context\ContainerAwareTrait;
 use Enhavo\Bundle\AppBundle\Behat\Context\KernelContext;
 use Enhavo\Bundle\AppBundle\Behat\Context\ManagerAwareTrait;
+use Enhavo\Bundle\AppBundle\Behat\Context\PantherContext;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Behat\Gherkin\Node\TableNode;
@@ -143,8 +144,8 @@ class UserContext extends KernelContext
     }
 
     /**
-     * @Given /^I am logged in as admin$/
-     */
+ * @Given /^I am logged in as admin$/
+ */
     public function iAmLoggedInAsAdmin()
     {
         $this->iAmLoggedInAsUser('admin@enhavo.com');

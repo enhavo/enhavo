@@ -4,6 +4,8 @@ default:
           kernel:
             class: Enhavo\Kernel
             bootstrap: config/test/bootstrap.php
+        Enhavo\Bundle\AppBundle\Behat\Extension\PantherExtension:
+
 
     formatters:
         pretty:

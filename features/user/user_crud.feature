@@ -5,9 +5,9 @@ Feature: User CRUD
 
   Background:
     Given admin user
-
-  Scenario: See Index
     Given I am logged in as admin
+
+  @web
+  Scenario: See Index
     Given I am on "/admin/enhavo/user/user/index"
     Then I should be on "/admin/enhavo/user/user/index"
-    And the response status code should be 200

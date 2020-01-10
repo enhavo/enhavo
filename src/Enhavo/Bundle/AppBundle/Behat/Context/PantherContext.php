@@ -9,51 +9,13 @@
 namespace Enhavo\Bundle\AppBundle\Behat\Context;
 
 use Behat\Behat\Context\Context;
-use Behat\Testwork\Hook\Scope\BeforeSuiteScope;
+use Behat\Gherkin\Node\TableNode;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\AssertionFailedError;
-use Symfony\Component\Panther\Client;
-use Symfony\Component\Panther\DomCrawler\Crawler;
-use Symfony\Component\Panther\PantherTestCaseTrait;
 
-class PantherContext implements Context
+class PantherContext implements Context, ClientAwareContext
 {
-    use PantherTestCaseTrait;
-
-    /**
-     * @var Client
-     */
-    private static $client;
-
-    /**
-     * @var Crawler
-     */
-    private static $request;
-
-    /**
-     * @return Client
-     */
-    protected function getClient(): Client
-    {
-        return self::$client;
-    }
-
-    /**
-     * @BeforeSuite
-     * @param BeforeSuiteScope $scope
-     */
-    public static function prepare(BeforeSuiteScope $scope)
-    {
-        self::$client = self::createPantherClient();
-    }
-
-    /**
-     * @AfterSuite
-     */
-    protected static function cleanUp()
-    {
-        self::tearDownAfterClass();
-    }
+    use ClientAwareTrait;
 
     /**
      * @Given I take a screenshot with name :name
@@ -68,9 +30,7 @@ class PantherContext implements Context
      */
     public function theResponseStatusCodeShouldBe($arg1)
     {
-        $response = self::$client->getResponse();
-
-
+        $response = $this->getClient()->getResponse();
         $this->getClient()->getCurrentURL();
         Assert::assertEquals($arg1, $response->getCode());
     }
