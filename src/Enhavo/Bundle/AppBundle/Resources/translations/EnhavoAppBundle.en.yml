@@ -81,3 +81,8 @@ batch:
       label: 'Assign'
       error:
           assign: 'Error while assigning'
+filter:
+  age:
+    label:
+      from: 'Age from'
+      to: 'To'
