@@ -1,6 +1,3 @@
-#theme:
-#    resource: routes/theme/*
-#
-#admin:
-#    prefix: /admin
-#    resource: routes/admin/*
+admin:
+    prefix: /admin
+    resource: admin/*

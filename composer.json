@@ -87,7 +87,7 @@
     "overtrue/phplint": "^1.1",
     "phpunit/phpunit": "^7.4",
     "symfony/debug-pack": "^1.0",
-    "symfony/maker-bundle": "^1.0",
+    "symfony/maker-bundle": "^1.14",
     "symfony/panther": "^0.6.0",
     "symfony/profiler-pack": "^1.0",
     "symfony/test-pack": "^1.0",

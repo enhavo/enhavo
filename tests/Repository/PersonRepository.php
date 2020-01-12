@@ -8,7 +8,9 @@
 
 namespace App\Repository;
 
-class PersonRepository
+use Enhavo\Bundle\AppBundle\Repository\EntityRepository;
+
+class PersonRepository extends EntityRepository
 {
 
 }

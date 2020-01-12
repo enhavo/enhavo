@@ -1,15 +1,14 @@
 <template>
     <div v-bind:class="name">
         <template v-for="filter in filters">
-            <template>
                 <component
                     class="view-table-filter"
                     :is="filter.component"
                     :data="filter"
+                    :data-filter="filter.key"
                     @apply="apply()"
                 >
                 </component>
-            </template>
         </template>
         <button @click="apply()" class="apply-button"><i class="icon icon-check"></i></button>
         <button @click="reset()" class="reset-button red"><i class="icon icon-close"></i></button>

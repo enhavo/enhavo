@@ -1,0 +1,102 @@
+app_person_index:
+    options:
+        expose: true
+    path: /app/person/index
+    methods: [GET]
+    defaults:
+        _controller: app.controller.person:indexAction
+        _sylius:
+            viewer:
+
+
+app_person_create:
+    options:
+        expose: true
+    path: /app/person/create
+    methods: [GET,POST]
+    defaults:
+        _controller: app.controller.person:createAction
+        _sylius:
+            redirect: app_person_update
+            viewer:
+
+app_person_update:
+    options:
+        expose: true
+    path: /app/person/update/{id}
+    methods: [GET,POST]
+    defaults:
+        _controller: app.controller.person:updateAction
+        _sylius:
+            viewer:
+
+app_person_table:
+    options:
+        expose: true
+    path: /app/person/table
+    methods: [GET,POST]
+    defaults:
+        _controller: app.controller.person:tableAction
+        _sylius:
+            filters:
+                age:
+                    label: Age
+                    type: age
+                    property: birthday
+            viewer:
+                columns:
+                    id:
+                        property: id
+                        width: 1
+                        label: id
+                        type: property
+                    name:
+                        property: name
+                        width: 11
+                        label: Name
+                        type: property
+app_person_delete:
+    options:
+        expose: true
+    path: /app/person/delete/{id}
+    methods: [POST]
+    defaults:
+        _controller: app.controller.person:deleteAction
+
+app_person_batch:
+    options:
+        expose: true
+    path: /app/person/batch
+    methods: [POST]
+    defaults:
+        _controller: app.controller.person:batchAction
+        _sylius:
+            paginate: false
+            criteria:
+                id: $ids
+            batches:
+                delete:
+                    type: delete
+
+app_person_preview:
+    options:
+        expose: true
+    path: /app/person/preview
+    methods: [GET]
+    defaults:
+        _controller: app.controller.person:previewAction
+        _sylius:
+            viewer:
+
+app_person_resource_preview:
+    options:
+        expose: true
+    path: /app/person/resource/preview
+    methods: [POST]
+    defaults:
+        _controller: app.controller.person:previewResourceAction
+        _sylius:
+            viewer:
+                strategy_options:
+                    service: enhavo_article.controller.article:showResourceAction
+
