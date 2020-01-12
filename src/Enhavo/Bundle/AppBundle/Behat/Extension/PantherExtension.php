@@ -34,14 +34,31 @@ class PantherExtension implements ExtensionInterface
 
     public function configure(ArrayNodeDefinition $builder)
     {
-
+        $builder
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->variableNode('env')->end()
+            ->end();
     }
 
     public function load(ContainerBuilder $container, array $config)
     {
+        $this->buildParameters($container, $config);
         $this->loadClientManager($container);
         $this->loadContextInitializer($container);
         $this->loadSubscriber($container);
+    }
+
+    private function buildParameters(ContainerBuilder $container, $config)
+    {
+        $env = is_array($config['env']) ? $config['env'] : [];
+        $container->setParameter('panther.env', $env);
+
+        foreach($env as $name => $value) {
+            if(!isset($_SERVER[$name])) {
+                $_SERVER[$name] = $value;
+            }
+        }
     }
 
     public function process(ContainerBuilder $container)
@@ -51,7 +68,7 @@ class PantherExtension implements ExtensionInterface
 
     private function loadClientManager(ContainerBuilder $container)
     {
-        $definition = new Definition(ClientManager::class, []);
+        $definition = new Definition(ClientManager::class);
         $container->setDefinition(ClientManager::class, $definition);
     }
 

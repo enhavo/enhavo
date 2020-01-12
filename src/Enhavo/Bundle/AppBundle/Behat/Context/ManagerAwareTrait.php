@@ -8,12 +8,13 @@
 
 namespace Enhavo\Bundle\AppBundle\Behat\Context;
 
+use Doctrine\ORM\EntityManagerInterface;
 
 trait ManagerAwareTrait
 {
     use ContainerAwareTrait;
 
-    public function getManager()
+    public function getManager(): EntityManagerInterface
     {
         return $this->getContainer()->get('doctrine.orm.entity_manager');
     }

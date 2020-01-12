@@ -18,14 +18,6 @@ class PantherContext implements Context, ClientAwareContext
     use ClientAwareTrait;
 
     /**
-     * @Given I take a screenshot with name :name
-     */
-    public function takeScreenshot($name)
-    {
-        $this->getClient()->takeScreenshot(sprintf('%s.png', $name));
-    }
-
-    /**
      * @Given the response status code should be :arg1
      */
     public function theResponseStatusCodeShouldBe($arg1)
@@ -86,16 +78,6 @@ class PantherContext implements Context, ClientAwareContext
         if(!$found) {
             throw new AssertionFailedError(sprintf('%s not found in any node', $text));
         }
-    }
-
-
-    /**
-     * @Then I save DOM
-     */
-    public function saveDOM()
-    {
-        $html = $this->getClient()->getCrawler()->html();
-        return;
     }
 
     /**
