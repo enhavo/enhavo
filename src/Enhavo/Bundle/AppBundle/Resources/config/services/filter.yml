@@ -79,6 +79,14 @@ services:
         tags:
             - { name: enhavo.filter, alias: auto_complete_entity }
 
+    Enhavo\Bundle\AppBundle\Filter\Type\BetweenFilterType:
+        parent: Enhavo\Bundle\AppBundle\Filter\AbstractFilterType
+        public: true
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.filter, alias: between }
+
     Enhavo\Bundle\AppBundle\Filter\Type\AgeFilterType:
         parent: Enhavo\Bundle\AppBundle\Filter\AbstractFilterType
         public: true

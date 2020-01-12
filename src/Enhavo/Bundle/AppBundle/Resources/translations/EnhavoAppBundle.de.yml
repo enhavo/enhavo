@@ -99,3 +99,7 @@ filter:
     label:
       from: 'Alter von'
       to: 'Bis'
+  between:
+    label:
+      from: 'Von'
+      to: 'Bis'

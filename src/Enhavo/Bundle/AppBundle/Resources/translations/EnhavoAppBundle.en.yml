@@ -86,3 +86,7 @@ filter:
     label:
       from: 'Age from'
       to: 'To'
+  between:
+    label:
+      from: 'From'
+      to: 'To'
