@@ -28,6 +28,11 @@ class Person implements ResourceInterface
     private $name;
 
     /**
+     * @var integer|null
+     */
+    private $children;
+
+    /**
      * @return integer
      */
     public function getId()
@@ -65,5 +70,21 @@ class Person implements ResourceInterface
     public function setName(?string $name): void
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getChildren(): ?int
+    {
+        return $this->children;
+    }
+
+    /**
+     * @param int|null $children
+     */
+    public function setChildren(?int $children): void
+    {
+        $this->children = $children;
     }
 }

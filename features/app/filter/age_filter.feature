@@ -5,10 +5,10 @@ Feature: Age Filter
         Given admin user
         Given table "app_person" is empty
         Given table "app_person" has rows
-            | id | name         | birthday   |
-            | 1  | James Bond   | 1970-02-04 |
-            | 2  | Peter Pan    | 1982-11-10 |
-            | 3  | Darth Vader  | 2035-01-07 |
+            | id | name         | birthday   | children |
+            | 1  | James Bond   | 1970-02-04 | 0        |
+            | 2  | Peter Pan    | 1982-11-10 | 13       |
+            | 3  | Darth Vader  | 2035-01-07 | 2        |
         Given I am logged in as admin
 
     @web

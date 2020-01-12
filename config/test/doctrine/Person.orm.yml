@@ -17,5 +17,7 @@ App\Entity\Person:
             type: date
             length: 255
             nullable: true
-
+        children:
+            type: integer
+            nullable: true
     lifecycleCallbacks: {  }

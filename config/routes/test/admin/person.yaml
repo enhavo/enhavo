@@ -8,7 +8,6 @@ app_person_index:
         _sylius:
             viewer:
 
-
 app_person_create:
     options:
         expose: true
