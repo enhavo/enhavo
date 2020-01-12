@@ -36,6 +36,6 @@ class Subscriber implements EventSubscriberInterface
 
     public function shutdown()
     {
-        $this->clientManager->stopWebServer();
+        //$this->clientManager->stopWebServer();
     }
 }

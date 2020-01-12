@@ -42,6 +42,12 @@ app_person_table:
                     label: Age
                     type: age
                     property: birthday
+                between:
+                    label: Children
+                    type: between
+                    property: children
+                    label_from: Children from
+                    label_to: to
             viewer:
                 columns:
                     id:

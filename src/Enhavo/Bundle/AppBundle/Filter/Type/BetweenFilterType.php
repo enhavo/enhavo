@@ -58,7 +58,7 @@ class BetweenFilterType extends AbstractFilterType
         $propertyPath = explode('.', $options['property']);
         $property = array_pop($propertyPath);
 
-        $query->addWhere($property, FilterQuery::OPERATOR_LESS_EQUAL, $fromValue, $propertyPath);
+        $query->addWhere($property, FilterQuery::OPERATOR_GREATER_EQUAL, $fromValue, $propertyPath);
     }
 
     protected function buildToQuery(FilterQuery $query, $options, $fromTo)
@@ -66,7 +66,7 @@ class BetweenFilterType extends AbstractFilterType
         $propertyPath = explode('.', $options['property']);
         $property = array_pop($propertyPath);
 
-        $query->addWhere($property, FilterQuery::OPERATOR_GREATER_EQUAL, $fromTo, $propertyPath);
+        $query->addWhere($property, FilterQuery::OPERATOR_LESS_EQUAL, $fromTo, $propertyPath);
     }
 
     public function configureOptions(OptionsResolver $optionsResolver)
