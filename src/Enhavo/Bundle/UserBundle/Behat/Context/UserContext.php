@@ -150,7 +150,7 @@ class UserContext implements Context, ClientAwareContext, KernelAwareContext
         return $user;
     }
 
-    private function findUser($username): UserInterface
+    private function findUser($username): ?UserInterface
     {
         return $this->get('enhavo_user.repository.user')->findOneBy([
             'username' => $username

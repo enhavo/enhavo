@@ -13,7 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AgeFilterType extends BetweenFilterType
 {
-    protected function buildFromQuery(FilterQuery$query, $options, $fromValue)
+    protected function buildFromQuery(FilterQuery $query, $options, $fromValue)
     {
         $propertyPath = explode('.', $options['property']);
         $property = array_pop($propertyPath);
