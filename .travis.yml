@@ -6,13 +6,14 @@ addons:
 dist: xenial
 
 php:
-  - 7.2
+    - 7.2
+    - 7.3
 
 services:
-  - mysql
+    - mysql
 
 env:
-  - ENVIRONMENT=test DEBUG=true
+    - ENVIRONMENT=test DEBUG=true
 
 before_install:
     - composer self-update
@@ -39,7 +40,7 @@ before_script:
     - php -i | grep -v GITHUB_OAUTH_TOKEN
 
 script:
-  - composer validate
-  - bin/behat --strict
-  - ./phpunit --stop-on-failure
-  - vendor/bin/phplint
+    - composer validate
+    - bin/behat --strict
+    - ./phpunit --stop-on-failure
+    - vendor/bin/phplint
