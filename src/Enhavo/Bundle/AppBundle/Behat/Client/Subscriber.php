@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Behat\Client;
 
-use Behat\Testwork\EventDispatcher\Event\AfterSuiteTested;
+use Behat\Testwork\EventDispatcher\Event\SuiteTested;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class Subscriber implements EventSubscriberInterface
@@ -30,12 +30,12 @@ class Subscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            AfterSuiteTested::class => 'shutdown'
+            SuiteTested::AFTER => 'shutdown'
         );
     }
 
     public function shutdown()
     {
-        //$this->clientManager->stopWebServer();
+        $this->clientManager->stopWebServer();
     }
 }
