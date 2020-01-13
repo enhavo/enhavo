@@ -94,3 +94,12 @@ batch:
     label: 'Zuweisen'
     error:
         assign: 'Fehler beim zuweisen'
+filter:
+  age:
+    label:
+      from: 'Alter von'
+      to: 'Bis'
+  between:
+    label:
+      from: 'Von'
+      to: 'Bis'

@@ -20,7 +20,6 @@
 /.web-server-pid
 .phpunit
 /phpunit.xml
-/behat.yml
 /npm-debug.log
 /yarn-error.log
 /assets/theme/custom.scss

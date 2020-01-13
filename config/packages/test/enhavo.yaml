@@ -1,0 +1,8 @@
+sylius_resource:
+    resources:
+        app.person:
+            classes:
+                model: App\Entity\Person
+                controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
+                form: App\Form\Type\PersonType
+                repository: App\Repository\PersonRepository

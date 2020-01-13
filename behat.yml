@@ -3,26 +3,27 @@ default:
         Behat\Symfony2Extension:
           kernel:
             class: Enhavo\Kernel
-            bootstrap: features/bootstrap/bootstrap.php
-
-        Behat\MinkExtension:
-          sessions:
-            default:
-              symfony2: ~
+            bootstrap: config/test/bootstrap.php
+        Enhavo\Bundle\AppBundle\Behat\Extension\PantherExtension:
+            env:
+                PANTHER_APP_ENV: "test"
 
     formatters:
         pretty:
-            verbose:  true
-            paths:    false
+            verbose: true
+            paths: false
             snippets: false
 
     suites:
-        enhavo:
+        web:
             contexts:
-                - Enhavo\Behat\Context\UserContext:
-                - Enhavo\Behat\Context\EmailContext:
-                - Enhavo\Behat\Context\MediaContext:
-                - Enhavo\Behat\Context\DoctrineContext:
-                - Enhavo\Behat\Context\NavigationContext:
-                - Enhavo\Behat\Context\SearchContext:
-                - Behat\MinkExtension\Context\MinkContext
+                - Enhavo\Bundle\AppBundle\Behat\Context\PantherContext:
+                - Enhavo\Bundle\AppBundle\Behat\Context\DebugContext:
+                - Enhavo\Bundle\AppBundle\Behat\Context\EmailContext:
+                - Enhavo\Bundle\AppBundle\Behat\Context\DoctrineContext:
+                - Enhavo\Bundle\MediaBundle\Behat\Context\MediaContext:
+                - Enhavo\Bundle\NavigationBundle\Behat\Context\NavigationContext:
+                - Enhavo\Bundle\SearchBundle\Behat\Context\SearchContext:
+                - Enhavo\Bundle\UserBundle\Behat\Context\UserContext:
+            filters:
+                tags: "@web"

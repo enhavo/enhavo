@@ -1,0 +1,4 @@
+enhavo_user_test_security_login:
+    path: /test/security/login
+    methods: [GET]
+    controller: Enhavo\Bundle\UserBundle\Behat\Controller\SecurityController:loginAction
