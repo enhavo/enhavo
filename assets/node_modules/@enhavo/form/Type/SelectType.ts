@@ -4,7 +4,7 @@ import 'select2'
 import 'select2/select2.css'
 import 'select2/select2_locale_de.js'
 import 'select2/select2_locale_en.js.template'
-import Sortable = require('sortablejs');
+import Sortable from 'sortablejs';
 
 export default class SelectType extends FormType
 {
@@ -21,7 +21,7 @@ export default class SelectType extends FormType
 
         if($list.get(0) && data && data.sortable && data.multiple) {
             let listElement = <HTMLElement>$list.get(0);
-            new Sortable(listElement, {
+            Sortable.create(listElement, {
                 draggable: ".select2-search-choice",
                 animation: 150,
                 onUpdate: () => {

@@ -2,7 +2,7 @@ import MediaType from "@enhavo/media/Type/MediaType";
 import MediaConfig from "@enhavo/media/Type/MediaConfig";
 import MediaItem from "@enhavo/media/Type/MediaItem";
 import MediaItemMeta from "@enhavo/media/Type/MediaItemMeta";
-import Sortable = require('sortablejs');
+import Sortable from 'sortablejs';
 import * as $ from "jquery";
 
 export default class MediaRow
@@ -194,7 +194,7 @@ export default class MediaRow
     {
         if (this.config.multiple && this.config.sortable) {
             let self = this;
-            new Sortable(<HTMLElement>this.$element[0], {
+            Sortable.create(<HTMLElement>this.$element[0], {
                 animation: 150,
                 touchStartThreshold: 10,
                 draggable: '[data-media-item]',
