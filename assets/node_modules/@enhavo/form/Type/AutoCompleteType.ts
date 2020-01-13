@@ -2,7 +2,7 @@ import 'select2'
 import 'select2/select2.css'
 import FormType from "@enhavo/app/Form/FormType";
 import AutoCompleteConfig from "@enhavo/form/Type/AutoCompleteConfig";
-import Sortable = require('sortablejs');
+import Sortable from 'sortablejs';
 
 export default class AutoCompleteType extends FormType
 {
@@ -28,7 +28,7 @@ export default class AutoCompleteType extends FormType
                 }
                 let $list = $element.parent().find('ul.select2-choices');
                 let listElement = <HTMLElement>$list.get(0);
-                new Sortable(listElement, {
+                Sortable.create(listElement, {
                     draggable: ".select2-search-choice",
                     animation: 150,
                     onUpdate: () => {
