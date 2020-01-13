@@ -13,6 +13,7 @@
     "blueimp-file-upload": "^9.22.1",
     "cropperjs": "~1.2.2",
     "jquery": "~3.4.1",
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.11",
+    "sortablejs": "^1.10.2"
   }
 }
