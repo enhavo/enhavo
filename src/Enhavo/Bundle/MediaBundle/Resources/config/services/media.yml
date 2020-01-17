@@ -46,6 +46,7 @@ services:
             - '@enhavo_media.repository.file'
             - '@doctrine.orm.entity_manager'
             - '@enhavo_media.provider'
+            - '@enhavo_app.util.doctrine_reference_finder'
 
     enhavo_media.media.format_manager:
         class: Enhavo\Bundle\MediaBundle\Media\FormatManager

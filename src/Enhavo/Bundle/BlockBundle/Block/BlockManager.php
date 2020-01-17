@@ -10,7 +10,9 @@ namespace Enhavo\Bundle\BlockBundle\Block;
 
 use Enhavo\Bundle\AppBundle\Exception\ResolverException;
 use Enhavo\Bundle\AppBundle\Type\TypeCollector;
+use Enhavo\Bundle\AppBundle\Util\DoctrineReferenceFinder;
 use Enhavo\Bundle\BlockBundle\Factory\AbstractBlockFactory;
+use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -20,12 +22,19 @@ class BlockManager
     use ContainerAwareTrait;
 
     /**
+     * @var DoctrineReferenceFinder
+     */
+    private $doctrineReferenceFinder;
+
+    /**
      * @var Block[]
      */
     private $blocks = [];
 
-    public function __construct(TypeCollector $collector, $configurations)
+    public function __construct(TypeCollector $collector, DoctrineReferenceFinder $doctrineReferenceFinder, $configurations)
     {
+        $this->doctrineReferenceFinder = $doctrineReferenceFinder;
+
         foreach($configurations as $name => $options) {
             /** @var BlockTypeInterface $configuration */
             $configuration = $collector->getType($options['type']);
@@ -88,6 +97,28 @@ class BlockManager
                 }
             }
             return $factory;
+        }
+        return null;
+    }
+
+    /**
+     * Find the resource that references the block tree that contains the given block
+     *
+     * @param BlockInterface $block
+     * @return object|null
+     */
+    public function findRootResource(BlockInterface $block)
+    {
+        if (!$block->getNode()) {
+            return null;
+        }
+        $rootNode = $block->getNode()->getRoot();
+        if (!$rootNode) {
+            return null;
+        }
+        $references = $this->doctrineReferenceFinder->findReferencesTo($rootNode, NodeInterface::class, [NodeInterface::class, BlockInterface::class]);
+        if (count($references) > 0) {
+            return $references[0];
         }
         return null;
     }

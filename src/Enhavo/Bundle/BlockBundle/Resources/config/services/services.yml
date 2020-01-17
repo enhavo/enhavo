@@ -59,6 +59,7 @@ services:
         public: true
         arguments:
             - '@enhavo_block.block_collector'
+            - '@enhavo_app.util.doctrine_reference_finder'
             - '%enhavo_block.blocks%'
         calls:
             - ['setContainer', ['@service_container']]
