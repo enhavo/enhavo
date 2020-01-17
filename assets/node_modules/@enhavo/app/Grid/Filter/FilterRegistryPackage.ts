@@ -6,6 +6,7 @@ import AutoCompleteEntityFactory from "@enhavo/app/Grid/Filter/Factory/AutoCompl
 import EntityFactory from "@enhavo/app/Grid/Filter/Factory/EntityFactory";
 import OptionFactory from "@enhavo/app/Grid/Filter/Factory/OptionFactory";
 import BetweenFactory from "@enhavo/app/Grid/Filter/Factory/BetweenFactory";
+import DateBetweenFactory from "@enhavo/app/Grid/Filter/Factory/DateBetweenFactory";
 
 export default class FilterRegistryPackage extends RegistryPackage
 {
@@ -17,5 +18,6 @@ export default class FilterRegistryPackage extends RegistryPackage
         this.register('filter-option', () => import("@enhavo/app/Grid/Filter/Components/FilterDropdownComponent.vue"), new OptionFactory(application));
         this.register('filter-text', () => import("@enhavo/app/Grid/Filter/Components/FilterTextComponent.vue"), new TextFactory(application));
         this.register('filter-between', () => import("@enhavo/app/Grid/Filter/Components/FilterBetweenComponent.vue"), new BetweenFactory(application));
+        this.register('filter-date-between', () => import("@enhavo/app/Grid/Filter/Components/FilterDateBetweenComponent.vue"), new DateBetweenFactory(application));
     }
 }

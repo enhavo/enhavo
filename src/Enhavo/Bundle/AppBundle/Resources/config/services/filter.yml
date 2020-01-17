@@ -94,3 +94,11 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.filter, alias: age }
+
+    Enhavo\Bundle\AppBundle\Filter\Type\DateBetweenFilterType:
+        parent: Enhavo\Bundle\AppBundle\Filter\AbstractFilterType
+        public: true
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.filter, alias: date_between }

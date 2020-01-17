@@ -103,3 +103,7 @@ filter:
     label:
       from: 'Von'
       to: 'Bis'
+  date_between:
+    label:
+      from: 'Datum von'
+      to: 'Bis'
