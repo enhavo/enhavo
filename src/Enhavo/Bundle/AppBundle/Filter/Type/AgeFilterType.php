@@ -30,7 +30,7 @@ class AgeFilterType extends BetweenFilterType
         $property = array_pop($propertyPath);
 
         $date = new \DateTime();
-        $date->modify(sprintf('-%s year', intval($fromTo)));
+        $date->modify(sprintf('-%s year', intval($fromTo+1)));
 
         $query->addWhere($property, FilterQuery::OPERATOR_GREATER_EQUAL, $date->format('Y-m-d'), $propertyPath);
     }
