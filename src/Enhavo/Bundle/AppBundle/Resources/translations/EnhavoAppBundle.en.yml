@@ -90,3 +90,7 @@ filter:
     label:
       from: 'From'
       to: 'To'
+  date_between:
+    label:
+      from: 'Date from'
+      to: 'To'

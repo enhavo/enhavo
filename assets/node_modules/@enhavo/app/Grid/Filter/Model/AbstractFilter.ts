@@ -5,7 +5,7 @@ export default abstract class AbstractFilter implements FilterInterface
 {
     protected application: ApplicationInterface;
     component: string;
-    value: string;
+    value: any;
     key: string;
     label: string;
     initialValue: string;

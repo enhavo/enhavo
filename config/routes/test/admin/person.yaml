@@ -48,6 +48,12 @@ app_person_table:
                     property: children
                     label_from: Children from
                     label_to: to
+                date_between:
+                    label: Date Between
+                    type: date_between
+                    property: birthday
+                    label_from: Date from
+                    label_to: to
             viewer:
                 columns:
                     id:

@@ -1,9 +1,9 @@
-import Vue, {VueConstructor} from "vue";
+import Vue from "vue";
 import AppInterface from "@enhavo/app/AppInterface";
 import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
-import LoadedEvent from "@enhavo/app/ViewStack/Event/LoadedEvent";
 import View from "@enhavo/app/View/View";
 import ClickOutside from "@enhavo/app/ClickOutside";
+import Datepicker from 'vuejs-datepicker';
 import vSelect from 'vue-select';
 import 'vue-select/dist/vue-select.css';
 
@@ -28,6 +28,7 @@ export default class VueLoader
         Vue.config.productionTip = false;
         Vue.directive('click-outside', new ClickOutside(this.dispatcher, this.view));
         Vue.component('v-select', vSelect);
+        Vue.component('datepicker', Datepicker);
 
         this.vue = new Vue({
             el: '#' + this.id,
