@@ -4,4 +4,4 @@ Component
 .. toctree::
     :maxdepth: 2
 
-    add-new-setting
+    add-component

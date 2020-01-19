@@ -1,3 +1,3 @@
-Migrate to 0.9
+Migrate to 0.8
 ==============
 

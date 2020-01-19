@@ -1,5 +1,5 @@
-Batch Actions
-=============
+Batch
+=====
 
 .. toctree::
     :maxdepth: 2

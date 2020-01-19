@@ -6,10 +6,6 @@ AppBundle
 
     introduction
     viewer
-    block/index.rst
-    configuration/index.rst
-    menu/index.rst
-    routing/index.rst
 
 
 

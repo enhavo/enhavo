@@ -5,5 +5,5 @@ BlockBundle
     :maxdepth: 2
 
     introduction
-    use-grid
+    use-block
     rendering

@@ -4,21 +4,23 @@ Guides
 .. toctree::
     :hidden:
 
-    package/index
-    advanced/index
-    grid/index
-    resource/index
-    contact-form/index
-    batch-actions/index
-    button/index
-    block/index
-    category/index
     action/index
-    javascript/index
+    advanced/index
+    assets/index
+    batch/index
+    block/index
+    column/index
+    component/index
+    resource/index
+    contact/index
+    controller/index
+    filter/index
+    media/index
+    migration/index
+    resource/index
+    routing/index
     search/index
     setting/index
-    filter/index
-    media-filter/index
 
 * **Package**
 

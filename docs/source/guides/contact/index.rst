@@ -1,5 +1,5 @@
-Contact Form
-============
+Contact
+=======
 
 .. toctree::
     :maxdepth: 2
