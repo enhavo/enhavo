@@ -5,3 +5,4 @@ Advanced
     :maxdepth: 2
 
     create-bundle
+    add-sylius-extension

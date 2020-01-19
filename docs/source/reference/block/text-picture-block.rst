@@ -1,9 +1,9 @@
-SearchBlock
-===========
+Text Picture Block
+==================
 
 +-------------+--------------------------------------------------------------------+
-| type        | search                                                             |
+| type        | text_picture                                                       |
 +-------------+--------------------------------------------------------------------+
-| class       | :class:`Enhavo\\Bundle\\SearchBundle\\Block\\SearchBlock`          |
+| class       | :class:`Enhavo\\Bundle\\BlockBundle\\Block\\Type\\TextPictureBlock`|
 +-------------+--------------------------------------------------------------------+
 
