@@ -1,10 +1,9 @@
-Assets
+Icons
 ======
 
 .. toctree::
     :maxdepth: 2
 
-    icons
 
 
 
