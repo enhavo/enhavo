@@ -1,12 +1,10 @@
-PreviewButton
-=============
+Send Action
+===========
 
-Send the current state of the form to a preview route that will display the view in a separate overview.
+Close the current overlay without saving.
 
 +-------------+--------------------------------------------------------------------+
-| type        | preview                                                            |
-+-------------+--------------------------------------------------------------------+
-| require     | - route_                                                           |
+| type        | cancel                                                             |
 +-------------+--------------------------------------------------------------------+
 | option      | - label_                                                           |
 |             | - icon_                                                            |
@@ -14,27 +12,9 @@ Send the current state of the form to a preview route that will display the view
 |             | - display_                                                         |
 |             | - role_                                                            |
 +-------------+--------------------------------------------------------------------+
-| class       | :class:`Enhavo\\Bundle\\AppBundle\\Button\\Button\\PreviewButton`  |
+| class       | :class:`Enhavo\\Bundle\\AppBundle\\Button\\Button\\CancelButton`   |
 +-------------+--------------------------------------------------------------------+
 
-
-
-Require
--------
-
-route
-~~~~~
-
-**type**: `string`
-
-Define the preview route where to send the current form.
-
-.. code-block:: yaml
-
-    buttons:
-        preview:
-            type: preview
-            route: my_preview_route
 
 Option
 ------
@@ -48,4 +28,3 @@ Option
 .. include:: /reference/button/option/display.rst
 
 .. include:: /reference/button/option/role.rst
-

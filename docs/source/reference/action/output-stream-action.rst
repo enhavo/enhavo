@@ -1,10 +1,10 @@
-CancelButton
-============
+Output Stream Action
+====================
 
 Close the current overlay without saving.
 
 +-------------+--------------------------------------------------------------------+
-| type        | cancel                                                             |
+| type        | output_stream                                                      |
 +-------------+--------------------------------------------------------------------+
 | option      | - label_                                                           |
 |             | - icon_                                                            |

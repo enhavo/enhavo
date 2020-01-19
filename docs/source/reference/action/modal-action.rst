@@ -1,10 +1,10 @@
-CategoryAction
-==============
+Modal Action
+============
 
 The CategoryAction provide a small overlay to manage categories quickly.
 
 +-------------+--------------------------------------------------------------------+
-| type        | category                                                           |
+| type        | modal                                                              |
 +-------------+--------------------------------------------------------------------+
 | option      | - `label`_                                                         |
 |             | - `collection`_                                                    |

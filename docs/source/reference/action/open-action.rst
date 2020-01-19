@@ -1,10 +1,10 @@
-Delete Action
-=============
+Open Action
+===========
 
 Will delete the current resource and close the overlay.
 
 +-------------+--------------------------------------------------------------------+
-| type        | download                                                           |
+| type        | open                                                               |
 +-------------+--------------------------------------------------------------------+
 | option      | - label_                                                           |
 |             | - icon_                                                            |

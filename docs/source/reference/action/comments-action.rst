@@ -1,10 +1,10 @@
-Delete Action
-=============
+Comments Action
+===============
 
-Will delete the current resource and close the overlay.
+Close the current overlay without saving.
 
 +-------------+--------------------------------------------------------------------+
-| type        | download                                                           |
+| type        | comments                                                           |
 +-------------+--------------------------------------------------------------------+
 | option      | - label_                                                           |
 |             | - icon_                                                            |
@@ -12,9 +12,10 @@ Will delete the current resource and close the overlay.
 |             | - display_                                                         |
 |             | - role_                                                            |
 +-------------+--------------------------------------------------------------------+
-| class       | :class:`Enhavo\\Bundle\\AppBundle\\Button\\Button\\DeleteButton`   |
+| bundle      | :class:`EnhavoCommentBundle`                                       |
 +-------------+--------------------------------------------------------------------+
-
+| class       | :class:`Enhavo\\Bundle\\AppBundle\\Button\\Button\\CancelButton`   |
++-------------+--------------------------------------------------------------------+
 
 Option
 ------
@@ -28,4 +29,3 @@ Option
 .. include:: /reference/button/option/display.rst
 
 .. include:: /reference/button/option/role.rst
-

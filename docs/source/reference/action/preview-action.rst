@@ -1,10 +1,12 @@
-Delete Action
-=============
+Preview Action
+==============
 
-Will delete the current resource and close the overlay.
+Send the current state of the form to a preview route that will display the view in a separate overview.
 
 +-------------+--------------------------------------------------------------------+
-| type        | download                                                           |
+| type        | preview                                                            |
++-------------+--------------------------------------------------------------------+
+| require     | - route_                                                           |
 +-------------+--------------------------------------------------------------------+
 | option      | - label_                                                           |
 |             | - icon_                                                            |
@@ -12,9 +14,27 @@ Will delete the current resource and close the overlay.
 |             | - display_                                                         |
 |             | - role_                                                            |
 +-------------+--------------------------------------------------------------------+
-| class       | :class:`Enhavo\\Bundle\\AppBundle\\Button\\Button\\DeleteButton`   |
+| class       | :class:`Enhavo\\Bundle\\AppBundle\\Button\\Button\\PreviewButton`  |
 +-------------+--------------------------------------------------------------------+
 
+
+
+Require
+-------
+
+route
+~~~~~
+
+**type**: `string`
+
+Define the preview route where to send the current form.
+
+.. code-block:: yaml
+
+    buttons:
+        preview:
+            type: preview
+            route: my_preview_route
 
 Option
 ------
