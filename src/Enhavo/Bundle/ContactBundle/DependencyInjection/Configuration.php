@@ -17,8 +17,8 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('enhavo_contact');
+        $treeBuilder = new TreeBuilder('enhavo_contact');
+        $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
             ->children()
