@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\MediaBundle\Media;
 
 use Doctrine\ORM\EntityManagerInterface;
 
+use Enhavo\Bundle\AppBundle\Util\DoctrineReferenceFinder;
 use Enhavo\Bundle\MediaBundle\Entity\Format;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\MediaBundle\Model\FormatInterface;
@@ -30,7 +31,7 @@ class MediaManager
     private $formatManager;
 
     /**
-     * @var ProviderInterface
+     * @var FileRepository
      */
     private $fileRepository;
 
@@ -45,6 +46,11 @@ class MediaManager
     private $provider;
 
     /**
+     * @var DoctrineReferenceFinder
+     */
+    private $doctrineReferenceFinder;
+
+    /**
      * MediaManager constructor.
      *
      * @param FormatManager $formatManager
@@ -52,19 +58,22 @@ class MediaManager
      * @param FileRepository $fileRepository
      * @param EntityManagerInterface $em
      * @param ProviderInterface $provider
+     * @param DoctrineReferenceFinder $doctrineReferenceFinder
      */
     public function __construct(
         FormatManager $formatManager,
         StorageInterface $storage,
         FileRepository $fileRepository,
         EntityManagerInterface $em,
-        ProviderInterface $provider
+        ProviderInterface $provider,
+        DoctrineReferenceFinder $doctrineReferenceFinder
     ) {
         $this->formatManager = $formatManager;
         $this->storage = $storage;
         $this->fileRepository = $fileRepository;
         $this->em = $em;
         $this->provider = $provider;
+        $this->doctrineReferenceFinder = $doctrineReferenceFinder;
     }
 
     /**
@@ -176,5 +185,16 @@ class MediaManager
     public function updateFile(FileInterface $file)
     {
         $this->provider->updateFile($file);
+    }
+
+    /**
+     * Finds entities referencing the file.
+     *
+     * @param FileInterface $file File to find references to
+     * @return array Array of entities that reference the file
+     */
+    public function findReferencesTo(FileInterface $file)
+    {
+        return $this->doctrineReferenceFinder->findReferencesTo($file, FileInterface::class, [Format::class]);
     }
 }
