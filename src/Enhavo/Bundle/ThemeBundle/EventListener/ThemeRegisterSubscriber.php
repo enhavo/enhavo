@@ -11,7 +11,7 @@ namespace Enhavo\Bundle\ThemeBundle\EventListener;
 use Enhavo\Bundle\AppBundle\Template\TemplateManager;
 use Enhavo\Bundle\ThemeBundle\Theme\ThemeManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 class ThemeRegisterSubscriber implements EventSubscriberInterface
@@ -48,9 +48,9 @@ class ThemeRegisterSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param GetResponseEvent $event
+     * @param ResponseEvent $event
      */
-    public function onRequest(GetResponseEvent $event)
+    public function onRequest(ResponseEvent $event)
     {
         $path = $this->themeManager->getTheme()->getTemplate()->getPath();
         if($path !== null) {

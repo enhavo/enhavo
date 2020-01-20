@@ -11,7 +11,7 @@ namespace Enhavo\Bundle\AppBundle\EventListener;
 use Enhavo\Bundle\AppBundle\Locale\LocaleResolverInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 
@@ -33,7 +33,7 @@ class LocaleSubscriber implements EventSubscriberInterface
         $this->resolver = $resolver;
     }
 
-    public function onKernelRequest(GetResponseEvent $event)
+    public function onKernelRequest(ResponseEvent $event)
     {
         $request = $event->getRequest();
         $request->setLocale($this->resolver->resolve());
