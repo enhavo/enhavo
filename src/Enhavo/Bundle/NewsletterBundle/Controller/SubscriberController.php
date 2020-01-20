@@ -3,17 +3,11 @@
 namespace Enhavo\Bundle\NewsletterBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
-use Enhavo\Bundle\NewsletterBundle\Event\NewsletterEvents;
-use Enhavo\Bundle\NewsletterBundle\Event\SubscriberEvent;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Strategy\AcceptStrategy;
 use Enhavo\Bundle\NewsletterBundle\Strategy\DoubleOptInStrategy;
-use ProjectBundle\Event\PreValidationEvent;
-use Sylius\Component\Resource\Model\ResourceInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class SubscriberController extends ResourceController
 {

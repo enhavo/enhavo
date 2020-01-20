@@ -8,16 +8,12 @@
 
 namespace Enhavo\Bundle\ShopBundle\Controller;
 
-use Enhavo\Bundle\AppBundle\Controller\AppController;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Payum\Core\Registry\RegistryInterface;
 use Payum\Core\Security\HttpRequestVerifierInterface;
 use Sylius\Component\Payment\Model\Payment;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Payum\Core\Security\GenericTokenFactoryInterface;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use Sylius\Bundle\PayumBundle\Request\GetStatus;
 
 class PaymentController extends AppController
 {
