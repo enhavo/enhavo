@@ -3,16 +3,16 @@
 namespace Enhavo\Bundle\ContactBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
-use Enhavo\Bundle\AppBundle\Controller\RequestConfigurationFactory;
 use Enhavo\Bundle\ContactBundle\Configuration\ConfigurationFactory;
 use Enhavo\Bundle\ContactBundle\ErrorResolver\FormErrorResolver;
 use Enhavo\Bundle\ContactBundle\Mailer\ContactMailer;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactory;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Translation\TranslatorInterface;
 
-class ContactController extends Controller
+class ContactController extends AbstractController
 {
     /**
      * @var TranslatorInterface

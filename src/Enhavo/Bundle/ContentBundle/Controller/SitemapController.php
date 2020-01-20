@@ -2,10 +2,11 @@
 
 namespace Enhavo\Bundle\ContentBundle\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
-class SitemapController extends Controller
+class SitemapController extends AbstractController
 {
     public function showAction()
     {

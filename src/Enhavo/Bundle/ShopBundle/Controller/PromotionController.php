@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\ShopBundle\Controller;
 
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sylius\Component\Cart\Provider\CartProviderInterface;
 use Sylius\Component\Cart\Model\CartInterface;
@@ -20,7 +21,7 @@ use Symfony\Component\EventDispatcher\GenericEvent;
 use Sylius\Component\Resource\Event\FlashEvent;
 use Sylius\Component\Order\SyliusCartEvents;
 
-class PromotionController extends Controller
+class PromotionController extends AbstractController
 {
     public function redeemCouponAction(Request $request)
     {
