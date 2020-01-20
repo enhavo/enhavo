@@ -15,24 +15,24 @@ class TextToWordTest extends TestCase
     {
         $textToWord = new TextToWord();
 
-        $this->assertArraySubset([
+        $this->assertSame([
             'Lorem',
             'ipsum',
             'Dolor'
         ], $textToWord->split('Lorem ipsum! Dolor'));
 
-        $this->assertArraySubset([
+        $this->assertSame([
             'Lorem',
             'ipsum...Dolor',
         ], $textToWord->split('Lorem ipsum...Dolor'));
 
-        $this->assertArraySubset([
+        $this->assertSame([
             'Lorem',
             'ipsum',
             'Dolor'
         ], $textToWord->split('Lorem ipsum   Dolor'));
 
-        $this->assertArraySubset([
+        $this->assertSame([
             'Lorem',
             'ipsum',
             'Dolor'
