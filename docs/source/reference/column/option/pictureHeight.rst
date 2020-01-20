@@ -9,6 +9,6 @@ This value will influence the height of the whole table row.
 .. code-block:: yaml
 
     columns:
-        myWidget:
+        myColumn:
             pictureHeight: 60
             # ... further option

@@ -8,6 +8,6 @@ Overwrite the default label. It will be translated over the translation service 
 .. code-block:: yaml
 
     columns:
-        myWidget:
+        myColumn:
             label: myLabel
             # ... further option

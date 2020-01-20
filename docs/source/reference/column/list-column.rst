@@ -1,5 +1,5 @@
-ListWidget
-==========
+List Column
+===========
 
 Show all values of a collection as a list.
 
@@ -14,14 +14,14 @@ Show all values of a collection as a list.
 |             | - label_                                                           |
 |             | - translationDomain_                                               |
 +-------------+--------------------------------------------------------------------+
-| class       | :class:`Enhavo\\Bundle\\AppBundle\\Table\\Widget\\ListWidget`      |
+| class       | :class:`Enhavo\\Bundle\\AppBundle\\Table\\Column\\ListColumn`      |
 +-------------+--------------------------------------------------------------------+
 
 
 Require
 -------
 
-.. include:: /reference/table-widget/option/property.rst
+.. include:: /reference/table-column/option/property.rst
 
 .. _item_property:
 
@@ -35,18 +35,18 @@ Define the property of the items which should be used to display inside the coll
 .. code-block:: yaml
 
     buttons:
-        myWidget:
+        myColumn:
             property: groups
             item_property: name
 
 Option
 ------
 
-.. include:: /reference/table-widget/option/separator.rst
+.. include:: /reference/table-column/option/separator.rst
 
-.. include:: /reference/table-widget/option/width.rst
+.. include:: /reference/table-column/option/width.rst
 
-.. include:: /reference/table-widget/option/label.rst
+.. include:: /reference/table-column/option/label.rst
 
-.. include:: /reference/table-widget/option/translationDomain.rst
+.. include:: /reference/table-column/option/translationDomain.rst
 

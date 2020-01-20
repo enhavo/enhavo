@@ -1,5 +1,5 @@
-TemplateWidget
-==============
+Template Column
+===============
 
 Render specific template with a certain property of a resource.
 
@@ -13,13 +13,13 @@ Render specific template with a certain property of a resource.
 |             | - label_                                                           |
 |             | - translationDomain_                                               |
 +-------------+--------------------------------------------------------------------+
-| class       | :class:`Enhavo\\Bundle\\AppBundle\\Table\\Widget\\PropertyWidget`  |
+| class       | :class:`Enhavo\\Bundle\\AppBundle\\Table\\Column\\PropertyColumn`  |
 +-------------+--------------------------------------------------------------------+
 
 Require
 -------
 
-.. include:: /reference/table-widget/option/property.rst
+.. include:: /reference/table-column/option/property.rst
 
 
 template
@@ -33,16 +33,16 @@ The parameters ``value`` (value of property) and ``data`` (resource) will be pas
 .. code-block:: yaml
 
     buttons:
-        myWidget:
-            template: MyBundle:TableWidget:myTemplate.html.twig
+        myColumn:
+            template: MyBundle:TableColumn:myTemplate.html.twig
 
 
 Option
 ------
 
-.. include:: /reference/table-widget/option/width.rst
+.. include:: /reference/table-column/option/width.rst
 
-.. include:: /reference/table-widget/option/label.rst
+.. include:: /reference/table-column/option/label.rst
 
-.. include:: /reference/table-widget/option/translationDomain.rst
+.. include:: /reference/table-column/option/translationDomain.rst
 

@@ -1,33 +1,33 @@
-Table Widget
-============
+Column Reference
+================
 
 .. toctree::
     :hidden:
 
-    boolean-widget
-    date-widget
-    datetime-widget
-    list-widget
-    multiple-property-widget
-    position-widget
-    property-widget
-    template-widget
-    picture-widget
+    boolean-column
+    date-column
+    datetime-column
+    list-column
+    multiple-property-column
+    position-column
+    property-column
+    template-column
+    picture-column
 
-* :doc:`/reference/table-widget/boolean-widget`
+* :doc:`/reference/table-column/boolean-column`
 
-* :doc:`/reference/table-widget/date-widget`
+* :doc:`/reference/table-column/date-column`
 
-* :doc:`/reference/table-widget/datetime-widget`
+* :doc:`/reference/table-column/datetime-column`
 
-* :doc:`/reference/table-widget/list-widget`
+* :doc:`/reference/table-column/list-column`
 
-* :doc:`/reference/table-widget/multiple-property-widget`
+* :doc:`/reference/table-column/multiple-property-column`
 
-* :doc:`/reference/table-widget/position-widget`
+* :doc:`/reference/table-column/position-column`
 
-* :doc:`/reference/table-widget/property-widget`
+* :doc:`/reference/table-column/property-column`
 
-* :doc:`/reference/table-widget/template-widget`
+* :doc:`/reference/table-column/template-column`
 
-* :doc:`/reference/table-widget/picture-widget`
+* :doc:`/reference/table-column/picture-column`

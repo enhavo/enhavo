@@ -10,6 +10,6 @@ Use format to display date. You can find all possible values on the date_ page o
 .. code-block:: yaml
 
     columns:
-        myWidget:
+        myColumn:
             date: r
             # ... further option

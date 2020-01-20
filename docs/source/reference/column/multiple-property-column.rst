@@ -1,5 +1,5 @@
-MultiplePropertyWidget
-======================
+Multiple Property Column
+========================
 
 Show a list of properties of the given resource.
 
@@ -13,7 +13,7 @@ Show a list of properties of the given resource.
 |             | - label_                                                                  |
 |             | - translationDomain_                                                      |
 +-------------+---------------------------------------------------------------------------+
-| class       | :class:`Enhavo\\Bundle\\AppBundle\\Table\\Widget\\MultiplePropertyWidget` |
+| class       | :class:`Enhavo\\Bundle\\AppBundle\\Table\\Column\\MultiplePropertyColumn` |
 +-------------+---------------------------------------------------------------------------+
 
 
@@ -32,7 +32,7 @@ Define a array of properties that should be displayed as list.
 .. code-block:: yaml
 
     buttons:
-        myWidget:
+        myColumn:
             properties:
                 - firstname
                 - lastname
@@ -40,10 +40,10 @@ Define a array of properties that should be displayed as list.
 Option
 ------
 
-.. include:: /reference/table-widget/option/separator.rst
+.. include:: /reference/table-column/option/separator.rst
 
-.. include:: /reference/table-widget/option/width.rst
+.. include:: /reference/table-column/option/width.rst
 
-.. include:: /reference/table-widget/option/label.rst
+.. include:: /reference/table-column/option/label.rst
 
-.. include:: /reference/table-widget/option/translationDomain.rst
+.. include:: /reference/table-column/option/translationDomain.rst

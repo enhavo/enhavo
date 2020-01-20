@@ -1,10 +1,10 @@
-PropertyWidget
+Boolean Column
 ==============
 
-Display a property of a resource.
+Show a tick or cross for a boolean value.
 
 +-------------+--------------------------------------------------------------------+
-| type        | property                                                           |
+| type        | boolean                                                            |
 +-------------+--------------------------------------------------------------------+
 | require     | - property_                                                        |
 +-------------+--------------------------------------------------------------------+
@@ -12,19 +12,20 @@ Display a property of a resource.
 |             | - label_                                                           |
 |             | - translationDomain_                                               |
 +-------------+--------------------------------------------------------------------+
-| class       | :class:`Enhavo\\Bundle\\AppBundle\\Table\\Widget\\PropertyWidget`  |
+| class       | :class:`Enhavo\\Bundle\\AppBundle\\Table\\Column\\BooleanColumn`   |
 +-------------+--------------------------------------------------------------------+
+
 
 Require
 -------
 
-.. include:: /reference/table-widget/option/property.rst
+.. include:: /reference/table-column/option/property.rst
 
 Option
 ------
 
-.. include:: /reference/table-widget/option/width.rst
+.. include:: /reference/table-column/option/width.rst
 
-.. include:: /reference/table-widget/option/label.rst
+.. include:: /reference/table-column/option/label.rst
 
-.. include:: /reference/table-widget/option/translationDomain.rst
+.. include:: /reference/table-column/option/translationDomain.rst
