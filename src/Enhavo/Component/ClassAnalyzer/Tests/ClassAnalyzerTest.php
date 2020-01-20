@@ -57,7 +57,7 @@ class ClassAnalyzerTest extends TestCase
     {
         $analyzer = new ClassAnalyzer();
         $analyzer->setCode($this->getCodeExampleOne());
-        $this->assertArraySubset(array(
+        $this->assertSame(array(
             'MyClass' => 'Acme\Demo\Package\MyClass',
             'AnotherClass' => 'Acme\Demo\Package\AnotherClass'
         ), $analyzer->getUses());
@@ -67,7 +67,7 @@ class ClassAnalyzerTest extends TestCase
     {
         $analyzer = new ClassAnalyzer();
         $analyzer->setCode($this->getCodeExampleTwo());
-        $this->assertArraySubset(array(
+        $this->assertSame(array(
             'Demo' => '\Acme\Demo',
             'Package' => 'Package'
         ), $analyzer->getUses());
@@ -77,7 +77,7 @@ class ClassAnalyzerTest extends TestCase
     {
         $analyzer = new ClassAnalyzer();
         $analyzer->setCode($this->getCodeExampleOne());
-        $this->assertArraySubset(array(
+        $this->assertSame(array(
             array('\DateTime', 'date'),
             array('MyClass', 'myClass'),
             array('AnotherClass', 'anotherClass'),
@@ -89,7 +89,7 @@ class ClassAnalyzerTest extends TestCase
     {
         $analyzer = new ClassAnalyzer();
         $analyzer->setCode($this->getCodeExampleTwo());
-        $this->assertArraySubset(array(
+        $this->assertSame(array(
             array('\DateTime', 'date'),
             array('MyClass', 'myClass'),
             array('AnotherClass', 'anotherClass'),
@@ -101,7 +101,7 @@ class ClassAnalyzerTest extends TestCase
     {
         $analyzer = new ClassAnalyzer();
         $analyzer->setCode($this->getCodeExampleOne());
-        $this->assertArraySubset(array(
+        $this->assertSame(array(
             '__construct', 'bar', 'hello'
         ), $analyzer->getFunctions());
     }
@@ -110,7 +110,7 @@ class ClassAnalyzerTest extends TestCase
     {
         $analyzer = new ClassAnalyzer();
         $analyzer->setCode($this->getCodeExampleTwo());
-        $this->assertArraySubset(array(
+        $this->assertSame(array(
             'Foo', 'bar', 'hello'
         ), $analyzer->getFunctions());
     }
@@ -120,8 +120,8 @@ class ClassAnalyzerTest extends TestCase
         $analyzer = new ClassAnalyzer();
         $analyzer->setCode($this->getCodeExampleOne());
 
-        $this->assertArraySubset(array(), $analyzer->getFunctionParameters('bar'));
-        $this->assertArraySubset(array(
+        $this->assertSame(array(), $analyzer->getFunctionParameters('bar'));
+        $this->assertSame(array(
             array(null, 'world')
         ), $analyzer->getFunctionParameters('hello'));
     }
@@ -131,8 +131,8 @@ class ClassAnalyzerTest extends TestCase
         $analyzer = new ClassAnalyzer();
         $analyzer->setCode($this->getCodeExampleTwo());
 
-        $this->assertArraySubset(array(), $analyzer->getFunctionParameters('bar'));
-        $this->assertArraySubset(array(
+        $this->assertSame(array(), $analyzer->getFunctionParameters('bar'));
+        $this->assertSame(array(
             array(null, 'world')
         ), $analyzer->getFunctionParameters('hello'));
     }

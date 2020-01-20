@@ -21,7 +21,7 @@ class FileTest extends TestCase
         $file->setParameters([
             'hello' => 'world!'
         ]);
-        $this->assertArraySubset([
+        $this->assertSame([
             'foo' => 'bar',
             'hello' => 'world!'
         ] , $file->getParameters());

@@ -26,8 +26,8 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('enhavo_user');
+        $treeBuilder = new TreeBuilder('enhavo_user');
+        $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
             // Driver used by the resource bundle

@@ -23,8 +23,8 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('enhavo_shop');
+        $treeBuilder = new TreeBuilder('enhavo_shop');
+        $rootNode = $treeBuilder->getRootNode();
         $rootNode
             ->children()
                 ->scalarNode('driver')->defaultValue('doctrine/orm')->end()

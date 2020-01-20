@@ -4,8 +4,10 @@ namespace Enhavo\Bundle\SearchBundle\Twig;
 
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Templating\EngineInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class SearchForm extends \Twig_Extension
+class SearchForm extends AbstractExtension
 {
     /**
      * @var Container
@@ -28,7 +30,7 @@ class SearchForm extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('search_form', array($this, 'render'), array('is_safe' => array('html'))),
+            new TwigFunction('search_form', array($this, 'render'), array('is_safe' => array('html'))),
         );
     }
 

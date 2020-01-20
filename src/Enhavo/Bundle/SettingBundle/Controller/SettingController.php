@@ -2,9 +2,9 @@
 
 namespace Enhavo\Bundle\SettingBundle\Controller;
 
-use Enhavo\Bundle\AppBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class SettingController extends Controller
+class SettingController extends AbstractController
 {
 
 }

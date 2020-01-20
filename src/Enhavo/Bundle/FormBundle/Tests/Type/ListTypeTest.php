@@ -24,7 +24,7 @@ class ListTypeTest extends TypeTestCase
         $form->createView();
 
         $this->assertTrue($form->isSynchronized());
-        $this->assertArraySubset([
+        $this->assertSame([
             0 => 'A',
             1 => 'B'
         ], $form->getData());
@@ -47,7 +47,7 @@ class ListTypeTest extends TypeTestCase
         $form->createView();
 
         $this->assertTrue($form->isSynchronized());
-        $this->assertArraySubset([
+        $this->assertSame([
             0 => 'B',
             1 => 'A'
         ], $form->getData());

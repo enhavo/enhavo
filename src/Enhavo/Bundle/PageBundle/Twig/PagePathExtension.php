@@ -7,8 +7,10 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\Routing\RouterInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class PagePathExtension extends \Twig_Extension
+class PagePathExtension extends AbstractExtension
 {
     /**
      * @var ContainerInterface
@@ -34,7 +36,7 @@ class PagePathExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('page_path', array($this, 'getPagePath')),
+            new TwigFunction('page_path', array($this, 'getPagePath')),
         );
     }
 

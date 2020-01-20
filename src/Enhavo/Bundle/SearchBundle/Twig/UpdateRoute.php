@@ -9,16 +9,18 @@
 namespace Enhavo\Bundle\SearchBundle\Twig;
 
 use Enhavo\Bundle\AppBundle\Security\Roles\RoleUtil;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 
 /*
  * Gets the update route for a given resource
  */
-class UpdateRoute extends \Twig_Extension
+class UpdateRoute extends AbstractExtension
 {
     public function getFilters()
     {
         return array(
-            new \Twig_SimpleFilter('updateRoute', array($this, 'getUpdateRoute')),
+            new TwigFilter('updateRoute', array($this, 'getUpdateRoute')),
         );
     }
 

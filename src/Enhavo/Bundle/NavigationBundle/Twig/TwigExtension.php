@@ -5,8 +5,10 @@ use Enhavo\Bundle\NavigationBundle\Entity\Node;
 use Enhavo\Bundle\NavigationBundle\Model\NodeInterface;
 use Enhavo\Bundle\NavigationBundle\Node\NodeManager;
 use Enhavo\Bundle\NavigationBundle\Renderer\NodeRenderer;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class TwigExtension extends \Twig_Extension
+class TwigExtension extends AbstractExtension
 {
     /**
      * @var NodeManager
@@ -32,8 +34,8 @@ class TwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('navigation_node_is_active', array($this, 'nodeIsActive')),
-            new \Twig_SimpleFunction('navigation_node_render', array($this, 'renderNode'), array('is_safe' => array('html'))),
+            new TwigFunction('navigation_node_is_active', array($this, 'nodeIsActive')),
+            new TwigFunction('navigation_node_render', array($this, 'renderNode'), array('is_safe' => array('html'))),
         );
     }
 
