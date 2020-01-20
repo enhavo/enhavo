@@ -2,7 +2,10 @@
 
 namespace Enhavo\Bundle\AppBundle\Type;
 
-abstract class AbstractRenderer extends \Twig_Extension
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
+
+abstract class AbstractRenderer extends AbstractExtension
 {
     /**
      * @var CollectorInterface
@@ -22,7 +25,7 @@ abstract class AbstractRenderer extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction($this->getName(), array($this, 'render'), array('is_safe' => array('html'))),
+            new TwigFunction($this->getName(), array($this, 'render'), array('is_safe' => array('html'))),
         );
     }
 

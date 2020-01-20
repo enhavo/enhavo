@@ -9,13 +9,15 @@
 namespace Enhavo\Bundle\ShopBundle\Twig;
 
 use Symfony\Component\Intl\Intl;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 
-class Country extends \Twig_Extension
+class Country extends AbstractExtension
 {
     public function getFilters()
     {
         return array(
-            new \Twig_SimpleFilter('country', array($this, 'getCountryName')),
+            new TwigFilter('country', array($this, 'getCountryName')),
         );
     }
 
