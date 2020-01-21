@@ -9,7 +9,6 @@ Column Reference
     comment-state-column
     date-widget-column
     datetime-widget-column
-    index
     label-column
     list-column
     media-column
@@ -27,7 +26,6 @@ Column Reference
 * :doc:`/reference/column/comment-state-column`
 * :doc:`/reference/column/date-widget-column`
 * :doc:`/reference/column/datetime-widget-column`
-* :doc:`/reference/column/index`
 * :doc:`/reference/column/label-column`
 * :doc:`/reference/column/list-column`
 * :doc:`/reference/column/media-column`

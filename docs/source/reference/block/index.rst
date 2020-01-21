@@ -4,7 +4,7 @@ Block
 .. toctree::
     :hidden:
 
-    article-list
+    article-list-block
     blockquote-block
     calendar-block
     comment-block

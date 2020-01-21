@@ -7,6 +7,7 @@ Book
     architecture/index
     assets/index
     app-bundle/index
+    article-bundle/index
     block-bundle/index
     calendar-bundle/index
     comment-bundle/index
@@ -46,20 +47,9 @@ The book give you an overview about all components and bundles and how they work
 
 * :doc:`/book/app-bundle/index`
 * :doc:`/book/app-bundle/viewer`
-
 * :doc:`/book/app-bundle/routing/index`
-
-* :doc:`/book/app-bundle/block/index`
-
-  * :doc:`/book/app-bundle/block/introduction`
-
-* :doc:`/book/app-bundle/configuration/index`
-
-  * :doc:`/book/app-bundle/configuration/app-bundle`
-
-* :doc:`/book/app-bundle/menu/index`
-
-  * :doc:`/book/app-bundle/menu/menu`
+* :doc:`/book/app-bundle/configuration`
+* :doc:`/book/app-bundle/menu`
 
 .. rubric:: FormBundle
 
@@ -69,7 +59,7 @@ The book give you an overview about all components and bundles and how they work
 
 * :doc:`/book/block-bundle/introduction`
 * :doc:`/book/block-bundle/use-block`
-* :doc:`/book/grid-bundle/rendering`
+* :doc:`/book/block-bundle/rendering`
 
 .. rubric:: SearchBundle
 
