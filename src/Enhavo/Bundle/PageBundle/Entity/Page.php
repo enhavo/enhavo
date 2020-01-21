@@ -104,6 +104,9 @@ class Page extends Content implements PageInterface
     public function setParent($parent)
     {
         $this->parent = $parent;
+        if(!$parent->getChildren()->contains($this)) {
+            $parent->getChildren()->add($this);
+        }
     }
 
     /**
@@ -112,8 +115,8 @@ class Page extends Content implements PageInterface
      */
     public function addChild(PageInterface $page)
     {
-        $page->setParent($this);
         $this->children[] = $page;
+        $page->setParent($this);
         return $this;
     }
 
