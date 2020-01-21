@@ -89,7 +89,7 @@ Start that build-in server with
 
 and see the result in your browser under ``http://127.0.0.1:8001/admin``
 
-Use the username and password from the user account, you´ve created before with ``fos:user:create`, to log in.
+Use the username and password from the user account, you´ve created before with ``fos:user:create``, to log in.
 
 Final Words
 -----------

@@ -8,7 +8,7 @@ To create a format we use filters that we can apply on the original file. If we 
 we chain them together.
 
 Enhavo comes already with a set of filters, that covers most of use cases. That includes resizing, compression and preview
-images out of pdfs and videos. For a full list of all filters check :doc:`/reference/image-filter/index`
+images out of pdfs and videos. For a full list of all filters check :doc:`/reference/media-filter/index`
 
 
 

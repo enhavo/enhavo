@@ -13,11 +13,11 @@ Media Filter
     pdf_image
     video_image
 
-* :doc:`/reference/image-filter/background`
-* :doc:`/reference/image-filter/image`
-* :doc:`/reference/image-filter/image_blur`
-* :doc:`/reference/image-filter/image_compression`
-* :doc:`/reference/image-filter/image_zoom`
-* :doc:`/reference/image-filter/parent`
-* :doc:`/reference/image-filter/pdf_image`
-* :doc:`/reference/image-filter/video_image`
+* :doc:`/reference/media-filter/background`
+* :doc:`/reference/media-filter/image`
+* :doc:`/reference/media-filter/image_blur`
+* :doc:`/reference/media-filter/image_compression`
+* :doc:`/reference/media-filter/image_zoom`
+* :doc:`/reference/media-filter/parent`
+* :doc:`/reference/media-filter/pdf_image`
+* :doc:`/reference/media-filter/video_image`

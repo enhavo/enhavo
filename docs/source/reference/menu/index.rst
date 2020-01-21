@@ -8,6 +8,6 @@ Menu
     dropdown
     base
 
-* :doc:`/reference/form/list`
-* :doc:`/reference/form/dropdown`
-* :doc:`/reference/form/base`
+* :doc:`list`
+* :doc:`dropdown`
+* :doc:`base`

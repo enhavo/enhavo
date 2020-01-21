@@ -22,27 +22,18 @@ Guides
     search/index
     setting/index
 
-* **Package**
+* **Block**
 
-  * :doc:`/guides/package/add-new-package`
-
-* **Grid**
-
-  * :doc:`/guides/grid/add-content-type`
+  * :doc:`/guides/block/create-block`
 
 * **Resource**
 
-  * :doc:`/guides/resource/add-sylius-extension`
-  * :doc:`/guides/resource/add-new-resource`
-  * :doc:`/guides/resource/dynamic-routing`
-  * :doc:`/guides/resource/make-resource-sortable`
-  * :doc:`/guides/resource/add-media-file-to-resource`
-  * :doc:`/guides/resource/create-controller-without-resource-binding`
   * :doc:`/guides/resource/delete-statements`
+  * :doc:`/guides/resource/make-resource-sortable`
 
-* **Contact Form**
+* **Contact**
 
-  * :doc:`/guides/contact-form/add-your-customize-contact-form`
+  * :doc:`/guides/contact/add-your-customize-contact-form`
 
 * **Filter**
 
@@ -54,8 +45,8 @@ Guides
 
 * **Batch**
 
-  * :doc:`/guides/batch-actions/add-batch-action`
-  * :doc:`/guides/batch-actions/remove-batch-actions`
+  * :doc:`/guides/batch/add-batch-action`
+  * :doc:`/guides/batch/remove-batch-actions`
 
 * **Action**
 
@@ -65,15 +56,12 @@ Guides
 
   * :doc:`/guides/block/create-block`
 
-* **Category**
-
-  * :doc:`/guides/category/add-multiple-categories`
-
 * **Setting**
 
   * :doc:`/guides/setting/add-new-setting`
 
 
-* **Javascript**
+* **Assets**
 
-  * :doc:`/guides/javascript/add-js-file`
+  * :doc:`/guides/assets/add-js-file`
+  * :doc:`/guides/assets/add-icon`
