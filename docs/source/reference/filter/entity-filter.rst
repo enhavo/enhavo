@@ -1,5 +1,5 @@
-EntityFilter
-============
+Entity Filter
+=============
 
 The BooleanFilter filters a property for entities as option
 

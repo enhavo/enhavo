@@ -1,5 +1,5 @@
-OptionFilter
-============
+Option Filter
+=============
 
 The OptionFilter filters a property for specific options
 

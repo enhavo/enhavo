@@ -1,5 +1,5 @@
-BooleanFilter
-=============
+Boolean Filter
+==============
 
 The BooleanFilter filters a property for a specific value
 

@@ -1,5 +1,5 @@
-TextFilter
-==========
+Text Filter
+===========
 
 The TextFilter filters a property by user string
 
