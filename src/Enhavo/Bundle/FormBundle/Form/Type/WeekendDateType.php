@@ -8,6 +8,11 @@ namespace Enhavo\Bundle\FormBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class WeekendDateType
+ * @package Enhavo\Bundle\FormBundle\Form\Type
+ * @deprecated should be used in project level
+ */
 class WeekendDateType extends AbstractType
 {
     public function getBlockPrefix()

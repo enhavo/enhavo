@@ -8,6 +8,12 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+
+/**
+ * Class MessageType
+ * @package Enhavo\Bundle\FormBundle\Form\Type
+ * @deprecated should be form extension or use twig file to print message
+ */
 class MessageType extends AbstractType
 {
     const MESSAGE_TYPE_INFO = 'info';
