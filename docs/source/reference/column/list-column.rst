@@ -21,7 +21,7 @@ Show all values of a collection as a list.
 Require
 -------
 
-.. include:: /reference/table-column/option/property.rst
+.. include:: /reference/column/option/property.rst
 
 .. _item_property:
 
@@ -42,11 +42,11 @@ Define the property of the items which should be used to display inside the coll
 Option
 ------
 
-.. include:: /reference/table-column/option/separator.rst
+.. include:: /reference/column/option/separator.rst
 
-.. include:: /reference/table-column/option/width.rst
+.. include:: /reference/column/option/width.rst
 
-.. include:: /reference/table-column/option/label.rst
+.. include:: /reference/column/option/label.rst
 
-.. include:: /reference/table-column/option/translationDomain.rst
+.. include:: /reference/column/option/translationDomain.rst
 

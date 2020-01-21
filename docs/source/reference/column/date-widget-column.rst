@@ -20,16 +20,16 @@ Show a formatted date
 Require
 -------
 
-.. include:: /reference/table-column/option/property.rst
+.. include:: /reference/column/option/property.rst
 
 Option
 ------
 
-.. include:: /reference/table-column/option/format.rst
+.. include:: /reference/column/option/format.rst
 
-.. include:: /reference/table-column/option/width.rst
+.. include:: /reference/column/option/width.rst
 
-.. include:: /reference/table-column/option/label.rst
+.. include:: /reference/column/option/label.rst
 
-.. include:: /reference/table-column/option/translationDomain.rst
+.. include:: /reference/column/option/translationDomain.rst
 

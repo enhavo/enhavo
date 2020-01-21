@@ -16,8 +16,8 @@ Display arrows to move the current row up and down to change its position.
 Option
 ------
 
-.. include:: /reference/table-column/option/width.rst
+.. include:: /reference/column/option/width.rst
 
-.. include:: /reference/table-column/option/label.rst
+.. include:: /reference/column/option/label.rst
 
-.. include:: /reference/table-column/option/translationDomain.rst
+.. include:: /reference/column/option/translationDomain.rst

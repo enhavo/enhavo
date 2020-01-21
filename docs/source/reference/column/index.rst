@@ -14,20 +14,20 @@ Column Reference
     template-column
     picture-column
 
-* :doc:`/reference/table-column/boolean-column`
+* :doc:`/reference/column/boolean-column`
 
-* :doc:`/reference/table-column/date-column`
+* :doc:`/reference/column/date-column`
 
-* :doc:`/reference/table-column/datetime-column`
+* :doc:`/reference/column/datetime-column`
 
-* :doc:`/reference/table-column/list-column`
+* :doc:`/reference/column/list-column`
 
-* :doc:`/reference/table-column/multiple-property-column`
+* :doc:`/reference/column/multiple-property-column`
 
-* :doc:`/reference/table-column/position-column`
+* :doc:`/reference/column/position-column`
 
-* :doc:`/reference/table-column/property-column`
+* :doc:`/reference/column/property-column`
 
-* :doc:`/reference/table-column/template-column`
+* :doc:`/reference/column/template-column`
 
-* :doc:`/reference/table-column/picture-column`
+* :doc:`/reference/column/picture-column`

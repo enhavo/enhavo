@@ -19,7 +19,7 @@ Render specific template with a certain property of a resource.
 Require
 -------
 
-.. include:: /reference/table-column/option/property.rst
+.. include:: /reference/column/option/property.rst
 
 
 template
@@ -40,9 +40,9 @@ The parameters ``value`` (value of property) and ``data`` (resource) will be pas
 Option
 ------
 
-.. include:: /reference/table-column/option/width.rst
+.. include:: /reference/column/option/width.rst
 
-.. include:: /reference/table-column/option/label.rst
+.. include:: /reference/column/option/label.rst
 
-.. include:: /reference/table-column/option/translationDomain.rst
+.. include:: /reference/column/option/translationDomain.rst
 
