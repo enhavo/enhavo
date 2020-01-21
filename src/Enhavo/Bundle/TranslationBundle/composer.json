@@ -18,6 +18,9 @@
     "enhavo/routing-bundle": "dev-master",
     "league/uri": "^5.0"
   },
+  "require-dev": {
+    "phpunit/phpunit": "^7.4"
+  },
   "autoload": {
     "psr-4": { "Enhavo\\Bundle\\TranslationBundle\\": "" }
   }
