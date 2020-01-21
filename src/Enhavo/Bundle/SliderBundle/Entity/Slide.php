@@ -163,7 +163,9 @@ class Slide implements SlideInterface, ResourceInterface, Publishable
     public function setSlider(SliderInterface $slider = null)
     {
         $this->slider = $slider;
-
+        if(!$this->slider->getSlides()->contains($this)) {
+            $this->slider->addSlide($this);
+        }
         return $this;
     }
 
