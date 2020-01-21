@@ -22,7 +22,6 @@ Block
 * :doc:`blockquote-block`
 * :doc:`calendar-block`
 * :doc:`comment-block`
-* :doc:`index`
 * :doc:`newsletter-subscribe-block`
 * :doc:`one-column-block`
 * :doc:`sidebar-column-block`

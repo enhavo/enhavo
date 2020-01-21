@@ -1,5 +1,5 @@
-Media Filter
-============
+Media
+=====
 
 .. toctree::
     :hidden:

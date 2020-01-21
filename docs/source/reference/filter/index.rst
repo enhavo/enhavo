@@ -1,5 +1,5 @@
-Filter Reference
-================
+Filter
+======
 
 .. toctree::
     :hidden:

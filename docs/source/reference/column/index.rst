@@ -1,5 +1,5 @@
-Column Reference
-================
+Column
+======
 
 .. toctree::
     :hidden:

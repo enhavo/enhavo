@@ -2,7 +2,8 @@ Form
 ====
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 1
+    :hidden:
 
     auto-complete-entity
     boolean
