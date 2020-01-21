@@ -16,6 +16,9 @@
     "enhavo/app-bundle": "dev-master",
     "enhavo/block-bundle": "dev-master"
   },
+  "require-dev": {
+    "phpunit/phpunit": "^7.4"
+  },
   "autoload": {
     "psr-4": { "Enhavo\\Bundle\\CommentBundle\\": "" }
   }
