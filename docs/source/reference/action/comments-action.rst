@@ -20,12 +20,12 @@ Close the current overlay without saving.
 Option
 ------
 
-.. include:: /reference/button/option/label.rst
+.. include:: /reference/action/option/label.rst
 
-.. include:: /reference/button/option/icon.rst
+.. include:: /reference/action/option/icon.rst
 
-.. include:: /reference/button/option/translationDomain.rst
+.. include:: /reference/action/option/translationDomain.rst
 
-.. include:: /reference/button/option/display.rst
+.. include:: /reference/action/option/display.rst
 
-.. include:: /reference/button/option/role.rst
+.. include:: /reference/action/option/role.rst

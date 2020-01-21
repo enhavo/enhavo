@@ -18,7 +18,7 @@ Action
     preview-action
     save-action
     send-action
-    sent-action
+    send-test-action
     update-action
 
 * :doc:`/reference/action/close-action`

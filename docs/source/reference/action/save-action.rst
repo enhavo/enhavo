@@ -36,15 +36,15 @@ action of the form. If the passed resource has already an id, that id will also 
             type: save
             route: my_save_route
 
-.. include:: /reference/button/option/routeParameters.rst
+.. include:: /reference/action/option/routeParameters.rst
 
-.. include:: /reference/button/option/label.rst
+.. include:: /reference/action/option/label.rst
 
-.. include:: /reference/button/option/icon.rst
+.. include:: /reference/action/option/icon.rst
 
-.. include:: /reference/button/option/translationDomain.rst
+.. include:: /reference/action/option/translationDomain.rst
 
-.. include:: /reference/button/option/display.rst
+.. include:: /reference/action/option/display.rst
 
-.. include:: /reference/button/option/role.rst
+.. include:: /reference/action/option/role.rst
 
