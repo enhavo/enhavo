@@ -1,38 +1,19 @@
-DownloadAction
-==============
+Delete Action
+=============
 
-The DownloadAction represents a button for a specific route to download its target
+Will delete the current resource and close the overlay.
 
 +-------------+--------------------------------------------------------------------+
 | type        | download                                                           |
 +-------------+--------------------------------------------------------------------+
-| require     | - route_                                                           |
-+-------------+--------------------------------------------------------------------+
 | option      | - label_                                                           |
 |             | - icon_                                                            |
 |             | - translationDomain_                                               |
+|             | - display_                                                         |
+|             | - role_                                                            |
 +-------------+--------------------------------------------------------------------+
-| class       | :class:`Enhavo\\Bundle\\AppBundle\\Action\\Action\\DownloadAction` |
+| class       | :class:`Enhavo\\Bundle\\AppBundle\\Button\\Button\\DeleteButton`   |
 +-------------+--------------------------------------------------------------------+
-
-
-
-Require
--------
-
-route
-~~~~~
-
-**type**: `string`
-
-Define which route should be used for download
-
-.. code-block:: yaml
-
-    actions:
-        create:
-            type: download
-            route: my_download_route
 
 
 Option
@@ -44,16 +25,7 @@ Option
 
 .. include:: /reference/action/option/translationDomain.rst
 
+.. include:: /reference/action/option/display.rst
 
-
-
-
-
-
-
-
-
-
-
-
+.. include:: /reference/action/option/role.rst
 

@@ -29,11 +29,10 @@ At this point, our object class looks like:
         }
     }
 
-
-As you can see, this class also implements a interface called ``ResourceInterface``.
+As you can see, this class also implements a interface called ``ResourceInterface`` .
 Why we do that, will be explained later_, but it has to be mentioned now, because it is the reason,
 why our Product class needs the id property. This id will be used as our ``primary key``
-in our database table and the ``getId()`-Function is the only function we need, to include this interface.
+in our database table and the ``getId()``-Function is the only function we need, to include this interface.
 
 .. _later: http://docs.enhavo.com//get-started/create-routing.html
 

@@ -60,7 +60,10 @@ class TypeCompilerPass implements CompilerPassInterface
                         array($attributes['alias'], $id)
                     );
                 } else {
-                    throw new AliasRequiredException(sprintf('alias required for %s', $id));
+                    $definition = $container->findDefinition($id);
+                    if(!$definition->isAbstract()) {
+                        throw new AliasRequiredException(sprintf('alias required for %s', $id));
+                    }
                 }
             }
         }

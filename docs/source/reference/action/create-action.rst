@@ -1,5 +1,5 @@
-CreateAction
-============
+Create Action
+=============
 
 The CreateAction represents a create button for a specific route
 

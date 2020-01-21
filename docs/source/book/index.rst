@@ -5,13 +5,31 @@ Book
     :hidden:
 
     architecture/index
+    assets/index
     app-bundle/index
+    article-bundle/index
+    block-bundle/index
+    calendar-bundle/index
+    comment-bundle/index
+    contact-bundle/index
+    content-bundle/index
+    dashboard-bundle/index
     form-bundle/index
-    grid-bundle/index
-    search-bundle/index
-    newsletter-bundle/index
-    translation-bundle/index
     media-bundle/index
+    newsletter-bundle/index
+    page-bundle/index
+    redirect-bundle/index
+    routing-bundle/index
+    search-bundle/index
+    setting-bundle/index
+    shop-bundle/index
+    sidebar-bundle/index
+    slider-bundle/index
+    taxonomy-bundle/index
+    template-bundle/index
+    theme-bundle/index
+    translation-bundle/index
+    user-bundle/index
 
 .. rubric:: How to read the book?
 
@@ -27,42 +45,21 @@ The book give you an overview about all components and bundles and how they work
 
 .. rubric:: AppBundle
 
-* :doc:`/book/app-bundle/introduction`
+* :doc:`/book/app-bundle/index`
 * :doc:`/book/app-bundle/viewer`
-
 * :doc:`/book/app-bundle/routing/index`
-
-  * :doc:`/book/app-bundle/routing/app-route`
-  * :doc:`/book/app-bundle/routing/index-route`
-  * :doc:`/book/app-bundle/routing/create-route`
-  * :doc:`/book/app-bundle/routing/update-route`
-  * :doc:`/book/app-bundle/routing/delete-route`
-  * :doc:`/book/app-bundle/routing/batch-action-route`
-  * :doc:`/book/app-bundle/routing/table-route`
-  * :doc:`/book/app-bundle/routing/sorting-routes`
-  * :doc:`/book/app-bundle/routing/route-generator`
-
-* :doc:`/book/app-bundle/block/index`
-
-  * :doc:`/book/app-bundle/block/introduction`
-
-* :doc:`/book/app-bundle/configuration/index`
-
-  * :doc:`/book/app-bundle/configuration/app-bundle`
-
-* :doc:`/book/app-bundle/menu/index`
-
-  * :doc:`/book/app-bundle/menu/menu`
+* :doc:`/book/app-bundle/configuration`
+* :doc:`/book/app-bundle/menu`
 
 .. rubric:: FormBundle
 
 * :doc:`/book/form-bundle/index`
 
-.. rubric:: GridBundle
+.. rubric:: BlockBundle
 
-* :doc:`/book/grid-bundle/introduction`
-* :doc:`/book/grid-bundle/use-grid`
-* :doc:`/book/grid-bundle/rendering`
+* :doc:`/book/block-bundle/introduction`
+* :doc:`/book/block-bundle/use-block`
+* :doc:`/book/block-bundle/rendering`
 
 .. rubric:: SearchBundle
 

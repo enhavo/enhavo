@@ -15,16 +15,12 @@ services:
         abstract: true
         arguments:
             - '@translator'
-        tags:
-            - { name: enhavo.action, alias: create }
 
     Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType:
         parent: Enhavo\Bundle\AppBundle\Action\AbstractActionType
         abstract: true
         arguments:
             - '@router'
-        tags:
-            - { name: enhavo.action, alias: create }
 
     Enhavo\Bundle\AppBundle\Action\Type\CreateActionType:
         parent: Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType

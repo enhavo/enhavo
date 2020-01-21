@@ -1,5 +1,5 @@
-Resource
-========
+Search
+======
 
 .. toctree::
     :maxdepth: 2

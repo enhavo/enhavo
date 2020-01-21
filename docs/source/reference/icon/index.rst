@@ -1,5 +1,5 @@
-Icons
-=====
+Icon
+====
 .. toctree::
     :hidden:
 

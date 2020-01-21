@@ -5,11 +5,11 @@ AppBundle
     :maxdepth: 2
 
     introduction
+    template
     viewer
-    block/index.rst
-    configuration/index.rst
-    menu/index.rst
-    routing/index.rst
+    configuration
+    menu
+    routing/index
 
 
 
