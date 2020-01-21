@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- http://www.phpunit.de/manual/current/en/appendixes.configuration.html -->
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/7.0/phpunit.xsd"
+         backupStaticAttributes      = "false"
+         colors                      = "true"
+         convertErrorsToExceptions   = "true"
+         convertNoticesToExceptions  = "true"
+         convertWarningsToExceptions = "true"
+         processIsolation            = "false"
+         stopOnFailure               = "false"
+         bootstrap                   = "Tests/bootstrap.php">
+
+    <testsuites>
+        <testsuite name="NavigationBundle suite">
+            <directory>Tests</directory>
+        </testsuite>
+    </testsuites>
+
+    <php>
+        <server name="KERNEL_DIR" value="app" />
+        <env name="APP_ENV" value="test"/>
+        <env name="APP_SECRET" value="eefb630d930192b749ea7557fe79aaa6"/>
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="disabled" />
+        <env name="MAILER_URL" value="null://localhost"/>
+    </php>
+</phpunit>

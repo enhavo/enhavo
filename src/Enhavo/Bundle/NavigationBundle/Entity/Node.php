@@ -171,7 +171,9 @@ class Node implements NodeInterface, ResourceInterface
     public function setParent(\Enhavo\Bundle\NavigationBundle\Model\NodeInterface $parent = null)
     {
         $this->parent = $parent;
-
+        if(!$parent->getChildren()->contains($this)) {
+            $parent->addChild($this);
+        }
         return $this;
     }
 
