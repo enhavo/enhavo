@@ -12,12 +12,10 @@ use Enhavo\Bundle\AppBundle\Template\TemplateManager;
 use Enhavo\Bundle\BlockBundle\Block\BlockManager;
 use Enhavo\Bundle\BlockBundle\Exception\RenderException;
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Symfony\Component\Templating\EngineInterface;
 
 class BlockRenderer
 {
-    use ContainerAwareTrait;
-
     /**
      * @var BlockManager
      */
@@ -34,17 +32,23 @@ class BlockRenderer
     private $templateManager;
 
     /**
+     * @var EngineInterface
+     */
+    private $engine;
+
+    /**
      * ContainerRenderer constructor.
      *
      * @param BlockManager $blockManager
      * @param array $renderSets
      * @param TemplateManager $templateManager
      */
-    public function __construct(BlockManager $blockManager, $renderSets, TemplateManager $templateManager)
+    public function __construct(BlockManager $blockManager, $renderSets, TemplateManager $templateManager, EngineInterface $engine)
     {
         $this->blockManager = $blockManager;
         $this->renderSets = $renderSets;
         $this->templateManager = $templateManager;
+        $this->engine = $engine;
     }
 
     /**
@@ -55,7 +59,7 @@ class BlockRenderer
      */
     private function renderTemplate($template, $parameters = [])
     {
-        return $this->container->get('templating')->render($template, $parameters);
+        return $this->engine->render($template, $parameters);
     }
 
     /**
