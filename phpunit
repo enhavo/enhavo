@@ -35,5 +35,5 @@ UserBundle \
 
 for bundle in ${bundles[*]}
 do
-    bin/phpunit --configuration src/Enhavo/Bundle/$bundle/phpunit.xml
+    bin/phpunit --configuration src/Enhavo/Bundle/$bundle/phpunit.xml "$@"
 done
