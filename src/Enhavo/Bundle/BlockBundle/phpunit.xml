@@ -13,7 +13,7 @@
          bootstrap                   = "Tests/bootstrap.php">
 
     <testsuites>
-        <testsuite name="BlockBundle Suite">
+        <testsuite name="BlockBundle suite">
             <directory>Tests</directory>
         </testsuite>
     </testsuites>
