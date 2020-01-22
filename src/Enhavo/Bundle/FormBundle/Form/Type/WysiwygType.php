@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\FormBundle\Form\Type;
 
-use Enhavo\Bundle\FormBundle\Form\Helper\EntrypointFileManager;
+use Enhavo\Bundle\FormBundle\Form\Helper\EntrypointFileManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -28,7 +28,7 @@ class WysiwygType extends AbstractType
     private $entrypointBuild;
 
     /**
-     * @var EntrypointFileManager
+     * @var EntrypointFileManagerInterface
      */
     private $entrypointManager;
 
@@ -37,9 +37,9 @@ class WysiwygType extends AbstractType
      *
      * @param $entrypoint
      * @param $entrypointBuild
-     * @param $entrypointManager
+     * @param EntrypointFileManagerInterface $entrypointManager
      */
-    public function __construct($entrypoint, $entrypointBuild, EntrypointFileManager $entrypointManager)
+    public function __construct($entrypoint, $entrypointBuild, EntrypointFileManagerInterface $entrypointManager)
     {
         $this->entrypoint = $entrypoint;
         $this->entrypointBuild = $entrypointBuild;

@@ -16,7 +16,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "App\\": "tests"
+      "App\\": "tests/App"
     }
   },
   "require": {
@@ -85,6 +85,7 @@
     "behat/symfony2-extension": "^2.0",
     "overtrue/phplint": "^1.1",
     "phpunit/phpunit": "^7.4",
+    "phpunit/php-code-coverage": "^6.1",
     "symfony/debug-pack": "^1.0",
     "symfony/maker-bundle": "^1.0",
     "symfony/panther": "^0.6.0",

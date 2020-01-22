@@ -10,7 +10,7 @@ namespace Enhavo\Bundle\FormBundle\Form\Helper;
 
 use Symfony\WebpackEncoreBundle\Asset\EntrypointLookupCollectionInterface;
 
-class EntrypointFileManager
+class EntrypointFileManager implements EntrypointFileManagerInterface
 {
     /**
      * @var EntrypointLookupCollectionInterface

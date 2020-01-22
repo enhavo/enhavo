@@ -16,6 +16,9 @@
     "enhavo/app-bundle": "dev-master",
     "symfony-cmf/routing-bundle": "^2.1"
   },
+  "require-dev": {
+    "phpunit/phpunit": "^7.4"
+  },
   "autoload": {
     "psr-4": { "Enhavo\\Bundle\\RoutingBundle\\": "" }
   }

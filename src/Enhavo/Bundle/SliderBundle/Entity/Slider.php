@@ -98,7 +98,7 @@ class Slider implements SliderInterface, ResourceInterface
     /**
      * Get slides
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection|Slide[]
      */
     public function getSlides()
     {
