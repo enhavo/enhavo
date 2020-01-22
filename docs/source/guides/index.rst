@@ -25,6 +25,7 @@ Guides
 * **Block**
 
   * :doc:`/guides/block/create-block`
+  * :doc:`/guides/block/custom-templates`
 
 * **Resource**
 
