@@ -4,9 +4,8 @@
 
 [![License](https://img.shields.io/packagist/l/enhavo/enhavo.svg)](https://packagist.org/packages/enhavo/enhavo)
 [![Build status...](https://api.travis-ci.org/enhavo/enhavo.svg?branch=master)](https://travis-ci.org/enhavo/enhavo)
-[![Codefresh build status]( https://g.codefresh.io/api/badges/pipeline/gseidel/enhavo%2Fenhavo%2Fenhavo?type=cf-1)]( https://g.codefresh.io/public/accounts/gseidel/pipelines/enhavo/enhavo/enhavo)
 [![Scrutinizer](https://scrutinizer-ci.com/g/enhavo/enhavo/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/enhavo/enhavo)
-[![Coverage](https://scrutinizer-ci.com/g/enhavo/enhavo/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/enhavo/enhavo)
+[![Coverage Status](https://coveralls.io/repos/github/enhavo/enhavo/badge.svg?branch=master)](https://coveralls.io/github/enhavo/enhavo?branch=master)
 [![Version](https://img.shields.io/packagist/v/enhavo/enhavo.svg)](https://packagist.org/packages/enhavo/enhavo)
 
 
@@ -66,14 +65,19 @@ $ docker run -d -e DATABASE_URL='mysql://root:root@mysql:3306/enhavo' --link 'my
 Documentation
 -------------
 
-Documentation is available at [docs.enhavo.com](http://docs.enhavo.com).
+Documentation is available at [docs.enhavo.com](http://docs.enhavo.com). To create documentation you need
+`sphinx`. Install it over `pip` with 
+
+```bash
+$ pip install -U Sphinx
+```
 
 Compile the documentation with
 
 ```bash
-$ pip install -U Sphinx
 $ sphinx-build -b html docs/source build/docs
 ```
+
 Or use the autobuilder
 
 ```bash
@@ -87,14 +91,14 @@ Run tests
 First setup the test database for behat testing, with
 
 ```bash
-$ app/console doctrine:schema:update --force --env="test"
+$ bin/console doctrine:schema:update --force --env="test"
 ```
 
 Then run the test itself.
 
 ```bash
 $ bin/behat
-$ bin/phpunit
+$ ./phpunit
 ```
 
 MIT License
