@@ -9,7 +9,7 @@
 namespace Enhavo\Bundle\UserBundle\Behat\Exception;
 
 
-class UserLoginException extends \HttpInvalidParamException
+class UserLoginException extends \Exception
 {
     public static function invalidUser($username)
     {
