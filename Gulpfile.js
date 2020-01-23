@@ -23,7 +23,11 @@ gulp.task('docs', function (cb) {
 });
 
 gulp.task('docs:watch', function () {
-  gulp.watch('docs/**/*.rst', gulp.series('docs'));
+    exec('sphinx-autobuild docs/source build/docs', function (err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        cb(err);
+    });
 });
 
 
