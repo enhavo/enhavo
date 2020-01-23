@@ -1,5 +1,5 @@
-Convention
-==========
+Conventions
+===========
 
 .. note::
 
