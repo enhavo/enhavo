@@ -2,7 +2,7 @@ Resource
 ========
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 1
 
     make-resource-sortable
     delete-statements

@@ -1,6 +1,10 @@
 Create controller without resource binding
 ==========================================
 
+.. note::
+
+  This article outdated and may contain information that are not in use any more
+
 You can also create a controller, that act like a resource controller, but it doesn't depend on a concrete resource.
 You just need to create a controller that extends from ``AppController``.
 

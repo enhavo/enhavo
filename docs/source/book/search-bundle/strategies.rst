@@ -1,6 +1,10 @@
 Strategies
 ==========
 
+.. note::
+
+  This article outdated and may contain information that are not in use any more
+
 For the indexing strategy you can choose between `index`, `index_new` and `reindex`.
 
 Index

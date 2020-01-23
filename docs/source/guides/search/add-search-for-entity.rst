@@ -1,6 +1,10 @@
 Add search for an entity
 ========================
 
+.. note::
+
+  This article outdated and may contain information that are not in use any more
+
 To make an entity searchable, just create a search.yml for your entity. Put the search.yml into ``AcmeBundle/Resource/config``.
 
 .. code-block:: yaml

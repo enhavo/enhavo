@@ -2,7 +2,7 @@ Guides
 ======
 
 .. toctree::
-    :hidden:
+    :maxdepth: 2
 
     action/index
     advanced/index
@@ -21,48 +21,3 @@ Guides
     routing/index
     search/index
     setting/index
-
-* **Block**
-
-  * :doc:`/guides/block/create-block`
-  * :doc:`/guides/block/custom-templates`
-
-* **Resource**
-
-  * :doc:`/guides/resource/delete-statements`
-  * :doc:`/guides/resource/make-resource-sortable`
-
-* **Contact**
-
-  * :doc:`/guides/contact/add-your-customize-contact-form`
-
-* **Filter**
-
-  * :doc:`/guides/filter/add-custom-filter`
-
-* **Search**
-
-  * :doc:`/guides/search/add-search-for-entity`
-
-* **Batch**
-
-  * :doc:`/guides/batch/add-batch-action`
-  * :doc:`/guides/batch/remove-batch-actions`
-
-* **Action**
-
-  * :doc:`/guides/action/create-action`
-
-* **Block**
-
-  * :doc:`/guides/block/create-block`
-
-* **Setting**
-
-  * :doc:`/guides/setting/add-new-setting`
-
-
-* **Assets**
-
-  * :doc:`/guides/assets/add-js-file`
-  * :doc:`/guides/assets/add-icon`

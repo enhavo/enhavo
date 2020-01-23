@@ -1,6 +1,10 @@
 Adding Media File to a resource
 ===============================
 
+.. note::
+
+  This article outdated and may contain information that are not in use any more
+
 The entity ``File`` in ``EnhavoMediaBundle`` is enhavo's way of handling user uploaded files like images or documents.
 This is a guide on how to add attached files to your resource.
 

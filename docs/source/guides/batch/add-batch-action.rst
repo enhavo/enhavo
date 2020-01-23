@@ -1,6 +1,10 @@
 Add custom batch action
 =======================
 
+.. note::
+
+  This article outdated and may contain information that are not in use any more
+
 All bundles have the batch action "delete" by default. Here we will add an additional custom batch action by using
 the page bundles *publish* action as an example.
 

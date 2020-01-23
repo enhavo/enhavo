@@ -1,6 +1,10 @@
 Installation
 ============
 
+.. note::
+
+  This article outdated and may contain information that are not in use any more
+
 Just copy the following code into your ``enhavo.yml``
 
 .. code-block:: yaml

@@ -1,6 +1,10 @@
 Create Route
 ============
 
+.. note::
+
+  This article outdated and may contain information that are not in use any more
+
 The create route is being called to render the form for creating a new resource and subsequently to save the form settings.
 
 Here is an example route displaying possible parameters:

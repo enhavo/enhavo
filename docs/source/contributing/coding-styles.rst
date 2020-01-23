@@ -1,4 +1,4 @@
-Add Component
+Coding styles
 =============
 
 tbc.

@@ -2,6 +2,9 @@ Contributing
 ============
 
 .. toctree::
-   :hidden:
+   :maxdepth: 1
 
-   convention/index
+    code-of-conduct
+    coding-style
+    testing
+    conventions

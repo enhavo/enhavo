@@ -1,6 +1,10 @@
 Delete Route
 ============
 
+.. note::
+
+  This article outdated and may contain information that are not in use any more
+
 .. code-block:: yaml
 
     enhavo_page_page_delete:

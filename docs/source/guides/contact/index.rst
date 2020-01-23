@@ -2,6 +2,6 @@ Contact
 =======
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 1
 
     add-your-customize-contact-form

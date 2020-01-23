@@ -1,6 +1,10 @@
 Batch action route
 ==================
 
+.. note::
+
+  This article outdated and may contain information that are not in use any more
+
 This route is needed for batch actions. These are actions that can be run on multiple items from the table view by
 selecting the items and choosing an action from a dropdown menu. If this route is not defined, the batch action
 checkboxes and dropdown menu will not be visible.

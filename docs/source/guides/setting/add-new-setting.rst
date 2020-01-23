@@ -1,6 +1,10 @@
 Add new setting
 ===============
 
+.. note::
+
+  This article outdated and may contain information that are not in use any more
+
 First add a file in your config directory under Resources and name it ``setting.yml``. Each setting has a single key followed by
 configuration for this specific setting. You yaml file can look like following file:
 

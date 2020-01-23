@@ -1,6 +1,10 @@
 Index Route
 ===========
 
+.. note::
+
+  This article outdated and may contain information that are not in use any more
+
 The index route is an implementation of the standard app route bound to a resource. It contains default settings for
 the standard Enhavo layout of resource views while still being as flexible and extendable as the app route.
 

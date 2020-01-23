@@ -1,6 +1,10 @@
 Making a resource sortable
 ==========================
 
+.. note::
+
+  This article outdated and may contain information that are not in use any more
+
 Sometimes the instances of your resource need to be in a specific order that can be changed by the user. An example
 would be the entries of a menu, or slides in a slider.
 

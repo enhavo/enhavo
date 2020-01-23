@@ -1,9 +1,41 @@
-Create Block
+Create block
 ============
 
-Create class
+.. note::
+
+  This article is not finished and need to be updated
+
+
+Create model
 ------------
 
+tbc.
+
+
+Create factory
+--------------
+
+tbc.
+
+Create form
+-----------
+
+tbc.
+
+Create template
+---------------
+
+tbc.
+
+
+Add configuration
+-----------------
+
+tbc.
+
+
+Create type
+-----------
 First you have to define a class that implements the ``BlockInterface``.
 On that interface you have to provide a ``getType``. This is the type name we use later display this block.
 If you want to have some additional helper methods we recommend to extend from ``AbstractType``
@@ -15,10 +47,9 @@ that provide some helpers like ``renderTemplate``.
 
     namespace AppBundle\Block;
 
-    use Enhavo\Bundle\AppBundle\Block\BlockInterface;
-    use Enhavo\Bundle\AppBundle\Type\AbstractType;
+    use Enhavo\Bundle\BlockBundle\Block\AbstractBlockType;
 
-    class GoogleAnalyticsBlock extends AbstractType implements BlockInterface
+    class SliderBlock extends AbstractBlockType
     {
         public function render($parameters)
         {
@@ -31,8 +62,6 @@ that provide some helpers like ``renderTemplate``.
         }
     }
 
-Add to service
---------------
 
 Now you have to add the created class to the dependency injection container.
 

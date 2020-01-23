@@ -1,6 +1,10 @@
 Introduction
 ============
 
+.. note::
+
+  This article outdated and may contain information that are not in use any more
+
 What is the AppBundle?
 ----------------------
 

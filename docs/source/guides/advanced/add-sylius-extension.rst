@@ -1,6 +1,10 @@
 Adding a sylius extension
 =========================
 
+.. note::
+
+  This article outdated and may contain information that are not in use any more
+
 Edit the extension in the folder DependencyInjection of your bundle to be derived from ``SyliusResourceExtension``
 and add the required parameters.
 

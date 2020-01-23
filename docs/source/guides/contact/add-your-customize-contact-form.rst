@@ -1,6 +1,10 @@
 Add your customize contact form
 ===============================
 
+.. note::
+
+  This article outdated and may contain information that are not in use any more
+
 In this section you learn how to add your own customized contact form. Just follow the steps below and change the
 things to your situation.
 
