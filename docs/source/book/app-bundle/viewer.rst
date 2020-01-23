@@ -1,4 +1,4 @@
 Viewer
 ======
 
-//TODO: viewer concept
+tbc.

@@ -1,6 +1,10 @@
 Menu
 ====
 
+.. note::
+
+  This article outdated and may contain information that are not in use any more
+
 The main menu in the admin backend is configurable via the parameter ``enhavo_admin.menu`` in the configuration file
 app/config/enhavo.yml. The logout button will be added automatically.
 

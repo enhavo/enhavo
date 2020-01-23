@@ -1,6 +1,10 @@
 Routing generator
 =================
 
+.. note::
+
+  This article outdated and may contain information that are not in use any more
+
 We implemented a short routing generator, which creates minimal CRUD routing definitions for your resource.
 
 .. code-block:: bash

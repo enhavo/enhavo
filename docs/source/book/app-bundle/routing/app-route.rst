@@ -1,6 +1,10 @@
 App Route
 =========
 
+.. note::
+
+  This article outdated and may contain information that are not in use any more
+
 Before you use the app route, you should know what is meant by ``actions`` and ``blocks``.
 The app route is used to display these two kinds of abstractions. It is independent of any data model.
 

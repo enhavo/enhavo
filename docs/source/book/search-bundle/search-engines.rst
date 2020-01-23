@@ -1,6 +1,10 @@
 Search Engines
 ==============
 
+.. note::
+
+  This article outdated and may contain information that are not in use any more
+
 Enhavo Search Engine
 --------------------
 

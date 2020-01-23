@@ -1,6 +1,10 @@
 Add custom filter
 =================
 
+.. note::
+
+  This article outdated and may contain information that are not in use any more
+
 To add you custom filter, just add class which extends from ``Enhavo\Bundle\AppBundle\Filter\AbstractFilter``
 
 .. code-block:: php

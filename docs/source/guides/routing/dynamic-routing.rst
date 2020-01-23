@@ -1,6 +1,10 @@
 Dynamic routing
 ===============
 
+.. note::
+
+  This article outdated and may contain information that are not in use any more
+
 The ``SymfonyCMF RoutingBundle`` is used to add optional dynamic routing for the resources. Usually dynamic routing
 is used for the front end to have a nice seo url.
 

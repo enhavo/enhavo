@@ -1,6 +1,9 @@
 Create Bundle
 -------------
 
+.. note::
+
+  This article outdated and may contain information that are not in use any more
 
 In the configuration definition we can see, that we use the model, the form and a repository, we’ve already created. But what about the controller and where does it come from? Well, the directory tells us, that the Resource Controller is part of the Enhavo App Bundle and its name tells us, that it probably handles resources. Hopefully, you can remember the Resource Interface, we used to create our Product Entity. In Enhavo, all entities you want to create for your application, and which should be creatable, readable, editable and deletable by the user need this interface so the Resource Controller can work with them
 If you want to provide a bundle to enhance enhavo for further projects use the ``Configuration.php`` in ``ProjectBundle/DependencyInjection`` like in the Example below:

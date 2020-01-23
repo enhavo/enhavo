@@ -1,6 +1,10 @@
 Sorting Routes
 ==============
 
+.. note::
+
+  This article outdated and may contain information that are not in use any more
+
 A resource might be sortable, meaning it has an order which can be changed by the user. In this case, it needs two
 additional routes for the events of moving the object to the new position.
 

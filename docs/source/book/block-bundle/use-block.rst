@@ -1,6 +1,10 @@
 Using block
 ===========
 
+.. note::
+
+  This article outdated and may contain information that are not in use any more
+
 
 Adding to the model
 -------------------

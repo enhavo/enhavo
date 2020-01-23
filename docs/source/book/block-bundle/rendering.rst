@@ -1,6 +1,10 @@
 Rendering
 =========
 
+.. note::
+
+  This article outdated and may contain information that are not in use any more
+
 To render the content in the frontend, you can use the twig function ``grid_render``. This function has
 three parameters. The first one is the grid object.
 The second one is optional and is used to render a different template set. For further information read the

@@ -1,17 +1,15 @@
 AppBundle
 =========
 
+.. note::
+
+  This article outdated and may contain information that are not in use any more
+
 Here is an example configuration for the AppBundle done in app/config/enhavo.yml.
 
 .. code-block:: yaml
 
     enhavo_app:
-        stylesheets:
-            - '@EnhavoAppBundle/Resource/public/css/style.css'
-        javascripts:
-            - '@EnhavoAppBundle/Resource/public/js/bootstrap.css'
-        apps:
-            - 'project/app/Homepage'
         menu:
             homepage:
                 type: base
