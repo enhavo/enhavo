@@ -2,7 +2,7 @@ Assets
 ======
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 1
 
     add-js-file
     add-icon

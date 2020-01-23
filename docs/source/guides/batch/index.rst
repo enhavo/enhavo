@@ -2,7 +2,7 @@ Batch
 =====
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 1
 
     add-batch-action
     remove-batch-actions

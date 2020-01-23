@@ -1,8 +1,13 @@
 Book
 ====
 
+.. rubric:: How to read the book?
+
+The book give you an overview about all components and bundles and how they work and interact together.
+
+
 .. toctree::
-    :hidden:
+    :maxdepth: 2
 
     architecture/index
     assets/index
@@ -31,52 +36,3 @@ Book
     translation-bundle/index
     user-bundle/index
 
-.. rubric:: How to read the book?
-
-The book give you an overview about all components and bundles and how they work and interact together.
-
-
-.. rubric:: Architecture
-
-* :doc:`/book/architecture/introduction`
-* :doc:`/book/architecture/bundle-structure`
-* :doc:`/book/architecture/type-pattern`
-* :doc:`/book/architecture/polymorph-entity`
-
-.. rubric:: AppBundle
-
-* :doc:`/book/app-bundle/index`
-* :doc:`/book/app-bundle/viewer`
-* :doc:`/book/app-bundle/routing/index`
-* :doc:`/book/app-bundle/configuration`
-* :doc:`/book/app-bundle/menu`
-
-.. rubric:: FormBundle
-
-* :doc:`/book/form-bundle/index`
-
-.. rubric:: BlockBundle
-
-* :doc:`/book/block-bundle/introduction`
-* :doc:`/book/block-bundle/use-block`
-* :doc:`/book/block-bundle/rendering`
-
-.. rubric:: SearchBundle
-
-* :doc:`/book/search-bundle/installation`
-* :doc:`/book/search-bundle/strategies`
-* :doc:`/book/search-bundle/search-engines`
-
-.. rubric:: NewsletterBundle
-
-* :doc:`/book/newsletter-bundle/general`
-* :doc:`/book/newsletter-bundle/strategies`
-* :doc:`/book/newsletter-bundle/storages`
-
-.. rubric:: TranslationBundle
-
-* :doc:`/book/translation-bundle/index`
-
-.. rubric:: MediaBundle
-
-* :doc:`/book/media-bundle/index`

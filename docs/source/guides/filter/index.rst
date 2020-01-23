@@ -2,11 +2,7 @@ Filter
 ======
 
 .. toctree::
-    :hidden:
+    :maxdepth: 1
 
     add-custom-filter
 
-
-* **Filter**
-
-  * :doc:`/guides/filter/add-custom-filter`
