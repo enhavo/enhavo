@@ -185,12 +185,6 @@
     "johngrogg/ics-parser": {
         "version": "v2.1.7"
     },
-    "jsvrcek/ics": {
-        "version": "0.6"
-    },
-    "jsvrcek/ics-bundle": {
-        "version": "0.1"
-    },
     "league/uri": {
         "version": "4.2.2"
     },

@@ -17,9 +17,7 @@ MediaBundle \
 NavigationBundle \
 NewsletterBundle \
 PageBundle \
-PortalBundle \
 RedirectBundle \
-RevisionBundle \
 RoutingBundle \
 SearchBundle \
 SettingBundle \
