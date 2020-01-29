@@ -15,7 +15,9 @@ Enhavo upgrade tasks
 * Migrate Grid data to block data structure (Using Doctrine migrations)
 * Rename Grid entities to Block (Optional)
 * Copy asset entrypoints structure (Copy also registry folder)
-* Convert custom admin assets to webpack (Important for Version <0.7)
+* Migrate and add enhavo configs
+* Migrate and add enhavo routings
+* Migrate custom admin assets to webpack (Important for Version <0.7)
 * Update or create ``webpack.config.js``
 * Require separate enhavo packages by composer
 * Use symfony 4 config and routing structure
@@ -25,6 +27,9 @@ Symfony upgrade tasks
 ---------------------
 
 * Use Symfony 4 directory structure
-* Use FQCN for Form Types
+* Migrate config
+* Use FQCN for Form types
+* Remove getName and use getBlockPrefix for Form types
 * Inject private services
 * Update service definitions
+* Add Kernel

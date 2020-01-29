@@ -6,3 +6,4 @@ Resource
 
     make-resource-sortable
     delete-statements
+    delete-tab
