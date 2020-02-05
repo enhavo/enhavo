@@ -80,7 +80,11 @@ class AutoCompleteController extends AbstractController
         $results = [];
         $accessor = PropertyAccess::createPropertyAccessor();
         foreach($entities as $entity) {
-            $id = $accessor->getValue($entity, 'id');
+            if ($configuration->getIdProperty()) {
+                $id = $accessor->getValue($entity, $configuration->getIdProperty());
+            } else {
+                $id = $accessor->getValue($entity, 'id');
+            }
             if($configuration->getChoiceLabel()) {
                 $text = $accessor->getValue($entity, $configuration->getChoiceLabel());
             } else {
@@ -129,6 +133,10 @@ class AutoCompleteController extends AbstractController
 
         if(isset($config['choice_label'])) {
             $configuration->setChoiceLabel($config['choice_label']);
+        }
+
+        if(isset($config['id_property'])) {
+            $configuration->setIdProperty($config['id_property']);
         }
 
         $configuration->setPage($request->get('page', 1));
