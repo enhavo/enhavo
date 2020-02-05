@@ -44,6 +44,11 @@ class AutoCompleteConfiguration
     /**
      * @var string
      */
+    private $idProperty;
+
+    /**
+     * @var string
+     */
     private $searchTerm = '';
 
     /**
@@ -145,6 +150,22 @@ class AutoCompleteConfiguration
     public function setChoiceLabel($choiceLabel)
     {
         $this->choiceLabel = $choiceLabel;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIdProperty(): string
+    {
+        return $this->idProperty;
+    }
+
+    /**
+     * @param string $idProperty
+     */
+    public function setIdProperty(string $idProperty): void
+    {
+        $this->idProperty = $idProperty;
     }
 
     /**
