@@ -2,9 +2,9 @@ Contributing
 ============
 
 .. toctree::
-   :maxdepth: 1
+    :maxdepth: 1
 
     code-of-conduct
-    coding-style
+    coding-styles
     testing
     conventions

@@ -63,6 +63,6 @@ To show the block form, you need add the ``Enhavo\Bundle\BlockBundle\Form\Type\B
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
-            $builder->add('content', BlockNodeType::class);
+            $builder->add('column', BlockNodeType::class);
         }
     }

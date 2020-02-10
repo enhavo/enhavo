@@ -6,4 +6,5 @@ Resource
 
     make-resource-sortable
     delete-statements
-    delete-tab
+    add-tab
+    add-listener
