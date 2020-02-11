@@ -12,6 +12,8 @@ services:
             - '@enhavo_app.menu.manager'
             - '%kernel.project_dir%'
             - '%enhavo_app.branding%'
+            - '%enhavo_app.toolbar_widget.primary%'
+            - '%enhavo_app.toolbar_widget.secondary%'
         tags:
             - { name: controller.service_arguments }
 

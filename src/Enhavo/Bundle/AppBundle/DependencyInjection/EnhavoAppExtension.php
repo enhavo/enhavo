@@ -35,6 +35,8 @@ class EnhavoAppExtension extends Extension
         $container->setParameter('enhavo_app.form_themes', $config['form_themes']);
         $container->setParameter('enhavo_app.locale', $config['locale']);
         $container->setParameter('enhavo_app.locale_resolver', $config['locale_resolver']);
+        $container->setParameter('enhavo_app.toolbar_widget.primary', $config['toolbar_widget']['primary']);
+        $container->setParameter('enhavo_app.toolbar_widget.secondary', $config['toolbar_widget']['secondary']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 

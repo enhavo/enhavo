@@ -19,8 +19,16 @@
             </div>
         </div>
 
+        <div class="toolbar-item left">
+            <template v-for="widget in toolbar.primaryWidgets">
+                <component class="widget-container" v-bind:is="widget.component" v-bind:data="widget"></component>
+            </template>
+        </div>
+
         <div class="toolbar-item right">
-            <toolbar-dropdown></toolbar-dropdown>
+            <template v-for="widget in toolbar.secondaryWidgets">
+                <component class="widget-container" v-bind:is="widget.component" v-bind:data="widget"></component>
+            </template>
         </div>
     </div>
 </template>
@@ -28,24 +36,27 @@
 <script lang="ts">
 
 import { Vue, Component, Prop } from "vue-property-decorator";
-import ViewStackData from "@enhavo/app/ViewStack/ViewStackData";
-import Dropdown from "@enhavo/app/Toolbar/Components/ToolbarDropdown";
 import Branding from "@enhavo/app/Main/Branding";
+import ToolbarData from "@enhavo/app/Toolbar/ToolbarData";
+import * as URI from 'urijs';
+import ApplicationBag from "@enhavo/app/ApplicationBag";
+import WidgetAwareApplication from "@enhavo/app/Toolbar/Widget/WidgetAwareApplication";
+let application = <WidgetAwareApplication>ApplicationBag.getApplication();
 
 @Component({
-    components: {'toolbar-dropdown': Dropdown}
+    components: application.getWidgetRegistry().getComponents()
 })
 export default class Toolbar extends Vue {
     name: 'toolbar';
-
-    @Prop()
-    view_stack: ViewStackData;
 
     @Prop()
     branding: Branding;
 
     @Prop()
     menu_open: boolean;
+
+    @Prop()
+    toolbar: ToolbarData;
 
     get brandingImageStyles() {
         if(this.branding.logo) {
@@ -57,7 +68,8 @@ export default class Toolbar extends Vue {
     }
 
     home() {
-        window.location.href = '/admin/'
+        let uri = new URI(window.location.href);
+        window.location.href = uri.path()
     }
 }
 </script>

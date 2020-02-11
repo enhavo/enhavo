@@ -9,6 +9,8 @@ import ViewRegistry from "@enhavo/app/ViewStack/ViewRegistry";
 import DataStorageManager from "@enhavo/app/ViewStack/DataStorageManager";
 import StateManager from "@enhavo/app/State/StateManager";
 import GlobalDataStorageManager from "@enhavo/app/ViewStack/GlobalDataStorageManager";
+import WidgetManager from "@enhavo/app/Toolbar/Widget/WidgetManager";
+import WidgetRegistry from "@enhavo/app/Toolbar/Widget/WidgetRegistry";
 
 export class MainApplication extends Application
 {
@@ -20,6 +22,8 @@ export class MainApplication extends Application
     protected dataStorageManager: DataStorageManager;
     protected stateManager: StateManager;
     protected globalDataStorageManager: GlobalDataStorageManager;
+    protected widgetManager: WidgetManager;
+    protected widgetRegistry: WidgetRegistry;
 
     public getApp(): AppInterface
     {
@@ -29,7 +33,8 @@ export class MainApplication extends Application
                 this.getViewStack(),
                 this.getMenuManager(),
                 this.getStateManager(),
-                this.getDataStorageManager()
+                this.getDataStorageManager(),
+                this.getWidgetManager(),
             );
         }
         return this.app;
@@ -102,6 +107,22 @@ export class MainApplication extends Application
             this.globalDataStorageManager = new GlobalDataStorageManager(this.getEventDispatcher(), this.getDataLoader().load().view_stack.storage);
         }
         return this.globalDataStorageManager;
+    }
+
+    public getWidgetRegistry(): WidgetRegistry
+    {
+        if(this.widgetRegistry == null) {
+            this.widgetRegistry = new WidgetRegistry();
+        }
+        return this.widgetRegistry;
+    }
+
+    public getWidgetManager(): WidgetManager
+    {
+        if(this.widgetManager == null) {
+            this.widgetManager = new WidgetManager(this.getDataLoader().load().toolbar.primaryWidgets, this.getDataLoader().load().toolbar.secondaryWidgets, this.getWidgetRegistry());
+        }
+        return this.widgetManager;
     }
 }
 

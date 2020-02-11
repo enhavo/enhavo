@@ -76,6 +76,16 @@ class Configuration implements ConfigurationInterface
             ->end()
 
             ->children()
+                ->arrayNode('toolbar_widget')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->variableNode('primary')->defaultValue([])->end()
+                        ->variableNode('secondary')->defaultValue([])->end()
+                    ->end()
+                ->end()
+            ->end()
+
+            ->children()
                 ->arrayNode('stylesheets')
                     ->prototype('scalar')->end()
                 ->end()

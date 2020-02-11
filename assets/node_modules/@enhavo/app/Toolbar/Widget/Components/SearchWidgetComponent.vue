@@ -10,7 +10,7 @@
 
     @Component
     export default class SearchWidgetComponent extends Vue {
-        name: 'search-widget-component';
+        name: 'search-widget';
 
         @Prop()
         data: WidgetInterface;

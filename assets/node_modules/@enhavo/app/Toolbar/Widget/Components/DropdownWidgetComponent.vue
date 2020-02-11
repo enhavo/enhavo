@@ -10,7 +10,7 @@
 
     @Component
     export default class DropdownWidgetComponent extends Vue {
-        name: 'dropdown-widget-component';
+        name: 'dropdown-widget';
 
         @Prop()
         data: WidgetInterface;

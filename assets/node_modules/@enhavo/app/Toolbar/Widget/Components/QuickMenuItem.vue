@@ -8,8 +8,8 @@
 import { Vue, Component, Prop } from "vue-property-decorator";
 
 @Component
-export default class ToolbarDropdownItem extends Vue {
-    name: 'toolbar-dropdown-item';
+export default class QuickMenuItem extends Vue {
+    name: 'quick-menu-item';
 
     @Prop()
     label: string;

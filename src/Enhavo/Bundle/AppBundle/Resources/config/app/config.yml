@@ -36,3 +36,9 @@ enhavo_app:
         enhavo_app:
             path: '@EnhavoAppBundle/Resources/views'
             priority: 10
+    toolbar_widget:
+        secondary:
+            -
+                component: quick-menu-widget
+                icon: person
+                menu:

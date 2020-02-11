@@ -33,11 +33,23 @@ class MainController extends AbstractController
      */
     private $brandingConfig;
 
-    public function __construct(MenuManager $menuManager, $projectDir, $brandingConfig)
+    /**
+     * @var array
+     */
+    private $toolbarPrimaryConfig;
+
+    /**
+     * @var array
+     */
+    private $toolbarSecondaryConfig;
+
+    public function __construct(MenuManager $menuManager, $projectDir, $brandingConfig, $toolbarPrimaryConfig, $toolbarSecondaryConfig)
     {
         $this->menuManager = $menuManager;
         $this->projectDir = $projectDir;
         $this->brandingConfig = $brandingConfig;
+        $this->toolbarPrimaryConfig = $toolbarPrimaryConfig;
+        $this->toolbarSecondaryConfig = $toolbarSecondaryConfig;
     }
 
     public function indexAction(Request $request)
@@ -55,6 +67,10 @@ class MainController extends AbstractController
                 'width' => 0,
                 'views' => $state['views'],
                 'storage' => $state['storage'],
+            ],
+            'toolbar' => [
+                'primaryWidgets' => $this->toolbarPrimaryConfig,
+                'secondaryWidgets' => $this->toolbarSecondaryConfig
             ],
             'branding' => [
                 'logo' => $this->brandingConfig['logo'],
