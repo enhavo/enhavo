@@ -3,6 +3,7 @@
         <div class="toolbar-item branding">
             <div class="branding-container" v-bind:style="brandingImageStyles" @click="home"></div>
         </div>
+
         <div class="toolbar-item" @click="$emit('toogle-menu')">
             <div v-if="menu_open" class="menu-toggle">
                 <span class="icon icon-chevron_left"></span>
@@ -17,14 +18,15 @@
                 <span class="icon icon-menu"></span>
             </div>
         </div>
+
         <div class="toolbar-item right">
-            <!--<a class="toolbar-link">Open Homepage</a>-->
             <toolbar-dropdown></toolbar-dropdown>
         </div>
     </div>
 </template>
 
 <script lang="ts">
+
 import { Vue, Component, Prop } from "vue-property-decorator";
 import ViewStackData from "@enhavo/app/ViewStack/ViewStackData";
 import Dropdown from "@enhavo/app/Toolbar/Components/ToolbarDropdown";
