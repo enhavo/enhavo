@@ -1,0 +1,28 @@
+services:
+    enhavo_app.toolbar_widget_collector:
+        class: Enhavo\Bundle\AppBundle\Type\TypeCollector
+        arguments:
+            - '@service_container'
+            - 'ToolbarWidget'
+
+    Enhavo\Bundle\AppBundle\Toolbar\ToolbarManager:
+        arguments:
+            - '@enhavo_app.toolbar_widget_collector'
+            - '@security.authorization_checker'
+
+    Enhavo\Bundle\AppBundle\Toolbar\AbstractToolbarWidgetType:
+        abstract: true
+        arguments:
+            - '@translator'
+
+    Enhavo\Bundle\AppBundle\Toolbar\Widget\IconToolbarWidgetType:
+        parent: Enhavo\Bundle\AppBundle\Toolbar\AbstractToolbarWidgetType
+        public: true
+        tags:
+            - { name: enhavo_app.toolbar_widget, alias: icon }
+
+    Enhavo\Bundle\AppBundle\Toolbar\Widget\QuickMenuToolbarWidgetType:
+        parent: Enhavo\Bundle\AppBundle\Toolbar\AbstractToolbarWidgetType
+        public: true
+        tags:
+            - { name: enhavo_app.toolbar_widget, alias: quick_menu }

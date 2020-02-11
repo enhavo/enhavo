@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\AppBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Menu\MenuManager;
 use Enhavo\Bundle\AppBundle\Template\TemplateTrait;
+use Enhavo\Bundle\AppBundle\Toolbar\ToolbarManager;
 use Enhavo\Bundle\AppBundle\Util\StateEncoder;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,6 +23,11 @@ class MainController extends AbstractController
      * @var MenuManager
      */
     private $menuManager;
+
+    /**
+     * @var ToolbarManager
+     */
+    private $toolbarManager;
 
     /**
      * @var string
@@ -43,9 +49,16 @@ class MainController extends AbstractController
      */
     private $toolbarSecondaryConfig;
 
-    public function __construct(MenuManager $menuManager, $projectDir, $brandingConfig, $toolbarPrimaryConfig, $toolbarSecondaryConfig)
-    {
+    public function __construct(
+        MenuManager $menuManager,
+        ToolbarManager $toolbarManager,
+        $projectDir,
+        $brandingConfig,
+        $toolbarPrimaryConfig,
+        $toolbarSecondaryConfig
+    ) {
         $this->menuManager = $menuManager;
+        $this->toolbarManager = $toolbarManager;
         $this->projectDir = $projectDir;
         $this->brandingConfig = $brandingConfig;
         $this->toolbarPrimaryConfig = $toolbarPrimaryConfig;
@@ -69,8 +82,8 @@ class MainController extends AbstractController
                 'storage' => $state['storage'],
             ],
             'toolbar' => [
-                'primaryWidgets' => $this->toolbarPrimaryConfig,
-                'secondaryWidgets' => $this->toolbarSecondaryConfig
+                'primaryWidgets' => $this->toolbarManager->createWidgetsViewData($this->toolbarPrimaryConfig),
+                'secondaryWidgets' => $this->toolbarManager->createWidgetsViewData($this->toolbarSecondaryConfig)
             ],
             'branding' => [
                 'logo' => $this->brandingConfig['logo'],

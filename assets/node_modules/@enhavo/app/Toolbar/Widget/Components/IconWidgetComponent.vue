@@ -1,6 +1,6 @@
 <template>
     <div>
-        Dropdown Widget
+        Icon Widget
     </div>
 </template>
 
@@ -9,8 +9,8 @@
     import WidgetInterface from "@enhavo/app/Toolbar/Widget/WidgetInterface";
 
     @Component
-    export default class DropdownWidgetComponent extends Vue {
-        name: 'dropdown-widget';
+    export default class IconWidgetComponent extends Vue {
+        name: 'icon-widget';
 
         @Prop()
         data: WidgetInterface;

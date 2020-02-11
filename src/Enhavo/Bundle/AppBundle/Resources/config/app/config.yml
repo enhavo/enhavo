@@ -38,7 +38,8 @@ enhavo_app:
             priority: 10
     toolbar_widget:
         secondary:
-            -
-                component: quick-menu-widget
+            user_menu:
+                type: quick_menu
                 icon: person
                 menu:
+                    

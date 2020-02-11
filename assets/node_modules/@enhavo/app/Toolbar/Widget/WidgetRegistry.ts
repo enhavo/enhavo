@@ -1,14 +1,14 @@
 import { Registry } from "@enhavo/core";
-import ActionFactoryInterface from "./ActionFactoryInterface";
+import WidgetFactoryInterface from "@enhavo/app/Toolbar/Widget/WidgetFactoryInterface";
 import RegistryInterface from "@enhavo/core/RegistryInterface";
 
 export default class WidgetRegistry extends Registry
 {
-    getFactory(name: string): ActionFactoryInterface {
-        return <ActionFactoryInterface>super.getFactory(name);
+    getFactory(name: string): WidgetFactoryInterface {
+        return <WidgetFactoryInterface>super.getFactory(name);
     }
 
-    register(name: string, component: object, factory: ActionFactoryInterface): RegistryInterface {
+    register(name: string, component: object, factory: WidgetFactoryInterface): RegistryInterface {
         return super.register(name, component, factory);
     }
 }
