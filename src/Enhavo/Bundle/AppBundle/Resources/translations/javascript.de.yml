@@ -1,13 +1,10 @@
 enhavo_app:
-    logout: 'Logout'
-    change_password: 'Passwort ändern'
     edit: 'Bearbeiten'
     create: 'Erstellen'
     preview: 'Vorschau'
     save: 'Speichern'
     abort: 'Abbrechen'
     cancel: 'Abbrechen'
-    open_homepage: 'Zur Startseite'
     error: 'Ein Fehler ist aufgetreten'
     batch:
         label:

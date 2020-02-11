@@ -36,12 +36,12 @@ class ToolbarManager
         $this->checker = $checker;
     }
 
-    public function createWidgetsViewData(array $configuration, $resource = null)
+    public function createWidgetsViewData(array $configuration)
     {
         $data = [];
         $widgets = $this->getWidgets($configuration);
         foreach($widgets as $widget) {
-            $data[] = $widget->createViewData($resource);
+            $data[] = $widget->createViewData();
         }
         return $data;
     }
@@ -50,7 +50,7 @@ class ToolbarManager
     {
         $widgets = [];
         foreach($configuration as $name => $options) {
-            $widget = $this->createWidget($options);
+            $widget = $this->createWidget($name, $options);
 
             if($widget->isHidden()) {
                 continue;
@@ -71,7 +71,7 @@ class ToolbarManager
      * @return Widget
      * @throws TypeMissingException
      */
-    private function createWidget($options)
+    private function createWidget($name, $options)
     {
         if(!isset($options['type'])) {
             throw new TypeMissingException(sprintf('No type was given to create "%s"', Widget::class));
@@ -80,7 +80,7 @@ class ToolbarManager
         /** @var WidgetTypeInterface $type */
         $type = $this->collector->getType($options['type']);
         unset($options['type']);
-        $widget = new Widget($type, $options);
+        $widget = new Widget($name, $type, $options);
         return $widget;
     }
 }

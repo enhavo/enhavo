@@ -22,7 +22,12 @@ class Widget
      */
     private $options;
 
-    public function __construct(ToolbarWidgetTypeInterface $type, $options)
+    /**
+     * @var string
+     */
+    private $name;
+
+    public function __construct($name, ToolbarWidgetTypeInterface $type, $options)
     {
         $this->type = $type;
         $resolver = new OptionsResolver();
@@ -32,7 +37,7 @@ class Widget
 
     public function createViewData()
     {
-        return $this->type->createViewData($this->options);
+        return $this->type->createViewData($this->name, $this->options);
     }
 
     public function getPermission()

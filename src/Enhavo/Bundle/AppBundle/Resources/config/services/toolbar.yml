@@ -22,7 +22,9 @@ services:
             - { name: enhavo_app.toolbar_widget, alias: icon }
 
     Enhavo\Bundle\AppBundle\Toolbar\Widget\QuickMenuToolbarWidgetType:
-        parent: Enhavo\Bundle\AppBundle\Toolbar\AbstractToolbarWidgetType
         public: true
+        arguments:
+            - '@translator'
+            - '@router'
         tags:
             - { name: enhavo_app.toolbar_widget, alias: quick_menu }

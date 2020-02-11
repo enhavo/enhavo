@@ -46,11 +46,12 @@ abstract class AbstractToolbarWidgetType implements ToolbarWidgetTypeInterface
         ]);
     }
 
-    public function createViewData(array $options)
+    public function createViewData($name, array $options)
     {
         $data = [
             'component' => $options['component'],
-            'icon' => $options['icon']
+            'icon' => $options['icon'],
+            'name' => $name,
         ];
 
         return $data;

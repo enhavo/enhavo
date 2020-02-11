@@ -14,10 +14,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 interface ToolbarWidgetTypeInterface extends TypeInterface
 {
     /**
+     * @param $name string
      * @param $options array
      * @return string
      */
-    public function createViewData(array $options);
+    public function createViewData($name, array $options);
 
     /**
      * @param array $options

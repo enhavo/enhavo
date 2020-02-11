@@ -5,6 +5,7 @@ export default abstract class AbstractWidget implements WidgetInterface
 {
     protected application: ApplicationInterface;
     component: string;
+    name: string;
 
     constructor(application: ApplicationInterface)
     {

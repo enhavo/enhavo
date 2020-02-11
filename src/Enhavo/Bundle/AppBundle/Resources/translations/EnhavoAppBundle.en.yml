@@ -1,5 +1,8 @@
 action:
-  changePassword: 'Passwort ändern'
+  changePassword: 'Change password'
+  batch:
+    submit: 'Execute'
+    delete: 'Delete'
 error:
   occurred: 'An error occured'
   forbidden: 'You have not the rights for this action'
@@ -45,6 +48,8 @@ label:
   filter: 'Filter'
   edit: 'Edit'
   index: 'Index'
+  change_password: 'Change password'
+  open_homepage: 'Open Homepage'
 message:
   duplicate:
     confirm: 'Warning: This form will be closed without saving. Do you really want to continue?'

@@ -12,9 +12,9 @@ use Enhavo\Bundle\AppBundle\Toolbar\AbstractToolbarWidgetType;
 
 class IconToolbarWidgetType extends AbstractToolbarWidgetType
 {
-    public function createViewData(array $options)
+    public function createViewData($name, array $options)
     {
-        return parent::createViewData($options);
+        return parent::createViewData($name, $options);
     }
 
     public function getType()
