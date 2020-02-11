@@ -16,8 +16,10 @@ services:
             - '@translator'
 
     Enhavo\Bundle\AppBundle\Toolbar\Widget\IconToolbarWidgetType:
-        parent: Enhavo\Bundle\AppBundle\Toolbar\AbstractToolbarWidgetType
         public: true
+        arguments:
+            - '@translator'
+            - '@router'
         tags:
             - { name: enhavo_app.toolbar_widget, alias: icon }
 

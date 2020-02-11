@@ -1,18 +1,31 @@
 <template>
-    <div>
-        Icon Widget
+    <div @click="open">
+        <i :class="getIcon()"></i>
     </div>
 </template>
 
 <script lang="ts">
     import { Vue, Component, Prop } from "vue-property-decorator";
-    import WidgetInterface from "@enhavo/app/Toolbar/Widget/WidgetInterface";
+    import IconWidget from "@enhavo/app/Toolbar/Widget/Model/IconWidget";
 
     @Component
     export default class IconWidgetComponent extends Vue {
         name: 'icon-widget';
 
         @Prop()
-        data: WidgetInterface;
+        data: IconWidget;
+
+        getIcon()
+        {
+            if(this.data.icon) {
+                return 'icon icon-'+this.data.icon;
+            }
+            return ''
+        }
+
+        open(menu: any) {
+            this.data.open(menu);
+            this.close();
+        }
     }
 </script>
