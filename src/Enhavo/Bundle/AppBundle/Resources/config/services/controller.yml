@@ -10,8 +10,11 @@ services:
     Enhavo\Bundle\AppBundle\Controller\MainController:
         arguments:
             - '@enhavo_app.menu.manager'
+            - '@Enhavo\Bundle\AppBundle\Toolbar\ToolbarManager'
             - '%kernel.project_dir%'
             - '%enhavo_app.branding%'
+            - '%enhavo_app.toolbar_widget.primary%'
+            - '%enhavo_app.toolbar_widget.secondary%'
         tags:
             - { name: controller.service_arguments }
 

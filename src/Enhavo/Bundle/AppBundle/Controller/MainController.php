@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\AppBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Menu\MenuManager;
 use Enhavo\Bundle\AppBundle\Template\TemplateTrait;
+use Enhavo\Bundle\AppBundle\Toolbar\ToolbarManager;
 use Enhavo\Bundle\AppBundle\Util\StateEncoder;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,6 +25,11 @@ class MainController extends AbstractController
     private $menuManager;
 
     /**
+     * @var ToolbarManager
+     */
+    private $toolbarManager;
+
+    /**
      * @var string
      */
     private $projectDir;
@@ -33,11 +39,30 @@ class MainController extends AbstractController
      */
     private $brandingConfig;
 
-    public function __construct(MenuManager $menuManager, $projectDir, $brandingConfig)
-    {
+    /**
+     * @var array
+     */
+    private $toolbarPrimaryConfig;
+
+    /**
+     * @var array
+     */
+    private $toolbarSecondaryConfig;
+
+    public function __construct(
+        MenuManager $menuManager,
+        ToolbarManager $toolbarManager,
+        $projectDir,
+        $brandingConfig,
+        $toolbarPrimaryConfig,
+        $toolbarSecondaryConfig
+    ) {
         $this->menuManager = $menuManager;
+        $this->toolbarManager = $toolbarManager;
         $this->projectDir = $projectDir;
         $this->brandingConfig = $brandingConfig;
+        $this->toolbarPrimaryConfig = $toolbarPrimaryConfig;
+        $this->toolbarSecondaryConfig = $toolbarSecondaryConfig;
     }
 
     public function indexAction(Request $request)
@@ -55,6 +80,10 @@ class MainController extends AbstractController
                 'width' => 0,
                 'views' => $state['views'],
                 'storage' => $state['storage'],
+            ],
+            'toolbar' => [
+                'primaryWidgets' => $this->toolbarManager->createWidgetsViewData($this->toolbarPrimaryConfig),
+                'secondaryWidgets' => $this->toolbarManager->createWidgetsViewData($this->toolbarSecondaryConfig)
             ],
             'branding' => [
                 'logo' => $this->brandingConfig['logo'],
