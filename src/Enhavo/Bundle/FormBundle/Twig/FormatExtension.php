@@ -75,17 +75,29 @@ class FormatExtension extends AbstractExtension
 
     public function sanitizeHtml($value, $tags = ['script', 'style', 'iframe', 'link'])
     {
+        if(empty($value)) {
+            return $value;
+        }
+
         $dom = new \DOMDocument();
-        $dom->loadHTML($value);
+        $dom->loadHTML($value, LIBXML_HTML_NODEFDTD);
         $tagsToRemove = $tags;
         foreach($tagsToRemove as $tag) {
             $element = $dom->getElementsByTagName($tag);
-            foreach($element  as $item){
+            foreach($element as $item) {
                 $item->parentNode->removeChild($item);
             }
         }
-        return $dom->saveHTML();
+        $html = $dom->saveHTML();
+
+        $html = str_replace('<html>', '', $html);
+        $html = str_replace('<head>', '', $html);
+        $html = str_replace('<body>', '', $html);
+        $html = str_replace('</html>', '', $html);
+        $html = str_replace('</head>', '', $html);
+        $html = str_replace('</body>', '', $html);
+        $html = trim($html);
+
+        return $html;
     }
-
-
 }
