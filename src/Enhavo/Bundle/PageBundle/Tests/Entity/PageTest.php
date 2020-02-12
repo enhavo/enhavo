@@ -53,4 +53,20 @@ class PageTest extends TestCase
 
         $this->assertEquals($grandMother, $daughter->getParent(), 'After addChild parent should be set as well');
     }
+
+    public function testGetParents()
+    {
+        $grandMother = new Page();
+        $mother = new Page();
+        $child = new Page();
+
+        $mother->setParent($grandMother);
+        $child->setParent($mother);
+
+        $parents = $child->getParents();
+
+        $this->assertCount(2, $parents, 'Should have two parents');
+        $this->assertEquals($mother, $parents[0]);
+        $this->assertEquals($grandMother, $parents[1]);
+    }
 }

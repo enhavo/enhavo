@@ -80,7 +80,7 @@ class FormatExtension extends AbstractExtension
         }
 
         $dom = new \DOMDocument();
-        $dom->loadHTML(sprintf('%s', $value), LIBXML_HTML_NODEFDTD);
+        $dom->loadHTML($value, LIBXML_HTML_NODEFDTD);
         $tagsToRemove = $tags;
         foreach($tagsToRemove as $tag) {
             $element = $dom->getElementsByTagName($tag);
