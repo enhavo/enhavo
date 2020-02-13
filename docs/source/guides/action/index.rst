@@ -5,3 +5,4 @@ Action
     :maxdepth: 1
 
     create-action
+    add-action-component
