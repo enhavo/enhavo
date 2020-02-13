@@ -50,7 +50,6 @@ abstract class AbstractToolbarWidgetType implements ToolbarWidgetTypeInterface
     {
         $data = [
             'component' => $options['component'],
-            'icon' => $options['icon'],
             'name' => $name,
         ];
 
