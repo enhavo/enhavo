@@ -1,5 +1,5 @@
 <template>
-    <div @click="open">
+    <div @click="open()">
         <i :class="getIcon()"></i>
     </div>
 </template>
@@ -23,9 +23,8 @@
             return ''
         }
 
-        open(menu: any) {
-            this.data.open(menu);
-            this.close();
+        open() {
+            this.data.open();
         }
     }
 </script>
