@@ -28,7 +28,7 @@ export default class Registry implements RegistryInterface
     register(name: string, component: object, factory: object): RegistryInterface
     {
         if(this.has(name)) {
-            throw 'Object with name "'+name+'" already exists in registry';
+            this.deleteEntry(name);
         }
         this.entries.push(new Entry(name, component, factory));
         return this;
@@ -40,6 +40,16 @@ export default class Registry implements RegistryInterface
             this.register(entry.name, entry.component, entry.factory);
         }
         return this;
+    }
+
+    private deleteEntry(name: string)
+    {
+        for (let i in this.entries) {
+            if(this.entries[i].name == name) {
+                this.entries.splice(parseInt(i), 1);
+                break;
+            }
+        }
     }
 
     has(name: string): boolean
