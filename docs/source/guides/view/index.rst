@@ -5,3 +5,4 @@ View
     :maxdepth: 1
 
     create-view
+    customize-styles
