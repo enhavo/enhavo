@@ -26,8 +26,12 @@ class EnhavoEncore
             if(".scss".match(rule.test)) {
                 rule.use.forEach(function(loader) {
                     if(loader.loader == 'sass-loader') {
-                        loader.options.data = '@import "custom";';
-                        loader.options.includePaths = [path.join(projectDir, 'assets/enhavo/styles')];
+                        loader.options.data = '@import "custom-vars";';
+                        if(fs.existsSync(path.join(projectDir, 'assets/enhavo/styles/custom-vars.scss'))) {
+                            loader.options.includePaths = [path.join(projectDir, 'assets/enhavo/styles')];
+                        } else {
+                            loader.options.includePaths = [path.join(projectDir, 'node_modules/@enhavo/app/assets/styles/custom')];
+                        }
                     }
                 });
             }
