@@ -8,3 +8,4 @@ Application.getModalRegistry().registerPackage(new ModalRegistryPackage(Applicat
 Application.getFormRegistry().registerPackage(new FormRegistryPackage(Application));
 Application.getForm().load();
 Application.getVueLoader().load(() => import("@enhavo/app/Form/Components/FormComponent.vue"));
+Application.getView().checkUrl();

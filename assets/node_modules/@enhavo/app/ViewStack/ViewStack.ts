@@ -16,6 +16,7 @@ import MenuManager from "@enhavo/app/Menu/MenuManager";
 import * as _ from 'lodash';
 import * as async from 'async';
 import SaveStateEvent from "@enhavo/app/ViewStack/Event/SaveStateEvent";
+import ChangeUrlEvent from "@enhavo/app/ViewStack/Event/ChangeUrlEvent";
 
 export default class ViewStack
 {
@@ -55,6 +56,23 @@ export default class ViewStack
         this.addArrangeListener();
         this.addLoadingListener();
         this.addExistsListener();
+        this.addChangeUrlListener();
+    }
+
+    private addChangeUrlListener()
+    {
+        this.dispatcher.on('change-url', (event: ChangeUrlEvent) => {
+            let view = this.get(event.id);
+            if(view.url !== event.url) {
+                view.url = event.url;
+                if(event.clearStorage) {
+                    view.storage = [];
+                }
+                event.resolve({changed: true});
+                return;
+            }
+            event.resolve({changed: false});
+        });
     }
 
     private addExistsListener()
