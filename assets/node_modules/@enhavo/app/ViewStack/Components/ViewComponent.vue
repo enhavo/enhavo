@@ -3,6 +3,7 @@
         <div class="toolbar">
             <strong v-if="!data.minimize">{{ data.label }}</strong>
             <div class="actions">
+                <div @click="open()" v-if="!data.minimize" class="action"><span class="icon icon-open_in_new"></span></div>
                 <div @click="close()" v-if="!data.minimize" class="action"><span class="icon icon-close"></span></div>
                 <div @click="minimize()" v-if="!data.minimize" class="action minimize"><span class="icon icon-keyboard_arrow_left"></span></div>
                 <div @click="maximize()" v-if="data.minimize" class="action maximize"><span class="icon icon-keyboard_arrow_right"></span></div>
@@ -55,6 +56,11 @@
 
         close() {
             application.getEventDispatcher().dispatch(new CloseEvent(this.data.id));
+        }
+
+        open() {
+            let url = application.getStateManager().generateViewUrl(this.data);
+            window.open(url, '_blank');
         }
 
         minimize() {

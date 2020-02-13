@@ -30,3 +30,10 @@ services:
             - '@router'
         tags:
             - { name: enhavo_app.toolbar_widget, alias: quick_menu }
+
+
+    Enhavo\Bundle\AppBundle\Toolbar\Widget\NewWindowToolbarWidgetType:
+        public: true
+        parent: Enhavo\Bundle\AppBundle\Toolbar\AbstractToolbarWidgetType
+        tags:
+            - { name: enhavo_app.toolbar_widget, alias: new_window }
