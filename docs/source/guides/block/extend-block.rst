@@ -43,10 +43,47 @@ a single table inheritance.
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
+
+Extend the current form
+-----------------------
+
+You have to create a form for your custom block. Use the ``getParent`` to extend the default form. Otherwise you have
+to redefine all properties inside ``buildForm``.
+
+.. code:: php
+
+    namespace App\Form\Type\Block;
+
+    use Symfony\Component\Form\AbstractType;
+    use Symfony\Component\Form\FormBuilderInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
+    use App\Entity\Block\TextBlock;
+
+    class TextBlockType extends AbstractType
+    {
+        public function buildForm(FormBuilderInterface $builder, array $options)
+        {
+            // ... add your property types
+        }
+
+        public function configureOptions(OptionsResolver $resolver)
+        {
+            $resolver->setDefaults([
+                'data_class' => TextBlock::class
+            ]);
+        }
+
+        public function getParent()
+        {
+            return \Enhavo\Bundle\BlockBundle\Form\Type\TextBlockType::class;
+        }
+    }
+
+
 Change block configuration
 --------------------------
 
-Change the block configuration and use your custom model class.
+Change the block configuration and use your custom classes.
 
 .. code:: yaml
 
@@ -57,3 +94,5 @@ Change the block configuration and use your custom model class.
             text:
                 type: text
                 model: App\Entity\Block\TextBlock
+                form: App\Form\Type\Block\TextBlockType
+                repository: App\Entity\Block\TextBlock
