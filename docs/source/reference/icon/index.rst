@@ -1,9 +1,6 @@
 Icon
 ====
-.. toctree::
-    :hidden:
 
-
-.. include:: /reference/icon/icon.rst
+.. include:: icon.rst
 
 

@@ -2,7 +2,7 @@ Block
 =====
 
 .. toctree::
-    :hidden:
+    :maxdepth: 1
 
     article-list-block
     blockquote-block
@@ -18,16 +18,3 @@ Block
     two-column-block
     video-block
 
-* :doc:`article-list-block`
-* :doc:`blockquote-block`
-* :doc:`calendar-block`
-* :doc:`comment-block`
-* :doc:`newsletter-subscribe-block`
-* :doc:`one-column-block`
-* :doc:`sidebar-column-block`
-* :doc:`slider-block`
-* :doc:`template-block`
-* :doc:`text-picture-block`
-* :doc:`three-column-block`
-* :doc:`two-column-block`
-* :doc:`video-block`

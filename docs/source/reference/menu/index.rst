@@ -1,13 +1,24 @@
 Menu
 ====
 
+
+Menu
+----
+
 .. toctree::
-    :hidden:
+    :maxdepth: 1
 
     list
     dropdown
     base
 
-* :doc:`list`
-* :doc:`dropdown`
-* :doc:`base`
+
+Components
+----------
+
+.. toctree::
+    :maxdepth: 1
+
+    component/dropdown-component
+    component/item-component
+    component/list-component
