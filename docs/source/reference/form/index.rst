@@ -3,7 +3,6 @@ Form
 
 .. toctree::
     :maxdepth: 1
-    :hidden:
 
     auto-complete-entity
     boolean
@@ -19,18 +18,3 @@ Form
     unit
     weekend-date
     wysiwyg
-
-* :doc:`/reference/form/auto-complete-entity`
-* :doc:`/reference/form/boolean`
-* :doc:`/reference/form/currency`
-* :doc:`/reference/form/date`
-* :doc:`/reference/form/date-time`
-* :doc:`/reference/form/entity-tree`
-* :doc:`/reference/form/head-line`
-* :doc:`/reference/form/list`
-* :doc:`/reference/form/message`
-* :doc:`/reference/form/position`
-* :doc:`/reference/form/slug`
-* :doc:`/reference/form/unit`
-* :doc:`/reference/form/weekend-date`
-* :doc:`/reference/form/wysiwyg`

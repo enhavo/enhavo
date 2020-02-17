@@ -1,8 +1,11 @@
 Column
 ======
 
+Columns
+-------
+
 .. toctree::
-    :hidden:
+    :maxdepth: 1
 
     action-column
     boolean-column
@@ -21,19 +24,15 @@ Column
     text-column
     url-column
 
-* :doc:`/reference/column/action-column`
-* :doc:`/reference/column/boolean-column`
-* :doc:`/reference/column/comment-state-column`
-* :doc:`/reference/column/date-widget-column`
-* :doc:`/reference/column/datetime-widget-column`
-* :doc:`/reference/column/label-column`
-* :doc:`/reference/column/list-column`
-* :doc:`/reference/column/media-column`
-* :doc:`/reference/column/multiple-property-column`
-* :doc:`/reference/column/newsletter-state-column`
-* :doc:`/reference/column/picture-column`
-* :doc:`/reference/column/position-column`
-* :doc:`/reference/column/property-column`
-* :doc:`/reference/column/template-column`
-* :doc:`/reference/column/text-column`
-* :doc:`/reference/column/url-column`
+Components
+----------
+
+.. toctree::
+    :maxdepth: 1
+
+    component/action-component
+    component/boolean-component
+    component/media-component
+    component/state-component
+    component/sub-component
+    component/text-component

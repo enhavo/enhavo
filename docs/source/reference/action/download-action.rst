@@ -1,5 +1,5 @@
-Delete Action
-=============
+Download Action
+===============
 
 Will delete the current resource and close the overlay.
 

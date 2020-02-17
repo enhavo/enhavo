@@ -1,8 +1,12 @@
 Action
 ======
 
+
+Actions
+-------
+
 .. toctree::
-    :hidden:
+    :maxdepth: 1
 
     close-action
     comments-action
@@ -21,19 +25,12 @@ Action
     send-test-action
     update-action
 
-* :doc:`/reference/action/close-action`
-* :doc:`/reference/action/comments-action`
-* :doc:`/reference/action/create-action`
-* :doc:`/reference/action/delete-action`
-* :doc:`/reference/action/download-action`
-* :doc:`/reference/action/duplicate-action`
-* :doc:`/reference/action/event-action`
-* :doc:`/reference/action/filter-action`
-* :doc:`/reference/action/modal-action`
-* :doc:`/reference/action/open-action`
-* :doc:`/reference/action/output-stream-action`
-* :doc:`/reference/action/preview-action`
-* :doc:`/reference/action/save-action`
-* :doc:`/reference/action/send-action`
-* :doc:`/reference/action/send-test-action`
-* :doc:`/reference/action/update-action`
+
+Components
+----------
+
+.. toctree::
+    :maxdepth: 1
+
+    component/action-component
+    component/dropdown-component
