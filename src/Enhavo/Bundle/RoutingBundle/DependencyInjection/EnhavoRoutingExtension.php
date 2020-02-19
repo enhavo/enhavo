@@ -2,9 +2,9 @@
 
 namespace Enhavo\Bundle\RoutingBundle\DependencyInjection;
 
+use Sylius\Bundle\ResourceBundle\DependencyInjection\Extension\AbstractResourceExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 
 /**
@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\Loader;
  *
  * @link http://symfony.com/doc/current/cookbook/bundles/extension.html
  */
-class EnhavoRoutingExtension extends Extension
+class EnhavoRoutingExtension extends AbstractResourceExtension
 {
     /**
      * {@inheritdoc}
@@ -21,6 +21,7 @@ class EnhavoRoutingExtension extends Extension
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
+        $this->registerResources('enhavo_routing', $config['driver'], $config['resources'], $container);
 
         $container->setParameter('enhavo_routing.classes', $config['classes']);
         $container->setParameter('enhavo_routing.condition_resolver', $config['condition_resolver']);

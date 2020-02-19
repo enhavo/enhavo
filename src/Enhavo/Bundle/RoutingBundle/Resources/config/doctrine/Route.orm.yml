@@ -1,6 +1,7 @@
 Enhavo\Bundle\RoutingBundle\Entity\Route:
     type: entity
     table: routing_route
+    repositoryClass: Enhavo\Bundle\RoutingBundle\Repository\RouteRepository
     indexes:
         name_idx:
             columns: [ name ]
