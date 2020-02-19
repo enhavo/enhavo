@@ -1,6 +1,6 @@
 <template>
     <div class="app" v-bind:class="{ 'menu-collapsed':!menu.open}">
-        <toolbar v-bind:menu_open="menu.open" :branding="branding" :view_stack="view_stack" v-on:toogle-menu="toogleMenu"></toolbar>
+        <toolbar v-bind:menu_open="menu.open" :branding="branding" :toolbar="toolbar" v-on:toogle-menu="toogleMenu"></toolbar>
         <viewstack-dropdown :view_stack="view_stack"></viewstack-dropdown>
         <div class="sidebar" v-bind:class="{ 'menu-collapsed':!menu.open}">
             <div class="mobile-branding-container" v-bind:style="brandingImageStyles" @click="home"></div>
@@ -17,6 +17,7 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 import ViewStack from "@enhavo/app/ViewStack/Components/ViewStack.vue"
 import Menu from "@enhavo/app/Menu/Components/Menu.vue"
 import Toolbar from "@enhavo/app/Toolbar/Components/Toolbar.vue"
+import ToolbarData from "@enhavo/app/Toolbar/ToolbarData"
 import ViewStackData from "@enhavo/app/ViewStack/ViewStackData"
 import '@enhavo/app/assets/styles/app.scss'
 import MenuData from "@enhavo/app/Menu/MenuData";
@@ -48,6 +49,9 @@ export default class App extends Vue {
 
     @Prop()
     view_stack: ViewStackData;
+
+    @Prop()
+    toolbar: ToolbarData;
 
     toogleMenu()
     {

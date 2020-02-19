@@ -6,10 +6,6 @@ action:
 error:
   occurred: 'Ein Fehler ist aufgetreten'
   forbidden: 'Sie haben nicht die nötigen Rechte um diese Aktion auszuführen'
-  batch:
-    noneSelected: 'Keine Elemente ausgewählt'
-    noActionSelected: 'Keine Aktion ausgewählt'
-    close: 'Schließen'
 form:
   delete:
     question: 'Wollen sie dieses Element wirklich löschen?'
@@ -52,6 +48,8 @@ label:
   filter: 'Filter'
   edit: 'Bearbeiten'
   index: 'Index'
+  change_password: 'Passwort ändern'
+  open_homepage: 'Zur Startseite'
 message:
   confirm:
     batch:

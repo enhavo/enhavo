@@ -1,6 +1,7 @@
 import ViewData from "@enhavo/app/View/ViewData";
 import Confirm from "@enhavo/app/View/Confirm";
 import * as _ from 'lodash';
+import * as URI from 'urijs';
 import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 import ClickEvent from "@enhavo/app/ViewStack/Event/ClickEvent";
 import CreateEvent from "@enhavo/app/ViewStack/Event/CreateEvent";
@@ -17,6 +18,7 @@ import SaveStateEvent from "@enhavo/app/ViewStack/Event/SaveStateEvent";
 import RemoveEvent from "@enhavo/app/ViewStack/Event/RemoveEvent";
 import LoadedEvent from "@enhavo/app/ViewStack/Event/LoadedEvent";
 import LoadingEvent from "@enhavo/app/ViewStack/Event/LoadingEvent";
+import ChangeUrlEvent, {ChangeUrlData} from "@enhavo/app/ViewStack/Event/ChangeUrlEvent";
 
 export default class View
 {
@@ -244,4 +246,24 @@ export default class View
     {
         this.eventDispatcher = dispatcher;
     }
+
+    public checkUrl(clearStorage: boolean = false)
+    {
+        let uri = new URI(window.location.href);
+        uri = uri.removeQuery('view_id');
+
+        let url = uri.path();
+        if(uri.query()) {
+            url = uri.path() + '?' + uri.query();
+        }
+
+        this.eventDispatcher.dispatch(new ChangeUrlEvent(this.getId(), url, clearStorage))
+            .then((data: ChangeUrlData) => {
+                if(data.changed) {
+                    this.eventDispatcher.dispatch(new SaveStateEvent());
+                }
+            }
+        );
+    }
 }
+

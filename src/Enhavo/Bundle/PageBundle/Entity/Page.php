@@ -146,12 +146,13 @@ class Page extends Content implements PageInterface
     {
         $parents = [];
         $parent = $this->getParent();
-        if($parent) {
-            $parents[] = $parent;
-            foreach($parents as $parent) {
+        do {
+            if($parent) {
                 $parents[] = $parent;
+            } else {
+                break;
             }
-        }
+        } while($parent = $parent->getParent());
         return $parents;
     }
 

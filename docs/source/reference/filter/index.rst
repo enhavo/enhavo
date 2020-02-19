@@ -1,8 +1,11 @@
 Filter
 ======
 
+Filter
+------
+
 .. toctree::
-    :hidden:
+    :maxdepth: 1
 
     age-filter
     auto-complete-entity-filter
@@ -14,11 +17,16 @@ Filter
     text-filter
 
 
-* :doc:`/reference/filter/age-filter`
-* :doc:`/reference/filter/auto-complete-entity-filter`
-* :doc:`/reference/filter/between-filter`
-* :doc:`/reference/filter/boolean-filter`
-* :doc:`/reference/filter/entity-filter`
-* :doc:`/reference/filter/option-filter`
-* :doc:`/reference/filter/taxonomy-filter`
-* :doc:`/reference/filter/text-filter`
+Components
+----------
+
+
+.. toctree::
+    :maxdepth: 1
+
+    component/auto-complete-component
+    component/between-component
+    component/checkbox-component
+    component/date-between-component
+    component/dropdown-component
+    component/text-component

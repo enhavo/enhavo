@@ -7,3 +7,4 @@ BlockBundle
     introduction
     use-block
     rendering
+    node-model

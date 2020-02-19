@@ -3,6 +3,7 @@ import ViewStack from "@enhavo/app/ViewStack/ViewStack";
 import * as pako from "pako";
 import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 import GlobalDataStorageManager from "@enhavo/app/ViewStack/GlobalDataStorageManager";
+import ViewInterface from "@enhavo/app/ViewStack/ViewInterface";
 
 export default class StateManager
 {
@@ -63,5 +64,22 @@ export default class StateManager
             views: viewData,
             storage: this.dataStorage.getStorage()
         };
+    }
+
+    public generateViewUrl(view: ViewInterface): string
+    {
+        let viewData = [];
+        viewData.push({
+            url: view.url,
+            id: view.id,
+            storage: view.storage
+        });
+
+        let stateObject = {
+            views: viewData,
+            storage: this.dataStorage.getStorage()
+        };
+
+        return this.generateUrl(stateObject);
     }
 }

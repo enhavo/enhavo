@@ -16,11 +16,11 @@ First update your meta file of your entity.
 And add a getter and setter function to the entity class.
 Set the property and type of the Node correctly. In this case the type is root, because
 it is the entry point of the block node tree. Property should be the member name where
-the Node is stored. This is important to browse throught the node three later.
+the Node is stored. This is important to browse through the node three later.
 
 .. code-block:: php
 
-    Enhavo\Bundle\BlockBundle\Model\NodeInterface
+    use Enhavo\Bundle\BlockBundle\Model\NodeInterface
 
     class MyEntity
     {
@@ -40,9 +40,26 @@ the Node is stored. This is important to browse throught the node three later.
                 $content->setType(NodeInterface::TYPE_ROOT);
                 $content->setProperty('content');
             }
+            $this->content = $content;
             return $this;
         }
     }
 
 
 And add a migration file and execute it to update your database schema.
+
+To show the block form, you need add the ``Enhavo\Bundle\BlockBundle\Form\Type\BlockNodeType`` to your form builder.
+
+.. code-block:: php
+
+    use Enhavo\Bundle\BlockBundle\Form\Type\BlockNodeType;
+    use Symfony\Component\Form\AbstractType;
+    use Symfony\Component\Form\FormBuilderInterface;
+
+    class MyEntityType extends AbstractType
+    {
+        public function buildForm(FormBuilderInterface $builder, array $options)
+        {
+            $builder->add('content', BlockNodeType::class);
+        }
+    }

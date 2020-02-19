@@ -10,7 +10,6 @@ Guides
     batch/index
     block/index
     column/index
-    component/index
     resource/index
     contact/index
     controller/index
@@ -21,3 +20,4 @@ Guides
     routing/index
     search/index
     setting/index
+    view/index

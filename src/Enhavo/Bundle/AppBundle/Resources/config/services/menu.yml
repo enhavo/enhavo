@@ -30,7 +30,6 @@ services:
       tags:
         - { name: enhavo.menu, alias: dropdown }
 
-
     Enhavo\Bundle\AppBundle\Menu\Menu\ListMenu:
         public: true
         arguments:
