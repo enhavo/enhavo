@@ -77,6 +77,6 @@ services:
         arguments:
             - '%enhavo_article.model.article.class%'
             - '@enhavo_block.factory.node'
-            - '@Enhavo\Bundle\RoutingBundle\Factory\RouteFactory'
+            - '@enhavo_routing.factory.route'
             - '@enhavo_media.factory.file'
 

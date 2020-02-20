@@ -1,6 +1,5 @@
 services:
-    enhavo_routing.manager.route:
-        class: Enhavo\Bundle\RoutingBundle\Manager\RouteManager
+    Enhavo\Bundle\RoutingBundle\Manager\RouteManager:
         public: true
         arguments:
             - '@enhavo_routing.auto_generator'
@@ -8,7 +7,7 @@ services:
     enhavo_routing.listener.routeable_listener:
         class: Enhavo\Bundle\RoutingBundle\EventListener\RouteableListener
         arguments:
-            - '@enhavo_routing.manager.route'
+            - '@Enhavo\Bundle\RoutingBundle\Manager\RouteManager'
         tags:
             - { name: kernel.event_subscriber }
 
@@ -36,5 +35,3 @@ services:
           - '@enhavo_app.reference.target_class_resolver'
         tags:
             - { name: doctrine.event_subscriber }
-
-    Enhavo\Bundle\RoutingBundle\Factory\RouteFactory:

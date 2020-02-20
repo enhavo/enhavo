@@ -13,6 +13,9 @@ services:
 
     Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator\PrefixGenerator:
         public: true
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@enhavo_routing.repository.route'
         calls:
             - [setContainer, ['@service_container']]
         tags:
