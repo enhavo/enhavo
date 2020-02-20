@@ -39,7 +39,7 @@ class PrefixGenerator extends AbstractGenerator
         }
     }
 
-    protected function existsPrefix($prefix, $resource, array $options): bool
+    protected function existsPrefix($prefix): bool
     {
         $results = $this->routeRepository->findBy([
             'staticPrefix' => $prefix
