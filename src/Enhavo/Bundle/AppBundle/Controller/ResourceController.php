@@ -136,7 +136,7 @@ class ResourceController extends BaseController
                 $this->appEventDispatcher->dispatchPreEvent(ResourceActions::CREATE, $configuration, $newResource);
                 $this->eventDispatcher->dispatchPreEvent(ResourceActions::CREATE, $configuration, $newResource);
                 $this->repository->add($newResource);
-                $this->appEventDispatcher->dispatchPreEvent(ResourceActions::CREATE, $configuration, $newResource);
+                $this->appEventDispatcher->dispatchPostEvent(ResourceActions::CREATE, $configuration, $newResource);
                 $this->eventDispatcher->dispatchPostEvent(ResourceActions::CREATE, $configuration, $newResource);
                 $this->addFlash('success', $this->get('translator')->trans('form.message.success', [], 'EnhavoAppBundle'));
                 $route = $configuration->getRedirectRoute(null);

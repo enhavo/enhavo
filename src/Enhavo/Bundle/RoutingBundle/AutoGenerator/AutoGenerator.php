@@ -37,11 +37,14 @@ class AutoGenerator
         $metadata = $this->metadataRepository->getMetadata($resource);
         foreach($metadata->getGenerators() as $generatorConfig) {
             /** @var GeneratorInterface $generator */
-            $generator = $this->collector->getType($generatorConfig->getType());
-            $optionsResolver = new OptionsResolver();
-            $generator->configureOptions($optionsResolver);
-            $options = $optionsResolver->resolve($generatorConfig->getOptions());
-            $generator->generate($resource, $options);
+            $type = $this->collector->getType($generatorConfig->getType());
+            $generator = $this->createGenerator($type, $generatorConfig->getOptions(), $resource);
+            $generator->generate();
         }
+    }
+
+    private function createGenerator($type, $options, $resource)
+    {
+        return new Generator($type, $options, $resource);
     }
 }

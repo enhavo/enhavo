@@ -8,8 +8,6 @@
 
 namespace Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator;
 
-
-use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Repository\EntityRepositoryInterface;
 use Enhavo\Bundle\RoutingBundle\AutoGenerator\AbstractGenerator;
 use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
@@ -19,18 +17,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class PrefixGenerator extends AbstractGenerator
 {
     /**
-     * @var EntityManagerInterface
-     */
-    protected $em;
-
-    /**
      * @var EntityRepositoryInterface
      */
     private $routeRepository;
 
-    public function __construct($em, $routeRepository)
+    public function __construct($routeRepository)
     {
-        $this->em = $em;
         $this->routeRepository = $routeRepository;
     }
 
@@ -43,8 +35,17 @@ class PrefixGenerator extends AbstractGenerator
             if(!$options['overwrite'] && $route->getStaticPrefix()) {
                 return;
             }
-            $route->setStaticPrefix($this->createUrl($properties, $options));
+            $route->setStaticPrefix($this->createPrefix($properties, $resource, $options));
         }
+    }
+
+    protected function existsPrefix($prefix, $resource, array $options): bool
+    {
+        $results = $this->routeRepository->findBy([
+            'staticPrefix' => $prefix
+        ]);
+
+        return count($results);
     }
 
     private function getSlugifiedProperties($resource, $properties)
@@ -70,59 +71,72 @@ class PrefixGenerator extends AbstractGenerator
         return Slugifier::slugify($string);
     }
 
-    private function createUrl(array $properties, array $options)
+    private function createPrefix(array $properties, $resource, array $options)
     {
-        return $options['unique'] ? $this->getUniqueUrl($properties, $options) : $this->format($properties, $options);
+        return $options['unique'] ? $this->getUniqueUrl($properties, $resource, $options) : $this->format($properties, $options);
     }
 
     private function format(array $properties, array $options)
     {
-        if($options['format']){
-            return $this->replace($options['format'], $properties);
+        if ($options['format']) {
+            $string = $options['format'];
+            foreach ($properties as $key => $value){
+                $string = str_replace(sprintf('{%s}', $key), $value, $string);
+            }
+            return $string;
         } else {
             return sprintf('/%s', join('-', $properties));
         }
     }
 
-    private function replace($string, $properties)
+    private function getUniqueUrl(array $properties, $resource, array $options): string
     {
-        foreach ($properties as $key => $value){
-            $string = str_replace(sprintf('{%s}', $key), $value, $string);
+        if($options['unique_property']) {
+            $this->checkUniqueProperty($properties, $options);
+            $isFirstTry = true;
+            while($this->existsPrefix($this->format($properties, $options), $resource, $options)) {
+                $properties = $this->increaseProperties($properties, $options, $isFirstTry);
+                $isFirstTry = false;
+            }
+            return $this->format($properties, $options);
         }
 
+        $string = $this->format($properties, $options);
+        $isFirstTry = true;
+        while($this->existsPrefix($string, $resource, $options)) {
+            $string = $this->increaseString($string, $isFirstTry);
+            $isFirstTry = false;
+        }
         return $string;
     }
 
-    /**
-     * $isFirstTry prevents unintended increase. E.g. if user enters "12-12-12" and entry exists, it should become "12-12-12-1", not "12-12-13".
-     */
-    private function getUniqueUrl(array $properties, $options, $isFirstTry = true)
+    private function checkUniqueProperty($properties, $options)
     {
-        $results = $this->routeRepository->findBy([
-            'staticPrefix' => $this->format($properties, $options)
-        ]);
-
-        if(count($results)){
-            return $this->getUniqueUrl($this->increase($properties, $options, $isFirstTry), $options, false);
-        } else {
-            return $this->format($properties, $options);
+        if(!isset($properties[$options['unique_property']])) {
+            throw new \InvalidArgumentException(sprintf(
+                'The unique_property option "%s" don\'t exists in option properties. Available properties are "%s"',
+                $options['unique_property'],
+                is_array($options['properties']) ? join(',', $options['properties']) : $options['properties']
+            ));
         }
     }
 
-    private function increase($properties, $options, $isFirstTry)
+    private function increaseProperties($properties, $options, $isFirstTry)
     {
-        $string = $properties[$this->getUniqueProperty($properties, $options)];
+        $uniqueProperty = $this->getUniqueProperty($properties, $options);
+        $string = $properties[$uniqueProperty];
+
         $added = false;
 
-        if(!$isFirstTry){
+        if(!$isFirstTry) {
             $isMatch = preg_match('/^(.*)-([0-9]+)$/', $string, $matches);
-            if($isMatch && isset($matches[1]) && isset($matches[2])){
+            if($isMatch && isset($matches[1]) && isset($matches[2])) {
                 $string = sprintf('%s-%u', $matches[1], intval($matches[2]) + 1);
                 $added = true;
             }
         }
 
-        if(!$added){
+        if(!$added) {
             $string = sprintf('%s-1', $string);
         }
 
@@ -131,14 +145,24 @@ class PrefixGenerator extends AbstractGenerator
         return $properties;
     }
 
+    private function increaseString($string, $isFirstTry)
+    {
+        if(!$isFirstTry) {
+            $isMatch = preg_match('/^(.*)-([0-9]+)$/', $string, $matches);
+            if($isMatch && isset($matches[1]) && isset($matches[2])) {
+                $string = sprintf('%s-%u', $matches[1], intval($matches[2]) + 1);
+                return $string;
+            }
+        }
+        return sprintf('%s-1', $string);
+    }
+
     private function getUniqueProperty($properties, $options)
     {
         if($options['unique_property']){
             return $options['unique_property'];
-        } elseif (count($properties) === 1 && !$options['unique_property']){
-            return array_key_first($properties);
         }
-        throw new \Exception('Error: "unique" option is set and multiple properties exist. Please specify a "unique_property".');
+        return array_key_last($properties);
     }
 
     public function configureOptions(OptionsResolver $resolver)

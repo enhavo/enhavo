@@ -14,5 +14,6 @@ This section contains a short reference information to following topics:
     icon/index
     media-filter/index
     menu/index
+    routing-generator/index
     toolbar-widget/index
     twig/index
