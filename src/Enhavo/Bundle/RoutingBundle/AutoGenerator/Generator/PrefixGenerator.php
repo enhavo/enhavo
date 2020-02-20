@@ -35,8 +35,17 @@ class PrefixGenerator extends AbstractGenerator
             if(!$options['overwrite'] && $route->getStaticPrefix()) {
                 return;
             }
-            $route->setStaticPrefix($this->createPrefix($properties, $options));
+            $route->setStaticPrefix($this->createPrefix($properties, $resource, $options));
         }
+    }
+
+    protected function existsPrefix($prefix, $resource, array $options): bool
+    {
+        $results = $this->routeRepository->findBy([
+            'staticPrefix' => $prefix
+        ]);
+
+        return count($results);
     }
 
     private function getSlugifiedProperties($resource, $properties)
@@ -62,9 +71,9 @@ class PrefixGenerator extends AbstractGenerator
         return Slugifier::slugify($string);
     }
 
-    private function createPrefix(array $properties, array $options)
+    private function createPrefix(array $properties, $resource, array $options)
     {
-        return $options['unique'] ? $this->getUniqueUrl($properties, $options) : $this->format($properties, $options);
+        return $options['unique'] ? $this->getUniqueUrl($properties, $resource, $options) : $this->format($properties, $options);
     }
 
     private function format(array $properties, array $options)
@@ -80,21 +89,12 @@ class PrefixGenerator extends AbstractGenerator
         }
     }
 
-    private function existsPrefix($prefix): bool
-    {
-        $results = $this->routeRepository->findBy([
-            'staticPrefix' => $prefix
-        ]);
-
-        return count($results);
-    }
-
-    private function getUniqueUrl(array $properties, array $options): string
+    private function getUniqueUrl(array $properties, $resource, array $options): string
     {
         if($options['unique_property']) {
             $this->checkUniqueProperty($properties, $options);
             $isFirstTry = true;
-            while($this->existsPrefix($this->format($properties, $options))) {
+            while($this->existsPrefix($this->format($properties, $options), $resource, $options)) {
                 $properties = $this->increaseProperties($properties, $options, $isFirstTry);
                 $isFirstTry = false;
             }
@@ -103,7 +103,7 @@ class PrefixGenerator extends AbstractGenerator
 
         $string = $this->format($properties, $options);
         $isFirstTry = true;
-        while($this->existsPrefix($string)) {
+        while($this->existsPrefix($string, $resource, $options)) {
             $string = $this->increaseString($string, $isFirstTry);
             $isFirstTry = false;
         }

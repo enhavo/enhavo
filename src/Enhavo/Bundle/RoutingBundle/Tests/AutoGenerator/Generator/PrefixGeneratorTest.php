@@ -26,11 +26,11 @@ class PrefixGeneratorTest extends TestCase
         return $resource;
     }
 
-    private function createRepository(array $prefixes = [])
+    private function createRepository(array $existPrefixes = [])
     {
         $repository = $this->getMockBuilder(EntityRepositoryInterface::class)->getMock();
-        $repository->method('findBy')->willReturnCallback(function ($criteria) use ($prefixes) {
-            if(isset($criteria['staticPrefix']) && in_array($criteria['staticPrefix'], $prefixes)) {
+        $repository->method('findBy')->willReturnCallback(function ($criteria) use ($existPrefixes) {
+            if(isset($criteria['staticPrefix']) && in_array($criteria['staticPrefix'], $existPrefixes)) {
                 return [new Route()];
             }
             return [];
@@ -98,9 +98,9 @@ class PrefixGeneratorTest extends TestCase
 
     public function testUniqueWithEndingNumber()
     {
-        $repository = $this->createRepository(['/12-12-12']);
+        $repository = $this->createRepository(['/1']);
         $resource = $this->createResource();
-        $resource->setTitle('12 12 12');
+        $resource->setTitle('1');
 
         $generator = new Generator(new PrefixGenerator($repository), [
             'properties' => 'title',
@@ -109,7 +109,7 @@ class PrefixGeneratorTest extends TestCase
 
         $generator->generate();
 
-        $this->assertEquals('/12-12-12-1', $resource->getRoute()->getStaticPrefix());
+        $this->assertEquals('/1-1', $resource->getRoute()->getStaticPrefix());
     }
 
     public function testMultipleUnique()
@@ -205,5 +205,21 @@ class PrefixGeneratorTest extends TestCase
 
         $this->expectException(\InvalidArgumentException::class);
         $generator->generate();
+    }
+
+    public function testExistsPrefixMethod()
+    {
+        $repository = $this->createRepository();
+        $resource = $this->createResource();
+
+        $prefixGenerator = new PrefixGeneratorExtendTest($repository);
+        $generator = new Generator($prefixGenerator, [
+            'properties' => 'title',
+            'unique' => true,
+        ], $resource);
+
+        $generator->generate();
+
+        $this->assertEquals($resource, $prefixGenerator->getResource());
     }
 }
