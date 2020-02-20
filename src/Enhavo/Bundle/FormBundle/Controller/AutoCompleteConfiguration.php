@@ -155,7 +155,7 @@ class AutoCompleteConfiguration
     /**
      * @return string
      */
-    public function getIdProperty(): string
+    public function getIdProperty(): ?string
     {
         return $this->idProperty;
     }
@@ -163,7 +163,7 @@ class AutoCompleteConfiguration
     /**
      * @param string $idProperty
      */
-    public function setIdProperty(string $idProperty): void
+    public function setIdProperty(?string $idProperty): void
     {
         $this->idProperty = $idProperty;
     }
