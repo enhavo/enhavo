@@ -126,21 +126,7 @@ class PrefixGenerator extends AbstractGenerator
         $uniqueProperty = $this->getUniqueProperty($properties, $options);
         $string = $properties[$uniqueProperty];
 
-        $added = false;
-
-        if(!$isFirstTry) {
-            $isMatch = preg_match('/^(.*)-([0-9]+)$/', $string, $matches);
-            if($isMatch && isset($matches[1]) && isset($matches[2])) {
-                $string = sprintf('%s-%u', $matches[1], intval($matches[2]) + 1);
-                $added = true;
-            }
-        }
-
-        if(!$added) {
-            $string = sprintf('%s-1', $string);
-        }
-
-        $properties[$this->getUniqueProperty($properties, $options)] = $string;
+        $properties[$this->getUniqueProperty($properties, $options)] = $this->increaseString($string, $isFirstTry);
 
         return $properties;
     }
