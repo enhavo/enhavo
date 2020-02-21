@@ -35,3 +35,18 @@ Migrate to 0.9
     Application.getWidgetRegistry().registerPackage(new WidgetRegistryPackage(Application));
 
 4. Rename routing manager service id ``enhavo_routing.manager.route`` to FQCN ``Enhavo\Bundle\RoutingBundle\Manager\RouteManager``
+
+5. Rename ``property`` to ``properties`` for route PrefixGenerator type.
+
+.. code:: yaml
+
+  enhavo_routing:
+      classes:
+          App\MyEntity:
+              generators:
+                  prefix:
+                      type: prefix
+                      # before
+                      property: title
+                      # now
+                      properties: title
