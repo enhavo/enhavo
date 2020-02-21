@@ -15,10 +15,10 @@ class NewsletterFixture extends AbstractFixture
     {
         /** @var Newsletter $newsletter */
         $newsletter = $this->container->get('enhavo_newsletter.factory.newsletter')->createNew();
-        $newsletter->setTitle($args['title']);
+//        $newsletter->setTitle($args['title']);
         $newsletter->setSlug($args['slug']);
         $newsletter->setSubject($args['subject']);
-        $newsletter->setGroup($this->createGroup($args['group']));
+        $newsletter->addGroup($this->createGroup($args['group']));
         $newsletter->setContent($this->createContent($args['content']));
 
         $this->translate($newsletter);
