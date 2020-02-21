@@ -20,6 +20,7 @@ Enhavo\Bundle\SliderBundle\Entity\Slider:
 
     oneToMany:
         slides:
+            cascade: ['persist', 'refresh', 'remove']
             targetEntity: Slide
             mappedBy: slider
             orderBy: {'order': 'ASC'}
