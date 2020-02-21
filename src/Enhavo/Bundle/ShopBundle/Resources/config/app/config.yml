@@ -175,7 +175,7 @@ enhavo_routing:
             generators:
                 prefix:
                     type: prefix
-                    property: title
+                    properties: title
 
 jms_serializer:
     metadata:

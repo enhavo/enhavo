@@ -43,7 +43,7 @@ enhavo_routing:
             generators:
                 prefix:
                     type: prefix
-                    property: title
+                    properties: title
                 route_name:
                     type: route_name
 
