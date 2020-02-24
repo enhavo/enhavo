@@ -52,7 +52,6 @@ class UserManager extends FOSUserManager
      * @param $class
      * @param TokenGenerator $tokenGenerator
      * @param UserMailer $mailer
-     * @param LoginManagerInterface $loginManager
      * @param $firewall
      */
     public function __construct(
@@ -62,14 +61,17 @@ class UserManager extends FOSUserManager
         $class,
         TokenGenerator $tokenGenerator,
         UserMailer $mailer,
-        LoginManagerInterface $loginManager,
         $firewall
     ) {
         parent::__construct($passwordUpdater, $canonicalFieldsUpdater, $om, $class);
         $this->tokenGenerator = $tokenGenerator;
         $this->mailer = $mailer;
-        $this->loginManager = $loginManager;
         $this->firewall = $firewall;
+    }
+
+    public function setLoginManager(LoginManagerInterface $loginManager)
+    {
+        $this->loginManager = $loginManager;
     }
 
     public function sendResetEmail(UserInterface $user, $template = null, $route = null)
