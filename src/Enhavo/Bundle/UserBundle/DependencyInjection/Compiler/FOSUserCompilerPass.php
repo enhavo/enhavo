@@ -29,8 +29,8 @@ class FOSUserCompilerPass implements CompilerPassInterface
         $definition->setClass(UserManager::class);
         $definition->addArgument(new Reference('fos_user.util.token_generator'));
         $definition->addArgument(new Reference('fos_user.mailer'));
-        $definition->addArgument(new Reference('fos_user.security.login_manager'));
         $definition->addArgument(new Parameter('fos_user.firewall_name'));
+        $definition->addMethodCall('setLoginManager', [new Reference('fos_user.security.login_manager')]);
     }
 
     protected function overwriteMailer(ContainerBuilder $container)
