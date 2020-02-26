@@ -76,7 +76,7 @@ class PrefixGenerator extends AbstractGenerator
         return $options['unique'] ? $this->getUniqueUrl($properties, $resource, $options) : $this->format($properties, $options);
     }
 
-    private function format(array $properties, array $options)
+    protected function format(array $properties, array $options)
     {
         if ($options['format']) {
             $string = $options['format'];
