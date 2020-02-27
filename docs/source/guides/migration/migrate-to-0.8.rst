@@ -33,3 +33,4 @@ Symfony upgrade tasks
 * Inject private services
 * Update service definitions
 * Add Kernel
+* Add tag ``console.command`` to command services (Create service if not exists)
