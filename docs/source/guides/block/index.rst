@@ -9,3 +9,4 @@ Block
     add-block-to-block
     custom-templates
     extend-block
+    custom-form-theme

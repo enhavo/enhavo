@@ -6,3 +6,4 @@ Media
 
     create-custom-filter
     add-media-file-to-resource
+    use-media-type-in-theme

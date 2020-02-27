@@ -3,8 +3,8 @@
 {% endblock %}
 
 {% block enhavo_block_column_widget %}
-    {{ form_row(form.width) }}
-    {{ form_row(form.style) }}
+    {% if form.width is defined %}{{ form_row(form.width) }}{% endif %}
+    {% if form.style is defined %}{{ form_row(form.style) }}{% endif %}
     {% for child in form %}
         {{ form_row(child) }}
     {% endfor %}
