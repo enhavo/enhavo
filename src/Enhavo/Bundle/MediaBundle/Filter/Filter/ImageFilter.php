@@ -230,7 +230,12 @@ class ImageFilter extends AbstractFilter
         //inset my not have target size, so we resize
         $palette = new RGB();
         $backgroundColor = $palette->color(array(255, 255, 255), 0);
-        $imagine = new Imagine();
+
+        if ($image instanceof \Imagine\Imagick\Image) {
+            $imagine = new ImagickImagine();
+        } else {
+            $imagine = new Imagine();
+        }
         $newImage = $imagine->create(new Box($width, $height), $backgroundColor);
         $newImage->resize(new Box($width, $height));
         
