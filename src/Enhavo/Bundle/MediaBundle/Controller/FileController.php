@@ -116,10 +116,20 @@ class FileController extends ResourceController
 
         $maxAge = $this->getParameter('enhavo_media.cache_control.max_age');
         if($maxAge) {
-            $response->headers->set('Cache-Control', sprintf('max-age=%s, public', $maxAge));
+            $response
+                ->setExpires($this->getDateInSeconds($maxAge))
+                ->setMaxAge($maxAge)
+                ->setPublic();
         }
 
         return $response;
+    }
+
+    private function getDateInSeconds($seconds)
+    {
+        $date = new \DateTime();
+        $date->modify(sprintf('+%s seconds', $seconds));
+        return $date;
     }
 
     public function downloadFormatAction(Request $request): Response
