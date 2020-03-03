@@ -40,6 +40,15 @@ class FileController extends ResourceController
         $response->setContent($content);
         $response->headers->set('Content-Type', $file->getMimeType());
         $response->headers->set('Content-Length', strlen($content));
+
+        $maxAge = $this->getMaxAge();
+        if($maxAge) {
+            $response
+                ->setExpires($this->getDateInSeconds($maxAge))
+                ->setMaxAge($maxAge)
+                ->setPublic();
+        }
+
         return $response;
     }
 
@@ -114,7 +123,7 @@ class FileController extends ResourceController
         $response->headers->set('Content-Type', $formatFile->getMimeType());
         $response->headers->set('Content-Length', strlen($content));
 
-        $maxAge = $this->getParameter('enhavo_media.cache_control.max_age');
+        $maxAge = $this->getMaxAge();
         if($maxAge) {
             $response
                 ->setExpires($this->getDateInSeconds($maxAge))
@@ -123,6 +132,11 @@ class FileController extends ResourceController
         }
 
         return $response;
+    }
+
+    private function getMaxAge()
+    {
+        return $this->getParameter('enhavo_media.cache_control.max_age');
     }
 
     private function getDateInSeconds($seconds)
