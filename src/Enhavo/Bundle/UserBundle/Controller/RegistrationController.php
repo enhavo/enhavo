@@ -161,7 +161,7 @@ class RegistrationController extends AbstractController
                 'user' => $this->getUser(),
             ])
             ->setStatusCode(200)
-            ->setTemplate($configuration->getTemplate($this->getTemplate('theme/security/registration/finish')))
+            ->setTemplate($configuration->getTemplate($this->getTemplate('theme/security/registration/finish.html.twig')))
         ;
 
         return $this->viewHandler->handle($view);
