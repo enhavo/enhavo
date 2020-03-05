@@ -73,7 +73,7 @@ class AcceptStrategy extends AbstractStrategy
         if($notify) {
             $template = $this->getTypeOption('template', $subscriber->getType(), 'EnhavoNewsletterBundle:Subscriber:Email/accept.html.twig');
             $from = $this->getTypeOption('from', $subscriber->getType(), 'no-reply@enhavo.com');
-            $senderName = $this->getTypeOption('sender_name', $subscriber->getType(), 'enahvo');
+            $senderName = $this->getTypeOption('sender_name', $subscriber->getType(), 'enhavo');
 
             $message = new \Swift_Message();
             $message->setSubject($this->getSubject())
@@ -95,7 +95,7 @@ class AcceptStrategy extends AbstractStrategy
 
         $template = $this->getTypeOption('admin_template', $subscriber->getType(), 'EnhavoNewsletterBundle:Subscriber:Email/accept-admin.html.twig');
         $from = $this->getTypeOption('from', $subscriber->getType(), 'no-reply@enhavo.com');
-        $senderName = $this->getTypeOption('sender_name', $subscriber->getType(), 'enahvo');
+        $senderName = $this->getTypeOption('sender_name', $subscriber->getType(), 'enhavo');
         $to = $this->getTypeOption('admin_email', $subscriber->getType(), 'no-reply@enhavo.com');
 
         $message = new \Swift_Message();
