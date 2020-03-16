@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\FormBundle\Twig;
 
 use Enhavo\Bundle\FormBundle\Formatter\CurrencyFormatter;
+use Enhavo\Bundle\FormBundle\Formatter\HtmlSanitizer;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -73,31 +74,8 @@ class FormatExtension extends AbstractExtension
         }
     }
 
-    public function sanitizeHtml($value, $tags = ['script', 'style', 'iframe', 'link'])
+    public function sanitizeHtml($value, $options = [])
     {
-        if(empty($value)) {
-            return $value;
-        }
-
-        $dom = new \DOMDocument();
-        $dom->loadHTML($value, LIBXML_HTML_NODEFDTD);
-        $tagsToRemove = $tags;
-        foreach($tagsToRemove as $tag) {
-            $element = $dom->getElementsByTagName($tag);
-            foreach($element as $item) {
-                $item->parentNode->removeChild($item);
-            }
-        }
-        $html = $dom->saveHTML();
-
-        $html = str_replace('<html>', '', $html);
-        $html = str_replace('<head>', '', $html);
-        $html = str_replace('<body>', '', $html);
-        $html = str_replace('</html>', '', $html);
-        $html = str_replace('</head>', '', $html);
-        $html = str_replace('</body>', '', $html);
-        $html = trim($html);
-
-        return $html;
+        return (new HtmlSanitizer())->sanitize($value, $options);
     }
 }
