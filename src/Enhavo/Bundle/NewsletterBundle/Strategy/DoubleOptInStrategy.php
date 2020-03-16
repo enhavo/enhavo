@@ -79,7 +79,7 @@ class DoubleOptInStrategy extends AbstractStrategy
 
             $template = $this->getTypeOption('template', $type, 'EnhavoNewsletterBundle:Subscriber:Email/double-opt-in.html.twig');
             $from = $this->getTypeOption('from', $type, 'no-reply@enhavo.com');
-            $senderName = $this->getTypeOption('sender_name', $type, 'enahvo');
+            $senderName = $this->getTypeOption('sender_name', $type, 'enhavo');
 
             $message = new \Swift_Message();
             $message->setSubject($this->getSubject())
@@ -101,7 +101,7 @@ class DoubleOptInStrategy extends AbstractStrategy
             // TODO add unsubscribe/change subscription link
             $template = $this->getTypeOption('confirmation_template', $type, 'EnhavoNewsletterBundle:Subscriber:Email/confirmation.html.twig');
             $from = $this->getTypeOption('from', $type, 'no-reply@enhavo.com');
-            $senderName = $this->getTypeOption('sender_name', $type, 'enahvo');
+            $senderName = $this->getTypeOption('sender_name', $type, 'enhavo');
 
             $message = new \Swift_Message();
             $message->setSubject($this->getSubject())
@@ -121,7 +121,7 @@ class DoubleOptInStrategy extends AbstractStrategy
         if($notify) {
             $template = $this->getTypeOption('admin_template', $type, 'EnhavoNewsletterBundle:Subscriber:Email/notify-admin.html.twig');
             $from = $this->getTypeOption('from', $$type, 'no-reply@enhavo.com');
-            $senderName = $this->getTypeOption('sender_name', $type, 'enahvo');
+            $senderName = $this->getTypeOption('sender_name', $type, 'enhavo');
             $to = $this->getTypeOption('admin_email', $type, 'no-reply@enhavo.com');
 
             $message = new \Swift_Message();
