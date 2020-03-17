@@ -24,6 +24,8 @@ use Enhavo\Bundle\MediaBundle\Storage\StorageInterface;
 
 class FormatManager
 {
+    const LOCK_FILTER_OPERATIONS_TIMEOUT = 180; // 3 minutes
+
     /**
      * @var array
      */
@@ -89,34 +91,38 @@ class FormatManager
     {
         $fileFormat = $this->formatFactory->createFromMediaFile($file);
         $fileFormat->setName($format);
+        $this->em->persist($fileFormat);
         return $this->applyFilter($fileFormat, $parameters);
     }
 
     public function getFormat(FileInterface $file, $format, $parameters = [])
     {
-        $fileFormat = $this->formatRepository->findOneBy([
-            'name' => $format,
-            'file' => $file
-        ]);
+        /** @var FormatInterface|null $fileFormat */
+        $fileFormat = $this->formatRepository->findByFormatNameAndFile($format, $file, self::LOCK_FILTER_OPERATIONS_TIMEOUT);
+        $fileFormat = $this->waitForFilterOperationsLock($fileFormat);
 
         if($fileFormat === null) {
             $fileFormat = $this->createFormat($file, $format, $parameters);
         }
+
+        $this->cleanUpTimedOutFilterOperationsLockFormats();
+
         return $fileFormat;
     }
 
     public function applyFormat(FileInterface $file, $format, $parameters = [])
     {
         /** @var Format $fileFormat */
-        $fileFormat = $this->formatRepository->findOneBy([
-            'name' => $format,
-            'file' => $file
-        ]);
+        $fileFormat = $this->formatRepository->findByFormatNameAndFile($format, $file, self::LOCK_FILTER_OPERATIONS_TIMEOUT);
+        $fileFormat = $this->waitForFilterOperationsLock($fileFormat);
 
         if($fileFormat === null) {
             return $this->createFormat($file, $format, $parameters);
         }
         $this->applyFilter($fileFormat, $parameters);
+
+        $this->cleanUpTimedOutFilterOperationsLockFormats();
+
         return $fileFormat;
     }
 
@@ -145,6 +151,8 @@ class FormatManager
 
     private function applyFilter(FormatInterface $fileFormat, $parameters)
     {
+        $this->lockFormat($fileFormat);
+
         $parameters = array_merge($fileFormat->getParameters(), $parameters);
         $settings = $this->getFormatSettings($fileFormat->getName(), $parameters);
 
@@ -156,12 +164,53 @@ class FormatManager
             $filter->apply($fileFormat, $setting);
         }
 
-        $this->em->persist($fileFormat);
-        $this->em->flush();
         $this->storage->saveFile($fileFormat);
         $this->cache->refresh($fileFormat->getFile(), $fileFormat->getName());
 
+        $this->unlockFormat($fileFormat);
+
         return $fileFormat;
+    }
+
+    private function waitForFilterOperationsLock(?FormatInterface $fileFormat)
+    {
+        $timeoutThreshold = new \DateTime(self::LOCK_FILTER_OPERATIONS_TIMEOUT . ' seconds ago');
+
+        // No format found
+        if ($fileFormat === null) {
+            return null;
+        }
+
+        // No lock, just return format
+        if ($fileFormat->getFilterOperationsLock() === null) {
+            return $fileFormat;
+        }
+
+        // Wait for operation to finish
+        while($fileFormat->getFilterOperationsLock() !== null && $fileFormat->getFilterOperationsLock() >= $timeoutThreshold) {
+            sleep(1);
+            $this->em->refresh($fileFormat);
+        }
+
+        // Operation finished, return format
+        if ($fileFormat->getFilterOperationsLock() === null) {
+            return $fileFormat;
+        }
+
+        // Timeout while waiting
+        return null;
+    }
+
+    private function lockFormat(FormatInterface $fileFormat)
+    {
+        $fileFormat->setFilterOperationsLock(new \DateTime());
+        $this->em->flush();
+    }
+
+    private function unlockFormat(FormatInterface $fileFormat)
+    {
+        $fileFormat->setFilterOperationsLock(null);
+        $this->em->flush();
     }
 
     public function deleteFormats(FileInterface $file)
@@ -226,5 +275,17 @@ class FormatManager
         }
 
         return $settings;
+    }
+
+    private function cleanUpTimedOutFilterOperationsLockFormats()
+    {
+        $timedOutFormats = $this->formatRepository->findByTimedOutFilterOperationsLock(self::LOCK_FILTER_OPERATIONS_TIMEOUT);
+        foreach($timedOutFormats as $format) {
+            try {
+                $this->deleteFormat($format);
+            } catch (\Exception $exception) {
+                // Timed out filter operations might not have files, which might lead to Exceptions when trying to delete those files
+            }
+        }
     }
 }

@@ -24,8 +24,12 @@ Enhavo\Bundle\MediaBundle\Entity\Format:
             nullable: true
 
         parameters:
-              type: json_array
-              nullable: true
+            type: json_array
+            nullable: true
+
+        filterOperationsLock:
+            type: datetime
+            nullable: true
 
     manyToOne:
         file:

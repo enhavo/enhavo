@@ -98,4 +98,14 @@ interface FormatInterface extends ResourceInterface
      * @return string
      */
     public function getFilename();
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getFilterOperationsLock();
+
+    /**
+     * @param \DateTime|null $filterOperationsLock
+     */
+    public function setFilterOperationsLock($filterOperationsLock);
 }

@@ -53,6 +53,12 @@ class Format implements FormatInterface
     private $content;
 
     /**
+     * @var \DateTime|null
+     */
+    private $filterOperationsLock;
+
+
+    /**
      * @inheritdoc
      */
     public function getId()
@@ -170,5 +176,21 @@ class Format implements FormatInterface
     public function setContent(ContentInterface $content)
     {
         $this->content = $content;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getFilterOperationsLock()
+    {
+        return $this->filterOperationsLock;
+    }
+
+    /**
+     * @param \DateTime|null $filterOperationsLock
+     */
+    public function setFilterOperationsLock($filterOperationsLock)
+    {
+        $this->filterOperationsLock = $filterOperationsLock;
     }
 }
