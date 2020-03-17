@@ -281,11 +281,9 @@ class FormatManager
     {
         $timedOutFormats = $this->formatRepository->findByTimedOutFilterOperationsLock(self::LOCK_FILTER_OPERATIONS_TIMEOUT);
         foreach($timedOutFormats as $format) {
-            try {
-                $this->deleteFormat($format);
-            } catch (\Exception $exception) {
-                // Timed out filter operations might not have files, which might lead to Exceptions when trying to delete those files
-            }
+            $this->em->remove($format);
+            $this->em->flush();
+            // Associated files are NOT deleted, since they might be part of a later format creation that did not timeout
         }
     }
 }
