@@ -229,7 +229,7 @@ class Subscriber implements ResourceInterface, SubscriberInterface
      */
     public function addGroup(\Enhavo\Bundle\NewsletterBundle\Entity\Group $group)
     {
-        $this->group[] = $group;
+        $this->groups[] = $group;
 
         return $this;
     }
@@ -241,7 +241,7 @@ class Subscriber implements ResourceInterface, SubscriberInterface
      */
     public function removeGroup(\Enhavo\Bundle\NewsletterBundle\Entity\Group $group)
     {
-        $this->group->removeElement($group);
+        $this->groups->removeElement($group);
     }
 
     /**
@@ -251,7 +251,7 @@ class Subscriber implements ResourceInterface, SubscriberInterface
      */
     public function getGroups()
     {
-        return $this->group;
+        return $this->groups;
     }
 
     /**
