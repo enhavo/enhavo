@@ -24,6 +24,8 @@ use Enhavo\Bundle\MediaBundle\Storage\StorageInterface;
 
 class FormatManager
 {
+    const LOCK_TIMEOUT = 180; // 3 minutes
+
     /**
      * @var array
      */
@@ -89,34 +91,38 @@ class FormatManager
     {
         $fileFormat = $this->formatFactory->createFromMediaFile($file);
         $fileFormat->setName($format);
+        $this->em->persist($fileFormat);
         return $this->applyFilter($fileFormat, $parameters);
     }
 
     public function getFormat(FileInterface $file, $format, $parameters = [])
     {
-        $fileFormat = $this->formatRepository->findOneBy([
-            'name' => $format,
-            'file' => $file
-        ]);
+        /** @var FormatInterface|null $fileFormat */
+        $fileFormat = $this->formatRepository->findByFormatNameAndFile($format, $file, self::LOCK_TIMEOUT);
+        $fileFormat = $this->waitForLock($fileFormat);
 
         if($fileFormat === null) {
             $fileFormat = $this->createFormat($file, $format, $parameters);
         }
+
+        $this->cleanUpTimedOutLockFormats();
+
         return $fileFormat;
     }
 
     public function applyFormat(FileInterface $file, $format, $parameters = [])
     {
         /** @var Format $fileFormat */
-        $fileFormat = $this->formatRepository->findOneBy([
-            'name' => $format,
-            'file' => $file
-        ]);
+        $fileFormat = $this->formatRepository->findByFormatNameAndFile($format, $file, self::LOCK_TIMEOUT);
+        $fileFormat = $this->waitForLock($fileFormat);
 
         if($fileFormat === null) {
             return $this->createFormat($file, $format, $parameters);
         }
         $this->applyFilter($fileFormat, $parameters);
+
+        $this->cleanUpTimedOutLockFormats();
+
         return $fileFormat;
     }
 
@@ -145,6 +151,8 @@ class FormatManager
 
     private function applyFilter(FormatInterface $fileFormat, $parameters)
     {
+        $this->lockFormat($fileFormat);
+
         $parameters = array_merge($fileFormat->getParameters(), $parameters);
         $settings = $this->getFormatSettings($fileFormat->getName(), $parameters);
 
@@ -156,12 +164,53 @@ class FormatManager
             $filter->apply($fileFormat, $setting);
         }
 
-        $this->em->persist($fileFormat);
-        $this->em->flush();
         $this->storage->saveFile($fileFormat);
         $this->cache->refresh($fileFormat->getFile(), $fileFormat->getName());
 
+        $this->unlockFormat($fileFormat);
+
         return $fileFormat;
+    }
+
+    private function waitForLock(?FormatInterface $fileFormat)
+    {
+        $timeoutThreshold = new \DateTime(self::LOCK_TIMEOUT . ' seconds ago');
+
+        // No format found
+        if ($fileFormat === null) {
+            return null;
+        }
+
+        // No lock, just return format
+        if ($fileFormat->getLockAt() === null) {
+            return $fileFormat;
+        }
+
+        // Wait for operation to finish
+        while($fileFormat->getLockAt() !== null && $fileFormat->getLockAt() >= $timeoutThreshold) {
+            sleep(1);
+            $this->em->refresh($fileFormat);
+        }
+
+        // Operation finished, return format
+        if ($fileFormat->getLockAt() === null) {
+            return $fileFormat;
+        }
+
+        // Timeout while waiting
+        return null;
+    }
+
+    private function lockFormat(FormatInterface $fileFormat)
+    {
+        $fileFormat->setLockAt(new \DateTime());
+        $this->em->flush();
+    }
+
+    private function unlockFormat(FormatInterface $fileFormat)
+    {
+        $fileFormat->setLockAt(null);
+        $this->em->flush();
     }
 
     public function deleteFormats(FileInterface $file)
@@ -226,5 +275,15 @@ class FormatManager
         }
 
         return $settings;
+    }
+
+    private function cleanUpTimedOutLockFormats()
+    {
+        $timedOutFormats = $this->formatRepository->findByTimedOutLock(self::LOCK_TIMEOUT);
+        foreach($timedOutFormats as $format) {
+            $this->em->remove($format);
+            $this->em->flush();
+            // Associated files are NOT deleted, since they might be part of a later format creation that did not timeout
+        }
     }
 }
