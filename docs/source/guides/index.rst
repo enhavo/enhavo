@@ -20,4 +20,5 @@ Guides
     routing/index
     search/index
     setting/index
+    toolbar-widget/index
     view/index
