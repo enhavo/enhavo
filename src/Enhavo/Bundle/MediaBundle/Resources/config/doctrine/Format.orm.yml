@@ -27,7 +27,7 @@ Enhavo\Bundle\MediaBundle\Entity\Format:
             type: json_array
             nullable: true
 
-        filterOperationsLock:
+        lockAt:
             type: datetime
             nullable: true
 

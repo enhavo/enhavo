@@ -55,7 +55,7 @@ class Format implements FormatInterface
     /**
      * @var \DateTime|null
      */
-    private $filterOperationsLock;
+    private $lockAt;
 
 
     /**
@@ -181,16 +181,16 @@ class Format implements FormatInterface
     /**
      * @return \DateTime|null
      */
-    public function getFilterOperationsLock()
+    public function getLockAt()
     {
-        return $this->filterOperationsLock;
+        return $this->lockAt;
     }
 
     /**
-     * @param \DateTime|null $filterOperationsLock
+     * @param \DateTime|null $lockAt
      */
-    public function setFilterOperationsLock($filterOperationsLock)
+    public function setLockAt($lockAt)
     {
-        $this->filterOperationsLock = $filterOperationsLock;
+        $this->lockAt = $lockAt;
     }
 }

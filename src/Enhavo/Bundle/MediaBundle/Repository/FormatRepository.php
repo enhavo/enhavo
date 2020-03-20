@@ -14,16 +14,16 @@ use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 
 class FormatRepository extends EntityRepository
 {
-    public function findByFormatNameAndFile($formatName, FileInterface $file, $filterOperationsLockTimeout = FormatManager::LOCK_FILTER_OPERATIONS_TIMEOUT)
+    public function findByFormatNameAndFile($formatName, FileInterface $file, $lockTimeout = FormatManager::LOCK_TIMEOUT)
     {
         $queryBuilder = $this->createQueryBuilder('format');
         $queryBuilder
             ->andWhere('format.name = :formatName')
             ->andWhere('format.file = :file')
-            ->andWhere('format.filterOperationsLock >= :lockTimeout')
+            ->andWhere('format.lockAt >= :lockTimeout')
             ->setParameter('formatName', $formatName)
             ->setParameter('file', $file)
-            ->setParameter('lockTimeout', new \DateTime($filterOperationsLockTimeout . ' seconds ago'));
+            ->setParameter('lockTimeout', new \DateTime($lockTimeout . ' seconds ago'));
 
         $allResults = $queryBuilder->getQuery()->getResult();
         if (count($allResults) > 0) {
@@ -32,12 +32,12 @@ class FormatRepository extends EntityRepository
         return null;
     }
 
-    public function findByTimedOutFilterOperationsLock($filterOperationsLockTimeout = FormatManager::LOCK_FILTER_OPERATIONS_TIMEOUT)
+    public function findByTimedOutLock($lockTimeout = FormatManager::LOCK_TIMEOUT)
     {
         $queryBuilder = $this->createQueryBuilder('format');
         $queryBuilder
-            ->andWhere('format.filterOperationsLock < :lockTimeout')
-            ->setParameter('lockTimeout', new \DateTime($filterOperationsLockTimeout . ' seconds ago'));
+            ->andWhere('format.lockAt < :lockTimeout')
+            ->setParameter('lockTimeout', new \DateTime($lockTimeout . ' seconds ago'));
 
         return $queryBuilder->getQuery()->getResult();
     }

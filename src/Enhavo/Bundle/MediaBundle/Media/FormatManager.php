@@ -24,7 +24,7 @@ use Enhavo\Bundle\MediaBundle\Storage\StorageInterface;
 
 class FormatManager
 {
-    const LOCK_FILTER_OPERATIONS_TIMEOUT = 180; // 3 minutes
+    const LOCK_TIMEOUT = 180; // 3 minutes
 
     /**
      * @var array
@@ -98,14 +98,14 @@ class FormatManager
     public function getFormat(FileInterface $file, $format, $parameters = [])
     {
         /** @var FormatInterface|null $fileFormat */
-        $fileFormat = $this->formatRepository->findByFormatNameAndFile($format, $file, self::LOCK_FILTER_OPERATIONS_TIMEOUT);
-        $fileFormat = $this->waitForFilterOperationsLock($fileFormat);
+        $fileFormat = $this->formatRepository->findByFormatNameAndFile($format, $file, self::LOCK_TIMEOUT);
+        $fileFormat = $this->waitForLock($fileFormat);
 
         if($fileFormat === null) {
             $fileFormat = $this->createFormat($file, $format, $parameters);
         }
 
-        $this->cleanUpTimedOutFilterOperationsLockFormats();
+        $this->cleanUpTimedOutLockFormats();
 
         return $fileFormat;
     }
@@ -113,15 +113,15 @@ class FormatManager
     public function applyFormat(FileInterface $file, $format, $parameters = [])
     {
         /** @var Format $fileFormat */
-        $fileFormat = $this->formatRepository->findByFormatNameAndFile($format, $file, self::LOCK_FILTER_OPERATIONS_TIMEOUT);
-        $fileFormat = $this->waitForFilterOperationsLock($fileFormat);
+        $fileFormat = $this->formatRepository->findByFormatNameAndFile($format, $file, self::LOCK_TIMEOUT);
+        $fileFormat = $this->waitForLock($fileFormat);
 
         if($fileFormat === null) {
             return $this->createFormat($file, $format, $parameters);
         }
         $this->applyFilter($fileFormat, $parameters);
 
-        $this->cleanUpTimedOutFilterOperationsLockFormats();
+        $this->cleanUpTimedOutLockFormats();
 
         return $fileFormat;
     }
@@ -172,9 +172,9 @@ class FormatManager
         return $fileFormat;
     }
 
-    private function waitForFilterOperationsLock(?FormatInterface $fileFormat)
+    private function waitForLock(?FormatInterface $fileFormat)
     {
-        $timeoutThreshold = new \DateTime(self::LOCK_FILTER_OPERATIONS_TIMEOUT . ' seconds ago');
+        $timeoutThreshold = new \DateTime(self::LOCK_TIMEOUT . ' seconds ago');
 
         // No format found
         if ($fileFormat === null) {
@@ -182,18 +182,18 @@ class FormatManager
         }
 
         // No lock, just return format
-        if ($fileFormat->getFilterOperationsLock() === null) {
+        if ($fileFormat->getLockAt() === null) {
             return $fileFormat;
         }
 
         // Wait for operation to finish
-        while($fileFormat->getFilterOperationsLock() !== null && $fileFormat->getFilterOperationsLock() >= $timeoutThreshold) {
+        while($fileFormat->getLockAt() !== null && $fileFormat->getLockAt() >= $timeoutThreshold) {
             sleep(1);
             $this->em->refresh($fileFormat);
         }
 
         // Operation finished, return format
-        if ($fileFormat->getFilterOperationsLock() === null) {
+        if ($fileFormat->getLockAt() === null) {
             return $fileFormat;
         }
 
@@ -203,13 +203,13 @@ class FormatManager
 
     private function lockFormat(FormatInterface $fileFormat)
     {
-        $fileFormat->setFilterOperationsLock(new \DateTime());
+        $fileFormat->setLockAt(new \DateTime());
         $this->em->flush();
     }
 
     private function unlockFormat(FormatInterface $fileFormat)
     {
-        $fileFormat->setFilterOperationsLock(null);
+        $fileFormat->setLockAt(null);
         $this->em->flush();
     }
 
@@ -277,9 +277,9 @@ class FormatManager
         return $settings;
     }
 
-    private function cleanUpTimedOutFilterOperationsLockFormats()
+    private function cleanUpTimedOutLockFormats()
     {
-        $timedOutFormats = $this->formatRepository->findByTimedOutFilterOperationsLock(self::LOCK_FILTER_OPERATIONS_TIMEOUT);
+        $timedOutFormats = $this->formatRepository->findByTimedOutLock(self::LOCK_TIMEOUT);
         foreach($timedOutFormats as $format) {
             $this->em->remove($format);
             $this->em->flush();

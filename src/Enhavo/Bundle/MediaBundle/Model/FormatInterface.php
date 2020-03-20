@@ -102,10 +102,10 @@ interface FormatInterface extends ResourceInterface
     /**
      * @return \DateTime|null
      */
-    public function getFilterOperationsLock();
+    public function getLockAt();
 
     /**
-     * @param \DateTime|null $filterOperationsLock
+     * @param \DateTime|null $lockAt
      */
-    public function setFilterOperationsLock($filterOperationsLock);
+    public function setLockAt($lockAt);
 }
