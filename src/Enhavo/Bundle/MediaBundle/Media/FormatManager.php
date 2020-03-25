@@ -98,7 +98,7 @@ class FormatManager
     public function getFormat(FileInterface $file, $format, $parameters = [])
     {
         /** @var FormatInterface|null $fileFormat */
-        $fileFormat = $this->formatRepository->findByFormatNameAndFile($format, $file, self::LOCK_TIMEOUT);
+        $fileFormat = $this->formatRepository->findByFormatNameAndFile($format, $file);
         $fileFormat = $this->waitForLock($fileFormat);
 
         if($fileFormat === null) {
@@ -113,7 +113,7 @@ class FormatManager
     public function applyFormat(FileInterface $file, $format, $parameters = [])
     {
         /** @var Format $fileFormat */
-        $fileFormat = $this->formatRepository->findByFormatNameAndFile($format, $file, self::LOCK_TIMEOUT);
+        $fileFormat = $this->formatRepository->findByFormatNameAndFile($format, $file);
         $fileFormat = $this->waitForLock($fileFormat);
 
         if($fileFormat === null) {
@@ -165,9 +165,10 @@ class FormatManager
         }
 
         $this->storage->saveFile($fileFormat);
-        $this->cache->refresh($fileFormat->getFile(), $fileFormat->getName());
 
         $this->unlockFormat($fileFormat);
+
+        $this->cache->refresh($fileFormat->getFile(), $fileFormat->getName());
 
         return $fileFormat;
     }
@@ -184,6 +185,11 @@ class FormatManager
         // No lock, just return format
         if ($fileFormat->getLockAt() === null) {
             return $fileFormat;
+        }
+
+        // Lock is timed out, assume error on build
+        if ($fileFormat->getLockAt() < $timeoutThreshold) {
+            return null;
         }
 
         // Wait for operation to finish

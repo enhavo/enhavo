@@ -14,16 +14,14 @@ use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 
 class FormatRepository extends EntityRepository
 {
-    public function findByFormatNameAndFile($formatName, FileInterface $file, $lockTimeout = FormatManager::LOCK_TIMEOUT)
+    public function findByFormatNameAndFile($formatName, FileInterface $file)
     {
         $queryBuilder = $this->createQueryBuilder('format');
         $queryBuilder
             ->andWhere('format.name = :formatName')
             ->andWhere('format.file = :file')
-            ->andWhere('format.lockAt >= :lockTimeout')
             ->setParameter('formatName', $formatName)
-            ->setParameter('file', $file)
-            ->setParameter('lockTimeout', new \DateTime($lockTimeout . ' seconds ago'));
+            ->setParameter('file', $file);
 
         $allResults = $queryBuilder->getQuery()->getResult();
         if (count($allResults) > 0) {
