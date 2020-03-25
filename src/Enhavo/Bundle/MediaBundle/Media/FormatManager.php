@@ -165,9 +165,10 @@ class FormatManager
         }
 
         $this->storage->saveFile($fileFormat);
-        $this->cache->refresh($fileFormat->getFile(), $fileFormat->getName());
 
         $this->unlockFormat($fileFormat);
+
+        $this->cache->refresh($fileFormat->getFile(), $fileFormat->getName());
 
         return $fileFormat;
     }
