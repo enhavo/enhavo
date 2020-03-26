@@ -70,6 +70,7 @@ services:
             - '%enhavo_newsletter.storage%'
 
     enhavo_newsletter.form_resolver:
+        public: true
         class: Enhavo\Bundle\NewsletterBundle\Form\Resolver
         arguments:
             - '%enhavo_newsletter.forms%'
