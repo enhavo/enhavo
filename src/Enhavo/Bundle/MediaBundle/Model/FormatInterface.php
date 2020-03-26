@@ -98,4 +98,14 @@ interface FormatInterface extends ResourceInterface
      * @return string
      */
     public function getFilename();
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getLockAt();
+
+    /**
+     * @param \DateTime|null $lockAt
+     */
+    public function setLockAt($lockAt);
 }

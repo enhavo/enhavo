@@ -41,11 +41,10 @@ class PublicUrlGenerator implements UrlGeneratorInterface
 
     public function generateFormat(FileInterface $file, string $format, $referenceType = UrlGenerator::ABSOLUTE_PATH)
     {
-        $formatObj = $this->mediaManager->getFormat($file, $format);
         return $this->router->generate('enhavo_media_file_format', [
             'id' => $file->getId(),
             'shortMd5Checksum' => substr($file->getMd5Checksum(), 0, 6),
-            'filename' => $formatObj->getFilename(),
+            'filename' => $file->getFilename(),
             'format' => $format,
         ], $referenceType);
     }
