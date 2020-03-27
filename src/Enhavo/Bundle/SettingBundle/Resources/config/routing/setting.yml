@@ -24,16 +24,16 @@ enhavo_setting_setting_update:
         _controller: enhavo_setting.controller.setting:updateAction
         _sylius:
             viewer:
-                form:
-                    delete: ~
-                buttons:
+                actions_secondary:
                     delete:
-                        display: false
+                        type: delete
+                        hidden: true
+                        route: ~
                 tabs:
                     main:
                         label: setting.label.setting
                         translation_domain: EnhavoSettingBundle
-                        template: EnhavoSettingBundle:Setting:setting.html.twig
+                        template: EnhavoSettingBundle:admin/resource/setting:main.html.twig
 
 enhavo_setting_setting_table:
     options:
@@ -53,6 +53,6 @@ enhavo_setting_setting_table:
                         width: 6
                     value:
                         type: text
-                        property: setting
+                        property: value
                         label: setting.label.value
                         width: 6
