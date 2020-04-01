@@ -23,7 +23,7 @@ export default class ColumnManager
         for(let column of this.columns) {
             if(column.directionDesc != null) {
                 parameters.push({
-                   property: column.property,
+                   property: column.sortingProperty,
                    direction:  column.directionDesc ? 'desc' : 'asc'
                 });
             }

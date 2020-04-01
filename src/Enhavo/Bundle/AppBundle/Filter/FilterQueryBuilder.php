@@ -51,7 +51,9 @@ class FilterQueryBuilder
         $filterQuery = $this->filterQueryFactory->create($class);
 
         foreach($sorting as $property => $order) {
-            $filterQuery->addOrderBy($property, $order);
+            $propertyPath = explode('.', $property);
+            $topProperty = array_pop($propertyPath);
+            $filterQuery->addOrderBy($topProperty, $order, $propertyPath);
         }
 
         foreach($criteria as $property => $value) {

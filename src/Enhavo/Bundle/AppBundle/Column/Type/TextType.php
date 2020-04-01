@@ -25,6 +25,7 @@ class TextType extends AbstractColumnType
 
         $data = array_merge($data, [
             'property' => $options['property'],
+            'sortingProperty' => ($options['sortingProperty'] ? $options['sortingProperty'] : $options['property']),
             'wrap' => $options['wrap']
         ]);
 
@@ -36,7 +37,8 @@ class TextType extends AbstractColumnType
         parent::configureOptions($resolver);
         $resolver->setDefaults([
             'component' => 'column-text',
-            'wrap' => true,
+            'sortingProperty' => null,
+            'wrap' => true
         ]);
         $resolver->setRequired(['property']);
     }
