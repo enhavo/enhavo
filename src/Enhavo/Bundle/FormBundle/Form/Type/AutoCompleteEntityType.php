@@ -134,6 +134,7 @@ class AutoCompleteEntityType extends AbstractType
             'route_parameters' => $options['route_parameters'],
             'value' => $view->vars['value'],
             'multiple' => $options['multiple'],
+            'count' => $options['count'],
             'minimum_input_length' => $options['minimum_input_length'],
             'placeholder' => $options['placeholder'],
             'id_property' => $options['id_property'],
@@ -141,6 +142,7 @@ class AutoCompleteEntityType extends AbstractType
             'sortable' => $options['sortable'],
         ];
         $view->vars['multiple'] = $options['multiple'];
+        $view->vars['count'] = $options['count'];
         $view->vars['create_route'] = $options['create_route'];
         $view->vars['create_button_label'] = $options['create_button_label'];
 
@@ -173,6 +175,7 @@ class AutoCompleteEntityType extends AbstractType
             'id_property' => 'id',
             'label_property' => null,
             'sortable' => false,
+            'count' => true,
             'sort_property' => null
         ]);
 
