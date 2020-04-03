@@ -1,7 +1,7 @@
 Multiple Property Column
 ========================
 
-Show a list of properties of the given resource.
+Shows a list of properties of the given resource.
 
 +-------------+---------------------------------------------------------------------------+
 | type        | multiply_property                                                         |

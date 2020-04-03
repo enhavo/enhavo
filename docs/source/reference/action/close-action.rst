@@ -1,56 +1,70 @@
 Close Action
 ============
 
-The CategoryAction provide a small overlay to manage categories quickly.
+The CloseAction closes the current window and can ask the user to save previously made changes.
 
-+-------------+--------------------------------------------------------------------+
-| type        | close                                                              |
-+-------------+--------------------------------------------------------------------+
-| option      | - `label`_                                                         |
-|             | - `collection`_                                                    |
-|             | - `route`_                                                         |
-|             | - `icon`_                                                          |
-|             | - `translationDomain`_                                             |
-+-------------+--------------------------------------------------------------------+
-| class       | :class:`Enhavo\\Bundle\\CategoryBundle\\Action\\CategoryAction`    |
-+-------------+--------------------------------------------------------------------+
+.. csv-table::
+    :widths: 50 150
 
+    Type , close
+    Inherited options, "- | :ref:`label <label>`
+    - | :ref:`translation_domain <translation_domain>`
+    - | :ref:`icon <icon>`
+    - | :ref:`permission <permission>`
+    - | :ref:`hidden <hidden>`"
+    Options ,"- | :ref:`confirm <confirm>`
+    - | :ref:`confirm_changes <confirm_changes>`
+    - | :ref:`confirm_message <confirm_message>`
+    - | :ref:`confirm_label_ok <confirm_label_ok>`
+    - | :ref:`confirm_label_cancel <confirm_label_cancel>`"
+    Class, :class:`Enhavo\\Bundle\\AppBundle\\Action\\Type\\CloseAction`
+    Parent, :ref:`Enhavo\\Bundle\\AppBundle\\Action\\AbstractActionType <abstract-action>`
+
+
+Inherited Option
+----------------
+
+.. _label:
+.. |default_label| replace:: `Close`
+.. include:: /reference/action/option/label.rst
+
+.. _translation_domain:
+.. |default_translationDomain| replace:: `EnhavoAppBundle`
+.. include:: /reference/action/option/translationDomain.rst
+
+.. _icon:
+.. |default_icon| replace:: `close`
+.. include:: /reference/action/option/icon.rst
+
+.. _permission:
+.. |default_permission| replace:: null
+.. include:: /reference/action/option/permission.rst
+
+.. _hidden:
+.. |default_hidden| replace:: `false`
+.. include:: /reference/action/option/hidden.rst
 
 Option
 ------
 
-collection
-~~~~~~~~~~
+.. _confirm:
+.. |default_confirm| replace:: `false`
+.. include:: /reference/action/option/confirm.rst
 
-**type**: `string`
+.. _confirm_changes:
+.. |default_confirm_changes| replace:: `true`
+.. include:: /reference/action/option/confirm_changes.rst
 
-Define which collection should be used for the categories. If no one is set, the default category collection will be used.
+.. _confirm_message:
+.. |default_confirm_message| replace:: `message.close.confirm`
+.. include:: /reference/action/option/confirm_message.rst
 
-.. code-block:: yaml
+.. _confirm_label_ok:
+.. |default_confirm_label_ok| replace:: `label.ok`
+.. include:: /reference/action/option/confirm_label_ok.rst
 
-    actions:
-        category:
-            type: category
-            collection: label
-
-.. include:: /reference/action/option/route.rst
-
-.. include:: /reference/action/option/label.rst
-
-.. include:: /reference/action/option/icon.rst
-
-.. include:: /reference/action/option/translationDomain.rst
-
-
-
-
-
-
-
-
-
-
-
-
+.. _confirm_label_cancel:
+.. |default_confirm_label_cancel| replace:: `label.cancel`
+.. include:: /reference/action/option/confirm_label_cancel.rst
 
 
