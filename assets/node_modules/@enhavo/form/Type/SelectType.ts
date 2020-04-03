@@ -17,6 +17,15 @@ export default class SelectType extends FormType
 
         let data = this.$element.data('select2-options');
         this.$element.select2();
+
+        let $count = this.$element.parents('[data-form-row]').find('[data-selected-count]');
+        if (this.$element.attr('multiple') && $count.length) {
+            this.$element.on("change", (event: Select2JQueryEventObject) => {
+                let count = event.val.length;
+                $count.text('(' + count + ')');
+            });
+        }
+
         let $list = this.$element.parent().find('ul.select2-choices');
 
         if($list.get(0) && data && data.sortable && data.multiple) {

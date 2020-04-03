@@ -69,6 +69,7 @@ class EntityTypeExtension extends AbstractTypeExtension
             ]);
         }
         $view->vars['count'] = $options['count'];
+        $view->vars['multiple'] = $options['multiple'];
     }
 
     public function configureOptions(OptionsResolver $resolver)
