@@ -74,6 +74,14 @@ export default class AutoCompleteType extends FormType
         $input.select2(config);
         $input.select2('data', data.value);
 
+        if (data.multiple && data.count) {
+            $input.on("change", function (event: Select2JQueryEventObject) {
+                let count = event.val.length;
+                let $count = $input.parents('[data-form-row]').find('[data-selected-count]');
+                $count.text('(' + count + ')');
+            });
+        }
+
         this.$element.find('[data-auto-complete-create]').click((event) => {
             event.preventDefault();
             let url = $(event.target).attr('href');

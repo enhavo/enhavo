@@ -42,6 +42,7 @@ class EntityTreeType extends AbstractType
         $resolver->setDefaults([
             'parent_property' => 'parent',
             'children_container_class' => 'entity-tree-children',
+            'count' => false
         ]);
     }
 
