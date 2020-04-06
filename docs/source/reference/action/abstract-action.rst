@@ -17,7 +17,6 @@ Abstract BaseAction class with most common default options.
     Class, :class:`Enhavo\\Bundle\\AppBundle\\Action\\AbstractAction`
     Parent, `none`
 
-
 Option
 ------
 

@@ -1,21 +1,22 @@
-Create Action
-=============
+.. _abstract-url-action:
 
-The CreateAction represents a create button for a specific route.
+Abstract Url Action
+===================
+
+AbstractUrlAction contains the AbstractAction and extends it by two additional parameters to redirect the user to a specific route.
 
 .. csv-table::
     :widths: 50 150
 
-    Type , create
     Require , "- | route_"
-    Inherited options, "- | :ref:`route_parameters <route_parameters>`
-    - | :ref:`label <label>`
+    Options , "- | :ref:`route_parameters <route_parameters>`"
+    Inherited options, "- | :ref:`label <label>`
     - | :ref:`translation_domain <translation_domain>`
     - | :ref:`icon <icon>`
     - | :ref:`permission <permission>`
     - | :ref:`hidden <hidden>`"
-    Class, :class:`Enhavo\\Bundle\\AppBundle\\Action\\Type\\CreateActionType`
-    Parent, :ref:`Enhavo\\Bundle\\AppBundle\\Action\\AbstractUrlActionType <abstract-url-action>`
+    Class, :class:`Enhavo\\Bundle\\AppBundle\\Action\\AbstractUrlActionType`
+    Parent, :ref:`Enhavo\\Bundle\\AppBundle\\Action\\AbstractActionType <abstract-action>`
 
 Require
 -------
@@ -33,27 +34,30 @@ Define which route should be used for the create overlay.
 .. code-block:: yaml
 
     actions:
-        create:
-            type: create
+        myAction:
+            type: my_action_type
             route: my_create_route
 
-Inherited Option
-----------------
+Option
+------
 
 .. _route_parameters:
 .. |default_route_parameters| replace:: []
 .. include:: /reference/action/option/routeParameters.rst
 
+Inherited option
+------
+
 .. _label:
-.. |default_label| replace:: `label.create`
+.. |default_label| replace:: `null`
 .. include:: /reference/action/option/label.rst
 
 .. _translation_domain:
-.. |default_translationDomain| replace:: `EnhavoAppBundle`
+.. |default_translationDomain| replace:: `null`
 .. include:: /reference/action/option/translationDomain.rst
 
 .. _icon:
-.. |default_icon| replace:: `add_circle_outline`
+.. |default_icon| replace:: `null`
 .. include:: /reference/action/option/icon.rst
 
 .. _permission:
@@ -63,16 +67,3 @@ Inherited Option
 .. _hidden:
 .. |default_hidden| replace:: `false`
 .. include:: /reference/action/option/hidden.rst
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -2,6 +2,7 @@ routeParameters
 ~~~~~~~~~~~~~~~
 
 **type**: `array`
+**default**: |default_route_parameters|
 
 If route is defined, you can overwrite the standard parameters to generate your own url.
 
