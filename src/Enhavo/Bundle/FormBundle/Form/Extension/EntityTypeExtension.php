@@ -65,8 +65,11 @@ class EntityTypeExtension extends AbstractTypeExtension
             $view->vars['attr']['data-select2-options'] = json_encode([
                 'multiple' => $options['multiple'],
                 'sortable' => $options['sortable'],
+                'count' => $options['count']
             ]);
         }
+        $view->vars['count'] = $options['count'];
+        $view->vars['multiple'] = $options['multiple'];
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -74,7 +77,8 @@ class EntityTypeExtension extends AbstractTypeExtension
         $resolver->setDefaults([
             'list' => false,
             'sortable' => false,
-            'sort_property' => null
+            'sort_property' => null,
+            'count' => true,
         ]);
     }
 
