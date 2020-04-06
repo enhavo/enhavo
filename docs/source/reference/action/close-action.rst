@@ -17,7 +17,7 @@ The CloseAction closes the current window and can ask the user to save previousl
     - | :ref:`confirm_message <confirm_message>`
     - | :ref:`confirm_label_ok <confirm_label_ok>`
     - | :ref:`confirm_label_cancel <confirm_label_cancel>`"
-    Class, :class:`Enhavo\\Bundle\\AppBundle\\Action\\Type\\CloseAction`
+    Class, :class:`Enhavo\\Bundle\\AppBundle\\Action\\Type\\CloseActionType`
     Parent, :ref:`Enhavo\\Bundle\\AppBundle\\Action\\AbstractActionType <abstract-action>`
 
 
@@ -25,7 +25,7 @@ Inherited Option
 ----------------
 
 .. _label:
-.. |default_label| replace:: `Close`
+.. |default_label| replace:: `label.close`
 .. include:: /reference/action/option/label.rst
 
 .. _translation_domain:

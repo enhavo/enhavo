@@ -2,8 +2,9 @@ route
 ~~~~~
 
 **type**: `string`
+**default**: |default_route|
 
-Define which route should be used for the overlay.
+Defines which route should be used for the overlay.
 
 .. code-block:: yaml
 
