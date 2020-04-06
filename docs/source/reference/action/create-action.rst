@@ -7,20 +7,20 @@ The CreateAction represents a create button for a specific route.
     :widths: 50 150
 
     Type , create
-    Require , "- | route_"
-    Inherited options, "- | :ref:`route_parameters <route_parameters>`
-    - | :ref:`label <label>`
-    - | :ref:`translation_domain <translation_domain>`
-    - | :ref:`icon <icon>`
-    - | :ref:`permission <permission>`
-    - | :ref:`hidden <hidden>`"
+    Require , "- | route_create_"
+    - | route_parameters_create_
+    - | label_create_
+    - | translation_domain_create_
+    - | icon_create_
+    - | permission_create_
+    - | hidden_create_"
     Class, :class:`Enhavo\\Bundle\\AppBundle\\Action\\Type\\CreateActionType`
-    Parent, :ref:`Enhavo\\Bundle\\AppBundle\\Action\\AbstractUrlActionType <abstract-url-action>`
+    Parent, `Enhavo\\Bundle\\AppBundle\\Action\\AbstractUrlActionType`
 
 Require
 -------
 
-.. _route:
+.. _route_create:
 
 route
 ~~~~~
@@ -37,30 +37,30 @@ Define which route should be used for the create overlay.
             type: create
             route: my_create_route
 
-Inherited Option
-----------------
+Options
+-------
 
-.. _route_parameters:
+.. _route_parameters_create:
 .. |default_route_parameters| replace:: []
 .. include:: /reference/action/option/routeParameters.rst
 
-.. _label:
+.. _label_create:
 .. |default_label| replace:: `label.create`
 .. include:: /reference/action/option/label.rst
 
-.. _translation_domain:
+.. _translation_domain_create:
 .. |default_translationDomain| replace:: `EnhavoAppBundle`
 .. include:: /reference/action/option/translationDomain.rst
 
-.. _icon:
+.. _icon_create:
 .. |default_icon| replace:: `add_circle_outline`
 .. include:: /reference/action/option/icon.rst
 
-.. _permission:
+.. _permission_create:
 .. |default_permission| replace:: null
 .. include:: /reference/action/option/permission.rst
 
-.. _hidden:
+.. _hidden_create:
 .. |default_hidden| replace:: `false`
 .. include:: /reference/action/option/hidden.rst
 

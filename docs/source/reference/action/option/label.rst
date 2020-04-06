@@ -1,5 +1,5 @@
 label
-~~~~~~~~~
+~~~~~
 
 **type**: `string`
 **default**: |default_label|

@@ -1,5 +1,5 @@
 confirm_changes
-~~~~~
+~~~~~~~~~~~~~~~
 
 **type**: boolean
 **default**: |default_confirm_changes|

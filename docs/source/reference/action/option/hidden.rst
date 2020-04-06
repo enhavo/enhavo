@@ -1,5 +1,5 @@
 hidden
-~~~~~
+~~~~~~
 
 **type**: `boolean`
 **default**: |default_hidden|

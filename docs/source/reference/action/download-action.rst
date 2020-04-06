@@ -7,22 +7,22 @@ Downloads the current resource. The Resource must implement the :class:Enhavo\\B
     :widths: 50 150
 
     Type , download
-    Require , "- | route_"
-    Options ,"- | :ref:`ajax <ajax>`"
-    Inherited options, "- | :ref:`route_parameters <route_parameters>`
-    - | :ref:`label <label>`
-    - | :ref:`translation_domain <translation_domain>`
-    - | :ref:`icon <icon>`
-    - | :ref:`permission <permission>`
-    - | :ref:`hidden <hidden>`"
+    Require , "- | route_download_"
+    Options ,"- | ajax_download_
+    - | route_parameters_download_
+    - | label_download_
+    - | translation_domain_download_
+    - | icon_download_
+    - | permission_download_
+    - | hidden_download_"
     Class, :class:`Enhavo\\Bundle\\AppBundle\\Action\\Type\\DownloadActionType`
-    Parent, :ref:`Enhavo\\Bundle\\AppBundle\\Action\\AbstractUrlActionType <abstract-url-action>`
+    Parent, `Enhavo\\Bundle\\AppBundle\\Action\\AbstractUrlActionType`
 
 
 Require
 -------
 
-.. _route:
+.. _route_download:
 
 route
 ~~~~~
@@ -42,7 +42,8 @@ Defines which route should be used to download the selected resource.
 Options
 -------
 
-.. _ajax:
+.. _ajax_download:
+
 **type**: `boolean`
 **default**: `false`
 
@@ -55,30 +56,27 @@ If the value is true, the download request call is executed via "Ajax"-Call in t
             type: download
             route: my_download_route
 
-Inherited Option
-----------------
-
-.. _route_parameters:
+.. _route_parameters_download:
 .. |default_route_parameters| replace:: []
 .. include:: /reference/action/option/routeParameters.rst
 
-.. _label:
+.. _label_download:
 .. |default_label| replace:: `label.download`
 .. include:: /reference/action/option/label.rst
 
-.. _translation_domain:
+.. _translation_domain_download:
 .. |default_translationDomain| replace:: `EnhavoAppBundle`
 .. include:: /reference/action/option/translationDomain.rst
 
-.. _icon:
+.. _icon_download:
 .. |default_icon| replace:: `file_download`
 .. include:: /reference/action/option/icon.rst
 
-.. _permission:
+.. _permission_download:
 .. |default_permission| replace:: null
 .. include:: /reference/action/option/permission.rst
 
-.. _hidden:
+.. _hidden_download:
 .. |default_hidden| replace:: `false`
 .. include:: /reference/action/option/hidden.rst
 

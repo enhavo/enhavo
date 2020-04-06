@@ -1,5 +1,5 @@
 translationDomain
-~~~~~
+~~~~~~~~~~~~~~~~~
 
 **type**: `string`
 **default**: |default_translationDomain|

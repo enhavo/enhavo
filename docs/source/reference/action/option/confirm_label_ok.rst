@@ -1,5 +1,5 @@
 confirm_label_ok
-~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~
 
 **type**: `string`
 **default**: |default_confirm_label_ok|
