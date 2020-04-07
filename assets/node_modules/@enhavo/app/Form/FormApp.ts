@@ -30,6 +30,7 @@ export default class FormApp extends ViewApp implements AppInterface
     {
         this.eventDispatcher.on('close', (event: CloseEvent) => {
             if(this.view.getId() === event.id) {
+
                 if(this.data.formChanged) {
                     this.view.confirm(new Confirm(
                         this.translator.trans('enhavo_app.view.message.not_saved'),
