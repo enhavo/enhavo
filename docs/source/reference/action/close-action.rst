@@ -7,16 +7,16 @@ The CloseAction closes the current window and can ask the user to save previousl
     :widths: 50 150
 
     Type , close
-    Options ,"- | confirm_close_
-    - | confirm_changes_close_
-    - | confirm_message_close_
-    - | confirm_label_ok_close_
-    - | confirm_label_cancel_close_
-    - | label_close_
-    - | translation_domain_close_
-    - | icon_close_
-    - | permission_close_
-    - | hidden_close_"
+    Options ,"- | :ref:`label <label_close>`
+    - | :ref:`translation_domain <translation_domain_close>`
+    - | :ref:`icon <icon_close>`
+    - | :ref:`permission <permission_close>`
+    - | :ref:`hidden <hidden_close>`
+    - | :ref:`confirm <confirm_close>`
+    - | :ref:`confirm_changes <confirm_changes_close>`
+    - | :ref:`confirm_message <confirm_message_close>`
+    - | :ref:`confirm_label_ok <confirm_label_ok_close>`
+    - | :ref:`confirm_label_cancel <confirm_label_cancel_close>`"
     Class, :class:`Enhavo\\Bundle\\AppBundle\\Action\\Type\\CloseActionType`
     Parent, `Enhavo\\Bundle\\AppBundle\\Action\\AbstractActionType`
 

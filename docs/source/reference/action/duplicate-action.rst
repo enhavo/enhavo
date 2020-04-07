@@ -7,17 +7,17 @@ Duplicates the current resource and creates a new instance with the same values.
     :widths: 50 150
 
     Type , delete
-    Require , "- | route_duplicate_"
-    Options ,"- | confirm_duplicate_
-    - | confirm_message_duplicate_
-    - | confirm_label_ok_duplicate_
-    - | confirm_label_cancel_duplicate_
-    - | route_parameters_duplicate_
-    - | label_duplicate_
-    - | translation_domain_duplicate_
-    - | icon_duplicate_
-    - | permission_duplicate_
-    - | hidden_duplicate_"
+    Require , "- | :ref:`route <route_duplicate>`"
+    Options ,"- | :ref:`label <label_duplicate>`
+    - | :ref:`translation_domain <translation_domain_duplicate>`
+    - | :ref:`icon <icon_duplicate>`
+    - | :ref:`permission <permission_duplicate>`
+    - | :ref:`hidden <hidden_duplicate>`
+    - | :ref:`route_parameters <route_parameters_duplicate>`
+    - | :ref:`confirm <confirm_duplicate>`
+    - | :ref:`confirm_message <confirm_message_duplicate>`
+    - | :ref:`confirm_label_ok <confirm_label_ok_duplicate>`
+    - | :ref:`confirm_label_cancel <confirm_label_cancel_duplicate>`"
     Class, :class:`Enhavo\\Bundle\\AppBundle\\Action\\Type\\DeleteActionType`
     Parent, `Enhavo\\Bundle\\AppBundle\\Action\\AbstractUrlActionType`
 
@@ -45,25 +45,6 @@ Define which route should be used to duplicate the selected resource.
 Options
 -------
 
-.. _confirm_duplicate:
-.. |default_confirm| replace:: `true`
-.. include:: /reference/action/option/confirm.rst
-
-.. _confirm_message_duplicate:
-.. |default_confirm_message| replace:: `message.duplicate.confirm`
-.. include:: /reference/action/option/confirm_message.rst
-
-.. _confirm_label_ok_duplicate:
-.. |default_confirm_label_ok| replace:: `label.ok`
-.. include:: /reference/action/option/confirm_label_ok.rst
-
-.. _confirm_label_cancel_duplicate:
-.. |default_confirm_label_cancel| replace:: `label.cancel`
-.. include:: /reference/action/option/confirm_label_cancel.rst
-
-.. _route_parameters_duplicate:
-.. |default_route_parameters| replace:: []
-.. include:: /reference/action/option/routeParameters.rst
 
 .. _label_duplicate:
 .. |default_label| replace:: `label.duplicate`
@@ -84,5 +65,27 @@ Options
 .. _hidden_duplicate:
 .. |default_hidden| replace:: `false`
 .. include:: /reference/action/option/hidden.rst
+
+.. _route_parameters_duplicate:
+.. |default_route_parameters| replace:: []
+.. include:: /reference/action/option/routeParameters.rst
+
+.. _confirm_duplicate:
+.. |default_confirm| replace:: `true`
+.. include:: /reference/action/option/confirm.rst
+
+.. _confirm_message_duplicate:
+.. |default_confirm_message| replace:: `message.duplicate.confirm`
+.. include:: /reference/action/option/confirm_message.rst
+
+.. _confirm_label_ok_duplicate:
+.. |default_confirm_label_ok| replace:: `label.ok`
+.. include:: /reference/action/option/confirm_label_ok.rst
+
+.. _confirm_label_cancel_duplicate:
+.. |default_confirm_label_cancel| replace:: `label.cancel`
+.. include:: /reference/action/option/confirm_label_cancel.rst
+
+
 
 

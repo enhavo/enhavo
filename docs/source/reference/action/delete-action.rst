@@ -7,17 +7,17 @@ Deletes the current resource and closes the window.
     :widths: 50 150
 
     Type , delete
-    Require , "- | route_delete_"
-    Options ,"- | confirm_delete_
-    - | confirm_message_delete_
-    - | confirm_label_ok_delete_
-    - | confirm_label_cancel_delete_"
-    - | route_parameters_delete_
-    - | label_delete_
-    - | translation_domain_delete_
-    - | icon_delete_
-    - | permission_delete_
-    - | hidden_delete_"
+    Require , "- | :ref:`route <route_delete>`"
+    Options ,"- | :ref:`confirm <confirm_delete>`
+    - | :ref:`confirm_message <confirm_message_delete>`
+    - | :ref:`confirm_label_ok <confirm_label_ok_delete>`
+    - | :ref:`confirm_label_cancel <confirm_label_cancel_delete>`
+    - | :ref:`route_parameters <route_parameters_delete>`
+    - | :ref:`label <label_delete>`
+    - | :ref:`translation_domain <translation_domain_delete>`
+    - | :ref:`icon <icon_delete>`
+    - | :ref:`permission <permission_delete>`
+    - | :ref:`hidden <hidden_delete>`"
     Class, :class:`Enhavo\\Bundle\\AppBundle\\Action\\Type\\DeleteActionType`
     Parent, `Enhavo\\Bundle\\AppBundle\\Action\\AbstractUrlActionType`
 

@@ -7,13 +7,13 @@ The CreateAction represents a create button for a specific route.
     :widths: 50 150
 
     Type , create
-    Require , "- | route_create_"
-    - | route_parameters_create_
-    - | label_create_
-    - | translation_domain_create_
-    - | icon_create_
-    - | permission_create_
-    - | hidden_create_"
+    Require , "- | :ref:`route <route_create>`"
+    Options ,"- | :ref:`route_parameters <route_parameters_create>`
+    - | :ref:`label <label_create>`
+    - | :ref:`translation_domain <translation_domain_create>`
+    - | :ref:`icon <icon_create>`
+    - | :ref:`permission <permission_create>`
+    - | :ref:`hidden <hidden_create>`"
     Class, :class:`Enhavo\\Bundle\\AppBundle\\Action\\Type\\CreateActionType`
     Parent, `Enhavo\\Bundle\\AppBundle\\Action\\AbstractUrlActionType`
 

@@ -1,4 +1,4 @@
-routeParameters
+route_parameters
 ~~~~~~~~~~~~~~~
 
 **type**: `array`

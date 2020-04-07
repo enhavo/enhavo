@@ -8,12 +8,12 @@ like for example the entity :class: Enhavo\Bundle\ArticleBundle\Entity\Article.p
     :widths: 50 150
 
     Type , comment
-    Options ,"- | route_comments_"
-    - | label_comments_
-    - | translation_domain_comments_
-    - | icon_comments_
-    - | permission_comments_
-    - | hidden_comments_"
+    Options ,"- | :ref:`route <route_comments>`
+    - | :ref:`label <label_comments>`
+    - | :ref:`translation_domain <translation_domain_comments>`
+    - | :ref:`icon <icon_comments>`
+    - | :ref:`permission <permission_comments>`
+    - | :ref:`hidden <hidden_comments>`"
     Class, :class:`Enhavo\\Bundle\\CommentBundle\\Action\\CommentsActionType`
     Parent, `Enhavo\\Bundle\\AppBundle\\Action\\AbstractActionType`
 

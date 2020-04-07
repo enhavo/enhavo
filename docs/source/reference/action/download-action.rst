@@ -7,14 +7,14 @@ Downloads the current resource. The Resource must implement the :class:Enhavo\\B
     :widths: 50 150
 
     Type , download
-    Require , "- | route_download_"
-    Options ,"- | ajax_download_
-    - | route_parameters_download_
-    - | label_download_
-    - | translation_domain_download_
-    - | icon_download_
-    - | permission_download_
-    - | hidden_download_"
+    Require , "- | :ref:`route <route_download>`"
+    Options ,"- | :ref:`ajax <ajax_download>`
+    - | :ref:`route_parameters <route_parameters_download>`
+    - | :ref:`label <label_download>`
+    - | :ref:`translation_domain <translation_domain_download>`
+    - | :ref:`icon <icon_download>`
+    - | :ref:`permission <permission_download>`
+    - | :ref:`hidden <hidden_download>`"
     Class, :class:`Enhavo\\Bundle\\AppBundle\\Action\\Type\\DownloadActionType`
     Parent, `Enhavo\\Bundle\\AppBundle\\Action\\AbstractUrlActionType`
 
