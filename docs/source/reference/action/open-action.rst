@@ -14,13 +14,8 @@ Opens the specified route. Can be used, for example, to view self-created newsle
     - | :ref:`translation_domain <translation_domain_open>`
     - | :ref:`permission <permission_open>`
     - | :ref:`hidden <hidden_open>`
-    - | :ref:`route_parameters <route_parameters_open>`
-    - | :ref:`confirm <confirm_open>`
-    - | :ref:`confirm_changes <confirm_changes_open>`
-    - | :ref:`confirm_message <confirm_message_open>`
-    - | :ref:`confirm_label_ok <confirm_label_ok_open>`
-    - | :ref:`confirm_label_cancel <confirm_label_cancel_open>`"
-    Class, :class:`Enhavo\\Bundle\\AppBundle\\Action\\Type\\EventActionType`
+    - | :ref:`route_parameters <route_parameters_open>`"
+    Class, :class:`Enhavo\\Bundle\\AppBundle\\Action\\Type\\OpenActionType`
     Parent, `Enhavo\\Bundle\\AppBundle\\Action\\AbstractUrlActionType`
 
 Require
@@ -87,25 +82,6 @@ The target attribute specifies the target window base of a reference. Possible v
 .. |default_route_parameters| replace:: []
 .. include:: /reference/action/option/routeParameters.rst
 
-.. _confirm_open:
-.. |default_confirm| replace:: `false`
-.. include:: /reference/action/option/confirm.rst
-
-.. _confirm_changes_open:
-.. |default_confirm_changes| replace:: `true`
-.. include:: /reference/action/option/confirm_changes.rst
-
-.. _confirm_message_open:
-.. |default_confirm_message| replace:: `message.close.confirm`
-.. include:: /reference/action/option/confirm_message.rst
-
-.. _confirm_label_ok_open:
-.. |default_confirm_label_ok| replace:: `label.ok`
-.. include:: /reference/action/option/confirm_label_ok.rst
-
-.. _confirm_label_cancel_open:
-.. |default_confirm_label_cancel| replace:: `label.cancel`
-.. include:: /reference/action/option/confirm_label_cancel.rst
 
 
 

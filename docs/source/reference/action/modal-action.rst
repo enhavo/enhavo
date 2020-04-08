@@ -1,3 +1,4 @@
+.. _modal_action:
 Modal Action
 ============
 
