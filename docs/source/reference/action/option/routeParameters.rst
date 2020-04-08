@@ -1,5 +1,5 @@
 route_parameters
-~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~
 
 **type**: `array`
 **default**: |default_route_parameters|

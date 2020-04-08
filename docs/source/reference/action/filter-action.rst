@@ -1,7 +1,7 @@
 Filter Action
 =============
 
-Opens all existing filters defined for a table.
+Opens an additional view that contains all available filters of a table.
 
 .. csv-table::
     :widths: 50 150
