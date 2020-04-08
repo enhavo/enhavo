@@ -1,15 +1,15 @@
 Event Action
 ============
 
-Duplicates the current resource and creates a new instance with the same values.
+Executes all handlers and behaviors of the specified jQuery event.
 
 .. csv-table::
     :widths: 50 150
 
     Type , event
-    Require , "- | :ref:`label <label_event>`
+    Require , "- | :ref:`event <event_event>`
     - | :ref:`icon <icon_event>`
-    - | :ref:`event <event_event>`"
+    - | :ref:`label <label_event>`"
     Options ,"- | :ref:`translation_domain <translation_domain_event>`
     - | :ref:`permission <permission_event>`
     - | :ref:`hidden <hidden_event>`
@@ -25,30 +25,39 @@ Duplicates the current resource and creates a new instance with the same values.
 Require
 -------
 
-.. _label_event:
-.. |default_label| replace:: ` `
-.. include:: /reference/action/option/label.rst
-
-.. _icon_event:
-.. |default_icon| replace:: ` `
-.. include:: /reference/action/option/icon.rst
-
-
-
 event
 ~~~~~
 .. _event_event:
 
 **type**: `string`
+**default**: `null`
 
-Define which route should be used to duplicate the selected resource.
+The jQuery event that is manually triggered when the action is clicked.
 
 .. code-block:: yaml
 
     actions:
         event:
             type: event
-            event: my_event
+            event: myEvent
+
+The event-string "myEvent" represents the jQuery event
+which has to be present in your project like this general example:
+
+.. code-block:: javascript
+
+    $(document).on("myEvent", function() {
+        doSomething();
+    });
+
+.. _label_event:
+.. |default_label| replace:: `null`
+.. include:: /reference/action/option/label.rst
+
+.. _icon_event:
+.. |default_icon| replace:: `null`
+.. include:: /reference/action/option/icon.rst
+
 
 Options
 -------
