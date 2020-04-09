@@ -24,7 +24,8 @@ class BooleanType extends AbstractColumnType
         $data = parent::createColumnViewData($options);
 
         $data = array_merge($data, [
-            'property' => $options['property']
+            'property' => $options['property'],
+            'sortingProperty' => ($options['sortingProperty'] ? $options['sortingProperty'] : $options['property'])
         ]);
 
         return $data;
@@ -35,6 +36,7 @@ class BooleanType extends AbstractColumnType
         parent::configureOptions($resolver);
         $resolver->setDefaults([
             'format' => 'd.m.Y H:i',
+            'sortingProperty' => null,
             'component' => 'column-boolean'
         ]);
         $resolver->setRequired(['property']);

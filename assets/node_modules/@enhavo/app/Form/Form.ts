@@ -7,9 +7,11 @@ import FlashMessenger from "@enhavo/app/FlashMessage/FlashMessenger";
 import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 import UpdatedEvent from "@enhavo/app/ViewStack/Event/UpdatedEvent";
 import View from "@enhavo/app/View/View";
+import SaveStateEvent from "@enhavo/app/ViewStack/Event/SaveStateEvent";
 
 export default class Form
 {
+    private view: View;
     private tabs: Tab[];
     private data: FormData;
     private registry: FormRegistry;
@@ -23,6 +25,7 @@ export default class Form
         eventDispatcher: EventDispatcher,
         view: View,
     ) {
+        this.view = view;
         this.data = _.extend(data, new FormData);
         for (let i in data.tabs) {
             _.extend(data.tabs[i], new Tab);
@@ -47,11 +50,23 @@ export default class Form
             tab.error = $tab.find('[data-form-error]').length > 0;
             tab.element = <HTMLElement>$tab[0];
         }
+
+        // load active tab
+        this.view.loadValue('active-tab', value => {
+            if (value) {
+                this.changeTab(value);
+            }
+        });
     }
 
     public changeTab(key: string)
     {
         this.data.tab = key;
+
+        // store active tab
+        this.view.storeValue('active-tab', key, () => {
+            this.eventDispatcher.dispatch(new SaveStateEvent());
+        });
     }
 
     public changeForm()

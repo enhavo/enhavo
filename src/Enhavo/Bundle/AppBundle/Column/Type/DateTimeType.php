@@ -27,7 +27,8 @@ class DateTimeType extends AbstractColumnType
         $data = parent::createColumnViewData($options);
 
         $data = array_merge($data, [
-
+            'property' => $options['property'],
+            'sortingProperty' => ($options['sortingProperty'] ? $options['sortingProperty'] : $options['property'])
         ]);
 
         return $data;
@@ -38,6 +39,7 @@ class DateTimeType extends AbstractColumnType
         parent::configureOptions($resolver);
         $resolver->setDefaults([
             'format' => 'd.m.Y H:i',
+            'sortingProperty' => null,
             'component' => 'column-text'
         ]);
         $resolver->setRequired(['property']);
