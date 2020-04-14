@@ -14,12 +14,12 @@ Submits the current form and updates the current resource form view.
     - | :ref:`permission <permission_save>`
     - | :ref:`hidden <hidden_save>`"
     Class, :class:`Enhavo\\Bundle\\AppBundle\\Action\\Type\\SaveActionType`
-    Parent, `Enhavo\\Bundle\\AppBundle\\Action\\AbstractActionType`
+    Parent, `Enhavo\\Bundle\\AppBundle\\Action\\AbstractUrlActionType`
 
 Require
 -------
 
-.. _route_preview:
+.. _route_save:
 
 route
 ~~~~~

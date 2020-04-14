@@ -13,7 +13,8 @@ opening route is used for something else.
     - | :ref:`icon <icon_update>`
     - | :ref:`translation_domain <translation_domain_update>`
     - | :ref:`permission <permission_update>`
-    - | :ref:`hidden <hidden_update>`"
+    - | :ref:`hidden <hidden_update>`
+    - | :ref:`route_parameters <route_parameters_update>`"
     Class, :class:`Enhavo\\Bundle\\AppBundle\\Action\\Type\\UpdateActionType`
     Parent, `Enhavo\\Bundle\\AppBundle\\Action\\AbstractActionType`
 
@@ -60,7 +61,9 @@ Options
 .. |default_hidden| replace:: `false`
 .. include:: /reference/action/option/hidden.rst
 
-
+.. _route_parameters_update:
+.. |default_route_parameters| replace:: []
+.. include:: /reference/action/option/routeParameters.rst
 
 
 

@@ -8,7 +8,7 @@ If route is defined, you can overwrite the standard parameters to generate your 
 
 .. code-block:: yaml
 
-    buttons:
-        myButton:
+    actions:
+        myAction:
             routeParameters:
                 id: $id

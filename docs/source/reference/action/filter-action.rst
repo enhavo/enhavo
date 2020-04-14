@@ -7,11 +7,11 @@ Opens an additional view that contains all available filters of a table.
     :widths: 50 150
 
     Type , filter
-    Options , "- | :ref:`label <label_event>`
-    - | :ref:`icon <icon_event>`
-    - | :ref:`translation_domain <translation_domain_event>`
-    - | :ref:`permission <permission_event>`
-    - | :ref:`hidden <hidden_event>`"
+    Options , "- | :ref:`label <label_filter>`
+    - | :ref:`icon <icon_filter>`
+    - | :ref:`translation_domain <translation_domain_filter>`
+    - | :ref:`permission <permission_filter>`
+    - | :ref:`hidden <hidden_filter>`"
     Class, :class:`Enhavo\\Bundle\\AppBundle\\Action\\Type\\FilterActionType`
     Parent, `Enhavo\\Bundle\\AppBundle\\Action\\AbstractActionType`
 
@@ -54,23 +54,23 @@ in more detail.
 Options
 -------
 
-.. _label_event:
+.. _label_filter:
 .. |default_label| replace:: `label.filter`
 .. include:: /reference/action/option/label.rst
 
-.. _icon_event:
+.. _icon_filter:
 .. |default_icon| replace:: `filter_list`
 .. include:: /reference/action/option/icon.rst
 
-.. _translation_domain_event:
+.. _translation_domain_filter:
 .. |default_translationDomain| replace:: `EnhavoAppBundle`
 .. include:: /reference/action/option/translationDomain.rst
 
-.. _permission_event:
+.. _permission_filter:
 .. |default_permission| replace:: null
 .. include:: /reference/action/option/permission.rst
 
-.. _hidden_event:
+.. _hidden_filter:
 .. |default_hidden| replace:: `false`
 .. include:: /reference/action/option/hidden.rst
 
