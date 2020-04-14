@@ -1,8 +1,8 @@
 Comments Action
 ===============
 
-This action redirects the user to the comments that exist on an article, blog entry or similar. The class for which this action should be used must implement the CommentSubjectInterface
-like for example the entity :class: Enhavo\Bundle\ArticleBundle\Entity\Article.php
+This action redirects the user to the comments that have been posted on an article, blog entry or similar. The class for which this action should be used must implement the CommentSubjectInterface
+like for example the entity :class:`Enhavo\Bundle\ArticleBundle\Entity\Article.php`
 
 .. csv-table::
     :widths: 50 150

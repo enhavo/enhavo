@@ -1,7 +1,7 @@
 Update Action
 =============
 
-Opens a window in which the selected resource can be edited. Can  be used in a table column if the default
+Opens a window in which the selected resource can be edited. Can be used in a table column if the default
 opening route is used for something else.
 
 .. csv-table::
