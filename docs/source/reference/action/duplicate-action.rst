@@ -18,7 +18,7 @@ Duplicates the current resource and creates a new instance with the same values.
     - | :ref:`confirm_message <confirm_message_duplicate>`
     - | :ref:`confirm_label_ok <confirm_label_ok_duplicate>`
     - | :ref:`confirm_label_cancel <confirm_label_cancel_duplicate>`"
-    Class, :class:`Enhavo\\Bundle\\AppBundle\\Action\\Type\\DeleteActionType`
+    Class, :class:`Enhavo\\Bundle\\AppBundle\\Action\\Type\\DuplicateActionType`
     Parent, `Enhavo\\Bundle\\AppBundle\\Action\\AbstractUrlActionType`
 
 

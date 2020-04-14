@@ -1,7 +1,7 @@
 Download Action
 ===============
 
-Downloads the current resource. The Resource must implement the :class:Enhavo\\Bundle\\MediaBundle\\Model\\FileInterface`
+Downloads the current resource. The Resource has to implement the :class:`Enhavo\\Bundle\\MediaBundle\\Model\\FileInterface`
 
 .. csv-table::
     :widths: 50 150

@@ -32,7 +32,7 @@ action of the form. If the passed resource has already an id, that id will also 
 
 .. code-block:: yaml
 
-    buttons:
+    actions:
         save:
             type: save
             route: my_save_route
