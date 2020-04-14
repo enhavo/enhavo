@@ -16,7 +16,7 @@ opening route is used for something else.
     - | :ref:`hidden <hidden_update>`
     - | :ref:`route_parameters <route_parameters_update>`"
     Class, :class:`Enhavo\\Bundle\\AppBundle\\Action\\Type\\UpdateActionType`
-    Parent, `Enhavo\\Bundle\\AppBundle\\Action\\AbstractActionType`
+    Parent, `Enhavo\\Bundle\\AppBundle\\Action\\AbstractUrlActionType`
 
 Require
 -------
