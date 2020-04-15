@@ -140,6 +140,8 @@ class AutoCompleteEntityType extends AbstractType
             'id_property' => $options['id_property'],
             'label_property' => $options['label_property'],
             'sortable' => $options['sortable'],
+            'editable' => $options['editable'],
+            'edit_route' => $options['edit_route']
         ];
         $view->vars['multiple'] = $options['multiple'];
         $view->vars['count'] = $options['count'];
@@ -176,7 +178,9 @@ class AutoCompleteEntityType extends AbstractType
             'label_property' => null,
             'sortable' => false,
             'count' => true,
-            'sort_property' => null
+            'sort_property' => null,
+            'editable' => false,
+            'edit_route' => null
         ]);
 
         $resolver->setRequired([
