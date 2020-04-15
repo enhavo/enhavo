@@ -77,4 +77,18 @@ class RequestConfiguration extends SyliusRequestConfiguration
 
         return parent::getSorting($sorting);
     }
+
+    public function isPaginated()
+    {
+        if ($this->getRequest()->query->has('paginate')) {
+            return $this->getRequest()->get('paginate');
+        }
+
+        return parent::isPaginated();
+    }
+
+    public function getHydrate()
+    {
+        return $this->getRequest()->get('hydrate', 'object');
+    }
 }

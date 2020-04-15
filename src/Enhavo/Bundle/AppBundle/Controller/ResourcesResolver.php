@@ -10,9 +10,10 @@ namespace Enhavo\Bundle\AppBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Filter\FilterQueryBuilder;
 use Enhavo\Bundle\AppBundle\Repository\EntityRepositoryInterface;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
-use Sylius\Bundle\ResourceBundle\Controller\ResourcesResolverInterface;
+use Pagerfanta\Pagerfanta;
 use Sylius\Bundle\ResourceBundle\Controller\RequestConfiguration as SyliusRequestConfiguration;
+use Sylius\Bundle\ResourceBundle\Controller\ResourcesResolverInterface;
+use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 /**
  * Class ResourcesResolver
@@ -50,10 +51,16 @@ class ResourcesResolver implements ResourcesResolverInterface
                 if (null !== $repositoryMethod = $requestConfiguration->getRepositoryMethod()) {
                     $callable = [$repository, $repositoryMethod];
                     $resources = call_user_func_array($callable, array_merge([$query], $requestConfiguration->getRepositoryArguments()));
-                    return $resources;
+
+                } else {
+                    $resources = $repository->filter($query);
                 }
 
-                return $repository->filter($query);
+                if ($resources instanceof Pagerfanta && !$requestConfiguration->isPaginated()) {
+                    $resources->setMaxPerPage($resources->count());
+                }
+
+                return $resources;
             }
         }
 

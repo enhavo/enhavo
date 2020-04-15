@@ -27,6 +27,9 @@ class FilterQuery
     const ORDER_ASC = 'asc';
     const ORDER_DESC = 'desc';
 
+    const HYDRATE_OBJECT = 'object';
+    const HYDRATE_ID = 'id';
+
     /**
      * @var array
      */
@@ -46,6 +49,11 @@ class FilterQuery
      * @var string
      */
     private $alias;
+
+    /**
+     * @var string
+     */
+    private $hydrate;
 
     public function __construct(EntityManagerInterface $em, $class, $alias = 'a')
     {
@@ -190,6 +198,10 @@ class FilterQuery
             }
         }
 
+        if ($this->getHydrate() === self::HYDRATE_ID) {
+            $query->select($this->getAlias() . '.id');
+        }
+
         return $this;
     }
 
@@ -285,5 +297,21 @@ class FilterQuery
     public function getAlias()
     {
         return $this->alias;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHydrate(): string
+    {
+        return $this->hydrate;
+    }
+
+    /**
+     * @param string $hydrate
+     */
+    public function setHydrate(string $hydrate): void
+    {
+        $this->hydrate = $hydrate;
     }
 }
