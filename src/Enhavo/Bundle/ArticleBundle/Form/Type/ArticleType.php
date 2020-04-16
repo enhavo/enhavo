@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\ArticleBundle\Form\Type;
 
+use Enhavo\Bundle\AppBundle\Action\ActionManager;
 use Enhavo\Bundle\BlockBundle\Form\Type\BlockNodeType;
 use Enhavo\Bundle\CommentBundle\Form\Type\ThreadType;
 use Enhavo\Bundle\ContentBundle\Form\Type\ContentType;
@@ -49,9 +50,13 @@ class ArticleType extends AbstractResourceType
         $builder->add('tags', TermAutoCompleteChoiceType::class, [
             'multiple' => true,
             'route' => 'enhavo_article_tag_auto_complete',
-            'create_route' => 'enhavo_article_tag_create',
-            'create_button_label' => 'article.form.label.create_tag',
             'translation_domain' => 'EnhavoArticleBundle',
+            'actions' => [
+                'create' => [
+                    'type' => 'create',
+                    'route' => 'enhavo_article_tag_create',
+                ]
+            ]
         ]);
     }
 
