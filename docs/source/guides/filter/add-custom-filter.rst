@@ -1,3 +1,4 @@
+.. _add_custom_filter:
 Add custom filter
 =================
 
