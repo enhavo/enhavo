@@ -28,9 +28,9 @@ class LabelType extends AbstractColumnType
     public function createColumnViewData(array $options)
     {
         $data = parent::createColumnViewData($options);
-
+        
         $data = array_merge($data, [
-
+            'property' => $options['property'],
         ]);
 
         return $data;
