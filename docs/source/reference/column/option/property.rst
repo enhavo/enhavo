@@ -3,10 +3,10 @@ property
 
 **type**: `string`
 
-Define which property of the resource is used for the column. The resource has to provide a getter method for that property.
+Defines which property of the resource is used for the column. The resource has to provide a getter method for that property.
 
 .. code-block:: yaml
 
-    buttons:
+    column:
         myColumn:
-            property: name
+            property: myEntityProperty

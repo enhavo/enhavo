@@ -1,13 +1,14 @@
-translationDomain
-~~~~~~~~~~~~~~~~~
+translation_domain
+~~~~~~~~~~~~~~~~~~
 
 **type**: `string`
+**default**: |default_translation_domain|
 
-Overwrite the default translationDomain. ``EnhavoAppBundle`` is used by default
+Overwrites the default translation_domain.
 
 .. code-block:: yaml
 
     columns:
         myColumn:
-            translationDomain: myTranslationDomain
+            translation_domain: my_translation_domain
             # ... further option
