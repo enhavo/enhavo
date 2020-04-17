@@ -44,6 +44,13 @@ export default class AutoCompleteType extends FormType
                     },
                 });
             },
+            formatSelection: function (state:any) {
+                if(data.multiple && data.editable){
+                    return "<span class=\"icon icon-edit\" data-auto-complete-edit=\"" + state.id + "\"></span> " +state.text;
+                } else {
+                    return state.text;
+                }
+            },
             minimumInputLength: data.minimum_input_length,
             ajax: {
                 url: data.url,
@@ -82,13 +89,40 @@ export default class AutoCompleteType extends FormType
             });
         }
 
-        this.$element.find('[data-auto-complete-create]').click((event) => {
+        if(data.multiple && data.editable){
+            $input.on("change", (event: Select2JQueryEventObject) => {
+                this.initEditFields(data.edit_route);
+            });
+            this.initEditFields(data.edit_route);
+        }
+
+        let $elements = this.$element.find('[data-auto-complete-action]');
+        $elements.click((event) => {
             event.preventDefault();
-            let url = $(event.target).attr('href');
-            if(this.config.create) {
-                this.config.create(this, url);
+            let url = $(event.target).closest('[data-auto-complete-action]').attr('href');
+            if(this.config.executeAction) {
+                this.config.executeAction(this, url);
             }
         });
+    }
+
+    private initEditFields(route:string)
+    {
+        let $items = this.$element.find('[data-auto-complete-edit]');
+
+        let self = this;
+        $items.each(function() {
+            if(typeof $(this).data('initialized') == "undefined"){
+                $(this).data('initialized', 1);
+                $(this).click((event:any) => {
+                    event.preventDefault();
+                    let id = $(event.target).data('auto-complete-edit');
+                    if(self.config.edit) {
+                        self.config.edit(self, route, id.toString());
+                    }
+                });
+            }
+        })
     }
 
     public addElement(data: any)

@@ -34,7 +34,12 @@ export default class DynamicFormLoader extends AbstractLoader
     public insert(element: HTMLElement): void
     {
         let config = new AutoCompleteConfig();
-        config.create = (type: AutoCompleteType, url: string) => {
+        config.executeAction = (type: AutoCompleteType, url: string) => {
+            this.application.getView().open(url, 'autocomplete_loader');
+            this.currentType = type;
+        };
+        config.edit = (type: AutoCompleteType, route: string, id: string) => {
+            let url = this.application.getRouter().generate(route, {id: id});
             this.application.getView().open(url, 'autocomplete_loader');
             this.currentType = type;
         };

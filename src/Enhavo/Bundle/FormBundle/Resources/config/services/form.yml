@@ -65,6 +65,7 @@ services:
             - '@router'
             - '@doctrine.orm.entity_manager'
             - '@property_accessor'
+            - '@enhavo_app.action_manager'
         tags:
             - { name: form.type, alias: 'enhavo_auto_complete_entity' }
 
