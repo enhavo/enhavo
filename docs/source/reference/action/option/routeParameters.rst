@@ -10,5 +10,5 @@ If route is defined, you can overwrite the standard parameters to generate your 
 
     actions:
         myAction:
-            routeParameters:
+            route_parameters:
                 id: $id
