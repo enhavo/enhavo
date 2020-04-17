@@ -48,7 +48,7 @@ Options
 .. include:: /reference/column/option/condition.rst
 
 .. _format_boolean:
-.. |default_format| replace:: `"d.m.Y H:i"`
+.. |default_format| replace:: `d.m.Y H:i`
 .. include:: /reference/column/option/format.rst
 
 .. _sorting_property_boolean:
