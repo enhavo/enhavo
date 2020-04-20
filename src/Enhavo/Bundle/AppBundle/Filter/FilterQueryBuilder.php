@@ -66,6 +66,8 @@ class FilterQueryBuilder
             $filter->buildQuery($filterQuery, $this->getValue($filter->getName(), $filterValues));
         }
 
+        $filterQuery->setHydrate($request->get('hydrate', FilterQuery::HYDRATE_OBJECT));
+
         return $filterQuery;
     }
 
