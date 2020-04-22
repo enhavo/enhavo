@@ -30,7 +30,7 @@ class TextPictureBlock extends AbstractBlock
     private $textLeft;
 
     /**
-     * @var FileInterface
+     * @var FileInterface|null
      */
     private $file;
 
@@ -124,7 +124,7 @@ class TextPictureBlock extends AbstractBlock
     /**
      * Set file
      *
-     * @param FileInterface $file
+     * @param FileInterface|null $file
      * @return TextPictureBlock
      */
     public function setFile(?FileInterface $file)
@@ -137,7 +137,7 @@ class TextPictureBlock extends AbstractBlock
     /**
      * Get file
      *
-     * @return FileInterface
+     * @return FileInterface|null
      */
     public function getFile()
     {

@@ -21,7 +21,7 @@ class PictureBlock extends AbstractBlock
     private $caption;
 
     /**
-     * @var FileInterface
+     * @var FileInterface|null
      */
     private $file;
 
@@ -79,7 +79,7 @@ class PictureBlock extends AbstractBlock
     /**
      * Get file
      *
-     * @return FileInterface
+     * @return FileInterface|null
      */
     public function getFile()
     {
