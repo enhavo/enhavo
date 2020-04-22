@@ -41,7 +41,7 @@ class PictureBlock extends AbstractBlock
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -70,7 +70,7 @@ class PictureBlock extends AbstractBlock
      * @param FileInterface|null $file
      * @return PictureBlock
      */
-    public function setFile(FileInterface $file = null)
+    public function setFile(?FileInterface $file = null)
     {
         $this->file = $file;
         return $this;

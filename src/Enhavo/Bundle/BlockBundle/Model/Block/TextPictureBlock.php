@@ -127,7 +127,7 @@ class TextPictureBlock extends AbstractBlock
      * @param FileInterface $file
      * @return TextPictureBlock
      */
-    public function setFile(FileInterface $file)
+    public function setFile(?FileInterface $file)
     {
         $this->file = $file;
 
