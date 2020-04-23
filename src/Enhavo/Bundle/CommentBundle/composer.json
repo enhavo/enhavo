@@ -13,8 +13,8 @@
   ],
   "require": {
     "php": "^7.2",
-    "enhavo/app-bundle": "0.8.x-dev",
-    "enhavo/block-bundle": "0.8.x-dev"
+    "enhavo/app-bundle": "^0.8",
+    "enhavo/block-bundle": "^0.8"
   },
   "autoload": {
     "psr-4": { "Enhavo\\Bundle\\CommentBundle\\": "" }
