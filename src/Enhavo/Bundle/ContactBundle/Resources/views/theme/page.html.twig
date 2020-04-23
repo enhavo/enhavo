@@ -5,11 +5,11 @@
     <form method="POST" action="{{ path('enhavo_contact_submit', {name: name}) }}">
 
         {% if form_has_errors(form) %}
-            <div>{{ 'contact.form.message.invalid'|trans }}</div>
+            <div>{{ messageInvalid|trans([], translationDomain) }}</div>
         {% endif %}
 
         {% if sent %}
-            <div>{{ 'contact.form.message.success'|trans }}</div>
+            <div>{{ messageSuccess|trans([], translationDomain) }}</div>
         {% endif %}
 
         {{ form_widget(form) }}

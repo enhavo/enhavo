@@ -79,7 +79,7 @@ class ContactController extends AbstractController
 
                 if($request->isXmlHttpRequest()) {
                     return new JsonResponse(array(
-                        'message' => $this->translator->trans('contact.form.message.success', [], 'EnhavoContactBundle')
+                        'message' => $this->translator->trans($formConfiguration->getMessageSuccess(), [], $formConfiguration->getTranslationDomain())
                     ));
                 }
             } else {
@@ -112,7 +112,10 @@ class ContactController extends AbstractController
         return $this->render($template, [
             'form' => $form->createView(),
             'name' => $name,
-            'sent' => $sent
+            'sent' => $sent,
+            'messageSuccess' => $formConfiguration->getMessageSuccess(),
+            'messageInvalid' => $formConfiguration->getMessageInvalid(),
+            'translationDomain' => $formConfiguration->getTranslationDomain()
         ]);
     }
 }

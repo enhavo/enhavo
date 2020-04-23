@@ -35,6 +35,8 @@ class ConfigurationFactory
         $configuration->setRecipient($this->getParameter($name, 'recipient'));
         $configuration->setConfirmTemplate($this->getParameter($name, 'template.confirm'));
         $configuration->setPageTemplate($this->getParameter($name, 'template.page'));
+        $configuration->setMessageSuccess($this->getParameter($name, 'message.success'));
+        $configuration->setMessageInvalid($this->getParameter($name, 'message.invalid'));
         $configuration->setFrom($this->getParameter($name, 'from'));
         $configuration->setSenderName($this->getParameter($name, 'sender_name'));
         $configuration->setSubject($this->getParameter($name, 'subject'));

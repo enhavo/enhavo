@@ -49,6 +49,16 @@ class Configuration
     /**
      * @var string
      */
+    private $messageSuccess;
+
+    /**
+     * @var string
+     */
+    private $messageInvalid;
+
+    /**
+     * @var string
+     */
     private $recipient;
 
     /**
@@ -282,5 +292,37 @@ class Configuration
     public function setPageTemplate($pageTemplate)
     {
         $this->pageTemplate = $pageTemplate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMessageSuccess()
+    {
+        return $this->messageSuccess;
+    }
+
+    /**
+     * @param string $messageSuccess
+     */
+    public function setMessageSuccess($messageSuccess)
+    {
+        $this->messageSuccess = $messageSuccess;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMessageInvalid()
+    {
+        return $this->messageInvalid;
+    }
+
+    /**
+     * @param string $messageInvalid
+     */
+    public function setMessageInvalid($messageInvalid)
+    {
+        $this->messageInvalid = $messageInvalid;
     }
 }
