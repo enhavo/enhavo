@@ -1,6 +1,6 @@
 {
   "name": "enhavo/template-bundle",
-  "type": "library",
+  "type": "symfony-bundle",
   "description": "EnhavoTemplateBundle",
   "keywords": ["framework"],
   "homepage": "https://enhavo.com",

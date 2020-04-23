@@ -1,6 +1,6 @@
 {
   "name": "enhavo/content-bundle",
-  "type": "library",
+  "type": "symfony-bundle",
   "description": "EnhavoContentBundle",
   "keywords": ["framework"],
   "homepage": "https://enhavo.com",

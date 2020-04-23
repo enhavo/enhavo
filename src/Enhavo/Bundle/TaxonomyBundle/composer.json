@@ -1,6 +1,6 @@
 {
   "name": "enhavo/taxonomy-bundle",
-  "type": "library",
+  "type": "symfony-bundle",
   "description": "EnhavoTaxonomyBundle",
   "keywords": ["framework"],
   "homepage": "https://enhavo.com",

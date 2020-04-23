@@ -1,6 +1,6 @@
 {
   "name": "enhavo/media-bundle",
-  "type": "library",
+  "type": "symfony-bundle",
   "description": "EnhavoMediaBundle",
   "keywords": ["framework"],
   "homepage": "https://enhavo.com",

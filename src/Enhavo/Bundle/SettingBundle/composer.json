@@ -1,6 +1,6 @@
 {
   "name": "enhavo/setting-bundle",
-  "type": "library",
+  "type": "symfony-bundle",
   "description": "EnhavoSettingBundle",
   "keywords": ["framework"],
   "homepage": "https://enhavo.com",

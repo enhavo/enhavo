@@ -1,6 +1,6 @@
 {
   "name": "enhavo/redirect-bundle",
-  "type": "library",
+  "type": "symfony-bundle",
   "description": "EnhavoRedirectBundle",
   "keywords": ["framework"],
   "homepage": "https://enhavo.com",
