@@ -1,6 +1,6 @@
 {
   "name": "enhavo/calendar-bundle",
-  "type": "library",
+  "type": "symfony-bundle",
   "description": "EnhavoCalendarBundle",
   "keywords": ["framework"],
   "homepage": "https://enhavo.com",

@@ -1,6 +1,6 @@
 {
   "name": "enhavo/shop-bundle",
-  "type": "library",
+  "type": "symfony-bundle",
   "description": "EnhavoShopBundle",
   "keywords": ["framework"],
   "homepage": "https://enhavo.com",

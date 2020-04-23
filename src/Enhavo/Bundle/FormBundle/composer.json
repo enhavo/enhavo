@@ -1,6 +1,6 @@
 {
   "name": "enhavo/form-bundle",
-  "type": "library",
+  "type": "symfony-bundle",
   "description": "EnhavoFormBundle",
   "keywords": ["framework"],
   "homepage": "https://enhavo.com",

@@ -1,6 +1,6 @@
 {
   "name": "enhavo/navigation-bundle",
-  "type": "library",
+  "type": "symfony-bundle",
   "description": "EnhavoNavigationBundle",
   "keywords": ["framework"],
   "homepage": "https://enhavo.com",

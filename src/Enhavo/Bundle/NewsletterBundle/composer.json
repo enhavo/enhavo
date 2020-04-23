@@ -1,6 +1,6 @@
 {
   "name": "enhavo/newsletter-bundle",
-  "type": "library",
+  "type": "symfony-bundle",
   "description": "EnhavoNewsletterBundle",
   "keywords": ["framework"],
   "homepage": "https://enhavo.com",
