@@ -1,6 +1,6 @@
 {
   "name": "enhavo/comment-bundle",
-  "type": "library",
+  "type": "symfony-bundle",
   "description": "EnhavoCommentBundle",
   "keywords": ["framework"],
   "homepage": "https://enhavo.com",

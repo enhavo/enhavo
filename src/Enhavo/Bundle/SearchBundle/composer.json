@@ -1,6 +1,6 @@
 {
   "name": "enhavo/search-bundle",
-  "type": "library",
+  "type": "symfony-bundle",
   "description": "EnhavoSearchBundle",
   "keywords": ["framework"],
   "homepage": "https://enhavo.com",

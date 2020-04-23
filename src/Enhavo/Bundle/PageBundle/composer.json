@@ -1,6 +1,6 @@
 {
   "name": "enhavo/page-bundle",
-  "type": "library",
+  "type": "symfony-bundle",
   "description": "EnhavoPageBundle",
   "keywords": ["framework"],
   "homepage": "https://enhavo.com",

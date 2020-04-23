@@ -63,7 +63,6 @@
     "symfony/console": "^4.2",
     "symfony/dotenv": "^4.2",
     "symfony/expression-language": "^4.2",
-    "symfony/flex": "^1.1",
     "symfony/form": "^4.2",
     "symfony/framework-bundle": "^4.2",
     "symfony/lock": "^4.2",
@@ -90,7 +89,7 @@
     "phpunit/php-code-coverage": "^6.1",
     "symfony/debug-pack": "^1.0",
     "symfony/maker-bundle": "^1.0",
-    "symfony/panther": "^0.6.0",
+    "symfony/panther": "~0.6",
     "symfony/profiler-pack": "^1.0",
     "symfony/test-pack": "^1.0",
     "symfony/web-server-bundle": "^4.2"
@@ -137,13 +136,7 @@
     "auto-scripts": {
       "cache:clear": "symfony-cmd",
       "assets:install %PUBLIC_DIR%": "symfony-cmd"
-    },
-    "post-install-cmd": [
-      "@auto-scripts"
-    ],
-    "post-update-cmd": [
-      "@auto-scripts"
-    ]
+    }
   },
   "conflict": {
     "symfony/symfony": "*"

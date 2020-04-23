@@ -1,6 +1,6 @@
 {
   "name": "enhavo/dashboard-bundle",
-  "type": "library",
+  "type": "symfony-bundle",
   "description": "EnhavoDashboardBundle",
   "keywords": ["framework"],
   "homepage": "https://enhavo.com",

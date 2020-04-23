@@ -5,3 +5,4 @@ enhavo_search_admin:
 enhavo_theme_search:
     resource: "@EnhavoSearchBundle/Resources/config/routing/theme.yml"
     prefix: /
+
