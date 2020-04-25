@@ -61,7 +61,7 @@ Add properties
 --------------
 
 There are two more properties you can add to the formType. Add these like you have done it with the ``allow_delete`` property.
-If you want to seperate the items from eachother with a border, set the ``border`` property to true. If not you can just skip this step.
+If you want to separate the items from eachother with a border, set the ``border`` property to true. If not you can just skip this step.
 
 .. code-block:: php
 

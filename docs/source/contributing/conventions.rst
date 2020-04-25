@@ -12,7 +12,7 @@ Route name
 
 For example you have a bundle called ``enhavoAppBundle``, and a action
 called ``index`` then you have to name your route like this ``enhavo_app_index``.
-A route should contain the following information devide by an underscore:
+A route should contain the following information divide by an underscore:
 
 1) Company name
 
