@@ -1,7 +1,6 @@
 {
   "name": "enhavo/enhavo",
   "license": "MIT",
-  "type": "project",
   "description": "enhavo",
   "authors": [
     {
@@ -138,12 +137,8 @@
       "assets:install %PUBLIC_DIR%": "symfony-cmd"
     }
   },
-  "conflict": {
-    "symfony/symfony": "*"
-  },
   "extra": {
     "symfony": {
-      "allow-contrib": false,
       "require": "^4.2"
     }
   }

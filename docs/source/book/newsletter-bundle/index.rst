@@ -2,8 +2,9 @@ NewsletterBundle
 ================
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 1
 
+    installation
     general
     storages
     strategies
