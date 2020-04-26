@@ -29,7 +29,7 @@ route
 **type**: `string`
 **default**: `null`
 
-Defines which update route should be used to edit the selected ressource.
+Defines which update route should be used to edit the selected resource.
 
 .. code-block:: yaml
 

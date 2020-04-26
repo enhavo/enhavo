@@ -198,7 +198,7 @@ To allow the user to edit this information, we define the fields in our resource
                 'label' => 'media.form.label.alt_tag',
                 'translationDomain' => 'EnhavoMediaBundle'
             ),
-            'my_paramater' => array(
+            'my_parameter' => array(
                 'label' => 'myresource.form.label.my_parameter',
                 'translationDomain' => 'AcmeMyResourceBundle'
             )

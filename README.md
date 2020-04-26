@@ -12,7 +12,7 @@
 The enhavo CMS is a open source PHP project on top of the fullstack Symfony framework and uses awesome Sylius components
 to serve a very flexible software, that can handle most of complex data structure with a clean and usability interface.
 
-Enhavo is still under heavy development and we can't gurantee for backward compatibility or security issues nor is our documentation up to date. 
+Enhavo is still under heavy development and we can't guarantee for backward compatibility or security issues nor is our documentation up to date. 
 So we advice you to not use the software for production until we reach a stable release. 
 
 

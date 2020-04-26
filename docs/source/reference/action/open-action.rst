@@ -1,7 +1,7 @@
 Open Action
 ===========
 
-Opens the specified route in a seperate tab in your browser. Can be used, for example, to view self-created newsletters, products, etc.
+Opens the specified route in a separate tab in your browser. Can be used, for example, to view self-created newsletters, products, etc.
 
 .. csv-table::
     :widths: 50 150

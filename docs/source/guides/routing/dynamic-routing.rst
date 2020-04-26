@@ -96,7 +96,7 @@ Form
 
 To add an url field in our form we just use this simple snippet.
 There is already a form type ``enhavo_route``, which handle
-all we need. Also the contraints, so we use a clean and unique url.
+all we need. Also the constraints, so we use a clean and unique url.
 
 .. code-block:: php
 
