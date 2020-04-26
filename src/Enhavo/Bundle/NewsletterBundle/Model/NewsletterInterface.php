@@ -116,6 +116,26 @@ interface NewsletterInterface
      */
     public function getReceivers();
 
+    /**
+     * Add attachments
+     *
+     * @param \Enhavo\Bundle\MediaBundle\Entity\File $attachments
+     */
+    public function addAttachment($attachments);
+
+    /**
+     * Remove attachments
+     *
+     * @param \Enhavo\Bundle\MediaBundle\Entity\File $attachments
+     */
+    public function removeAttachment($attachments);
+
+    /**
+     * Get attachments
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAttachments();
 
     /**
      * @return \DateTime
