@@ -5,10 +5,11 @@ Installation
 
 .. code::
 
-  $ composer require enhavo/search-bundle ^0.8
+  $ composer require enhavo/slider-bundle ^0.8
+
 
 .. include:: /book/_includes/installation/node-package.rst
 
 .. code::
 
-  $ yarn add @enhavo/search --dev
+  $ yarn add @enhavo/slider --dev

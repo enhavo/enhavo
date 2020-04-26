@@ -2,7 +2,9 @@ FormBundle
 ==========
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 1
+
+    installation
 
 .. rubric:: What is the FormBundle?
 

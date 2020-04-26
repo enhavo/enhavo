@@ -4,6 +4,7 @@ MediaBundle
 .. toctree::
     :maxdepth: 1
 
+    installation
     format
     commands
 
