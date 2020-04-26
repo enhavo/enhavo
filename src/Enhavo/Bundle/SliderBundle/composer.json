@@ -1,6 +1,6 @@
 {
   "name": "enhavo/slider-bundle",
-  "type": "library",
+  "type": "symfony-bundle",
   "description": "EnhavoSliderBundle",
   "keywords": ["framework"],
   "homepage": "https://enhavo.com",

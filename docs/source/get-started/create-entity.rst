@@ -190,7 +190,7 @@ The common path for the Repository-classes are ``src/Repository``.
 
     }
 
-An empty Repository is very unspectacular, but we will learn how usefull they can be later.
+An empty Repository is very unspectacular, but we will learn how useful they can be later.
 
 
 Update Database

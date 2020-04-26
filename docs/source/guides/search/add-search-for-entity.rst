@@ -56,7 +56,7 @@ If there is a HTML text which contains HTML-tags, you should choose the ``Html``
               h2: 10
               p: 7
 
-With the `type` you can set the type as which the field gets stored in the database and whith the `weight` you choose the weight of the field compared to all the other fields.
+With the `type` you can set the type as which the field gets stored in the database and with the `weight` you choose the weight of the field compared to all the other fields.
 If you have the `Html` field you can give weights to each HTML-tag (if you just skip the `weights` there are default weights for the HTML-tags).
 
 Attention: If you use elastic-search you can not define the weight for each HTML-tag. Just use the weight like explained for the `Plain` type.

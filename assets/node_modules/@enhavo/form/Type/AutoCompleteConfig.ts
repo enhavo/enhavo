@@ -1,5 +1,6 @@
 import AutoCompleteType from "@enhavo/form/Type/AutoCompleteType";
 
 export default class AutoCompleteConfig {
-    create: (type: AutoCompleteType, url: string) => void;
+    executeAction: (type: AutoCompleteType, url: string) => void;
+    edit: (type: AutoCompleteType, route: string, id: string) => void;
 }

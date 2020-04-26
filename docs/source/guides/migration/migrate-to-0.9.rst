@@ -31,8 +31,10 @@ Migrate to 0.9
     // Add import line
     import WidgetRegistryPackage from "./registry/widget";
 
-    // Add register package line
+    // Add register package line before load
     Application.getWidgetRegistry().registerPackage(new WidgetRegistryPackage(Application));
+
+    Application.getVueLoader().load(() => import("@enhavo/app/Main/Components/MainComponent.vue"));
 
 4. Rename routing manager service id ``enhavo_routing.manager.route`` to FQCN ``Enhavo\Bundle\RoutingBundle\Manager\RouteManager``
 

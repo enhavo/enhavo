@@ -77,7 +77,7 @@ The finale installation steps are initializing Enhavo once and creating your fir
 
 Launching Project
 -----------------
-So far, so good. The installation is complete and you´re ready to launch your empty base-application.
+So far, so good. The installation is complete and you're ready to launch your empty base-application.
 
 You can run this project on any webserver (like apache, nginx, etc.), but for testing reasons, the fastest way to start your application for the first time is using the PHP´s build-in web-server.
 
@@ -87,13 +87,13 @@ Start that build-in server with
 
     $ php bin/console server:run
 
-and see the result in your browser under ``http://127.0.0.1:8001/admin``
+and see the result in your browser under ``http://127.0.0.1:8000/admin``
 
 Use the username and password from the user account, you´ve created before with ``fos:user:create``, to log in.
 
 Final Words
 -----------
-Great! We´ve got two awesome dependency management tools, installed a complete new web-application project based on the symfony-framework and included Enhavo as cms and launched our application with the build-in server.
+Great! We've installed the basic, really basic, enhavo CMS with our two awesome dependency management tools composer and yarn.
 
 Well-intentioned Advices
 ------------------------

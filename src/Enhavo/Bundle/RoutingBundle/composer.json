@@ -1,6 +1,6 @@
 {
   "name": "enhavo/routing-bundle",
-  "type": "library",
+  "type": "symfony-bundle",
   "description": "EnhavoRoutingBundle",
   "keywords": ["framework"],
   "homepage": "https://enhavo.com",

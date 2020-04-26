@@ -69,7 +69,7 @@ The assembly of the view data is delegated to the type. After you get the action
         }
 
 Thanks to the symfony dependency injection container we can add this type to the central repository by tagging,
-and it will only be instanciated if it is really used.
+and it will only be instantiated if it is really used.
 
 .. note::
 

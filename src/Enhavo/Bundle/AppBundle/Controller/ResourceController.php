@@ -312,8 +312,8 @@ class ResourceController extends BaseController
     }
 
     /**
- * {@inheritdoc}
- */
+     * {@inheritdoc}
+     */
     public function listAction(Request $request): Response
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);

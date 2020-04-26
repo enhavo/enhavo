@@ -1,21 +1,14 @@
 Installation
 ============
 
-.. note::
+.. include:: /book/_includes/installation/composer.rst
 
-  This article outdated and may contain information that are not in use any more
+.. code::
 
-Just copy the following code into your ``enhavo.yml``
+  $ composer require enhavo/search-bundle ^0.8
 
-.. code-block:: yaml
+.. include:: /book/_includes/installation/node-package.rst
 
-    enhavo_search:
-        search:
-            template: EnhavoSearchBundle:Search:render.html.twig
-            strategy: index
-            search_engine: enhavo_search_search_engine
-            index_engine: enhavo_search_index_engine
+.. code::
 
-Here you tell enhavo which template should be rendered for the search-field,
-which indexing strategy should be used and which engines do the work of indexing and searching.
-
+  $ yarn add @enhavo/search --dev

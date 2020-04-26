@@ -5,3 +5,4 @@ enhavo_media:
 enhavo_media_theme:
     resource: "@EnhavoMediaBundle/Resources/config/routing/theme.yml"
     prefix: /
+

@@ -5,6 +5,7 @@ namespace Enhavo\Bundle\FormBundle\Form\Type;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Common\Collections\Collection;
+use Enhavo\Bundle\AppBundle\Action\ActionManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -31,11 +32,21 @@ class AutoCompleteEntityType extends AbstractType
      */
     protected $propertyAccessor;
 
-    public function __construct(RouterInterface $router, EntityManagerInterface $entityManager, PropertyAccessorInterface $propertyAccessor)
+    /**
+     * @var ActionManager
+     */
+    private $actionManager;
+
+    public function __construct(
+        RouterInterface $router,
+        EntityManagerInterface $entityManager,
+        PropertyAccessorInterface $propertyAccessor,
+        ActionManager $actionManager)
     {
         $this->router = $router;
         $this->entityManager = $entityManager;
         $this->propertyAccessor = $propertyAccessor;
+        $this->actionManager = $actionManager;
     }
 
     /**
@@ -128,6 +139,12 @@ class AutoCompleteEntityType extends AbstractType
      */
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
+        $actions = $options['actions'];
+        if(!empty($actions)){
+            $data = $form->getParent() && $form->getParent()->getData() ? $form->getParent()->getData() : null;
+            $actions = $this->createActionsViewData($actions, $data);
+        }
+
         $view->vars['auto_complete_data'] = [
             'url' => $this->router->generate($options['route'], $options['route_parameters']),
             'route' => $options['route'],
@@ -140,11 +157,13 @@ class AutoCompleteEntityType extends AbstractType
             'id_property' => $options['id_property'],
             'label_property' => $options['label_property'],
             'sortable' => $options['sortable'],
+            'editable' => $options['editable'],
+            'edit_route' => $options['edit_route'],
+            'actions' => $actions
         ];
         $view->vars['multiple'] = $options['multiple'];
         $view->vars['count'] = $options['count'];
-        $view->vars['create_route'] = $options['create_route'];
-        $view->vars['create_button_label'] = $options['create_button_label'];
+        $view->vars['actions'] = $actions;
 
         if ($options['multiple'] === false) {
             $value = $view->vars['value'];
@@ -170,19 +189,25 @@ class AutoCompleteEntityType extends AbstractType
             'multiple' => false,
             'minimum_input_length' => 0,
             'placeholder' => null,
-            'create_route' => null,
-            'create_button_label' => null,
             'id_property' => 'id',
             'label_property' => null,
             'sortable' => false,
             'count' => true,
-            'sort_property' => null
+            'sort_property' => null,
+            'editable' => false,
+            'edit_route' => null,
+            'actions' => []
         ]);
 
         $resolver->setRequired([
             'route',
             'class',
         ]);
+    }
+
+    public function createActionsViewData(array $options, $resource)
+    {
+        return $this->actionManager->createActionsViewData($options, $resource);
     }
 
     /**

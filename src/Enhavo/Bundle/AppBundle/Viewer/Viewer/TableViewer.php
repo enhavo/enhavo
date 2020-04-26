@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
 
 use Enhavo\Bundle\AppBundle\Column\ColumnManager;
 use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
+use Enhavo\Bundle\AppBundle\Filter\FilterQuery;
 use Enhavo\Bundle\AppBundle\Viewer\AbstractResourceViewer;
 use Enhavo\Bundle\AppBundle\Viewer\ViewerUtil;
 use Pagerfanta\Pagerfanta;
@@ -85,7 +86,7 @@ class TableViewer extends AbstractResourceViewer
 
         return $columns;
     }
-    
+
     private function getBatches($batchRoute)
     {
         $configuration = $this->util->createConfigurationFromRoute($batchRoute);
@@ -130,7 +131,13 @@ class TableViewer extends AbstractResourceViewer
                 'page' => $resources->getCurrentPage()
             ]);
         }
-        $parameters->set('resources', $this->columnManager->createResourcesViewData($columns, $options['resources']));
+
+        if ($requestConfiguration->getHydrate() === FilterQuery::HYDRATE_ID) {
+            $parameters->set('resources', $options['resources']);
+        } else {
+            $parameters->set('resources', $this->columnManager->createResourcesViewData($columns, $options['resources']));
+        }
+
     }
 
     public function configureOptions(OptionsResolver $optionsResolver)

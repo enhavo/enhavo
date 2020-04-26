@@ -1,6 +1,6 @@
 {
   "name": "enhavo/block-bundle",
-  "type": "library",
+  "type": "symfony-bundle",
   "description": "EnhavoBlockBundle",
   "keywords": ["framework"],
   "homepage": "https://enhavo.com",
