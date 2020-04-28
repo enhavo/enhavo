@@ -52,3 +52,6 @@ Migrate to 0.9
                       property: title
                       # now
                       properties: title
+
+6. If the action component ``create-action`` was used, you have to migrate it to ``open-action``. `
+The action type ``create`` is not affected.

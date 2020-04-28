@@ -33,7 +33,8 @@ class OpenActionType extends AbstractUrlActionType implements ActionTypeInterfac
     {
         $data = parent::createViewData($options, $resource);
         $data = array_merge($data, [
-            'target' => $options['target']
+            'target' => $options['target'],
+            'key' => $options['view_key']
         ]);
         return $data;
     }
@@ -49,7 +50,8 @@ class OpenActionType extends AbstractUrlActionType implements ActionTypeInterfac
             'component' => 'open-action',
             'label' => 'Open',
             'icon' => 'arrow_forward',
-            'target' => '_self'
+            'target' => '_self',
+            'view_key' => null
         ]);
     }
 

@@ -1,7 +1,6 @@
 import RegistryPackage from "@enhavo/core/RegistryPackage";
 import ApplicationInterface from "@enhavo/app/ApplicationInterface";
 import CloseActionFactory from "@enhavo/app/Action/Factory/CloseActionFactory";
-import CreateActionFactory from "@enhavo/app/Action/Factory/CreateActionFactory";
 import DeleteActionFactory from "@enhavo/app/Action/Factory/DeleteActionFactory";
 import DropdownActionFactory from "@enhavo/app/Action/Factory/DropdownActionFactory";
 import FilterActionFactory from "@enhavo/app/Action/Factory/FilterActionFactory";
@@ -18,7 +17,6 @@ export default class ActionRegistryPackage extends RegistryPackage
     constructor(application: ApplicationInterface) {
         super();
         this.register('close-action', () => import('@enhavo/app/Action/Components/ActionComponent.vue'), new CloseActionFactory(application));
-        this.register('create-action', () => import('@enhavo/app/Action/Components/ActionComponent.vue'), new CreateActionFactory(application));
         this.register('delete-action', () => import('@enhavo/app/Action/Components/ActionComponent.vue'), new DeleteActionFactory(application));
         this.register('dropdown-action', () => import('@enhavo/app/Action/Components/DropdownActionComponent.vue'), new DropdownActionFactory(application));
         this.register('filter-action', () => import('@enhavo/app/Action/Components/ActionComponent.vue'), new FilterActionFactory(application));

@@ -14,7 +14,8 @@ Opens the specified route in a separate tab in your browser. Can be used, for ex
     - | :ref:`translation_domain <translation_domain_open>`
     - | :ref:`permission <permission_open>`
     - | :ref:`hidden <hidden_open>`
-    - | :ref:`route_parameters <route_parameters_open>`"
+    - | :ref:`route_parameters <route_parameters_open>`
+    - | :ref:`view_key <view_key_open>`"
     Class, :class:`Enhavo\\Bundle\\AppBundle\\Action\\Type\\OpenActionType`
     Parent, `Enhavo\\Bundle\\AppBundle\\Action\\AbstractUrlActionType`
 
@@ -49,7 +50,8 @@ target
 **type**: `string`
 **default**: `_self`
 
-The target attribute specifies the target window base of a reference. Possible values: _self, _parent, _top, _blank
+The target attribute specifies the target window base of a reference. If you use ``_view``, the target window will be
+a new enhavo view.
 
 .. code-block:: yaml
 
@@ -82,6 +84,9 @@ The target attribute specifies the target window base of a reference. Possible v
 .. |default_route_parameters| replace:: []
 .. include:: /reference/action/option/routeParameters.rst
 
+.. _view_key_open:
+.. |default_view_key| replace:: null
+.. include:: /reference/action/option/view_key.rst
 
 
 

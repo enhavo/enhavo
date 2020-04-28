@@ -13,17 +13,18 @@ use Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType;
 use Enhavo\Bundle\AppBundle\Action\ActionTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CreateActionType extends AbstractUrlActionType implements ActionTypeInterface
+class CreateActionType extends OpenActionType
 {
     public function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'component' => 'create-action',
             'icon' => 'add_circle_outline',
             'label' => 'label.create',
             'translation_domain' => 'EnhavoAppBundle',
+            'view_key' => 'edit-view',
+            'target' => '_view'
         ]);
     }
 
