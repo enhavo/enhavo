@@ -13,6 +13,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class LabelType extends AbstractColumnType
 {
+    /**
+     * @param array $options
+     * @param $resource
+     * @return null|string
+     * @throws \Enhavo\Bundle\AppBundle\Exception\PropertyNotExistsException
+     */
     public function createResourceViewData(array $options, $resource)
     {
         $label = $this->getProperty($resource, $options['property']);
@@ -28,9 +34,9 @@ class LabelType extends AbstractColumnType
     public function createColumnViewData(array $options)
     {
         $data = parent::createColumnViewData($options);
-
+        
         $data = array_merge($data, [
-
+            'property' => $options['property'],
         ]);
 
         return $data;

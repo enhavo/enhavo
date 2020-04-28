@@ -40,6 +40,7 @@ newsletter:
       slug: 'Slug'
       template: 'Template'
       group: 'Group'
+      attachments: 'Attachments'
   batch:
     action:
       send: 'Send'

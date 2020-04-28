@@ -2,6 +2,7 @@ format
 ~~~~~~
 
 **type**: `string`
+**default**: |default_format|
 
 Use format to display date. You can find all possible values on the date_ page of the php documentation.
 

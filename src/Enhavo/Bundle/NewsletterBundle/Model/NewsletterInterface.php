@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\NewsletterBundle\Model;
 
 use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
+use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\NewsletterBundle\Entity\Receiver;
 
 interface NewsletterInterface
@@ -116,6 +117,26 @@ interface NewsletterInterface
      */
     public function getReceivers();
 
+    /**
+     * Add attachments
+     *
+     * @param FileInterface $attachments
+     */
+    public function addAttachment(FileInterface $attachments);
+
+    /**
+     * Remove attachments
+     *
+     * @param FileInterface $attachments
+     */
+    public function removeAttachment(FileInterface $attachments);
+
+    /**
+     * Get attachments
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAttachments();
 
     /**
      * @return \DateTime

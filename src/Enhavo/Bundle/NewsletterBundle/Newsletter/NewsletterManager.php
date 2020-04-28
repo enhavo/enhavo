@@ -3,7 +3,10 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Newsletter;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
+use Enhavo\Bundle\MediaBundle\Model\FileInterface;
+use Enhavo\Bundle\NewsletterBundle\Entity\Newsletter;
 use Enhavo\Bundle\NewsletterBundle\Exception\SendException;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 use Enhavo\Bundle\NewsletterBundle\Provider\ProviderInterface;
@@ -164,6 +167,12 @@ class NewsletterManager
             ->setFrom($this->from)
             ->setTo($receiver->getEmail())
             ->setBody($this->render($receiver->getNewsletter(), $receiver->getParameters()));
+
+        $newsletter = $receiver->getNewsletter();
+        if (!empty($receiver->getNewsletter()->getAttachments())) {
+            $this->addAttachmentsToMessage($receiver->getNewsletter()->getAttachments(), $message);
+        }
+
         return $this->mailer->send($message);
     }
 
@@ -176,7 +185,23 @@ class NewsletterManager
             ->setFrom($this->from)
             ->setTo($email)
             ->setBody($this->render($newsletter, $this->provider->getTestParameters()));
+
+        if (!empty($newsletter->getAttachments())) {
+            $this->addAttachmentsToMessage($newsletter->getAttachments(), $message);
+        }
+
         return $this->mailer->send($message);
+    }
+
+    private function addAttachmentsToMessage($attachments, \Swift_Message $message) {
+        /** @var FileInterface $attachment */
+        foreach ($attachments as $attachment) {
+            $attach = new \Swift_Attachment();
+            $attach->setFilename($attachment->getFilename());
+            $attach->setContentType($attachment->getMimeType());
+            $attach->setBody($attachment);
+            $message->attach($attach);
+        }
     }
 
     public function getTestParameters()

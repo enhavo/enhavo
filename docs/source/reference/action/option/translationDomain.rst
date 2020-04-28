@@ -11,5 +11,5 @@ all translatable designations, e.g. the label
 
     actions:
         myAction:
-            translationDomain: myTranslationDomain
+            translation_domain: myTranslationDomain
             # ... further option

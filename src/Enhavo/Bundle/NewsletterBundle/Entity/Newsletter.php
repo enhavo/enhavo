@@ -4,6 +4,7 @@ namespace Enhavo\Bundle\NewsletterBundle\Entity;
 
 use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
+use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 use Enhavo\Bundle\RoutingBundle\Model\Slugable;
 use Sylius\Component\Resource\Model\ResourceInterface;
@@ -68,6 +69,11 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
      */
     private $state = NewsletterInterface::STATE_CREATED;
 
+    /*
+     * Collection
+     */
+    private $attachments;
+
     /**
      * Constructor
      */
@@ -75,6 +81,7 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
     {
         $this->receivers = new \Doctrine\Common\Collections\ArrayCollection();
         $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->attachments = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -277,6 +284,39 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
     public function getReceivers()
     {
         return $this->receivers;
+    }
+
+    /**
+     * Add attachments
+     *
+     * @param \Enhavo\Bundle\MediaBundle\Entity\File $attachments
+     * @return Newsletter
+     */
+    public function addAttachment($attachments)
+    {
+        $this->attachments[] = $attachments;
+
+        return $this;
+    }
+
+    /**
+     * Remove attachments
+     *
+     * @param \Enhavo\Bundle\MediaBundle\Entity\File $attachments
+     */
+    public function removeAttachment($attachments)
+    {
+        $this->attachments->removeElement($attachments);
+    }
+
+    /**
+     * Get attachments
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAttachments()
+    {
+        return $this->attachments;
     }
 
     /**

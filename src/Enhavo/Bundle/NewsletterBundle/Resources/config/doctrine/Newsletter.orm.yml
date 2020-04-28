@@ -66,5 +66,17 @@ Enhavo\Bundle\NewsletterBundle\Entity\Newsletter:
                 inverseJoinColumns:
                     group_id:
                         referencedColumnName: id
+        attachments:
+            cascade: ['persist', 'refresh']
+            targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
+            orphanRemoval: true
+            joinTable:
+                name: newsletter_newsletter_attachment
+                joinColumns:
+                    newsletter_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    file_id:
+                        referencedColumnName: id
 
     lifecycleCallbacks: { }

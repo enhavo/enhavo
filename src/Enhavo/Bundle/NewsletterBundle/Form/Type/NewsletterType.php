@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\NewsletterBundle\Form\Type;
 
 use Enhavo\Bundle\BlockBundle\Form\Type\BlockNodeType;
+use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Enhavo\Bundle\NewsletterBundle\Model\GroupInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -59,6 +60,13 @@ class NewsletterType extends AbstractType
         $builder->add('content', BlockNodeType::class, array(
             'label' => 'form.label.content',
             'translation_domain' => 'EnhavoAppBundle',
+        ));
+
+        $builder->add('attachments', MediaType::class, array(
+            'label' => 'newsletter.form.label.attachments',
+            'translation_domain' => 'EnhavoNewsletterBundle',
+            'multiple' => true,
+            'required' => false
         ));
 
         if(count($this->templates) > 1) {
