@@ -6,14 +6,6 @@ var download = require("gulp-download");
 var decompress = require('gulp-decompress');
 var clean = require('gulp-clean');
 
-gulp.task('changelog', function (cb) {
-  exec('bundler exec github_changelog_generator enhavo/enhavo', function (err, stdout, stderr) {
-    console.log(stdout);
-    console.log(stderr);
-    cb(err);
-  });
-});
-
 gulp.task('docs', function (cb) {
   exec('sphinx-build -b html docs/source build/docs', function (err, stdout, stderr) {
     console.log(stdout);
