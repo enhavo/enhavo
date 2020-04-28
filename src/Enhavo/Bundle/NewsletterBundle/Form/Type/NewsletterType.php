@@ -63,7 +63,7 @@ class NewsletterType extends AbstractType
         ));
 
         $builder->add('attachments', MediaType::class, array(
-            'label' => 'newsletter.form.label.attachment',
+            'label' => 'newsletter.form.label.attachments',
             'translation_domain' => 'EnhavoNewsletterBundle',
             'multiple' => true,
             'required' => false
