@@ -13,9 +13,10 @@ The CreateAction represents a create button for a specific route.
     - | :ref:`translation_domain <translation_domain_create>`
     - | :ref:`icon <icon_create>`
     - | :ref:`permission <permission_create>`
+    - | :ref:`view_key <view_key_create>`
     - | :ref:`hidden <hidden_create>`"
     Class, :class:`Enhavo\\Bundle\\AppBundle\\Action\\Type\\CreateActionType`
-    Parent, `Enhavo\\Bundle\\AppBundle\\Action\\AbstractUrlActionType`
+    Parent, :class:`Enhavo\\Bundle\\AppBundle\\Action\\Type\\OpenActionType`
 
 Require
 -------
@@ -64,15 +65,6 @@ Options
 .. |default_hidden| replace:: `false`
 .. include:: /reference/action/option/hidden.rst
 
-
-
-
-
-
-
-
-
-
-
-
-
+.. _view_key_create:
+.. |default_view_key| replace:: 'edit-view'
+.. include:: /reference/action/option/view_key.rst

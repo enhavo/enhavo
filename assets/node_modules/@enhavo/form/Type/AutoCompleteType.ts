@@ -82,10 +82,8 @@ export default class AutoCompleteType extends FormType
         $input.select2('data', data.value);
 
         if (data.multiple && data.count) {
-            $input.on("change", function (event: Select2JQueryEventObject) {
-                let count = event.val.length;
-                let $count = $input.parents('[data-form-row]').find('[data-selected-count]');
-                $count.text('(' + count + ')');
+            $input.on("change", (event: Select2JQueryEventObject) => {
+                this.updateCount();
             });
         }
 
@@ -131,7 +129,7 @@ export default class AutoCompleteType extends FormType
             let id = data[this.idProperty];
             let label = data[this.labelProperty];
             let $input = this.$element.find('[data-auto-complete-input]');
-            let formTypeConfiguration = this.$element.data('auto-complete-entity')
+            let formTypeConfiguration = this.$element.data('auto-complete-entity');
             if (formTypeConfiguration.multiple) {
                 let currentData = $input.select2('data');
                 let exists = false;
@@ -153,6 +151,19 @@ export default class AutoCompleteType extends FormType
                     text: label
                 });
             }
+
+            let config = this.$element.data('auto-complete-entity');
+            if (config.multiple && config.count) {
+                this.updateCount();
+            }
         }
+    }
+
+    private updateCount()
+    {
+        let $input = this.$element.find('[data-auto-complete-input]');
+        let count = $input.select2('data').length;
+        let $count = $input.parents('[data-form-row]').find('[data-selected-count]');
+        $count.text('(' + count + ')');
     }
 }
