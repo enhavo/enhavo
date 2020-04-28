@@ -3,7 +3,7 @@ language: php
 addons:
     chrome: stable
 
-dist: xenial
+dist: bionic
 
 php:
     - 7.2
