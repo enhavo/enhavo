@@ -34,7 +34,7 @@
     "slick-carousel": "^1.8.1",
     "sortablejs": "^1.10.2",
     "source-sans-pro": "^2.45.0",
-    "tinymce": "~5.0.3",
+    "tinymce": "~5.1.4",
     "ts-loader": "^5.3",
     "typeface-cormorant-garamond": "^0.0.72",
     "typescript": "^3.1.1",
