@@ -10,6 +10,8 @@ services:
 
     Enhavo\Bundle\AppBundle\Batch\Type\DeleteType:
         public: true
+        arguments:
+            - '@event_dispatcher'
         calls:
             - [setContainer, ['@service_container']]
         tags:
