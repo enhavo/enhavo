@@ -4,6 +4,7 @@ import ModalRegistryPackage from "./registry/modal";
 import BatchRegistryPackage from "./registry/batch";
 import ColumnRegistryPackage from "./registry/column";
 import FilterRegistryPackage from "./registry/filter";
+import FormRegistryPackage from "./registry/form";
 import '@enhavo/app/assets/styles/base.scss'
 import '@enhavo/form/assets/styles/form.scss'
 
@@ -12,5 +13,6 @@ Application.getFilterRegistry().registerPackage(new FilterRegistryPackage(Applic
 Application.getModalRegistry().registerPackage(new ModalRegistryPackage(Application));
 Application.getBatchRegistry().registerPackage(new BatchRegistryPackage(Application));
 Application.getColumnRegistry().registerPackage(new ColumnRegistryPackage(Application));
+Application.getFormRegistry().registerPackage(new FormRegistryPackage(Application));
 Application.getGrid().load();
 Application.getVueLoader().load(() => import("@enhavo/app/Index/Components/IndexComponent.vue"));

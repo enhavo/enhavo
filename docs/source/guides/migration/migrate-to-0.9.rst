@@ -55,3 +55,15 @@ Migrate to 0.9
 
 6. If the action component ``create-action`` was used, you have to migrate it to ``open-action``. `
 The action type ``create`` is not affected.
+
+7. Add form registry to ``assets/enhavo/index.ts``
+
+.. code::
+
+    // Add import line
+    import FormRegistryPackage from "./registry/form";
+
+    // Add register package line before load
+    Application.getFormRegistry().registerPackage(new FormRegistryPackage(Application));
+
+   Application.getVueLoader().load(() => import("@enhavo/app/Index/Components/IndexComponent.vue"));
