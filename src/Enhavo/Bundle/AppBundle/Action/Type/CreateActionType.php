@@ -9,8 +9,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Action\Type;
 
-use Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType;
-use Enhavo\Bundle\AppBundle\Action\ActionTypeInterface;
+use Enhavo\Bundle\AppBundle\Security\Roles\RoleUtil;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CreateActionType extends OpenActionType
@@ -24,7 +23,8 @@ class CreateActionType extends OpenActionType
             'label' => 'label.create',
             'translation_domain' => 'EnhavoAppBundle',
             'view_key' => 'edit-view',
-            'target' => '_view'
+            'target' => '_view',
+            'permission' => RoleUtil::ACTION_CREATE
         ]);
     }
 

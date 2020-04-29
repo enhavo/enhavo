@@ -9,6 +9,7 @@ namespace Enhavo\Bundle\AppBundle\Action\Type;
 
 use Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType;
 use Enhavo\Bundle\AppBundle\Action\ActionTypeInterface;
+use Enhavo\Bundle\AppBundle\Security\Roles\RoleUtil;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManager;
@@ -65,6 +66,7 @@ class DeleteActionType extends AbstractUrlActionType implements ActionTypeInterf
             'confirm_message' => 'message.delete.confirm',
             'confirm_label_ok' => 'label.ok',
             'confirm_label_cancel' => 'label.cancel',
+            'permission' => RoleUtil::ACTION_DELETE
         ]);
     }
 
