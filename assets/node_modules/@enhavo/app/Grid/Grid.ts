@@ -16,6 +16,7 @@ import FlashMessenger from "@enhavo/app/FlashMessage/FlashMessenger";
 import * as jexl from "jexl";
 import ViewInterface from "@enhavo/app/ViewStack/ViewInterface";
 import * as async from "async";
+import Confirm from "@enhavo/app/View/Confirm";
 
 export default class Grid
 {
@@ -126,20 +127,54 @@ export default class Grid
     public changeSelectAll(value: boolean)
     {
         this.configuration.selectAll = value;
+        this.resetSelectedIds();
 
-        if (this.configuration.paginate) {
-            this.changeSelectedIdsAsync(value);
-
+        if (this.hasPages()) {
+            if(value) {
+                this.markAllEntries();
+            } else {
+                this.markAllRowsWith(false);
+            }
         } else {
-            this.configuration.selectedIds = new Array<number>();
-            for(let row of this.configuration.rows) {
-                row.selected = value;
-                this.configuration.selectedIds.push(row.id);
+            if(value) {
+                this.markVisibleEntries();
+                this.markAllRowsWith(true);
+            } else {
+                this.markAllRowsWith(false);
             }
         }
     }
 
-    private changeSelectedIdsAsync(value: boolean)
+    private resetSelectedIds()
+    {
+        this.configuration.selectedIds.splice(0, this.configuration.selectedIds.length);
+    }
+
+    private hasSelectedIds()
+    {
+        return this.configuration.selectedIds.length > 0;
+    }
+
+    private hasPages()
+    {
+        return this.configuration.pagination < this.configuration.count;
+    }
+
+    private markAllRowsWith(value: boolean)
+    {
+        for(let row of this.configuration.rows) {
+            row.selected = value;
+        }
+    }
+
+    private markVisibleEntries()
+    {
+        for(let row of this.configuration.rows) {
+            this.configuration.selectedIds.push(row.id);
+        }
+    }
+
+    private markAllEntries()
     {
         this.configuration.loading = true;
 
@@ -165,9 +200,6 @@ export default class Grid
             })
             // executed on success
             .then(response => {
-
-                this.configuration.selectedIds = new Array<number>();
-
                 for (let index in response.data.resources) {
                     this.configuration.selectedIds.push(response.data.resources[index].id);
                 }
@@ -202,7 +234,22 @@ export default class Grid
     public applyFilter()
     {
         this.configuration.page = 1;
-        this.loadTable();
+        this.configuration.selectAll = false;
+        if(this.hasSelectedIds()) {
+            this.view.confirm(new Confirm(
+                this.translator.trans('enhavo_app.view.message.unmark_after_filter'),
+                () => {
+                    this.resetSelectedIds();
+                    this.loadTable();
+                },
+                () => {},
+                this.translator.trans('enhavo_app.view.label.cancel'),
+                this.translator.trans('enhavo_app.view.label.ok'),
+            ))
+        } else {
+            this.resetSelectedIds();
+            this.loadTable();
+        }
     }
 
     public resetFilter()
@@ -242,7 +289,6 @@ export default class Grid
 
     public loadTable()
     {
-        this.configuration.selectAll = false;
         this.configuration.loading = true;
 
         let parameters: any = {};
