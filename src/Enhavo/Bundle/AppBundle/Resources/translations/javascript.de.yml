@@ -18,6 +18,7 @@ enhavo_app:
     view:
         message:
             not_saved: 'Schließen ohne zu speichern?'
+            unmark_after_filter: 'Nach dem Ausführen gehen alle selektierten Einträge verloren'
         label:
             ok: 'Ok'
             cancel: 'Abbrechen'
