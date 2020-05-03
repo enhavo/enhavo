@@ -67,3 +67,23 @@ The action type ``create`` is not affected.
     Application.getFormRegistry().registerPackage(new FormRegistryPackage(Application));
 
    Application.getVueLoader().load(() => import("@enhavo/app/Index/Components/IndexComponent.vue"));
+
+8. Add resource parameter to Action
+
+This changes only may apply if you have this functions define by your own
+
+.. code::
+
+    // change this line
+    public function getPermission(array $options);
+
+    // to this line
+    public function getPermission(array $options, $resource = null);
+
+
+    // change this line
+    public function isHidden(array $options);
+
+    // to this line
+    public function isHidden(array $options, $resource = null);
+
