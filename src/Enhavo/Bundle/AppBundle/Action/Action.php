@@ -36,13 +36,13 @@ class Action
         return $this->type->createViewData($this->options, $resource);
     }
 
-    public function getPermission()
+    public function getPermission($resource = null)
     {
-        return $this->type->getPermission($this->options);
+        return $this->type->getPermission($this->options, $resource);
     }
 
-    public function isHidden()
+    public function isHidden($resource = null)
     {
-        return $this->type->isHidden($this->options);
+        return $this->type->isHidden($this->options, $resource);
     }
 }

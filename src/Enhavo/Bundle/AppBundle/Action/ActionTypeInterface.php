@@ -25,15 +25,17 @@ interface ActionTypeInterface extends TypeInterface
 
     /**
      * @param array $options
+     * @param object $resource
      * @return string
      */
-    public function getPermission(array $options);
+    public function getPermission(array $options, $resource = null);
 
     /**
      * @param array $options
+     * @param object $resource
      * @return boolean
      */
-    public function isHidden(array $options);
+    public function isHidden(array $options, $resource = null);
 
     /**
      * @param $resolver OptionsResolver
