@@ -23,12 +23,12 @@ abstract class AbstractActionType implements ActionTypeInterface
         $this->translator = $translator;
     }
 
-    public function isHidden(array $options)
+    public function isHidden(array $options, $resource = null)
     {
         return $options['hidden'];
     }
 
-    public function getPermission(array $options)
+    public function getPermission(array $options, $resource = null)
     {
         return $options['permission'];
     }
