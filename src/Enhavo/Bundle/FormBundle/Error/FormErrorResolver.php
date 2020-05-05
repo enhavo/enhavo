@@ -46,7 +46,7 @@ class FormErrorResolver
         }
 
         foreach ($form->all() as $child) {
-            if (!$child->isValid()) {
+            if ($child->isSubmitted() && !$child->isValid()) {
                 $childErrors = $this->getErrorMessages($child);
                 foreach($childErrors as $childError) {
                     $errors[] = $childError;
