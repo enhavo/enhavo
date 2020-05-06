@@ -14,12 +14,12 @@ class CurrencyTransformer implements DataTransformerInterface
 
     /**
      * CurrencyTransformer constructor.
+     * @param CurrencyFormatter $currencyFormatter
      */
-    public function __construct()
+    public function __construct(CurrencyFormatter $currencyFormatter)
     {
-        $this->currencyFormatter = new CurrencyFormatter();
+        $this->currencyFormatter = $currencyFormatter;
     }
-
 
     /**
      * @inheritDoc
@@ -27,7 +27,7 @@ class CurrencyTransformer implements DataTransformerInterface
     public function transform($currencyAsInt)
     {
         //int -> text
-        $this->currencyFormatter->getCurrency($currencyAsInt, null);
+        return $this->currencyFormatter->getCurrency($currencyAsInt, null);
     }
 
     /**
@@ -36,6 +36,6 @@ class CurrencyTransformer implements DataTransformerInterface
     public function reverseTransform($currencyAsString)
     {
         //text -> int
-        $this->currencyFormatter->getInt($currencyAsString);
+        return $this->currencyFormatter->getInt($currencyAsString);
     }
 }
