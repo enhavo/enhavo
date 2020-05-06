@@ -12,14 +12,26 @@ use Enhavo\Bundle\FormBundle\Form\Transformer\CurrencyTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\CallbackTransformer;
 
 class CurrencyType extends AbstractType
 {
+    /** @var  CurrencyTransformer */
+    protected $currencyTransformer;
+
+    /**
+     * CurrencyType constructor.
+     * @param CurrencyTransformer $currencyTransformer
+     */
+    public function __construct(CurrencyTransformer $currencyTransformer)
+    {
+        $this->currencyTransformer = $currencyTransformer;
+    }
+
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->addModelTransformer(new CurrencyTransformer())
+            ->addModelTransformer($this->currencyTransformer)
         ;
     }
 
