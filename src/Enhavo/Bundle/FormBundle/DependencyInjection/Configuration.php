@@ -28,6 +28,18 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('editor_entrypoint_build')->defaultValue('enhavo')->end()
                     ->end()
                 ->end()
+                ->arrayNode('date_type')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->variableNode('config')->defaultValue(null)->end()
+                    ->end()
+                ->end()
+                ->arrayNode('date_time_type')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->variableNode('config')->defaultValue(null)->end()
+                    ->end()
+                ->end()
             ->end()
         ;
 

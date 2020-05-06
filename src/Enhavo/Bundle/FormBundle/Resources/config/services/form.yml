@@ -13,6 +13,8 @@ services:
 
     enhavo_date:
         class: Enhavo\Bundle\FormBundle\Form\Type\DateType
+        arguments:
+            - '%enhavo_form.date_type.config%'
         tags:
             - { name: form.type }
 
@@ -23,6 +25,8 @@ services:
 
     enhavo_datetime:
         class: Enhavo\Bundle\FormBundle\Form\Type\DateTimeType
+        arguments:
+            - '%enhavo_form.date_time_type.config%'
         tags:
             - { name: form.type }
 
