@@ -17,25 +17,20 @@ class DateType extends AbstractType
     /**
      * @var array|null
      */
-    private $defaultDateTimePickerOptions;
+    private $defaultDateTimePickerConfig;
 
     /**
-     * @param $defaultDateTimePickerOptions
+     * @param string $defaultDateTimePickerConfig
      */
-    public function __construct($defaultDateTimePickerOptions)
+    public function __construct($defaultDateTimePickerConfig)
     {
-        $this->defaultDateTimePickerOptions = $defaultDateTimePickerOptions;
+        $this->defaultDateTimePickerConfig = $defaultDateTimePickerConfig;
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         if (array_key_exists('data-date-picker', $options['attr'])) {
-            if ($options['datetimepicker_options'] === null) {
-                $dateTimePickerOptions = $this->defaultDateTimePickerOptions;
-            } else {
-                $dateTimePickerOptions = array_merge($this->defaultDateTimePickerOptions, $options['datetimepicker_options']);
-            }
-            $view->vars['attr']['data-date-picker'] = json_encode($dateTimePickerOptions);
+            $view->vars['attr']['data-date-picker'] = $options['config'];
         }
     }
 
@@ -59,7 +54,7 @@ class DateType extends AbstractType
         $resolver->setDefaults(array(
             'widget' => 'single_text',
             'format' => 'dd.MM.yyyy',
-            'datetimepicker_options' => $this->defaultDateTimePickerOptions,
+            'config' => $this->defaultDateTimePickerConfig,
             'attr' => [
                 'data-date-picker' => null,
                 'autocomplete' => 'off'
