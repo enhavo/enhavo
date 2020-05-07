@@ -24,7 +24,7 @@ class EnhavoRedirectExtension extends AbstractResourceExtension
         $this->registerResources('enhavo_redirect', $config['driver'], $config['resources'], $container);
 
         $configFiles = array(
-            'services.yml',
+            'services.yaml',
         );
 
         foreach ($configFiles as $configFile) {
