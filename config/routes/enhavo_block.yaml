@@ -1,4 +1,4 @@
 enhavo_block:
-    resource: "@EnhavoBlockBundle/Resources/config/routing/routing.yml"
+    resource: "@EnhavoBlockBundle/Resources/config/routing/routing.yaml"
     prefix: /admin
 

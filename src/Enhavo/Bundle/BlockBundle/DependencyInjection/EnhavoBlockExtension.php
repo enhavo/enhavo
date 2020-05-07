@@ -43,10 +43,10 @@ class EnhavoBlockExtension extends Extension
         }
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services/command.yml');
-        $loader->load('services/services.yml');
-        $loader->load('services/factory.yml');
-        $loader->load('services/blocks.yml');
-        $loader->load('services/form.yml');
+        $loader->load('services/command.yaml');
+        $loader->load('services/services.yaml');
+        $loader->load('services/factory.yaml');
+        $loader->load('services/blocks.yaml');
+        $loader->load('services/form.yaml');
     }
 }

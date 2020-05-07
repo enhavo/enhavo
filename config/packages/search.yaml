@@ -2,4 +2,4 @@ imports:
     - { resource: '@EnhavoArticleBundle/Resources/config/app/search.yaml' }
     - { resource: '@EnhavoPageBundle/Resources/config/app/search.yml' }
     - { resource: '@EnhavoShopBundle/Resources/config/app/search.yml' }
-    - { resource: '@EnhavoBlockBundle/Resources/config/app/search.yml' }
+    - { resource: '@EnhavoBlockBundle/Resources/config/app/search.yaml' }

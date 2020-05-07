@@ -1,4 +1,4 @@
 imports:
-    - { resource: '@EnhavoBlockBundle/Resources/config/app/config.yml' }
-    - { resource: '@EnhavoBlockBundle/Resources/config/app/search.yml' }
-    - { resource: '@EnhavoBlockBundle/Resources/config/app/translation.yml' }
+    - { resource: '@EnhavoBlockBundle/Resources/config/app/config.yaml' }
+    - { resource: '@EnhavoBlockBundle/Resources/config/app/search.yaml' }
+    - { resource: '@EnhavoBlockBundle/Resources/config/app/translation.yaml' }
