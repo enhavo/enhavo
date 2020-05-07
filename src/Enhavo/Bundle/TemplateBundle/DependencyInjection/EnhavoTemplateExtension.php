@@ -32,7 +32,7 @@ class EnhavoTemplateExtension extends AbstractResourceExtension
         $container->setParameter('enhavo_template.template', $config['template']);
 
         $configFiles = array(
-            'services.yml',
+            'services.yaml',
         );
         foreach ($configFiles as $configFile) {
             $loader->load($configFile);
