@@ -29,7 +29,7 @@ class EnhavoCommentExtension extends AbstractResourceExtension
         $container->setParameter('enhavo_comment.publish_strategy.options', $config['publish_strategy']['options']);
 
         $configFiles = array(
-            'services.yml',
+            'services.yaml',
         );
 
         foreach ($configFiles as $configFile) {
