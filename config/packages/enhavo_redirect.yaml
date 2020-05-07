@@ -1,2 +1,2 @@
-imports:
-    - { resource: '@EnhavoRedirectBundle/Resources/config/app/config.yaml' }
+#imports:
+#    - { resource: '@EnhavoRedirectBundle/Resources/config/app/config.yaml' }

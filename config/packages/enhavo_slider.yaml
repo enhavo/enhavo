@@ -1,2 +1,2 @@
-imports:
-    - { resource: '@EnhavoSliderBundle/Resources/config/app/config.yaml' }
+#imports:
+#    - { resource: '@EnhavoSliderBundle/Resources/config/app/config.yaml' }
