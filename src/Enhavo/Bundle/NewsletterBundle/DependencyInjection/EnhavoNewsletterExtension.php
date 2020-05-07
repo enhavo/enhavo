@@ -42,9 +42,9 @@ class EnhavoNewsletterExtension extends AbstractResourceExtension
         $this->setStorageSettings($config, $container);
 
         $configFiles = array(
-            'services/services.yml',
-            'services/newsletter.yml',
-            'services/subscriber.yml',
+            'services/services.yaml',
+            'services/newsletter.yaml',
+            'services/subscriber.yaml',
         );
 
         foreach ($configFiles as $configFile) {

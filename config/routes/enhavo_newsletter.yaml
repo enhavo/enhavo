@@ -1,19 +1,19 @@
 enhavo_newsletter_newsletter:
-    resource: "@EnhavoNewsletterBundle/Resources/config/routing/admin/newsletter.yml"
+    resource: "@EnhavoNewsletterBundle/Resources/config/routing/admin/newsletter.yaml"
     prefix: /admin
 
 enhavo_newsletter_subscriber:
-    resource: "@EnhavoNewsletterBundle/Resources/config/routing/admin/subscriber.yml"
+    resource: "@EnhavoNewsletterBundle/Resources/config/routing/admin/subscriber.yaml"
     prefix: /admin
 
 enhavo_newsletter_group:
-    resource: "@EnhavoNewsletterBundle/Resources/config/routing/admin/group.yml"
+    resource: "@EnhavoNewsletterBundle/Resources/config/routing/admin/group.yaml"
     prefix: /admin
 
 enhavo_newsletter_theme:
-    resource: "@EnhavoNewsletterBundle/Resources/config/routing/theme/newsletter.yml"
+    resource: "@EnhavoNewsletterBundle/Resources/config/routing/theme/newsletter.yaml"
     prefix: /
 
 enhavo_newsletter_subscribe:
-    resource: "@EnhavoNewsletterBundle/Resources/config/routing/subscribe.yml"
+    resource: "@EnhavoNewsletterBundle/Resources/config/routing/subscribe.yaml"
     prefix: /

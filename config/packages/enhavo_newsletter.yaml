@@ -1,2 +1,2 @@
 imports:
-    - { resource: '@EnhavoNewsletterBundle/Resources/config/app/config.yml' }
+    - { resource: '@EnhavoNewsletterBundle/Resources/config/app/config.yaml' }
