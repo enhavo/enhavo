@@ -24,7 +24,7 @@ class EnhavoSettingExtension extends AbstractResourceExtension
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $this->registerResources('enhavo_setting', $config['driver'], $config['resources'], $container);
         $configFiles = array(
-            'services.yml',
+            'services.yaml',
         );
         foreach ($configFiles as $configFile) {
             $loader->load($configFile);
