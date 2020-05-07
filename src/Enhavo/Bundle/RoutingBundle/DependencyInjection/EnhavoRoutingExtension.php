@@ -27,11 +27,11 @@ class EnhavoRoutingExtension extends AbstractResourceExtension
         $container->setParameter('enhavo_routing.condition_resolver', $config['condition_resolver']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services/cfm.yml');
-        $loader->load('services/form.yml');
-        $loader->load('services/general.yml');
-        $loader->load('services/generator.yml');
-        $loader->load('services/metadata.yml');
-        $loader->load('services/router.yml');
+        $loader->load('services/cfm.yaml');
+        $loader->load('services/form.yaml');
+        $loader->load('services/general.yaml');
+        $loader->load('services/generator.yaml');
+        $loader->load('services/metadata.yaml');
+        $loader->load('services/router.yaml');
     }
 }
