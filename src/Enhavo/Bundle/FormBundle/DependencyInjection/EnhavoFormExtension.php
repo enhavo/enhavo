@@ -28,9 +28,9 @@ class EnhavoFormExtension extends Extension
         $container->setParameter('enhavo_form.date_time_type.config', $config['date_time_type']['config']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services/form.yml');
-        $loader->load('services/serializer.yml');
-        $loader->load('services/controller.yml');
-        $loader->load('services/services.yml');
+        $loader->load('services/form.yaml');
+        $loader->load('services/serializer.yaml');
+        $loader->load('services/controller.yaml');
+        $loader->load('services/services.yaml');
     }
 }
