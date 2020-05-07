@@ -28,7 +28,7 @@ class EnhavoPageExtension extends AbstractResourceExtension
         $container->setParameter('enhavo_page.routing.page.route', $config['resources']['page']['routing']['route']);
 
         $configFiles = array(
-            'services.yml',
+            'services.yaml',
         );
         foreach ($configFiles as $configFile) {
             $loader->load($configFile);
