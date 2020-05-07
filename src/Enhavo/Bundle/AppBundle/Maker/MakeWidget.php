@@ -88,7 +88,7 @@ class MakeWidget extends AbstractMaker
         $this->generateTemplateFile($bundle, $cleanedWidgetName);
 
         $this->output->writeln('');
-        $this->output->writeln('<options=bold>Add this to your services.yml config file:</>');
+        $this->output->writeln('<options=bold>Add this to your services.yaml config file:</>');
         $this->output->writeln($this->generateServiceConfigCode($bundle, $cleanedWidgetName));
         $this->output->writeln('');
         $this->output->writeln('<options=bold>To render your widget, add this code in a twig file:</>');
