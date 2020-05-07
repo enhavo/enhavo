@@ -30,9 +30,9 @@ class EnhavoTranslationExtension extends AbstractResourceExtension
         $container->setParameter('enhavo_translation.translator.access_control', $config['translator']['access_control']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services/translator.yml');
-        $loader->load('services/translation.yml');
-        $loader->load('services/form.yml');
-        $loader->load('services/metadata.yml');
+        $loader->load('services/translator.yaml');
+        $loader->load('services/translation.yaml');
+        $loader->load('services/form.yaml');
+        $loader->load('services/metadata.yaml');
     }
 }
