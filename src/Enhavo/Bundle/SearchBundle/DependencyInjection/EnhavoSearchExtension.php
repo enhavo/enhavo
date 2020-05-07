@@ -35,13 +35,13 @@ class EnhavoSearchExtension extends Extension
 
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services/services.yml');
-        $loader->load('services/general.yml');
-        $loader->load('services/metadata.yml');
-        $loader->load('services/extractor.yml');
-        $loader->load('services/indexer.yml');
-        $loader->load('services/elastic_search.yml');
-        $loader->load('services/database.yml');
-        $loader->load('services/filter.yml');
+        $loader->load('services/services.yaml');
+        $loader->load('services/general.yaml');
+        $loader->load('services/metadata.yaml');
+        $loader->load('services/extractor.yaml');
+        $loader->load('services/indexer.yaml');
+        $loader->load('services/elastic_search.yaml');
+        $loader->load('services/database.yaml');
+        $loader->load('services/filter.yaml');
     }
 }
