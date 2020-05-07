@@ -24,7 +24,7 @@ class EnhavoArticleExtension extends AbstractResourceExtension
         $this->registerResources('enhavo_article', $config['driver'], $config['resources'], $container);
 
         $configFiles = array(
-            'services.yml',
+            'services.yaml',
         );
 
         foreach ($configFiles as $configFile) {
