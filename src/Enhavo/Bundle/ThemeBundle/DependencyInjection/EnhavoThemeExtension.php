@@ -28,6 +28,6 @@ class EnhavoThemeExtension extends AbstractResourceExtension
         $container->setParameter('enhavo_theme.theme', $config['theme']);
         $container->setParameter('enhavo_theme.themes_dir', $config['themes_dir']);
 
-        $loader->load('services/services.yml');
+        $loader->load('services/services.yaml');
     }
 }
