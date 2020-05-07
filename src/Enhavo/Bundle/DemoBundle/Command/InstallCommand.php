@@ -278,7 +278,7 @@ class InstallCommand extends Command
         file_put_contents(sprintf('%s/Controller/DefaultController.php', $projectBundleDir), $defaultControllerContent);
 
         $routingContent = $this->template->render('EnhavoInstallerBundle:generate:routing.yml.twig');
-        file_put_contents(sprintf('%s/Resources/config/routing.yml', $projectBundleDir), $routingContent);
+        file_put_contents(sprintf('%s/Resources/config/routing.yaml', $projectBundleDir), $routingContent);
 
         $indexContent = $this->template->render('EnhavoInstallerBundle:generate:index.html.twig');
         file_put_contents(sprintf('%s/Resources/views/Default/index.html.twig', $projectBundleDir), $indexContent);
