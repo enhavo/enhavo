@@ -27,7 +27,7 @@ class EnhavoTaxonomyExtension extends AbstractResourceExtension
         $container->setParameter('enhavo_taxonomy.taxonomies', isset($config['taxonomies']) ? $config['taxonomies'] : []);
 
         $configFiles = array(
-            'services.yml',
+            'services.yaml',
         );
         foreach ($configFiles as $configFile) {
             $loader->load($configFile);
