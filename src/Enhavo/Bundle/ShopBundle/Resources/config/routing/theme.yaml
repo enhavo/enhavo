@@ -1,0 +1,31 @@
+enhavo_shop_theme_cart:
+    resource: "@EnhavoShopBundle/Resources/config/routing/theme/cart.yaml"
+    prefix: /shop/cart
+
+enhavo_shop_theme_checkout:
+    resource: "@EnhavoShopBundle/Resources/config/routing/theme/checkout.yaml"
+    prefix: /shop/checkout
+
+enhavo_shop_theme_product:
+    resource: "@EnhavoShopBundle/Resources/config/routing/theme/product.yaml"
+    prefix: /shop/product
+
+enhavo_shop_theme_promotion:
+    resource: "@EnhavoShopBundle/Resources/config/routing/theme/promotion.yaml"
+    prefix: /shop/promotion
+
+enhavo_shop_theme_payment:
+    resource: "@EnhavoShopBundle/Resources/config/routing/theme/payment.yaml"
+    prefix: /shop/payment
+
+enhavo_shop_theme_order:
+    resource: "@EnhavoShopBundle/Resources/config/routing/theme/order.yaml"
+    prefix: /shop/order
+
+enhavo_shop_theme_user:
+    resource: "@EnhavoShopBundle/Resources/config/routing/theme/user.yaml"
+    prefix: /user
+
+enhavo_shop_theme_template:
+    resource: "@EnhavoShopBundle/Resources/config/routing/theme/template.yaml"
+    prefix: /shop

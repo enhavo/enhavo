@@ -43,12 +43,12 @@ class EnhavoShopExtension extends AbstractResourceExtension
         $container->setParameter('enhavo_shop.payment.paypal.branding', $config['payment']['paypal']['branding']);
 
         $configFiles = array(
-            'services/locale.yml',
-            'services/menu.yml',
-            'services/form.yml',
-            'services/block.yml'
-//            'services/services.yml',
-//            'services/order.yml',
+            'services/locale.yaml',
+            'services/menu.yaml',
+            'services/form.yaml',
+            'services/block.yaml'
+//            'services/services.yaml',
+//            'services/order.yaml',
         );
         foreach ($configFiles as $configFile) {
             $loader->load($configFile);
