@@ -31,7 +31,7 @@ class EnhavoContentExtension extends AbstractResourceExtension
 
 
         $configFiles = array(
-            'services.yml',
+            'services.yaml',
         );
 
         foreach ($configFiles as $configFile) {
