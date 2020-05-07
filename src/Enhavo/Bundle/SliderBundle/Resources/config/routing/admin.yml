@@ -1,7 +1,0 @@
-enhavo_slider:
-    resource: "@EnhavoSliderBundle/Resources/config/routing/admin/slider.yml"
-    prefix: /
-
-enhavo_slide:
-    resource: "@EnhavoSliderBundle/Resources/config/routing/admin/slide.yml"
-    prefix: /
