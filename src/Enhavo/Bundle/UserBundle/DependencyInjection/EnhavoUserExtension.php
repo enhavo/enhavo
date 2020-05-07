@@ -24,11 +24,11 @@ class EnhavoUserExtension extends AbstractResourceExtension
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $this->registerResources('enhavo_user', $config['driver'], $config['resources'], $container);
         $configFiles = array(
-            'services/controller.yml',
-            'services/services.yml',
-            'services/form.yml',
-            'services/menu.yml',
-            'services/viewer.yml',
+            'services/controller.yaml',
+            'services/services.yaml',
+            'services/form.yaml',
+            'services/menu.yaml',
+            'services/viewer.yaml',
         );
         foreach ($configFiles as $configFile) {
             $loader->load($configFile);
