@@ -33,7 +33,7 @@ class EnhavoNavigationExtension extends AbstractResourceExtension
         $container->setParameter('enhavo_navigation.default.template', $config['default']['template']);
 
         $configFiles = array(
-            'services.yml',
+            'services.yaml',
         );
 
         foreach ($configFiles as $configFile) {
