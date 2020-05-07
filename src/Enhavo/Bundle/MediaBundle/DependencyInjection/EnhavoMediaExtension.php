@@ -33,10 +33,10 @@ class EnhavoMediaExtension extends AbstractResourceExtension
         $container->setParameter('enhavo_media.cache_control.class', $config['cache_control']['class']);
 
         $configFiles = array(
-            'services/command.yml',
-            'services/media.yml',
-            'services/extension.yml',
-            'services/filter.yml',
+            'services/command.yaml',
+            'services/media.yaml',
+            'services/extension.yaml',
+            'services/filter.yaml',
         );
 
         foreach ($configFiles as $configFile) {
