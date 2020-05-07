@@ -30,7 +30,7 @@ class EnhavoCalendarExtension extends AbstractResourceExtension
         $container->setParameter('enhavo_calendar.export_name', $config['exporter']['calendarName']);
 
         $configFiles = array(
-            'services.yml',
+            'services.yaml',
         );
         foreach ($configFiles as $configFile) {
             $loader->load($configFile);

@@ -1,2 +1,2 @@
 imports:
-    - { resource: '@EnhavoCalendarBundle/Resources/config/app/config.yml' }
+    - { resource: '@EnhavoCalendarBundle/Resources/config/app/config.yaml' }
