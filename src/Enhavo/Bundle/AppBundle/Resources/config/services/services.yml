@@ -29,8 +29,8 @@ services:
     enhavo_app.preview.strategy.dynamic:
         class: Enhavo\Bundle\AppBundle\Preview\Strategy\DynamicStrategy
         public: true
-        arguments:
-            - '@service_container'
+        calls:
+            - ['setContainer', ['@service_container']]
 
     enhavo_app.preview.strategy.service:
         class: Enhavo\Bundle\AppBundle\Preview\Strategy\ServiceStrategy
