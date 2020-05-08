@@ -17,6 +17,7 @@ Enhavo\Bundle\SliderBundle\Entity\Slider:
         code:
             type: string
             length: 255
+            nullable: true
 
     oneToMany:
         slides:
