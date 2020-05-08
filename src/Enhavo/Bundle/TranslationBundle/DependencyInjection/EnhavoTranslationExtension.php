@@ -43,19 +43,10 @@ class EnhavoTranslationExtension extends AbstractResourceExtension implements Pr
      */
     public function prepend(ContainerBuilder $container)
     {
-        $path = __DIR__ . '/../Resources/config/app/';
-        $files = scandir($path);
-
-        foreach ($files as $file) {
-            if (preg_match('/\.yaml$/', $file)) {
-                $settings = Yaml::parse(file_get_contents($path . $file));
-                if (is_array($settings)) {
-                    foreach ($settings as $name => $value) {
-                        if (is_array($value)) {
-                            $container->prependExtensionConfig($name, $value);
-                        }
-                    }
-                }
+        $configs = Yaml::parse(file_get_contents(__DIR__.'/../Resources/config/app/config.yaml'));
+        foreach($configs as $name => $config) {
+            if (is_array($config)) {
+                $container->prependExtensionConfig($name, $config);
             }
         }
     }
