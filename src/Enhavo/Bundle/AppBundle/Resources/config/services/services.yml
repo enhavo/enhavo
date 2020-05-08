@@ -23,8 +23,8 @@ services:
 
     enhavo_app.preview.strategy_resolver:
         class: Enhavo\Bundle\AppBundle\Preview\StrategyResolver
-        arguments:
-            - '@service_container'
+        calls:
+            - ['setContainer', ['@service_container']]
 
     enhavo_app.preview.strategy.dynamic:
         class: Enhavo\Bundle\AppBundle\Preview\Strategy\DynamicStrategy
@@ -87,3 +87,8 @@ services:
         class: Enhavo\Bundle\AppBundle\Template\ConfigWebpackBuildResolver
         arguments:
             - '%enhavo_app.webpack_build%'
+
+    enhavo_app.argument_resolver:
+        class: Enhavo\Bundle\AppBundle\Controller\ArgumentResolver
+        arguments:
+            - '@argument_metadata_factory'
