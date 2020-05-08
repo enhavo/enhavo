@@ -24,4 +24,4 @@ Enhavo\Bundle\SliderBundle\Entity\Slider:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Slide
             mappedBy: slider
-            orderBy: {'order': 'ASC'}
+            orderBy: {'position': 'ASC'}
