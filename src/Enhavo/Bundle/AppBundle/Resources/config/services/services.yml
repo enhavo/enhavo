@@ -36,7 +36,10 @@ services:
         class: Enhavo\Bundle\AppBundle\Preview\Strategy\ServiceStrategy
         public: true
         arguments:
-            - '@service_container'
+            - '@argument_resolver'
+            - '@request_stack'
+        calls:
+            - ['setContainer', ['@service_container']]
 
     security.authentication.voter.super_admin:
         class: Enhavo\Bundle\AppBundle\Security\Authentication\Voter\SuperAdminVoter

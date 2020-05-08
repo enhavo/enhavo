@@ -25,7 +25,7 @@ class ArticleController extends AbstractController
         $this->commentManager = $commentManager;
     }
 
-    public function showResourceAction($contentDocument, Request $request)
+    public function showResourceAction($contentDocument = null, Request $request)
     {
         $context = $this->commentManager->handleSubmitForm($request, $contentDocument);
         if($context->isInsert()) {
