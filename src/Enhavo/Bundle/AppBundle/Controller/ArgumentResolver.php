@@ -11,35 +11,40 @@ use Symfony\Component\HttpKernel\Controller\ArgumentResolver\RequestValueResolve
 use Symfony\Component\HttpKernel\Controller\ArgumentResolver\SessionValueResolver;
 use Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver;
 use Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface;
-use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadataFactory;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadataFactoryInterface;
 
 class ArgumentResolver implements ArgumentResolverInterface
 {
+
     /** @var ArgumentMetadataFactory  */
     private $argumentMetadataFactory;
 
-    /**
-     * @var iterable|ArgumentValueResolverInterface[]
-     */
-    private $argumentValueResolvers;
 
-    public function __construct(ArgumentMetadataFactoryInterface $argumentMetadataFactory = null, iterable $argumentValueResolvers = [])
+    public function __construct(ArgumentMetadataFactoryInterface $argumentMetadataFactory = null)
     {
         $this->argumentMetadataFactory = $argumentMetadataFactory ?: new ArgumentMetadataFactory();
-        $this->argumentValueResolvers = $argumentValueResolvers ?: self::getDefaultArgumentValueResolvers();
     }
 
     /**
-     * @inheritDoc
+     * @param Request $request
+     * @param callable $controller
+     * @param array $values
+     * @return array
      */
-    public function getArguments(Request $request, $controller)
+    public function getArguments(Request $request, $controller, array $values = [])
     {
         $arguments = [];
+        $resolvers = $this->getDefaultArgumentValueResolvers();
 
         foreach ($this->argumentMetadataFactory->createArgumentMetadata($controller) as $metadata) {
-            foreach ($this->argumentValueResolvers as $resolver) {
+
+            if (isset($values[count($arguments)])) {
+                $arguments[] = $values[count($arguments)];
+                continue;
+            }
+
+            foreach ($resolvers as $resolver) {
                 if (!$resolver->supports($request, $metadata)) {
                     continue;
                 }
@@ -70,7 +75,7 @@ class ArgumentResolver implements ArgumentResolverInterface
      *
      * @return iterable
      */
-    public static function getDefaultArgumentValueResolvers(): iterable
+    private function getDefaultArgumentValueResolvers(): iterable
     {
         return [
             new RequestAttributeValueResolver(),

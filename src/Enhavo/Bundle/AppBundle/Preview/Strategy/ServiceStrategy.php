@@ -76,8 +76,9 @@ class ServiceStrategy implements StrategyInterface
         }
 
         $controller = array($invokeService, $invokeFunction);
-        $arguments = $this->argumentResolver->getArguments($this->requestStack->getCurrentRequest(), $controller);
-        $arguments[0] = $resource;
+        $arguments = $this->argumentResolver->getArguments($this->requestStack->getCurrentRequest(), $controller, [
+            $resource
+        ]);
         return call_user_func($controller, ...$arguments);
     }
 }

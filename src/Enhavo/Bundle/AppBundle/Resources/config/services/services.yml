@@ -36,7 +36,7 @@ services:
         class: Enhavo\Bundle\AppBundle\Preview\Strategy\ServiceStrategy
         public: true
         arguments:
-            - '@argument_resolver'
+            - '@enhavo_app.argument_resolver'
             - '@request_stack'
         calls:
             - ['setContainer', ['@service_container']]
