@@ -9,8 +9,8 @@
     "url": "https://github.com/enhavo/enhavo.git"
   },
   "dependencies": {
-    "@enhavo/app": "https://github.com/enhavo/app-assets.git#0.8",
-    "@enhavo/form": "https://github.com/enhavo/app-assets.git#0.8",
+    "@enhavo/app": "^0.8.3",
+    "@enhavo/form": "^0.8.3",
     "jquery": "~3.4.1"
   }
 }
