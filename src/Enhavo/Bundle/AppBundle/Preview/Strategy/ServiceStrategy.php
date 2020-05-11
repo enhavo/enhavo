@@ -11,17 +11,32 @@ namespace Enhavo\Bundle\AppBundle\Preview\Strategy;
 
 use Enhavo\Bundle\AppBundle\Exception\PreviewException;
 use Enhavo\Bundle\AppBundle\Preview\StrategyInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface;
 
 class ServiceStrategy implements StrategyInterface
 {
-    protected $container;
+    use ContainerAwareTrait;
 
-    public function __construct(ContainerInterface $container)
+    /** @var ArgumentResolverInterface */
+    private $argumentResolver;
+
+    /** @var RequestStack */
+    private $requestStack;
+
+    /**
+     * ServiceStrategy constructor.
+     * @param ArgumentResolverInterface $argumentResolver
+     * @param RequestStack $requestStack
+     */
+    public function __construct(ArgumentResolverInterface $argumentResolver, RequestStack $requestStack)
     {
-        $this->container = $container;
+        $this->argumentResolver = $argumentResolver;
+        $this->requestStack = $requestStack;
     }
+
 
     public function getPreviewResponse($resource, $options = array())
     {
@@ -60,6 +75,17 @@ class ServiceStrategy implements StrategyInterface
             );
         }
 
-        return call_user_func(array($invokeService, $invokeFunction), $resource);
+        $controller = array($invokeService, $invokeFunction);
+        $arguments = [];
+
+        try {
+            $arguments = $this->argumentResolver->getArguments($this->requestStack->getCurrentRequest(), $controller);
+        } catch (\RuntimeException $exception) {
+
+        }
+
+        array_unshift($arguments, $resource);
+
+        return call_user_func($controller, ...$arguments);
     }
 }
