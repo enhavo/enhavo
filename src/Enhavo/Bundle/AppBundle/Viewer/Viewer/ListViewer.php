@@ -9,8 +9,8 @@
 namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
 
 use Enhavo\Bundle\AppBundle\Action\ActionManager;
-use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
 use Enhavo\Bundle\AppBundle\Column\ColumnManager;
+use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
 use Enhavo\Bundle\AppBundle\Viewer\ViewerUtil;
 use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactory;
 use Sylius\Component\Resource\Metadata\MetadataInterface;
@@ -155,6 +155,7 @@ class ListViewer extends AppViewer
             'create' => [
                 'type' => 'create',
                 'route' => sprintf('%s_%s_create', $metadata->getApplicationName(), $this->getUnderscoreName($metadata)),
+                'permission' => $this->getRoleNameByResourceName($metadata->getApplicationName(), $this->getUnderscoreName($metadata), 'create')
             ]
         ];
 

@@ -69,6 +69,7 @@ enhavo_newsletter_newsletter_update:
                     duplicate:
                         type: duplicate
                         route: enhavo_newsletter_newsletter_duplicate
+                        permission: ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_CREATE
                     preview:
                         type: preview
                         route: enhavo_newsletter_newsletter_preview

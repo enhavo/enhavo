@@ -68,6 +68,7 @@ enhavo_page_page_update:
                     duplicate:
                         type: duplicate
                         route: enhavo_page_page_duplicate
+                        permission: ROLE_ENHAVO_PAGE_PAGE_CREATE
 
 enhavo_page_page_data:
     options:

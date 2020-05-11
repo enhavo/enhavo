@@ -69,6 +69,7 @@ class ActionManager
      * @param $options
      * @return Action
      * @throws TypeMissingException
+     * @throws \Enhavo\Bundle\AppBundle\Exception\TypeNotFoundException
      */
     private function createAction($options)
     {
