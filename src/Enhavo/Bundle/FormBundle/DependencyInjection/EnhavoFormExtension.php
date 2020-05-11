@@ -24,6 +24,8 @@ class EnhavoFormExtension extends Extension
 
         $container->setParameter('enhavo_form.wysiwyg.editor_entrypoint', $config['wysiwyg']['editor_entrypoint']);
         $container->setParameter('enhavo_form.wysiwyg.editor_entrypoint_build', $config['wysiwyg']['editor_entrypoint_build']);
+        $container->setParameter('enhavo_form.date_type.config', $config['date_type']['config']);
+        $container->setParameter('enhavo_form.date_time_type.config', $config['date_time_type']['config']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services/form.yml');

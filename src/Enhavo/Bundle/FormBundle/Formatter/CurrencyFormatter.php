@@ -10,17 +10,47 @@ namespace Enhavo\Bundle\FormBundle\Formatter;
 
 class CurrencyFormatter
 {
-    public function getCurrency($value, $currency = 'Euro', $position = 'right')
+    public function getCurrency($currencyAsInt, $currency = 'Euro', $position = 'right')
     {
-        $string = (string)$value;
+        $string = (string)$currencyAsInt;
         $string = str_pad($string, 3, '0', STR_PAD_LEFT);
         $length = strlen($string);
         $right = substr($string, $length - 2, 2 );
         $left = substr($string, 0, $length - 2);
-        if($position == 'right'){
-            return sprintf('%s,%s %s', $left, $right, $currency);
+        if ($currency !== null) {
+            if ($position == 'right') {
+                return sprintf('%s,%s %s', $left, $right, $currency);
+            } else {
+                return sprintf('%s %s,%s', $currency, $left, $right);
+            }
         } else {
-            return sprintf('%s %s,%s', $currency,$left, $right);
+            return sprintf('%s,%s', $left, $right);
         }
+    }
+
+    public function getInt($currencyAsString)
+    {
+        //text -> int
+        $string = $currencyAsString;
+        $string = str_replace('.', '', $string);
+
+        $parts = explode(',', $string);
+        $right = 0;
+        if (count($parts) > 1) {
+            $right = array_pop($parts);
+            $right = substr($right, 0, 2);
+            $right = str_pad($right, 2, '0');
+            $right = intval($right);
+        }
+
+        $left = implode($parts);
+        $left = intval($left);
+
+        $value = $right;
+        if ($left > 0) {
+            $value = $left * 100 + $value;
+        }
+
+        return $value;
     }
 }

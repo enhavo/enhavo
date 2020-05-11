@@ -38,24 +38,24 @@ class ActionManager
     public function createActionsViewData(array $configuration, $resource = null)
     {
         $data = [];
-        $actions = $this->getActions($configuration);
+        $actions = $this->getActions($configuration, $resource);
         foreach($actions as $action) {
             $data[] = $action->createViewData($resource);
         }
         return $data;
     }
 
-    public function getActions(array $configuration)
+    public function getActions(array $configuration, $resource = null)
     {
         $actions = [];
         foreach($configuration as $name => $options) {
             $action = $this->createAction($options);
 
-            if($action->isHidden()) {
+            if($action->isHidden($resource)) {
                 continue;
             }
 
-            if($action->getPermission() !== null && !$this->checker->isGranted($action->getPermission())) {
+            if($action->getPermission($resource) !== null && !$this->checker->isGranted($action->getPermission())) {
                 continue;
             }
 
