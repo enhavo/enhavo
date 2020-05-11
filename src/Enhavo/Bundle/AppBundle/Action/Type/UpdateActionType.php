@@ -17,8 +17,7 @@ class UpdateActionType extends AbstractUrlActionType implements ActionTypeInterf
             'component' => 'create-action',
             'label' => 'label.edit',
             'translation_domain' => 'EnhavoAppBundle',
-            'icon' => 'edit',
-            'permission' => RoleUtil::ACTION_UPDATE
+            'icon' => 'edit'
         ]);
 
         $resolver->setRequired(['route']);

@@ -44,8 +44,7 @@ class DuplicateActionType extends AbstractUrlActionType implements ActionTypeInt
             'confirm' => true,
             'confirm_message' => 'message.duplicate.confirm',
             'confirm_label_ok' => 'label.ok',
-            'confirm_label_cancel' => 'label.cancel',
-            'permission' => RoleUtil::ACTION_CREATE
+            'confirm_label_cancel' => 'label.cancel'
         ]);
     }
 

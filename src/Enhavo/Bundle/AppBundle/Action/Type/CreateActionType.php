@@ -23,8 +23,7 @@ class CreateActionType extends OpenActionType
             'label' => 'label.create',
             'translation_domain' => 'EnhavoAppBundle',
             'view_key' => 'edit-view',
-            'target' => '_view',
-            'permission' => RoleUtil::ACTION_CREATE
+            'target' => '_view'
         ]);
     }
 

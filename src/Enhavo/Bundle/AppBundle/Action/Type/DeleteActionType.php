@@ -65,8 +65,7 @@ class DeleteActionType extends AbstractUrlActionType implements ActionTypeInterf
             'confirm' => true,
             'confirm_message' => 'message.delete.confirm',
             'confirm_label_ok' => 'label.ok',
-            'confirm_label_cancel' => 'label.cancel',
-            'permission' => RoleUtil::ACTION_DELETE
+            'confirm_label_cancel' => 'label.cancel'
         ]);
     }
 
