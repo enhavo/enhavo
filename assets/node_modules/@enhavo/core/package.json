@@ -18,6 +18,7 @@
     "vue": "^2.5.22",
     "vue-loader": "^15.5.1",
     "vue-property-decorator": "^6.0.0",
-    "vue-template-compiler": "^2.5.22"
+    "vue-template-compiler": "^2.5.22",
+    "compass-mixins": "^0.12.10"
   }
 }
