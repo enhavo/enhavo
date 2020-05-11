@@ -76,4 +76,16 @@ class BaseViewer extends AbstractResourceViewer
         }
         return null;
     }
+
+    /**
+     * @param $bundlePrefix
+     * @param $resourceName
+     * @param $action
+     * @return string
+     */
+    public function getRoleNameByResourceName($bundlePrefix, $resourceName, $action)
+    {
+        $roleName = strtoupper(sprintf('ROLE_%s_%s_%s', $bundlePrefix, $resourceName, $action));
+        return $roleName;
+    }
 }
