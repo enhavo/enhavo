@@ -20,30 +20,20 @@ class ArgumentResolver implements ArgumentResolverInterface
     /** @var ArgumentMetadataFactory  */
     private $argumentMetadataFactory;
 
-
     public function __construct(ArgumentMetadataFactoryInterface $argumentMetadataFactory = null)
     {
         $this->argumentMetadataFactory = $argumentMetadataFactory ?: new ArgumentMetadataFactory();
     }
 
     /**
-     * @param Request $request
-     * @param callable $controller
-     * @param array $values
-     * @return array
+     * @inheritDoc
      */
-    public function getArguments(Request $request, $controller, array $values = [])
+    public function getArguments(Request $request, $controller)
     {
         $arguments = [];
         $resolvers = $this->getDefaultArgumentValueResolvers();
 
         foreach ($this->argumentMetadataFactory->createArgumentMetadata($controller) as $metadata) {
-
-            if (isset($values[count($arguments)])) {
-                $arguments[] = $values[count($arguments)];
-                continue;
-            }
-
             foreach ($resolvers as $resolver) {
                 if (!$resolver->supports($request, $metadata)) {
                     continue;
