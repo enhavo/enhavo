@@ -36,7 +36,7 @@ services:
         class: Enhavo\Bundle\AppBundle\Preview\Strategy\ServiceStrategy
         public: true
         arguments:
-            - '@enhavo_app.argument_resolver'
+            - '@Enhavo\Bundle\AppBundle\Controller\ArgumentResolver'
             - '@request_stack'
         calls:
             - ['setContainer', ['@service_container']]
@@ -88,7 +88,6 @@ services:
         arguments:
             - '%enhavo_app.webpack_build%'
 
-    enhavo_app.argument_resolver:
-        class: Enhavo\Bundle\AppBundle\Controller\ArgumentResolver
+    Enhavo\Bundle\AppBundle\Controller\ArgumentResolver:
         arguments:
             - '@argument_metadata_factory'
