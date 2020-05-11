@@ -2,7 +2,7 @@
   "name": "@enhavo/shop",
   "license": "MIT",
   "types": "index.ts",
-  "version": "0.8.0",
+  "version": "0.8.2",
   "homepage": "https://www.enhavo.com",
   "repository": {
     "type": "git",
