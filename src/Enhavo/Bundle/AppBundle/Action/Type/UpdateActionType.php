@@ -13,7 +13,7 @@ class UpdateActionType extends AbstractUrlActionType implements ActionTypeInterf
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'component' => 'create-action',
+            'component' => 'open-action',
             'label' => 'label.edit',
             'translation_domain' => 'EnhavoAppBundle',
             'icon' => 'edit',
