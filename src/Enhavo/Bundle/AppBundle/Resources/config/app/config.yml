@@ -1,9 +1,5 @@
-parameters:
-    # keep for bc breaks with other bundles
-    locale: '%kernel.default_locale%'
-
 framework:
-    translator: { fallback: "%env(string:APP_DEFAULT_LOCALE)%" }
+    translator: { fallback: "%locale%" }
     validation:
         enabled: true
     session:
@@ -19,7 +15,7 @@ doctrine:
             json_array: string
 
 stof_doctrine_extensions:
-    default_locale: "%env(string:APP_DEFAULT_LOCALE)%"
+    default_locale: "%locale%"
     orm:
         default:
             sluggable: true
@@ -33,7 +29,7 @@ jms_serializer:
         auto_detection: false
 
 enhavo_app:
-    locale: "%env(string:APP_DEFAULT_LOCALE)%"
+    locale: "%locale%"
     template_paths:
         default:
             path: ''
