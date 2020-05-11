@@ -17,10 +17,11 @@ Enhavo\Bundle\SliderBundle\Entity\Slider:
         code:
             type: string
             length: 255
+            nullable: true
 
     oneToMany:
         slides:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Slide
             mappedBy: slider
-            orderBy: {'order': 'ASC'}
+            orderBy: {'position': 'ASC'}

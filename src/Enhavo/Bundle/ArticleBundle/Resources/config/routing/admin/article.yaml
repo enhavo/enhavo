@@ -67,6 +67,7 @@ enhavo_article_article_update:
                     duplicate:
                         type: duplicate
                         route: enhavo_article_article_duplicate
+                        permission: ROLE_ENHAVO_ARTICLE_ARTICLE_CREATE
                     preview:
                         type: preview
                         route: enhavo_article_article_preview

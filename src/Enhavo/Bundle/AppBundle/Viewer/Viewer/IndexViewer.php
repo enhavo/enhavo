@@ -148,7 +148,7 @@ class IndexViewer extends AppViewer
                 5, 10, 50, 100, 500
             ],
         ];
-        
+
         $parameters->set('data', [
             'messages' => [],
             'grid' => $grid,
@@ -202,6 +202,7 @@ class IndexViewer extends AppViewer
             'create' => [
                 'type' => 'create',
                 'route' => sprintf('%s_%s_create', $metadata->getApplicationName(), $this->getUnderscoreName($metadata)),
+                'permission' => $this->getRoleNameByResourceName($metadata->getApplicationName(), $this->getUnderscoreName($metadata), 'create')
             ]
         ];
 

@@ -11,18 +11,14 @@
 namespace Enhavo\Bundle\AppBundle\Preview\Strategy;
 
 use Enhavo\Bundle\AppBundle\Exception\PreviewException;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Enhavo\Bundle\AppBundle\Preview\StrategyInterface;
 
 class DynamicStrategy implements StrategyInterface
 {
-    protected $container;
-
-    public function __construct(ContainerInterface $container)
-    {
-        $this->container = $container;
-    }
+    use ContainerAwareTrait;
 
     /**
      * {@inheritdoc}

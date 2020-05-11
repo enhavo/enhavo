@@ -4,6 +4,7 @@ namespace Enhavo\Bundle\AppBundle\Action\Type;
 
 use Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType;
 use Enhavo\Bundle\AppBundle\Action\ActionTypeInterface;
+use Enhavo\Bundle\AppBundle\Security\Roles\RoleUtil;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UpdateActionType extends AbstractUrlActionType implements ActionTypeInterface
@@ -16,7 +17,7 @@ class UpdateActionType extends AbstractUrlActionType implements ActionTypeInterf
             'component' => 'open-action',
             'label' => 'label.edit',
             'translation_domain' => 'EnhavoAppBundle',
-            'icon' => 'edit',
+            'icon' => 'edit'
         ]);
 
         $resolver->setRequired(['route']);

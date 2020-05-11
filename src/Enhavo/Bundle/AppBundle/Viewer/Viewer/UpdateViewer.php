@@ -102,7 +102,8 @@ class UpdateViewer extends CreateViewer
             'delete' => [
                 'type' => 'delete',
                 'route' => $formDelete,
-                'route_parameters' => $formDeleteParameters
+                'route_parameters' => $formDeleteParameters,
+                'permission' => $this->getRoleNameByResourceName($metadata->getApplicationName(), $this->getUnderscoreName($metadata), 'delete')
             ]
         ];
 

@@ -8,6 +8,6 @@ services:
 
     Sylius\Component\Locale\Context\ImmutableLocaleContext:
         arguments:
-            - '%locale%'
+            - '%env(string:APP_DEFAULT_LOCALE)%'
         tags:
             - { name: 'sylius.context.locale', priority: 32 }

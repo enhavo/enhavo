@@ -3,6 +3,7 @@ namespace Enhavo\Bundle\AppBundle\Action\Type;
 
 use Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType;
 use Enhavo\Bundle\AppBundle\Action\ActionTypeInterface;
+use Enhavo\Bundle\AppBundle\Security\Roles\RoleUtil;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DuplicateActionType extends AbstractUrlActionType implements ActionTypeInterface
@@ -43,7 +44,7 @@ class DuplicateActionType extends AbstractUrlActionType implements ActionTypeInt
             'confirm' => true,
             'confirm_message' => 'message.duplicate.confirm',
             'confirm_label_ok' => 'label.ok',
-            'confirm_label_cancel' => 'label.cancel',
+            'confirm_label_cancel' => 'label.cancel'
         ]);
     }
 
