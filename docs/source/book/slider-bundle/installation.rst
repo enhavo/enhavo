@@ -12,4 +12,4 @@ Installation
 
 .. code::
 
-  $ yarn add @enhavo/slider --dev
+  $ yarn add @enhavo/slider

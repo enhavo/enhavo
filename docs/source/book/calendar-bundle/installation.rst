@@ -17,4 +17,4 @@ Installation
 
 .. code::
 
-  $ yarn add @enhavo/calendar --dev
+  $ yarn add @enhavo/calendar
