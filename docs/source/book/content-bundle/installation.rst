@@ -11,4 +11,4 @@ Installation
 
 .. code::
 
-  $ yarn add @enhavo/content --dev
+  $ yarn add @enhavo/content

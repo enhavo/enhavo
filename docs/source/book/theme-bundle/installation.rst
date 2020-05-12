@@ -16,4 +16,4 @@ Installation
 
 .. code::
 
-  $ yarn add @enhavo/theme --dev
+  $ yarn add @enhavo/theme

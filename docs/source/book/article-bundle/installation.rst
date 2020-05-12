@@ -21,4 +21,4 @@ Installation
 
 .. code::
 
-  $ yarn add @enhavo/article --dev
+  $ yarn add @enhavo/article

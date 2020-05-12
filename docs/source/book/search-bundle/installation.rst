@@ -11,4 +11,4 @@ Installation
 
 .. code::
 
-  $ yarn add @enhavo/search --dev
+  $ yarn add @enhavo/search

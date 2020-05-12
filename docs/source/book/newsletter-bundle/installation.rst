@@ -18,7 +18,7 @@ Installation
 
 .. code::
 
-  $ yarn add @enhavo/newsletter --dev
+  $ yarn add @enhavo/newsletter
 
 
 .. include:: /book/_includes/installation/register-action-package.rst

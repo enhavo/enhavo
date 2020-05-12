@@ -17,7 +17,7 @@ Installation
 
 .. code::
 
-  $ yarn add @enhavo/translation --dev
+  $ yarn add @enhavo/translation
 
 
 .. include:: /book/_includes/installation/register-form-package.rst
