@@ -1,54 +1,59 @@
-const path = require('path');
-const fs = require('fs');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const Encore = require('@symfony/webpack-encore');
 
 class EnhavoEncore
 {
-    getWebpackConfig(config)
+    constructor()
     {
-        const projectDir = this.getProjectDir();
+        this.configs = [];
+        this.packages = [];
+    }
 
-        config.plugins.push(new CopyWebpackPlugin([
-            { from: 'node_modules/tinymce/skins', to: 'enhavo/skins' },
-            { from: 'node_modules/tinymce/plugins', to: 'enhavo/plugins' }
-        ]));
+    register(enhavoPackage)
+    {
+        this.packages.push(enhavoPackage);
+        return this;
+    }
 
-        config.module.rules.forEach(function(rule) {
-            if(".ts".match(rule.test)) {
-                delete rule.exclude;
-                rule.use.forEach(function(loader) {
-                    if(loader.loader == 'ts-loader') {
-                        loader.options.allowTsInNodeModules = true;
-                        loader.options.transpileOnly = true;
-                    }
-                });
-            }
-            if(".scss".match(rule.test)) {
-                rule.use.forEach(function(loader) {
-                    if(loader.loader == 'sass-loader') {
-                        loader.options.data = '@import "custom";';
-                        loader.options.includePaths = [path.join(projectDir, 'assets/enhavo/styles')];
-                    }
-                });
-            }
-        });
+    add(name, callback)
+    {
+        Encore.reset();
+        Encore.setOutputPath('public/build/'+name+'/');
+        Encore.setPublicPath('/build/'+name);
 
-        config.resolve.alias['jquery'] = path.join(projectDir, 'node_modules/jquery/src/jquery');
-        config.resolve.alias['jquery-ui/ui/widget'] = path.join(projectDir, 'node_modules/blueimp-file-upload/js/vendor/jquery.ui.widget.js');
+        for(let enhavoPackage of this.packages) {
+            enhavoPackage.initEncore(Encore, name)
+        }
+
+        callback(Encore);
+
+        let config = Encore.getWebpackConfig();
+        config.name = name;
+        this.configs.push(config);
+
+        for(let enhavoPackage of this.packages) {
+            enhavoPackage.initWebpackConfig(config, name)
+        }
+
         return config;
     }
 
-    getProjectDir()
+    export(name = null)
     {
-        const pathArray = path.dirname(__dirname).split(path.sep);
-        while(pathArray.length > 0) {
-            var tryPath = pathArray.join(path.sep) + path.sep + 'webpack.config.js';
-            if(fs.existsSync(tryPath)) {
-                return pathArray.join(path.sep);
+        if(name) {
+            for(let config of this.configs) {
+                if(config.name === name) {
+                    return config;
+                }
             }
-            pathArray.pop();
+            throw 'Config name "' + name + '"does not exists';
         }
-        return null;
+        return this.configs;
+    }
+
+    /** @deprecated Please upgrade your webpack.config.js (Follow 0.9 Migration Guide) */
+    getWebpackConfig(config)
+    {
+        throw 'Please upgrade your webpack.config.js (Follow 0.9 Migration Guide)';
     }
 }
 
