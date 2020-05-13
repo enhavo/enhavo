@@ -87,3 +87,38 @@ This changes only may apply if you have this functions define by your own
     // to this line
     public function isHidden(array $options, $resource = null);
 
+9. Update your ``webpack.config.js``. The way how to include other bundles and configure
+your webpack/encore has changed. Just use
+the following lines if you never edit your ``webpack.config.js`` .
+If you edit this file before, you need to add the configs inside the js callbacks.
+
+.. code:: js
+
+    const EnhavoEncore = require('@enhavo/core/EnhavoEncore');
+    const AppPackage = require('@enhavo/app/Encore/EncoreRegistryPackage');
+    const FormPackage = require('@enhavo/form/Encore/EncoreRegistryPackage');
+    const MediaPackage = require('@enhavo/media/Encore/EncoreRegistryPackage');
+    const DashboardPackage = require('@enhavo/dashboard/Encore/EncoreRegistryPackage');
+    const UserPackage = require('@enhavo/user/Encore/EncoreRegistryPackage');
+
+    EnhavoEncore
+      // register packages
+      .register(new AppPackage())
+      .register(new FormPackage())
+      .register(new MediaPackage())
+      .register(new DashboardPackage())
+      .register(new UserPackage())
+    ;
+
+    EnhavoEncore.add('enhavo', (Encore) => {
+      // custom encore config
+      // Encore.enableBuildNotifications();
+    });
+
+    EnhavoEncore.add('theme', (Encore) => {
+      Encore
+        // add theme entry and config
+        .addEntry('base', './assets/theme/base')
+    });
+
+    module.exports = EnhavoEncore.export();
