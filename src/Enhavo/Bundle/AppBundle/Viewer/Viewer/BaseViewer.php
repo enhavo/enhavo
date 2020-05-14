@@ -33,7 +33,7 @@ class BaseViewer extends AbstractResourceViewer
         $parameters->set('javascripts', $this->mergeConfigArray([
             $this->container->getParameter('enhavo_app.javascripts'),
             $options['javascripts'],
-            $this->getViewerOption('stylesheets', $requestConfiguration)
+            $this->getViewerOption('javascripts', $requestConfiguration)
         ]));
 
         $parameters->set('translation_domain', $this->mergeConfig([
