@@ -17,3 +17,4 @@ This section contains a short reference information to following topics:
     routing-generator/index
     toolbar-widget/index
     twig/index
+    make/index
