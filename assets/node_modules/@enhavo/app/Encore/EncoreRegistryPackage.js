@@ -1,9 +1,19 @@
 const EncoreUtil = require('@enhavo/core/EncoreUtil');
 const path = require('path');
 const fs = require('fs');
+const _ = require('lodash');
 
 class EncoreRegistryPackage
 {
+    constructor(config = null)
+    {
+        this.config = new Config();
+
+        if(typeof config == 'object') {
+            _.merge(this.config, config);
+        }
+    }
+
     initEncore(Encore, name)
     {
         if(name === 'enhavo') {
@@ -25,7 +35,7 @@ class EncoreRegistryPackage
                 .addEntry('enhavo/delete', './assets/enhavo/delete')
                 .addEntry('enhavo/list', './assets/enhavo/list')
             ;
-        } else {
+        } else if(this.config.theme) {
             Encore
                 .enableSingleRuntimeChunk()
                 .enableSourceMaps(!Encore.isProduction())
@@ -34,6 +44,14 @@ class EncoreRegistryPackage
                 .enableSassLoader()
                 .enableTypeScriptLoader()
                 .enableVersioning(Encore.isProduction())
+            ;
+
+            if(this.config.copyThemeImages) {
+                Encore.copyFiles({
+                    from: './assets/enhavo/images',
+                    to: 'images/[path][name].[ext]'
+                })
+            }
         }
     }
 
@@ -73,6 +91,14 @@ class EncoreRegistryPackage
         config.resolve.alias['jquery'] = path.join(projectDir, 'node_modules/jquery/src/jquery');
         config.resolve.alias['jquery-ui/ui/widget'] = path.join(projectDir, 'node_modules/blueimp-file-upload/js/vendor/jquery.ui.widget.js');
         return config;
+    }
+}
+
+class Config
+{
+    constructor() {
+        this.copyThemeImages = true;
+        this.theme = true;
     }
 }
 

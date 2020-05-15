@@ -1,12 +1,14 @@
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const _ = require('lodash');
 
 class EncoreRegistryPackage
 {
     constructor(config = null)
     {
-        this.config = {};
-        if(this.config !== null) {
-            this.config = config;
+        this.config = new Config();
+
+        if(typeof config == 'object') {
+            _.merge(this.config, config);
         }
     }
 
@@ -32,6 +34,13 @@ class EncoreRegistryPackage
                 { from: 'node_modules/tinymce/plugins', to: 'enhavo/plugins' }
             ]));
         }
+    }
+}
+
+class Config
+{
+    constructor() {
+        this.theme = true;
     }
 }
 
