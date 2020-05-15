@@ -6,3 +6,4 @@ View
 
     create-view
     customize-styles
+    overwrite-application-service
