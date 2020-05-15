@@ -22,3 +22,5 @@ Guides
     setting/index
     toolbar-widget/index
     view/index
+    view-stack/index
+    form/index
