@@ -13,7 +13,7 @@ Installation
 
 .. code::
 
-  $ yarn add @enhavo/form --dev
+  $ yarn add @enhavo/form
 
 .. include:: /book/_includes/installation/register-form-package.rst
 
@@ -24,3 +24,16 @@ Installation
 
     // register the package
     this.registerPackage(new FormFormRegistryPackage(application));
+
+
+.. include:: /book/_includes/installation/register-encore-package.rst
+
+.. code::
+
+  // import
+  const FormPackage = require('@enhavo/form/Encore/EncoreRegistryPackage');
+
+  // register package
+  .register(new FormPackage())
+
+.. include:: /book/_includes/installation/build-assets.rst

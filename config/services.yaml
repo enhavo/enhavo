@@ -1,7 +1,7 @@
 parameters:
-    locale: 'en'
+    locale: en
 
 services:
     _defaults:
-        autowire: true      # Automatically injects dependencies in your services.
-        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        autowire: false
+        autoconfigure: false

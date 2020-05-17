@@ -9,6 +9,7 @@ This section contains a short reference information to following topics:
     action/index
     block/index
     column/index
+    encore/index
     filter/index
     form/index
     icon/index
@@ -17,3 +18,4 @@ This section contains a short reference information to following topics:
     routing-generator/index
     toolbar-widget/index
     twig/index
+    make/index

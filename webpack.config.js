@@ -1,37 +1,28 @@
-const Encore = require('@symfony/webpack-encore');
 const EnhavoEncore = require('./assets/node_modules/@enhavo/core/EnhavoEncore');
-const EnhavoThemeEncore = require('./assets/node_modules/@enhavo/theme/EnhavoThemeEncore');
+const EnhavoThemeEncore = require('./assets/node_modules/@enhavo/theme/Encore/EnhavoThemeEncore');
+const ThemeLoader = require('./assets/node_modules/@enhavo/theme/Encore/ThemeLoader');
+const AppPackage = require('./assets/node_modules/@enhavo/app/Encore/EncoreRegistryPackage');
+const FormPackage = require('./assets/node_modules/@enhavo/form/Encore/EncoreRegistryPackage');
+const ThemePackage = require('./assets/node_modules/@enhavo/theme/Encore/EncoreRegistryPackage');
+const MediaPackage = require('./assets/node_modules/@enhavo/media/Encore/EncoreRegistryPackage');
+const DashboardPackage = require('./assets/node_modules/@enhavo/dashboard/Encore/EncoreRegistryPackage');
+const UserPackage = require('./assets/node_modules/@enhavo/user/Encore/EncoreRegistryPackage');
 
-Encore
-    .setOutputPath('public/build/enhavo/')
-    .setPublicPath('/build/enhavo')
-    .enableSingleRuntimeChunk()
-    .enableSourceMaps(!Encore.isProduction())
-    .splitEntryChunks()
-    .autoProvidejQuery()
-    .enableVueLoader()
-    .enableSassLoader()
-    .enableTypeScriptLoader()
-    .enableBuildNotifications()
-    .enableVersioning(Encore.isProduction())
-
-    .addEntry('enhavo/main', './assets/enhavo/main')
-    .addEntry('enhavo/index', './assets/enhavo/index')
-    .addEntry('enhavo/view', './assets/enhavo/view')
-    .addEntry('enhavo/form', './assets/enhavo/form')
-    .addEntry('enhavo/editor', './assets/enhavo/editor')
-    .addEntry('enhavo/image-cropper', './assets/enhavo/image-cropper')
-    .addEntry('enhavo/media-library', './assets/enhavo/media-library')
-    .addEntry('enhavo/dashboard', './assets/enhavo/dashboard')
-    .addEntry('enhavo/preview', './assets/enhavo/preview')
-    .addEntry('enhavo/delete', './assets/enhavo/delete')
-    .addEntry('enhavo/list', './assets/enhavo/list')
-    .addEntry('enhavo/login', './assets/enhavo/login')
+EnhavoEncore
+    // register packages
+    .register(new AppPackage({copyThemeImages: false}))
+    .register(new FormPackage())
+    .register(new MediaPackage())
+    .register(new DashboardPackage())
+    .register(new UserPackage())
+    .register(new ThemePackage(ThemeLoader))
 ;
 
-enhavoConfig = EnhavoEncore.getWebpackConfig(Encore.getWebpackConfig());
-enhavoConfig.name = 'enhavo';
+EnhavoEncore.add('enhavo', (Encore) => {
+    // custom encore config
+    // Encore.enableBuildNotifications();
+});
 
-let configs = EnhavoThemeEncore.getThemeConfigs(Encore);
-configs.push(enhavoConfig);
-module.exports = configs;
+EnhavoThemeEncore.addThemes(EnhavoEncore, ThemeLoader);
+
+module.exports = EnhavoEncore.export();

@@ -2,21 +2,20 @@
 
 namespace Enhavo\Bundle\AppBundle\Action\Type;
 
-use Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType;
-use Enhavo\Bundle\AppBundle\Action\ActionTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UpdateActionType extends AbstractUrlActionType implements ActionTypeInterface
+class UpdateActionType extends OpenActionType
 {
     public function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'component' => 'create-action',
+            'icon' => 'edit',
             'label' => 'label.edit',
             'translation_domain' => 'EnhavoAppBundle',
-            'icon' => 'edit',
+            'view_key' => 'edit-view',
+            'target' => '_view'
         ]);
 
         $resolver->setRequired(['route']);

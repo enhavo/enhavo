@@ -1,10 +1,8 @@
 'use strict';
 
-var gulp = require('gulp');
-var exec = require('child_process').exec;
-var download = require("gulp-download");
-var decompress = require('gulp-decompress');
-var clean = require('gulp-clean');
+const gulp = require('gulp');
+const exec = require('child_process').exec;
+const elasticInstaller = require('./assets/node_modules/@enhavo/search/Installer')('./build/elasticsearch', '6.0.0');
 
 gulp.task('docs', function (cb) {
   exec('sphinx-build -b html docs/source build/docs', function (err, stdout, stderr) {
@@ -22,27 +20,19 @@ gulp.task('docs:watch', function () {
     });
 });
 
-
 gulp.task("elastic:download", function(next) {
-  download('https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.0.0.zip')
-    .pipe(gulp.dest("."))
-    .on('end', next);
+    elasticInstaller.download().then(next);
 });
 
-gulp.task("elastic:decompress", function(next) {
-  gulp.src('./elasticsearch-6.0.0.zip')
-    .pipe(decompress({strip: 1}))
-    .pipe(gulp.dest('./elasticsearch'))
-    .on('end', next);
+gulp.task("elastic:cleanup", function(next) {
+    elasticInstaller.cleanup().then(next);
 });
 
-gulp.task("elastic:clean", function(next) {
-  gulp.src('./elasticsearch-6.0.0.zip', {read: false})
-    .pipe(clean())
-    .on('end', next);
+gulp.task("elastic:install", function(next) {
+    elasticInstaller.install('./elasticsearch').then(next);
 });
 
-gulp.task("elastic:install", gulp.series("elastic:download", "elastic:decompress", "elastic:clean"));
+gulp.task("elastic", gulp.series("elastic:download", "elastic:install", "elastic:cleanup"));
 
 gulp.task('routes:dump', function (cb) {
     exec('bin/console fos:js-routing:dump --format=json --target=public/js/fos_js_routes.json', function (err, stdout, stderr) {

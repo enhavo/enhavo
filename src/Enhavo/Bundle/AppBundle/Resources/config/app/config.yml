@@ -29,6 +29,7 @@ jms_serializer:
         auto_detection: false
 
 enhavo_app:
+    locale: "%locale%"
     template_paths:
         default:
             path: ''

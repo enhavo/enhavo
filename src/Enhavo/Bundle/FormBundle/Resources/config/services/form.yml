@@ -13,6 +13,8 @@ services:
 
     enhavo_date:
         class: Enhavo\Bundle\FormBundle\Form\Type\DateType
+        arguments:
+            - '%enhavo_form.date_type.config%'
         tags:
             - { name: form.type }
 
@@ -23,6 +25,8 @@ services:
 
     enhavo_datetime:
         class: Enhavo\Bundle\FormBundle\Form\Type\DateTimeType
+        arguments:
+            - '%enhavo_form.date_time_type.config%'
         tags:
             - { name: form.type }
 
@@ -69,6 +73,12 @@ services:
         tags:
             - { name: form.type, alias: 'enhavo_auto_complete_entity' }
 
+    Enhavo\Bundle\FormBundle\Form\Type\CurrencyType:
+        arguments:
+            - '@Enhavo\Bundle\FormBundle\Form\Transformer\CurrencyTransformer'
+        tags:
+            - { name: form.type }
+
     Enhavo\Bundle\FormBundle\Form\Extension\ChoiceTypeExtension:
         tags:
             - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\ChoiceType }
@@ -85,3 +95,8 @@ services:
         tags:
             - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 
+
+    Enhavo\Bundle\FormBundle\Form\Transformer\CurrencyTransformer:
+        public: true
+        arguments:
+            - '@Enhavo\Bundle\FormBundle\Formatter\CurrencyFormatter'

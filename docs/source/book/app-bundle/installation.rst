@@ -7,72 +7,84 @@ Installation
 
   $ composer require enhavo/app-bundle ^0.8
 
-Webpack Config
---------------
+Add packages
+------------
+
+Add following ``package.json`` to your project root directory.
+
+.. code::
+
+    {
+      "scripts": {
+        "routes:dump": "bin/console fos:js-routing:dump --format=json --target=public/js/fos_js_routes.json"
+      },
+      "dependencies": {
+        "@enhavo/app": "^0.8.0",
+      }
+    }
+
+Add webpack config
+------------------
 
 Add following ``webpack.config.js`` to your project root directory.
 
 .. code::
 
-    const Encore = require('@symfony/webpack-encore');
     const EnhavoEncore = require('@enhavo/core/EnhavoEncore');
+    const AppPackage = require('@enhavo/app/Encore/EncoreRegistryPackage');
 
-    Encore
-      .setOutputPath('public/build/enhavo/')
-      .setPublicPath('/build/enhavo')
-      .enableSingleRuntimeChunk()
-      .enableSourceMaps(!Encore.isProduction())
-      .splitEntryChunks()
-      .autoProvidejQuery()
-      .enableVueLoader()
-      .enableSassLoader()
-      .enableTypeScriptLoader()
-      .enableVersioning(Encore.isProduction())
 
-      .addEntry('enhavo/main', './assets/enhavo/main')
-      .addEntry('enhavo/index', './assets/enhavo/index')
-      .addEntry('enhavo/view', './assets/enhavo/view')
-      .addEntry('enhavo/form', './assets/enhavo/form')
-      .addEntry('enhavo/preview', './assets/enhavo/preview')
-      .addEntry('enhavo/delete', './assets/enhavo/delete')
-      .addEntry('enhavo/list', './assets/enhavo/list')
+    EnhavoEncore
+      // register packages
+      .register(new AppPackage())
     ;
 
-    enhavoConfig = EnhavoEncore.getWebpackConfig(Encore.getWebpackConfig());
-    enhavoConfig.name = 'enhavo';
+    EnhavoEncore.add('enhavo', (Encore) => {
+      // custom encore config
+      // Encore.enableBuildNotifications();
+    });
 
-    Encore.reset();
+    EnhavoEncore.add('theme', (Encore) => {
+      Encore
+        // add theme entry and config
+        .addEntry('base', './assets/theme/base')
+    });
 
-    Encore
-      .setOutputPath('public/build/theme/')
-      .setPublicPath('/build/theme')
-      .enableSingleRuntimeChunk()
-      .enableSourceMaps(!Encore.isProduction())
-      .splitEntryChunks()
-      .autoProvidejQuery()
-      .enableVueLoader()
-      .enableSassLoader()
-      .enableTypeScriptLoader()
-      .enableVersioning(Encore.isProduction())
+    module.exports = EnhavoEncore.export();
 
-      .addEntry('base', './assets/theme/base')
+.. include:: /book/_includes/installation/change-configuration.rst
 
-      .copyFiles({
-        from: './assets/theme/images',
-        to: 'images/[path][name].[ext]'
-      })
-    ;
+Update your ``config/packages/webpack_encore.yaml``
 
-    themeConfig = EnhavoEncore.getWebpackConfig(Encore.getWebpackConfig());
-    themeConfig.name = 'theme';
+.. code:: yaml
 
-    module.exports = [enhavoConfig, themeConfig];
+  webpack_encore:
+      output_path: '%kernel.project_dir%/public/build/enhavo'
+      builds:
+          enhavo: '%kernel.project_dir%/public/build/enhavo'
+          theme: '%kernel.project_dir%/public/build/theme'
+
+Update your ``config/packages/assets.yaml``
+
+.. code:: yaml
+
+  framework:
+      assets:
+          json_manifest_path: '%kernel.project_dir%/public/build/theme/manifest.json'
+
+This is optional, but it helps to test your mails using within other packages.
+Just update your ``config/packages/dev/swiftmailer.yaml``
+
+.. code:: yaml
+
+  swiftmailer:
+      delivery_addresses: ['%env(resolve:MAILER_DELIVERY_ADDRESS)%']
 
 
-Typescript config
------------------
+Add typescript config
+---------------------
 
-Add following ``tsconfig.js`` to your project root directory.
+Add following ``tsconfig.json`` to your project root directory.
 
 .. code::
 
@@ -93,39 +105,9 @@ Add following ``tsconfig.js`` to your project root directory.
       ]
     }
 
+.. include:: /book/_includes/installation/build-assets.rst
 
-Packages
---------
+Start application
+-----------------
 
-Add following ``package.json`` to your project root directory.
-
-.. code::
-
-    {
-      "scripts": {
-        "routes:dump": "bin/console fos:js-routing:dump --format=json --target=public/js/fos_js_routes.json"
-      },
-      "devDependencies": {
-        "@enhavo/app": "^0.8.0",
-        "@symfony/webpack-encore": "0.22.4",
-        "copy-webpack-plugin": "^4.5.2",
-        "node-sass": "^4.12.0",
-        "sass-loader": "^7.1.0",
-        "ts-loader": "^5.3",
-        "typescript": "^3.1.1",
-        "vue": "^2.5.22",
-        "vue-loader": "^15.5.1",
-        "vue-property-decorator": "^6.0.0",
-        "vue-template-compiler": "^2.5.22"
-      }
-    }
-
-Build
------
-
-Execute following commands to build needed files.
-
-.. code::
-
-  $ yarn encore dev
-  % yarn routes:dump
+Open your application under the ``/admin`` url.

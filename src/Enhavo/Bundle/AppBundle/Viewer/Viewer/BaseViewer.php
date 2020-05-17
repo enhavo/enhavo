@@ -33,7 +33,7 @@ class BaseViewer extends AbstractResourceViewer
         $parameters->set('javascripts', $this->mergeConfigArray([
             $this->container->getParameter('enhavo_app.javascripts'),
             $options['javascripts'],
-            $this->getViewerOption('stylesheets', $requestConfiguration)
+            $this->getViewerOption('javascripts', $requestConfiguration)
         ]));
 
         $parameters->set('translation_domain', $this->mergeConfig([
@@ -75,5 +75,17 @@ class BaseViewer extends AbstractResourceViewer
             return file_get_contents($file);
         }
         return null;
+    }
+
+    /**
+     * @param $bundlePrefix
+     * @param $resourceName
+     * @param $action
+     * @return string
+     */
+    public function getRoleNameByResourceName($bundlePrefix, $resourceName, $action)
+    {
+        $roleName = strtoupper(sprintf('ROLE_%s_%s_%s', $bundlePrefix, $resourceName, $action));
+        return $roleName;
     }
 }

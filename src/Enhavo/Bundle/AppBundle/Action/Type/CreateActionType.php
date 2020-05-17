@@ -9,8 +9,6 @@
 
 namespace Enhavo\Bundle\AppBundle\Action\Type;
 
-use Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType;
-use Enhavo\Bundle\AppBundle\Action\ActionTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CreateActionType extends OpenActionType

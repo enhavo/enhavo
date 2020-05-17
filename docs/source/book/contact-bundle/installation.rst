@@ -15,4 +15,4 @@ Installation
 
 .. code::
 
-  $ yarn add @enhavo/contact --dev
+  $ yarn add @enhavo/contact

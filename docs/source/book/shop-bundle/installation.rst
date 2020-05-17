@@ -19,4 +19,4 @@ Installation
 
 .. code::
 
-  $ yarn add @enhavo/shop --dev
+  $ yarn add @enhavo/shop
