@@ -47,46 +47,6 @@ class TableViewer extends AbstractResourceViewer
         return 'table';
     }
 
-    private function getColumns(RequestConfiguration $configuration, $defaultTranslationDomain = null)
-    {
-        $columns = $this->getViewerOption('columns', $configuration);
-
-        if(empty($columns)) {
-            if ($configuration->isSortable()) {
-                $columns = array(
-                    'id' => array(
-                        'label' => 'id',
-                        'property' => 'id',
-                    ),
-                    'position' => array(
-                        'type' => 'position'
-                    )
-                );
-            } else {
-                $columns = array(
-                    'id' => array(
-                        'label' => 'id',
-                        'property' => 'id',
-                    )
-                );
-            }
-        }
-
-        foreach($columns as $key => &$column) {
-            if(!array_key_exists('type', $column)) {
-                $column['type'] = 'property';
-            }
-        }
-
-        foreach($columns as $key => &$column) {
-            if(!array_key_exists('translation_domain', $column)) {
-                $column['translation_domain'] = $defaultTranslationDomain;
-            }
-        }
-
-        return $columns;
-    }
-
     private function getBatches($batchRoute)
     {
         $configuration = $this->util->createConfigurationFromRoute($batchRoute);
@@ -130,6 +90,10 @@ class TableViewer extends AbstractResourceViewer
                 'count' => $resources->count(),
                 'page' => $resources->getCurrentPage()
             ]);
+
+            if (!$requestConfiguration->isPaginated()) {
+                $resources->setMaxPerPage($resources->count());
+            }
         }
 
         if ($requestConfiguration->getHydrate() === FilterQuery::HYDRATE_ID) {
