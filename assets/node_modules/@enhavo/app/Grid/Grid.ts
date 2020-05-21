@@ -184,7 +184,7 @@ export default class Grid
         }
 
         parameters.hydrate = 'id';
-        parameters.paginate = false;
+        parameters.paginate = 0;
         let url = this.router.generate(this.configuration.tableRoute, parameters);
 
         if(this.source != null) {
