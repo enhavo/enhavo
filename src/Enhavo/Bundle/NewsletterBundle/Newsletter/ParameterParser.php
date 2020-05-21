@@ -18,6 +18,9 @@ class ParameterParser implements ParameterParserInterface
         $nameTransformer = new NameTransformer();
         foreach($parameters as $key => $value) {
             $var = sprintf('${%s}', strtoupper($nameTransformer->snakeCase($key)));
+            if (is_array($value)) {
+                $value = $this->parse($content, $value);
+            }
             $content = str_replace($var, $value, $content);
         }
         return $content;
