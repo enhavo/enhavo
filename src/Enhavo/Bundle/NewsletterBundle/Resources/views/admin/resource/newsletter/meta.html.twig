@@ -1,1 +1,13 @@
 {% if form.slug is defined %}{{ form_row(form.slug) }}{% endif %}
+{% if form.id is defined %}{{ form_row(form.id) }}{% endif %}
+{% if form.createdAt is defined %}{{ form_row(form.createdAt) }}{% endif %}
+{% if form.state is defined %}{{ form_row(form.state) }}{% endif %}
+{% if resource.state != 'created' %}
+    {% if form.startAt is defined %}{{ form_row(form.startAt) }}{% endif %}
+    {% if form.finishAt is defined %}{{ form_row(form.finishAt) }}{% endif %}
+{% endif %}
+
+
+
+
+

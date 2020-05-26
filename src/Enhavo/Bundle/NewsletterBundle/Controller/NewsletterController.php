@@ -113,4 +113,21 @@ class NewsletterController extends ResourceController
             ], 400);
         }
     }
+
+    public function statsAction(Request $request)
+    {
+        /** @var RequestConfiguration $configuration */
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+        /** @var NewsletterInterface $newsletter */
+        $newsletter = $this->singleResourceProvider->get($configuration, $this->repository);
+
+        $view = $this->viewFactory->create('app', [
+            'request_configuration' => $configuration,
+            'metadata' => $this->metadata,
+            'resource' => $newsletter,
+            'template' => 'admin/resource/newsletter/stats.html.twig'
+        ]);
+
+        return $this->viewHandler->handle($configuration, $view);
+    }
 }

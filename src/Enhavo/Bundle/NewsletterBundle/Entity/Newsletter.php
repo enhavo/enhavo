@@ -183,7 +183,7 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
     /**
      * @return \DateTime
      */
-    public function getStartAt(): \DateTime
+    public function getStartAt(): ?\DateTime
     {
         return $this->startAt;
     }
@@ -191,7 +191,7 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
     /**
      * @param \DateTime $startAt
      */
-    public function setStartAt(\DateTime $startAt): void
+    public function setStartAt(?\DateTime $startAt): void
     {
         $this->startAt = $startAt;
     }
@@ -199,7 +199,7 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
     /**
      * @return \DateTime
      */
-    public function getFinishAt(): \DateTime
+    public function getFinishAt(): ?\DateTime
     {
         return $this->finishAt;
     }
@@ -207,7 +207,7 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
     /**
      * @param \DateTime $finishAt
      */
-    public function setFinishAt(\DateTime $finishAt): void
+    public function setFinishAt(?\DateTime $finishAt): void
     {
         $this->finishAt = $finishAt;
     }

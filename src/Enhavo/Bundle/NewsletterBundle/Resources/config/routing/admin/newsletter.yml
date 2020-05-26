@@ -77,6 +77,8 @@ enhavo_newsletter_newsletter_update:
                         type: newsletter_send_test
                     send:
                         type: newsletter_send
+                    stats:
+                        type: newsletter_stats
 
 enhavo_newsletter_newsletter_table:
     options:
@@ -85,6 +87,9 @@ enhavo_newsletter_newsletter_table:
     defaults:
         _controller: enhavo_newsletter.controller.newsletter:tableAction
         _sylius:
+            sorting:
+                createdAt: desc
+                finishAt: desc
             filters:
                 subject:
                     type: text
@@ -111,10 +116,16 @@ enhavo_newsletter_newsletter_table:
                         type: property
                         label: newsletter.form.label.subject
                         property: subject
-                        width: 8
+                        width: 6
                     state:
                         type: newsletter_state
-                        width: 4
+                        width: 3
+                    createdAt:
+                        type: datetime
+                        label: newsletter.label.createdAt
+                        property: createdAt
+                        width: 3
+                        condition: "desktop"
 
 enhavo_newsletter_newsletter_delete:
     options:
@@ -199,3 +210,10 @@ enhavo_newsletter_newsletter_test_form:
     defaults:
         _config:
             form: Enhavo\Bundle\NewsletterBundle\Form\Type\NewsletterEmailType
+
+enhavo_newsletter_newsletter_stats:
+    options:
+        expose: true
+    path: /enhavo/newsletter/newsletter/stats/{id}
+    methods: [GET]
+    controller: enhavo_newsletter.controller.newsletter:statsAction

@@ -23,6 +23,13 @@ class AppViewer extends BaseViewer
     {
         parent::buildTemplateParameters($parameters, $requestConfiguration, $options);
 
+        $parameters->set('data', [
+            'view' => [
+                'id' => $this->getViewId(),
+                'label' => $this->container->get('translator')->trans($options['label'], [], $parameters->get('translation_domain'))
+            ]
+        ]);
+
         $parameters->set('actions', $this->mergeConfigArray([
             $options['actions'],
             $this->getViewerOption('actions', $requestConfiguration)
@@ -34,7 +41,15 @@ class AppViewer extends BaseViewer
         parent::configureOptions($optionsResolver);
 
         $optionsResolver->setDefaults([
-            'actions' => []
+            'actions' => [],
+            'javascripts' => [
+                'enhavo/view'
+            ],
+            'stylesheets' => [
+                'enhavo/view'
+            ],
+            'label' => '',
+            'template' => 'admin/view/app.html.twig'
         ]);
     }
 }

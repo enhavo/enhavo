@@ -141,19 +141,19 @@ interface NewsletterInterface
     /**
      * @return \DateTime
      */
-    public function getStartAt(): \DateTime;
+    public function getStartAt(): ?\DateTime;
 
     /**
      * @param \DateTime $startAt
      */
-    public function setStartAt(\DateTime $startAt): void;
+    public function setStartAt(?\DateTime $startAt): void;
 
     /**
      * @return \DateTime
      */
-    public function getFinishAt(): \DateTime;
+    public function getFinishAt(): ?\DateTime;
     /**
      * @param \DateTime $finishAt
      */
-    public function setFinishAt(\DateTime $finishAt): void;
+    public function setFinishAt(?\DateTime $finishAt): void;
 }

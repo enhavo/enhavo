@@ -111,6 +111,9 @@ abstract class AbstractResourceViewer extends AbstractType implements ViewerInte
 
     protected function buildTemplateParameters(ParameterBag $parameters, RequestConfiguration $requestConfiguration, array $options)
     {
+        $parameters->set('resource', $options['resource']);
+        $parameters->set('resources', $options['resources']);
+
         $parameters->set('translation_domain', $this->mergeConfig([
             $options['translation_domain'],
             $this->getViewerOption('translation_domain', $requestConfiguration)
