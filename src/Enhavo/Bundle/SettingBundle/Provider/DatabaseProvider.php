@@ -96,6 +96,9 @@ class DatabaseProvider implements ProviderInterface
         if ($setting->getType() === Setting::SETTING_TYPE_DATETIME) {
             return $setting->getDate();
         }
+        if ($setting->getType() === Setting::SETTING_TYPE_CURRENCY) {
+            return $setting->getValue();
+        }
         return null;
     }
 
