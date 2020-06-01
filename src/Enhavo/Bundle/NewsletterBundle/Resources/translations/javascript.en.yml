@@ -5,3 +5,8 @@ enhavo_newsletter:
     message:
       form_changed: 'Newsletter content has changed. Please save first, before sending'
       confirm: 'Do you want to send the newsletter now?'
+  stats:
+    label:
+      email: 'Email'
+      sentAt: 'Sent at'
+      readAt: 'Read at'

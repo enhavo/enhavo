@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\NewsletterBundle\Entity;
 
 use Doctrine\Common\Collections\Collection;
+use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
 class Receiver implements ResourceInterface
@@ -49,7 +50,7 @@ class Receiver implements ResourceInterface
     private $tracking;
 
     /**
-     * @var Newsletter $newsletter
+     * @var NewsletterInterface $newsletter
      */
     private $newsletter;
 
@@ -187,17 +188,17 @@ class Receiver implements ResourceInterface
     }
 
     /**
-     * @return Newsletter
+     * @return NewsletterInterface
      */
-    public function getNewsletter(): Newsletter
+    public function getNewsletter(): NewsletterInterface
     {
         return $this->newsletter;
     }
 
     /**
-     * @param Newsletter $newsletter
+     * @param NewsletterInterface $newsletter
      */
-    public function setNewsletter(Newsletter $newsletter): void
+    public function setNewsletter(NewsletterInterface $newsletter): void
     {
         $this->newsletter = $newsletter;
     }
@@ -205,5 +206,14 @@ class Receiver implements ResourceInterface
     public function isSent()
     {
         return $this->getSentAt() !== null;
+    }
+
+    public function trackOpen()
+    {
+        $tracking = new Tracking();
+        $tracking->setDate(new \DateTime());
+        $tracking->setType(Tracking::TRACKING_OPEN);
+        $tracking->setReceiver($this);
+        $this->addTracking($tracking);
     }
 }

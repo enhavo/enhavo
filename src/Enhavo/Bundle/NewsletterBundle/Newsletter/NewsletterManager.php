@@ -166,9 +166,8 @@ class NewsletterManager
             ->setContentType("text/html")
             ->setFrom($this->from)
             ->setTo($receiver->getEmail())
-            ->setBody($this->render($receiver->getNewsletter(), $receiver->getParameters()));
+            ->setBody($this->render($receiver));
 
-        $newsletter = $receiver->getNewsletter();
         if (!empty($receiver->getNewsletter()->getAttachments())) {
             $this->addAttachmentsToMessage($receiver->getNewsletter()->getAttachments(), $message);
         }
@@ -178,19 +177,11 @@ class NewsletterManager
 
     public function sendTest(NewsletterInterface $newsletter, string $email)
     {
-        $message = new \Swift_Message();
-        $message
-            ->setSubject($newsletter->getSubject())
-            ->setContentType("text/html")
-            ->setFrom($this->from)
-            ->setTo($email)
-            ->setBody($this->render($newsletter, $this->provider->getTestParameters()));
-
-        if (!empty($newsletter->getAttachments())) {
-            $this->addAttachmentsToMessage($newsletter->getAttachments(), $message);
+        $receivers = $this->provider->getTestReceivers($newsletter);
+        foreach($receivers as $receiver) {
+            $receiver->setEmail($email);
+            $this->sendNewsletter($receiver);
         }
-
-        return $this->mailer->send($message);
     }
 
     private function addAttachmentsToMessage($attachments, \Swift_Message $message) {
@@ -204,22 +195,22 @@ class NewsletterManager
         }
     }
 
-    public function getTestParameters()
+    public function renderPreview(NewsletterInterface $newsletter)
     {
-        return $this->provider->getTestParameters();
+        $receivers = $this->provider->getTestReceivers($newsletter);
+        return $this->render($receivers[0]);
     }
 
-    public function render(NewsletterInterface $newsletter, array $parameters = [])
+    public function render(Receiver $receiver)
     {
         $templateManager = $this->container->get('enhavo_app.template.manager');
-        $template = $this->getTemplate($newsletter->getTemplate());
+        $template = $this->getTemplate($receiver->getNewsletter()->getTemplate());
         $content = $this->container->get('twig')->render($templateManager->getTemplate($template), [
-            'resource' => $newsletter,
-            'newsletter' => $newsletter,
-            'parameters' => $parameters
+            'resource' => $receiver->getNewsletter(),
+            'receiver' => $receiver,
         ]);
 
-        $content = $this->parameterParser->parse($content, $parameters);
+        $content = $this->parameterParser->parse($content, $receiver->getParameters());
 
         return $content;
     }

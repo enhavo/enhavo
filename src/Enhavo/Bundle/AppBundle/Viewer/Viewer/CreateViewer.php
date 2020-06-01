@@ -134,8 +134,6 @@ class CreateViewer extends BaseViewer
                 'label' => $this->container->get('translator')->trans($label, [], $parameters->get('translation_domain'))
             ]
         ]);
-
-        $parameters->set('resource', $options['resource']);
     }
 
     protected function createTabViewData($configuration, $translationDomain)

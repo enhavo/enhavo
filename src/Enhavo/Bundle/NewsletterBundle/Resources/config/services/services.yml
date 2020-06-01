@@ -108,6 +108,14 @@ services:
         tags:
             - { name: enhavo.action, alias: newsletter_send_test }
 
+    Enhavo\Bundle\NewsletterBundle\Action\StatsActionType:
+        public: true
+        arguments:
+            - '@translator'
+            - '@router'
+        tags:
+            - { name: enhavo.action, alias: newsletter_stats }
+
     Enhavo\Bundle\NewsletterBundle\Block\SubscribeBlockType:
         public: true
         calls:

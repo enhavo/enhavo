@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\NewsletterBundle\Form\Type;
 
 use Enhavo\Bundle\BlockBundle\Form\Type\BlockNodeType;
+use Enhavo\Bundle\FormBundle\Form\Type\DateTimeType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Enhavo\Bundle\NewsletterBundle\Model\GroupInterface;
 use Symfony\Component\Form\AbstractType;
@@ -39,15 +40,15 @@ class NewsletterType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('slug', TextType::class, array(
+        $builder->add('slug', TextType::class, [
             'label' => 'newsletter.form.label.slug',
             'translation_domain' => 'EnhavoNewsletterBundle'
-        ));
+        ]);
 
-        $builder->add('subject', TextType::class, array(
+        $builder->add('subject', TextType::class, [
             'label' => 'newsletter.form.label.subject',
             'translation_domain' => 'EnhavoNewsletterBundle'
-        ));
+        ]);
 
         $builder->add('groups', AutoCompleteEntityType::class, [
             'label' => 'group.label.groups',
@@ -57,17 +58,38 @@ class NewsletterType extends AbstractType
             'route' => "enhavo_newsletter_group_auto_complete",
         ]);
 
-        $builder->add('content', BlockNodeType::class, array(
+        $builder->add('content', BlockNodeType::class, [
             'label' => 'form.label.content',
             'translation_domain' => 'EnhavoAppBundle',
-        ));
+        ]);
 
-        $builder->add('attachments', MediaType::class, array(
+        $builder->add('attachments', MediaType::class, [
             'label' => 'newsletter.form.label.attachments',
             'translation_domain' => 'EnhavoNewsletterBundle',
             'multiple' => true,
             'required' => false
-        ));
+        ]);
+
+        $builder->add('createdAt', DateTimeType::class, [
+            'disabled' => true
+        ]);
+
+        $builder->add('startAt', DateTimeType::class, [
+            'disabled' => true
+        ]);
+
+        $builder->add('finishAt', DateTimeType::class, [
+            'disabled' => true
+        ]);
+
+        $builder->add('state', TextType::class, [
+            'disabled' => true
+        ]);
+
+        $builder->add('id', TextType::class, [
+            'disabled' => true
+        ]);
+
 
         if(count($this->templates) > 1) {
             $choices = [];

@@ -2,3 +2,25 @@ Enhavo\Bundle\NewsletterBundle\Entity\Newsletter:
     attributes:
         id:
             groups: ['form']
+        receivers:
+            groups: ['stats']
+
+Enhavo\Bundle\NewsletterBundle\Entity\Receiver:
+    attributes:
+        id:
+            groups: ['stats']
+        sentAt:
+            groups: ['stats']
+        tracking:
+            groups: ['stats']
+        email:
+            groups: ['stats']
+
+Enhavo\Bundle\NewsletterBundle\Entity\Tracking:
+    attributes:
+        id:
+            groups: ['stats']
+        type:
+            groups: ['stats']
+        date:
+            groups: ['stats']

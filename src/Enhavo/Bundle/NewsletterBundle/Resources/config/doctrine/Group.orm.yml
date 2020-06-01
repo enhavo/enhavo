@@ -12,10 +12,10 @@ Enhavo\Bundle\NewsletterBundle\Entity\Group:
     fields:
         name:
             type: text
-            nullable: false
+            nullable: true
         code:
             type: string
-            nullable: false
+            nullable: true
 
     manyToMany:
         subscribers:

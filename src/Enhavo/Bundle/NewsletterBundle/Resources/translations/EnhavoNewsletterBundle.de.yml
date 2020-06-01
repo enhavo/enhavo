@@ -8,6 +8,8 @@ newsletter:
       send: 'Newsletter verschicken'
       view: 'Newsletter im Frontend anzeigen'
   action:
+    stats:
+      label: 'Statistik'
     test_mail:
       label: 'Test Mail'
       success: 'Test Mail erfolgreich gesendet'
@@ -26,6 +28,7 @@ newsletter:
     newsletter: 'Newsletter'
     content: 'Inhalt'
     default: 'Default'
+    createdAt: 'Erstellt am'
     created: 'Erstellt'
     prepared: 'Vorbereitet'
     sending: 'Senden'

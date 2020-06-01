@@ -77,6 +77,8 @@ enhavo_newsletter_newsletter_update:
                         type: newsletter_send_test
                     send:
                         type: newsletter_send
+                    stats:
+                        type: newsletter_stats
 
 enhavo_newsletter_newsletter_table:
     options:
@@ -85,6 +87,9 @@ enhavo_newsletter_newsletter_table:
     defaults:
         _controller: enhavo_newsletter.controller.newsletter:tableAction
         _sylius:
+            sorting:
+                createdAt: desc
+                finishAt: desc
             filters:
                 subject:
                     type: text
@@ -108,13 +113,22 @@ enhavo_newsletter_newsletter_table:
                             permission: ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_SEND
                 columns:
                     subject:
+                        sortable: true
                         type: property
                         label: newsletter.form.label.subject
                         property: subject
-                        width: 8
+                        width: 6
                     state:
+                        sortable: true
                         type: newsletter_state
-                        width: 4
+                        width: 3
+                    createdAt:
+                        sortable: true
+                        type: datetime
+                        label: newsletter.label.createdAt
+                        property: createdAt
+                        width: 3
+                        condition: "desktop"
 
 enhavo_newsletter_newsletter_delete:
     options:
@@ -199,3 +213,13 @@ enhavo_newsletter_newsletter_test_form:
     defaults:
         _config:
             form: Enhavo\Bundle\NewsletterBundle\Form\Type\NewsletterEmailType
+
+enhavo_newsletter_newsletter_stats:
+    options:
+        expose: true
+    path: /enhavo/newsletter/newsletter/stats/{id}
+    methods: [GET]
+    controller: enhavo_newsletter.controller.newsletter:statsAction
+    defaults:
+        _sylius:
+            serialization_groups: ['stats']

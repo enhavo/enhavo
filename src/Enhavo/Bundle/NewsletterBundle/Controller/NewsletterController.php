@@ -6,6 +6,8 @@ use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\AppBundle\Template\TemplateTrait;
 use Enhavo\Bundle\NewsletterBundle\Entity\Newsletter;
+use Enhavo\Bundle\NewsletterBundle\Entity\Receiver;
+use Enhavo\Bundle\NewsletterBundle\Entity\Tracking;
 use Enhavo\Bundle\NewsletterBundle\Form\Type\NewsletterEmailType;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager;
@@ -34,13 +36,26 @@ class NewsletterController extends ResourceController
         if (!$contentDocument) {
             throw $this->createNotFoundException();
         }
-        return $this->showResourceAction($contentDocument);
+        return $this->showResourceAction($contentDocument, $request);
     }
 
-    public function showResourceAction(Newsletter $contentDocument)
+    public function showResourceAction(Newsletter $contentDocument, Request $request)
     {
         $manager = $this->get(NewsletterManager::class);
-        $content = $manager->render($contentDocument, $manager->getTestParameters());
+
+        $token = $request->get('token');
+        if($token) {
+            $receiver = $this->getDoctrine()->getRepository(Receiver::class)->findOneBy([
+                'token' => $token
+            ]);
+
+            if($receiver instanceof Receiver && $receiver->getNewsletter() === $contentDocument) {
+                $content = $manager->render($receiver);
+                return new Response($content);
+            }
+        }
+
+        $content = $manager->renderPreview($contentDocument);
         return new Response($content);
     }
 
@@ -112,5 +127,23 @@ class NewsletterController extends ResourceController
                 'message' => $this->get('translator')->trans('newsletter.action.test_mail.error', [], 'EnhavoNewsletterBundle')
             ], 400);
         }
+    }
+
+    public function statsAction(Request $request)
+    {
+        /** @var RequestConfiguration $configuration */
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+        /** @var NewsletterInterface $newsletter */
+        $newsletter = $this->singleResourceProvider->get($configuration, $this->repository);
+
+        $view = $this->viewFactory->create('app', [
+            'request_configuration' => $configuration,
+            'metadata' => $this->metadata,
+            'resource' => $newsletter,
+            'template' => 'admin/resource/newsletter/stats.html.twig',
+            'javascripts' => ['enhavo/newsletter-stats']
+        ]);
+
+        return $this->viewHandler->handle($configuration, $view);
     }
 }

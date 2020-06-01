@@ -41,16 +41,20 @@ class SubscriberProvider implements ProviderInterface
         $receiver = new Receiver();
         $receiver->setEmail($subscriber->getEmail());
         $receiver->setParameters([
-
+            'token' => $subscriber->getToken()
         ]);
         return $receiver;
     }
 
-    public function getTestParameters()
+    public function getTestReceivers(NewsletterInterface $newsletter): array
     {
-        return [
+        $receiver = new Receiver();
+        $receiver->setToken('token');
+        $receiver->setNewsletter($newsletter);
+        $receiver->setParameters([
             'firstName' => 'Foo',
-            'lastName' => 'Bar',
-        ];
+            'lastName' => 'Bar'
+        ]);
+        return [$receiver];
     }
 }
