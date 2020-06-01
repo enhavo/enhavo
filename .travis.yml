@@ -25,6 +25,7 @@ before_install:
 install:
     - mysql -e 'create database enhavo_test'
     - composer install --no-interaction --optimize-autoloader --prefer-dist
+    - cd vendor/symfony/panther/chromedriver-bin && bash update.sh
 
 before_script:
     - bin/console cache:warmup --env=test --no-debug
@@ -40,7 +41,6 @@ before_script:
 
 script:
     - composer validate
-    - echo $WEBDRIVER_CHROME_DRIVER
     - bin/behat --strict
     - ./phpunit --stop-on-failure
     - vendor/bin/phplint
