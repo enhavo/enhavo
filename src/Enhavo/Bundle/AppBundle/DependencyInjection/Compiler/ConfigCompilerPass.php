@@ -21,7 +21,7 @@ use Symfony\Component\Yaml\Yaml;
  *
  * The configFilename is the file that should be read in the config directory of the bundle.
  * For example the configFilename is "search" and the cacheFilename "search_metadata",
- * than all files in "XXXBundle/Resources/config/search.yml" will be read and save to "CACHE/search_metadata.json"
+ * than all files in "XXXBundle/Resources/config/search.yaml" will be read and save to "CACHE/search_metadata.json"
  *
  * @package Enhavo\Bundle\AppBundle\DependencyInjection\Compiler
  */
@@ -81,7 +81,7 @@ class ConfigCompilerPass implements CompilerPassInterface
         $bundleName = array_pop($classNameParts);
         $resource = sprintf('@%s', $bundleName);
         $pathToBundle = $this->kernel->locateResource($resource);
-        return sprintf('%sResources/config/%s.yml', $pathToBundle, $this->configFilename);
+        return sprintf('%sResources/config/%s.yaml', $pathToBundle, $this->configFilename);
     }
 
     private function writeToCache($content)

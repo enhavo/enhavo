@@ -88,12 +88,12 @@ class MakeBlock extends AbstractMaker
         }
 
         $io->writeln('');
-        $io->writeln('<options=bold>Add this to your enhavo.yml config file under enhavo_block -> blocks:</>');
+        $io->writeln('<options=bold>Add this to your enhavo.yaml config file under enhavo_block -> blocks:</>');
         $io->writeln($this->generateEnhavoConfigCode($block, $type));
         $io->writeln('');
 
         if($type) {
-            $io->writeln('<options=bold>Add this to your service.yml config</>');
+            $io->writeln('<options=bold>Add this to your service.yaml config</>');
             $io->writeln($this->generateServiceCode($block));
         }
         $io->writeln('');

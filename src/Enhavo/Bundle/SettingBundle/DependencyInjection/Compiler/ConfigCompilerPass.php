@@ -59,7 +59,7 @@ class ConfigCompilerPass implements CompilerPassInterface
         $bundleName = array_pop($classNameParts);
         $resource = sprintf('@%s', $bundleName);
         $pathToBundle = $this->kernel->locateResource($resource);
-        return sprintf('%sResources/config/setting.yml', $pathToBundle);
+        return sprintf('%sResources/config/setting.yaml', $pathToBundle);
     }
 
     protected function writeToCache($file)

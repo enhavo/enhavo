@@ -1,4 +1,4 @@
 enhavo_setting:
-    resource: "@EnhavoSettingBundle/Resources/config/routing/setting.yml"
+    resource: "@EnhavoSettingBundle/Resources/config/routing/setting.yaml"
     prefix: /admin
 

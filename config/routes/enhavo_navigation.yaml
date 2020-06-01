@@ -1,7 +1,7 @@
 enhavo_navigation:
-    resource: "@EnhavoNavigationBundle/Resources/config/routing/navigation.yml"
+    resource: "@EnhavoNavigationBundle/Resources/config/routing/navigation.yaml"
     prefix: /admin
 
 enhavo_navigation_form:
-    resource: "@EnhavoNavigationBundle/Resources/config/routing/form.yml"
+    resource: "@EnhavoNavigationBundle/Resources/config/routing/form.yaml"
     prefix: /

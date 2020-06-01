@@ -60,9 +60,9 @@ class MakeRouting extends AbstractMaker
             $path = sprintf('%s/config/routes/admin/%s.yaml', $this->util->getProjectPath(), $this->util->camelCaseToSnakeCase($resource));
         } else {
             $app = $this->util->getBundleNameWithoutPostfix($bundle);
-            $path = sprintf('%s/Resources/config/routing/admin/%s.yml', $this->util->getBundlePath($bundle), $this->util->camelCaseToSnakeCase($resource));
+            $path = sprintf('%s/Resources/config/routing/admin/%s.yaml', $this->util->getBundlePath($bundle), $this->util->camelCaseToSnakeCase($resource));
         }
-        
+
         $generator->generateFile(
             $path,
             $this->util->getRealpath('@EnhavoAppBundle/Resources/skeleton/routing.tpl.php'),

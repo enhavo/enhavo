@@ -4,15 +4,17 @@ namespace Enhavo\Bundle\SearchBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * This is the class that loads and manages your bundle configuration
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class EnhavoSearchExtension extends Extension
+class EnhavoSearchExtension extends Extension implements PrependExtensionInterface
 {
     /**
      * {@inheritDoc}
@@ -35,13 +37,26 @@ class EnhavoSearchExtension extends Extension
 
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services/services.yml');
-        $loader->load('services/general.yml');
-        $loader->load('services/metadata.yml');
-        $loader->load('services/extractor.yml');
-        $loader->load('services/indexer.yml');
-        $loader->load('services/elastic_search.yml');
-        $loader->load('services/database.yml');
-        $loader->load('services/filter.yml');
+        $loader->load('services/services.yaml');
+        $loader->load('services/general.yaml');
+        $loader->load('services/metadata.yaml');
+        $loader->load('services/extractor.yaml');
+        $loader->load('services/indexer.yaml');
+        $loader->load('services/elastic_search.yaml');
+        $loader->load('services/database.yaml');
+        $loader->load('services/filter.yaml');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function prepend(ContainerBuilder $container)
+    {
+        $configs = Yaml::parse(file_get_contents(__DIR__.'/../Resources/config/app/config.yaml'));
+        foreach($configs as $name => $config) {
+            if (is_array($config)) {
+                $container->prependExtensionConfig($name, $config);
+            }
+        }
     }
 }

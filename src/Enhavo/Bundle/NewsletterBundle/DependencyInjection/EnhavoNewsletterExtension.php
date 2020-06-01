@@ -6,7 +6,9 @@ use Sylius\Bundle\ResourceBundle\DependencyInjection\Extension\AbstractResourceE
 use Sylius\Component\Resource\Factory;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Symfony\Component\Yaml\Yaml;
 
 
 /**
@@ -14,7 +16,7 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class EnhavoNewsletterExtension extends AbstractResourceExtension
+class EnhavoNewsletterExtension extends AbstractResourceExtension implements PrependExtensionInterface
 {
     /**
      * {@inheritdoc}
@@ -42,9 +44,9 @@ class EnhavoNewsletterExtension extends AbstractResourceExtension
         $this->setStorageSettings($config, $container);
 
         $configFiles = array(
-            'services/services.yml',
-            'services/newsletter.yml',
-            'services/subscriber.yml',
+            'services/services.yaml',
+            'services/newsletter.yaml',
+            'services/subscriber.yaml',
         );
 
         foreach ($configFiles as $configFile) {
@@ -109,6 +111,19 @@ class EnhavoNewsletterExtension extends AbstractResourceExtension
             $container->setParameter('enhavo_newsletter.mailchimp.mapping', $config['storage']['settings']['mailchimp']['groups']['mapping']);
         } else {
             $container->setParameter('enhavo_newsletter.mailchimp.mapping', []);
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function prepend(ContainerBuilder $container)
+    {
+        $configs = Yaml::parse(file_get_contents(__DIR__.'/../Resources/config/app/config.yaml'));
+        foreach($configs as $name => $config) {
+            if (is_array($config)) {
+                $container->prependExtensionConfig($name, $config);
+            }
         }
     }
 }

@@ -1,2 +1,0 @@
-imports:
-    - { resource: '@EnhavoFormBundle/Resources/config/app/config.yml' }

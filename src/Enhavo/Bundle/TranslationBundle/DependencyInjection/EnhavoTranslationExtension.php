@@ -5,14 +5,16 @@ namespace Enhavo\Bundle\TranslationBundle\DependencyInjection;
 use Sylius\Bundle\ResourceBundle\DependencyInjection\Extension\AbstractResourceExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * This is the class that loads and manages your bundle configuration.
  *
  * @link http://symfony.com/doc/current/cookbook/bundles/extension.html
  */
-class EnhavoTranslationExtension extends AbstractResourceExtension
+class EnhavoTranslationExtension extends AbstractResourceExtension implements PrependExtensionInterface
 {
     /**
      * {@inheritdoc}
@@ -30,9 +32,22 @@ class EnhavoTranslationExtension extends AbstractResourceExtension
         $container->setParameter('enhavo_translation.translator.access_control', $config['translator']['access_control']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services/translator.yml');
-        $loader->load('services/translation.yml');
-        $loader->load('services/form.yml');
-        $loader->load('services/metadata.yml');
+        $loader->load('services/translator.yaml');
+        $loader->load('services/translation.yaml');
+        $loader->load('services/form.yaml');
+        $loader->load('services/metadata.yaml');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function prepend(ContainerBuilder $container)
+    {
+        $configs = Yaml::parse(file_get_contents(__DIR__.'/../Resources/config/app/config.yaml'));
+        foreach($configs as $name => $config) {
+            if (is_array($config)) {
+                $container->prependExtensionConfig($name, $config);
+            }
+        }
     }
 }

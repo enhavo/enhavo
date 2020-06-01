@@ -1,5 +1,5 @@
 enhavo_article_article:
-    resource: "@EnhavoArticleBundle/Resources/config/routing/admin/article.yml"
+    resource: "@EnhavoArticleBundle/Resources/config/routing/admin/article.yaml"
     prefix:   /
 
 enhavo_article_tag:
