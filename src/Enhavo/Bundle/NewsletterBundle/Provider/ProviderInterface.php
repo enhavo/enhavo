@@ -14,7 +14,8 @@ interface ProviderInterface
     public function getReceivers(NewsletterInterface $newsletter): array;
 
     /**
-     * @return array
+     * @param NewsletterInterface $newsletter
+     * @return Receiver[]
      */
-    public function getTestParameters();
+    public function getTestReceivers(NewsletterInterface $newsletter): array;
 }

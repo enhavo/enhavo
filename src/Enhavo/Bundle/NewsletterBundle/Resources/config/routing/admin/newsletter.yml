@@ -113,14 +113,17 @@ enhavo_newsletter_newsletter_table:
                             permission: ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_SEND
                 columns:
                     subject:
+                        sortable: true
                         type: property
                         label: newsletter.form.label.subject
                         property: subject
                         width: 6
                     state:
+                        sortable: true
                         type: newsletter_state
                         width: 3
                     createdAt:
+                        sortable: true
                         type: datetime
                         label: newsletter.label.createdAt
                         property: createdAt
@@ -217,3 +220,6 @@ enhavo_newsletter_newsletter_stats:
     path: /enhavo/newsletter/newsletter/stats/{id}
     methods: [GET]
     controller: enhavo_newsletter.controller.newsletter:statsAction
+    defaults:
+        _sylius:
+            serialization_groups: ['stats']

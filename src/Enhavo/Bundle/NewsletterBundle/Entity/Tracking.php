@@ -12,6 +12,9 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 
 class Tracking implements ResourceInterface
 {
+    const TRACKING_OPEN = 'open';
+    const TRACKING_BOUNCE = 'bounce';
+
     /**
      * @var integer
      */

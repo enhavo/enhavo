@@ -122,3 +122,29 @@ If you edit this file before, you need to add the configs inside the js callback
     });
 
     module.exports = EnhavoEncore.export();
+
+
+10. Change newsletter routing ``config/routes/enhavo_newsletter.yaml``
+
+.. code:: yaml
+
+    enhavo_newsletter_admin:
+        resource: "@EnhavoNewsletterBundle/Resources/config/routing/admin/*"
+        prefix: /admin
+
+    enhavo_newsletter_theme:
+        resource: "@EnhavoNewsletterBundle/Resources/config/routing/theme/*"
+        prefix: /
+
+11. ``Enhavo\Bundle\NewsletterBundle\Provider\ProviderInterface`` changed
+
+.. code:: php`
+
+    // before
+    public function getTestParameters(): array;
+
+    // after
+    public function getTestReceivers(NewsletterInterface $newsletter): array;
+
+
+12. Newsletter template parameters changed. The parameter ``parameters`` is now ``receiver.parameters``

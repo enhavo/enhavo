@@ -4,7 +4,6 @@ namespace Enhavo\Bundle\NewsletterBundle\Entity;
 
 use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
-use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 use Enhavo\Bundle\RoutingBundle\Model\Slugable;
 use Sylius\Component\Resource\Model\ResourceInterface;
@@ -35,17 +34,17 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
     private $content;
 
     /**
-     * @var \DateTime
+     * @var \DateTime|null
      */
     private $startAt;
 
     /**
-     * @var \DateTime
+     * @var \DateTime|null
      */
     private $finishAt;
 
     /**
-     * @var \DateTime
+     * @var \DateTime|null
      */
     private $createdAt;
 
@@ -167,7 +166,7 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
     /**
      * @return \DateTime
      */
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
@@ -175,7 +174,7 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
     /**
      * @param \DateTime $createdAt
      */
-    public function setCreatedAt(\DateTime $createdAt): void
+    public function setCreatedAt(?\DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;
     }

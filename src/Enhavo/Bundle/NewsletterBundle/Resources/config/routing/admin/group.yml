@@ -40,20 +40,19 @@ enhavo_newsletter_group_table:
     defaults:
         _controller: enhavo_newsletter.controller.group:tableAction
         _sylius:
+            sorting:
+                name: asc
             viewer:
                 columns:
                     name:
+                        sortable: true
                         property: name
-                        width: 12
-                        label: id
+                        width: 8
+                        label: group.label.name
                         type: property
-                    code:
-                        property: code
-                        width: 12
-                        label: code
-                        type: property
+                        translation_domain: EnhavoNewsletterBundle
                     action:
-                        width: 2
+                        width: 4
                         label: label.edit
                         translation_domain: EnhavoAppBundle
                         type: action

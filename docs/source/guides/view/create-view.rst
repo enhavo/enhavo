@@ -1,8 +1,6 @@
 Create View
 -----------
 
-
-
 .. code:: typescript
 
   import View from "@enhavo/app/View/View";

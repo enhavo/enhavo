@@ -7,6 +7,7 @@ const ThemePackage = require('./assets/node_modules/@enhavo/theme/Encore/EncoreR
 const MediaPackage = require('./assets/node_modules/@enhavo/media/Encore/EncoreRegistryPackage');
 const DashboardPackage = require('./assets/node_modules/@enhavo/dashboard/Encore/EncoreRegistryPackage');
 const UserPackage = require('./assets/node_modules/@enhavo/user/Encore/EncoreRegistryPackage');
+const NewsletterPackage = require('./assets/node_modules/@enhavo/newsletter/Encore/EncoreRegistryPackage');
 
 EnhavoEncore
     // register packages
@@ -16,6 +17,7 @@ EnhavoEncore
     .register(new DashboardPackage())
     .register(new UserPackage())
     .register(new ThemePackage(ThemeLoader))
+    .register(new NewsletterPackage())
 ;
 
 EnhavoEncore.add('enhavo', (Encore) => {

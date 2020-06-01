@@ -23,17 +23,34 @@ class AppViewer extends BaseViewer
     {
         parent::buildTemplateParameters($parameters, $requestConfiguration, $options);
 
-        $parameters->set('data', [
+        $data = [
             'view' => [
                 'id' => $this->getViewId(),
                 'label' => $this->container->get('translator')->trans($options['label'], [], $parameters->get('translation_domain'))
-            ]
-        ]);
+            ],
+        ];
+
+        $resourceData = $this->getResourceData($requestConfiguration, $options);
+        if($resourceData) {
+            $data['resource'] = $resourceData;
+        }
+
+        $parameters->set('data', $data);
 
         $parameters->set('actions', $this->mergeConfigArray([
             $options['actions'],
             $this->getViewerOption('actions', $requestConfiguration)
         ]));
+    }
+
+    private function getResourceData(RequestConfiguration $requestConfiguration, array $options)
+    {
+        $resourceData = null;
+        $serializationGroups = $requestConfiguration->getSerializationGroups();
+        if($serializationGroups && $options['resource']) {
+            $resourceData = $this->container->get('serializer')->normalize($options['resource'], null, ['groups' => $serializationGroups]);
+        }
+        return $resourceData;
     }
 
     public function configureOptions(OptionsResolver $optionsResolver)
