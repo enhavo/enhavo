@@ -1,9 +1,0 @@
-enhavo_shop_theme_payment_after:
-    path: /after
-    defaults:
-        _controller: enhavo_shop.controller.payment:afterAction
-
-enhavo_shop_theme_payment_purchase:
-    path: /purchase/{token}
-    defaults:
-        _controller: enhavo_shop.controller.payment:purchaseAction

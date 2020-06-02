@@ -1,4 +1,3 @@
-enhavo_setting:
-    resource: "@EnhavoSettingBundle/Resources/config/routing/setting.yaml"
+enhavo_setting_admin:
+    resource: "@EnhavoSettingBundle/Resources/config/routes/admin/*"
     prefix: /admin
-

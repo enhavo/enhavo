@@ -1,3 +1,7 @@
 enhavo_comment_admin:
-    resource: "@EnhavoCommentBundle/Resources/config/routing/admin/*"
+    resource: "@EnhavoCommentBundle/Resources/config/routes/admin/*"
     prefix: /admin
+
+enhavo_comment_theme:
+    resource: "@EnhavoCommentBundle/Resources/config/routes/theme/*"
+    prefix: /

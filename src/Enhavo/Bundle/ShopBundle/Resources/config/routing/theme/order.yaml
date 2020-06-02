@@ -1,8 +1,0 @@
-enhavo_shop_theme_order_show:
-    path: /{token}
-    defaults:
-        _controller: sylius.controller.order:showAction
-        _sylius:
-            repository:
-                method: findByToken
-                arguments: $token

@@ -1,11 +1,7 @@
 enhavo_user_admin:
-    resource: "@EnhavoUserBundle/Resources/config/routing/admin.yaml"
+    resource: "@EnhavoUserBundle/Resources/config/routes/admin/*"
     prefix: /admin
 
-enhavo_group_admin_group:
-    resource: "@EnhavoUserBundle/Resources/config/routing/admin/group.yaml"
-    prefix: /admin
-
-enhavo_user_theme:
-    resource: "@EnhavoUserBundle/Resources/config/routing/theme.yaml"
-    prefix: /
+enhavo_user_user:
+    resource: "@EnhavoUserBundle/Resources/config/routes/user/*"
+    prefix: /user

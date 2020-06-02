@@ -1,0 +1,5 @@
+enhavo_contact_submit:
+    path: /contact/{name}/submit
+    defaults:
+      _controller: enhavo_contact.controller.contact:submitAction
+    methods: [POST, GET]

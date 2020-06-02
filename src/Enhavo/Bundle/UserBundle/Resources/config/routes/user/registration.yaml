@@ -1,0 +1,34 @@
+enhavo_user_theme_registration_register:
+    options:
+        expose: true
+    path: /registration/register
+    methods: [GET, POST]
+    defaults:
+        _controller: enhavo_user.controller.registration:registerAction
+        _sylius:
+            viewer:
+                mailTemplate: ~
+                confirmRoute: enhavo_user_reset_password_confirm
+
+enhavo_user_theme_registration_check:
+    path: /registration/check
+    methods: [GET]
+    defaults:
+        _controller: enhavo_user.controller.registration:checkAction
+        _template: theme/secutiry/registration/check.html.twig
+
+enhavo_user_theme_registration_confirm:
+    path: /registration/confirm/{token}
+    methods: [GET]
+    defaults:
+        _controller: enhavo_user.controller.registration:confirmAction
+        _template: EnhavoUserBundle:Theme/User:registration-confirmed.html.twig
+
+enhavo_user_theme_registration_finish:
+    options:
+        expose: true
+    path: /registration/finish
+    methods: [GET, POST]
+    defaults:
+        _controller: enhavo_user.controller.registration:finishAction
+        _template: EnhavoUserBundle:Theme/User:checkEmail.html.twig
