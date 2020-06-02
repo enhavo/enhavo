@@ -148,3 +148,6 @@ If you edit this file before, you need to add the configs inside the js callback
 
 
 12. Newsletter template parameters changed. The parameter ``parameters`` is now ``receiver.parameters``
+
+13. Delete all enhavo config files ``config/packages/enhavo_*, which only imported yaml files from it's bundle. If you include
+search or translation configs, you can keep that lines but change it to ``yaml`` instead of ``yml``
