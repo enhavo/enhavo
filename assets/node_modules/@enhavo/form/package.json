@@ -18,6 +18,6 @@
     "moment": "^2.18.1",
     "select2": "~3.5.1",
     "sortablejs": "^1.10.2",
-    "tinymce": "~5.1.4"
+    "tinymce": "~5.3.1"
   }
 }

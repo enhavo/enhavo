@@ -24,14 +24,16 @@ class EncoreRegistryPackage
         if(name === 'enhavo') {
             config.plugins.push(new CopyWebpackPlugin([
                 { from: 'node_modules/tinymce/skins', to: 'enhavo/skins' },
-                { from: 'node_modules/tinymce/plugins', to: 'enhavo/plugins' }
+                { from: 'node_modules/tinymce/plugins', to: 'enhavo/plugins' },
+                { from: 'node_modules/tinymce/icons', to: 'enhavo/icons' }
             ]));
         }
 
         if(config.theme) {
             config.plugins.push(new CopyWebpackPlugin([
                 { from: 'node_modules/tinymce/skins', to: 'enhavo/skins' },
-                { from: 'node_modules/tinymce/plugins', to: 'enhavo/plugins' }
+                { from: 'node_modules/tinymce/plugins', to: 'enhavo/plugins' },
+                { from: 'node_modules/tinymce/icons', to: 'enhavo/icons' }
             ]));
         }
     }
@@ -40,7 +42,7 @@ class EncoreRegistryPackage
 class Config
 {
     constructor() {
-        this.theme = true;
+        this.theme = false;
     }
 }
 
