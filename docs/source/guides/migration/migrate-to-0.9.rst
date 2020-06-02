@@ -1,14 +1,14 @@
 Migrate to 0.9
 ==============
 
-1. Add this line at the end of ``assets/enhavo/form.ts``
+.. rubric:: 1. Add this line at the end of ``assets/enhavo/form.ts``
 
 .. code:: js
 
     Application.getView().checkUrl();
 
 
-2. Create registry file ``assets/enhavo/registry/widget.ts``
+.. rubric:: 2. Create registry file ``assets/enhavo/registry/widget.ts``
 
 .. code::
 
@@ -24,7 +24,7 @@ Migrate to 0.9
         }
     }
 
-3. Add widget registry to ``assets/enhavo/main.ts``
+.. rubric:: 3. Add widget registry to ``assets/enhavo/main.ts``
 
 .. code::
 
@@ -36,9 +36,9 @@ Migrate to 0.9
 
     Application.getVueLoader().load(() => import("@enhavo/app/Main/Components/MainComponent.vue"));
 
-4. Rename routing manager service id ``enhavo_routing.manager.route`` to FQCN ``Enhavo\Bundle\RoutingBundle\Manager\RouteManager``
+.. rubric:: 4. Rename routing manager service id ``enhavo_routing.manager.route`` to FQCN ``Enhavo\Bundle\RoutingBundle\Manager\RouteManager``
 
-5. Rename ``property`` to ``properties`` for route PrefixGenerator type.
+.. rubric:: 5. Rename ``property`` to ``properties`` for route PrefixGenerator type.
 
 .. code:: yaml
 
@@ -53,10 +53,12 @@ Migrate to 0.9
                       # now
                       properties: title
 
-6. If the action component ``create-action`` was used, you have to migrate it to ``open-action``. `
+
+.. rubric:: 6. If the action component ``create-action`` was used, you have to migrate it to ``open-action``. `
 The action type ``create`` is not affected.
 
-7. Add form registry to ``assets/enhavo/index.ts``
+
+.. rubric:: 7. Add form registry to ``assets/enhavo/index.ts``
 
 .. code::
 
@@ -68,7 +70,7 @@ The action type ``create`` is not affected.
 
    Application.getVueLoader().load(() => import("@enhavo/app/Index/Components/IndexComponent.vue"));
 
-8. Add resource parameter to Action
+.. rubric:: 8. Add resource parameter to Action
 
 This changes only may apply if you have this functions define by your own
 
@@ -87,8 +89,9 @@ This changes only may apply if you have this functions define by your own
     // to this line
     public function isHidden(array $options, $resource = null);
 
-9. Update your ``webpack.config.js``. The way how to include other bundles and configure
-your webpack/encore has changed. Just use
+.. rubric:: 9. Update your ``webpack.config.js``.
+
+The way how to include other bundles and configure your webpack/encore has changed. Just use
 the following lines if you never edit your ``webpack.config.js`` .
 If you edit this file before, you need to add the configs inside the js callbacks.
 
@@ -124,9 +127,11 @@ If you edit this file before, you need to add the configs inside the js callback
     module.exports = EnhavoEncore.export();
 
 
-10. ``Enhavo\Bundle\NewsletterBundle\Provider\ProviderInterface`` changed
+.. rubric:: 10. ``Enhavo\Bundle\NewsletterBundle\Provider\ProviderInterface`` changed
 
-.. code:: php`
+Return a test receiver with parameters now.
+
+.. code:: php
 
     // before
     public function getTestParameters(): array;
@@ -135,10 +140,16 @@ If you edit this file before, you need to add the configs inside the js callback
     public function getTestReceivers(NewsletterInterface $newsletter): array;
 
 
-11. Newsletter template parameters changed. The parameter ``parameters`` is now ``receiver.parameters``
+.. rubric:: 11. Newsletter template parameters changed.
 
-12. Delete all enhavo config files ``config/packages/enhavo_*``, which only imported yaml files from it's bundle. If you include
-search or translation configs, you can keep that lines but change it to ``yaml`` instead of ``yml``
+The parameter ``parameters`` is now ``receiver.parameters``
 
-13. Update your routes by download  :download:`this zip file </_static/download/migrate-routes-0.9.zip>` and overwrite the files in ``config/routes`` if they exists.
-If you made changes to the file before you have to merge the file yourself.
+.. rubric:: 12. Delete all enhavo config files ``config/packages/enhavo_*``
+
+If you have other contents in that files then import yaml files from it's bundle. You may keep that changes.
+If you include search or translation configs, you can keep that lines as well but change it to ``yaml`` instead of ``yml``
+
+.. rubric:: 13. Update your routes.
+
+Download :download:`this zip file </_static/download/migrate-routes-0.9.zip>` and overwrite the files in ``config/routes`` if they exists.
+Note that the file in your project probably named ``*.yml`` instead of ``*.yaml``. If you made changes to the file before you have to merge the file yourself.
