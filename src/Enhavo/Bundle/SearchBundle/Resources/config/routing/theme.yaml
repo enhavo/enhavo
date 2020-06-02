@@ -1,6 +1,0 @@
-enhavo_search_theme_submit:
-    path:     /search
-    defaults:
-        _controller: enhavo_search.controller.search:submitAction
-        _sylius:
-            template: 'EnhavoSearchBundle:Theme:Search/result.html.twig'

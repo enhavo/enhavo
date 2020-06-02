@@ -1,11 +1,7 @@
-enhavo_calendar:
-    resource: "@EnhavoCalendarBundle/Resources/config/routing/admin/appointment.yaml"
+enhavo_calendar_admin:
+    resource: "@EnhavoCalendarBundle/Resources/config/routes/admin/*"
     prefix: /admin
 
-enhavo_calendar_export:
-    resource: "@EnhavoCalendarBundle/Resources/config/routing/theme/export.yaml"
-    prefix: /
-
-enhavo_calendar_appointment:
-    resource: "@EnhavoCalendarBundle/Resources/config/routing/theme/appointment.yaml"
+enhavo_calendar_theme:
+    resource: "@EnhavoCalendarBundle/Resources/config/routes/theme/*"
     prefix: /

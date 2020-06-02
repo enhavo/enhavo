@@ -1,7 +1,7 @@
 enhavo_article_admin:
-    resource: "@EnhavoArticleBundle/Resources/config/routing/admin.yaml"
+    resource: "@EnhavoArticleBundle/Resources/config/routes/admin/*"
     prefix: /admin
 
 enhavo_article_theme:
-    resource: "@EnhavoArticleBundle/Resources/config/routing/theme.yaml"
+    resource: "@EnhavoArticleBundle/Resources/config/routes/theme/*"
     prefix: /

@@ -1,7 +1,11 @@
 enhavo_shop_admin:
-    resource: "@EnhavoShopBundle/Resources/config/routing/admin.yaml"
+    resource: "@EnhavoShopBundle/Resources/config/routes/admin/*"
     prefix: /admin
 
+enhavo_shop_user:
+    resource: "@EnhavoShopBundle/Resources/config/routes/user/*"
+    prefix: /user
+
 enhavo_shop_theme:
-    resource: "@EnhavoShopBundle/Resources/config/routing/theme.yaml"
+    resource: "@EnhavoShopBundle/Resources/config/routes/theme/*"
     prefix: /

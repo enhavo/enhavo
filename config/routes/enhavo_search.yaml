@@ -1,8 +1,7 @@
 enhavo_search_admin:
-    resource: "@EnhavoSearchBundle/Resources/config/routing/admin.yaml"
+    resource: "@EnhavoSearchBundle/Resources/config/routes/admin/*"
     prefix: /admin
 
-enhavo_theme_search:
-    resource: "@EnhavoSearchBundle/Resources/config/routing/theme.yaml"
+enhavo_search_theme:
+    resource: "@EnhavoSearchBundle/Resources/config/routes/theme/*"
     prefix: /
-

@@ -1,0 +1,37 @@
+enhavo_shop_theme_cart_save:
+    path: /cart/save.{_format}
+    defaults:
+        _controller: sylius.controller.cart:saveAction
+        _format: json
+
+enhavo_shop_theme_cart_save_quantity:
+    path: /cart/save/{id}/quantity.{_format}
+    defaults:
+        _controller: sylius.controller.cart:saveQuantityAction
+        _format: json
+
+enhavo_shop_theme_cart_clear:
+    path: /cart/clear.{_format}
+    defaults:
+        _controller: sylius.controller.cart:clearAction
+        _format: json
+
+enhavo_shop_theme_cart_item_add:
+    path: /cart/add.{_format}
+    defaults:
+        _controller: sylius.controller.cart_item:addAction
+        _format: json
+
+enhavo_shop_theme_cart_item_remove:
+    path: /cart/{id}/remove.{_format}
+    defaults:
+        _controller: sylius.controller.cart_item:removeAction
+        _format: json
+
+enhavo_shop_theme_cart_summary:
+    path: /cart/summary.{_format}
+    defaults:
+        _controller: sylius.controller.cart:summaryAction
+        _format: html
+        _sylius:
+            template: EnhavoShopBundle:Theme:Cart/summary.html.twig

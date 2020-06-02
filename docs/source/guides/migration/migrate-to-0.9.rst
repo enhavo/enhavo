@@ -124,19 +124,7 @@ If you edit this file before, you need to add the configs inside the js callback
     module.exports = EnhavoEncore.export();
 
 
-10. Change newsletter routing ``config/routes/enhavo_newsletter.yaml``
-
-.. code:: yaml
-
-    enhavo_newsletter_admin:
-        resource: "@EnhavoNewsletterBundle/Resources/config/routing/admin/*"
-        prefix: /admin
-
-    enhavo_newsletter_theme:
-        resource: "@EnhavoNewsletterBundle/Resources/config/routing/theme/*"
-        prefix: /
-
-11. ``Enhavo\Bundle\NewsletterBundle\Provider\ProviderInterface`` changed
+10. ``Enhavo\Bundle\NewsletterBundle\Provider\ProviderInterface`` changed
 
 .. code:: php`
 
@@ -147,7 +135,10 @@ If you edit this file before, you need to add the configs inside the js callback
     public function getTestReceivers(NewsletterInterface $newsletter): array;
 
 
-12. Newsletter template parameters changed. The parameter ``parameters`` is now ``receiver.parameters``
+11. Newsletter template parameters changed. The parameter ``parameters`` is now ``receiver.parameters``
 
-13. Delete all enhavo config files ``config/packages/enhavo_*, which only imported yaml files from it's bundle. If you include
+12. Delete all enhavo config files ``config/packages/enhavo_*``, which only imported yaml files from it's bundle. If you include
 search or translation configs, you can keep that lines but change it to ``yaml`` instead of ``yml``
+
+13. Update your routes by download  :download:`this zip file </_static/download/migrate-routes-0.9.zip>` and overwrite the files in ``config/routes`` if they exists.
+If you made changes to the file before you have to merge the file yourself.
