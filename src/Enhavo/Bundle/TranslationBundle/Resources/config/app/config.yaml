@@ -1,4 +1,5 @@
 enhavo_translation:
+    default_locale: '%locale%'
     translation_paths:
         - '#^/admin/.+#'
     translator:
