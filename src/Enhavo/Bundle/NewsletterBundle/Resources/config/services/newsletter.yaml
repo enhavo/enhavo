@@ -20,17 +20,21 @@ services:
     Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager:
         public: true
         class: Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager
-        calls:
-            - [setContainer, ['@service_container']]
         arguments:
           - '@doctrine.orm.entity_manager'
           - '@mailer'
           - '%enhavo_newsletter.newsletter.mail.from%'
-          - '%enhavo_newsletter.newsletter.templates%'
           - '@enhavo_app.util.secure_url_token_generator'
           - '@logger'
           - '@enhavo_newsletter.newsletter.provider'
-          - '@Enhavo\Bundle\NewsletterBundle\Newsletter\ParameterParser'
+          - '@Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterRenderer'
+
+    Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterRenderer:
+        arguments:
+            - '@twig'
+            - '@enhavo_app.template.manager'
+            - '@Enhavo\Bundle\NewsletterBundle\Newsletter\ParameterParser'
+            - '%enhavo_newsletter.newsletter.templates%'
 
     Enhavo\Bundle\NewsletterBundle\Newsletter\ParameterParser:
 

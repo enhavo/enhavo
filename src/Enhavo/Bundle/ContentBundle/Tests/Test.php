@@ -6,7 +6,7 @@
  * Time: 19:47
  */
 
-namespace Enhavo\Bundle\ShopBundle\Tests;
+namespace Enhavo\Bundle\ContentBundle\Tests;
 
 
 use PHPUnit\Framework\TestCase;

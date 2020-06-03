@@ -12,6 +12,31 @@ gulp.task('docs', function (cb) {
   });
 });
 
+
+gulp.task('test', function (cb) {
+    exec('bin/phpunit', function (err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        cb(err);
+    });
+});
+
+gulp.task('test:coverage', function (cb) {
+    exec('bin/phpunit --coverage-html build/coverage-html', function (err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        cb(err);
+    });
+});
+
+gulp.task('test:coverage:clover', function (cb) {
+    exec('bin/phpunit --coverage-clover build/coverage-clover', function (err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        cb(err);
+    });
+});
+
 gulp.task('docs:watch', function () {
     exec('sphinx-autobuild docs/source build/docs', function (err, stdout, stderr) {
         console.log(stdout);

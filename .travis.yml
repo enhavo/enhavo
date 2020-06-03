@@ -42,5 +42,5 @@ before_script:
 script:
     - composer validate
     - bin/behat --strict
-    - ./phpunit --stop-on-failure
+    - bin/phpunit --stop-on-failure
     - vendor/bin/phplint
