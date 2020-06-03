@@ -8,7 +8,6 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Newsletter;
 
-
 use Enhavo\Bundle\AppBundle\Template\TemplateManager;
 use Enhavo\Bundle\NewsletterBundle\Entity\Receiver;
 use Twig\Environment;
@@ -54,7 +53,10 @@ class NewsletterRenderer
             'receiver' => $receiver,
         ]);
 
-        $content = $this->parameterParser->parse($content, $receiver->getParameters());
+        $parameters = $receiver->getParameters();
+        if($parameters) {
+            $content = $this->parameterParser->parse($content, $receiver->getParameters());
+        }
 
         return $content;
     }

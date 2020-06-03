@@ -182,7 +182,7 @@ class NewsletterManager
             $attach = new \Swift_Attachment();
             $attach->setFilename($attachment->getFilename());
             $attach->setContentType($attachment->getMimeType());
-            $attach->setBody($attachment);
+            $attach->setBody($attachment->getContent()->getContent());
             $message->attach($attach);
         }
     }
