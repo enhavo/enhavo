@@ -10,6 +10,8 @@ namespace Enhavo\Bundle\NewsletterBundle\Tests\Newsletter;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface;
+use Enhavo\Bundle\MediaBundle\Content\Content;
+use Enhavo\Bundle\MediaBundle\Entity\File;
 use Enhavo\Bundle\NewsletterBundle\Entity\Newsletter;
 use Enhavo\Bundle\NewsletterBundle\Entity\Receiver;
 use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager;
@@ -110,6 +112,36 @@ class NewsletterManagerTest extends TestCase
         $this->assertFalse($receiverTwo->isSent());
     }
 
+    public function testSendAttachments()
+    {
+        $messageContainer = new MessageContainer();
+
+        $dependency = $this->createDependency();
+        $dependency->mailer->method('createMessage')->willReturn(new \Swift_Message());
+        $dependency->mailer->method('send')->willReturnCallback(function($message) use ($messageContainer) {
+            $messageContainer->message = $message;
+            return true;
+        });
+        $newsletterManager = $this->createNewsletterManager($dependency);
+
+        $receiver = new Receiver();
+        $receiver->setEmail('james@bond.com');
+
+        $content = new Content('attachmentContent');
+        $file = new File();
+        $file->setContent($content);
+
+        $newsletter = new Newsletter();
+        $newsletter->addAttachment($file);
+        $newsletter->setState(Newsletter::STATE_PREPARED);
+        $newsletter->addReceiver($receiver);
+
+        $newsletterManager->send($newsletter, 1);
+
+        $this->assertCount(1, $messageContainer->message->getChildren());
+        $this->assertEquals('attachmentContent', $messageContainer->message->getChildren()[0]->getBody());
+    }
+
     public function testFinishSending()
     {
         $dependency = $this->createDependency();
@@ -138,7 +170,7 @@ class NewsletterManagerTest extends TestCase
     /**
      * @expectedException \Enhavo\Bundle\NewsletterBundle\Exception\SendException
      */
-    public function sendNewsletterPrepared()
+    public function testSendNewsletterPrepared()
     {
         $dependency = $this->createDependency();
         $newsletterManager = $this->createNewsletterManager($dependency);
@@ -151,7 +183,7 @@ class NewsletterManagerTest extends TestCase
     /**
      * @expectedException \Enhavo\Bundle\NewsletterBundle\Exception\SendException
      */
-    public function sendNewsletterAlreadySent()
+    public function testSendNewsletterAlreadySent()
     {
         $dependency = $this->createDependency();
         $newsletterManager = $this->createNewsletterManager($dependency);
@@ -159,6 +191,56 @@ class NewsletterManagerTest extends TestCase
         $newsletter = new Newsletter();
         $newsletter->setState(Newsletter::STATE_SENT);
         $newsletterManager->send($newsletter);
+    }
+
+    public function testRender()
+    {
+        $dependency = $this->createDependency();
+        $dependency->renderer->method('render')->willReturn('content');
+        $newsletterManager = $this->createNewsletterManager($dependency);
+
+        $receiverOne = new Receiver();
+        $content = $newsletterManager->render($receiverOne);
+
+        $this->assertEquals('content', $content);
+    }
+
+    public function testRenderPreview()
+    {
+        $receiverOne = new Receiver();
+
+        $dependency = $this->createDependency();
+        $dependency->renderer->method('render')->willReturn('content');
+        $dependency->provider->method('getTestReceivers')->willReturn([$receiverOne]);
+        $newsletterManager = $this->createNewsletterManager($dependency);
+
+        $newsletter = new Newsletter();
+        $content = $newsletterManager->renderPreview($newsletter);
+
+        $this->assertEquals('content', $content);
+    }
+
+    public function testSendTest()
+    {
+        $messageContainer = new MessageContainer();
+        $newsletter = new Newsletter();
+        $receiver = new Receiver();
+        $receiver->setNewsletter($newsletter);
+
+        $dependency = $this->createDependency();
+        $dependency->renderer->method('render')->willReturn('content');
+        $dependency->provider->method('getTestReceivers')->willReturn([$receiver]);
+        $dependency->mailer->method('createMessage')->willReturn(new \Swift_Message());
+        $dependency->mailer->method('send')->willReturnCallback(function($message) use ($messageContainer) {
+            $messageContainer->message = $message;
+            return true;
+        });
+        $newsletterManager = $this->createNewsletterManager($dependency);
+
+        $newsletter = new Newsletter();
+        $newsletterManager->sendTest($newsletter, 'peter@pan.de');
+
+        $this->assertEquals('content', $messageContainer->message->getBody());
     }
 }
 
@@ -176,4 +258,10 @@ class DependencyProvider
     public $provider;
     /** @var NewsletterRenderer|\PHPUnit_Framework_MockObject_MockObject */
     public $renderer;
+}
+
+class MessageContainer
+{
+    /** @var \Swift_Message */
+    public $message;
 }

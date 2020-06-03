@@ -33,7 +33,7 @@
                 <directory>./src/Enhavo/Bundle/*/Resources</directory>
                 <directory>./src/Enhavo/Bundle/*/Behat</directory>
                 <directory>./src/Enhavo/Component/*/Tests</directory>
-                <directory>./src/Enhavo/Migration/*</directory>
+                <directory>./src/Enhavo/Migration</directory>
                 <directory>./src/Enhavo/Kernel.php</directory>
                 <directory>./src/Enhavo/CacheKernel.php</directory>
             </exclude>

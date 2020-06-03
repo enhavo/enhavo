@@ -37,7 +37,7 @@ class Receiver implements ResourceInterface
     /**
      * @var array
      */
-    private $parameters;
+    private $parameters = [];
 
     /**
      * @var string
