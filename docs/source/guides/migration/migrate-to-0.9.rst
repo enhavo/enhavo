@@ -153,3 +153,5 @@ If you include search or translation configs, you can keep that lines as well bu
 
 Download :download:`this zip file </_static/download/migrate-routes-0.9.zip>` and overwrite the files in ``config/routes`` if they exists.
 Note that the file in your project probably named ``*.yml`` instead of ``*.yaml``. If you made changes to the file before you have to merge the file yourself.
+
+.. rubric:: 14. Delete file ``config/routes/enhavo_taxonomy.yaml`` if exists
