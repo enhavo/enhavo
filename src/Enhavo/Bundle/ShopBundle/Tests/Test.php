@@ -8,7 +8,6 @@
 
 namespace Enhavo\Bundle\ShopBundle\Tests;
 
-
 use PHPUnit\Framework\TestCase;
 
 class Test extends TestCase
