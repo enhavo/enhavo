@@ -15,16 +15,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class OpenActionType extends AbstractUrlActionType implements ActionTypeInterface
 {
     /**
-     * ExportModalActionType constructor.
-     * @param TranslatorInterface $translator
-     * @param RouterInterface $router
-     */
-    public function __construct(TranslatorInterface $translator, RouterInterface $router)
-    {
-        parent::__construct($translator, $router);
-    }
-
-    /**
      * @param array $options
      * @param null $resource
      * @return array|string
@@ -48,7 +38,7 @@ class OpenActionType extends AbstractUrlActionType implements ActionTypeInterfac
 
         $resolver->setDefaults([
             'component' => 'open-action',
-            'label' => 'Open',
+            'label' => 'label.open',
             'icon' => 'arrow_forward',
             'target' => '_self',
             'view_key' => null

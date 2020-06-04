@@ -22,16 +22,6 @@ class DuplicateActionType extends AbstractUrlActionType implements ActionTypeInt
         return $data;
     }
 
-    protected function getUrl(array $options, $resource = null)
-    {
-        $parameters = [];
-        if(!isset($options['route_parameters']['id'])) {
-            $parameters['id'] = $resource->getId();
-        }
-        $parameters = array_merge_recursive($parameters, $options['route_parameters']);
-        return $this->router->generate($options['route'], $parameters);
-    }
-
     public function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);
@@ -44,7 +34,8 @@ class DuplicateActionType extends AbstractUrlActionType implements ActionTypeInt
             'confirm' => true,
             'confirm_message' => 'message.duplicate.confirm',
             'confirm_label_ok' => 'label.ok',
-            'confirm_label_cancel' => 'label.cancel'
+            'confirm_label_cancel' => 'label.cancel',
+            'append_id' => true
         ]);
     }
 

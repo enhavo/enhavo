@@ -43,16 +43,15 @@ abstract class AbstractUrlActionType extends AbstractActionType
 
     protected function getUrl(array $options, $resource = null)
     {
-        if($resource) {
-            $parameters = [];
-            if(!isset($options['route_parameters']['id'])) {
-                $parameters['id'] = $resource->getId();
-            }
-            $parameters = array_merge_recursive($parameters, $options['route_parameters']);
-            return $this->router->generate($options['route'], $parameters);
+        $parameters = [];
+
+        if($options['append_id'] && $resource !== null && $resource->getId() !== null) {
+            $parameters[$options['append_key']] = $resource->getId();
         }
 
-        return $this->router->generate($options['route'], $options['route_parameters']);
+        $parameters = array_merge_recursive($parameters, $options['route_parameters']);
+
+        return $this->router->generate($options['route'], $parameters);
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -60,7 +59,9 @@ abstract class AbstractUrlActionType extends AbstractActionType
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'route_parameters' => []
+            'route_parameters' => [],
+            'append_id' => false,
+            'append_key' => 'id'
         ]);
 
         $resolver->setRequired([
