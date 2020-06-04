@@ -65,7 +65,6 @@ class UpdateViewer extends CreateViewer
         ]);
 
         $formDeleteParameters = $this->mergeConfigArray([
-            [ 'id' => $resource->getId() ],
             $options['form_delete_parameters'],
             $this->getViewerOption('form.delete_parameters', $requestConfiguration)
         ]);

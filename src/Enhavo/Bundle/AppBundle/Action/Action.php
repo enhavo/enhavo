@@ -31,7 +31,7 @@ class Action
         $this->options = $resolver->resolve($options);
     }
 
-    public function createViewData($resource = null)
+    public function createViewData($resource = null): array
     {
         return $this->type->createViewData($this->options, $resource);
     }
@@ -41,7 +41,7 @@ class Action
         return $this->type->getPermission($this->options, $resource);
     }
 
-    public function isHidden($resource = null)
+    public function isHidden($resource = null): bool
     {
         return $this->type->isHidden($this->options, $resource);
     }

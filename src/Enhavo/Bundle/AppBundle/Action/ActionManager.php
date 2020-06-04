@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\AppBundle\Action;
 
 use Enhavo\Bundle\AppBundle\Exception\TypeMissingException;
 use Enhavo\Bundle\AppBundle\Type\TypeCollector;
+use Sylius\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class ActionManager
@@ -45,6 +46,11 @@ class ActionManager
         return $data;
     }
 
+    /**
+     * @param array $configuration
+     * @param ResourceInterface $resource
+     * @return Action[]
+     */
     public function getActions(array $configuration, $resource = null)
     {
         $actions = [];
@@ -69,7 +75,6 @@ class ActionManager
      * @param $options
      * @return Action
      * @throws TypeMissingException
-     * @throws \Enhavo\Bundle\AppBundle\Exception\TypeNotFoundException
      */
     private function createAction($options)
     {

@@ -15,7 +15,8 @@ class UpdateActionType extends OpenActionType
             'label' => 'label.edit',
             'translation_domain' => 'EnhavoAppBundle',
             'view_key' => 'edit-view',
-            'target' => '_view'
+            'target' => '_view',
+            'append_id' => true
         ]);
 
         $resolver->setRequired(['route']);
