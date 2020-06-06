@@ -4,6 +4,8 @@ namespace Enhavo\Bundle\BlockBundle\DependencyInjection;
 
 use Enhavo\Bundle\BlockBundle\Form\Type\StyleType;
 use Enhavo\Bundle\BlockBundle\Form\Type\WidthType;
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
+use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -22,18 +24,39 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder('enhavo_block');
         $rootNode = $treeBuilder->getRootNode();
 
-        $rootNode
+        $this->addRenderSection($rootNode);
+        $this->addDoctrineSection($rootNode);
+        $this->addColumnSection($rootNode);
+        $this->addBlockSection($rootNode);
+
+        return $treeBuilder;
+    }
+
+    private function addRenderSection(ArrayNodeDefinition $node)
+    {
+        $node
             ->children()
                 ->arrayNode('render')
+                    ->addDefaultsIfNotSet()
                     ->children()
                         ->arrayNode('sets')
+                            ->defaultValue([])
                             ->useAttributeAsKey('name')
-                            ->prototype('array')
+                            ->arrayPrototype()
+                                ->useAttributeAsKey('name')
                                 ->prototype('scalar')->end()
                             ->end()
                         ->end()
                     ->end()
                 ->end()
+            ->end()
+        ;
+    }
+
+    private function addDoctrineSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
                 ->arrayNode('doctrine')
                     ->addDefaultsIfNotSet()
                     ->children()
@@ -41,7 +64,14 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('enable_blocks')->defaultValue(true)->end()
                     ->end()
                 ->end()
+            ->end()
+        ;
+    }
 
+    private function addColumnSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
                 ->arrayNode('column')
                     ->addDefaultsIfNotSet()
                     ->children()
@@ -49,7 +79,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('width_form')->defaultValue(WidthType::class)->end()
                         ->arrayNode('styles')
                             ->useAttributeAsKey('name')
-                            ->prototype('array')
+                            ->arrayPrototype()
                                 ->children()
                                     ->scalarNode('label')->end()
                                     ->scalarNode('value')->end()
@@ -58,11 +88,18 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
+            ->end()
+        ;
+    }
 
+    private function addBlockSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
                 ->arrayNode('blocks')
-                    ->isRequired()
+                    ->defaultValue([])
                     ->useAttributeAsKey('name')
-                    ->prototype('array')
+                    ->arrayPrototype()
                         ->children()
                             ->scalarNode('model')->end()
                             ->scalarNode('form')->end()
@@ -78,9 +115,7 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                  ->end()
-
-            ->end();
-
-        return $treeBuilder;
+            ->end()
+        ;
     }
 }
