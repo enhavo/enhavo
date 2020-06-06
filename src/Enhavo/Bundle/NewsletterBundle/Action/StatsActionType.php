@@ -20,7 +20,8 @@ class StatsActionType extends OpenActionType implements ActionTypeInterface
             'icon' => 'assessment',
             'route' => 'enhavo_newsletter_newsletter_stats',
             'view_key' => 'stats-view',
-            'target' => '_view'
+            'target' => '_view',
+            'append_id' => true
         ]);
     }
 

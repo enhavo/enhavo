@@ -1,0 +1,39 @@
+{% import _self as element %}
+
+{% macro text(block, layout = 0) %}
+    {% import _self as element %}
+    <td style="{% if layout == 0 %}width: 50%;{% endif %}{% if layout == 1 %}width: 33%;{% endif %}{% if layout == 2 %}width: 67%;{% endif %} padding: 10px;">
+        {% if block.title %}
+            <h2>{{ block.title }}</h2>
+        {% endif %}
+        {% if block.text %}
+            <p>{{ block.text|html_sanitize }}</p>
+        {% endif %}
+    </td>
+{% endmacro %}
+
+{% macro picture(block, layout = 0) %}
+    <td style="{% if layout == 0 %}width: 50%;{% endif %}{% if layout == 1 %}width: 33%;{% endif %}{% if layout == 2 %}width: 67%;{% endif %} padding: 10px;">
+        {% if block.file %}
+            <img src="{{ media_url(block.file, 'container_width') }}" style="width:100%;">
+        {% endif %}
+        {% if block.caption %}
+            <p style="font-size: 13px;margin-top: 5px;">{{ block.caption }}</p>
+        {% endif %}
+    </td>
+{% endmacro %}
+
+
+<div style="padding-top: 10px; padding-bottom: 10px;">
+    <table border="0">
+        <tr>
+            {% if block.textLeft %}
+                {{ element.text(block, block.layout == 1 ? 1 : (block.layout == 2 ? 2 : 0)) }}
+                {{ element.picture(block, block.layout == 1 ? 2 : (block.layout == 2 ? 1 : 0)) }}
+            {% else %}
+                {{ element.picture(block, block.layout == 1 ? 1 : (block.layout == 2 ? 2 : 0)) }}
+                {{ element.text(block, block.layout == 1 ? 2 : (block.layout == 2 ? 1 : 0)) }}
+            {% endif %}
+        </tr>
+    </table>
+</div>

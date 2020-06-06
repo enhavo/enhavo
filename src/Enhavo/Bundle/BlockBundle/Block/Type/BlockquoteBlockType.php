@@ -29,7 +29,7 @@ class BlockquoteBlockType extends AbstractBlockType
             'template' => 'theme/block/blockquote.html.twig',
             'label' =>  'blockquoteText.label.blockquoteText',
             'translationDomain' => 'EnhavoBlockBundle',
-            'groups' => ['default', 'content']
+            'groups' => ['default', 'content', 'simple']
         ]);
     }
 

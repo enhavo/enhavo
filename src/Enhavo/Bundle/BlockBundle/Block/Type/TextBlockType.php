@@ -29,7 +29,7 @@ class TextBlockType extends AbstractBlockType
             'template' => 'theme/block/text.html.twig',
             'label' => 'text.label.text',
             'translationDomain' => 'EnhavoBlockBundle',
-            'groups' => ['default', 'content']
+            'groups' => ['default', 'content', 'simple']
         ]);
     }
 
