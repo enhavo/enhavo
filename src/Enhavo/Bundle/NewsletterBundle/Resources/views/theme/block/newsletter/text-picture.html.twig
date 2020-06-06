@@ -7,7 +7,7 @@
             <h2>{{ block.title }}</h2>
         {% endif %}
         {% if block.text %}
-            <p>{{ block.text|raw }}</p>
+            <p>{{ block.text|html_sanitize }}</p>
         {% endif %}
     </td>
 {% endmacro %}

@@ -29,7 +29,7 @@ class PictureBlockType extends AbstractBlockType
             'template' => 'theme/block/picture.html.twig',
             'label' => 'picture.label.picture',
             'translationDomain' => 'EnhavoBlockBundle',
-            'groups' => ['default', 'content']
+            'groups' => ['default', 'content', 'simple']
         ]);
     }
 

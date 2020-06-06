@@ -96,15 +96,9 @@ enhavo_block:
         sets:
             newsletter:
                 picture: theme/block/newsletter/picture.html.twig
-                picture_picture: theme/block/newsletter/picture_picture.html.twig
-                three_picture: theme/block/newsletter/three_picture.html.twig
-                gallery: theme/block/newsletter/gallery.html.twig
                 text: theme/block/newsletter/text.html.twig
                 text_picture: theme/block/newsletter/text_picture.html.twig
-                text_text: theme/block/newsletter/text_text.html.twig
-                cite_text: theme/block/newsletter/cite_text.html.twig
-                download: theme/block/newsletter/download.html.twig
-                video: theme/block/newsletter/video.html.twig
+                blockquote: theme/block/newsletter/blockquote.html.twig
 
 enhavo_routing:
     classes:

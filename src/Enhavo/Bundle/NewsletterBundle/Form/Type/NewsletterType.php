@@ -61,6 +61,7 @@ class NewsletterType extends AbstractType
         $builder->add('content', BlockNodeType::class, [
             'label' => 'form.label.content',
             'translation_domain' => 'EnhavoAppBundle',
+            'item_groups' => ['newsletter', 'simple']
         ]);
 
         $builder->add('attachments', MediaType::class, [

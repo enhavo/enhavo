@@ -1,6 +1,6 @@
 <div style="padding-top: 10px; padding-bottom: 10px;">
     {% if block.title %}
-        <h2>{{ block.title|raw }}</h2>
+        <h2>{{ block.title|html_sanitize }}</h2>
     {% endif %}
     {% if block.file %}
         <img src="{{ media_url(block.file, 'container_width') }}" style="width:100%">
