@@ -12,13 +12,13 @@
 {% endmacro %}
 
 <div style="padding-top: 10px; padding-bottom: 10px;">
-    {% if data.title %}
-        <h2>{{ data.title }}</h2>
+    {% if block.title %}
+        <h2>{{ block.title }}</h2>
     {% endif %}
     <table border="0">
         <tr>
-            {{ element.text(data.titleLeft, data.textLeft, data.layout == 1 ? 1 : (data.layout == 2 ? 2 : 0)) }}
-            {{ element.text(data.titleRight, data.textRight, data.layout == 1 ? 1 : (data.layout == 2 ? 2 : 0)) }}
+            {{ element.text(block.titleLeft, block.textLeft, block.layout == 1 ? 1 : (block.layout == 2 ? 2 : 0)) }}
+            {{ element.text(block.titleRight, block.textRight, block.layout == 1 ? 1 : (block.layout == 2 ? 2 : 0)) }}
         </tr>
     </table>
 </div>

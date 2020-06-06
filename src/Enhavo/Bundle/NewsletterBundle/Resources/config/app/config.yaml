@@ -95,16 +95,16 @@ enhavo_block:
     render:
         sets:
             newsletter:
-                picture: EnhavoNewsletterBundle:Theme\Block:picture.html.twig
-                picture_picture: EnhavoNewsletterBundle:Theme\Block:picture_picture.html.twig
-                three_picture: EnhavoNewsletterBundle:Theme\Block:three_picture.html.twig
-                gallery: EnhavoNewsletterBundle:Theme\Block:gallery.html.twig
-                text: EnhavoNewsletterBundle:Theme\Block:text.html.twig
-                text_picture: EnhavoNewsletterBundle:Theme\Block:text_picture.html.twig
-                text_text: EnhavoNewsletterBundle:Theme\Block:text_text.html.twig
-                cite_text: EnhavoNewsletterBundle:Theme\Block:cite_text.html.twig
-                download: EnhavoNewsletterBundle:Theme\Block:download.html.twig
-                video: EnhavoNewsletterBundle:Theme\Block:video.html.twig
+                picture: theme/block/newsletter/picture.html.twig
+                picture_picture: theme/block/newsletter/picture_picture.html.twig
+                three_picture: theme/block/newsletter/three_picture.html.twig
+                gallery: theme/block/newsletter/gallery.html.twig
+                text: theme/block/newsletter/text.html.twig
+                text_picture: theme/block/newsletter/text_picture.html.twig
+                text_text: theme/block/newsletter/text_text.html.twig
+                cite_text: theme/block/newsletter/cite_text.html.twig
+                download: theme/block/newsletter/download.html.twig
+                video: theme/block/newsletter/video.html.twig
 
 enhavo_routing:
     classes:

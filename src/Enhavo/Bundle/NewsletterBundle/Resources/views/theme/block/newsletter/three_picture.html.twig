@@ -2,36 +2,36 @@
     <table border="0">
         <tr>
             <td style="width: 33%; padding:10px;">
-                {% if data.titleLeft %}
-                    <h2>{{ data.titleLeft }}</h2>
+                {% if block.titleLeft %}
+                    <h2>{{ block.titleLeft }}</h2>
                 {% endif %}
-                {% if data.fileLeft %}
-                    <img src="{{ media_url(data.fileLeft, 'container_width') }}" style="width:100%;">
+                {% if block.fileLeft %}
+                    <img src="{{ media_url(block.fileLeft, 'container_width') }}" style="width:100%;">
                 {% endif %}
-                {% if data.captionLeft %}
-                    <p style="font-size: 13px;margin-top: 5px;">{{ data.captionLeft }}</p>
+                {% if block.captionLeft %}
+                    <p style="font-size: 13px;margin-top: 5px;">{{ block.captionLeft }}</p>
                 {% endif %}
             </td>
             <td style="width: 34%; padding:10px;">
-                {% if data.titleCenter %}
-                    <h2>{{ data.titleCenter }}</h2>
+                {% if block.titleCenter %}
+                    <h2>{{ block.titleCenter }}</h2>
                 {% endif %}
-                {% if data.fileCenter %}
-                    <img src="{{ media_url(data.fileCenter, 'container_width') }}" style="width:100%;">
+                {% if block.fileCenter %}
+                    <img src="{{ media_url(block.fileCenter, 'container_width') }}" style="width:100%;">
                 {% endif %}
-                {% if data.captionCenter %}
-                    <p style="font-size: 13px;margin-top: 5px;">{{ data.captionCenter }}</p>
+                {% if block.captionCenter %}
+                    <p style="font-size: 13px;margin-top: 5px;">{{ block.captionCenter }}</p>
                 {% endif %}
             </td>
             <td style="width: 33%; padding:10px;">
-                {% if data.titleRight %}
-                    <h2>{{ data.titleRight }}</h2>
+                {% if block.titleRight %}
+                    <h2>{{ block.titleRight }}</h2>
                 {% endif %}
-                {% if data.fileRight %}
-                    <img src="{{ media_url(data.fileRight, 'container_width') }}" style="width:100%;">
+                {% if block.fileRight %}
+                    <img src="{{ media_url(block.fileRight, 'container_width') }}" style="width:100%;">
                 {% endif %}
-                {% if data.captionRight %}
-                    <p style="font-size: 13px;margin-top: 5px;">{{ data.captionRight }}</p>
+                {% if block.captionRight %}
+                    <p style="font-size: 13px;margin-top: 5px;">{{ block.captionRight }}</p>
                 {% endif %}
             </td>
         </tr>

@@ -1,11 +1,11 @@
 <div style="padding-top: 10px; padding-bottom: 10px;">
-    {% if data.title %}
-        <h2>{{ data.title|raw }}</h2>
+    {% if block.title %}
+        <h2>{{ block.title|raw }}</h2>
     {% endif %}
-    {% if data.file %}
-        <img src="{{ media_url(data.file, 'container_width') }}" style="width:100%">
+    {% if block.file %}
+        <img src="{{ media_url(block.file, 'container_width') }}" style="width:100%">
     {% endif %}
-    {% if data.caption %}
-        <p style="font-size: 13px;margin-top: 5px;">{{ data.caption }}</p>
+    {% if block.caption %}
+        <p style="font-size: 13px;margin-top: 5px;">{{ block.caption }}</p>
     {% endif %}
 </div>

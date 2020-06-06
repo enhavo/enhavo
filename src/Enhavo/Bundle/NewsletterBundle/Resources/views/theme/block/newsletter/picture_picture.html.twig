@@ -1,24 +1,24 @@
 <div style="padding-top: 10px; padding-bottom: 10px;">
     <div style="margin-left: 0;margin-right: 0;">
-        {% if data.title %}
-            <h2>{{ data.title|raw }}</h2>
+        {% if block.title %}
+            <h2>{{ block.title|raw }}</h2>
         {% endif %}
         <table border="0">
             <tr>
                 <td style="padding: 10px;">
-                    {% if data.fileLeft %}
-                        <img src="{{ media_url(data.fileLeft, 'container_width') }}" style="width:100%;">
+                    {% if block.fileLeft %}
+                        <img src="{{ media_url(block.fileLeft, 'container_width') }}" style="width:100%;">
                     {% endif %}
-                    {% if data.captionLeft %}
-                        <p style="font-size: 13px;margin-top: 5px;">{{ data.captionLeft }}</p>
+                    {% if block.captionLeft %}
+                        <p style="font-size: 13px;margin-top: 5px;">{{ block.captionLeft }}</p>
                     {% endif %}
                 </td>
                 <td style="padding: 10px;">
-                    {% if data.fileRight %}
-                        <img src="{{ media_url(data.fileRight, 'container_width') }}" style="width:100%;">
+                    {% if block.fileRight %}
+                        <img src="{{ media_url(block.fileRight, 'container_width') }}" style="width:100%;">
                     {% endif %}
-                    {% if data.captionRight %}
-                        <p style="font-size: 13px;margin-top: 5px;">{{ data.captionRight }}</p>
+                    {% if block.captionRight %}
+                        <p style="font-size: 13px;margin-top: 5px;">{{ block.captionRight }}</p>
                     {% endif %}
                 </td>
             </tr>
