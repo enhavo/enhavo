@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Action;
 
+use Enhavo\Bundle\AppBundle\Util\ArrayUtil;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -34,7 +35,7 @@ abstract class AbstractUrlActionType extends AbstractActionType
     {
         $data = parent::createViewData($options);
 
-        $data = array_merge($data, [
+        $data = ArrayUtil::merge($data, [
             'url' => $this->getUrl($options, $resource)
         ]);
 
