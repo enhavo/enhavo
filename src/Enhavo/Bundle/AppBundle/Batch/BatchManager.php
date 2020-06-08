@@ -72,11 +72,11 @@ class BatchManager
         return $batches;
     }
 
-    public function getBatch($type, array $configuration)
+    public function getBatch($key, array $configuration)
     {
         $batches = $this->getBatches($configuration);
-        if(isset($batches[$type])) {
-            return $batches[$type];
+        if(isset($batches[$key])) {
+            return $batches[$key];
         }
         return null;
     }
