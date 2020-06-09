@@ -12,6 +12,7 @@ namespace Enhavo\Component\Type;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Reference;
 
 class TypeCompilerPass implements CompilerPassInterface
 {
@@ -60,13 +61,15 @@ class TypeCompilerPass implements CompilerPassInterface
     {
         $definition = new Definition();
         $definition->setClass(Registry::class);
+        $definition->setArguments([$this->namespace]);
+        $definition->addMethodCall('setContainer', [new Reference('service_container')]);
         return $definition;
     }
 
     private function createFactoryDefinition($class, $registryDefinition): Definition
     {
         $definition = new Definition();
-        $definition->setClass(Registry::class);
+        $definition->setClass(Factory::class);
         $definition->setArguments([$class, $registryDefinition]);
         return $definition;
     }

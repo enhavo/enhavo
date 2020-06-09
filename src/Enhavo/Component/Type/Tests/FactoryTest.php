@@ -37,9 +37,9 @@ class FactoryTest extends TestCase
         $rootType = new FactoryRootType();
 
         $dependencies =$this->createDependencies();
-        $dependencies->registry->addType('test', $testType);
-        $dependencies->registry->addType('parent', $parentType);
-        $dependencies->registry->addType('root', $rootType);
+        $dependencies->registry->register('test', $testType);
+        $dependencies->registry->register('parent', $parentType);
+        $dependencies->registry->register('root', $rootType);
         $factory = $this->createInstance($dependencies);
 
         /** @var ConcreteTest $typeContainer */

@@ -15,7 +15,7 @@ class RegistryMock implements RegistryInterface
 {
     private $types = [];
 
-    public function addType($name, $type)
+    public function register($name, $type)
     {
         return $this->types[$name] = $type;
     }
