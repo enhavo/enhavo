@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AppBundle\Chart;
+namespace Enhavo\Bundle\DashboardBundle\Chart;
 
 use Enhavo\Bundle\AppBundle\Type\TypeInterface;
 
