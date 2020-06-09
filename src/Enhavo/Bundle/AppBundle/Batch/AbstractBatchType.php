@@ -2,46 +2,32 @@
 
 namespace Enhavo\Bundle\AppBundle\Batch;
 
-use Doctrine\ORM\EntityManagerInterface;
-use Enhavo\Bundle\AppBundle\Type\AbstractType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Enhavo\Bundle\AppBundle\Batch\Type\BaseBatchType;
+use Enhavo\Bundle\AppBundle\View\ViewData;
+use Enhavo\Component\Type\AbstractType;
+use Sylius\Component\Resource\Model\ResourceInterface;
 
 abstract class AbstractBatchType extends AbstractType implements BatchTypeInterface
 {
-    /**
-     * @inheritdoc
-     */
-    abstract function execute(array $options, $resources);
+    /** @var $parent self */
+    protected $parent;
 
     /**
      * @inheritdoc
      */
-    public function createViewData(array $options, $resource = null)
+    public function execute(array $options, array $resources, ResourceInterface $resource = null)
     {
-        return [
-            'label' => $this->getLabel($options),
-            'confirmMessage' => $this->getConfirmMessage($options),
-            'position' => $options['position'],
-            'component' => $options['component'],
-        ];
+        $this->parent->execute($options, $resources);
     }
 
-    protected function getLabel($options)
+    public function createViewData(array $options, ViewData $data, ResourceInterface $resource = null)
     {
-        return $this->container->get('translator')->trans($options['label'], [], $options['translation_domain']);
+
     }
 
-    protected function getConfirmMessage($options)
+    public static function getParentType(): ?string
     {
-        return $this->container->get('translator')->trans($options['confirm_message'], [], $options['translation_domain']);
-    }
-
-    /**
-     * @return EntityManagerInterface
-     */
-    protected function getManager(): EntityManagerInterface
-    {
-        return $this->container->get('doctrine.orm.entity_manager');
+        return BaseBatchType::class;
     }
 
     /**
@@ -49,7 +35,7 @@ abstract class AbstractBatchType extends AbstractType implements BatchTypeInterf
      */
     public function getPermission(array $options)
     {
-        return $options['permission'];
+        $this->parent->getPermission($options);
     }
 
     /**
@@ -57,25 +43,6 @@ abstract class AbstractBatchType extends AbstractType implements BatchTypeInterf
      */
     public function isHidden(array $options)
     {
-        return $options['hidden'];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults([
-            'permission'  => null,
-            'position'  => 0,
-            'translation_domain' => null,
-            'hidden' => false,
-            'confirm_message' => null,
-            'component' => 'batch-url',
-            'route' => null,
-            'route_parameters' => null,
-        ]);
-
-        $resolver->setRequired(['label']);
+        $this->parent->isHidden($options);
     }
 }

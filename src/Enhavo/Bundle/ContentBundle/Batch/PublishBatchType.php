@@ -2,8 +2,10 @@
 
 namespace Enhavo\Bundle\ContentBundle\Batch;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Batch\AbstractBatchType;
 use Enhavo\Bundle\ContentBundle\Content\Publishable;
+use Sylius\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -12,25 +14,34 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @since 04/07/16
  * @author gseidel
  */
-class PublishType extends AbstractBatchType
+class PublishBatchType extends AbstractBatchType
 {
+    /** @var EntityManagerInterface */
+    private $em;
+
+    /**
+     * PublishBatchType constructor.
+     * @param EntityManagerInterface $em
+     */
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
     /**
      * @param array $options
      * @param Publishable[] $resources
      */
-    public function execute(array $options, $resources)
+    public function execute(array $options, array $resources, ResourceInterface $resource = null)
     {
-        $em = $this->container->get('doctrine.orm.entity_manager');
         foreach($resources as $resource) {
             $resource->setPublic(true);
         }
-        $em->flush();
+        $this->em->flush();
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        parent::configureOptions($resolver);
-
         $resolver->setDefaults([
             'label' => 'batch.publish.label',
             'confirm_message' => 'batch.publish.message.confirm',
@@ -38,7 +49,7 @@ class PublishType extends AbstractBatchType
         ]);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'publish';
     }

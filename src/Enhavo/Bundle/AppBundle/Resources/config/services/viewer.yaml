@@ -24,7 +24,7 @@ services:
         public: true
         arguments:
             - '@enhavo_app.action_manager'
-            - '@enhavo_app.batch_manager'
+            - '@Enhavo\Bundle\AppBundle\Batch\BatchManager'
             - '@enhavo_app.filter_manager'
             - '@enhavo_app.column_manager'
         calls:
