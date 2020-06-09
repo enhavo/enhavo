@@ -8,6 +8,7 @@
 
 namespace Enhavo\Component\Type\Tests;
 
+use Enhavo\Component\Type\Factory;
 use Enhavo\Component\Type\Registry;
 use Enhavo\Component\Type\TypeCompilerPass;
 use PHPUnit\Framework\TestCase;
@@ -38,6 +39,7 @@ class TypeCompilerPassTest extends TestCase
         $this->assertTrue($container->getDefinition('typeTwo')->isPublic());
 
         $this->assertNotNull($factoryDefinition);
+        $this->assertEquals(Factory::class, $factoryDefinition->getClass());
     }
 
     private function createTypeDefinition($class)
