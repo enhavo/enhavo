@@ -10,32 +10,43 @@ namespace Enhavo\Bundle\AppBundle\Tests\Batch;
 
 use Enhavo\Bundle\AppBundle\Batch\Batch;
 use Enhavo\Bundle\AppBundle\Batch\BatchManager;
-use Enhavo\Bundle\AppBundle\Batch\BatchTypeInterface;
 use Enhavo\Bundle\AppBundle\Tests\Mock\ResourceMock;
-use Enhavo\Bundle\AppBundle\Type\TypeCollector;
+use Enhavo\Component\Type\FactoryInterface;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class BatchManagerTest extends TestCase
 {
-    public function createDependencies()
+    private function createDependencies()
     {
         $dependencies = new BatchManagerTestDependencies();
-        $dependencies->collector = $this->getMockBuilder(TypeCollector::class)->disableOriginalConstructor()->getMock();
+        $dependencies->factory = $this->getMockBuilder(FactoryInterface::class)->disableOriginalConstructor()->getMock();
         $dependencies->checker = $this->getMockBuilder(AuthorizationCheckerInterface::class)->getMock();
         return $dependencies;
     }
 
-    public function createInstance(BatchManagerTestDependencies $dependencies)
+    private function createInstance(BatchManagerTestDependencies $dependencies)
     {
-        return new BatchManager($dependencies->collector, $dependencies->checker);
+        return new BatchManager($dependencies->factory, $dependencies->checker);
+    }
+
+    /**
+     * @return Batch|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private function createBatchMock(bool $hidden = false, string $role = 'ROLE_TEST')
+    {
+        /** @var \PHPUnit_Framework_MockObject_MockObject $mock */
+        $mock = $this->getMockBuilder(Batch::class)->disableOriginalConstructor()->getMock();
+        $mock->method('isHidden')->willReturn($hidden);
+        $mock->method('getPermission')->willReturn($role);
+        $mock->method('createViewData')->willReturn(['view' => 'data']);
+        return $mock;
     }
 
     public function testGetBatches()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->collector->method('getType')->willReturn(new TestBatchType());
+        $dependencies->factory->method('create')->willReturn($this->createBatchMock());
         $dependencies->checker->method('isGranted')->willReturn(true);
         $manager = $this->createInstance($dependencies);
         $batches = $manager->getBatches([
@@ -52,7 +63,7 @@ class BatchManagerTest extends TestCase
     public function testGetBatch()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->collector->method('getType')->willReturn(new TestBatchType());
+        $dependencies->factory->method('create')->willReturn($this->createBatchMock());
         $dependencies->checker->method('isGranted')->willReturn(true);
         $manager = $this->createInstance($dependencies);
         $batch = $manager->getBatch('testKey', [
@@ -68,7 +79,7 @@ class BatchManagerTest extends TestCase
     public function testCreateBatchesViewData()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->collector->method('getType')->willReturn(new TestBatchType());
+        $dependencies->factory->method('create')->willReturn($this->createBatchMock());
         $dependencies->checker->method('isGranted')->willReturn(true);
         $manager = $this->createInstance($dependencies);
         $viewData = $manager->createBatchesViewData([
@@ -89,7 +100,7 @@ class BatchManagerTest extends TestCase
     public function testHidden()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->collector->method('getType')->willReturn(new TestBatchType(true));
+        $dependencies->factory->method('create')->willReturn($this->createBatchMock(true));
         $dependencies->checker->method('isGranted')->willReturn(true);
         $manager = $this->createInstance($dependencies);
         $batches = $manager->getBatches([
@@ -105,7 +116,7 @@ class BatchManagerTest extends TestCase
     public function testPermission()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->collector->method('getType')->willReturn(new TestBatchType());
+        $dependencies->factory->method('create')->willReturn($this->createBatchMock());
         $dependencies->checker->method('isGranted')->willReturn(false);
         $manager = $this->createInstance($dependencies);
         $batches = $manager->getBatches([
@@ -122,7 +133,7 @@ class BatchManagerTest extends TestCase
     {
         $dependencies = $this->createDependencies();
         $manager = $this->createInstance($dependencies);
-        $batch = $this->getMockBuilder(Batch::class)->disableOriginalConstructor()->getMock();
+        $batch = $this->createBatchMock();
         $batch->expects($this->once())->method('execute');
         $manager->executeBatch($batch, new ResourceMock());
     }
@@ -130,70 +141,20 @@ class BatchManagerTest extends TestCase
     public function testCreateBatch()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->collector->method('getType')->willReturn(new TestBatchType());
+        $dependencies->factory->method('create')->willReturn($this->createBatchMock());
         $manager = $this->createInstance($dependencies);
-        $batch = $manager->createBatch('testKey', []);
+        $batch = $manager->createBatch(['type' => 'testKey']);
 
         $this->assertEquals([
-                'view' => 'data',
+            'view' => 'data',
         ], $batch->createViewData());
     }
 }
 
-
 class BatchManagerTestDependencies
 {
-    /** @var TypeCollector|\PHPUnit_Framework_MockObject_MockObject */
-    public $collector;
+    /** @var FactoryInterface|\PHPUnit_Framework_MockObject_MockObject */
+    public $factory;
     /** @var AuthorizationCheckerInterface|\PHPUnit_Framework_MockObject_MockObject */
     public $checker;
-}
-
-class TestBatchType implements BatchTypeInterface
-{
-    /** @var boolean */
-    private $hidden;
-    /** @var string */
-    private $role;
-
-    /**
-     * TestActionType constructor.
-     * @param bool $hidden
-     * @param string $role
-     */
-    public function __construct(bool $hidden = false, string $role = 'ROLE_TEST')
-    {
-        $this->hidden = $hidden;
-        $this->role = $role;
-    }
-
-    public function getPermission(array $options, $resource = null)
-    {
-        return $this->role;
-    }
-
-    public function isHidden(array $options, $resource = null)
-    {
-        return $this->hidden;
-    }
-
-    public function execute(array $options, $resources)
-    {
-        // TODO: Implement execute() method.
-    }
-
-    public function createViewData(array $options)
-    {
-        return ['view' => 'data'];
-    }
-
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(['config' => 'defaultValue']);
-    }
-
-    public function getType()
-    {
-        return 'test';
-    }
 }

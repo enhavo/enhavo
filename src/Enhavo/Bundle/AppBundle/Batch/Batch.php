@@ -9,34 +9,26 @@
 namespace Enhavo\Bundle\AppBundle\Batch;
 
 use Enhavo\Bundle\AppBundle\Exception\BatchExecutionException;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Enhavo\Bundle\AppBundle\View\ViewData;
+use Enhavo\Component\Type\AbstractContainerType;
+use Sylius\Component\Resource\Model\ResourceInterface;
 
-class Batch
+class Batch extends AbstractContainerType
 {
-    /**
-     * @var BatchTypeInterface
-     */
-    private $type;
+    /** @var BatchTypeInterface */
+    protected $type;
 
-    /**
-     * @var array
-     */
-    private $options;
+    /** @var BatchTypeInterface[] */
+    protected $parents;
 
-    public function __construct(BatchTypeInterface $type, $options)
+    public function createViewData(ResourceInterface $resource = null)
     {
-        $this->type = $type;
-        $resolver = new OptionsResolver();
-        $this->type->configureOptions($resolver);
-        $this->options = $resolver->resolve($options);
-    }
-
-    /**
-     * @return array
-     */
-    public function createViewData()
-    {
-        return $this->type->createViewData($this->options);
+        $data = new ViewData();
+        foreach ($this->parents as $parent) {
+            $parent->createViewData($this->options, $data, $resource);
+        }
+        $this->type->createViewData($this->options, $data, $resource);
+        return $data->normalize();
     }
 
     /**
@@ -57,10 +49,11 @@ class Batch
 
     /**
      * @param $resources
+     * @param ResourceInterface $resource
      * @throws BatchExecutionException
      */
-    public function execute($resources)
+    public function execute($resources, ResourceInterface $resource = null)
     {
-        $this->type->execute($this->options, $resources);
+        $this->type->execute($this->options, $resources, $resource);
     }
 }

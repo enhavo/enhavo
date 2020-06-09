@@ -8,17 +8,15 @@
 
 namespace Enhavo\Bundle\AppBundle\Batch;
 
-use Enhavo\Bundle\AppBundle\Exception\BatchExecutionException;
-use Enhavo\Bundle\AppBundle\Exception\TypeMissingException;
-use Enhavo\Bundle\AppBundle\Type\TypeCollector;
+use Enhavo\Component\Type\FactoryInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class BatchManager
 {
     /**
-     * @var TypeCollector
+     * @var FactoryInterface
      */
-    private $collector;
+    private $factory;
 
     /**
      * @var AuthorizationCheckerInterface
@@ -27,20 +25,20 @@ class BatchManager
 
     /**
      * ActionManager constructor.
-     * @param TypeCollector $collector
+     * @param FactoryInterface $factory
      * @param AuthorizationCheckerInterface $checker
      */
-    public function __construct(TypeCollector $collector, AuthorizationCheckerInterface $checker)
+    public function __construct(FactoryInterface $factory, AuthorizationCheckerInterface $checker)
     {
-        $this->collector = $collector;
+        $this->factory = $factory;
         $this->checker = $checker;
     }
 
     public function createBatchesViewData(array $configuration)
     {
         $data = [];
-        $actions = $this->getBatches($configuration);
-        foreach($actions as $key => $action) {
+        $batches = $this->getBatches($configuration);
+        foreach($batches as $key => $action) {
             $viewData = $action->createViewData();
             $viewData['key'] = $key;
             $data[] = $viewData;
@@ -56,7 +54,7 @@ class BatchManager
     {
         $batches = [];
         foreach($configuration as $name => $options) {
-            $batch = $this->createBatchFromOptions($options);
+            $batch = $this->createBatch($options);
 
             if($batch->isHidden()) {
                 continue;
@@ -84,35 +82,15 @@ class BatchManager
     /**
      * @param $options
      * @return Batch
-     * @throws TypeMissingException
      */
-    private function createBatchFromOptions($options)
+    public function createBatch($options): Batch
     {
-        if(!isset($options['type'])) {
-            throw new TypeMissingException(sprintf('No type was given to create "%s"', Batch::class));
-        }
-        $type = $options['type'];
-        unset($options['type']);
-        return $this->createBatch($type, $options);
-    }
-
-    /**
-     * @param $type
-     * @param $options
-     * @return Batch
-     */
-    public function createBatch($type, $options)
-    {
-        /** @var BatchTypeInterface $type */
-        $type = $this->collector->getType($type);
-        $batch = new Batch($type, $options);
-        return $batch;
+        return $this->factory->create($options);
     }
 
     /**
      * @param Batch $batch
      * @param $resources
-     * @throws BatchExecutionException
      */
     public function executeBatch(Batch $batch, $resources)
     {

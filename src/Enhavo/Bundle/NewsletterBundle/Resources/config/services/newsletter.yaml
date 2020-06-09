@@ -1,17 +1,18 @@
 services:
     Enhavo\Bundle\NewsletterBundle\Batch\SendBatchType:
-        public: true
-        calls:
-            - [setContainer, ['@service_container']]
+        arguments:
+            - '@enhavo_newsletter.manager'
         tags:
-            - { name: enhavo.batch, alias: newsletter_send }
+            - { name: enhavo_app.batch }
 
     Enhavo\Bundle\NewsletterBundle\Batch\SendTestBatchType:
-        public: true
-        calls:
-            - [setContainer, ['@service_container']]
+        arguments:
+            - '@enhavo_newsletter.manager'
+            - '@request_stack'
+            - '@translator'
+            - '@form.factory'
         tags:
-            - { name: enhavo.batch, alias: newsletter_send_test }
+            - { name: enhavo_app.batch }
 
     enhavo_newsletter.manager:
         public: true

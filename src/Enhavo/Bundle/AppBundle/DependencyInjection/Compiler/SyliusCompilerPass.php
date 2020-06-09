@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\AppBundle\DependencyInjection\Compiler;
 
+use Enhavo\Bundle\AppBundle\Batch\BatchManager;
 use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
 use Enhavo\Bundle\AppBundle\Controller\ResourcesResolver;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -43,7 +44,7 @@ class SyliusCompilerPass implements CompilerPassInterface
                 $definition = $container->getDefinition($definitionName);
                 $definition->addArgument($container->getDefinition('view.factory'));
                 $definition->addArgument($container->getDefinition('enhavo.sorting_manager'));
-                $definition->addArgument($container->getDefinition('enhavo_app.batch_manager'));
+                $definition->addArgument($container->getDefinition(BatchManager::class));
                 $definition->addArgument($container->getDefinition('enhavo_app.factory.duplicate_resource_factory'));
                 $definition->addArgument($container->getDefinition('enhavo_app.event_dispatcher'));
             }

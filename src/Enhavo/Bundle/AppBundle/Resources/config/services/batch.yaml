@@ -1,32 +1,32 @@
-parameters:
-    enhavo_app.twig.batch_collector.class:
-
 services:
-    enhavo_app.batch_collector:
-        class: Enhavo\Bundle\AppBundle\Type\TypeCollector
-        arguments:
-            - '@service_container'
-            - 'Batch'
-
-    Enhavo\Bundle\AppBundle\Batch\Type\DeleteType:
-        public: true
+    Enhavo\Bundle\AppBundle\Batch\Type\DeleteBatchType:
         arguments:
             - '@event_dispatcher'
-        calls:
-            - [setContainer, ['@service_container']]
+            - '@doctrine.orm.entity_manager'
         tags:
-            - { name: enhavo.batch, alias: delete }
+            - { name: enhavo_app.batch }
 
     Enhavo\Bundle\AppBundle\Batch\Type\AssignBatchType:
-        public: true
-        calls:
-            - [setContainer, ['@service_container']]
-        tags:
-            - { name: enhavo.batch, alias: assign }
-
-    enhavo_app.batch_manager:
-        class: Enhavo\Bundle\AppBundle\Batch\BatchManager
-        public: true
         arguments:
-            - '@enhavo_app.batch_collector'
+            - '@request_stack'
+            - '@form.factory'
+            - '@translator'
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: enhavo_app.batch }
+
+    Enhavo\Bundle\AppBundle\Batch\Type\BaseBatchType:
+        arguments:
+            - '@translator'
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: enhavo_app.batch }
+
+    Enhavo\Bundle\AppBundle\Batch\Type\FormBatchType:
+        tags:
+            - { name: enhavo_app.batch }
+
+    Enhavo\Bundle\AppBundle\Batch\BatchManager:
+        arguments:
+            - '@Enhavo\Component\Type\FactoryInterface[Batch]'
             - '@security.authorization_checker'

@@ -2,10 +2,13 @@
 
 namespace Enhavo\Bundle\AppBundle\Batch\Type;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Batch\AbstractBatchType;
+use Enhavo\Bundle\AppBundle\View\ViewData;
 use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
+use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\ResourceActions;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -14,51 +17,49 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @since 04/07/16
  * @author gseidel
  */
-class DeleteType extends AbstractBatchType
+class DeleteBatchType extends AbstractBatchType
 {
-
     /** @var EventDispatcherInterface */
-    protected $eventDispatcher;
+    private $eventDispatcher;
+
+    /** @var EntityManagerInterface */
+    private $em;
 
     /**
      * DeleteType constructor.
      * @param EventDispatcherInterface $eventDispatcher
+     * @param EntityManagerInterface $em
      */
-    public function __construct(EventDispatcherInterface $eventDispatcher)
+    public function __construct(EventDispatcherInterface $eventDispatcher, EntityManagerInterface $em)
     {
         $this->eventDispatcher = $eventDispatcher;
+        $this->em = $em;
     }
-
 
     /**
      * @inheritdoc
      */
-    public function execute(array $options, $resources)
+    public function execute(array $options, array $resources, ResourceInterface $resource = null)
     {
-        $em = $this->container->get('doctrine.orm.entity_manager');
         foreach($resources as $resource) {
             $this->eventDispatcher->dispatch(sprintf('enhavo_app.pre_%s', ResourceActions::DELETE), new ResourceControllerEvent($resource));
-            $em->remove($resource);
+            $this->em->remove($resource);
             $this->eventDispatcher->dispatch(sprintf('enhavo_app.post_%s', ResourceActions::DELETE), new ResourceControllerEvent($resource));
         }
-        $em->flush();
+        $this->em->flush();
     }
 
     /**
      * @inheritdoc
      */
-    public function createViewData(array $options, $resource = null)
+    public function createViewData(array $options, ViewData $data, ResourceInterface $resource = null)
     {
-        $data = parent::createViewData($options, $resource);
         $data['route'] = $options['route'];
         $data['routeParameters'] = $options['route_parameters'];
-        return $data;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        parent::configureOptions($resolver);
-
         $resolver->setDefaults([
             'label' => 'batch.delete.label',
             'confirm_message' => 'batch.delete.message.confirm',
@@ -68,7 +69,7 @@ class DeleteType extends AbstractBatchType
         ]);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'delete';
     }
