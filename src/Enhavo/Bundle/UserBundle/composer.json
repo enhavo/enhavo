@@ -14,7 +14,8 @@
   "require": {
     "php": "^7.2",
     "enhavo/app-bundle": "dev-master",
-    "enhavo/form-bundle": "dev-master"
+    "enhavo/form-bundle": "dev-master",
+    "friendsofsymfony/user-bundle": "^2.1"
   },
   "require-dev": {
     "phpunit/phpunit": "^7.4"
