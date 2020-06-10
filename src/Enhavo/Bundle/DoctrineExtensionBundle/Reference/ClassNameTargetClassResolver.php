@@ -7,7 +7,7 @@
  * Time: 15:19
  */
 
-namespace Enhavo\Bundle\AppBundle\Reference;
+namespace Enhavo\Bundle\DoctrineExtensionBundle\Reference;
 
 use Doctrine\ORM\Proxy\Proxy;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;

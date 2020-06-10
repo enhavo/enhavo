@@ -26,7 +26,7 @@ use Doctrine\ORM\UnitOfWork;
  *
  * @package Enhavo\Bundle\ArticleBundle\EventListener
  */
-class DoctrineReferenceListener implements EventSubscriber
+class DoctrineReferenceSubscriber implements EventSubscriber
 {
     /**
      * @var string

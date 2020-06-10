@@ -14,3 +14,7 @@ services:
         class: Enhavo\Bundle\AppBundle\Reference\ClassNameTargetClassResolver
         calls:
             - [setContainer, ['@service_container']]
+
+   Enhavo\Component\DoctrineExtension\Extend\DoctrineExtendSubscriber:
+       tags:
+           - { name: doctrine.event_subscriber }

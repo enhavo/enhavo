@@ -7,43 +7,33 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AppBundle\EventListener;
+namespace Enhavo\Component\DoctrineExtension\Extend;
 
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Events;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Enhavo\Bundle\DoctrineExtensionBundle\Metadata\Metadata;
+use Enhavo\Component\Metadata\MetadataRepository;
 
 /**
- * Class DoctrineExtendListener
+ * Class DoctrineExtendSubscriber
  *
  * Check if a target class was extended and then add a single table inheritance
  * to that class and its metadata.
  *
  * @package Enhavo\Bundle\ArticleBundle\EventListener
  */
-class DoctrineExtendListener implements EventSubscriber
+class DoctrineExtendSubscriber implements EventSubscriber
 {
     /**
-     * @var string
+     * @var MetadataRepository
      */
-    protected $targetClass;
+    private $metadataRepository;
 
-    /**
-     * @var string
-     */
-    protected $extendedClass;
-
-    /**
-     * @var boolean
-     */
-    protected $extend;
-
-    public function __construct($targetClass, $extendedClass, $extend)
+    public function __construct(MetadataRepository $metadataRepository)
     {
-        $this->targetClass = $targetClass;
-        $this->extendedClass = $extendedClass;
-        $this->extend = $extend;
+        $this->metadataRepository = $metadataRepository;
     }
 
     /**
@@ -63,6 +53,13 @@ class DoctrineExtendListener implements EventSubscriber
     {
         /** @var ClassMetadata $metadata */
         $metadata = $eventArgs->getClassMetadata();
+
+        if($this->metadataRepository->hasMetadata($metadata->getName())) {
+           return;
+        }
+
+        /** @var Metadata $metadataExtension */
+        $metadataExtension = $this->metadataRepository->getMetadata($metadata->getName());
 
         if ($metadata->getName() != $this->targetClass) {
             return;

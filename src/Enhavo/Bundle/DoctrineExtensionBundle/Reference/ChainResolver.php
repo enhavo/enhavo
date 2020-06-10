@@ -6,7 +6,7 @@
  * Time: 17:17
  */
 
-namespace Enhavo\Bundle\AppBundle\Reference;
+namespace Enhavo\Bundle\DoctrineExtensionBundle\Reference;
 
 
 class ChainResolver

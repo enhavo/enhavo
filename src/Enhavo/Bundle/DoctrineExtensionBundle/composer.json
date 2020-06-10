@@ -1,0 +1,23 @@
+{
+  "name": "enhavo/doctrine-extension-bundle",
+  "type": "library",
+  "description": "DoctrineExtension",
+  "keywords": ["framework"],
+  "homepage": "https://enhavo.com",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Gerhard Seidel",
+      "email": "gseidel.message@googlemail.com"
+    }
+  ],
+  "require": {
+    "php": "^7.2"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^7.4"
+  },
+  "autoload": {
+    "psr-4": { "Enhavo\\Component\\DoctrineExtension\\": "" }
+  }
+}

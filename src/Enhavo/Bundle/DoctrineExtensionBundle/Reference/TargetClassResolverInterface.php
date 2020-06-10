@@ -6,7 +6,7 @@
  * Time: 15:19
  */
 
-namespace Enhavo\Bundle\AppBundle\Reference;
+namespace Enhavo\Bundle\DoctrineExtensionBundle\Reference;
 
 
 interface TargetClassResolverInterface
