@@ -6,12 +6,13 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AppBundle\Metadata;
+namespace Enhavo\Component\Metadata\Driver;
 
 use Enhavo\Bundle\AppBundle\Filesystem\Filesystem;
+use Enhavo\Component\Metadata\DriverInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-class MetadataCacheConfiguration implements MetadataConfigurationInterface
+class FileDriver implements DriverInterface
 {
     /**
      * @var KernelInterface
@@ -40,10 +41,15 @@ class MetadataCacheConfiguration implements MetadataConfigurationInterface
         $this->filesystem = $filesystem;
     }
 
+    public function load()
+    {
+        // TODO: Implement load() method.
+    }
+
     /**
      * @return array
      */
-    public function getConfiguration()
+    public function getNormalizedData()
     {
         if($this->configuration !== null) {
             return $this->configuration;

@@ -8,11 +8,11 @@
 
 namespace Enhavo\Bundle\AppBundle\Metadata\Parser;
 
-use Enhavo\Bundle\AppBundle\Metadata\ParserInterface;
+use Enhavo\Component\Metadata\Metadata;
 
-class PropertyParser implements ParserInterface
+class PropertyProvider
 {
-    public function parse(array &$metadataArray, $configuration)
+    public function provide(Metadata $metadata, $normalizedData)
     {
         if(isset($configuration['properties']) && is_array($configuration['properties'])) {
             $properties = $configuration['properties'];

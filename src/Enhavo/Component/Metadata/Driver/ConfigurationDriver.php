@@ -6,9 +6,11 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AppBundle\Metadata;
+namespace Enhavo\Component\Metadata\Driver;
 
-class MetadataConfiguration implements MetadataConfigurationInterface
+use Enhavo\Component\Metadata\DriverInterface;
+
+class ConfigurationDriver implements DriverInterface
 {
     /**
      * @var array
@@ -20,10 +22,12 @@ class MetadataConfiguration implements MetadataConfigurationInterface
         $this->configuration = $configuration;
     }
 
-    /**
-     * @return array
-     */
-    public function getConfiguration()
+    public function load()
+    {
+
+    }
+
+    public function getNormalizedData()
     {
         return $this->configuration;
     }
