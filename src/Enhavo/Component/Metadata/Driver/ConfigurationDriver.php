@@ -17,7 +17,7 @@ class ConfigurationDriver implements DriverInterface
      */
     private $configuration;
 
-    public function __construct($configuration)
+    public function __construct(array $configuration)
     {
         $this->configuration = $configuration;
     }
@@ -25,6 +25,11 @@ class ConfigurationDriver implements DriverInterface
     public function load()
     {
 
+    }
+
+    public function getAllClasses()
+    {
+        return array_keys($this->configuration);
     }
 
     public function getNormalizedData()
