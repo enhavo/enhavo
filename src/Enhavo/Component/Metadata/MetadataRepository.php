@@ -9,97 +9,113 @@
 namespace Enhavo\Component\Metadata;
 
 use Doctrine\ORM\Proxy\Proxy;
+use Enhavo\Component\Metadata\Exception\InvalidMetadataException;
 
 class MetadataRepository
 {
-    /**
-     * @var MetadataFactory
-     */
+    /** @var MetadataFactory */
     private $factory;
 
-    /**
-     * @var array
-     */
-    private $metadataCache = [];
+    /** @var array */
+    private $metadata = [];
+
+    /** @var boolean */
+    private $allowExtend;
 
     /**
      * MetadataRepository constructor.
      *
      * @param MetadataFactory $factory
+     * @param boolean $allowExtend
      */
     public function __construct(MetadataFactory $factory, $allowExtend = true)
     {
         $this->factory = $factory;
+        $this->allowExtend = $allowExtend;
     }
 
     /**
-     * @param $entity
-     * @throws \Exception
-     * @return object
+     * @return Metadata[]
      */
-    public function getMetadata($entity)
+    public function getAllMetadata()
     {
-        $className = $this->getClassName($entity);
+        $classes = $this->factory->getAllClasses();
+        foreach($classes as $class) {
+            $this->getMetadata($class);
+        }
+        return $this->metadata;
+    }
 
-        if(array_key_exists($className, $this->metadataCache)) {
-            return  $this->metadataCache[$className];
+    /**
+     * @param string|object $class
+     * @return Metadata
+     */
+    public function getMetadata($class)
+    {
+        $className = $this->getClassName($class);
+
+        if(array_key_exists($className, $this->metadata)) {
+            return $this->metadata[$className];
         }
 
-        $metadataArray = [];
-        $this->findMetadata($className, $metadataArray);
-        $metadata = $this->factory->create($className, $metadataArray);
-        $this->metadataCache[$className] = $metadata;
+        $loaded = [];
+        $metadata = $this->factory->createMetadata($className, $this->allowExtend);
+
+        if ($this->allowExtend) {
+            $parents = [];
+            $this->getParents($className, $parents);
+            $parents = array_reverse($parents);
+
+            foreach($parents as $parent) {
+                $loaded[] = $this->factory->loadMetadata($parent, $metadata);
+            }
+        } elseif($metadata === null) {
+            return null;
+        }
+
+        $loaded[] = $this->factory->loadMetadata($className, $metadata);
+
+        if($this->allowExtend && !in_array(true, $loaded)) {
+            return null;
+        }
+
+        $this->metadata[$className] = $metadata;
         return $metadata;
     }
 
-    /**
-     * @param $entity
-     * @return bool
-     */
-    public function hasMetadata($entity)
+    private function getParents($className, array &$parents)
     {
-        $className = $this->getClassName($entity);
-
-        $configuration = $this->configuration->getConfiguration();
-
-        if(array_key_exists($className, $configuration)) {
-            return true;
+        $parentClass = get_parent_class($className);
+        if($parentClass !== false) {
+            $parents[] = $parentClass;
+            $this->getParents($parentClass, $parents);
         }
-        return false;
     }
 
-    private function getClassName($entity)
+    /**
+     * @param $class
+     * @return bool
+     */
+    public function hasMetadata($class): bool
     {
-        if(is_string($entity)) {
-            $className = $entity;
-        } else if(is_object($entity)) {
-            if($entity instanceof Proxy) {
-                $className = get_parent_class($entity);
+        $metadata = $this->getMetadata($class);
+        return $metadata !== null;
+    }
+
+    private function getClassName($class)
+    {
+        if(is_string($class)) {
+            $className = $class;
+        } else if(is_object($class)) {
+            if($class instanceof Proxy) {
+                $className = get_parent_class($class);
             } else {
-                $className = get_class($entity);
+                $className = get_class($class);
             }
         } else {
-            throw new \Exception('entity should be type of string or an object');
+            throw InvalidMetadataException::invalidType($class);
         }
 
         return $className;
-    }
-
-    private function findMetadata($className, array &$metadataArray)
-    {
-        $parentClass = get_parent_class($className);
-        if($parentClass) {
-            $this->findMetadata($parentClass, $metadataArray);
-        }
-
-
-
-        $configuration = $this->configuration->getConfiguration();
-
-        if(array_key_exists($className, $configuration)) {
-            foreach($this->parsers as $parser) {
-                $parser->parse($metadataArray, $configuration[$className]);
-            }
-        }
     }
 }

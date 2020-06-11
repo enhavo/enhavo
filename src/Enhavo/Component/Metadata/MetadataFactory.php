@@ -35,13 +35,18 @@ class MetadataFactory
         $this->metaDataClass = $metaDataClass;
     }
 
-    public function createMetadata($className)
+    public function getAllClasses()
     {
-        if($this->loaded = false) {
-            $this->load();
-        }
+        $this->load();
 
-        if(array_key_exists($className, $this->configurations)) {
+        return array_keys($this->configurations);
+    }
+
+    public function createMetadata($className, $force = false): ?Metadata
+    {
+        $this->load();
+
+        if($force === false && !array_key_exists($className, $this->configurations)) {
             return null;
         }
 
@@ -49,21 +54,25 @@ class MetadataFactory
         return $metadata;
     }
 
-    public function loadMetadata(Metadata $metadata)
+    public function loadMetadata($className, Metadata $metadata): bool
     {
-        if($this->loaded = false) {
-            $this->load();
-        }
+        $this->load();
 
-        if(array_key_exists($metadata->getClassName(), $this->configurations)) {
+        if(array_key_exists($className, $this->configurations)) {
             foreach($this->providers as $provider) {
-                $provider->provide($metadata, $this->configurations[$metadata->getClassName()]);
+                $provider->provide($metadata, $this->configurations[$className]);
             }
+            return true;
         }
+        return false;
     }
 
     private function load()
     {
+        if($this->loaded) {
+            return;
+        }
+
         foreach($this->drivers as $driver) {
             $driver->load();
             $data = $driver->getNormalizedData();
@@ -77,5 +86,57 @@ class MetadataFactory
         }
 
         $this->loaded = true;
+    }
+
+    /**
+     * @param ProviderInterface $provider
+     */
+    public function addProvider(ProviderInterface $provider)
+    {
+        $this->providers[] = $provider;
+    }
+
+    /**
+     * @param ProviderInterface $provider
+     */
+    public function removeProvider(ProviderInterface $provider)
+    {
+        if (false !== $key = array_search($provider, $this->providers, true)) {
+            array_splice($this->providers, $key, 1);
+        }
+    }
+
+    /**
+     * @param DriverInterface $driver
+     */
+    public function addDriver(DriverInterface $driver)
+    {
+        $this->drivers[] = $driver;
+    }
+
+    /**
+     * @param DriverInterface $driver
+     */
+    public function removeDriver(DriverInterface $driver)
+    {
+        if (false !== $key = array_search($driver, $this->drivers, true)) {
+            array_splice($this->drivers, $key, 1);
+        }
+    }
+
+    /**
+     * @return DriverInterface[]
+     */
+    public function getDrivers(): array
+    {
+        return $this->drivers;
+    }
+
+    /**
+     * @return ProviderInterface[]
+     */
+    public function getProviders(): array
+    {
+        return $this->providers;
     }
 }

@@ -11,6 +11,8 @@ namespace Enhavo\Component\Metadata;
 
 interface DriverInterface
 {
+    public function getAllClasses();
+
     public function load();
 
     public function getNormalizedData();
