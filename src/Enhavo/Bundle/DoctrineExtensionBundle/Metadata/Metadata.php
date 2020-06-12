@@ -11,10 +11,10 @@ namespace Enhavo\Bundle\DoctrineExtensionBundle\Metadata;
 
 class Metadata extends \Enhavo\Component\Metadata\Metadata
 {
-    /** @var string */
+    /** @var string|null */
     private $extends;
 
-    /** @var string */
+    /** @var string|null */
     private $discrName;
 
     /** @var Reference[] */
@@ -23,7 +23,7 @@ class Metadata extends \Enhavo\Component\Metadata\Metadata
     /**
      * @return string
      */
-    public function getExtends(): string
+    public function getExtends(): ?string
     {
         return $this->extends;
     }
@@ -31,7 +31,7 @@ class Metadata extends \Enhavo\Component\Metadata\Metadata
     /**
      * @param string $extends
      */
-    public function setExtends(string $extends): void
+    public function setExtends(?string $extends): void
     {
         $this->extends = $extends;
     }
@@ -39,7 +39,7 @@ class Metadata extends \Enhavo\Component\Metadata\Metadata
     /**
      * @return string
      */
-    public function getDiscrName(): string
+    public function getDiscrName(): ?string
     {
         return $this->discrName;
     }
@@ -47,7 +47,7 @@ class Metadata extends \Enhavo\Component\Metadata\Metadata
     /**
      * @param string $discrName
      */
-    public function setDiscrName(string $discrName): void
+    public function setDiscrName(?string $discrName): void
     {
         $this->discrName = $discrName;
     }
@@ -60,15 +60,6 @@ class Metadata extends \Enhavo\Component\Metadata\Metadata
         $this->references[] = $reference;
     }
 
-    /**
-     * @param Reference $reference
-     */
-    public function removeReference(Reference $reference)
-    {
-        if (false !== $key = array_search($reference, $this->references, true)) {
-            array_splice($this->references, $key, 1);
-        }
-    }
 
     /**
      * @return Reference[]

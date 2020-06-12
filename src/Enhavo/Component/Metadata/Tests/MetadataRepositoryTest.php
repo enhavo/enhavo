@@ -154,6 +154,16 @@ class MetadataRepositoryTest extends TestCase
         $this->assertTrue($repository->hasMetadata(MetadataRepositoryRoot::class));
         $this->assertFalse($repository->hasMetadata(MetadataRepositoryDependencies::class));
     }
+
+    /**
+     * @expectedException \Enhavo\Component\Metadata\Exception\InvalidMetadataException
+     */
+    public function testInvalidClass()
+    {
+        $dependencies = $this->createDependencies();
+        $repository = $this->createInstance($dependencies);
+        $repository->getMetadata(1234);
+    }
 }
 
 class MetadataRepositoryDependencies

@@ -23,7 +23,7 @@ class PropertyProvider
     public function provide(Metadata $metadata, $normalizedData)
     {
         if(!$metadata instanceof PropertyInterface) {
-            throw ProviderException::invalidInterface($metadata, PropertyInterface::class);
+            throw ProviderException::invalidType($metadata, PropertyInterface::class);
         }
 
         if(array_key_exists('properties', $normalizedData) && is_array($normalizedData['properties'])) {

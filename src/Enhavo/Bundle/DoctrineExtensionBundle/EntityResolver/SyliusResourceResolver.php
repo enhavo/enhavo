@@ -7,33 +7,46 @@
  * Time: 15:19
  */
 
-namespace Enhavo\Bundle\DoctrineExtensionBundle\Reference;
+namespace Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver;
 
 use Doctrine\ORM\Proxy\Proxy;
 use Doctrine\Common\Persistence\ObjectRepository;
+use Enhavo\Bundle\DoctrineExtensionBundle\Exception\ResolveException;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
-class SyliusTargetClassResolver implements TargetClassResolverInterface
+class SyliusResourceResolver implements EntityResolverInterface
 {
     use ContainerAwareTrait;
 
-    public function resolveClass($object)
+    /** @var array */
+    private $resources;
+
+    /**
+     * SyliusResourceResolver constructor.
+     * @param array $resources
+     */
+    public function __construct(array $resources)
+    {
+        $this->resources = $resources;
+    }
+
+    public function getName(object $object): string
     {
         $className = get_class($object);
         if($object instanceof Proxy) {
             $className = get_parent_class($object);
         }
 
-        $resources = $this->container->getParameter('sylius.resources');
-        foreach($resources as $type => $resource) {
+        foreach($this->resources as $type => $resource) {
             if($resource['classes']['model'] == $className) {
                 return $type;
             }
         }
-        return null;
+
+        throw ResolveException::invalidEntity($object);
     }
 
-    public function find($id, $class)
+    public function getEntity(int $id, string $class): ?object
     {
         $repository = $this->getRepository($class);
         if($repository === null) {
@@ -48,8 +61,7 @@ class SyliusTargetClassResolver implements TargetClassResolverInterface
      */
     private function getRepository($class)
     {
-        $resources = $this->container->getParameter('sylius.resources');
-        if(!array_key_exists($class, $resources)) {
+        if(!array_key_exists($class, $this->resources)) {
             return null;
         }
 

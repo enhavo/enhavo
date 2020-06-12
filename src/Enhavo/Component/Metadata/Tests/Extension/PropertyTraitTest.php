@@ -13,7 +13,7 @@ use Enhavo\Component\Metadata\Extension\PropertyInterface;
 use Enhavo\Component\Metadata\Extension\PropertyTrait;
 use PHPUnit\Framework\TestCase;
 
-class TestPropertyTrait extends TestCase
+class PropertyTraitTest extends TestCase
 {
     public function testGetterAndSetter()
     {

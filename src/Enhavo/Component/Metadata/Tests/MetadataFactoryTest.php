@@ -88,6 +88,14 @@ class MetadataFactoryTest extends TestCase
 
         $this->assertEquals(['Peter'], $metadata->names);
     }
+
+    public function testGetAllClasses()
+    {
+        $dependencies = $this->createDependencies();
+        $factory = $this->createInstance($dependencies);
+        $factory->addDriver(new MetadataFactoryDriver());
+        $this->assertEquals([MetadataFactoryResource::class], $factory->getAllClasses());
+    }
 }
 
 class MetadataFactoryDependencies

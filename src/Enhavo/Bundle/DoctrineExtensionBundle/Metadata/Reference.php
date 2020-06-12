@@ -14,25 +14,52 @@ class Reference
     /**
      * @var string
      */
-    private $targetClass;
+    private $property;
 
     /**
      * @var string
      */
-    private $targetProperty;
+    private $nameField;
 
     /**
      * @var string
      */
-    private $classProperty;
+    private $idField;
 
     /**
-     * @var string
+     * Reference constructor.
+     * @param string $property
+     * @param string $nameField
+     * @param string $idField
      */
-    private $idProperty;
+    public function __construct(string $property, string $nameField, string $idField)
+    {
+        $this->property = $property;
+        $this->nameField = $nameField;
+        $this->idField = $idField;
+    }
 
     /**
-     * @var string
+     * @return string
      */
-    private $targetClassResolver;
+    public function getProperty(): string
+    {
+        return $this->property;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNameField(): string
+    {
+        return $this->nameField;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIdField(): string
+    {
+        return $this->idField;
+    }
 }
