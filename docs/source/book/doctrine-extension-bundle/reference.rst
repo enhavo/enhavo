@@ -1,5 +1,9 @@
-Polymorph Entity
-================
+Reference
+=========
+
+
+Polymorphism
+------------
 
 Imagine you have a model class that refers to an other class by just knowing it's interface and not
 the concrete implementation. Of course that's a very common use case in object orientated programming.
@@ -14,6 +18,9 @@ it's not so clear how your table structure will look like.
 Normally we are not interested how the sql schema will end up, because we use doctrine as our ORM layer which
 should take care of it. But in doctrine, we are not able to configure this out of the box. We need some help
 by extensions. Enhavo has it's own extension for that use case.
+
+Implementations
+---------------
 
 In general, we have two obvious sql implementations with pros and cons. Let's have look at the page table.
 
@@ -88,20 +95,58 @@ And how does our php code look like? Well, it's strait forward. We just implemen
         }
     }
 
-To make it work, you need to register a service which hooks into doctrine
+
+Configuration
+-------------
+
+To make it work, the ``EnhavoDoctrineExtensionBundle`` will hooks into doctrine
 and takes care of resolving ``$blockClass`` and ``$blockId``, and injects the correct
 block if you got the object from a repository.
 
+For that you have to add some ORM mapping to your entity like in this example.
+
+.. code-block:: php
+
+    namespace App\Entity
+
+    use Doctrine\ORM\Mapping as ORM;
+
+    /**
+     * @ORM\Entity
+     */
+    class Page
+    {
+        /** @var BlockInterface */
+        private $block;
+
+        /**
+         * @ORM\Column(type="string", length=255, nullable=true)
+         */
+        private $blockClass;
+
+        /**
+         * @ORM\Column(type="integer",  nullable=true)
+         */
+        private $blockId;
+
+        public function setBlock(BlockInterface $block)
+        {
+            $this->block = $block;
+        }
+    }
+
+
+Now tell the ``EnhavoDoctrineExtensionBundle`` for which class you want to add the reference behavior and which field
+the listener has to observe.
 
 .. code:: yaml
 
-    block_reference:
-        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineReferenceListener
-        arguments:
-          - 'Page'
-          - 'block'
-          - 'blockClass'
-          - 'blockId'
-          - '@enhavo_app.reference.target_class_resolver'
-        tags:
-            - { name: doctrine.event_subscriber }
+    enhavo_doctrine_extension:
+        metadata:
+            App/Entity/Page:
+                reference:
+                    block:
+                        idField: blockId
+                        nameField: blockClass
+
+That's all. The ``EnhavoDoctrineExtensionBundle`` takes care of ``App/Entity/Page``

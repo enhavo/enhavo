@@ -155,3 +155,10 @@ Download :download:`this zip file </_static/download/migrate-routes-0.9.zip>` an
 Note that the file in your project probably named ``*.yml`` instead of ``*.yaml``. If you made changes to the file before you have to merge the file yourself.
 
 .. rubric:: 14. Delete file ``config/routes/enhavo_taxonomy.yaml`` if exists
+
+.. rubric:: 15. Update BatchTypes to the new Type Component
+
+.. rubric:: 16. The DoctrineExtendListener was removed. Add metadata information to all your entities which extend from enhavo.
+
+Check the :doc:`Extend from resource </guides/resource/extend-from-resource>` guide for more information. Notice that before the ``discrName`` was ``extend``.
+If you add some other name, beware to also provide some Doctrine Migrations to update the ``discr`` column
