@@ -45,35 +45,6 @@ services:
             - '@enhavo_comment.factory.comment'
             - '@event_dispatcher'
 
-    enhavo_comment.extend_listener.comment:
-        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
-        arguments:
-            - Enhavo\Bundle\CommentBundle\Entity\Comment
-            - '%enhavo_comment.model.comment.class%'
-            - true
-        tags:
-            - { name: doctrine.event_subscriber, connection: default }
-
-    enhavo_comment.extend_listener.thread:
-        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
-        arguments:
-            - Enhavo\Bundle\CommentBundle\Entity\Thread
-            - '%enhavo_comment.model.thread.class%'
-            - true
-        tags:
-            - { name: doctrine.event_subscriber, connection: default }
-
-    enhavo_comment.reference.thread:
-        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineReferenceListener
-        arguments:
-            - 'Enhavo\Bundle\CommentBundle\Entity\Thread'
-            - 'subject'
-            - 'subjectClass'
-            - 'subjectId'
-            - '@enhavo_app.reference.target_class_resolver'
-        tags:
-            - { name: doctrine.event_subscriber }
-
     Enhavo\Bundle\CommentBundle\EventListener\PublishStrategySubscriber:
         arguments:
             - '@enhavo_comment.publish_strategy'
