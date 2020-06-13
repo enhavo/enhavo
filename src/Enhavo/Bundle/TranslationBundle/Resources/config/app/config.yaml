@@ -10,3 +10,11 @@ enhavo_app:
     locale_resolver: Enhavo\Bundle\TranslationBundle\Locale\LocalePathResolver
     form_themes:
       - '@EnhavoTranslation/admin/form/translation/fields.html.twig'
+
+enhavo_doctrine_extension:
+    metadata:
+        Enhavo\Bundle\TranslationBundle\Entity\Translation:
+            reference:
+                object:
+                    idField: refId
+                    nameField: class

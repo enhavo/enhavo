@@ -10,7 +10,7 @@ namespace Enhavo\Bundle\TranslationBundle\Translator\Slug;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Locale\LocaleResolverInterface;
-use Enhavo\Bundle\AppBundle\Reference\TargetClassResolverInterface;
+use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface;
 use Enhavo\Bundle\TranslationBundle\Entity\Translation;
 use Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator;
 
@@ -27,9 +27,9 @@ class SlugTranslator
     private $localeResolver;
 
     /**
-     * @var TargetClassResolverInterface
+     * @var EntityResolverInterface
      */
-    private $classResolver;
+    private $entityResolver;
 
     /**
      * @var TextTranslator
@@ -47,20 +47,20 @@ class SlugTranslator
      * @param EntityManagerInterface $em
      * @param LocaleResolverInterface $localeResolver
      * @param $defaultLocale string
-     * @param $classResolver TargetClassResolverInterface
+     * @param $entityResolver EntityResolverInterface
      * @param $textTranslator TextTranslator
      */
     public function __construct(
         EntityManagerInterface $em,
         LocaleResolverInterface $localeResolver,
         $defaultLocale,
-        TargetClassResolverInterface $classResolver,
+        EntityResolverInterface $entityResolver,
         TextTranslator $textTranslator
     ) {
         $this->em = $em;
         $this->localeResolver = $localeResolver;
         $this->defaultLocale = $defaultLocale;
-        $this->classResolver = $classResolver;
+        $this->entityResolver = $entityResolver;
         $this->textTranslator = $textTranslator;
     }
 
@@ -89,7 +89,7 @@ class SlugTranslator
 
         /** @var Translation $translation */
         $translation = $this->em->getRepository(Translation::class)->findOneBy([
-            'class' => $this->classResolver->resolveClass($class),
+            'class' => $this->entityResolver->getName($class),
             'property' => 'slug',
             'translation' => $slug,
             'locale' => $locale

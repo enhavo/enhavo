@@ -9,9 +9,9 @@
 namespace Enhavo\Bundle\TranslationBundle\Translation;
 
 use Enhavo\Bundle\AppBundle\Exception\TypeMissingException;
-use Enhavo\Bundle\AppBundle\Metadata\MetadataRepository;
 use Enhavo\Bundle\AppBundle\Type\TypeCollector;
 use Enhavo\Bundle\TranslationBundle\Metadata\Metadata;
+use Enhavo\Component\Metadata\MetadataRepository;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class TranslationManager
