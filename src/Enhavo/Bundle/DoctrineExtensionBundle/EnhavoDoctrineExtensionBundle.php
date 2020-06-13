@@ -1,6 +1,6 @@
 <?php
 
-namespace Enhavo\Bundle\DashboardBundle;
+namespace Enhavo\Bundle\DoctrineExtensionBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

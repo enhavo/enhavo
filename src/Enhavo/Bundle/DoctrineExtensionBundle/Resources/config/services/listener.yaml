@@ -1,0 +1,13 @@
+services:
+    Enhavo\Bundle\DoctrineExtensionBundle\EventListener\ReferenceSubscriber:
+        arguments:
+            - '@Enhavo\Component\Metadata\MetadataRepository[DoctrineExtension]'
+            - '@Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface'
+        tags:
+            - { name: doctrine.event_subscriber }
+
+    Enhavo\Bundle\DoctrineExtensionBundle\EventListener\ExtendSubscriber:
+        arguments:
+            - '@Enhavo\Component\Metadata\MetadataRepository[DoctrineExtension]'
+        tags:
+            - { name: doctrine.event_subscriber }

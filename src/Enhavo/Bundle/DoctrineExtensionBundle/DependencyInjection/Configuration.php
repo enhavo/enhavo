@@ -20,11 +20,7 @@ class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder('enhavo_doctrine_extension');
         $rootNode = $treeBuilder->getRootNode();
-
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
-
+        $this->addMappingSection($rootNode);
         return $treeBuilder;
     }
 
@@ -32,9 +28,7 @@ class Configuration implements ConfigurationInterface
     {
         $node
             ->children()
-                ->arrayNode('mapping')
-                    ->addDefaultsIfNotSet()
-                    ->defaultValue([])
+                ->arrayNode('metadata')
                     ->useAttributeAsKey('name')
                     ->arrayPrototype()
                         ->useAttributeAsKey('name')

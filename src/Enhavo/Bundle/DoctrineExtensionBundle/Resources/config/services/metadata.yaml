@@ -1,0 +1,23 @@
+services:
+    Enhavo\Component\Metadata\MetadataRepository[DoctrineExtension]:
+        class: Enhavo\Component\Metadata\MetadataRepository
+        arguments:
+            - '@Enhavo\Component\Metadata\MetadataFactory[DoctrineExtension]'
+
+    Enhavo\Component\Metadata\MetadataFactory[DoctrineExtension]:
+        class: Enhavo\Component\Metadata\MetadataFactory
+        arguments:
+            - 'Enhavo\Bundle\DoctrineExtensionBundle\Metadata\Metadata'
+        calls:
+            - [addDriver, ['@Enhavo\Component\Metadata\Driver\ConfigurationDriver[DoctrineExtension]']]
+            - [addProvider, ['@Enhavo\Bundle\DoctrineExtensionBundle\Metadata\Provider\ExtendProvider']]
+            - [addProvider, ['@Enhavo\Bundle\DoctrineExtensionBundle\Metadata\Provider\ReferenceProvider']]
+
+    Enhavo\Component\Metadata\Driver\ConfigurationDriver[DoctrineExtension]:
+        class: Enhavo\Component\Metadata\Driver\ConfigurationDriver
+        arguments:
+            - '%enhavo_doctrine_extension.metadata%'
+
+    Enhavo\Bundle\DoctrineExtensionBundle\Metadata\Provider\ExtendProvider:
+
+    Enhavo\Bundle\DoctrineExtensionBundle\Metadata\Provider\ReferenceProvider:
