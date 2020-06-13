@@ -52,33 +52,6 @@ services:
         tags:
             - { name: enhavo.menu, alias: newsletter_newsletter }
 
-    enhavo_newsletter.extend_listener.newsletter:
-        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
-        arguments:
-            - Enhavo\Bundle\NewsletterBundle\Entity\Newsletter
-            - '%enhavo_newsletter.model.newsletter.class%'
-            - true
-        tags:
-            - { name: doctrine.event_subscriber, connection: default }
-
-    enhavo_newsletter.extend_listener.subscriber:
-        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
-        arguments:
-            - Enhavo\Bundle\NewsletterBundle\Entity\Subscriber
-            - '%enhavo_newsletter.model.newsletter.class%'
-            - true
-        tags:
-            - { name: doctrine.event_subscriber, connection: default }
-
-    enhavo_newsletter.extend_listener.group:
-        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
-        arguments:
-            - Enhavo\Bundle\NewsletterBundle\Entity\Group
-            - '%enhavo_newsletter.model.newsletter.class%'
-            - true
-        tags:
-            - { name: doctrine.event_subscriber, connection: default }
-
     Enhavo\Bundle\NewsletterBundle\Command\SendNewsletterCommand:
         arguments:
             - '@doctrine.orm.entity_manager'
