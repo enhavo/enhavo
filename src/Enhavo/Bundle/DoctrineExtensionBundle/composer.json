@@ -19,6 +19,6 @@
     "phpunit/phpunit": "^7.4"
   },
   "autoload": {
-    "psr-4": { "Enhavo\\Component\\DoctrineExtension\\": "" }
+    "psr-4": { "Enhavo\\Bundle\\DoctrineExtensionBundle\\": "" }
   }
 }
