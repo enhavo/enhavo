@@ -36,6 +36,7 @@ newsletter:
     state: 'State'
     subject: 'Subject'
     email: 'Email'
+    plain: 'E-Mail'
   form:
     label:
       subject: 'Subject'
