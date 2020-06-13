@@ -8,10 +8,9 @@
 
 namespace Enhavo\Bundle\RoutingBundle\AutoGenerator;
 
-use Enhavo\Bundle\AppBundle\Metadata\MetadataRepository;
 use Enhavo\Bundle\RoutingBundle\Metadata\Metadata;
 use Enhavo\Bundle\AppBundle\Type\CollectorInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Enhavo\Component\Metadata\MetadataRepository;
 
 class AutoGenerator
 {
