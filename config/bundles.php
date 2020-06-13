@@ -41,6 +41,7 @@ return [
     Enhavo\Bundle\ContentBundle\EnhavoContentBundle::class => ['all' => true],
     Enhavo\Bundle\ContactBundle\EnhavoContactBundle::class => ['all' => true],
     Enhavo\Bundle\CommentBundle\EnhavoCommentBundle::class => ['all' => true],
+    Enhavo\Bundle\DoctrineExtensionBundle\EnhavoDoctrineExtensionBundle::class => ['all' => true],
     Enhavo\Bundle\RoutingBundle\EnhavoRoutingBundle::class => ['all' => true],
     Enhavo\Bundle\NavigationBundle\EnhavoNavigationBundle::class => ['all' => true],
     Enhavo\Bundle\DemoBundle\EnhavoDemoBundle::class => ['all' => true],

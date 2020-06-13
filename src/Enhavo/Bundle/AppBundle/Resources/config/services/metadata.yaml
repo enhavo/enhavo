@@ -1,3 +1,0 @@
-services:
-    enhavo_app.metadata.parser.property_parser:
-        class: Enhavo\Bundle\AppBundle\Metadata\Parser\PropertyParser
