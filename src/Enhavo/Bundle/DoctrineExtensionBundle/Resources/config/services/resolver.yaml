@@ -1,0 +1,18 @@
+services:
+    Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface:
+        alias: Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\ChainResolver
+
+    Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\ChainResolver:
+        calls:
+            - [addResolver, ['@Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\SyliusResourceResolver', 200]]
+            - [addResolver, ['@Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\ClassNameResolver', 100]]
+
+    Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\SyliusResourceResolver:
+        arguments:
+            - '%sylius.resources%'
+        calls:
+            - [setContainer, ['@service_container']]
+
+    Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\ClassNameResolver:
+        arguments:
+            - '@doctrine.orm.entity_manager'

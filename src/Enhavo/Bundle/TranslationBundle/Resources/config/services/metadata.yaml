@@ -1,18 +1,20 @@
 services:
-    enhavo_translation.metadata.configuration:
-        class: Enhavo\Bundle\AppBundle\Metadata\MetadataConfiguration
+    Enhavo\Component\Metadata\MetadataRepository[Translation]:
+        class: Enhavo\Component\Metadata\MetadataRepository
+        arguments:
+            - '@Enhavo\Component\Metadata\MetadataFactory[Translation]'
+
+    Enhavo\Component\Metadata\MetadataFactory[Translation]:
+        class: Enhavo\Component\Metadata\MetadataFactory
+        arguments:
+            - 'Enhavo\Bundle\TranslationBundle\Metadata\Metadata'
+        calls:
+            - [addDriver, ['@Enhavo\Component\Metadata\Driver\ConfigurationDriver[Translation]']]
+            - [addProvider, ['@Enhavo\Bundle\TranslationBundle\Metadata\Provider\PropertyNodeProvider']]
+
+    Enhavo\Component\Metadata\Driver\ConfigurationDriver[Translation]:
+        class: Enhavo\Component\Metadata\Driver\ConfigurationDriver
         arguments:
             - '%enhavo_translation.metadata%'
 
-    enhavo_translation.metadata.factory:
-        class: Enhavo\Bundle\TranslationBundle\Metadata\MetadataFactory
-        arguments:
-            - '@kernel'
-
-    enhavo_translation.metadata.repository:
-        class: Enhavo\Bundle\AppBundle\Metadata\MetadataRepository
-        arguments:
-            - '@enhavo_translation.metadata.configuration'
-            - '@enhavo_translation.metadata.factory'
-        calls:
-            - [addParser, ['@enhavo_app.metadata.parser.property_parser']]
+    Enhavo\Bundle\TranslationBundle\Metadata\Provider\PropertyNodeProvider:

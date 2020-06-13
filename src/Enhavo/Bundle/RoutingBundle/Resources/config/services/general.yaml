@@ -24,14 +24,3 @@ services:
     Enhavo\Bundle\RoutingBundle\Twig\SlugifyExtension:
         tags:
             - { name: twig.extension }
-
-    enhavo_routing.event_listener.route_reference:
-        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineReferenceListener
-        arguments:
-          - 'Enhavo\Bundle\RoutingBundle\Entity\Route'
-          - 'content'
-          - 'contentClass'
-          - 'contentId'
-          - '@enhavo_app.reference.target_class_resolver'
-        tags:
-            - { name: doctrine.event_subscriber }

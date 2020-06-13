@@ -10,10 +10,9 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PostFlushEventArgs;
 use Doctrine\ORM\Event\PreFlushEventArgs;
-use Enhavo\Bundle\AppBundle\Metadata\MetadataRepository;
-use Enhavo\Bundle\TranslationBundle\Metadata\Metadata;
 use Enhavo\Bundle\TranslationBundle\Translator\Text\AccessControl;
 use Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator;
+use Enhavo\Component\Metadata\MetadataRepository;
 
 /**
  * Class DoctrineTranslatorSubscriber
@@ -41,15 +40,18 @@ class DoctrineTextTranslatorSubscriber implements EventSubscriber
      */
     private $metadataRepository;
 
-    /**
-     * DoctrineTextTranslatorSubscriber constructor.
-     * @param TextTranslator $translator
-     * @param AccessControl $accessControl
-     */
-    public function __construct(TextTranslator $translator, AccessControl $accessControl, MetadataRepository $metadataRepository)
+    public function setTranslator(TextTranslator $translator)
     {
         $this->translator = $translator;
+    }
+
+    public function setAccessControl(AccessControl $accessControl)
+    {
         $this->accessControl = $accessControl;
+    }
+
+    public function setMetadataRepository(MetadataRepository $metadataRepository)
+    {
         $this->metadataRepository = $metadataRepository;
     }
 

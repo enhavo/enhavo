@@ -6,15 +6,6 @@ services:
         tags:
             - { name: form.type, alias: enhavo_article_article }
 
-    enhavo_article.extend_listener.article:
-        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
-        arguments:
-            - Enhavo\Bundle\ArticleBundle\Entity\Article
-            - '%enhavo_article.model.article.class%'
-            - true
-        tags:
-            - { name: doctrine.event_subscriber, connection: default }
-
     Enhavo\Bundle\ArticleBundle\Menu\ArticleRootMenuType:
         parent: Enhavo\Bundle\AppBundle\Menu\Menu\ListMenu
         tags:

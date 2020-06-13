@@ -87,16 +87,6 @@ services:
         tags:
             - { name: enhavo.newsletter_strategy, alias: accept }
 
-    enhavo_newsletter.extend_listener.subscriber:
-        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
-        arguments:
-            - Enhavo\Bundle\NewsletterBundle\Entity\Subscriber
-            - '%enhavo_newsletter.model.subscriber.class%'
-            - true
-        tags:
-            - { name: doctrine.event_subscriber, connection: default }
-
-
     enhavo_newsletter.factory.subscriber:
         class: Enhavo\Bundle\NewsletterBundle\Factory\SubscriberFactory
         arguments:

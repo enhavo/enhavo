@@ -9,8 +9,7 @@
 namespace Enhavo\Bundle\SearchBundle\Engine\DatabaseSearch;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Enhavo\Bundle\AppBundle\Metadata\MetadataRepository;
-use Enhavo\Bundle\AppBundle\Reference\TargetClassResolverInterface;
+use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface;
 use Enhavo\Bundle\SearchBundle\Engine\EngineInterface;
 use Enhavo\Bundle\SearchBundle\Engine\Filter\Filter;
 use Enhavo\Bundle\SearchBundle\Filter\FilterData;
@@ -24,6 +23,7 @@ use Enhavo\Bundle\SearchBundle\Repository\IndexRepository;
 use Enhavo\Bundle\SearchBundle\Repository\TotalRepository;
 use Enhavo\Bundle\SearchBundle\Util\TextSimplify;
 use Enhavo\Bundle\SearchBundle\Util\TextToWord;
+use Enhavo\Component\Metadata\MetadataRepository;
 use Pagerfanta\Pagerfanta;
 
 class DatabaseSearchEngine implements EngineInterface
@@ -59,9 +59,9 @@ class DatabaseSearchEngine implements EngineInterface
     private $simplifier;
 
     /**
-     * @var TargetClassResolverInterface
+     * @var EntityResolverInterface
      */
-    private $classResolver;
+    private $entityResolver;
 
     /**
      * @var FilterData
@@ -80,7 +80,7 @@ class DatabaseSearchEngine implements EngineInterface
         Extractor $extractor,
         TextToWord $splitter,
         TextSimplify $simplifier,
-        TargetClassResolverInterface $classResolver,
+        EntityResolverInterface $entityResolver,
         FilterData $filterData,
         $classes
     ) {
@@ -90,7 +90,7 @@ class DatabaseSearchEngine implements EngineInterface
         $this->extractor = $extractor;
         $this->splitter = $splitter;
         $this->simplifier = $simplifier;
-        $this->classResolver = $classResolver;
+        $this->entityResolver = $entityResolver;
         $this->filterData = $filterData;
         $this->classes = $classes;
     }
@@ -103,7 +103,7 @@ class DatabaseSearchEngine implements EngineInterface
         $searchResults = $repository->getSearchResults($searchFilter);
         $result = [];
         foreach($searchResults as $searchResult) {
-            $result[] = $this->classResolver->find($searchResult['id'], $searchResult['class']);
+            $result[] = $this->entityResolver->getEntity($searchResult['id'], $searchResult['class']);
         }
 
         return $result;
@@ -114,7 +114,7 @@ class DatabaseSearchEngine implements EngineInterface
         $searchFilter = $this->createSearchFilter($filter);
         $repository = $this->em->getRepository(Index::class);
         $searchQuery = $repository->createSearchQuery($searchFilter);
-        return new Pagerfanta(new DatabaseSearchAdapter($searchQuery, $this->classResolver));
+        return new Pagerfanta(new DatabaseSearchAdapter($searchQuery, $this->entityResolver));
     }
 
     private function createSearchFilter(Filter $filter)
@@ -127,7 +127,7 @@ class DatabaseSearchEngine implements EngineInterface
         $searchFilter->setWords($words);
 
         if($filter->getClass()) {
-            $class = $this->classResolver->resolveClass($filter->getClass());
+            $class = $this->entityResolver->getName($filter->getClass());
             $searchFilter->setContentClass($class);
         }
 
@@ -228,7 +228,7 @@ class DatabaseSearchEngine implements EngineInterface
 
     private function findDataSetOrCreateNew($resource)
     {
-        $className = $this->classResolver->resolveClass($resource);
+        $className = $this->entityResolver->getName($resource);
         $dataSet = $this->em->getRepository(DataSet::class)->findOneBy([
             'contentId' => $resource->getId(),
             'contentClass' => $className
@@ -281,7 +281,7 @@ class DatabaseSearchEngine implements EngineInterface
 
     public function removeIndex($resource)
     {
-        $className = $this->classResolver->resolveClass($resource);
+        $className = $this->entityResolver->getName($resource);
         $dataSet = $this->em->getRepository(DataSet::class)->findOneBy([
             'contentId' => $resource->getId(),
             'contentClass' => $className

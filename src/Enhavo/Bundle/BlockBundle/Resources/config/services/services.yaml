@@ -42,17 +42,6 @@ services:
         tags:
             - { name: validator.constraint_validator, alias: video_url }
 
-    enhavo_block.event_listener.block_reference:
-        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineReferenceListener
-        arguments:
-          - 'Enhavo\Bundle\BlockBundle\Entity\Node'
-          - 'block'
-          - 'blockClass'
-          - 'blockId'
-          - '@enhavo_app.reference.target_class_resolver'
-        tags:
-            - { name: doctrine.event_subscriber }
-
     enhavo_block.block.manager:
         class: Enhavo\Bundle\BlockBundle\Block\BlockManager
         public: true

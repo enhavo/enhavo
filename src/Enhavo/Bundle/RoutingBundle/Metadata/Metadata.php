@@ -9,12 +9,8 @@ namespace Enhavo\Bundle\RoutingBundle\Metadata;
  * @since 18/08/18
  * @author gseidel
  */
-class Metadata
+class Metadata extends \Enhavo\Component\Metadata\Metadata
 {
-    /**
-     * @var string
-     */
-    private $className;
 
     /**
      * @var Generator[]
@@ -27,22 +23,6 @@ class Metadata
     private $router = [];
 
     /**
-     * @return string
-     */
-    public function getClassName()
-    {
-        return $this->className;
-    }
-
-    /**
-     * @param string $className
-     */
-    public function setClassName($className)
-    {
-        $this->className = $className;
-    }
-
-    /**
      * @return Generator[]
      */
     public function getGenerators()
@@ -51,12 +31,13 @@ class Metadata
     }
 
     /**
-     * @param Generator[] $generators
+     * @param Generator $generator
      */
-    public function setGenerators($generators)
+    public function addGenerator(Generator $generator)
     {
-        $this->generators = $generators;
+        $this->generators[] = $generator;
     }
+
 
     /**
      * @return Router[]
@@ -67,10 +48,10 @@ class Metadata
     }
 
     /**
-     * @param Router[] $router
+     * @param Router $router
      */
-    public function setRouter($router)
+    public function addRouter(Router $router)
     {
-        $this->router = $router;
+        $this->router[] = $router;
     }
 }

@@ -28,25 +28,6 @@ services:
         tags:
             - { name: enhavo.widget, alias: slider }
 
-
-    enhavo_slider.extend_listener.slider:
-        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
-        arguments:
-            - Enhavo\Bundle\SliderBundle\Entity\Slider
-            - '%enhavo_slider.model.slider.class%'
-            - true
-        tags:
-            - { name: doctrine.event_subscriber, connection: default }
-
-    enhavo_slider.extend_listener.slide:
-        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
-        arguments:
-            - Enhavo\Bundle\SliderBundle\Entity\Slide
-            - '%enhavo_slider.model.slide.class%'
-            - true
-        tags:
-            - { name: doctrine.event_subscriber, connection: default }
-
     Enhavo\Bundle\SliderBundle\Menu\SliderMenu:
         parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:

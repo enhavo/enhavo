@@ -184,24 +184,6 @@ services:
             - '@enhavo_media.media.media_manager'
             - '@router'
 
-    enhavo_media.extend_listener.file:
-        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
-        arguments:
-            - Enhavo\Bundle\MediaBundle\Entity\File
-            - '%enhavo_media.model.file.class%'
-            - true
-        tags:
-            - { name: doctrine.event_subscriber, connection: default }
-
-    enhavo_media.extend_listener.format:
-        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
-        arguments:
-            - Enhavo\Bundle\MediaBundle\Entity\Format
-            - '%enhavo_media.model.format.class%'
-            - true
-        tags:
-            - { name: doctrine.event_subscriber, connection: default }
-
     Enhavo\Bundle\MediaBundle\Menu\LibraryMenu:
         parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:

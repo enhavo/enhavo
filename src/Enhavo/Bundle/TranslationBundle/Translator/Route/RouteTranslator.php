@@ -9,11 +9,11 @@
 namespace Enhavo\Bundle\TranslationBundle\Translator\Route;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Enhavo\Bundle\AppBundle\Metadata\MetadataRepository;
-use Enhavo\Bundle\AppBundle\Reference\TargetClassResolverInterface;
+use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface;
 use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
 use Enhavo\Bundle\TranslationBundle\Exception\TranslationException;
 use Enhavo\Bundle\TranslationBundle\Entity\TranslationRoute;
+use Enhavo\Component\Metadata\MetadataRepository;
 
 class RouteTranslator
 {
@@ -28,9 +28,9 @@ class RouteTranslator
     private $defaultLocale;
 
     /**
-     * @var TargetClassResolverInterface
+     * @var EntityResolverInterface
      */
-    private $classResolver;
+    private $entityResolver;
 
     /**
      * @var EntityManagerInterface
@@ -41,14 +41,14 @@ class RouteTranslator
      * RouteTranslator constructor.
      * @param MetadataRepository $metadataRepository
      * @param string $defaultLocale
-     * @param TargetClassResolverInterface $classResolver
+     * @param EntityResolverInterface $entityResolver
      * @param EntityManagerInterface $em
      */
-    public function __construct(MetadataRepository $metadataRepository, string $defaultLocale, TargetClassResolverInterface $classResolver, EntityManagerInterface $em)
+    public function __construct(MetadataRepository $metadataRepository, string $defaultLocale, EntityResolverInterface $entityResolver, EntityManagerInterface $em)
     {
         $this->metadataRepository = $metadataRepository;
         $this->defaultLocale = $defaultLocale;
-        $this->classResolver = $classResolver;
+        $this->entityResolver = $entityResolver;
         $this->em = $em;
     }
 
@@ -120,7 +120,7 @@ class RouteTranslator
         $repository = $this->getEntityManager()->getRepository(TranslationRoute::class);
 
         $translationRoutes = $repository->findTranslationRoutes(
-            $this->classResolver->resolveClass($entity),
+            $this->entityResolver->getName($entity),
             $entity->getId()
         );
 
@@ -134,7 +134,7 @@ class RouteTranslator
         $repository = $this->getEntityManager()->getRepository(TranslationRoute::class);
 
         $translationRoute = $repository->findTranslationRoute(
-            $this->classResolver->resolveClass($entity),
+            $this->entityResolver->getName($entity),
             $entity->getId(),
             $property,
             $locale

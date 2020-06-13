@@ -13,15 +13,6 @@ services:
         tags:
             - { name: validator.constraint_validator, alias: valid_appointment_date }
 
-    enhavo_calendar.extend_listener.appointment:
-        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
-        arguments:
-            - Enhavo\Bundle\CalendarBundle\Entity\Appointment
-            - '%enhavo_calendar.model.appointment.class%'
-            - true
-        tags:
-            - { name: doctrine.event_subscriber, connection: default }
-
     Enhavo\Bundle\CalendarBundle\Menu\CalendarMenu:
         parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:

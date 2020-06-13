@@ -2,7 +2,7 @@ services:
     enhavo_translation.translation.manager:
         class: Enhavo\Bundle\TranslationBundle\Translation\TranslationManager
         arguments:
-            - '@enhavo_translation.metadata.repository'
+            - '@Enhavo\Component\Metadata\MetadataRepository[Translation]'
             - '@enhavo_translation.translation_collector'
             - '%enhavo_translation.locales%'
             - '%enhavo_translation.default_locale%'

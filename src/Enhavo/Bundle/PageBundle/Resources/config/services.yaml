@@ -19,15 +19,6 @@ services:
         tags:
             - { name: form.type, alias: 'enhavo_page_page_choice' }
 
-    enhavo_page.extend_listener.page:
-        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
-        arguments:
-            - Enhavo\Bundle\PageBundle\Entity\Page
-            - '%enhavo_page.model.page.class%'
-            - true
-        tags:
-            - { name: doctrine.event_subscriber, connection: default }
-
     enhavo_page.twig.page_path_extension:
         class: Enhavo\Bundle\PageBundle\Twig\PagePathExtension
         arguments:

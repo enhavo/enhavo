@@ -9,12 +9,11 @@
 namespace Enhavo\Bundle\RoutingBundle\Router;
 
 use Doctrine\ORM\Proxy\Proxy;
-use Enhavo\Bundle\AppBundle\Metadata\MetadataRepository;
 use Enhavo\Bundle\AppBundle\Type\CollectorInterface;
 use Enhavo\Bundle\RoutingBundle\Exception\UrlResolverException;
 use Enhavo\Bundle\RoutingBundle\Metadata\Metadata;
+use Enhavo\Component\Metadata\MetadataRepository;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class Router

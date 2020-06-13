@@ -15,6 +15,14 @@ doctrine:
         resolve_target_entities:
             Enhavo\Bundle\RoutingBundle\Model\RouteInterface: Enhavo\Bundle\RoutingBundle\Entity\Route
 
+enhavo_doctrine_extension:
+    metadata:
+        Enhavo\Bundle\RoutingBundle\Entity\Route:
+            reference:
+                content:
+                    idField: contentId
+                    nameField: contentClass
+
 stof_doctrine_extensions:
     class:
         sluggable: Enhavo\Bundle\RoutingBundle\EventListener\SluggableListener

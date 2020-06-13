@@ -10,13 +10,8 @@ namespace Enhavo\Bundle\TranslationBundle\Metadata;
 
 use Enhavo\Bundle\AppBundle\Util\NameTransformer;
 
-class Metadata
+class Metadata extends \Enhavo\Component\Metadata\Metadata
 {
-    /**
-     * @var string
-     */
-    private $class;
-
     /**
      * @var PropertyNode[]
      */
@@ -27,8 +22,9 @@ class Metadata
      */
     private $nameTransformer;
 
-    public function __construct()
+    public function __construct($className)
     {
+        parent::__construct($className);
         $this->nameTransformer = new NameTransformer();
     }
 
@@ -53,32 +49,8 @@ class Metadata
         return null;
     }
 
-    /**
-     * @param PropertyNode[] $properties
-     */
-    public function setProperties($properties)
-    {
-        $this->properties = $properties;
-    }
-
     public function addProperty(PropertyNode $property)
     {
-        $this->properties[] = $property;
-    }
-
-    /**
-     * @return string
-     */
-    public function getClass()
-    {
-        return $this->class;
-    }
-
-    /**
-     * @param string $class
-     */
-    public function setClass($class)
-    {
-        $this->class = $class;
+        $this->properties[$property->getProperty()] = $property;
     }
 }

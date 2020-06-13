@@ -10,13 +10,13 @@ namespace Enhavo\Bundle\SearchBundle\Engine\DatabaseSearch;
 
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\QueryBuilder;
-use Enhavo\Bundle\AppBundle\Reference\TargetClassResolverInterface;
+use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface;
 use Pagerfanta\Adapter\AdapterInterface;
 
 class DatabaseSearchAdapter implements AdapterInterface
 {
     /**
-     * @var TargetClassResolverInterface
+     * @var EntityResolverInterface
      */
     private $resolver;
 
@@ -25,7 +25,7 @@ class DatabaseSearchAdapter implements AdapterInterface
      */
     private $queryBuilder;
 
-    public function __construct(QueryBuilder $queryBuilder, TargetClassResolverInterface $resolver)
+    public function __construct(QueryBuilder $queryBuilder, EntityResolverInterface $resolver)
     {
         $this->resolver = $resolver;
         $this->queryBuilder = $queryBuilder;
@@ -52,7 +52,7 @@ class DatabaseSearchAdapter implements AdapterInterface
 
         $result = [];
         foreach($rows as $item) {
-            $result[] = $this->resolver->find($item['id'], $item['class']);
+            $result[] = $this->resolver->getEntity($item['id'], $item['class']);
         }
         return $result;
     }
