@@ -16,3 +16,11 @@ enhavo_app:
             priority: 10
     form_themes:
         - '@EnhavoBlock/admin/form/block/fields.html.twig'
+
+enhavo_doctrine_extension:
+    metadata:
+        Enhavo\Bundle\BlockBundle\Entity\Node:
+            reference:
+                block:
+                    idField: blockId
+                    nameField: blockClass
