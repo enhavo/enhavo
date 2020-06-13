@@ -58,7 +58,7 @@ class AssignBatchType extends AbstractBatchType
     public function execute(array $options, array $resources, ResourceInterface $resource = null)
     {
         $request = $this->requestStack->getMasterRequest();
-        $form = $this->formFactory->create($options['form'], $options['form']);
+        $form = $this->formFactory->create($options['form']);
 
         $form->handleRequest($request);
         if(!$form->isValid()) {
@@ -101,6 +101,11 @@ class AssignBatchType extends AbstractBatchType
         ]);
 
         $resolver->setRequired(['form', 'property']);
+    }
+
+    public static function getParentType(): ?string
+    {
+        return FormBatchType::class;
     }
 
     public static function getName(): ?string

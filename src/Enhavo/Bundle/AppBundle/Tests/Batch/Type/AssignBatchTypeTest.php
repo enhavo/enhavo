@@ -13,6 +13,7 @@ use Enhavo\Bundle\AppBundle\Batch\AbstractBatchType;
 use Enhavo\Bundle\AppBundle\Batch\Batch;
 use Enhavo\Bundle\AppBundle\Batch\BatchTypeInterface;
 use Enhavo\Bundle\AppBundle\Batch\Type\AssignBatchType;
+use Enhavo\Bundle\AppBundle\Batch\Type\FormBatchType;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
@@ -148,6 +149,11 @@ class AssignBatchTypeTest extends TestCase
     public function testGetName()
     {
         $this->assertEquals('assign', AssignBatchType::getName());
+    }
+
+    public function testParentName()
+    {
+        $this->assertEquals(FormBatchType::class, AssignBatchType::getParentType());
     }
 }
 
