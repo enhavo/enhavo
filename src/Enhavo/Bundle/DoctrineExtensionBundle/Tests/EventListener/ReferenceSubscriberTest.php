@@ -38,7 +38,7 @@ class ReferenceSubscriberTest extends SubscriberTest
 
         $dependencies = $this->createDependencies([
             Entity::class => [
-                'references' => [
+                'reference' => [
                     'node' => [
                         'nameField' => 'nodeName',
                         'idField' => 'nodeId'

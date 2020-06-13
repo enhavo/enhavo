@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\SearchBundle\Filter;
 
-use Enhavo\Bundle\AppBundle\Metadata\MetadataRepository;
+use Enhavo\Component\Metadata\MetadataRepository;
 use Enhavo\Bundle\AppBundle\Type\TypeCollector;
 use Enhavo\Bundle\SearchBundle\Metadata\Filter;
 use Enhavo\Bundle\SearchBundle\Metadata\Metadata;

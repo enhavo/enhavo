@@ -9,13 +9,8 @@ namespace Enhavo\Bundle\SearchBundle\Metadata;
  * @since 23/06/16
  * @author gseidel
  */
-class Metadata
+class Metadata extends \Enhavo\Component\Metadata\Metadata
 {
-    /**
-     * @var string
-     */
-    private $className;
-
     /**
      * @var string
      */
@@ -40,22 +35,6 @@ class Metadata
      * @var array
      */
     private $filters = [];
-
-    /**
-     * @return string
-     */
-    public function getClassName()
-    {
-        return $this->className;
-    }
-
-    /**
-     * @param string $className
-     */
-    public function setClassName($className)
-    {
-        $this->className = $className;
-    }
 
     /**
      * @return string
@@ -114,15 +93,15 @@ class Metadata
     }
 
     /**
-     * @param array $properties
+     * @param PropertyNode $property
      */
-    public function setProperties($properties)
+    public function addProperty(PropertyNode $property)
     {
-        $this->properties = $properties;
+        $this->properties[] = $property;
     }
 
     /**
-     * @return array
+     * @return Filter[]
      */
     public function getFilters()
     {
@@ -130,10 +109,10 @@ class Metadata
     }
 
     /**
-     * @param array $filter
+     * @param Filter $filter
      */
-    public function setFilters($filter)
+    public function addFilter($filter)
     {
-        $this->filters = $filter;
+        $this->filters[] = $filter;
     }
 }

@@ -4,7 +4,7 @@ services:
         public: true
         arguments:
             - '@enhavo_search.indexer.indexer'
-            - '@enhavo_search.metadata.repository'
+            - '@Enhavo\Component\Metadata\MetadataRepository[Search]'
             - '@doctrine.orm.entity_manager'
             - '@enhavo_search.elastica.client'
             - '@enhavo_search.extractor.extractor'

@@ -20,7 +20,7 @@ class ReferenceProviderTest extends TestCase
         $metadata = new Metadata('SomeClass');
         $provider = new ReferenceProvider();
         $provider->provide($metadata, [
-            'references' => [
+            'reference' => [
                 'name' => [
                     'idField' => 'entityId',
                     'nameField' => 'entityName'
@@ -40,7 +40,7 @@ class ReferenceProviderTest extends TestCase
         $metadata = new Metadata('SomeClass');
         $provider = new ReferenceProvider();
         $provider->provide($metadata, [
-            'references' => [
+            'reference' => [
                 'name' => [
                     'nameField' => 'entityName'
                 ]
@@ -54,7 +54,7 @@ class ReferenceProviderTest extends TestCase
         $metadata = new Metadata('SomeClass');
         $provider = new ReferenceProvider();
         $provider->provide($metadata, [
-            'references' => [
+            'reference' => [
                 'name' => [
                     'idField' => 'entityId',
                 ]

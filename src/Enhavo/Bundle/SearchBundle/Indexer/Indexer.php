@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\SearchBundle\Indexer;
 
-use Enhavo\Bundle\AppBundle\Metadata\MetadataRepository;
+use Enhavo\Component\Metadata\MetadataRepository;
 use Enhavo\Bundle\AppBundle\Type\TypeCollector;
 use Enhavo\Bundle\SearchBundle\Metadata\Metadata;
 use Symfony\Component\PropertyAccess\PropertyAccess;

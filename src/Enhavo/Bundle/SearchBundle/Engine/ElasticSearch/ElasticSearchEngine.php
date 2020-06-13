@@ -18,7 +18,7 @@ use Enhavo\Bundle\SearchBundle\Exception\IndexException;
 use Enhavo\Bundle\SearchBundle\Filter\FilterData;
 use Enhavo\Bundle\SearchBundle\Metadata\Filter as MetadataFilter;
 use Pagerfanta\Pagerfanta;
-use Enhavo\Bundle\AppBundle\Metadata\MetadataRepository;
+use Enhavo\Component\Metadata\MetadataRepository;
 use Enhavo\Bundle\SearchBundle\Engine\EngineInterface;
 use Enhavo\Bundle\SearchBundle\Extractor\Extractor;
 use Enhavo\Bundle\SearchBundle\Indexer\Indexer;
@@ -104,6 +104,7 @@ class ElasticSearchEngine implements EngineInterface
 
         $filterData = [];
         foreach($this->classes as $class) {
+            /** @var Metadata $metadata */
             $metadata = $this->metadataRepository->getMetadata($class);
             $filters = $metadata->getFilters();
 
