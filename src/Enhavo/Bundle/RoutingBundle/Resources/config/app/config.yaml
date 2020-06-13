@@ -16,10 +16,12 @@ doctrine:
             Enhavo\Bundle\RoutingBundle\Model\RouteInterface: Enhavo\Bundle\RoutingBundle\Entity\Route
 
 enhavo_doctrine_extension:
-    reference:
-        content:
-            idField: contentId
-            nameField: contentClass
+    metadata:
+        Enhavo\Bundle\RoutingBundle\Entity\Route:
+            reference:
+                content:
+                    idField: contentId
+                    nameField: contentClass
 
 stof_doctrine_extensions:
     class:

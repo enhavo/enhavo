@@ -24,7 +24,9 @@ class ReferenceProvider implements ProviderInterface
 
         if(array_key_exists('reference', $normalizedData) && is_array($normalizedData['reference'])) {
             foreach($normalizedData['reference'] as $name => $referenceData) {
-                if(!array_key_exists('nameField', $referenceData)) {
+                if(!is_array($referenceData)) {
+                    throw ProviderException::definitionMissing($metadata, ['idField', 'nameField']);
+                } elseif(!array_key_exists('nameField', $referenceData)) {
                     throw ProviderException::definitionMissing($metadata, 'nameField');
                 } elseif(!array_key_exists('idField', $referenceData)) {
                     throw ProviderException::definitionMissing($metadata, 'idField');

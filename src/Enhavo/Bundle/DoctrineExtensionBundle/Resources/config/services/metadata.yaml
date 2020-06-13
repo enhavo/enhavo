@@ -3,6 +3,7 @@ services:
         class: Enhavo\Component\Metadata\MetadataRepository
         arguments:
             - '@Enhavo\Component\Metadata\MetadataFactory[DoctrineExtension]'
+            - false
 
     Enhavo\Component\Metadata\MetadataFactory[DoctrineExtension]:
         class: Enhavo\Component\Metadata\MetadataFactory

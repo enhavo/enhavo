@@ -38,5 +38,6 @@ enhavo_doctrine_extension:
     metadata:
         Enhavo\Bundle\NavigationBundle\Entity\Node:
             reference:
-                idField: contentId
-                nameField: contentClass
+                node:
+                    idField: contentId
+                    nameField: contentClass

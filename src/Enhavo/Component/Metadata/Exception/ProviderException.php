@@ -18,8 +18,11 @@ class ProviderException extends \InvalidArgumentException
         return new self(sprintf('The Metadata class "%s" should be type of "%s" to provide data', get_class($metadata), $type));
     }
 
-    public static function definitionMissing(Metadata $metadata, string $property)
+    public static function definitionMissing(Metadata $metadata, $property)
     {
+        if(is_array($property)) {
+            return new self(sprintf('The Class "%s" should define following: "%s", but they are missing', $metadata->getClassName(), join('", "', $property)));
+        }
         return new self(sprintf('The Class "%s" should define "%s", but is missing', $metadata->getClassName(), $property));
     }
 }

@@ -61,4 +61,16 @@ class ReferenceProviderTest extends TestCase
             ]
         ]);
     }
+
+    public function testConfigNotArray()
+    {
+        $this->expectException(ProviderException::class);
+        $metadata = new Metadata('SomeClass');
+        $provider = new ReferenceProvider();
+        $provider->provide($metadata, [
+            'reference' => [
+                'name' => 'something'
+            ]
+        ]);
+    }
 }
