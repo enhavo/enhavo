@@ -8,30 +8,43 @@
 
 namespace Enhavo\Bundle\ArticleBundle\Repository;
 
+use Doctrine\ORM\QueryBuilder;
 use Enhavo\Bundle\ContentBundle\Repository\ContentRepository;
 
 class ArticleRepository extends ContentRepository
 {
-    public function findByCategoriesAndTags($categories = [], $tags = [], $pagination = true, $limit = 10, $orderBy = [])
+    private function addDefaultConditions(QueryBuilder $query)
+    {
+        $query->andWhere('a.public = true');
+        $query->andWhere('a.publicationDate <= CURRENT_TIMESTAMP()');
+        $query->andWhere('a.publishedUntil > CURRENT_TIMESTAMP() OR a.publishedUntil IS NULL');
+
+        $query->orderBy('a.publicationDate', 'DESC');
+    }
+
+    public function findByCategoriesAndTags($categories = [], $tags = [], $pagination = true, $limit = 10)
     {
         $query = $this->createQueryBuilder('a');
 
-        if(count($categories) > 0) {
+        $this->addDefaultConditions($query);
+
+        if (count($categories) > 0) {
             $query->innerJoin('a.categories', 'c');
             $query->andWhere('c.id IN (:categories)');
             $query->setParameter('categories', $categories);
         }
 
-        if(count($tags) > 0) {
+        if (count($tags) > 0) {
             $query->innerJoin('a.tags', 't');
             $query->andWhere('t.id IN (:tags)');
             $query->setParameter('tags', $tags);
         }
 
-        if($pagination) {
+        if ($pagination) {
             $paginator = $this->getPaginator($query);
             $paginator->setMaxPerPage($limit);
             return $paginator;
+
         } else {
             $query->setMaxResults($limit);
             return $query->getQuery()->getResult();
