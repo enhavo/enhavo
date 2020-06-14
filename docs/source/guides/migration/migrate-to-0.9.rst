@@ -156,9 +156,24 @@ Note that the file in your project probably named ``*.yml`` instead of ``*.yaml`
 
 .. rubric:: 14. Delete file ``config/routes/enhavo_taxonomy.yaml`` if exists
 
-.. rubric:: 15. Update BatchTypes to the new Type Component
+.. rubric:: 15. Update BatchTypes to the new Type Component if you add custom batches.
 
-.. rubric:: 16. The DoctrineExtendListener was removed. Add metadata information to all your entities which extend from enhavo.
+.. rubric:: 16. Add packages to your ``composer.json``
+
+If you use ``dev-master`` as version in your ``composer.json``, you have to add following packages to prevent minimum stability violence.
+If you are not use ``dev-master`` you can skip this step.
+
+.. code-block:: json
+
+  "dependencies": {
+    "enhavo/doctrine-extension-bundle": "dev-master",
+    "enhavo/metadata": "dev-master",
+    "enhavo/type": "dev-master",
+    // other packages
+  }
+
+.. rubric:: 17. The DoctrineExtendListener has removed. You have to add metadata information to all your entities which extend from enhavo.
 
 Check the :doc:`Extend from resource </guides/resource/extend-from-resource>` guide for more information. Notice that before the ``discrName`` was ``extend``.
-If you add some other name, beware to also provide some Doctrine Migrations to update the ``discr`` column
+If you add some other name, beware to also provide some Doctrine Migrations to update the ``discr`` column. If you don't know, if and for what resource you have to put
+the extends configuration. Just search for ``model`` inside ``config/packages/*`` and see where you redefine a model. At least for this models you have to provide the configuration.
