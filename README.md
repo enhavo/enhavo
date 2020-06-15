@@ -37,14 +37,10 @@ $ bin/console enhavo:init
 $ bin/console fos:user:create my@email.com my@email.com password --super-admin
 ```
 
-Editions
---------
+Get started
+-----------
 
-If you want to use enhavo CMS, we recommend to use one of the enhavo editions:
-
-* [Enhavo CMS](https://github.com/enhavo/enhavo-cms) Contais CMS relavent feature
-* [Enhavo Shop](https://github.com/enhavo/enhavo-shop) Same as CMS but also contain Shop features
-* [Enhavo App](https://github.com/enhavo/enhavo-app) Contains only basic Admin features
+If you want to use enhavo you can read the [Get Started](https://docs.enhavo.com/get-started/index.html) tutorial. 
 
 Demo
 ----
@@ -53,20 +49,10 @@ Use username **admin@enhavo.com** with password **admin** to log in into the bac
 
 [demo.enhavo.com](http://demo.enhavo.com/admin/login)
 
-Docker
-------
-
-To run the demo with docker you can use following command
-
-```bash
-$ docker run -d -e DATABASE_URL='mysql://root:root@mysql:3306/enhavo' --link 'mysql:mysql' -p '80:80' enhavo/enhavo:master
-```
-
 Documentation
 -------------
 
-Documentation is available at [docs.enhavo.com](http://docs.enhavo.com). To create documentation you need
-`sphinx`. Install it over `pip` with 
+Documentation is available at [docs.enhavo.com](http://docs.enhavo.com). To create documentation you need `sphinx`. Install it over `pip` with 
 
 ```bash
 $ pip install -U Sphinx
@@ -78,7 +64,7 @@ Compile the documentation with
 $ sphinx-build -b html docs/source build/docs
 ```
 
-Or use the autobuilder
+Or use the autobuilder to watch your files
 
 ```bash
 $ pip install sphinx-autobuild
@@ -98,7 +84,7 @@ Then run the test itself.
 
 ```bash
 $ bin/behat
-$ ./phpunit
+$ bin/phpunit
 ```
 
 MIT License
