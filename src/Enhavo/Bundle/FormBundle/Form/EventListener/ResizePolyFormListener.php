@@ -3,6 +3,8 @@
 namespace Enhavo\Bundle\FormBundle\Form\EventListener;
 
 use Doctrine\Common\Util\ClassUtils;
+use Symfony\Component\Form\Exception\InvalidArgumentException;
+use Symfony\Component\Form\Exception\InvalidConfigurationException;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Form\Extension\Core\EventListener\ResizeFormListener;
 use Symfony\Component\Form\FormEvent;
@@ -28,9 +30,6 @@ class ResizePolyFormListener extends ResizeFormListener
     /** @var string Name of the hidden field identifying the type. */
     private $typeFieldName;
 
-    /** @var null|string Name of the index field on the given entity. */
-    private $indexProperty;
-
     /** @var \Symfony\Component\PropertyAccess\PropertyAccessor */
     private $propertyAccessor;
 
@@ -43,19 +42,17 @@ class ResizePolyFormListener extends ResizeFormListener
      * @param bool $allowAdd
      * @param bool $allowDelete
      * @param string $typeFieldName
-     * @param string $indexProperty
      */
-    public function __construct(array $prototypes, array $options = array(), $allowAdd = false, $allowDelete = false, $typeFieldName = '_key', $indexProperty = null, $entryTypeResolver = null)
+    public function __construct(array $prototypes, array $options = array(), $allowAdd = false, $allowDelete = false, $typeFieldName = '_key', $entryTypeResolver = null)
     {
         $this->typeFieldName = $typeFieldName;
-        $this->indexProperty = $indexProperty;
         $this->entryTypeResolver = $entryTypeResolver;
         $this->propertyAccessor = PropertyAccess::createPropertyAccessor();
 
         $defaultType = null;
         foreach ($prototypes as $key => $prototype) {
             /** @var FormInterface $prototype */
-            $modelClass = $prototype->getConfig()->getOption('model_class');
+            $modelClass = $prototype->getConfig()->getOption('data_class');
             $type = $prototype->getConfig()->getType()->getInnerType();
 
             if (null === $defaultType) {
@@ -63,7 +60,10 @@ class ResizePolyFormListener extends ResizeFormListener
             }
 
             $this->typeMap[$key] = get_class($type);
-            $this->classMap[$modelClass] = $key;
+
+            if($modelClass !== null) {
+                $this->classMap[$modelClass] = $key;
+            }
         }
 
         parent::__construct(get_class($defaultType), $options, $allowAdd, $allowDelete);
@@ -85,10 +85,10 @@ class ResizePolyFormListener extends ResizeFormListener
                 return $this->classMap[$class];
             }
 
-            throw new \InvalidArgumentException();
+            throw new InvalidConfigurationException(sprintf('The class "%s" can\'t by mapped to a type. You can avoid this behavior be adding an entry_type_resolver', $class));
         }
 
-        throw new \InvalidArgumentException();
+        throw new InvalidConfigurationException(sprintf('The type "%s" is not supported by default. Add an entry_type_resolver to resolve this type', gettype($entryData)));
     }
 
     /**
@@ -99,12 +99,12 @@ class ResizePolyFormListener extends ResizeFormListener
      *
      * @return string|FormTypeInterface
      *
-     * @throws \InvalidArgumentException when _type is not present or is invalid
+     * @throws InvalidArgumentException when _type is not present or is invalid
      */
     private function getKeyForData(array $data)
     {
         if (!array_key_exists($this->typeFieldName, $data) || !array_key_exists($data[$this->typeFieldName], $this->typeMap)) {
-            throw new \InvalidArgumentException('Unable to determine the Type for given data');
+            throw new InvalidArgumentException('Unable to determine the Type for given data');
         }
 
         return $data[$this->typeFieldName];
@@ -151,71 +151,24 @@ class ResizePolyFormListener extends ResizeFormListener
             throw new UnexpectedTypeException($data, 'array or (\Traversable and \ArrayAccess)');
         }
 
-        // Process entries by IndexProperty
-        if (!is_null($this->indexProperty)) {
-            // Reindex the submit data by given index
-            $indexedData = array();
-            $unindexedData = array();
-            $finalData = array();
-            foreach ($data as $item) {
-                if (isset($item[$this->indexProperty])) {
-                    $indexedData[$item[$this->indexProperty]] = $item;
-                } else {
-                    $unindexedData[] = $item;
+
+        // Remove all empty rows
+        if ($this->allowDelete) {
+            foreach ($form as $name => $child) {
+                if (!isset($data[$name])) {
+                    $form->remove($name);
                 }
             }
+        }
 
-            // Add all additional rows to the end of the array
-            $name = $form->count();
-            foreach ($unindexedData as $item) {
-                if ($this->allowAdd) {
-                    $key = $this->getKeyForData($item);
+        // Add all additional rows
+        if ($this->allowAdd) {
+            foreach ($data as $name => $value) {
+                if (!$form->has($name)) {
+                    $key = $this->getKeyForData($value);
                     $form->add($name, $this->typeMap[$key], array_replace(array(
                         'property_path' => '['.$name.']',
                     ), isset($this->options[$key]) ? $this->options[$key] : []));
-                }
-
-                // Add to final data array
-                $finalData[$name] = $item;
-                ++$name;
-            }
-
-            // Remove all empty rows
-            if ($this->allowDelete) {
-                foreach ($form as $name => $child) {
-                    // New items will have null data. Skip these.
-                    if (!is_null($child->getData())) {
-                        $index = $this->propertyAccessor->getValue($child->getData(), $this->indexProperty);
-                        if (!isset($indexedData[$index])) {
-                            $form->remove($name);
-                        } else {
-                            $finalData[$name] = $indexedData[$index];
-                        }
-                    }
-                }
-            }
-
-            // Replace submitted data with new form order
-            $event->setData($finalData);
-        } else {
-            // Remove all empty rows
-            if ($this->allowDelete) {
-                foreach ($form as $name => $child) {
-                    if (!isset($data[$name])) {
-                        $form->remove($name);
-                    }
-                }
-            }
-
-            // Add all additional rows
-            if ($this->allowAdd) {
-                foreach ($data as $name => $value) {
-                    if (!$form->has($name)) {
-                        $key = $this->getKeyForData($value);
-                        $form->add($name, $this->typeMap[$key], array_replace(array(
-                            'property_path' => '['.$name.']',
-                        ), isset($this->options[$key]) ? $this->options[$key] : []));
-                    }
                 }
             }
         }

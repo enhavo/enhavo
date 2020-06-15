@@ -41,7 +41,6 @@ class PolyCollectionType extends AbstractType
             $options['allow_add'],
             $options['allow_delete'],
             $options['entry_type_name'],
-            $options['index_property'],
             $options['entry_type_resolver']
         );
 
@@ -146,7 +145,6 @@ class PolyCollectionType extends AbstractType
             'allow_delete' => false,
             'prototype' => true,
             'prototype_name' => '__name__',
-            'index_property' => null,
             'entry_types_options' => [],
             'entry_type_name' => '_key',
             'entry_type_resolver' => null
