@@ -9,22 +9,19 @@
 namespace Enhavo\Bundle\FormBundle\Form\Type;
 
 use Enhavo\Bundle\FormBundle\Form\EventListener\ResizePolyFormListener;
-use Enhavo\Bundle\FormBundle\Form\PolyCollection\EntryType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Exception\InvalidConfigurationException;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 
 /**
  * PolyCollectionType
- * @author gseidel <gseidel@enhavo.com>
+ * Copied and customize from InfiniteFormBundle. Thanks for the assume work.
  *
- * Heavily inspired by PolyCollectionType from InfiniteFormBundle
+ * @author gseidel
  */
 class PolyCollectionType extends AbstractType
 {
@@ -38,16 +35,14 @@ class PolyCollectionType extends AbstractType
             $builder->setAttribute('prototypes', $prototypes);
         }
 
-        $useTypesOptions = !empty($options['types_options']);
-
         $resizeListener = new ResizePolyFormListener(
             $prototypes,
-            $useTypesOptions === true ? $options['types_options'] : $options['options'],
+            $options['entry_types_options'],
             $options['allow_add'],
             $options['allow_delete'],
-            $options['type_name'],
+            $options['entry_type_name'],
             $options['index_property'],
-            $useTypesOptions
+            $options['entry_type_resolver']
         );
 
         $builder->addEventSubscriber($resizeListener);
@@ -61,25 +56,16 @@ class PolyCollectionType extends AbstractType
      *
      * @return array
      */
-    protected function buildPrototypes(FormBuilderInterface $builder, array $options)
+    private function buildPrototypes(FormBuilderInterface $builder, array $options)
     {
         $prototypes = array();
-        $useTypesOptions = !empty($options['types_options']);
 
-        foreach ($options['types'] as $key => $type) {
-            $typeOptions = $options['options'];
-            if ($useTypesOptions) {
-                $typeOptions = [];
-                if (isset($options['types_options'][$type])) {
-                    $typeOptions = $options['types_options'][$type];
-                }
-            }
-
+        foreach ($options['entry_types'] as $key => $type) {
             $prototype = $this->buildPrototype(
                 $builder,
                 $options['prototype_name'],
                 $type,
-                $typeOptions
+                isset($options['entry_types_options'][$key]) ? $options['entry_types_options'][$key] : []
             );
 
             $prototypes[$key] = $prototype->getForm();
@@ -98,7 +84,7 @@ class PolyCollectionType extends AbstractType
      *
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    protected function buildPrototype(FormBuilderInterface $builder, $name, $type, array $options)
+    private function buildPrototype(FormBuilderInterface $builder, $name, $type, array $options)
     {
         $prototype = $builder->create($name, $type, array_replace(array(
             'label' => $name.'label__',
@@ -147,7 +133,7 @@ class PolyCollectionType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'infinite_form_polycollection';
+        return 'enhavo_poly_collection';
     }
 
     /**
@@ -160,40 +146,16 @@ class PolyCollectionType extends AbstractType
             'allow_delete' => false,
             'prototype' => true,
             'prototype_name' => '__name__',
-            'type_name' => '_type',
-            'options' => [],
-            'types_options' => [],
             'index_property' => null,
+            'entry_types_options' => [],
+            'entry_type_name' => '_key',
+            'entry_type_resolver' => null
         ));
 
         $resolver->setRequired(array(
-            'types',
+            'entry_types',
         ));
 
-        $resolver->setAllowedTypes('types', 'array');
-        $resolver->setNormalizer('options', $this->getOptionsNormalizer());
-        $resolver->setNormalizer('types_options', $this->getTypesOptionsNormalizer());
-    }
-
-    private function getOptionsNormalizer()
-    {
-        return function (Options $options, $value) {
-            $value['block_name'] = 'entry';
-
-            return $value;
-        };
-    }
-
-    private function getTypesOptionsNormalizer()
-    {
-        return function (Options $options, $value) {
-            foreach ($options['types'] as $type) {
-                if (isset($value[$type])) {
-                    $value[$type]['block_name'] = 'entry';
-                }
-            }
-
-            return $value;
-        };
+        $resolver->setAllowedTypes('entry_types', 'array');
     }
 }

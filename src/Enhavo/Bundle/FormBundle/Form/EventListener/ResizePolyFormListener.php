@@ -1,12 +1,5 @@
 <?php
 
-/*
- * (c) Infinite Networks <http://www.infinite.net.au>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Enhavo\Bundle\FormBundle\Form\EventListener;
 
 use Doctrine\Common\Util\ClassUtils;
@@ -18,66 +11,48 @@ use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
 /**
- * A Form Resize listener capable of coping with a polycollection.
+ * ResizePolyFormListener
+ * A Form Resize listener capable of coping with a PolyCollectionType.
+ * Copied and customize from InfiniteFormBundle. Thanks for the assume work.
+ *
+ * @author gseidel
  */
 class ResizePolyFormListener extends ResizeFormListener
 {
-    /**
-     * Stores an array of Types with the Type name as the key.
-     *
-     * @var array
-     */
-    protected $typeMap = array();
+    /** @var array Stores an array of Types with the Type name as the key. */
+    private $typeMap = array();
+
+    /** @var array Stores an array of types with the Data Class as the key. */
+    private $classMap = array();
+
+    /** @var string Name of the hidden field identifying the type. */
+    private $typeFieldName;
+
+    /** @var null|string Name of the index field on the given entity. */
+    private $indexProperty;
+
+    /** @var \Symfony\Component\PropertyAccess\PropertyAccessor */
+    private $propertyAccessor;
+
+    /** @var \Closure|null */
+    private $entryTypeResolver;
 
     /**
-     * Stores an array of types with the Data Class as the key.
-     *
-     * @var array
+     * @param FormInterface[] $prototypes
+     * @param array $options
+     * @param bool $allowAdd
+     * @param bool $allowDelete
+     * @param string $typeFieldName
+     * @param string $indexProperty
      */
-    protected $classMap = array();
-
-    /**
-     * Name of the hidden field identifying the type.
-     *
-     * @var string
-     */
-    protected $typeFieldName;
-
-    /**
-     * Name of the index field on the given entity.
-     *
-     * @var null|string
-     */
-    protected $indexProperty;
-
-    /**
-     * Property Accessor.
-     *
-     * @var \Symfony\Component\PropertyAccess\PropertyAccessor
-     */
-    protected $propertyAccessor;
-
-    /**
-     * @var bool
-     */
-    protected $useTypesOptions;
-
-    /**
-     * @param array<FormInterface> $prototypes
-     * @param array                $options
-     * @param bool                 $allowAdd
-     * @param bool                 $allowDelete
-     * @param string               $typeFieldName
-     * @param string               $indexProperty
-     */
-    public function __construct(array $prototypes, array $options = array(), $allowAdd = false, $allowDelete = false, $typeFieldName = '_type', $indexProperty = null, $useTypesOptions = false)
+    public function __construct(array $prototypes, array $options = array(), $allowAdd = false, $allowDelete = false, $typeFieldName = '_key', $indexProperty = null, $entryTypeResolver = null)
     {
         $this->typeFieldName = $typeFieldName;
         $this->indexProperty = $indexProperty;
-        $this->useTypesOptions = $useTypesOptions;
+        $this->entryTypeResolver = $entryTypeResolver;
         $this->propertyAccessor = PropertyAccess::createPropertyAccessor();
-        $defaultType = null;
 
+        $defaultType = null;
         foreach ($prototypes as $key => $prototype) {
             /** @var FormInterface $prototype */
             $modelClass = $prototype->getConfig()->getOption('model_class');
@@ -88,31 +63,32 @@ class ResizePolyFormListener extends ResizeFormListener
             }
 
             $this->typeMap[$key] = get_class($type);
-            $this->classMap[$modelClass] = get_class($type);
+            $this->classMap[$modelClass] = $key;
         }
 
         parent::__construct(get_class($defaultType), $options, $allowAdd, $allowDelete);
     }
 
     /**
-     * Returns the form type for the supplied object. If a specific
-     * form type is not found, it will return the default form type.
-     *
-     * @param object $object
-     *
+     * @param object $entryData
      * @return string
      */
-    protected function getTypeForObject($object)
+    private function resolveEntryKey($entryData)
     {
-        $class = get_class($object);
-        $class = ClassUtils::getRealClass($class);
-        $type = $this->type;
+        if($this->entryTypeResolver !== null) {
+            return call_user_func($this->entryTypeResolver, $entryData);
+        } elseif(is_object($entryData)) {
+            $class = get_class($entryData);
+            $class = ClassUtils::getRealClass($class);
 
-        if (array_key_exists($class, $this->classMap)) {
-            $type = $this->classMap[$class];
+            if (array_key_exists($class, $this->classMap)) {
+                return $this->classMap[$class];
+            }
+
+            throw new \InvalidArgumentException();
         }
 
-        return $type;
+        throw new \InvalidArgumentException();
     }
 
     /**
@@ -125,22 +101,13 @@ class ResizePolyFormListener extends ResizeFormListener
      *
      * @throws \InvalidArgumentException when _type is not present or is invalid
      */
-    protected function getTypeForData(array $data)
+    private function getKeyForData(array $data)
     {
         if (!array_key_exists($this->typeFieldName, $data) || !array_key_exists($data[$this->typeFieldName], $this->typeMap)) {
             throw new \InvalidArgumentException('Unable to determine the Type for given data');
         }
 
-        return $this->typeMap[$data[$this->typeFieldName]];
-    }
-
-    protected function getOptionsForType($type)
-    {
-        if ($this->useTypesOptions === true) {
-            return isset($this->options[$type]) ? $this->options[$type] : [];
-        } else {
-            return $this->options;
-        }
+        return $data[$this->typeFieldName];
     }
 
     public function preSetData(FormEvent $event)
@@ -163,16 +130,12 @@ class ResizePolyFormListener extends ResizeFormListener
 
         // Then add all rows again in the correct order for the incoming data
         foreach ($data as $name => $value) {
-            $type = $this->getTypeForObject($value);
-            $form->add($name, $type, array_replace(array(
-                'property_path' => '['.$name.']',
-            ), $this->getOptionsForType($type)));
-        }
-    }
+            $key = $this->resolveEntryKey($value);
 
-    public function preBind(FormEvent $event)
-    {
-        $this->preSubmit($event);
+            $form->add($name, $this->typeMap[$key], array_replace(array(
+                'property_path' => '['.$name.']',
+            ), isset($this->options[$key]) ? $this->options[$key] : []));
+        }
     }
 
     public function preSubmit(FormEvent $event)
@@ -206,10 +169,10 @@ class ResizePolyFormListener extends ResizeFormListener
             $name = $form->count();
             foreach ($unindexedData as $item) {
                 if ($this->allowAdd) {
-                    $type = $this->getTypeForData($item);
-                    $form->add($name, $type, array_replace(array(
+                    $key = $this->getKeyForData($item);
+                    $form->add($name, $this->typeMap[$key], array_replace(array(
                         'property_path' => '['.$name.']',
-                    ), $this->getOptionsForType($type)));
+                    ), isset($this->options[$key]) ? $this->options[$key] : []));
                 }
 
                 // Add to final data array
@@ -248,10 +211,10 @@ class ResizePolyFormListener extends ResizeFormListener
             if ($this->allowAdd) {
                 foreach ($data as $name => $value) {
                     if (!$form->has($name)) {
-                        $type = $this->getTypeForData($value);
-                        $form->add($name, $type, array_replace(array(
+                        $key = $this->getKeyForData($value);
+                        $form->add($name, $this->typeMap[$key], array_replace(array(
                             'property_path' => '['.$name.']',
-                        ), $this->getOptionsForType($type)));
+                        ), isset($this->options[$key]) ? $this->options[$key] : []));
                     }
                 }
             }
