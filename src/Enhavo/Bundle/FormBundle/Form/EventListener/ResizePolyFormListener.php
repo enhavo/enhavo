@@ -36,6 +36,12 @@ class ResizePolyFormListener extends ResizeFormListener
     /** @var \Closure|null */
     private $entryTypeResolver;
 
+    /** @var array */
+    private $prototypes;
+
+    /** @var bool */
+    private $loaded = false;
+
     /**
      * @param FormInterface[] $prototypes
      * @param array $options
@@ -45,19 +51,24 @@ class ResizePolyFormListener extends ResizeFormListener
      */
     public function __construct(array $prototypes, array $options = array(), $allowAdd = false, $allowDelete = false, $typeFieldName = '_key', $entryTypeResolver = null)
     {
+        $this->prototypes = $prototypes;
         $this->typeFieldName = $typeFieldName;
         $this->entryTypeResolver = $entryTypeResolver;
         $this->propertyAccessor = PropertyAccess::createPropertyAccessor();
 
-        $defaultType = null;
-        foreach ($prototypes as $key => $prototype) {
+        parent::__construct('', $options, $allowAdd, $allowDelete);
+    }
+
+    private function loadMap()
+    {
+        if($this->loaded) {
+            return;
+        }
+
+        foreach ($this->prototypes as $key => $prototype) {
             /** @var FormInterface $prototype */
             $modelClass = $prototype->getConfig()->getOption('data_class');
             $type = $prototype->getConfig()->getType()->getInnerType();
-
-            if (null === $defaultType) {
-                $defaultType = $type;
-            }
 
             $this->typeMap[$key] = get_class($type);
 
@@ -66,7 +77,7 @@ class ResizePolyFormListener extends ResizeFormListener
             }
         }
 
-        parent::__construct(get_class($defaultType), $options, $allowAdd, $allowDelete);
+        $this->loaded = false;
     }
 
     /**
@@ -115,6 +126,8 @@ class ResizePolyFormListener extends ResizeFormListener
         $form = $event->getForm();
         $data = $event->getData();
 
+        $this->loadMap();
+
         if (null === $data) {
             $data = array();
         }
@@ -142,6 +155,8 @@ class ResizePolyFormListener extends ResizeFormListener
     {
         $form = $event->getForm();
         $data = $event->getData();
+
+        $this->loadMap();
 
         if (null === $data || '' === $data) {
             $data = array();

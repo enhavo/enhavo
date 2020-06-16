@@ -9,10 +9,12 @@
 namespace Enhavo\Bundle\FormBundle\Tests\Type;
 
 use Enhavo\Bundle\FormBundle\Form\Type\PolyCollectionType;
+use Enhavo\Bundle\FormBundle\Tests\Form\PreloadExtensionFactory;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Exception\InvalidArgumentException;
 use Symfony\Component\Form\Exception\InvalidConfigurationException;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Test\TypeTestCase;
@@ -20,6 +22,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PolyCollectionTypeTest extends TypeTestCase
 {
+    protected function getExtensions()
+    {
+        return [
+            PreloadExtensionFactory::createPolyCollectionTypeExtension()
+        ];
+    }
+
     public function testSubmit()
     {
         $form = $this->factory->create(PolyCollectionType::class, [], [
@@ -192,6 +201,34 @@ class PolyCollectionTypeTest extends TypeTestCase
         ]);
         $form->setData('something is wrong');
     }
+
+    public function testEmptyEntryTypes()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->factory->create(PolyCollectionType::class, null, [
+            'entry_types' => []
+        ]);
+    }
+
+    public function testNestedTypes()
+    {
+        $form = $this->factory->create(PolyCollectionType::class, null, [
+            'entry_types' => [
+                'nested' => NestedType::class,
+                'first' => FirstType::class,
+                'second' => SecondType::class
+            ],
+            'allow_add' => true,
+            'allow_delete' => true,
+            'prototype_storage' => 'test'
+        ]);
+
+        $view = $form->createView();
+
+        $this->assertCount(3, $view->vars['prototypes']);
+        $this->assertArrayHasKey('nested', $view->vars['prototypes']);
+        $this->assertEquals('test', $view->vars['prototype_storage']);
+    }
 }
 
 class FirstType extends AbstractType
@@ -207,6 +244,32 @@ class SecondType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('label', TextType::class);
+    }
+}
+
+class NestedType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add('children', PolyCollectionType::class, [
+            'entry_types' => ['nested' => NestedType::class],
+            'allow_add' => true,
+            'allow_delete' => true,
+            'prototype' => false,
+            'prototype_storage' => 'test'
+        ]);
+    }
+}
+
+class NestedCollectionType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add('children', CollectionType::class, [
+            'entry_type' => NestedCollectionType::class,
+            'allow_add' => true,
+            'allow_delete' => true
+        ]);
     }
 }
 

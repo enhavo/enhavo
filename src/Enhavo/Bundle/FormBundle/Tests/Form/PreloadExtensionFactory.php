@@ -8,7 +8,9 @@
 
 namespace Enhavo\Bundle\FormBundle\Tests\Form;
 
+use Enhavo\Bundle\FormBundle\Form\Type\PolyCollectionType;
 use Enhavo\Bundle\FormBundle\Form\Type\WysiwygType;
+use Enhavo\Bundle\FormBundle\Prototype\PrototypeStorage;
 use Symfony\Component\Form\PreloadedExtension;
 
 class PreloadExtensionFactory
@@ -17,5 +19,10 @@ class PreloadExtensionFactory
     {
         $type = new WysiwygType('', '', new EntrypointFileManagerMock());
         return new PreloadedExtension([$type], []);
+    }
+
+    public static function createPolyCollectionTypeExtension()
+    {
+        return new PreloadedExtension([new PolyCollectionType(new PrototypeStorage())], []);
     }
 }

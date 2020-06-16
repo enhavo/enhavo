@@ -18,3 +18,5 @@ services:
 
     Enhavo\Bundle\FormBundle\Formatter\CurrencyFormatter:
         public: true
+
+    Enhavo\Bundle\FormBundle\Prototype\PrototypeStorage:
