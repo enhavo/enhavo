@@ -54,18 +54,6 @@ services:
         arguments:
             - '@webpack_encore.entrypoint_lookup_collection'
 
-    Enhavo\Bundle\FormBundle\Form\Type\DynamicFormType:
-        calls:
-            - ['setContainer', ['@service_container']]
-        tags:
-            - { name: form.type }
-
-    Enhavo\Bundle\FormBundle\Form\Type\DynamicItemType:
-        calls:
-            - ['setContainer', ['@service_container']]
-        tags:
-            - { name: form.type }
-
     Enhavo\Bundle\FormBundle\Form\Type\AutoCompleteEntityType:
         arguments:
             - '@router'

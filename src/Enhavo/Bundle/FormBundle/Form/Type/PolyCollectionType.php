@@ -123,7 +123,6 @@ class PolyCollectionType extends AbstractType
         return $prototype;
     }
 
-
     /**
      * {@inheritdoc}
      */
@@ -137,6 +136,23 @@ class PolyCollectionType extends AbstractType
                 return $prototype->createView($view);
             }, $form->getConfig()->getAttribute('prototypes'));
         }
+
+        $view->vars['prototype_storage'] = $options['prototype_storage'];
+
+        $view->vars['poly_collection_config'] = [
+            'prototypeName' => 'string',
+            'prototypeStorage' => $options['prototype_storage'],
+            'prototypesCount' => isset($view->vars['prototypes']) ? count($view->vars['prototypes']) : 0,
+            'collapsed' => $options['collapsed'],
+        ];
+
+        $view->vars['items'] = [
+            [
+                'label' => 'Text',
+                'translationDomain' => null,
+                'name' => 'text'
+            ]
+        ];
     }
 
     /**
@@ -156,8 +172,6 @@ class PolyCollectionType extends AbstractType
                 $view->vars['multipart'] = true;
             }
         }
-
-        $view->vars['prototype_storage'] = $options['prototype_storage'];
     }
 
     /**
@@ -176,11 +190,13 @@ class PolyCollectionType extends AbstractType
         $resolver->setDefaults([
             'allow_add' => false,
             'allow_delete' => false,
+            'collapsed' => false,
             'prototype' => true,
             'prototype_name' => '__name__',
             'entry_types_options' => [],
             'entry_type_name' => '_key',
             'entry_type_resolver' => null,
+            'entry_type_labels' => null,
             'prototype_storage' => null,
         ]);
 

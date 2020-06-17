@@ -1,20 +1,20 @@
-.enhavo-dynamic-form {position: relative;padding:20px;border-radius:3px;
+.enhavo-poly-collection {position: relative;padding:20px;border-radius:3px;
   .addItem {cursor: pointer;}
-  .add-enhavo_dynamic-form-button {font-size:14px;line-height:19px;}
-  .dynamic-form-actions {
+  .add-enhavo_poly-collection-button {font-size:14px;line-height:19px;}
+  .poly-collection-actions {
     .button {cursor: pointer;z-index:1;top:0;text-align:center;width:33px;background:$grey1;border-radius:3px;color:$grey3;padding:4px 0;
       &:hover {color:#fff;background:$color1;}
     }
   }
-  .dynamic-form-container {
-    .dynamic-form-item-add-button-row {margin:10px 0;position:relative;cursor:pointer;z-index:1; width:100%; text-align:center; background:#FFF; padding:11px 0 10px 0;border-radius: 0 0 3px 3px;border: 1px solid $grey5;transition:all .3s;
+  .poly-collection-container {
+    .poly-collection-item-add-button-row {margin:10px 0;position:relative;cursor:pointer;z-index:1; width:100%; text-align:center; background:#FFF; padding:11px 0 10px 0;border-radius: 0 0 3px 3px;border: 1px solid $grey5;transition:all .3s;
       i {color:$grey3}
       &:hover { color:$color1;
         i {color:$color1}
       }
     }
-    .dynamic-nested-container {padding-left: 10px;padding-right: 10px;}
-    .dynamic-form-item {background:#fff; box-shadow: 0 0 4px rgba(0, 0, 0, 0.16), 0 1px 4px rgba(0, 0, 0, 0.23); border-radius:3px;overflow:hidden;
+    .poly-collection-nested-container {padding-left: 10px;padding-right: 10px;}
+    .poly-collection-item {background:#fff; box-shadow: 0 0 4px rgba(0, 0, 0, 0.16), 0 1px 4px rgba(0, 0, 0, 0.23); border-radius:3px;overflow:hidden;
       .button-container {border-bottom: 1px solid $grey5;padding:6px;display:flex;align-items:center;
         .button {cursor: pointer;height:100%;z-index:1;top:0;text-align:center;width:33px;background:#FFF;border-radius:3px;color:$grey3;padding:4px 0;
           &:hover {color:#fff;background:$color1;}
@@ -26,12 +26,12 @@
         .button-collapse {order:3;}
         .label { padding-left:9px;font-weight: 600;order:0;margin-right:auto!important;}
       }
-      .dynamic-form-item-content-container {padding:15px;}
-      .dynamic-form-item {box-shadow:none;border: 1px solid $grey5;}
+      .poly-collection-item-content-container {padding:15px;}
+      .poly-collection-item {box-shadow:none;border: 1px solid $grey5;}
     }
   }
 
-  .dynamic-form-menu-dialogue {display:none;margin-top:-10px;margin-bottom:10px;border-radius:0 0 3px 3px;padding:10px 20px 20px; background:#FFF;border-width: 0 1px 1px 1px;border-style: solid; border-color: $grey5;
+  .poly-collection-menu-dialogue {display:none;margin-top:-10px;margin-bottom:10px;border-radius:0 0 3px 3px;padding:10px 20px 20px; background:#FFF;border-width: 0 1px 1px 1px;border-style: solid; border-color: $grey5;
     .item-list {display:flex;flex-wrap:wrap;margin:0 -6px;
       li {width:150px;margin:6px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;padding:7px;text-align:center;cursor:pointer;flex:1 1 auto;border-radius:10px;background:$grey1;font-size:0.875rem;line-height:1.3em;
         &:hover {background:$color1;color:#fff;}

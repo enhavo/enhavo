@@ -1,18 +1,18 @@
 import * as $ from "jquery";
-import DynamicFormType from "@enhavo/form/Type/DynamicFormType";
-import DynamicFormItemAddButton from "@enhavo/form/Type/DynamicFormItemAddButton";
+import PolyCollectionType from "@enhavo/form/Type/PolyCollectionType";
+import PolyCollectionItemAddButton from "@enhavo/form/Type/PolyCollectionItemAddButton";
 
-export default class DynamicFormMenu
+export default class PolyCollectionMenu
 {
     private $element: JQuery;
 
-    private dynamicForm: DynamicFormType;
+    private polyCollection: PolyCollectionType;
 
-    private button: DynamicFormItemAddButton;
+    private button: PolyCollectionItemAddButton;
 
-    constructor(element: HTMLElement, dynamicForm: DynamicFormType)
+    constructor(element: HTMLElement, polyCollection: PolyCollectionType)
     {
-        this.dynamicForm = dynamicForm;
+        this.polyCollection = polyCollection;
         this.$element = $(element);
         this.initActions();
     }
@@ -20,14 +20,14 @@ export default class DynamicFormMenu
     private initActions()
     {
         let menu = this;
-        this.$element.find('[data-dynamic-form-menu-item]').click(function () {
-            let name = $(this).data('dynamic-form-menu-item');
-            menu.dynamicForm.addItem(name, menu.button);
+        this.$element.find('[data-poly-collection-menu-item]').click(function () {
+            let name = $(this).data('poly-collection-menu-item');
+            menu.polyCollection.addItem(name, menu.button);
             menu.hide();
         });
     }
 
-    public show(button: DynamicFormItemAddButton)
+    public show(button: PolyCollectionItemAddButton)
     {
         if(this.button === button) {
             this.hide();

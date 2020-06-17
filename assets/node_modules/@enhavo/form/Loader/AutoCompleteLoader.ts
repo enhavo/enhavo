@@ -6,7 +6,7 @@ import LoadDataEvent from "@enhavo/app/ViewStack/Event/LoadDataEvent";
 import UpdatedEvent from "@enhavo/app/ViewStack/Event/UpdatedEvent";
 import DataStorageEntry from "@enhavo/app/ViewStack/DataStorageEntry";
 
-export default class DynamicFormLoader extends AbstractLoader
+export default class AutoCompleteLoader extends AbstractLoader
 {
     private application: ApplicationInterface;
     private currentType: AutoCompleteType;

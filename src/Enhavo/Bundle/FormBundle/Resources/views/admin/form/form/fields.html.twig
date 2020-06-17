@@ -137,92 +137,6 @@
     </div>
 {% endblock %}
 
-{% block enhavo_dynamic_form_widget %}
-    {% import _self as helper %}
-    
-    <div class="enhavo-dynamic-form"
-         data-dynamic-form
-         data-dynamic-form-name="{{ full_name }}"
-         data-dynamic-form-add-button-template="{{ helper.addButton()|e }}"
-         data-dynamic-config="{{ dynamic_config|json_encode|e }}"
-    >
-
-        <div class="dynamic-form-actions" data-dynamic-form-action>
-            <div class="button" data-dynamic-form-action-collapse-all>
-                <i class="icon icon-unfold_less"></i>
-            </div>
-            <div class="button" data-dynamic-form-action-expand-all>
-                <i class="icon icon-unfold_more"></i>
-            </div>
-        </div>
-
-        {{ helper.addDialogue(items) }}
-
-        <div class="dynamic-form-container" data-reindexable data-dynamic-form-container>
-            {{ helper.addButton() }}
-            {% for item in form %}
-                {{ form_widget(item) }}
-                {{ helper.addButton() }}
-            {% endfor %}
-        </div>
-
-    </div>
-{% endblock %}
-
-{% block enhavo_dynamic_item_widget %}
-    <div class="dynamic-form-item" data-dynamic-form-item>
-        <div class="button-container" data-dynamic-form-item-action>
-            <div class="button button-up" data-dynamic-form-item-action-up>
-                <i class="icon icon-keyboard_arrow_up"></i>
-            </div>
-            <div class="button button-down" data-dynamic-form-item-action-down>
-                <i class="icon icon-keyboard_arrow_down"></i>
-            </div>
-            <div class="button button-delete" data-dynamic-form-item-action-remove>
-                <i class="icon icon-close"></i>
-            </div>
-            <div class="button button-collapse" data-dynamic-form-item-action-collapse>
-                <i class="icon icon-unfold_less"></i>
-            </div>
-            <div class="button button-expand" data-dynamic-form-item-action-expand>
-                <i class="icon icon-unfold_more"></i>
-            </div>
-            <div class="label">{{ label|trans({}, translation_domain)|nl2br }}</div>
-        </div>
-
-        <div class="dynamic-form-item-content-container" data-dynamic-form-item-container>
-            {% if item_template %}
-                {% include template(item_template) %}
-            {% else %}
-                {% for child in form %}
-                    <div class="clearfix" data-form-row>
-                        <div class="col-md-2 label-container">{{ form_label(child) }}</div>
-                        <div class="col-md-10">{{ form_widget(child) }}</div>
-                    </div>
-                {% endfor %}
-            {% endif %}
-        </div>
-    </div>
-{% endblock %}
-
-{% macro addButton() %}
-    <div class="dynamic-form-item-add-button-row" data-dynamic-form-add-button>
-        <div class="label"><i class="icon icon-add"></i> <span>Block hinzufügen</span></div>
-    </div>
-{% endmacro %}
-
-{% macro addDialogue(items) %}
-    <div class="dynamic-form-menu-dialogue" data-dynamic-form-menu>
-        <ul class="item-list">
-            {% for item in items %}
-                <li data-dynamic-form-menu-item="{{ item.name }}">
-                    {{ item.label|trans({}, item.translationDomain)|nl2br }}
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
-{% endmacro %}
-
 {% block entity_label %}
     {{ block('form_label') }}{% if multiple is defined and count is defined and multiple and count %}&nbsp;<span data-selected-count>({{ data|length }})</span>{% endif %}
 {% endblock %}
@@ -315,3 +229,93 @@
         {% endspaceless %}
     </div>
 {% endblock %}
+
+{% block enhavo_poly_collection_widget %}
+    {% import _self as helper %}
+
+    <div class="enhavo-poly-collection"
+         data-poly-collection
+         data-poly-collection-name="{{ full_name }}"
+         data-poly-collection-add-button-template="{{ helper.addPolyCollectionButton()|e }}"
+         data-poly-collection-config="{{ poly_collection_config|json_encode|e }}"
+         data-poly-collection-item-template="{{ helper.addPolyCollectionItem(null, '__label__', null)|e }}"
+    >
+        {% if prototypes is defined %}
+            {% for key,prototype in prototypes %}
+                {% form_theme prototype with form_themes() %}
+                <script
+                    type="text/template"
+                    data-poly-collection-prototype="{{ key }}"
+                    data-poly-collection-prototype-storage="{{ prototype_storage }}"
+                    data-poly-collection-prototype-content="{{ form_widget(prototype)|e }}"
+                ></script>
+            {% endfor %}
+        {% endif %}
+
+        <div class="poly-collection-actions" data-poly-collection-action>
+            <div class="button" data-poly-collection-action-collapse-all>
+                <i class="icon icon-unfold_less"></i>
+            </div>
+            <div class="button" data-poly-collection-action-expand-all>
+                <i class="icon icon-unfold_more"></i>
+            </div>
+        </div>
+
+        {{ helper.addPolyCollectionDialogue(items) }}
+
+        <div class="poly-collection-container" data-reindexable data-poly-collection-container>
+            {{ helper.addPolyCollectionButton() }}
+            {% for item in form %}
+                {{ helper.addPolyCollectionButton(item, item.vars.label, item.vars.translation_domain) }}
+                {{ helper.addPolyCollectionButton() }}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{% macro addPolyCollectionItem(item, label, translation_domain) %}
+    <div class="poly-collection-item" data-poly-collection-item>
+        <div class="button-container" data-poly-collection-item-action>
+            <div class="button button-up" data-poly-collection-item-action-up>
+                <i class="icon icon-keyboard_arrow_up"></i>
+            </div>
+            <div class="button button-down" data-poly-collection-item-action-down>
+                <i class="icon icon-keyboard_arrow_down"></i>
+            </div>
+            <div class="button button-delete" data-poly-collection-item-action-remove>
+                <i class="icon icon-close"></i>
+            </div>
+            <div class="button button-collapse" data-poly-collection-item-action-collapse>
+                <i class="icon icon-unfold_less"></i>
+            </div>
+            <div class="button button-expand" data-poly-collection-item-action-expand>
+                <i class="icon icon-unfold_more"></i>
+            </div>
+            <div class="label">{{ label|trans({}, translation_domain)|nl2br }}</div>
+        </div>
+
+        <div class="poly-collection-item-content-container" data-poly-collection-item-container>
+            {% if item %}
+                {{ form_widget(item) }}
+            {% endif %}
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro addPolyCollectionButton() %}
+    <div class="poly-collection-item-add-button-row" data-poly-collection-add-button>
+        <div class="label"><i class="icon icon-add"></i> <span>Block hinzufügen</span></div>
+    </div>
+{% endmacro %}
+
+{% macro addPolyCollectionDialogue(items) %}
+    <div class="poly-collection-menu-dialogue" data-poly-collection-menu>
+        <ul class="item-list">
+            {% for item in items %}
+                <li data-poly-collection-menu-item="{{ item.name }}">
+                    {{ item.label|trans({}, item.translationDomain)|nl2br }}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endmacro %}
