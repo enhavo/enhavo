@@ -19,11 +19,8 @@ services:
             { name: form.type }
 
     Enhavo\Bundle\CommentBundle\Block\CommentBlockType:
-        public: true
-        calls:
-            - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.block, alias: comment }
+            - { name: enhavo_block.block }
 
     Enhavo\Bundle\CommentBundle\Widget\CommentsWidgetType:
         public: true

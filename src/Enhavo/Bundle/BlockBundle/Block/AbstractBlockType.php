@@ -8,92 +8,62 @@
 
 namespace Enhavo\Bundle\BlockBundle\Block;
 
+use Enhavo\Bundle\BlockBundle\Block\Type\BaseBlockType;
 use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
-use Enhavo\Bundle\AppBundle\Type\AbstractType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Enhavo\Component\Type\AbstractType ;
 
 abstract class AbstractBlockType extends AbstractType implements BlockTypeInterface
 {
+    /** @var BlockTypeInterface */
+    protected $parent;
+
     public function createViewData(BlockInterface $block, $resource, array $options)
     {
-        return [
-            'block' => $block,
-            'resource' => $resource
-        ];
+
     }
 
     public function finishViewData(BlockInterface $block, array $viewData, $resource, array $options)
     {
-        return $viewData;
+
     }
 
     public function getModel(array $options)
     {
-        return $options['model'];
+        return $this->parent->getModel($options);
     }
 
     public function getForm(array $options)
     {
-        return $options['form'];
-    }
-
-    public function getRepository(array $options)
-    {
-        return $options['repository'];
-    }
-
-    public function getLabel(array $options)
-    {
-        return $options['label'];
-    }
-
-    public function getTranslationDomain(array $options)
-    {
-        return $options['translationDomain'];
-    }
-
-    public function getParent(array $options)
-    {
-        return $options['parent'];
+        return $this->parent->getForm($options);
     }
 
     public function getFactory(array $options)
     {
-        return $options['factory'];
+        return $this->parent->getFactory($options);
     }
 
     public function getTemplate(array $options)
     {
-        return $options['template'];
-    }
-
-    public function getFormTemplate(array $options)
-    {
-        return $options['form_template'];
+        return $this->parent->getTemplate($options);
     }
 
     public function getGroups(array $options)
     {
-        return $options['groups'];
+        return $this->parent->getGroups($options);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function getLabel(array $options)
     {
-        $resolver->setDefaults([
-            'options' => [],
-            'parent' => null,
-            'translationDomain' => null,
-            'form_template' => '@EnhavoBlock/admin/form/block/block.html.twig',
-            'groups' => ['default']
-        ]);
+        return $this->parent->getLabel($options);
+    }
 
-        $resolver->setRequired([
-            'label',
-            'factory',
-            'model',
-            'template',
-            'form',
-            'repository',
-        ]);
+    public function getTranslationDomain(array $options)
+    {
+        return $this->parent->getTranslationDomain($options);
+    }
+
+    public static function getParentType(): ?string
+    {
+        return BaseBlockType::class;
     }
 }

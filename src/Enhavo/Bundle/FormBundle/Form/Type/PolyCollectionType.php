@@ -12,6 +12,7 @@ use Enhavo\Bundle\FormBundle\Form\EventListener\ResizePolyFormListener;
 use Enhavo\Bundle\FormBundle\Prototype\PrototypeStorage;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Exception\InvalidArgumentException;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormTypeInterface;
@@ -64,6 +65,8 @@ class PolyCollectionType extends AbstractType
             if ($options['allow_add'] && $options['prototype']) {
                 $builder->setAttribute('prototypes', $prototypes);
             }
+
+            $builder->setAttribute('entry_keys', array_keys($prototypes));
         }
 
         $resizeListener = new ResizePolyFormListener(
@@ -116,9 +119,7 @@ class PolyCollectionType extends AbstractType
      */
     private function buildPrototype(FormBuilderInterface $builder, $name, $type, array $options)
     {
-        $prototype = $builder->create($name, $type, array_replace(array(
-            'label' => $name.'label__',
-        ), $options));
+        $prototype = $builder->create($name, $type, $options);
 
         return $prototype;
     }
@@ -139,20 +140,30 @@ class PolyCollectionType extends AbstractType
 
         $view->vars['prototype_storage'] = $options['prototype_storage'];
 
+        if ($options['prototype_storage'] !== null) {
+            $entryKeys = $this->buildEntryKeys($options);
+        } else {
+            $entryKeys = $form->getConfig()->getAttribute('entry_keys');
+        }
+
         $view->vars['poly_collection_config'] = [
-            'prototypeName' => 'string',
+            'prototypeName' => $options['prototype_name'],
+            'entryKeys' => $entryKeys,
             'prototypeStorage' => $options['prototype_storage'],
             'prototypesCount' => isset($view->vars['prototypes']) ? count($view->vars['prototypes']) : 0,
             'collapsed' => $options['collapsed'],
         ];
+    }
 
-        $view->vars['items'] = [
-            [
-                'label' => 'Text',
-                'translationDomain' => null,
-                'name' => 'text'
-            ]
-        ];
+    private function buildEntryKeys(array $options)
+    {
+        $prototypes = $this->prototypeStorage->getPrototypes($options['prototype_storage']);
+        $keys = array_keys($prototypes);
+
+        if ($options['entry_type_filter'] !== null) {
+            return call_user_func($options['entry_type_filter'], $keys, $this);
+        }
+        return $keys;
     }
 
     /**
@@ -196,7 +207,7 @@ class PolyCollectionType extends AbstractType
             'entry_types_options' => [],
             'entry_type_name' => '_key',
             'entry_type_resolver' => null,
-            'entry_type_labels' => null,
+            'entry_type_filter' => null,
             'prototype_storage' => null,
         ]);
 

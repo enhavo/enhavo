@@ -16,24 +16,20 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TextBlockType extends AbstractBlockType
 {
-    public function configureOptions(OptionsResolver $optionsResolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        parent::configureOptions($optionsResolver);
-
-        $optionsResolver->setDefaults([
+        $resolver->setDefaults([
             'model' => TextBlock::class,
-            'parent' => TextBlock::class,
             'form' => TextBlockFormType::class,
             'factory' => TextBlockFactory::class,
-            'repository' => 'EnhavoBlockBundle:TextBlock',
             'template' => 'theme/block/text.html.twig',
             'label' => 'text.label.text',
-            'translationDomain' => 'EnhavoBlockBundle',
+            'translation_domain' => 'EnhavoBlockBundle',
             'groups' => ['default', 'content', 'simple']
         ]);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'text';
     }

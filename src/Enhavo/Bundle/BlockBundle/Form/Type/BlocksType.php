@@ -8,20 +8,20 @@
 
 namespace Enhavo\Bundle\BlockBundle\Form\Type;
 
-use Enhavo\Bundle\FormBundle\Form\Type\DynamicFormType;
+use Enhavo\Bundle\BlockBundle\Block\Block;
+use Enhavo\Bundle\BlockBundle\Block\BlockManager;
+use Enhavo\Bundle\FormBundle\Form\Type\PolyCollectionType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BlocksType extends AbstractType
 {
-    /**
-     * @var string
-     */
-    private $class;
+    /** @var BlockManager */
+    private $blockManager;
 
-    public function __construct($class)
+    public function __construct(BlockManager $blockManager)
     {
-        $this->class = $class;
+        $this->blockManager = $blockManager;
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -29,15 +29,43 @@ class BlocksType extends AbstractType
         $resolver->setDefaults([
             'label' => 'block.label.blocks',
             'translation_domain' => 'EnhavoBlockBundle',
-            'item_resolver' => 'enhavo_block.resolver.block_resolver',
-            'item_route' => 'enhavo_block_block_form',
-            'item_class' => $this->class,
+            'entry_types' => $this->getEntryTypes(),
+            'entry_types_options' => $this->getEntryTypesOptions(),
+            'allow_add' => true,
+            'allow_delete' => true,
+            'item_groups' => [],
+            'items' => [],
+            'prototype_storage' => 'enhavo_block'
         ]);
+    }
+
+    private function getEntryTypes()
+    {
+        $types = [];
+        /** @var Block $block */
+        foreach($this->blockManager->getBlocks() as $key => $block) {
+            $types[$key] = NodeType::class;
+        }
+        return $types;
+    }
+
+    private function getEntryTypesOptions()
+    {
+        $types = [];
+        /** @var Block $block */
+        foreach($this->blockManager->getBlocks() as $key => $block) {
+            $types[$key] = [
+                'block_type' => $block->getForm(),
+                'label' => $block->getLabel(),
+                'translation_domain' => $block->getTranslationDomain(),
+            ];
+        }
+        return $types;
     }
 
     public function getParent()
     {
-        return DynamicFormType::class;
+        return PolyCollectionType::class;
     }
 
     public function getBlockPrefix()
@@ -45,5 +73,3 @@ class BlocksType extends AbstractType
         return 'enhavo_block_blocks';
     }
 }
-
-

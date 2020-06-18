@@ -2,6 +2,12 @@
     {{ form_widget(form.children) }}
 {% endblock %}
 
+{% block enhavo_block_node_widget %}
+    {{ form_widget(form.position) }}
+    {{ form_widget(form.name) }}
+    {{ form_widget(form.block) }}
+{% endblock %}
+
 {% block enhavo_block_column_widget %}
     {% if form.width is defined %}{{ form_row(form.width) }}{% endif %}
     {% if form.style is defined %}{{ form_row(form.style) }}{% endif %}

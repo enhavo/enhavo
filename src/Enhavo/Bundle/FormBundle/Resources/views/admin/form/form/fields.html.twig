@@ -246,6 +246,7 @@
                 <script
                     type="text/template"
                     data-poly-collection-prototype="{{ key }}"
+                    data-poly-collection-prototype-label="{{ prototype.vars.label|trans({}, prototype.vars.translation_domain) }}"
                     data-poly-collection-prototype-storage="{{ prototype_storage }}"
                     data-poly-collection-prototype-content="{{ form_widget(prototype)|e }}"
                 ></script>
@@ -261,7 +262,9 @@
             </div>
         </div>
 
-        {{ helper.addPolyCollectionDialogue(items) }}
+        <div class="poly-collection-menu-dialogue" data-poly-collection-menu>
+            <ul class="item-list" data-poly-collection-menu-container="{{ '<li data-poly-collection-menu-item="__key__">__label__</li>'|e }}"></ul>
+        </div>
 
         <div class="poly-collection-container" data-reindexable data-poly-collection-container>
             {{ helper.addPolyCollectionButton() }}
@@ -304,18 +307,6 @@
 
 {% macro addPolyCollectionButton() %}
     <div class="poly-collection-item-add-button-row" data-poly-collection-add-button>
-        <div class="label"><i class="icon icon-add"></i> <span>Block hinzufügen</span></div>
-    </div>
-{% endmacro %}
-
-{% macro addPolyCollectionDialogue(items) %}
-    <div class="poly-collection-menu-dialogue" data-poly-collection-menu>
-        <ul class="item-list">
-            {% for item in items %}
-                <li data-poly-collection-menu-item="{{ item.name }}">
-                    {{ item.label|trans({}, item.translationDomain)|nl2br }}
-                </li>
-            {% endfor %}
-        </ul>
+        <div class="label"><i class="icon icon-add"></i> <span>{{ 'poly_collection.action.add_block'|trans({}, 'EnhavoFormBundle') }}</span></div>
     </div>
 {% endmacro %}

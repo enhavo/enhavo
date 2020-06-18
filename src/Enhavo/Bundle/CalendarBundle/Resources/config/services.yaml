@@ -42,8 +42,7 @@ services:
             - { name: console.command, command: 'enhavo:calendar:import' }
 
     Enhavo\Bundle\CalendarBundle\Block\CalendarBlockType:
-        public: true
-        calls:
-            - [setContainer, ['@service_container']]
+        arguments:
+            - '@enhavo_calendar.repository.appointment'
         tags:
-            - { name: enhavo.block, alias: calendar }
+            - { name: enhavo_block.block }

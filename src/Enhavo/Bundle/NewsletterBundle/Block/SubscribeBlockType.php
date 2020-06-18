@@ -12,22 +12,18 @@ class SubscribeBlockType extends AbstractBlockType
 {
     public function configureOptions(OptionsResolver $optionsResolver)
     {
-        parent::configureOptions($optionsResolver);
-
         $optionsResolver->setDefaults([
             'model' => SubscribeBlock::class,
-            'parent' => SubscribeBlock::class,
             'form' => SubscribeBlockFormType::class,
             'factory' => SubscribeBlockFactory::class,
-            'repository' => 'EnhavoNewsletterBundle:SubscribeBlock',
             'template' => 'theme/block/subscribe.html.twig',
             'label' => 'Newsletter Subscribe',
-            'translationDomain' => 'EnhavoNewsletterBundle',
+            'translation_domain' => 'EnhavoNewsletterBundle',
             'groups' => ['default', 'content']
         ]);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'newsletter_subscribe';
     }

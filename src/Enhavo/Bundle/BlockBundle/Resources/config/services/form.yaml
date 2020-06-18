@@ -6,8 +6,6 @@ services:
     Enhavo\Bundle\BlockBundle\Form\Type\NodeType:
         tags:
             - { name: form.type }
-        calls:
-            - ['setContainer', ['@service_container']]
 
     Enhavo\Bundle\BlockBundle\Form\Type\BlockquoteBlockType:
         tags:

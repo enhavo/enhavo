@@ -16,25 +16,20 @@ use Enhavo\Bundle\BlockBundle\Form\Type\TemplateBlockType as TemplateBlockFormTy
 
 class TemplateBlockType extends AbstractBlockType
 {
-    public function configureOptions(OptionsResolver $optionsResolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        parent::configureOptions($optionsResolver);
-
-        $optionsResolver->setDefaults([
+        $resolver->setDefaults([
             'model' => TemplateBlock::class,
-            'parent' => TemplateBlock::class,
             'form' => TemplateBlockFormType::class,
             'factory' => TemplateBlockFactory::class,
-            'repository' => 'EnhavoBlockBundle:TemplateBlock',
             'template' => 'theme/block/template.html.twig',
-            'form_template' => '@EnhavoBlock/admin/form/block/block_empty.html.twig',
             'label' => 'template.label.template',
-            'translationDomain' => 'EnhavoBlockBundle',
+            'translation_domain' => 'EnhavoBlockBundle',
             'groups' => ['default', 'content']
         ]);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'template';
     }

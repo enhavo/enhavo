@@ -30,7 +30,7 @@ class ProductListBlockType extends AbstractBlockType
             'repository' => 'ProductListBlock::class',
             'template' => 'theme/block/product-list.html.twig',
             'label' => 'ProductList',
-            'translationDomain' => 'EnhavoShopBundle',
+            'translation_domain' => 'EnhavoShopBundle',
             'groups' => ['default', 'content']
         ]);
     }

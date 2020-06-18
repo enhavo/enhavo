@@ -19,7 +19,6 @@ class ResourceBlockType extends AbstractBlockType
 {
     public function createViewData(BlockInterface $block, $resource, array $options)
     {
-        $data = parent::createViewData($block, $resource, $options);
         /** @var ResourceBlock $block */
         $data['template'] = $block->getTemplate();
         return $data;
@@ -31,19 +30,16 @@ class ResourceBlockType extends AbstractBlockType
 
         $optionsResolver->setDefaults([
             'model' => ResourceBlock::class,
-            'parent' => ResourceBlock::class,
             'form' => ResourceBlockFormType::class,
             'factory' => ResourceBlockFactory::class,
-            'repository' => 'EnhavoBlockBundle:CiteText',
             'template' => 'theme/block/resource.html.twig',
-            'form_template' => '@EnhavoBlock/admin/form/block/block_empty.html.twig',
             'label' =>  'resource.label.resource',
-            'translationDomain' => 'EnhavoTemplateBundle',
+            'translation_domain' => 'EnhavoTemplateBundle',
             'groups' => ['template']
         ]);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'resource';
     }

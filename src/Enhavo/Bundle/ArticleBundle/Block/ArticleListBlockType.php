@@ -16,24 +16,20 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ArticleListBlockType extends AbstractBlockType
 {
-    public function configureOptions(OptionsResolver $optionsResolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        parent::configureOptions($optionsResolver);
-
-        $optionsResolver->setDefaults([
+        $resolver->setDefaults([
             'model' => ArticleListBlock::class,
-            'parent' => ArticleListBlock::class,
             'form' => ArticleListFormType::class,
             'factory' => ArticleListFactory::class,
-            'repository' => 'EnhavoArticleBundle:ArticleList',
             'template' => 'theme/block/article-list.html.twig',
             'label' => 'article.label.article_list',
-            'translationDomain' => 'EnhavoArticleBundle',
+            'translation_domain' => 'EnhavoArticleBundle',
             'groups' => ['default', 'content']
         ]);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'article_list';
     }

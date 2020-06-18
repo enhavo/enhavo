@@ -14,7 +14,20 @@ export default class PolyCollectionMenu
     {
         this.polyCollection = polyCollection;
         this.$element = $(element);
+        this.buildMenu();
         this.initActions();
+    }
+
+    private buildMenu()
+    {
+        let $container = this.$element.find('[data-poly-collection-menu-container]');
+        let template = $container.data('poly-collection-menu-container');
+
+        for (let prototype of this.polyCollection.getPrototypes()) {
+            let menuItem = template.replace('__key__', prototype.getKey());
+            menuItem = menuItem.replace('__label__', prototype.getLabel());
+            $container.append(menuItem);
+        }
     }
 
     private initActions()
@@ -36,19 +49,6 @@ export default class PolyCollectionMenu
 
         this.button = button;
         this.$element.insertAfter(this.button.getElement()).show();
-    }
-
-    private topToElement(element:HTMLElement, toElement:HTMLElement, top: number = 0): number
-    {
-        let parent = <HTMLElement>$(element).offsetParent().get(0);
-        if(parent == $('html').get(0)) {
-            return top;
-        }
-        let topOffset = $(element).position().top;
-        if(toElement == parent) {
-            return top + topOffset;
-        }
-        return this.topToElement(parent, toElement, top + topOffset)
     }
 
     public hide()

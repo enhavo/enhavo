@@ -18,23 +18,18 @@ class SidebarColumnBlockType extends AbstractBlockType
 {
     public function configureOptions(OptionsResolver $optionsResolver)
     {
-        parent::configureOptions($optionsResolver);
-
         $optionsResolver->setDefaults([
             'model' => SidebarColumnBlock::class,
-            'parent' => SidebarColumnBlock::class,
             'form' => SidebarColumnBlockFormType::class,
             'factory' => SidebarColumnBlockFactory::class,
-            'repository' => 'EnhavoSidebarBundle:SidebarColumn',
             'template' => 'theme/block/sidebar-column.html.twig',
-            'form_template' => '@EnhavoBlock/admin/form/block/block_fields.html.twig',
             'label' => 'sidebar_column.label.sidebar_column',
-            'translationDomain' => 'EnhavoSidebarBundle',
+            'translation_domain' => 'EnhavoSidebarBundle',
             'groups' => ['default', 'layout']
         ]);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'sidebar_column';
     }

@@ -11,13 +11,5 @@ services:
             - { name: form.type, alias: enhavo_sidebar_sidebar }
 
     Enhavo\Bundle\SidebarBundle\Block\SidebarColumnBlockType:
-        public: true
         tags:
-            - { name: enhavo.block, alias: sidebar_column }
-
-    Enhavo\Bundle\SliderBundle\Block\SliderBlockType:
-        public: true
-        calls:
-            - [setContainer, ['@service_container']]
-        tags:
-            - { name: enhavo.block, alias: slider }
+            - { name: enhavo_block.block }

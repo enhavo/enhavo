@@ -1,7 +1,7 @@
 services:
     Enhavo\Bundle\BlockBundle\Form\Type\BlocksType:
         arguments:
-            - Enhavo\Bundle\BlockBundle\Entity\Node
+            - '@Enhavo\Bundle\BlockBundle\Block\BlockManager'
         tags:
             - { name: form.type }
 
@@ -15,21 +15,10 @@ services:
 
     Enhavo\Bundle\BlockBundle\Renderer\BlockRenderer:
         arguments:
-            - '@enhavo_block.block.manager'
+            - '@Enhavo\Bundle\BlockBundle\Block\BlockManager'
             - '%enhavo_block.render.sets%'
             - '@enhavo_app.template.manager'
             - '@templating'
-
-    enhavo_block.resolver.block_resolver:
-        public: true
-        class: Enhavo\Bundle\BlockBundle\Resolver\BlockResolver
-        calls:
-            - ['setContainer', ['@service_container']]
-        arguments:
-            - '@form.factory'
-            - '@enhavo_block.factory.block'
-            - '@enhavo_block.block.manager'
-            - '@enhavo_block.factory.node'
 
     enhavo_block.block_collector:
         class: Enhavo\Bundle\AppBundle\Type\TypeCollector
@@ -42,11 +31,9 @@ services:
         tags:
             - { name: validator.constraint_validator, alias: video_url }
 
-    enhavo_block.block.manager:
-        class: Enhavo\Bundle\BlockBundle\Block\BlockManager
-        public: true
+    Enhavo\Bundle\BlockBundle\Block\BlockManager:
         arguments:
-            - '@enhavo_block.block_collector'
+            - '@Enhavo\Component\Type\FactoryInterface[Block]'
             - '@enhavo_app.util.doctrine_reference_finder'
             - '%enhavo_block.blocks%'
         calls:

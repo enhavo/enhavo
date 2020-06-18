@@ -10,11 +10,10 @@
 namespace Enhavo\Bundle\BlockBundle\Factory;
 
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
-use Enhavo\Bundle\FormBundle\DynamicForm\FactoryInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Enhavo\Bundle\BlockBundle\Entity\Node;
 
-class NodeFactory implements FactoryInterface
+class NodeFactory
 {
     use ContainerAwareTrait;
 

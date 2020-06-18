@@ -1,12 +1,11 @@
 import * as $ from 'jquery'
-import FormListener from "@enhavo/app/Form/FormListener";
-import FormConvertEvent from "@enhavo/app/Form/Event/FormConvertEvent";
 import FormInitializer from "@enhavo/app/Form/FormInitializer";
 import PolyCollectionItem from "@enhavo/form/Type/PolyCollectionItem";
 import PolyCollectionMenu from "@enhavo/form/Type/PolyCollectionMenu";
 import PolyCollectionConfig from "@enhavo/form/Type/PolyCollectionConfig";
 import PolyCollectionItemAddButton from "@enhavo/form/Type/PolyCollectionItemAddButton";
 import FormType from "@enhavo/app/Form/FormType";
+import PolyCollectionPrototype from "@enhavo/form/Type/PolyCollectionPrototype";
 
 export default class PolyCollectionType extends FormType
 {
@@ -22,11 +21,14 @@ export default class PolyCollectionType extends FormType
 
     private config: PolyCollectionConfig;
 
+    private prototypes: PolyCollectionPrototype[] = [];
+
     constructor(element: HTMLElement, config: PolyCollectionConfig)
     {
         super(element);
         this.$container = this.$element.children('[data-poly-collection-container]');
         this.config = config;
+        this.initPrototypes();
         this.initMenu();
         this.initActions();
         this.initItems();
@@ -82,6 +84,33 @@ export default class PolyCollectionType extends FormType
         this.$element.children('[data-poly-collection-action]').children('[data-poly-collection-action-expand-all]').click(function() {
             polyCollection.expandAll();
         });
+    }
+
+    private initPrototypes()
+    {
+        for(let key of this.config.entryKeys) {
+            let $prototype = null;
+            if(this.config.prototypesCount > 0 && this.config.prototypeStorage !== null) {
+                // nested and root element
+                $prototype = this.$element.children('[data-poly-collection-prototype-storage="'+this.config.prototypeStorage+'"][data-poly-collection-prototype="'+key+'"]');
+            } else if (this.config.prototypeStorage !== null) {
+                // nested and somewhere inside the tree
+                $prototype = $('body').find('[data-poly-collection-prototype-storage="'+this.config.prototypeStorage+'"][data-poly-collection-prototype="'+key+'"]');
+            } else {
+                // not nested
+                $prototype = this.$element.children('[data-poly-collection-prototype="'+key+'"]');
+            }
+
+            if($prototype.length === 0) {
+                throw 'Can\'t find prototype "'+key+'"';
+            }
+
+            this.prototypes.push(new PolyCollectionPrototype(
+                key,
+                $prototype.data('poly-collection-prototype-label').trim(),
+                $prototype.data('poly-collection-prototype-content').trim()
+            ));
+        }
     }
 
     public getConfig()
@@ -145,32 +174,28 @@ export default class PolyCollectionType extends FormType
 
     private createItem(type : string): HTMLElement
     {
+        let prototype = this.getPrototype(type);
+
         let itemTemplate = this.getItemTemplate();
-        let prototypeTemplate = this.getPrototypeTemplate(type);
+        itemTemplate = itemTemplate.replace('__label__', prototype.getLabel());
+
+        let prototypeTemplate = prototype.getTemplate();
+
+        prototypeTemplate = prototypeTemplate.replace(new RegExp(this.config.prototypeName, 'g'), String(this.placeholderIndex));
+
         let $item = $($.parseHTML(itemTemplate));
         $item.find('[data-poly-collection-item-container]').html(prototypeTemplate);
         return <HTMLElement>$item.get(0);
     }
 
-    private getPrototypeTemplate(type: string): string
+    private getPrototype(type: string): PolyCollectionPrototype
     {
-        let $prototype = null;
-        if(this.config.prototypesCount > 0 && this.config.prototypeStorage !== null) {
-            // nested and root element
-            $prototype = this.$element.children('[data-poly-collection-prototype-storage="'+this.config.prototypeStorage+'"][data-poly-collection-prototype="'+type+'"]');
-        } else if (this.config.prototypeStorage !== null) {
-            // nested and somewhere inside the tree
-            $prototype = this.$element.parent('form').find('[data-poly-collection-prototype-storage="'+this.config.prototypeStorage+'"][data-poly-collection-prototype="'+type+'"]');
-        } else {
-            // not nested
-            $prototype = this.$element.children('[data-poly-collection-prototype="'+type+'"]');
+        for(let prototype of this.prototypes) {
+            if(type == prototype.getKey()) {
+                return prototype;
+            }
         }
-
-        if($prototype.length === 0) {
-            throw 'Can\'t find prototype "'+type+'"';
-        }
-
-        return $prototype.data('poly-collection-prototype-content').trim();
+        throw 'Can\'t find prototype "'+type+'"';
     }
 
     private getItemTemplate(): string
@@ -260,5 +285,10 @@ export default class PolyCollectionType extends FormType
         if (index > -1) {
             this.items.splice(index, 1);
         }
+    }
+
+    public getPrototypes(): PolyCollectionPrototype[]
+    {
+        return this.prototypes;
     }
 }
