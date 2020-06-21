@@ -5,9 +5,8 @@
 [![License](https://img.shields.io/packagist/l/enhavo/enhavo.svg)](https://packagist.org/packages/enhavo/enhavo)
 [![Build status...](https://api.travis-ci.org/enhavo/enhavo.svg?branch=master)](https://travis-ci.org/enhavo/enhavo)
 [![Scrutinizer](https://scrutinizer-ci.com/g/enhavo/enhavo/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/enhavo/enhavo)
-[![Coverage Status](https://coveralls.io/repos/github/enhavo/enhavo/badge.svg?branch=master)](https://coveralls.io/github/enhavo/enhavo?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/enhavo/enhavo/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/enhavo/enhavo/?branch=master)
 [![Version](https://img.shields.io/packagist/v/enhavo/enhavo.svg)](https://packagist.org/packages/enhavo/enhavo)
-
 
 The enhavo CMS is a open source PHP project on top of the fullstack Symfony framework and uses awesome Sylius components
 to serve a very flexible software, that can handle most of complex data structure with a clean and usability interface.

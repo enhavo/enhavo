@@ -1,0 +1,23 @@
+filter:
+    paths:
+        - "src/*"
+    excluded_paths:
+        - "src/Enhavo/Bundle/*Bundle/Tests/"
+        - "src/Enhavo/Component/*Bundle/Tests/"
+
+checks:
+    php: true
+
+build:
+    nodes:
+        coverage:
+            services:
+            environment:
+                php:
+                    version: "7.2"
+            tests:
+                override:
+                    - command: ./bin/phpunit --coverage-clover build/coverage.xml
+                      coverage:
+                          file: build/coverage.xml
+                          format: clover
