@@ -29,14 +29,6 @@ gulp.task('test:coverage', function (cb) {
     });
 });
 
-gulp.task('test:coverage:clover', function (cb) {
-    exec('bin/phpunit --coverage-clover build/coverage-clover', function (err, stdout, stderr) {
-        console.log(stdout);
-        console.log(stderr);
-        cb(err);
-    });
-});
-
 gulp.task('docs:watch', function () {
     exec('sphinx-autobuild docs/source build/docs', function (err, stdout, stderr) {
         console.log(stdout);
