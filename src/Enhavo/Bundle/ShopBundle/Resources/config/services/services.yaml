@@ -63,24 +63,6 @@ services:
         tags:
             - { name: twig.extension }
 
-    enhavo_shop.extend_listener.product:
-        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
-        arguments:
-            - Enhavo\Bundle\ShopBundle\Entity\Product
-            - '%sylius.model.product.class%'
-            - true
-        tags:
-            - { name: doctrine.event_subscriber, connection: default }
-
-    enhavo_shop.extend_listener.order:
-        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
-        arguments:
-            - Enhavo\Bundle\ShopBundle\Entity\Order
-            - '%sylius.model.order.class%'
-            - true
-        tags:
-            - { name: doctrine.event_subscriber, connection: default }
-
     enhavo_shop.controller.user:
         class: '%enhavo_shop.controller.user.class%'
         arguments:

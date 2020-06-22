@@ -4,7 +4,7 @@ services:
         public: true
         arguments:
             - '@enhavo_routing.router.strategy_collector'
-            - '@enhavo_routing.metadata.repository'
+            - '@Enhavo\Component\Metadata\MetadataRepository[Routing]'
 
     enhavo_routing.router.strategy_collector:
         class: Enhavo\Bundle\AppBundle\Type\TypeCollector

@@ -7,12 +7,11 @@ services:
         tags:
             - { name: form.type }
 
-    Enhavo\Bundle\ContentBundle\Batch\PublishType:
-        public: true
-        calls:
-            - [setContainer, ['@service_container']]
+    Enhavo\Bundle\ContentBundle\Batch\PublishBatchType:
+        arguments:
+            - '@doctrine.orm.entity_manager'
         tags:
-            - { name: enhavo.batch, alias: publish }
+            - { name: enhavo_app.batch }
 
     enhavo_content.sitemap_collector:
         class: Enhavo\Bundle\AppBundle\Type\TypeCollector

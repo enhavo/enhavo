@@ -7,8 +7,4 @@ This chapter helps you understand the enhavo architecture and the design choices
     :maxdepth: 1
 
     introduction
-    type-pattern
     bundle-structure
-    polymorph-entity
-
-

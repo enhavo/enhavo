@@ -55,8 +55,6 @@ class EnhavoAppExtension extends Extension implements PrependExtensionInterface
         $loader->load('services/batch.yaml');
         $loader->load('services/menu.yaml');
         $loader->load('services/chart.yaml');
-        $loader->load('services/reference.yaml');
-        $loader->load('services/metadata.yaml');
         $loader->load('services/maker.yaml');
         $loader->load('services/widget.yaml');
         $loader->load('services/toolbar.yaml');

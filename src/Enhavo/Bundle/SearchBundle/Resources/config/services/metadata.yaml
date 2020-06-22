@@ -1,22 +1,28 @@
 services:
-    enhavo_search.metadata.configuration:
-        class: Enhavo\Bundle\AppBundle\Metadata\MetadataConfiguration
+    Enhavo\Component\Metadata\MetadataRepository[Search]:
+        class: Enhavo\Component\Metadata\MetadataRepository
+        arguments:
+            - '@Enhavo\Component\Metadata\MetadataFactory[Search]'
+
+    Enhavo\Component\Metadata\MetadataFactory[Search]:
+        class: Enhavo\Component\Metadata\MetadataFactory
+        arguments:
+            - 'Enhavo\Bundle\SearchBundle\Metadata\Metadata'
+        calls:
+            - [addDriver, ['@Enhavo\Component\Metadata\Driver\ConfigurationDriver[Search]']]
+            - [addProvider, ['@Enhavo\Bundle\SearchBundle\Metadata\Provider\PropertyNodeProvider']]
+            - [addProvider, ['@Enhavo\Bundle\SearchBundle\Metadata\Provider\FilterProvider']]
+            - [addProvider, ['@Enhavo\Bundle\SearchBundle\Metadata\Provider\BundleProvider']]
+
+    Enhavo\Component\Metadata\Driver\ConfigurationDriver[Search]:
+        class: Enhavo\Component\Metadata\Driver\ConfigurationDriver
         arguments:
             - '%enhavo_search.metadata%'
 
-    enhavo_search.metadata.metadata_factory:
-        class: Enhavo\Bundle\SearchBundle\Metadata\MetadataFactory
+    Enhavo\Bundle\SearchBundle\Metadata\Provider\PropertyNodeProvider:
+
+    Enhavo\Bundle\SearchBundle\Metadata\Provider\FilterProvider:
+
+    Enhavo\Bundle\SearchBundle\Metadata\Provider\BundleProvider:
         arguments:
             - '@kernel'
-
-    enhavo_search.metadata.filter_parser:
-        class: Enhavo\Bundle\SearchBundle\Metadata\FilterParser
-
-    enhavo_search.metadata.repository:
-        class: Enhavo\Bundle\AppBundle\Metadata\MetadataRepository
-        arguments:
-            - '@enhavo_search.metadata.configuration'
-            - '@enhavo_search.metadata.metadata_factory'
-        calls:
-            - [addParser, ['@enhavo_app.metadata.parser.property_parser']]
-            - [addParser, ['@enhavo_search.metadata.filter_parser']]

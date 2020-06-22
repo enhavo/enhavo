@@ -8,13 +8,13 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Translator\Text;
 
-use Enhavo\Bundle\AppBundle\Reference\TargetClassResolverInterface;
+use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface;
 use Enhavo\Bundle\TranslationBundle\Entity\Translation;
 use Enhavo\Bundle\TranslationBundle\Metadata\Metadata;
+use Enhavo\Component\Metadata\MetadataRepository;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Enhavo\Bundle\TranslationBundle\Exception\TranslationException;
-use Enhavo\Bundle\AppBundle\Metadata\MetadataRepository;
 
 /**
  * Class TextTranslator
@@ -36,9 +36,9 @@ class TextTranslator
     private $defaultLocale;
 
     /**
-     * @var TargetClassResolverInterface
+     * @var EntityResolverInterface
      */
-    private $classResolver;
+    private $entityResolver;
 
     /**
      * @var DataMap
@@ -55,11 +55,11 @@ class TextTranslator
      */
     private $translatedLocale;
 
-    public function __construct(MetadataRepository $metadataRepository, $defaultLocale, TargetClassResolverInterface $classResolver)
+    public function __construct(MetadataRepository $metadataRepository, $defaultLocale, EntityResolverInterface $entityResolver)
     {
         $this->metadataRepository = $metadataRepository;
         $this->defaultLocale = $defaultLocale;
-        $this->classResolver = $classResolver;
+        $this->entityResolver = $entityResolver;
 
         $this->buffer = new DataMap;
         $this->originalData = new DataMap;
@@ -230,7 +230,7 @@ class TextTranslator
     private function load($entity, $property, $locale): ?Translation
     {
         $translation = $this->getRepository()->findOneBy([
-            'class' => $this->classResolver->resolveClass($entity),
+            'class' => $this->entityResolver->getName($entity),
             'refId' => $entity->getId(),
             'property' => $property,
             'locale' => $locale
@@ -244,7 +244,7 @@ class TextTranslator
 
         /** @var Translation[] $translations */
         $translations = $this->getRepository()->findBy([
-            'class' => $this->classResolver->resolveClass($entity),
+            'class' => $this->entityResolver->getName($entity),
             'refId' => $entity->getId()
         ]);
 

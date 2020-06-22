@@ -11,35 +11,6 @@ services:
         tags:
             - { name: form.type }
 
-    enhavo_navigation.extend_listener.navigation:
-        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
-        arguments:
-            - Enhavo\Bundle\NavigationBundle\Entity\Navigation
-            - '%enhavo_navigation.model.navigation.class%'
-            - true
-        tags:
-            - { name: doctrine.event_subscriber, connection: default }
-
-    enhavo_navigation.extend_listener.node:
-        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
-        arguments:
-            - Enhavo\Bundle\NavigationBundle\Entity\Node
-            - '%enhavo_navigation.model.node.class%'
-            - true
-        tags:
-            - { name: doctrine.event_subscriber, connection: default }
-
-    enhavo_navigation.event_listener.node_reference:
-        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineReferenceListener
-        arguments:
-          - 'Enhavo\Bundle\NavigationBundle\Entity\Node'
-          - 'content'
-          - 'contentClass'
-          - 'contentId'
-          - '@enhavo_app.reference.target_class_resolver'
-        tags:
-            - { name: doctrine.event_subscriber }
-
     enhavo_navigation.item_collector:
         class: Enhavo\Bundle\AppBundle\Type\TypeCollector
         arguments:
@@ -152,7 +123,3 @@ services:
         arguments:
             - '@enhavo_navigation.item_collector'
             - '%enhavo_navigation.items%'
-
-
-
-

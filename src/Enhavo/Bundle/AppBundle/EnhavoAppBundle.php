@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\AppBundle;
 
+use Enhavo\Bundle\AppBundle\Batch\Batch;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\FilesystemCompilerPass;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\FOSRestCompilerPass;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\LocaleResolverCompilerPass;
@@ -37,7 +38,7 @@ class EnhavoAppBundle extends Bundle
         );
 
         $container->addCompilerPass(
-            new TypeCompilerPass('enhavo_app.batch_collector', 'enhavo.batch')
+            new \Enhavo\Component\Type\TypeCompilerPass('Batch', 'enhavo_app.batch', Batch::class)
         );
 
         $container->addCompilerPass(

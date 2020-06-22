@@ -9,3 +9,11 @@ enhavo_app:
         enhavo_comment:
             path: '@EnhavoCommentBundle/Resources/views'
             priority: 10
+
+enhavo_doctrine_extension:
+    metadata:
+        Enhavo\Bundle\CommentBundle\Entity\Thread:
+            reference:
+                subject:
+                    idField: subjectId
+                    nameField: subjectClass

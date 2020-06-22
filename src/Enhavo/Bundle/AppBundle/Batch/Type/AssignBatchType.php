@@ -2,10 +2,16 @@
 
 namespace Enhavo\Bundle\AppBundle\Batch\Type;
 
-use Enhavo\Bundle\AppBundle\Batch\AbstractFormBatchType;
+use Doctrine\ORM\EntityManagerInterface;
+use Enhavo\Bundle\AppBundle\Batch\AbstractBatchType;
 use Enhavo\Bundle\AppBundle\Exception\BatchExecutionException;
+use Enhavo\Bundle\AppBundle\View\ViewData;
+use Sylius\Component\Resource\Model\ResourceInterface;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * AssignBatchType.php
@@ -13,21 +19,50 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
  * @since 02/01/20
  * @author gseidel
  */
-class AssignBatchType extends AbstractFormBatchType
+class AssignBatchType extends AbstractBatchType
 {
+    /** @var RequestStack */
+    private $requestStack;
+
+    /** @var FormFactoryInterface */
+    private $formFactory;
+
+    /** @var TranslatorInterface */
+    private $translator;
+
+    /** @var EntityManagerInterface */
+    private $em;
+
+    /**
+     * AssignBatchType constructor.
+     * @param RequestStack $requestStack
+     * @param FormFactoryInterface $formFactory
+     * @param TranslatorInterface $translator
+     * @param EntityManagerInterface $em
+     */
+    public function __construct(
+        RequestStack $requestStack,
+        FormFactoryInterface $formFactory,
+        TranslatorInterface $translator,
+        EntityManagerInterface $em
+    ) {
+        $this->requestStack = $requestStack;
+        $this->formFactory = $formFactory;
+        $this->translator = $translator;
+        $this->em = $em;
+    }
+
     /**
      * @inheritdoc
      */
-    public function execute(array $options, $resources)
+    public function execute(array $options, array $resources, ResourceInterface $resource = null)
     {
-        $request = $this->container->get('request_stack')->getMasterRequest();
-        $form = $this->container->get('form.factory')->create($options['form'], $options['form']);
+        $request = $this->requestStack->getMasterRequest();
+        $form = $this->formFactory->create($options['form']);
 
-
-        $translator = $this->container->get('translator');
         $form->handleRequest($request);
         if(!$form->isValid()) {
-            throw new BatchExecutionException($translator->trans($options['error_assign'], [], $options['translation_domain']));
+            throw new BatchExecutionException($this->translator->trans($options['error_assign'], [], $options['translation_domain']));
         }
 
         $propertyAccessor = PropertyAccess::createPropertyAccessor();
@@ -37,28 +72,24 @@ class AssignBatchType extends AbstractFormBatchType
             $data = $propertyAccessor->getValue($data, $options['data_property']);
         }
 
-        $em = $this->container->get('doctrine.orm.entity_manager');
         foreach($resources as $resource) {
             $propertyAccessor->setValue($resource, $options['property'], $data);
         }
-        $em->flush();
+
+        $this->em->flush();
     }
 
     /**
      * @inheritdoc
      */
-    public function createViewData(array $options, $resource = null)
+    public function createViewData(array $options, ViewData $data, ResourceInterface $resource = null)
     {
-        $data = parent::createViewData($options, $resource);
         $data['route'] = $options['route'];
         $data['routeParameters'] = $options['route_parameters'];
-        return $data;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        parent::configureOptions($resolver);
-
         $resolver->setDefaults([
             'label' => 'batch.assign.label',
             'translation_domain' => 'EnhavoAppBundle',
@@ -72,7 +103,12 @@ class AssignBatchType extends AbstractFormBatchType
         $resolver->setRequired(['form', 'property']);
     }
 
-    public function getType()
+    public static function getParentType(): ?string
+    {
+        return FormBatchType::class;
+    }
+
+    public static function getName(): ?string
     {
         return 'assign';
     }

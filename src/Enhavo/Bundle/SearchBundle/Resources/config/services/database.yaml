@@ -4,22 +4,11 @@ services:
         public: true
         arguments:
             - '@enhavo_search.indexer.indexer'
-            - '@enhavo_search.metadata.repository'
+            - '@Enhavo\Component\Metadata\MetadataRepository[Search]'
             - '@doctrine.orm.entity_manager'
             - '@enhavo_search.extractor.extractor'
             - '@enhavo_search.util.text_to_word'
             - '@enhavo_search.util.text_simplify'
-            - '@enhavo_app.reference.target_class_resolver'
+            - '@Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface'
             - '@enhavo_search.filter.filter_data'
             - '%enhavo_search.index.class%'
-
-    enhavo_search.event_listener.data_set_reference:
-        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineReferenceListener
-        arguments:
-          - 'Enhavo\Bundle\SearchBundle\Model\Database\DataSet'
-          - 'content'
-          - 'contentClass'
-          - 'contentId'
-          - '@enhavo_app.reference.target_class_resolver'
-        tags:
-            - { name: doctrine.event_subscriber }

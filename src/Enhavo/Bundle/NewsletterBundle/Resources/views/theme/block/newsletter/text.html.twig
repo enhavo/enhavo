@@ -1,10 +1,10 @@
 <div style="padding-top: 10px; padding-bottom: 10px;">
     <div>
-        {% if data.title %}
-            <h2>{{ data.title|raw }}</h2>
+        {% if block.title %}
+            <h2>{{ block.title|html_sanitize }}</h2>
         {% endif %}
-        {% if data.text %}
-            {{ data.text|raw }}
+        {% if block.text %}
+            {{ block.text|html_sanitize }}
         {% endif %}
     </div>
 </div>

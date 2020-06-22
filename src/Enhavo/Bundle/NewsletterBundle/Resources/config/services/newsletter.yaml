@@ -1,17 +1,18 @@
 services:
     Enhavo\Bundle\NewsletterBundle\Batch\SendBatchType:
-        public: true
-        calls:
-            - [setContainer, ['@service_container']]
+        arguments:
+            - '@enhavo_newsletter.manager'
         tags:
-            - { name: enhavo.batch, alias: newsletter_send }
+            - { name: enhavo_app.batch }
 
     Enhavo\Bundle\NewsletterBundle\Batch\SendTestBatchType:
-        public: true
-        calls:
-            - [setContainer, ['@service_container']]
+        arguments:
+            - '@enhavo_newsletter.manager'
+            - '@request_stack'
+            - '@translator'
+            - '@form.factory'
         tags:
-            - { name: enhavo.batch, alias: newsletter_send_test }
+            - { name: enhavo_app.batch }
 
     enhavo_newsletter.manager:
         public: true
@@ -50,33 +51,6 @@ services:
         parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
             - { name: enhavo.menu, alias: newsletter_newsletter }
-
-    enhavo_newsletter.extend_listener.newsletter:
-        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
-        arguments:
-            - Enhavo\Bundle\NewsletterBundle\Entity\Newsletter
-            - '%enhavo_newsletter.model.newsletter.class%'
-            - true
-        tags:
-            - { name: doctrine.event_subscriber, connection: default }
-
-    enhavo_newsletter.extend_listener.subscriber:
-        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
-        arguments:
-            - Enhavo\Bundle\NewsletterBundle\Entity\Subscriber
-            - '%enhavo_newsletter.model.newsletter.class%'
-            - true
-        tags:
-            - { name: doctrine.event_subscriber, connection: default }
-
-    enhavo_newsletter.extend_listener.group:
-        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
-        arguments:
-            - Enhavo\Bundle\NewsletterBundle\Entity\Group
-            - '%enhavo_newsletter.model.newsletter.class%'
-            - true
-        tags:
-            - { name: doctrine.event_subscriber, connection: default }
 
     Enhavo\Bundle\NewsletterBundle\Command\SendNewsletterCommand:
         arguments:

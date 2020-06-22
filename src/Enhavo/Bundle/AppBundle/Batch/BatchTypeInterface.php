@@ -9,24 +9,28 @@
 namespace Enhavo\Bundle\AppBundle\Batch;
 
 use Enhavo\Bundle\AppBundle\Exception\BatchExecutionException;
-use Enhavo\Bundle\AppBundle\Type\TypeInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Enhavo\Bundle\AppBundle\View\ViewData;
+use Enhavo\Component\Type\TypeInterface;
+use Sylius\Component\Resource\Model\ResourceInterface;
 
 interface BatchTypeInterface extends TypeInterface
 {
     /**
      * @param $options array
-     * @param $resources
+     * @param ResourceInterface[] $resources
+     * @param $resource
      * @return void
      * @throws BatchExecutionException
      */
-    public function execute(array $options, $resources);
+    public function execute(array $options, array $resources, ResourceInterface $resource = null);
 
     /**
      * @param $options array
+     * @param ViewData $data
+     * @param ResourceInterface $resource
      * @return array
      */
-    public function createViewData(array $options);
+    public function createViewData(array $options, ViewData $data, ResourceInterface $resource = null);
 
     /**
      * @param array $options
@@ -39,10 +43,4 @@ interface BatchTypeInterface extends TypeInterface
      * @return boolean
      */
     public function isHidden(array $options);
-
-    /**
-     * @param $resolver OptionsResolver
-     * @return void
-     */
-    public function configureOptions(OptionsResolver $resolver);
 }

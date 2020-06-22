@@ -3,7 +3,7 @@ services:
         class: Enhavo\Bundle\RoutingBundle\AutoGenerator\AutoGenerator
         arguments:
             - '@enhavo_routing.auto_generator.route_generator_collector'
-            - '@enhavo_routing.metadata.repository'
+            - '@Enhavo\Component\Metadata\MetadataRepository[Routing]'
 
     enhavo_routing.auto_generator.route_generator_collector:
         class: Enhavo\Bundle\AppBundle\Type\TypeCollector

@@ -2,45 +2,68 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Batch;
 
-use Enhavo\Bundle\AppBundle\Batch\AbstractFormBatchType;
+use Enhavo\Bundle\AppBundle\Batch\AbstractBatchType;
+use Enhavo\Bundle\AppBundle\Batch\Type\FormBatchType;
 use Enhavo\Bundle\AppBundle\Exception\BatchExecutionException;
-use Enhavo\Bundle\NewsletterBundle\Entity\Newsletter;
 use Enhavo\Bundle\NewsletterBundle\Form\Type\NewsletterEmailType;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager;
+use Sylius\Component\Resource\Model\ResourceInterface;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
-class SendTestBatchType extends AbstractFormBatchType
+class SendTestBatchType extends AbstractBatchType
 {
-    /**
-     * @param array $options
-     * @param Newsletter[] $resources
-     * @throws BatchExecutionException
-     */
-    public function execute(array $options, $resources)
-    {
-        $manager = $this->container->get(NewsletterManager::class);
-        $request = $this->container->get('request_stack')->getMasterRequest();
-        $translator = $this->container->get('translator');
-        $form = $this->container->get('form.factory')->create(NewsletterEmailType::class);
+    /** @var NewsletterManager */
+    private $newsletterManager;
 
-        $form->handleRequest($request);
+    /** @var RequestStack */
+    private $requestStack;
+
+    /** @var TranslatorInterface */
+    private $translator;
+
+    /** @var FormFactoryInterface */
+    private $formFactory;
+
+    /**
+     * SendTestBatchType constructor.
+     * @param NewsletterManager $newsletterManager
+     * @param RequestStack $requestStack
+     * @param TranslatorInterface $translator
+     * @param FormFactoryInterface $formFactory
+     */
+    public function __construct(NewsletterManager $newsletterManager, RequestStack $requestStack, TranslatorInterface $translator, FormFactoryInterface $formFactory)
+    {
+        $this->newsletterManager = $newsletterManager;
+        $this->requestStack = $requestStack;
+        $this->translator = $translator;
+        $this->formFactory = $formFactory;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function execute(array $options, array $resources, ResourceInterface $resource = null)
+    {
+        $form = $this->formFactory->create(NewsletterEmailType::class);
+        $form->handleRequest($this->requestStack->getMasterRequest());
         if(!$form->isValid()) {
-            throw new BatchExecutionException($translator->trans('newsletter.batch.error.email', [], 'EnhavoNewsletterBundle'));
+            throw new BatchExecutionException($this->translator->trans('newsletter.batch.error.email', [], 'EnhavoNewsletterBundle'));
         }
 
         $data = $form->getData();
 
         /** @var NewsletterInterface $resource */
         foreach($resources as $resource) {
-            $manager->sendTest($resource, $data['email']);
+            $this->newsletterManager->sendTest($resource, $data['email']);
         }
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        parent::configureOptions($resolver);
-
         $resolver->setDefaults([
             'label' => 'newsletter.batch.action.send_test',
             'translation_domain' => 'EnhavoNewsletterBundle',
@@ -49,7 +72,12 @@ class SendTestBatchType extends AbstractFormBatchType
         ]);
     }
 
-    public function getType()
+    public static function getParentType(): ?string
+    {
+        return FormBatchType::class;
+    }
+
+    public static function getName(): ?string
     {
         return 'newsletter_send_test';
     }

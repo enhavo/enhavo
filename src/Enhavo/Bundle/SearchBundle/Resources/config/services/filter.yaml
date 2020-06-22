@@ -8,7 +8,7 @@ services:
     enhavo_search.filter.filter_data:
         class: Enhavo\Bundle\SearchBundle\Filter\FilterData
         arguments:
-            - '@enhavo_search.metadata.repository'
+            - '@Enhavo\Component\Metadata\MetadataRepository[Search]'
             - '@enhavo_search.filter_provider_collector'
 
     Enhavo\Bundle\SearchBundle\Filter\DataProvider\ValueDataProvider:

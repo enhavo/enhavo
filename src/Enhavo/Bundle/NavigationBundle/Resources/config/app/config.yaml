@@ -33,3 +33,11 @@ enhavo_navigation:
             type: submenu
         link:
             type: link
+
+enhavo_doctrine_extension:
+    metadata:
+        Enhavo\Bundle\NavigationBundle\Entity\Node:
+            reference:
+                node:
+                    idField: contentId
+                    nameField: contentClass
