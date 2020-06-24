@@ -1,5 +1,5 @@
 {% for prototype in prototypes %}
-    {#{% form_theme prototype.formView with form_themes() %}#}
+    {% form_theme prototype.formView with form_themes() %}
     <script
         type="text/template"
         data-prototype-parameters="{{ prototype.parameters|json_encode|e }}"

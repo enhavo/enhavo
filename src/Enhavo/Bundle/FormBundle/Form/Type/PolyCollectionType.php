@@ -43,13 +43,16 @@ class PolyCollectionType extends AbstractType
     {
         if(!$this->prototypeManager->hasStorage($options['prototype_storage'])) {
             $this->prototypeManager->initStorage($options['prototype_storage']);
-            $this->buildPrototypes($options);
+            $this->buildPrototypes($builder, $options);
         }
 
-        $prototypes = $this->prototypeManager->getPrototypes($options['prototype_storage']);
+        $entryKeys = $this->buildEntryKeys($options);
+        $builder->setAttribute('entry_keys', $entryKeys);
 
         $resizeListener = new ResizePolyFormListener(
-            $prototypes,
+            $this->prototypeManager,
+            $options['prototype_storage'],
+            [],
             $options['entry_types_options'],
             $options['allow_add'],
             $options['allow_delete'],
@@ -63,12 +66,14 @@ class PolyCollectionType extends AbstractType
     /**
      * Builds prototypes for each of the form types used for the collection.
      *
+     * @param FormBuilderInterface $builder
      * @param array $options
      */
-    private function buildPrototypes(array $options)
+    private function buildPrototypes(FormBuilderInterface $builder, array $options)
     {
         foreach ($options['entry_types'] as $key => $type) {
             $this->prototypeManager->buildPrototype(
+                $builder,
                 $options['prototype_storage'],
                 $type,
                 isset($options['entry_types_options'][$key]) ? $options['entry_types_options'][$key] : [],
@@ -86,7 +91,7 @@ class PolyCollectionType extends AbstractType
         $view->vars['allow_delete'] = $options['allow_delete'];
 
         $view->vars['poly_collection_config'] = [
-            'entryKeys' => $this->buildEntryKeys($options),
+            'entryKeys' => $form->getConfig()->getAttribute('entry_keys'),
             'prototypeStorage' => $options['prototype_storage'],
             'collapsed' => $options['collapsed'],
         ];
@@ -94,8 +99,10 @@ class PolyCollectionType extends AbstractType
 
     private function buildEntryKeys(array $options)
     {
-        $prototypes = $this->prototypeManager->getPrototypes($options['prototype_storage']);
-        $keys = array_keys($prototypes);
+        $keys = [];
+        foreach ($this->prototypeManager->getPrototypes($options['prototype_storage']) as $prototype) {
+            $keys[] = $prototype->getParameters()['key'];
+        }
 
         if ($options['entry_type_filter'] !== null) {
             return call_user_func($options['entry_type_filter'], $keys, $this);

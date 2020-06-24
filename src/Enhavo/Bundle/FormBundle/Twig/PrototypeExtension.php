@@ -23,6 +23,9 @@ class PrototypeExtension extends AbstractExtension
     /** @var Environment */
     private $environment;
 
+    /** @var bool */
+    private $isRendered = false;
+
     /**
      * PrototypeExtension constructor.
      * @param PrototypeManager $prototypeManager
@@ -52,11 +55,18 @@ class PrototypeExtension extends AbstractExtension
     {
         /** @var FormRenderer $formRenderer */
         $formRenderer = $this->environment->getRuntime(FormRenderer::class);
+        $this->prototypeManager->buildPrototypeView($view);
         return $formRenderer->searchAndRenderBlock($view, 'widget', $parameters);
     }
 
     public function renderPrototypes()
     {
+        if($this->isRendered) {
+            return '';
+        }
+
+        $this->isRendered = true;
+
         /** @var FormRenderer $formRenderer */
         return $this->environment->render('@EnhavoForm/admin/form/form/prototypes.html.twig', [
             'prototypes' => $this->prototypeManager->getPrototypeViews()

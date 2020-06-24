@@ -18,6 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Test\TypeTestCase;
+use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PolyCollectionTypeTest extends TypeTestCase
@@ -25,7 +26,7 @@ class PolyCollectionTypeTest extends TypeTestCase
     protected function getExtensions()
     {
         return [
-            PreloadExtensionFactory::createPolyCollectionTypeExtension()
+            PreloadExtensionFactory::createPolyCollectionTypeExtension(),
         ];
     }
 
@@ -135,7 +136,6 @@ class PolyCollectionTypeTest extends TypeTestCase
 
         $view = $form->createView();
 
-        $this->assertArrayHasKey('prototypes', $view->vars);
         $this->assertTrue($view->vars['allow_add']);
         $this->assertFalse($view->vars['allow_delete']);
     }
@@ -202,12 +202,10 @@ class PolyCollectionTypeTest extends TypeTestCase
         $form->setData('something is wrong');
     }
 
-    public function testEmptyEntryTypes()
+    public function testMissingEntryTypes()
     {
-        $this->expectException(InvalidArgumentException::class);
-        $this->factory->create(PolyCollectionType::class, null, [
-            'entry_types' => []
-        ]);
+        $this->expectException(MissingOptionsException::class);
+        $this->factory->create(PolyCollectionType::class, null, []);
     }
 
     public function testNestedTypes()
@@ -223,11 +221,7 @@ class PolyCollectionTypeTest extends TypeTestCase
             'prototype_storage' => 'test'
         ]);
 
-        $view = $form->createView();
-
-        $this->assertCount(3, $view->vars['prototypes']);
-        $this->assertArrayHasKey('nested', $view->vars['prototypes']);
-        $this->assertEquals('test', $view->vars['prototype_storage']);
+        $form->createView();
 
         $form->submit([
             ['_key' => 'first', 'name' => 'Bob1'],
@@ -246,48 +240,6 @@ class PolyCollectionTypeTest extends TypeTestCase
                 ['label' => 'Alice2'],
             ]],
         ], $form->getData());
-    }
-
-    public function testBuildView()
-    {
-        $form = $this->factory->create(NestedPathFirstType::class, [
-            'children' => [['textarea' => 'Test']]
-        ]);
-
-        $view = $form->createView();
-
-        $this->assertArrayHasKey('data-nested-root', $view->vars['attr']);
-
-        $this->assertArrayNotHasKey('data-nested-path', $view->children['text']->vars['attr']);
-
-        $this->assertArrayHasKey('data-nested-path', $view->children['children']->vars['attr']);
-        $this->assertEquals('children', $view->children['children']->vars['attr']['data-nested-path']);
-
-        $this->assertArrayHasKey('data-nested-path', $view->children['children'][0]->vars['attr']);
-        $this->assertEquals('0', $view->children['children'][0]->vars['attr']['data-nested-path']);
-
-        $this->assertArrayHasKey('data-nested-path', $view->children['second']->vars['attr']);
-        $this->assertEquals('second', $view->children['second']->vars['attr']['data-nested-path']);
-    }
-}
-
-class NestedPathFirstType extends AbstractType
-{
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder->add('text', TextType::class);
-        $builder->add('second', NestedPathSecondType::class);
-        $builder->add('children', CollectionType::class, [
-            'entry_type' => NestedPathSecondType::class
-        ]);
-    }
-}
-
-class NestedPathSecondType extends AbstractType
-{
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder->add('textarea', TextareaType::class);
     }
 }
 

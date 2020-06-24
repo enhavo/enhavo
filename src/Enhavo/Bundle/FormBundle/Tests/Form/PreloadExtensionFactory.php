@@ -10,7 +10,7 @@ namespace Enhavo\Bundle\FormBundle\Tests\Form;
 
 use Enhavo\Bundle\FormBundle\Form\Type\PolyCollectionType;
 use Enhavo\Bundle\FormBundle\Form\Type\WysiwygType;
-use Enhavo\Bundle\FormBundle\Prototype\PrototypeStorage;
+use Enhavo\Bundle\FormBundle\Prototype\PrototypeManager;
 use Symfony\Component\Form\PreloadedExtension;
 
 class PreloadExtensionFactory
@@ -21,8 +21,10 @@ class PreloadExtensionFactory
         return new PreloadedExtension([$type], []);
     }
 
-    public static function createPolyCollectionTypeExtension()
+    public static function createPolyCollectionTypeExtension($csrfProtection = false)
     {
-        return new PreloadedExtension([new PolyCollectionType(new PrototypeStorage())], []);
+        $manager = new PrototypeManager(new TokenGeneratorMock, $csrfProtection);
+        return new PreloadedExtension([new PolyCollectionType($manager)], []);
     }
 }
+

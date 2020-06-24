@@ -162,13 +162,14 @@ export default class PolyCollectionType extends FormType
     private createItem(type : string): HTMLElement
     {
         let prototype = this.getPrototype(type);
+        let typeElement = <HTMLElement>this.$element.get(0);
 
         let itemTemplate = this.getItemTemplate();
         itemTemplate = itemTemplate.replace('__label__', prototype.getLabel());
+        itemTemplate = itemTemplate.replace('__key__', prototype.getParameter('key'));
+        itemTemplate = itemTemplate.replace('__full_name__', this.prototypeManager.getFullPath(this.placeholderIndex, typeElement) + '[_key]');
 
-        let prototypeTemplate = prototype.getTemplate();
-
-        prototypeTemplate = prototypeTemplate.replace(new RegExp(prototype.getName(), 'g'), String(this.placeholderIndex));
+        let prototypeTemplate = this.prototypeManager.renderTemplate(this.placeholderIndex, prototype, typeElement);
 
         let $item = $($.parseHTML(itemTemplate));
         $item.find('[data-poly-collection-item-container]').html(prototypeTemplate);

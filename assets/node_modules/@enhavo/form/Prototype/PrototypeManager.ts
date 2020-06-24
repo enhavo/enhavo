@@ -37,6 +37,19 @@ export class PrototypeManager
         }
         return data;
     }
+
+    public getFullPath(index: number, typeElement: HTMLElement): string
+    {
+        return $(typeElement).data('prototype-full-name')+'['+index+']';
+    }
+
+    public renderTemplate(index: number, prototype: Prototype, typeElement: HTMLElement): string
+    {
+        let path = this.getFullPath(index, typeElement);
+        let template = prototype.getTemplate();
+        template = template.replace(new RegExp(prototype.getName(), 'g'), path);
+        return template;
+    }
 }
 
 let manager = new PrototypeManager();

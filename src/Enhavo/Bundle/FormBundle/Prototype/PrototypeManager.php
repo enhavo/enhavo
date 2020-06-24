@@ -26,18 +26,18 @@ class PrototypeManager
     /** @var array */
     private $storage = [];
 
-    /** @var FormBuilderInterface */
-    private $formBuilder;
+    /** @var bool */
+    private $csrfProtection;
 
     /**
      * PrototypeManager constructor.
      * @param TokenGeneratorInterface $tokenGenerator
-     * @param FormFactoryInterface $formFactory
+     * @param bool $csrfProtection
      */
-    public function __construct(TokenGeneratorInterface $tokenGenerator, FormFactoryInterface $formFactory)
+    public function __construct(TokenGeneratorInterface $tokenGenerator, $csrfProtection = true)
     {
         $this->tokenGenerator = $tokenGenerator;
-        $this->formBuilder = $formFactory->createBuilder();
+        $this->csrfProtection = $csrfProtection;
     }
 
     public function initStorage($storageName)
@@ -53,27 +53,33 @@ class PrototypeManager
         return isset($this->storage[$storageName]);
     }
 
-    public function buildPrototype($storageName, $type, $options, $parameters)
+    public function buildPrototype(FormBuilderInterface $builder, $storageName, $type, $options, $parameters)
     {
         if(!$this->hasStorage($storageName)) {
             throw new \InvalidArgumentException();
         }
 
-        $options = array_merge($options, [
-            'csrf_protection' => false
-        ]);
+        if($this->csrfProtection) {
+            $options = array_merge($options, [
+                'csrf_protection' => false
+            ]);
+        }
 
         $name = sprintf('__%s__', $this->tokenGenerator->generateToken(8));
-        $form = $this->formBuilder->create($name, $type, $options)->getForm();
+        $form = $builder->create($name, $type, $options)->getForm();
         $this->prototypes[] = new Prototype($storageName, $name, $form, $parameters);
     }
 
+    /**
+     * @param $storageName
+     * @return Prototype[]
+     */
     public function getPrototypes($storageName): array
     {
         $prototypes = [];
         foreach($this->prototypes as $prototype) {
             if($prototype->getStorageName() === $storageName) {
-                $prototypes[] = $prototype->getForm();
+                $prototypes[] = $prototype;
             }
         }
         return $prototypes;
@@ -104,44 +110,11 @@ class PrototypeManager
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-
+        $view->vars['attr']['data-prototype-full-name'] = $view->vars['full_name'];
     }
 
-    private function buildPrototypeConfiguration(FormView $view, FormInterface $form, array $options)
+    public function buildPrototypeView(FormView $view)
     {
-        if($options['nested_prototype']) {
-            $path = [$form->getName()];
-            $parent = $form->getParent();
-            while($parent !== null) {
-                $path[] = $parent->getName();
-                $parent = $parent->getParent();
-            }
-            $path = array_reverse($path);
 
-
-            $view->vars['prototype_configuration'] = json_encode([
-                'prototypeName' => $options['nested_prototype_name'],
-                'nestedPath' => $path
-            ]);
-        }
-    }
-
-    private function buildNestedPath(FormView $view, FormInterface $form, array $options)
-    {
-        if($options['nested_path']) {
-            $path = [$form->getName()];
-            $parent = $form->getParent();
-            while($parent !== null) {
-                if($parent->getConfig()->getOption('nested_prototype')) {
-                    return;
-                };
-                $path[] = $parent->getName();
-                $parent = $parent->getParent();
-            }
-            $path = array_reverse($path);
-
-            $view->vars['attr']['data-nested-path'] = json_encode($path);
-            $view->vars['nested_path'] = json_encode($path);
-        }
     }
 }

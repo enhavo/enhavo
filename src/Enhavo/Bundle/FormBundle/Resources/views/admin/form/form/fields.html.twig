@@ -236,7 +236,7 @@
          data-poly-collection
          data-poly-collection-add-button-template="{{ helper.addPolyCollectionButton()|e }}"
          data-poly-collection-config="{{ poly_collection_config|json_encode|e }}"
-         data-poly-collection-item-template="{{ helper.addPolyCollectionItem(null, '__label__', null)|e }}"
+         data-poly-collection-item-template="{{ helper.addPolyCollectionItem(null, '__label__', null, '__full_name__', '__key__')|e }}"
         {{ block('attributes') }}
     >
         {{ form_prototypes() }}
@@ -256,17 +256,18 @@
 
         <div class="poly-collection-container" data-reindexable data-poly-collection-container>
             {{ helper.addPolyCollectionButton() }}
-            {% for item in form %}
-                {{ helper.addPolyCollectionItem(item, item.vars.label, item.vars.translation_domain) }}
+            {% for item in form|filter(item => not item.vars.name == '_token') %}
+                {{ helper.addPolyCollectionItem(item, item.vars.label, item.vars.translation_domain, item.vars.full_name, '') }}
                 {{ helper.addPolyCollectionButton() }}
             {% endfor %}
         </div>
     </div>
 {% endblock %}
 
-{% macro addPolyCollectionItem(item, label, translation_domain) %}
+{% macro addPolyCollectionItem(item, label, translation_domain, full_name, key) %}
     <div class="poly-collection-item" data-poly-collection-item>
         <div class="button-container" data-poly-collection-item-action>
+            <input type="hidden" name="{{ full_name }}" value="{{ key }}">
             <div class="button button-up" data-poly-collection-item-action-up>
                 <i class="icon icon-keyboard_arrow_up"></i>
             </div>
