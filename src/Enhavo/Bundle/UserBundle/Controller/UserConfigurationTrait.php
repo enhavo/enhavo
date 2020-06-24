@@ -38,7 +38,7 @@ trait UserConfigurationTrait
         }
 
         if(isset($config['route']['confirmed'])) {
-            $configuration->setConfirmRoute($config['route']['confirmed']);
+            $configuration->setConfirmedRoute($config['route']['confirmed']);
         }
 
         if(isset($config['route']['redirect'])) {
@@ -46,7 +46,7 @@ trait UserConfigurationTrait
         }
 
         if(isset($config['form'])) {
-            $configuration->setConfirmRoute($config['form']);
+            $configuration->setForm($config['form']);
         }
 
         return $configuration;
