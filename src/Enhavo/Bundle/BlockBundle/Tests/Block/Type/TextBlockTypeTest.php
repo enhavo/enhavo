@@ -17,8 +17,7 @@ class TextBlockTypeTest extends TestCase
 {
     public function testGetType()
     {
-        $type = new TextBlockType();
-        $this->assertEquals('text', $type->getType());
+        $this->assertEquals('text', TextBlockType::getName());
     }
 
     public function testConfigureOption()

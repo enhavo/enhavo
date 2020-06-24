@@ -17,7 +17,7 @@ class BlockNodeType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('children', BlocksType::class, [
+        $builder->add('children', BlockCollectionType::class, [
             'item_groups' => $options['item_groups'],
             'items' => $options['items']
         ]);

@@ -1,10 +1,4 @@
 services:
-    Enhavo\Bundle\BlockBundle\Form\Type\BlocksType:
-        arguments:
-            - '@Enhavo\Bundle\BlockBundle\Block\BlockManager'
-        tags:
-            - { name: form.type }
-
     Enhavo\Bundle\BlockBundle\Twig\TwigExtension:
         arguments:
             - '@Enhavo\Bundle\BlockBundle\Renderer\BlockRenderer'
@@ -19,12 +13,6 @@ services:
             - '%enhavo_block.render.sets%'
             - '@enhavo_app.template.manager'
             - '@templating'
-
-    enhavo_block.block_collector:
-        class: Enhavo\Bundle\AppBundle\Type\TypeCollector
-        arguments:
-            - '@service_container'
-            - 'Block'
 
     validator.video_url_validator:
         class:  Enhavo\Bundle\BlockBundle\Validator\Constraints\VideoUrlValidator

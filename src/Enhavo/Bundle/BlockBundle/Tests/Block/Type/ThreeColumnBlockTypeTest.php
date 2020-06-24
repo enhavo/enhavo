@@ -17,8 +17,7 @@ class ThreeColumnBlockTypeTest extends TestCase
 {
     public function testGetType()
     {
-        $type = new ThreeColumnBlockType();
-        $this->assertEquals('three_column', $type->getType());
+        $this->assertEquals('three_column', ThreeColumnBlockType::getName());
     }
 
     public function testConfigureOption()

@@ -15,10 +15,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BlockquoteBlockTypeTest extends TestCase
 {
-    public function testGetType()
+    public function testGetName()
     {
-        $type = new BlockquoteBlockType();
-        $this->assertEquals('blockquote', $type->getType());
+        $this->assertEquals('blockquote', BlockquoteBlockType::getName());
     }
 
     public function testConfigureOption()

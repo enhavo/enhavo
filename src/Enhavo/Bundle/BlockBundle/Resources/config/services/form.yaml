@@ -47,3 +47,9 @@ services:
     Enhavo\Bundle\BlockBundle\Form\Type\WidthType:
         tags:
             - { name: form.type }
+
+    Enhavo\Bundle\BlockBundle\Form\Type\BlockCollectionType:
+        arguments:
+            - '@Enhavo\Bundle\BlockBundle\Block\BlockManager'
+        tags:
+            - { name: form.type }

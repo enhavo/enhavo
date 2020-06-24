@@ -18,8 +18,7 @@ class OneColumnBlockTypeTest extends TestCase
 {
     public function testGetType()
     {
-        $type = new OneColumnBlockType();
-        $this->assertEquals('one_column', $type->getType());
+        $this->assertEquals('one_column', OneColumnBlockType::getName());
     }
 
     public function testConfigureOption()

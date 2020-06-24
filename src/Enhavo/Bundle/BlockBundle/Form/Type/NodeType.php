@@ -28,8 +28,7 @@ class NodeType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => Node::class,
-            'block_type_options' => [],
-            'label' => 'Test',
+            'block_type_options' => []
         ));
 
         $resolver->setRequired(['block_type']);

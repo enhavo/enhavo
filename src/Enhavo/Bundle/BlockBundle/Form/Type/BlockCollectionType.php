@@ -14,7 +14,7 @@ use Enhavo\Bundle\FormBundle\Form\Type\PolyCollectionType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class BlocksType extends AbstractType
+class BlockCollectionType extends AbstractType
 {
     /** @var BlockManager */
     private $blockManager;

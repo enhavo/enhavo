@@ -17,8 +17,7 @@ class VideoBlockTypeTest extends TestCase
 {
     public function testGetType()
     {
-        $type = new VideoBlockType();
-        $this->assertEquals('video', $type->getType());
+        $this->assertEquals('video', VideoBlockType::getName());
     }
 
     public function testConfigureOption()

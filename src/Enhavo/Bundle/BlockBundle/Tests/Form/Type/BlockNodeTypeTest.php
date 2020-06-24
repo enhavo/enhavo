@@ -13,6 +13,7 @@ use Enhavo\Bundle\BlockBundle\Form\Type\BlockNodeType;
 use Enhavo\Bundle\BlockBundle\Tests\Form\PreloadExtensionFactory;
 use Enhavo\Bundle\BlockBundle\Tests\Mock\Form\TextBlockMockType;
 use Symfony\Component\Form\Test\TypeTestCase;
+use Enhavo\Bundle\FormBundle\Tests\Form\PreloadExtensionFactory as FormPreloadExtensionFactory;
 
 class BlockNodeTypeTest extends TypeTestCase
 {
@@ -28,7 +29,8 @@ class BlockNodeTypeTest extends TypeTestCase
     protected function getExtensions()
     {
         return [
-            PreloadExtensionFactory::createBlocksTypeExtension($this, [TextBlockMockType::class])
+            PreloadExtensionFactory::createBlockCollectionTypeExtension($this, [TextBlockMockType::class]),
+            FormPreloadExtensionFactory::createPolyCollectionTypeExtension()
         ];
     }
 }
