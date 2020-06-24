@@ -16,7 +16,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 class CurrencyType extends AbstractType
 {
     /** @var  CurrencyTransformer */
-    protected $currencyTransformer;
+    private $currencyTransformer;
 
     /**
      * CurrencyType constructor.
@@ -27,12 +27,9 @@ class CurrencyType extends AbstractType
         $this->currencyTransformer = $currencyTransformer;
     }
 
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->addModelTransformer($this->currencyTransformer)
-        ;
+        $builder->addModelTransformer($this->currencyTransformer);
     }
 
     public function getParent()

@@ -8,7 +8,7 @@
         {% for key,tab in tabs %}
             <div data-tab="{{ key }}">
                 {% include template(tab.template) %}
-                {% if loop.last and form._token is defined and not form._token.rendered%}
+                {% if loop.last and form._token is defined and not form._token.rendered %}
                     {{ form_row(form._token) }}
                 {% endif %}
             </div>

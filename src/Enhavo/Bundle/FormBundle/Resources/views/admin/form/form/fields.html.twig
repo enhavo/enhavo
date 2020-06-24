@@ -232,26 +232,14 @@
 
 {% block enhavo_poly_collection_widget %}
     {% import _self as helper %}
-
     <div class="enhavo-poly-collection"
          data-poly-collection
-         data-poly-collection-name="{{ full_name }}"
          data-poly-collection-add-button-template="{{ helper.addPolyCollectionButton()|e }}"
          data-poly-collection-config="{{ poly_collection_config|json_encode|e }}"
          data-poly-collection-item-template="{{ helper.addPolyCollectionItem(null, '__label__', null)|e }}"
+        {{ block('attributes') }}
     >
-        {% if prototypes is defined %}
-            {% for key,prototype in prototypes %}
-                {% form_theme prototype with form_themes() %}
-                <script
-                    type="text/template"
-                    data-poly-collection-prototype="{{ key }}"
-                    data-poly-collection-prototype-label="{{ prototype.vars.label|trans({}, prototype.vars.translation_domain) }}"
-                    data-poly-collection-prototype-storage="{{ prototype_storage }}"
-                    data-poly-collection-prototype-content="{{ form_widget(prototype)|e }}"
-                ></script>
-            {% endfor %}
-        {% endif %}
+        {{ form_prototypes() }}
 
         <div class="poly-collection-actions" data-poly-collection-action>
             <div class="button" data-poly-collection-action-collapse-all>
@@ -269,7 +257,7 @@
         <div class="poly-collection-container" data-reindexable data-poly-collection-container>
             {{ helper.addPolyCollectionButton() }}
             {% for item in form %}
-                {{ helper.addPolyCollectionButton(item, item.vars.label, item.vars.translation_domain) }}
+                {{ helper.addPolyCollectionItem(item, item.vars.label, item.vars.translation_domain) }}
                 {{ helper.addPolyCollectionButton() }}
             {% endfor %}
         </div>
@@ -310,3 +298,5 @@
         <div class="label"><i class="icon icon-add"></i> <span>{{ 'poly_collection.action.add_block'|trans({}, 'EnhavoFormBundle') }}</span></div>
     </div>
 {% endmacro %}
+
+

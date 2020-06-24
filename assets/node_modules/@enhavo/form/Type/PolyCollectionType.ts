@@ -5,7 +5,8 @@ import PolyCollectionMenu from "@enhavo/form/Type/PolyCollectionMenu";
 import PolyCollectionConfig from "@enhavo/form/Type/PolyCollectionConfig";
 import PolyCollectionItemAddButton from "@enhavo/form/Type/PolyCollectionItemAddButton";
 import FormType from "@enhavo/app/Form/FormType";
-import PolyCollectionPrototype from "@enhavo/form/Type/PolyCollectionPrototype";
+import {PrototypeManager} from "@enhavo/form/Prototype/PrototypeManager";
+import Prototype from "@enhavo/form/Prototype/Prototype";
 
 export default class PolyCollectionType extends FormType
 {
@@ -21,13 +22,16 @@ export default class PolyCollectionType extends FormType
 
     private config: PolyCollectionConfig;
 
-    private prototypes: PolyCollectionPrototype[] = [];
+    private prototypeManager: PrototypeManager;
 
-    constructor(element: HTMLElement, config: PolyCollectionConfig)
+    private prototypes: Prototype[];
+
+    constructor(element: HTMLElement, config: PolyCollectionConfig, prototypeManager: PrototypeManager)
     {
         super(element);
         this.$container = this.$element.children('[data-poly-collection-container]');
         this.config = config;
+        this.prototypeManager = prototypeManager;
         this.initPrototypes();
         this.initMenu();
         this.initActions();
@@ -39,6 +43,11 @@ export default class PolyCollectionType extends FormType
     protected init()
     {
 
+    }
+
+    private initPrototypes()
+    {
+        this.prototypes = this.prototypeManager.getPrototypes(this.config.prototypeStorage);
     }
 
     private initItems()
@@ -86,36 +95,14 @@ export default class PolyCollectionType extends FormType
         });
     }
 
-    private initPrototypes()
-    {
-        for(let key of this.config.entryKeys) {
-            let $prototype = null;
-            if(this.config.prototypesCount > 0 && this.config.prototypeStorage !== null) {
-                // nested and root element
-                $prototype = this.$element.children('[data-poly-collection-prototype-storage="'+this.config.prototypeStorage+'"][data-poly-collection-prototype="'+key+'"]');
-            } else if (this.config.prototypeStorage !== null) {
-                // nested and somewhere inside the tree
-                $prototype = $('body').find('[data-poly-collection-prototype-storage="'+this.config.prototypeStorage+'"][data-poly-collection-prototype="'+key+'"]');
-            } else {
-                // not nested
-                $prototype = this.$element.children('[data-poly-collection-prototype="'+key+'"]');
-            }
-
-            if($prototype.length === 0) {
-                throw 'Can\'t find prototype "'+key+'"';
-            }
-
-            this.prototypes.push(new PolyCollectionPrototype(
-                key,
-                $prototype.data('poly-collection-prototype-label').trim(),
-                $prototype.data('poly-collection-prototype-content').trim()
-            ));
-        }
-    }
-
     public getConfig()
     {
         return this.config;
+    }
+
+    public getPrototypes(): Prototype[]
+    {
+        return this.prototypes;
     }
 
     public collapseAll()
@@ -181,17 +168,18 @@ export default class PolyCollectionType extends FormType
 
         let prototypeTemplate = prototype.getTemplate();
 
-        prototypeTemplate = prototypeTemplate.replace(new RegExp(this.config.prototypeName, 'g'), String(this.placeholderIndex));
+        prototypeTemplate = prototypeTemplate.replace(new RegExp(prototype.getName(), 'g'), String(this.placeholderIndex));
 
         let $item = $($.parseHTML(itemTemplate));
         $item.find('[data-poly-collection-item-container]').html(prototypeTemplate);
         return <HTMLElement>$item.get(0);
     }
 
-    private getPrototype(type: string): PolyCollectionPrototype
+    private getPrototype(type: string): Prototype
     {
         for(let prototype of this.prototypes) {
-            if(type == prototype.getKey()) {
+            let key = <string>prototype.getParameter('key');
+            if(type == key) {
                 return prototype;
             }
         }
@@ -285,10 +273,5 @@ export default class PolyCollectionType extends FormType
         if (index > -1) {
             this.items.splice(index, 1);
         }
-    }
-
-    public getPrototypes(): PolyCollectionPrototype[]
-    {
-        return this.prototypes;
     }
 }

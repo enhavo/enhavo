@@ -4,19 +4,10 @@ services:
         arguments:
             - '@translator'
 
-    Enhavo\Bundle\FormBundle\Twig\FormExtension:
-        arguments:
-            - '@enhavo_form.error.error.resolver'
-        tags:
-            - { name: twig.extension }
-
-    Enhavo\Bundle\FormBundle\Twig\FormatExtension:
-        calls:
-            - [setContainer, ['@service_container']]
-        tags:
-            - { name: twig.extension }
-
     Enhavo\Bundle\FormBundle\Formatter\CurrencyFormatter:
         public: true
 
-    Enhavo\Bundle\FormBundle\Prototype\PrototypeStorage:
+    Enhavo\Bundle\FormBundle\Prototype\PrototypeManager:
+        arguments:
+            - '@enhavo_app.util.secure_url_token_generator'
+            - '@form.factory'

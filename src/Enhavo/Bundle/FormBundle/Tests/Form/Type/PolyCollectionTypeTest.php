@@ -228,6 +228,66 @@ class PolyCollectionTypeTest extends TypeTestCase
         $this->assertCount(3, $view->vars['prototypes']);
         $this->assertArrayHasKey('nested', $view->vars['prototypes']);
         $this->assertEquals('test', $view->vars['prototype_storage']);
+
+        $form->submit([
+            ['_key' => 'first', 'name' => 'Bob1'],
+            ['_key' => 'second', 'label' => 'Alice1'],
+            ['_key' => 'nested', 'children' => [
+                ['_key' => 'first', 'name' => 'Bob2'],
+                ['_key' => 'second', 'label' => 'Alice2'],
+            ]],
+        ]);
+
+        $this->assertEquals([
+            ['name' => 'Bob1'],
+            ['label' => 'Alice1'],
+            ['children' => [
+                ['name' => 'Bob2'],
+                ['label' => 'Alice2'],
+            ]],
+        ], $form->getData());
+    }
+
+    public function testBuildView()
+    {
+        $form = $this->factory->create(NestedPathFirstType::class, [
+            'children' => [['textarea' => 'Test']]
+        ]);
+
+        $view = $form->createView();
+
+        $this->assertArrayHasKey('data-nested-root', $view->vars['attr']);
+
+        $this->assertArrayNotHasKey('data-nested-path', $view->children['text']->vars['attr']);
+
+        $this->assertArrayHasKey('data-nested-path', $view->children['children']->vars['attr']);
+        $this->assertEquals('children', $view->children['children']->vars['attr']['data-nested-path']);
+
+        $this->assertArrayHasKey('data-nested-path', $view->children['children'][0]->vars['attr']);
+        $this->assertEquals('0', $view->children['children'][0]->vars['attr']['data-nested-path']);
+
+        $this->assertArrayHasKey('data-nested-path', $view->children['second']->vars['attr']);
+        $this->assertEquals('second', $view->children['second']->vars['attr']['data-nested-path']);
+    }
+}
+
+class NestedPathFirstType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add('text', TextType::class);
+        $builder->add('second', NestedPathSecondType::class);
+        $builder->add('children', CollectionType::class, [
+            'entry_type' => NestedPathSecondType::class
+        ]);
+    }
+}
+
+class NestedPathSecondType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add('textarea', TextareaType::class);
     }
 }
 
@@ -252,7 +312,7 @@ class NestedType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('children', PolyCollectionType::class, [
-            'entry_types' => ['nested' => NestedType::class],
+            'entry_types' => ['nested' => NestedType::class, 'first' => FirstType::class, 'second' => Second::class],
             'allow_add' => true,
             'allow_delete' => true,
             'prototype' => false,

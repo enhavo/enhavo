@@ -12,7 +12,7 @@ services:
 
     Enhavo\Bundle\FormBundle\Form\Type\PolyCollectionType:
         arguments:
-            - '@Enhavo\Bundle\FormBundle\Prototype\PrototypeStorage'
+            - '@Enhavo\Bundle\FormBundle\Prototype\PrototypeManager'
         tags:
             - { name: form.type }
 
@@ -84,7 +84,6 @@ services:
     Enhavo\Bundle\FormBundle\Form\Extension\HelpExtension:
         tags:
             - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
-
 
     Enhavo\Bundle\FormBundle\Form\Transformer\CurrencyTransformer:
         public: true

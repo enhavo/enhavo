@@ -34,6 +34,7 @@ class EnhavoFormExtension extends Extension implements PrependExtensionInterface
         $loader->load('services/serializer.yaml');
         $loader->load('services/controller.yaml');
         $loader->load('services/services.yaml');
+        $loader->load('services/twig.yaml');
     }
 
     /**
