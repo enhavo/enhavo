@@ -142,6 +142,7 @@ class PolyCollectionType extends AbstractType
             'entry_type_resolver' => null,
             'entry_type_filter' => null,
             'prototype_storage' => null,
+            'by_reference' => false
         ]);
 
         $resolver->setRequired(array(

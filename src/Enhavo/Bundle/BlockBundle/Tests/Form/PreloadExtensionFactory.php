@@ -19,10 +19,10 @@ class PreloadExtensionFactory
     public static function createBlockCollectionTypeExtension(TestCase $testCase, $forms = [])
     {
         $blocks = [];
-        foreach($forms as $form) {
+        foreach($forms as $key => $form) {
             $block = $testCase->getMockBuilder(Block::class)->disableOriginalConstructor()->getMock();
             $block->method('getForm')->willReturn($form);
-            $blocks[] = $block;
+            $blocks[$key] = $block;
         }
 
         $blockManager = $testCase->getMockBuilder(BlockManager::class)->disableOriginalConstructor()->getMock();

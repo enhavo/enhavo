@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\BlockBundle\Form\Type;
 
 use Enhavo\Bundle\BlockBundle\Entity\Node;
 use Enhavo\Bundle\FormBundle\Form\Type\PositionType;
+use Enhavo\Bundle\FormBundle\Form\Type\TypeNameType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,7 +21,7 @@ class NodeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('position', PositionType::class);
-        $builder->add('name', HiddenType::class);
+        $builder->add('name', TypeNameType::class);
         $builder->add('block', $options['block_type'], $options['block_type_options']);
     }
 

@@ -57,6 +57,7 @@ class ResizePolyFormListener extends ResizeFormListener
      * @param bool $allowAdd
      * @param bool $allowDelete
      * @param string $typeFieldName
+     * @param \Closure $entryTypeResolver
      */
     public function __construct(
         PrototypeManager $prototypeManager,

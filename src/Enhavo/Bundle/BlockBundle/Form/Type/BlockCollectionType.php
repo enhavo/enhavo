@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\BlockBundle\Form\Type;
 
 use Enhavo\Bundle\BlockBundle\Block\Block;
 use Enhavo\Bundle\BlockBundle\Block\BlockManager;
+use Enhavo\Bundle\BlockBundle\Entity\Node;
 use Enhavo\Bundle\FormBundle\Form\Type\PolyCollectionType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -31,6 +32,10 @@ class BlockCollectionType extends AbstractType
             'translation_domain' => 'EnhavoBlockBundle',
             'entry_types' => $this->getEntryTypes(),
             'entry_types_options' => $this->getEntryTypesOptions(),
+            'entry_type_name' => 'name',
+            'entry_type_resolver' => function(Node $node) {
+                return $node->getName();
+            },
             'allow_add' => true,
             'allow_delete' => true,
             'item_groups' => [],
