@@ -6,18 +6,16 @@
  * Time: 18:05
  */
 
-namespace Enhavo\Bundle\NavigationBundle\Voter\Type;
+namespace Enhavo\Bundle\NavigationBundle\Voter;
 
+use Enhavo\Bundle\NavigationBundle\Entity\Link;
 use Enhavo\Bundle\NavigationBundle\Model\NodeInterface;
-use Enhavo\Bundle\NavigationBundle\NavItem\Type\LinkNavItemType;
-use Enhavo\Bundle\NavigationBundle\Voter\AbstractVoterType;
-use Enhavo\Bundle\NavigationBundle\Voter\Voter;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class LinkVoterType extends AbstractVoterType
+class LinkVoter implements VoterInterface
 {
     /** @var RequestStack */
-    private $requestStack;
+    protected $requestStack;
 
     public function __construct(RequestStack $requestStack)
     {
@@ -26,17 +24,17 @@ class LinkVoterType extends AbstractVoterType
 
     public function vote(NodeInterface $node)
     {
-        $navItem = $node->getNavItem();
-        if($navItem instanceof LinkNavItemType) {
-            $link = $navItem->getLink();
+        $subject = $node->getSubject();
+        if($subject instanceof Link) {
+            $link = $subject->getLink();
             if($this->match($link)) {
-                return Voter::VOTE_IN;
+                return VoterInterface::VOTE_IN;
             }
         }
-        return Voter::VOTE_ABSTAIN;
+        return VoterInterface::VOTE_ABSTAIN;
     }
 
-    private function match($url)
+    protected function match($url)
     {
         $request = $this->requestStack->getCurrentRequest();
         $path = sprintf('/%s', $request->getBasePath());
@@ -53,10 +51,5 @@ class LinkVoterType extends AbstractVoterType
         }
 
         return false;
-    }
-
-    public static function getName(): ?string
-    {
-        return 'link';
     }
 }

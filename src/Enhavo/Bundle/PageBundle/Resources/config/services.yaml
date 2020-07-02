@@ -18,11 +18,11 @@ services:
         tags:
             - { name: twig.extension }
 
-    Enhavo\Bundle\PageBundle\Navigation\Voter\PageHierarchyVoterType:
+    Enhavo\Bundle\PageBundle\Navigation\Voter\PageHierarchyVoter:
         tags:
             - { name: enhavo_navigation.voter }
 
-    Enhavo\Bundle\PageBundle\Navigation\Voter\PageVoterType:
+    Enhavo\Bundle\PageBundle\Navigation\Voter\PageVoter:
         arguments:
             - '@request_stack'
         tags:

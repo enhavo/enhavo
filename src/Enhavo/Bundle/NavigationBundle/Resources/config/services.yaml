@@ -53,23 +53,20 @@ services:
             - { name: enhavo.widget, alias: 'navigation' }
 
     Enhavo\Bundle\NavigationBundle\Navigation\NavigationManager:
-        arguments:
-            - '@Enhavo\Component\Type\FactoryInterface[NavigationVoter]'
-            - '%enhavo_navigation.voters%'
 
-    Enhavo\Bundle\NavigationBundle\Voter\Type\LinkVoterType:
+    Enhavo\Bundle\NavigationBundle\Voter\LinkVoter:
         arguments:
             - '@request_stack'
         tags:
             - { name: enhavo_navigation.voter }
 
-    Enhavo\Bundle\NavigationBundle\Voter\Type\LinkHierarchyVoterType:
+    Enhavo\Bundle\NavigationBundle\Voter\LinkHierarchyVoter:
         arguments:
             - '@request_stack'
         tags:
             - { name: enhavo_navigation.voter }
 
-    Enhavo\Bundle\NavigationBundle\Voter\Type\NodeHierarchyVoterType:
+    Enhavo\Bundle\NavigationBundle\Voter\NodeHierarchyVoter:
         arguments:
             - '@Enhavo\Bundle\NavigationBundle\Navigation\NavigationManager'
         tags:

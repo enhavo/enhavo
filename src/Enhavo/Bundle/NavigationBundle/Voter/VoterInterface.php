@@ -9,11 +9,12 @@
 namespace Enhavo\Bundle\NavigationBundle\Voter;
 
 use Enhavo\Bundle\NavigationBundle\Model\NodeInterface;
-use Enhavo\Component\Type\TypeInterface;
 
-interface VoterTypeInterface extends TypeInterface
+interface VoterInterface
 {
-    public function vote(NodeInterface $node);
+    const VOTE_IN = 'in';
+    const VOTE_ABSTAIN = 'abstain';
+    const VOTE_OUT = 'out';
 
-    public function isDisabled($options);
+    public function vote(NodeInterface $node);
 }

@@ -10,11 +10,10 @@ namespace Enhavo\Bundle\PageBundle\Navigation\Voter;
 
 use Enhavo\Bundle\NavigationBundle\Entity\Content;
 use Enhavo\Bundle\NavigationBundle\Model\NodeInterface;
-use Enhavo\Bundle\NavigationBundle\Voter\AbstractVoterType;
-use Enhavo\Bundle\NavigationBundle\Voter\Voter;
+use Enhavo\Bundle\NavigationBundle\Voter\VoterInterface;
 use Enhavo\Bundle\PageBundle\Entity\Page;
 
-class PageHierarchyVoterType extends AbstractVoterType
+class PageHierarchyVoter implements VoterInterface
 {
     /** @var PageVoterType */
     protected $parent;
@@ -29,20 +28,10 @@ class PageHierarchyVoterType extends AbstractVoterType
             foreach($descendants as $descendant) {
                 /** @var parent PageVoterType */
                 if($this->parent->match($descendant)) {
-                    return Voter::VOTE_IN;
+                    return VoterInterface::VOTE_IN;
                 }
             }
         }
-        return Voter::VOTE_ABSTAIN;
-    }
-
-    public static function getParentType(): ?string
-    {
-        return PageVoterType::class;
-    }
-
-    public static function getName(): ?string
-    {
-        return 'page_hierarchy';
+        return VoterInterface::VOTE_ABSTAIN;
     }
 }

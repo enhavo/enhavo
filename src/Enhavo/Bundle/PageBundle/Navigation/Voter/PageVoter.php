@@ -9,14 +9,13 @@
 namespace Enhavo\Bundle\PageBundle\Navigation\Voter;
 
 use Enhavo\Bundle\MediaBundle\Content\Content;
-use Enhavo\Bundle\NavigationBundle\Voter\AbstractVoterType;
-use Enhavo\Bundle\NavigationBundle\Voter\Voter;
+use Enhavo\Bundle\NavigationBundle\Voter\VoterInterface;
 use Enhavo\Bundle\RoutingBundle\Entity\Route;
 use Enhavo\Bundle\NavigationBundle\Model\NodeInterface;
 use Enhavo\Bundle\PageBundle\Entity\Page;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class PageVoterType extends AbstractVoterType
+class PageVoter implements VoterInterface
 {
     /** @var RequestStack */
     private $requestStack;

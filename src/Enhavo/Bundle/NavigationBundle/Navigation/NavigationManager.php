@@ -9,31 +9,13 @@
 namespace Enhavo\Bundle\NavigationBundle\Navigation;
 
 use Enhavo\Bundle\NavigationBundle\Model\NodeInterface;
-use Enhavo\Bundle\NavigationBundle\Voter\Voter;
-use Enhavo\Component\Type\Factory;
+use Enhavo\Bundle\NavigationBundle\Voter\VoterInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class NavigationManager
 {
-    /** @var Voter[] */
-    private $voters;
-
-    /** @var Factory */
-    private $voterFactory;
-
-    /** @var array */
-    private $voterConfiguration;
-
-    /**
-     * NavigationManager constructor.
-     * @param Factory $voterFactory
-     * @param array $voterConfiguration
-     */
-    public function __construct(Factory $voterFactory, array $voterConfiguration)
-    {
-        $this->voterFactory = $voterFactory;
-        $this->voterConfiguration = $voterConfiguration;
-    }
+    /** @var VoterInterface[] */
+    private $voters = [];
 
     /**
      * @param NodeInterface $node
@@ -47,16 +29,19 @@ class NavigationManager
             'voters' => null,
             'exclude' => []
         ]);
+
+        $optionsResolver->setAllowedTypes('exclude', 'array');
+
         $options = $optionsResolver->resolve($options);
 
         $voters = $this->getVoters($options['voters'], $options['exclude']);
         $in = false;
         foreach($voters as $voter) {
             $result = $voter->vote($node);
-            if($result === Voter::VOTE_IN) {
+            if($result === VoterInterface::VOTE_IN) {
                 $in = true;
             }
-            if($result === Voter::VOTE_OUT) {
+            if($result === VoterInterface::VOTE_OUT) {
                 return false;
             }
         }
@@ -66,42 +51,42 @@ class NavigationManager
     /**
      * @param null|string[] $voters
      * @param array $exclude
-     * @return Voter[]
+     * @return VoterInterface[]
      */
     private function getVoters($voters = null, $exclude = [])
     {
-        $this->loadVoters();
-
         $usedVoters = $this->voters;
 
         if(is_array($voters)) {
             $usedVoters = [];
-            foreach($this->voters as $name => $voter) {
-                if(in_array($name, $voters)) {
-                    $usedVoters[] = $voter;
+            foreach($voters as $includeVoter) {
+                foreach ($this->voters as $voter) {
+                    if (is_string($includeVoter) && get_class($voter) === $includeVoter) {
+                        $usedVoters[] = $voter;
+                    } elseif(is_object($includeVoter) && $voter === $includeVoter) {
+                        $usedVoters[] = $voter;
+                    }
                 }
             }
         }
 
         if(count($exclude) > 0) {
-            $includeVoters = [];
-            foreach($usedVoters as $name => $voter) {
-                if(!in_array($voter, $exclude)) {
-                    $includeVoters[] = $voter;
+            foreach($exclude as $excludeVoter) {
+                foreach ($usedVoters as $index => $voter) {
+                    if (is_string($excludeVoter) && get_class($voter) === $excludeVoter) {
+                        unset($usedVoters[$index]);
+                    } elseif(is_object($excludeVoter) && $voter === $excludeVoter) {
+                        unset($usedVoters[$index]);
+                    }
                 }
             }
-            $usedVoters = $includeVoters;
         }
 
         return $usedVoters;
     }
 
-    private function loadVoters()
+    public function addVoter(VoterInterface $voter)
     {
-        if($this->voters === null) {
-            foreach($this->voterConfiguration as $name => $options) {
-                $this->voters[$name] = $this->voterFactory->create($options);
-            }
-        }
+        $this->voters[] = $voter;
     }
 }

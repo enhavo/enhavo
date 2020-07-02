@@ -6,14 +6,12 @@
  * Time: 18:05
  */
 
-namespace Enhavo\Bundle\NavigationBundle\Voter\Type;
+namespace Enhavo\Bundle\NavigationBundle\Voter;
 
 use Enhavo\Bundle\NavigationBundle\Model\NodeInterface;
 use Enhavo\Bundle\NavigationBundle\Navigation\NavigationManager;
-use Enhavo\Bundle\NavigationBundle\Voter\AbstractVoterType;
-use Enhavo\Bundle\NavigationBundle\Voter\Voter;
 
-class NodeHierarchyVoterType extends AbstractVoterType
+class NodeHierarchyVoter implements VoterInterface
 {
     /** @var NavigationManager */
     private $navigationManager;
@@ -28,17 +26,12 @@ class NodeHierarchyVoterType extends AbstractVoterType
         $descendants = $node->getDescendants();
         foreach($descendants as $descendant) {
             $vote = $this->navigationManager->isActive($descendant, [
-                'exclude' => ['node_hierarchy']
+                'exclude' => [$this]
             ]);
-            if($vote == Voter::VOTE_IN) {
-                return Voter::VOTE_IN;
+            if($vote == VoterInterface::VOTE_IN) {
+                return VoterInterface::VOTE_IN;
             }
         }
-        return Voter::VOTE_ABSTAIN;
-    }
-
-    public static function getName(): ?string
-    {
-        return 'node_hierarchy';
+        return VoterInterface::VOTE_ABSTAIN;
     }
 }
