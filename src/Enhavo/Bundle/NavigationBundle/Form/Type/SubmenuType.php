@@ -8,21 +8,23 @@
 
 namespace Enhavo\Bundle\NavigationBundle\Form\Type;
 
+use Enhavo\Bundle\NavigationBundle\Entity\Submenu;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SubmenuType extends AbstractType
 {
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add('nodes', NodeCollectionType::class);
+    }
+
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'children' => true
+            'data_class' => Submenu::class,
         ]);
-    }
-
-    public function getParent()
-    {
-        return NodeType::class;
     }
 
     public function getBlockPrefix()

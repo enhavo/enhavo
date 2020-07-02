@@ -6,12 +6,12 @@ use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\NavigationBundle\Entity\Navigation;
 use Enhavo\Bundle\NavigationBundle\Entity\Node;
 use Enhavo\Bundle\NavigationBundle\Factory\NavigationFactory;
-use Enhavo\Bundle\NavigationBundle\Factory\NodeFactory;
 use Enhavo\Bundle\NavigationBundle\Form\Type\NavigationType;
 use Enhavo\Bundle\NavigationBundle\Form\Type\NodeType;
 use Enhavo\Bundle\NavigationBundle\Repository\NavigationRepository;
 use Enhavo\Bundle\NavigationBundle\Repository\NodeRepository;
 use Enhavo\Bundle\AppBundle\Factory\Factory;
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -30,12 +30,27 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder('enhavo_navigation');
         $rootNode = $treeBuilder->getRootNode();
 
-        $rootNode
-            // Driver used by the resource bundle
-            ->children()
-               ->scalarNode('driver')->defaultValue('doctrine/orm')->end()
-            ->end()
+        $this->addDriverSection($rootNode);
+        $this->addResourceSection($rootNode);
+        $this->addRenderSection($rootNode);
+        $this->addVotersSection($rootNode);
+        $this->addNavItemSection($rootNode);
 
+        return $treeBuilder;
+    }
+
+    private function addDriverSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->scalarNode('driver')->defaultValue('doctrine/orm')->end()
+            ->end()
+        ;
+    }
+
+    private function addResourceSection(ArrayNodeDefinition $node)
+    {
+        $node
             ->children()
                 ->arrayNode('resources')
                     ->addDefaultsIfNotSet()
@@ -75,28 +90,32 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end()
+        ;
+    }
 
-
+    private function addVotersSection(ArrayNodeDefinition $node)
+    {
+        $node
             ->children()
-                ->arrayNode('default')
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->scalarNode('model')->defaultValue(Node::class)->end()
-                        ->scalarNode('form')->defaultValue(NodeType::class)->end()
-                        ->scalarNode('repository')->defaultValue(NodeRepository::class)->end()
-                        ->scalarNode('factory')->defaultValue(NodeFactory::class)->end()
-                        ->scalarNode('template')->defaultValue('admin/form/navigation/node.html.twig')->end()
-                    ->end()
+                ->arrayNode('voters')
+                    ->defaultValue([])
+                    ->useAttributeAsKey('name')
+                    ->prototype('variable')->end()
                  ->end()
             ->end()
+        ;
+    }
 
+    private function addRenderSection(ArrayNodeDefinition $node)
+    {
+        $node
             ->children()
                 ->arrayNode('render')
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->arrayNode('sets')
                         ->useAttributeAsKey('name')
-                            ->prototype('array')
+                            ->arrayPrototype()
                                 ->useAttributeAsKey('name')
                                 ->prototype('scalar')->end()
                             ->end()
@@ -104,33 +123,29 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end()
+        ;
+    }
 
+    private function addNavItemSection(ArrayNodeDefinition $node)
+    {
+        $node
             ->children()
-                ->arrayNode('items')
-                    ->isRequired()
+                ->arrayNode('nav_items')
+                    ->defaultValue([])
                     ->useAttributeAsKey('name')
-                    ->prototype('array')
+                    ->arrayPrototype()
                         ->children()
                             ->scalarNode('model')->end()
                             ->scalarNode('form')->end()
-                            ->scalarNode('content_model')->end()
-                            ->scalarNode('configuration_form')->end()
-                            ->scalarNode('content_form')->end()
-                            ->scalarNode('repository')->end()
                             ->scalarNode('label')->end()
-                            ->scalarNode('translationDomain')->end()
+                            ->scalarNode('translation_domain')->end()
                             ->scalarNode('type')->end()
-                            ->scalarNode('parent')->end()
                             ->scalarNode('factory')->end()
-                            ->scalarNode('content_factory')->end()
                             ->scalarNode('template')->end()
-                            ->scalarNode('render_template')->end()
-                            ->arrayNode('options')->end()
                         ->end()
                     ->end()
                  ->end()
-            ->end();
-
-        return $treeBuilder;
+            ->end()
+        ;
     }
 }

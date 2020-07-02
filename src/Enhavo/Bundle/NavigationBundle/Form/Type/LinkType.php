@@ -22,6 +22,8 @@ class LinkType extends AbstractType
             'label' => 'link.label.link',
             'translation_domain' => 'EnhavoNavigationBundle'
         ]);
+
+        $builder->add('target', TargetType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -29,10 +31,5 @@ class LinkType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Link::class
         ]);
-    }
-
-    public function getBlockPrefix()
-    {
-        return 'enhavo_navigation_link';
     }
 }

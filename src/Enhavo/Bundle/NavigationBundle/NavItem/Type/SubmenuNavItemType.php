@@ -6,29 +6,28 @@
  * Time: 18:53
  */
 
-namespace Enhavo\Bundle\NavigationBundle\Item\Configuration;
+namespace Enhavo\Bundle\NavigationBundle\NavItem\Type;
 
-use Enhavo\Bundle\NavigationBundle\Item\AbstractConfiguration;
+use Enhavo\Bundle\NavigationBundle\Entity\Submenu;
 use Enhavo\Bundle\NavigationBundle\Factory\SubmenuFactory;
 use Enhavo\Bundle\NavigationBundle\Form\Type\SubmenuType;
+use Enhavo\Bundle\NavigationBundle\NavItem\AbstractNavItemType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SubmenuConfiguration extends AbstractConfiguration
+class SubmenuNavItemType extends AbstractNavItemType
 {
     public function configureOptions(OptionsResolver $resolver)
     {
-        parent::configureOptions($resolver);
-
         $resolver->setDefaults([
             'form' => SubmenuType::class,
             'label' => 'node.label.submenu',
-            'translationDomain' => 'EnhavoNavigationBundle',
-            'type' => 'submenu',
+            'translation_domain' => 'EnhavoNavigationBundle',
             'factory' => SubmenuFactory::class,
+            'model' => Submenu::class
         ]);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'submenu';
     }

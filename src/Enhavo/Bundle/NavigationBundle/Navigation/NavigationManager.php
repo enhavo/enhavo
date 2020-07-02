@@ -6,37 +6,35 @@
  * Time: 18:10
  */
 
-namespace Enhavo\Bundle\NavigationBundle\Node;
+namespace Enhavo\Bundle\NavigationBundle\Navigation;
 
-use Enhavo\Bundle\AppBundle\Type\CollectorInterface;
 use Enhavo\Bundle\NavigationBundle\Model\NodeInterface;
-use Enhavo\Bundle\NavigationBundle\Node\Voter\VoterInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Enhavo\Bundle\NavigationBundle\Voter\Voter;
+use Enhavo\Component\Type\Factory;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class NodeManager
+class NavigationManager
 {
-    use ContainerAwareTrait;
-
-    /**
-     * @var VoterInterface[]
-     */
+    /** @var Voter[] */
     private $voters;
 
-    /**
-     * @var CollectorInterface
-     */
-    private $collector;
+    /** @var Factory */
+    private $voterFactory;
+
+    /** @var array */
+    private $voterConfiguration;
 
     /**
-     * NodeManager constructor.
-     * @param CollectorInterface $collector
+     * NavigationManager constructor.
+     * @param Factory $voterFactory
+     * @param array $voterConfiguration
      */
-    public function __construct(CollectorInterface $collector)
+    public function __construct(Factory $voterFactory, array $voterConfiguration)
     {
-        $this->collector = $collector;
+        $this->voterFactory = $voterFactory;
+        $this->voterConfiguration = $voterConfiguration;
     }
-    
+
     /**
      * @param NodeInterface $node
      * @param array $options
@@ -55,10 +53,10 @@ class NodeManager
         $in = false;
         foreach($voters as $voter) {
             $result = $voter->vote($node);
-            if($result === VoterInterface::VOTE_IN) {
+            if($result === Voter::VOTE_IN) {
                 $in = true;
             }
-            if($result === VoterInterface::VOTE_OUT) {
+            if($result === Voter::VOTE_OUT) {
                 return false;
             }
         }
@@ -68,20 +66,18 @@ class NodeManager
     /**
      * @param null|string[] $voters
      * @param array $exclude
-     * @return VoterInterface[]
+     * @return Voter[]
      */
     private function getVoters($voters = null, $exclude = [])
     {
-        if($this->voters === null) {
-            $this->voters = $this->collector->getTypes();
-        }
+        $this->loadVoters();
 
         $usedVoters = $this->voters;
 
         if(is_array($voters)) {
             $usedVoters = [];
-            foreach($this->voters as $voter) {
-                if(in_array($voter->getType(), $voters)) {
+            foreach($this->voters as $name => $voter) {
+                if(in_array($name, $voters)) {
                     $usedVoters[] = $voter;
                 }
             }
@@ -89,8 +85,8 @@ class NodeManager
 
         if(count($exclude) > 0) {
             $includeVoters = [];
-            foreach($usedVoters as $voter) {
-                if(!in_array($voter->getType(), $exclude)) {
+            foreach($usedVoters as $name => $voter) {
+                if(!in_array($voter, $exclude)) {
                     $includeVoters[] = $voter;
                 }
             }
@@ -98,5 +94,14 @@ class NodeManager
         }
 
         return $usedVoters;
+    }
+
+    private function loadVoters()
+    {
+        if($this->voters === null) {
+            foreach($this->voterConfiguration as $name => $options) {
+                $this->voters[$name] = $this->voterFactory->create($options);
+            }
+        }
     }
 }

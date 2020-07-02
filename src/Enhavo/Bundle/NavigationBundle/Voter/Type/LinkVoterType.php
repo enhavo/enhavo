@@ -6,18 +6,17 @@
  * Time: 18:05
  */
 
-namespace Enhavo\Bundle\NavigationBundle\Node\Voter;
+namespace Enhavo\Bundle\NavigationBundle\Voter\Type;
 
-use Enhavo\Bundle\AppBundle\Type\TypeInterface;
-use Enhavo\Bundle\NavigationBundle\Entity\Link;
 use Enhavo\Bundle\NavigationBundle\Model\NodeInterface;
+use Enhavo\Bundle\NavigationBundle\NavItem\Type\LinkNavItemType;
+use Enhavo\Bundle\NavigationBundle\Voter\AbstractVoterType;
+use Enhavo\Bundle\NavigationBundle\Voter\Voter;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class LinkVoter implements VoterInterface, TypeInterface
+class LinkVoterType extends AbstractVoterType
 {
-    /**
-     * @var RequestStack
-     */
+    /** @var RequestStack */
     private $requestStack;
 
     public function __construct(RequestStack $requestStack)
@@ -27,19 +26,19 @@ class LinkVoter implements VoterInterface, TypeInterface
 
     public function vote(NodeInterface $node)
     {
-        $content = $node->getContent();
-        if($node->getType() === 'link' && $content instanceof Link) {
-            $link = $content->getLink();
+        $navItem = $node->getNavItem();
+        if($navItem instanceof LinkNavItemType) {
+            $link = $navItem->getLink();
             if($this->match($link)) {
-                return VoterInterface::VOTE_IN;
+                return Voter::VOTE_IN;
             }
         }
-        return VoterInterface::VOTE_ABSTAIN;
+        return Voter::VOTE_ABSTAIN;
     }
 
-    protected function match($url)
+    private function match($url)
     {
-        $request = $this->getRequest();
+        $request = $this->requestStack->getCurrentRequest();
         $path = sprintf('/%s', $request->getBasePath());
         $host = $request->getHost();
 
@@ -56,12 +55,7 @@ class LinkVoter implements VoterInterface, TypeInterface
         return false;
     }
 
-    protected function getRequest()
-    {
-        return $this->requestStack->getMasterRequest();
-    }
-
-    public function getType()
+    public static function getName(): ?string
     {
         return 'link';
     }

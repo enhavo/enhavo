@@ -6,15 +6,14 @@
  * Time: 18:06
  */
 
-namespace Enhavo\Bundle\NavigationBundle\Node\Voter;
+namespace Enhavo\Bundle\NavigationBundle\Voter;
 
 use Enhavo\Bundle\NavigationBundle\Model\NodeInterface;
+use Enhavo\Component\Type\TypeInterface;
 
-interface VoterInterface
+interface VoterTypeInterface extends TypeInterface
 {
-    const VOTE_IN = 'in';
-    const VOTE_ABSTAIN = 'abstain';
-    const VOTE_OUT = 'out';
-
     public function vote(NodeInterface $node);
+
+    public function isDisabled($options);
 }

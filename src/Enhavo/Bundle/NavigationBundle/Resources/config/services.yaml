@@ -11,55 +11,35 @@ services:
         tags:
             - { name: form.type }
 
-    enhavo_navigation.item_collector:
-        class: Enhavo\Bundle\AppBundle\Type\TypeCollector
-        arguments:
-            - '@service_container'
-            - 'NavigationItem'
-
-    enhavo_navigation.resolver.node_resolver:
-        class: Enhavo\Bundle\NavigationBundle\Resolver\NodeResolver
-        public: true
-        calls:
-            - ['setContainer', ['@service_container']]
-        arguments:
-            - '@form.factory'
-            - '@enhavo_navigation.item.item_manager'
-
-    enhavo_navigation.form.node_type:
-        class: Enhavo\Bundle\NavigationBundle\Form\Type\NodeType
+    Enhavo\Bundle\NavigationBundle\Form\Type\NodeType:
         arguments:
             - '%enhavo_navigation.model.node.class%'
         tags:
             - { name: form.type, alias: 'enhavo_navigation_node' }
 
-    enhavo_navigation.form.nodes_type:
-        class: Enhavo\Bundle\NavigationBundle\Form\Type\NodesType
+    Enhavo\Bundle\NavigationBundle\Form\Type\NodeCollectionType:
         arguments:
             - '%enhavo_navigation.model.node.class%'
+            - '@Enhavo\Bundle\NavigationBundle\NavItem\NavItemManager'
         tags:
             - { name: form.type, alias: 'enhavo_navigation_nodes' }
 
-    Enhavo\Bundle\NavigationBundle\Item\Configuration\LinkConfiguration:
-        public: true
-        calls:
-            - ['setContainer', ['@service_container']]
+    Enhavo\Bundle\NavigationBundle\NavItem\Type\NavItemType:
         tags:
-            - { name: enhavo_navigation.item, alias: 'link' }
+            - { name: enhavo_navigation.nav_item }
 
-    Enhavo\Bundle\NavigationBundle\Item\Configuration\SubmenuConfiguration:
-        public: true
-        calls:
-            - ['setContainer', ['@service_container']]
+    Enhavo\Bundle\NavigationBundle\NavItem\Type\LinkNavItemType:
         tags:
-            - { name: enhavo_navigation.item, alias: 'submenu' }
+            - { name: enhavo_navigation.nav_item }
 
-    Enhavo\Bundle\NavigationBundle\Item\Configuration\NodeConfiguration:
-        public: true
-        calls:
-            - ['setContainer', ['@service_container']]
+    Enhavo\Bundle\NavigationBundle\NavItem\Type\SubmenuNavItemType:
         tags:
-            - { name: enhavo_navigation.item, alias: 'node' }
+            - { name: enhavo_navigation.nav_item }
+
+    Enhavo\Bundle\NavigationBundle\NavItem\NavItemManager:
+        arguments:
+            - '@Enhavo\Component\Type\FactoryInterface[NavItem]'
+            - '%enhavo_navigation.nav_items%'
 
     Enhavo\Bundle\NavigationBundle\Widget\NavigationWidgetType:
         public: true
@@ -68,58 +48,37 @@ services:
         tags:
             - { name: enhavo.widget, alias: 'navigation' }
 
-    enhavo_navigation.node.manager:
-        class: Enhavo\Bundle\NavigationBundle\Node\NodeManager
+    Enhavo\Bundle\NavigationBundle\Navigation\NavigationManager:
         arguments:
-            - '@enhavo_navigation.voter_collector'
-        calls:
-            - [setContainer, ['@service_container']]
+            - '@Enhavo\Component\Type\FactoryInterface[NavigationVoter]'
+            - '%enhavo_navigation.voters%'
 
-    enhavo_navigation.voter_collector:
-        class: Enhavo\Bundle\AppBundle\Type\TypeCollector
-        arguments:
-            - '@service_container'
-            - 'NavigationVoter'
-
-    Enhavo\Bundle\NavigationBundle\Node\Voter\LinkVoter:
-        public: true
+    Enhavo\Bundle\NavigationBundle\Voter\Type\LinkVoterType:
         arguments:
             - '@request_stack'
         tags:
-            - { name: enhavo_navigation.voter, alias: 'link' }
+            - { name: enhavo_navigation.voter }
 
-    Enhavo\Bundle\NavigationBundle\Node\Voter\LinkHierarchyVoter:
-        public: true
+    Enhavo\Bundle\NavigationBundle\Voter\Type\LinkHierarchyVoterType:
         arguments:
             - '@request_stack'
         tags:
-            - { name: enhavo_navigation.voter, alias: 'link_hierarchy' }
+            - { name: enhavo_navigation.voter }
 
-    Enhavo\Bundle\NavigationBundle\Node\Voter\NodeHierarchyVoter:
-        public: true
+    Enhavo\Bundle\NavigationBundle\Voter\Type\NodeHierarchyVoterType:
         arguments:
-            - '@enhavo_navigation.node.manager'
+            - '@Enhavo\Bundle\NavigationBundle\Navigation\NavigationManager'
         tags:
-            - { name: enhavo_navigation.voter, alias: 'node_hierarchy' }
+            - { name: enhavo_navigation.voter }
 
-    enhavo_navigation.twig.extension:
-        class: Enhavo\Bundle\NavigationBundle\Twig\TwigExtension
+    Enhavo\Bundle\NavigationBundle\Twig\TwigExtension:
         tags:
             - { name: twig.extension }
         arguments:
-            - '@enhavo_navigation.node.manager'
-            - '@enhavo_navigation.renderer.node_renderer'
+            - '@Enhavo\Bundle\NavigationBundle\Navigation\NavigationManager'
+            - '@Enhavo\Bundle\NavigationBundle\Renderer\NodeRenderer'
 
-    enhavo_navigation.renderer.node_renderer:
-        class: Enhavo\Bundle\NavigationBundle\Renderer\NodeRenderer
-        calls:
-            - [setContainer, ['@service_container']]
+    Enhavo\Bundle\NavigationBundle\Renderer\NodeRenderer:
         arguments:
-            - '@enhavo_navigation.item.item_manager'
+            - '@Enhavo\Bundle\NavigationBundle\NavItem\NavItemManager'
             - '%enhavo_navigation.render.sets%'
-
-    enhavo_navigation.item.item_manager:
-        class: Enhavo\Bundle\NavigationBundle\Item\ItemManager
-        arguments:
-            - '@enhavo_navigation.item_collector'
-            - '%enhavo_navigation.items%'
