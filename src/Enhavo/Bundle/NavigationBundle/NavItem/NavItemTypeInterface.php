@@ -16,6 +16,8 @@ interface NavItemTypeInterface extends TypeInterface
 
     public function getForm($options);
 
+    public function getFormOptions($options);
+
     public function getLabel(array $options);
 
     public function getTranslationDomain(array $options);

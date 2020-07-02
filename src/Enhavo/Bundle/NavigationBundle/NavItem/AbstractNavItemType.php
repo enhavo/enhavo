@@ -27,6 +27,11 @@ abstract class AbstractNavItemType extends AbstractType implements NavItemTypeIn
         return $this->parent->getForm($options);
     }
 
+    public function getFormOptions($options)
+    {
+        return $this->parent->getFormOptions($options);
+    }
+
     public function getLabel(array $options)
     {
         return $this->parent->getLabel($options);
@@ -50,16 +55,6 @@ abstract class AbstractNavItemType extends AbstractType implements NavItemTypeIn
     public function render($options)
     {
         return $this->parent->render($options);
-    }
-
-    public function getPermission($options)
-    {
-        return $this->parent->getPermission($options);
-    }
-
-    public function isHidden($options)
-    {
-        return $this->parent->isHidden($options);
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -25,6 +25,11 @@ class NavItem extends AbstractContainerType
         return $this->type->getForm($this->options);
     }
 
+    public function getFormOptions()
+    {
+        return $this->type->getFormOptions($this->options);
+    }
+
     public function getFactory()
     {
         return $this->type->getFactory($this->options);

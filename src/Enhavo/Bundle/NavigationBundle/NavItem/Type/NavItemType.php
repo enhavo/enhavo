@@ -24,6 +24,11 @@ class NavItemType implements NavItemTypeInterface
         return $options['form'];
     }
 
+    public function getFormOptions($options)
+    {
+        return $options['form_options'];
+    }
+
     public function getLabel(array $options)
     {
         return $options['label'];
@@ -69,10 +74,11 @@ class NavItemType implements NavItemTypeInterface
         $resolver->setDefaults([
             'translation_domain' => null,
             'template' => null,
+            'form_options' => [],
         ]);
 
         $resolver->setRequired([
-            'label', 'model', 'factory',
+            'label', 'model', 'factory', 'form'
         ]);
     }
 }

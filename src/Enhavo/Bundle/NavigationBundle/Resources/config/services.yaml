@@ -36,6 +36,10 @@ services:
         tags:
             - { name: enhavo_navigation.nav_item }
 
+    Enhavo\Bundle\NavigationBundle\NavItem\Type\ContentNavItemType:
+        tags:
+            - { name: enhavo_navigation.nav_item }
+
     Enhavo\Bundle\NavigationBundle\NavItem\NavItemManager:
         arguments:
             - '@Enhavo\Component\Type\FactoryInterface[NavItem]'

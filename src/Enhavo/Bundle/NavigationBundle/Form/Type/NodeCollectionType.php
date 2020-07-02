@@ -74,6 +74,7 @@ class NodeCollectionType extends AbstractType
         foreach($this->navItemManager->getNavItems() as $key => $navItem) {
             $types[$key] = [
                 'subject_type' => $navItem->getForm(),
+                'subject_type_options' => $navItem->getFormOptions(),
                 'label' => $navItem->getLabel(),
                 'translation_domain' => $navItem->getTranslationDomain(),
             ];
