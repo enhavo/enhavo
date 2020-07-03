@@ -1,11 +1,11 @@
 <?php
 
-namespace Enhavo\Bundle\AppBundle\Util;
+namespace Enhavo\Bundle\DoctrineExtensionBundle\Util;
 
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\ORM\EntityManagerInterface;
 
-class DoctrineReferenceFinder
+class ReferenceFinder
 {
     /**
      * @var EntityManagerInterface
