@@ -22,7 +22,7 @@ services:
     Enhavo\Bundle\BlockBundle\Block\BlockManager:
         arguments:
             - '@Enhavo\Component\Type\FactoryInterface[Block]'
-            - '@enhavo_app.util.doctrine_reference_finder'
+            - '@Enhavo\Bundle\DoctrineExtensionBundle\Util\AssociationFinder'
             - '%enhavo_block.blocks%'
         calls:
             - ['setContainer', ['@service_container']]

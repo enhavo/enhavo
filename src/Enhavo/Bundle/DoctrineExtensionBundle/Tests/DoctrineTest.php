@@ -14,7 +14,7 @@ use Doctrine\ORM\Tools\Setup;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Finder\Finder;
 
-class DoctrineTest extends TestCase
+abstract class DoctrineTest extends TestCase
 {
     /** @var EntityManager */
     protected $em;

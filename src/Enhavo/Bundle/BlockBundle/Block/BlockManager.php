@@ -8,10 +8,10 @@
 
 namespace Enhavo\Bundle\BlockBundle\Block;
 
-use Enhavo\Bundle\AppBundle\Util\DoctrineReferenceFinder;
 use Enhavo\Bundle\BlockBundle\Factory\AbstractBlockFactory;
 use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
+use Enhavo\Bundle\DoctrineExtensionBundle\Util\AssociationFinder;
 use Enhavo\Component\Type\FactoryInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -21,18 +21,18 @@ class BlockManager
     use ContainerAwareTrait;
 
     /**
-     * @var DoctrineReferenceFinder
+     * @var AssociationFinder
      */
-    private $doctrineReferenceFinder;
+    private $associationFinder;
 
     /**
      * @var Block[]
      */
     private $blocks = [];
 
-    public function __construct(FactoryInterface $factory, DoctrineReferenceFinder $doctrineReferenceFinder, $configurations)
+    public function __construct(FactoryInterface $factory, AssociationFinder $associationFinder, $configurations)
     {
-        $this->doctrineReferenceFinder = $doctrineReferenceFinder;
+        $this->associationFinder = $associationFinder;
 
         foreach($configurations as $name => $options) {
             $this->blocks[$name] = $factory->create($options);
@@ -111,7 +111,7 @@ class BlockManager
         if (!$rootNode) {
             return null;
         }
-        $references = $this->doctrineReferenceFinder->findReferencesTo($rootNode, NodeInterface::class, [NodeInterface::class, BlockInterface::class]);
+        $references = $this->associationFinder->findAssociationsTo($rootNode, NodeInterface::class, [NodeInterface::class, BlockInterface::class]);
         if (count($references) > 0) {
             return $references[0];
         }

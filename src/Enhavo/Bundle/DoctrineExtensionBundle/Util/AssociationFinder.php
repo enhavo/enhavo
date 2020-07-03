@@ -5,42 +5,38 @@ namespace Enhavo\Bundle\DoctrineExtensionBundle\Util;
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\ORM\EntityManagerInterface;
 
-class ReferenceFinder
+class AssociationFinder
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
+    /** @var EntityManagerInterface */
+    private $em;
+
+    /** @var array */
+    private $associationMapCache = [];
 
     /**
-     * @var array
-     */
-    private $referenceMapCache = [];
-
-    /**
-     * DoctrineReferenceFinder constructor.
+     * DoctrineAssociationFinder constructor.
      *
-     * @param EntityManagerInterface $entityManager
+     * @param EntityManagerInterface $em
      */
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $em)
     {
-        $this->entityManager = $entityManager;
+        $this->em = $em;
     }
 
     /**
-     * Finds all ORM references to a doctrine managed entity.
+     * Finds all ORM associations to a doctrine managed entity.
      *
      * The optional parameter $entityClassName can be set to the fully qualified name of the class or interface used in
      * ORM mapping for $entity. Parent classes and interfaces include mappings to child classes, but not the other way around.
      * Defaults to the result of get_class($entity) if not provided.
      *
-     * @param object $entity The entity to find references to
+     * @param object $entity The entity to find associations to
      * @param string|null $entityClassName (Optional) Fully qualified class name of $entity
      * @param string[] $excludeClasses (Optional) Array of fully qualified class names of classes to exclude in search
-     * @return array Array of entities that have a reference to $entity.
+     * @return array Array of entities that have a association to $entity.
      * @throws \Exception
      */
-    public function findReferencesTo($entity, $entityClassName = null, $excludeClasses = [])
+    public function findAssociationsTo($entity, $entityClassName = null, $excludeClasses = [])
     {
         if ($entityClassName === null) {
             $entityClassName = get_class($entity);
@@ -50,15 +46,15 @@ class ReferenceFinder
         }
 
         $results = [];
-        foreach($this->getReferenceMap($entityClassName, $excludeClasses) as $reference) {
-            $queryBuilder = $this->entityManager->createQueryBuilder();
+        foreach($this->getAssociationMap($entityClassName, $excludeClasses) as $association) {
+            $queryBuilder = $this->em->createQueryBuilder();
             $queryBuilder->select('o')
-                ->from($reference['class'], 'o');
-            if ($reference['singleValued']) {
-                $queryBuilder->andWhere('o.' . $reference['field'] . ' = :entity');
+                ->from($association['class'], 'o');
+            if ($association['singleValued']) {
+                $queryBuilder->andWhere('o.' . $association['field'] . ' = :entity');
             } else {
                 $queryBuilder
-                    ->innerJoin('o.' . $reference['field'], 'j')
+                    ->innerJoin('o.' . $association['field'], 'j')
                     ->andWhere('j = :entity');
             }
             $queryBuilder->setParameter('entity', $entity);
@@ -73,45 +69,45 @@ class ReferenceFinder
     }
 
     /**
-     * Gets an array of Metadata about ORM references to target class.
+     * Gets an array of Metadata about ORM associations to target class.
      *
      * @param string $targetClass Fully qualified class name of target class
-     * @param string[] $excludedClasses Optional array of fully qualified class names of classes to exclude in reference map
+     * @param string[] $excludedClasses Optional array of fully qualified class names of classes to exclude in association map
      * @return array
      */
-    private function getReferenceMap($targetClass, $excludedClasses = [])
+    private function getAssociationMap($targetClass, $excludedClasses = [])
     {
-        $cacheKey = $this->getReferenceMapCacheKey($targetClass, $excludedClasses);
-        if (!isset($this->referenceMapCache[$cacheKey])) {
-            $this->buildReferenceMapCache($targetClass, $excludedClasses);
+        $cacheKey = $this->getAssociationMapCacheKey($targetClass, $excludedClasses);
+        if (!isset($this->associationMapCache[$cacheKey])) {
+            $this->buildAssociationMapCache($targetClass, $excludedClasses);
         }
-        return $this->referenceMapCache[$cacheKey];
+        return $this->associationMapCache[$cacheKey];
     }
 
     /**
-     * Generates cache key to for caching reference maps. This key should be unique for any combination of the parameters $targetClass and $excludedClasses.
+     * Generates cache key to for caching association maps. This key should be unique for any combination of the parameters $targetClass and $excludedClasses.
      *
      * @param string $targetClass Fully qualified class name of target class
-     * @param array $excludedClasses Optional array of fully qualified class names of classes to exclude in reference map
+     * @param array $excludedClasses Optional array of fully qualified class names of classes to exclude in association map
      * @return string
      */
-    private function getReferenceMapCacheKey($targetClass, $excludedClasses = [])
+    private function getAssociationMapCacheKey($targetClass, $excludedClasses = [])
     {
         return md5($targetClass . ':' . implode('.', $excludedClasses));
     }
 
     /**
-     * Creates an array of Metadata about ORM references to target class and saves it in cache.
+     * Creates an array of Metadata about ORM associations to target class and saves it in cache.
      *
      * @param string $targetClass Fully qualified class name of target class
-     * @param array $excludedClasses Optional array of fully qualified class names of classes to exclude in reference map
+     * @param array $excludedClasses Optional array of fully qualified class names of classes to exclude in association map
      */
-    private function buildReferenceMapCache($targetClass, $excludedClasses = [])
+    private function buildAssociationMapCache($targetClass, $excludedClasses = [])
     {
-        $key = $this->getReferenceMapCacheKey($targetClass, $excludedClasses);
-        $this->referenceMapCache[$key] = [];
+        $key = $this->getAssociationMapCacheKey($targetClass, $excludedClasses);
+        $this->associationMapCache[$key] = [];
 
-        $metaData = $this->entityManager->getMetadataFactory()->getAllMetadata();
+        $metaData = $this->em->getMetadataFactory()->getAllMetadata();
         /** @var ClassMetadata $classMetadata */
         foreach($metaData as $classMetadata) {
             $reflectionClass = $classMetadata->getReflectionClass();
@@ -135,7 +131,7 @@ class ReferenceFinder
             foreach($associations as $associationName) {
                 $associationClass = $classMetadata->getAssociationTargetClass($associationName);
                 if (is_a($associationClass, $targetClass, true)) {
-                    $this->referenceMapCache[$key] []= [
+                    $this->associationMapCache[$key] []= [
                         'class' => $className,
                         'field' => $associationName,
                         'singleValued' => $classMetadata->isSingleValuedAssociation($associationName)
