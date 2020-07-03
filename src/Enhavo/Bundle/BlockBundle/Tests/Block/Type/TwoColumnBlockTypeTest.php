@@ -18,8 +18,7 @@ class TwoColumnBlockTypeTest extends TestCase
 {
     public function testGetType()
     {
-        $type = new TwoColumnBlockType();
-        $this->assertEquals('two_column', $type->getType());
+        $this->assertEquals('two_column', TwoColumnBlockType::getName());
     }
 
     public function testConfigureOption()

@@ -1,0 +1,11 @@
+{% for prototype in prototypes %}
+    {% form_theme prototype.formView with form_themes() %}
+    <script
+        type="text/template"
+        data-prototype-parameters="{{ prototype.parameters|json_encode|e }}"
+        data-prototype-name="{{ prototype.name }}"
+        data-prototype-label="{{ prototype.vars.label|trans({}, prototype.vars.translation_domain) }}"
+        data-prototype-storage="{{ prototype.storage }}"
+        data-prototype-template="{{ form_widget(prototype.formView)|e }}"
+    ></script>
+{% endfor %}

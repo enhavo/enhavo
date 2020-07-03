@@ -3,19 +3,19 @@
 namespace Enhavo\Bundle\FormBundle\Form\EventListener;
 
 use Doctrine\Common\Util\ClassUtils;
+use Enhavo\Bundle\FormBundle\Prototype\PrototypeManager;
 use Symfony\Component\Form\Exception\InvalidArgumentException;
 use Symfony\Component\Form\Exception\InvalidConfigurationException;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Form\Extension\Core\EventListener\ResizeFormListener;
 use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
 /**
  * ResizePolyFormListener
  * A Form Resize listener capable of coping with a PolyCollectionType.
- * Copied and customize from InfiniteFormBundle. Thanks for the assume work.
+ * Copied and customize from InfiniteFormBundle. Thanks for the awesome work.
  *
  * @author gseidel
  */
@@ -36,37 +36,66 @@ class ResizePolyFormListener extends ResizeFormListener
     /** @var \Closure|null */
     private $entryTypeResolver;
 
+    /** @var PrototypeManager */
+    private $prototypeManager;
+
+    /** @var string */
+    private $storageName;
+
+    /** @var string[] */
+    private $entryKeys;
+
+    /** @var bool */
+    private $loaded = false;
+
     /**
-     * @param FormInterface[] $prototypes
+     * @param PrototypeManager $prototypeManager
+     * @param string $storageName
+     * @param string[] $entryKeys
      * @param array $options
      * @param bool $allowAdd
      * @param bool $allowDelete
      * @param string $typeFieldName
+     * @param \Closure $entryTypeResolver
      */
-    public function __construct(array $prototypes, array $options = array(), $allowAdd = false, $allowDelete = false, $typeFieldName = '_key', $entryTypeResolver = null)
-    {
+    public function __construct(
+        PrototypeManager $prototypeManager,
+        $storageName,
+        $entryKeys = [],
+        array $options = [],
+        $allowAdd = false,
+        $allowDelete = false,
+        $typeFieldName = '_key',
+        $entryTypeResolver = null
+    ) {
+        $this->prototypeManager = $prototypeManager;
+        $this->storageName = $storageName;
+        $this->entryKeys = $entryKeys;
         $this->typeFieldName = $typeFieldName;
         $this->entryTypeResolver = $entryTypeResolver;
         $this->propertyAccessor = PropertyAccess::createPropertyAccessor();
 
-        $defaultType = null;
-        foreach ($prototypes as $key => $prototype) {
-            /** @var FormInterface $prototype */
-            $modelClass = $prototype->getConfig()->getOption('data_class');
-            $type = $prototype->getConfig()->getType()->getInnerType();
+        parent::__construct('', $options, $allowAdd, $allowDelete);
+    }
 
-            if (null === $defaultType) {
-                $defaultType = $type;
-            }
+    private function loadMap()
+    {
+        if($this->loaded) {
+            return;
+        }
 
-            $this->typeMap[$key] = get_class($type);
+        foreach ($this->prototypeManager->getPrototypes($this->storageName) as $prototype) {
+            $modelClass = $prototype->getForm()->getConfig()->getOption('data_class');
+            $type = $prototype->getForm()->getConfig()->getType()->getInnerType();
+
+            $this->typeMap[$prototype->getParameters()['key']] = get_class($type);
 
             if($modelClass !== null) {
-                $this->classMap[$modelClass] = $key;
+                $this->classMap[$modelClass] = $prototype->getParameters()['key'];
             }
         }
 
-        parent::__construct(get_class($defaultType), $options, $allowAdd, $allowDelete);
+        $this->loaded = false;
     }
 
     /**
@@ -115,6 +144,8 @@ class ResizePolyFormListener extends ResizeFormListener
         $form = $event->getForm();
         $data = $event->getData();
 
+        $this->loadMap();
+
         if (null === $data) {
             $data = array();
         }
@@ -142,6 +173,8 @@ class ResizePolyFormListener extends ResizeFormListener
     {
         $form = $event->getForm();
         $data = $event->getData();
+
+        $this->loadMap();
 
         if (null === $data || '' === $data) {
             $data = array();

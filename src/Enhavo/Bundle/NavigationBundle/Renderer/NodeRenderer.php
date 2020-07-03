@@ -10,26 +10,24 @@ namespace Enhavo\Bundle\NavigationBundle\Renderer;
 
 use Enhavo\Bundle\AppBundle\Template\TemplateTrait;
 use Enhavo\Bundle\NavigationBundle\Exception\RenderException;
-use Enhavo\Bundle\NavigationBundle\Item\ItemManager;
 use Enhavo\Bundle\NavigationBundle\Model\NodeInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Enhavo\Bundle\NavigationBundle\NavItem\NavItemManager;
+use Twig\Environment;
 
 class NodeRenderer
 {
-    use ContainerAwareTrait;
     use TemplateTrait;
 
-    /**
-     * @var ItemManager
-     */
+    /** @var NavItemManager */
     private $itemManager;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     private $renderSets = [];
 
-    public function __construct(ItemManager $itemManager, array $renderSets = null)
+    /** @var Environment */
+    private $twig;
+
+    public function __construct(NavItemManager $itemManager, array $renderSets = null)
     {
         $this->itemManager = $itemManager;
         if(is_array($renderSets)) {
@@ -37,25 +35,30 @@ class NodeRenderer
         }
     }
 
+    public function setTwig(Environment $twig)
+    {
+        $this->twig = $twig;
+    }
+
     private function renderView($template, $parameters = [])
     {
-        return $this->container->get('twig')->render($template, $parameters);
+        return $this->twig->render($template, $parameters);
     }
 
     public function render(NodeInterface $node, $renderSet = null)
     {
-        $item = $this->itemManager->getItem($node->getType());
+        $item = $this->itemManager->getNavItem($node->getName());
         $template = $item->getRenderTemplate();
 
-        if($renderSet && isset($this->renderSets[$renderSet][$node->getType()])) {
-            $template = $this->renderSets[$renderSet][$node->getType()];
+        if($renderSet && isset($this->renderSets[$renderSet][$node->getName()])) {
+            $template = $this->renderSets[$renderSet][$node->getName()];
         }
 
         if($template === null) {
             if($renderSet) {
-                throw new RenderException(sprintf('No template found to render node "%s" with render set "%s"', $node->getType(), $renderSet));
+                throw new RenderException(sprintf('No template found to render node "%s" with render set "%s"', $node->getName(), $renderSet));
             }
-            throw new RenderException(sprintf('No default template found for node type "%s"', $node->getType()));
+            throw new RenderException(sprintf('No default template found for node type "%s"', $node->getName()));
         }
 
         return $this->renderView($this->getTemplate($template), [

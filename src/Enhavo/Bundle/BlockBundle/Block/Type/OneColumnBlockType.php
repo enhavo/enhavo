@@ -16,25 +16,20 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class OneColumnBlockType extends AbstractBlockType
 {
-    public function configureOptions(OptionsResolver $optionsResolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        parent::configureOptions($optionsResolver);
-
-        $optionsResolver->setDefaults([
+        $resolver->setDefaults([
             'model' => OneColumnBlock::class,
-            'parent' => OneColumnBlock::class,
             'form' => OneColumnBlockFormType::class,
             'factory' => OneColumnBlockFactory::class,
-            'repository' => 'EnhavoBlockBundle:OneColumnBlock',
             'template' => 'theme/block/one-column.html.twig',
-            'form_template' => '@EnhavoBlock/admin/form/block/block_fields.html.twig',
             'label' => 'one_column.label.one_column',
-            'translationDomain' => 'EnhavoBlockBundle',
+            'translation_domain' => 'EnhavoBlockBundle',
             'groups' => ['default', 'layout']
         ]);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'one_column';
     }

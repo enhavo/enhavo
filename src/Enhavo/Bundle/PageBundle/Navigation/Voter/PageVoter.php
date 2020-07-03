@@ -8,18 +8,16 @@
 
 namespace Enhavo\Bundle\PageBundle\Navigation\Voter;
 
+use Enhavo\Bundle\MediaBundle\Content\Content;
+use Enhavo\Bundle\NavigationBundle\Voter\VoterInterface;
 use Enhavo\Bundle\RoutingBundle\Entity\Route;
-use Enhavo\Bundle\AppBundle\Type\TypeInterface;
 use Enhavo\Bundle\NavigationBundle\Model\NodeInterface;
-use Enhavo\Bundle\NavigationBundle\Node\Voter\VoterInterface;
 use Enhavo\Bundle\PageBundle\Entity\Page;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class PageVoter implements VoterInterface, TypeInterface
+class PageVoter implements VoterInterface
 {
-    /**
-     * @var RequestStack
-     */
+    /** @var RequestStack */
     private $requestStack;
 
     public function __construct(RequestStack $requestStack)
@@ -29,16 +27,18 @@ class PageVoter implements VoterInterface, TypeInterface
 
     public function vote(NodeInterface $node)
     {
-        $content = $node->getContent();
-        if($node->getType() === 'page' && $content instanceof Page) {
-            if($this->match($content)) {
-                return VoterInterface::VOTE_IN;
+        $subject = $node->getSubject();
+        if($node->getName() === 'page' && $subject instanceof Content && $subject->getContent()) {
+            /** @var Page $page */
+            $page = $subject->getContent();
+            if($this->match($page)) {
+                return Voter::VOTE_IN;
             }
         }
-        return VoterInterface::VOTE_ABSTAIN;
+        return Voter::VOTE_ABSTAIN;
     }
 
-    protected function match(Page $page)
+    public function match(Page $page)
     {
         $request = $this->getRequest();
         $routeName = $request->get('_route');
@@ -57,7 +57,7 @@ class PageVoter implements VoterInterface, TypeInterface
         return $this->requestStack->getMasterRequest();
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'page';
     }

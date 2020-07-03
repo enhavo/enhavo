@@ -30,5 +30,6 @@ class EnhavoDoctrineExtensionExtension extends Extension
         $loader->load('services/resolver.yaml');
         $loader->load('services/metadata.yaml');
         $loader->load('services/listener.yaml');
+        $loader->load('services/util.yaml');
     }
 }

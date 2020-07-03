@@ -11,11 +11,8 @@ services:
             - { name: form.type, alias: enhavo_template_template }
 
     Enhavo\Bundle\TemplateBundle\Block\ResourceBlockType:
-        public: true
-        calls:
-            - ['setContainer', ['@service_container']]
         tags:
-            - { name: enhavo.block, alias: resource }
+            - { name: enhavo_block.block }
 
     Enhavo\Bundle\TemplateBundle\Template\TemplateManager:
         public: true

@@ -18,8 +18,7 @@ class PictureBlockTypeTest extends TestCase
 {
     public function testGetType()
     {
-        $type = new PictureBlockType();
-        $this->assertEquals('picture', $type->getType());
+        $this->assertEquals('picture', PictureBlockType::getName());
     }
 
     public function testConfigureOption()

@@ -10,7 +10,7 @@ Enhavo\Bundle\NavigationBundle\Entity\Node:
                 strategy: AUTO
 
     fields:
-        type:
+        name:
             type: string
             length: 255
             nullable: true
@@ -24,15 +24,11 @@ Enhavo\Bundle\NavigationBundle\Entity\Node:
             type: integer
             nullable: true
 
-        configuration:
-            type: json_array
-            nullable: true
-
-        contentId:
+        subjectId:
             type: integer
             nullable: true
 
-        contentClass:
+        subjectClass:
             type: string
             length: 255
             nullable: true

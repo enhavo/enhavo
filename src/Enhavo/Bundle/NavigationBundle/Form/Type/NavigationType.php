@@ -8,8 +8,6 @@
 
 namespace Enhavo\Bundle\NavigationBundle\Form\Type;
 
-use Enhavo\Bundle\FormBundle\Form\Type\DynamicFormType;
-use Enhavo\Bundle\NavigationBundle\Entity\Node;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,11 +15,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class NavigationType extends AbstractResourceType
 {
-    public function __construct($dataClass, $validationGroups = [])
-    {
-        parent::__construct($dataClass, $validationGroups);
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name', TextType::class, [
@@ -34,15 +27,7 @@ class NavigationType extends AbstractResourceType
             'translation_domain' => 'EnhavoNavigationBundle',
         ]);
 
-        $builder->add('nodes', DynamicFormType::class, [
-            'label' => 'navigation.label.items',
-            'translation_domain' => 'EnhavoNavigationBundle',
-            'item_resolver' => 'enhavo_navigation.resolver.node_resolver',
-            'item_route' => 'enhavo_navigation_navigation_form',
-            'item_class' => Node::class,
-            'items' => $options['items'],
-            'item_groups' => $options['item_groups']
-        ]);
+        $builder->add('nodes', NodeCollectionType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -51,10 +36,5 @@ class NavigationType extends AbstractResourceType
            'items' => [],
            'item_groups' => []
         ]);
-    }
-
-    public function getBlockPrefix()
-    {
-        return 'enhavo_navigation_navigation';
     }
 }

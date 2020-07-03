@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\ShopBundle\Block;
 
+use Enhavo\Bundle\AppBundle\View\ViewData;
 use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
 use Enhavo\Bundle\ShopBundle\Entity\ProductListBlock;
 use Enhavo\Bundle\ShopBundle\Factory\ProductListBlockFactory;
@@ -11,11 +12,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProductListBlockType extends AbstractBlockType
 {
-    public function createViewData(BlockInterface $block, $resource, array $options)
+    public function createViewData(BlockInterface $block, ViewData $viewData, $resource, array $options)
     {
-        $data = parent::createViewData($block, $resource, $options);
-        $data['products'] = $this->container->get('sylius.repository.product')->findAll();
-        return $data;
+        $viewData['products'] = $this->container->get('sylius.repository.product')->findAll();
     }
 
     public function configureOptions(OptionsResolver $optionsResolver)
@@ -30,7 +29,7 @@ class ProductListBlockType extends AbstractBlockType
             'repository' => 'ProductListBlock::class',
             'template' => 'theme/block/product-list.html.twig',
             'label' => 'ProductList',
-            'translationDomain' => 'EnhavoShopBundle',
+            'translation_domain' => 'EnhavoShopBundle',
             'groups' => ['default', 'content']
         ]);
     }

@@ -1,0 +1,20 @@
+services:
+    Enhavo\Bundle\FormBundle\Twig\PrototypeExtension:
+        arguments:
+            - '@Enhavo\Bundle\FormBundle\Prototype\PrototypeManager'
+        calls:
+            - [setEnvironment, ['@twig']]
+        tags:
+            - { name: twig.extension }
+
+    Enhavo\Bundle\FormBundle\Twig\FormExtension:
+        arguments:
+            - '@enhavo_form.error.error.resolver'
+        tags:
+            - { name: twig.extension }
+
+    Enhavo\Bundle\FormBundle\Twig\FormatExtension:
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: twig.extension }

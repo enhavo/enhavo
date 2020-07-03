@@ -1,3 +1,0 @@
-enhavo_block_admin:
-    resource: "@EnhavoBlockBundle/Resources/config/routes/admin/*"
-    prefix: /admin

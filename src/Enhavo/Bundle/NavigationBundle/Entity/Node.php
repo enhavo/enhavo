@@ -9,19 +9,20 @@
 namespace Enhavo\Bundle\NavigationBundle\Entity;
 
 use Enhavo\Bundle\NavigationBundle\Model\NodeInterface;
+use Enhavo\Bundle\NavigationBundle\Model\SubjectInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
 class Node implements NodeInterface, ResourceInterface
 {
     /**
-     * @var integer
+     * @var int|null
      */
     private $id;
 
     /**
-     * @var string
+     * @var string|null
      */
-    private $type;
+    private $name;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -34,39 +35,34 @@ class Node implements NodeInterface, ResourceInterface
     private $parent;
 
     /**
-     * @var object
+     * @var SubjectInterface|null
      */
-    private $content;
+    private $subject;
 
     /**
-     * @var integer
+     * @var integer|null
      */
-    private $contentId;
+    private $subjectId;
 
     /**
-     * @var string
+     * @var string|null
      */
-    private $contentClass;
+    private $subjectClass;
 
     /**
-     * @var Navigation
+     * @var Navigation|null
      */
     private $navigation;
 
     /**
-     * @var integer
+     * @var integer|null
      */
     private $position;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $label;
-
-    /**
-     * @var array
-     */
-    private $configuration;
 
     /**
      * Constructor
@@ -87,35 +83,12 @@ class Node implements NodeInterface, ResourceInterface
     }
 
     /**
-     * Set type
-     *
-     * @param string $type
-     * @return Node
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return string 
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
      * Add children
      *
-     * @param \Enhavo\Bundle\NavigationBundle\Model\NodeInterface $children
+     * @param NodeInterface $children
      * @return Node
      */
-    public function addChild(\Enhavo\Bundle\NavigationBundle\Model\NodeInterface $children)
+    public function addChild(NodeInterface $children)
     {
         $this->children[] = $children;
         $children->setParent($this);
@@ -126,9 +99,9 @@ class Node implements NodeInterface, ResourceInterface
     /**
      * Remove children
      *
-     * @param \Enhavo\Bundle\NavigationBundle\Model\NodeInterface $children
+     * @param NodeInterface $children
      */
-    public function removeChild(\Enhavo\Bundle\NavigationBundle\Model\NodeInterface $children)
+    public function removeChild(NodeInterface $children)
     {
         $children->setParent(null);
         $this->children->removeElement($children);
@@ -165,10 +138,10 @@ class Node implements NodeInterface, ResourceInterface
     /**
      * Set parent
      *
-     * @param \Enhavo\Bundle\NavigationBundle\Model\NodeInterface $parent
+     * @param NodeInterface $parent
      * @return Node
      */
-    public function setParent(\Enhavo\Bundle\NavigationBundle\Model\NodeInterface $parent = null)
+    public function setParent(NodeInterface $parent = null)
     {
         $this->parent = $parent;
         if(!$parent->getChildren()->contains($this)) {
@@ -180,59 +153,11 @@ class Node implements NodeInterface, ResourceInterface
     /**
      * Get parent
      *
-     * @return \Enhavo\Bundle\NavigationBundle\Model\NodeInterface 
+     * @return NodeInterface
      */
     public function getParent()
     {
         return $this->parent;
-    }
-
-    /**
-     * @return object
-     */
-    public function getContent()
-    {
-        return $this->content;
-    }
-
-    /**
-     * @param object $content
-     */
-    public function setContent($content)
-    {
-        $this->content = $content;
-    }
-
-    /**
-     * @return int
-     */
-    public function getContentId()
-    {
-        return $this->contentId;
-    }
-
-    /**
-     * @param int $contentId
-     */
-    public function setContentId($contentId)
-    {
-        $this->contentId = $contentId;
-    }
-
-    /**
-     * @return string
-     */
-    public function getContentClass()
-    {
-        return $this->contentClass;
-    }
-
-    /**
-     * @param string $contentClass
-     */
-    public function setContentClass($contentClass)
-    {
-        $this->contentClass = $contentClass;
     }
 
     /**
@@ -284,21 +209,70 @@ class Node implements NodeInterface, ResourceInterface
     }
 
     /**
-     * @return array
+     * @return string|null
      */
-    public function getConfiguration()
+    public function getName(): ?string
     {
-        if($this->configuration === null) {
-            return [];
-        }
-        return $this->configuration;
+        return $this->name;
     }
 
     /**
-     * @param array $configuration
+     * @param string|null $name
      */
-    public function setConfiguration($configuration)
+    public function setName(?string $name): void
     {
-        $this->configuration = $configuration;
+        $this->name = $name;
+    }
+
+    /**
+     * @return object|null
+     */
+    public function getSubject(): ?SubjectInterface
+    {
+        return $this->subject;
+    }
+
+    /**
+     * @param SubjectInterface|null $subject
+     */
+    public function setSubject(?SubjectInterface $subject): void
+    {
+        if ($subject === null && $this->subject !== null) {
+            $this->subject->setNode(null);
+        }
+        $this->subject = $subject;
+        $this->subject->setNode($this);
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getSubjectId(): ?int
+    {
+        return $this->subjectId;
+    }
+
+    /**
+     * @param int|null $subjectId
+     */
+    public function setSubjectId(?int $subjectId): void
+    {
+        $this->subjectId = $subjectId;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSubjectClass(): ?string
+    {
+        return $this->subjectClass;
+    }
+
+    /**
+     * @param string|null $subjectClass
+     */
+    public function setSubjectClass(?string $subjectClass): void
+    {
+        $this->subjectClass = $subjectClass;
     }
 }

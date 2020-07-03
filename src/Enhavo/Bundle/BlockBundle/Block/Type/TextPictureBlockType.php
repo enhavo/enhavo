@@ -18,22 +18,18 @@ class TextPictureBlockType extends AbstractBlockType
 {
     public function configureOptions(OptionsResolver $optionsResolver)
     {
-        parent::configureOptions($optionsResolver);
-
         $optionsResolver->setDefaults([
             'model' => TextPictureBlock::class,
-            'parent' => TextPictureBlock::class,
             'form' => TextPictureBlockFormType::class,
             'factory' => TextPictureBlockFactory::class,
-            'repository' => 'EnhavoBlockBundle:TextPictureBlock',
             'template' => 'theme/block/text-picture.html.twig',
             'label' => 'textPicture.label.textPicture',
-            'translationDomain' => 'EnhavoBlockBundle',
+            'translation_domain' => 'EnhavoBlockBundle',
             'groups' => ['default', 'content', 'simple']
         ]);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'text_picture';
     }

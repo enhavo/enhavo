@@ -43,7 +43,7 @@ class EnhavoBlockExtension extends Extension implements PrependExtensionInterfac
         $loader->load('services/command.yaml');
         $loader->load('services/services.yaml');
         $loader->load('services/factory.yaml');
-        $loader->load('services/blocks.yaml');
+        $loader->load('services/block.yaml');
         $loader->load('services/form.yaml');
     }
 

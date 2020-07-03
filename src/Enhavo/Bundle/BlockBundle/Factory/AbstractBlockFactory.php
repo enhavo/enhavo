@@ -8,7 +8,6 @@
 
 namespace Enhavo\Bundle\BlockBundle\Factory;
 
-use Enhavo\Bundle\FormBundle\DynamicForm\FactoryInterface;
 use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;

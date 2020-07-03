@@ -28,11 +28,6 @@ class Navigation implements ResourceInterface
     private $code;
 
     /**
-     * @var string
-     */
-    private $condition;
-
-    /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $nodes;
@@ -83,29 +78,6 @@ class Navigation implements ResourceInterface
     public function setCode($code)
     {
         $this->code = $code;
-    }
-
-    /**
-     * Set condition
-     *
-     * @param string $condition
-     * @return Navigation
-     */
-    public function setCondition($condition)
-    {
-        $this->condition = $condition;
-
-        return $this;
-    }
-
-    /**
-     * Get condition
-     *
-     * @return string 
-     */
-    public function getCondition()
-    {
-        return $this->condition;
     }
 
     /**

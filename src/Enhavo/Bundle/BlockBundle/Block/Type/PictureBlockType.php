@@ -16,24 +16,20 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PictureBlockType extends AbstractBlockType
 {
-    public function configureOptions(OptionsResolver $optionsResolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        parent::configureOptions($optionsResolver);
-
-        $optionsResolver->setDefaults([
-            'model' => PictureBlock::class,
-            'parent' => PictureBlock::class,
+        $resolver->setDefaults([
             'form' => PictureBlockFormType::class,
+            'model' => PictureBlock::class,
             'factory' => PictureBlockFactory::class,
-            'repository' => 'EnhavoBlockBundle:PictureBlock',
             'template' => 'theme/block/picture.html.twig',
             'label' => 'picture.label.picture',
-            'translationDomain' => 'EnhavoBlockBundle',
+            'translation_domain' => 'EnhavoBlockBundle',
             'groups' => ['default', 'content', 'simple']
         ]);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'picture';
     }

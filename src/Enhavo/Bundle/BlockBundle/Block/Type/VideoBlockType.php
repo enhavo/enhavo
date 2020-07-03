@@ -18,22 +18,18 @@ class VideoBlockType extends AbstractBlockType
 {
     public function configureOptions(OptionsResolver $optionsResolver)
     {
-        parent::configureOptions($optionsResolver);
-
         $optionsResolver->setDefaults([
             'model' => VideoBlock::class,
-            'parent' => VideoBlock::class,
             'form' => VideoBlockFormType::class,
             'factory' => VideoBlockFactory::class,
-            'repository' => 'EnhavoBlockBundle:VideoBlock',
             'template' => 'theme/block/video.html.twig',
             'label' => 'video.label.video',
-            'translationDomain' => 'EnhavoBlockBundle',
+            'translation_domain' => 'EnhavoBlockBundle',
             'groups' => ['default', 'content']
         ]);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'video';
     }

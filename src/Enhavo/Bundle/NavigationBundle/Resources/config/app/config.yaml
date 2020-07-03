@@ -3,6 +3,8 @@ enhavo_app:
         enhavo_navigation:
             path: '@EnhavoNavigationBundle/Resources/views'
             priority: 10
+    form_themes:
+        - '@EnhavoNavigation/admin/form/navigation/fields.html.twig'
     roles:
         enhavo_navigation_navigation_index:
             role: ROLE_ENHAVO_NAVIGATION_NAVIGATION_INDEX
@@ -28,7 +30,7 @@ doctrine:
             Enhavo\Bundle\NavigationBundle\Model\NavigationInterface: Enhavo\Bundle\NavigationBundle\Entity\Navigation
 
 enhavo_navigation:
-    items:
+    nav_items:
         submenu:
             type: submenu
         link:
@@ -38,6 +40,12 @@ enhavo_doctrine_extension:
     metadata:
         Enhavo\Bundle\NavigationBundle\Entity\Node:
             reference:
-                node:
+                subject:
+                    idField: subjectId
+                    nameField: subjectClass
+
+        Enhavo\Bundle\NavigationBundle\Entity\Content:
+            reference:
+                content:
                     idField: contentId
                     nameField: contentClass

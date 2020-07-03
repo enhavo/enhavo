@@ -8,25 +8,14 @@
 
 namespace Enhavo\Bundle\NavigationBundle\Factory;
 
-use Enhavo\Bundle\FormBundle\DynamicForm\FactoryInterface;
 use Enhavo\Bundle\NavigationBundle\Model\NodeInterface;
 
-class NodeFactory implements FactoryInterface
+class NodeFactory
 {
     /**
      * @var string
      */
     private $class;
-
-    /**
-     * @var FactoryInterface
-     */
-    private $contentFactory;
-
-    /**
-     * @var FactoryInterface
-     */
-    private $configurationFactory;
 
     /**
      * @var string
@@ -58,37 +47,5 @@ class NodeFactory implements FactoryInterface
         $node->setType($this->name);
 
         return $node;
-    }
-
-    /**
-     * @return FactoryInterface
-     */
-    public function getContentFactory()
-    {
-        return $this->contentFactory;
-    }
-
-    /**
-     * @param FactoryInterface $contentFactory
-     */
-    public function setContentFactory($contentFactory)
-    {
-        $this->contentFactory = $contentFactory;
-    }
-
-    /**
-     * @return FactoryInterface
-     */
-    public function getConfigurationFactory()
-    {
-        return $this->configurationFactory;
-    }
-
-    /**
-     * @param FactoryInterface $configurationFactory
-     */
-    public function setConfigurationFactory($configurationFactory)
-    {
-        $this->configurationFactory = $configurationFactory;
     }
 }

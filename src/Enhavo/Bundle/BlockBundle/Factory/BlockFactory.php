@@ -11,8 +11,6 @@ namespace Enhavo\Bundle\BlockBundle\Factory;
 
 use Enhavo\Bundle\BlockBundle\Block\Block;
 use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
-use Enhavo\Bundle\FormBundle\DynamicForm\ResolverInterface;
-use Enhavo\Bundle\FormBundle\DynamicForm\FactoryInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 class BlockFactory
@@ -41,14 +39,6 @@ class BlockFactory
         $block = $this->getResolver()->resolveItem($original->getNode()->getName());
         $factory = $this->getFactory($block->getName());
         return $factory->duplicate($original);
-    }
-
-    /**
-     * @return ResolverInterface
-     */
-    private function getResolver()
-    {
-        return $this->container->get('enhavo_block.resolver.block_resolver');
     }
 
     /**

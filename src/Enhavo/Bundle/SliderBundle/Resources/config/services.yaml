@@ -38,3 +38,9 @@ services:
         arguments:
             - '%enhavo_slider.model.slide.class%'
             - '@enhavo_slider.repository.slider'
+
+    Enhavo\Bundle\SliderBundle\Block\SliderBlockType:
+        arguments:
+            - 'enhavo_slider.repository.slide'
+        tags:
+            - { name: enhavo_block.block }

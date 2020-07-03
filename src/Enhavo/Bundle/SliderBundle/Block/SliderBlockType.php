@@ -2,6 +2,8 @@
 
 namespace Enhavo\Bundle\SliderBundle\Block;
 
+use Doctrine\ORM\EntityRepository;
+use Enhavo\Bundle\AppBundle\View\ViewData;
 use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
 use Enhavo\Bundle\SliderBundle\Entity\SliderBlock;
 use Enhavo\Bundle\SliderBundle\Factory\SliderBlockFactory;
@@ -11,31 +13,27 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SliderBlockType extends AbstractBlockType
 {
-    public function createViewData(BlockInterface $block, $resource, array $options)
+    /** @var EntityRepository */
+    private $repository;
+
+    public function createViewData(BlockInterface $block, ViewData $viewData, $resource, array $options)
     {
-        $data = parent::createViewData($block, $resource, $options);
-        $data['slides'] = $this->container->get('enhavo_slider.repository.slide')->findAll();
-        return $data;
+        $viewData['slides'] = $this->repository->findAll();
     }
 
     public function configureOptions(OptionsResolver $optionsResolver)
     {
-        parent::configureOptions($optionsResolver);
-
         $optionsResolver->setDefaults([
             'model' => SliderBlock::class,
-            'parent' => SliderBlock::class,
             'form' => SliderBlockFormType::class,
             'factory' => SliderBlockFactory::class,
-            'repository' => 'EnhavoSliderBundle:SliderBlock',
             'template' => 'theme/block/slider.html.twig',
             'label' => 'Slider',
-            'translationDomain' => 'EnhavoSliderBundle',
+            'translation_domain' => 'EnhavoSliderBundle',
             'groups' => ['default', 'content']
         ]);
     }
-
-    public function getType()
+    public static function getName(): ?string
     {
         return 'slider';
     }

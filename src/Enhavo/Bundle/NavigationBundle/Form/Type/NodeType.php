@@ -8,9 +8,8 @@
 
 namespace Enhavo\Bundle\NavigationBundle\Form\Type;
 
-use Enhavo\Bundle\FormBundle\Form\Type\DynamicItemType;
 use Enhavo\Bundle\FormBundle\Form\Type\PositionType;
-use Enhavo\Bundle\NavigationBundle\Entity\Node;
+use Enhavo\Bundle\FormBundle\Form\Type\TypeNameType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -18,9 +17,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class NodeType extends AbstractType
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $class;
 
     /**
@@ -35,47 +32,29 @@ class NodeType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('position', PositionType::class, []);
+        $builder->add('position', PositionType::class);
+        $builder->add('name', TypeNameType::class);
 
         $builder->add('label', TextType::class, [
             'label' => 'node.label.label',
             'translation_domain' => 'EnhavoNavigationBundle',
         ]);
 
-        if($options['configuration_type']) {
-            $builder->add('configuration',  $options['configuration_type'], $options['configuration_type_options']);
-        }
-
-        if($options['content_type']) {
-            $builder->add('content',  $options['content_type'], $options['content_type_options']);
-        }
-
-        if($options['children']) {
-            $builder->add('children', NodesType::class);
-        }
+        $builder->add('subject',  $options['subject_type'], $options['subject_type_options']);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Node::class,
-            'children' => false,
-            'block_name' => 'enhavo_dynamic_item',
-            'item_resolver' => 'enhavo_navigation.resolver.node_resolver',
-            'configuration_type' => null,
-            'configuration_type_options' => [],
-            'content_type' => null,
-            'content_type_options' => [],
+            'data_class' => $this->class,
+            'subject_type_options' => []
         ]);
+
+        $resolver->setRequired('subject_type');
     }
 
     public function getBlockPrefix()
     {
         return 'enhavo_navigation_node';
-    }
-
-    public function getParent()
-    {
-        return DynamicItemType::class;
     }
 }
