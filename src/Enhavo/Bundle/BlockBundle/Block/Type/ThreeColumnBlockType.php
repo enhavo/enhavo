@@ -18,8 +18,6 @@ class ThreeColumnBlockType extends AbstractBlockType
 {
     public function configureOptions(OptionsResolver $optionsResolver)
     {
-        parent::configureOptions($optionsResolver);
-
         $optionsResolver->setDefaults([
             'model' => ThreeColumnBlock::class,
             'form' => ThreeColumnBlockFormType::class,

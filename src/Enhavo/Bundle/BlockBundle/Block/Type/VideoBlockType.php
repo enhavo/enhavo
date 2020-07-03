@@ -18,8 +18,6 @@ class VideoBlockType extends AbstractBlockType
 {
     public function configureOptions(OptionsResolver $optionsResolver)
     {
-        parent::configureOptions($optionsResolver);
-
         $optionsResolver->setDefaults([
             'model' => VideoBlock::class,
             'form' => VideoBlockFormType::class,

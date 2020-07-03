@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\CalendarBundle\Block;
 
 use Doctrine\ORM\EntityRepository;
+use Enhavo\Bundle\AppBundle\View\ViewData;
 use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
 use Enhavo\Bundle\CalendarBundle\Entity\CalendarBlock;
 use Enhavo\Bundle\CalendarBundle\Factory\CalendarBlockFactory;
@@ -24,11 +25,9 @@ class CalendarBlockType extends AbstractBlockType
         $this->repository = $repository;
     }
 
-    public function createViewData(BlockInterface $block, $resource, array $options)
+    public function createViewData(BlockInterface $block, ViewData $viewData, $resource, array $options)
     {
-        $data = parent::createViewData($block, $resource, $options);
-        $data['appointments'] = $this->repository->findAll();
-        return $data;
+        $viewData['appointments'] = $this->repository->findAll();
     }
 
     public function configureOptions(OptionsResolver $optionsResolver)

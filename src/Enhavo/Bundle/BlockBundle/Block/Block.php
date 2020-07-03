@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\BlockBundle\Block;
 
+use Enhavo\Bundle\AppBundle\View\ViewData;
 use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
 use Enhavo\Component\Type\AbstractContainerType;
 
@@ -53,11 +54,23 @@ class Block extends AbstractContainerType
 
     public function createViewData(BlockInterface $block, $resource = null)
     {
-        return $this->type->createViewData($block, $resource, $this->options);
+        $viewData = new ViewData();
+        /** @var BlockTypeInterface $parent */
+        foreach($this->parents as $parent) {
+            $parent->createViewData($block, $viewData, $resource, $this->options);
+        }
+        $this->type->createViewData($block, $viewData, $resource, $this->options);
+        return $viewData->normalize();
     }
 
-    public function finishViewData(BlockInterface $block, array $viewData, $resource = null)
+    public function finishViewData(BlockInterface $block, array $data, $resource = null)
     {
-        return $this->type->finishViewData($block, $viewData, $resource, $this->options);
+        $viewData = new ViewData($data);
+        /** @var BlockTypeInterface $parent */
+        foreach($this->parents as $parent) {
+            $parent->finishViewData($block, $viewData, $resource, $this->options);
+        }
+        $this->type->finishViewData($block, $viewData, $resource, $this->options);
+        return $viewData->normalize();
     }
 }
