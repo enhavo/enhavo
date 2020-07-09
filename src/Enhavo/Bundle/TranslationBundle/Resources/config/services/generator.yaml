@@ -1,23 +1,22 @@
 services:
-    enhavo_translation.auto_generator:
-        class: Enhavo\Bundle\TranslationBundle\AutoGenerator\LocaleAutoGenerator
-        arguments:
-            - '@enhavo_translation.auto_generator.route_generator_collector'
-            - '@enhavo_translation.metadata.repository'
-            - '%enhavo_translation.locales%'
-            - '%enhavo_translation.default_locale%'
-
-    enhavo_translation.auto_generator.route_generator_collector:
-        class: Enhavo\Bundle\AppBundle\Type\TypeCollector
-        arguments:
-            - '@service_container'
-            - 'LocaleAutoGenerator'
-
-    Enhavo\Bundle\TranslationBundle\EventListener\RouteableListener:
-        arguments:
-            - '@enhavo_translation.auto_generator'
-        tags:
-            - { name: kernel.event_subscriber }
+#    Enhavo\Bundle\TranslationBundle\AutoGenerator\LocaleAutoGenerator:
+#        arguments:
+#            - '@enhavo_translation.auto_generator.route_generator_collector'
+#            - '@Enhavo\Component\Metadata\MetadataRepository[Translation]'
+#            - '%enhavo_translation.locales%'
+#            - '%enhavo_translation.default_locale%'
+#
+#    enhavo_translation.auto_generator.route_generator_collector:
+#        class: Enhavo\Bundle\AppBundle\Type\TypeCollector
+#        arguments:
+#            - '@service_container'
+#            - 'LocaleAutoGenerator'
+#
+#    Enhavo\Bundle\TranslationBundle\EventListener\RouteableListener:
+#        arguments:
+#            - '@enhavo_translation.auto_generator'
+#        tags:
+#            - { name: kernel.event_subscriber }
 
     Enhavo\Bundle\TranslationBundle\AutoGenerator\Generator\LocalePrefixGenerator:
         public: true

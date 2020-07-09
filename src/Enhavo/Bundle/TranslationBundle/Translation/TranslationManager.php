@@ -84,13 +84,9 @@ class TranslationManager
         return $this->enabled;
     }
 
-    public function isTranslatable($data, $property = null): bool
+    public function isTranslatable(?object $data, $property = null): bool
     {
         if($data === null) {
-            return false;
-        }
-
-        if(!(is_string($data) || is_object($data))) {
             return false;
         }
 

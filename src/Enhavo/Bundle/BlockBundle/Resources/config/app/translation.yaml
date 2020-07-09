@@ -1,15 +1,13 @@
 enhavo_translation:
     metadata:
-        Enhavo\Bundle\BlockBundle\Model\Block\BlockquoteTextBlock:
+        Enhavo\Bundle\BlockBundle\Model\Block\BlockquoteBlock:
             properties:
-                blockquote:
+                text:
                     type: text
 
         Enhavo\Bundle\BlockBundle\Model\Block\GalleryBlock:
             properties:
                 title:
-                    type: text
-                text:
                     type: text
 
         Enhavo\Bundle\BlockBundle\Model\Block\PictureBlock:

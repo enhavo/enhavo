@@ -8,9 +8,9 @@
 
 namespace Enhavo\Bundle\TranslationBundle\AutoGenerator;
 
-use Enhavo\Bundle\AppBundle\Metadata\MetadataRepository;
 use Enhavo\Bundle\AppBundle\Type\CollectorInterface;
 use Enhavo\Bundle\TranslationBundle\Metadata\Metadata;
+use Enhavo\Component\Metadata\MetadataRepository;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class LocaleAutoGenerator
