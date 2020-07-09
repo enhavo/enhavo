@@ -12,16 +12,9 @@ namespace Enhavo\Bundle\AppBundle\Action\Type;
 use Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType;
 use Enhavo\Bundle\AppBundle\Action\ActionTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Contracts\Translation\TranslatorInterface;
-use Symfony\Component\Routing\RouterInterface;
 
 class PreviewActionType extends AbstractUrlActionType implements ActionTypeInterface
 {
-    public function __construct(TranslatorInterface $translator, RouterInterface $router)
-    {
-        parent::__construct($translator, $this->router);
-    }
-
     public function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);

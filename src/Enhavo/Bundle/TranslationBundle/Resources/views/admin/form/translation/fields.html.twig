@@ -1,4 +1,4 @@
-{% block enhavo_translation_tranlsation_widget %}
+{% block enhavo_translation_translation_widget %}
     <div data-translation-type="{{ translation_locales|json_encode|e }}" class="translation">
         {% for locale,child in form.children %}
             <div data-translation-widget="{{ locale }}" {% if loop.index0 != 0 %}style="display: none"{% endif %}>

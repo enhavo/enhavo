@@ -1,7 +1,6 @@
 services:
     Enhavo\Bundle\TranslationBundle\Form\Type\TranslationType:
         arguments:
-            - '@form.factory'
             - '@enhavo_translation.translation.manager'
         tags:
             - { name: form.type }
