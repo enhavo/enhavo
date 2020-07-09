@@ -65,3 +65,9 @@ services:
             - '@enhavo_routing.factory.route'
             - '@enhavo_media.factory.file'
 
+    Enhavo\Bundle\ArticleBundle\Provider\TotalProvider:
+        public: true
+        arguments:
+            - '@enhavo_article.repository.article'
+        tags:
+            - { name: enhavo.provider, alias: article.total }
