@@ -86,3 +86,13 @@ services:
     Enhavo\Bundle\AppBundle\Controller\ArgumentResolver:
         arguments:
             - '@argument_metadata_factory'
+
+    enhavo_app.provider_collector:
+        class: Enhavo\Bundle\AppBundle\Type\TypeCollector
+        arguments:
+            - '@service_container'
+            - 'Provider'
+
+    Enhavo\Bundle\AppBundle\Provider\ProviderManager:
+        arguments:
+            - '@enhavo_app.provider_collector'

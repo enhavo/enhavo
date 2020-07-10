@@ -8,24 +8,28 @@
 
 namespace Enhavo\Bundle\DashboardBundle\Viewer;
 
-use Enhavo\Bundle\AppBundle\Action\ActionManager;
-use Enhavo\Bundle\AppBundle\Viewer\AbstractActionViewer;
+use Enhavo\Bundle\AppBundle\Viewer\AbstractViewer;
+use Enhavo\Bundle\DashboardBundle\Widget\WidgetManager;
 use FOS\RestBundle\View\View;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class DashboardViewer extends AbstractActionViewer
+class DashboardViewer extends AbstractViewer
 {
     use ContainerAwareTrait;
 
     /**
-     * ImageCropperViewer constructor.
-     * @param ActionManager $actionManager
+     * @var WidgetManager
      */
-    public function __construct(
-        ActionManager $actionManager
-    ) {
-        parent::__construct($actionManager);
+    private $widgetManager;
+
+    /**
+     * constructor
+     * @param WidgetManager $widgetManager
+     */
+    public function __construct(WidgetManager $widgetManager)
+    {
+        $this->widgetManager = $widgetManager;
     }
 
     public function getType()
@@ -39,8 +43,11 @@ class DashboardViewer extends AbstractActionViewer
     public function createView($options = []): View
     {
         $view = parent::createView($options);
+
         $templateVars = $view->getTemplateData();
+        $templateVars['data']['widgets'] = $this->widgetManager->createViewData();
         $view->setTemplateData($templateVars);
+
         return $view;
     }
 
@@ -55,7 +62,8 @@ class DashboardViewer extends AbstractActionViewer
                 'enhavo/dashboard'
             ],
             'label' => 'dashboard.label.dashboard',
-            'translation_domain' => 'EnhavoDashboardBundle'
+            'translation_domain' => 'EnhavoDashboardBundle',
+            'data' => null
         ]);
     }
 }
