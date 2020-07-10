@@ -8,62 +8,25 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Translation;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Enhavo\Component\Type\AbstractContainerType;
 
-class Translation
+class Translation extends AbstractContainerType
 {
-    /**
-     * @var TranslationTypeInterface
-     */
-    private $type;
+    /** @var TranslationTypeInterface */
+    protected $type;
 
-    /**
-     * @var array
-     */
-    private $options;
-
-    /**
-     * @var mixed
-     */
-    private $data;
-
-    /**
-     * @var string
-     */
-    private $property;
-
-    public function __construct(TranslationTypeInterface $type, $options, $data, $property)
+    public function getTranslation($data, $property, $locale)
     {
-        $this->type = $type;
-        $resolver = new OptionsResolver();
-        $this->type->configureOptions($resolver);
-        $this->options = $resolver->resolve($options);
-        $this->data = $data;
-        $this->property = $property;
+        return $this->type->getTranslation($this->options, $data, $property, $locale);
     }
 
-    public function getData()
+    public function setTranslation($data, $property, $locale, $value)
     {
-        return $this->data;
+        return $this->type->setTranslation($this->options, $data, $property, $locale, $value);
     }
 
-    public function getProperty()
+    public function getValidationConstraints($data, $property, $locale)
     {
-        return $this->property;
-    }
-
-    public function getTranslation($locale)
-    {
-        return $this->type->getTranslation($this->options, $this->data, $this->property, $locale);
-    }
-
-    public function setTranslation($locale, $value)
-    {
-        return $this->type->setTranslation($this->options, $this->data, $this->property, $locale, $value);
-    }
-
-    public function getValidationConstraints($locale)
-    {
-        return $this->type->getValidationConstraints($this->options, $this->data, $this->property, $locale);
+        return $this->type->getValidationConstraints($this->options, $data, $property, $locale);
     }
 }

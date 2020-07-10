@@ -15,9 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SlugTranslationType extends AbstractTranslationType
 {
-    /**
-     * @var SlugTranslator
-     */
+    /** @var SlugTranslator */
     private $slugTranslator;
 
     /**
@@ -48,7 +46,7 @@ class SlugTranslationType extends AbstractTranslationType
         ]);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'slug';
     }

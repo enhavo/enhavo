@@ -1,19 +1,19 @@
 services:
     Enhavo\Bundle\TranslationBundle\Form\Type\TranslationType:
         arguments:
-            - '@enhavo_translation.translation.manager'
+            - '@Enhavo\Bundle\TranslationBundle\Translation\TranslationManager'
         tags:
             - { name: form.type }
 
     Enhavo\Bundle\TranslationBundle\Form\Extension\TranslationExtension:
         arguments:
-            - '@enhavo_translation.translation.manager'
+            - '@Enhavo\Bundle\TranslationBundle\Translation\TranslationManager'
         tags:
             - { name: form.type_extension }
 
     Enhavo\Bundle\TranslationBundle\Validator\Constraints\TranslationValidator:
         arguments:
-            - '@enhavo_translation.translation.manager'
+            - '@Enhavo\Bundle\TranslationBundle\Translation\TranslationManager'
             - '@validator'
         tags:
             - { name: validator.constraint_validator }

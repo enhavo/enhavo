@@ -12,58 +12,41 @@ use Enhavo\Bundle\AppBundle\Exception\TypeMissingException;
 use Enhavo\Bundle\AppBundle\Type\TypeCollector;
 use Enhavo\Bundle\TranslationBundle\Metadata\Metadata;
 use Enhavo\Component\Metadata\MetadataRepository;
+use Enhavo\Component\Type\FactoryInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class TranslationManager
 {
-    /**
-     * @var MetadataRepository
-     */
+    /** @var MetadataRepository */
     private $metadataRepository;
 
-    /**
-     * @var TypeCollector
-     */
-    private $collector;
+    /** @var FactoryInterface */
+    private $factory;
 
-    /**
-     * @var string[]
-     */
+    /** @var string[] */
     private $locales;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $defaultLocale;
 
-    /**
-     * @var boolean
-     */
+    /** @var boolean */
     private $enabled;
 
-    /**
-     * @var RequestStack
-     */
+    /** @var RequestStack */
     private $translationPaths;
 
-    /**
-     * @var RequestStack
-     */
+    /** @var RequestStack */
     private $requestStack;
 
-    /**
-     * @var boolean|null
-     */
+    /** @var boolean|null */
     private $cachedTranslation = null;
 
-    /**
-     * @var Translation[]
-     */
-    private $types = [];
+    /** @var Translation[] */
+    private $translation = [];
 
     public function __construct(
         MetadataRepository $metadataRepository,
-        TypeCollector $collector,
+        FactoryInterface $factory,
         $locales,
         $defaultLocale,
         $enabled,
@@ -71,7 +54,7 @@ class TranslationManager
         RequestStack $requestStack
     ) {
         $this->metadataRepository = $metadataRepository;
-        $this->collector = $collector;
+        $this->factory = $factory;
         $this->locales = $locales;
         $this->defaultLocale = $defaultLocale;
         $this->enabled = $enabled;
@@ -134,57 +117,37 @@ class TranslationManager
 
     public function getValidationConstraints($data, $property, $locale)
     {
-        $type = $this->getType($data, $property);
-        return $type->getValidationConstraints($locale);
+        return $this->getTranslation($data, $property)->getValidationConstraints($data, $property, $locale);
     }
 
     public function getTranslations($data, $property)
     {
-        $translations = [];
-        $type = $this->getType($data, $property);
+        $translationValues = [];
+        $translation = $this->getTranslation($data, $property);
         foreach($this->locales as $locale) {
             if($locale == $this->getDefaultLocale()) {
                 continue;
             }
-            $translations[$locale] = $type->getTranslation($locale);
+            $translationValues[$locale] = $translation->getTranslation($data, $property, $locale);
         }
-        return $translations;
+        return $translationValues;
     }
 
     public function setTranslation($data, $property, $locale, $value)
     {
-        $type = $this->getType($data, $property);
-        $type->setTranslation($locale, $value);
+        $this->getTranslation($data, $property)->setTranslation($data, $property, $locale, $value);
     }
 
-    private function getType($data, $property)
-    {
-        foreach($this->types as $type) {
-            if($type->getData() === $data && $type->getProperty() === $property) {
-                return $type;
-            }
-        }
-
-        $type = $this->createType($data, $property);
-        $this->types[] = $type;
-        return $type;
-    }
-
-    private function createType($data, $property)
+    private function getTranslation($data, $propertyData)
     {
         /** @var Metadata $metadata */
         $metadata = $this->metadataRepository->getMetadata($data);
+        $property = $metadata->getProperty($propertyData);
 
-        $options = $metadata->getProperty($property)->getOptions();
-        $type = $metadata->getProperty($property)->getType();
-
-        if(empty($type)) {
-            throw new TypeMissingException(sprintf('No type was given to create "%s"', Translation::class));
+        if (!isset($this->translation[$property->getType()])) {
+            $this->translation[$property->getType()] = $this->factory->create(array_merge(['type' => $property->getType()], $property->getOptions()));
         }
 
-        /** @var TranslationTypeInterface $translationType */
-        $translationType = $this->collector->getType($type);
-        $type = new Translation($translationType, $options, $data, $property);
-        return $type;
+        return $this->translation[$property->getType()];
     }
 }

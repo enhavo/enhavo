@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\TranslationBundle;
 
 use Enhavo\Bundle\AppBundle\Type\TypeCompilerPass;
+use Enhavo\Bundle\TranslationBundle\Translation\Translation;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -11,7 +12,7 @@ class EnhavoTranslationBundle extends Bundle
     public function build(ContainerBuilder $container)
     {
         $container->addCompilerPass(
-            new TypeCompilerPass('enhavo_translation.translation_collector', 'enhavo.translation')
+            new \Enhavo\Component\Type\TypeCompilerPass('Translation', 'enhavo_translation.translation', Translation::class)
         );
 
         $container->addCompilerPass(

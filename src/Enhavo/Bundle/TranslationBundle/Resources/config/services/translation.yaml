@@ -1,38 +1,32 @@
 services:
-    enhavo_translation.translation.manager:
-        class: Enhavo\Bundle\TranslationBundle\Translation\TranslationManager
+    Enhavo\Bundle\TranslationBundle\Translation\TranslationManager:
         arguments:
             - '@Enhavo\Component\Metadata\MetadataRepository[Translation]'
-            - '@enhavo_translation.translation_collector'
+            - '@Enhavo\Component\Type\FactoryInterface[Translation]'
             - '%enhavo_translation.locales%'
             - '%enhavo_translation.default_locale%'
             - '%enhavo_translation.enable%'
             - '%enhavo_translation.translation_paths%'
             - '@Symfony\Component\HttpFoundation\RequestStack'
 
-    enhavo_translation.translation_collector:
-        class: Enhavo\Bundle\AppBundle\Type\TypeCollector
-        arguments:
-            - '@service_container'
-            - 'Translation'
-
     Enhavo\Bundle\TranslationBundle\Translation\Type\TextTranslationType:
-        public: true
         arguments:
             - '@enhavo_translation.text.translator'
         tags:
-            - { name: enhavo.translation, alias: text }
+            - { name: enhavo_translation.translation }
 
     Enhavo\Bundle\TranslationBundle\Translation\Type\RouteTranslationType:
-        public: true
         arguments:
             - '@enhavo_translation.route.translator'
         tags:
-            - { name: enhavo.translation, alias: route }
+            - { name: enhavo_translation.translation }
 
     Enhavo\Bundle\TranslationBundle\Translation\Type\SlugTranslationType:
-        public: true
         arguments:
             - '@enhavo_translation.slug.translator'
         tags:
-            - { name: enhavo.translation, alias: slug }
+            - { name: enhavo_translation.translation }
+
+    Enhavo\Bundle\TranslationBundle\Translation\Type\TranslationType:
+        tags:
+            - { name: enhavo_translation.translation }

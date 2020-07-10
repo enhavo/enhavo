@@ -8,16 +8,13 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Translation\Type;
 
-use Enhavo\Bundle\RoutingBundle\Form\Type\RouteType;
 use Enhavo\Bundle\TranslationBundle\Translation\AbstractTranslationType;
 use Enhavo\Bundle\TranslationBundle\Translator\Route\RouteTranslator;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class RouteTranslationType extends AbstractTranslationType
 {
-    /**
-     * @var RouteTranslator
-     */
+    /** @var RouteTranslator */
     private $routeTranslator;
 
     /**
@@ -41,14 +38,12 @@ class RouteTranslationType extends AbstractTranslationType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        parent::configureOptions($resolver);
         $resolver->setDefaults([
-            'constraints' => [],
             'generators' => []
         ]);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'route';
     }
