@@ -33,6 +33,12 @@ class TranslationValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint)
     {
         $property = $this->context->getObject()->getName();
+        $parent = $this->context->getObject()->getParent();
+
+        if($parent === null) {
+            return;
+        }
+
         $data = $this->context->getObject()->getParent()->getData();
 
         $translations = $this->translationManager->getTranslations($data, $property);
