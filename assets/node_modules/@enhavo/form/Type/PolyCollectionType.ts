@@ -105,6 +105,20 @@ export default class PolyCollectionType extends FormType
         return this.prototypes;
     }
 
+    public getEntries(): Prototype[]
+    {
+        let entries = [];
+        for (let key of this.config.entryKeys) {
+            for (let prototype of this.getPrototypes()) {
+                if(key === prototype.getParameter('key')) {
+                    entries.push(prototype);
+                    break;
+                }
+            }
+        }
+        return entries;
+    }
+
     public collapseAll()
     {
         this.$element.children('[data-poly-collection-action]').children('[data-poly-collection-action-collapse-all]').hide();
