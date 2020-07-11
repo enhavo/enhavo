@@ -13,6 +13,7 @@ use Enhavo\Bundle\BlockBundle\Block\BlockManager;
 use Enhavo\Bundle\BlockBundle\Entity\Node;
 use Enhavo\Bundle\FormBundle\Form\Type\PolyCollectionType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BlockCollectionType extends AbstractType
@@ -42,6 +43,41 @@ class BlockCollectionType extends AbstractType
             'items' => [],
             'prototype_storage' => 'enhavo_block'
         ]);
+
+        $resolver->setNormalizer('entry_type_filter', function (Options $options, $value)
+        {
+            if($value !== null) {
+                return $value;
+            }
+
+            if(count($options['item_groups']) === 0 && count($options['items']) === 0) {
+                return null;
+            }
+
+            $keys = [];
+            if(count($options['item_groups']) > 0) {
+                foreach ($this->blockManager->getBlocks() as $key => $block) {
+                    foreach ($block->getGroups() as $group) {
+                        if(in_array($group, $options['item_groups'])) {
+                            $keys[] = $key;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if(count($options['items']) > 0) {
+                foreach ($this->blockManager->getBlocks() as $key => $block) {
+                    if(in_array($key, $options['items'])) {
+                        $keys[] = $key;
+                    }
+                }
+            }
+
+            return function() use ($keys) {
+                return $keys;
+            };
+        });
     }
 
     private function getEntryTypes()

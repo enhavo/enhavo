@@ -241,6 +241,25 @@ class PolyCollectionTypeTest extends TypeTestCase
             ]],
         ], $form->getData());
     }
+
+    public function testFilter()
+    {
+        $form = $this->factory->create(PolyCollectionType::class, null, [
+            'entry_types' => [
+                'nested' => NestedType::class,
+                'first' => FirstType::class,
+                'second' => SecondType::class
+            ],
+            'allow_add' => true,
+            'allow_delete' => true,
+            'entry_type_filter' => function($keys) {
+                return ['nested'];
+            }
+        ]);
+
+        $view = $form->createView();
+        $this->assertEquals(['nested'], $view->vars['poly_collection_config']['entryKeys']);
+    }
 }
 
 class FirstType extends AbstractType
@@ -264,7 +283,7 @@ class NestedType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('children', PolyCollectionType::class, [
-            'entry_types' => ['nested' => NestedType::class, 'first' => FirstType::class, 'second' => Second::class],
+            'entry_types' => ['nested' => NestedType::class, 'first' => FirstType::class, 'second' => SecondType::class],
             'allow_add' => true,
             'allow_delete' => true,
             'prototype' => false,

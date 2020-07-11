@@ -23,7 +23,7 @@ export default class PolyCollectionMenu
         let $container = this.$element.find('[data-poly-collection-menu-container]');
         let template = $container.data('poly-collection-menu-container');
 
-        for (let prototype of this.polyCollection.getPrototypes()) {
+        for (let prototype of this.polyCollection.getEntries()) {
             let menuItem = template.replace('__key__', prototype.getParameter('key'));
             menuItem = menuItem.replace('__label__', prototype.getLabel());
             $container.append(menuItem);
