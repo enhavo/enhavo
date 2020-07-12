@@ -37,15 +37,6 @@ class SlugTranslationType extends AbstractTranslationType
         return $this->slugTranslator->getTranslation($data, $property, $locale);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        parent::configureOptions($resolver);
-        $resolver->setDefaults([
-            'form_type' => TextType::class,
-            'generators' => []
-        ]);
-    }
-
     public static function getName(): ?string
     {
         return 'slug';
