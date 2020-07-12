@@ -14,6 +14,7 @@ use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -106,6 +107,33 @@ class TranslationTypeTest extends TypeTestCase
         ]);
 
         $this->assertEquals('Hello', $form->getData()->getText());
+    }
+
+    public function testView()
+    {
+        $this->translationManager->method('getLocales')->willReturn(['en', 'de']);
+        $this->translationManager->method('getDefaultLocale')->willReturn('en');
+        $this->translationManager->method('getTranslations')->willReturnCallback(function($data, $property) {
+            return ['de' => ''];
+        });
+
+        $form = $this->factory->create(TranslationType::class, null, [
+            'form_options' => [],
+            'form_type' => TextType::class,
+            'translation_data' => new MockTranslationModel,
+            'translation_property' => 'text'
+        ]);
+
+        $form->addError(new FormError('(de) Error'));
+        $form->addError(new FormError('Normal Error'));
+
+        $view = $form->createView();
+
+        $this->assertEquals(['en', 'de'], $view->vars['translation_locales']);
+        $this->assertCount(2, $view->vars['errors']);
+        $this->assertEquals('(de) Error', $view->vars['errors'][0]->getMessage());
+        $this->assertEquals('(en) Normal Error', $view->vars['errors'][1]->getMessage());
+        $this->assertTrue(in_array('enhavo_translation_translation', $view->vars['block_prefixes']));
     }
 }
 

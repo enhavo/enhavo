@@ -36,13 +36,6 @@ class RouteTranslationType extends AbstractTranslationType
         return $this->routeTranslator->getTranslation($data, $property, $locale);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults([
-            'generators' => []
-        ]);
-    }
-
     public static function getName(): ?string
     {
         return 'route';
