@@ -1,0 +1,49 @@
+services:
+    Bundle\MultiTenancyBundle\EventListener\MultiTenancyListener:
+        class: Bundle\MultiTenancyBundle\EventListener\MultiTenancyListener
+        arguments:
+            - '@Bundle\MultiTenancyBundle\Resolver\MultiTenancyResolver'
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
+    Bundle\MultiTenancyBundle\EventListener\MultiTenancyAwareSubscriber:
+        class: Bundle\MultiTenancyBundle\EventListener\MultiTenancyAwareSubscriber
+        arguments:
+            - '@Bundle\MultiTenancyBundle\Resolver\MultiTenancyResolver'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    Bundle\MultiTenancyBundle\Factory\ConfigurationFactory:
+        class: Bundle\MultiTenancyBundle\Factory\ConfigurationFactory
+
+    Bundle\MultiTenancyBundle\MultiTenancy\MultiTenancyManager:
+        class: Bundle\MultiTenancyBundle\Manager\MultiTenancyManager
+        arguments:
+            - '@service_container'
+            - '%multiTenancy.configuration%'
+
+    Bundle\MultiTenancyBundle\Resolver\MultiTenancyResolver:
+        class: Bundle\MultiTenancyBundle\Resolver\MultiTenancyResolver
+        arguments:
+            - '@Bundle\MultiTenancyBundle\MultiTenancy\MultiTenancyManager'
+
+
+    Bundle\MultiTenancyBundle\Resolver\MultiTenancyConditionResolver:
+        class: Bundle\MultiTenancyBundle\Resolver\MultiTenancyConditionResolver
+        arguments:
+            - '@Bundle\MultiTenancyBundle\Resolver\MultiTenancyResolver'
+            - '@request_stack'
+
+    Bundle\MultiTenancyBundle\Resolver\MultiTenancyResolverExpressionLanguageProvider:
+        class: Bundle\MultiTenancyBundle\Resolver\MultiTenancyResolverExpressionLanguageProvider
+        arguments:
+            - '@Bundle\MultiTenancyBundle\Resolver\MultiTenancyResolver'
+
+    Bundle\MultiTenancyBundle\Twig\MultiTenancyExtension:
+        class: Bundle\MultiTenancyBundle\Twig\MultiTenancyExtension
+        arguments:
+            - '@Bundle\MultiTenancyBundle\Resolver\MultiTenancyResolver'
+        tags:
+            - { name: twig.extension }
+        calls:
+            - [ setContainer, ['@service_container']]

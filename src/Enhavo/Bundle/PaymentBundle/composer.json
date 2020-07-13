@@ -1,0 +1,21 @@
+{
+  "name": "enhavo/payment-bundle",
+  "type": "library",
+  "description": "EnhavoPaymentBundle",
+  "keywords": ["framework"],
+  "homepage": "https://enhavo.com",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Gerhard Seidel",
+      "email": "gseidel@xq-web.de"
+    }
+  ],
+  "autoload": {
+    "psr-4": { "Enhavo\\Bundle\\PaymentBundle\\": "" }
+  },
+  "require": {
+    "php": "^7.2",
+    "enhavo/app-bundle": "dev-master"
+  }
+}
