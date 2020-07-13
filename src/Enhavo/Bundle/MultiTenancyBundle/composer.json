@@ -1,0 +1,21 @@
+{
+  "name": "enhavo/multi-tenancy-bundle",
+  "type": "library",
+  "description": "EnhavoMultiTenancyBundle",
+  "keywords": ["framework"],
+  "homepage": "https://enhavo.com",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Gerhard Seidel",
+      "email": "gseidel@xq-web.de"
+    }
+  ],
+  "autoload": {
+    "psr-4": { "Enhavo\\Bundle\\MultiTenancyBundle\\": "" }
+  },
+  "require": {
+    "php": "^7.2",
+    "enhavo/app-bundle": "dev-master"
+  }
+}
