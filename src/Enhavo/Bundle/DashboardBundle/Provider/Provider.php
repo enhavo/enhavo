@@ -13,8 +13,8 @@ class Provider extends AbstractContainerType
      */
     protected $type;
 
-    public function getData($options)
+    public function getData()
     {
-        return $this->type->getData($options);
+        return $this->type->getData($this->options);
     }
 }

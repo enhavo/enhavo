@@ -32,7 +32,7 @@ class NumberWidgetType extends AbstractWidgetType
     public function createViewData(array $options, ViewData $data, ResourceInterface $resource = null)
     {
         $provider = $this->factory->create($options['provider']);
-        $data['value'] = $provider->getData($options['provider']);
+        $data['value'] = $provider->getData();
     }
 
     public static function getName(): ?string
