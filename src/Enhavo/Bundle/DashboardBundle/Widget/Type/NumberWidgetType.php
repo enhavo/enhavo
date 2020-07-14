@@ -4,36 +4,35 @@
 namespace Enhavo\Bundle\DashboardBundle\Widget\Type;
 
 
-use Enhavo\Bundle\AppBundle\Provider\ProviderInterface;
-use Enhavo\Bundle\AppBundle\Provider\ProviderManager;
+use Enhavo\Bundle\DashboardBundle\Provider\ProviderTypeInterface;
+use Enhavo\Bundle\DashboardBundle\Provider\ProviderManager;
 use Enhavo\Bundle\AppBundle\View\ViewData;
+use Enhavo\Bundle\DashboardBundle\Provider\Type\DashboardProviderType;
 use Enhavo\Bundle\DashboardBundle\Widget\AbstractWidgetType;
+use Enhavo\Component\Type\FactoryInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class NumberWidgetType extends AbstractWidgetType
 {
     /**
-     * @var ProviderManager
+     * @var FactoryInterface
      */
-    private $providerManager;
+    private $factory;
 
-    public function __construct(ProviderManager $providerManager)
+    /**
+     * NumberWidgetType constructor.
+     * @param FactoryInterface $factory
+     */
+    public function __construct(FactoryInterface $factory)
     {
-        $this->providerManager = $providerManager;
+        $this->factory = $factory;
     }
 
     public function createViewData(array $options, ViewData $data, ResourceInterface $resource = null)
     {
-        $providerOptions = $options['provider'];
-        $data['value'] = $this->get($providerOptions['type'], $providerOptions['key']);
-    }
-
-    public function get($type, $key)
-    {
-        /** @var ProviderInterface $provider */
-        $provider = $this->providerManager->getProvider($type, $key);
-        return $provider->get();
+        $provider = $this->factory->create($options['provider']);
+        $data['value'] = $provider->getData();
     }
 
     public static function getName(): ?string
