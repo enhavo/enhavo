@@ -9,7 +9,6 @@
 namespace Enhavo\Bundle\DashboardBundle\Widget;
 
 
-use Enhavo\Bundle\DashboardBundle\Provider\ProviderTypeInterface;
 use Enhavo\Component\Type\FactoryInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
