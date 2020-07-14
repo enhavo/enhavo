@@ -22,7 +22,7 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->arrayNode('dashboard')
+                ->arrayNode('widgets')
                     ->useAttributeAsKey('name')
                     ->arrayPrototype()
                         ->children()
@@ -30,8 +30,9 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('label')->end()
                             ->arrayNode('provider')
                                 ->children()
-                                    ->scalarNode('type')->end()
-                                    ->scalarNode('key')->end()
+                                    ->scalarNode('type')->isRequired()->end()
+                                    ->scalarNode('repository')->end()
+                                    ->scalarNode('method')->end()
                                 ->end()
                             ->end()
                         ->end()

@@ -9,9 +9,8 @@
 namespace Enhavo\Bundle\DashboardBundle\Widget;
 
 
-use Enhavo\Bundle\DashboardBundle\Widget\Widget;
+use Enhavo\Bundle\DashboardBundle\Provider\ProviderTypeInterface;
 use Enhavo\Component\Type\FactoryInterface;
-use Sylius\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class WidgetManager
@@ -31,8 +30,9 @@ class WidgetManager
      */
     private $configuration;
 
+
     /**
-     * ActionManager constructor.
+     * WidgetManager constructor.
      * @param FactoryInterface $factory
      * @param AuthorizationCheckerInterface $checker
      * @param array $configuration
@@ -49,6 +49,7 @@ class WidgetManager
         $data = [];
         $dashboardWidgets = $this->getDashboardWidgets($this->configuration);
         foreach($dashboardWidgets as $dashboardWidget) {
+            /** @var ProviderTypeInterface $provider */
             $data[] = $dashboardWidget->createViewData();
         }
         return $data;
@@ -56,7 +57,6 @@ class WidgetManager
 
     /**
      * @param array $configuration
-     * @param ResourceInterface $resource
      * @return Widget[]
      */
     public function getDashboardWidgets(array $configuration)

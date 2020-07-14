@@ -39,11 +39,11 @@ services:
         arguments:
             - '@Enhavo\Component\Type\FactoryInterface[DashboardWidget]'
             - '@security.authorization_checker'
-            - '%enhavo_dashboard.dashboard%'
+            - '%enhavo_dashboard.widgets%'
 
     Enhavo\Bundle\DashboardBundle\Widget\Type\NumberWidgetType:
         arguments:
-            - '@Enhavo\Bundle\AppBundle\Provider\ProviderManager'
+            - '@Enhavo\Component\Type\FactoryInterface[DashboardProvider]'
         tags:
             - { name: enhavo_dashboard.widget }
 
@@ -51,4 +51,18 @@ services:
         arguments:
             - '@translator'
         tags:
-            - { name: enhavo_dashboard.widget}
+            - { name: enhavo_dashboard.widget }
+
+    Enhavo\Bundle\DashboardBundle\Provider\Type\DashboardProviderType:
+        arguments:
+            - '@service_container'
+        tags:
+            - { name: enhavo_dashboard.provider }
+
+    Enhavo\Bundle\DashboardBundle\Provider\Type\TotalDashboardProviderType:
+        tags:
+            - { name: enhavo_dashboard.provider }
+
+    Enhavo\Bundle\DashboardBundle\Provider\Type\RepositoryDashboardProviderType:
+        tags:
+            - { name: enhavo_dashboard.provider }

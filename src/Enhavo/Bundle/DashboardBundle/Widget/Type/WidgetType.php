@@ -52,7 +52,9 @@ class WidgetType extends AbstractType implements WidgetTypeInterface
             'permission' => null,
         ]);
 
-        $resolver->setRequired('component');
+        $resolver->setRequired([
+            'component'
+        ]);
     }
 
     public function createViewData(array $options, ViewData $data, ResourceInterface $resource = null)
