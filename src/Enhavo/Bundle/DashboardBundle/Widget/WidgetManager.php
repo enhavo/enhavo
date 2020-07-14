@@ -49,7 +49,6 @@ class WidgetManager
         $data = [];
         $dashboardWidgets = $this->getDashboardWidgets($this->configuration);
         foreach($dashboardWidgets as $dashboardWidget) {
-            /** @var ProviderTypeInterface $provider */
             $data[] = $dashboardWidget->createViewData();
         }
         return $data;
