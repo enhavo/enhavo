@@ -57,7 +57,7 @@ class WidgetManager
      * @param array $configuration
      * @return Widget[]
      */
-    public function getDashboardWidgets(array $configuration)
+    private function getDashboardWidgets(array $configuration)
     {
         $dashboardWidgets = [];
         foreach($configuration as $name => $options) {
