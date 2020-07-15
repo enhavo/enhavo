@@ -12,6 +12,20 @@ use PHPUnit\Framework\TestCase;
 
 class WidgetTest extends TestCase
 {
+    public function testCreateViewData()
+    {
+        $dependencies = $this->createDependencies();
+        $dependencies->type = $this->createTypeMock(false, 'ROLE_TEST');
+        $dependencies->parents = $this->createParents();
+        $widget = $this->createInstance($dependencies);
+        $viewData = $widget->createViewData();
+
+        $this->assertEquals([
+            'parentKey' => 'parentData',
+            'key' => 'data'
+        ], $viewData);
+    }
+
     public function testIsHiddenIsFromType()
     {
         $dependencies = $this->createDependencies();
@@ -33,20 +47,6 @@ class WidgetTest extends TestCase
         $widget = $this->createInstance($dependencies);
 
         $this->assertEquals('ROLE_TEST', $widget->getPermission());
-    }
-
-    public function testCreateViewData()
-    {
-        $dependencies = $this->createDependencies();
-        $dependencies->type = $this->createTypeMock(false, 'ROLE_TEST');
-        $dependencies->parents = $this->createParents();
-        $widget = $this->createInstance($dependencies);
-        $viewData = $widget->createViewData();
-
-        $this->assertEquals([
-            'parentKey' => 'parentData',
-            'key' => 'data'
-        ], $viewData);
     }
 
     private function createParents()

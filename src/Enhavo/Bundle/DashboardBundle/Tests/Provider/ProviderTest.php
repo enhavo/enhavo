@@ -11,16 +11,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProviderTest extends TestCase
 {
-    private $data = 'DATA678';
-
     public function testGetDataReturnsTypeGetData()
     {
         $typeMock = $this->createTypeMock();
-        $typeMock->method('getData')->willReturn($this->data);
+        $typeMock->method('getData')->willReturn('DATA678');
 
         $provider = new Provider($typeMock, [], []);
 
-        $this->assertEquals($this->data, $provider->getData());
+        $this->assertEquals('DATA678', $provider->getData());
     }
 
     /**

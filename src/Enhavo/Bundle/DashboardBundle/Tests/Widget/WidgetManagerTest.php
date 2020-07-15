@@ -111,7 +111,7 @@ class WidgetManagerTest extends TestCase
     private function createWidgetMock(bool $hidden = false, string $role = 'ROLE_TEST', int $value = 0)
     {
         /** @var \PHPUnit_Framework_MockObject_MockObject $mock */
-        $mock = $this->getMockBuilder(Widget::class)->disableOriginalConstructor()->getMock();
+        $mock = $this->createMock(Widget::class);
         $mock->method('isHidden')->willReturn($hidden);
         $mock->method('getPermission')->willReturn($role);
         $mock->method('createViewData')->willReturn([
