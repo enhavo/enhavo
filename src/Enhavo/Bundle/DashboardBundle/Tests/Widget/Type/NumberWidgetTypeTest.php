@@ -5,7 +5,7 @@ namespace Enhavo\Bundle\DashboardBundle\Tests\Widget\Type;
 
 
 use Enhavo\Bundle\AppBundle\View\ViewData;
-use Enhavo\Bundle\DashboardBundle\Provider\ProviderInterface;
+use Enhavo\Bundle\DashboardBundle\Provider\Provider;
 use Enhavo\Bundle\DashboardBundle\Widget\Type\NumberWidgetType;
 use Enhavo\Bundle\DashboardBundle\Widget\Widget;
 use Enhavo\Component\Type\FactoryInterface;
@@ -65,7 +65,7 @@ class NumberWidgetTypeTest extends TestCase
     private function createProviderMock($data = 0)
     {
         /** @var \PHPUnit_Framework_MockObject_MockObject $mock */
-        $mock = $this->getMockBuilder(ProviderInterface::class)->disableOriginalConstructor()->getMock();
+        $mock = $this->createMock(Provider::class);
         $mock->method('getData')->willReturn($data);
         return $mock;
     }
