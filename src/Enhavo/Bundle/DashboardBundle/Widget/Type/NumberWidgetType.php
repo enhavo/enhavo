@@ -4,10 +4,7 @@
 namespace Enhavo\Bundle\DashboardBundle\Widget\Type;
 
 
-use Enhavo\Bundle\DashboardBundle\Provider\ProviderTypeInterface;
-use Enhavo\Bundle\DashboardBundle\Provider\ProviderManager;
 use Enhavo\Bundle\AppBundle\View\ViewData;
-use Enhavo\Bundle\DashboardBundle\Provider\Type\DashboardProviderType;
 use Enhavo\Bundle\DashboardBundle\Widget\AbstractWidgetType;
 use Enhavo\Component\Type\FactoryInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
