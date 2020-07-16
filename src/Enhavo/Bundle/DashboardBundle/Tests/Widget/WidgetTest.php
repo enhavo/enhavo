@@ -16,7 +16,10 @@ class WidgetTest extends TestCase
     {
         $dependencies = $this->createDependencies();
         $dependencies->type = $this->createTypeMock(false, 'ROLE_TEST');
-        $dependencies->parents = $this->createParents();
+        $dependencies->parents = [
+            $this->createTypeMock(false, 'ROLE_TEST', 'parentKey', 'parentData')
+        ];
+
         $widget = $this->createInstance($dependencies);
         $viewData = $widget->createViewData();
 
@@ -47,13 +50,6 @@ class WidgetTest extends TestCase
         $widget = $this->createInstance($dependencies);
 
         $this->assertEquals('ROLE_TEST', $widget->getPermission());
-    }
-
-    private function createParents()
-    {
-        return [
-            $this->createTypeMock(false, 'ROLE_TEST', 'parentKey', 'parentData')
-        ];
     }
 
     private function createDependencies()

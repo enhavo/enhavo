@@ -13,7 +13,7 @@ class ProviderTest extends TestCase
 {
     public function testGetDataReturnsTypeGetData()
     {
-        $typeMock = $this->createTypeMock();
+        $typeMock = $this->createMock(AbstractDashboardProviderType::class);
         $typeMock->method('getData')->willReturn('DATA678');
 
         $provider = new Provider($typeMock, [], []);
@@ -21,12 +21,9 @@ class ProviderTest extends TestCase
         $this->assertEquals('DATA678', $provider->getData());
     }
 
-    /**
-     * @depends testGetDataReturnsTypeGetData
-     */
     public function testGetDataUsesOptionsAsParameter()
     {
-        $typeMock = $this->createTypeMock();
+        $typeMock = $this->createMock(AbstractDashboardProviderType::class);
         $typeMock->method('getData')->willReturnCallback(
             function ($options) {
                 return $options;
@@ -47,10 +44,5 @@ class ProviderTest extends TestCase
         $provider = new Provider($typeMock, [], $options);
 
         $this->assertEquals($options, $provider->getData());
-    }
-
-    private function createTypeMock()
-    {
-        return $this->getMockBuilder(AbstractDashboardProviderType::class)->disableOriginalConstructor()->getMock();
     }
 }

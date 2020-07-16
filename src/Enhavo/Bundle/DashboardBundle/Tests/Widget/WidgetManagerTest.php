@@ -31,10 +31,9 @@ class WidgetManagerTest extends TestCase
                 $this->createWidgetMock(false, 'ROLE_TEST', 123)
             );
         $dependencies->checker->method('isGranted')->willReturn(true);
+
         $manager = $this->createInstance($dependencies);
         $data = $manager->createViewData();
-
-        $this->assertCount(2, $data);
 
         $this->assertEquals([
             [

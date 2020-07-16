@@ -15,20 +15,12 @@ class RepositoryDashboardProviderTypeTest extends TestCase
     public function testGetData()
     {
         $instance = $this->createInstance();
-        $parent = $this->createParentMock();
-        $parent->method('getRepository')->willReturnCallback(
-            function () {
-                $repositoryMock = $this->createRepositoryMock();
+        $parent = $this->createMock(DashboardProviderType::class);
 
-                $repositoryMock->method('findAll')->willReturnCallback(
-                    function () {
-                        return 790;
-                    }
-                );
+        $repositoryMock = $this->createMock(EntityRepository::class);
+        $repositoryMock->method('findAll')->willReturn(790);
 
-                return $repositoryMock;
-            }
-        );
+        $parent->method('getRepository')->willReturn($repositoryMock);
 
         $instance->setParent($parent);
 
@@ -40,7 +32,7 @@ class RepositoryDashboardProviderTypeTest extends TestCase
     public function testConfigureOptionsCallsParent()
     {
         $instance = $this->createInstance();
-        $parent = $this->createParentMock();
+        $parent = $this->createMock(DashboardProviderType::class);
 
         $parent->method('configureOptions')->willReturnCallback(
             function (OptionsResolver $resolver) {
@@ -61,23 +53,11 @@ class RepositoryDashboardProviderTypeTest extends TestCase
 
     public function testGetName()
     {
-        $instance = $this->createInstance();
-
-        $this->assertEquals('repository', $instance->getName());
+        $this->assertEquals('repository', RepositoryDashboardProviderType::getName());
     }
 
     private function createInstance()
     {
         return new RepositoryDashboardProviderType();
-    }
-
-    private function createParentMock()
-    {
-        return $this->createMock(DashboardProviderType::class);
-    }
-
-    private function createRepositoryMock()
-    {
-        return $this->createMock(EntityRepository::class);
     }
 }

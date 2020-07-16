@@ -24,11 +24,7 @@ class DashboardProviderTypeTest extends TestCase
             }
         );
 
-        $dependencies->container->method('get')->willReturnCallback(
-            function () {
-                return $this->createEntityRepositoryMock();
-            }
-        );
+        $dependencies->container->method('get')->willReturn($this->createMock(EntityRepository::class));
 
         $instance = $this->createInstance($dependencies);
 
@@ -41,20 +37,12 @@ class DashboardProviderTypeTest extends TestCase
     {
         $dependencies = $this->createDependencies();
 
-        $dependencies->container->method('has')->willReturnCallback(
-            function () {
-                return false;
-            }
-        );
+        $dependencies->container->method('has')->willReturn(false);
 
-        $dependencies->container->method('get')->willReturnCallback(
-            function () {
-                $emMock = $this->createEntityManagerMock();
-                $emMock->method('getRepository')->willReturn($this->createEntityRepositoryMock());
+        $emMock = $this->createMock(EntityManagerInterface::class);
+        $emMock->method('getRepository')->willReturn($this->createMock(EntityRepository::class));
 
-                return $emMock;
-            }
-        );
+        $dependencies->container->method('get')->willReturn($emMock);
 
         $instance = $this->createInstance($dependencies);
 
@@ -67,11 +55,7 @@ class DashboardProviderTypeTest extends TestCase
     {
         $dependencies = $this->createDependencies();
 
-        $dependencies->container->method('has')->willReturnCallback(
-            function () {
-                return true;
-            }
-        );
+        $dependencies->container->method('has')->willReturn(true);
 
         $dependencies->container->method('get')->willReturnCallback(
             function () {
@@ -111,16 +95,6 @@ class DashboardProviderTypeTest extends TestCase
         $dependencies->container = $this->createMock(ContainerInterface::class);
         $dependencies->em = $this->createMock(EntityManagerInterface::class);
         return $dependencies;
-    }
-
-    private function createEntityRepositoryMock()
-    {
-        return $this->createMock(EntityRepository::class);
-    }
-
-    private function createEntityManagerMock()
-    {
-        return $this->createMock(EntityManagerInterface::class);
     }
 }
 

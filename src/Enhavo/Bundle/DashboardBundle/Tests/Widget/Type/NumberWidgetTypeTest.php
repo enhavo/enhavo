@@ -17,14 +17,11 @@ class NumberWidgetTypeTest extends TestCase
     public function testCreateViewData()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->factory->method('create')->willReturnCallback(
-            function () {
-                $providerMock = $this->createProviderMock();
-                $providerMock->method('getData')->willReturn(543);
 
-                return $providerMock;
-            }
-        );
+        $providerMock = $this->createMock(Provider::class);
+        $providerMock->method('getData')->willReturn(543);
+        $dependencies->factory->method('create')->willReturn($providerMock);
+
         $instance = $this->createInstance($dependencies);
 
         $viewData = new ViewData();
@@ -39,10 +36,7 @@ class NumberWidgetTypeTest extends TestCase
 
     public function testGetName()
     {
-        $dependencies = $this->createDependencies();
-        $instance = $this->createInstance($dependencies);
-
-        $this->assertEquals('number', $instance->getName());
+        $this->assertEquals('number', NumberWidgetType::getName());
     }
 
     public function testConfigureOptionsMissingRequiredParameter()
@@ -60,7 +54,7 @@ class NumberWidgetTypeTest extends TestCase
     private function createDependencies()
     {
         $dependencies = new NumberWidgetTypeTestDependencies();
-        $dependencies->factory = $this->createFactoryMock();
+        $dependencies->factory = $this->createMock(FactoryInterface::class);
 
         return $dependencies;
     }
@@ -68,16 +62,6 @@ class NumberWidgetTypeTest extends TestCase
     private function createInstance(NumberWidgetTypeTestDependencies $dependencies)
     {
         return new NumberWidgetType($dependencies->factory);
-    }
-
-    private function createFactoryMock()
-    {
-        return $this->createMock(FactoryInterface::class);
-    }
-
-    private function createProviderMock()
-    {
-        return $this->createMock(Provider::class);
     }
 }
 
