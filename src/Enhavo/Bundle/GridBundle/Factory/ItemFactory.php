@@ -45,9 +45,9 @@ class ItemFactory implements FactoryInterface
     public function duplicate(ItemTypeInterface $itemType)
     {
         $item = new Item();
-        $item->setName($item->getName());
-        $item->setPosition($item->getPosition());
-        $item->setItemType($this->itemTypeFactory->duplicate($itemType, $item->getName()));
+        $item->setName($itemType->getItem()->getName());
+        $item->setPosition($itemType->getItem()->getPosition());
+        $item->setItemType($this->itemTypeFactory->duplicate($itemType, $itemType->getItem()->getName()));
         return $item;
     }
 }
