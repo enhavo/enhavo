@@ -30,8 +30,8 @@ class GridFactory extends Factory
 
         /** @var Item $item */
         foreach($originalResource->getItems() as $item) {
-            $item = $this->getItemFactory($item->getName())->duplicate($item->getItemType());
-            $newGrid->addItem($item);
+            $newItem = $this->getItemFactory($item->getName())->duplicate($item->getItemType());
+            $newGrid->addItem($newItem);
         }
 
         return $newGrid;

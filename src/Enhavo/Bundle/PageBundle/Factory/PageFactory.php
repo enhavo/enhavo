@@ -5,6 +5,7 @@ use Enhavo\Bundle\ContentBundle\Entity\Content;
 use Enhavo\Bundle\ContentBundle\Factory\ContentFactory;
 use Enhavo\Bundle\GridBundle\Factory\GridFactory;
 use Enhavo\Bundle\PageBundle\Entity\Page;
+use Enhavo\Bundle\RoutingBundle\Entity\Route;
 
 class PageFactory extends ContentFactory
 {
@@ -40,7 +41,7 @@ class PageFactory extends ContentFactory
 
         $newGrid = $this->gridFactory->duplicate($originalResource->getGrid());
         $newPage->setGrid($newGrid);
-
+        $newPage->setRoute(new Route());
         $newPage->setParent($originalResource->getParent());
 
         return $newPage;
