@@ -13,6 +13,7 @@ Guides
     resource/index
     contact/index
     controller/index
+    dashboard-widget/index
     filter/index
     media/index
     migration/index
