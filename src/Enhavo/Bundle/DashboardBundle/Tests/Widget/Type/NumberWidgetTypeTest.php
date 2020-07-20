@@ -5,9 +5,8 @@ namespace Enhavo\Bundle\DashboardBundle\Tests\Widget\Type;
 
 
 use Enhavo\Bundle\AppBundle\View\ViewData;
-use Enhavo\Bundle\DashboardBundle\Provider\ProviderInterface;
+use Enhavo\Bundle\DashboardBundle\Provider\Provider;
 use Enhavo\Bundle\DashboardBundle\Widget\Type\NumberWidgetType;
-use Enhavo\Bundle\DashboardBundle\Widget\Widget;
 use Enhavo\Component\Type\FactoryInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
@@ -17,7 +16,13 @@ class NumberWidgetTypeTest extends TestCase
 {
     public function testCreateViewData()
     {
-        $numberWidgetType = new NumberWidgetType($this->createFactory(345));
+        $dependencies = $this->createDependencies();
+
+        $providerMock = $this->createMock(Provider::class);
+        $providerMock->method('getData')->willReturn(543);
+        $dependencies->factory->method('create')->willReturn($providerMock);
+
+        $instance = $this->createInstance($dependencies);
 
         $viewData = new ViewData();
         $options = [
@@ -25,48 +30,43 @@ class NumberWidgetTypeTest extends TestCase
                 'type' => 'type'
             ]
         ];
-        $numberWidgetType->createViewData($options, $viewData);
-        $this->assertEquals(345, $viewData->get('value'));
+        $instance->createViewData($options, $viewData);
+        $this->assertEquals(543, $viewData->get('value'));
     }
 
     public function testGetName()
     {
-        $numberWidgetType = new NumberWidgetType($this->createFactory());
-
-        $this->assertEquals('number', $numberWidgetType->getName());
+        $this->assertEquals('number', NumberWidgetType::getName());
     }
 
     public function testConfigureOptionsMissingRequiredParameter()
     {
-        $numberWidgetType = new NumberWidgetType($this->createFactory());
+        $dependencies = $this->createDependencies();
+        $instance = $this->createInstance($dependencies);
 
         $optionsResolver = new OptionsResolver();
-        $numberWidgetType->configureOptions($optionsResolver);
+        $instance->configureOptions($optionsResolver);
 
         $this->expectException(MissingOptionsException::class);
         $optionsResolver->resolve([]);
     }
 
-    private function createFactory($data = 0)
+    private function createDependencies()
     {
-        /**
-         * @return Widget|\PHPUnit_Framework_MockObject_MockObject
-         */
-        /** @var \PHPUnit_Framework_MockObject_MockObject $mock */
-        $mock = $this->getMockBuilder(FactoryInterface::class)->disableOriginalConstructor()->getMock();
-        $mock->method('create')->willReturn($this->createProviderMock($data));
+        $dependencies = new NumberWidgetTypeTestDependencies();
+        $dependencies->factory = $this->createMock(FactoryInterface::class);
 
-        return $mock;
+        return $dependencies;
     }
 
-    /**
-     * @return Widget|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private function createProviderMock($data = 0)
+    private function createInstance(NumberWidgetTypeTestDependencies $dependencies)
     {
-        /** @var \PHPUnit_Framework_MockObject_MockObject $mock */
-        $mock = $this->getMockBuilder(ProviderInterface::class)->disableOriginalConstructor()->getMock();
-        $mock->method('getData')->willReturn($data);
-        return $mock;
+        return new NumberWidgetType($dependencies->factory);
     }
+}
+
+class NumberWidgetTypeTestDependencies
+{
+    /** @var FactoryInterface|\PHPUnit_Framework_MockObject_MockObject $mock */
+    public $factory;
 }

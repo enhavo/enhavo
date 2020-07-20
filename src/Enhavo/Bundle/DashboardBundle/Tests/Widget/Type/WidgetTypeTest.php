@@ -6,7 +6,6 @@ namespace Enhavo\Bundle\DashboardBundle\Tests\Widget\Type;
 
 use Enhavo\Bundle\AppBundle\View\ViewData;
 use Enhavo\Bundle\DashboardBundle\Widget\Type\WidgetType;
-use Enhavo\Bundle\DashboardBundle\Widget\Widget;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -14,38 +13,39 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class WidgetTypeTest extends TestCase
 {
-    /**
-     * @var WidgetType
-     */
-    private $instance;
-
-    public function setUp()
-    {
-        $this->instance = $this->createInstance();
-    }
-
     public function testPermission()
     {
+        $dependencies = $this->createDependencies();
+        $instance = $this->createInstance($dependencies);
+
         $options = [
             'permission' => 'ROLE_TEST'
         ];
 
-        $this->assertEquals('ROLE_TEST', $this->instance->getPermission($options));
+        $this->assertEquals('ROLE_TEST', $instance->getPermission($options));
     }
 
     public function testHidden()
     {
-        $options = [
-            'hidden' => true
-        ];
+        $dependencies = $this->createDependencies();
+        $instance = $this->createInstance($dependencies);
 
-        $this->assertTrue($this->instance->isHidden($options));
+        $this->assertTrue($instance->isHidden([
+            'hidden' => true
+        ]));
+
+        $this->assertFalse($instance->isHidden([
+            'hidden' => false
+        ]));
     }
 
     public function testConfigureOptions()
     {
+        $dependencies = $this->createDependencies();
+        $instance = $this->createInstance($dependencies);
+
         $optionsResolver = new OptionsResolver();
-        $this->instance->configureOptions($optionsResolver);
+        $instance->configureOptions($optionsResolver);
 
         $this->expectException(MissingOptionsException::class);
         $optionsResolver->resolve([]);
@@ -53,33 +53,41 @@ class WidgetTypeTest extends TestCase
 
     public function testCreateViewData()
     {
-        $options = [
+        $dependencies = $this->createDependencies();
+        $dependencies->translator->method('trans')->willReturn('translated');
+        $instance = $this->createInstance($dependencies);
+
+        $viewData = new ViewData();
+        $instance->createViewData([
             'label' => 'label',
             'component' => 'component123',
             'translation_domain' => null
-        ];
-
-        $viewData = new ViewData();
-        $this->instance->createViewData($options, $viewData);
+        ], $viewData);
 
         $this->assertEquals('translated', $viewData->get('label'));
         $this->assertEquals('component123', $viewData->get('component'));
     }
 
-    private function createInstance()
+    private function createInstance(WidgetTypeTestDependencies $dependencies)
     {
-        return new WidgetType($this->createTranslatorMock('translated'));
+        return new WidgetType($dependencies->translator);
     }
 
-    /**
-     * @return Widget|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private function createTranslatorMock($willReturn = '')
+    private function createDependencies()
     {
-        /** @var TranslatorInterface|\PHPUnit_Framework_MockObject_MockObject $mock */
-        $mock = $this->getMockBuilder(TranslatorInterface::class)->disableOriginalConstructor()->getMock();
-        $mock->method('trans')->willReturn($willReturn);
+        $dependencies = new WidgetTypeTestDependencies();
+        $dependencies->translator = $this->createTranslatorMock();
 
-        return $mock;
+        return $dependencies;
     }
+
+    private function createTranslatorMock()
+    {
+        return $this->createMock(TranslatorInterface::class);
+    }
+}
+
+class WidgetTypeTestDependencies
+{
+    public $translator;
 }

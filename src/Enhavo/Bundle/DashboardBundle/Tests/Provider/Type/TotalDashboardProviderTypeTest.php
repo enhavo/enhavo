@@ -14,101 +14,57 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TotalDashboardProviderTypeTest extends TestCase
 {
-    private $instance;
-
-    private $testCount = 789;
-    private $parentOptionsKey = 'test_key';
-    private $parentOptionsValue = 'test_value';
-
-    public function setUp()
-    {
-        $this->instance = $this->createInstance();
-        $this->instance->setParent($this->createParentMock());
-    }
-
     public function testGetData()
     {
-        $this->assertEquals($this->testCount, $this->instance->getData([]));
+        $instance = $this->createInstance();
+        $parent = $this->createMock(DashboardProviderType::class);
+
+        $queryMock = $this->createMock(AbstractQuery::class);
+        $queryMock->method('getSingleScalarResult')->willReturn(765);
+
+        $qbMock = $this->createMock(QueryBuilder::class);
+        $qbMock->method('select')->willReturnSelf();
+        $qbMock->method('getQuery')->willReturn($queryMock);
+
+        $repositoryMock = $this->createMock(EntityRepository::class);
+        $repositoryMock->method('createQueryBuilder')->willReturn($qbMock);
+
+        $parent->method('getRepository')->willReturn($repositoryMock);
+
+        $instance->setParent($parent);
+
+        $this->assertEquals(765, $instance->getData([]));
     }
 
     public function testConfigureOptionsCallsParent()
     {
+        $instance = $this->createInstance();
+        $parent = $this->createMock(DashboardProviderType::class);
+
+        $parent->method('configureOptions')->willReturnCallback(
+            function (OptionsResolver $resolver) {
+                $resolver->setDefaults([
+                    'key1' => 'value1'
+                ]);
+            }
+        );
+
+        $instance->setParent($parent);
+
         $resolver = new OptionsResolver();
-        $this->instance->configureOptions($resolver);
+        $instance->configureOptions($resolver);
         $resolvedOptions = $resolver->resolve([]);
 
-        $this->assertEquals($this->parentOptionsValue, $resolvedOptions[$this->parentOptionsKey]);
+        $this->assertEquals('value1', $resolvedOptions['key1']);
     }
 
     public function testGetName()
     {
-        $this->assertEquals('total', $this->instance->getName());
+        $this->assertEquals('total', TotalDashboardProviderType::getName());
     }
 
     private function createInstance()
     {
         return new TotalDashboardProviderType();
-    }
-
-    private function createParentMock()
-    {
-        $mock = $this->createMock(DashboardProviderType::class);
-
-        $mock->method('getRepository')->willReturnCallback(
-            function () {
-                return $this->createRepositoryMock();
-            }
-        );
-
-        $mock->method('configureOptions')->willReturnCallback(
-            function (OptionsResolver $resolver) {
-                $resolver->setDefaults([
-                    $this->parentOptionsKey => $this->parentOptionsValue
-                ]);
-            }
-        );
-
-        return $mock;
-    }
-
-    private function createRepositoryMock()
-    {
-        $mock = $this->createMock(EntityRepository::class);
-
-        $mock->method('createQueryBuilder')->willReturnCallback(
-            function () {
-                return $this->createQueryBuilderMock();
-            }
-        );
-
-        return $mock;
-    }
-
-    private function createQueryBuilderMock()
-    {
-        $mock = $this->createMock(QueryBuilder::class);
-
-        $mock->method('select')->willReturnSelf();
-
-        $mock->method('getQuery')->willReturnCallback(
-            function () {
-                return $this->createQuery();
-            }
-        );
-
-        return $mock;
-    }
-
-    private function createQuery()
-    {
-        $query = $this->createMock(AbstractQuery::class);
-
-        $query->method('getSingleScalarResult')->willReturnCallback(
-            function () {
-                return $this->testCount;
-            }
-        );
-
-        return $query;
     }
 }

@@ -12,78 +12,52 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class RepositoryDashboardProviderTypeTest extends TestCase
 {
-    private $instance;
-
-    private $testCount = 789;
-    private $testCountMethod = 'findAll';
-    private $parentOptionsKey = 'test_key';
-    private $parentOptionsValue = 'test_value';
-
-    public function setUp()
-    {
-        $this->instance = $this->createInstance();
-        $this->instance->setParent($this->createParentMock());
-    }
-
     public function testGetData()
     {
-        $options = [
-            'method' => $this->testCountMethod
-        ];
+        $instance = $this->createInstance();
+        $parent = $this->createMock(DashboardProviderType::class);
 
-        $this->assertEquals($this->testCount, $this->instance->getData($options));
+        $repositoryMock = $this->createMock(EntityRepository::class);
+        $repositoryMock->method('findAll')->willReturn(790);
+
+        $parent->method('getRepository')->willReturn($repositoryMock);
+
+        $instance->setParent($parent);
+
+        $this->assertEquals(790, $instance->getData([
+            'method' => 'findAll'
+        ]));
     }
 
     public function testConfigureOptionsCallsParent()
     {
+        $instance = $this->createInstance();
+        $parent = $this->createMock(DashboardProviderType::class);
+
+        $parent->method('configureOptions')->willReturnCallback(
+            function (OptionsResolver $resolver) {
+                $resolver->setDefaults([
+                    'parentKey' => 'parentValue'
+                ]);
+            }
+        );
+
+        $instance->setParent($parent);
+
         $resolver = new OptionsResolver();
-        $this->instance->configureOptions($resolver);
+        $instance->configureOptions($resolver);
         $resolvedOptions = $resolver->resolve([]);
 
-        $this->assertEquals($this->parentOptionsValue, $resolvedOptions[$this->parentOptionsKey]);
+        $this->assertEquals('parentValue', $resolvedOptions['parentKey']);
     }
 
     public function testGetName()
     {
-        $this->assertEquals('repository', $this->instance->getName());
+        $this->assertEquals('repository', RepositoryDashboardProviderType::getName());
     }
 
     private function createInstance()
     {
         return new RepositoryDashboardProviderType();
-    }
-
-    private function createParentMock()
-    {
-        $mock = $this->createMock(DashboardProviderType::class);
-
-        $mock->method('getRepository')->willReturnCallback(
-            function () {
-                return $this->createRepositoryMock();
-            }
-        );
-
-        $mock->method('configureOptions')->willReturnCallback(
-            function (OptionsResolver $resolver) {
-                $resolver->setDefaults([
-                    $this->parentOptionsKey => $this->parentOptionsValue
-                ]);
-            }
-        );
-
-        return $mock;
-    }
-
-    private function createRepositoryMock()
-    {
-        $mock = $this->createMock(EntityRepository::class);
-
-        $mock->method($this->testCountMethod)->willReturnCallback(
-            function () {
-                return $this->testCount;
-            }
-        );
-
-        return $mock;
     }
 }

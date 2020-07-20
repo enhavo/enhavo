@@ -14,105 +14,93 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DashboardProviderTypeTest extends TestCase
 {
-    private $repositoryNameViaContainer = 'repository.test';
-    private $repositoryNameViaEntityManager = 'TestRepository';
-    private $repositoryNameViaContainerInvalid = 'repository.invalid';
-    private $emId = 'doctrine.orm.entity_manager';
-
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
-
-    public function setUp()
-    {
-        $this->container = $this->createContainerMock();
-        $this->container->method('has')->willReturnCallback(
-            function ($name) {
-                return in_array($name, [
-                    $this->repositoryNameViaContainer,
-                    $this->repositoryNameViaContainerInvalid
-                ]);
-            }
-        );
-
-        $this->container->method('get')->willReturnCallback(
-            function ($name) {
-                if($name === $this->repositoryNameViaContainer){
-                    return $this->createEntityRepositoryMock();
-                } else if($name === $this->emId){
-                    return $this->createEntityManagerMock();
-                } else if($name === $this->repositoryNameViaContainerInvalid) {
-                    return $this;
-                }
-                return null;
-            }
-        );
-    }
-
     public function testGetRepositoryViaContainer()
     {
-        $options = [
-            'repository' => $this->repositoryNameViaContainer
-        ];
+        $dependencies = $this->createDependencies();
 
-        $dashboardProviderType = new DashboardProviderType($this->container);
+        $dependencies->container->method('has')->willReturnCallback(
+            function ($name) {
+                return $name === 'repository.test';
+            }
+        );
 
-        $entityRepositoryMock = $this->container->get($this->repositoryNameViaContainer);
+        $dependencies->container->method('get')->willReturn($this->createMock(EntityRepository::class));
 
-        $this->assertEquals($entityRepositoryMock, $dashboardProviderType->getRepository($options));
+        $instance = $this->createInstance($dependencies);
+
+        $this->assertInstanceOf(EntityRepository::class, $instance->getRepository([
+            'repository' => 'repository.test'
+        ]));
     }
 
     public function testGetRepositoryViaEntityManager()
     {
-        $options = [
-            'repository' => $this->repositoryNameViaEntityManager
-        ];
+        $dependencies = $this->createDependencies();
 
-        $dashboardProviderType = new DashboardProviderType($this->container);
+        $dependencies->container->method('has')->willReturn(false);
 
-        $entityRepositoryMock = $this->container->get($this->emId)->getRepository('');
+        $emMock = $this->createMock(EntityManagerInterface::class);
+        $emMock->method('getRepository')->willReturn($this->createMock(EntityRepository::class));
 
-        $this->assertEquals($entityRepositoryMock, $dashboardProviderType->getRepository($options));
+        $dependencies->container->method('get')->willReturn($emMock);
+
+        $instance = $this->createInstance($dependencies);
+
+        $this->assertInstanceOf(EntityRepository::class, $instance->getRepository([
+            'repository' => 'repository.test'
+        ]));
     }
 
     public function testGetRepositoryIsNotEntityRepository()
     {
-        $options = [
-            'repository' => $this->repositoryNameViaContainerInvalid
-        ];
+        $dependencies = $this->createDependencies();
 
-        $dashboardProviderType = new DashboardProviderType($this->container);
+        $dependencies->container->method('has')->willReturn(true);
+
+        $dependencies->container->method('get')->willReturnCallback(
+            function () {
+                return $this;
+            }
+        );
+
+        $instance = $this->createInstance($dependencies);
 
         $this->expectException(\InvalidArgumentException::class);
-        $dashboardProviderType->getRepository($options);
+        $instance->getRepository([
+            'repository' => 'repository.test'
+        ]);
     }
 
     public function testConfigureOptionsRequiredParametersSet()
     {
+        $dependencies = $this->createDependencies();
+
+        $instance = $this->createInstance($dependencies);
+
         $optionsResolver = new OptionsResolver();
-        $dashboardProviderType = new DashboardProviderType($this->container);
-        $dashboardProviderType->configureOptions($optionsResolver);
+        $instance->configureOptions($optionsResolver);
 
         $this->expectException(MissingOptionsException::class);
         $optionsResolver->resolve([]);
     }
 
-    private function createContainerMock()
+    private function createInstance(DashboardProviderTypeTestDependencies $dependencies)
     {
-        return $this->createMock(ContainerInterface::class);
+        return new DashboardProviderType($dependencies->container);
     }
 
-    private function createEntityRepositoryMock()
+    private function createDependencies()
     {
-        return $this->createMock(EntityRepository::class);
+        $dependencies = new DashboardProviderTypeTestDependencies();
+        $dependencies->container = $this->createMock(ContainerInterface::class);
+        $dependencies->em = $this->createMock(EntityManagerInterface::class);
+        return $dependencies;
     }
+}
 
-    private function createEntityManagerMock()
-    {
-        $mock = $this->createMock(EntityManagerInterface::class);
-        $mock->method('getRepository')->willReturn($this->createEntityRepositoryMock());
+class DashboardProviderTypeTestDependencies
+{
+    public $container;
 
-        return $mock;
-    }
+    public $em;
 }
