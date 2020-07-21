@@ -5,3 +5,5 @@ DashboardBundle
     :maxdepth: 1
 
     installation
+    introduction
+    usage

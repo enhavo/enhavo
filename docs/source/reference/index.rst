@@ -9,6 +9,8 @@ This section contains a short reference information to following topics:
     action/index
     block/index
     column/index
+    dashboard-widget/index
+    dashboard-provider/index
     encore/index
     filter/index
     form/index
