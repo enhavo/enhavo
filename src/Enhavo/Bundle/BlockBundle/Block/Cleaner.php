@@ -51,14 +51,20 @@ class Cleaner
     /**
      * CleanUpCommand constructor.
      * @param EntityManagerInterface $entityManager
-     * @param BlockManager $blockManager
      * @param AssociationFinder $associationFinder
      */
-    public function __construct(EntityManagerInterface $entityManager, BlockManager $blockManager, AssociationFinder $associationFinder)
+    public function __construct(EntityManagerInterface $entityManager, AssociationFinder $associationFinder)
     {
         $this->entityManager = $entityManager;
-        $this->blockManager = $blockManager;
         $this->associationFinder = $associationFinder;
+    }
+
+    /**
+     * @param BlockManager $blockManager
+     */
+    public function setBlockManager(BlockManager $blockManager)
+    {
+        $this->blockManager = $blockManager;
     }
 
     /**

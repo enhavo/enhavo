@@ -27,13 +27,19 @@ class BlockManager
     private $associationFinder;
 
     /**
+     * @var Cleaner
+     */
+    private $cleaner;
+
+    /**
      * @var Block[]
      */
     private $blocks = [];
 
-    public function __construct(FactoryInterface $factory, AssociationFinder $associationFinder, $configurations)
+    public function __construct(FactoryInterface $factory, AssociationFinder $associationFinder, Cleaner $cleaner, $configurations)
     {
         $this->associationFinder = $associationFinder;
+        $this->cleaner = $cleaner;
 
         foreach($configurations as $name => $options) {
             $this->blocks[$name] = $factory->create($options);
@@ -128,6 +134,6 @@ class BlockManager
      */
     public function cleanUp($outputLogger = null, $dryRun = false)
     {
-        $this->container->get(Cleaner::class)->clean($outputLogger, $dryRun);
+        $this->cleaner->clean($outputLogger, $dryRun);
     }
 }
