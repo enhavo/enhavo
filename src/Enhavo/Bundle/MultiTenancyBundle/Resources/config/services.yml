@@ -1,49 +1,36 @@
 services:
-    Bundle\MultiTenancyBundle\EventListener\MultiTenancyListener:
-        class: Bundle\MultiTenancyBundle\EventListener\MultiTenancyListener
+    Enhavo\Bundle\MultiTenancyBundle\EventListener\TenantAwareSubscriber:
         arguments:
-            - '@Bundle\MultiTenancyBundle\Resolver\MultiTenancyResolver'
-        tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
-
-    Bundle\MultiTenancyBundle\EventListener\MultiTenancyAwareSubscriber:
-        class: Bundle\MultiTenancyBundle\EventListener\MultiTenancyAwareSubscriber
-        arguments:
-            - '@Bundle\MultiTenancyBundle\Resolver\MultiTenancyResolver'
+            - '@Enhavo\Bundle\MultiTenancyBundle\Tenant\TenantManager'
         tags:
             - { name: kernel.event_subscriber }
 
-    Bundle\MultiTenancyBundle\Factory\ConfigurationFactory:
-        class: Bundle\MultiTenancyBundle\Factory\ConfigurationFactory
-
-    Bundle\MultiTenancyBundle\MultiTenancy\MultiTenancyManager:
-        class: Bundle\MultiTenancyBundle\Manager\MultiTenancyManager
+    Enhavo\Bundle\MultiTenancyBundle\Tenant\TenantManager:
         arguments:
-            - '@service_container'
-            - '%multiTenancy.configuration%'
+            - '@enhavo_multi_tenancy.resolver'
+            - '@enhavo_multi_tenancy.provider'
 
-    Bundle\MultiTenancyBundle\Resolver\MultiTenancyResolver:
-        class: Bundle\MultiTenancyBundle\Resolver\MultiTenancyResolver
+    Enhavo\Bundle\MultiTenancyBundle\ExpressionLanguage\TenantExpressionFunctionProvider:
         arguments:
-            - '@Bundle\MultiTenancyBundle\MultiTenancy\MultiTenancyManager'
+            - '@enhavo_multi_tenancy.resolver'
 
-
-    Bundle\MultiTenancyBundle\Resolver\MultiTenancyConditionResolver:
-        class: Bundle\MultiTenancyBundle\Resolver\MultiTenancyConditionResolver
+    Enhavo\Bundle\MultiTenancyBundle\Twig\TenantExtension:
         arguments:
-            - '@Bundle\MultiTenancyBundle\Resolver\MultiTenancyResolver'
-            - '@request_stack'
-
-    Bundle\MultiTenancyBundle\Resolver\MultiTenancyResolverExpressionLanguageProvider:
-        class: Bundle\MultiTenancyBundle\Resolver\MultiTenancyResolverExpressionLanguageProvider
-        arguments:
-            - '@Bundle\MultiTenancyBundle\Resolver\MultiTenancyResolver'
-
-    Bundle\MultiTenancyBundle\Twig\MultiTenancyExtension:
-        class: Bundle\MultiTenancyBundle\Twig\MultiTenancyExtension
-        arguments:
-            - '@Bundle\MultiTenancyBundle\Resolver\MultiTenancyResolver'
+            - '@Enhavo\Bundle\MultiTenancyBundle\Tenant\TenantManager'
         tags:
             - { name: twig.extension }
+
+    Enhavo\Bundle\MultiTenancyBundle\Resolver\HostResolver:
+        arguments:
+            - '@enhavo_multi_tenancy.provider'
+            - '@request_stack'
+
+    Enhavo\Bundle\MultiTenancyBundle\Resolver\EnvResolver:
+        arguments:
+            - '@enhavo_multi_tenancy.provider'
+
+    enhavo_multi_tenancy.resolver.default:
+        class: Enhavo\Bundle\MultiTenancyBundle\Resolver\ChainResolver
         calls:
-            - [ setContainer, ['@service_container']]
+            - ['addResolver', ['Enhavo\Bundle\MultiTenancyBundle\Resolver\HostResolver']]
+            - ['addResolver', ['Enhavo\Bundle\MultiTenancyBundle\Resolver\EnvResolver']]

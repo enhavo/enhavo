@@ -6,9 +6,9 @@
  * Time: 18:35
  */
 
-namespace Bundle\Enhavo\MultiTenancyBundle;
+namespace Enhavo\Bundle\Enhavo\MultiTenancyBundle;
 
-use Bundle\MultiTenancyBundle\DependencyInjection\CompilerPass\SyliusCompilerPass;
+use Enhavo\Bundle\MultiTenancyBundle\DependencyInjection\CompilerPass\SyliusCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
