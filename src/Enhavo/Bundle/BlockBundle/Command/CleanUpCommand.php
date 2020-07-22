@@ -2,26 +2,28 @@
 
 namespace Enhavo\Bundle\BlockBundle\Command;
 
-use Enhavo\Bundle\BlockBundle\CleanUp\CleanUpManager;
+use Enhavo\Bundle\AppBundle\Output\CliOutputLogger;
+use Enhavo\Bundle\BlockBundle\Block\BlockManager;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class CleanUpCommand extends Command
 {
     /**
-     * @var CleanUpManager
+     * @var BlockManager
      */
-    private $cleanUpManager;
+    private $blockManager;
 
     /**
      * CleanUpCommand constructor.
-     * @param CleanUpManager $cleanUpManager
+     * @param BlockManager $blockManager
      */
-    public function __construct(CleanUpManager $cleanUpManager)
+    public function __construct(BlockManager $blockManager)
     {
-        $this->cleanUpManager = $cleanUpManager;
+        $this->blockManager = $blockManager;
         parent::__construct();
     }
 
@@ -44,13 +46,10 @@ class CleanUpCommand extends Command
     {
         $isDryRun = $input->getOption('dry-run');
 
-        $output->writeln('Starting cleanup');
-        $this->cleanUpManager->cleanUp($output, $isDryRun);
-        $output->writeln('Cleanup complete, ' . $this->cleanUpManager->getNodesDeleted() . ' nodes and ' . $this->cleanUpManager->getBlocksDeleted() . ' blocks deleted.');
+        $this->blockManager->cleanUp(new CliOutputLogger(new SymfonyStyle($input, $output)), $isDryRun);
 
-        if ($isDryRun) $output->writeln('This was a dry run, no actual files were deleted.');
+        if ($isDryRun) $output->writeln('This was a dry run, no actual changes were made.');
 
         return 0;
     }
-
 }

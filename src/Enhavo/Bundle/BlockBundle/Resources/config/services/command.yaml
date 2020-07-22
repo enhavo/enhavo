@@ -1,7 +1,7 @@
 services:
     Enhavo\Bundle\BlockBundle\Command\CleanUpCommand:
         arguments:
-            - '@Enhavo\Bundle\BlockBundle\CleanUp\CleanUpManager'
+            - '@Enhavo\Bundle\BlockBundle\Block\BlockManager'
         tags:
             - { name: console.command, command: 'enhavo:block:clean-up' }
 

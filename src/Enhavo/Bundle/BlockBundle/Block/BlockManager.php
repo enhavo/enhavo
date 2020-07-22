@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\BlockBundle\Block;
 
+use Enhavo\Bundle\AppBundle\Output\OutputLoggerInterface;
 use Enhavo\Bundle\BlockBundle\Factory\AbstractBlockFactory;
 use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
@@ -26,13 +27,19 @@ class BlockManager
     private $associationFinder;
 
     /**
+     * @var Cleaner
+     */
+    private $cleaner;
+
+    /**
      * @var Block[]
      */
     private $blocks = [];
 
-    public function __construct(FactoryInterface $factory, AssociationFinder $associationFinder, $configurations)
+    public function __construct(FactoryInterface $factory, AssociationFinder $associationFinder, Cleaner $cleaner, $configurations)
     {
         $this->associationFinder = $associationFinder;
+        $this->cleaner = $cleaner;
 
         foreach($configurations as $name => $options) {
             $this->blocks[$name] = $factory->create($options);
@@ -116,5 +123,17 @@ class BlockManager
             return $references[0];
         }
         return null;
+    }
+
+    /**
+     * Search database for orphaned or erroneous nodes and blocks and delete them.
+     *
+     * @param OutputLoggerInterface? $outputLogger
+     * @param bool $dryRun
+     * @throws \Exception
+     */
+    public function cleanUp($outputLogger = null, $dryRun = false)
+    {
+        $this->cleaner->clean($outputLogger, $dryRun);
     }
 }
