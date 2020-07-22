@@ -23,6 +23,14 @@ services:
         arguments:
             - '@Enhavo\Component\Type\FactoryInterface[Block]'
             - '@Enhavo\Bundle\DoctrineExtensionBundle\Util\AssociationFinder'
+            - '@Enhavo\Bundle\BlockBundle\Block\Cleaner'
             - '%enhavo_block.blocks%'
         calls:
             - ['setContainer', ['@service_container']]
+
+    Enhavo\Bundle\BlockBundle\Block\Cleaner:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@Enhavo\Bundle\DoctrineExtensionBundle\Util\AssociationFinder'
+        calls:
+            - ['setBlockManager', ['@Enhavo\Bundle\BlockBundle\Block\BlockManager']]

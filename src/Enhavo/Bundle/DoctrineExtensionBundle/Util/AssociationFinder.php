@@ -2,8 +2,8 @@
 
 namespace Enhavo\Bundle\DoctrineExtensionBundle\Util;
 
-use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\ClassMetadata;
 
 class AssociationFinder
 {
@@ -110,6 +110,9 @@ class AssociationFinder
         $metaData = $this->em->getMetadataFactory()->getAllMetadata();
         /** @var ClassMetadata $classMetadata */
         foreach($metaData as $classMetadata) {
+            if ($classMetadata->isMappedSuperclass) {
+                continue;
+            }
             $reflectionClass = $classMetadata->getReflectionClass();
             if ($reflectionClass->isAbstract() || $reflectionClass->isInterface()) {
                 continue;
