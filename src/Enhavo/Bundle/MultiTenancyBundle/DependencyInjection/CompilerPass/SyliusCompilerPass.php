@@ -6,9 +6,9 @@
  * Time: 10:42
  */
 
-namespace Bundle\MultiTenancyBundle\DependencyInjection\CompilerPass;
+namespace Enhavo\Bundle\MultiTenancyBundle\DependencyInjection\CompilerPass;
 
-use Bundle\MultiTenancyBundle\Resolver\MultiTenancyResolverExpressionLanguageProvider;
+use Enhavo\Bundle\MultiTenancyBundle\ExpressionLanguage\TenantExpressionFunctionProvider;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -19,7 +19,7 @@ class SyliusCompilerPass implements CompilerPassInterface
     {
         $definition = $container->getDefinition('sylius.expression_language');
         $definition->addMethodCall('registerProvider', [
-            new Reference(MultiTenancyResolverExpressionLanguageProvider::class)
+            new Reference(TenantExpressionFunctionProvider::class)
         ]);
     }
 }
