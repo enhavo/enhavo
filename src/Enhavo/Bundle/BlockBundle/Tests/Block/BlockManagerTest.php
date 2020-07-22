@@ -13,6 +13,7 @@ use Enhavo\Bundle\AppBundle\View\ViewData;
 use Enhavo\Bundle\BlockBundle\Block\AbstractBlockType;
 use Enhavo\Bundle\BlockBundle\Block\Block;
 use Enhavo\Bundle\BlockBundle\Block\BlockManager;
+use Enhavo\Bundle\BlockBundle\Block\Cleaner;
 use Enhavo\Bundle\BlockBundle\Entity\Node;
 use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
@@ -28,6 +29,7 @@ class BlockManagerTest extends TestCase
     {
         $dependencies = new BlockManagerTestDependencies();
         $dependencies->associationFinder = $this->getMockBuilder(AssociationFinder::class)->disableOriginalConstructor()->getMock();
+        $dependencies->cleaner = $this->getMockBuilder(Cleaner::class)->disableOriginalConstructor()->getMock();
         $dependencies->registry = new RegistryMock();
         $dependencies->factory = new Factory(Block::class, $dependencies->registry);
         $dependencies->configurations = [];
@@ -36,7 +38,7 @@ class BlockManagerTest extends TestCase
 
     private function createInstance(BlockManagerTestDependencies $dependencies)
     {
-        return new BlockManager($dependencies->factory, $dependencies->associationFinder, $dependencies->configurations);
+        return new BlockManager($dependencies->factory, $dependencies->associationFinder, $dependencies->cleaner, $dependencies->configurations);
     }
 
     public function testGetter()
@@ -109,6 +111,8 @@ class BlockManagerTestDependencies
     public $factory;
     /** @var AssociationFinder|\PHPUnit_Framework_MockObject_MockObject */
     public $associationFinder;
+    /** @var Cleaner|\PHPUnit_Framework_MockObject_MockObject */
+    public $cleaner;
     /** @var array */
     public $configurations;
     /** @var RegistryMock */
