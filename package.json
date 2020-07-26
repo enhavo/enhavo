@@ -26,7 +26,7 @@
     "jquery": "^3.4.1",
     "jquery-datetimepicker": "^2.5.21",
     "js-yaml": "^3.13.1",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.19",
     "moment": "^2.18.1",
     "node-sass": "^4.11.0",
     "pako": "^1.0.10",
