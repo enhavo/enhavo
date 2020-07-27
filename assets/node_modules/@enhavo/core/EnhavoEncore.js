@@ -1,4 +1,5 @@
 const Encore = require('@symfony/webpack-encore');
+const path = require('path');
 
 class EnhavoEncore
 {
@@ -29,6 +30,11 @@ class EnhavoEncore
         let config = Encore.getWebpackConfig();
         config.name = name;
         this.configs.push(config);
+
+        config.module.rules.push({
+            test: /\.service\.yaml$/,
+            use: [{loader: path.resolve(__dirname, 'DependencyInjection/ServiceLoader.js'), options: {/* ... */}}]
+        });
 
         for(let enhavoPackage of this.packages) {
             enhavoPackage.initWebpackConfig(config, name)

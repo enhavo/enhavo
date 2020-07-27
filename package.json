@@ -21,6 +21,7 @@
     "copy-webpack-plugin": "^4.5.2",
     "cropperjs": "~1.2.2",
     "fullcalendar": "^3.10.0",
+    "glob": "^7.1.6",
     "icheck": "~1.0.2",
     "jexl": "^2.1.1",
     "jquery": "^3.4.1",
@@ -47,7 +48,8 @@
     "vue-select": "^3.0.0",
     "vue-template-compiler": "^2.5.22",
     "vuedraggable": "^2.23.0",
-    "vuejs-datepicker": "^1.6.2"
+    "vuejs-datepicker": "^1.6.2",
+    "yaml": "^1.10.0"
   },
   "devDependencies": {
     "@symfony/webpack-encore": "0.22.4",

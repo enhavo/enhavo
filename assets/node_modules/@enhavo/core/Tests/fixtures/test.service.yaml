@@ -1,0 +1,8 @@
+services:
+    TestService:
+        from: '@enhavo/core/Tests/fixtures/TestService'
+    TestDependService:
+        import: TestDependService
+        from: '@enhavo/core/Tests/fixtures/TestDependService'
+        arguments:
+            - '@TestService'

@@ -62,17 +62,6 @@ class EncoreTestRegistryPackage
         config.resolve.alias['jquery'] = path.join(projectDir, 'node_modules/jquery/src/jquery');
         config.resolve.alias['jquery-ui/ui/widget'] = path.join(projectDir, 'node_modules/blueimp-file-upload/js/vendor/jquery.ui.widget.js');
 
-        config.module.rules.push({
-            test: /\.service.yaml$/,
-            use: [
-                {
-                    loader: path.resolve('../Loader/ServiceLoader.js'),
-                    options: {/* ... */}
-                }
-            ]
-        });
-
-
         return config;
     }
 }
