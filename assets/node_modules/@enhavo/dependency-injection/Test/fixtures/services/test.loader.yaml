@@ -1,0 +1,6 @@
+version: 1
+kind: Loader
+locations:
+    -
+        namespace:
+        path:
