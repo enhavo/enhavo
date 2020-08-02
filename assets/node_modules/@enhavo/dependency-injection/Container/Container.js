@@ -6,20 +6,20 @@ export class Container
         this.services = [];
     }
 
-    get(name) {
+    async get(name) {
         for (let service in this.services) {
             if (service.name === name) {
                 return service.instance;
             }
         }
 
-        let service = new Service(name, this._call('get' + name, this));
+        let service = new Service(name, await this._call('get' + name, this));
         this.services.push(service);
 
         return service.instance;
     }
 
-    _call(functionName, context /*, args */)
+    async _call(functionName, context /*, args */)
     {
         let args = Array.prototype.slice.call(arguments, 2);
         let namespaces = functionName.split(".");
@@ -27,7 +27,7 @@ export class Container
         for (let i = 0; i < namespaces.length; i++) {
             context = context[namespaces[i]];
         }
-        return context[func].apply(context, args);
+        return await context[func].apply(context, args);
     }
 }
 

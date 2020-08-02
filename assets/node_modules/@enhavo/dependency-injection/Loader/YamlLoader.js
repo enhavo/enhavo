@@ -1,66 +1,38 @@
 const YAML = require('yaml');
-const ContainerBuilder = require('./ContainerBuilder');
-const Definition = require('./Definition');
-const Reference = require('./Reference');
+const ContainerBuilder = require('@enhavo/dependency-injection/Container/ContainerBuilder');
+const AbstractLoader = require('@enhavo/dependency-injection/Loader/AbstractLoader');
 
-class YamlLoader
+class YamlLoader extends AbstractLoader
 {
     /**
      * @param {string} content
+     * @param {ContainerBuilder} builder
+     * @param {object} options
      * @return {ContainerBuilder}
      */
-    load(content) {
+    load(content, builder, options =  {}) {
         let data = YAML.parse(content);
-        if(data.services) {
-            for (let name in data.services) {
-                if (!data.services.hasOwnProperty(name)) {
-                    break;
-                }
+        options = this._configureOptions(options);
 
-                let definition = new Definition(name);
-                this.checkArguments(data.services[name], definition);
-                this.checkImport(data.services[name], definition);
-                this.checkFrom(data.services[name], definition);
-
-                ContainerBuilder.addDefinition(definition);
-            }
+        if(options.loadDefinition) {
+            this._addDefinitions(data, builder);
         }
 
-        return ContainerBuilder;
+        if(options.loadEntrypoint) {
+            this._addEntrypoints(data, builder);
+        }
+
+        return builder;
     }
 
-    /**
-     * @param {object} service
-     * @param {Definition} definition
-     */
-    checkArguments(service, definition) {
-        if(service.arguments) {
-            for (let argument of service.arguments) {
-                if(argument.startsWith('@')) {
-                    definition.addArgument(new Reference(argument));
-                }
-            }
+    _configureOptions(options) {
+        if(typeof options.loadDefinition === 'undefined') {
+            options.loadDefinition = true;
         }
-    }
-
-    /**
-     * @param {object} service
-     * @param {Definition} definition
-     */
-    checkImport(service, definition) {
-        if(service.import) {
-            definition.setImport(service.import)
+        if(typeof options.loadEntrypoint === 'undefined') {
+            options.loadDefinition = true;
         }
-    }
-
-    /**
-     * @param {object} service
-     * @param {Definition} definition
-     */
-    checkFrom(service, definition) {
-        if(service.from) {
-            definition.setFrom(service.from)
-        }
+        return options;
     }
 }
 

@@ -1,3 +1,5 @@
+const sha1 = require('sha1');
+const Tag = require('@enhavo/dependency-injection/Container/Tag');
 
 class Definition
 {
@@ -8,10 +10,13 @@ class Definition
     {
         this.name = name;
         this.arguments = [];
+        /** @type {Tag} */
         this.tags = [];
         this.calls = [];
         this.import = null;
         this.from = null;
+        this.static = false;
+        this.hash = sha1(this.name).substring(0, 8);
     }
 
     /**
@@ -38,6 +43,9 @@ class Definition
     }
 
     getFrom() {
+        if(this.from === null) {
+            return this.name;
+        }
         return this.from;
     }
 
@@ -51,6 +59,34 @@ class Definition
 
     getArguments() {
         return this.arguments;
+    }
+
+    getArgument(index) {
+        return this.arguments[index];
+    }
+
+    getHash() {
+        return this.hash;
+    }
+
+    isStatic() {
+        return this.static;
+    }
+
+    /**
+     * @param {string} name
+     */
+    hasTag(name) {
+        return null !== this.getTag(name);
+    }
+
+    getTag(name) {
+        for (let tag of this.tags) {
+            if(tag.getName() === name) {
+                return tag;
+            }
+        }
+        return null;
     }
 }
 

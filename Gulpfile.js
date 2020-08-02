@@ -12,8 +12,15 @@ gulp.task('docs', function (cb) {
   });
 });
 
+gulp.task('test:mocha', function (cb) {
+    exec('TESTBUILD=true encore dev --config webpack.test.config.js && karma start --single-run --browsers ChromeHeadless karma.conf.js && rm -rf public/build/test/*', function (err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        cb(err);
+    });
+});
 
-gulp.task('test', function (cb) {
+gulp.task('test:phpunit', function (cb) {
     exec('bin/phpunit', function (err, stdout, stderr) {
         console.log(stdout);
         console.log(stderr);

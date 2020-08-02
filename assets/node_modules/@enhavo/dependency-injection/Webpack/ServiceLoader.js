@@ -1,9 +1,14 @@
+const path = require('path');
 
-const YamlLoader = require('./YamlLoader');
-const Compiler = require('./Compiler');
+class ServiceLoader
+{
+    static path() {
+        return path.resolve(__dirname, './service-loader-function.js');
+    }
 
-module.exports = function(source) {
-    let builder = YamlLoader.load(source);
-    let compiler = new Compiler;
-    return compiler.compile(builder);
-};
+    static test() {
+        return /\.yaml$/
+    }
+}
+
+module.exports = ServiceLoader;

@@ -1,6 +1,6 @@
-const Definition = require("./Definition");
-const ContainerBuilder = require("./ContainerBuilder");
-const Reference = require("./Reference");
+const Definition = require("@enhavo/dependency-injection/Container/Definition");
+const ContainerBuilder = require("@enhavo/dependency-injection/Container/ContainerBuilder");
+const Reference = require("@enhavo/dependency-injection/Container/Reference");
 
 class Compiler
 {
@@ -11,14 +11,14 @@ class Compiler
     compile(builder)
     {
         let content = '';
-        content += this.generateImportStatements(builder) + `\n`;
+        // content += this.generateImportStatements(builder) + `\n`;
 
-        content += `import {Container} from '@enhavo/core/DependencyInjection/Container'\n`;
+        content += `import {Container} from '@enhavo/dependency-injection/Container/Container'\n`;
         content += `class CompiledContainer extends Container {\n`;
-        content += this.generateServiceGetters(builder) + `\n\n`;
+        content += this.generateServiceGetters(builder) + `\n`;
         content += `}\n\n`;
-        content += `let container = new CompiledContainer;`;
-        content += `export default container;`;
+        content += `let container = new CompiledContainer;\n`;
+        content += `export default container;\n\n`;
 
         return content;
     }
@@ -67,13 +67,15 @@ class Compiler
      */
     generateServiceGetter(definition)
     {
+
         let content = '';
-        content += `get`+definition.getName()+`() {\n`;
-        content += `return new `+(definition.getImport() ? definition.getImport() : definition.getName())+`(\n`;
+        content += `async get`+definition.getHash()+`() {\n`;
+        content += `let module = await import("`+definition.getFrom()+`")\n`;
+        content += `return `+(definition.isStatic() ? '' : 'new')+` module.`+(definition.getImport() ? definition.getImport() : `default`)+`(\n`;
 
         for (let argument of definition.getArguments()) {
             if(argument instanceof Reference) {
-                content +=  `this.get("`+argument.getName()+`")\n`;
+                content +=  `await this.get("`+argument.getName()+`")\n`;
             }
         }
 
