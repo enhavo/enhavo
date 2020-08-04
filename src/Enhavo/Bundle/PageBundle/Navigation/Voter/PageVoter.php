@@ -14,6 +14,7 @@ use Enhavo\Bundle\RoutingBundle\Entity\Route;
 use Enhavo\Bundle\NavigationBundle\Model\NodeInterface;
 use Enhavo\Bundle\PageBundle\Entity\Page;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 class PageVoter implements VoterInterface
 {
@@ -32,10 +33,10 @@ class PageVoter implements VoterInterface
             /** @var Page $page */
             $page = $subject->getContent();
             if($this->match($page)) {
-                return Voter::VOTE_IN;
+                return Voter::ACCESS_GRANTED;
             }
         }
-        return Voter::VOTE_ABSTAIN;
+        return Voter::ACCESS_ABSTAIN;
     }
 
     public function match(Page $page)
