@@ -30,7 +30,7 @@
   .view-table-row {display:flex;align-items:center;padding:0 10px;cursor:pointer;@include transition(all 300ms);border-bottom:1px solid $grey5;
     &:hover {background:$grey1;}
     &.has-children {border-left:1px solid $grey5;}
-    .view-table-row-columns {display:flex;flex:1 1 auto;padding:10px 15px 10px 20px;}
+    .view-table-row-columns {display:flex;flex:1 1 auto;padding:10px 15px 10px 20px;min-width:0;}
     &.active {background:$grey1;
       &.selected {background:$grey1;}
     }
