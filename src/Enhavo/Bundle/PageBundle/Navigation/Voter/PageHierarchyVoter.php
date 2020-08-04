@@ -15,7 +15,7 @@ use Enhavo\Bundle\PageBundle\Entity\Page;
 
 class PageHierarchyVoter implements VoterInterface
 {
-    /** @var PageVoterType */
+    /** @var PageVoter */
     protected $parent;
 
     public function vote(NodeInterface $node)
@@ -26,7 +26,6 @@ class PageHierarchyVoter implements VoterInterface
             $page = $subject->getContent();
             $descendants = $page->getDescendants();
             foreach($descendants as $descendant) {
-                /** @var parent PageVoterType */
                 if($this->parent->match($descendant)) {
                     return VoterInterface::VOTE_IN;
                 }
