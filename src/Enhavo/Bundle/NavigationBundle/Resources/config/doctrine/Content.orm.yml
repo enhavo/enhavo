@@ -9,6 +9,14 @@ Enhavo\Bundle\NavigationBundle\Entity\Content:
             generator:
                 strategy: AUTO
 
+    fields:
+        contentId:
+            type: integer
+            nullable: true
+        contentClass:
+            type: string
+            nullable: true
+
     manyToOne:
         node:
             targetEntity: Enhavo\Bundle\NavigationBundle\Model\NodeInterface
