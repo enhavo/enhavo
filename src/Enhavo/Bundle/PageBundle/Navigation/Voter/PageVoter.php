@@ -32,10 +32,10 @@ class PageVoter implements VoterInterface
             /** @var Page $page */
             $page = $subject->getContent();
             if($this->match($page)) {
-                return Voter::VOTE_IN;
+                return VoterInterface::VOTE_IN;
             }
         }
-        return Voter::VOTE_ABSTAIN;
+        return VoterInterface::VOTE_ABSTAIN;
     }
 
     public function match(Page $page)

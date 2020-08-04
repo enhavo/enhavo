@@ -48,7 +48,7 @@ class NodeRenderer
     public function render(NodeInterface $node, $renderSet = null)
     {
         $item = $this->itemManager->getNavItem($node->getName());
-        $template = $item->getRenderTemplate();
+        $template = $item->getTemplate();
 
         if($renderSet && isset($this->renderSets[$renderSet][$node->getName()])) {
             $template = $this->renderSets[$renderSet][$node->getName()];
