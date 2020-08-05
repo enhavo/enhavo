@@ -1,0 +1,14 @@
+enhavo_translation:
+    metadata:
+        Enhavo\Bundle\NavigationBundle\Entity\Link:
+            properties:
+                link:
+                    type: text
+        Enhavo\Bundle\NavigationBundle\Entity\Navigation:
+            properties:
+                name:
+                    type: text
+        Enhavo\Bundle\NavigationBundle\Entity\Node:
+            properties:
+                label:
+                    type: text
