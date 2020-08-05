@@ -8,17 +8,31 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Translation;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Enhavo\Bundle\TranslationBundle\Translation\Type\TranslationType;
+use Enhavo\Component\Type\AbstractType;
 
-abstract class AbstractTranslationType implements TranslationTypeInterface
+abstract class AbstractTranslationType extends AbstractType implements TranslationTypeInterface
 {
-    public function configureOptions(OptionsResolver $resolver)
-    {
+    /** @var TranslationTypeInterface */
+    protected $parent;
 
+    public function setTranslation(array $options, $data, $property, $locale, $value)
+    {
+        $this->parent->setTranslation($options, $data, $property, $locale, $value);
+    }
+
+    public function getTranslation(array $options, $data, $property, $locale)
+    {
+        $this->parent->getTranslation($options, $data, $property, $locale);
     }
 
     public function getValidationConstraints(array $options, $data, $property, $locale)
     {
-        return [];
+        $this->parent->getValidationConstraints($options, $data, $property, $locale);
+    }
+
+    public static function getParentType(): ?string
+    {
+        return TranslationType::class;
     }
 }

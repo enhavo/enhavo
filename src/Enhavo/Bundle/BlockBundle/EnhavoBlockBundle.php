@@ -2,9 +2,10 @@
 
 namespace Enhavo\Bundle\BlockBundle;
 
+use Enhavo\Bundle\BlockBundle\Block\Block;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Enhavo\Bundle\AppBundle\Type\TypeCompilerPass;
+use Enhavo\Component\Type\TypeCompilerPass;
 use Symfony\Component\DependencyInjection\Definition;
 use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
 use Doctrine\Common\Persistence\Mapping\Driver\DefaultFileLocator;
@@ -27,7 +28,7 @@ class EnhavoBlockBundle extends Bundle
         ));
 
         $container->addCompilerPass(
-            new TypeCompilerPass('enhavo_block.block_collector', 'enhavo.block')
+            new TypeCompilerPass('Block', 'enhavo_block.block', Block::class)
         );
     }
 

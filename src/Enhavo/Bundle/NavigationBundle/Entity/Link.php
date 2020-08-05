@@ -8,19 +8,30 @@
 
 namespace Enhavo\Bundle\NavigationBundle\Entity;
 
-use Sylius\Component\Resource\Model\ResourceInterface;
+use Enhavo\Bundle\NavigationBundle\Model\NodeInterface;
+use Enhavo\Bundle\NavigationBundle\Model\SubjectInterface;
 
-class Link implements ResourceInterface
+class Link implements SubjectInterface
 {
-    /**
-     * @var integer
-     */
+    /** @var integer */
     private $id;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $link;
+
+    /** @var string|null */
+    private $target;
+
+    /** @var Node|null */
+    private $node;
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * @return string
@@ -39,10 +50,34 @@ class Link implements ResourceInterface
     }
 
     /**
-     * @return int
+     * @return string|null
      */
-    public function getId()
+    public function getTarget(): ?string
     {
-        return $this->id;
+        return $this->target;
+    }
+
+    /**
+     * @param string|null $target
+     */
+    public function setTarget(?string $target): void
+    {
+        $this->target = $target;
+    }
+
+    /**
+     * @return NodeInterface|null
+     */
+    public function getNode(): ?NodeInterface
+    {
+        return $this->node;
+    }
+
+    /**
+     * @param NodeInterface|null $node
+     */
+    public function setNode(?NodeInterface $node): void
+    {
+        $this->node = $node;
     }
 }

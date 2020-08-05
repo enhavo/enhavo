@@ -1,0 +1,44 @@
+services:
+    Enhavo\Bundle\BlockBundle\Block\Type\BaseBlockType:
+        tags:
+            - { name: enhavo_block.block }
+
+    Enhavo\Bundle\BlockBundle\Block\Type\GalleryBlockType:
+        tags:
+            - { name: enhavo_block.block }
+
+    Enhavo\Bundle\BlockBundle\Block\Type\PictureBlockType:
+        tags:
+            - { name: enhavo_block.block }
+
+    Enhavo\Bundle\BlockBundle\Block\Type\TextBlockType:
+        tags:
+            - { name: enhavo_block.block }
+
+    Enhavo\Bundle\BlockBundle\Block\Type\TextPictureBlockType:
+        tags:
+            - { name: enhavo_block.block }
+
+    Enhavo\Bundle\BlockBundle\Block\Type\VideoBlockType:
+        tags:
+            - { name: enhavo_block.block }
+
+    Enhavo\Bundle\BlockBundle\Block\Type\BlockquoteBlockType:
+        tags:
+            - { name: enhavo_block.block }
+
+    Enhavo\Bundle\BlockBundle\Block\Type\TemplateBlockType:
+        tags:
+            - { name: enhavo_block.block }
+
+    Enhavo\Bundle\BlockBundle\Block\Type\OneColumnBlockType:
+        tags:
+            - { name: enhavo_block.block }
+
+    Enhavo\Bundle\BlockBundle\Block\Type\TwoColumnBlockType:
+        tags:
+            - { name: enhavo_block.block }
+
+    Enhavo\Bundle\BlockBundle\Block\Type\ThreeColumnBlockType:
+        tags:
+            - { name: enhavo_block.block }

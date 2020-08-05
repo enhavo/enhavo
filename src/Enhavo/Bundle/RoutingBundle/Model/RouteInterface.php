@@ -29,4 +29,92 @@ interface RouteInterface extends RouteObjectInterface
     public function setName($name);
 
     public function getName();
+
+
+    /**
+     * Sets an option value.
+     *
+     * This method implements a fluent interface.
+     *
+     * @param string $name  An option name
+     * @param mixed  $value The option value
+     *
+     * @return $this
+     */
+    public function setOption($name, $value);
+
+    /**
+     * Get an option value.
+     *
+     * @param string $name An option name
+     *
+     * @return mixed The option value or null when not given
+     */
+    public function getOption($name);
+
+    /**
+     * Checks if an option has been set.
+     *
+     * @param string $name An option name
+     *
+     * @return bool true if the option is set, false otherwise
+     */
+    public function hasOption($name);
+
+    /**
+     * Returns the defaults.
+     *
+     * @return array The defaults
+     */
+    public function getDefaults();
+
+    /**
+     * Sets the defaults.
+     *
+     * This method implements a fluent interface.
+     *
+     * @param array $defaults The defaults
+     *
+     * @return $this
+     */
+    public function setDefaults(array $defaults);
+
+    /**
+     * Adds defaults.
+     *
+     * This method implements a fluent interface.
+     *
+     * @param array $defaults The defaults
+     *
+     * @return $this
+     */
+    public function addDefaults(array $defaults);
+
+    /**
+     * Gets a default value.
+     *
+     * @param string $name A variable name
+     *
+     * @return mixed The default value or null when not given
+     */
+    public function getDefault($name);
+
+    /**
+     * Checks if a default value is set for the given variable.
+     *
+     * @param string $name A variable name
+     *
+     * @return bool true if the default value is set, false otherwise
+     */
+    public function hasDefault($name);
+
+    /**
+     * Sets a default value.
+     *
+     * @param string $name    A variable name
+     * @param mixed  $default The default value
+     *
+     * @return $this
+     */
+    public function setDefault($name, $default);
 }

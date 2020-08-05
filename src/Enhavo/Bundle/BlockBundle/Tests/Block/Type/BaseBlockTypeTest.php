@@ -16,10 +16,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BaseBlockTypeTest extends TestCase
 {
-    public function testGetType()
+    public function testGetName()
     {
-        $type = new BaseBlockType();
-        $this->assertEquals('base', $type->getType());
+        $this->assertEquals('base', BaseBlockType::getName());
     }
 
     public function testConfigureOption()
@@ -31,7 +30,6 @@ class BaseBlockTypeTest extends TestCase
             'label' => 'label',
             'model' => 'model',
             'template' => 'template',
-            'repository' => 'repository',
         ]);
         $this->assertIsArray($options);
     }

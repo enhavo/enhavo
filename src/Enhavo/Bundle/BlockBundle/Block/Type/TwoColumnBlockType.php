@@ -22,19 +22,17 @@ class TwoColumnBlockType extends AbstractBlockType
 
         $optionsResolver->setDefaults([
             'model' => TwoColumnBlock::class,
-            'parent' => TwoColumnBlock::class,
             'form' => TwoColumnBlockFormType::class,
             'factory' => TwoColumnBlockFactory::class,
-            'repository' => 'EnhavoBlockBundle:TwoColumnBlock',
             'template' => 'theme/block/two-column.html.twig',
             'form_template' => '@EnhavoBlock/admin/form/block/block_fields.html.twig',
             'label' => 'two_column.label.two_column',
-            'translationDomain' => 'EnhavoBlockBundle',
+            'translation_domain' => 'EnhavoBlockBundle',
             'groups' => ['default', 'layout']
         ]);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'two_column';
     }

@@ -10,24 +10,20 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ArticleTeaserBlockType extends AbstractBlockType
 {
-    public function configureOptions(OptionsResolver $optionsResolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        parent::configureOptions($optionsResolver);
-
-        $optionsResolver->setDefaults([
+        $resolver->setDefaults([
             'model' => ArticleTeaserBlock::class,
-            'parent' => ArticleTeaserBlock::class,
             'form' => ArticleTeaserBlockFormType::class,
             'factory' => ArticleTeaserBlockFactory::class,
-            'repository' => 'ArticleTeaserBlock::class',
             'template' => 'theme/block/article-teaser.html.twig',
             'label' => 'article.label.article_teaser',
-            'translationDomain' => 'EnhavoArticleBundle',
+            'translation_domain' => 'EnhavoArticleBundle',
             'groups' => ['default', 'content']
         ]);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'article_teaser';
     }

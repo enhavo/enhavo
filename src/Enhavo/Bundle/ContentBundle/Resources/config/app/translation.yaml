@@ -4,23 +4,17 @@ enhavo_translation:
             properties:
                 title:
                     type: text
-                    form_type: Symfony\Component\Form\Extension\Core\Type\TextType
                     constraints:
                         - Symfony\Component\Validator\Constraints\NotBlank
                 metaDescription:
                     type: text
-                    form_type: Symfony\Component\Form\Extension\Core\Type\TextareaType
                 pageTitle:
                     type: text
-                    form_type: Symfony\Component\Form\Extension\Core\Type\TextType
                 openGraphTitle:
                     type: text
-                    form_type: Symfony\Component\Form\Extension\Core\Type\TextType
                 openGraphDescription:
                     type: text
-                    form_type: Symfony\Component\Form\Extension\Core\Type\TextareaType
                 route:
                     type: route
-                    form_type: Enhavo\Bundle\RoutingBundle\Form\Type\RouteType
                 slug:
                     type: slug

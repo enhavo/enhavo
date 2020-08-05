@@ -15,9 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SlugTranslationType extends AbstractTranslationType
 {
-    /**
-     * @var SlugTranslator
-     */
+    /** @var SlugTranslator */
     private $slugTranslator;
 
     /**
@@ -27,11 +25,6 @@ class SlugTranslationType extends AbstractTranslationType
     public function __construct(SlugTranslator $slugTranslator)
     {
         $this->slugTranslator = $slugTranslator;
-    }
-
-    public function getFormType(array $options)
-    {
-        return $options['form_type'];
     }
 
     public function setTranslation(array $options, $data, $property, $locale, $value)
@@ -44,15 +37,7 @@ class SlugTranslationType extends AbstractTranslationType
         return $this->slugTranslator->getTranslation($data, $property, $locale);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        parent::configureOptions($resolver);
-        $resolver->setDefaults([
-            'form_type' => TextType::class
-        ]);
-    }
-
-    public function getType()
+    public static function getName(): ?string
     {
         return 'slug';
     }

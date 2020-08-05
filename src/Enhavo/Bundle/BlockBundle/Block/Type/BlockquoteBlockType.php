@@ -16,24 +16,20 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BlockquoteBlockType extends AbstractBlockType
 {
-    public function configureOptions(OptionsResolver $optionsResolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        parent::configureOptions($optionsResolver);
-
-        $optionsResolver->setDefaults([
+        $resolver->setDefaults([
             'model' => BlockquoteBlock::class,
-            'parent' => BlockquoteBlock::class,
             'form' => BlockquoteBlockFormType::class,
             'factory' =>  BlockquoteBlockFactory::class,
-            'repository' => 'EnhavoBlockBundle:BlockquoteBlock',
             'template' => 'theme/block/blockquote.html.twig',
             'label' =>  'blockquoteText.label.blockquoteText',
-            'translationDomain' => 'EnhavoBlockBundle',
+            'translation_domain' => 'EnhavoBlockBundle',
             'groups' => ['default', 'content', 'simple']
         ]);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'blockquote';
     }

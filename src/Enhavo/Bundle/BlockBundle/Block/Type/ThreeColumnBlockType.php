@@ -18,23 +18,18 @@ class ThreeColumnBlockType extends AbstractBlockType
 {
     public function configureOptions(OptionsResolver $optionsResolver)
     {
-        parent::configureOptions($optionsResolver);
-
         $optionsResolver->setDefaults([
             'model' => ThreeColumnBlock::class,
-            'parent' => ThreeColumnBlock::class,
             'form' => ThreeColumnBlockFormType::class,
             'factory' => ThreeColumnBlockFactory::class,
-            'repository' => 'EnhavoBlockBundle:ThreeColumnBlock',
             'template' => 'theme/block/three-column.html.twig',
-            'form_template' => '@EnhavoBlock/admin/form/block/block_fields.html.twig',
             'label' => 'three_column.label.three_column',
-            'translationDomain' => 'EnhavoBlockBundle',
+            'translation_domain' => 'EnhavoBlockBundle',
             'groups' => ['default', 'layout']
         ]);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'three_column';
     }

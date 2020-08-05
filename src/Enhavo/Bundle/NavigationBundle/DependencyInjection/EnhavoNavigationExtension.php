@@ -25,14 +25,9 @@ class EnhavoNavigationExtension extends AbstractResourceExtension implements Pre
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $this->registerResources('enhavo_navigation', $config['driver'], $config['resources'], $container);
 
-        $container->setParameter('enhavo_navigation.items', $config['items']);
+        $container->setParameter('enhavo_navigation.nav_items', $config['nav_items']);
         $container->setParameter('enhavo_navigation.render.sets', $config['render']['sets']);
-
-        $container->setParameter('enhavo_navigation.default.model', $config['default']['model']);
-        $container->setParameter('enhavo_navigation.default.form', $config['default']['form']);
-        $container->setParameter('enhavo_navigation.default.repository', $config['default']['repository']);
-        $container->setParameter('enhavo_navigation.default.factory', $config['default']['factory']);
-        $container->setParameter('enhavo_navigation.default.template', $config['default']['template']);
+        $container->setParameter('enhavo_navigation.voters', $config['voters']);
 
         $configFiles = array(
             'services.yaml',

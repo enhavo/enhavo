@@ -8,74 +8,37 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Form\Type;
 
+use Enhavo\Bundle\TranslationBundle\Form\Transformer\TranslationValueTransformer;
 use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
 use Enhavo\Bundle\TranslationBundle\Validator\Constraints\Translation;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormErrorIterator;
-use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TranslationType extends AbstractType
 {
-    /**
-     * @var FormFactory
-     */
-    private $formFactory;
-
-    /**
-     * @var TranslationManager
-     */
+    /** @var TranslationManager */
     private $translationManager;
 
     /**
      * TranslationType constructor.
-     * @param FormFactory $formFactory
      * @param TranslationManager $translationManager
      */
-    public function __construct(FormFactory $formFactory, TranslationManager $translationManager)
+    public function __construct(TranslationManager $translationManager)
     {
-        $this->formFactory = $formFactory;
         $this->translationManager = $translationManager;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        /** @var FormInterface $child */
-        $form = $options['form'];
-        $formData = $options['form_data'];
-        $translationManager = $this->translationManager;
+        $builder->addModelTransformer(new TranslationValueTransformer($this->translationManager, $options['translation_data'], $options['translation_property']));
 
-        $builder->addModelTransformer(new CallbackTransformer(
-            function ($originalDescription) use($translationManager, $form, $formData) {
-                $data = [
-                    $translationManager->getDefaultLocale() => $originalDescription,
-                ];
-
-                $translations = $translationManager->getTranslations($formData, $form->getName());
-                foreach($translations as $locale => $value) {
-                    $data[$locale] = $value;
-                }
-
-                return $data;
-            },
-            function ($submittedDescription) use($translationManager, $form, $formData) {
-                $data = $submittedDescription;
-                foreach($data as $locale => $value) {
-                    if($locale !== $translationManager->getDefaultLocale()) {
-                        $translationManager->setTranslation($formData, $form->getName(), $locale, $value);
-                    }
-                }
-                return $data[$translationManager->getDefaultLocale()];
-            }
-        ));
-
-        foreach($translationManager->getLocales() as $locale) {
-            $builder->add($locale, $options['form_type'], $form->getConfig()->getOptions());
+        foreach($this->translationManager->getLocales() as $locale) {
+            $builder->add($locale, $options['form_type'], $options['form_options']);
         }
     }
 
@@ -84,7 +47,7 @@ class TranslationType extends AbstractType
         /** @var FormErrorIterator $errors */
         $errors = $view->vars['errors'];
 
-        $newErrors= [];
+        $newErrors = [];
         /** @var FormError $error */
         foreach($errors as $error) {
             if(!preg_match('/^\(.+\) /', $error->getMessage())) {
@@ -115,11 +78,16 @@ class TranslationType extends AbstractType
             ]
         ]);
 
-        $resolver->setRequired(['form', 'form_type', 'form_data']);
+        $resolver->setRequired([
+            'translation_data',
+            'translation_property',
+            'form_options',
+            'form_type'
+        ]);
     }
 
     public function getBlockPrefix()
     {
-        return 'enhavo_translation_tranlsation';
+        return 'enhavo_translation_translation';
     }
 }

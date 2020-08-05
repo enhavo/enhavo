@@ -10,13 +10,10 @@ namespace Enhavo\Bundle\TranslationBundle\Translation\Type;
 
 use Enhavo\Bundle\TranslationBundle\Translation\AbstractTranslationType;
 use Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TextTranslationType extends AbstractTranslationType
 {
-    /**
-     * @var TextTranslator
-     */
+    /** @var TextTranslator */
     private $translator;
 
     /**
@@ -26,11 +23,6 @@ class TextTranslationType extends AbstractTranslationType
     public function __construct(TextTranslator $translator)
     {
         $this->translator = $translator;
-    }
-
-    public function getFormType(array $options)
-    {
-        return $options['form_type'];
     }
 
     public function setTranslation(array $options, $data, $property, $locale, $value)
@@ -43,22 +35,8 @@ class TextTranslationType extends AbstractTranslationType
         return $this->translator->getTranslation($data, $property, $locale);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'text';
-    }
-
-   public function getValidationConstraints(array $options, $data, $property, $locale)
-    {
-        return $options['constraints'];
-    }
-
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        parent::configureOptions($resolver);
-        $resolver->setDefaults([
-            'constraints' => []
-        ]);
-        $resolver->setRequired(['form_type']);
     }
 }

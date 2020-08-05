@@ -6,9 +6,9 @@ import DateTimeLoader from "@enhavo/form/Loader/DateTimeLoader";
 import DateLoader from "@enhavo/form/Loader/DateLoader";
 import WysiwygLoader from "@enhavo/form/Loader/WysiwygLoader";
 import ListLoader from "@enhavo/form/Loader/ListLoader";
-import DynamicFormLoader from "@enhavo/form/Loader/DynamicFormLoader";
 import AutoCompleteLoader from "@enhavo/form/Loader/AutoCompleteLoader";
 import WeekendDateLoader from "@enhavo/form/Loader/WeekendDateLoader";
+import PolyCollectionLoader from "@enhavo/form/Loader/PolyCollectionLoader";
 
 export default class FormRegistryPackage extends RegistryPackage
 {
@@ -22,7 +22,7 @@ export default class FormRegistryPackage extends RegistryPackage
         this.register(new DateLoader());
         this.register(new WysiwygLoader());
         this.register(new ListLoader());
-        this.register(new DynamicFormLoader(application));
+        this.register(new PolyCollectionLoader());
         this.register(new AutoCompleteLoader(application));
     }
 }

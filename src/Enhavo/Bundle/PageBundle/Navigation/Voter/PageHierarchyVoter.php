@@ -8,28 +8,29 @@
 
 namespace Enhavo\Bundle\PageBundle\Navigation\Voter;
 
+use Enhavo\Bundle\NavigationBundle\Entity\Content;
 use Enhavo\Bundle\NavigationBundle\Model\NodeInterface;
-use Enhavo\Bundle\NavigationBundle\Node\Voter\VoterInterface;
+use Enhavo\Bundle\NavigationBundle\Voter\VoterInterface;
 use Enhavo\Bundle\PageBundle\Entity\Page;
 
-class PageHierarchyVoter extends PageVoter
+class PageHierarchyVoter implements VoterInterface
 {
+    /** @var PageVoter */
+    protected $parent;
+
     public function vote(NodeInterface $node)
     {
-        $content = $node->getContent();
-        if($node->getType() === 'page' && $content instanceof Page) {
-            $descendants  = $content->getDescendants();
+        $subject = $node->getSubject();
+        if($node->getName() === 'page' && $subject instanceof Content && $subject->getContent()) {
+            /** @var Page $page */
+            $page = $subject->getContent();
+            $descendants = $page->getDescendants();
             foreach($descendants as $descendant) {
-                if($this->match($descendant)) {
+                if($this->parent->match($descendant)) {
                     return VoterInterface::VOTE_IN;
                 }
             }
         }
         return VoterInterface::VOTE_ABSTAIN;
-    }
-
-    public function getType()
-    {
-        return 'page_hierarchy';
     }
 }

@@ -10,7 +10,7 @@ namespace Enhavo\Bundle\MediaBundle\Media;
 
 use Doctrine\ORM\EntityManagerInterface;
 
-use Enhavo\Bundle\AppBundle\Util\DoctrineReferenceFinder;
+use Enhavo\Bundle\DoctrineExtensionBundle\Util\AssociationFinder;
 use Enhavo\Bundle\MediaBundle\Entity\Format;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\MediaBundle\Model\FormatInterface;
@@ -46,9 +46,9 @@ class MediaManager
     private $provider;
 
     /**
-     * @var DoctrineReferenceFinder
+     * @var AssociationFinder
      */
-    private $doctrineReferenceFinder;
+    private $associationFinder;
 
     /**
      * MediaManager constructor.
@@ -58,7 +58,7 @@ class MediaManager
      * @param FileRepository $fileRepository
      * @param EntityManagerInterface $em
      * @param ProviderInterface $provider
-     * @param DoctrineReferenceFinder $doctrineReferenceFinder
+     * @param AssociationFinder $associationFinder
      */
     public function __construct(
         FormatManager $formatManager,
@@ -66,14 +66,14 @@ class MediaManager
         FileRepository $fileRepository,
         EntityManagerInterface $em,
         ProviderInterface $provider,
-        DoctrineReferenceFinder $doctrineReferenceFinder
+        AssociationFinder $associationFinder
     ) {
         $this->formatManager = $formatManager;
         $this->storage = $storage;
         $this->fileRepository = $fileRepository;
         $this->em = $em;
         $this->provider = $provider;
-        $this->doctrineReferenceFinder = $doctrineReferenceFinder;
+        $this->associationFinder = $associationFinder;
     }
 
     /**
@@ -195,6 +195,6 @@ class MediaManager
      */
     public function findReferencesTo(FileInterface $file)
     {
-        return $this->doctrineReferenceFinder->findReferencesTo($file, FileInterface::class, [Format::class]);
+        return $this->associationFinder->findAssociationsTo($file, FileInterface::class, [Format::class]);
     }
 }

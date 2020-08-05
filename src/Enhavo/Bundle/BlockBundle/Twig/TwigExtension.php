@@ -8,8 +8,8 @@
 
 namespace Enhavo\Bundle\BlockBundle\Twig;
 
+use Enhavo\Bundle\BlockBundle\Renderer\BlockRendererInterface;
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
-use Enhavo\Bundle\BlockBundle\Renderer\BlockRenderer;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -19,11 +19,11 @@ class TwigExtension extends AbstractExtension
     use ContainerAwareTrait;
 
     /**
-     * @var BlockRenderer
+     * @var BlockRendererInterface
      */
     private $renderer;
 
-    public function __construct(BlockRenderer $renderer)
+    public function __construct(BlockRendererInterface $renderer)
     {
         $this->renderer = $renderer;
     }

@@ -16,24 +16,20 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class GalleryBlockType extends AbstractBlockType
 {
-    public function configureOptions(OptionsResolver $optionsResolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        parent::configureOptions($optionsResolver);
-
-        $optionsResolver->setDefaults([
+        $resolver->setDefaults([
             'model' => GalleryBlock::class,
-            'parent' => GalleryBlock::class,
             'form' => GalleryBlockFormType::class,
             'factory' => GalleryBlockFactory::class,
-            'repository' => 'EnhavoBlockBundle:GalleryBlock',
             'template' => 'theme/block/gallery.html.twig',
             'label' => 'gallery.label.gallery',
-            'translationDomain' => 'EnhavoBlockBundle',
+            'translation_domain' => 'EnhavoBlockBundle',
             'groups' => ['default', 'content']
         ]);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'gallery';
     }

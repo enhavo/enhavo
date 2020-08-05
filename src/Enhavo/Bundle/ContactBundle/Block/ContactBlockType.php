@@ -12,22 +12,18 @@ class ContactBlockType extends AbstractBlockType
 {
     public function configureOptions(OptionsResolver $optionsResolver)
     {
-        parent::configureOptions($optionsResolver);
-
         $optionsResolver->setDefaults([
             'model' => ContactBlock::class,
-            'parent' => ContactBlock::class,
             'form' => ContactBlockFormType::class,
             'factory' => ContactBlockFactory::class,
-            'repository' => 'EnhavoContactBundle:ContactBlock',
             'template' => 'EnhavoContactBundle:Theme/Block:contact.html.twig',
             'label' => 'Contact',
-            'translationDomain' => 'EnhavoContactBundle',
+            'translation_domain' => 'EnhavoContactBundle',
             'groups' => ['default', 'content']
         ]);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'contact';
     }

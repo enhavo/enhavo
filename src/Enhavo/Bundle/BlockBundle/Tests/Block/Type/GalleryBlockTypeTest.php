@@ -17,8 +17,7 @@ class GalleryBlockTypeTest extends TestCase
 {
     public function testGetType()
     {
-        $type = new GalleryBlockType();
-        $this->assertEquals('gallery', $type->getType());
+        $this->assertEquals('gallery', GalleryBlockType::getName());
     }
 
     public function testConfigureOption()

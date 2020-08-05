@@ -3,31 +3,27 @@ namespace Enhavo\Bundle\NavigationBundle\Twig;
 
 use Enhavo\Bundle\NavigationBundle\Entity\Node;
 use Enhavo\Bundle\NavigationBundle\Model\NodeInterface;
-use Enhavo\Bundle\NavigationBundle\Node\NodeManager;
+use Enhavo\Bundle\NavigationBundle\Navigation\NavigationManager;
 use Enhavo\Bundle\NavigationBundle\Renderer\NodeRenderer;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 class TwigExtension extends AbstractExtension
 {
-    /**
-     * @var NodeManager
-     */
-    private $nodeManager;
+    /** @var NavigationManager */
+    private $navigationManager;
 
-    /**
-     * @var NodeRenderer
-     */
+    /** @var NodeRenderer */
     private $nodeRenderer;
 
     /**
      * TwigExtension constructor.
-     * @param NodeManager $nodeManager
+     * @param NavigationManager $navigationManager
      * @param NodeRenderer $nodeRenderer
      */
-    public function __construct(NodeManager $nodeManager, NodeRenderer $nodeRenderer)
+    public function __construct(NavigationManager $navigationManager, NodeRenderer $nodeRenderer)
     {
-        $this->nodeManager = $nodeManager;
+        $this->navigationManager = $navigationManager;
         $this->nodeRenderer = $nodeRenderer;
     }
 
@@ -46,7 +42,7 @@ class TwigExtension extends AbstractExtension
      */
     public function nodeIsActive(Node $node, $options = [])
     {
-        return $this->nodeManager->isActive($node, $options);
+        return $this->navigationManager->isActive($node, $options);
     }
 
     public function renderNode(NodeInterface $node, $renderSet = null)

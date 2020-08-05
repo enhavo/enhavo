@@ -35,6 +35,7 @@ class Registry implements RegistryInterface
     public function register(string $class, string $id)
     {
         $this->checkInterface($class);
+        /** @var string|TypeInterface $class */
         $this->checkClassAlreadyExists($class);
         $this->checkNameExists($class::getName());
         $this->checkParentType($class);
@@ -48,8 +49,7 @@ class Registry implements RegistryInterface
      */
     private function checkInterface($class)
     {
-        $reflection = new \ReflectionClass($class);
-        if (!$reflection->implementsInterface(TypeInterface::class)) {
+        if (!in_array(TypeInterface::class, class_implements($class))) {
             throw TypeNotValidException::invalidInterface($class);
         }
     }
@@ -79,11 +79,12 @@ class Registry implements RegistryInterface
     }
 
     /**
-     * @param string $class
+     * @param string|TypeInterface $class
      * @throws TypeNotValidException
      */
     private function checkParentType($class)
     {
+        /** @var string|TypeInterface $parentClass */
         $parentClass = $class::getParentType();
         $classes = [$class];
         while ($parentClass !== null) {

@@ -8,12 +8,12 @@
 
 namespace Enhavo\Bundle\BlockBundle\Block;
 
-use Enhavo\Bundle\AppBundle\Exception\ResolverException;
-use Enhavo\Bundle\AppBundle\Type\TypeCollector;
-use Enhavo\Bundle\AppBundle\Util\DoctrineReferenceFinder;
+use Enhavo\Bundle\AppBundle\Output\OutputLoggerInterface;
 use Enhavo\Bundle\BlockBundle\Factory\AbstractBlockFactory;
 use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
+use Enhavo\Bundle\DoctrineExtensionBundle\Util\AssociationFinder;
+use Enhavo\Component\Type\FactoryInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -22,25 +22,27 @@ class BlockManager
     use ContainerAwareTrait;
 
     /**
-     * @var DoctrineReferenceFinder
+     * @var AssociationFinder
      */
-    private $doctrineReferenceFinder;
+    private $associationFinder;
+
+    /**
+     * @var Cleaner
+     */
+    private $cleaner;
 
     /**
      * @var Block[]
      */
     private $blocks = [];
 
-    public function __construct(TypeCollector $collector, DoctrineReferenceFinder $doctrineReferenceFinder, $configurations)
+    public function __construct(FactoryInterface $factory, AssociationFinder $associationFinder, Cleaner $cleaner, $configurations)
     {
-        $this->doctrineReferenceFinder = $doctrineReferenceFinder;
+        $this->associationFinder = $associationFinder;
+        $this->cleaner = $cleaner;
 
         foreach($configurations as $name => $options) {
-            /** @var BlockTypeInterface $configuration */
-            $configuration = $collector->getType($options['type']);
-            unset($options['type']);
-            $block = new Block($configuration, $name, $options);
-            $this->blocks[$name] = $block;
+            $this->blocks[$name] = $factory->create($options);
         }
     }
 
@@ -116,10 +118,22 @@ class BlockManager
         if (!$rootNode) {
             return null;
         }
-        $references = $this->doctrineReferenceFinder->findReferencesTo($rootNode, NodeInterface::class, [NodeInterface::class, BlockInterface::class]);
+        $references = $this->associationFinder->findAssociationsTo($rootNode, NodeInterface::class, [NodeInterface::class, BlockInterface::class]);
         if (count($references) > 0) {
             return $references[0];
         }
         return null;
+    }
+
+    /**
+     * Search database for orphaned or erroneous nodes and blocks and delete them.
+     *
+     * @param OutputLoggerInterface? $outputLogger
+     * @param bool $dryRun
+     * @throws \Exception
+     */
+    public function cleanUp($outputLogger = null, $dryRun = false)
+    {
+        $this->cleaner->clean($outputLogger, $dryRun);
     }
 }

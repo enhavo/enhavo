@@ -8,9 +8,8 @@
 
 namespace Enhavo\Bundle\NavigationBundle\Factory;
 
-use Enhavo\Bundle\FormBundle\DynamicForm\FactoryInterface;
 
-class Factory implements FactoryInterface
+class Factory
 {
     /**
      * @var string

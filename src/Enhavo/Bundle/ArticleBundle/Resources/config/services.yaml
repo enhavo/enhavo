@@ -34,18 +34,12 @@ services:
             - { name: enhavo.statistic, alias: article }
 
     Enhavo\Bundle\ArticleBundle\Block\ArticleListBlockType:
-        public: true
-        calls:
-            - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.block, alias: article_list }
+            - { name: enhavo_block.block }
 
     Enhavo\Bundle\ArticleBundle\Block\ArticleTeaserBlockType:
-        public: true
-        calls:
-            - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.block, alias: article_teaser }
+            - { name: enhavo_block.block }
 
     Enhavo\Bundle\ArticleBundle\Widget\ArticleListType:
         public: true
@@ -71,3 +65,9 @@ services:
             - '@enhavo_routing.factory.route'
             - '@enhavo_media.factory.file'
 
+    Enhavo\Bundle\ArticleBundle\Provider\TotalProvider:
+        public: true
+        arguments:
+            - '@enhavo_article.repository.article'
+        tags:
+            - { name: enhavo.provider, alias: article.total }

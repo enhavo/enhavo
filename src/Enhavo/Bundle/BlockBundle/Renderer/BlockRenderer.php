@@ -14,7 +14,7 @@ use Enhavo\Bundle\BlockBundle\Exception\RenderException;
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 use Symfony\Component\Templating\EngineInterface;
 
-class BlockRenderer
+class BlockRenderer implements BlockRendererInterface
 {
     /**
      * @var BlockManager

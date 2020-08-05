@@ -117,8 +117,5 @@ services:
             - { name: enhavo.action, alias: newsletter_stats }
 
     Enhavo\Bundle\NewsletterBundle\Block\SubscribeBlockType:
-        public: true
-        calls:
-            - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.block, alias: newsletter_subscribe }
+            - { name: enhavo_block.block }

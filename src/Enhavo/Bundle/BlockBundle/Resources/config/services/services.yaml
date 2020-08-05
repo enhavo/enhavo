@@ -1,10 +1,4 @@
 services:
-    Enhavo\Bundle\BlockBundle\Form\Type\BlocksType:
-        arguments:
-            - Enhavo\Bundle\BlockBundle\Entity\Node
-        tags:
-            - { name: form.type }
-
     Enhavo\Bundle\BlockBundle\Twig\TwigExtension:
         arguments:
             - '@Enhavo\Bundle\BlockBundle\Renderer\BlockRenderer'
@@ -15,39 +9,28 @@ services:
 
     Enhavo\Bundle\BlockBundle\Renderer\BlockRenderer:
         arguments:
-            - '@enhavo_block.block.manager'
+            - '@Enhavo\Bundle\BlockBundle\Block\BlockManager'
             - '%enhavo_block.render.sets%'
             - '@enhavo_app.template.manager'
             - '@templating'
-
-    enhavo_block.resolver.block_resolver:
-        public: true
-        class: Enhavo\Bundle\BlockBundle\Resolver\BlockResolver
-        calls:
-            - ['setContainer', ['@service_container']]
-        arguments:
-            - '@form.factory'
-            - '@enhavo_block.factory.block'
-            - '@enhavo_block.block.manager'
-            - '@enhavo_block.factory.node'
-
-    enhavo_block.block_collector:
-        class: Enhavo\Bundle\AppBundle\Type\TypeCollector
-        arguments:
-            - '@service_container'
-            - 'Block'
 
     validator.video_url_validator:
         class:  Enhavo\Bundle\BlockBundle\Validator\Constraints\VideoUrlValidator
         tags:
             - { name: validator.constraint_validator, alias: video_url }
 
-    enhavo_block.block.manager:
-        class: Enhavo\Bundle\BlockBundle\Block\BlockManager
-        public: true
+    Enhavo\Bundle\BlockBundle\Block\BlockManager:
         arguments:
-            - '@enhavo_block.block_collector'
-            - '@enhavo_app.util.doctrine_reference_finder'
+            - '@Enhavo\Component\Type\FactoryInterface[Block]'
+            - '@Enhavo\Bundle\DoctrineExtensionBundle\Util\AssociationFinder'
+            - '@Enhavo\Bundle\BlockBundle\Block\Cleaner'
             - '%enhavo_block.blocks%'
         calls:
             - ['setContainer', ['@service_container']]
+
+    Enhavo\Bundle\BlockBundle\Block\Cleaner:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@Enhavo\Bundle\DoctrineExtensionBundle\Util\AssociationFinder'
+        calls:
+            - ['setBlockManager', ['@Enhavo\Bundle\BlockBundle\Block\BlockManager']]

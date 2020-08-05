@@ -1,7 +1,7 @@
-{% if node.type == "page" %}
+{% if node.name == "page" %}
     {% include '@EnhavoDemo/theme/navigation/page.html.twig' with {'node': node} %}
-{% elseif node.type == "link" %}
+{% elseif node.name == "link" %}
     {% include '@EnhavoDemo/theme/navigation/link.html.twig' with {'node': node} %}
-{% elseif node.type == "submenu" %}
+{% elseif node.name == "submenu" %}
     {% include 'EnhavoDemoBundle:theme/navigation:submenu.html.twig' with {'node': node} %}
 {% endif %}

@@ -2,7 +2,8 @@
   "name": "enhavo",
   "license": "MIT",
   "scripts": {
-    "routes:dump": "bin/console fos:js-routing:dump --format=json --target=public/js/fos_js_routes.json"
+    "routes:dump": "bin/console fos:js-routing:dump --format=json --target=public/js/fos_js_routes.json",
+    "test": "TESTBUILD=true encore dev --config webpack.test.config.js && karma start --single-run --browsers ChromeHeadless karma.conf.js && rm -rf public/build/test/*"
   },
   "dependencies": {
     "@fullcalendar/core": "^4.2.0",
@@ -52,6 +53,7 @@
     "@symfony/webpack-encore": "0.22.4",
     "@types/async": "^2.4.1",
     "@types/axios": "^0.14.0",
+    "@types/chai": "^4.2.12",
     "@types/chart.js": "^2.7.50",
     "@types/cropperjs": "^1.1.1",
     "@types/icheck": "^0.8.29",
@@ -60,6 +62,7 @@
     "@types/jquery.fileupload": "^5.40.36",
     "@types/jqueryui": "^1.11.36",
     "@types/lodash": "^4.14.120",
+    "@types/mocha": "^8.0.0",
     "@types/pako": "^1.0.1",
     "@types/select2": "4.0.37",
     "@types/slick-carousel": "^1.6.33",
@@ -68,9 +71,14 @@
     "@types/urijs": "^1.19.0",
     "@types/uuid": "^3.4.4",
     "@types/vue-select": "^2.5.0",
+    "chai": "^4.2.0",
     "download": "^8.0.0",
     "gulp": "^4.0.0",
-    "gulp-sass": "^4.0.2",
+    "karma": "^5.1.0",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-mocha": "^2.0.1",
+    "mocha": "^8.0.1",
     "webfonts-generator": "^0.4.0",
     "webpack-notifier": "^1.7.0"
   }

@@ -55,6 +55,9 @@ enhavo_content:
                 repository: enhavo_page.repository.page
 
 enhavo_navigation:
-    items:
+    nav_items:
         page:
-            type: page
+            type: content
+            label: page.label.page
+            translation_domain: EnhavoPageBundle
+            content_form: Enhavo\Bundle\PageBundle\Form\Type\PageChoiceType

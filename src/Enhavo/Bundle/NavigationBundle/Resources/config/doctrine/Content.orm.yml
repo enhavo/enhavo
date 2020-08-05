@@ -1,0 +1,24 @@
+Enhavo\Bundle\NavigationBundle\Entity\Content:
+    type: entity
+    table: navigation_content
+    repositoryClass: Enhavo\Bundle\NavigationBundle\Repository\ContentRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    fields:
+        contentId:
+            type: integer
+            nullable: true
+        contentClass:
+            type: string
+            nullable: true
+
+    manyToOne:
+        node:
+            targetEntity: Enhavo\Bundle\NavigationBundle\Model\NodeInterface
+
+    lifecycleCallbacks: { }

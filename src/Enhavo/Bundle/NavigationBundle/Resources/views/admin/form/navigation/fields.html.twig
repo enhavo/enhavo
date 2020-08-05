@@ -1,0 +1,10 @@
+{% block enhavo_navigation_node_widget %}
+    {{ form_widget(form.position) }}
+    {{ form_widget(form.name) }}
+    {{ form_row(form.label) }}
+    {{ form_widget(form.subject) }}
+{% endblock %}
+
+{% block enhavo_navigation_submenu_widget %}
+    {{ form_widget(form.nodes) }}
+{% endblock %}

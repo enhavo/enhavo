@@ -51,8 +51,5 @@ services:
             - [setContainer, ['@service_container']]
 
     Enhavo\Bundle\ContactBundle\Block\ContactBlockType:
-        public: true
-        calls:
-            - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.block, alias: contact }
+            - { name: enhavo_block.block }

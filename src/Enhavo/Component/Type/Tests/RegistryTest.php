@@ -10,8 +10,10 @@ namespace Enhavo\Component\Type\Tests;
 
 use Enhavo\Component\Type\AbstractType;
 use Enhavo\Component\Type\Registry;
+use Enhavo\Component\Type\TypeInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class RegistryTest extends TestCase
 {
@@ -113,6 +115,16 @@ class RegistryTest extends TestCase
         $dependencies = $this->createDependencies();
         $registry = $this->createInstance($dependencies);
         $registry->register(NoInterface::class, NoInterface::class);
+    }
+
+    /**
+     * @doesNotPerformAssertions
+     */
+    public function testIndirectInterface()
+    {
+        $dependencies = $this->createDependencies();
+        $registry = $this->createInstance($dependencies);
+        $registry->register(IndirectClass::class, IndirectClass::class);
     }
 
     /**
@@ -274,4 +286,32 @@ class OtherTestType extends AbstractType
 class NoInterface
 {
 
+}
+
+interface IndirectInterface extends TypeInterface
+{
+
+}
+
+class IndirectClass implements IndirectInterface
+{
+    public static function getName(): ?string
+    {
+        return null;
+    }
+
+    public static function getParentType(): ?string
+    {
+        return null;
+    }
+
+    public function setParent(TypeInterface $parent)
+    {
+
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+
+    }
 }

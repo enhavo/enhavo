@@ -17,13 +17,12 @@ class TemplateBlockTypeTest extends TestCase
 {
     public function testGetType()
     {
-        $type = new TemplateBlockType([]);
-        $this->assertEquals('template', $type->getType());
+        $this->assertEquals('template', TemplateBlockType::getName());
     }
 
     public function testConfigureOption()
     {
-        $type = new TemplateBlockType([]);
+        $type = new TemplateBlockType();
         $options = $this->createOptions($type);
         $this->assertIsArray($options);
     }

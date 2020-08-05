@@ -1,0 +1,5 @@
+
+services:
+    Enhavo\Bundle\DoctrineExtensionBundle\Util\AssociationFinder:
+        arguments:
+            - '@doctrine.orm.entity_manager'

@@ -18,8 +18,7 @@ class TextPictureBlockTypeTest extends TestCase
 {
     public function testGetType()
     {
-        $type = new TextPictureBlockType();
-        $this->assertEquals('text_picture', $type->getType());
+        $this->assertEquals('text_picture', TextPictureBlockType::getName());
     }
 
     public function testConfigureOption()

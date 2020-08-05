@@ -2,7 +2,7 @@
     {% spaceless %}
         {% trans_default_domain 'EnhavoAppBundle' %}
         <div class="media-type" data-media-type="{{ mediaConfig|json_encode }}">
-            <script type="text/html" data-media-item-template>
+            <script type="text/template" data-media-item-template>
                 {{ media_render_item(item_template, form.vars.prototype) }}
             </script>
 

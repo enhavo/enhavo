@@ -8,7 +8,6 @@
 
 namespace Enhavo\Bundle\NavigationBundle\Model;
 
-
 use Enhavo\Bundle\NavigationBundle\Entity\Navigation;
 
 interface NodeInterface
@@ -21,25 +20,9 @@ interface NodeInterface
     public function getId();
 
     /**
-     * Set type
-     *
-     * @param string $type
-     * @return NodeInterface
-     */
-    public function setType($type);
-
-    /**
-     * Get type
-     *
-     * @return string
-     */
-    public function getType();
-
-    /**
      * Add children
      *
      * @param NodeInterface $children
-     * @return NodeInterface
      */
     public function addChild(NodeInterface $children);
 
@@ -58,6 +41,8 @@ interface NodeInterface
     public function getChildren();
 
     /**
+     * Get Descendants
+     *
      * @return NodeInterface[]
      */
     public function getDescendants();
@@ -66,7 +51,6 @@ interface NodeInterface
      * Set parent
      *
      * @param NodeInterface $parent
-     * @return NodeInterface
      */
     public function setParent(NodeInterface $parent = null);
 
@@ -76,36 +60,6 @@ interface NodeInterface
      * @return NodeInterface
      */
     public function getParent();
-
-    /**
-     * @return object
-     */
-    public function getContent();
-
-    /**
-     * @param object $content
-     */
-    public function setContent($content);
-
-    /**
-     * @return int
-     */
-    public function getContentId();
-
-    /**
-     * @param int $contentId
-     */
-    public function setContentId($contentId);
-
-    /**
-     * @return string
-     */
-    public function getContentClass();
-
-    /**
-     * @param string $contentClass
-     */
-    public function setContentClass($contentClass);
 
     /**
      * @return Navigation
@@ -123,9 +77,9 @@ interface NodeInterface
     public function getPosition();
 
     /**
-     * @param int $order
+     * @param int $position
      */
-    public function setPosition($order);
+    public function setPosition($position);
 
     /**
      * @return string
@@ -138,12 +92,42 @@ interface NodeInterface
     public function setLabel($label);
 
     /**
-     * @return array
+     * @return string|null
      */
-    public function getConfiguration();
+    public function getName(): ?string;
 
     /**
-     * @param array $configuration
+     * @param string|null $name
      */
-    public function setConfiguration($configuration);
+    public function setName(?string $name): void;
+
+    /**
+     * @return SubjectInterface|null
+     */
+    public function getSubject(): ?SubjectInterface;
+
+    /**
+     * @param object|null $navItem
+     */
+    public function setSubject(?SubjectInterface $navItem): void;
+
+    /**
+     * @return int|null
+     */
+    public function getSubjectId(): ?int;
+
+    /**
+     * @param int|null $navItemId
+     */
+    public function setSubjectId(?int $navItemId): void;
+
+    /**
+     * @return string|null
+     */
+    public function getSubjectClass(): ?string;
+
+    /**
+     * @param string|null $navItemClass
+     */
+    public function setSubjectClass(?string $navItemClass): void;
 }
