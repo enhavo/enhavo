@@ -12,10 +12,12 @@ use Enhavo\Bundle\AppBundle\Template\TemplateTrait;
 use Enhavo\Bundle\NavigationBundle\Exception\RenderException;
 use Enhavo\Bundle\NavigationBundle\Model\NodeInterface;
 use Enhavo\Bundle\NavigationBundle\NavItem\NavItemManager;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Twig\Environment;
 
 class NodeRenderer
 {
+    use ContainerAwareTrait;
     use TemplateTrait;
 
     /** @var NavItemManager */
