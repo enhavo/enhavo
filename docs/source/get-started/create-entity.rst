@@ -202,7 +202,7 @@ But after all, we still have no table in our database, but creating it is very c
 
 .. code::
 
-    $ php bin/console doctrine:schema:update -- force
+    $ php bin/console doctrine:schema:update --force
 
 It seems to be nothing special, but this command does a lot! It checks, how your database should look like
 (based on the mapping information we´ve defined with the annotations in our product class before)
