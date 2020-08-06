@@ -36,6 +36,7 @@ class ClassNameResolverTest extends TestCase
 
         $this->assertEquals(ClassNameResolverEntityDummy::class, $resolver->getName(new ClassNameResolverEntityDummy()));
         $this->assertEquals(ClassNameResolverEntityDummy::class, $resolver->getName(new ClassNameResolverEntityProxyDummy()));
+        $this->assertEquals(ClassNameResolverEntityDummy::class, $resolver->getName(ClassNameResolverEntityDummy::class));
     }
 
     public function testGetEntity()

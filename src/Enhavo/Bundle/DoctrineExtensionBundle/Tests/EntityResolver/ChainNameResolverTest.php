@@ -32,8 +32,6 @@ class ChainResolverTest extends TestCase
         $resolver->addResolver(new ClassNameResolverDummy(null, null), 200);
         $this->assertEquals('three', $resolver->getName($peter));
 
-        $this->assertEquals('app.peter', $resolver->getName('app.peter'));
-
         $this->assertEquals('James', $resolver->getEntity(1, 'test')->name);
     }
 
