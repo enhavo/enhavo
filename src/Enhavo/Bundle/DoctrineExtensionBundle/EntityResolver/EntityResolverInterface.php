@@ -17,7 +17,7 @@ interface EntityResolverInterface
      * @throws ResolveException
      * @return string
      */
-    public function getName(object $entity): string;
+    public function getName($entity): string;
 
     /**
      * @param int $id
