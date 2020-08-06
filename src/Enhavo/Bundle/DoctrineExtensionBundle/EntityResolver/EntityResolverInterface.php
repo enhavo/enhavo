@@ -13,11 +13,10 @@ use Enhavo\Bundle\DoctrineExtensionBundle\Exception\ResolveException;
 interface EntityResolverInterface
 {
     /**
-     * @param object $entity
-     * @throws ResolveException
+     * @param $entity
      * @return string
      */
-    public function getName(object $entity): string;
+    public function getName($entity): string;
 
     /**
      * @param int $id

@@ -252,4 +252,24 @@ class TextTranslator
             $this->getEntityManager()->remove($translation);
         }
     }
+
+    /**
+     * @return string
+     */
+    protected function getDefaultLocale(): string
+    {
+        return $this->defaultLocale;
+    }
+
+    /**
+     * @return EntityResolverInterface
+     */
+    protected function getEntityResolver(): EntityResolverInterface
+    {
+        return $this->entityResolver;
+    }
+
+
+
+
 }

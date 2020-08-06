@@ -30,11 +30,16 @@ class SyliusResourceResolver implements EntityResolverInterface
         $this->resources = $resources;
     }
 
-    public function getName(object $object): string
+    public function getName($object): string
     {
-        $className = get_class($object);
-        if($object instanceof Proxy) {
-            $className = get_parent_class($object);
+        if (is_string($object)) {
+            $className = $object;
+
+        } else {
+            $className = get_class($object);
+            if ($object instanceof Proxy) {
+                $className = get_parent_class($object);
+            }
         }
 
         foreach($this->resources as $type => $resource) {

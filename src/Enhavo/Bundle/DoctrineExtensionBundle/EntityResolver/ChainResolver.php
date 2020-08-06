@@ -18,7 +18,7 @@ class ChainResolver implements EntityResolverInterface
      */
     private $resolvers = [];
 
-    public function getName(object $entity): string
+    public function getName($entity): string
     {
         foreach($this->resolvers as $resolver)
         {

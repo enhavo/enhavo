@@ -21,8 +21,8 @@ services:
     Enhavo\Bundle\TranslationBundle\AutoGenerator\Generator\LocalePrefixGenerator:
         public: true
         arguments:
-            - '@enhavo_translation.route.translator'
-            - '@enhavo_translation.text.translator'
+            - '@Enhavo\Bundle\TranslationBundle\Translator\Route\RouteTranslator'
+            - '@Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator'
         calls:
             - [setContainer, ['@service_container']]
         tags:
@@ -31,8 +31,8 @@ services:
     Enhavo\Bundle\TranslationBundle\AutoGenerator\Generator\SlugGenerator:
         public: true
         arguments:
-            - '@enhavo_translation.route.translator'
-            - '@enhavo_translation.text.translator'
+            - '@Enhavo\Bundle\TranslationBundle\Translator\Route\RouteTranslator'
+            - '@Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator'
         calls:
             - [setContainer, ['@service_container']]
         tags:
@@ -41,8 +41,8 @@ services:
     Enhavo\Bundle\TranslationBundle\AutoGenerator\Generator\LocaleDefaultGenerator:
         public: true
         arguments:
-            - '@enhavo_translation.route.translator'
-            - '@enhavo_translation.text.translator'
+            - '@Enhavo\Bundle\TranslationBundle\Translator\Route\RouteTranslator'
+            - '@Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator'
         calls:
             - [setContainer, ['@service_container']]
         tags:
