@@ -22,15 +22,17 @@ class ChainResolverTest extends TestCase
 
         $resolver = new ChainResolver();
 
-        $resolver->addResolver(new ClassResolverDummy('one', null), 20);
-        $resolver->addResolver(new ClassResolverDummy('two', null), 10);
+        $resolver->addResolver(new ClassNameResolverDummy('one', null), 20);
+        $resolver->addResolver(new ClassNameResolverDummy('two', null), 10);
         $this->assertEquals('one', $resolver->getName($peter));
 
-        $resolver->addResolver(new ClassResolverDummy('three', $james), 100);
+        $resolver->addResolver(new ClassNameResolverDummy('three', $james), 100);
         $this->assertEquals('three', $resolver->getName($james));
 
-        $resolver->addResolver(new ClassResolverDummy(null, null), 200);
+        $resolver->addResolver(new ClassNameResolverDummy(null, null), 200);
         $this->assertEquals('three', $resolver->getName($peter));
+
+        $this->assertEquals('app.peter', $resolver->getName('app.peter'));
 
         $this->assertEquals('James', $resolver->getEntity(1, 'test')->name);
     }
@@ -63,7 +65,7 @@ class ChainResolverEntityDummy
     }
 }
 
-class ClassResolverDummy implements EntityResolverInterface
+class ClassNameResolverDummy implements EntityResolverInterface
 {
     private $name;
     private $entity;
@@ -74,8 +76,12 @@ class ClassResolverDummy implements EntityResolverInterface
         $this->entity = $entity;
     }
 
-    public function getName(object $entity): string
+    public function getName($entity): string
     {
+        if (is_string($entity)) {
+            return $entity;
+        }
+
         if($this->name === null) {
             throw new ResolveException();
         }
