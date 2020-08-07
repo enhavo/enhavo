@@ -1,21 +1,27 @@
 const Definition = require("@enhavo/dependency-injection/Container/Definition");
+const CompilerPass = require("@enhavo/dependency-injection/Container/CompilerPass");
+const Entrypoint = require("@enhavo/dependency-injection/Container/Entrypoint");
+const Map = require("@enhavo/dependency-injection/Container/Map");
+const fs = require("fs");
 
 class ContainerBuilder
 {
     constructor() {
-        /** @type {Array<Definition>} */
-        this.definitions = [];
-        this.entrypoints = [];
+        /** @type {Map<Definition>} */
+        this.definitions = new Map();
+        /** @type {Map<Entrypoint>} */
+        this.entrypoints = new Map();
+        /** @type {Map<CompilerPass>} */
+        this.compilerPasses = new Map();
     }
 
     /**
      * @param {string} name
      * @returns {Array<Definition>}
      */
-    getDefinitionByTagName(name)
-    {
+    getDefinitionByTagName(name) {
         let definitions = [];
-        for (let definition of this.definitions) {
+        for (let definition of this.definitions.getValues()) {
             if(definition.hasTag(name)) {
                 definitions.push(definition);
             }
@@ -26,23 +32,15 @@ class ContainerBuilder
     /**
      * @param {Definition} definition
      */
-    addDefinition(definition)
-    {
-        let index = this._getDefinitionIndex(definition.getName());
-        if (index !== -1) {
-            this.definitions.push(definition);
-            return;
-        }
-
-        this.definitions[index] = definition;
+    addDefinition(definition) {
+        this.definitions.add(definition.getName(), definition);
     }
 
     /**
      * @returns {Array<Definition>}
      */
-    getDefinitions()
-    {
-        return this.definitions;
+    getDefinitions() {
+        return this.definitions.getValues();
     }
 
     /**
@@ -50,11 +48,7 @@ class ContainerBuilder
      * @returns {Definition}
      */
     getDefinition(name) {
-        let index = this._getDefinitionIndex(name);
-        if (index !== -1) {
-            return this.definitions[index];
-        }
-        return null;
+        return this.definitions.get(name);
     }
 
     /**
@@ -62,20 +56,39 @@ class ContainerBuilder
      * @returns {Definition}
      */
     hasDefinition(name) {
-        return this.getDefinition() !== null;
+        return this.definitions.has(name);
     }
 
     /**
-     * @returns {number}
-     * @private
+     * @param {Entrypoint} entrypoint
      */
-    _getDefinitionIndex(name) {
-        for (let i in this.definitions) {
-            if (this.definitions[i].getName() === name) {
-                return i;
-            }
+    addEntrypoint(entrypoint) {
+        this.entrypoints.add(entrypoint.getName(), entrypoint);
+    }
+
+    getEntrypoints() {
+        return this.entrypoints.getValues();
+    }
+
+    /**
+     * @param {CompilerPass} compilerPass
+     */
+    addCompilerPass(compilerPass) {
+        this.compilerPasses.add(compilerPass.getName(), compilerPass);
+    }
+
+    getCompilerPasses() {
+        return this.compilerPasses.getValues();
+    }
+
+    prepare() {
+        for (let compilerPass of this.getCompilerPasses()) {
+            let content = fs.readFileSync(compilerPass.path)+'';
+            let m = new module.constructor();
+            m.paths = module.paths;
+            m._compile(content, compilerPass.path);
+            m.exports(this);
         }
-        return -1;
     }
 }
 

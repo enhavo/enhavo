@@ -1,5 +1,4 @@
 const Encore = require('@symfony/webpack-encore');
-const ServiceLoader = require('@enhavo/dependency-injection/Webpack/ServiceLoader');
 
 class EnhavoEncore
 {
@@ -15,7 +14,13 @@ class EnhavoEncore
         return this;
     }
 
-    add(name, callback)
+    /**
+     * @param {string} name
+     * @param {function} callback
+     * @param {function} configCallback
+     * @returns {object}
+     */
+    add(name, callback, configCallback = null)
     {
         Encore.reset();
         Encore.setOutputPath('public/build/'+name+'/');
@@ -31,13 +36,12 @@ class EnhavoEncore
         config.name = name;
         this.configs.push(config);
 
-        config.module.rules.push({
-            test: ServiceLoader.test(),
-            use: [{loader: ServiceLoader.path(), options: {}}]
-        });
-
         for(let enhavoPackage of this.packages) {
             enhavoPackage.initWebpackConfig(config, name)
+        }
+
+        if (configCallback) {
+            configCallback(config);
         }
 
         return config;

@@ -4,3 +4,7 @@ services:
         import: TestDependService
         arguments:
             - '@enhavo/dependency-injection/Tests/fixtures/TestService'
+
+compiler_pass:
+    test:
+        path: '../../Mock/CompilerPass.js'

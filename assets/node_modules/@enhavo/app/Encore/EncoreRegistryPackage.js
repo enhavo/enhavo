@@ -1,7 +1,8 @@
 const EncoreUtil = require('@enhavo/core/EncoreUtil');
-const path = require('path');
 const fs = require('fs');
 const _ = require('lodash');
+const DependencyInjectionPlugin = require('@enhavo/dependency-injection/Webpack/DependencyInjectionPlugin');
+const path = require('path');
 
 class EncoreRegistryPackage
 {
@@ -16,6 +17,10 @@ class EncoreRegistryPackage
 
     initEncore(Encore, name)
     {
+        Encore.addPlugin(new DependencyInjectionPlugin(
+            path.resolve(EncoreUtil.getProjectDir(), './assets/services/*')
+        ));
+
         if(name === 'enhavo') {
             Encore
                 .enableSingleRuntimeChunk()

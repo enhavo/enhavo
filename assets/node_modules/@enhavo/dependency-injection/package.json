@@ -4,12 +4,18 @@
   "types": "index.ts",
   "version": "0.8.0",
   "homepage": "https://www.enhavo.com",
+  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/enhavo/enhavo.git"
   },
+  "bin": {
+    "dependency-injection": "bin/dependency-injection.js",
+    "di": "bin/dependency-injection.js"
+  },
   "dependencies": {
-    "sha1": "^1.1.1"
+    "sha1": "^1.1.1",
+    "glob": "^7.1.6"
   },
   "devDependencies": {
     "acorn": "^7.3.1"

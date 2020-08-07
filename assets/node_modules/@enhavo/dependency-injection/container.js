@@ -1,1 +1,1 @@
-throw 'Your loader ist not set correctly';
+throw 'This file should be load by service-loader';

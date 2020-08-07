@@ -75,7 +75,7 @@ class Compiler
 
         for (let argument of definition.getArguments()) {
             if(argument instanceof Reference) {
-                content +=  `await this.get("`+argument.getName()+`")\n`;
+                content +=  `await this.get("`+argument.getName()+`"),\n`;
             }
         }
 

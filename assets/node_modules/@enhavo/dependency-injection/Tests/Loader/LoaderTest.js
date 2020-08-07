@@ -1,32 +1,48 @@
+import ContainerBuilder from "@enhavo/dependency-injection/Container/ContainerBuilder";
+import Loader from "@enhavo/dependency-injection/Loader/Loader";
 import {assert} from "chai";
-import AbstractLoader from "@enhavo/dependency-injection/Loader/AbstractLoader"
-import ContainerBuilder from "@enhavo/dependency-injection/Container/ContainerBuilder"
 
-class ConcreteLoader extends AbstractLoader
+class FileSystemMock
 {
-    load(data, builder) {
-        this._addDefinitions(data, builder);
+    constructor() {
+        this._file = null;
+    }
+
+    readFileSync(file) {
+        this._file = file;
+    }
+
+    existsSync() {
+        return false;
+    }
+
+    getFile() {
+        return this._file;
     }
 }
 
-describe('dependency-injection/Loader/AbstractLoader', () => {
+describe('dependency-injection/Loader/Loader', () => {
     describe('test imports', () => {
         it('should return imported definitions', () => {
             let builder = new ContainerBuilder;
-            let loader = new ConcreteLoader;
+            let fileSystemMock = new FileSystemMock();
+            let loader = new Loader(fileSystemMock);
 
             loader.load({
                 'imports': [{
-                    'path': 'path'
+                    'path': './pathToSomeFile.yaml'
                 }]
-            }, builder);
+            }, null, builder, '/test');
+
+            assert.equal('/test/pathToSomeFile.yaml', fileSystemMock.getFile());
         });
     });
 
     describe('test load further files', () => {
         it('should return correct definition', () => {
             let builder = new ContainerBuilder;
-            let loader = new ConcreteLoader;
+            let fileSystemMock = new FileSystemMock();
+            let loader = new Loader(fileSystemMock);
 
             loader.load({
                 'services': {
@@ -35,7 +51,7 @@ describe('dependency-injection/Loader/AbstractLoader', () => {
                         tags: ['foo', {name: 'bar', parameterOne: 'something'}]
                     }
                 }
-            }, builder);
+            }, null, builder, '/test');
 
             let definition = builder.getDefinition('test');
             assert.equal('test', definition.getName());

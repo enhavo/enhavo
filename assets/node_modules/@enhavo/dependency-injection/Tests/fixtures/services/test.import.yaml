@@ -1,4 +1,2 @@
-type: Service
 imports:
-    -
-        path:
+

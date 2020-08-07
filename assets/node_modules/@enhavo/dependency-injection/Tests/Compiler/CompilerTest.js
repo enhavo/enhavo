@@ -14,10 +14,8 @@ describe('dependency-injection/Compiler/Compiler', () => {
             builder.addDefinition(definition);
 
             let code = compiler.compile(builder);
-
-            // since acorn is not supporting dynamic import statement, we have to wait until this is fixed parse AST
-            // let tree = acorn.parse(code);
+            // since acorn throws error, we have to wait until this is fixed parse AST
+            // let tree = acorn.parse(code, {ecmaVersion: 11});
         });
     });
 });
-

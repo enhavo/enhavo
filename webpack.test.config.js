@@ -14,6 +14,10 @@ EnhavoEncore.add('test', (Encore) =>
     for (let file of files) {
         Encore.addEntry(file.relativePath, './' + file.relativePath);
     }
+}, (config) => {
+    config.node = {
+        fs: 'empty'
+    };
 });
 
 module.exports = EnhavoEncore.export();

@@ -17,6 +17,17 @@ class Definition
         this.from = null;
         this.static = false;
         this.hash = sha1(this.name).substring(0, 8);
+        this.mode = null;
+        this.prefetch = null;
+        this.preload = null;
+        this.chunckName = null;
+        this.include = null;
+        this.exclude = null;
+        this.exports = null;
+    }
+
+    getName() {
+        return this.name;
     }
 
     /**
@@ -24,10 +35,6 @@ class Definition
      */
     addArgument(argument) {
         this.arguments.push(argument);
-    }
-
-    addTag(tag) {
-        this.tags.push(tag);
     }
 
     addCall(call) {
@@ -38,10 +45,6 @@ class Definition
         this.from = from;
     }
 
-    setImport(importName) {
-        this.import = importName;
-    }
-
     getFrom() {
         if(this.from === null) {
             return this.name;
@@ -49,12 +52,12 @@ class Definition
         return this.from;
     }
 
-    getImport() {
-        return this.import;
+    setImport(importName) {
+        this.import = importName;
     }
 
-    getName() {
-        return this.name;
+    getImport() {
+        return this.import;
     }
 
     getArguments() {
@@ -73,6 +76,10 @@ class Definition
         return this.static;
     }
 
+    addTag(tag) {
+        this.tags.push(tag);
+    }
+
     /**
      * @param {string} name
      */
@@ -87,6 +94,14 @@ class Definition
             }
         }
         return null;
+    }
+
+    setMode(mode) {
+        this.mode = mode;
+    }
+
+    getMode() {
+        return this.mode;
     }
 }
 

@@ -1,0 +1,265 @@
+const ContainerBuilder = require('@enhavo/dependency-injection/Container/ContainerBuilder');
+const Definition = require('@enhavo/dependency-injection/Container/Definition');
+const Reference = require('@enhavo/dependency-injection/Container/Reference');
+const Entrypoint = require('@enhavo/dependency-injection/Container/Entrypoint');
+const CompilerPass = require('@enhavo/dependency-injection/Container/CompilerPass');
+const Tag = require('@enhavo/dependency-injection/Container/Tag');
+const glob = require('glob');
+const path = require('path');
+const YAML = require('yaml');
+const _ = require('lodash');
+const fs = require('fs');
+
+class Loader
+{
+    constructor(fileSystem = null) {
+        this.fs = fileSystem !== null ? fileSystem : fs;
+        this.loadedFiles = [];
+    }
+
+    addLoadedFile(file) {
+        this.loadedFiles.push(file);
+    }
+
+    getLoadedFiles()
+    {
+        return this.loadedFiles;
+    }
+
+    _isFileAlreadyLoaded(file) {
+        return this.loadedFiles.indexOf(file) >= 0;
+    }
+
+    /**
+     * @param {string|object} content
+     * @param {string|null} format
+     * @param {ContainerBuilder} builder
+     * @param {string} cwd
+     * @param {object} options
+     */
+    load(content, format, builder, cwd, options =  {}) {
+        let data = this._normalizeData(content, format);
+        options = this._configureOptions(options);
+
+        this._loadImports(data, builder, cwd, options);
+
+        if(options.loadDefinition) {
+            this._addDefinitions(data, builder, cwd);
+        }
+
+        if(options.loadEntrypoint) {
+            this._addEntrypoints(data, builder, cwd);
+        }
+
+        if(options.loadCompilerPasses) {
+            this._addCompilerPass(data, builder, cwd);
+        }
+
+        return this;
+    }
+
+    loadFile(filepath, builder, options =  {}) {
+        let files = glob.sync(filepath);
+        for (let file of files) {
+            if(this._isFileAlreadyLoaded()) {
+                continue;
+            }
+            let extension = path.extname(file);
+            if (extension === '.yaml') {
+                let content = this.fs.readFileSync(file)+'';
+                this.load(content, 'yaml', builder, path.dirname(file), options);
+            }
+            this.addLoadedFile(file);
+        }
+        return this;
+    }
+
+    _normalizeData(content, format)
+    {
+        if(typeof content === 'object') {
+            return content;
+        } else if (format === 'yaml') {
+            return YAML.parse(content);
+        } else if(format === 'json') {
+            return JSON.parse(content);
+        }
+        throw 'format not supported';
+    }
+
+    _configureOptions(options) {
+        options = _.merge(new Configuration(), options);
+        return options;
+    }
+
+    _loadImports(data, builder, cwd, options) {
+        if (data.imports && data.imports.length > 0) {
+            for (let importData of data.imports) {
+                let filepath = this._buildFilepath(importData.path, cwd);
+                if (filepath === null) {
+                    throw 'Can\'t find file "'+importData.path+'"'
+                }
+                this.loadFile(filepath, builder, options);
+            }
+        }
+    }
+
+    _buildFilepath(filepath, cwd, keepModulePath = false) {
+        if (filepath.startsWith('.')) {
+            return path.resolve(cwd, filepath)
+        } else if(filepath.startsWith('/')) {
+            return filepath;
+        } else if(!keepModulePath) {
+            let subPath = cwd;
+            let beforePath = null;
+            while(subPath !== beforePath) {
+                let file = path.resolve(subPath, './node_modules');
+                if(this.fs.existsSync(file)) {
+                    return path.resolve(subPath, './node_modules', filepath);
+                }
+                beforePath = subPath;
+                subPath = path.resolve(subPath, '..');
+            }
+            return null;
+        }
+        return filepath;
+    }
+
+    /**
+     * @param {object} data
+     * @param {ContainerBuilder} builder
+     * @param {string} cwd
+     */
+    _addDefinitions(data, builder, cwd) {
+        if(data.services) {
+            for (let name in data.services) {
+                if (!data.services.hasOwnProperty(name)) {
+                    continue;
+                }
+
+                let service = data.services[name];
+                if(service === null) {
+                    service = {};
+                }
+
+                let definition = new Definition(name);
+                this._checkArguments(service, definition);
+                this._checkTags(service, definition);
+                this._checkImport(service, definition);
+                this._checkFrom(service, definition, cwd);
+
+                builder.addDefinition(definition);
+            }
+        }
+    }
+
+    /**
+     * @param {object} service
+     * @param {Definition} definition
+     */
+    _checkArguments(service, definition) {
+        if(service.arguments) {
+            for (let argument of service.arguments) {
+                if(argument.startsWith('@')) {
+                    definition.addArgument(new Reference(argument));
+                }
+            }
+        }
+    }
+
+    /**
+     * @param {object} service
+     * @param {Definition} definition
+     */
+    _checkTags(service, definition) {
+        if(service.tags) {
+            for (let tag of service.tags) {
+                if(typeof tag == 'string') {
+                    definition.addTag(new Tag(tag));
+                }
+
+                if(tag.name) {
+                    definition.addTag(new Tag(tag.name, tag));
+                }
+            }
+        }
+    }
+
+    /**
+     * @param {object} service
+     * @param {Definition} definition
+     */
+    _checkImport(service, definition) {
+        if(service.import) {
+            definition.setImport(service.import)
+        }
+    }
+
+    /**
+     * @param {object} service
+     * @param {Definition} definition
+     * @param {string} cwd
+     */
+    _checkFrom(service, definition, cwd) {
+        if(service.from) {
+            definition.setFrom(this._buildFilepath(service.from, cwd, true));
+        }
+    }
+
+    /**
+     * @param {object} data
+     * @param {ContainerBuilder} builder
+     * @param {string} cwd
+     */
+    _addEntrypoints(data, builder, cwd) {
+        if(data.entrypoints) {
+            for (let name in data.entrypoints) {
+                if (!data.entrypoints.hasOwnProperty(name)) {
+                    break;
+                }
+
+                let entrypointConfig = data.entrypoints[name];
+                if(entrypointConfig === null) {
+                    entrypointConfig = {};
+                }
+
+                let entrypoint = new Entrypoint(name, this._buildFilepath(entrypointConfig.path, cwd));
+                builder.addEntrypoint(entrypoint);
+            }
+        }
+    }
+
+    /**
+     * @param {object} data
+     * @param {ContainerBuilder} builder
+     * @param {string} cwd
+     */
+    _addCompilerPass(data, builder, cwd) {
+        if(data.compiler_pass) {
+            for (let name in data.compiler_pass) {
+                if (!data.compiler_pass.hasOwnProperty(name)) {
+                    break;
+                }
+
+                let compilerPassConfig = data.compiler_pass[name];
+                if(compilerPassConfig === null) {
+                    compilerPassConfig = {};
+                }
+
+                let compilerPass = new CompilerPass(name, this._buildFilepath(compilerPassConfig.path, cwd));
+                builder.addCompilerPass(compilerPass);
+            }
+        }
+    }
+}
+
+class Configuration
+{
+    constructor() {
+        this.loadImports = true;
+        this.loadDefinition = true;
+        this.loadEntrypoint = true;
+        this.loadCompilerPasses = true;
+    }
+}
+
+module.exports = Loader;

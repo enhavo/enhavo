@@ -1,5 +1,5 @@
 import {assert} from "chai";
-import Container from "@enhavo/dependency-injection/Tests/fixtures/services/test.service.yaml"
+import Container from "@enhavo/dependency-injection"
 
 describe('dependency-injection/Webpack/ServiceLoader', () => {
     describe('test load', () => {
