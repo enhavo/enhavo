@@ -10,21 +10,10 @@ namespace Enhavo\Bundle\TranslationBundle\Translation\Type;
 
 use Enhavo\Bundle\TranslationBundle\Translation\AbstractTranslationType;
 use Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator;
+use Enhavo\Bundle\TranslationBundle\Translator\TranslatorInterface;
 
 class TextTranslationType extends AbstractTranslationType
 {
-    /** @var TextTranslator */
-    private $translator;
-
-    /**
-     * TextTranslationType constructor.
-     * @param TextTranslator $translator
-     */
-    public function __construct(TextTranslator $translator)
-    {
-        $this->translator = $translator;
-    }
-
     public function setTranslation(array $options, $data, $property, $locale, $value)
     {
         $this->translator->setTranslation($data, $property, $locale, $value);

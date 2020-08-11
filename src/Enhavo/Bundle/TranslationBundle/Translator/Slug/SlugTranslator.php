@@ -43,13 +43,13 @@ class SlugTranslator extends TextTranslator
     }
 
 
-    public function fetch($class, $slug, $locale = null)
+    public function fetch($class, $slug, $locale = null, $allowFallback = false)
     {
-        if($locale === null) {
+        if ($locale === null) {
             $locale = $this->localeResolver->resolve();
         }
 
-        if($locale === $this->getDefaultLocale()) {
+        if ($locale === $this->getDefaultLocale()) {
             $entity = $this->em->getRepository($class)->findOneBy([
                 'slug' => $slug
             ]);
@@ -64,10 +64,19 @@ class SlugTranslator extends TextTranslator
             'locale' => $locale
         ]);
 
-        if($translation !== null) {
+        if ($translation !== null) {
             return $translation->getObject();
         }
 
+        if ($allowFallback) {
+            return $this->fetch($class, $slug, $this->getDefaultLocale(), false);
+        }
+
         return null;
+    }
+
+    public function getAcceptedTypes(): array
+    {
+        return ['slug'];
     }
 }

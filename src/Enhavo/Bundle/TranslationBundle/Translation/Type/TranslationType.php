@@ -19,6 +19,21 @@ class TranslationType extends AbstractType implements TranslationTypeInterface
 
     }
 
+    public function translate($object, $locale): void
+    {
+
+    }
+
+    public function detach($object): void
+    {
+
+    }
+
+    public function delete($object): void
+    {
+
+    }
+
     public function getValidationConstraints(array $options, $data, $property, $locale)
     {
         return $options['constraints'];
@@ -27,7 +42,8 @@ class TranslationType extends AbstractType implements TranslationTypeInterface
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'constraints' => []
+            'constraints' => [],
+            'allow_fallback' => false
         ]);
     }
 }

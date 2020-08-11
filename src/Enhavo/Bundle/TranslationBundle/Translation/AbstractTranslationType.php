@@ -9,12 +9,41 @@
 namespace Enhavo\Bundle\TranslationBundle\Translation;
 
 use Enhavo\Bundle\TranslationBundle\Translation\Type\TranslationType;
+use Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator;
+use Enhavo\Bundle\TranslationBundle\Translator\TranslatorInterface;
 use Enhavo\Component\Type\AbstractType;
 
 abstract class AbstractTranslationType extends AbstractType implements TranslationTypeInterface
 {
     /** @var TranslationTypeInterface */
     protected $parent;
+
+    /** @var TextTranslator */
+    protected $translator;
+
+    /**
+     * TextTranslationType constructor.
+     * @param TranslatorInterface $translator
+     */
+    public function __construct(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
+
+    public function translate($object, $locale): void
+    {
+        $this->translator->translate($object, $locale);
+    }
+
+    public function detach($object): void
+    {
+        $this->translator->detach($object);
+    }
+
+    public function delete($object): void
+    {
+        $this->translator->delete($object);
+    }
 
     public function setTranslation(array $options, $data, $property, $locale, $value)
     {

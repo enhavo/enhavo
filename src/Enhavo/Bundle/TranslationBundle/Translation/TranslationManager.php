@@ -11,6 +11,7 @@ namespace Enhavo\Bundle\TranslationBundle\Translation;
 use Enhavo\Bundle\AppBundle\Exception\TypeMissingException;
 use Enhavo\Bundle\AppBundle\Type\TypeCollector;
 use Enhavo\Bundle\TranslationBundle\Metadata\Metadata;
+use Enhavo\Bundle\TranslationBundle\Metadata\PropertyNode;
 use Enhavo\Component\Metadata\MetadataRepository;
 use Enhavo\Component\Type\FactoryInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -52,7 +53,8 @@ class TranslationManager
         $enabled,
         $translationPaths,
         RequestStack $requestStack
-    ) {
+    )
+    {
         $this->metadataRepository = $metadataRepository;
         $this->factory = $factory;
         $this->locales = $locales;
@@ -69,15 +71,15 @@ class TranslationManager
 
     public function isTranslatable(?object $data, $property = null): bool
     {
-        if($data === null) {
+        if ($data === null) {
             return false;
         }
 
-        if(!$this->metadataRepository->hasMetadata($data)) {
+        if (!$this->metadataRepository->hasMetadata($data)) {
             return false;
         }
 
-        if($property === null) {
+        if ($property === null) {
             return true;
         }
 
@@ -94,15 +96,15 @@ class TranslationManager
 
     public function isTranslation()
     {
-        if($this->cachedTranslation !== null) {
+        if ($this->cachedTranslation !== null) {
             return $this->cachedTranslation;
         }
 
         $this->cachedTranslation = false;
         $request = $this->requestStack->getMasterRequest();
         $path = $request->getPathInfo();
-        foreach($this->translationPaths as $regex) {
-            if(preg_match($regex, $path)) {
+        foreach ($this->translationPaths as $regex) {
+            if (preg_match($regex, $path)) {
                 $this->cachedTranslation = true;
                 break;
             }
@@ -124,8 +126,8 @@ class TranslationManager
     {
         $translationValues = [];
         $translation = $this->getTranslation($data, $property);
-        foreach($this->locales as $locale) {
-            if($locale == $this->getDefaultLocale()) {
+        foreach ($this->locales as $locale) {
+            if ($locale == $this->getDefaultLocale()) {
                 continue;
             }
             $translationValues[$locale] = $translation->getTranslation($data, $property, $locale);
@@ -138,11 +140,66 @@ class TranslationManager
         $this->getTranslation($data, $property)->setTranslation($data, $property, $locale, $value);
     }
 
-    private function getTranslation($data, $propertyData)
+    public function translate($object, $locale)
+    {
+        $properties = $this->getObjectProperties($object);
+
+        $types = [];
+        foreach ($properties as $property) {
+            if (!isset($types[$property->getType()])) {
+                $type = $this->getTranslation($object, $property->getProperty());
+                $type->translate($object, $locale);
+                $types[$property->getType()] = $type;
+            }
+        }
+    }
+
+    public function detach($object)
+    {
+        $properties = $this->getObjectProperties($object);
+
+        $types = [];
+        foreach ($properties as $property) {
+            if (!isset($types[$property->getType()])) {
+                $type = $this->getTranslation($object, $property->getProperty());
+                $type->detach($object);
+                $types[$property->getType()] = $type;
+            }
+        }
+    }
+
+    public function delete($object)
+    {
+        $properties = $this->getObjectProperties($object);
+
+        $types = [];
+        foreach ($properties as $property) {
+            if (!isset($types[$property->getType()])) {
+                $translation = $this->getTranslation($object, $property->getProperty());
+                $translation->delete($object);
+                $types[$property->getType()] = $translation;
+            }
+        }
+    }
+
+    /**
+     * @param $object
+     * @return PropertyNode[]
+     */
+    private function getObjectProperties($object): array
+    {
+        $metadata = $this->metadataRepository->getMetadata($object);
+        if (null === $metadata) {
+            return [];
+        }
+        return $metadata->getProperties() ?? [];
+    }
+
+    private function getTranslation($data, $propertyName)
     {
         /** @var Metadata $metadata */
         $metadata = $this->metadataRepository->getMetadata($data);
-        $property = $metadata->getProperty($propertyData);
+        $property = $metadata->getProperty($propertyName);
 
         if (!isset($this->translation[$property->getType()])) {
             $this->translation[$property->getType()] = $this->factory->create(array_merge(['type' => $property->getType()], $property->getOptions()));

@@ -14,12 +14,11 @@ services:
             - '@enhavo_app.locale_resolver'
             - '%enhavo_translation.translator.access_control%'
 
-    Enhavo\Bundle\TranslationBundle\EventListener\DoctrineTextTranslatorSubscriber:
-        class: Enhavo\Bundle\TranslationBundle\EventListener\DoctrineTextTranslatorSubscriber
-        calls:
-            - [setTranslator, ['@Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator']]
-            - [setAccessControl, ['@Enhavo\Bundle\TranslationBundle\Translator\Text\AccessControl']]
-            - [setMetadataRepository, ['@Enhavo\Component\Metadata\MetadataRepository[Translation]']]
+    Enhavo\Bundle\TranslationBundle\EventListener\DoctrineTranslationSubscriber:
+        arguments:
+            - '@Enhavo\Bundle\TranslationBundle\Translation\TranslationManager'
+            - '@Enhavo\Bundle\TranslationBundle\Translator\Text\AccessControl'
+            - '@Enhavo\Component\Metadata\MetadataRepository[Translation]'
         tags:
             - { name: doctrine.event_subscriber }
 

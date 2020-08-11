@@ -13,9 +13,13 @@ use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface
 use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
 use Enhavo\Bundle\TranslationBundle\Exception\TranslationException;
 use Enhavo\Bundle\TranslationBundle\Entity\TranslationRoute;
+use Enhavo\Bundle\TranslationBundle\Metadata\Metadata;
+use Enhavo\Bundle\TranslationBundle\Translator\AbstractTranslator;
+use Enhavo\Bundle\TranslationBundle\Translator\TranslatorInterface;
 use Enhavo\Component\Metadata\MetadataRepository;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 
-class RouteTranslator
+class RouteTranslator implements TranslatorInterface
 {
     /**
      * @var MetadataRepository
@@ -146,5 +150,20 @@ class RouteTranslator
     private function getEntityManager(): EntityManagerInterface
     {
         return $this->em;
+    }
+
+    public function translate($entity, $locale)
+    {
+
+    }
+
+    public function detach($entity)
+    {
+
+    }
+
+    public function getAcceptedTypes(): array
+    {
+        return ['route'];
     }
 }
