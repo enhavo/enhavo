@@ -39,11 +39,12 @@ class TranslationType extends AbstractType implements TranslationTypeInterface
         return $options['constraints'];
     }
 
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults([
-            'constraints' => [],
-            'allow_fallback' => false
-        ]);
-    }
+//    public function configureOptions(OptionsResolver $resolver)
+//    {
+//        $resolver->setDefaults([
+//            'constraints' => [],
+//            'generators' => null,
+//            'allow_fallback' => false
+//        ]);
+//    }
 }

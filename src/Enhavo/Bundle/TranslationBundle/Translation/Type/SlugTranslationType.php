@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\TranslationBundle\Translation\Type;
 
 use Enhavo\Bundle\TranslationBundle\Translation\AbstractTranslationType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SlugTranslationType extends AbstractTranslationType
 {
@@ -25,5 +26,12 @@ class SlugTranslationType extends AbstractTranslationType
     public static function getName(): ?string
     {
         return 'slug';
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'allow_fallback' => false
+        ]);
     }
 }

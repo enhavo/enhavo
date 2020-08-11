@@ -11,6 +11,7 @@ namespace Enhavo\Bundle\TranslationBundle\Translation\Type;
 use Enhavo\Bundle\TranslationBundle\Translation\AbstractTranslationType;
 use Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator;
 use Enhavo\Bundle\TranslationBundle\Translator\TranslatorInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TextTranslationType extends AbstractTranslationType
 {
@@ -27,5 +28,13 @@ class TextTranslationType extends AbstractTranslationType
     public static function getName(): ?string
     {
         return 'text';
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'constraints' => null,
+            'allow_fallback' => false
+        ]);
     }
 }
