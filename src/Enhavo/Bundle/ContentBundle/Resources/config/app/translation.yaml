@@ -18,3 +18,4 @@ enhavo_translation:
                     type: route
                 slug:
                     type: slug
+                    allow_fallback: true
