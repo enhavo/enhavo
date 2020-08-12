@@ -40,7 +40,7 @@ enhavo_theme:
         enable: true
 
 enhavo_translation:
-    enable: true
+    enable: false
     default_locale: 'en'
     locales:
         - 'en'
