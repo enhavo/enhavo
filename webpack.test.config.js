@@ -7,8 +7,8 @@ EnhavoEncore.register(new AppTestPackage());
 EnhavoEncore.add('test', (Encore) =>
 {
     let files = TestFinder.find([
-        'assets/node_modules/@enhavo/**/Tests/*Test.@(js|ts)',
-        'assets/node_modules/@enhavo/**/Tests/**/*Test.@(js|ts)',
+        'assets/node_modules/@enhavo/**/Tests/*Test.karma.@(js|ts)',
+        'assets/node_modules/@enhavo/**/Tests/**/*Test.karma.@(js|ts)',
     ]);
 
     for (let file of files) {

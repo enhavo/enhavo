@@ -10,8 +10,9 @@ class Definition
     {
         this.name = name;
         this.arguments = [];
-        /** @type {Tag} */
+        /** @type {Array<Tag>} */
         this.tags = [];
+        /** @type {Array<Call>} */
         this.calls = [];
         this.import = null;
         this.from = null;
@@ -24,6 +25,7 @@ class Definition
         this.include = null;
         this.exclude = null;
         this.exports = null;
+        this.init = false;
     }
 
     getName() {
@@ -60,22 +62,38 @@ class Definition
         return this.import;
     }
 
+    /**
+     * @returns {Array<Argument>}
+     */
     getArguments() {
         return this.arguments;
     }
 
+    /**
+     * @param {number} index
+     * @returns {Argument}
+     */
     getArgument(index) {
         return this.arguments[index];
     }
 
+    /**
+     * @returns {string}
+     */
     getHash() {
         return this.hash;
     }
 
+    /**
+     * @returns {boolean}
+     */
     isStatic() {
         return this.static;
     }
 
+    /**
+     * @param {Tag} tag
+     */
     addTag(tag) {
         this.tags.push(tag);
     }
@@ -102,6 +120,69 @@ class Definition
 
     getMode() {
         return this.mode;
+    }
+
+    setInit(value) {
+        return this.init = value;
+    }
+
+    isInit() {
+        return this.init;
+    }
+
+    /**
+     * @returns {Array<Call>}
+     */
+    getCalls() {
+        return this.calls;
+    }
+
+    setPrefetch(prefetch) {
+
+    }
+
+    getPrefetch(prefetch) {
+
+    }
+
+    setPreload(preload) {
+
+    }
+
+    getPreload(preload) {
+
+    }
+
+    setChunkName(chunkName) {
+
+    }
+
+    getChunkName(chunkName) {
+
+    }
+
+    setInclude(include) {
+
+    }
+
+    getInclude(include) {
+
+    }
+
+    setExclude(exclude) {
+
+    }
+
+    getExclude(exclude) {
+
+    }
+
+    setExport(exports) {
+
+    }
+
+    getExport(exports) {
+
     }
 }
 

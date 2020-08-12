@@ -1,8 +1,8 @@
-import {assert} from "chai";
-import ContainerBuilder from "@enhavo/dependency-injection/Container/ContainerBuilder";
-import Definition from "@enhavo/dependency-injection/Container/Definition";
-import Compiler from "@enhavo/dependency-injection/Compiler/Compiler";
-import * as acorn from "acorn";
+const assert = require("chai").assert;
+const ContainerBuilder = require("@enhavo/dependency-injection/Container/ContainerBuilder");
+const Definition = require( "@enhavo/dependency-injection/Container/Definition");
+const Compiler = require("@enhavo/dependency-injection/Compiler/Compiler");
+const acorn  = require("acorn");
 
 describe('dependency-injection/Compiler/Compiler', () => {
     describe('test definition function', () => {

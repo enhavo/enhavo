@@ -3,8 +3,9 @@
   "license": "MIT",
   "scripts": {
     "routes:dump": "bin/console fos:js-routing:dump --format=json --target=public/js/fos_js_routes.json",
-    "test": "TESTBUILD=true encore dev --config webpack.test.config.js && karma start --single-run --browsers ChromeHeadless karma.conf.js && rm -rf public/build/test/*",
-    "di": "node ./assets/node_modules/@enhavo/dependency-injection/bin/dependency-injection.js ./assets/services/*"
+    "karma": "TESTBUILD=true encore dev --config webpack.test.config.js && karma start --single-run --browsers ChromeHeadless karma.conf.js && rm -rf public/build/test/*",
+    "mocha": "mocha assets/node_modules/**/Tests/**/*.mocha.js",
+    "di": "node ./assets/node_modules/@enhavo/dependency-injection/bin/dependency-injection.js \"./assets/services/*\""
   },
   "dependencies": {
     "@fullcalendar/core": "^4.2.0",
@@ -30,9 +31,9 @@
     "js-yaml": "^3.13.1",
     "lodash": "^4.17.11",
     "moment": "^2.18.1",
-    "node-sass": "^4.11.0",
+    "node-sass": "^4.0.0",
     "pako": "^1.0.10",
-    "sass-loader": "^7.1.0",
+    "sass-loader": "^8.0.0",
     "select2": "~3.5.1",
     "sha1": "^1.1.1",
     "slick-carousel": "^1.8.1",
@@ -54,7 +55,7 @@
     "yaml": "^1.10.0"
   },
   "devDependencies": {
-    "@symfony/webpack-encore": "0.22.4",
+    "@symfony/webpack-encore": "0.30.2",
     "@types/async": "^2.4.1",
     "@types/axios": "^0.14.0",
     "@types/chai": "^4.2.12",

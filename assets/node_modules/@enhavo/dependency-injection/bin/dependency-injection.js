@@ -1,4 +1,7 @@
 const Loader = require('@enhavo/dependency-injection/Loader/Loader');
+const CommandException = require('@enhavo/dependency-injection/Exception/CommandException');
+const Compiler = require('@enhavo/dependency-injection/Compiler/Compiler');
+const Validator = require('@enhavo/dependency-injection/Validation/Validator');
 const builder = require('@enhavo/dependency-injection/builder');
 const process = require('process');
 const path = require('path');
@@ -12,31 +15,48 @@ class CommandLineInterface
     }
 
     execute() {
-        this._list();
+        if(this.command === undefined || this.command === 'list') {
+            this._list();
+        } else if(this.command === 'compile') {
+            this._compile();
+        } else {
+            this._write('Command "'+this.command+'" not exist.');
+        }
     }
 
     _list() {
         this.loader.loadFile(this.servicePath, builder);
+        (new Validator).validate(builder);
 
-        process.stdout.write('\u001b[42mLoaded files:\u001b[49m\n');
-        for (let file of this.loader.getLoadedFiles()) {
-            process.stdout.write(' - '+file+'\n');
+        this._write('\u001b[42mLoaded files:\u001b[49m');
+        for (let file of builder.getFiles()) {
+            this._write(' - '+file);
         }
 
-        process.stdout.write('\u001b[42mEntrypoints:\u001b[49m\n');
+        this._write('\u001b[42mEntrypoints:\u001b[49m');
         for (let entrypoint of builder.getEntrypoints()) {
-            process.stdout.write(' - '+ entrypoint.getName()+'\n');
+            this._write(' - '+ entrypoint.getName());
         }
 
-        process.stdout.write('\u001b[42mCompiler Passes:\u001b[49m\n');
+        this._write('\u001b[42mCompiler Passes:\u001b[49m');
         for (let compilerPass of builder.getCompilerPasses()) {
-            process.stdout.write(' - '+ compilerPass.getName()+'\n');
+            this._write(' - '+ compilerPass.getName());
         }
 
-        process.stdout.write('\u001b[42mServices:\u001b[49m\n');
+        this._write('\u001b[42mServices:\u001b[49m\n');
         for (let definitions of builder.getDefinitions()) {
-            process.stdout.write(' - '+ definitions.getName()+'\n');
+            this._write(' - '+ definitions.getName());
         }
+    }
+
+    _compile() {
+        this.loader.loadFile(this.servicePath, builder);
+        (new Validator).validate(builder);
+        this._write((new Compiler).compile(builder));
+    }
+
+    _write(message) {
+        process.stdout.write(message+'\n');
     }
 }
 

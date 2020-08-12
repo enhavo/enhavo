@@ -1,9 +1,11 @@
 const ContainerBuilder = require('@enhavo/dependency-injection/Container/ContainerBuilder');
 const Definition = require('@enhavo/dependency-injection/Container/Definition');
-const Reference = require('@enhavo/dependency-injection/Container/Reference');
+const Call = require('@enhavo/dependency-injection/Container/Call');
+const Argument = require('@enhavo/dependency-injection/Container/Argument');
 const Entrypoint = require('@enhavo/dependency-injection/Container/Entrypoint');
 const CompilerPass = require('@enhavo/dependency-injection/Container/CompilerPass');
 const Tag = require('@enhavo/dependency-injection/Container/Tag');
+const FileLoadException = require('@enhavo/dependency-injection/Exception/FileLoadException');
 const glob = require('glob');
 const path = require('path');
 const YAML = require('yaml');
@@ -12,18 +14,13 @@ const fs = require('fs');
 
 class Loader
 {
-    constructor(fileSystem = null) {
-        this.fs = fileSystem !== null ? fileSystem : fs;
+    constructor() {
         this.loadedFiles = [];
     }
 
-    addLoadedFile(file) {
+    _addLoadedFile(file, builder) {
+        builder.addFile(file);
         this.loadedFiles.push(file);
-    }
-
-    getLoadedFiles()
-    {
-        return this.loadedFiles;
     }
 
     _isFileAlreadyLoaded(file) {
@@ -66,10 +63,15 @@ class Loader
             }
             let extension = path.extname(file);
             if (extension === '.yaml') {
-                let content = this.fs.readFileSync(file)+'';
-                this.load(content, 'yaml', builder, path.dirname(file), options);
+                let content = fs.readFileSync(file)+'';
+                try {
+                    this.load(content, 'yaml', builder, path.dirname(file), options);
+                } catch (e) {
+                    throw new FileLoadException('Can\'t load file "'+file+'". Error: ' + e)
+                }
+
             }
-            this.addLoadedFile(file);
+            this._addLoadedFile(file, builder);
         }
         return this;
     }
@@ -113,7 +115,7 @@ class Loader
             let beforePath = null;
             while(subPath !== beforePath) {
                 let file = path.resolve(subPath, './node_modules');
-                if(this.fs.existsSync(file)) {
+                if(fs.existsSync(file)) {
                     return path.resolve(subPath, './node_modules', filepath);
                 }
                 beforePath = subPath;
@@ -144,8 +146,8 @@ class Loader
                 let definition = new Definition(name);
                 this._checkArguments(service, definition);
                 this._checkTags(service, definition);
-                this._checkImport(service, definition);
-                this._checkFrom(service, definition, cwd);
+                this._checkCalls(service, definition);
+                this._checkSettings(service, definition, cwd);
 
                 builder.addDefinition(definition);
             }
@@ -159,9 +161,7 @@ class Loader
     _checkArguments(service, definition) {
         if(service.arguments) {
             for (let argument of service.arguments) {
-                if(argument.startsWith('@')) {
-                    definition.addArgument(new Reference(argument));
-                }
+                definition.addArgument(new Argument(argument));
             }
         }
     }
@@ -187,11 +187,19 @@ class Loader
     /**
      * @param {object} service
      * @param {Definition} definition
+     * @param {string} cwd
      */
-    _checkImport(service, definition) {
-        if(service.import) {
-            definition.setImport(service.import)
-        }
+    _checkSettings(service, definition, cwd) {
+        service.from ? definition.setFrom(this._buildFilepath(service.from, cwd, true)) : null;
+        service.import ? definition.setImport(service.import) : null;
+        service.init ? definition.setInit(service.init) : null;
+        service.mode ? definition.setMode(service.mode) : null;
+        service.prefetch ? definition.setPrefetch(service.mode) : null;
+        service.preload ? definition.setPreload(service.mode) : null;
+        service.chunckName ? definition.setChunkName(service.chunckName) : null;
+        service.include ? definition.setInclude(service.include) : null;
+        service.exclude ? definition.setExclude(service.exclude) : null;
+        service.exports ? definition.setExport(service.exports) : null;
     }
 
     /**
@@ -199,9 +207,17 @@ class Loader
      * @param {Definition} definition
      * @param {string} cwd
      */
-    _checkFrom(service, definition, cwd) {
-        if(service.from) {
-            definition.setFrom(this._buildFilepath(service.from, cwd, true));
+    _checkCalls(service, definition) {
+        if(service.calls) {
+            for (let call of service.calls) {
+                let argumentList = [];
+                if (call.length > 1) {
+                    for (let value of call[1]) {
+                        argumentList.push(new Argument(value));
+                    }
+                }
+                definition.addCall(new Call(call[0], argumentList));
+            }
         }
     }
 

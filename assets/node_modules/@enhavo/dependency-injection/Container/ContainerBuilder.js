@@ -13,16 +13,39 @@ class ContainerBuilder
         this.entrypoints = new Map();
         /** @type {Map<CompilerPass>} */
         this.compilerPasses = new Map();
+
+        this.files = [];
+    }
+
+    addFile(file) {
+        this.files.push(file);
+    }
+
+    getFiles() {
+        return this.files;
     }
 
     /**
      * @param {string} name
      * @returns {Array<Definition>}
      */
-    getDefinitionByTagName(name) {
+    getDefinitionsByTagName(name) {
         let definitions = [];
         for (let definition of this.definitions.getValues()) {
             if(definition.hasTag(name)) {
+                definitions.push(definition);
+            }
+        }
+        return definitions;
+    }
+
+    /**
+     * @returns {Array<Definition>}
+     */
+    getInitDefinitions() {
+        let definitions = [];
+        for (let definition of this.definitions.getValues()) {
+            if(definition.isInit()) {
                 definitions.push(definition);
             }
         }
@@ -77,6 +100,9 @@ class ContainerBuilder
         this.compilerPasses.add(compilerPass.getName(), compilerPass);
     }
 
+    /**
+     * @return {CompilerPass}
+     */
     getCompilerPasses() {
         return this.compilerPasses.getValues();
     }
@@ -87,7 +113,7 @@ class ContainerBuilder
             let m = new module.constructor();
             m.paths = module.paths;
             m._compile(content, compilerPass.path);
-            m.exports(this);
+            m.exports(this, compilerPass.getOptions());
         }
     }
 }
