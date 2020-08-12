@@ -18,7 +18,7 @@ abstract class AbstractTranslationType extends AbstractType implements Translati
     /** @var TranslationTypeInterface */
     protected $parent;
 
-    /** @var TextTranslator */
+    /** @var TranslatorInterface */
     protected $translator;
 
     /**

@@ -58,12 +58,12 @@ class DoctrineTranslationSubscriber implements EventSubscriber
      */
     public function getSubscribedEvents()
     {
-        return array(
+        return [
             'preRemove',
             'postLoad',
             'preFlush',
             'postFlush'
-        );
+        ];
     }
 
     /**
