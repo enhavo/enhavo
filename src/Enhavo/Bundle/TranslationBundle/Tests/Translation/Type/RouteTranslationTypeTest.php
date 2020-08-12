@@ -5,8 +5,12 @@ namespace Enhavo\Bundle\TranslationBundle\Tests\Translation\Type;
 
 use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
 use Enhavo\Bundle\TranslationBundle\Translation\Type\RouteTranslationType;
+use Enhavo\Bundle\TranslationBundle\Translation\Type\TranslationType;
 use Enhavo\Bundle\TranslationBundle\Translator\Route\RouteTranslator;
+use Enhavo\Bundle\TranslationBundle\Translator\TranslatorInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Enhavo\Bundle\TranslationBundle\Translation\Translation;
 
 class RouteTranslationTypeTest extends TestCase
 {
@@ -17,6 +21,7 @@ class RouteTranslationTypeTest extends TestCase
 
     public function testSetTranslation()
     {
+        /** @var RouteTranslator|MockObject $routeTranslator */
         $routeTranslator = $this->getMockBuilder(RouteTranslator::class)->disableOriginalConstructor()->getMock();
         $routeTranslator->expects($this->once())->method('setTranslation')->willReturnCallback(function($data, $property, $locale, $value) {
             $this->assertTrue(is_object($data));
@@ -33,6 +38,7 @@ class RouteTranslationTypeTest extends TestCase
     {
         $route = $this->getMockBuilder(RouteInterface::class)->getMock();
 
+        /** @var RouteTranslator|MockObject $routeTranslator */
         $routeTranslator = $this->getMockBuilder(RouteTranslator::class)->disableOriginalConstructor()->getMock();
         $routeTranslator->expects($this->once())->method('getTranslation')->willReturn($route);
 
@@ -40,5 +46,18 @@ class RouteTranslationTypeTest extends TestCase
 
         $type = new RouteTranslationType($routeTranslator);
         $this->assertTrue($route === $type->getTranslation([], $data, 'route', 'de'));
+    }
+
+    public function testValidationConstraints()
+    {
+        /** @var TranslatorInterface $translator */
+        $translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
+        $type = new RouteTranslationType($translator);
+
+        $translation = new Translation($type, [], [
+            'generators' => ['Generator']
+        ]);
+
+        $this->assertEquals(['Generator'], $translation->getValidationConstraints(null, 'route', 'de'));
     }
 }

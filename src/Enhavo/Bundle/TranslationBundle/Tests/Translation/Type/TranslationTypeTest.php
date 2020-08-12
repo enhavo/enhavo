@@ -9,14 +9,14 @@ use PHPUnit\Framework\TestCase;
 
 class TranslationTypeTest extends TestCase
 {
-    public function testValidationConstraints()
-    {
-        $type = new TranslationType();
-
-        $translation = new Translation($type, [], [
-            'constraints' => ['Constraint']
-        ]);
-
-        $this->assertEquals(['Constraint'], $translation->getValidationConstraints(null, null, 'de'));
-    }
+//    public function testValidationConstraints()
+//    {
+//        $type = new TranslationType();
+//
+//        $translation = new Translation($type, [], [
+//            'constraints' => ['Constraint']
+//        ]);
+//
+//        $this->assertEquals(['Constraint'], $translation->getValidationConstraints(null, null, 'de'));
+//    }
 }

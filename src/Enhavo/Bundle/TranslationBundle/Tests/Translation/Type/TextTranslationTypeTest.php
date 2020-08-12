@@ -3,12 +3,22 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Tests\Translation\Type;
 
+use Enhavo\Bundle\TranslationBundle\Translation\Translation;
 use Enhavo\Bundle\TranslationBundle\Translation\Type\TextTranslationType;
 use Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator;
+use Enhavo\Bundle\TranslationBundle\Translator\TranslatorInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class TextTranslationTypeTest extends TestCase
 {
+    private function createDependencies()
+    {
+        /** @var TextTranslator|MockObject $textTranslator */
+        $textTranslator = $this->getMockBuilder(TextTranslator::class)->disableOriginalConstructor()->getMock();
+        return $textTranslator;
+    }
+
     public function testGetName()
     {
         $this->assertEquals('text', TextTranslationType::getName());
@@ -16,7 +26,7 @@ class TextTranslationTypeTest extends TestCase
 
     public function testSetTranslation()
     {
-        $textTranslator = $this->getMockBuilder(TextTranslator::class)->disableOriginalConstructor()->getMock();
+        $textTranslator = $this->createDependencies();
         $textTranslator->expects($this->once())->method('setTranslation')->willReturnCallback(function($data, $property, $locale, $value) {
             $this->assertTrue(is_object($data));
             $this->assertEquals('name', $property);
@@ -30,10 +40,26 @@ class TextTranslationTypeTest extends TestCase
 
     public function testGetTranslation()
     {
-        $textTranslator = $this->getMockBuilder(TextTranslator::class)->disableOriginalConstructor()->getMock();
+        $textTranslator = $this->createDependencies();
         $textTranslator->expects($this->once())->method('getTranslation')->willReturn('Something');
 
         $type = new TextTranslationType($textTranslator);
         $this->assertEquals('Something', $type->getTranslation([], new \stdClass(), 'text', 'de'));
+    }
+
+    public function testValidationConstraints()
+    {
+        $textTranslator = $this->createDependencies();
+        $type = new TextTranslationType($textTranslator);
+
+        $translation = new Translation($type, [], [
+            'constraints' => ['Constraint'],
+            'allow_fallback' => true
+        ]);
+
+        $this->assertEquals([
+            'constraints' => ['Constraint'],
+            'allow_fallback' => true
+        ], $translation->getValidationConstraints(null, 'field', 'de'));
     }
 }

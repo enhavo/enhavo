@@ -4,8 +4,10 @@
 namespace Enhavo\Bundle\TranslationBundle\Tests\Translation\Type;
 
 use Enhavo\Bundle\RoutingBundle\Model\SlugInterface;
+use Enhavo\Bundle\TranslationBundle\Translation\Translation;
 use Enhavo\Bundle\TranslationBundle\Translation\Type\SlugTranslationType;
 use Enhavo\Bundle\TranslationBundle\Translator\Slug\SlugTranslator;
+use Enhavo\Bundle\TranslationBundle\Translator\TranslatorInterface;
 use PHPUnit\Framework\TestCase;
 
 class SlugTranslationTypeTest extends TestCase
@@ -38,5 +40,18 @@ class SlugTranslationTypeTest extends TestCase
 
         $type = new SlugTranslationType($slugTranslator);
         $this->assertEquals('Slug', $type->getTranslation([], $data, 'slug', 'de'));
+    }
+
+    public function testValidationConstraints()
+    {
+        /** @var TranslatorInterface $translator */
+        $translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
+        $type = new SlugTranslationType($translator);
+
+        $translation = new Translation($type, [], [
+            'allow_fallback' => true
+        ]);
+
+        $this->assertEquals(['allow_fallback' => true], $translation->getValidationConstraints(null, 'slug', 'de'));
     }
 }

@@ -8,8 +8,8 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Translation;
 
-use Enhavo\Bundle\AppBundle\Exception\TypeMissingException;
-use Enhavo\Bundle\AppBundle\Type\TypeCollector;
+use Doctrine\ORM\EntityManagerInterface;
+use Enhavo\Bundle\TranslationBundle\Exception\TranslationException;
 use Enhavo\Bundle\TranslationBundle\Metadata\Metadata;
 use Enhavo\Bundle\TranslationBundle\Metadata\PropertyNode;
 use Enhavo\Component\Metadata\MetadataRepository;
@@ -23,6 +23,9 @@ class TranslationManager
 
     /** @var FactoryInterface */
     private $factory;
+
+    /** @var EntityManagerInterface */
+    private $entityManager;
 
     /** @var string[] */
     private $locales;
@@ -45,9 +48,13 @@ class TranslationManager
     /** @var Translation[] */
     private $translation = [];
 
+    /** @var string[] */
+    private $translatedLocale;
+
     public function __construct(
         MetadataRepository $metadataRepository,
         FactoryInterface $factory,
+        EntityManagerInterface $entityManager,
         $locales,
         $defaultLocale,
         $enabled,
@@ -57,11 +64,13 @@ class TranslationManager
     {
         $this->metadataRepository = $metadataRepository;
         $this->factory = $factory;
+        $this->entityManager = $entityManager;
         $this->locales = $locales;
         $this->defaultLocale = $defaultLocale;
         $this->enabled = $enabled;
         $this->translationPaths = $translationPaths;
         $this->requestStack = $requestStack;
+        $this->translatedLocale = [];
     }
 
     public function isEnabled()
@@ -142,43 +151,89 @@ class TranslationManager
 
     public function translate($object, $locale)
     {
+        $this->checkEntity($object);
+
+        if ($this->isTranslated($object)) {
+            throw new TranslationException('Entity was already translated. It can only be translated once. Please detach before using translate again');
+        }
+
         $properties = $this->getObjectProperties($object);
 
-        $types = [];
         foreach ($properties as $property) {
-            if (!isset($types[$property->getType()])) {
-                $type = $this->getTranslation($object, $property->getProperty());
-                $type->translate($object, $locale);
-                $types[$property->getType()] = $type;
-            }
+            $type = $this->getTranslation($object, $property->getProperty());
+            $type->translate($object, $property->getProperty(), $locale);
         }
+
+        $this->setTranslated($object, $locale);
     }
 
     public function detach($object)
     {
+        $this->checkEntity($object);
+
+        if (!$this->isTranslated($object)) {
+            throw new TranslationException('Entity was not translated. You can only detach already translated objects');
+        }
+
+        $locale = $this->getTranslatedLocale($object);
         $properties = $this->getObjectProperties($object);
 
-        $types = [];
         foreach ($properties as $property) {
-            if (!isset($types[$property->getType()])) {
-                $type = $this->getTranslation($object, $property->getProperty());
-                $type->detach($object);
-                $types[$property->getType()] = $type;
-            }
+            $type = $this->getTranslation($object, $property->getProperty());
+            $type->detach($object, $property, $locale);
         }
+
+        $this->setTranslated($object, false);
     }
 
     public function delete($object)
     {
+        $this->checkEntity($object);
+
         $properties = $this->getObjectProperties($object);
 
         $types = [];
         foreach ($properties as $property) {
             if (!isset($types[$property->getType()])) {
                 $translation = $this->getTranslation($object, $property->getProperty());
+                // todo: isTypeAccepted
                 $translation->delete($object);
                 $types[$property->getType()] = $translation;
             }
+        }
+    }
+
+    private function isTranslated($entity): bool
+    {
+        $oid = spl_object_hash($entity);
+        return isset($this->translatedLocale[$oid]);
+    }
+
+    /**
+     * @param $object
+     * @return string|null
+     */
+    private function getTranslatedLocale($object): ?string
+    {
+        $oid = spl_object_hash($object);
+        return $this->translatedLocale[$oid];
+    }
+
+    private function setTranslated($entity, $value)
+    {
+        $oid = spl_object_hash($entity);
+        if (false !== $value) {
+            unset($this->translatedLocale[$oid]);
+
+        } else {
+            $this->translatedLocale[$oid] = $value;
+        }
+    }
+
+    private function checkEntity($entity)
+    {
+        if (!$this->metadataRepository->hasMetadata($entity)) {
+            throw new TranslationException(sprintf('Entity "%s" is not translatable', get_class($entity)));
         }
     }
 
@@ -188,6 +243,7 @@ class TranslationManager
      */
     private function getObjectProperties($object): array
     {
+        /** @var Metadata $metadata */
         $metadata = $this->metadataRepository->getMetadata($object);
         if (null === $metadata) {
             return [];
@@ -206,5 +262,38 @@ class TranslationManager
         }
 
         return $this->translation[$property->getType()];
+    }
+
+
+    public function fetchBySlug($class, $slug, $locale = null, $allowFallback = false)
+    {
+        if ($locale === null) {
+            $locale = $this->localeResolver->resolve();
+        }
+
+        if ($locale === $this->getDefaultLocale()) {
+            $entity = $this->em->getRepository($class)->findOneBy([
+                'slug' => $slug
+            ]);
+            return $entity;
+        }
+
+        /** @var Translation $translation */
+        $translation = $this->em->getRepository(Translation::class)->findOneBy([
+            'class' => $this->getEntityResolver()->getName($class),
+            'property' => 'slug',
+            'translation' => $slug,
+            'locale' => $locale
+        ]);
+
+        if ($translation !== null) {
+            return $translation->getObject();
+        }
+
+        if ($allowFallback) {
+            return $this->fetch($class, $slug, $this->getDefaultLocale(), false);
+        }
+
+        return null;
     }
 }

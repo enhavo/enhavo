@@ -86,7 +86,9 @@ class DoctrineTranslationSubscriber implements EventSubscriber
          */
         foreach ($uow->getIdentityMap() as $className) {
             foreach ($className as $object) {
-                $this->translationManager->detach($object);
+                if ($this->metadataRepository->hasMetadata($className)) {
+                    $this->translationManager->detach($object);
+                }
             }
         }
     }
@@ -106,9 +108,12 @@ class DoctrineTranslationSubscriber implements EventSubscriber
         $result = $uow->getIdentityMap();
 
         foreach ($result as $class => $entities) {
-            foreach ($entities as $entity) {
-                $this->translationManager->translate($entity, $this->accessControl->getLocale());
+            if ($this->metadataRepository->hasMetadata($class)) {
+                foreach ($entities as $entity) {
+                    $this->translationManager->translate($entity, $this->accessControl->getLocale());
+                }
             }
+
         }
     }
 
@@ -120,7 +125,9 @@ class DoctrineTranslationSubscriber implements EventSubscriber
     public function preRemove(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
-        $this->translationManager->delete($entity);
+        if ($this->metadataRepository->hasMetadata($entity)) {
+            $this->translationManager->delete($entity);
+        }
     }
 
     /**
@@ -135,6 +142,8 @@ class DoctrineTranslationSubscriber implements EventSubscriber
         }
 
         $entity = $args->getEntity();
-        $this->translationManager->translate($entity, $this->accessControl->getLocale());
+        if ($this->metadataRepository->hasMetadata($entity)) {
+            $this->translationManager->translate($entity, $this->accessControl->getLocale());
+        }
     }
 }

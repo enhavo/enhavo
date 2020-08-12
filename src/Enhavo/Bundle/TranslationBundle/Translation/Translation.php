@@ -30,14 +30,14 @@ class Translation extends AbstractContainerType
         return $this->type->getValidationConstraints($this->options, $data, $property, $locale);
     }
 
-    public function translate($data, $locale)
+    public function translate($data, string $property, string $locale)
     {
-        $this->type->translate($data, $locale);
+        $this->type->translate($data, $property, $locale, $this->options);
     }
 
-    public function detach($data)
+    public function detach($data, string $property, string $locale)
     {
-        $this->type->detach($data);
+        $this->type->detach($data, $property, $locale, $this->options);
     }
 
     public function delete($data)

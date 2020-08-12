@@ -3,12 +3,14 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Tests\Translation;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\TranslationBundle\Metadata\Metadata;
 use Enhavo\Bundle\TranslationBundle\Metadata\PropertyNode;
 use Enhavo\Bundle\TranslationBundle\Translation\Translation;
 use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
 use Enhavo\Component\Metadata\MetadataRepository;
 use Enhavo\Component\Type\FactoryInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -20,6 +22,7 @@ class TranslationManagerTest extends TestCase
         $dependencies = new TranslationManagerDependencies();
         $dependencies->metadataRepository = $this->getMockBuilder(MetadataRepository::class)->disableOriginalConstructor()->getMock();
         $dependencies->factory = $this->getMockBuilder(FactoryInterface::class)->getMock();
+        $dependencies->entityManager = $this->getMockBuilder(EntityManagerInterface::class)->getMock();
         $dependencies->locales = ['en', 'de'];
         $dependencies->defaultLocale = 'en';
         $dependencies->enabled = true;
@@ -33,6 +36,7 @@ class TranslationManagerTest extends TestCase
         return new TranslationManager(
             $dependencies->metadataRepository,
             $dependencies->factory,
+            $dependencies->entityManager,
             $dependencies->locales,
             $dependencies->defaultLocale,
             $dependencies->enabled,
@@ -166,11 +170,14 @@ class TranslationManagerTest extends TestCase
 
 class TranslationManagerDependencies
 {
-    /** @var MetadataRepository|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var MetadataRepository|MockObject */
     public $metadataRepository;
 
-    /** @var FactoryInterface|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var FactoryInterface|MockObject */
     public $factory;
+
+    /** @var EntityManagerInterface|MockObject */
+    public $entityManager;
 
     /** @var array */
     public $locales;
@@ -184,7 +191,7 @@ class TranslationManagerDependencies
     /** @var array */
     public $translationPaths;
 
-    /** @var RequestStack|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var RequestStack|MockObject */
     public $requestStack;
 }
 

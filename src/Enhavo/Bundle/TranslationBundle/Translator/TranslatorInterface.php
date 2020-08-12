@@ -9,10 +9,7 @@ interface TranslatorInterface
 
     public function getTranslation($entity, $property, $locale);
 
-    public function translate($entity, $locale);
+    public function translate($entity, string $property, string $locale, array $options);
 
-    public function detach($entity);
-
-    public function getAcceptedTypes(): array;
-
+    public function detach($entity, string $property, string $locale, array $options);
 }

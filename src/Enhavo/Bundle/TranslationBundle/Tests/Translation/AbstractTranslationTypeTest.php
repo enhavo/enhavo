@@ -28,7 +28,7 @@ class AbstractTranslationTypeTest extends TestCase
         $type = new ConcreteTranslationType($dependencies->translator);
         $type->setParent($dependencies->translation);
 
-        $type->setTranslation([], null, null, 'en', 'value');
+        $type->setTranslation([], null, 'field', 'en', 'value');
     }
 
     public function testGetTranslation()
@@ -38,7 +38,7 @@ class AbstractTranslationTypeTest extends TestCase
         $type = new ConcreteTranslationType($dependencies->translator);
         $type->setParent($dependencies->translation);
 
-        $type->getTranslation([], null, null, 'en');
+        $type->getTranslation([], null, 'field', 'en');
     }
 
     public function testGetValidationConstraint()
@@ -48,7 +48,7 @@ class AbstractTranslationTypeTest extends TestCase
         $type = new ConcreteTranslationType($dependencies->translator);
         $type->setParent($dependencies->translation);
 
-        $type->getValidationConstraints([], null, null, 'en');
+        $type->getValidationConstraints([], null, 'field', 'en');
     }
 
     public function testGetParentType()

@@ -30,14 +30,14 @@ abstract class AbstractTranslationType extends AbstractType implements Translati
         $this->translator = $translator;
     }
 
-    public function translate($object, $locale): void
+    public function translate($object, string $property, string $locale, array $options): void
     {
-        $this->translator->translate($object, $locale);
+        $this->translator->translate($object, $property, $locale, $options);
     }
 
-    public function detach($object): void
+    public function detach($object, string $property, string $locale, array $options): void
     {
-        $this->translator->detach($object);
+        $this->translator->detach($object, $property, $locale, $options);
     }
 
     public function delete($object): void
@@ -45,17 +45,17 @@ abstract class AbstractTranslationType extends AbstractType implements Translati
         $this->translator->delete($object);
     }
 
-    public function setTranslation(array $options, $data, $property, $locale, $value)
+    public function setTranslation(array $options, $data, string $property, string $locale, $value)
     {
         $this->parent->setTranslation($options, $data, $property, $locale, $value);
     }
 
-    public function getTranslation(array $options, $data, $property, $locale)
+    public function getTranslation(array $options, $data, string $property, string $locale)
     {
         $this->parent->getTranslation($options, $data, $property, $locale);
     }
 
-    public function getValidationConstraints(array $options, $data, $property, $locale)
+    public function getValidationConstraints(array $options, $data, string $property, string $locale)
     {
         $this->parent->getValidationConstraints($options, $data, $property, $locale);
     }

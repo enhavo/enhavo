@@ -15,12 +15,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TextTranslationType extends AbstractTranslationType
 {
-    public function setTranslation(array $options, $data, $property, $locale, $value)
+    public function setTranslation(array $options, $data, string $property, string $locale, $value)
     {
         $this->translator->setTranslation($data, $property, $locale, $value);
     }
 
-    public function getTranslation(array $options, $data, $property, $locale)
+    public function getTranslation(array $options, $data, string $property, string $locale)
     {
         return $this->translator->getTranslation($data, $property, $locale);
     }

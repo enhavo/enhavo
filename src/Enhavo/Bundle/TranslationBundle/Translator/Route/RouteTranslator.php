@@ -58,17 +58,15 @@ class RouteTranslator implements TranslatorInterface
 
     public function setTranslation($entity, $property, $locale, $value): void
     {
-        $this->checkEntity($entity);
-
-        if($locale == $this->defaultLocale) {
+        if ($locale == $this->defaultLocale) {
             return;
         }
 
         $translationRoute = $this->findTranslationRoute($entity, $property, $locale);
-        if($translationRoute === null) {
+        if ($translationRoute === null) {
             $this->createTranslationRoute($entity, $property, $locale, $value);
         } else {
-            if($translationRoute->getRoute() !== $value) {
+            if ($translationRoute->getRoute() !== $value) {
                 $route = $translationRoute->getRoute();
                 $this->getEntityManager()->remove($route);
                 $translationRoute->setRoute($value);
@@ -78,15 +76,13 @@ class RouteTranslator implements TranslatorInterface
 
     public function getTranslation($entity, $property, $locale): ?RouteInterface
     {
-        $this->checkEntity($entity);
-
-        if($locale == $this->defaultLocale) {
+        if ($locale == $this->defaultLocale) {
             return null;
         }
 
         $translationRoute = $this->findTranslationRoute($entity, $property, $locale);
 
-        if($translationRoute !== null) {
+        if ($translationRoute !== null) {
             return $translationRoute->getRoute();
         }
 
@@ -96,13 +92,6 @@ class RouteTranslator implements TranslatorInterface
     public function delete($entity)
     {
         $this->deleteTranslationData($entity);
-    }
-
-    private function checkEntity($entity)
-    {
-        if(!$this->metadataRepository->hasMetadata($entity)) {
-            throw new TranslationException(sprintf('Entity "%s" is not translatable', get_class($entity)));
-        }
     }
 
     private function createTranslationRoute($entity, $property, $locale, RouteInterface $route): TranslationRoute
@@ -128,7 +117,7 @@ class RouteTranslator implements TranslatorInterface
             $entity->getId()
         );
 
-        foreach($translationRoutes as $translationRoute) {
+        foreach ($translationRoutes as $translationRoute) {
             $this->getEntityManager()->remove($translationRoute);
         }
     }
@@ -152,15 +141,16 @@ class RouteTranslator implements TranslatorInterface
         return $this->em;
     }
 
-    public function translate($entity, $locale)
+    public function translate($entity, string $property, string $locale, array $options)
     {
-
+        // TODO: Implement translate() method.
     }
 
-    public function detach($entity)
+    public function detach($entity, string $property, string $locale, array $options)
     {
-
+        // TODO: Implement detach() method.
     }
+
 
     public function getAcceptedTypes(): array
     {

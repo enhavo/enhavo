@@ -3,6 +3,7 @@ services:
         arguments:
             - '@Enhavo\Component\Metadata\MetadataRepository[Translation]'
             - '@Enhavo\Component\Type\FactoryInterface[Translation]'
+            - '@doctrine.orm.entity_manager'
             - '%enhavo_translation.locales%'
             - '%enhavo_translation.default_locale%'
             - '%enhavo_translation.enable%'
