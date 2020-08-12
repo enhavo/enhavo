@@ -12,7 +12,7 @@ services:
             - '@Enhavo\Bundle\BlockBundle\Block\BlockManager'
             - '%enhavo_block.render.sets%'
             - '@enhavo_app.template.manager'
-            - '@templating'
+            - '@twig'
 
     validator.video_url_validator:
         class:  Enhavo\Bundle\BlockBundle\Validator\Constraints\VideoUrlValidator

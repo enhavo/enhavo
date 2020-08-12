@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\TaxonomyBundle\Maker;
 
 use Enhavo\Bundle\AppBundle\Maker\MakerUtil;
+use Enhavo\Bundle\AppBundle\Util\NameTransformer;
 use Symfony\Bundle\MakerBundle\InputConfiguration;
 use Symfony\Bundle\MakerBundle\Maker\AbstractMaker;
 use Symfony\Bundle\MakerBundle\ConsoleStyle;
@@ -25,9 +26,15 @@ class MakeTaxonomy extends AbstractMaker
      */
     private $util;
 
+    /**
+     * @var NameTransformer
+     */
+    private $nameTransformer;
+
     public function __construct(MakerUtil $util)
     {
         $this->util = $util;
+        $this->nameTransformer = new NameTransformer();
     }
 
     public function configureCommand(Command $command, InputConfiguration $inputConf)
@@ -61,11 +68,11 @@ class MakeTaxonomy extends AbstractMaker
         $class = sprintf("%s\\%s", $namespace, $className);
 
         $generator->generateFile(
-            sprintf('%sResources/config/routing/admin/%s.yaml', $path, $this->util->camelCaseToSnakeCase($name)),
+            sprintf('%sResources/config/routing/admin/%s.yaml', $path, $this->nameTransformer->snakeCase($name)),
             $this->util->getRealpath('@EnhavoTaxonomyBundle/Resources/skeleton/routing.tpl.php'),
             [
-                'bundle_name' => $this->util->camelCaseToSnakeCase($this->util->getBundleNameWithoutPostfix($bundleName)),
-                'name' => $this->util->camelCaseToSnakeCase($name),
+                'bundle_name' => $this->nameTransformer->snakeCase($this->util->getBundleNameWithoutPostfix($bundleName)),
+                'name' => $this->nameTransformer->snakeCase($name),
                 'bundle_url' => $this->util->getBundleUrl($bundleName),
                 'name_url' => $this->util->getResourceUrl($name),
                 'hierarchy' => $hierarchy,
@@ -80,12 +87,12 @@ class MakeTaxonomy extends AbstractMaker
                 'namespace' => $namespace,
                 'class_name' => $className,
                 'hierarchy' => $hierarchy,
-                'name' => $this->util->camelCaseToSnakeCase($name),
+                'name' => $this->nameTransformer->snakeCase($name),
             ]
         );
 
         $generator->writeChanges();
 
-        $io->writeln(sprintf('Add the %s.yaml to your routing', $this->util->camelCaseToSnakeCase($name)));
+        $io->writeln(sprintf('Add the %s.yaml to your routing', $this->nameTransformer->snakeCase($name)));
     }
 }

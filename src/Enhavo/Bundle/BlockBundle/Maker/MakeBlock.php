@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\BlockBundle\Maker;
 
 use Enhavo\Bundle\AppBundle\Maker\MakerUtil;
+use Enhavo\Bundle\AppBundle\Util\NameTransformer;
 use Symfony\Bundle\MakerBundle\ConsoleStyle;
 use Symfony\Bundle\MakerBundle\DependencyBuilder;
 use Symfony\Bundle\MakerBundle\Generator;
@@ -12,7 +13,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\Templating\EngineInterface;
+use Twig\Environment;
 
 class MakeBlock extends AbstractMaker
 {
@@ -27,15 +28,21 @@ class MakeBlock extends AbstractMaker
     private $util;
 
     /**
-     * @var EngineInterface
+     * @var Environment
      */
-    private $templateEngine;
+    private $twigEnvironment;
 
-    public function __construct(KernelInterface $kernel, MakerUtil $util, EngineInterface $templateEngine)
+    /**
+     * @var NameTransformer
+     */
+    private $nameTransformer;
+
+    public function __construct(KernelInterface $kernel, MakerUtil $util, Environment $twigEnvironment)
     {
         $this->kernel = $kernel;
         $this->util = $util;
-        $this->templateEngine = $templateEngine;
+        $this->twigEnvironment = $twigEnvironment;
+        $this->nameTransformer = new NameTransformer();
     }
 
     public static function getCommandName(): string
@@ -103,9 +110,9 @@ class MakeBlock extends AbstractMaker
 
     private function generateDoctrineOrmFile(Generator $generator, BlockName $block)
     {
-        $applicationName = $this->util->snakeCase($block->getApplicationName());
+        $applicationName = $this->nameTransformer->snakeCase($block->getApplicationName());
         $applicationName = str_replace('enhavo_', '', $applicationName); // special case for enhavo
-        $tableName = sprintf('%s_%s_block', $applicationName, $this->util->snakeCase($block->getName()));
+        $tableName = sprintf('%s_%s_block', $applicationName, $this->nameTransformer->snakeCase($block->getName()));
         $generator->generateFile(
             $block->getDoctrineORMFilePath(),
             $this->createTemplatePath('block/doctrine.tpl.php'),
@@ -131,7 +138,7 @@ class MakeBlock extends AbstractMaker
 
     private function generateFormTypeFile(Generator $generator, BlockName $block)
     {
-        $formTypeName = sprintf('%s_%s_block', $this->util->snakeCase($block->getApplicationName()), $this->util->snakeCase($block->getName()));
+        $formTypeName = sprintf('%s_%s_block', $this->nameTransformer->snakeCase($block->getApplicationName()), $this->nameTransformer->snakeCase($block->getName()));
         $generator->generateFile(
             $block->getFormTypeFilePath(),
             $this->createTemplatePath('block/form-type.tpl.php'),
@@ -162,7 +169,7 @@ class MakeBlock extends AbstractMaker
             $block->getTemplateFilePath(),
             $this->createTemplatePath('block/template.tpl.php'),
             [
-                'name' => $this->util->snakeCase($block->getName()),
+                'name' => $this->nameTransformer->snakeCase($block->getName()),
             ]
         );
     }
@@ -177,9 +184,9 @@ class MakeBlock extends AbstractMaker
                 'entity_namespace' => $block->getEntityNamespace(),
                 'form_namespace' => $block->getFormNamespace(),
                 'factory_namespace' => $block->getFactoryNamespace(),
-                'name_snake' => $this->util->snakeCase($block->getName()),
-                'name_camel' => $this->util->camelCase($block->getName()),
-                'name_kebab' => $this->util->kebabCase($block->getName()),
+                'name_snake' => $this->nameTransformer->snakeCase($block->getName()),
+                'name_camel' => $this->nameTransformer->camelCase($block->getName()),
+                'name_kebab' => $this->nameTransformer->kebabCase($block->getName()),
                 'translation_domain' => $block->getTranslationDomain(),
             ]
         );
@@ -187,14 +194,14 @@ class MakeBlock extends AbstractMaker
 
     private function generateEnhavoConfigCode(BlockName $block, $type)
     {
-        return $this->templateEngine->render('@EnhavoBlock/maker/Block/enhavo_config_entry.yml.twig', array(
+        return $this->twigEnvironment->render('@EnhavoBlock/maker/Block/enhavo_config_entry.yml.twig', array(
             'namespace' => $block->getNamespace(),
             'entity_namespace' => $block->getEntityNamespace(),
             'form_namespace' => $block->getFormNamespace(),
             'factory_namespace' => $block->getFactoryNamespace(),
-            'name_snake' => $this->util->snakeCase($block->getName()),
-            'name_camel' => $this->util->camelCase($block->getName()),
-            'name_kebab' => $this->util->kebabCase($block->getName()),
+            'name_snake' => $this->nameTransformer->snakeCase($block->getName()),
+            'name_camel' => $this->nameTransformer->camelCase($block->getName()),
+            'name_kebab' => $this->nameTransformer->kebabCase($block->getName()),
             'translation_domain' => $block->getTranslationDomain(),
             'block_type' => $type,
         ));
@@ -202,9 +209,9 @@ class MakeBlock extends AbstractMaker
 
     private function generateServiceCode(BlockName $block)
     {
-        return $this->templateEngine->render('@EnhavoBlock/maker/Block/block_service.yml.twig', array(
+        return $this->twigEnvironment->render('@EnhavoBlock/maker/Block/block_service.yml.twig', array(
             'namespace' => $block->getNamespace(),
-            'type' => $this->util->snakeCase($block->getName()),
+            'type' => $this->nameTransformer->snakeCase($block->getName()),
             'name' => $block->getName(),
         ));
     }
