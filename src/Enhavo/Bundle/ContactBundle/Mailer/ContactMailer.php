@@ -12,7 +12,7 @@ use Enhavo\Bundle\ContactBundle\Configuration\ConfigurationFactory;
 use Enhavo\Bundle\ContactBundle\Model\ContactInterface;
 use Symfony\Component\Templating\EngineInterface;
 use Enhavo\Bundle\ContactBundle\Configuration\Configuration;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ContactMailer
 {

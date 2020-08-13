@@ -50,6 +50,7 @@ class SyliusResourceResolverTest extends TestCase
 
         $this->assertEquals('app.entity', $resolver->getName(new SyliusResourceResolverEntityDummy));
         $this->assertEquals('app.entity', $resolver->getName(new SyliusResourceResolverEntityProxyDummy));
+        $this->assertEquals('app.entity', $resolver->getName(SyliusResourceResolverEntityDummy::class));
     }
 
     public function testGetNameException()

@@ -26,8 +26,11 @@ class ClassNameResolver implements EntityResolverInterface
         $this->em = $em;
     }
 
-    public function getName(object $entity): string
+    public function getName($entity): string
     {
+        if (is_string($entity)) {
+            return $entity;
+        }
         $className = get_class($entity);
         if($entity instanceof Proxy) {
             $className = get_parent_class($entity);

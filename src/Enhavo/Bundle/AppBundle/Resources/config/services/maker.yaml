@@ -13,6 +13,7 @@ services:
     Enhavo\Bundle\AppBundle\Maker\MakeWidget:
         arguments:
             - '@enhavo_app.maker.util'
+            - '@twig'
         tags:
             - { name: 'maker.command' }
 

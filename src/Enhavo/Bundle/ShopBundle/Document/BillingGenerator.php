@@ -13,7 +13,7 @@ use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Enhavo\Bundle\ShopBundle\Entity\OrderItem;
 use Enhavo\Bundle\ShopBundle\Model\ProductInterface;
 use Sylius\Component\Taxation\Model\TaxRate;
-use Symfony\Component\Intl\Intl;
+use Symfony\Component\Intl\Countries;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class BillingGenerator implements GeneratorInterface
@@ -114,7 +114,7 @@ class BillingGenerator implements GeneratorInterface
 
             $pdf->MultiCell($addressWidth,0,$order->getBillingAddress()->getStreet(),0,"L",false,1,$marginLeft);
             $pdf->MultiCell($addressWidth,0,$order->getBillingAddress()->getPostcode().' '.$order->getBillingAddress()->getCity(),0,"L",false,1,$marginLeft);
-            $pdf->MultiCell($addressWidth,0,Intl::getRegionBundle()->getCountryName($order->getBillingAddress()->getCountryCode()),0,"L",false,1,$marginLeft);
+            $pdf->MultiCell($addressWidth,0,Countries::getName($order->getBillingAddress()->getCountryCode()),0,"L",false,1,$marginLeft);
             if(!$order->getBillingAddress()->getCompany()) {
                 $pdf->MultiCell($addressWidth,0,"",0,"L",false,1,$marginLeft);
             }

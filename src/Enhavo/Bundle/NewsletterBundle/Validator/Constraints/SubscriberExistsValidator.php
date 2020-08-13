@@ -10,7 +10,6 @@ namespace Enhavo\Bundle\NewsletterBundle\Validator\Constraints;
 
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Subscriber\SubscriberManager;
-use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 

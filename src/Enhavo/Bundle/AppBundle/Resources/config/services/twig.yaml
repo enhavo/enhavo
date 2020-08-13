@@ -3,7 +3,7 @@ services:
         arguments:
             - 'EnhavoAppBundle:View:pagination.html.twig'
         calls:
-            - [ setEngine, ['@templating']]
+            - [ setTwigEnvironment, ['@twig']]
         tags:
             - { name: twig.extension }
 

@@ -10,7 +10,6 @@ namespace Enhavo\Bundle\ShopBundle\Controller;
 
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sylius\Component\Cart\Provider\CartProviderInterface;
 use Sylius\Component\Cart\Model\CartInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;

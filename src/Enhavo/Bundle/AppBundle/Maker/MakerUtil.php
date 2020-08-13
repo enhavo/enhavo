@@ -12,6 +12,10 @@ class MakerUtil
      * @var KernelInterface
      */
     private $kernel;
+
+    /**
+     * @var NameTransformer
+     */
     private $nameTransformer;
 
     /**
@@ -27,6 +31,7 @@ class MakerUtil
     /**
      * @param $name
      * @deprecated Use Enhavo\Bundle\AppBundle\Util\NameTransformer
+     * @return string
      */
     public function camelCase($name)
     {
@@ -36,6 +41,7 @@ class MakerUtil
     /**
      * @param $name
      * @deprecated Use Enhavo\Bundle\AppBundle\Util\NameTransformer
+     * @return string
      */
     public function kebabCase($name)
     {
@@ -45,6 +51,7 @@ class MakerUtil
     /**
      * @param $name
      * @deprecated Use Enhavo\Bundle\AppBundle\Util\NameTransformer
+     * @return string
      */
     public function snakeCase($name)
     {
@@ -52,7 +59,10 @@ class MakerUtil
     }
 
     /**
+     * @param string $camelCaseName
+     * @param bool $minusSeparator
      * @deprecated Use Enhavo\Bundle\AppBundle\Util\NameTransformer
+     * @return string
      */
     public function camelCaseToSnakeCase($camelCaseName, $minusSeparator = false)
     {
@@ -78,7 +88,10 @@ class MakerUtil
     }
 
     /**
+     * @param string $snakeCaseName
+     * @param bool $minusSeparator
      * @deprecated Use Enhavo\Bundle\AppBundle\Util\NameTransformer
+     * @return string
      */
     public function snakeCaseToCamelCase($snakeCaseName, $minusSeparator = false)
     {
@@ -135,7 +148,7 @@ class MakerUtil
 
     public function getBundleUrl($bundleName)
     {
-        return preg_replace('/_/', '/', $this->camelCaseToSnakeCase($this->getBundleNameWithoutPostfix($bundleName)));
+        return preg_replace('/_/', '/', $this->nameTransformer->snakeCase($this->getBundleNameWithoutPostfix($bundleName)));
     }
 
     public function getBundleNamespace($bundleName)
@@ -148,7 +161,7 @@ class MakerUtil
 
     public function getResourceUrl($name)
     {
-        return $this->camelCaseToSnakeCase($name, true);
+        return $this->nameTransformer->kebabCase($name);
     }
 
     public function getRealpath($path)

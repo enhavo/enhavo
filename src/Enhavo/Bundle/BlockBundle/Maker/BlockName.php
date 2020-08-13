@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\BlockBundle\Maker;
 
 use Enhavo\Bundle\AppBundle\Maker\MakerUtil;
+use Enhavo\Bundle\AppBundle\Util\NameTransformer;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 
@@ -28,6 +29,11 @@ class BlockName
      * @var string
      */
     private $name;
+
+    /**
+     * @var NameTransformer
+     */
+    private $nameTransformer;
 
     /**
      * @var BundleInterface
@@ -73,12 +79,13 @@ class BlockName
         $this->name = array_pop($nameParts);
         $this->subDirectories = $nameParts;
         $this->path = str_replace('\\', '/', $this->namespace);
+        $this->nameTransformer = new NameTransformer();
     }
 
     public function getDoctrineORMFilePath()
     {
         $subDirectory = $this->subDirectories ? implode('.', $this->subDirectories).'.' : '';
-        $filename = sprintf('%s%sBlock.orm.yml', $subDirectory, $this->util->camelCase($this->name));
+        $filename = sprintf('%s%sBlock.orm.yml', $subDirectory, $this->nameTransformer->camelCase($this->name));
 
         if($this->bundle) {
             return sprintf( 'src/%s/Resources/config/doctrine/%s', $this->path, $filename);
@@ -90,7 +97,7 @@ class BlockName
     public function getEntityFilePath()
     {
         $subDirectory = $this->subDirectories ? implode('/', $this->subDirectories).'/' : '';
-        $filename = sprintf('%s%sBlock.php', $subDirectory, $this->util->camelCase($this->name));
+        $filename = sprintf('%s%sBlock.php', $subDirectory, $this->nameTransformer->camelCase($this->name));
 
         if($this->bundle) {
             return sprintf( 'src/%s/Entity/%s', $this->path, $filename);
@@ -108,7 +115,7 @@ class BlockName
     public function getFormTypeFilePath()
     {
         $subDirectory = $this->subDirectories ? implode('/', $this->subDirectories).'/' : '';
-        $filename = sprintf('%s%sBlockType.php', $subDirectory, $this->util->camelCase($this->name));
+        $filename = sprintf('%s%sBlockType.php', $subDirectory, $this->nameTransformer->camelCase($this->name));
 
         if($this->bundle) {
             return sprintf( 'src/%s/Form/Type/%s', $this->path, $filename);
@@ -120,16 +127,16 @@ class BlockName
     public function getTemplateFilePath()
     {
         if($this->bundle) {
-            return sprintf( 'src/%s/Resources/views/theme/block/%s.html.twig', $this->path, $this->util->kebabCase($this->name));
+            return sprintf( 'src/%s/Resources/views/theme/block/%s.html.twig', $this->path, $this->nameTransformer->kebabCase($this->name));
         } else {
-            return sprintf('%s/templates/theme/block/%s.html.twig', $this->util->getProjectPath(), $this->util->kebabCase($this->name));
+            return sprintf('%s/templates/theme/block/%s.html.twig', $this->util->getProjectPath(), $this->nameTransformer->kebabCase($this->name));
         }
     }
 
     public function getFactoryFilePath()
     {
         $subDirectory = $this->subDirectories ? implode('/', $this->subDirectories).'/' : '';
-        $filename = sprintf('%s%sBlockFactory.php', $subDirectory, $this->util->camelCase($this->name));
+        $filename = sprintf('%s%sBlockFactory.php', $subDirectory, $this->nameTransformer->camelCase($this->name));
 
         if($this->bundle) {
             return sprintf( 'src/%s/Factory/%s', $this->path, $filename);
@@ -181,9 +188,9 @@ class BlockName
     {
         if($this->bundle) {
             $bundleName = $this->util->getBundleNameWithoutPostfix($this->bundle->getName());
-            return $this->util->snakeCase($bundleName);
+            return $this->nameTransformer->snakeCase($bundleName);
         } else {
-            return $this->util->snakeCase(explode('\\', $this->namespace));
+            return $this->nameTransformer->snakeCase(explode('\\', $this->namespace));
         }
     }
 }

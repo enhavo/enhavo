@@ -8,14 +8,13 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Event;
 
-
-use ProjectBundle\Entity\Subscriber;
+use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Symfony\Component\EventDispatcher\Event;
 
 class CleverReachEvent extends Event
 {
     /**
-     * @var Subscriber
+     * @var SubscriberInterface
      */
     private $subscriber;
 
@@ -31,7 +30,7 @@ class CleverReachEvent extends Event
     }
 
     /**
-     * @return Subscriber
+     * @return SubscriberInterface
      */
     public function getSubscriber()
     {

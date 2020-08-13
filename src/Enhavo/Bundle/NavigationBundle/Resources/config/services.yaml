@@ -83,3 +83,6 @@ services:
         arguments:
             - '@Enhavo\Bundle\NavigationBundle\NavItem\NavItemManager'
             - '%enhavo_navigation.render.sets%'
+        calls:
+            - [setContainer, ['@service_container']]
+            - [setTwig, ['@twig']]

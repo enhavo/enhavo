@@ -11,19 +11,19 @@ services:
 
     Enhavo\Bundle\TranslationBundle\Translation\Type\TextTranslationType:
         arguments:
-            - '@enhavo_translation.text.translator'
+            - '@Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator'
         tags:
             - { name: enhavo_translation.translation }
 
     Enhavo\Bundle\TranslationBundle\Translation\Type\RouteTranslationType:
         arguments:
-            - '@enhavo_translation.route.translator'
+            - '@Enhavo\Bundle\TranslationBundle\Translator\Route\RouteTranslator'
         tags:
             - { name: enhavo_translation.translation }
 
     Enhavo\Bundle\TranslationBundle\Translation\Type\SlugTranslationType:
         arguments:
-            - '@enhavo_translation.slug.translator'
+            - '@Enhavo\Bundle\TranslationBundle\Translator\Slug\SlugTranslator'
         tags:
             - { name: enhavo_translation.translation }
 

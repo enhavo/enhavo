@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Maker;
 
-use Symfony\Component\Console\Output\ConsoleOutput;
+use Enhavo\Bundle\AppBundle\Util\NameTransformer;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -14,7 +14,6 @@ use Symfony\Bundle\MakerBundle\Generator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 
 class MakeWidget extends AbstractMaker
 {
@@ -36,6 +35,11 @@ class MakeWidget extends AbstractMaker
     private $util;
 
     /**
+     * @var NameTransformer
+     */
+    private $nameTransformer;
+
+    /**
      * WidgetGenerator constructor.
      *
      * @param MakerUtil $util
@@ -43,6 +47,7 @@ class MakeWidget extends AbstractMaker
     public function __construct(MakerUtil $util)
     {
         $this->util = $util;
+        $this->nameTransformer = new NameTransformer();
     }
 
 
@@ -70,7 +75,7 @@ class MakeWidget extends AbstractMaker
 
     public function configureDependencies(DependencyBuilder $dependencies)
     {
-        // TODO: Implement configureDependencies() method.
+
     }
 
     public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator)
@@ -92,7 +97,7 @@ class MakeWidget extends AbstractMaker
         $this->output->writeln($this->generateServiceConfigCode($bundle, $cleanedWidgetName));
         $this->output->writeln('');
         $this->output->writeln('<options=bold>To render your widget, add this code in a twig file:</>');
-        $this->output->writeln('{{ widget_render(\'' . $this->util->camelCaseToSnakeCase($cleanedWidgetName) . '\', {}) }}');
+        $this->output->writeln('{{ widget_render(\'' . $this->nameTransformer->snakeCase($cleanedWidgetName) . '\', {}) }}');
         $this->output->writeln('');
     }
 
@@ -108,16 +113,16 @@ class MakeWidget extends AbstractMaker
             $filePath,
             [
                 'namespace' => $bundle->getNamespace() . '\\Widget',
-                'template_file' => '@' . $this->util->getBundleNameWithoutPostfix($bundle) . '/' . self::TEMPLATE_FILE_PATH . '/' . $this->util->camelCaseToSnakeCase($widgetName) . '.html.twig',
+                'template_file' => '@' . $this->util->getBundleNameWithoutPostfix($bundle) . '/' . self::TEMPLATE_FILE_PATH . '/' . $this->nameTransformer->snakeCase($widgetName) . '.html.twig',
                 'widget_name' => $widgetName,
-                'widget_label' => $this->util->camelCaseToSnakeCase($widgetName)
+                'widget_label' => $this->nameTransformer->snakeCase($widgetName)
             ]
         );
     }
 
     private function generateTemplateFile(BundleInterface $bundle, $widgetName)
     {
-        $filePath = $bundle->getPath() . '/Resources/views/' . self::TEMPLATE_FILE_PATH . '/' . $this->util->camelCaseToSnakeCase($widgetName) . '.html.twig';
+        $filePath = $bundle->getPath() . '/Resources/views/' . self::TEMPLATE_FILE_PATH . '/' . $this->nameTransformer->snakeCase($widgetName) . '.html.twig';
         if (file_exists($filePath)) {
             throw new \RuntimeException('Template file "' . $filePath . '" already exists.');
         }
@@ -134,8 +139,8 @@ class MakeWidget extends AbstractMaker
     private function generateServiceConfigCode(BundleInterface $bundle, $widgetName)
     {
         return $this->util->render('@EnhavoGenerator/Generator/Widget/service_config_entry.yml.twig', array(
-            'bundle_name_snake_case_without_postfix' => $this->util->camelCaseToSnakeCase($this->util->getBundleNameWithoutPostfix($bundle)),
-            'widget_label' => $this->util->camelCaseToSnakeCase($widgetName),
+            'bundle_name_snake_case_without_postfix' => $this->nameTransformer->snakeCase($this->util->getBundleNameWithoutPostfix($bundle)),
+            'widget_label' => $this->nameTransformer->snakeCase($widgetName),
             'bundle_namespace' => $bundle->getNamespace(),
             'widget_name' => $widgetName
         ));
@@ -143,7 +148,7 @@ class MakeWidget extends AbstractMaker
 
     private function cleanWidgetName($widgetName)
     {
-        $cleanedWidgetName = $this->util->snakeCaseToCamelCase($widgetName);
+        $cleanedWidgetName = $this->nameTransformer->snakeCase($widgetName);
         $matches = [];
         if (preg_match('/^(.+)Widget$/', $cleanedWidgetName, $matches)) {
             $cleanedWidgetName = $matches[1];

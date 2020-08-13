@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Maker;
 
+use Enhavo\Bundle\AppBundle\Util\NameTransformer;
 use Symfony\Bundle\MakerBundle\InputConfiguration;
 use Symfony\Bundle\MakerBundle\Maker\AbstractMaker;
 use Symfony\Bundle\MakerBundle\ConsoleStyle;
@@ -24,9 +25,15 @@ class MakeMenu extends AbstractMaker
      */
     private $util;
 
+    /**
+     * @var NameTransformer
+     */
+    private $nameTransformer;
+
     public function __construct(MakerUtil $util)
     {
         $this->util = $util;
+        $this->nameTransformer = new NameTransformer();
     }
 
     public function configureCommand(Command $command, InputConfiguration $inputConf)
@@ -62,7 +69,7 @@ class MakeMenu extends AbstractMaker
             [
                 'namespace' => $namespace,
                 'class_name' => $className,
-                'name' => $this->util->camelCaseToSnakeCase($name)
+                'name' => $this->nameTransformer->snakeCase($name)
             ]
         );
         $generator->writeChanges();

@@ -4,7 +4,7 @@ enhavo_translation:
             properties:
                 route:
                     type: route
-                    generators:
+                    constraints:
                         locale_prefix:
                             type: locale_prefix
                             property: title

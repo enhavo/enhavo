@@ -8,8 +8,7 @@
 
 namespace Enhavo\Bundle\MediaBundle\Factory;
 
-use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesser;
-use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
+use Symfony\Component\Mime\MimeTypes;
 
 trait GuessTrait
 {
@@ -21,8 +20,8 @@ trait GuessTrait
      */
     protected function guessMimeType($path)
     {
-        $guesser = MimeTypeGuesser::getInstance();
-        return $guesser->guess($path);
+        $guesser = MimeTypes::getDefault();
+        return $guesser->guessMimeType($path);
     }
 
     /**
@@ -35,7 +34,11 @@ trait GuessTrait
      */
     protected function guessExtension($path)
     {
-        $guesser = ExtensionGuesser::getInstance();
-        return $guesser->guess($path);
+        $guesser = MimeTypes::getDefault();
+        $extensions = $guesser->getExtensions($this->guessMimeType($path));
+        if ($extensions && count($extensions)) {
+            return $extensions[0];
+        }
+        return null;
     }
 }
