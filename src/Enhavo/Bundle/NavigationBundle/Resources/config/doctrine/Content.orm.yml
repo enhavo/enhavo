@@ -19,6 +19,9 @@ Enhavo\Bundle\NavigationBundle\Entity\Content:
 
     manyToOne:
         node:
+            cascade: ['persist']
             targetEntity: Enhavo\Bundle\NavigationBundle\Model\NodeInterface
+            joinColumn:
+                onDelete: CASCADE
 
     lifecycleCallbacks: { }
