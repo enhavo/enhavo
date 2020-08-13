@@ -6,7 +6,3 @@ enhavo_translation:
                     type: text
                 slug:
                     type: slug
-                    generators:
-                        slug:
-                            type: slug
-                            property: title

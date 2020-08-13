@@ -262,16 +262,16 @@ class TranslationManager
         /** @var Metadata $metadata */
         $metadata = $this->metadataRepository->getMetadata($data);
         $property = $metadata->getProperty($propertyName);
-        $typeName = $property->getType();
+        $className = $metadata->getClassName();
 
-        if (!isset($this->translation[$typeName])) { // todo check if caching types does make sens
-            $this->translation[$typeName] = [];
+        if (!isset($this->translation[$className])) {
+            $this->translation[$className] = [];
         }
-        if (!isset($this->translation[$typeName][$propertyName])) {
-            $this->translation[$typeName][$propertyName] = $this->factory->create(array_merge(['type' => $typeName], $property->getOptions()));
+        if (!isset($this->translation[$className][$propertyName])) {
+            $this->translation[$className][$propertyName] = $this->factory->create(array_merge(['type' => $property->getType()], $property->getOptions()));
         }
 
-        return $this->translation[$typeName][$propertyName];
+        return $this->translation[$className][$propertyName];
     }
 
 
