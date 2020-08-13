@@ -10,24 +10,39 @@ namespace Enhavo\Bundle\AppBundle\Security;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
+use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-class ExceptionListener extends \Symfony\Component\Security\Http\Firewall\ExceptionListener
+/**
+ * Class ExceptionListener
+ *
+ * In case of an AccessDeniedException, this class saves enhavo-view_id and post variables to the session, if any.
+ *
+ * This fixes the problem of a user getting logged out while editing a form in Enhavo backend. Now when the user gets
+ * prompted with a login dialog when clicking Save, the dialog will not be hidden behind a permanent loading overlay
+ * and on a successful login, the form's state as sent in the save request get restored.
+ *
+ * @package Enhavo\Bundle\AppBundle\Security
+ */
+class ExceptionListener
 {
     /**
      * @var Session
      */
     private $session;
 
-    public function setSession(Session $session)
+    /**
+     * ExceptionListener constructor.
+     * @param Session $session
+     */
+    public function __construct(Session $session)
     {
         $this->session = $session;
     }
 
-    public function onKernelException(GetResponseForExceptionEvent $event)
+    public function onKernelException(ExceptionEvent $event)
     {
-        $exception = $event->getException();
+        $exception = $event->getThrowable();
 
         if ($exception instanceof AccessDeniedException) {
             $request = $event->getRequest();
@@ -39,8 +54,6 @@ class ExceptionListener extends \Symfony\Component\Security\Http\Firewall\Except
                 }
             }
         }
-
-        parent::onKernelException($event);
     }
 
     private function getViewId(Request $request)

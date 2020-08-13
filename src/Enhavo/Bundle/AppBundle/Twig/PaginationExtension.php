@@ -3,16 +3,16 @@
 namespace Enhavo\Bundle\AppBundle\Twig;
 
 use Pagerfanta\Pagerfanta;
-use Symfony\Component\Templating\EngineInterface;
+use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 class PaginationExtension extends AbstractExtension
 {
     /**
-     * @var EngineInterface
+     * @var Environment
      */
-    private $engine;
+    private $twigEnvironment;
 
     /**
      * @var string
@@ -29,11 +29,11 @@ class PaginationExtension extends AbstractExtension
     }
 
     /**
-     * @param EngineInterface $engine
+     * @param Environment $twigEnvironment
      */
-    public function setEngine(EngineInterface $engine)
+    public function setTwigEnvironment(Environment $twigEnvironment)
     {
-        $this->engine = $engine;
+        $this->twigEnvironment = $twigEnvironment;
     }
 
     public function getFunctions()
@@ -45,7 +45,7 @@ class PaginationExtension extends AbstractExtension
 
     public function render(Pagerfanta $pagination, array $parameters = [])
     {
-        return $this->engine->render($this->template, array_merge([
+        return $this->twigEnvironment->render($this->template, array_merge([
             'pagination' => $pagination
         ], $parameters));
     }

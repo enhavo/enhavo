@@ -82,10 +82,6 @@ class EnhavoAppBundle extends Bundle
         );
 
         $container->addCompilerPass(
-            new SecurityCompilerPass()
-        );
-
-        $container->addCompilerPass(
             new LocaleResolverCompilerPass()
         );
     }
