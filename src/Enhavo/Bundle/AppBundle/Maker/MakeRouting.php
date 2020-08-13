@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Maker;
 
+use Enhavo\Bundle\AppBundle\Util\NameTransformer;
 use Symfony\Bundle\MakerBundle\InputConfiguration;
 use Symfony\Bundle\MakerBundle\Maker\AbstractMaker;
 use Symfony\Bundle\MakerBundle\ConsoleStyle;
@@ -16,7 +17,6 @@ use Symfony\Bundle\MakerBundle\Generator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 
 class MakeRouting extends AbstractMaker
 {
@@ -25,9 +25,15 @@ class MakeRouting extends AbstractMaker
      */
     private $util;
 
+    /**
+     * @var NameTransformer
+     */
+    private $nameTransformer;
+
     public function __construct(MakerUtil $util)
     {
         $this->util = $util;
+        $this->nameTransformer = new NameTransformer();
     }
 
     public function configureCommand(Command $command, InputConfiguration $inputConf)
@@ -57,18 +63,18 @@ class MakeRouting extends AbstractMaker
 
         if($bundle == 'no') {
             $app = 'app';
-            $path = sprintf('%s/config/routes/admin/%s.yaml', $this->util->getProjectPath(), $this->util->camelCaseToSnakeCase($resource));
+            $path = sprintf('%s/config/routes/admin/%s.yaml', $this->util->getProjectPath(), $this->nameTransformer->snakeCase($resource));
         } else {
             $app = $this->util->getBundleNameWithoutPostfix($bundle);
-            $path = sprintf('%s/Resources/config/routing/admin/%s.yaml', $this->util->getBundlePath($bundle), $this->util->camelCaseToSnakeCase($resource));
+            $path = sprintf('%s/Resources/config/routing/admin/%s.yaml', $this->util->getBundlePath($bundle), $this->nameTransformer->snakeCase($resource));
         }
 
         $generator->generateFile(
             $path,
             $this->util->getRealpath('@EnhavoAppBundle/Resources/skeleton/routing.tpl.php'),
             [
-                'app' => $this->util->camelCaseToSnakeCase($app),
-                'resource' => $this->util->camelCaseToSnakeCase($resource),
+                'app' => $this->nameTransformer->snakeCase($app),
+                'resource' => $this->nameTransformer->snakeCase($resource),
                 'app_url' => $this->getUrl($app),
                 'resource_url' => $this->getUrl($resource)
             ]
@@ -79,6 +85,6 @@ class MakeRouting extends AbstractMaker
 
     private function getUrl($input)
     {
-        return preg_replace('/_/', '/',  $this->util->camelCaseToSnakeCase($input));
+        return preg_replace('/_/', '/',  $this->nameTransformer->snakeCase($input));
     }
 }

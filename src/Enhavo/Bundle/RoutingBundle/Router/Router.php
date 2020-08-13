@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\RoutingBundle\Router;
 
-use Doctrine\ORM\Proxy\Proxy;
+use Doctrine\Common\Proxy\Proxy;
 use Enhavo\Bundle\AppBundle\Type\CollectorInterface;
 use Enhavo\Bundle\RoutingBundle\Exception\UrlResolverException;
 use Enhavo\Bundle\RoutingBundle\Metadata\Metadata;

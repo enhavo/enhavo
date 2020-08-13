@@ -12,7 +12,7 @@ use Enhavo\Bundle\AppBundle\Template\TemplateManager;
 use Enhavo\Bundle\BlockBundle\Block\BlockManager;
 use Enhavo\Bundle\BlockBundle\Exception\RenderException;
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
-use Symfony\Component\Templating\EngineInterface;
+use Twig\Environment;
 
 class BlockRenderer implements BlockRendererInterface
 {
@@ -32,9 +32,9 @@ class BlockRenderer implements BlockRendererInterface
     private $templateManager;
 
     /**
-     * @var EngineInterface
+     * @var Environment
      */
-    private $engine;
+    private $twigEnvironment;
 
     /**
      * ContainerRenderer constructor.
@@ -42,13 +42,14 @@ class BlockRenderer implements BlockRendererInterface
      * @param BlockManager $blockManager
      * @param array $renderSets
      * @param TemplateManager $templateManager
+     * @param Environment $twigEnvironment
      */
-    public function __construct(BlockManager $blockManager, $renderSets, TemplateManager $templateManager, EngineInterface $engine)
+    public function __construct(BlockManager $blockManager, $renderSets, TemplateManager $templateManager, Environment $twigEnvironment)
     {
         $this->blockManager = $blockManager;
         $this->renderSets = $renderSets;
         $this->templateManager = $templateManager;
-        $this->engine = $engine;
+        $this->twigEnvironment = $twigEnvironment;
     }
 
     /**
@@ -59,7 +60,7 @@ class BlockRenderer implements BlockRendererInterface
      */
     private function renderTemplate($template, $parameters = [])
     {
-        return $this->engine->render($template, $parameters);
+        return $this->twigEnvironment->render($template, $parameters);
     }
 
     /**

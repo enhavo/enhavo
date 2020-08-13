@@ -9,6 +9,6 @@ services:
         arguments:
             - '@kernel'
             - '@enhavo_app.maker.util'
-            - '@templating.engine.twig'
+            - '@twig'
         tags:
             - { name: 'maker.command' }

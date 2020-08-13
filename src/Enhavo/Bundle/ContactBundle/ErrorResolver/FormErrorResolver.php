@@ -9,7 +9,7 @@
 namespace Enhavo\Bundle\ContactBundle\ErrorResolver;
 
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class FormErrorResolver {
     /**
