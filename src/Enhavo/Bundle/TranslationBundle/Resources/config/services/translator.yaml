@@ -1,10 +1,4 @@
 services:
-    Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator:
-        arguments:
-            - '@doctrine.orm.entity_manager'
-            - '@Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface'
-            - '%enhavo_translation.default_locale%'
-
     Enhavo\Bundle\TranslationBundle\Translator\Text\AccessControl:
         arguments:
             - '@request_stack'
@@ -31,6 +25,15 @@ services:
             - '%enhavo_translation.locales%'
             - '%enhavo_translation.default_locale%'
 
+    Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface'
+            - '%enhavo_translation.default_locale%'
+
+    Enhavo\Bundle\TranslationBundle\Translator\Slug\SlugTranslator:
+        parent: Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator
+
     Enhavo\Bundle\TranslationBundle\Translator\Route\RouteTranslator:
         arguments:
             - '@Enhavo\Component\Metadata\MetadataRepository[Translation]'
@@ -38,21 +41,12 @@ services:
             - '@Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface'
             - '@doctrine.orm.entity_manager'
 
-    Enhavo\Bundle\TranslationBundle\Translator\Slug\SlugTranslator:
-        parent: Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator
-
 #    enhavo_translation.preview_listener:
 #        class: Enhavo\Bundle\TranslationBundle\EventListener\PreviewListener
 #        arguments:
 #            - '@enhavo_translation.locale_resolver'
 #        tags:
 #            - { name: kernel.event_listener, event: enhavo_app.init_preview, method: onInitPreview }
-
-#    enhavo_translation.slug_translator:
-#        class: Enhavo\Bundle\TranslationBundle\Translator\SlugTranslator
-#        arguments:
-#            - '@doctrine.orm.entity_manager'
-#            - '@enhavo_translation.locale_resolver'
 
 #    enhavo_translation.translation_route_manager:
 #        class: Enhavo\Bundle\TranslationBundle\Route\TranslationRouteManager

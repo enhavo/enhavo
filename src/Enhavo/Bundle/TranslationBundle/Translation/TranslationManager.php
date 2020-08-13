@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\TranslationBundle\Translation;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Enhavo\Bundle\AppBundle\Locale\LocaleResolverInterface;
 use Enhavo\Bundle\TranslationBundle\Exception\TranslationException;
 use Enhavo\Bundle\TranslationBundle\Metadata\Metadata;
 use Enhavo\Bundle\TranslationBundle\Metadata\PropertyNode;
@@ -26,6 +27,9 @@ class TranslationManager
 
     /** @var EntityManagerInterface */
     private $entityManager;
+
+    /** @var LocaleResolverInterface */
+    protected $localeResolver;
 
     /** @var string[] */
     private $locales;
@@ -45,7 +49,7 @@ class TranslationManager
     /** @var boolean|null */
     private $cachedTranslation = null;
 
-    /** @var Translation[] */
+    /** @var Translation[][] */
     private $translation = [];
 
     /** @var string[] */
@@ -55,6 +59,7 @@ class TranslationManager
         MetadataRepository $metadataRepository,
         FactoryInterface $factory,
         EntityManagerInterface $entityManager,
+        LocaleResolverInterface $localeResolver,
         $locales,
         $defaultLocale,
         $enabled,
@@ -65,6 +70,7 @@ class TranslationManager
         $this->metadataRepository = $metadataRepository;
         $this->factory = $factory;
         $this->entityManager = $entityManager;
+        $this->localeResolver = $localeResolver;
         $this->locales = $locales;
         $this->defaultLocale = $defaultLocale;
         $this->enabled = $enabled;
@@ -196,7 +202,7 @@ class TranslationManager
         foreach ($properties as $property) {
             if (!isset($types[$property->getType()])) {
                 $translation = $this->getTranslation($object, $property->getProperty());
-                // todo: isTypeAccepted
+                // todo: isTypeAccepted?
                 $translation->delete($object);
                 $types[$property->getType()] = $translation;
             }
@@ -256,12 +262,16 @@ class TranslationManager
         /** @var Metadata $metadata */
         $metadata = $this->metadataRepository->getMetadata($data);
         $property = $metadata->getProperty($propertyName);
+        $typeName = $property->getType();
 
-        if (!isset($this->translation[$property->getType()])) {
-            $this->translation[$property->getType()] = $this->factory->create(array_merge(['type' => $property->getType()], $property->getOptions()));
+        if (!isset($this->translation[$typeName])) { // todo check if caching types does make sens
+            $this->translation[$typeName] = [];
+        }
+        if (!isset($this->translation[$typeName][$propertyName])) {
+            $this->translation[$typeName][$propertyName] = $this->factory->create(array_merge(['type' => $typeName], $property->getOptions()));
         }
 
-        return $this->translation[$property->getType()];
+        return $this->translation[$typeName][$propertyName];
     }
 
 
@@ -272,14 +282,14 @@ class TranslationManager
         }
 
         if ($locale === $this->getDefaultLocale()) {
-            $entity = $this->em->getRepository($class)->findOneBy([
+            $entity = $this->entityManager->getRepository($class)->findOneBy([
                 'slug' => $slug
             ]);
             return $entity;
         }
 
         /** @var Translation $translation */
-        $translation = $this->em->getRepository(Translation::class)->findOneBy([
+        $translation = $this->entityManager->getRepository(Translation::class)->findOneBy([
             'class' => $this->getEntityResolver()->getName($class),
             'property' => 'slug',
             'translation' => $slug,

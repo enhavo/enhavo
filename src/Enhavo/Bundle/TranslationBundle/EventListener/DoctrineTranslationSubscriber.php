@@ -70,6 +70,7 @@ class DoctrineTranslationSubscriber implements EventSubscriber
      * Before flushing the data, we have to check if some translation data was stored for an object.
      *
      * @param PreFlushEventArgs $event
+     * @throws \Enhavo\Bundle\TranslationBundle\Exception\TranslationException
      */
     public function preFlush(PreFlushEventArgs $event)
     {
@@ -97,6 +98,7 @@ class DoctrineTranslationSubscriber implements EventSubscriber
      * Check if entity is not up to date an trigger flush again if needed
      *
      * @param PostFlushEventArgs $args
+     * @throws \Enhavo\Bundle\TranslationBundle\Exception\TranslationException
      */
     public function postFlush(PostFlushEventArgs $args)
     {
@@ -134,6 +136,7 @@ class DoctrineTranslationSubscriber implements EventSubscriber
      * Load TranslationData into to entity if it's fetched from the database
      *
      * @param LifecycleEventArgs $args
+     * @throws \Enhavo\Bundle\TranslationBundle\Exception\TranslationException
      */
     public function postLoad(LifecycleEventArgs $args)
     {
