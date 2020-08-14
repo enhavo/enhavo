@@ -171,13 +171,4 @@ class TextTranslator implements TranslatorInterface
     {
         return $this->entityManager->getRepository(Translation::class);
     }
-
-    /**
-     * @return string
-     */
-    protected function getDefaultLocale(): string
-    {
-        return $this->defaultLocale;
-    }
-
 }

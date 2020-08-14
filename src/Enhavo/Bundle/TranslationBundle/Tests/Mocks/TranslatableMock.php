@@ -5,8 +5,15 @@ namespace Enhavo\Bundle\TranslationBundle\Tests\Mocks;
 
 
 
-class TranslatableMock
+use Sylius\Component\Resource\Model\ResourceInterface;
+
+class TranslatableMock implements ResourceInterface
 {
+    public function getId()
+    {
+        return 1;
+    }
+
     private $name;
 
     /**
