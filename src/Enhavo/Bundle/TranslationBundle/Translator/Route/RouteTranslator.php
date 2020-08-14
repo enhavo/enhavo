@@ -21,15 +21,11 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class RouteTranslator implements TranslatorInterface
 {
-    /**
-     * @var MetadataRepository
-     */
-    private $metadataRepository;
 
     /**
-     * @var string
+     * @var EntityManagerInterface
      */
-    private $defaultLocale;
+    private $entityManager;
 
     /**
      * @var EntityResolverInterface
@@ -37,24 +33,23 @@ class RouteTranslator implements TranslatorInterface
     private $entityResolver;
 
     /**
-     * @var EntityManagerInterface
+     * @var string
      */
-    private $em;
+    private $defaultLocale;
 
     /**
      * RouteTranslator constructor.
-     * @param MetadataRepository $metadataRepository
-     * @param string $defaultLocale
+     * @param EntityManagerInterface $entityManager
      * @param EntityResolverInterface $entityResolver
-     * @param EntityManagerInterface $em
+     * @param string $defaultLocale
      */
-    public function __construct(MetadataRepository $metadataRepository, string $defaultLocale, EntityResolverInterface $entityResolver, EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $entityManager, EntityResolverInterface $entityResolver, string $defaultLocale)
     {
-        $this->metadataRepository = $metadataRepository;
-        $this->defaultLocale = $defaultLocale;
+        $this->entityManager = $entityManager;
         $this->entityResolver = $entityResolver;
-        $this->em = $em;
+        $this->defaultLocale = $defaultLocale;
     }
+
 
     public function setTranslation($entity, $property, $locale, $value): void
     {
@@ -68,7 +63,7 @@ class RouteTranslator implements TranslatorInterface
         } else {
             if ($translationRoute->getRoute() !== $value) {
                 $route = $translationRoute->getRoute();
-                $this->getEntityManager()->remove($route);
+                $this->entityManager->remove($route);
                 $translationRoute->setRoute($value);
             }
         }
@@ -103,14 +98,14 @@ class RouteTranslator implements TranslatorInterface
         $translationRoute->setProperty($property);
         $translationRoute->setRoute($route);
 
-        $this->getEntityManager()->persist($translationRoute);
+        $this->entityManager->persist($translationRoute);
 
         return $translationRoute;
     }
 
     private function deleteTranslationData($entity)
     {
-        $repository = $this->getEntityManager()->getRepository(TranslationRoute::class);
+        $repository = $this->getRepository();
 
         $translationRoutes = $repository->findTranslationRoutes(
             $this->entityResolver->getName($entity),
@@ -118,13 +113,13 @@ class RouteTranslator implements TranslatorInterface
         );
 
         foreach ($translationRoutes as $translationRoute) {
-            $this->getEntityManager()->remove($translationRoute);
+            $this->entityManager->remove($translationRoute);
         }
     }
 
     private function findTranslationRoute($entity, $property, $locale): ?TranslationRoute
     {
-        $repository = $this->getEntityManager()->getRepository(TranslationRoute::class);
+        $repository = $this->getRepository();
 
         $translationRoute = $repository->findTranslationRoute(
             $this->entityResolver->getName($entity),
@@ -136,9 +131,9 @@ class RouteTranslator implements TranslatorInterface
         return $translationRoute;
     }
 
-    private function getEntityManager(): EntityManagerInterface
+    private function getRepository()
     {
-        return $this->em;
+        return $this->entityManager->getRepository(TranslationRoute::class);
     }
 
     public function translate($entity, string $property, string $locale, array $options)

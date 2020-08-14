@@ -63,7 +63,8 @@ class TextTranslatorTest extends TestCase
         $translation = $this->getMockBuilder(Translation::class)->getMock();
 
         $dependencies->repository->method('findOneBy')->willReturnCallback(function (array $params) use ($translation) {
-            $paramstring = 'translated' . implode(',', $params);
+            $params['class'] = 'translated';
+            $paramstring = implode(',', $params);
             $translation->method('getTranslation')->willReturn($paramstring);
             return $translation;
         });
@@ -71,7 +72,7 @@ class TextTranslatorTest extends TestCase
         $entity = new TranslatableMock();
         $translator->getTranslation($entity, 'name', 'fr');
 
-        $this->assertEquals('translated,1,name,fr', $translator->getTranslation($entity, 'name', 'fr'));
+        $this->assertEquals('translated,,name,fr', $translator->getTranslation($entity, 'name', 'fr'));
     }
 
     public function testSetLoadTranslation()
@@ -81,7 +82,8 @@ class TextTranslatorTest extends TestCase
         $translation = $this->getMockBuilder(Translation::class)->getMock();
 
         $dependencies->repository->method('findOneBy')->willReturnCallback(function (array $params) use ($translation) {
-            $paramstring = 'translated' . implode(',', $params);
+            $params['class'] = 'translated';
+            $paramstring = implode(',', $params);
             $translation->method('getTranslation')->willReturn($paramstring);
             return $translation;
         });
@@ -89,7 +91,7 @@ class TextTranslatorTest extends TestCase
         $entity = new TranslatableMock();
         $translator->setTranslation($entity, 'name', 'fr', 'bingobongo');
 
-        $this->assertEquals('translated,1,name,fr', $translator->getTranslation($entity, 'name', 'fr'));
+        $this->assertEquals('translated,,name,fr', $translator->getTranslation($entity, 'name', 'fr'));
     }
 
     public function testGetTranslationDefaultLocale()

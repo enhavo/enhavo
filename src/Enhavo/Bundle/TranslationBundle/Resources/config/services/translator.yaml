@@ -36,10 +36,9 @@ services:
 
     Enhavo\Bundle\TranslationBundle\Translator\Route\RouteTranslator:
         arguments:
-            - '@Enhavo\Component\Metadata\MetadataRepository[Translation]'
-            - '%enhavo_translation.default_locale%'
-            - '@Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface'
             - '@doctrine.orm.entity_manager'
+            - '@Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface'
+            - '%enhavo_translation.default_locale%'
 
 #    enhavo_translation.preview_listener:
 #        class: Enhavo\Bundle\TranslationBundle\EventListener\PreviewListener

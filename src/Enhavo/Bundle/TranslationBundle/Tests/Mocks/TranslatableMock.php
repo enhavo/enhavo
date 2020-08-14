@@ -9,9 +9,11 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 
 class TranslatableMock implements ResourceInterface
 {
+    public $id;
+
     public function getId()
     {
-        return 1;
+        return $this->id;
     }
 
     private $name;
