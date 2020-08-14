@@ -89,7 +89,7 @@ class RouteTranslator implements TranslatorInterface
         return null;
     }
 
-    public function delete($entity)
+    public function delete($entity, string $property)
     {
         $this->deleteTranslationData($entity);
     }

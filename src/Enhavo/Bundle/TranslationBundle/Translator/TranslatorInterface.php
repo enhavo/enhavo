@@ -12,4 +12,6 @@ interface TranslatorInterface
     public function translate($entity, string $property, string $locale, array $options);
 
     public function detach($entity, string $property, string $locale, array $options);
+
+    public function delete($entity, string $property);
 }

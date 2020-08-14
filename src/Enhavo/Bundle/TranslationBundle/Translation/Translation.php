@@ -40,8 +40,8 @@ class Translation extends AbstractContainerType
         $this->type->detach($data, $property, $locale, $this->options);
     }
 
-    public function delete($data)
+    public function delete($data, string $property)
     {
-        $this->type->delete($data);
+        $this->type->delete($data, $property);
     }
 }

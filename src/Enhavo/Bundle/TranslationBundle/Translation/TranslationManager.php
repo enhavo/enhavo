@@ -203,14 +203,9 @@ class TranslationManager
 
         $properties = $this->getObjectProperties($object);
 
-        $types = [];
         foreach ($properties as $property) {
-            if (!isset($types[$property->getType()])) {
-                $translation = $this->getTranslation($object, $property->getProperty());
-                // todo: isTypeAccepted?
-                $translation->delete($object);
-                $types[$property->getType()] = $translation;
-            }
+            $translation = $this->getTranslation($object, $property->getProperty());
+            $translation->delete($object, $property);
         }
     }
 

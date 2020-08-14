@@ -153,12 +153,13 @@ class TextTranslator implements TranslatorInterface
         return $translation;
     }
 
-    public function delete($entity)
+    public function delete($entity, string $property)
     {
         /** @var Translation[] $translations */
         $translations = $this->getRepository()->findBy([
             'class' => $this->entityResolver->getName($entity),
-            'refId' => $entity->getId()
+            'property' => $property,
+            'refId' => $entity->getId(),
         ]);
 
         foreach ($translations as $translation) {

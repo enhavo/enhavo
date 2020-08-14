@@ -23,5 +23,5 @@ interface TranslationTypeInterface extends TypeInterface
 
     public function detach($object, string $property, string $locale, array $options);
 
-    public function delete($object);
+    public function delete($object, string $property);
 }

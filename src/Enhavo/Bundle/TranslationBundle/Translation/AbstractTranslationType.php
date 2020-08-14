@@ -40,9 +40,9 @@ abstract class AbstractTranslationType extends AbstractType implements Translati
         $this->translator->detach($object, $property, $locale, $options);
     }
 
-    public function delete($object): void
+    public function delete($object, string $property): void
     {
-        $this->translator->delete($object);
+        $this->translator->delete($object, $property);
     }
 
     public function setTranslation(array $options, $data, string $property, string $locale, $value)
