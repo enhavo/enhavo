@@ -29,7 +29,7 @@ class TranslationType extends AbstractType implements TranslationTypeInterface
 
     }
 
-    public function delete($object): void
+    public function delete($object, string $property): void
     {
 
     }
