@@ -3,6 +3,7 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Tests\Translation;
 
+use Enhavo\Bundle\TranslationBundle\Tests\Mocks\TranslatableMock;
 use Enhavo\Bundle\TranslationBundle\Translation\AbstractTranslationType;
 use Enhavo\Bundle\TranslationBundle\Translation\TranslationTypeInterface;
 use Enhavo\Bundle\TranslationBundle\Translation\Type\TranslationType;
@@ -54,6 +55,35 @@ class AbstractTranslationTypeTest extends TestCase
     public function testGetParentType()
     {
         $this->assertEquals(TranslationType::class, ConcreteTranslationType::getParentType());
+    }
+
+
+    public function testEntityUpdates()
+    {
+        $entity = new TranslatableMock();
+        $dependencies = $this->createDependencies();
+        $dependencies->translator->expects($this->once())->method('translate');
+        $dependencies->translator->expects($this->once())->method('detach');
+        $dependencies->translator->expects($this->once())->method('delete');
+        $dependencies->translator->method('translate')->willReturnCallback(function ($data, $property, $locale) {
+            $data->setName($property . '-' . $locale);
+        });
+        $dependencies->translator->method('detach')->willReturnCallback(function ($data, $property, $locale) {
+            $data->setName($property . '-' . $locale . '.old');
+        });
+        $dependencies->translator->method('delete')->willReturnCallback(function ($data, $property) {
+            $data->setName(null);
+        });
+
+        $type = new ConcreteTranslationType($dependencies->translator);
+        $type->setParent($dependencies->translation);
+
+        $type->translate($entity, 'field', 'de', []);
+        $this->assertEquals('field-de', $entity->getName());
+        $type->detach($entity, 'field', 'de', []);
+        $this->assertEquals('field-de.old', $entity->getName());
+        $type->delete($entity, 'field');
+        $this->assertNull($entity->getName());
     }
 }
 

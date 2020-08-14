@@ -205,7 +205,7 @@ class TranslationManager
 
         foreach ($properties as $property) {
             $translation = $this->getTranslation($object, $property->getProperty());
-            $translation->delete($object, $property);
+            $translation->delete($object, $property->getProperty());
         }
     }
 

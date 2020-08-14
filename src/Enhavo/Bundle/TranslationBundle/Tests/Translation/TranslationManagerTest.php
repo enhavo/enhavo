@@ -8,14 +8,13 @@ use Enhavo\Bundle\AppBundle\Locale\LocaleResolverInterface;
 use Enhavo\Bundle\TranslationBundle\Exception\TranslationException;
 use Enhavo\Bundle\TranslationBundle\Metadata\Metadata;
 use Enhavo\Bundle\TranslationBundle\Metadata\PropertyNode;
+use Enhavo\Bundle\TranslationBundle\Tests\Mocks\TranslatableMock;
 use Enhavo\Bundle\TranslationBundle\Translation\Translation;
 use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
 use Enhavo\Component\Metadata\MetadataRepository;
 use Enhavo\Component\Type\FactoryInterface;
-use Gedmo\Mapping\Annotation\Translatable;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Recurr\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -93,6 +92,22 @@ class TranslationManagerTest extends TestCase
         $this->assertTrue($manager->isTranslatable($mock, 'something'));
     }
 
+
+    public function testIsTranslatableWithoutMetadata()
+    {
+        $property = $this->getMockBuilder(PropertyNode::class)->disableOriginalConstructor()->getMock();
+        $metadata = $this->getMockBuilder(Metadata::class)->disableOriginalConstructor()->getMock();
+        $metadata->method('getProperty')->willReturn($property);
+
+        $dependencies = $this->createDependencies();
+        $dependencies->metadataRepository->method('hasMetadata')->willReturn(false);
+        $manager = $this->createInstance($dependencies);
+
+        $mock = new TranslatableMock();
+
+        $this->assertFalse($manager->isTranslatable($mock, 'something'));
+    }
+
     public function testIsTranslatableWithNull()
     {
         $dependencies = $this->createDependencies();
@@ -151,6 +166,34 @@ class TranslationManagerTest extends TestCase
         ], $manager->getTranslations($mock, 'name'));
     }
 
+    public function testGetValidationConstraints()
+    {
+        $property = $this->getMockBuilder(PropertyNode::class)->disableOriginalConstructor()->getMock();
+        $property->method('getType')->willReturn('text');
+        $property->method('getOptions')->willReturn([]);
+        $metadata = $this->getMockBuilder(Metadata::class)->disableOriginalConstructor()->getMock();
+        $metadata->method('getProperty')->willReturn($property);
+        $translation = $this->getMockBuilder(Translation::class)->disableOriginalConstructor()->getMock();
+        $translation->method('getTranslation')->willReturnCallback(function($data, $property, $locale) {
+            return $property.'-'.$locale;
+        });
+        $translation->method('getValidationConstraints')->willReturnCallback(function ($data, $property, $locale) {
+            return [$data, $property, $locale];
+        });
+
+        $dependencies = $this->createDependencies();
+        $dependencies->factory->method('create')->willReturn($translation);
+        $dependencies->metadataRepository->method('hasMetadata')->willReturn(true);
+        $dependencies->metadataRepository->method('getMetadata')->willReturn($metadata);
+        $manager = $this->createInstance($dependencies);
+
+
+        $mock = new TranslatableMock();
+        $this->assertEquals([
+            $mock, 'name', 'de'
+        ], $manager->getValidationConstraints($mock, 'name', 'de'));
+    }
+
     public function testSetTranslations()
     {
         $property = $this->getMockBuilder(PropertyNode::class)->disableOriginalConstructor()->getMock();
@@ -173,14 +216,47 @@ class TranslationManagerTest extends TestCase
         $manager->setTranslation(new TranslatableMock(), 'name', 'de', 'value');
     }
 
-    public function testTranslate()
+    public function testDelete()
     {
-        $node = new PropertyNode();
-        $node->setType('slug');
-        $node->setOptions([
-            'allow_fallback' => true
-        ]);
-        $node->setProperty('name');
+        $node = $this->getMockBuilder(PropertyNode::class)->getMock();
+        $node->method('getType')->willReturn('slug');
+        $node->method('getProperty')->willReturn('name');
+        $node->method('getOptions')->willReturn(['allow_fallback' => true]);
+
+        $metadata = $this->getMockBuilder(Metadata::class)->disableOriginalConstructor()->getMock();
+        $metadata->method('getProperties')->willReturnCallback(function () use ($node) {
+            return [$node];
+        });
+        $metadata->method('getProperty')->willReturnCallback(function ($property) use ($node) {
+            return $node;
+        });
+        $metadata->method('getClassName')->willReturn(TranslatableMock::class);
+
+        $translation = $this->getMockBuilder(Translation::class)->disableOriginalConstructor()->getMock();
+
+        $translation->method('delete')->willReturnCallback(function($data) {
+            $data->setName(null);
+        });
+
+        $dependencies = $this->createDependencies();
+        $dependencies->factory->method('create')->willReturn($translation);
+        $dependencies->metadataRepository->method('hasMetadata')->willReturn(true);
+        $dependencies->metadataRepository->method('getMetadata')->willReturn($metadata);
+        $manager = $this->createInstance($dependencies);
+
+        $entity = new TranslatableMock();
+        $entity->setName('Harry');
+
+        $manager->delete($entity);
+        $this->assertNull($entity->getName());
+    }
+
+    public function testDetach()
+    {
+        $node = $this->getMockBuilder(PropertyNode::class)->getMock();
+        $node->method('getType')->willReturn('slug');
+        $node->method('getProperty')->willReturn('name');
+        $node->method('getOptions')->willReturn(['allow_fallback' => true]);
 
         $metadata = $this->getMockBuilder(Metadata::class)->disableOriginalConstructor()->getMock();
         $metadata->method('getProperties')->willReturnCallback(function () use ($node) {
@@ -209,13 +285,48 @@ class TranslationManagerTest extends TestCase
         $entity->setName('Harry');
 
         $manager->translate($entity, 'de');
+        $manager->detach($entity);
+        $this->assertEquals('name-de.old', $entity->getName());
 
-        $this->assertEquals(true, $manager->isTranslatable($entity, 'name'));
+        $this->expectException(TranslationException::class);
+        $manager->detach($entity);
+    }
+
+    public function testTranslate()
+    {
+        $node = $this->getMockBuilder(PropertyNode::class)->getMock();
+        $node->method('getType')->willReturn('slug');
+        $node->method('getProperty')->willReturn('name');
+        $node->method('getOptions')->willReturn(['allow_fallback' => true]);
+
+        $metadata = $this->getMockBuilder(Metadata::class)->disableOriginalConstructor()->getMock();
+        $metadata->method('getProperties')->willReturnCallback(function () use ($node) {
+            return [$node];
+        });
+        $metadata->method('getProperty')->willReturnCallback(function ($property) use ($node) {
+            return $node;
+        });
+        $metadata->method('getClassName')->willReturn(TranslatableMock::class);
+
+        $translation = $this->getMockBuilder(Translation::class)->disableOriginalConstructor()->getMock();
+        $translation->method('translate')->willReturnCallback(function($data, $property, $locale) {
+            $data->setName($property.'-'.$locale);
+        });
+
+        $dependencies = $this->createDependencies();
+        $dependencies->factory->method('create')->willReturn($translation);
+        $dependencies->metadataRepository->method('hasMetadata')->willReturn(true);
+        $dependencies->metadataRepository->method('getMetadata')->willReturn($metadata);
+        $manager = $this->createInstance($dependencies);
+
+        $entity = new TranslatableMock();
+        $entity->setName('Harry');
+
+        $manager->translate($entity, 'de');
         $this->assertEquals('name-de', $entity->getName());
 
-        $manager->detach($entity);
-
-        $this->assertEquals('name-de.old', $entity->getName());
+        $this->expectException(TranslationException::class);
+        $manager->translate($entity, 'de');
     }
 
     public function testNoMetadataException()
@@ -260,26 +371,5 @@ class TranslationManagerDependencies
 
     /** @var RequestStack|MockObject */
     public $requestStack;
-}
-
-class TranslatableMock
-{
-    private $name;
-
-    /**
-     * @return mixed
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param mixed $name
-     */
-    public function setName($name): void
-    {
-        $this->name = $name;
-    }
 }
 
