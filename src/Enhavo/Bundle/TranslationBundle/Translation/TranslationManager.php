@@ -155,6 +155,11 @@ class TranslationManager
         $this->getTranslation($data, $property)->setTranslation($data, $property, $locale, $value);
     }
 
+    /**
+     * @param $object
+     * @param $locale
+     * @throws TranslationException
+     */
     public function translate($object, $locale)
     {
         $this->checkEntity($object);
@@ -186,7 +191,7 @@ class TranslationManager
 
         foreach ($properties as $property) {
             $type = $this->getTranslation($object, $property->getProperty());
-            $type->detach($object, $property, $locale);
+            $type->detach($object, $property->getProperty(), $locale);
         }
 
         $this->setTranslated($object, false);
@@ -228,7 +233,7 @@ class TranslationManager
     private function setTranslated($entity, $value)
     {
         $oid = spl_object_hash($entity);
-        if (false !== $value) {
+        if (false === $value) {
             unset($this->translatedLocale[$oid]);
 
         } else {
@@ -236,6 +241,10 @@ class TranslationManager
         }
     }
 
+    /**
+     * @param $entity
+     * @throws TranslationException
+     */
     private function checkEntity($entity)
     {
         if (!$this->metadataRepository->hasMetadata($entity)) {
@@ -251,9 +260,7 @@ class TranslationManager
     {
         /** @var Metadata $metadata */
         $metadata = $this->metadataRepository->getMetadata($object);
-        if (null === $metadata) {
-            return [];
-        }
+
         return $metadata->getProperties() ?? [];
     }
 

@@ -47,11 +47,14 @@ class SlugTranslationTypeTest extends TestCase
         /** @var TranslatorInterface $translator */
         $translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
         $type = new SlugTranslationType($translator);
+        $class = SlugTranslationType::getParentType();
+        $parent = new $class();
+        $type->setParent($parent);
 
-        $translation = new Translation($type, [], [
-            'allow_fallback' => true
+        $translation = new Translation($type, [$parent], [
+            'constraints' => ['const']
         ]);
 
-        $this->assertEquals(['allow_fallback' => true], $translation->getValidationConstraints(null, 'slug', 'de'));
+        $this->assertEquals(['const'], $translation->getValidationConstraints(null, 'slug', 'de'));
     }
 }

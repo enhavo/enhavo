@@ -53,11 +53,15 @@ class RouteTranslationTypeTest extends TestCase
         /** @var TranslatorInterface $translator */
         $translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
         $type = new RouteTranslationType($translator);
+        $class = RouteTranslationType::getParentType();
+        $parent = new $class();
+        $type->setParent($parent);
 
-        $translation = new Translation($type, [], [
-            'generators' => ['Generator']
+        $translation = new Translation($type, [$parent], [
+            'constraints' => ['Generator']
         ]);
 
-        $this->assertEquals(['Generator'], $translation->getValidationConstraints(null, 'route', 'de'));
+        $result = $translation->getValidationConstraints(null, 'route', 'de');
+        $this->assertEquals(['Generator'], $result);
     }
 }

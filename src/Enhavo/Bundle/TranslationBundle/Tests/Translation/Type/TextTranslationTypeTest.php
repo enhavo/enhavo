@@ -51,15 +51,14 @@ class TextTranslationTypeTest extends TestCase
     {
         $textTranslator = $this->createDependencies();
         $type = new TextTranslationType($textTranslator);
+        $class = TextTranslationType::getParentType();
+        $parent = new $class();
+        $type->setParent($parent);
 
-        $translation = new Translation($type, [], [
+        $translation = new Translation($type, [$parent], [
             'constraints' => ['Constraint'],
-            'allow_fallback' => true
         ]);
 
-        $this->assertEquals([
-            'constraints' => ['Constraint'],
-            'allow_fallback' => true
-        ], $translation->getValidationConstraints(null, 'field', 'de'));
+        $this->assertEquals(['Constraint'], $translation->getValidationConstraints(null, 'field', 'de'));
     }
 }

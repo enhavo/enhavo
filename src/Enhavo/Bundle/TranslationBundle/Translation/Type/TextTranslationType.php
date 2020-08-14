@@ -33,7 +33,6 @@ class TextTranslationType extends AbstractTranslationType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'constraints' => null,
             'allow_fallback' => false
         ]);
     }
