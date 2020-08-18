@@ -11,7 +11,6 @@ namespace Enhavo\Bundle\TranslationBundle\Locale;
 use Enhavo\Bundle\AppBundle\Locale\LocaleResolverInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\HttpFoundation\RequestStack;
-use League\Uri\Components\HierarchicalPath;
 
 class LocaleResolver implements LocaleResolverInterface
 {

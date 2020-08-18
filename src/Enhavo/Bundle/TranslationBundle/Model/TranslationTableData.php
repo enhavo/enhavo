@@ -9,7 +9,7 @@
 namespace Enhavo\Bundle\TranslationBundle\Model;
 
 
-use Enhavo\Bundle\TranslationBundle\Metadata\Property;
+use Enhavo\Bundle\TranslationBundle\Metadata\PropertyNode;
 
 class TranslationTableData
 {
@@ -19,7 +19,7 @@ class TranslationTableData
     private $entity;
 
     /**
-     * @var Property
+     * @var PropertyNode
      */
     private $property;
 
@@ -45,7 +45,7 @@ class TranslationTableData
     }
 
     /**
-     * @return Property
+     * @return PropertyNode
      */
     public function getProperty()
     {
@@ -53,7 +53,7 @@ class TranslationTableData
     }
 
     /**
-     * @param Property $property
+     * @param PropertyNode $property
      */
     public function setProperty($property)
     {

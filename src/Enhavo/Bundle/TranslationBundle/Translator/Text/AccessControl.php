@@ -53,31 +53,34 @@ class AccessControl
 
     public function isAccess()
     {
-        if($this->access !== null) {
+        if ($this->access !== null) {
             return $this->access;
         }
 
         $this->access = true;
         $request = $this->requestStack->getMasterRequest();
-        if($request === null) {
+        if ($request === null) {
             return false;
         }
+
         $path = $request->getPathInfo();
-        foreach($this->accessControl as $regex) {
-            if(!preg_match($regex, $path)) {
+        foreach ($this->accessControl as $regex) {
+            if (!preg_match($regex, $path)) {
                 $this->access = false;
                 break;
             }
         }
+
         return $this->access;
     }
 
     public function getLocale()
     {
-        if($this->locale !== null) {
+        if ($this->locale !== null) {
             return $this->locale;
         }
         $this->locale = $this->localResolver->resolve();
-        return $this->locale;;
+
+        return $this->locale;
     }
 }

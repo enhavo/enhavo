@@ -30,6 +30,8 @@ class PropertyNodeProviderTest extends TestCase
         ]);
 
         $this->assertCount(1, $metadata->getProperties());
+        $this->assertEquals('text', $metadata->getProperty('first_name')->getType());
+        $this->assertNull($metadata->getProperty('last_name'));
         $this->assertEquals('firstName', $metadata->getProperties()['firstName']->getProperty());
         $this->assertEquals('text', $metadata->getProperties()['firstName']->getType());
         $this->assertEquals([
