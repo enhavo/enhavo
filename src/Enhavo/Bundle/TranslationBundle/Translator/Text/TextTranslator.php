@@ -11,8 +11,8 @@ namespace Enhavo\Bundle\TranslationBundle\Translator\Text;
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface;
 use Enhavo\Bundle\TranslationBundle\Entity\Translation;
+use Enhavo\Bundle\TranslationBundle\Translator\DataMap;
 use Enhavo\Bundle\TranslationBundle\Translator\TranslatorInterface;
-use Enhavo\Component\Metadata\MetadataRepository;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
 /**
@@ -53,8 +53,8 @@ class TextTranslator implements TranslatorInterface
         $this->defaultLocale = $defaultLocale;
         $this->entityResolver = $entityResolver;
 
-        $this->buffer = new DataMap;
-        $this->originalData = new DataMap;
+        $this->buffer = new DataMap();
+        $this->originalData = new DataMap();
     }
 
     public function setTranslation($entity, $property, $locale, $value): void

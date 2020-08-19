@@ -11,13 +11,9 @@ namespace Enhavo\Bundle\TranslationBundle\Translator\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface;
 use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
-use Enhavo\Bundle\TranslationBundle\Exception\TranslationException;
 use Enhavo\Bundle\TranslationBundle\Entity\TranslationRoute;
-use Enhavo\Bundle\TranslationBundle\Metadata\Metadata;
-use Enhavo\Bundle\TranslationBundle\Translator\AbstractTranslator;
+use Enhavo\Bundle\TranslationBundle\Translator\DataMap;
 use Enhavo\Bundle\TranslationBundle\Translator\TranslatorInterface;
-use Enhavo\Component\Metadata\MetadataRepository;
-use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class RouteTranslator implements TranslatorInterface
 {
@@ -38,6 +34,11 @@ class RouteTranslator implements TranslatorInterface
     private $defaultLocale;
 
     /**
+     * @var DataMap
+     */
+    private $buffer;
+
+    /**
      * RouteTranslator constructor.
      * @param EntityManagerInterface $entityManager
      * @param EntityResolverInterface $entityResolver
@@ -48,8 +49,9 @@ class RouteTranslator implements TranslatorInterface
         $this->entityManager = $entityManager;
         $this->entityResolver = $entityResolver;
         $this->defaultLocale = $defaultLocale;
-    }
 
+        $this->buffer = new DataMap();
+    }
 
     public function setTranslation($entity, $property, $locale, $value): void
     {
@@ -57,9 +59,11 @@ class RouteTranslator implements TranslatorInterface
             return;
         }
 
-        $translationRoute = $this->findTranslationRoute($entity, $property, $locale);
+        $translationRoute = $this->buffer->load($entity, $property, $locale)
+            ?? $this->load($entity, $property, $locale);
+
         if ($translationRoute === null) {
-            $this->createTranslationRoute($entity, $property, $locale, $value);
+            $translationRoute = $this->createTranslationRoute($entity, $property, $locale, $value);
         } else {
             if ($translationRoute->getRoute() !== $value) {
                 $route = $translationRoute->getRoute();
@@ -67,6 +71,8 @@ class RouteTranslator implements TranslatorInterface
                 $translationRoute->setRoute($value);
             }
         }
+
+        $this->buffer->store($entity, $property, $locale, $translationRoute);
     }
 
     public function getTranslation($entity, $property, $locale): ?RouteInterface
@@ -75,9 +81,14 @@ class RouteTranslator implements TranslatorInterface
             return null;
         }
 
-        $translationRoute = $this->findTranslationRoute($entity, $property, $locale);
-
+        $translationRoute = $this->buffer->load($entity, $property, $locale);
         if ($translationRoute !== null) {
+            return $translationRoute->getRoute();
+        }
+
+        $translationRoute = $this->load($entity, $property, $locale);
+        if ($translationRoute !== null) {
+            $this->buffer->store($entity, $property, $locale, $translationRoute);
             return $translationRoute->getRoute();
         }
 
@@ -117,18 +128,16 @@ class RouteTranslator implements TranslatorInterface
         }
     }
 
-    private function findTranslationRoute($entity, $property, $locale): ?TranslationRoute
+    private function load($entity, $property, $locale): ?TranslationRoute
     {
         $repository = $this->getRepository();
 
-        $translationRoute = $repository->findTranslationRoute(
+        return $repository->findTranslationRoute(
             $this->entityResolver->getName($entity),
             $entity->getId(),
             $property,
             $locale
         );
-
-        return $translationRoute;
     }
 
     private function getRepository()

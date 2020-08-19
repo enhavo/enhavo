@@ -80,6 +80,10 @@ class LocalePrefixGenerator extends AbstractGenerator
         $locales = $this->translationManager->getLocales();
 
         foreach ($locales as $locale) {
+            if ($locale == $this->translationManager->getDefaultLocale()) {
+                continue;
+            }
+
             $route = $this->routeTranslator->getTranslation($resource, $options['route_property'], $locale)
                 ?? $this->routeFactory->createNew();
             if (!$options['overwrite'] && $route->getStaticPrefix()) {

@@ -6,7 +6,7 @@
  * Time: 20:28
  */
 
-namespace Enhavo\Bundle\TranslationBundle\Translator\Text;
+namespace Enhavo\Bundle\TranslationBundle\Translator;
 
 class DataMapEntry
 {
