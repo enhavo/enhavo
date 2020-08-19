@@ -45,7 +45,7 @@ class LocaleResolver implements LocaleResolverInterface
 
     public function resolve()
     {
-        if($this->locale) {
+        if ($this->locale) {
             return $this->locale;
         }
 
@@ -57,9 +57,9 @@ class LocaleResolver implements LocaleResolverInterface
     {
         $this->locale = $this->defaultLocale;
         $request = $this->requestStack->getMasterRequest();
-        if($request !== null) {
+        if ($request !== null) {
             $locale = $request->attributes->get('_locale');
-            if($locale) {
+            if ($locale) {
                 $this->locale = $locale;
             }
         }

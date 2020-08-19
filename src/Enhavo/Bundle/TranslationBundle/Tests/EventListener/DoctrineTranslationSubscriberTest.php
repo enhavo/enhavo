@@ -51,7 +51,7 @@ class DoctrineTranslationSubscriberTest extends TestCase
         ], $subscriber->getSubscribedEvents());
     }
 
-    public function testIsAccessPreRemove()
+    public function testIsAccess()
     {
         $dependencies = $this->createDependencies();
         $dependencies->accessControl->method('isAccess')->willReturn(false);

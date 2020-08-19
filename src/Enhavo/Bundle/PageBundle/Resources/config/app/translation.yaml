@@ -1,12 +1,15 @@
-enhavo_translation:
-    metadata:
+enhavo_routing:
+    classes:
         Enhavo\Bundle\PageBundle\Entity\Page:
-            properties:
-                route:
+            router:
+                default:
                     type: route
-                    constraints:
-                        locale_prefix:
-                            type: locale_prefix
-                            property: title
-                        locale_default:
-                            type: locale_default
+                admin:
+                    type: id
+                    route: enhavo_page_page_update
+            generators:
+                prefix:
+                    type: locale_prefix
+                    property: title
+                route_name:
+                    type: translation_route_name

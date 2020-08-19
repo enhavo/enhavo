@@ -30,8 +30,6 @@ class RouteTranslationType extends AbstractTranslationType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'generators' => null,
-        ]);
+
     }
 }

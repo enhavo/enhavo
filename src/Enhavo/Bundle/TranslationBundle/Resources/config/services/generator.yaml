@@ -1,49 +1,22 @@
 services:
-#    Enhavo\Bundle\TranslationBundle\AutoGenerator\LocaleAutoGenerator:
-#        arguments:
-#            - '@enhavo_translation.auto_generator.route_generator_collector'
-#            - '@Enhavo\Component\Metadata\MetadataRepository[Translation]'
-#            - '%enhavo_translation.locales%'
-#            - '%enhavo_translation.default_locale%'
-#
-#    enhavo_translation.auto_generator.route_generator_collector:
-#        class: Enhavo\Bundle\AppBundle\Type\TypeCollector
-#        arguments:
-#            - '@service_container'
-#            - 'LocaleAutoGenerator'
-#
-#    Enhavo\Bundle\TranslationBundle\EventListener\RouteableListener:
-#        arguments:
-#            - '@enhavo_translation.auto_generator'
-#        tags:
-#            - { name: kernel.event_subscriber }
-
     Enhavo\Bundle\TranslationBundle\AutoGenerator\Generator\LocalePrefixGenerator:
         public: true
         arguments:
+            - '@Enhavo\Bundle\TranslationBundle\Translation\TranslationManager'
             - '@Enhavo\Bundle\TranslationBundle\Translator\Route\RouteTranslator'
             - '@Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator'
+            - '@enhavo_routing.factory.route'
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: 'enhavo_translation.locale_generator', alias: 'locale_prefix' }
+            - { name: 'enhavo_route.generator', alias: 'locale_prefix' }
 
-    Enhavo\Bundle\TranslationBundle\AutoGenerator\Generator\SlugGenerator:
+    Enhavo\Bundle\TranslationBundle\AutoGenerator\Generator\TranslationRouteNameGenerator:
         public: true
         arguments:
+            - '@Enhavo\Bundle\TranslationBundle\Translation\TranslationManager'
             - '@Enhavo\Bundle\TranslationBundle\Translator\Route\RouteTranslator'
-            - '@Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator'
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: 'enhavo_translation.locale_generator', alias: 'slug' }
-
-    Enhavo\Bundle\TranslationBundle\AutoGenerator\Generator\LocaleDefaultGenerator:
-        public: true
-        arguments:
-            - '@Enhavo\Bundle\TranslationBundle\Translator\Route\RouteTranslator'
-            - '@Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator'
-        calls:
-            - [setContainer, ['@service_container']]
-        tags:
-            - { name: 'enhavo_translation.locale_generator', alias: 'locale_default' }
+            - { name: 'enhavo_route.generator', alias: 'translation_route_name' }
