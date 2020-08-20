@@ -5,6 +5,7 @@ services:
             - '@Enhavo\Component\Type\FactoryInterface[Translation]'
             - '@doctrine.orm.entity_manager'
             - '@enhavo_app.locale_resolver'
+            - '@Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface'
             - '%enhavo_translation.locales%'
             - '%enhavo_translation.default_locale%'
             - '%enhavo_translation.enable%'

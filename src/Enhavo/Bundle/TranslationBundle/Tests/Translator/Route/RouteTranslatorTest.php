@@ -6,10 +6,12 @@ namespace Enhavo\Bundle\TranslationBundle\Tests\Translator\Text;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface;
+use Enhavo\Bundle\RoutingBundle\Entity\Route;
 use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
 use Enhavo\Bundle\TranslationBundle\Entity\TranslationRoute;
 use Enhavo\Bundle\TranslationBundle\Repository\TranslationRepository;
 use Enhavo\Bundle\TranslationBundle\Repository\TranslationRouteRepository;
+use Enhavo\Bundle\TranslationBundle\Tests\Mocks\RouteableMock;
 use Enhavo\Bundle\TranslationBundle\Tests\Mocks\TranslatableMock;
 use Enhavo\Bundle\TranslationBundle\Translator\Route\RouteTranslator;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -72,9 +74,11 @@ class RouteTranslatorTest extends TestCase
         $translator = $this->createInstance($dependencies);
 
         /** @var RouteInterface|MockObject $route */
-        $route = $this->getMockBuilder(RouteInterface::class)->getMock();
+        $route = new Route();
+        $route->setName('route-a');
         /** @var RouteInterface|MockObject $route */
-        $route2 = $this->getMockBuilder(RouteInterface::class)->getMock();
+        $route2 = new Route();
+        $route2->setName('route-b');
 
         $dependencies->repository->method('findTranslationRoute')->willReturnCallback(function ($entity, $property, $locale) use ($route) {
             $translation = new TranslationRoute();
@@ -91,7 +95,7 @@ class RouteTranslatorTest extends TestCase
 
     }
 
-    public function testGetTranslationDefaultLocale()
+    public function testGetSetTranslationDefaultLocale()
     {
         $dependencies = $this->createDependencies();
         $translator = $this->createInstance($dependencies);
@@ -99,6 +103,28 @@ class RouteTranslatorTest extends TestCase
         $entity = new TranslatableMock();
 
         $this->assertNull($translator->getTranslation($entity, 'route', 'es'));
+        $this->assertNull($translator->setTranslation($entity, 'route', 'es', []));
+    }
+
+    public function testGetExistingTranslation()
+    {
+        $dependencies = $this->createDependencies();
+        $translator = $this->createInstance($dependencies);
+        /** @var RouteInterface|MockObject $route */
+        $route = $this->getMockBuilder(RouteInterface::class)->getMock();
+
+        $dependencies->repository->method('findTranslationRoute')->willReturnCallback(function ($entity, $property, $locale) use ($route) {
+            $translation = new TranslationRoute();
+            $translation->setRoute($route);
+
+            return $translation;
+        });
+
+        $entity = new TranslatableMock();
+
+        $this->assertEquals($route,
+            $translator->getTranslation($entity, 'route', 'fr')
+        );
     }
 
     public function testGetTranslationMissing()
@@ -130,7 +156,48 @@ class RouteTranslatorTest extends TestCase
 
     }
 
+    public function testTranslate()
+    {
+        $dependencies = $this->createDependencies();
+        $translator = $this->createInstance($dependencies);
 
+        /** @var RouteInterface|MockObject $route */
+        $route = $this->getMockBuilder(RouteInterface::class)->getMock();
+
+        $entity = new RouteableMock();
+        $entity->setRoute($route);
+
+        $translator->translate($entity, 'route', 'en', []);
+        $this->assertNotEquals($route, $entity->getRoute());
+    }
+
+
+    public function testDetach()
+    {
+        $dependencies = $this->createDependencies();
+        $translator = $this->createInstance($dependencies);
+
+        /** @var RouteInterface|MockObject $route */
+        $route = new Route();
+        $route->setName('route');
+        /** @var RouteInterface|MockObject $route */
+        $routeEn = new Route();
+        $routeEn->setName('route-en');
+
+        $entity = new RouteableMock();
+        $entity->setName('routed');
+        $entity->setRoute($route);
+
+        $translator->setTranslation($entity, 'route', 'en', $routeEn);
+
+        $translator->translate($entity, 'route', 'en', []);
+        $translator->detach($entity, 'route', 'en', []);
+
+        $this->assertEquals($route, $entity->getRoute());
+
+        $translator->translate($entity, 'route', 'es', []);
+        $this->assertEquals($route, $entity->getRoute());
+    }
 
 }
 

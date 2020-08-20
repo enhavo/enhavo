@@ -5,9 +5,11 @@ namespace Enhavo\Bundle\TranslationBundle\Tests\Translation;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Locale\LocaleResolverInterface;
+use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface;
 use Enhavo\Bundle\TranslationBundle\Exception\TranslationException;
 use Enhavo\Bundle\TranslationBundle\Metadata\Metadata;
 use Enhavo\Bundle\TranslationBundle\Metadata\PropertyNode;
+use Enhavo\Bundle\TranslationBundle\Repository\TranslationRepository;
 use Enhavo\Bundle\TranslationBundle\Tests\Mocks\TranslatableMock;
 use Enhavo\Bundle\TranslationBundle\Translation\Translation;
 use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
@@ -27,6 +29,7 @@ class TranslationManagerTest extends TestCase
         $dependencies->factory = $this->getMockBuilder(FactoryInterface::class)->getMock();
         $dependencies->entityManager = $this->getMockBuilder(EntityManagerInterface::class)->getMock();
         $dependencies->localeResolver = $this->getMockBuilder(LocaleResolverInterface::class)->getMock();
+        $dependencies->entityResolver = $this->getMockBuilder(EntityResolverInterface::class)->getMock();
         $dependencies->locales = ['en', 'de'];
         $dependencies->defaultLocale = 'en';
         $dependencies->enabled = true;
@@ -42,6 +45,7 @@ class TranslationManagerTest extends TestCase
             $dependencies->factory,
             $dependencies->entityManager,
             $dependencies->localeResolver,
+            $dependencies->entityResolver,
             $dependencies->locales,
             $dependencies->defaultLocale,
             $dependencies->enabled,
@@ -292,7 +296,7 @@ class TranslationManagerTest extends TestCase
         $manager->detach($entity);
     }
 
-    public function testTranslate()
+    public function testTranslateSlug()
     {
         $node = $this->getMockBuilder(PropertyNode::class)->getMock();
         $node->method('getType')->willReturn('slug');
@@ -341,6 +345,28 @@ class TranslationManagerTest extends TestCase
         $manager->translate(new TranslatableMock(), 'de');
 
     }
+
+    public function testFetchBySlug()
+    {
+        $dependencies = $this->createDependencies();
+        $manager = $this->createInstance($dependencies);
+
+        $repository = $this->getMockBuilder(TranslationRepository::class)->disableOriginalConstructor()->getMock();
+
+        $repository->method('findOneBy')->willReturnCallback(function ($options) {
+
+            $translation = new \Enhavo\Bundle\TranslationBundle\Entity\Translation();
+            $translation->setObject(implode(',', $options));
+
+            return $translation;
+        });
+
+        $dependencies->entityManager->method('getRepository')->willReturn($repository);
+
+        $result = $manager->fetchBySlug('test.class', 'sa-lug');
+
+        $this->assertEquals(',slug,sa-lug,', $result);
+    }
 }
 
 class TranslationManagerDependencies
@@ -356,6 +382,9 @@ class TranslationManagerDependencies
 
     /** @var LocaleResolverInterface|MockObject */
     public $localeResolver;
+
+    /** @var EntityResolverInterface|MockObject */
+    public $entityResolver;
 
     /** @var array */
     public $locales;

@@ -154,28 +154,28 @@ class RouteTranslator implements TranslatorInterface
 
     public function translate($entity, string $property, string $locale, array $options)
     {
-//        // translation data is stored inside the object
-//        if ($locale === $this->defaultLocale) {
-//            return;
-//        }
-//
-//        $accessor = PropertyAccess::createPropertyAccessor();
-//
-//        $newValue = $this->getTranslation($entity, $property, $locale);
-//        $oldValue = $accessor->getValue($entity, $property);
-//        $this->originalData->store($entity, $property, null, $oldValue);
-//        $accessor->setValue($entity, $property, $newValue);
+        // translation data is stored inside the object
+        if ($locale === $this->defaultLocale) {
+            return;
+        }
+
+        $accessor = PropertyAccess::createPropertyAccessor();
+
+        $newValue = $this->getTranslation($entity, $property, $locale);
+        $oldValue = $accessor->getValue($entity, $property);
+        $this->originalData->store($entity, $property, null, $oldValue);
+        $accessor->setValue($entity, $property, $newValue);
     }
 
     public function detach($entity, string $property, string $locale, array $options)
     {
-//        $accessor = PropertyAccess::createPropertyAccessor();
-//
-//        $originalValue = $this->originalData->load($entity, $property, null);
-//        $translationValue = $accessor->getValue($entity, $property);
-//        $this->setTranslation($entity, $property, $locale, $translationValue);
-//        $accessor->setValue($entity, $property, $originalValue);
-//
-//        $this->originalData->delete($entity);
+        $accessor = PropertyAccess::createPropertyAccessor();
+
+        $originalValue = $this->originalData->load($entity, $property, null);
+        $translationValue = $accessor->getValue($entity, $property);
+        $this->setTranslation($entity, $property, $locale, $translationValue);
+        $accessor->setValue($entity, $property, $originalValue);
+
+        $this->originalData->delete($entity);
     }
 }

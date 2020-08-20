@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\TranslationBundle\Translation;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Locale\LocaleResolverInterface;
+use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface;
 use Enhavo\Bundle\TranslationBundle\Exception\TranslationException;
 use Enhavo\Bundle\TranslationBundle\Metadata\Metadata;
 use Enhavo\Bundle\TranslationBundle\Metadata\PropertyNode;
@@ -30,6 +31,9 @@ class TranslationManager
 
     /** @var LocaleResolverInterface */
     protected $localeResolver;
+
+    /** @var EntityResolverInterface */
+    protected $entityResolver;
 
     /** @var string[] */
     private $locales;
@@ -60,6 +64,7 @@ class TranslationManager
         FactoryInterface $factory,
         EntityManagerInterface $entityManager,
         LocaleResolverInterface $localeResolver,
+        EntityResolverInterface $entityResolver,
         $locales,
         $defaultLocale,
         $enabled,
@@ -71,6 +76,7 @@ class TranslationManager
         $this->factory = $factory;
         $this->entityManager = $entityManager;
         $this->localeResolver = $localeResolver;
+        $this->entityResolver = $entityResolver;
         $this->locales = $locales;
         $this->defaultLocale = $defaultLocale;
         $this->enabled = $enabled;
@@ -290,9 +296,9 @@ class TranslationManager
             return $entity;
         }
 
-        /** @var Translation $translation */
+        /** @var \Enhavo\Bundle\TranslationBundle\Entity\Translation $translation */
         $translation = $this->entityManager->getRepository(Translation::class)->findOneBy([
-            'class' => $this->getEntityResolver()->getName($class),
+            'class' => $this->entityResolver->getName($class),
             'property' => 'slug',
             'translation' => $slug,
             'locale' => $locale
@@ -303,7 +309,7 @@ class TranslationManager
         }
 
         if ($allowFallback) {
-            return $this->fetch($class, $slug, $this->getDefaultLocale(), false);
+            return $this->fetchBySlug($class, $slug, $this->getDefaultLocale(), false);
         }
 
         return null;
