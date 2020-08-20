@@ -1,12 +1,11 @@
 <?php
 
 
-namespace Enhavo\Bundle\TranslationBundle\Tests\Translator\Text;
+namespace Enhavo\Bundle\TranslationBundle\Tests\EventListener;
 
 
 use Enhavo\Bundle\AppBundle\Locale\LocaleResolverInterface;
-use Enhavo\Bundle\TranslationBundle\Locale\LocaleResolver;
-use Enhavo\Bundle\TranslationBundle\Translator\Text\AccessControl;
+use Enhavo\Bundle\TranslationBundle\EventListener\AccessControl;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\ParameterBag;

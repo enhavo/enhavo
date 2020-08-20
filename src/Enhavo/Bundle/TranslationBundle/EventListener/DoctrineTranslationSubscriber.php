@@ -11,8 +11,6 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PostFlushEventArgs;
 use Doctrine\ORM\Event\PreFlushEventArgs;
 use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
-use Enhavo\Bundle\TranslationBundle\Translator\Text\AccessControl;
-use Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator;
 use Enhavo\Component\Metadata\MetadataRepository;
 
 /**

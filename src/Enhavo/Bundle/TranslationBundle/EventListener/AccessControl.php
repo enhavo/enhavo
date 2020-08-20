@@ -6,7 +6,7 @@
  * Time: 14:45
  */
 
-namespace Enhavo\Bundle\TranslationBundle\Translator\Text;
+namespace Enhavo\Bundle\TranslationBundle\EventListener;
 
 use Enhavo\Bundle\AppBundle\Locale\LocaleResolverInterface;
 use Symfony\Component\HttpFoundation\RequestStack;

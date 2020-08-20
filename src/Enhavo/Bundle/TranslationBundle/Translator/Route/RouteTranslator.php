@@ -14,6 +14,7 @@ use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
 use Enhavo\Bundle\TranslationBundle\Entity\TranslationRoute;
 use Enhavo\Bundle\TranslationBundle\Translator\DataMap;
 use Enhavo\Bundle\TranslationBundle\Translator\TranslatorInterface;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class RouteTranslator implements TranslatorInterface
 {
@@ -39,6 +40,11 @@ class RouteTranslator implements TranslatorInterface
     private $buffer;
 
     /**
+     * @var DataMap
+     */
+    private $originalData;
+
+    /**
      * RouteTranslator constructor.
      * @param EntityManagerInterface $entityManager
      * @param EntityResolverInterface $entityResolver
@@ -51,6 +57,7 @@ class RouteTranslator implements TranslatorInterface
         $this->defaultLocale = $defaultLocale;
 
         $this->buffer = new DataMap();
+        $this->originalData = new DataMap();
     }
 
     public function setTranslation($entity, $property, $locale, $value): void
@@ -147,17 +154,28 @@ class RouteTranslator implements TranslatorInterface
 
     public function translate($entity, string $property, string $locale, array $options)
     {
-        // TODO: Implement translate() method.
+//        // translation data is stored inside the object
+//        if ($locale === $this->defaultLocale) {
+//            return;
+//        }
+//
+//        $accessor = PropertyAccess::createPropertyAccessor();
+//
+//        $newValue = $this->getTranslation($entity, $property, $locale);
+//        $oldValue = $accessor->getValue($entity, $property);
+//        $this->originalData->store($entity, $property, null, $oldValue);
+//        $accessor->setValue($entity, $property, $newValue);
     }
 
     public function detach($entity, string $property, string $locale, array $options)
     {
-        // TODO: Implement detach() method.
-    }
-
-
-    public function getAcceptedTypes(): array
-    {
-        return ['route'];
+//        $accessor = PropertyAccess::createPropertyAccessor();
+//
+//        $originalValue = $this->originalData->load($entity, $property, null);
+//        $translationValue = $accessor->getValue($entity, $property);
+//        $this->setTranslation($entity, $property, $locale, $translationValue);
+//        $accessor->setValue($entity, $property, $originalValue);
+//
+//        $this->originalData->delete($entity);
     }
 }

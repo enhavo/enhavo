@@ -1,5 +1,5 @@
 services:
-    Enhavo\Bundle\TranslationBundle\Translator\Text\AccessControl:
+    Enhavo\Bundle\TranslationBundle\EventListener\AccessControl:
         arguments:
             - '@request_stack'
             - '@enhavo_app.locale_resolver'
@@ -8,7 +8,7 @@ services:
     Enhavo\Bundle\TranslationBundle\EventListener\DoctrineTranslationSubscriber:
         arguments:
             - '@Enhavo\Bundle\TranslationBundle\Translation\TranslationManager'
-            - '@Enhavo\Bundle\TranslationBundle\Translator\Text\AccessControl'
+            - '@Enhavo\Bundle\TranslationBundle\EventListener\AccessControl'
             - '@Enhavo\Component\Metadata\MetadataRepository[Translation]'
         tags:
             - { name: doctrine.event_subscriber }
