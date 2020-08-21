@@ -47,18 +47,4 @@ class TextTranslationTypeTest extends TestCase
         $this->assertEquals('Something', $type->getTranslation([], new \stdClass(), 'text', 'de'));
     }
 
-    public function testValidationConstraints()
-    {
-        $textTranslator = $this->createDependencies();
-        $type = new TextTranslationType($textTranslator);
-        $class = TextTranslationType::getParentType();
-        $parent = new $class();
-        $type->setParent($parent);
-
-        $translation = new Translation($type, [$parent], [
-            'constraints' => ['Constraint'],
-        ]);
-
-        $this->assertEquals(['Constraint'], $translation->getValidationConstraints(null, 'field', 'de'));
-    }
 }

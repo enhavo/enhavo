@@ -73,7 +73,8 @@ class TranslationType extends AbstractType
             'error_bubbling' => false,
             'constraints' => [
                 new Translation([
-                    'groups' => ['default']
+                    'groups' => ['default'],
+                    'constraints' => null
                 ])
             ]
         ]);

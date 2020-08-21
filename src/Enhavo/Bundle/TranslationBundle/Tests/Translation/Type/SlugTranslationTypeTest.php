@@ -42,19 +42,4 @@ class SlugTranslationTypeTest extends TestCase
         $this->assertEquals('Slug', $type->getTranslation([], $data, 'slug', 'de'));
     }
 
-    public function testValidationConstraints()
-    {
-        /** @var TranslatorInterface $translator */
-        $translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
-        $type = new SlugTranslationType($translator);
-        $class = SlugTranslationType::getParentType();
-        $parent = new $class();
-        $type->setParent($parent);
-
-        $translation = new Translation($type, [$parent], [
-            'constraints' => ['const']
-        ]);
-
-        $this->assertEquals(['const'], $translation->getValidationConstraints(null, 'slug', 'de'));
-    }
 }

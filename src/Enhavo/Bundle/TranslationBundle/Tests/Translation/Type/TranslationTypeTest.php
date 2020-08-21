@@ -3,20 +3,20 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Tests\Translation\Type;
 
-use Enhavo\Bundle\TranslationBundle\Translation\Translation;
 use Enhavo\Bundle\TranslationBundle\Translation\Type\TranslationType;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TranslationTypeTest extends TestCase
 {
-    public function testValidationConstraints()
+    public function testConfigureOptions()
     {
+        $resolver = new OptionsResolver();
+
         $type = new TranslationType();
 
-        $translation = new Translation($type, [], [
-            'constraints' => ['Constraint']
-        ]);
+        $type->configureOptions($resolver);
 
-        $this->assertEquals(['Constraint'], $translation->getValidationConstraints(null, 'null', 'de'));
+        $this->assertEquals(['constraints'], $resolver->getDefinedOptions());
     }
 }

@@ -35,14 +35,6 @@ class TranslationTest extends TestCase
         $type->getTranslation(null, 'field', 'en');
     }
 
-    public function testGetValidationConstraint()
-    {
-        $typeMock = $this->createDependencies();
-        $typeMock->expects($this->once())->method('getValidationConstraints');
-        $type = new Translation($typeMock, [], []);
-        $type->getValidationConstraints( null, 'field', 'en');
-    }
-
     public function testEntityUpdates()
     {
         $entity = new TranslatableMock();

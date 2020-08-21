@@ -1,10 +1,14 @@
 <?php
+
 namespace Enhavo\Bundle\TranslationBundle\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 
 class Translation extends Constraint
 {
+    public $constraints;
+    public $validateDefaultValue = false;
+
     public function validatedBy()
     {
         return TranslationValidator::class;
@@ -12,6 +16,6 @@ class Translation extends Constraint
 
     public function getTargets()
     {
-        return self::CLASS_CONSTRAINT;
+        return self::PROPERTY_CONSTRAINT;
     }
 }

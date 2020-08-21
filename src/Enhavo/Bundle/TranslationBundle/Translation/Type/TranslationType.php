@@ -34,11 +34,6 @@ class TranslationType extends AbstractType implements TranslationTypeInterface
 
     }
 
-    public function getValidationConstraints(array $options, $data, string $property, string $locale)
-    {
-        return $options['constraints'];
-    }
-
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

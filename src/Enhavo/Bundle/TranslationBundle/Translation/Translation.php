@@ -25,11 +25,6 @@ class Translation extends AbstractContainerType
         return $this->type->setTranslation($this->options, $data, $property, $locale, $value);
     }
 
-    public function getValidationConstraints($data, $property, $locale)
-    {
-        return $this->type->getValidationConstraints($this->options, $data, $property, $locale);
-    }
-
     public function translate($data, string $property, string $locale)
     {
         $this->type->translate($data, $property, $locale, $this->options);

@@ -1,4 +1,5 @@
 <?php
+
 namespace Enhavo\Bundle\TranslationBundle\Validator\Constraints;
 
 use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
@@ -32,21 +33,21 @@ class TranslationValidator extends ConstraintValidator
 
     public function validate($value, Constraint $constraint)
     {
-        $property = $this->context->getObject()->getName();
-        $parent = $this->context->getObject()->getParent();
+        $metadata = $this->context->getMetadata();
+        $resource = $this->context->getObject();
+        $property = $metadata->getPropertyName();
 
-        if($parent === null) {
-            return;
+        $constraints = $constraint->constraints;
+
+        $translations = $this->translationManager->getTranslations($resource, $property);
+        if ($constraint->validateDefaultValue) {
+            $translations[$this->translationManager->getDefaultLocale()] = $value;
         }
 
-        $data = $this->context->getObject()->getParent()->getData();
-
-        $translations = $this->translationManager->getTranslations($data, $property);
-        foreach($translations as $locale => $translation) {
-            $constraints = $this->translationManager->getValidationConstraints($data, $property, $locale);
-            foreach($constraints as $translationConstraint) {
+        foreach ($translations as $locale => $translation) {
+            foreach ($constraints as $translationConstraint) {
                 /** @var ConstraintViolationInterface[] $violations */
-                $violations = $this->validator->validate($translation, new $translationConstraint);
+                $violations = $this->validator->validate($translation, $translationConstraint);
                 foreach ($violations as $violation) {
                     $this->context->buildViolation(sprintf('(%s) %s', $locale, $violation->getMessage()))->addViolation();
                 }

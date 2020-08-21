@@ -42,16 +42,6 @@ class AbstractTranslationTypeTest extends TestCase
         $type->getTranslation([], null, 'field', 'en');
     }
 
-    public function testGetValidationConstraint()
-    {
-        $dependencies = $this->createDependencies();
-        $dependencies->translation->expects($this->once())->method('getValidationConstraints');
-        $type = new ConcreteTranslationType($dependencies->translator);
-        $type->setParent($dependencies->translation);
-
-        $type->getValidationConstraints([], null, 'field', 'en');
-    }
-
     public function testGetParentType()
     {
         $this->assertEquals(TranslationType::class, ConcreteTranslationType::getParentType());

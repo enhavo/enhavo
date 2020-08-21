@@ -55,11 +55,6 @@ abstract class AbstractTranslationType extends AbstractType implements Translati
         return $this->parent->getTranslation($options, $data, $property, $locale);
     }
 
-    public function getValidationConstraints(array $options, $data, string $property, string $locale)
-    {
-        return $this->parent->getValidationConstraints($options, $data, $property, $locale);
-    }
-
     public static function getParentType(): ?string
     {
         return TranslationType::class;

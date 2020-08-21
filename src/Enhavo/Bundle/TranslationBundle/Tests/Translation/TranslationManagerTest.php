@@ -170,34 +170,6 @@ class TranslationManagerTest extends TestCase
         ], $manager->getTranslations($mock, 'name'));
     }
 
-    public function testGetValidationConstraints()
-    {
-        $property = $this->getMockBuilder(PropertyNode::class)->disableOriginalConstructor()->getMock();
-        $property->method('getType')->willReturn('text');
-        $property->method('getOptions')->willReturn([]);
-        $metadata = $this->getMockBuilder(Metadata::class)->disableOriginalConstructor()->getMock();
-        $metadata->method('getProperty')->willReturn($property);
-        $translation = $this->getMockBuilder(Translation::class)->disableOriginalConstructor()->getMock();
-        $translation->method('getTranslation')->willReturnCallback(function($data, $property, $locale) {
-            return $property.'-'.$locale;
-        });
-        $translation->method('getValidationConstraints')->willReturnCallback(function ($data, $property, $locale) {
-            return [$data, $property, $locale];
-        });
-
-        $dependencies = $this->createDependencies();
-        $dependencies->factory->method('create')->willReturn($translation);
-        $dependencies->metadataRepository->method('hasMetadata')->willReturn(true);
-        $dependencies->metadataRepository->method('getMetadata')->willReturn($metadata);
-        $manager = $this->createInstance($dependencies);
-
-
-        $mock = new TranslatableMock();
-        $this->assertEquals([
-            $mock, 'name', 'de'
-        ], $manager->getValidationConstraints($mock, 'name', 'de'));
-    }
-
     public function testSetTranslations()
     {
         $property = $this->getMockBuilder(PropertyNode::class)->disableOriginalConstructor()->getMock();
