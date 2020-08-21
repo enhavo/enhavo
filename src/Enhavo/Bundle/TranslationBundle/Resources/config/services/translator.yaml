@@ -31,9 +31,6 @@ services:
             - '@Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface'
             - '%enhavo_translation.default_locale%'
 
-    Enhavo\Bundle\TranslationBundle\Translator\Slug\SlugTranslator:
-        parent: Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator
-
     Enhavo\Bundle\TranslationBundle\Translator\Route\RouteTranslator:
         arguments:
             - '@doctrine.orm.entity_manager'
@@ -46,9 +43,3 @@ services:
 #            - '@enhavo_translation.locale_resolver'
 #        tags:
 #            - { name: kernel.event_listener, event: enhavo_app.init_preview, method: onInitPreview }
-
-#    enhavo_translation.translation_route_manager:
-#        class: Enhavo\Bundle\TranslationBundle\Route\TranslationRouteManager
-#        arguments:
-#            - '@enhavo_app.route_manager'
-#            - '@doctrine.orm.entity_manager'
