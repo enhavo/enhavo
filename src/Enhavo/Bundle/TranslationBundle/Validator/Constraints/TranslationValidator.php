@@ -6,6 +6,8 @@ use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\ConstraintViolationInterface;
+use Symfony\Component\Validator\Exception\RuntimeException;
+use Symfony\Component\Validator\Mapping\PropertyMetadataInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class TranslationValidator extends ConstraintValidator
@@ -34,6 +36,11 @@ class TranslationValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint)
     {
         $metadata = $this->context->getMetadata();
+
+        if (!($metadata instanceof PropertyMetadataInterface)) {
+            throw new RuntimeException(sprintf('Expected "%s" for metadata but got "%s"', PropertyMetadataInterface::class, get_class($metadata)));
+        }
+
         $resource = $this->context->getObject();
         $property = $metadata->getPropertyName();
 

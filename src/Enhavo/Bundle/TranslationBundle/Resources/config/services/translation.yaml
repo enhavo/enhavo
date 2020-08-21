@@ -12,7 +12,19 @@ services:
             - '%enhavo_translation.translation_paths%'
             - '@Symfony\Component\HttpFoundation\RequestStack'
 
+    Enhavo\Bundle\TranslationBundle\Translation\Type\TranslationType:
+        arguments:
+            - '@Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator'
+        tags:
+            - { name: enhavo_translation.translation }
+
     Enhavo\Bundle\TranslationBundle\Translation\Type\TextTranslationType:
+        arguments:
+            - '@Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator'
+        tags:
+            - { name: enhavo_translation.translation }
+
+    Enhavo\Bundle\TranslationBundle\Translation\Type\SlugTranslationType:
         arguments:
             - '@Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator'
         tags:
@@ -21,15 +33,5 @@ services:
     Enhavo\Bundle\TranslationBundle\Translation\Type\RouteTranslationType:
         arguments:
             - '@Enhavo\Bundle\TranslationBundle\Translator\Route\RouteTranslator'
-        tags:
-            - { name: enhavo_translation.translation }
-
-    Enhavo\Bundle\TranslationBundle\Translation\Type\SlugTranslationType:
-        arguments:
-            - '@Enhavo\Bundle\TranslationBundle\Translator\Slug\SlugTranslator'
-        tags:
-            - { name: enhavo_translation.translation }
-
-    Enhavo\Bundle\TranslationBundle\Translation\Type\TranslationType:
         tags:
             - { name: enhavo_translation.translation }

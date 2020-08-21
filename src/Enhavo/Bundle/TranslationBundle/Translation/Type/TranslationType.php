@@ -16,7 +16,7 @@ class TranslationType extends AbstractType implements TranslationTypeInterface
 
     public function getTranslation(array $options, $data, string $property, string $locale)
     {
-
+        return null;
     }
 
     public function translate($object, string $property, string $locale, array $options): void

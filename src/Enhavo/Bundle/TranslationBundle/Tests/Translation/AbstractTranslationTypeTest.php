@@ -16,8 +16,7 @@ class AbstractTranslationTypeTest extends TestCase
     private function createDependencies()
     {
         $dependencies = new AbstractTranslationTypeTestDependencies();
-        $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
-        $dependencies->translation = $this->getMockBuilder(TranslationTypeInterface::class)->getMock();
+        $dependencies->parent = $this->getMockBuilder(TranslationTypeInterface::class)->getMock();
 
         return $dependencies;
     }
@@ -25,9 +24,9 @@ class AbstractTranslationTypeTest extends TestCase
     public function testSetTranslation()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->translation->expects($this->once())->method('setTranslation');
-        $type = new ConcreteTranslationType($dependencies->translator);
-        $type->setParent($dependencies->translation);
+        $dependencies->parent->expects($this->once())->method('setTranslation');
+        $type = new ConcreteTranslationType();
+        $type->setParent($dependencies->parent);
 
         $type->setTranslation([], null, 'field', 'en', 'value');
     }
@@ -35,9 +34,9 @@ class AbstractTranslationTypeTest extends TestCase
     public function testGetTranslation()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->translation->expects($this->once())->method('getTranslation');
-        $type = new ConcreteTranslationType($dependencies->translator);
-        $type->setParent($dependencies->translation);
+        $dependencies->parent->expects($this->once())->method('getTranslation');
+        $type = new ConcreteTranslationType();
+        $type->setParent($dependencies->parent);
 
         $type->getTranslation([], null, 'field', 'en');
     }
@@ -52,21 +51,21 @@ class AbstractTranslationTypeTest extends TestCase
     {
         $entity = new TranslatableMock();
         $dependencies = $this->createDependencies();
-        $dependencies->translator->expects($this->once())->method('translate');
-        $dependencies->translator->expects($this->once())->method('detach');
-        $dependencies->translator->expects($this->once())->method('delete');
-        $dependencies->translator->method('translate')->willReturnCallback(function ($data, $property, $locale) {
+        $dependencies->parent->expects($this->once())->method('translate');
+        $dependencies->parent->expects($this->once())->method('detach');
+        $dependencies->parent->expects($this->once())->method('delete');
+        $dependencies->parent->method('translate')->willReturnCallback(function ($data, $property, $locale) {
             $data->setName($property . '-' . $locale);
         });
-        $dependencies->translator->method('detach')->willReturnCallback(function ($data, $property, $locale) {
+        $dependencies->parent->method('detach')->willReturnCallback(function ($data, $property, $locale) {
             $data->setName($property . '-' . $locale . '.old');
         });
-        $dependencies->translator->method('delete')->willReturnCallback(function ($data, $property) {
+        $dependencies->parent->method('delete')->willReturnCallback(function ($data, $property) {
             $data->setName(null);
         });
 
-        $type = new ConcreteTranslationType($dependencies->translator);
-        $type->setParent($dependencies->translation);
+        $type = new ConcreteTranslationType();
+        $type->setParent($dependencies->parent);
 
         $type->translate($entity, 'field', 'de', []);
         $this->assertEquals('field-de', $entity->getName());
@@ -79,11 +78,8 @@ class AbstractTranslationTypeTest extends TestCase
 
 class AbstractTranslationTypeTestDependencies
 {
-    /** @var TranslatorInterface|MockObject */
-    public $translator;
-
     /** @var TranslationTypeInterface|MockObject */
-    public $translation;
+    public $parent;
 }
 
 class ConcreteTranslationType extends AbstractTranslationType

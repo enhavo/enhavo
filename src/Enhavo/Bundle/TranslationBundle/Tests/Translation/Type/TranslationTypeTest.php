@@ -9,6 +9,17 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TranslationTypeTest extends TestCase
 {
+    public function testEmptyFunctions()
+    {
+        $type = new TranslationType();
+        $this->assertNull($type->setTranslation([], null, 'prop', 'locale', 'value'));
+        $this->assertNull($type->getTranslation([], null, 'prop', 'locale'));
+        $type->translate(null, 'prop', 'locale', []);
+        $type->detach(null, 'prop', 'locale', []);
+        $type->delete(null, 'prop');
+
+    }
+
     public function testConfigureOptions()
     {
         $resolver = new OptionsResolver();

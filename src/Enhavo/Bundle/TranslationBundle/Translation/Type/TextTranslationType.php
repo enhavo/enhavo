@@ -15,6 +15,33 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TextTranslationType extends AbstractTranslationType
 {
+    /** @var TranslatorInterface */
+    protected $translator;
+
+    /**
+     * TextTranslationType constructor.
+     * @param TranslatorInterface $translator
+     */
+    public function __construct(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
+
+    public function translate($object, string $property, string $locale, array $options): void
+    {
+        $this->translator->translate($object, $property, $locale, $options);
+    }
+
+    public function detach($object, string $property, string $locale, array $options): void
+    {
+        $this->translator->detach($object, $property, $locale, $options);
+    }
+
+    public function delete($object, string $property): void
+    {
+        $this->translator->delete($object, $property);
+    }
+
     public function setTranslation(array $options, $data, string $property, string $locale, $value)
     {
         $this->translator->setTranslation($data, $property, $locale, $value);
