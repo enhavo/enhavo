@@ -5,6 +5,7 @@ namespace Enhavo\Bundle\TranslationBundle\Tests\Mocks;
 
 
 
+use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
 class TranslatableMock implements ResourceInterface
@@ -17,6 +18,9 @@ class TranslatableMock implements ResourceInterface
     }
 
     private $name;
+
+    /** @var FileInterface */
+    private $file;
 
     /**
      * @return mixed
@@ -33,4 +37,22 @@ class TranslatableMock implements ResourceInterface
     {
         $this->name = $name;
     }
+
+    /**
+     * @return FileInterface
+     */
+    public function getFile(): FileInterface
+    {
+        return $this->file;
+    }
+
+    /**
+     * @param FileInterface $file
+     */
+    public function setFile(FileInterface $file): void
+    {
+        $this->file = $file;
+    }
+
+
 }

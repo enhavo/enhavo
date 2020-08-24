@@ -113,8 +113,8 @@ class FileTranslator implements TranslatorInterface
         $oldValue = $accessor->getValue($entity, $property);
         $this->originalData->store($entity, $property, null, $oldValue);
 
-        // set null values only if fallback is not allowed
-        if ($newValue !== null || !$options['allow_fallback']) {
+        // never set null values
+        if ($newValue !== null) {
             $accessor->setValue($entity, $property, $newValue);
         }
     }
