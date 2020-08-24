@@ -1,5 +1,6 @@
 const ContainerException = require('@enhavo/dependency-injection/Exception/ContainerException');
 
+const TYPE_NULL = 'null';
 const TYPE_SERVICE = 'service';
 const TYPE_STRING = 'string';
 const TYPE_NUMBER = 'number';
@@ -8,15 +9,29 @@ const TYPE_CONTAINER = 'container';
 
 class Argument
 {
-    constructor(expression) {
-        if(typeof expression !== 'string') {
+    constructor(expression, type = null) {
+        if(expression === null && (type === null || type === TYPE_NULL)) {
+            this.value = null;
+            this.type = TYPE_NULL;
+            return;
+        }
+
+        if (typeof expression !== 'string') {
             throw new ContainerException('Argument expression should be type of string "'+(typeof expression)+'" given.');
         }
 
-        /** @type {string} */
-        this.value = this._getValue(expression);
-        /** @type {string} */
-        this.type = this._getType(expression);
+        if (type !== null) {
+            /** @type {string} */
+            this.value = expression;
+            /** @type {string} */
+            this.type = type;
+        } else {
+            /** @type {string} */
+            this.value = this._getValue(expression);
+            /** @type {string} */
+            this.type = this._getType(expression);
+        }
+
         /** @type {string} */
         this.hash = null;
     }

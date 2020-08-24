@@ -5,6 +5,7 @@ const Validator = require('@enhavo/dependency-injection/Validation/Validator');
 const builder = require('@enhavo/dependency-injection/builder');
 const process = require('process');
 const path = require('path');
+const fs = require('fs');
 
 class CommandLineInterface
 {
@@ -18,7 +19,7 @@ class CommandLineInterface
         if(this.command === undefined || this.command === 'list') {
             this._list();
         } else if(this.command === 'compile') {
-            this._compile();
+            this._compile(process.argv[4]);
         } else {
             this._write('Command "'+this.command+'" not exist.');
         }
@@ -49,10 +50,13 @@ class CommandLineInterface
         }
     }
 
-    _compile() {
+    _compile(filePath) {
         this.loader.loadFile(this.servicePath, builder);
+        builder.prepare();
         (new Validator).validate(builder);
-        this._write((new Compiler).compile(builder));
+        let content = (new Compiler).compile(builder);
+        let file = path.resolve(process.cwd(), filePath);
+        fs.writeFileSync(file, content);
     }
 
     _write(message) {

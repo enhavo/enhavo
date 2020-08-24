@@ -7,7 +7,7 @@ class Callable
         this._name = null;
     }
 
-    setValue(name) {
+    setName(name) {
         this._name = name;
     }
 
@@ -16,6 +16,10 @@ class Callable
     }
 }
 
+class TestContainer extends Container
+{
+
+}
 
 describe('dependency-injection/Container/Container', () => {
     describe('test call function', () => {
@@ -23,7 +27,7 @@ describe('dependency-injection/Container/Container', () => {
             let container = new Container();
             let callable = new Callable();
 
-            container._call('setValue', callable, ['foobar']);
+            container._call('setName', callable, ['foobar']);
 
             assert.equal('foobar', callable.getName())
         });

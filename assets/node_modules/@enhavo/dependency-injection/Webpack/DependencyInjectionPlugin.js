@@ -17,26 +17,26 @@ class DependencyInjectionPlugin
         validator.validate(builder);
 
         compiler.hooks.beforeRun.tap('DependencyInjectionPlugin', compiler => {
-            this.addLoader(compiler.options);
+            this._addLoader(compiler.options);
         });
 
         compiler.hooks.watchRun.tap('DependencyInjectionPlugin', compiler => {
-            this.addLoader(compiler.options);
+            this._addLoader(compiler.options);
         });
 
         compiler.hooks.entryOption.tap('DependencyInjectionPlugin', (context, entry) => {
-            this.addEntrypoints(entry);
+            this._addEntrypoints(entry);
         });
     }
 
-    addLoader(options) {
+    _addLoader(options) {
         options.resolveLoader.modules = [
             'node_modules',
             path.resolve(__dirname, 'Loaders')
         ];
     }
 
-    addEntrypoints(entry) {
+    _addEntrypoints(entry) {
         for (let entrypoint of builder.getEntrypoints()) {
             entry[entrypoint.getName()] = entrypoint.getPath();
         }

@@ -173,11 +173,9 @@ class Loader
     _checkTags(service, definition) {
         if(service.tags) {
             for (let tag of service.tags) {
-                if(typeof tag == 'string') {
+                if(typeof tag === 'string') {
                     definition.addTag(new Tag(tag));
-                }
-
-                if(tag.name) {
+                } else if(tag.name) {
                     definition.addTag(new Tag(tag.name, tag));
                 }
             }
@@ -200,6 +198,7 @@ class Loader
         service.include ? definition.setInclude(service.include) : null;
         service.exclude ? definition.setExclude(service.exclude) : null;
         service.exports ? definition.setExport(service.exports) : null;
+        service.static ? definition.setStatic(service.static) : null;
     }
 
     /**
@@ -261,7 +260,7 @@ class Loader
                     compilerPassConfig = {};
                 }
 
-                let compilerPass = new CompilerPass(name, this._buildFilepath(compilerPassConfig.path, cwd));
+                let compilerPass = new CompilerPass(name, this._buildFilepath(compilerPassConfig.path, cwd), compilerPassConfig);
                 builder.addCompilerPass(compilerPass);
             }
         }

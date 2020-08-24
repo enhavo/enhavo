@@ -87,6 +87,13 @@ class Definition
     /**
      * @returns {boolean}
      */
+    setStatic(value) {
+        this.static = value;
+    }
+
+    /**
+     * @returns {boolean}
+     */
     isStatic() {
         return this.static;
     }
@@ -105,6 +112,10 @@ class Definition
         return null !== this.getTag(name);
     }
 
+    /**
+     * @param {string} name
+     * @return {Tag}
+     */
     getTag(name) {
         for (let tag of this.tags) {
             if(tag.getName() === name) {
@@ -184,6 +195,31 @@ class Definition
     getExport(exports) {
 
     }
+
+    getDependDefinitionNames()
+    {
+        let depends = [];
+        for (let argument of this.arguments) {
+            if(argument.getType() === 'service') {
+                depends.push(argument.getValue());
+            }
+        }
+        return depends;
+    }
+
+    getDependCallDefinitionNames()
+    {
+        let depends = [];
+        for (let call of this.calls) {
+            for (let argument of call.getArguments()) {
+                if(argument.getType() === 'service') {
+                    depends.push(argument.getValue());
+                }
+            }
+        }
+        return depends;
+    }
+
 }
 
 module.exports = Definition;

@@ -50,7 +50,7 @@ class Validator
     }
 
     _checkCircularReferenceRecursive(builder, definition, dependencyList) {
-        let dependencies = this._getServiceNameDependencies(definition, true);
+        let dependencies = this._getServiceNameDependencies(definition);
         for (let dependency of dependencies) {
             if (dependencyList.includes(dependency)) {
 
