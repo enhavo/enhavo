@@ -4,8 +4,6 @@ enhavo_translation:
             properties:
                 title:
                     type: text
-                    constraints:
-                        - Symfony\Component\Validator\Constraints\NotBlank
                 metaDescription:
                     type: text
                 pageTitle:

@@ -19,15 +19,4 @@ class TranslationTypeTest extends TestCase
         $type->delete(null, 'prop');
 
     }
-
-    public function testConfigureOptions()
-    {
-        $resolver = new OptionsResolver();
-
-        $type = new TranslationType();
-
-        $type->configureOptions($resolver);
-
-        $this->assertEquals(['constraints'], $resolver->getDefinedOptions());
-    }
 }
