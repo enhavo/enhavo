@@ -1,7 +1,5 @@
 const EncoreUtil = require('@enhavo/core/EncoreUtil');
-const fs = require('fs');
 const _ = require('lodash');
-const DependencyInjectionPlugin = require('@enhavo/dependency-injection/Webpack/DependencyInjectionPlugin');
 const path = require('path');
 
 class AppThemePackage
@@ -19,7 +17,6 @@ class AppThemePackage
     {
         Encore
             .enableSingleRuntimeChunk()
-            .addPlugin(new DependencyInjectionPlugin('./assets/services/theme'))
             .enableSourceMaps(!Encore.isProduction())
             .splitEntryChunks()
             .autoProvidejQuery()
