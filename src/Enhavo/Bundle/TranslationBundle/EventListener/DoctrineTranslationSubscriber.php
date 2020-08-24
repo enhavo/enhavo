@@ -81,12 +81,12 @@ class DoctrineTranslationSubscriber implements EventSubscriber
 
         /*
          * We need to use the IdentityMap, because the update and persist collection stores entities, that have
-         * computed changes, but translation data might have changed without changing it underlying model!
+         * computed changes, but translation data might have changed without changing its underlying model!
          */
-        foreach ($uow->getIdentityMap() as $className) {
-            foreach ($className as $object) {
-                if ($this->metadataRepository->hasMetadata($className)) {
-                    $this->translationManager->detach($object);
+        foreach ($uow->getIdentityMap() as $class => $entities) {
+            if ($this->metadataRepository->hasMetadata($class)) {
+                foreach ($entities as $entity) {
+                    $this->translationManager->detach($entity);
                 }
             }
         }
@@ -105,15 +105,12 @@ class DoctrineTranslationSubscriber implements EventSubscriber
         }
 
         $uow = $args->getEntityManager()->getUnitOfWork();
-        $result = $uow->getIdentityMap();
-
-        foreach ($result as $class => $entities) {
+        foreach ($uow->getIdentityMap() as $class => $entities) {
             if ($this->metadataRepository->hasMetadata($class)) {
                 foreach ($entities as $entity) {
                     $this->translationManager->translate($entity, $this->accessControl->getLocale());
                 }
             }
-
         }
     }
 
