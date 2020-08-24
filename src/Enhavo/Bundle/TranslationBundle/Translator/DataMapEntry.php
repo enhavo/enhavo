@@ -6,7 +6,7 @@
  * Time: 20:28
  */
 
-namespace Enhavo\Bundle\TranslationBundle\Translator\Text;
+namespace Enhavo\Bundle\TranslationBundle\Translator;
 
 class DataMapEntry
 {
@@ -47,27 +47,11 @@ class DataMapEntry
     }
 
     /**
-     * @param string|null $property
-     */
-    public function setProperty(?string $property): void
-    {
-        $this->property = $property;
-    }
-
-    /**
      * @return string|null
      */
     public function getLocale(): ?string
     {
         return $this->locale;
-    }
-
-    /**
-     * @param string|null $locale
-     */
-    public function setLocale(?string $locale): void
-    {
-        $this->locale = $locale;
     }
 
     /**

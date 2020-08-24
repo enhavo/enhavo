@@ -1,25 +1,15 @@
 services:
-    Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator:
-        arguments:
-            - '@Enhavo\Component\Metadata\MetadataRepository[Translation]'
-            - '%enhavo_translation.default_locale%'
-            - '@Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface'
-            - '@doctrine.orm.entity_manager'
-        calls:
-            - [ setContainer, ['@service_container']]
-
-    Enhavo\Bundle\TranslationBundle\Translator\Text\AccessControl:
+    Enhavo\Bundle\TranslationBundle\EventListener\AccessControl:
         arguments:
             - '@request_stack'
             - '@enhavo_app.locale_resolver'
             - '%enhavo_translation.translator.access_control%'
 
-    Enhavo\Bundle\TranslationBundle\EventListener\DoctrineTextTranslatorSubscriber:
-        class: Enhavo\Bundle\TranslationBundle\EventListener\DoctrineTextTranslatorSubscriber
-        calls:
-            - [setTranslator, ['@Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator']]
-            - [setAccessControl, ['@Enhavo\Bundle\TranslationBundle\Translator\Text\AccessControl']]
-            - [setMetadataRepository, ['@Enhavo\Component\Metadata\MetadataRepository[Translation]']]
+    Enhavo\Bundle\TranslationBundle\EventListener\DoctrineTranslationSubscriber:
+        arguments:
+            - '@Enhavo\Bundle\TranslationBundle\Translation\TranslationManager'
+            - '@Enhavo\Bundle\TranslationBundle\EventListener\AccessControl'
+            - '@Enhavo\Component\Metadata\MetadataRepository[Translation]'
         tags:
             - { name: doctrine.event_subscriber }
 
@@ -35,18 +25,24 @@ services:
             - '%enhavo_translation.locales%'
             - '%enhavo_translation.default_locale%'
 
+    Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface'
+            - '%enhavo_translation.default_locale%'
+
     Enhavo\Bundle\TranslationBundle\Translator\Route\RouteTranslator:
         arguments:
-            - '@Enhavo\Component\Metadata\MetadataRepository[Translation]'
-            - '%enhavo_translation.default_locale%'
-            - '@Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface'
             - '@doctrine.orm.entity_manager'
-
-    Enhavo\Bundle\TranslationBundle\Translator\Slug\SlugTranslator:
-        parent: Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator
-        arguments:
-            - '@enhavo_app.locale_resolver'
             - '@Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface'
+            - '%enhavo_translation.default_locale%'
+
+    Enhavo\Bundle\TranslationBundle\Translator\Media\FileTranslator:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface'
+            - '%enhavo_translation.default_locale%'
+
 
 #    enhavo_translation.preview_listener:
 #        class: Enhavo\Bundle\TranslationBundle\EventListener\PreviewListener
@@ -54,15 +50,3 @@ services:
 #            - '@enhavo_translation.locale_resolver'
 #        tags:
 #            - { name: kernel.event_listener, event: enhavo_app.init_preview, method: onInitPreview }
-
-#    enhavo_translation.slug_translator:
-#        class: Enhavo\Bundle\TranslationBundle\Translator\SlugTranslator
-#        arguments:
-#            - '@doctrine.orm.entity_manager'
-#            - '@enhavo_translation.locale_resolver'
-
-#    enhavo_translation.translation_route_manager:
-#        class: Enhavo\Bundle\TranslationBundle\Route\TranslationRouteManager
-#        arguments:
-#            - '@enhavo_app.route_manager'
-#            - '@doctrine.orm.entity_manager'

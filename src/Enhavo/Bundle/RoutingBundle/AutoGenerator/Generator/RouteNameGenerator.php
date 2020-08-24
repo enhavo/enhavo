@@ -24,7 +24,7 @@ class RouteNameGenerator extends AbstractGenerator
         $route->setName($this->getRandomName());
     }
 
-    private function getRandomName()
+    protected function getRandomName()
     {
         return uniqid();
     }

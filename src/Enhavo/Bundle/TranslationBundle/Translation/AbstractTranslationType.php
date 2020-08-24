@@ -16,19 +16,29 @@ abstract class AbstractTranslationType extends AbstractType implements Translati
     /** @var TranslationTypeInterface */
     protected $parent;
 
-    public function setTranslation(array $options, $data, $property, $locale, $value)
+    public function translate($object, string $property, string $locale, array $options): void
+    {
+        $this->parent->translate($object, $property, $locale, $options);
+    }
+
+    public function detach($object, string $property, string $locale, array $options): void
+    {
+        $this->parent->detach($object, $property, $locale, $options);
+    }
+
+    public function delete($object, string $property): void
+    {
+        $this->parent->delete($object, $property);
+    }
+
+    public function setTranslation(array $options, $data, string $property, string $locale, $value)
     {
         $this->parent->setTranslation($options, $data, $property, $locale, $value);
     }
 
-    public function getTranslation(array $options, $data, $property, $locale)
+    public function getTranslation(array $options, $data, string $property, string $locale)
     {
-        $this->parent->getTranslation($options, $data, $property, $locale);
-    }
-
-    public function getValidationConstraints(array $options, $data, $property, $locale)
-    {
-        $this->parent->getValidationConstraints($options, $data, $property, $locale);
+        return $this->parent->getTranslation($options, $data, $property, $locale);
     }
 
     public static function getParentType(): ?string

@@ -10,25 +10,22 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PostFlushEventArgs;
 use Doctrine\ORM\Event\PreFlushEventArgs;
-use Enhavo\Bundle\TranslationBundle\Translator\Text\AccessControl;
-use Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator;
+use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
 use Enhavo\Component\Metadata\MetadataRepository;
 
 /**
  * Class DoctrineTranslatorSubscriber
- * 
+ *
  * This subscriber is listing to doctrine events to call the translator actions
  *
  * @since 03/10/16
  * @author gseidel
  * @package Enhavo\Bundle\TranslationBundle\EventListener
  */
-class DoctrineTextTranslatorSubscriber implements EventSubscriber
+class DoctrineTranslationSubscriber implements EventSubscriber
 {
-    /**
-     * @var TextTranslator
-     */
-    private $translator;
+    /** @var TranslationManager */
+    private $translationManager;
 
     /**
      * @var AccessControl
@@ -40,42 +37,42 @@ class DoctrineTextTranslatorSubscriber implements EventSubscriber
      */
     private $metadataRepository;
 
-    public function setTranslator(TextTranslator $translator)
+    /**
+     * DoctrineTranslationSubscriber constructor.
+     * @param TranslationManager $translationManager
+     * @param AccessControl $accessControl
+     * @param MetadataRepository $metadataRepository
+     */
+    public function __construct(TranslationManager $translationManager, AccessControl $accessControl, MetadataRepository $metadataRepository)
     {
-        $this->translator = $translator;
-    }
-
-    public function setAccessControl(AccessControl $accessControl)
-    {
+        $this->translationManager = $translationManager;
         $this->accessControl = $accessControl;
-    }
-
-    public function setMetadataRepository(MetadataRepository $metadataRepository)
-    {
         $this->metadataRepository = $metadataRepository;
     }
+
 
     /**
      * {@inheritdoc}
      */
     public function getSubscribedEvents()
     {
-        return array(
+        return [
             'preRemove',
             'postLoad',
             'preFlush',
             'postFlush'
-        );
+        ];
     }
 
     /**
      * Before flushing the data, we have to check if some translation data was stored for an object.
      *
      * @param PreFlushEventArgs $event
+     * @throws \Enhavo\Bundle\TranslationBundle\Exception\TranslationException
      */
     public function preFlush(PreFlushEventArgs $event)
     {
-        if(!$this->accessControl->isAccess()) {
+        if (!$this->accessControl->isAccess()) {
             return;
         }
 
@@ -84,12 +81,12 @@ class DoctrineTextTranslatorSubscriber implements EventSubscriber
 
         /*
          * We need to use the IdentityMap, because the update and persist collection stores entities, that have
-         * computed changes, but translation data might have changed without changing it underlying model!
+         * computed changes, but translation data might have changed without changing its underlying model!
          */
-        foreach($uow->getIdentityMap() as $className) {
-            foreach($className as $object) {
-                if($this->metadataRepository->hasMetadata($object) && $this->translator->isTranslated($object)) {
-                    $this->translator->detach($object);
+        foreach ($uow->getIdentityMap() as $class => $entities) {
+            if ($this->metadataRepository->hasMetadata($class)) {
+                foreach ($entities as $entity) {
+                    $this->translationManager->detach($entity);
                 }
             }
         }
@@ -99,20 +96,19 @@ class DoctrineTextTranslatorSubscriber implements EventSubscriber
      * Check if entity is not up to date an trigger flush again if needed
      *
      * @param PostFlushEventArgs $args
+     * @throws \Enhavo\Bundle\TranslationBundle\Exception\TranslationException
      */
     public function postFlush(PostFlushEventArgs $args)
     {
-        if(!$this->accessControl->isAccess()) {
+        if (!$this->accessControl->isAccess()) {
             return;
         }
 
         $uow = $args->getEntityManager()->getUnitOfWork();
-        $result = $uow->getIdentityMap();
-
-        foreach ($result as $class => $entities) {
-            if($this->metadataRepository->hasMetadata($class)) {
-                foreach($entities as $entity) {
-                    $this->translator->translate($entity, $this->accessControl->getLocale());
+        foreach ($uow->getIdentityMap() as $class => $entities) {
+            if ($this->metadataRepository->hasMetadata($class)) {
+                foreach ($entities as $entity) {
+                    $this->translationManager->translate($entity, $this->accessControl->getLocale());
                 }
             }
         }
@@ -120,32 +116,32 @@ class DoctrineTextTranslatorSubscriber implements EventSubscriber
 
     /**
      * If entity will be deleted, we need to delete all its translation data as well
-     * 
+     *
      * @param LifecycleEventArgs $args
      */
     public function preRemove(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
-        if($this->metadataRepository->hasMetadata($entity)) {
-            $this->translator->delete($entity);
+        if ($this->metadataRepository->hasMetadata($entity)) {
+            $this->translationManager->delete($entity);
         }
     }
 
     /**
      * Load TranslationData into to entity if it's fetched from the database
-     * 
+     *
      * @param LifecycleEventArgs $args
+     * @throws \Enhavo\Bundle\TranslationBundle\Exception\TranslationException
      */
     public function postLoad(LifecycleEventArgs $args)
     {
-        if(!$this->accessControl->isAccess()) {
+        if (!$this->accessControl->isAccess()) {
             return;
         }
 
         $entity = $args->getEntity();
-
-        if($this->metadataRepository->hasMetadata($entity)) {
-            $this->translator->translate($entity, $this->accessControl->getLocale());
+        if ($this->metadataRepository->hasMetadata($entity)) {
+            $this->translationManager->translate($entity, $this->accessControl->getLocale());
         }
     }
 }

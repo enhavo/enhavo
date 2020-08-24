@@ -3,13 +3,28 @@ services:
         arguments:
             - '@Enhavo\Component\Metadata\MetadataRepository[Translation]'
             - '@Enhavo\Component\Type\FactoryInterface[Translation]'
+            - '@doctrine.orm.entity_manager'
+            - '@enhavo_app.locale_resolver'
+            - '@Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface'
             - '%enhavo_translation.locales%'
             - '%enhavo_translation.default_locale%'
             - '%enhavo_translation.enable%'
             - '%enhavo_translation.translation_paths%'
             - '@Symfony\Component\HttpFoundation\RequestStack'
 
+    Enhavo\Bundle\TranslationBundle\Translation\Type\TranslationType:
+        arguments:
+            - '@Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator'
+        tags:
+            - { name: enhavo_translation.translation }
+
     Enhavo\Bundle\TranslationBundle\Translation\Type\TextTranslationType:
+        arguments:
+            - '@Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator'
+        tags:
+            - { name: enhavo_translation.translation }
+
+    Enhavo\Bundle\TranslationBundle\Translation\Type\SlugTranslationType:
         arguments:
             - '@Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator'
         tags:
@@ -21,12 +36,8 @@ services:
         tags:
             - { name: enhavo_translation.translation }
 
-    Enhavo\Bundle\TranslationBundle\Translation\Type\SlugTranslationType:
+    Enhavo\Bundle\TranslationBundle\Translation\Type\FileTranslationType:
         arguments:
-            - '@Enhavo\Bundle\TranslationBundle\Translator\Slug\SlugTranslator'
-        tags:
-            - { name: enhavo_translation.translation }
-
-    Enhavo\Bundle\TranslationBundle\Translation\Type\TranslationType:
+            - '@Enhavo\Bundle\TranslationBundle\Translator\Media\FileTranslator'
         tags:
             - { name: enhavo_translation.translation }
