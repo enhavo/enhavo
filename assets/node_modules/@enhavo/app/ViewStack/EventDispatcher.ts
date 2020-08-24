@@ -1,6 +1,6 @@
 import Event, {ResolveEvent, RejectEvent} from '@enhavo/app/ViewStack/Event/Event';
 import * as _ from 'lodash';
-import View from "@enhavo/app/View/View";
+import * as URI from 'urijs';
 
 export default class EventDispatcher
 {
@@ -8,12 +8,9 @@ export default class EventDispatcher
     private dispatchSubscriber: Subscriber[] = [];
     private allSubscriber: Subscriber[] = [];
     private events: EventStore[] = [];
-    private view: View;
 
-    constructor(view: View)
+    constructor()
     {
-        this.view = view;
-
         this.onDispatch((event: Event) => {
             if(event.origin == null) {
                 event.origin = this.getViewId();
@@ -80,7 +77,12 @@ export default class EventDispatcher
     
     private getViewId(): number
     {
-        return this.view.getId();
+        let url = new URL(window.location.href);
+        let id = parseInt(url.searchParams.get("view_id"));
+        if(id > 0) {
+            return id
+        }
+        return 0;
     }
 
     private removeEvent(eventStore: EventStore)
@@ -91,11 +93,6 @@ export default class EventDispatcher
                 return;
             }
         }
-    }
-
-    public setView(view: View)
-    {
-        this.view = view;
     }
 
     public dispatch(event: Event): Promise<object>

@@ -1,19 +1,20 @@
-import ApplicationInterface from "@enhavo/app/ApplicationInterface";
 import ModalInterface from "@enhavo/app/Modal/ModalInterface";
+import ModalManager from "@enhavo/app/Modal/ModalManager";
 
 export default abstract class AbstractModal implements ModalInterface
 {
-    protected application: ApplicationInterface;
     component: string;
 
-    constructor(application: ApplicationInterface)
+    protected readonly modalManager: ModalManager;
+
+    constructor(modalManager: ModalManager)
     {
-        this.application = application;
+        this.modalManager = modalManager;
     }
 
     init() {}
 
     close() {
-        this.application.getModalManager().pop();
+        this.modalManager.pop();
     }
 }

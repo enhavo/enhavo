@@ -1,7 +1,8 @@
 import AbstractWidget from "@enhavo/app/Toolbar/Widget/Model/AbstractWidget";
 import ClearEvent from "@enhavo/app/ViewStack/Event/ClearEvent";
 import CreateEvent from "@enhavo/app/ViewStack/Event/CreateEvent";
-import MenuAwareApplication from "@enhavo/app/Menu/MenuAwareApplication";
+import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
+import MenuManager from "@enhavo/app/Menu/MenuManager";
 
 export default class IconWidget extends AbstractWidget
 {
@@ -10,23 +11,27 @@ export default class IconWidget extends AbstractWidget
     public url: string;
     public target: string;
 
-    public getApplication()
-    {
-        return this.application;
+    private readonly eventDispatcher: EventDispatcher;
+    private readonly menuManager: MenuManager;
+
+    constructor(eventDispatcher: EventDispatcher, menuManager: MenuManager) {
+        super();
+        this.eventDispatcher = eventDispatcher;
+        this.menuManager = menuManager;
     }
 
     private openView(url: string, label: string)
     {
-        this.getApplication().getEventDispatcher().dispatch(new ClearEvent())
+        this.eventDispatcher.dispatch(new ClearEvent())
             .then(() => {
-                this.getApplication().getEventDispatcher()
+                this.eventDispatcher
                     .dispatch(new CreateEvent({
                         label: label,
                         component: 'iframe-view',
                         url: url
                     }))
                     .then(() => {
-                        (<MenuAwareApplication>this.getApplication()).getMenuManager().clearSelections();
+                        this.menuManager.clearSelections();
                     });
             })
             .catch(() => {})

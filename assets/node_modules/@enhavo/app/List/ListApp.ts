@@ -1,16 +1,27 @@
-import DataLoader from '@enhavo/app/DataLoader';
 import ActionManager from "@enhavo/app/Action/ActionManager";
-import ViewApp from "@enhavo/app/ViewApp";
-import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 import View from "@enhavo/app/View/View";
+import List from "@enhavo/app/List/List";
 
-export default class ListApp extends ViewApp
+export default class ListApp
 {
-    private actionManager: ActionManager;
+    private readonly view: View;
+    private readonly actionManager: ActionManager;
+    private readonly list: List;
 
-    constructor(loader: DataLoader, eventDispatcher: EventDispatcher, view: View, actionManager: ActionManager)
+    constructor(view: View, actionManager: ActionManager, list: List)
     {
-        super(loader, eventDispatcher, view);
+        this.view = view;
         this.actionManager = actionManager;
+        this.list = list;
+    }
+
+    init() {
+        this.view.init();
+        this.actionManager.init();
+        this.list.init();
+        this.list.load();
+
+        this.view.addDefaultCloseListener();
+        this.view.ready();
     }
 }

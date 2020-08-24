@@ -1,0 +1,9 @@
+entrypoints:
+    'enhavo/user/login':
+        path: '../Entrypoint/login.ts'
+        build: enhavo
+
+services:
+    '@enhavo/user/Login/LoginApp':
+        arguments:
+            - '@enhavo/app/View/View'

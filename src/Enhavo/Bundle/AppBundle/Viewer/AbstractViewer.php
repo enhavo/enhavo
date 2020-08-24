@@ -87,8 +87,8 @@ abstract class AbstractViewer implements ViewerInterface
         $optionsResolver->setDefaults([
             'javascripts' => [],
             'stylesheets' => [],
-            'translations' => false,
-            'routes' => false,
+            'translations' => true,
+            'routes' => true,
             'template' => 'admin/view/base.html.twig',
             'label' => null,
             'translation_domain' => null

@@ -17,29 +17,22 @@ class EncoreRegistryPackage
 
     initEncore(Encore, name)
     {
-        Encore.addPlugin(new DependencyInjectionPlugin(
-            path.resolve(EncoreUtil.getProjectDir(), './assets/services/*')
-        ));
+        let dummyFile = './'+path.relative(EncoreUtil.getProjectDir(), path.resolve( __dirname, '../Entrypoint/dummy.ts'));
 
         if(name === 'enhavo') {
             Encore
+                .addEntry('enhavo/app/dummy', dummyFile)
                 .enableSingleRuntimeChunk()
                 .enableSourceMaps(!Encore.isProduction())
                 .splitEntryChunks()
                 .autoProvidejQuery()
-                .enableVueLoader()
+                .enableVueLoader(() => {}, { runtimeCompilerBuild: false })
                 .enableSassLoader()
                 .enableTypeScriptLoader()
                 .enableVersioning(Encore.isProduction())
-
-                .addEntry('enhavo/main', './assets/enhavo/main')
-                .addEntry('enhavo/index', './assets/enhavo/index')
-                .addEntry('enhavo/view', './assets/enhavo/view')
-                .addEntry('enhavo/form', './assets/enhavo/form')
-                .addEntry('enhavo/preview', './assets/enhavo/preview')
-                .addEntry('enhavo/delete', './assets/enhavo/delete')
-                .addEntry('enhavo/list', './assets/enhavo/list')
-            ;
+                .addPlugin(new DependencyInjectionPlugin(
+                    path.resolve(EncoreUtil.getProjectDir(), './assets/services/*')
+                ));
         } else if(this.config.theme) {
             Encore
                 .enableSingleRuntimeChunk()
@@ -67,16 +60,17 @@ class EncoreRegistryPackage
         if(name === 'enhavo') {
             config.module.rules.forEach(function(rule) {
                 if(".scss".match(rule.test)) {
-                    rule.use.forEach(function(loader) {
-                        if(loader.loader === 'sass-loader') {
-                            loader.options.data = '@import "custom-vars";';
-                            if(fs.existsSync(path.join(projectDir, 'assets/enhavo/styles/custom-vars.scss'))) {
-                                loader.options.includePaths = [path.join(projectDir, 'assets/enhavo/styles')];
-                            } else {
-                                loader.options.includePaths = [path.join(projectDir, 'node_modules/@enhavo/app/assets/styles/custom')];
-                            }
-                        }
-                    });
+                    // console.log(rule);
+                    // rule.use.forEach(function(loader) {
+                    //     if(loader.loader === 'sass-loader') {
+                    //         loader.options.data = '@import "custom-vars";';
+                    //         if(fs.existsSync(path.join(projectDir, 'assets/enhavo/styles/custom-vars.scss'))) {
+                    //             loader.options.includePaths = [path.join(projectDir, 'assets/enhavo/styles')];
+                    //         } else {
+                    //             loader.options.includePaths = [path.join(projectDir, 'node_modules/@enhavo/app/assets/styles/custom')];
+                    //         }
+                    //     }
+                    // });
                 }
             });
         }
@@ -85,7 +79,7 @@ class EncoreRegistryPackage
             if(".ts".match(rule.test)) {
                 delete rule.exclude;
                 rule.use.forEach(function(loader) {
-                    if(loader.loader === 'ts-loader') {
+                    if(loader.loader.match(/ts-loader/)) {
                         loader.options.allowTsInNodeModules = true;
                         loader.options.transpileOnly = true;
                     }

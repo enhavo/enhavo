@@ -225,10 +225,10 @@ class IndexViewer extends AppViewer
 
         $optionsResolver->setDefaults([
             'javascripts' => [
-                'enhavo/index'
+                'enhavo/app/index'
             ],
             'stylesheets' => [
-                'enhavo/index'
+                'enhavo/app/index'
             ],
             'actions' => [],
             'table_route' => null,

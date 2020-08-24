@@ -14,26 +14,24 @@ class EncoreRegistryPackage
 
     initEncore(Encore, name)
     {
-        if(name === 'enhavo') {
-            Encore.addEntry('enhavo/editor', './assets/enhavo/editor');
-        }
+
     }
 
     initWebpackConfig(config, name)
     {
         if(name === 'enhavo') {
             config.plugins.push(new CopyWebpackPlugin([
-                { from: 'node_modules/tinymce/skins', to: 'enhavo/skins' },
-                { from: 'node_modules/tinymce/plugins', to: 'enhavo/plugins' },
-                { from: 'node_modules/tinymce/icons', to: 'enhavo/icons' }
+                { from: 'node_modules/tinymce/skins', to: 'skins' },
+                { from: 'node_modules/tinymce/plugins', to: 'plugins' },
+                { from: 'node_modules/tinymce/icons', to: 'icons' }
             ]));
         }
 
         if(config.theme) {
             config.plugins.push(new CopyWebpackPlugin([
-                { from: 'node_modules/tinymce/skins', to: 'enhavo/skins' },
-                { from: 'node_modules/tinymce/plugins', to: 'enhavo/plugins' },
-                { from: 'node_modules/tinymce/icons', to: 'enhavo/icons' }
+                { from: 'node_modules/tinymce/skins', to: 'skins' },
+                { from: 'node_modules/tinymce/plugins', to: 'plugins' },
+                { from: 'node_modules/tinymce/icons', to: 'icons' }
             ]));
         }
     }

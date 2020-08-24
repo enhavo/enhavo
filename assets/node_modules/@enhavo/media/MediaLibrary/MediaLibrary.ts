@@ -8,16 +8,18 @@ import View from "@enhavo/app/View/View";
 import Translator from "@enhavo/core/Translator";
 import RemovedEvent from "@enhavo/app/ViewStack/Event/RemovedEvent";
 import UpdatedEvent from "@enhavo/app/ViewStack/Event/UpdatedEvent";
+import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
 
 export default class MediaLibrary
 {
-    private data: MediaData;
-    private router: Router;
-    private eventDispatcher: EventDispatcher;
-    private view: View;
-    private translator: Translator;
+    public data: MediaData;
+    private readonly router: Router;
+    private readonly eventDispatcher: EventDispatcher;
+    private readonly view: View;
+    private readonly translator: Translator;
+    private readonly componentRegistry: ComponentRegistryInterface;
 
-    constructor(data: MediaData, router: Router, eventDispatcher: EventDispatcher, view: View, translator: Translator)
+    constructor(data: MediaData, router: Router, eventDispatcher: EventDispatcher, view: View, translator: Translator, componentRegistry: ComponentRegistryInterface)
     {
         _.extend(data, new MediaData());
         this.data = data;
@@ -25,7 +27,10 @@ export default class MediaLibrary
         this.view = view;
         this.router = router;
         this.translator = translator;
+        this.componentRegistry = componentRegistry;
+    }
 
+    init() {
         this.refresh();
 
         this.eventDispatcher.on('removed', (event: RemovedEvent) => {
@@ -39,6 +44,9 @@ export default class MediaLibrary
                 this.refresh();
             }
         });
+
+        this.componentRegistry.registerData(this.data);
+        this.componentRegistry.registerStore('mediaLibrary', this);
     }
 
     setProgress(value: number)

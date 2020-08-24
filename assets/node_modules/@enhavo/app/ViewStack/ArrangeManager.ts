@@ -1,35 +1,25 @@
 import ViewInterface from "./ViewInterface";
-import ViewStackData from "./ViewStackData";
 import MenuManager from "@enhavo/app/Menu/MenuManager";
-import * as $ from "jquery";
 import MenuList from "@enhavo/app/Menu/Model/MenuList";
 
 export default class ArrangeManager
 {
-    private views: ViewInterface[];
-    private data: ViewStackData;
     private menuManager: MenuManager;
 
-    constructor(views: ViewInterface[], data: ViewStackData, menuManager: MenuManager)
+    constructor(menuManager: MenuManager)
     {
-        this.views = views;
-        this.data = data;
         this.menuManager = menuManager;
-
-        $(window).resize(() => {
-            this.resize();
-        });
     }
 
-    resize()
+    resize(views: ViewInterface[])
     {
 
     }
 
-    arrange()
+    arrange(viewsData: ViewInterface[])
     {
         window.setTimeout(() => {
-            let views = this.getViews();
+            let views = this.getViews(viewsData);
 
             if(!this.menuManager.isCustomChange()) {
                 if(views.length >= 2) {
@@ -131,14 +121,14 @@ export default class ArrangeManager
         }
     }
 
-    private getViews(): ViewInterface[]
+    private getViews(views: ViewInterface[]): ViewInterface[]
     {
-        let views = [];
-        for(let view of this.views) {
+        let returnData = [];
+        for(let view of views) {
             if(!view.removed) {
-                views.push(view);
+                returnData.push(view);
             }
         }
-        return views;
+        return returnData;
     }
 }

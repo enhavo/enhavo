@@ -4,7 +4,7 @@
             <span class="icon icon-more_horiz"></span>
         </div>
         <ul v-if="isOpen" class="viewstack-dropdown">
-            <template v-for="view in view_stack.views">
+            <template v-for="view in $viewStack.data.views">
                 <li v-if="!view.removed" @click="maximize(view);close();">{{ view.label }}</li>
             </template>
         </ul>
@@ -12,16 +12,11 @@
 </template>
 
 <script lang="ts">
-
-import { Vue, Component, Prop } from "vue-property-decorator";
-import ViewStackData from "@enhavo/app/ViewStack/ViewStackData";
+import { Vue, Component } from "vue-property-decorator";
 
 @Component()
-export default class ViewstackDropdown extends Vue {
-    name: 'viewstack-dropdown';
-
-    @Prop()
-    view_stack: ViewStackData;
+export default class ViewstackDropdown extends Vue
+{
     isOpen: boolean = false;
 
     toggle (): void {
@@ -30,8 +25,8 @@ export default class ViewstackDropdown extends Vue {
 
     get hasMoreThanOneView() {
         let count = 0;
-        for(let i = 0;i<this.view_stack.views.length;i++) {
-            if(this.view_stack.views[i].removed == false) {
+        for(let i = 0; i < this.$viewStack.data.views.length;i++) {
+            if(this.$viewStack.data.views[i].removed == false) {
                 count++;
             }
         }
@@ -39,7 +34,7 @@ export default class ViewstackDropdown extends Vue {
     }
 
     maximize(element) {
-        for (let view of this.view_stack.views) {
+        for (let view of this.$viewStack.data.views) {
             view.minimize = true;
             view.focus = false;
         }
@@ -50,12 +45,5 @@ export default class ViewstackDropdown extends Vue {
     close(): void {
         this.isOpen = false;
     }
-
 }
 </script>
-
-
-
-
-
-

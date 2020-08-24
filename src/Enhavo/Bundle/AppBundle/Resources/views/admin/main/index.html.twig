@@ -8,7 +8,7 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     <script id="data" type="application/json">{{ data|json_encode|raw }}</script>
     {% block stylesheets %}
-        {{ encore_entry_link_tags('enhavo/main', null, 'enhavo') }}
+        {{ encore_entry_link_tags('enhavo/app/main', null, 'enhavo') }}
     {% endblock %}
 </head>
 
@@ -18,7 +18,7 @@
     <script id="translations" type="application/json">{{ translations|json_encode|raw }}</script>
 
     {% block javascripts %}
-        {{ encore_entry_script_tags('enhavo/main', null, 'enhavo') }}
+        {{ encore_entry_script_tags('enhavo/app/main', null, 'enhavo') }}
     {% endblock %}
 </body>
 </html>

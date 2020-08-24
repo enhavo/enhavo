@@ -1,0 +1,15 @@
+services:
+    '@enhavo/app/FlashMessage/FlashMessenger':
+        arguments:
+            - 'param:data.messages'
+            - '@enhavo/app/Vue/VueRegistry'
+
+    '@enhavo/app/FlashMessage/Components/FlashMessages':
+        static: true
+        tags:
+            - { name: vue.component, component: 'flash-messages' }
+
+    '@enhavo/app/FlashMessage/Components/FlashMessage':
+        static: true
+        tags:
+            - { name: vue.component, component: 'flash-message' }

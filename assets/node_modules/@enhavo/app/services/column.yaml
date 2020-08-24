@@ -1,0 +1,92 @@
+services:
+    '@enhavo/app/Grid/Column/ColumnManager':
+        arguments:
+            - 'param:data.grid.columns'
+            - '@enhavo/app/Grid/Column/ColumnRegistry'
+            - '@enhavo/app/Vue/VueRegistry'
+
+    '@enhavo/app/Grid/Column/ColumnRegistry':
+
+    column.boolean:
+        from: '@enhavo/core/RegistryEntry'
+        arguments:
+            - 'string:column-boolean'
+            - '@enhavo/app/Grid/Column/Components/ColumnBooleanComponent.vue'
+            - '@enhavo/app/Grid/Column/Factory/BooleanFactory'
+        tags:
+            - 'enhavo_app.column'
+
+    column.text:
+        from: '@enhavo/core/RegistryEntry'
+        arguments:
+            - 'string:column-text'
+            - '@enhavo/app/Grid/Column/Components/ColumnTextComponent.vue'
+            - '@enhavo/app/Grid/Column/Factory/TextFactory'
+        tags:
+            - 'enhavo_app.column'
+
+    column.action:
+        from: '@enhavo/core/RegistryEntry'
+        arguments:
+            - 'string:column-action'
+            - '@enhavo/app/Grid/Column/Components/ColumnActionComponent.vue'
+            - '@enhavo/app/Grid/Column/Factory/ActionFactory'
+        tags:
+            - 'enhavo_app.column'
+
+    column.sub:
+        from: '@enhavo/core/RegistryEntry'
+        arguments:
+            - 'string:column-sub'
+            - '@enhavo/app/Grid/Column/Components/ColumnSubComponent.vue'
+            - '@enhavo/app/Grid/Column/Factory/SubFactory'
+        tags:
+            - 'enhavo_app.column'
+
+    column.media:
+        from: '@enhavo/core/RegistryEntry'
+        arguments:
+             - 'string:column-media'
+             - '@enhavo/app/Grid/Column/Components/ColumnMediaComponent.vue'
+             - '@enhavo/app/Grid/Column/Factory/MediaFactory'
+        tags:
+            - 'enhavo_app.column'
+
+    column.state:
+        from: '@enhavo/core/RegistryEntry'
+        arguments:
+            - 'string:column-state'
+            - '@enhavo/app/Grid/Column/Components/ColumnStateComponent.vue'
+            - '@enhavo/app/Grid/Column/Factory/StateFactory'
+        tags:
+            - 'enhavo_app.column'
+
+    '@enhavo/app/Grid/Column/Factory/BooleanFactory':
+
+    '@enhavo/app/Grid/Column/Factory/TextFactory':
+
+    '@enhavo/app/Grid/Column/Factory/ActionFactory':
+
+    '@enhavo/app/Grid/Column/Factory/SubFactory':
+
+    '@enhavo/app/Grid/Column/Factory/MediaFactory':
+
+    '@enhavo/app/Grid/Column/Factory/StateFactory':
+
+    '@enhavo/app/Grid/Column/Components/ColumnBooleanComponent.vue':
+        static: true
+
+    '@enhavo/app/Grid/Column/Components/ColumnTextComponent.vue':
+        static: true
+
+    '@enhavo/app/Grid/Column/Components/ColumnActionComponent.vue':
+        static: true
+
+    '@enhavo/app/Grid/Column/Components/ColumnSubComponent.vue':
+        static: true
+
+    '@enhavo/app/Grid/Column/Components/ColumnMediaComponent.vue':
+        static: true
+
+    '@enhavo/app/Grid/Column/Components/ColumnStateComponent.vue':
+        static: true

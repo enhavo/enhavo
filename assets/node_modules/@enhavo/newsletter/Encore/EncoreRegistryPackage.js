@@ -13,9 +13,7 @@ class EncoreRegistryPackage
 
     initEncore(Encore, name)
     {
-        if(name === 'enhavo') {
-            Encore.addEntry('enhavo/newsletter-stats', './assets/enhavo/newsletter-stats');
-        }
+
     }
 
     initWebpackConfig(config, name)

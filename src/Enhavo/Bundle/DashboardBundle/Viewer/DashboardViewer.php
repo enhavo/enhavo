@@ -56,14 +56,16 @@ class DashboardViewer extends AbstractViewer
         parent::configureOptions($optionsResolver);
         $optionsResolver->setDefaults([
             'javascripts' => [
-                'enhavo/dashboard'
+                'enhavo/dashboard/dashboard'
             ],
             'stylesheets' => [
-                'enhavo/dashboard'
+                'enhavo/dashboard/dashboard'
             ],
             'label' => 'dashboard.label.dashboard',
             'translation_domain' => 'EnhavoDashboardBundle',
-            'data' => null
+            'data' => null,
+            'translations' => true,
+            'routes' => true,
         ]);
     }
 }

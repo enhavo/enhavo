@@ -1,5 +1,5 @@
 <template>
-    <div class="tab-head" @click="changeTab" :class="{'selected': selected, 'has-error': tab.error}">
+    <div class="tab-head" @click="changeTab" :class="{'selected': tab.active, 'has-error': tab.error}">
         {{ tab.label }}
     </div>
 </template>
@@ -7,22 +7,15 @@
 <script lang="ts">
     import { Vue, Component, Prop } from "vue-property-decorator";
     import Tab from "@enhavo/app/Form/Tab";
-    import ApplicationBag from "@enhavo/app/ApplicationBag";
-    import FormApplication from "@enhavo/app/Form/FormApplication";
-    const application = <FormApplication>ApplicationBag.getApplication();
 
     @Component()
-    export default class TabHead extends Vue {
-        name = 'tab-head';
-
+    export default class TabHead extends Vue
+    {
         @Prop()
         tab: Tab;
 
-        @Prop()
-        selected: boolean;
-
         changeTab() {
-            application.getForm().changeTab(this.tab.key);
+            this.$form.changeTab(this.tab.key);
         }
     }
 </script>

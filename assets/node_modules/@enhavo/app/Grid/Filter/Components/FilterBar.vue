@@ -1,6 +1,6 @@
 <template>
-    <div v-bind:class="name">
-        <template v-for="filter in filters">
+    <div class="filter-bar">
+        <template v-for="filter in $filterManager.filters">
                 <component
                     class="view-table-filter"
                     :is="filter.component"
@@ -16,32 +16,21 @@
 </template>
 
 <script lang="ts">
-  import { Vue, Component, Prop, Watch } from "vue-property-decorator";
-  import ApplicationBag from "@enhavo/app/ApplicationBag";
-  import IndexApplication from "@enhavo/app/Index/IndexApplication";
-  const application = <IndexApplication>ApplicationBag.getApplication();
+  import { Vue, Component } from "vue-property-decorator";
 
-  @Component({
-      components: application.getFilterRegistry().getComponents()
-  })
-  export default class FilterBar extends Vue {
-    name: string = "filter-bar";
-    
-    @Prop()
-    filters: Array<object>;
-
+  @Component()
+  export default class FilterBar extends Vue
+  {
     calcWidth(filter: any): string {
         return (100 / 12 * filter.width) + '%';
     }
 
     apply() {
-        const application = <IndexApplication>ApplicationBag.getApplication();
-        application.getGrid().applyFilter();
+        this.$grid.applyFilter();
     }
 
     reset() {
-      const application = <IndexApplication>ApplicationBag.getApplication();
-      application.getGrid().resetFilter();
+        this.$grid.resetFilter();
     }
   }
 </script>

@@ -3,29 +3,59 @@ import MenuRegistry from "@enhavo/app/Menu/MenuRegistry";
 import * as _ from "lodash";
 import MenuInterface from "@enhavo/app/Menu/MenuInterface";
 import GlobalDataStorageManager from "@enhavo/app/ViewStack/GlobalDataStorageManager";
+import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
 
 export default class MenuManager
 {
-    private data: MenuData;
+    public data: MenuData;
+
     private registry: MenuRegistry;
     private dataStorage: GlobalDataStorageManager;
+    private componentRegistry: ComponentRegistryInterface;
 
-    constructor(data: MenuData, registry: MenuRegistry, dataStorage: GlobalDataStorageManager)
+    constructor(data: MenuData, registry: MenuRegistry, dataStorage: GlobalDataStorageManager, componentRegistry: ComponentRegistryInterface)
     {
         _.extend(data, new MenuData);
         this.data = data;
         this.registry = registry;
         this.dataStorage = dataStorage;
+        this.componentRegistry = componentRegistry;
+    }
 
+    init(): void {
         for (let i in this.data.items) {
-            let item = registry.getFactory(this.data.items[i].component).createFromData(this.data.items[i]);
+            let item = this.registry.getFactory(this.data.items[i].component).createFromData(this.data.items[i]);
             _.extend(this.data.items[i], item);
         }
+
+        for (let component of this.registry.getComponents()) {
+            this.componentRegistry.registerComponent(component.name, component.component)
+        }
+
+        this.componentRegistry.registerStore('menuManager', this);
+        this.componentRegistry.registerData(this.data);
+
+        let menuActiveKey = this.dataStorage.get('menu-active-key');
+        if(menuActiveKey !== null) {
+            for(let item of this.getItems()) {
+                if(item.key == menuActiveKey.value) {
+                    item.select();
+                }
+            }
+        }
+    }
+
+    getData(): MenuData {
+        return this.data;
     }
 
     isOpen(): boolean
     {
         return this.data.open;
+    }
+
+    toogleMenu(): void {
+        this.data.open = !this.data.open;
     }
 
     open() {
@@ -55,17 +85,6 @@ export default class MenuManager
                     item.select();
                     item.open();
                     return;
-                }
-            }
-        }
-    }
-
-    init() {
-        let menuActiveKey = this.dataStorage.get('menu-active-key');
-        if(menuActiveKey !== null) {
-            for(let item of this.getItems()) {
-                if(item.key == menuActiveKey.value) {
-                    item.select();
                 }
             }
         }

@@ -14,7 +14,7 @@ export default class Cart implements InitializerInterface
 
         $(element).find('[data-more-amount]').on('blur', function() {
             if ($(this).val() != 0) {
-                let value = $(this).val();
+                let value = <string>$(this).val();
                 $(this).parent('[data-select-amount]').find('select').append(new Option(value, value));
                 $(this).parent('[data-select-amount]').find('select').val(value);
             }

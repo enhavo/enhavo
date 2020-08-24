@@ -126,10 +126,10 @@ class FormViewer extends AbstractActionViewer
         parent::configureOptions($optionsResolver);
         $optionsResolver->setDefaults([
             'javascripts' => [
-                'enhavo/form'
+                'enhavo/app/form'
             ],
             'stylesheets' => [
-                'enhavo/form'
+                'enhavo/app/form'
             ],
             'translations' => true,
             'routes' => false,

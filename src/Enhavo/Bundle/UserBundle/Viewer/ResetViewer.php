@@ -71,10 +71,10 @@ class ResetViewer extends AbstractViewer
         $optionsResolver->setDefaults([
             'template' => 'admin/security/reset-password/reset.html.twig',
             'stylesheets' => [
-                'enhavo/login'
+                'enhavo/user/login'
             ],
             'javascripts' => [
-                'enhavo/login'
+                'enhavo/user/login'
             ],
             'parameters' => [
 

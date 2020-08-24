@@ -19,57 +19,44 @@
 </template>
 
 <script lang="ts">
-    import { Vue, Component, Prop } from "vue-property-decorator";
-    import MenuNotificationComponent from '@enhavo/app/Menu/Components/MenuNotificationComponent';
-    import MenuList from '@enhavo/app/Menu/Model/MenuList';
-    import * as _ from "lodash";
-    import ApplicationBag from "@enhavo/app/ApplicationBag";
-    import MenuAwareApplication from "@enhavo/app/Menu/MenuAwareApplication";
-    let application = <MenuAwareApplication>ApplicationBag.getApplication();
+import { Vue, Component, Prop } from "vue-property-decorator";
+import MenuList from '@enhavo/app/Menu/Model/MenuList';
 
-    @Component({
-        components: _.extend({'menu-notification': MenuNotificationComponent}, application.getMenuRegistry().getComponents())
-    })
-    export default class MenuListComponent extends Vue {
-        name: string = 'menu-list';
+@Component()
+export default class MenuListComponent extends Vue {
+    name: string = 'menu-list';
 
-        @Prop()
-        data: MenuList;
+    @Prop()
+    data: MenuList;
 
-        get label(): string {
-            return (this.data && this.data.label) ? this.data.label : false;
-        }
+    get label(): string|boolean {
+        return (this.data && this.data.label) ? this.data.label : false;
+    }
 
-        get icon(): string {
-            return (this.data && this.data.icon) ? 'icon-' + this.data.icon : false;
-        }
+    get icon(): string|boolean {
+        return (this.data && this.data.icon) ? 'icon-' + this.data.icon : false;
+    }
 
-        get notification(): object {
-            return (this.data && this.data.notification) ? this.data.notification : false;
-        }
+    get notification(): object {
+        return (this.data && this.data.notification) ? this.data.notification : false;
+    }
 
-        toggle (): void {
-            this.data.isOpen = !this.data.isOpen;
-            if(this.data.isOpen) {
-                this.data.open();
-                this.data.closeOtherMenus();
-            } else {
-                this.data.close();
-            }
-        }
-
-        outside(): void {
-            window.setTimeout(() => {
-                if(!this.data.isMainMenuOpen()) {
-                    this.data.isOpen = false
-                }
-            }, 100)
+    toggle (): void {
+        this.data.isOpen = !this.data.isOpen;
+        if(this.data.isOpen) {
+            this.data.open();
+            this.data.closeOtherMenus();
+        } else {
+            this.data.close();
         }
     }
+
+    outside(): void {
+        window.setTimeout(() => {
+            if(!this.data.isMainMenuOpen()) {
+                this.data.isOpen = false
+            }
+        }, 100)
+    }
+}
 </script>
-
-
-
-
-
-

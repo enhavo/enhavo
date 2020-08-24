@@ -1,6 +1,6 @@
 <template>
-    <div v-if="data.length" class="modal-container">
-        <template v-for="modal in data">
+    <div v-if="$modalManager.modals.length" class="modal-container">
+        <template v-for="modal in $modalManager.modals">
             <div class="modal-component">
                 <component v-bind:is="modal.component" v-bind:modal="modal"></component>
             </div>
@@ -9,18 +9,10 @@
 </template>
 
 <script lang="ts">
-    import { Vue, Component, Prop } from "vue-property-decorator";
-    import ApplicationBag from "@enhavo/app/ApplicationBag";
-    import ModalInterface from "@enhavo/app/Modal/ModalInterface";
-    let application = ApplicationBag.getApplication();
+    import { Vue, Component } from "vue-property-decorator";
 
-    @Component({
-        components: application.getModalRegistry().getComponents()
-    })
+    @Component()
     export default class ModalComponent extends Vue {
-        name: string = 'modal-component';
 
-        @Prop()
-        data: ModalInterface[];
     }
 </script>

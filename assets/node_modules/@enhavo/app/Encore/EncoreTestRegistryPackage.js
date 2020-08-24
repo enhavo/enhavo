@@ -36,16 +36,16 @@ class EncoreTestRegistryPackage
         if(name === 'enhavo') {
             config.module.rules.forEach(function(rule) {
                 if(".scss".match(rule.test)) {
-                    rule.use.forEach(function(loader) {
-                        if(loader.loader === 'sass-loader') {
-                            loader.options.data = '@import "custom-vars";';
-                            if(fs.existsSync(path.join(projectDir, 'assets/enhavo/styles/custom-vars.scss'))) {
-                                loader.options.includePaths = [path.join(projectDir, 'assets/enhavo/styles')];
-                            } else {
-                                loader.options.includePaths = [path.join(projectDir, 'node_modules/@enhavo/app/assets/styles/custom')];
-                            }
-                        }
-                    });
+                    // rule.use.forEach(function(loader) {
+                    //     if(loader.loader === 'sass-loader') {
+                    //         loader.options.data = '@import "custom-vars";';
+                    //         if(fs.existsSync(path.join(projectDir, 'assets/enhavo/styles/custom-vars.scss'))) {
+                    //             loader.options.includePaths = [path.join(projectDir, 'assets/enhavo/styles')];
+                    //         } else {
+                    //             loader.options.includePaths = [path.join(projectDir, 'node_modules/@enhavo/app/assets/styles/custom')];
+                    //         }
+                    //     }
+                    // });
                 }
             });
         }

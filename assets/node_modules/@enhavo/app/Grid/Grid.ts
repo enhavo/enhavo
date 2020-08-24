@@ -17,19 +17,22 @@ import * as jexl from "jexl";
 import ViewInterface from "@enhavo/app/ViewStack/ViewInterface";
 import * as async from "async";
 import Confirm from "@enhavo/app/View/Confirm";
+import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
 
 export default class Grid
 {
-    private filterManager: FilterManager;
-    private columnManager: ColumnManager;
-    private batchManager: BatchManager;
-    private router: Router;
-    private eventDispatcher: EventDispatcher;
-    private configuration: GridConfiguration;
-    private view: View;
-    private translator: Translator;
+    public configuration: GridConfiguration;
     private source: CancelTokenSource;
-    private flashMessenger: FlashMessenger;
+
+    private readonly filterManager: FilterManager;
+    private readonly columnManager: ColumnManager;
+    private readonly batchManager: BatchManager;
+    private readonly router: Router;
+    private readonly eventDispatcher: EventDispatcher;
+    private readonly view: View;
+    private readonly translator: Translator;
+    private readonly flashMessenger: FlashMessenger;
+    private readonly componentRegistry: ComponentRegistryInterface;
 
     constructor(
         filterManager: FilterManager,
@@ -40,7 +43,8 @@ export default class Grid
         configuration: GridConfiguration,
         view: View,
         translator: Translator,
-        flashMessenger: FlashMessenger
+        flashMessenger: FlashMessenger,
+        componentRegistry: ComponentRegistryInterface
     ) {
         this.filterManager = filterManager;
         this.columnManager = columnManager;
@@ -50,11 +54,23 @@ export default class Grid
         this.view = view;
         this.translator = translator;
         this.flashMessenger = flashMessenger;
+        this.componentRegistry = componentRegistry;
 
         _.extend(configuration, new GridConfiguration());
         this.configuration = configuration;
         this.checkColumnConditions();
         this.initListener();
+    }
+
+    public init()
+    {
+        this.batchManager.init();
+        this.filterManager.init();
+        this.columnManager.init();
+        this.view.init();
+
+        this.componentRegistry.registerStore('grid', this);
+        this.componentRegistry.registerData(this.configuration);
     }
 
     private initListener()
@@ -426,5 +442,15 @@ export default class Grid
         for(let currentRow of this.configuration.rows) {
             currentRow.active = false;
         }
+    }
+
+    public isFilterOn()
+    {
+        return this.configuration.showFilter;
+    }
+
+    public hasPagination()
+    {
+        return this.configuration.pagination;
     }
 }

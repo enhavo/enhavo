@@ -6,12 +6,23 @@ import LoadedEvent from "@enhavo/app/ViewStack/Event/LoadedEvent";
 import ExistsData from "@enhavo/app/ViewStack/ExistsData";
 import LoadDataEvent from "@enhavo/app/ViewStack/Event/LoadDataEvent";
 import DataStorageEntry from "@enhavo/app/ViewStack/DataStorageEntry";
+import View from "@enhavo/app/View/View";
+import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 
 export default class PreviewAction extends AbstractAction
 {
     public url: string;
 
     private static listenerLoaded = false;
+
+    private readonly view: View;
+    private readonly eventDispatcher: EventDispatcher;
+
+    constructor(view: View, eventDispatcher: EventDispatcher) {
+        super();
+        this.view = view;
+        this.eventDispatcher = eventDispatcher;
+    }
 
     loadListener()
     {
@@ -21,15 +32,15 @@ export default class PreviewAction extends AbstractAction
 
         PreviewAction.listenerLoaded = true;
 
-        this.application.getView().loadValue('preview-view', (id) => {
+        this.view.loadValue('preview-view', (id) => {
             let viewId = id ? parseInt(id) : null;
             if(viewId) {
                 this.sendData(viewId);
             }
         });
 
-        this.application.getEventDispatcher().on('loaded', (event: LoadedEvent) => {
-            this.application.getView().loadValue('preview-view', (id) => {
+        this.eventDispatcher.on('loaded', (event: LoadedEvent) => {
+            this.view.loadValue('preview-view', (id) => {
                 let viewId = id ? parseInt(id) : null;
                 if(event.id == viewId) {
                     this.sendData(viewId);
@@ -46,26 +57,26 @@ export default class PreviewAction extends AbstractAction
     private sendData(id :number)
     {
         let data = $('form').serializeArray();
-        this.application.getEventDispatcher().dispatch(new DataEvent(id, data));
+        this.eventDispatcher.dispatch(new DataEvent(id, data));
     }
 
     private open(url: string, key: string = null, label: string = null)
     {
-        this.application.getEventDispatcher().dispatch(new LoadDataEvent(key)).then((data: DataStorageEntry) => {
+        this.eventDispatcher.dispatch(new LoadDataEvent(key)).then((data: DataStorageEntry) => {
             let viewId: number = null;
             if(data) {
                 viewId = data.value;
             }
             if(viewId != null) {
-                this.application.getEventDispatcher().dispatch(new ExistsEvent(viewId)).then((data: ExistsData) => {
+                this.eventDispatcher.dispatch(new ExistsEvent(viewId)).then((data: ExistsData) => {
                     if(data.exists) {
                         this.sendData(viewId);
                     } else {
-                        this.application.getView().openView(url, key, label);
+                        this.view.openView(url, key, label);
                     }
                 });
             } else {
-                this.application.getView().openView(url, key, label);
+                this.view.openView(url, key, label);
             }
         });
     }

@@ -1,21 +1,22 @@
 import MenuInterface from "@enhavo/app/Menu/MenuInterface";
-import ApplicationInterface from "@enhavo/app/ApplicationInterface";
 import MenuManager from "@enhavo/app/Menu/MenuManager";
-import MenuAwareApplication from "@enhavo/app/Menu/MenuAwareApplication";
+import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 
 export default abstract class AbstractMenu implements MenuInterface
 {
+    private parentItem: MenuInterface;
     public component: string;
     public label: string;
     public selected: boolean = false;
     public key: string;
-    protected application: ApplicationInterface;
-    private parentItem: MenuInterface;
     public clickable: boolean = false;
+    protected eventDispatcher: EventDispatcher;
+    protected menuManager: MenuManager;
 
-    constructor(application: ApplicationInterface)
+    constructor(eventDispatcher: EventDispatcher, menuManager: MenuManager)
     {
-        this.application = application;
+        this.eventDispatcher = eventDispatcher;
+        this.menuManager = menuManager;
     }
 
     children(): Array<MenuInterface> {
@@ -62,6 +63,6 @@ export default abstract class AbstractMenu implements MenuInterface
 
     protected getManager(): MenuManager
     {
-        return (<MenuAwareApplication>this.application).getMenuManager();
+        return this.menuManager;
     }
 }
