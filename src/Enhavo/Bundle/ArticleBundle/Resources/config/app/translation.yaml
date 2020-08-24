@@ -6,3 +6,5 @@ enhavo_translation:
                     type: text
                 slug:
                     type: slug
+                picture:
+                    type: file
