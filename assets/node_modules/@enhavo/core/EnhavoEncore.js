@@ -8,35 +8,32 @@ class EnhavoEncore
         this.packages = [];
     }
 
-    register(enhavoPackage)
-    {
-        this.packages.push(enhavoPackage);
-        return this;
-    }
-
     /**
      * @param {string} name
-     * @param {function} callback
+     * @param {[]} packages
+     * @param {function} encoreCallback
      * @param {function} configCallback
      * @returns {object}
      */
-    add(name, callback, configCallback = null)
+    add(name, packages = [], encoreCallback = null, configCallback = null, )
     {
         Encore.reset();
         Encore.setOutputPath('public/build/'+name+'/');
         Encore.setPublicPath('/build/'+name);
 
-        for(let enhavoPackage of this.packages) {
+        for(let enhavoPackage of packages) {
             enhavoPackage.initEncore(Encore, name)
         }
 
-        callback(Encore);
+        if (encoreCallback) {
+            encoreCallback(Encore);
+        }
 
         let config = Encore.getWebpackConfig();
         config.name = name;
         this.configs.push(config);
 
-        for(let enhavoPackage of this.packages) {
+        for(let enhavoPackage of packages) {
             enhavoPackage.initWebpackConfig(config, name)
         }
 
@@ -58,12 +55,6 @@ class EnhavoEncore
             throw 'Config name "' + name + '"does not exists';
         }
         return this.configs;
-    }
-
-    /** @deprecated Please upgrade your webpack.config.js (Follow 0.9 Migration Guide) */
-    getWebpackConfig(config)
-    {
-        throw 'Please upgrade your webpack.config.js (Follow 0.9 Migration Guide)';
     }
 }
 

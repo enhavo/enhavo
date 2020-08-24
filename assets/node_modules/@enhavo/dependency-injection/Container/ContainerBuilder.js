@@ -110,11 +110,22 @@ class ContainerBuilder
     prepare() {
         for (let compilerPass of this.getCompilerPasses()) {
             let content = fs.readFileSync(compilerPass.path)+'';
-            let m = new module.constructor();
-            m.paths = module.paths;
-            m._compile(content, compilerPass.path);
-            m.exports(this, compilerPass.getOptions());
+            try {
+                let m = new module.constructor();
+                m.paths = module.paths;
+                m._compile(content, compilerPass.path);
+                m.exports(this, compilerPass.getOptions());
+            } catch (e) {
+                throw 'Error occured while using compiler pass "'+compilerPass.path+'" with error: ' + e;
+            }
         }
+    }
+
+    reset() {
+        this.definitions = new Map();
+        this.entrypoints = new Map();
+        this.compilerPasses = new Map();
+        this.files = [];
     }
 }
 

@@ -11,6 +11,7 @@ class DependencyInjectionPlugin
 
     apply(compiler) {
         let loader = new Loader;
+        builder.reset();
         loader.loadFile(this.configurationPath, builder);
         builder.prepare();
         let validator = new Validator;

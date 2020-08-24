@@ -9,13 +9,10 @@ describe('dependency-injection/Container/Argument', () => {
             assert.equal('@Something/service', new Argument('service:@Something/service').getValue());
             assert.equal('@Something/service', new Argument('param:@Something/service').getValue());
             assert.equal('Test', new Argument('string:Test').getValue());
+            assert.equal(null, new Argument(null).getValue());
         });
 
         it('should throw exceptions', () => {
-            chai.expect(() => {
-                new Argument(null)
-            }).to.throw();
-
             chai.expect(() => {
                 new Argument('service:huhu:@Something/service')
             }).to.throw();
@@ -26,4 +23,3 @@ describe('dependency-injection/Container/Argument', () => {
         });
     });
 });
-

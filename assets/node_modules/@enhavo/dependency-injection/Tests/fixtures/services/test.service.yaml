@@ -1,9 +1,10 @@
 services:
     '@enhavo/dependency-injection/Tests/Mock/TestService':
+
     '@enhavo/dependency-injection/Tests/Mock/TestDependService':
         import: TestDependService
         arguments:
-            - '@enhavo/dependency-injection/Tests/fixtures/TestService'
+            - '@enhavo/dependency-injection/Tests/Mock/TestService'
 
 compiler_pass:
     test:

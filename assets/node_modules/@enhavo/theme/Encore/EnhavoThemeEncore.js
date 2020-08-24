@@ -5,9 +5,9 @@ class EnhavoThemeEncore
         this.manifestFiles = [];
     }
 
-    addThemes(EnhavoEncore, ThemeLoader) {
+    addThemes(EnhavoEncore, ThemeLoader, packages = []) {
         for(let theme of ThemeLoader.getThemes()) {
-            EnhavoEncore.add(theme.key, (Encore) => {
+            EnhavoEncore.add(theme.key, packages, (Encore) => {
                 for(let entry of theme.entries) {
                     Encore.addEntry(entry.name, entry.path)
                 }

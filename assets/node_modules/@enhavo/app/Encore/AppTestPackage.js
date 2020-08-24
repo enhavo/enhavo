@@ -1,21 +1,20 @@
 const EncoreUtil = require('@enhavo/core/EncoreUtil');
 const path = require('path');
-const fs = require('fs');
 const _ = require('lodash');
 const DependencyInjectionPlugin = require('@enhavo/dependency-injection/Webpack/DependencyInjectionPlugin');
 
-class EncoreTestRegistryPackage
+class AppTestPackage
 {
     constructor(config = null)
     {
         this.config = new Config();
 
         if(typeof config == 'object') {
-            _.merge(this.config, config);
+            this.config = _.merge(this.config, config);
         }
     }
 
-    initEncore(Encore, name)
+    initEncore(Encore)
     {
         Encore
             .disableSingleRuntimeChunk()
@@ -25,30 +24,14 @@ class EncoreTestRegistryPackage
             .enableSassLoader()
             .enableTypeScriptLoader()
             .enableVersioning(false)
-            .addPlugin(new DependencyInjectionPlugin(path.resolve(EncoreUtil.getProjectDir(), './assets/node_modules/@enhavo/**/Test/fixtures/services/*')))
+            .cleanupOutputBeforeBuild()
+            .addPlugin(new DependencyInjectionPlugin(path.resolve(EncoreUtil.getProjectDir(), './assets/node_modules/@enhavo/**/Tests/fixtures/services/*')))
 
     }
 
-    initWebpackConfig(config, name)
+    initWebpackConfig(config)
     {
         const projectDir = EncoreUtil.getProjectDir();
-
-        if(name === 'enhavo') {
-            config.module.rules.forEach(function(rule) {
-                if(".scss".match(rule.test)) {
-                    // rule.use.forEach(function(loader) {
-                    //     if(loader.loader === 'sass-loader') {
-                    //         loader.options.data = '@import "custom-vars";';
-                    //         if(fs.existsSync(path.join(projectDir, 'assets/enhavo/styles/custom-vars.scss'))) {
-                    //             loader.options.includePaths = [path.join(projectDir, 'assets/enhavo/styles')];
-                    //         } else {
-                    //             loader.options.includePaths = [path.join(projectDir, 'node_modules/@enhavo/app/assets/styles/custom')];
-                    //         }
-                    //     }
-                    // });
-                }
-            });
-        }
 
         config.module.rules.forEach(function(rule) {
             if(".ts".match(rule.test)) {
@@ -72,9 +55,8 @@ class EncoreTestRegistryPackage
 class Config
 {
     constructor() {
-        this.copyThemeImages = true;
-        this.theme = true;
+
     }
 }
 
-module.exports = EncoreTestRegistryPackage;
+module.exports = AppTestPackage;
