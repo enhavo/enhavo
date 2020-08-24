@@ -37,6 +37,13 @@ services:
             - '@Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface'
             - '%enhavo_translation.default_locale%'
 
+    Enhavo\Bundle\TranslationBundle\Translator\Media\FileTranslator:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface'
+            - '%enhavo_translation.default_locale%'
+
+
 #    enhavo_translation.preview_listener:
 #        class: Enhavo\Bundle\TranslationBundle\EventListener\PreviewListener
 #        arguments:
