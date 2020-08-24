@@ -1,0 +1,41 @@
+entrypoints:
+    'enhavo/dashboard/dashboard':
+        path: '../Entrypoint/dashboard'
+        build: enhavo
+
+compiler_pass:
+    dashboard_widget:
+        path: '@enhavo/app/CompilerPass/registry.js'
+        service: '@enhavo/dashboard/Widget/WidgetRegistry'
+        tag: 'enhavo_dashboard.widget'
+
+services:
+    '@enhavo/dashboard/Dashboard/DashboardApp':
+        arguments:
+            - '@enhavo/app/View/View'
+            - '@enhavo/dashboard/Widget/WidgetManager'
+
+    '@enhavo/dashboard/Widget/WidgetManager':
+        arguments:
+            - 'param:data.widgets'
+            - '@enhavo/dashboard/Widget/WidgetRegistry'
+            - '@enhavo/app/Vue/VueRegistry'
+
+    '@enhavo/dashboard/Widget/WidgetRegistry':
+
+    widget.number:
+        from: '@enhavo/core/RegistryEntry'
+        arguments:
+            - 'string:number-widget'
+            - '@enhavo/dashboard/Widget/Components/NumberWidgetComponent.vue'
+            - '@enhavo/dashboard/Widget/Factory/NumberWidgetFactory'
+        tags:
+            - 'enhavo_dashboard.widget'
+
+    '@enhavo/dashboard/Widget/Factory/NumberWidgetFactory':
+
+    '@enhavo/dashboard/Widget/Components/NumberWidgetComponent.vue':
+        static: true
+
+    '@enhavo/dashboard/Dashboard/Components/ApplicationComponent.vue':
+        static: true

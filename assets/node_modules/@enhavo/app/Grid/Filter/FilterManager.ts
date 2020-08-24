@@ -1,20 +1,35 @@
 import FilterInterface from "@enhavo/app/Grid/Filter/FilterInterface";
 import FilterRegistry from "@enhavo/app/Grid/Filter/FilterRegistry";
 import * as _ from 'lodash';
+import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
 
 export default class FilterManager
 {
-    private filters: FilterInterface[];
-    private registry: FilterRegistry;
+    public filters: FilterInterface[];
 
-    constructor(filters: FilterInterface[], registry:FilterRegistry)
+    private readonly registry: FilterRegistry;
+    private readonly componentRegistry: ComponentRegistryInterface;
+
+    constructor(filters: FilterInterface[], registry: FilterRegistry, componentRegistry: ComponentRegistryInterface)
     {
-        this.registry = registry;
-        for (let i in filters) {
-            let filter = registry.getFactory(filters[i].component).createFromData(filters[i]);
-            _.extend(filters[i], filter);
-        }
         this.filters = filters;
+        this.registry = registry;
+        this.componentRegistry = componentRegistry;
+    }
+
+    public init()
+    {
+        for (let i in this.filters) {
+            let filter = this.registry.getFactory(this.filters[i].component).createFromData(this.filters[i]);
+            _.extend(this.filters[i], filter);
+        }
+
+        for (let component of this.registry.getComponents()) {
+            this.componentRegistry.registerComponent(component.name, component.component)
+        }
+
+        this.componentRegistry.registerStore('filterManager', this);
+        this.componentRegistry.registerData(this.filters);
     }
 
     public getFilterParameters()

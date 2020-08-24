@@ -5,19 +5,23 @@ import "@enhavo/media/assets/styles/style.scss";
 import ImageCropperExtension from "@enhavo/media/Extension/ImageCropperExtension";
 import ImageCropperConfiguration from "@enhavo/media/Extension/ImageCropperConfiguration";
 import MediaItem from "@enhavo/media/Type/MediaItem";
-import ApplicationInterface from "@enhavo/app/ApplicationInterface";
 import MediaRouter from "@enhavo/media/MediaRouter";
 import DownloadExtension from "@enhavo/media/Extension/DownloadExtension";
+import View from "@enhavo/app/View/View";
+import Router from "@enhavo/core/Router";
 
 export default class MediaLoader extends AbstractLoader
 {
     private isBindDragAndDrop = false;
 
-    private application: ApplicationInterface;
+    private readonly view: View;
+    private readonly router: Router;
 
-    constructor(application: ApplicationInterface) {
+    constructor(view: View, router: Router) {
         super();
-        this.application = application;
+        this.view = view;
+        this.router = router;
+
         this.bindDragAndDrop();
         this.initImageCropper();
         this.initDownload();
@@ -61,11 +65,11 @@ export default class MediaLoader extends AbstractLoader
         $(document).on('mediaAddItem', (event, item) => {
             let config = new ImageCropperConfiguration();
             config.openCropper = (media: MediaItem, format: string) => {
-                let url = this.application.getRouter().generate('enhavo_media_image_cropper_index', {
+                let url = this.router.generate('enhavo_media_image_cropper_index', {
                     format: format,
                     token: media.getMeta().token
                 });
-                this.application.getView().open(url, 'media-image-cropper')
+                this.view.open(url, 'media-image-cropper')
             };
             new ImageCropperExtension(item, config);
         });
@@ -74,7 +78,7 @@ export default class MediaLoader extends AbstractLoader
     private initDownload()
     {
         $(document).on('mediaAddItem', (event, item) => {
-            new DownloadExtension(new MediaRouter(this.application.getRouter()), item);
+            new DownloadExtension(new MediaRouter(this.router), item);
         });
     }
 }

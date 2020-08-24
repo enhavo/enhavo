@@ -1,0 +1,34 @@
+services:
+    '@enhavo/app/Grid/Grid':
+        arguments:
+            - '@enhavo/app/Grid/Filter/FilterManager'
+            - '@enhavo/app/Grid/Column/ColumnManager'
+            - '@enhavo/app/Grid/Batch/BatchManager'
+            - '@enhavo/core/Router'
+            - '@enhavo/app/ViewStack/EventDispatcher'
+            - 'param:data.grid'
+            - '@enhavo/app/View/View'
+            - '@enhavo/core/Translator'
+            - '@enhavo/app/FlashMessage/FlashMessenger'
+            - '@enhavo/app/Vue/VueRegistry'
+
+    '@enhavo/app/Grid/Components/Grid.vue':
+        static: true
+        tags:
+            - { name: vue.component, component: 'grid-grid' }
+
+    '@enhavo/app/Grid/Components/Pagination.vue':
+        static: true
+        tags:
+            - { name: vue.component, component: 'grid-pagination' }
+
+    '@enhavo/app/Grid/Components/Table.vue':
+        static: true
+        tags:
+            - { name: vue.component, component: 'grid-table' }
+
+    '@enhavo/app/Grid/Column/Components/Row':
+        static: true
+        tags:
+            - { name: vue.component, component: 'grid-table-row' }
+

@@ -1,33 +1,50 @@
-import DataLoader from '@enhavo/app/DataLoader';
 import ActionManager from "@enhavo/app/Action/ActionManager";
-import AppInterface from "@enhavo/app/AppInterface";
-import ViewApp from "@enhavo/app/ViewApp";
 import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 import View from "@enhavo/app/View/View";
 import CloseEvent from "@enhavo/app/ViewStack/Event/CloseEvent";
 import RemoveEvent from "@enhavo/app/ViewStack/Event/RemoveEvent";
 import Confirm from "@enhavo/app/View/Confirm";
 import FormatData from "@enhavo/media/ImageCropper/FormatData";
-import * as _ from "lodash";
 import FlashMessenger from "@enhavo/app/FlashMessage/FlashMessenger";
 import UpdatedEvent from "@enhavo/app/ViewStack/Event/UpdatedEvent";
+import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
+import * as _ from "lodash";
 
-export default class ImageCropperApp extends ViewApp implements AppInterface
+export default class ImageCropperApp
 {
+    public data: FormatData;
+
+    private eventDispatcher: EventDispatcher;
+    private view: View;
     private actionManager: ActionManager;
     private flashMessenger: FlashMessenger;
-    protected data: FormatData;
+    private componentRegistry: ComponentRegistryInterface;
 
-    constructor(loader: DataLoader, eventDispatcher: EventDispatcher, view: View, actionManager: ActionManager, flashMessenger: FlashMessenger)
+    constructor(data: FormatData, eventDispatcher: EventDispatcher, view: View, actionManager: ActionManager, flashMessenger: FlashMessenger, componentRegistry: ComponentRegistryInterface)
     {
-        super(loader, eventDispatcher, view);
-        loader.load().format = _.extend(loader.load().format, new FormatData);
+        this.data  = _.extend(data, new FormatData);
+        this.eventDispatcher = eventDispatcher;
+        this.view = view;
         this.actionManager = actionManager;
         this.flashMessenger = flashMessenger;
+        this.componentRegistry = componentRegistry;
+    }
 
+    public init()
+    {
         if(this.flashMessenger.has('success')) {
-            this.eventDispatcher.dispatch(new UpdatedEvent(view.getId()))
+            this.eventDispatcher.dispatch(new UpdatedEvent(this.view.getId()))
         }
+
+        this.view.init();
+        this.actionManager.init();
+        this.flashMessenger.init();
+
+        this.componentRegistry.registerStore('imageCropper', this);
+        this.componentRegistry.registerData(this.data);
+
+        this.addCloseListener();
+        this.view.ready();
     }
 
     protected addCloseListener()

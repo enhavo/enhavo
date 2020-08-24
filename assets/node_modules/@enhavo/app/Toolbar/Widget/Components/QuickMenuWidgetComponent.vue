@@ -18,8 +18,6 @@
 
     @Component()
     export default class QuickMenuWidgetComponent extends Vue {
-        name: 'quick-menu-widget';
-
         @Prop()
         data: QuickMenuWidget;
 
@@ -38,8 +36,7 @@
             this.close();
         }
 
-        getIcon()
-        {
+        getIcon() {
             if(this.data.icon) {
                 return 'icon icon-'+this.data.icon;
             }

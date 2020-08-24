@@ -1,0 +1,23 @@
+services:
+    '@enhavo/app/Main/MainApp':
+        arguments:
+            - 'param:data.branding'
+            - '@enhavo/app/ViewStack/ViewStack'
+            - '@enhavo/app/Menu/MenuManager'
+            - '@enhavo/app/State/StateManager'
+            - '@enhavo/app/ViewStack/DataStorageManager'
+            - '@enhavo/app/Toolbar/Widget/WidgetManager'
+            - '@enhavo/app/Vue/VueRegistry'
+
+    '@enhavo/app/Main/Components/MainComponent.vue':
+        static: true
+
+    '@enhavo/app/Main/Components/OverlayContainer.vue':
+        static: true
+        tags:
+            - { name: vue.component, component: 'overlay-container' }
+
+    '@enhavo/app/Main/Components/LoadingScreen.vue':
+        static: true
+        tags:
+            - { name: vue.component, component: 'loading-screen' }

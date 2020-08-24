@@ -119,7 +119,7 @@ export default class Theme implements InitializerInterface
         $('[data-loading-screen]').on('mouseover', function() {
             $(this).find('[data-loading-spinner]').fadeIn();
             document.onmousemove = handleMouseMove;
-            function handleMouseMove(event) {
+            function handleMouseMove(event: any) {
 
                 let eventDoc, doc, body;
                 event = event || window.event;
@@ -137,8 +137,10 @@ export default class Theme implements InitializerInterface
                         (doc && doc.clientTop  || body && body.clientTop  || 0 );
                 }
 
-                document.getElementsByClassName('loading')[0].style.top=event.pageY+'px';
-                document.getElementsByClassName('loading')[0].style.left=event.pageX+'px';
+                let element = <HTMLElement>document.getElementsByClassName('loading')[0];
+
+                element.style.top=event.pageY+'px';
+                element.style.left=event.pageX+'px';
             }
         });
         $('[data-loading-screen]').on('mouseleave', function() {

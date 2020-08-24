@@ -8,15 +8,18 @@ import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 import UpdatedEvent from "@enhavo/app/ViewStack/Event/UpdatedEvent";
 import View from "@enhavo/app/View/View";
 import SaveStateEvent from "@enhavo/app/ViewStack/Event/SaveStateEvent";
+import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
 
 export default class Form
 {
-    private view: View;
-    private tabs: Tab[];
-    private data: FormData;
-    private registry: FormRegistry;
-    private flashMessenger: FlashMessenger;
-    private eventDispatcher: EventDispatcher;
+    public data: FormData;
+    public tabs: Tab[];
+
+    private readonly view: View;
+    private readonly registry: FormRegistry;
+    private readonly flashMessenger: FlashMessenger;
+    private readonly eventDispatcher: EventDispatcher;
+    private readonly componentRegistry: ComponentRegistryInterface;
 
     constructor(
         data: FormData,
@@ -24,34 +27,41 @@ export default class Form
         flashMessenger: FlashMessenger,
         eventDispatcher: EventDispatcher,
         view: View,
+        componentRegistry: ComponentRegistryInterface,
     ) {
         this.view = view;
         this.data = _.extend(data, new FormData);
-        for (let i in data.tabs) {
-            _.extend(data.tabs[i], new Tab);
-        }
-        this.tabs = data.tabs;
         this.registry = registry;
         this.flashMessenger = flashMessenger;
         this.eventDispatcher = eventDispatcher;
+        this.componentRegistry = componentRegistry;
+
+
+    }
+
+    init() {
+        this.flashMessenger.init();
+        this.view.init();
 
         if(this.flashMessenger.has('success')) {
-            this.eventDispatcher.dispatch(new UpdatedEvent(view.getId(), data.resource))
+            this.eventDispatcher.dispatch(new UpdatedEvent(this.view.getId(), this.data.resource))
         }
+
+        for (let i in this.data.tabs) {
+            _.extend(this.data.tabs[i], new Tab);
+        }
+
+        this.tabs = this.data.tabs;
+
+        this.componentRegistry.registerStore('form', this);
+        this.componentRegistry.registerData(this.data);
+        this.componentRegistry.registerData(this.tabs);
     }
 
     public load()
     {
-        for(let tab of this.tabs) {
-            if(!this.data.tab) {
-                this.data.tab = tab.key;
-            }
-            let $tab = $('[data-tab-container]').find('[data-tab='+tab.key+']');
-            tab.error = $tab.find('[data-form-error]').length > 0;
-            tab.element = <HTMLElement>$tab[0];
-        }
+        this.changeTab(this.tabs[0].key);
 
-        // load active tab
         this.view.loadValue('active-tab', value => {
             if (value) {
                 this.changeTab(value);
@@ -61,7 +71,13 @@ export default class Form
 
     public changeTab(key: string)
     {
-        this.data.tab = key;
+        for(let tab of this.tabs) {
+            if (tab.key === key) {
+                tab.active = true;
+                continue;
+            }
+            tab.active = false;
+        }
 
         // store active tab
         this.view.storeValue('active-tab', key, () => {
@@ -77,5 +93,10 @@ export default class Form
     public isFormChanged(): boolean
     {
         return this.data.formChanged;
+    }
+
+    public hasTabs(): boolean
+    {
+        return this.tabs.length > 1
     }
 }

@@ -1,8 +1,8 @@
 <template>
-    <div class="media-library" v-bind:class="{ 'drop-zone': data.dropZone, 'drop-zone-active': data.dropZoneActive }" ref="mediaLibrary">
+    <div class="media-library" v-bind:class="{ 'drop-zone': $mediaLibrary.data.dropZone, 'drop-zone-active': $mediaLibrary.data.dropZoneActive }" ref="mediaLibrary">
         <input v-once type="file" multiple ref="upload" v-show="false">
         <ul class="media-library-file-list">
-            <li v-for="item in data.items" @click="open(item)">
+            <li v-for="item in $mediaLibrary.data.items" @click="open(item)">
                 <div class="filename">{{ item.data.name }}</div>
                 <img v-bind:src="item.data.media.url" v-show="getType(item.data.extension) === 'image'" />
                 <div class="icon-container"  v-show="getType(item.data.extension) === 'document'">
@@ -18,9 +18,6 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
-import ApplicationBag from "@enhavo/app/ApplicationBag";
-import MediaLibraryApplication from "@enhavo/media/MediaLibrary/MediaLibraryApplication";
-import MediaData from "@enhavo/media/MediaLibrary/MediaData";
 import MediaItem from "@enhavo/media/MediaLibrary/MediaItem";
 import * as $ from "jquery";
 import "blueimp-file-upload/js/jquery.iframe-transport";
@@ -29,9 +26,6 @@ import "blueimp-file-upload/js/jquery.fileupload";
 @Component()
 export default class MediaLibraryComponent extends Vue
 {
-    @Prop()
-    data: MediaData;
-
     mounted()
     {
         let element = this.$refs.upload;
@@ -104,19 +98,14 @@ export default class MediaLibraryComponent extends Vue
         this.getMediaLibrary().open(item)
     }
 
-    getApplication(): MediaLibraryApplication
-    {
-        return <MediaLibraryApplication>ApplicationBag.getApplication();
-    }
-
     getMediaLibrary()
     {
-        return this.getApplication().getMediaLibrary()
+        return this.$mediaLibrary;
     }
 
     getRouter()
     {
-        return this.getApplication().getRouter()
+        return this.$router;
     }
 
     getType(extension)

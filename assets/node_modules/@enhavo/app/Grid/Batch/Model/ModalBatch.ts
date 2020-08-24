@@ -1,16 +1,17 @@
 import AbstractBatch from "@enhavo/app/Grid/Batch/Model/AbstractBatch";
-import ApplicationInterface from "@enhavo/app/ApplicationInterface";
+import ModalManager from "@enhavo/app/Modal/ModalManager";
 
 export default class ModalBatch extends AbstractBatch
 {
-    public application: ApplicationInterface;
     public modal: any;
     public provideData: boolean;
     public provideKey: string;
 
-    public constructor(application: ApplicationInterface) {
+    private readonly modalManager: ModalManager;
+
+    public constructor(modalManager: ModalManager) {
         super();
-        this.application = application;
+        this.modalManager = modalManager;
     }
 
     async execute(ids: number[]): Promise<boolean>
@@ -21,7 +22,7 @@ export default class ModalBatch extends AbstractBatch
                 type: this.key
             }
         }
-        this.application.getModalManager().push(this.modal);
+        this.modalManager.push(this.modal);
         return false;
     }
 }

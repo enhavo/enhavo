@@ -1,14 +1,14 @@
 import RegistryInterface from "./RegistryInterface";
-import RegistryPackageInterface from "@enhavo/core/RegistryPackageInterface";
+import RegistryEntry from "@enhavo/core/RegistryEntry";
 
 export default class Registry implements RegistryInterface
 {
-    private entries: Entry[] = [];
+    private entries: RegistryEntry[] = [];
 
-    private get(name: string): Entry
+    private get(name: string): RegistryEntry
     {
         for(let entry of this.entries) {
-            if(entry.name == name) {
+            if(entry.getName() == name) {
                 return entry;
             }
         }
@@ -17,35 +17,27 @@ export default class Registry implements RegistryInterface
 
     getFactory(name: string): object
     {
-        return this.get(name).factory;
+        return this.get(name).getFactory();
     }
 
     getComponent(name: string): object
     {
-        return this.get(name).component;
+        return this.get(name).getComponent();
     }
 
-    register(name: string, component: object, factory: object): RegistryInterface
+    register(entry: RegistryEntry): RegistryInterface
     {
-        if(this.has(name)) {
-            this.deleteEntry(name);
+        if(this.has(entry.getName())) {
+            this.deleteEntry(entry.getName());
         }
-        this.entries.push(new Entry(name, component, factory));
-        return this;
-    }
-
-    registerPackage(registryPackage: RegistryPackageInterface)
-    {
-        for(let entry of registryPackage.getEntries()) {
-            this.register(entry.name, entry.component, entry.factory);
-        }
+        this.entries.push(entry);
         return this;
     }
 
     private deleteEntry(name: string)
     {
         for (let i in this.entries) {
-            if(this.entries[i].name == name) {
+            if(this.entries[i].getName() == name) {
                 this.entries.splice(parseInt(i), 1);
                 break;
             }
@@ -55,33 +47,30 @@ export default class Registry implements RegistryInterface
     has(name: string): boolean
     {
         for(let entry of this.entries) {
-            if(entry.name == name) {
+            if(entry.getName() == name) {
                 return true;
             }
         }
         return false;
     }
 
-    getComponents(): object
+    getComponents(): Component[]
     {
-        let components = {};
+        let components = [];
         for(let entry of this.entries) {
-            components[entry.name] = entry.component;
+            components.push(new Component(entry.getName(), entry.getComponent()));
         }
         return components;
     }
 }
 
-class Entry
+export class Component
 {
-    name: string;
-    factory: object;
-    component: object;
+    public name: string;
+    public component: object;
 
-    constructor(name: string, component: object, factory: object)
-    {
+    constructor(name: string, component: object) {
         this.name = name;
         this.component = component;
-        this.factory = factory;
     }
 }

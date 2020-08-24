@@ -1,0 +1,11 @@
+services:
+    '@enhavo/app/Preview/PreviewApp':
+        arguments:
+            - 'param:data'
+            - '@enhavo/app/ViewStack/EventDispatcher'
+            - '@enhavo/app/View/View'
+            - '@enhavo/app/Action/ActionManager'
+            - '@enhavo/app/Vue/VueRegistry'
+
+    '@enhavo/app/Preview/Components/ApplicationComponent.vue':
+        static: true

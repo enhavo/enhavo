@@ -3,7 +3,9 @@
   "license": "MIT",
   "scripts": {
     "routes:dump": "bin/console fos:js-routing:dump --format=json --target=public/js/fos_js_routes.json",
-    "test": "TESTBUILD=true encore dev --config webpack.test.config.js && karma start --single-run --browsers ChromeHeadless karma.conf.js && rm -rf public/build/test/*"
+    "karma": "TESTBUILD=true encore dev --config webpack.test.config.js && karma start --single-run --browsers ChromeHeadless karma.conf.js && rm -rf public/build/test/*",
+    "mocha": "mocha assets/node_modules/**/Tests/**/*.mocha.js",
+    "di": "node ./assets/node_modules/@enhavo/dependency-injection/bin/dependency-injection.js \"./assets/services/enhavo/*\""
   },
   "dependencies": {
     "@fullcalendar/core": "^4.2.0",
@@ -21,6 +23,7 @@
     "copy-webpack-plugin": "^4.5.2",
     "cropperjs": "~1.2.2",
     "fullcalendar": "^3.10.0",
+    "glob": "^7.1.6",
     "icheck": "~1.0.2",
     "jexl": "^2.1.1",
     "jquery": "^3.4.1",
@@ -28,10 +31,11 @@
     "js-yaml": "^3.13.1",
     "lodash": "^4.17.11",
     "moment": "^2.18.1",
-    "node-sass": "^4.11.0",
+    "node-sass": "^4.0.0",
     "pako": "^1.0.10",
-    "sass-loader": "^7.1.0",
+    "sass-loader": "^8.0.0",
     "select2": "~3.5.1",
+    "sha1": "^1.1.1",
     "slick-carousel": "^1.8.1",
     "sortablejs": "^1.10.2",
     "source-sans-pro": "^2.45.0",
@@ -47,10 +51,11 @@
     "vue-select": "^3.0.0",
     "vue-template-compiler": "^2.5.22",
     "vuedraggable": "^2.23.0",
-    "vuejs-datepicker": "^1.6.2"
+    "vuejs-datepicker": "^1.6.2",
+    "yaml": "^1.10.0"
   },
   "devDependencies": {
-    "@symfony/webpack-encore": "0.22.4",
+    "@symfony/webpack-encore": "0.30.2",
     "@types/async": "^2.4.1",
     "@types/axios": "^0.14.0",
     "@types/chai": "^4.2.12",
@@ -71,6 +76,7 @@
     "@types/urijs": "^1.19.0",
     "@types/uuid": "^3.4.4",
     "@types/vue-select": "^2.5.0",
+    "acorn": "^7.3.1",
     "chai": "^4.2.0",
     "download": "^8.0.0",
     "gulp": "^4.0.0",

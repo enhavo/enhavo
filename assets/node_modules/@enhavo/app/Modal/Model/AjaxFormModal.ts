@@ -1,6 +1,8 @@
 import AbstractModal from "@enhavo/app/Modal/Model/AbstractModal";
 import axios from "axios";
 import * as _ from "lodash";
+import ModalManager from "@enhavo/app/Modal/ModalManager";
+import Router from "@enhavo/core/Router";
 
 export default class AjaxFormModal extends AbstractModal
 {
@@ -16,9 +18,17 @@ export default class AjaxFormModal extends AbstractModal
     public loading: boolean = true;
     public data: any;
 
+    protected readonly router: Router;
+
+    constructor(modalManager: ModalManager, router: Router)
+    {
+        super(modalManager);
+        this.router = router;
+    }
+
     async loadForm(): Promise<void>
     {
-        let url = this.application.getRouter().generate(this.route, this.routeParameters);
+        let url = this.router.generate(this.route, this.routeParameters);
 
         this.loading = true;
 
@@ -78,10 +88,10 @@ export default class AjaxFormModal extends AbstractModal
         }
 
         if(this.actionRoute) {
-            return this.application.getRouter().generate(this.actionRoute, this.actionRouteParameters);
+            return this.router.generate(this.actionRoute, this.actionRouteParameters);
         }
 
-        return this.application.getRouter().generate(this.route, this.routeParameters);
+        return this.router.generate(this.route, this.routeParameters);
     }
 
     private buildQuery(obj: object, prefix: string = ''): string

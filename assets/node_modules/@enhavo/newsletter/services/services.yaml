@@ -1,0 +1,39 @@
+entrypoints:
+    'enhavo/newsletter/stats':
+        path: '../Entrypoint/stats'
+        build: enhavo
+
+services:
+    '@enhavo/newsletter/Stats/StatsApp':
+        arguments:
+            - 'param:data.resource'
+            - '@enhavo/app/View/View'
+            - '@enhavo/app/Action/ActionManager'
+            - '@enhavo/app/Vue/VueRegistry'
+
+    '@enhavo/newsletter/Stats/Components/IndexComponent.vue':
+        static: true
+
+    action.newsletter-send:
+        from: '@enhavo/core/RegistryEntry'
+        arguments:
+            - 'string:newsletter-send'
+            - '@enhavo/app/Action/Components/ActionComponent.vue'
+            - '@enhavo/newsletter/Action/Factory/NewsletterSendActionFactory'
+        tags:
+            - 'enhavo_app.action'
+
+    action.newsletter-send-test:
+        from: '@enhavo/core/RegistryEntry'
+        arguments:
+            - 'string:newsletter-send-test'
+            - '@enhavo/app/Action/Components/ActionComponent.vue'
+            - '@enhavo/newsletter/Action/Factory/NewsletterSendTestActionFactory'
+        tags:
+            - 'enhavo_app.action'
+
+    '@enhavo/newsletter/Action/Factory/NewsletterSendActionFactory':
+        arguments:
+
+    '@enhavo/newsletter/Action/Factory/NewsletterSendTestActionFactory':
+        arguments:

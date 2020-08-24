@@ -1,19 +1,18 @@
 <template>
-    <div v-bind:class="name">
+    <div class="view-table">
         <div class="view-table-head">
-            <div class="checkbox-container" v-if="batches.length > 0">
-                <input type="checkbox" v-on:change="changeSelectAll" :checked="selectAll" />
+            <div class="checkbox-container" v-if="$batchManager.hasBatches()">
+                <input type="checkbox" v-on:change="changeSelectAll" :checked="$grid.configuration.selectAll" />
                 <span></span>
             </div>
             <div class="view-table-head-columns">
-                <template v-for="column in columns">
+                <template v-for="column in $columnManager.columns">
                     <div
                         v-if="column.display"
                         v-bind:key="column.key"
                         v-bind:style="getColumnStyle(column)"
                         v-bind:class="['view-table-col', {'sortable': column.sortable}, {'sorted': column.directionDesc !== null}]"
                         v-on:click="changeSortDirection(column)"
-
                     >
                         {{ column.label }}
                         <i
@@ -26,9 +25,9 @@
             </div>
         </div>
 
-        <template v-if="!loading">
-            <template v-for="row in rows">
-                <table-row v-bind:batches="batches" v-bind:columns="columns" v-bind:data="row"></table-row>
+        <template v-if="! $grid.configuration.loading">
+            <template v-for="row in $grid.configuration.rows">
+                <grid-table-row v-bind:data="row"></grid-table-row>
             </template>
         </template>
         <template v-else>
@@ -45,48 +44,22 @@
 </template>
 
 <script lang="ts">
-    import { Vue, Component, Prop } from "vue-property-decorator";
-    import Row from "@enhavo/app/Grid/Column/Components/Row.vue"
-    import ColumnInterface from "@enhavo/app/Grid/Column/ColumnInterface"
-    import RowData from "@enhavo/app/Grid/Column/RowData"
-    import ApplicationBag from "@enhavo/app/ApplicationBag";
-    import IndexApplication from "@enhavo/app/Index/IndexApplication";
+    import { Vue, Component } from "vue-property-decorator";
     import * as $ from "jquery";
-    const application = <IndexApplication>ApplicationBag.getApplication();
 
-    @Component({
-        components: {
-            'table-row': Row,
-        }
-    })
-    export default class Table extends Vue {
-        name: string = 'view-table';
-    
-        @Prop()
-        columns: Array<ColumnInterface>;
-
-        @Prop()
-        rows: Array<RowData>;
-
-        @Prop()
-        loading: boolean;
-
-        @Prop()
-        selectAll: boolean;
-
-        @Prop()
-        batches: Array<object>;
-
+    @Component()
+    export default class Table extends Vue
+    {
         mounted() {
             $(window).resize(() => {
-                application.getGrid().resize();
+                this.$grid.resize();
                 this.$forceUpdate();
             });
         }
 
         calcColumnWidth(parts: number): string {
             let totalWidth = 0;
-            for(let column of this.columns) {
+            for(let column of this.$columnManager.columns) {
                 if(column.display) {
                     totalWidth += column.width;
                 }
@@ -104,17 +77,11 @@
         }
 
         changeSelectAll() {
-            application.getGrid().changeSelectAll(!this.selectAll);
+            this.$grid.changeSelectAll(!this.$grid.configuration.selectAll);
         }
 
         changeSortDirection(column: any) {
-            application.getGrid().changeSortDirection(column);
+            this.$grid.changeSortDirection(column);
         }
     }
 </script>
-
-
-
-
-
-

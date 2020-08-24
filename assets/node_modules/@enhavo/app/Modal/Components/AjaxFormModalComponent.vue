@@ -15,8 +15,6 @@
     import { Vue, Component, Prop, Watch } from "vue-property-decorator";
     import AjaxFormModal from "@enhavo/app/Modal/Model/AjaxFormModal"
     import FormInitializer from "@enhavo/app/Form/FormInitializer";
-    import ApplicationBag from "@enhavo/app/ApplicationBag";
-    let application = ApplicationBag.getApplication();
 
     @Component()
     export default class ModalComponent extends Vue {

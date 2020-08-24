@@ -4,20 +4,23 @@ import * as pako from "pako";
 import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 import GlobalDataStorageManager from "@enhavo/app/ViewStack/GlobalDataStorageManager";
 import ViewInterface from "@enhavo/app/ViewStack/ViewInterface";
+import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
 
 export default class StateManager
 {
-    private baseUrl: string;
-    private viewStack: ViewStack;
-    private eventDispatcher: EventDispatcher;
-    private dataStorage: GlobalDataStorageManager;
+    private readonly baseUrl: string;
+    private readonly viewStack: ViewStack;
+    private readonly eventDispatcher: EventDispatcher;
+    private readonly dataStorage: GlobalDataStorageManager;
+    private readonly componentRegistry: ComponentRegistryInterface;
 
-    constructor(viewStack: ViewStack, eventDispatcher: EventDispatcher, dataStorage: GlobalDataStorageManager)
+    constructor(viewStack: ViewStack, eventDispatcher: EventDispatcher, dataStorage: GlobalDataStorageManager, componentRegistry: ComponentRegistryInterface)
     {
         this.baseUrl = window.location.href;
         this.viewStack = viewStack;
         this.eventDispatcher = eventDispatcher;
         this.dataStorage = dataStorage;
+        this.componentRegistry = componentRegistry;
 
         this.eventDispatcher.on('save-state', () => {
             window.setTimeout(() => {
@@ -25,9 +28,11 @@ export default class StateManager
             }, 50);
         });
 
-        window.onpopstate = (event) => {
+        window.onpopstate = (event: any) => {
             this.applyState(event.state);
         };
+
+        this.componentRegistry.registerStore('stateManager', this);
     }
 
     private applyState(state: any)

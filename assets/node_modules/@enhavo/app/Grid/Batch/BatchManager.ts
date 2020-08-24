@@ -3,23 +3,37 @@ import BatchRegistry from "@enhavo/app/Grid/Batch/BatchRegistry";
 import BatchDataInterface from "@enhavo/app/Grid/Batch/BatchDataInterface";
 import View from "@enhavo/app/View/View";
 import Translator from "@enhavo/core/Translator";
+import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
 
 export default class BatchManager
 {
-    private registry: BatchRegistry;
-    private data: BatchDataInterface;
-    private view: View;
-    private translator: Translator;
+    public data: BatchDataInterface;
 
-    constructor(data: BatchDataInterface, registry: BatchRegistry, view: View, translator: Translator)
+    private readonly registry: BatchRegistry;
+    private readonly view: View;
+    private readonly translator: Translator;
+    private readonly componentRegistry: ComponentRegistryInterface;
+
+    constructor(data: BatchDataInterface, registry: BatchRegistry, view: View, translator: Translator, componentRegistry: ComponentRegistryInterface)
     {
         this.registry = registry;
         this.view = view;
         this.translator = translator;
         this.data = data;
-        for (let i in data.batches) {
-            data.batches[i] = registry.getFactory(data.batches[i].component).createFromData(data.batches[i]);;
+        this.componentRegistry = componentRegistry;
+    }
+
+    init() {
+        for (let i in this.data.batches) {
+            this.data.batches[i] = this.registry.getFactory(this.data.batches[i].component).createFromData(this.data.batches[i]);
         }
+
+        for (let component of this.registry.getComponents()) {
+            this.componentRegistry.registerComponent(component.name, component.component)
+        }
+
+        this.componentRegistry.registerStore('batchManager', this);
+        this.componentRegistry.registerData(this.data);
     }
 
     async execute(ids: number[]): Promise<boolean>
@@ -57,5 +71,10 @@ export default class BatchManager
             }
         }
         return null;
+    }
+
+    public hasBatches()
+    {
+        return this.data.batches.length > 0;
     }
 }

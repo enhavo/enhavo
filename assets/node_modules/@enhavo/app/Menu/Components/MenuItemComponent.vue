@@ -13,18 +13,15 @@
 <script lang="ts">
     import { Vue, Component, Prop } from "vue-property-decorator";
     import MenuItem from '@enhavo/app/Menu/Model/MenuItem';
-    import MenuNotificationComponent from '@enhavo/app/Menu/Components/MenuNotificationComponent';
 
-    @Component({
-        components: {'menu-notification': MenuNotificationComponent}
-    })
+    @Component()
     export default class MenuItemComponent extends Vue {
         name: string = 'menu-item';
 
         @Prop()
         data: MenuItem;
 
-        get label(): string {
+        get label(): string|boolean {
             return (this.data && this.data.label) ? this.data.label : false;
         }
 

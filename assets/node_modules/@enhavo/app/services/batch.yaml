@@ -1,0 +1,56 @@
+services:
+    '@enhavo/app/Grid/Batch/BatchManager':
+        arguments:
+            - 'param:data.grid'
+            - '@enhavo/app/Grid/Batch/BatchRegistry'
+            - '@enhavo/app/View/View'
+            - '@enhavo/core/Translator'
+            - '@enhavo/app/Vue/VueRegistry'
+
+    '@enhavo/app/Grid/Batch/BatchRegistry':
+
+    '@enhavo/app/Grid/Batch/Component/Batches.vue':
+        static: true
+        tags:
+            - { name: vue.component, component: 'grid-batches' }
+
+    batch.url:
+        from: '@enhavo/core/RegistryEntry'
+        arguments:
+            - 'string:batch-url'
+            - null
+            - '@enhavo/app/Grid/Batch/Factory/UrlFactory'
+        tags:
+            - 'enhavo_app.batch'
+
+    batch.modal:
+        from: '@enhavo/core/RegistryEntry'
+        arguments:
+            - 'string:batch-modal'
+            - null
+            - '@enhavo/app/Grid/Batch/Factory/ModalFactory'
+        tags:
+            - 'enhavo_app.batch'
+
+    batch.form:
+        from: '@enhavo/core/RegistryEntry'
+        arguments:
+            - 'string:batch-form'
+            - null
+            - '@enhavo/app/Grid/Batch/Factory/FormFactory'
+        tags:
+            - 'enhavo_app.batch'
+
+    '@enhavo/app/Grid/Batch/Factory/UrlFactory':
+        arguments:
+            - 'param:data.grid'
+            - '@enhavo/core/Translator'
+            - '@enhavo/app/View/View'
+            - '@enhavo/app/FlashMessage/FlashMessenger'
+            - '@enhavo/core/Router'
+
+    '@enhavo/app/Grid/Batch/Factory/ModalFactory':
+        arguments:
+            - '@enhavo/app/Modal/ModalManager'
+
+    '@enhavo/app/Grid/Batch/Factory/FormFactory':

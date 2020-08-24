@@ -141,7 +141,8 @@ class NewsletterController extends ResourceController
             'metadata' => $this->metadata,
             'resource' => $newsletter,
             'template' => 'admin/resource/newsletter/stats.html.twig',
-            'javascripts' => ['enhavo/newsletter-stats']
+            'javascripts' => ['enhavo/newsletter/stats'],
+            'stylesheets' => ['enhavo/newsletter/stats']
         ]);
 
         return $this->viewHandler->handle($configuration, $view);

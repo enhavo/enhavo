@@ -1,20 +1,30 @@
-import DataLoader from '@enhavo/app/DataLoader';
 import ActionManager from "@enhavo/app/Action/ActionManager";
-import AppInterface from "@enhavo/app/AppInterface";
-import ViewApp from "@enhavo/app/ViewApp";
-import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 import View from "@enhavo/app/View/View";
 import MediaLibrary from "@enhavo/media/MediaLibrary/MediaLibrary";
+import FlashMessenger from "@enhavo/app/FlashMessage/FlashMessenger";
 
-export default class MediaLibraryApp extends ViewApp implements AppInterface
+export default class MediaLibraryApp
 {
-    private actionManager: ActionManager;
-    private mediaLibrary: MediaLibrary;
+    private readonly view: View;
+    private readonly mediaLibrary: MediaLibrary;
+    private readonly actionManager: ActionManager;
+    private readonly flashMessenger: FlashMessenger;
 
-    constructor(loader: DataLoader, eventDispatcher: EventDispatcher, view: View, actionManager: ActionManager, mediaLibrary: MediaLibrary)
+    constructor(view: View, actionManager: ActionManager, mediaLibrary: MediaLibrary, flashMessenger: FlashMessenger)
     {
-        super(loader, eventDispatcher, view);
+        this.view = view;
         this.actionManager = actionManager;
         this.mediaLibrary = mediaLibrary;
+        this.flashMessenger = flashMessenger;
+    }
+
+    init() {
+        this.view.init();
+        this.actionManager.init();
+        this.mediaLibrary.init();
+        this.flashMessenger.init();
+
+        this.view.addDefaultCloseListener();
+        this.view.ready();
     }
 }

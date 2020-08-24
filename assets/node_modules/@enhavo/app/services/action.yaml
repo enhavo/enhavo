@@ -1,0 +1,161 @@
+services:
+    '@enhavo/app/Action/ActionManager':
+        arguments:
+            - 'param:data.actions'
+            - 'param:data.actionsSecondary'
+            - '@enhavo/app/Action/ActionRegistry'
+            - '@enhavo/app/Vue/VueRegistry'
+
+    '@enhavo/app/Action/ActionRegistry':
+
+    '@enhavo/app/Action/Components/ActionBar.vue':
+        static: true
+        tags:
+            - { name: vue.component, component: 'action-bar' }
+
+    action.close:
+        from: '@enhavo/core/RegistryEntry'
+        arguments:
+            - 'string:close-action'
+            - '@enhavo/app/Action/Components/ActionComponent.vue'
+            - '@enhavo/app/Action/Factory/CloseActionFactory'
+        tags:
+            - 'enhavo_app.action'
+
+    action.delete:
+        from: '@enhavo/core/RegistryEntry'
+        arguments:
+            - 'string:delete-action'
+            - '@enhavo/app/Action/Components/ActionComponent.vue'
+            - '@enhavo/app/Action/Factory/DeleteActionFactory'
+        tags:
+            - 'enhavo_app.action'
+
+    action.dropdown:
+        from: '@enhavo/core/RegistryEntry'
+        arguments:
+            - 'string:dropdown-action'
+            - '@enhavo/app/Action/Components/DropdownActionComponent.vue'
+            - '@enhavo/app/Action/Factory/DropdownActionFactory'
+        tags:
+            - 'enhavo_app.action'
+
+    action.filter:
+        from: '@enhavo/core/RegistryEntry'
+        arguments:
+            - 'string:filter-action'
+            - '@enhavo/app/Action/Components/ActionComponent.vue'
+            - '@enhavo/app/Action/Factory/FilterActionFactory'
+        tags:
+            - 'enhavo_app.action'
+
+    action.preview:
+        from: '@enhavo/core/RegistryEntry'
+        arguments:
+            - 'string:preview-action'
+            - '@enhavo/app/Action/Components/ActionComponent.vue'
+            - '@enhavo/app/Action/Factory/PreviewActionFactory'
+        tags:
+            - 'enhavo_app.action'
+
+    action.save:
+        from: '@enhavo/core/RegistryEntry'
+        arguments:
+            - 'string:save-action'
+            - '@enhavo/app/Action/Components/ActionComponent.vue'
+            - '@enhavo/app/Action/Factory/SaveActionFactory'
+        tags:
+            - 'enhavo_app.action'
+
+    action.event:
+        from: '@enhavo/core/RegistryEntry'
+        arguments:
+            - 'string:event-action'
+            - '@enhavo/app/Action/Components/ActionComponent.vue'
+            - '@enhavo/app/Action/Factory/EventActionFactory'
+        tags:
+            - 'enhavo_app.action'
+
+    action.open:
+        from: '@enhavo/core/RegistryEntry'
+        arguments:
+            - 'string:open-action'
+            - '@enhavo/app/Action/Components/ActionComponent.vue'
+            - '@enhavo/app/Action/Factory/OpenActionFactory'
+        tags:
+            - 'enhavo_app.action'
+
+    action.duplicate:
+        from: '@enhavo/core/RegistryEntry'
+        arguments:
+            - 'string:duplicate-action'
+            - '@enhavo/app/Action/Components/ActionComponent.vue'
+            - '@enhavo/app/Action/Factory/DuplicateActionFactory'
+        tags:
+            - 'enhavo_app.action'
+
+    action.download:
+        from: '@enhavo/core/RegistryEntry'
+        arguments:
+            - 'string:download-action'
+            - '@enhavo/app/Action/Components/ActionComponent.vue'
+            - '@enhavo/app/Action/Factory/DownloadActionFactory'
+        tags:
+            - 'enhavo_app.action'
+
+    action.modal:
+        from: '@enhavo/core/RegistryEntry'
+        arguments:
+            - 'string:modal-action'
+            - '@enhavo/app/Action/Components/ActionComponent.vue'
+            - '@enhavo/app/Action/Factory/ModalActionFactory'
+        tags:
+            - 'enhavo_app.action'
+
+    '@enhavo/app/Action/Factory/CloseActionFactory':
+        arguments:
+            - '@enhavo/app/View/View'
+            - '@enhavo/app/ViewStack/EventDispatcher'
+
+    '@enhavo/app/Action/Factory/DeleteActionFactory':
+        arguments:
+            - '@enhavo/app/View/View'
+            - '@enhavo/app/ViewStack/EventDispatcher'
+            - '@enhavo/core/Translator'
+
+    '@enhavo/app/Action/Factory/DownloadActionFactory':
+
+    '@enhavo/app/Action/Factory/DropdownActionFactory':
+
+    '@enhavo/app/Action/Factory/DuplicateActionFactory':
+        arguments:
+            - '@enhavo/app/View/View'
+            - '@enhavo/app/ViewStack/EventDispatcher'
+
+    '@enhavo/app/Action/Factory/EventActionFactory':
+
+    '@enhavo/app/Action/Factory/FilterActionFactory':
+
+    '@enhavo/app/Action/Factory/ModalActionFactory':
+        arguments:
+            - '@enhavo/app/Modal/ModalManager'
+
+    '@enhavo/app/Action/Factory/OpenActionFactory':
+        arguments:
+            - '@enhavo/app/View/View'
+
+    '@enhavo/app/Action/Factory/PreviewActionFactory':
+        arguments:
+            - '@enhavo/app/View/View'
+            - '@enhavo/app/ViewStack/EventDispatcher'
+
+    '@enhavo/app/Action/Factory/SaveActionFactory':
+        arguments:
+            - '@enhavo/app/View/View'
+            - '@enhavo/app/ViewStack/EventDispatcher'
+
+    '@enhavo/app/Action/Components/ActionComponent.vue':
+        static: true
+
+    '@enhavo/app/Action/Components/DropdownActionComponent.vue':
+        static: true

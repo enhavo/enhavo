@@ -1,44 +1,19 @@
 <template>
     <div class="app-view">
-        <view-view v-bind:data="view"></view-view>
-        <flash-messages v-bind:messages="messages"></flash-messages>
-        <modal-component v-bind:data="modals"></modal-component>
-        <action-bar v-bind:primary="actions"></action-bar>
-        <grid-grid v-bind:data="grid"></grid-grid>
+        <view-view></view-view>
+        <flash-messages></flash-messages>
+        <modal-component></modal-component>
+        <action-bar></action-bar>
+        <grid-grid></grid-grid>
     </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
-import Grid from "@enhavo/app/Grid/Components/Grid.vue";
-import ActionBar from "@enhavo/app/Action/Components/ActionBar.vue";
 import '@enhavo/app/assets/styles/view.scss'
-import ViewData from "@enhavo/app/View/ViewData";
-import ViewComponent from "@enhavo/app/View/Components/ViewComponent";
-import FlashMessages from "@enhavo/app/FlashMessage/Components/FlashMessages.vue";
-import ModalComponent from "@enhavo/app/Modal/Components/ModalComponent.vue";
 
-@Component({
-    components: {ModalComponent, FlashMessages, ActionBar, 'grid-grid': Grid, 'view-view': ViewComponent}
-})
+@Component()
 export default class AppView extends Vue {
-    name = 'app-view';
 
-    @Prop()
-    messages: Array<object>;
-
-    @Prop()
-    view: ViewData;
-
-    @Prop()
-    actions: Array<object>;
-
-    @Prop()
-    modals: Array<object>;
-
-    @Prop()
-    grid: Array<object>;
 }
 </script>
-
-

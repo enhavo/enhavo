@@ -7,21 +7,18 @@
 </template>
 
 <script lang="ts">
-    import { Vue, Component, Prop } from "vue-property-decorator";
-    import MenuNotificationComponent from '@enhavo/app/Menu/Components/MenuNotificationComponent';
-    import MenuDropdown from '@enhavo/app/Menu/Model/MenuDropdown';
+import { Vue, Component, Prop } from "vue-property-decorator";
+import MenuDropdown from '@enhavo/app/Menu/Model/MenuDropdown';
 
-    @Component({
-        components: {'menu-notification': MenuNotificationComponent}
-    })
-    export default class MenuDropdownComponent extends Vue {
-        name: string = 'menu-dropdown';
+@Component()
+export default class MenuDropdownComponent extends Vue {
+    name: string = 'menu-dropdown';
 
-        @Prop()
-        data: MenuDropdown;
+    @Prop()
+    data: MenuDropdown;
 
-        change(value): any {
-            this.data.change(value);
-        }
+    change(value): any {
+        this.data.change(value);
     }
+}
 </script>

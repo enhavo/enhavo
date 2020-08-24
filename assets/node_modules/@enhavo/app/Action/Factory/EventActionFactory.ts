@@ -4,6 +4,6 @@ import EventAction from "@enhavo/app/Action/Model/EventAction";
 export default class EventActionFactory extends AbstractFactory
 {
     createNew(): EventAction {
-        return new EventAction(this.application);
+        return new EventAction();
     }
 }

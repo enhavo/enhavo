@@ -1,7 +1,7 @@
-import { ComponentAwareInterface}  from "@enhavo/core/index";
+import ViewInterface from "@enhavo/app/ViewStack/ViewInterface";
 
 export default class ViewStackData
 {
-    views: ComponentAwareInterface[];
+    views: ViewInterface[];
     width: number = 0;
 }

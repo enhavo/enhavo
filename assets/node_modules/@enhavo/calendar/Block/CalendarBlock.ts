@@ -9,7 +9,7 @@ export default class CalendarBlock implements InitializerInterface
 {
     public init(element: HTMLElement)
     {
-        let calendarEl = <HTMLElement>$(element).find('#calendar').get(0);
+        let calendarEl = <HTMLElement><unknown>$(element).find('#calendar').get(0);
         if(calendarEl) {
             let calendar = new Calendar(calendarEl, {
                 plugins: [ dayGridPlugin, timeGridPlugin, listPlugin ],

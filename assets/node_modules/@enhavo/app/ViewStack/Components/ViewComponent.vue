@@ -24,66 +24,54 @@
 </template>
 
 <script lang="ts">
-    import { Vue, Component, Prop } from "vue-property-decorator";
-    import CloseEvent from  '@enhavo/app/ViewStack/Event/CloseEvent';
-    import ArrangeEvent from  '@enhavo/app/ViewStack/Event/ArrangeEvent';
-    import OverlayContainer from "@enhavo/app/Main/Components/OverlayContainer.vue";
-    import LoadingScreen from "@enhavo/app/Main/Components/LoadingScreen.vue";
-    import ViewInterface from "@enhavo/app/ViewStack/ViewInterface";
-    import ApplicationBag from "@enhavo/app/ApplicationBag";
-    import MainApplication from "@enhavo/app/Main/MainApplication";
-    let application = <MainApplication>ApplicationBag.getApplication();
+import { Vue, Component, Prop } from "vue-property-decorator";
+import CloseEvent from  '@enhavo/app/ViewStack/Event/CloseEvent';
+import ArrangeEvent from  '@enhavo/app/ViewStack/Event/ArrangeEvent';
+import ViewInterface from "@enhavo/app/ViewStack/ViewInterface";
 
-    Vue.component('overlay-container', OverlayContainer);
-    Vue.component('loading-screen', LoadingScreen);
+@Component()
+export default class ViewComponent extends Vue
+{
+    @Prop()
+    data: ViewInterface;
 
-    @Component({
-        components: application.getViewRegistry().getComponents()
-    })
-    export default class ViewComponent extends Vue {
-        name: 'view-component';
-
-        @Prop()
-        data: ViewInterface;
-
-        mounted() {
-            application.getEventDispatcher().dispatch(new ArrangeEvent());
-        }
-
-        destroyed() {
-            application.getEventDispatcher().dispatch(new ArrangeEvent());
-        }
-
-        close() {
-            application.getEventDispatcher().dispatch(new CloseEvent(this.data.id));
-        }
-
-        open() {
-            let url = application.getStateManager().generateViewUrl(this.data);
-            window.open(url, '_blank');
-        }
-
-        minimize() {
-            this.data.minimize = true;
-            this.data.customMinimized = true;
-            application.getEventDispatcher().dispatch(new ArrangeEvent());
-        }
-
-        maximize() {
-            this.data.minimize = false;
-            this.data.customMinimized = true;
-            application.getEventDispatcher().dispatch(new ArrangeEvent());
-        }
-
-        get position(): number
-        {
-            return this.data.position;
-        }
-
-        get loaded(): boolean
-        {
-            return this.data.loaded;
-        }
+    mounted() {
+        this.eventDispatcher.dispatch(new ArrangeEvent());
     }
 
+    destroyed() {
+        this.eventDispatcher.dispatch(new ArrangeEvent());
+    }
+
+    close() {
+        this.eventDispatcher.dispatch(new CloseEvent(this.data.id));
+    }
+
+    open() {
+        let url = this.$stateManager.generateViewUrl(this.data);
+        window.open(url, '_blank');
+    }
+
+    minimize() {
+        this.data.minimize = true;
+        this.data.customMinimized = true;
+        this.eventDispatcher.dispatch(new ArrangeEvent());
+    }
+
+    maximize() {
+        this.data.minimize = false;
+        this.data.customMinimized = true;
+        this.eventDispatcher.dispatch(new ArrangeEvent());
+    }
+
+    get position(): number
+    {
+        return this.data.position;
+    }
+
+    get loaded(): boolean
+    {
+        return this.data.loaded;
+    }
+}
 </script>

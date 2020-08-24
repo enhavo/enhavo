@@ -80,14 +80,16 @@ class PreviewViewer extends AbstractActionViewer
         parent::configureOptions($optionsResolver);
         $optionsResolver->setDefaults([
             'javascripts' => [
-                'enhavo/preview'
+                'enhavo/app/preview'
             ],
             'stylesheets' => [
-                'enhavo/preview'
+                'enhavo/app/preview'
             ],
             'translation_domain' => 'EnhavoAppBundle',
             'label' => 'label.preview',
-            'resource' => null
+            'resource' => null,
+            'translations' => true,
+            'routes' => true,
         ]);
         $optionsResolver->setRequired(['metadata']);
     }

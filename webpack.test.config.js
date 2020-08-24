@@ -1,10 +1,27 @@
 const EnhavoEncore = require('./assets/node_modules/@enhavo/core/EnhavoEncore');
-const AppTestPackage = require('./assets/node_modules/@enhavo/app/Encore/EncoreTestRegistryPackage');
+const AppTestPackage = require('./assets/node_modules/@enhavo/app/Encore/AppTestPackage');
+const TestFinder = require('./assets/node_modules/@enhavo/core/TestFinder');
 
-EnhavoEncore.register(new AppTestPackage());
+EnhavoEncore.add(
+    'test',
+    [
+        new AppTestPackage()
+    ],
+    Encore => {
+        let files = TestFinder.find([
+            'assets/node_modules/@enhavo/**/Tests/*Test.karma.@(js|ts)',
+            'assets/node_modules/@enhavo/**/Tests/**/*Test.karma.@(js|ts)',
+        ]);
 
-EnhavoEncore.add('test', (Encore) => {
-    Encore.addEntry('core/Tests/RegistryTest', './assets/node_modules/@enhavo/core/Tests/RegistryTest.ts')
-});
+        for (let file of files) {
+            Encore.addEntry(file.relativePath, './' + file.relativePath);
+        }
+    },
+    config => {
+        config.node = {
+            fs: 'empty'
+        };
+    }
+);
 
 module.exports = EnhavoEncore.export();

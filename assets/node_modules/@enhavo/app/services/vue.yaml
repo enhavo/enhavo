@@ -1,0 +1,31 @@
+compiler_pass:
+    vue:
+        path: '../CompilerPass/vue.js'
+        service: '@enhavo/app/Vue/VueRegistry'
+
+services:
+    '@enhavo/app/Vue/VueRegistry':
+        arguments:
+            - 'string:app'
+
+    '@enhavo/app/Vue/VueApp':
+        arguments:
+            - '@enhavo/app/Vue/VueRegistry'
+            - '@enhavo/app/ViewStack/EventDispatcher'
+
+    '@enhavo/app/Vue/ClickOutside':
+        arguments:
+            - '@enhavo/app/ViewStack/EventDispatcher'
+            - '@enhavo/app/View/View'
+        tags:
+            - { name: vue.directive, directive: 'click-outside' }
+
+    'vue-select':
+        static: true
+        tags:
+            - { name: vue.component, component: 'v-select' }
+
+    'vuejs-datepicker':
+        static: true
+        tags:
+            - { name: vue.component, component: 'datepicker' }

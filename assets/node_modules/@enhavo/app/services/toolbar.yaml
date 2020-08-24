@@ -1,0 +1,59 @@
+services:
+    '@enhavo/app/Toolbar/Widget/WidgetManager':
+        arguments:
+            - 'param:data.toolbar.primaryWidgets'
+            - 'param:data.toolbar.secondaryWidgets'
+            - '@enhavo/app/Toolbar/Widget/WidgetRegistry'
+            - '@enhavo/app/Vue/VueRegistry'
+
+    '@enhavo/app/Toolbar/Widget/WidgetRegistry':
+
+    toolbar.icon-widget:
+        from: '@enhavo/core/RegistryEntry'
+        arguments:
+            - 'string:icon-widget'
+            - '@enhavo/app/Toolbar/Widget/Components/IconWidgetComponent.vue'
+            - '@enhavo/app/Toolbar/Widget/Factory/IconWidgetFactory'
+        tags:
+            - 'enhavo_app.toolbar'
+
+    '@enhavo/app/Toolbar/Widget/Factory/IconWidgetFactory':
+        arguments:
+            - '@enhavo/app/ViewStack/EventDispatcher'
+            - '@enhavo/app/Menu/MenuManager'
+
+    '@enhavo/app/Toolbar/Widget/Components/IconWidgetComponent.vue':
+        static: true
+
+    toolbar.quick-menu-widget:
+        from: '@enhavo/core/RegistryEntry'
+        arguments:
+            - 'string:quick-menu-widget'
+            - '@enhavo/app/Toolbar/Widget/Components/QuickMenuWidgetComponent.vue'
+            - '@enhavo/app/Toolbar/Widget/Factory/QuickMenuWidgetFactory'
+        tags:
+            - 'enhavo_app.toolbar'
+
+    '@enhavo/app/Toolbar/Widget/Factory/QuickMenuWidgetFactory':
+        arguments:
+            - '@enhavo/app/ViewStack/EventDispatcher'
+            - '@enhavo/app/Menu/MenuManager'
+
+    '@enhavo/app/Toolbar/Widget/Components/QuickMenuWidgetComponent.vue':
+        static: true
+
+    toolbar.new-window-widget:
+        from: '@enhavo/core/RegistryEntry'
+        arguments:
+            - 'string:new-window-widget'
+            - '@enhavo/app/Toolbar/Widget/Components/IconWidgetComponent.vue'
+            - '@enhavo/app/Toolbar/Widget/Factory/NewWindowWidgetFactory'
+        tags:
+            - 'enhavo_app.toolbar'
+
+    '@enhavo/app/Toolbar/Widget/Factory/NewWindowWidgetFactory':
+
+    '@enhavo/app/Toolbar/Components/Toolbar.vue':
+        static: true
+        tags:
+            - { name: vue.component, component: 'toolbar' }

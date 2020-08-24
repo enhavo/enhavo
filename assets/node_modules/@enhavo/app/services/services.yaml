@@ -1,0 +1,73 @@
+entrypoints:
+    'enhavo/app/delete':
+        path: '../Entrypoint/delete'
+        build: enhavo
+    'enhavo/app/form':
+        path: '../Entrypoint/form'
+        build: enhavo
+    'enhavo/app/index':
+        path: '../Entrypoint/index'
+        build: enhavo
+    'enhavo/app/list':
+        path: '../Entrypoint/list'
+        build: enhavo
+    'enhavo/app/main':
+        path: '../Entrypoint/main'
+        build: enhavo
+    'enhavo/app/preview':
+        path: '../Entrypoint/preview'
+        build: enhavo
+
+compiler_pass:
+    action:
+        path: '../CompilerPass/registry.js'
+        service: '@enhavo/app/Action/ActionRegistry'
+        tag: 'enhavo_app.action'
+    batch:
+        path: '../CompilerPass/registry.js'
+        service: '@enhavo/app/Grid/Batch/BatchRegistry'
+        tag: 'enhavo_app.batch'
+    column:
+        path: '../CompilerPass/registry.js'
+        service: '@enhavo/app/Grid/Column/ColumnRegistry'
+        tag: 'enhavo_app.column'
+    filter:
+        path: '../CompilerPass/registry.js'
+        service: '@enhavo/app/Grid/Filter/FilterRegistry'
+        tag: 'enhavo_app.filter'
+    form:
+        path: '../CompilerPass/registry.js'
+        service: '@enhavo/app/Form/FormRegistry'
+        tag: 'enhavo_app.form'
+    menu:
+        path: '../CompilerPass/registry.js'
+        service: '@enhavo/app/Menu/MenuRegistry'
+        tag: 'enhavo_app.menu'
+    modal:
+        path: '../CompilerPass/registry.js'
+        service: '@enhavo/app/Modal/ModalRegistry'
+        tag: 'enhavo_app.modal'
+    view:
+        path: '../CompilerPass/registry.js'
+        service: '@enhavo/app/ViewStack/ViewRegistry'
+        tag: 'enhavo_app.view'
+    toolbar_widget:
+        path: '../CompilerPass/registry.js'
+        service: '@enhavo/app/Toolbar/Widget/WidgetRegistry'
+        tag: 'enhavo_app.toolbar'
+
+services:
+    '@enhavo/core/Router':
+        calls:
+            - [setRoutingData, ['param:routes']]
+
+    '@enhavo/core/Translator':
+        calls:
+            - [setData, ['param:translations']]
+
+    '@enhavo/app/State/StateManager':
+        arguments:
+            - '@enhavo/app/ViewStack/ViewStack'
+            - '@enhavo/app/ViewStack/EventDispatcher'
+            - '@enhavo/app/ViewStack/GlobalDataStorageManager'
+            - '@enhavo/app/Vue/VueRegistry'

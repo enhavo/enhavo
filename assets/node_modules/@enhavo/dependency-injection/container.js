@@ -1,0 +1,1 @@
+throw 'This file should be load by service-loader';

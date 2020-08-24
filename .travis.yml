@@ -41,7 +41,8 @@ before_script:
 
 script:
     - composer validate
-    - yarn test
+    - yarn mocha
+    - yarn karma
     - bin/behat --strict
     - bin/phpunit --stop-on-failure
     - vendor/bin/phplint

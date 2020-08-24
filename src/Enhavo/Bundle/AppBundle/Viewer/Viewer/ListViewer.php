@@ -168,10 +168,10 @@ class ListViewer extends AppViewer
 
         $optionsResolver->setDefaults([
             'javascripts' => [
-                'enhavo/list'
+                'enhavo/app/list'
             ],
             'stylesheets' => [
-                'enhavo/list'
+                'enhavo/app/list'
             ],
             'actions' => [],
             'data_route' => null,

@@ -10,15 +10,17 @@
     import FormInitializer from "@enhavo/app/Form/FormInitializer";
 
     @Component()
-    export default class AppView extends Vue {
-        name = 'tab-container';
-
+    export default class AppView extends Vue
+    {
         @Prop()
         tab: Tab;
 
         mounted() {
+            let $tab = $('[data-tab-container]').find('[data-tab='+this.tab.key+']');
+            this.tab.error = $tab.find('[data-form-error]').length > 0;
+            let element = <HTMLElement>$tab[0];
             let initializer = new FormInitializer();
-            initializer.setElement(this.tab.element);
+            initializer.setElement(element);
             initializer.append(this.$refs.container);
         }
     }
