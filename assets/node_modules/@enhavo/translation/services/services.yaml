@@ -1,2 +1,6 @@
-
-
+services:
+    '@enhavo/translation/Form/Loader/TranslationLoader':
+        arguments:
+            - '@enhavo/app/ViewStack/EventDispatcher'
+        tags:
+            - 'enhavo_app.form'

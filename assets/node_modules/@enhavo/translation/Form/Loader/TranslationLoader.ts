@@ -1,23 +1,23 @@
 import TranslationType from "@enhavo/translation/Form/Type/TranslationType";
 import AbstractLoader from "@enhavo/form/Loader/AbstractLoader";
 import "@enhavo/translation/assets/styles/style.scss";
-import ApplicationInterface from "@enhavo/app/ApplicationInterface";
+import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 
 export default class TranslationLoader extends AbstractLoader
 {
-    private application: ApplicationInterface;
+    private readonly eventDispatcher: EventDispatcher;
 
-    constructor(application: ApplicationInterface)
+    constructor(eventDispatcher: EventDispatcher)
     {
         super();
-        this.application = application;
+        this.eventDispatcher = eventDispatcher;
     }
 
     public insert(element: HTMLElement): void
     {
         let elements = this.findElements(element, '[data-translation-type]');
         for(element of elements) {
-            new TranslationType(element, this.application.getEventDispatcher());
+            new TranslationType(element, this.eventDispatcher);
         }
     }
 }
