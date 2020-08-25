@@ -1,5 +1,6 @@
 services:
     '@enhavo/app/Preview/PreviewApp':
+        chunk: 'preview'
         arguments:
             - 'param:data'
             - '@enhavo/app/ViewStack/EventDispatcher'
@@ -8,4 +9,5 @@ services:
             - '@enhavo/app/Vue/VueRegistry'
 
     '@enhavo/app/Preview/Components/ApplicationComponent.vue':
+        chunk: 'preview'
         static: true

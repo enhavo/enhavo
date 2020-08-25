@@ -1,11 +1,13 @@
 services:
     '@enhavo/app/List/ListApp':
+        chunk: 'list'
         arguments:
             - '@enhavo/app/View/View'
             - '@enhavo/app/Action/ActionManager'
             - '@enhavo/app/List/List'
 
     '@enhavo/app/List/List':
+        chunk: 'list'
         arguments:
             - 'param:data.list'
             - '@enhavo/app/ViewStack/EventDispatcher'
@@ -17,14 +19,17 @@ services:
             - '@enhavo/app/Vue/VueRegistry'
 
     '@enhavo/app/List/Components/ListApplicationComponent.vue':
+        chunk: 'list'
         static: true
 
     '@enhavo/app/List/Components/ListComponent.vue':
+        chunk: 'vue'
         static: true
         tags:
             - { name: vue.component, component: 'list-list' }
 
     '@enhavo/app/List/Components/ItemComponent.vue':
+        chunk: 'vue'
         static: true
         tags:
             - { name: vue.component, component: 'list-item' }

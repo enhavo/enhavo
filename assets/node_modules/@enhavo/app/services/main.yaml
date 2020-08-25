@@ -1,5 +1,6 @@
 services:
     '@enhavo/app/Main/MainApp':
+        chunk: 'main'
         arguments:
             - 'param:data.branding'
             - '@enhavo/app/ViewStack/ViewStack'
@@ -9,15 +10,26 @@ services:
             - '@enhavo/app/Toolbar/Widget/WidgetManager'
             - '@enhavo/app/Vue/VueRegistry'
 
+    '@enhavo/app/State/StateManager':
+        chunk: 'main'
+        arguments:
+            - '@enhavo/app/ViewStack/ViewStack'
+            - '@enhavo/app/ViewStack/EventDispatcher'
+            - '@enhavo/app/ViewStack/GlobalDataStorageManager'
+            - '@enhavo/app/Vue/VueRegistry'
+
     '@enhavo/app/Main/Components/MainComponent.vue':
+        chunk: 'main'
         static: true
 
     '@enhavo/app/Main/Components/OverlayContainer.vue':
+        chunk: 'vue'
         static: true
         tags:
             - { name: vue.component, component: 'overlay-container' }
 
     '@enhavo/app/Main/Components/LoadingScreen.vue':
+        chunk: 'vue'
         static: true
         tags:
             - { name: vue.component, component: 'loading-screen' }

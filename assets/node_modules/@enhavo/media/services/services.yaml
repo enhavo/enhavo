@@ -7,6 +7,7 @@ entrypoints:
         build: enhavo
 services:
     '@enhavo/media/Loader/MediaLoader':
+        chunk: 'form'
         arguments:
             - '@enhavo/app/View/View'
             - '@enhavo/core/Router'
@@ -14,6 +15,7 @@ services:
             - 'enhavo_app.form'
 
     '@enhavo/media/MediaLibrary/MediaLibraryApp':
+        chunk: 'media'
         arguments:
             - '@enhavo/app/View/View'
             - '@enhavo/app/Action/ActionManager'
@@ -21,6 +23,7 @@ services:
             - '@enhavo/app/FlashMessage/FlashMessenger'
 
     '@enhavo/media/MediaLibrary/MediaLibrary':
+        chunk: 'media'
         arguments:
             - 'param:data.media'
             - '@enhavo/core/Router'
@@ -30,14 +33,17 @@ services:
             - '@enhavo/app/Vue/VueRegistry'
 
     '@enhavo/media/MediaLibrary/Components/ApplicationComponent.vue':
+        chunk: 'media'
         static: true
 
     '@enhavo/media/MediaLibrary/Components/MediaLibraryComponent.vue':
+        chunk: 'media'
         static: true
         tags:
             - { name: vue.component, component: 'media-library' }
 
     '@enhavo/media/ImageCropper/ImageCropperApp':
+        chunk: 'image-cropper'
         arguments:
             - 'param:data.format'
             - '@enhavo/app/ViewStack/EventDispatcher'
@@ -47,9 +53,11 @@ services:
             - '@enhavo/app/Vue/VueRegistry'
 
     '@enhavo/media/ImageCropper/Components/ImageCropperComponent.vue':
+        chunk: 'image-cropper'
         static: true
 
     '@enhavo/media/ImageCropper/Components/ImageCropperStageComponent.vue':
+        chunk: 'vue'
         static: true
         tags:
             - { name: vue.component, component: 'image-cropper' }

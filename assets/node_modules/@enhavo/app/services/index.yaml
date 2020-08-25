@@ -1,5 +1,6 @@
 services:
     '@enhavo/app/Index/IndexApp':
+        chunk: 'index'
         arguments:
             - '@enhavo/app/ViewStack/EventDispatcher'
             - '@enhavo/app/View/View'
@@ -9,4 +10,5 @@ services:
             - '@enhavo/app/Grid/Grid'
 
     '@enhavo/app/Index/Components/IndexComponent.vue':
+        chunk: 'vue'
         static: true

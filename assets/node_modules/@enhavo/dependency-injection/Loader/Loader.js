@@ -194,11 +194,12 @@ class Loader
         service.mode ? definition.setMode(service.mode) : null;
         service.prefetch ? definition.setPrefetch(service.mode) : null;
         service.preload ? definition.setPreload(service.mode) : null;
-        service.chunckName ? definition.setChunkName(service.chunckName) : null;
+        service.chunk ? definition.setChunkName(service.chunk) : null;
         service.include ? definition.setInclude(service.include) : null;
         service.exclude ? definition.setExclude(service.exclude) : null;
-        service.exports ? definition.setExport(service.exports) : null;
+        service.exports ? definition.setExports(service.exports) : null;
         service.static ? definition.setStatic(service.static) : null;
+        service.ignore ? definition.setIgnore(service.ignore) : null;
     }
 
     /**
