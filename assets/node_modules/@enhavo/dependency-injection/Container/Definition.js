@@ -25,6 +25,7 @@ class Definition
         this.include = null;
         this.exclude = null;
         this.exports = null;
+        this.ignore = null;
         this.init = false;
     }
 
@@ -149,51 +150,59 @@ class Definition
     }
 
     setPrefetch(prefetch) {
-
+        this.prefetch = prefetch;
     }
 
-    getPrefetch(prefetch) {
-
+    getPrefetch() {
+        return this.prefetch
     }
 
     setPreload(preload) {
-
+        this.preload = preload;
     }
 
-    getPreload(preload) {
-
+    getPreload() {
+        return this.preload;
     }
 
     setChunkName(chunkName) {
-
+        this.chunckName = chunkName;
     }
 
-    getChunkName(chunkName) {
-
+    getChunkName() {
+        return this.chunckName;
     }
 
     setInclude(include) {
-
+        this.include = include;
     }
 
-    getInclude(include) {
-
+    getInclude() {
+        return this.include;
     }
 
     setExclude(exclude) {
-
+        this.exclude = exclude;
     }
 
-    getExclude(exclude) {
-
+    getExclude() {
+        return this.exclude
     }
 
-    setExport(exports) {
-
+    setExports(exports) {
+        this.exports = exports;
     }
 
-    getExport(exports) {
+    getExports() {
+        return this.exports;
+    }
 
+    setIgnore(ignore) {
+        this.ignore = ignore;
+    }
+
+    getIgnore() {
+        return this.ignore;
     }
 
     getDependDefinitionNames()
@@ -219,7 +228,6 @@ class Definition
         }
         return depends;
     }
-
 }
 
 module.exports = Definition;
