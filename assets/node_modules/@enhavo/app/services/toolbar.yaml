@@ -1,5 +1,6 @@
 services:
     '@enhavo/app/Toolbar/Widget/WidgetManager':
+        chunk: 'main'
         arguments:
             - 'param:data.toolbar.primaryWidgets'
             - 'param:data.toolbar.secondaryWidgets'
@@ -7,8 +8,10 @@ services:
             - '@enhavo/app/Vue/VueRegistry'
 
     '@enhavo/app/Toolbar/Widget/WidgetRegistry':
+        chunk: 'main'
 
     toolbar.icon-widget:
+        chunk: 'main'
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:icon-widget'
@@ -18,14 +21,17 @@ services:
             - 'enhavo_app.toolbar'
 
     '@enhavo/app/Toolbar/Widget/Factory/IconWidgetFactory':
+        chunk: 'main'
         arguments:
             - '@enhavo/app/ViewStack/EventDispatcher'
             - '@enhavo/app/Menu/MenuManager'
 
     '@enhavo/app/Toolbar/Widget/Components/IconWidgetComponent.vue':
+        chunk: 'main'
         static: true
 
     toolbar.quick-menu-widget:
+        chunk: 'main'
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:quick-menu-widget'
@@ -35,14 +41,17 @@ services:
             - 'enhavo_app.toolbar'
 
     '@enhavo/app/Toolbar/Widget/Factory/QuickMenuWidgetFactory':
+        chunk: 'main'
         arguments:
             - '@enhavo/app/ViewStack/EventDispatcher'
             - '@enhavo/app/Menu/MenuManager'
 
     '@enhavo/app/Toolbar/Widget/Components/QuickMenuWidgetComponent.vue':
+        chunk: 'main'
         static: true
 
     toolbar.new-window-widget:
+        chunk: 'main'
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:new-window-widget'
@@ -52,8 +61,10 @@ services:
             - 'enhavo_app.toolbar'
 
     '@enhavo/app/Toolbar/Widget/Factory/NewWindowWidgetFactory':
+        chunk: 'main'
 
     '@enhavo/app/Toolbar/Components/Toolbar.vue':
+        chunk: 'vue'
         static: true
         tags:
             - { name: vue.component, component: 'toolbar' }

@@ -1,5 +1,6 @@
 services:
     '@enhavo/app/Grid/Grid':
+        chunk: 'grid'
         arguments:
             - '@enhavo/app/Grid/Filter/FilterManager'
             - '@enhavo/app/Grid/Column/ColumnManager'
@@ -13,21 +14,25 @@ services:
             - '@enhavo/app/Vue/VueRegistry'
 
     '@enhavo/app/Grid/Components/Grid.vue':
+        chunk: 'vue'
         static: true
         tags:
             - { name: vue.component, component: 'grid-grid' }
 
     '@enhavo/app/Grid/Components/Pagination.vue':
+        chunk: 'vue'
         static: true
         tags:
             - { name: vue.component, component: 'grid-pagination' }
 
     '@enhavo/app/Grid/Components/Table.vue':
+        chunk: 'vue'
         static: true
         tags:
             - { name: vue.component, component: 'grid-table' }
 
     '@enhavo/app/Grid/Column/Components/Row':
+        chunk: 'vue'
         static: true
         tags:
             - { name: vue.component, component: 'grid-table-row' }

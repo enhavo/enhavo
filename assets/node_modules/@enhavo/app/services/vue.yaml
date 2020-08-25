@@ -5,15 +5,18 @@ compiler_pass:
 
 services:
     '@enhavo/app/Vue/VueRegistry':
+        chunk: 'vue'
         arguments:
             - 'string:app'
 
     '@enhavo/app/Vue/VueApp':
+        chunk: 'vue'
         arguments:
             - '@enhavo/app/Vue/VueRegistry'
             - '@enhavo/app/ViewStack/EventDispatcher'
 
     '@enhavo/app/Vue/ClickOutside':
+        chunk: 'vue'
         arguments:
             - '@enhavo/app/ViewStack/EventDispatcher'
             - '@enhavo/app/View/View'
@@ -21,11 +24,13 @@ services:
             - { name: vue.directive, directive: 'click-outside' }
 
     'vue-select':
+        chunk: 'vue'
         static: true
         tags:
             - { name: vue.component, component: 'v-select' }
 
     'vuejs-datepicker':
+        chunk: 'vue'
         static: true
         tags:
             - { name: vue.component, component: 'datepicker' }

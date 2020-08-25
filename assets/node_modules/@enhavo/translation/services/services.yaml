@@ -1,5 +1,6 @@
 services:
     '@enhavo/translation/Form/Loader/TranslationLoader':
+        chunk: 'form'
         arguments:
             - '@enhavo/app/ViewStack/EventDispatcher'
         tags:

@@ -1,5 +1,6 @@
 services:
     '@enhavo/app/Action/ActionManager':
+        chunk: 'action'
         arguments:
             - 'param:data.actions'
             - 'param:data.actionsSecondary'
@@ -7,13 +8,16 @@ services:
             - '@enhavo/app/Vue/VueRegistry'
 
     '@enhavo/app/Action/ActionRegistry':
+        chunk: 'action'
 
     '@enhavo/app/Action/Components/ActionBar.vue':
         static: true
+        chunk: 'vue'
         tags:
             - { name: vue.component, component: 'action-bar' }
 
     action.close:
+        chunk: 'action'
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:close-action'
@@ -23,6 +27,7 @@ services:
             - 'enhavo_app.action'
 
     action.delete:
+        chunk: 'action'
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:delete-action'
@@ -32,6 +37,7 @@ services:
             - 'enhavo_app.action'
 
     action.dropdown:
+        chunk: 'action'
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:dropdown-action'
@@ -41,6 +47,7 @@ services:
             - 'enhavo_app.action'
 
     action.filter:
+        chunk: 'action'
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:filter-action'
@@ -50,6 +57,7 @@ services:
             - 'enhavo_app.action'
 
     action.preview:
+        chunk: 'action'
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:preview-action'
@@ -59,6 +67,7 @@ services:
             - 'enhavo_app.action'
 
     action.save:
+        chunk: 'action'
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:save-action'
@@ -68,6 +77,7 @@ services:
             - 'enhavo_app.action'
 
     action.event:
+        chunk: 'action'
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:event-action'
@@ -77,6 +87,7 @@ services:
             - 'enhavo_app.action'
 
     action.open:
+        chunk: 'action'
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:open-action'
@@ -86,6 +97,7 @@ services:
             - 'enhavo_app.action'
 
     action.duplicate:
+        chunk: 'action'
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:duplicate-action'
@@ -95,6 +107,7 @@ services:
             - 'enhavo_app.action'
 
     action.download:
+        chunk: 'action'
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:download-action'
@@ -104,6 +117,7 @@ services:
             - 'enhavo_app.action'
 
     action.modal:
+        chunk: 'action'
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:modal-action'
@@ -113,49 +127,62 @@ services:
             - 'enhavo_app.action'
 
     '@enhavo/app/Action/Factory/CloseActionFactory':
+        chunk: 'action'
         arguments:
             - '@enhavo/app/View/View'
             - '@enhavo/app/ViewStack/EventDispatcher'
 
     '@enhavo/app/Action/Factory/DeleteActionFactory':
+        chunk: 'action'
         arguments:
             - '@enhavo/app/View/View'
             - '@enhavo/app/ViewStack/EventDispatcher'
             - '@enhavo/core/Translator'
 
     '@enhavo/app/Action/Factory/DownloadActionFactory':
+        chunk: 'action'
 
     '@enhavo/app/Action/Factory/DropdownActionFactory':
+        chunk: 'action'
 
     '@enhavo/app/Action/Factory/DuplicateActionFactory':
+        chunk: 'action'
         arguments:
             - '@enhavo/app/View/View'
             - '@enhavo/app/ViewStack/EventDispatcher'
 
     '@enhavo/app/Action/Factory/EventActionFactory':
+        chunk: 'action'
 
     '@enhavo/app/Action/Factory/FilterActionFactory':
+        chunk: 'action'
 
     '@enhavo/app/Action/Factory/ModalActionFactory':
+        chunk: 'action'
         arguments:
             - '@enhavo/app/Modal/ModalManager'
 
     '@enhavo/app/Action/Factory/OpenActionFactory':
+        chunk: 'action'
         arguments:
             - '@enhavo/app/View/View'
 
     '@enhavo/app/Action/Factory/PreviewActionFactory':
+        chunk: 'action'
         arguments:
             - '@enhavo/app/View/View'
             - '@enhavo/app/ViewStack/EventDispatcher'
 
     '@enhavo/app/Action/Factory/SaveActionFactory':
+        chunk: 'action'
         arguments:
             - '@enhavo/app/View/View'
             - '@enhavo/app/ViewStack/EventDispatcher'
 
     '@enhavo/app/Action/Components/ActionComponent.vue':
+        chunk: 'action'
         static: true
 
     '@enhavo/app/Action/Components/DropdownActionComponent.vue':
+        chunk: 'action'
         static: true

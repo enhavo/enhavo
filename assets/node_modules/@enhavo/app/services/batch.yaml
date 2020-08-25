@@ -1,5 +1,6 @@
 services:
     '@enhavo/app/Grid/Batch/BatchManager':
+        chunk: 'batch'
         arguments:
             - 'param:data.grid'
             - '@enhavo/app/Grid/Batch/BatchRegistry'
@@ -8,13 +9,16 @@ services:
             - '@enhavo/app/Vue/VueRegistry'
 
     '@enhavo/app/Grid/Batch/BatchRegistry':
+        chunk: 'batch'
 
     '@enhavo/app/Grid/Batch/Component/Batches.vue':
+        chunk: 'vue'
         static: true
         tags:
             - { name: vue.component, component: 'grid-batches' }
 
     batch.url:
+        chunk: 'batch'
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:batch-url'
@@ -24,6 +28,7 @@ services:
             - 'enhavo_app.batch'
 
     batch.modal:
+        chunk: 'batch'
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:batch-modal'
@@ -33,6 +38,7 @@ services:
             - 'enhavo_app.batch'
 
     batch.form:
+        chunk: 'batch'
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:batch-form'
@@ -42,6 +48,7 @@ services:
             - 'enhavo_app.batch'
 
     '@enhavo/app/Grid/Batch/Factory/UrlFactory':
+        chunk: 'batch'
         arguments:
             - 'param:data.grid'
             - '@enhavo/core/Translator'
@@ -50,7 +57,9 @@ services:
             - '@enhavo/core/Router'
 
     '@enhavo/app/Grid/Batch/Factory/ModalFactory':
+        chunk: 'batch'
         arguments:
             - '@enhavo/app/Modal/ModalManager'
 
     '@enhavo/app/Grid/Batch/Factory/FormFactory':
+        chunk: 'batch'
