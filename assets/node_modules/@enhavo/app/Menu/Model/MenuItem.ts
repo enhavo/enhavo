@@ -11,9 +11,9 @@ export default class MenuItem extends AbstractMenu
     public clickable: boolean = true;
 
     open(): void {
-        this.application.getEventDispatcher().dispatch(new ClearEvent())
+        this.eventDispatcher.dispatch(new ClearEvent())
             .then(() => {
-                this.application.getEventDispatcher()
+                this.eventDispatcher
                     .dispatch(new CreateEvent({
                         component: 'iframe-view',
                         url: this.url
@@ -22,7 +22,7 @@ export default class MenuItem extends AbstractMenu
                         this.getManager().clearSelections();
                         this.getManager().setActive(this.key);
                         this.select();
-                        this.application.getEventDispatcher().dispatch(new SaveStateEvent());
+                        this.eventDispatcher.dispatch(new SaveStateEvent());
                         if(!this.getManager().isOpen()) {
                             if(this.parent()) {
                                 (<MenuList>this.parent()).close();

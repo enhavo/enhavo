@@ -12,41 +12,41 @@ import ClearEvent from "@enhavo/app/ViewStack/Event/ClearEvent";
 import ClearedEvent from "@enhavo/app/ViewStack/Event/ClearedEvent";
 import ArrangeManager from "@enhavo/app/ViewStack/ArrangeManager";
 import LoadingEvent from "@enhavo/app/ViewStack/Event/LoadingEvent";
-import MenuManager from "@enhavo/app/Menu/MenuManager";
 import * as _ from 'lodash';
 import * as async from 'async';
 import SaveStateEvent from "@enhavo/app/ViewStack/Event/SaveStateEvent";
 import ChangeUrlEvent from "@enhavo/app/ViewStack/Event/ChangeUrlEvent";
+import FrameStorage from "@enhavo/app/ViewStack/FrameStorage";
+import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
+import * as $ from "jquery";
 
 export default class ViewStack
 {
-    private readonly views: ViewInterface[];
+    public views: ViewInterface[];
+    public data: ViewStackData;
+
+    private nextId: number = 1;
+
     private readonly dispatcher: EventDispatcher;
     private readonly registry: ViewRegistry;
-    private data: ViewStackData;
-    private nextId: number = 1;
-    private arrangeManager: ArrangeManager;
+    private readonly arrangeManager: ArrangeManager;
+    private readonly frameStorage: FrameStorage;
+    private readonly componentRegistry: ComponentRegistryInterface;
 
     constructor(
         data: ViewStackData,
-        menuManager: MenuManager,
         dispatcher: EventDispatcher,
         viewRegistry: ViewRegistry,
+        frameStorage: FrameStorage,
+        componentRegistry: ComponentRegistryInterface,
+        arrangeManager: ArrangeManager
     ) {
+        this.data = data;
         this.dispatcher = dispatcher;
         this.registry = viewRegistry;
-
-        for(let i in data.views) {
-            let view = viewRegistry.getFactory(data.views[i].component).createFromData(data.views[i]);
-            if(view.id > this.nextId) {
-                this.nextId = view.id + 1;
-            }
-            _.extend(data.views[i], view);
-        }
-        this.views = <ViewInterface[]>data.views;
-        this.data = data;
-
-        this.arrangeManager = new ArrangeManager(this.views, data, menuManager);
+        this.frameStorage = frameStorage;
+        this.componentRegistry = componentRegistry;
+        this.arrangeManager = arrangeManager;
 
         this.addCloseListener();
         this.addRemoveListener();
@@ -57,6 +57,38 @@ export default class ViewStack
         this.addLoadingListener();
         this.addExistsListener();
         this.addChangeUrlListener();
+
+        $(window).resize(() => {
+            this.arrangeManager.resize(this.data.views);
+        });
+    }
+
+    init() {
+        if(!this.data.views) {
+            this.data.views = [];
+            this.views = <ViewInterface[]>this.data.views;
+        } else {
+            for(let i in this.data.views) {
+                let view = this.registry.getFactory(this.data.views[i].component).createFromData(this.data.views[i]);
+                if(view.id > this.nextId) {
+                    this.nextId = view.id + 1;
+                }
+                this.data.views[i] = _.extend(this.data.views[i], view);
+            }
+
+            this.views = <ViewInterface[]>this.data.views;
+        }
+
+        for (let component of this.registry.getComponents()) {
+            this.componentRegistry.registerComponent(component.name, component.component)
+        }
+
+        this.componentRegistry.registerStore('viewStack', this);
+        this.componentRegistry.registerData(this.data);
+    }
+
+    getFrameStorage() {
+        return this.frameStorage;
     }
 
     private addChangeUrlListener()
@@ -207,7 +239,7 @@ export default class ViewStack
 
     private arrange()
     {
-        this.arrangeManager.arrange();
+        this.arrangeManager.arrange(this.data.views);
     }
 
     private generateId(): number

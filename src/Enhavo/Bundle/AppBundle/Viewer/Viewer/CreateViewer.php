@@ -185,10 +185,10 @@ class CreateViewer extends BaseViewer
         $optionsResolver->setDefaults([
             'tabs' => [],
             'javascripts' => [
-                'enhavo/form'
+                'enhavo/app/form'
             ],
             'stylesheets' => [
-                'enhavo/form'
+                'enhavo/app/form'
             ],
             'actions' => [],
             'actions_secondary' => [],

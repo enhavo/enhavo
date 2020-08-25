@@ -11,10 +11,7 @@ class EncoreRegistryPackage
 
     initEncore(Encore, name)
     {
-        if(name === 'enhavo') {
-            Encore
-                .addEntry('enhavo/login', './assets/enhavo/login')
-        }
+
     }
 
     initWebpackConfig(config, name)

@@ -1,7 +1,4 @@
-import DataLoader from '@enhavo/app/DataLoader';
 import ActionManager from "@enhavo/app/Action/ActionManager";
-import AppInterface from "@enhavo/app/AppInterface";
-import ViewApp from "@enhavo/app/ViewApp";
 import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 import View from "@enhavo/app/View/View";
 import CloseEvent from "@enhavo/app/ViewStack/Event/CloseEvent";
@@ -10,23 +7,50 @@ import FormData from "@enhavo/app/form/FormData";
 import Confirm from "@enhavo/app/View/Confirm";
 import Translator from "@enhavo/core/Translator";
 import ModalManager from "@enhavo/app/Modal/ModalManager";
+import Form from "@enhavo/app/Form/Form";
 
-export default class FormApp extends ViewApp implements AppInterface
+export default class FormApp
 {
-    private actionManager: ActionManager;
-    private translator: Translator;
-    private modalManager: ModalManager;
-    protected data: FormData;
+    private data: FormData;
+    private readonly eventDispatcher: EventDispatcher;
+    private readonly view: View;
+    private readonly actionManager: ActionManager;
+    private readonly translator: Translator;
+    private readonly modalManager: ModalManager;
+    private readonly form: Form;
 
-    constructor(loader: DataLoader, eventDispatcher: EventDispatcher, view: View, actionManager: ActionManager, translator: Translator, modalManager: ModalManager)
-    {
-        super(loader, eventDispatcher, view);
-        this.actionManager = actionManager;
+    constructor(
+        data: any,
+        eventDispatcher: EventDispatcher,
+        view: View,
+        actionManager: ActionManager,
+        translator: Translator,
+        modalManager: ModalManager,
+        form: Form,
+    ) {
+        this.data = data;
+
+        this.view = view;
+        this.eventDispatcher = eventDispatcher;
         this.translator = translator;
+        this.actionManager = actionManager;
         this.modalManager = modalManager;
+        this.form = form;
     }
 
-    protected addCloseListener()
+    init() {
+        this.actionManager.init();
+        this.modalManager.init();
+        this.form.init();
+        this.view.init();
+
+        this.form.load();
+        this.addCloseListener();
+        this.view.ready();
+        this.view.checkUrl();
+    }
+
+    private addCloseListener()
     {
         this.eventDispatcher.on('close', (event: CloseEvent) => {
             if(this.view.getId() === event.id) {

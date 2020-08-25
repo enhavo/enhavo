@@ -11,21 +11,18 @@ namespace Enhavo\Bundle\TranslationBundle\Translator\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface;
 use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
-use Enhavo\Bundle\TranslationBundle\Exception\TranslationException;
 use Enhavo\Bundle\TranslationBundle\Entity\TranslationRoute;
-use Enhavo\Component\Metadata\MetadataRepository;
+use Enhavo\Bundle\TranslationBundle\Translator\DataMap;
+use Enhavo\Bundle\TranslationBundle\Translator\TranslatorInterface;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 
-class RouteTranslator
+class RouteTranslator implements TranslatorInterface
 {
-    /**
-     * @var MetadataRepository
-     */
-    private $metadataRepository;
 
     /**
-     * @var string
+     * @var EntityManagerInterface
      */
-    private $defaultLocale;
+    private $entityManager;
 
     /**
      * @var EntityResolverInterface
@@ -33,72 +30,81 @@ class RouteTranslator
     private $entityResolver;
 
     /**
-     * @var EntityManagerInterface
+     * @var string
      */
-    private $em;
+    private $defaultLocale;
+
+    /**
+     * @var DataMap
+     */
+    private $buffer;
+
+    /**
+     * @var DataMap
+     */
+    private $originalData;
 
     /**
      * RouteTranslator constructor.
-     * @param MetadataRepository $metadataRepository
-     * @param string $defaultLocale
+     * @param EntityManagerInterface $entityManager
      * @param EntityResolverInterface $entityResolver
-     * @param EntityManagerInterface $em
+     * @param string $defaultLocale
      */
-    public function __construct(MetadataRepository $metadataRepository, string $defaultLocale, EntityResolverInterface $entityResolver, EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $entityManager, EntityResolverInterface $entityResolver, string $defaultLocale)
     {
-        $this->metadataRepository = $metadataRepository;
-        $this->defaultLocale = $defaultLocale;
+        $this->entityManager = $entityManager;
         $this->entityResolver = $entityResolver;
-        $this->em = $em;
+        $this->defaultLocale = $defaultLocale;
+
+        $this->buffer = new DataMap();
+        $this->originalData = new DataMap();
     }
 
     public function setTranslation($entity, $property, $locale, $value): void
     {
-        $this->checkEntity($entity);
-
-        if($locale == $this->defaultLocale) {
+        if ($locale == $this->defaultLocale) {
             return;
         }
 
-        $translationRoute = $this->findTranslationRoute($entity, $property, $locale);
-        if($translationRoute === null) {
-            $this->createTranslationRoute($entity, $property, $locale, $value);
+        $translationRoute = $this->buffer->load($entity, $property, $locale)
+            ?? $this->load($entity, $property, $locale);
+
+        if ($translationRoute === null) {
+            $translationRoute = $this->createTranslationRoute($entity, $property, $locale, $value);
         } else {
-            if($translationRoute->getRoute() !== $value) {
+            if ($translationRoute->getRoute() !== $value) {
                 $route = $translationRoute->getRoute();
-                $this->getEntityManager()->remove($route);
+                $this->entityManager->remove($route);
                 $translationRoute->setRoute($value);
             }
         }
+
+        $this->buffer->store($entity, $property, $locale, $translationRoute);
     }
 
     public function getTranslation($entity, $property, $locale): ?RouteInterface
     {
-        $this->checkEntity($entity);
-
-        if($locale == $this->defaultLocale) {
+        if ($locale == $this->defaultLocale) {
             return null;
         }
 
-        $translationRoute = $this->findTranslationRoute($entity, $property, $locale);
+        $translationRoute = $this->buffer->load($entity, $property, $locale);
+        if ($translationRoute !== null) {
+            return $translationRoute->getRoute();
+        }
 
-        if($translationRoute !== null) {
+        $translationRoute = $this->load($entity, $property, $locale);
+        if ($translationRoute !== null) {
+            $this->buffer->store($entity, $property, $locale, $translationRoute);
             return $translationRoute->getRoute();
         }
 
         return null;
     }
 
-    public function delete($entity)
+    public function delete($entity, string $property)
     {
         $this->deleteTranslationData($entity);
-    }
-
-    private function checkEntity($entity)
-    {
-        if(!$this->metadataRepository->hasMetadata($entity)) {
-            throw new TranslationException(sprintf('Entity "%s" is not translatable', get_class($entity)));
-        }
     }
 
     private function createTranslationRoute($entity, $property, $locale, RouteInterface $route): TranslationRoute
@@ -110,41 +116,66 @@ class RouteTranslator
         $translationRoute->setProperty($property);
         $translationRoute->setRoute($route);
 
-        $this->getEntityManager()->persist($translationRoute);
+        $this->entityManager->persist($translationRoute);
 
         return $translationRoute;
     }
 
     private function deleteTranslationData($entity)
     {
-        $repository = $this->getEntityManager()->getRepository(TranslationRoute::class);
+        $repository = $this->getRepository();
 
         $translationRoutes = $repository->findTranslationRoutes(
             $this->entityResolver->getName($entity),
             $entity->getId()
         );
 
-        foreach($translationRoutes as $translationRoute) {
-            $this->getEntityManager()->remove($translationRoute);
+        foreach ($translationRoutes as $translationRoute) {
+            $this->entityManager->remove($translationRoute);
         }
     }
 
-    private function findTranslationRoute($entity, $property, $locale): ?TranslationRoute
+    private function load($entity, $property, $locale): ?TranslationRoute
     {
-        $repository = $this->getEntityManager()->getRepository(TranslationRoute::class);
+        $repository = $this->getRepository();
 
-        $translationRoute = $repository->findTranslationRoute(
+        return $repository->findTranslationRoute(
             $this->entityResolver->getName($entity),
             $entity->getId(),
             $property,
             $locale
         );
-
-        return $translationRoute;
     }
 
-    private function getEntityManager(): EntityManagerInterface
+    private function getRepository()
     {
-        return $this->em;
+        return $this->entityManager->getRepository(TranslationRoute::class);
+    }
+
+    public function translate($entity, string $property, string $locale, array $options)
+    {
+        // translation data is stored inside the object
+        if ($locale === $this->defaultLocale) {
+            return;
+        }
+
+        $accessor = PropertyAccess::createPropertyAccessor();
+
+        $newValue = $this->getTranslation($entity, $property, $locale);
+        $oldValue = $accessor->getValue($entity, $property);
+        $this->originalData->store($entity, $property, null, $oldValue);
+        $accessor->setValue($entity, $property, $newValue);
+    }
+
+    public function detach($entity, string $property, string $locale, array $options)
+    {
+        $accessor = PropertyAccess::createPropertyAccessor();
+
+        $originalValue = $this->originalData->load($entity, $property, null);
+        $translationValue = $accessor->getValue($entity, $property);
+        $this->setTranslation($entity, $property, $locale, $translationValue);
+        $accessor->setValue($entity, $property, $originalValue);
+
+        $this->originalData->delete($entity);
     }
 }

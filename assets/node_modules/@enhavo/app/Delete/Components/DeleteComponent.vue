@@ -1,6 +1,7 @@
 <template>
     <div class="app-view">
-        <view-view v-bind:data="view"></view-view>
+        <view-view></view-view>
+        <flash-messages></flash-messages>
         <div class="inline-confirm-dialogue">
             <div class="message">{{ message }}</div>
             <button @click="close" class="btn">{{ button }}</button>
@@ -9,39 +10,23 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from "vue-property-decorator";
+import { Vue, Component } from "vue-property-decorator";
 import '@enhavo/app/assets/styles/view.scss'
-import ViewData from "@enhavo/app/View/ViewData";
-import ViewComponent from "@enhavo/app/View/Components/ViewComponent";
 import FlashMessages from "@enhavo/app/FlashMessage/Components/FlashMessages.vue";
-import ApplicationBag from "@enhavo/app/ApplicationBag";
-import DeleteApplication from "@enhavo/app/Delete/DeleteAppliction";
-const application = <DeleteApplication>ApplicationBag.getApplication();
-
 @Component({
-    components: {FlashMessages, 'view-view': ViewComponent}
+    components: {FlashMessages}
 })
 export default class AppView extends Vue {
-    name = 'app-view';
-
-    @Prop()
-    messages: Array<object>;
-
-    @Prop()
-    view: ViewData;
-
     close() {
-        application.getApp().close()
+        this.$deleteApp.close()
     }
 
     get message() {
-        return application.getTranslator().trans('enhavo_app.delete.message.success')
+        return this.$translator.trans('enhavo_app.delete.message.success')
     }
 
     get button() {
-        return application.getTranslator().trans('enhavo_app.delete.label.close')
+        return this.$translator.trans('enhavo_app.delete.label.close')
     }
 }
 </script>
-
-

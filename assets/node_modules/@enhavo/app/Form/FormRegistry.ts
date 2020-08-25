@@ -3,7 +3,6 @@ import FormInsertEvent from "@enhavo/app/Form/Event/FormInsertEvent";
 import LoaderInterface from "@enhavo/app/Form/LoaderInterface";
 import FormReleaseEvent from "@enhavo/app/Form/Event/FormReleaseEvent";
 import FormElementEvent from "@enhavo/app/Form/Event/FormElementEvent";
-import RegistryPackage from "@enhavo/app/Form/RegistryPackage";
 
 export default class FormRegistry
 {
@@ -32,14 +31,6 @@ export default class FormRegistry
             loader.remove(event.getElement());
         });
 
-        return this;
-    }
-
-    registerPackage(registryPackage: RegistryPackage)
-    {
-        for(let loader of registryPackage.getLoaders()) {
-            this.register(loader);
-        }
         return this;
     }
 }

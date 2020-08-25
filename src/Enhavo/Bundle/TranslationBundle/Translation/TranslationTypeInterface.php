@@ -8,13 +8,18 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Translation;
 
+use Enhavo\Bundle\TranslationBundle\Translator\TranslatorInterface;
 use Enhavo\Component\Type\TypeInterface;
 
 interface TranslationTypeInterface extends TypeInterface
 {
-    public function setTranslation(array $options, $data, $property, $locale, $value);
+    public function setTranslation(array $options, $data, string $property, string $locale, $value);
 
-    public function getTranslation(array $options, $data, $property, $locale);
+    public function getTranslation(array $options, $data, string $property, string $locale);
 
-    public function getValidationConstraints(array $options, $data, $property, $locale);
+    public function translate($object, string $property, string $locale, array $options): void;
+
+    public function detach($object, string $property, string $locale, array $options);
+
+    public function delete($object, string $property);
 }

@@ -1,0 +1,40 @@
+services:
+    '@enhavo/form/Loader/CheckboxLoader':
+        tags:
+            - 'enhavo_app.form'
+
+    '@enhavo/form/Loader/SelectLoader':
+        tags:
+            - 'enhavo_app.form'
+
+    '@enhavo/form/Loader/DateTimeLoader':
+        tags:
+            - 'enhavo_app.form'
+
+    '@enhavo/form/Loader/DateLoader':
+        tags:
+            - 'enhavo_app.form'
+
+    '@enhavo/form/Loader/WysiwygLoader':
+        tags:
+            - 'enhavo_app.form'
+
+    '@enhavo/form/Loader/ListLoader':
+        tags:
+            - 'enhavo_app.form'
+
+    '@enhavo/form/Loader/AutoCompleteLoader':
+        arguments:
+            - '@enhavo/app/ViewStack/EventDispatcher'
+            - '@enhavo/app/View/View'
+            - '@enhavo/core/Router'
+        tags:
+            - 'enhavo_app.form'
+
+    '@enhavo/form/Loader/WeekendDateLoader':
+        tags:
+            - 'enhavo_app.form'
+
+    '@enhavo/form/Loader/PolyCollectionLoader':
+        tags:
+            - 'enhavo_app.form'

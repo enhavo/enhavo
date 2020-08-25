@@ -1,0 +1,31 @@
+Enhavo\Bundle\TranslationBundle\Entity\TranslationFile:
+    type: entity
+    table: translation_translation_file
+    repositoryClass: Enhavo\Bundle\TranslationBundle\Repository\TranslationFileRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    fields:
+        class:
+            type: string
+            nullable: true
+        property:
+            type: string
+            nullable: true
+        refId:
+            type: integer
+            nullable: true
+        locale:
+            type: string
+            nullable: true
+
+    manyToOne:
+        file:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
+
+    lifecycleCallbacks: {  }

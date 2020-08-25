@@ -1,4 +1,5 @@
 import AbstractAction from "@enhavo/app/Action/Model/AbstractAction";
+import View from "@enhavo/app/View/View";
 
 export default class OpenAction extends AbstractAction
 {
@@ -6,13 +7,20 @@ export default class OpenAction extends AbstractAction
     public target: string;
     public key: string;
 
+    private readonly view: View;
+
+    constructor(view: View) {
+        super();
+        this.view = view;
+    }
+
     execute(): void
     {
         if(this.target == '_view') {
             if(this.key) {
-                this.application.getView().open(this.url, this.key);
+                this.view.open(this.url, this.key);
             } else {
-                this.application.getView().open(this.url);
+                this.view.open(this.url);
             }
             return;
         }

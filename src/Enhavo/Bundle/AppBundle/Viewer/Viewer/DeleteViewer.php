@@ -83,10 +83,10 @@ class DeleteViewer extends BaseViewer
         parent::configureOptions($optionsResolver);
         $optionsResolver->setDefaults([
             'javascripts' => [
-                'enhavo/delete'
+                'enhavo/app/delete'
             ],
             'stylesheets' => [
-                'enhavo/delete'
+                'enhavo/app/delete'
             ],
         ]);
     }

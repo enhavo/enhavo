@@ -43,7 +43,7 @@ class Metadata extends \Enhavo\Component\Metadata\Metadata
     public function getProperty(string $property)
     {
         $name = $this->nameTransformer->camelCase($property, true);
-        if(isset($this->properties[$name])) {
+        if (isset($this->properties[$name])) {
             return $this->properties[$name];
         }
         return null;

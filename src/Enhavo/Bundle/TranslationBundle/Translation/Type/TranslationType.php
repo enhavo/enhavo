@@ -9,25 +9,28 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TranslationType extends AbstractType implements TranslationTypeInterface
 {
-    public function setTranslation(array $options, $data, $property, $locale, $value)
+    public function setTranslation(array $options, $data, string $property, string $locale, $value)
     {
 
     }
 
-    public function getTranslation(array $options, $data, $property, $locale)
+    public function getTranslation(array $options, $data, string $property, string $locale)
+    {
+        return null;
+    }
+
+    public function translate($object, string $property, string $locale, array $options): void
     {
 
     }
 
-    public function getValidationConstraints(array $options, $data, $property, $locale)
+    public function detach($object, string $property, string $locale, array $options)
     {
-        return $options['constraints'];
+
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function delete($object, string $property): void
     {
-        $resolver->setDefaults([
-            'constraints' => []
-        ]);
+
     }
 }

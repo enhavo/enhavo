@@ -1,20 +1,34 @@
 import ColumnInterface from "@enhavo/app/Grid/Column/ColumnInterface";
 import ColumnRegistry from "@enhavo/app/Grid/Column/ColumnRegistry";
 import * as _ from 'lodash';
+import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
 
 export default class ColumnManager
 {
-    private columns: ColumnInterface[];
-    private registry: ColumnRegistry;
+    public columns: ColumnInterface[];
 
-    constructor(columns: ColumnInterface[], registry: ColumnRegistry)
+    private readonly registry: ColumnRegistry;
+    private readonly componentRegistry: ComponentRegistryInterface;
+
+    constructor(columns: ColumnInterface[], registry: ColumnRegistry, componentRegistry: ComponentRegistryInterface)
     {
+        this.componentRegistry = componentRegistry;
         this.registry = registry;
-        for (let i in columns) {
-            let filter = registry.getFactory(columns[i].component).createFromData(columns[i]);
-            _.extend(columns[i], filter);
-        }
         this.columns = columns;
+    }
+
+    init() {
+        for (let i in this.columns) {
+            let filter = this.registry.getFactory(this.columns[i].component).createFromData(this.columns[i]);
+            _.extend(this.columns[i], filter);
+        }
+
+        for (let component of this.registry.getComponents()) {
+            this.componentRegistry.registerComponent(component.name, component.component)
+        }
+
+        this.componentRegistry.registerData(this.columns);
+        this.componentRegistry.registerStore('columnManager', this);
     }
 
     getSortingParameters()

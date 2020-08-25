@@ -49,6 +49,7 @@ class MediaLibraryViewer extends AbstractActionViewer
     {
         $view = parent::createView($options);
         $templateVars = $view->getTemplateData();
+        $templateVars['data']['messages'] = [];
         $templateVars['data']['media'] = [
             'items' => [],
             'page' => 1,
@@ -78,10 +79,10 @@ class MediaLibraryViewer extends AbstractActionViewer
         parent::configureOptions($optionsResolver);
         $optionsResolver->setDefaults([
             'javascripts' => [
-                'enhavo/media-library'
+                'enhavo/media/media-library'
             ],
             'stylesheets' => [
-                'enhavo/media-library'
+                'enhavo/media/media-library'
             ],
             'translations' => true,
             'routes' => true,

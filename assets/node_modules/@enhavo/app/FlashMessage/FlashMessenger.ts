@@ -1,19 +1,29 @@
 import Message from "@enhavo/app/FlashMessage/Message";
 import * as _ from "lodash";
+import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
 
 export default class FlashMessenger
 {
     public messages: Message[];
 
-    constructor(messages: Message[])
+    private readonly componentRegistry: ComponentRegistryInterface;
+
+    constructor(messages: Message[], componentRegistry: ComponentRegistryInterface)
     {
         this.messages = messages;
-        for (let i in messages) {
-            _.extend(messages[i], new Message());
+        this.componentRegistry = componentRegistry;
+    }
+
+    init() {
+        for (let i in this.messages) {
+            _.extend(this.messages[i], new Message());
         }
         setInterval(() => {
             this.tick();
-        }, 1000)
+        }, 1000);
+
+        this.componentRegistry.registerStore('flashMessenger', this);
+        this.componentRegistry.registerData(this.messages);
     }
 
     public addMessage(message: Message)

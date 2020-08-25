@@ -4,8 +4,6 @@ enhavo_translation:
             properties:
                 title:
                     type: text
-                    constraints:
-                        - Symfony\Component\Validator\Constraints\NotBlank
                 metaDescription:
                     type: text
                 pageTitle:
@@ -18,3 +16,4 @@ enhavo_translation:
                     type: route
                 slug:
                     type: slug
+                    allow_fallback: true

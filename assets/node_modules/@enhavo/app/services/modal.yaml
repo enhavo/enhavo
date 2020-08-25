@@ -1,0 +1,50 @@
+services:
+    '@enhavo/app/Modal/ModalManager':
+        arguments:
+            - 'param:data.modals'
+            - '@enhavo/app/Modal/ModalRegistry'
+            - '@enhavo/app/Vue/VueRegistry'
+
+    '@enhavo/app/Modal/ModalRegistry':
+
+    modal.iframe:
+        from: '@enhavo/core/RegistryEntry'
+        arguments:
+            - 'string:iframe-modal'
+            - '@enhavo/app/Modal/Components/IframeModalComponent.vue'
+            - '@enhavo/app/Modal/Factory/IframeModalFactory'
+
+    modal.ajax-form:
+        from: '@enhavo/core/RegistryEntry'
+        arguments:
+            - 'string:ajax-form-modal'
+            - '@enhavo/app/Modal/Components/AjaxFormModalComponent.vue'
+            - '@enhavo/app/Modal/Factory/AjaxFormModalFactory'
+
+    modal.output-stream:
+        from: '@enhavo/core/RegistryEntry'
+        arguments:
+            - 'string:output-stream'
+            - '@enhavo/app/Modal/Components/OutputStreamModalComponent.vue'
+            - '@enhavo/app/Modal/Factory/OutputStreamModalFactory'
+
+
+    '@enhavo/app/Modal/Factory/IframeModalFactory':
+
+    '@enhavo/app/Modal/Factory/AjaxFormModalFactory':
+
+    '@enhavo/app/Modal/Factory/OutputStreamModalFactory':
+
+    '@enhavo/app/Modal/Components/IframeModalComponent.vue':
+        static: true
+
+    '@enhavo/app/Modal/Components/AjaxFormModalComponent.vue':
+        static: true
+
+    '@enhavo/app/Modal/Components/OutputStreamModalComponent.vue':
+        static: true
+
+    '@enhavo/app/Modal/Components/ModalComponent.vue':
+        static: true
+        tags:
+            - { name: vue.component, component: 'modal-component' }

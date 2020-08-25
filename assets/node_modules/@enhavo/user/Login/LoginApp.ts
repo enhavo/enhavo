@@ -1,15 +1,17 @@
-import DataLoader from '@enhavo/app/DataLoader';
-import ViewApp from "@enhavo/app/ViewApp";
-import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 import View from "@enhavo/app/View/View";
 import * as $ from "jquery";
 
-export default class LoginApp extends ViewApp
+export default class LoginApp
 {
-    constructor(loader: DataLoader, eventDispatcher: EventDispatcher, view: View)
-    {
-        super(loader, eventDispatcher, view);
+    private readonly view: View;
 
+    constructor(view: View)
+    {
+        this.view = view;
+    }
+
+    init() {
+        this.view.init();
         this.view.addDefaultCloseListener();
 
         $(() => {

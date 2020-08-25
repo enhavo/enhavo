@@ -1,13 +1,34 @@
-import ApplicationInterface from "@enhavo/app/ApplicationInterface";
 import UrlBatch from "@enhavo/app/Grid/Batch/Model/UrlBatch";
 import AjaxFormModal from "@enhavo/app/Modal/Model/AjaxFormModal";
 import Message from "@enhavo/app/FlashMessage/Message";
-import {IndexApplication} from "@enhavo/app/Index/IndexApplication";
+import FlashMessenger from "@enhavo/app/FlashMessage/FlashMessenger";
+import BatchDataInterface from "@enhavo/app/Grid/Batch/BatchDataInterface";
+import Translator from "@enhavo/core/Translator";
+import View from "@enhavo/app/View/View";
+import Router from "@enhavo/core/Router";
+import ModalManager from "@enhavo/app/Modal/ModalManager";
+import Grid from "@enhavo/app/Grid/Grid";
 
 export default class FormBatch extends UrlBatch
 {
-    public application: ApplicationInterface;
     public modal: any;
+
+    protected readonly modalManager: ModalManager;
+    protected readonly grid: Grid;
+
+    public constructor(
+        batchData: BatchDataInterface,
+        translator: Translator,
+        view: View,
+        flashMessenger: FlashMessenger,
+        router: Router,
+        modalManager: ModalManager,
+        grid: Grid
+    ) {
+        super(batchData, translator, view, flashMessenger, router);
+        this.modalManager = modalManager;
+        this.grid = grid;
+    }
 
     async execute(ids: number[]): Promise<boolean>
     {
@@ -25,21 +46,21 @@ export default class FormBatch extends UrlBatch
         this.modal.actionHandler = (modal: AjaxFormModal, data: any, error: string) => {
             return new Promise((resolve, reject) => {
                 if(data.status == 400) {
-                    this.application.getFlashMessenger().addMessage(new Message(Message.ERROR, data.data));
+                    this.flashMessenger.addMessage(new Message(Message.ERROR, data.data));
                     resolve(true);
                     return;
                 } else if(error) {
-                    this.application.getFlashMessenger().addMessage(new Message(Message.ERROR, this.application.getTranslator().trans(error)));
+                    this.flashMessenger.addMessage(new Message(Message.ERROR, this.translator.trans(error)));
                     resolve(true);
                     return;
                 }
 
-                this.application.getFlashMessenger().addMessage(new Message(Message.SUCCESS, this.application.getTranslator().trans('enhavo_app.batch.message.success')));
-                (<IndexApplication>this.application).getGrid().loadTable();
+                this.flashMessenger.addMessage(new Message(Message.SUCCESS, this.translator.trans('enhavo_app.batch.message.success')));
+                this.grid.loadTable();
                 resolve(true);
             })
         };
-        this.application.getModalManager().push(this.modal);
+        this.modalManager.push(this.modal);
         return false;
     }
 }

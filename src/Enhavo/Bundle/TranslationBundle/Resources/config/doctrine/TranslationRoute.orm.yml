@@ -19,9 +19,7 @@ Enhavo\Bundle\TranslationBundle\Entity\TranslationRoute:
 
     manyToOne:
         route:
-            cascade: ['persist', 'refresh']
+            cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\RoutingBundle\Model\RouteInterface
-            joinColumn:
-                onDelete: CASCADE
 
     lifecycleCallbacks: {  }

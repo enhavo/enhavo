@@ -89,10 +89,10 @@ class LoginViewer extends AbstractViewer
         $optionsResolver->setDefaults([
             'template' => 'admin/login/login.html.twig',
             'stylesheets' => [
-                'enhavo/login'
+                'enhavo/user/login'
             ],
             'javascripts' => [
-                'enhavo/login'
+                'enhavo/user/login'
             ],
             'parameters' => []
         ]);

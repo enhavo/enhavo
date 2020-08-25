@@ -1,0 +1,30 @@
+services:
+    '@enhavo/app/List/ListApp':
+        arguments:
+            - '@enhavo/app/View/View'
+            - '@enhavo/app/Action/ActionManager'
+            - '@enhavo/app/List/List'
+
+    '@enhavo/app/List/List':
+        arguments:
+            - 'param:data.list'
+            - '@enhavo/app/ViewStack/EventDispatcher'
+            - '@enhavo/app/View/View'
+            - '@enhavo/app/Grid/Column/ColumnManager'
+            - '@enhavo/core/Router'
+            - '@enhavo/core/Translator'
+            - '@enhavo/app/FlashMessage/FlashMessenger'
+            - '@enhavo/app/Vue/VueRegistry'
+
+    '@enhavo/app/List/Components/ListApplicationComponent.vue':
+        static: true
+
+    '@enhavo/app/List/Components/ListComponent.vue':
+        static: true
+        tags:
+            - { name: vue.component, component: 'list-list' }
+
+    '@enhavo/app/List/Components/ItemComponent.vue':
+        static: true
+        tags:
+            - { name: vue.component, component: 'list-item' }

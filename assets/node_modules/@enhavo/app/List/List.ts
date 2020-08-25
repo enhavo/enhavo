@@ -12,16 +12,19 @@ import FlashMessenger from "@enhavo/app/FlashMessage/FlashMessenger";
 import Message from "@enhavo/app/FlashMessage/Message";
 import * as async from "async";
 import ViewInterface from "@enhavo/app/ViewStack/ViewInterface";
+import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
 
 export default class List
 {
-    private columnManager: ColumnManager;
-    private router: Router;
-    private eventDispatcher: EventDispatcher;
-    private data: ListData;
-    private view: View;
-    private translator: Translator;
-    private flashMessenger: FlashMessenger;
+    public data: ListData;
+
+    private readonly eventDispatcher: EventDispatcher;
+    private readonly columnManager: ColumnManager;
+    private readonly view: View;
+    private readonly router: Router;
+    private readonly translator: Translator;
+    private readonly flashMessenger: FlashMessenger;
+    private readonly componentRegistry: ComponentRegistryInterface;
 
     constructor(
         data: ListData,
@@ -30,7 +33,8 @@ export default class List
         columnManager: ColumnManager,
         router: Router,
         translator: Translator,
-        flashMessenger: FlashMessenger
+        flashMessenger: FlashMessenger,
+        componentRegistry: ComponentRegistryInterface
     ) {
         _.extend(data, new ListData);
         this.data = data;
@@ -40,6 +44,14 @@ export default class List
         this.router = router;
         this.translator = translator;
         this.flashMessenger = flashMessenger;
+        this.componentRegistry = componentRegistry;
+    }
+
+    public init()
+    {
+        this.flashMessenger.init();
+        this.view.init();
+        this.columnManager.init();
 
         this.eventDispatcher.on('updated', (event: UpdatedEvent) => {
             this.view.loadValue('edit-view', (id) => {
@@ -64,6 +76,9 @@ export default class List
                 }
             });
         });
+
+        this.componentRegistry.registerStore('list', this);
+        this.componentRegistry.registerData(this.data);
     }
 
     public load()

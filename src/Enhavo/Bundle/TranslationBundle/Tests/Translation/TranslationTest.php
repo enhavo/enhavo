@@ -3,33 +3,60 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Tests\Translation;
 
+use Enhavo\Bundle\TranslationBundle\Tests\Mocks\TranslatableMock;
 use Enhavo\Bundle\TranslationBundle\Translation\Translation;
 use Enhavo\Bundle\TranslationBundle\Translation\TranslationTypeInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class TranslationTest extends TestCase
 {
+    private function createDependencies()
+    {
+        /** @var TranslationTypeInterface|MockObject $translationType */
+        $translationType = $this->getMockBuilder(TranslationTypeInterface::class)->getMock();
+
+        return $translationType;
+    }
+
     public function testSetTranslation()
     {
-        $typeMock = $this->getMockBuilder(TranslationTypeInterface::class)->getMock();
+        $typeMock = $this->createDependencies();
         $typeMock->expects($this->once())->method('setTranslation');
         $type = new Translation($typeMock, [], []);
-        $type->setTranslation([], null, null, 'en', 'value');
+        $type->setTranslation([], 'field', 'en', 'value');
     }
 
     public function testGetTranslation()
     {
-        $typeMock = $this->getMockBuilder(TranslationTypeInterface::class)->getMock();
+        $typeMock = $this->createDependencies();
         $typeMock->expects($this->once())->method('getTranslation');
         $type = new Translation($typeMock, [], []);
-        $type->getTranslation(null, null, 'en');
+        $type->getTranslation(null, 'field', 'en');
     }
 
-    public function testGetValidationConstraint()
+    public function testEntityUpdates()
     {
-        $typeMock = $this->getMockBuilder(TranslationTypeInterface::class)->getMock();
-        $typeMock->expects($this->once())->method('getValidationConstraints');
+        $entity = new TranslatableMock();
+        $typeMock = $this->createDependencies();
+        $typeMock->expects($this->once())->method('translate');
+        $typeMock->expects($this->once())->method('detach');
+        $typeMock->expects($this->once())->method('delete');
+        $typeMock->method('translate')->willReturnCallback(function ($data, $property, $locale) {
+            $data->setName($property . '-' . $locale);
+        });
+        $typeMock->method('detach')->willReturnCallback(function ($data, $property, $locale) {
+            $data->setName($property . '-' . $locale . '.old');
+        });
+        $typeMock->method('delete')->willReturnCallback(function ($data, $property) {
+            $data->setName(null);
+        });
         $type = new Translation($typeMock, [], []);
-        $type->getValidationConstraints( null, null, 'en');
+        $type->translate($entity, 'field', 'de');
+        $this->assertEquals('field-de', $entity->getName());
+        $type->detach($entity, 'field', 'de');
+        $this->assertEquals('field-de.old', $entity->getName());
+        $type->delete($entity, 'field');
+        $this->assertNull($entity->getName());
     }
 }

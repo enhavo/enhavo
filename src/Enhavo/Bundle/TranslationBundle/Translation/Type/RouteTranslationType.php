@@ -9,35 +9,50 @@
 namespace Enhavo\Bundle\TranslationBundle\Translation\Type;
 
 use Enhavo\Bundle\TranslationBundle\Translation\AbstractTranslationType;
-use Enhavo\Bundle\TranslationBundle\Translator\Route\RouteTranslator;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Enhavo\Bundle\TranslationBundle\Translator\TranslatorInterface;
 
 class RouteTranslationType extends AbstractTranslationType
 {
-    /** @var RouteTranslator */
-    private $routeTranslator;
+    /** @var TranslatorInterface */
+    protected $translator;
 
     /**
-     * RouteTranslationType constructor.
-     * @param RouteTranslator $routeTranslator
+     * TextTranslationType constructor.
+     * @param TranslatorInterface $translator
      */
-    public function __construct(RouteTranslator $routeTranslator)
+    public function __construct(TranslatorInterface $translator)
     {
-        $this->routeTranslator = $routeTranslator;
+        $this->translator = $translator;
     }
 
-    public function setTranslation(array $options, $data, $property, $locale, $value)
+    public function translate($object, string $property, string $locale, array $options): void
     {
-        $this->routeTranslator->setTranslation($data, $property, $locale, $value);
+        $this->translator->translate($object, $property, $locale, $options);
     }
 
-    public function getTranslation(array $options, $data, $property, $locale)
+    public function detach($object, string $property, string $locale, array $options): void
     {
-        return $this->routeTranslator->getTranslation($data, $property, $locale);
+        $this->translator->detach($object, $property, $locale, $options);
+    }
+
+    public function delete($object, string $property): void
+    {
+        $this->translator->delete($object, $property);
+    }
+
+    public function setTranslation(array $options, $data, string $property, string $locale, $value)
+    {
+        $this->translator->setTranslation($data, $property, $locale, $value);
+    }
+
+    public function getTranslation(array $options, $data, string $property, string $locale)
+    {
+        return $this->translator->getTranslation($data, $property, $locale);
     }
 
     public static function getName(): ?string
     {
         return 'route';
     }
+
 }

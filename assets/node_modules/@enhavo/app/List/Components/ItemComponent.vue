@@ -6,7 +6,7 @@
                 <i v-if="!data.expand" class="icon icon-unfold_less"></i>
             </div>
             <div class="view-table-row-columns">
-                <template v-for="column in columns">
+                <template v-for="column in $list.data.columns">
                     <component
                         class="view-table-col"
                         v-bind:is="column.component"
@@ -20,7 +20,7 @@
         <div class="view-table-list-row-children" v-if="data.expand && data.parentProperty" :class="{ 'has-children': data.children && data.children.length > 0 }">
             <draggable group="list" v-model="data.children" v-on:change="save($event, data)" @start="data.dragging = true" @end="data.dragging = false" :class="{'dragging':data.dragging == true}">
                 <template v-for="item in data.children">
-                    <list-item v-bind:columns="columns" v-bind:data="item" :key="item.id"></list-item>
+                    <list-item v-bind:data="item" :key="item.id"></list-item>
                 </template>
             </draggable>
         </div>
@@ -29,25 +29,16 @@
 
 <script lang="ts">
     import { Vue, Component, Prop } from "vue-property-decorator";
-    import ApplicationBag from "@enhavo/app/ApplicationBag";
-    import ListApplication from "@enhavo/app/List/ListApplication";
     import Item from "@enhavo/app/List/Item";
-    const application = <ListApplication>ApplicationBag.getApplication();
 
-    @Component({
-        components: application.getColumnRegistry().getComponents()
-    })
-    export default class ItemComponent extends Vue {
-        name: string = 'list-item';
-
+    @Component()
+    export default class ItemComponent extends Vue
+    {
         @Prop()
         data: Array<Item>;
 
-        @Prop()
-        columns: Array<object>;
-        
         open() {
-            application.getList().open(this.data);
+            this.$list.open(this.data);
         }
 
         calcColumnWidth(parts: number): string {
@@ -78,9 +69,9 @@
         save(event, parent)
         {
             if(event.added) {
-                application.getList().save(parent);
+                this.$list.save(parent);
             } else if(event.moved) {
-                application.getList().save(parent);
+                this.$list.save(parent);
             }
         }
     }

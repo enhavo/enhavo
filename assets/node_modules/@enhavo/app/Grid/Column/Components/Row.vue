@@ -1,11 +1,11 @@
 <template>
     <div :class="{'view-table-row': true, 'active': data.active, 'selected': data.selected}" @click="open()">
-        <div class="checkbox-container" v-if="batches.length > 0">
+        <div class="checkbox-container" v-if="$batchManager.hasBatches()">
             <input type="checkbox" v-on:change="changeSelect" v-on:click.stop :checked="data.selected" />
             <span></span>
         </div>
         <div class="view-table-row-columns">
-            <template v-for="column in columns">
+            <template v-for="column in $columnManager.columns">
                 <component
                     class="view-table-col"
                     v-if="column.display"
@@ -22,44 +22,32 @@
 <script lang="ts">
     import { Vue, Component, Prop } from "vue-property-decorator";
     import RowData from "@enhavo/app/Grid/Column/RowData";
-    import ApplicationBag from "@enhavo/app/ApplicationBag";
-    import IndexApplication from "@enhavo/app/Index/IndexApplication";
     import * as $ from "jquery";
-    const application = <IndexApplication>ApplicationBag.getApplication();
 
-    @Component({
-        components: application.getColumnRegistry().getComponents()
-    })
-    export default class Row extends Vue {
-        name: string = 'table-row';
-    
-        @Prop()
-        columns: Array<object>;
-
+    @Component()
+    export default class Row extends Vue
+    {
         @Prop()
         data: RowData;
 
-        @Prop()
-        batches: Array<object>;
-
         mounted() {
             $(window).resize(() => {
-                application.getGrid().resize();
+                this.$grid.resize();
                 this.$forceUpdate();
             });
         }
 
         changeSelect() {
-            application.getGrid().changeSelect(this.data, !this.data.selected);
+            this.$grid.changeSelect(this.data, !this.data.selected);
         }
 
         open() {
-            application.getGrid().open(this.data);
+            this.$grid.open(this.data);
         }
 
         calcColumnWidth(parts: number): string {
             let totalWidth = 0;
-            for(let column of this.columns) {
+            for(let column of this.$columnManager.columns) {
                 if(column.display) {
                     totalWidth += column.width;
                 }
@@ -84,9 +72,3 @@
         }
     }
 </script>
-
-
-
-
-
-

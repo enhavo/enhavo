@@ -16,6 +16,8 @@ use Symfony\Component\Yaml\Yaml;
  */
 class EnhavoTranslationExtension extends AbstractResourceExtension implements PrependExtensionInterface
 {
+    const CONFIG_DIR = __DIR__.'/../Resources/config/app/config.yaml';
+
     /**
      * {@inheritdoc}
      */
@@ -44,7 +46,7 @@ class EnhavoTranslationExtension extends AbstractResourceExtension implements Pr
      */
     public function prepend(ContainerBuilder $container)
     {
-        $configs = Yaml::parse(file_get_contents(__DIR__.'/../Resources/config/app/config.yaml'));
+        $configs = Yaml::parse(file_get_contents(self::CONFIG_DIR));
         foreach($configs as $name => $config) {
             if (is_array($config)) {
                 $container->prependExtensionConfig($name, $config);

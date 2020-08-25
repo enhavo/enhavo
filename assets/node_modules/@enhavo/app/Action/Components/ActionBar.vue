@@ -1,12 +1,12 @@
 <template>
-    <div class="actions" v-if="(primary && primary.length > 0) || (secondary && secondary.length > 0)">
+    <div class="actions" v-if="$actionManager.hasActions()">
         <div class="primary-actions">
-            <template v-for="action in primary">
+            <template v-for="action in $actionManager.primary">
                 <component class="action-container" v-bind:is="action.component" v-bind:data="action" :data-action="action.key"></component>
             </template>
         </div>
         <div class="secondary-actions">
-            <template v-for="action in secondary">
+            <template v-for="action in $actionManager.secondary">
                 <component class="action-container" v-bind:is="action.component" v-bind:data="action"></component>
             </template>
         </div>
@@ -14,19 +14,10 @@
 </template>
 
 <script lang="ts">
-    import { Vue, Component, Prop } from "vue-property-decorator";
-    import ApplicationBag from "@enhavo/app/ApplicationBag";
-    import ActionAwareApplication from "@enhavo/app/Action/ActionAwareApplication";
-    let application = <ActionAwareApplication>ApplicationBag.getApplication();
+import { Vue, Component } from "vue-property-decorator";
 
-    @Component({
-        components: application.getActionRegistry().getComponents()
-    })
-    export default class ActionBar extends Vue {
-        @Prop()
-        primary: object;
+@Component()
+export default class ActionBar extends Vue {
 
-        @Prop()
-        secondary: object;
-    }
+}
 </script>

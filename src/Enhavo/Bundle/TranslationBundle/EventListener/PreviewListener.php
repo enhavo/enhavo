@@ -10,7 +10,7 @@ namespace Enhavo\Bundle\TranslationBundle\EventListener;
 
 
 use Enhavo\Bundle\AppBundle\Event\PreviewEvent;
-use Enhavo\Bundle\TranslationBundle\Translator\LocaleResolver;
+use Enhavo\Bundle\TranslationBundle\Locale\LocaleResolver;
 
 class PreviewListener
 {

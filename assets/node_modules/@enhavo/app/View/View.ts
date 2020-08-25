@@ -19,30 +19,56 @@ import RemoveEvent from "@enhavo/app/ViewStack/Event/RemoveEvent";
 import LoadedEvent from "@enhavo/app/ViewStack/Event/LoadedEvent";
 import LoadingEvent from "@enhavo/app/ViewStack/Event/LoadingEvent";
 import ChangeUrlEvent, {ChangeUrlData} from "@enhavo/app/ViewStack/Event/ChangeUrlEvent";
+import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
+import Translator from "@enhavo/core/Translator";
+import Router from "@enhavo/core/Router";
 
 export default class View
 {
-    private data: ViewData;
-    private eventDispatcher: EventDispatcher;
+    public data: ViewData;
 
-    constructor(data: ViewData = null)
-    {
-        if(data === null) {
-            data = new ViewData;
+    private readonly componentRegistry: ComponentRegistryInterface;
+    private readonly router: Router;
+    private readonly translator: Translator;
+    private eventDispatcher: EventDispatcher;
+    private initialized: boolean = false;
+
+    constructor(
+        data: ViewData,
+        router: Router,
+        translator: Translator,
+        componentRegistry: ComponentRegistryInterface
+    ) {
+        this.data = data;
+        this.router = router;
+        this.translator = translator;
+        this.componentRegistry = componentRegistry;
+    }
+
+    init() {
+        if (this.initialized) {
+            return;
+        }
+        this.initialized = true;
+
+        if(this.data === null) {
+            this.data = new ViewData;
         } else {
-            data = _.assignWith(data, new ViewData, (objValue, srcValue) => {
+            this.data = _.assignWith(this.data, new ViewData, (objValue, srcValue) => {
                 return _.isUndefined(objValue) ? srcValue : objValue;
             });
         }
-        this.data = data;
 
         if(this.data.id == null) {
             this.data.id = this.getIdFromUrl();
-        }
-
-        if(typeof this.data.id == 'string') {
+        } else if(typeof this.data.id === 'string') {
             this.data.id = parseInt(this.data.id);
         }
+
+        this.componentRegistry.registerStore('view', this);
+        this.componentRegistry.registerStore('translator', this.translator);
+        this.componentRegistry.registerStore('router', this.router);
+        this.componentRegistry.registerData(this.data);
 
         window.addEventListener('click', () => {
             this.eventDispatcher.dispatch(new ClickEvent(this.getId()));

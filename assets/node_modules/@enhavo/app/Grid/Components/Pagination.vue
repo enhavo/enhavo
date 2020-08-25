@@ -2,7 +2,7 @@
     <div class="view-table-pagination">
         <div class="pagination-select">
             <div class="label">{{ entryPerPage }}:</div>
-            <v-select @input="changePagination" :value="pagination" :options="options" :clearable="false" :searchable="false"></v-select>
+            <v-select @input="changePagination" :value="$grid.configuration.pagination" :options="options" :clearable="false" :searchable="false"></v-select>
         </div>
 
         <div class="pagination-nav">
@@ -16,7 +16,7 @@
             </template>
 
             <div 
-                v-for="page in pages" 
+                v-for="page in $grid.configuration.pages" 
                 v-bind:key="page"
                 v-bind:class="['pagination-nav-item', 'number', {active: currentPage == page}]" 
                 v-on:click="clickPage(page)">
@@ -37,41 +37,25 @@
 </template>
 
 <script lang="ts">
-    import { Vue, Component, Prop, Watch } from "vue-property-decorator";
-    import ApplicationBag from "@enhavo/app/ApplicationBag";
-    import IndexApplication from "@enhavo/app/Index/IndexApplication";
-    const application = <IndexApplication>ApplicationBag.getApplication();
+    import { Vue, Component } from "vue-property-decorator";
 
     @Component
-    export default class Pagination extends Vue {
-        name: string = 'table-pagination';
-    
-        @Prop()
-        page: number;
-
-        @Prop()
-        paginationSteps: Array<number>;
-
-        @Prop()
-        count: number;
-
-        @Prop()
-        pagination: number;
-
+    export default class Pagination extends Vue
+    {
         itemsAround: number = 2;
 
         changePagination(value) {
-            application.getGrid().changePagination(value.code);
+            this.$grid.changePagination(value.code);
         }
 
         get entryPerPage()
         {
-            return application.getTranslator().trans('enhavo_app.grid.label.entry_per_page')
+            return this.$translator.trans('enhavo_app.grid.label.entry_per_page')
         }
 
         get options() {
             let steps = [];
-            for(let step of this.paginationSteps) {
+            for(let step of this.$grid.configuration.paginationSteps) {
                 steps.push({
                     label: step,
                     code: step
@@ -81,14 +65,14 @@
         }
 
         get currentPage(): number {
-            return this.page;
+            return this.$grid.configuration.page;
         }
 
         get lastPage(): number {
-            if(!this.count || !this.pagination) {
+            if(!this.$grid.configuration.count || !this.$grid.configuration.pagination) {
                 return 1;
             }
-            return Math.ceil(this.count/this.pagination);
+            return Math.ceil(this.$grid.configuration.count/this.$grid.configuration.pagination);
         }
 
         get isFirstPage(): boolean {
@@ -182,7 +166,7 @@
         }
 
         clickPage(page: number): void {
-            application.getGrid().changePage(page);
+            this.$grid.changePage(page);
         }
     }
 </script>

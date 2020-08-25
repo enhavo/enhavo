@@ -3,12 +3,15 @@ enhavo_translation:
         Enhavo\Bundle\NavigationBundle\Entity\Link:
             properties:
                 link:
-                    type: text
-        Enhavo\Bundle\NavigationBundle\Entity\Navigation:
-            properties:
-                name:
-                    type: text
+                    type: slug
+                    allow_fallback: true
+#        Enhavo\Bundle\NavigationBundle\Entity\Navigation:
+#            properties:
+#                name:
+#                    type: text
+#                    allow_fallback: true
         Enhavo\Bundle\NavigationBundle\Entity\Node:
             properties:
                 label:
                     type: text
+                    allow_fallback: true

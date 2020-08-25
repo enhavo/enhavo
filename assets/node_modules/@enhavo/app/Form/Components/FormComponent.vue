@@ -1,19 +1,21 @@
 <template>
     <div class="app-view">
         <div class="form-view">
-            <view-view v-bind:data="view"></view-view>
-            <modal-component v-bind:data="modals"></modal-component>
-            <flash-messages v-bind:messages="messages"></flash-messages>
-            <action-bar v-bind:primary="actions" v-bind:secondary="actionsSecondary"></action-bar>
-            <div class="tab-header" v-if="tabs.length > 1">
-                <template v-for="tab in tabs">
-                    <tab-head v-bind:selected="isCurrentTab(tab)" v-bind:tab="tab"></tab-head>
+            <view-view></view-view>
+            <modal-component></modal-component>
+            <flash-messages></flash-messages>
+            <action-bar></action-bar>
+
+            <div class="tab-header" v-if="$form.hasTabs()">
+                <template v-for="tab in $form.tabs">
+                    <form-tab-head v-bind:tab="tab"></form-tab-head>
                 </template>
             </div>
+
             <div class="form-container">
                 <form method="POST">
-                    <template v-for="tab in tabs">
-                        <tab-container v-show="isCurrentTab(tab)" v-bind:tab="tab"></tab-container>
+                    <template v-for="tab in $form.tabs">
+                        <form-tab-container v-show="tab.active" v-bind:tab="tab"></form-tab-container>
                     </template>
                 </form>
             </div>
@@ -22,58 +24,25 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from "vue-property-decorator";
+import { Vue, Component } from "vue-property-decorator";
 import '@enhavo/app/assets/styles/base.scss'
 import '@enhavo/form/assets/styles/form.scss'
-import ActionBar from "@enhavo/app/Action/Components/ActionBar.vue";
-import TabHead from "@enhavo/app/Form/Components/TabHead.vue";
-import TabContainer from "@enhavo/app/Form/Components/TabContainer.vue";
-import FlashMessages from "@enhavo/app/FlashMessage/Components/FlashMessages.vue";
-import ViewData from "@enhavo/app/View/ViewData";
-import ViewComponent from "@enhavo/app/View/Components/ViewComponent";
-import ApplicationBag from "@enhavo/app/ApplicationBag";
-import FormApplication from "@enhavo/app/Form/FormApplication";
 import '@enhavo/app/assets/styles/view.scss';
-import ModalComponent from "@enhavo/app/Modal/Components/ModalComponent.vue";
 
-const application = <FormApplication>ApplicationBag.getApplication();
-
-@Component({
-    components: {FlashMessages, ActionBar, TabContainer, TabHead, 'view-view': ViewComponent, ModalComponent}
-})
-export default class AppView extends Vue {
-    name = 'app-view';
-
-    @Prop()
-    view: ViewData;
-
-    @Prop()
-    actions: Array<object>;
-
-    @Prop()
-    actionsSecondary: Array<object>;
-
-    @Prop()
-    tabs: Array<object>;
-
-    @Prop()
-    tab: string;
-
-    @Prop()
-    messages: Array<object>;
-
-    @Prop()
-    modals: Array<object>;
-
+@Component()
+export default class AppView extends Vue
+{
     mounted() {
         $(document).on('change', ':input', () => {
-            application.getForm().changeForm();
+            this.$form.changeForm();
         });
+
         $(document).on('focus','[data-field-with-label] input[type="text"],[data-field-with-label] textarea', function() {
             $(this).parents('[data-field-with-label]').addClass('focused');
         }).on('blur','[data-field-with-label] input[type="text"],[data-field-with-label] textarea', function() {
             $(this).parents('[data-field-with-label]').removeClass('focused');
         });
+
         $(document).on('keyup','[data-field-with-label] input[type="text"],[data-field-with-label] textarea', function() {
             if($(this).val().length > 0) {
                 $(this).parents('[data-field-with-label]').addClass('filled');
@@ -81,11 +50,6 @@ export default class AppView extends Vue {
                 $(this).parents('[data-field-with-label]').removeClass('filled');
             }
         });
-    }
-
-    isCurrentTab(tab: Tab): boolean
-    {
-        return tab.key == this.tab;
     }
 }
 </script>
