@@ -9,6 +9,7 @@
 
 namespace Enhavo\Bundle\ShopBundle\Form\Type;
 
+use Enhavo\Bundle\FormBundle\Form\Type\CurrencyType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Enhavo\Bundle\RoutingBundle\Form\Type\RouteType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -38,6 +39,7 @@ class ProductType extends AbstractType
     {
         $this->dataClass = $dataClass;
         $this->taxRateClass = $taxRateClass;
+        $this->optionClass = $optionClass;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
