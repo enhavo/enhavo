@@ -60,11 +60,11 @@ export default class Form
 
     public load()
     {
-        this.changeTab(this.tabs[0].key);
-
         this.view.loadValue('active-tab', value => {
             if (value) {
                 this.changeTab(value);
+            } else {
+                this.changeTab(this.tabs[0].key);
             }
         });
     }
