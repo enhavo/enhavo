@@ -50,9 +50,6 @@ class FileTranslatorTest extends TestCase
         $entity = new TranslatableMock();
 
         $dependencies->repository->method('findOneBy')->willReturnCallback(function ($options) use ($file) {
-//            if (null === $options['id']) {
-//                return null;
-//            }
             $translation = new TranslationFile();
             $translation->setFile($file);
 
