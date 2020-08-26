@@ -10,6 +10,12 @@ services:
             - '%sylius.model.product_option.class%'
         tags:
             - { name: form.type }
+
+    Enhavo\Bundle\ShopBundle\Form\Type\ProductOptionType:
+        arguments:
+            - '%sylius.model.product_option.class%'
+        tags:
+            - { name: form.type }
 #
 #    Enhavo\Bundle\ShopBundle\Form\Type\OrderAddressType:
 #        arguments:
@@ -72,11 +78,7 @@ services:
 #        tags:
 #            - { name: form.type }
 #
-#    Enhavo\Bundle\ShopBundle\Form\Type\ProductOptionType:
-#        arguments:
-#            - '%sylius.model.product_option.class%'
-#        tags:
-#            - { name: form.type }
+
 #
 #    Enhavo\Bundle\ShopBundle\Form\Type\ProductVariantCreateType:
 #        arguments:

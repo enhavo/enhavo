@@ -12,6 +12,7 @@ namespace Enhavo\Bundle\ShopBundle\Form\Type;
 use Enhavo\Bundle\FormBundle\Form\Type\CurrencyType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Enhavo\Bundle\RoutingBundle\Form\Type\RouteType;
+use Sylius\Bundle\ShippingBundle\Form\Type\ShippingCategoryChoiceType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -65,10 +66,10 @@ class ProductType extends AbstractType
             'translation_domain' => 'EnhavoShopBundle',
         ));
 
-//        $builder->add('shippingCategory', 'sylius_shipping_category_choice', array(
-//            'label' => 'product.label.shippingCategory',
-//            'translation_domain' => 'EnhavoShopBundle',
-//        ));
+        $builder->add('shippingCategory', ShippingCategoryChoiceType::class, array(
+            'label' => 'product.label.shippingCategory',
+            'translation_domain' => 'EnhavoShopBundle',
+        ));
 
         $builder->add('width', TextType::class, array(
             'label' => 'product.label.width',
@@ -87,11 +88,6 @@ class ProductType extends AbstractType
 
         $builder->add('weight', TextType::class, array(
             'label' => 'product.label.weight',
-            'translation_domain' => 'EnhavoShopBundle',
-        ));
-
-        $builder->add('volume', TextType::class, array(
-            'label' => 'product.label.volume',
             'translation_domain' => 'EnhavoShopBundle',
         ));
 
