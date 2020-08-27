@@ -72,10 +72,6 @@ class TranslationType extends AbstractType
         $resolver->setDefaults([
             'error_bubbling' => false,
             'constraints' => [
-//                new Translation([
-//                    'groups' => ['default'],
-//                    'constraints' => null
-//                ])
             ]
         ]);
 
