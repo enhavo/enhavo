@@ -197,12 +197,14 @@ sylius_product:
         product_option:
             classes:
                 model: Enhavo\Bundle\ShopBundle\Entity\ProductOption
-#                repository: Enhavo\Bundle\ShopBundle\Repository\ProductOptionRepository
+                form: Enhavo\Bundle\ShopBundle\Form\Type\ProductOptionType
+        product_attribute:
+            classes:
+                model: Enhavo\Bundle\ShopBundle\Entity\ProductAttribute
                 form: Enhavo\Bundle\ShopBundle\Form\Type\ProductOptionType
         product_variant:
             classes:
                 model: Enhavo\Bundle\ShopBundle\Entity\ProductVariant
-#                repository: Enhavo\Bundle\ShopBundle\Repository\ProductRepository
                 form: Enhavo\Bundle\ShopBundle\Form\Type\ProductType
 #winzou_state_machine:
 #    sylius_payment:

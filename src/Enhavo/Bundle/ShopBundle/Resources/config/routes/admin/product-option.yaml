@@ -25,8 +25,8 @@ sylius_product_option_create:
     defaults:
         _controller: sylius.controller.product_option:createAction
         _sylius:
+            sortable: true
             redirect: sylius_product_option_update
-#            form: enhavo_shop_product_option
             viewer:
                 translation_domain: EnhavoShopBundle
                 form:
@@ -35,6 +35,11 @@ sylius_product_option_create:
                     preview:
                         type: preview
                         route: sylius_product_option_preview
+                tabs:
+                    main:
+                        label: product.label.product
+                        translation_domain: EnhavoShopBundle
+                        template: EnhavoShopBundle:admin/resource/product-option:product-option.html.twig
 
 sylius_product_option_update:
     options:
@@ -44,6 +49,7 @@ sylius_product_option_update:
     defaults:
         _controller: sylius.controller.product_option:updateAction
         _sylius:
+            sortable: true
             viewer:
                 translation_domain: EnhavoShopBundle
                 form:
@@ -53,6 +59,11 @@ sylius_product_option_update:
                     preview:
                         type: preview
                         route: sylius_product_option_preview
+                tabs:
+                    main:
+                        label: product.label.product
+                        translation_domain: EnhavoShopBundle
+                        template: EnhavoShopBundle:admin/resource/product-option:product-option.html.twig
 
 sylius_product_option_table:
     options:
@@ -76,7 +87,7 @@ sylius_product_option_table:
                         property: code
                         width: 10
 
-sylius_product_option__delete:
+sylius_product_option_delete:
     options:
         expose: true
     path: /enhavo/shop/product/option/delete/{id}
@@ -84,7 +95,7 @@ sylius_product_option__delete:
     defaults:
         _controller: sylius.controller.product_option:deleteAction
 
-sylius_product_option__batch:
+sylius_product_option_batch:
     options:
         expose: true
     path: /enhavo/shop/product/option/batch
