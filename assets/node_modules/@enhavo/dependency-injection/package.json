@@ -15,7 +15,8 @@
   },
   "dependencies": {
     "sha1": "^1.1.1",
-    "glob": "^7.1.6"
+    "glob": "^7.1.6",
+    "yaml": "^1.10.0"
   },
   "devDependencies": {
     "acorn": "^7.3.1"
