@@ -1,0 +1,186 @@
+#sylius_product_attributes_index:
+#    options:
+#        expose: true
+#    path: /enhavo/shop/product/attribute/index
+#    methods: [GET]
+#    defaults:
+#        _controller: sylius.controller.product_attribute:indexAction
+#        _sylius:
+#            viewer:
+#
+#
+#
+#sylius_product_attributes_create:
+#    options:
+#        expose: true
+#    path: /enhavo/shop/product/attribute/create
+#    methods: [GET,POST]
+#    defaults:
+#        _controller: sylius.controller.product_attribute:createAction
+#        _sylius:
+#            redirect: sylius_product_attribute_update
+#            viewer:
+#
+#sylius_product_attributes_update:
+#    options:
+#        expose: true
+#    path: /enhavo/shop/product/attribute/update/{id}
+#    methods: [GET,POST]
+#    defaults:
+#        _controller: sylius.controller.product_attribute:updateAction
+#        _sylius:
+#            viewer:
+#
+#sylius_product_attributes_table:
+#    options:
+#        expose: true
+#    path: /enhavo/shop/product/attribute/table
+#    methods: [GET,POST]
+#    defaults:
+#        _controller: enhavo_shop.controller.product_attribute:tableAction
+#        _sylius:
+#            viewer:
+#                columns:
+#                    id:
+#                        property: id
+#                        width: 12
+#                        label: id
+#                        type: property
+#
+#sylius_product_attributes_delete:
+#    options:
+#        expose: true
+#    path: /enhavo/shop/product/attribute/delete/{id}
+#    methods: [POST]
+#    defaults:
+#        _controller: sylius.controller.product_attribute:deleteAction
+#
+#sylius_product_attributes_batch:
+#    options:
+#        expose: true
+#    path: /enhavo/shop/product/attribute/batch
+#    methods: [POST]
+#    defaults:
+#        _controller: sylius.controller.product_attribute:batchAction
+#        _sylius:
+#            paginate: false
+#            criteria:
+#                id: $ids
+#            batches:
+#                delete:
+#                    type: delete
+#
+#sylius_product_attributes_preview:
+#    options:
+#        expose: true
+#    path: /enhavo/shop/product/attribute/preview
+#    methods: [GET]
+#    defaults:
+#        _controller: sylius.controller.product_attribute:previewAction
+#        _sylius:
+#            viewer:
+#
+#sylius_product_attributes_resource_preview:
+#    options:
+#        expose: true
+#    path: /enhavo/shop/product/attribute/resource/preview
+#    methods: [POST]
+#    defaults:
+#        _controller: sylius.controller.product_attributes:previewResourceAction
+#        _sylius:
+#            viewer:
+#                strategy_options:
+#                    service: enhavo_article.controller.article:showResourceAction
+
+
+enhavo_shop_product_attribute_index:
+    options:
+        expose: true
+    path: /enhavo/shop/product/attribute/index
+    methods: [GET]
+    defaults:
+        _controller: enhavo_shop.controller.product_attribute:indexAction
+        _sylius:
+            viewer:
+
+enhavo_shop_product_attribute_create:
+    options:
+        expose: true
+    path: /enhavo/shop/product/attribute/create
+    methods: [GET,POST]
+    defaults:
+        _controller: enhavo_shop.controller.product_attribute:createAction
+        _sylius:
+            redirect: enhavo_shop_product_attribute_update
+            viewer:
+
+enhavo_shop_product_attribute_update:
+    options:
+        expose: true
+    path: /enhavo/shop/product/attribute/update/{id}
+    methods: [GET,POST]
+    defaults:
+        _controller: enhavo_shop.controller.product_attribute:updateAction
+        _sylius:
+            viewer:
+
+enhavo_shop_product_attribute_table:
+    options:
+        expose: true
+    path: /enhavo/shop/product/attribute/table
+    methods: [GET,POST]
+    defaults:
+        _controller: enhavo_shop.controller.product_attribute:tableAction
+        _sylius:
+            viewer:
+                columns:
+                    id:
+                        property: id
+                        width: 12
+                        label: id
+                        type: property
+
+enhavo_shop_product_attribute_delete:
+    options:
+        expose: true
+    path: /enhavo/shop/product/attribute/delete/{id}
+    methods: [POST]
+    defaults:
+        _controller: enhavo.controller.product_attribute:deleteAction
+
+enhavo_shop_product_attribute_batch:
+    options:
+        expose: true
+    path: /enhavo/shop/product/attribute/batch
+    methods: [POST]
+    defaults:
+        _controller: enhavo_shop.controller.product_attribute:batchAction
+        _sylius:
+            paginate: false
+            criteria:
+                id: $ids
+            batches:
+                delete:
+                    type: delete
+
+enhavo_shop_product_attribute_preview:
+    options:
+        expose: true
+    path: /enhavo/shop/product/attribute/preview
+    methods: [GET]
+    defaults:
+        _controller: enhavo_shop.controller.product_attribute:previewAction
+        _sylius:
+            viewer:
+
+enhavo_shop_product_attribute_resource_preview:
+    options:
+        expose: true
+    path: /enhavo/shop/product/attribute/resource/preview
+    methods: [POST]
+    defaults:
+        _controller: enhavo_shop.controller.product_attribute:previewResourceAction
+        _sylius:
+            viewer:
+                strategy_options:
+                    service: enhavo_article.controller.article:showResourceAction

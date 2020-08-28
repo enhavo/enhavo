@@ -186,6 +186,59 @@ jms_serializer:
 sylius_inventory:
     resources:
 
+
+#'sylius_attribute', [
+#            'resources' => [
+#                'product' => [
+#                    'subject' => $config['resources']['product']['classes']['model'],
+#                    'attribute' => [
+#                        'classes' => [
+#                            'model' => ProductAttribute::class,
+#                            'interface' => ProductAttributeInterface::class,
+#                            'controller' => ProductAttributeController::class,
+#                            'form' => ProductAttributeType::class,
+#                        ],
+#                        'translation' => [
+#                            'classes' => [
+#                                'model' => ProductAttributeTranslation::class,
+#                                'interface' => ProductAttributeTranslationInterface::class,
+#                                'form' => ProductAttributeTranslationType::class,
+#                            ],
+#                        ],
+#                    ],
+#                    'attribute_value' => [
+#                        'classes' => [
+#                            'model' => ProductAttributeValue::class,
+#                            'interface' => ProductAttributeValueInterface::class,
+#                            'repository' => ProductAttributeValueRepository::class,
+#                            'form' => ProductAttributeValueType::class,
+#                        ],
+#                    ],
+#                ],
+#            ],
+#        ]);
+
+sylius_resource:
+    resources:
+        enhavo_shop.product_attribute:
+            classes:
+                model: Enhavo\Bundle\ShopBundle\Entity\ProductAttribute
+                controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
+#                form: Enhavo\Bundle\ShopBundle\Entity\ProductAttributeType
+#                repository: App\Repository\GalleryRepository
+
+#sylius_attribute:
+#    driver: doctrine/orm
+#    resources:
+#        product:
+#        # Make sure to provide the correct Product class in the subject.
+#            subject: Enhavo\Bundle\ShopBundle\Entity\Product
+#            attribute:
+#                classes:
+#                    model: Enhavo\Bundle\ShopBundle\Entity\ProductAttribute
+#                    repository: Enhavo\Bundle\ShopBundle\Repository\ProductAttributeRepository
+#                    controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
+
 sylius_product:
     resources:
         product:
@@ -197,10 +250,6 @@ sylius_product:
         product_option:
             classes:
                 model: Enhavo\Bundle\ShopBundle\Entity\ProductOption
-                form: Enhavo\Bundle\ShopBundle\Form\Type\ProductOptionType
-        product_attribute:
-            classes:
-                model: Enhavo\Bundle\ShopBundle\Entity\ProductAttribute
                 form: Enhavo\Bundle\ShopBundle\Form\Type\ProductOptionType
         product_variant:
             classes:
@@ -245,3 +294,94 @@ sylius_product:
 #                from: [new, pending]
 #                to: void
 
+#enhavo_shop_product_attribute_index:
+#    options:
+#        expose: true
+#    path: /enhavo/shop/product/attribute/index
+#    methods: [GET]
+#    defaults:
+#        _controller: enhavo_shop.controller.product_attribute:indexAction
+#        _sylius:
+#            viewer:
+#
+#enhavo_shop_product_attribute_create:
+#    options:
+#        expose: true
+#    path: /enhavo/shop/product/attribute/create
+#    methods: [GET,POST]
+#    defaults:
+#        _controller: enhavo_shop.controller.product_attribute:createAction
+#        _sylius:
+#            redirect: enhavo_shop_product_attribute_update
+#            viewer:
+#
+#enhavo_shop_product_attribute_update:
+#    options:
+#        expose: true
+#    path: /enhavo/shop/product/attribute/update/{id}
+#    methods: [GET,POST]
+#    defaults:
+#        _controller: enhavo_shop.controller.product_attribute:updateAction
+#        _sylius:
+#            viewer:
+#
+#enhavo_shop_product_attribute_table:
+#    options:
+#        expose: true
+#    path: /enhavo/shop/product/attribute/table
+#    methods: [GET,POST]
+#    defaults:
+#        _controller: enhavo_shop.controller.product_attribute:tableAction
+#        _sylius:
+#            viewer:
+#                columns:
+#                    id:
+#                        property: id
+#                        width: 12
+#                        label: id
+#                        type: property
+#
+#enhavo_shop_product_attribute_delete:
+#    options:
+#        expose: true
+#    path: /enhavo/shop/product/attribute/delete/{id}
+#    methods: [POST]
+#    defaults:
+#        _controller: enhavo.controller.product_attribute:deleteAction
+#
+#enhavo_shop_product_attribute_batch:
+#    options:
+#        expose: true
+#    path: /enhavo/shop/product/attribute/batch
+#    methods: [POST]
+#    defaults:
+#        _controller: enhavo_shop.controller.product_attribute:batchAction
+#        _sylius:
+#            paginate: false
+#            criteria:
+#                id: $ids
+#            batches:
+#                delete:
+#                    type: delete
+#
+#enhavo_shop_product_attribute_preview:
+#    options:
+#        expose: true
+#    path: /enhavo/shop/product/attribute/preview
+#    methods: [GET]
+#    defaults:
+#        _controller: enhavo_shop.controller.product_attribute:previewAction
+#        _sylius:
+#            viewer:
+#
+#enhavo_shop_product_attribute_resource_preview:
+#    options:
+#        expose: true
+#    path: /enhavo/shop/product/attribute/resource/preview
+#    methods: [POST]
+#    defaults:
+#        _controller: enhavo_shop.controller.product_attribute:previewResourceAction
+#        _sylius:
+#            viewer:
+#                strategy_options:
+#                    service: enhavo_article.controller.article:showResourceAction

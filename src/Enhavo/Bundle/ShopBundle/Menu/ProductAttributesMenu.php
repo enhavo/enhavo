@@ -22,7 +22,7 @@ class ProductAttributeMenu extends BaseMenu
             'icon' => 'sound-mix',
             'label' => 'product.label.product_attribute',
             'translation_domain' => 'EnhavoShopBundle',
-            'route' => 'sylius_product_attribute_index',
+            'route' => 'enhavo_shop_product_attribute_index',
             'role' => 'ROLE_ENHAVO_SHOP_PRODUCT_ATTRIBUTE_INDEX',
         ]);
     }

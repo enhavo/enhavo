@@ -117,6 +117,7 @@ product:
   label:
     product: Product
     product_option: Option
+    product_attribute: Attribute
     code: Code
     title: Title
     options: Options
