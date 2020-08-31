@@ -46,9 +46,6 @@ class PolyCollectionType extends AbstractType
             $this->buildPrototypes($builder, $options);
         }
 
-        $entryKeys = $this->buildEntryKeys($options);
-        $builder->setAttribute('entry_keys', $entryKeys);
-
         $resizeListener = new ResizePolyFormListener(
             $this->prototypeManager,
             $options['prototype_storage'],
@@ -91,7 +88,7 @@ class PolyCollectionType extends AbstractType
         $view->vars['allow_delete'] = $options['allow_delete'];
 
         $view->vars['poly_collection_config'] = [
-            'entryKeys' => $form->getConfig()->getAttribute('entry_keys'),
+            'entryKeys' => $this->buildEntryKeys($options),
             'prototypeStorage' => $options['prototype_storage'],
             'collapsed' => $options['collapsed'],
         ];
