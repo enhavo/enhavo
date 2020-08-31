@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\TranslationBundle\Translation\Type;
 
 use Enhavo\Bundle\TranslationBundle\Translation\AbstractTranslationType;
 use Enhavo\Bundle\TranslationBundle\Translator\TranslatorInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class RouteTranslationType extends AbstractTranslationType
 {
@@ -53,6 +54,13 @@ class RouteTranslationType extends AbstractTranslationType
     public static function getName(): ?string
     {
         return 'route';
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'allow_null' => false
+        ]);
     }
 
 }

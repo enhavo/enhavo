@@ -164,7 +164,10 @@ class RouteTranslator implements TranslatorInterface
         $newValue = $this->getTranslation($entity, $property, $locale);
         $oldValue = $accessor->getValue($entity, $property);
         $this->originalData->store($entity, $property, null, $oldValue);
-        $accessor->setValue($entity, $property, $newValue);
+
+        if ($newValue !== null || $options['allow_null']) {
+            $accessor->setValue($entity, $property, $newValue);
+        }
     }
 
     public function detach($entity, string $property, string $locale, array $options)

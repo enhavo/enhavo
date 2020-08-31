@@ -20,3 +20,13 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: 'enhavo_route.generator', alias: 'translation_route_name' }
+
+    Enhavo\Bundle\TranslationBundle\AutoGenerator\Generator\TranslationSlugGenerator:
+        public: true
+        arguments:
+            - '@Enhavo\Bundle\TranslationBundle\Translation\TranslationManager'
+            - '@Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator'
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: 'enhavo_route.generator', alias: 'translation_slug' }
