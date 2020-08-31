@@ -104,6 +104,6 @@ class RouteTranslationTypeTest extends TestCase
 
         $type->configureOptions($resolver);
 
-        $this->assertEquals([], $resolver->getDefinedOptions());
+        $this->assertEquals(['allow_null'], $resolver->getDefinedOptions());
     }
 }

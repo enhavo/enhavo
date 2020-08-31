@@ -167,7 +167,7 @@ class RouteTranslatorTest extends TestCase
         $entity = new RouteableMock();
         $entity->setRoute($route);
 
-        $translator->translate($entity, 'route', 'en', []);
+        $translator->translate($entity, 'route', 'en', ['allow_null' => true]);
         $this->assertNotEquals($route, $entity->getRoute());
     }
 
@@ -190,12 +190,12 @@ class RouteTranslatorTest extends TestCase
 
         $translator->setTranslation($entity, 'route', 'en', $routeEn);
 
-        $translator->translate($entity, 'route', 'en', []);
+        $translator->translate($entity, 'route', 'en', ['allow_null' => false]);
         $translator->detach($entity, 'route', 'en', []);
 
         $this->assertEquals($route, $entity->getRoute());
 
-        $translator->translate($entity, 'route', 'es', []);
+        $translator->translate($entity, 'route', 'es', ['allow_null' => false]);
         $this->assertEquals($route, $entity->getRoute());
     }
 
