@@ -14,6 +14,7 @@ use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface
 use Enhavo\Bundle\TranslationBundle\Exception\TranslationException;
 use Enhavo\Bundle\TranslationBundle\Metadata\Metadata;
 use Enhavo\Bundle\TranslationBundle\Metadata\PropertyNode;
+use Enhavo\Bundle\TranslationBundle\Entity\Translation as TranslationEntity;
 use Enhavo\Component\Metadata\MetadataRepository;
 use Enhavo\Component\Type\FactoryInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -291,8 +292,8 @@ class TranslationManager
             return $entity;
         }
 
-        /** @var \Enhavo\Bundle\TranslationBundle\Entity\Translation $translation */
-        $translation = $this->entityManager->getRepository(Translation::class)->findOneBy([
+        /** @var TranslationEntity $translation */
+        $translation = $this->entityManager->getRepository(TranslationEntity::class)->findOneBy([
             'class' => $this->entityResolver->getName($class),
             'property' => 'slug',
             'translation' => $slug,
