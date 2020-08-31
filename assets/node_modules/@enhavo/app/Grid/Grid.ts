@@ -112,7 +112,39 @@ export default class Grid
     public changePage(page: number)
     {
         this.configuration.page = page;
+        this.trimPages();
         this.loadTable();
+    }
+
+    public trimPages(maxLength: number = 5)
+    {
+        this.configuration.pages.length = 0; // empty array but keep reference
+        let numberOfPages = Math.ceil(this.configuration.count / this.configuration.pagination);
+        for (let i = 1; i <= numberOfPages; i++) {
+            this.configuration.pages.push(i);
+        }
+
+        if (this.configuration.pages.length <= maxLength) {
+            return;
+        }
+
+        let leftTrim = Math.ceil((maxLength - 1) / 2);
+        let rightTrim = Math.floor((maxLength - 1) / 2);
+
+        if (this.configuration.pages.length - this.configuration.page <= rightTrim) {
+            let newRightTrim = this.configuration.pages.length - this.configuration.page;
+            leftTrim += rightTrim - newRightTrim;
+            rightTrim = newRightTrim;
+        } else if (this.configuration.page <= leftTrim) {
+            let newLeftTrim = this.configuration.page - 1;
+            rightTrim += leftTrim - newLeftTrim;
+            leftTrim = newLeftTrim;
+        }
+
+
+        this.configuration.pages.splice(0,  this.configuration.pages.indexOf(this.configuration.page) - leftTrim);
+        let rightTrimIndex = this.configuration.pages.indexOf(this.configuration.page) + rightTrim + 1;
+        this.configuration.pages.splice(rightTrimIndex, this.configuration.pages.length - rightTrimIndex + 1);
     }
 
     public changePagination(number: number)
@@ -341,6 +373,7 @@ export default class Grid
                     this.configuration.page = parseInt(response.data.pages.page);
                 }
 
+                this.trimPages();
                 this.checkSelectedRows();
                 this.checkActiveRow();
             })
