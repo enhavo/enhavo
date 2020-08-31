@@ -77,6 +77,8 @@ services:
 
     '@enhavo/app/Grid/Column/Factory/ActionFactory':
         chunk: 'grid'
+        arguments:
+            - '@enhavo/app/Action/ActionRegistry'
 
     '@enhavo/app/Grid/Column/Factory/SubFactory':
         chunk: 'grid'
