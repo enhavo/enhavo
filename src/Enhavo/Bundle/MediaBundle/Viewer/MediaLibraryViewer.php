@@ -10,9 +10,6 @@ namespace Enhavo\Bundle\MediaBundle\Viewer;
 
 use Enhavo\Bundle\AppBundle\Action\ActionManager;
 use Enhavo\Bundle\AppBundle\Viewer\AbstractActionViewer;
-use Enhavo\Bundle\MediaBundle\Media\ImageCropperManager;
-use Enhavo\Bundle\MediaBundle\Media\MediaManager;
-use Enhavo\Bundle\MediaBundle\Media\UrlResolver;
 use FOS\RestBundle\View\View;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use Symfony\Component\OptionsResolver\OptionsResolver;
