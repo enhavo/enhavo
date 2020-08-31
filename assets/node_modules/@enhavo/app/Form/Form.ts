@@ -1,4 +1,3 @@
-import * as $ from 'jquery';
 import * as _ from "lodash";
 import Tab from "@enhavo/app/Form/Tab";
 import FormData from "@enhavo/app/Form/FormData";
@@ -35,8 +34,6 @@ export default class Form
         this.flashMessenger = flashMessenger;
         this.eventDispatcher = eventDispatcher;
         this.componentRegistry = componentRegistry;
-
-
     }
 
     init() {
@@ -60,6 +57,8 @@ export default class Form
 
     public load()
     {
+        this.changeTab(this.tabs[0].key, false);
+
         this.view.loadValue('active-tab', value => {
             if (value) {
                 this.changeTab(value);
@@ -69,7 +68,7 @@ export default class Form
         });
     }
 
-    public changeTab(key: string)
+    public changeTab(key: string, store: boolean = true)
     {
         for(let tab of this.tabs) {
             if (tab.key === key) {
@@ -79,10 +78,12 @@ export default class Form
             tab.active = false;
         }
 
-        // store active tab
-        this.view.storeValue('active-tab', key, () => {
-            this.eventDispatcher.dispatch(new SaveStateEvent());
-        });
+        if (store) {
+            // store active tab
+            this.view.storeValue('active-tab', key, () => {
+                this.eventDispatcher.dispatch(new SaveStateEvent());
+            });
+        }
     }
 
     public changeForm()
