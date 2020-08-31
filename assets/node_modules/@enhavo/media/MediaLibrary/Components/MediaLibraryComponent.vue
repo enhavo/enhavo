@@ -35,6 +35,7 @@ export default class MediaLibraryComponent extends Vue
         });
 
         $(element).fileupload({
+            replaceFileInput: false,
             dataType: 'json',
             paramName: 'files',
             done: (event, data) => {
@@ -122,5 +123,3 @@ export default class MediaLibraryComponent extends Vue
     }
 }
 </script>
-
-
