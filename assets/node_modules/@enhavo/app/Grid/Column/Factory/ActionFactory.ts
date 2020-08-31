@@ -1,10 +1,18 @@
 import AbstractFactory from "@enhavo/app/Grid/Column/Factory/AbstractFactory";
 import ActionColumn from "@enhavo/app/Grid/Column/Model/ActionColumn";
-import ActionAwareApplication from "@enhavo/app/Action/ActionAwareApplication";
+import ActionRegistry from "@enhavo/app/Action/ActionRegistry";
 
 export default class ActionFactory extends AbstractFactory
 {
+    private readonly registry: ActionRegistry;
+
+    constructor(registry: ActionRegistry)
+    {
+        super();
+        this.registry = registry;
+    }
+
     createNew(): ActionColumn {
-        return new ActionColumn((<ActionAwareApplication>this.application).getActionRegistry());
+        return new ActionColumn(this.registry);
     }
 }
