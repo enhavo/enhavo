@@ -29,6 +29,10 @@ stof_doctrine_extensions:
 
 enhavo_routing:
     classes:
+        Enhavo\Bundle\RoutingBundle\Entity\Route:
+            router:
+                default:
+                    type: route
 
 enhavo_app:
     form_themes:

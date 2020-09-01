@@ -152,6 +152,16 @@ class TranslationManager
         return $translationValues;
     }
 
+    public function getProperty($resource, $property, $locale)
+    {
+        $translation = $this->getTranslation($resource, $property);
+        if ($locale === $this->getDefaultLocale()) {
+            return $translation->getDefaultValue($resource, $property);
+        }
+
+        return $translation->getTranslation($resource, $property, $locale);
+    }
+
     public function setTranslation($data, $property, $locale, $value)
     {
         $this->getTranslation($data, $property)->setTranslation($data, $property, $locale, $value);
@@ -261,6 +271,11 @@ class TranslationManager
         return $metadata->getProperties() ?? [];
     }
 
+    /**
+     * @param $data
+     * @param $propertyName
+     * @return Translation
+     */
     private function getTranslation($data, $propertyName)
     {
         /** @var Metadata $metadata */
