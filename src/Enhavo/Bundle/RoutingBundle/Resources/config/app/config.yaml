@@ -32,7 +32,7 @@ enhavo_routing:
         Enhavo\Bundle\RoutingBundle\Entity\Route:
             router:
                 default:
-                    type: direct
+                    type: route
 
 enhavo_app:
     form_themes:
