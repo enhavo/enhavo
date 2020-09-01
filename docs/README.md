@@ -11,5 +11,5 @@ Autobuilder
 
 ```bash
 $ pip install sphinx-autobuild
-$ sphinx-autobuild docs/source build/docs
+$ sphinx-autobuild source build/html
 ```
