@@ -53,6 +53,17 @@ class FileTranslationTypeTest extends TestCase
         $this->assertEquals($file, $type->getTranslation([], new \stdClass(), 'file', 'de'));
     }
 
+
+    public function testGetDefaultValue()
+    {
+        $fileTranslator = $this->createDependencies();
+        $file = $this->getMockBuilder(FileInterface::class)->getMock();
+        $fileTranslator->expects($this->once())->method('getDefaultValue')->willReturn($file);
+
+        $type = $this->createInstance($fileTranslator);
+        $this->assertEquals($file, $type->getDefaultValue([], new \stdClass(), 'file'));
+    }
+
     public function testTranslate()
     {
         $routeTranslator = $this->createDependencies();

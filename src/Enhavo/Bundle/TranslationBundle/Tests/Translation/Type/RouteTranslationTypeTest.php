@@ -60,6 +60,18 @@ class RouteTranslationTypeTest extends TestCase
         $this->assertTrue($route === $type->getTranslation([], $data, 'route', 'de'));
     }
 
+    public function testGetDefaultValue()
+    {
+        $route = $this->getMockBuilder(RouteInterface::class)->getMock();
+        $routeTranslator = $this->createDependencies();
+        $routeTranslator->expects($this->once())->method('getDefaultValue')->willReturn($route);
+
+        $data = new \stdClass();
+
+        $type = $this->createInstance($routeTranslator);
+        $this->assertTrue($route === $type->getDefaultValue([], $data, 'route'));
+    }
+
     public function testTranslate()
     {
         $routeTranslator = $this->createDependencies();

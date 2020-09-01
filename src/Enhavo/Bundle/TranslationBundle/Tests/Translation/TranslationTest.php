@@ -35,6 +35,14 @@ class TranslationTest extends TestCase
         $type->getTranslation(null, 'field', 'en');
     }
 
+    public function testGetDefaultValue()
+    {
+        $typeMock = $this->createDependencies();
+        $typeMock->expects($this->once())->method('getDefaultValue');
+        $type = new Translation($typeMock, [], []);
+        $type->getDefaultValue(null, 'field');
+    }
+
     public function testEntityUpdates()
     {
         $entity = new TranslatableMock();

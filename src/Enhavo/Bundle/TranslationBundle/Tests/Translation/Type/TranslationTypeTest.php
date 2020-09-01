@@ -14,6 +14,7 @@ class TranslationTypeTest extends TestCase
         $type = new TranslationType();
         $this->assertNull($type->setTranslation([], null, 'prop', 'locale', 'value'));
         $this->assertNull($type->getTranslation([], null, 'prop', 'locale'));
+        $this->assertNull($type->getDefaultValue([], null, 'prop'));
         $type->translate(null, 'prop', 'locale', []);
         $type->detach(null, 'prop', 'locale', []);
         $type->delete(null, 'prop');
