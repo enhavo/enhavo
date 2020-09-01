@@ -7,7 +7,7 @@ enhavo_newsletter_subscriber_index:
         _controller: enhavo_newsletter.controller.subscriber:indexAction
         _sylius:
             viewer:
-                label: subscriber.label.subscriber
+                label: subscriber.label.subscribers
                 translation_domain: EnhavoNewsletterBundle
                 table_route_parameters:
                     group: $id
@@ -31,6 +31,7 @@ enhavo_newsletter_subscriber_create:
                 method: createWithGroupId
                 arguments: $group
             viewer:
+                label: subscriber.label.create
                 translation_domain: EnhavoNewsletterBundle
 
 enhavo_newsletter_subscriber_update:
@@ -42,6 +43,7 @@ enhavo_newsletter_subscriber_update:
         _controller: enhavo_newsletter.controller.subscriber:updateAction
         _sylius:
             viewer:
+                label: subscriber.label.update
                 translation_domain: EnhavoNewsletterBundle
 
 enhavo_newsletter_subscriber_table:

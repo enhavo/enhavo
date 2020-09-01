@@ -21,6 +21,8 @@ enhavo_newsletter_group_create:
         _sylius:
             redirect: enhavo_newsletter_group_update
             viewer:
+                label: group.label.create
+                translation_domain: EnhavoNewsletterBundle
 
 enhavo_newsletter_group_update:
     options:
@@ -31,6 +33,8 @@ enhavo_newsletter_group_update:
         _controller: enhavo_newsletter.controller.group:updateAction
         _sylius:
             viewer:
+                label: group.label.update
+                translation_domain: EnhavoNewsletterBundle
 
 enhavo_newsletter_group_table:
     options:

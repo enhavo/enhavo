@@ -19,8 +19,6 @@ enhavo_redirect_redirect_create:
         _controller: enhavo_redirect.controller.redirect:createAction
         _sylius:
             redirect: enhavo_redirect_redirect_update
-            viewer:
-                translation_domain: EnhavoRedirectBundle
 
 enhavo_redirect_redirect_update:
     options:
@@ -29,9 +27,6 @@ enhavo_redirect_redirect_update:
     methods: [GET,POST]
     defaults:
         _controller: enhavo_redirect.controller.redirect:updateAction
-        _sylius:
-            viewer:
-                translation_domain: EnhavoRedirectBundle
 
 enhavo_redirect_redirect_table:
     options:

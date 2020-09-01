@@ -65,7 +65,10 @@ subscriber:
       create: 'Subscriber create'
       delete: 'Subscriber delete'
   label:
+    create: 'Create Subscriber'
+    update: 'Edit Subscriber'
     subscriber: Subscriber
+    subscribers: 'Subscribers'
     active: 'Active'
     email: 'E-Mail'
   form:
@@ -81,6 +84,8 @@ subscriber:
       sent_again: 'Please confirm your registration'
 group:
   label:
+    create: 'Create Group'
+    update: 'Edit Group'
     group: Group
     groups: Groups
     name: 'Name'
