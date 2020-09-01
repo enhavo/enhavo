@@ -41,3 +41,9 @@ services:
             - '@Enhavo\Bundle\TranslationBundle\Translator\Media\FileTranslator'
         tags:
             - { name: enhavo_translation.translation }
+
+    Enhavo\Bundle\TranslationBundle\Twig\TranslationExtension:
+        arguments:
+            - '@Enhavo\Bundle\TranslationBundle\Translation\TranslationManager'
+        tags:
+            - { name: twig.extension }

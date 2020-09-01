@@ -25,6 +25,11 @@ class Translation extends AbstractContainerType
         return $this->type->setTranslation($this->options, $data, $property, $locale, $value);
     }
 
+    public function getDefaultValue($data, $property)
+    {
+        return $this->type->getDefaultValue($this->options, $data, $property);
+    }
+
     public function translate($data, string $property, string $locale)
     {
         $this->type->translate($data, $property, $locale, $this->options);

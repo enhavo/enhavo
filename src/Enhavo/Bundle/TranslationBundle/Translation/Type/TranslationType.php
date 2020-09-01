@@ -19,6 +19,11 @@ class TranslationType extends AbstractType implements TranslationTypeInterface
         return null;
     }
 
+    public function getDefaultValue(array $options, $data, string $property)
+    {
+        return null;
+    }
+
     public function translate($object, string $property, string $locale, array $options): void
     {
 

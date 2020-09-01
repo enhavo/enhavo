@@ -39,3 +39,10 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: 'enhavo_route.strategy', alias: 'route' }
+
+    Enhavo\Bundle\RoutingBundle\Router\Strategy\DirectStrategy:
+        public: true
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: 'enhavo_route.strategy', alias: 'direct' }

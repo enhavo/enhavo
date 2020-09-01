@@ -17,7 +17,7 @@ class RouteExtension extends AbstractExtension
         );
     }
 
-    public function getRoutes(): string
+    public function getRoutes(): ?string
     {
         $file = $this->container->getParameter('kernel.project_dir').'/public/js/fos_js_routes.json';
         if(file_exists($file)) {

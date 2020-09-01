@@ -8,58 +8,18 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Translator\Route;
 
-use Doctrine\ORM\EntityManagerInterface;
-use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface;
+use Doctrine\ORM\EntityRepository;
 use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
 use Enhavo\Bundle\TranslationBundle\Entity\TranslationRoute;
-use Enhavo\Bundle\TranslationBundle\Translator\DataMap;
-use Enhavo\Bundle\TranslationBundle\Translator\TranslatorInterface;
+use Enhavo\Bundle\TranslationBundle\Translator\AbstractTranslator;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
-class RouteTranslator implements TranslatorInterface
+/**
+ * Class RouteTranslator
+ * @package Enhavo\Bundle\TranslationBundle\Translator\Route
+ */
+class RouteTranslator extends AbstractTranslator
 {
-
-    /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
-
-    /**
-     * @var EntityResolverInterface
-     */
-    private $entityResolver;
-
-    /**
-     * @var string
-     */
-    private $defaultLocale;
-
-    /**
-     * @var DataMap
-     */
-    private $buffer;
-
-    /**
-     * @var DataMap
-     */
-    private $originalData;
-
-    /**
-     * RouteTranslator constructor.
-     * @param EntityManagerInterface $entityManager
-     * @param EntityResolverInterface $entityResolver
-     * @param string $defaultLocale
-     */
-    public function __construct(EntityManagerInterface $entityManager, EntityResolverInterface $entityResolver, string $defaultLocale)
-    {
-        $this->entityManager = $entityManager;
-        $this->entityResolver = $entityResolver;
-        $this->defaultLocale = $defaultLocale;
-
-        $this->buffer = new DataMap();
-        $this->originalData = new DataMap();
-    }
-
     public function setTranslation($entity, $property, $locale, $value): void
     {
         if ($locale == $this->defaultLocale) {
@@ -147,7 +107,7 @@ class RouteTranslator implements TranslatorInterface
         );
     }
 
-    private function getRepository()
+    public function getRepository(): EntityRepository
     {
         return $this->entityManager->getRepository(TranslationRoute::class);
     }
@@ -168,17 +128,5 @@ class RouteTranslator implements TranslatorInterface
         if ($newValue !== null || $options['allow_null']) {
             $accessor->setValue($entity, $property, $newValue);
         }
-    }
-
-    public function detach($entity, string $property, string $locale, array $options)
-    {
-        $accessor = PropertyAccess::createPropertyAccessor();
-
-        $originalValue = $this->originalData->load($entity, $property, null);
-        $translationValue = $accessor->getValue($entity, $property);
-        $this->setTranslation($entity, $property, $locale, $translationValue);
-        $accessor->setValue($entity, $property, $originalValue);
-
-        $this->originalData->delete($entity);
     }
 }

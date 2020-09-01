@@ -52,6 +52,11 @@ class TextTranslationType extends AbstractTranslationType
         return $this->translator->getTranslation($data, $property, $locale);
     }
 
+    public function getDefaultValue(array $options, $data, string $property)
+    {
+        return $this->translator->getDefaultValue($data, $property);
+    }
+
     public static function getName(): ?string
     {
         return 'text';
