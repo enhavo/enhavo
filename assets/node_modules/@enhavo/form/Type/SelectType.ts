@@ -1,7 +1,6 @@
 import FormType from "@enhavo/app/Form/FormType";
 import * as $ from "jquery";
 import 'select2'
-import 'select2/select2.css'
 import 'select2/select2_locale_de.js'
 import 'select2/select2_locale_en.js.template'
 import Sortable from 'sortablejs';
