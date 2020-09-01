@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="Enhavo\Bundle\SearchBundle\Model\Database\DataSet" table="search_data_set">
+        <id name="id" type="integer" column="id">
+            <generator />
+        </id>
+
+        <field name="contentId" type="integer" nullable="true" />
+        <field name="contentClass" nullable="true" />
+
+        <one-to-many field="indexes" target-entity="Enhavo\Bundle\SearchBundle\Model\Database\Index" mapped-by="dataSet" orphan-removal="true">
+            <cascade>
+                <cascade-persist />
+                <cascade-remove />
+                <cascade-refresh />
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="filters" target-entity="Enhavo\Bundle\SearchBundle\Model\Database\Filter" mapped-by="dataSet" orphan-removal="true">
+            <cascade>
+                <cascade-persist />
+                <cascade-remove />
+                <cascade-refresh />
+            </cascade>
+        </one-to-many>
+    </entity>
+</doctrine-mapping>

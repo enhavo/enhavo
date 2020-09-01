@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="Enhavo\Bundle\CalendarBundle\Entity\Appointment" table="calendar_appointment" repository-class="Enhavo\Bundle\CalendarBundle\Repository\AppointmentRepository">
+        <field name="teaser" type="text" nullable="true" />
+        <field name="dateFrom" type="datetime" nullable="true" />
+        <field name="dateTo" type="datetime" nullable="true" />
+        <field name="externalId" type="text" nullable="true" />
+        <field name="locationLongitude" type="text" nullable="true" />
+        <field name="locationLatitude" type="text" nullable="true" />
+        <field name="locationName" type="text" nullable="true" />
+        <field name="locationCity" type="text" nullable="true" />
+        <field name="locationCountry" type="text" nullable="true" />
+        <field name="locationStreet" type="text" nullable="true" />
+        <field name="locationZip" type="text" nullable="true" />
+        <field name="repeatRule" type="text" nullable="true" />
+        <field name="importerName" type="text" nullable="true" />
+        <field name="notImporterHandled" type="boolean" nullable="true" />
+
+        <one-to-one field="content" target-entity="Enhavo\Bundle\BlockBundle\Model\NodeInterface">
+            <cascade>
+                <cascade-persist />
+                <cascade-remove />
+                <cascade-refresh />
+            </cascade>
+        </one-to-one>
+
+        <one-to-one field="picture" target-entity="Enhavo\Bundle\MediaBundle\Model\FileInterface" orphan-removal="true">
+            <cascade>
+                <cascade-persist />
+                <cascade-remove />
+                <cascade-refresh />
+            </cascade>
+        </one-to-one>
+    </entity>
+</doctrine-mapping>

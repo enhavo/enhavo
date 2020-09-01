@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="Enhavo\Bundle\TemplateBundle\Entity\Template" table="template_template" repository-class="Enhavo\Bundle\TemplateBundle\Repository\TemplateRepository">
+        <id name="id" type="integer" column="id">
+            <generator />
+        </id>
+
+        <field name="code" length="255" nullable="true" />
+
+        <one-to-one field="content" target-entity="Enhavo\Bundle\BlockBundle\Model\NodeInterface">
+            <cascade>
+                <cascade-persist />
+                <cascade-remove />
+                <cascade-refresh />
+            </cascade>
+        </one-to-one>
+
+        <one-to-one field="route" target-entity="Enhavo\Bundle\RoutingBundle\Model\RouteInterface">
+            <cascade>
+                <cascade-persist />
+                <cascade-remove />
+                <cascade-refresh />
+            </cascade>
+        </one-to-one>
+    </entity>
+</doctrine-mapping>

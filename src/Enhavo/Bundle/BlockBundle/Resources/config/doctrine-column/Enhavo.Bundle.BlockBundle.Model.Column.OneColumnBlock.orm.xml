@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="Enhavo\Bundle\BlockBundle\Model\Column\OneColumnBlock" table="block_one_column_block">
+        <many-to-one field="column" target-entity="Enhavo\Bundle\BlockBundle\Model\NodeInterface">
+            <cascade>
+                <cascade-persist />
+                <cascade-remove />
+                <cascade-refresh />
+            </cascade>
+            <join-column on-delete="CASCADE">
+            </join-column>
+        </many-to-one>
+    </entity>
+</doctrine-mapping>

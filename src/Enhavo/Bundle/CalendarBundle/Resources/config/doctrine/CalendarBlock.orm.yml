@@ -1,5 +1,0 @@
-Enhavo\Bundle\CalendarBundle\Entity\CalendarBlock:
-    type: entity
-    table: enhavo_calendar_calendar_block
-
-    lifecycleCallbacks: {  }

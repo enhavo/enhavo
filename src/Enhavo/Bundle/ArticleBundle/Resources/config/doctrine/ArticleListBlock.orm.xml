@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="Enhavo\Bundle\ArticleBundle\Entity\ArticleListBlock" table="article_article_list_block">
+        <field name="limit" column="`limit`" type="integer" nullable="true" />
+        <field name="pagination" column="pagination" type="boolean" nullable="true" />
+    </entity>
+</doctrine-mapping>

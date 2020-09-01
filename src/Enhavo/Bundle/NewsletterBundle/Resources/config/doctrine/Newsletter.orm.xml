@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping">
+    <entity name="Enhavo\Bundle\NewsletterBundle\Entity\Newsletter" table="newsletter_newsletter" repository-class="Enhavo\Bundle\NewsletterBundle\Repository\NewsletterRepository">
+        <id name="id" type="integer" column="id">
+            <generator />
+        </id>
+
+        <field name="slug" length="255" nullable="true">
+            <gedmo:slug fields="subject" separator="-" style="default" updatable="false" />
+        </field>
+        <field name="subject" length="255" nullable="true" />
+        <field name="state" nullable="true" />
+        <field name="template" nullable="true" />
+        <field name="startAt" type="datetime" nullable="true" />
+        <field name="finishAt" type="datetime" nullable="true" />
+        <field name="createdAt" type="datetime" nullable="true">
+            <gedmo:timestampable on="create" />
+        </field>
+
+        <one-to-one field="content" target-entity="Enhavo\Bundle\BlockBundle\Model\NodeInterface">
+            <cascade>
+                <cascade-persist/>
+                <cascade-refresh/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-one>
+
+        <one-to-many field="receivers" target-entity="Enhavo\Bundle\NewsletterBundle\Entity\Receiver" mapped-by="newsletter" orphan-removal="true">
+            <cascade>
+                <cascade-persist/>
+                <cascade-refresh/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <many-to-many field="groups" target-entity="Enhavo\Bundle\NewsletterBundle\Model\GroupInterface">
+            <cascade>
+                <cascade-persist/>
+                <cascade-refresh/>
+            </cascade>
+            <join-table name="newsletter_newsletter_group">
+                <join-columns>
+                    <join-column name="newsletter_id" />
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="group_id" />
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
+
+        <many-to-many field="attachments" target-entity="Enhavo\Bundle\MediaBundle\Model\FileInterface" orphan-removal="true">
+            <cascade>
+                <cascade-persist/>
+                <cascade-refresh/>
+            </cascade>
+            <join-table name="newsletter_newsletter_attachment">
+                <join-columns>
+                    <join-column name="newsletter_id" />
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="file_id" />
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
+    </entity>
+</doctrine-mapping>

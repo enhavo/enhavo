@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="Enhavo\Bundle\TranslationBundle\Entity\Translation" table="translation_translation" repository-class="Enhavo\Bundle\TranslationBundle\Repository\TranslationRepository">
+        <indexes>
+            <index name="IDX_REFERENCE" columns="refId,class,property,locale" />
+        </indexes>
+
+        <id name="id" type="integer" column="id">
+            <generator />
+        </id>
+
+        <field name="class" nullable="true" />
+        <field name="property" nullable="true" />
+        <field name="refId" type="integer" nullable="true" />
+        <field name="locale" nullable="true" />
+        <field name="translation" type="text" nullable="true" />
+    </entity>
+</doctrine-mapping>

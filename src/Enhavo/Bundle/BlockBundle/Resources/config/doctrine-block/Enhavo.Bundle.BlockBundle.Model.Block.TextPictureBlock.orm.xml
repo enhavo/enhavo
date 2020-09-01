@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="Enhavo\Bundle\BlockBundle\Model\Block\TextPictureBlock" table="block_text_picture_block">
+        <field name="text" type="text" nullable="true" />
+        <field name="title" length="255" nullable="true" />
+        <field name="caption" length="255" nullable="true" />
+        <field name="textLeft" type="boolean" nullable="true" />
+        <field name="float" column="`float`" type="boolean" nullable="true" />
+        <field name="layout" type="integer" nullable="true" />
+
+        <one-to-one field="file" target-entity="Enhavo\Bundle\MediaBundle\Model\FileInterface">
+            <cascade>
+                <cascade-persist />
+                <cascade-remove />
+                <cascade-refresh />
+            </cascade>
+        </one-to-one>
+    </entity>
+</doctrine-mapping>

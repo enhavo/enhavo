@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="Enhavo\Bundle\NavigationBundle\Entity\Navigation" table="navigation_navigation" repository-class="Enhavo\Bundle\NavigationBundle\Repository\NavigationRepository">
+        <id name="id" type="integer" column="id">
+            <generator />
+        </id>
+
+        <field name="name" length="255" nullable="true" />
+        <field name="code" length="255" nullable="true" />
+
+        <one-to-many field="nodes" target-entity="Enhavo\Bundle\NavigationBundle\Model\NodeInterface" mapped-by="navigation" orphan-removal="true">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+            <order-by>
+                <order-by-field name="position" />
+            </order-by>
+        </one-to-many>
+    </entity>
+</doctrine-mapping>

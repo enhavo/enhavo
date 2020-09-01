@@ -1,5 +1,0 @@
-Enhavo\Bundle\ShopBundle\Entity\Promotion:
-    type: entity
-    table: shop_promotion
-
-    lifecycleCallbacks: {  }

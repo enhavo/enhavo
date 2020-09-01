@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="Enhavo\Bundle\NavigationBundle\Entity\Link" table="navigation_link" repository-class="Enhavo\Bundle\NavigationBundle\Repository\LinkRepository">
+        <id name="id" type="integer" column="id">
+            <generator />
+        </id>
+
+        <field name="link" length="1023" nullable="true" />
+        <field name="target" length="255" nullable="true" />
+
+        <many-to-one field="node" target-entity="Enhavo\Bundle\NavigationBundle\Model\NodeInterface">
+            <cascade>
+                <cascade-persist />
+            </cascade>
+            <join-column on-delete="CASCADE" />
+        </many-to-one>
+    </entity>
+</doctrine-mapping>
