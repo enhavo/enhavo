@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="Enhavo\Bundle\RoutingBundle\Entity\Route" table="routing_route" repository-class="Enhavo\Bundle\RoutingBundle\Repository\RouteRepository">
+        <indexes>
+            <index name="name_idx" columns="name" />
+            <index name="prefix_idx" columns="staticPrefix" />
+        </indexes>
+
+        <id name="id" type="integer" column="id">
+            <generator />
+        </id>
+
+        <field name="variablePattern" length="255" nullable="true" />
+        <field name="staticPrefix" column="staticPrefix" length="255" nullable="true" />
+        <field name="name" length="255" nullable="true" />
+        <field name="position" type="integer" nullable="true" />
+        <field name="contentClass" length="255" nullable="true" />
+        <field name="contentId" type="integer" nullable="true" />
+    </entity>
+</doctrine-mapping>

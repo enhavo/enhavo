@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="Enhavo\Bundle\BlockBundle\Model\Block\TextBlock" table="block_text_block">
+        <field name="title" length="255" nullable="true" />
+        <field name="text" type="text" nullable="true" />
+    </entity>
+</doctrine-mapping>

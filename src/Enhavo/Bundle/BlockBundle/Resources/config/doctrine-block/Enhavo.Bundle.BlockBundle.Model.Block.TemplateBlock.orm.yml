@@ -1,7 +1,0 @@
-Enhavo\Bundle\BlockBundle\Model\Block\TemplateBlock:
-    type: entity
-    table: block_template_block
-
-    fields:
-
-    lifecycleCallbacks: {  }

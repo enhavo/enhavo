@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="Enhavo\Bundle\NewsletterBundle\Entity\Group" table="newsletter_group" repository-class="Enhavo\Bundle\NewsletterBundle\Repository\GroupRepository">
+        <id name="id" type="integer" column="id">
+            <generator />
+        </id>
+
+        <field name="name" type="text" nullable="true" />
+        <field name="code" nullable="true" />
+
+        <many-to-many field="subscribers" target-entity="Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface" mapped-by="groups" />
+        <many-to-many field="newsletters" target-entity="Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface" mapped-by="groups" />
+    </entity>
+</doctrine-mapping>

@@ -2,16 +2,14 @@
 
 namespace Enhavo\Bundle\SearchBundle;
 
-use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\ConfigCompilerPass;
+use Doctrine\ORM\Mapping\Driver\XmlDriver;
 use Enhavo\Bundle\SearchBundle\DependencyInjection\Compiler\SearchEngineCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Enhavo\Bundle\AppBundle\Type\TypeCompilerPass;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
-use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\DependencyInjection\Definition;
 use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
 use Doctrine\Common\Persistence\Mapping\Driver\DefaultFileLocator;
-use Doctrine\ORM\Mapping\Driver\YamlDriver;
 
 class EnhavoSearchBundle extends Bundle
 {
@@ -40,9 +38,9 @@ class EnhavoSearchBundle extends Bundle
 
     private function buildDoctrineItemCompilerPass($configDir, $namespace, $enableParameter = false)
     {
-        $arguments = array(array(realpath(sprintf('%s/Resources/config/%s', __DIR__, $configDir))), '.orm.yml');
+        $arguments = array(array(realpath(sprintf('%s/Resources/config/%s', __DIR__, $configDir))), '.orm.xml');
         $locator = new Definition(DefaultFileLocator::class, $arguments);
-        $driver = new Definition(YamlDriver::class, array($locator));
+        $driver = new Definition(XmlDriver::class, array($locator));
 
         return new DoctrineOrmMappingsPass(
             $driver,

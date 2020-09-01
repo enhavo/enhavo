@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="Enhavo\Bundle\UserBundle\Entity\Group" table="user_group" repository-class="Enhavo\Bundle\UserBundle\Repository\GroupRepository">
+        <id name="id" type="integer" column="id">
+            <generator />
+        </id>
+
+        <many-to-many field="users" target-entity="Enhavo\Bundle\UserBundle\Model\UserInterface" mapped-by="groups" />
+    </entity>
+</doctrine-mapping>

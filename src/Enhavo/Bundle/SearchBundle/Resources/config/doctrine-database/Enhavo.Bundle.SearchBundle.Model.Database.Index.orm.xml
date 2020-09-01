@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="Enhavo\Bundle\SearchBundle\Model\Database\Index" table="search_index" repository-class="Enhavo\Bundle\SearchBundle\Repository\IndexRepository">
+        <id name="id" type="integer" column="id">
+            <generator />
+        </id>
+
+        <field name="word" length="255" nullable="true" />
+        <field name="locale" length="255" nullable="true" />
+        <field name="weight" type="integer" nullable="true" />
+        <field name="score" type="float" nullable="true" />
+
+        <many-to-one field="dataSet" target-entity="Enhavo\Bundle\SearchBundle\Model\Database\DataSet" inversed-by="indexes">
+            <join-column on-delete="CASCADE" />
+        </many-to-one>
+    </entity>
+</doctrine-mapping>

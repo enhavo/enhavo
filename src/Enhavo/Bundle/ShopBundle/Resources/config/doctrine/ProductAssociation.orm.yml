@@ -1,3 +1,0 @@
-Enhavo\Bundle\ShopBundle\Entity\ProductAssociation:
-    type: entity
-    table: shop_product_association

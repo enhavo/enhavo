@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="Enhavo\Bundle\NavigationBundle\Entity\Submenu" table="navigation_submenu" repository-class="Enhavo\Bundle\NavigationBundle\Repository\SubmenuRepository">
+        <id name="id" type="integer" column="id">
+            <generator />
+        </id>
+
+        <many-to-one field="node" target-entity="Enhavo\Bundle\NavigationBundle\Model\NodeInterface" />
+    </entity>
+</doctrine-mapping>
