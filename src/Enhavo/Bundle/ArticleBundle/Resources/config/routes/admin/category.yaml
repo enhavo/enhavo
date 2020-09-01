@@ -31,8 +31,6 @@ enhavo_article_category_create:
                 method: createNewOnTaxonomy
                 arguments:
                     - 'article_category'
-            viewer:
-                translation_domain: EnhavoTaxonomyBundle
 
 enhavo_article_category_update:
     options:
@@ -44,7 +42,6 @@ enhavo_article_category_update:
         _sylius:
             form: 'Enhavo\Bundle\ArticleBundle\Form\Type\CategoryType'
             viewer:
-                translation_domain: EnhavoTaxonomyBundle
                 actions_secondary:
                     delete:
                         type: delete

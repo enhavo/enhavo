@@ -31,8 +31,6 @@ enhavo_article_tag_create:
                 method: createNewOnTaxonomy
                 arguments:
                     - 'article_tag'
-            viewer:
-                translation_domain: EnhavoTaxonomyBundle
 
 enhavo_article_tag_update:
     options:
@@ -45,7 +43,6 @@ enhavo_article_tag_update:
             form: Enhavo\Bundle\ArticleBundle\Form\Type\TagType
             serialization_groups: ['form']
             viewer:
-                translation_domain: EnhavoTaxonomyBundle
                 actions_secondary:
                     delete:
                         type: delete
