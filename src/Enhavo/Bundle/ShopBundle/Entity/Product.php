@@ -12,14 +12,11 @@ use Enhavo\Bundle\RoutingBundle\Entity\Route;
 use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
 use Enhavo\Bundle\RoutingBundle\Model\Routeable;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
-//use Enhavo\Bundle\ShopBundle\Model\ProductInterface;
-use Sylius\Component\Attribute\Model\AttributeSubjectInterface;
 use Sylius\Component\Product\Model\ProductInterface;
 use Sylius\Component\Product\Model\Product as SyliusProduct;
 use Sylius\Component\Taxation\Model\TaxRateInterface;
 use Sylius\Component\Shipping\Model\ShippingCategoryInterface;
 
-//class Product extends SyliusProduct implements ProductInterface, Routeable
 class Product extends SyliusProduct implements ProductInterface, Routeable
 {
     /**
