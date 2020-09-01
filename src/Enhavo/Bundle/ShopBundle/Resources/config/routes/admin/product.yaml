@@ -134,3 +134,20 @@ sylius_product_resource_preview:
                 strategy_options:
                     service: enhavo_article.controller.article:showResourceAction
 
+sylius_product_auto_complete:
+   options:
+       expose: true
+   path: /enhavo/shop/product/{id}/auto_complete
+   methods: [GET]
+   defaults:
+       _controller: enhavo_form.controller.auto_complete:searchAction
+       _config:
+           class: Enhavo\Bundle\ShopBundle\Entity\Product
+           repository:
+               method: findByTerm
+               arguments:
+                  - expr:configuration.getSearchTerm()
+                  - expr:request.get('id')
+                  - expr:configuration.getLimit()
+           choice_label: name
+

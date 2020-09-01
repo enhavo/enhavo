@@ -8,6 +8,7 @@ services:
             - '%sylius.model.product.class%'
             - '%sylius.model.tax_rate.class%'
             - '%sylius.model.product_option.class%'
+            - '@sylius.form.event_subscriber.product_variant_generator'
         tags:
             - { name: form.type }
 

@@ -9,17 +9,22 @@
 
 namespace Enhavo\Bundle\ShopBundle\Form\Type;
 
+use Enhavo\Bundle\FormBundle\Form\Type\AutoCompleteEntityType;
 use Enhavo\Bundle\FormBundle\Form\Type\CurrencyType;
 use Enhavo\Bundle\FormBundle\Form\Type\ListType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Enhavo\Bundle\RoutingBundle\Form\Type\RouteType;
+use Enhavo\Bundle\ShopBundle\Entity\Product;
 use Sylius\Bundle\ProductBundle\Form\Type\ProductAttributeValueType;
 use Sylius\Bundle\ProductBundle\Form\Type\ProductVariantGenerationType;
 use Sylius\Bundle\ShippingBundle\Form\Type\ShippingCategoryChoiceType;
+use Sylius\Component\Product\Model\ProductAssociationInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -54,6 +59,28 @@ class ProductType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder
+            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+                /** @var integer $id */
+                $form = $event->getForm();
+                $product = $event->getData();
+                if ($product instanceof Product) {
+                    $id = $product->getId();
+                    $form->add('associations', AutoCompleteEntityType::class, [
+                        'label' => 'product.label.associations',
+                        'translation_domain' => 'EnhavoShopBundle',
+                        'multiple' => true,
+                        'class' => ProductAssociationInterface::class,
+                        'route' => "sylius_product_auto_complete",
+                        'route_parameters' => [
+                            'id' => isset($id) ? $id : 0
+                        ]
+                    ]);
+                }
+            })
+        ;
+
+
         $builder->add('title', TextType::class, array(
             'label' => 'product.label.title',
             'translation_domain' => 'EnhavoShopBundle',
@@ -131,6 +158,7 @@ class ProductType extends AbstractType
             'by_reference' => false,
             'label' => false,
         ]);
+
 //        $builder->add('variants', ListType::class, [
 //            'entry_type' => ProductVariantGenerationType::class,
 //            'allow_add' => false,

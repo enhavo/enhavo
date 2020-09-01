@@ -132,6 +132,7 @@ product:
     weight: Weight
     volume: Volume
     taxRate: Tax rate
+    associations: Associations
   message:
     error:
       not_found: 'Requested product was not found.'
