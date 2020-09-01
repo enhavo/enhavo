@@ -177,3 +177,17 @@ If you are not use ``dev-master`` you can skip this step.
 Check the :doc:`Extend from resource </guides/resource/extend-from-resource>` guide for more information. Notice that before the ``discrName`` was ``extend``.
 If you add some other name, beware to also provide some Doctrine Migrations to update the ``discr`` column. If you don't know, if and for what resource you have to put
 the extends configuration. Just search for ``model`` inside ``config/packages/*`` and see where you redefine a model. At least for this models you have to provide the configuration.
+
+.. rubric:: 18. Rename strategy type ``route`` to ``routable`` for Router.
+
+.. code:: yaml
+
+  enhavo_routing:
+      classes:
+          App\MyEntity:
+              router:
+                  default:
+                      # before
+                      type: route
+                      # now
+                      type: routable
