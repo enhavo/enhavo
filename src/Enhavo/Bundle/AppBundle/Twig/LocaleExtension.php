@@ -31,7 +31,7 @@ class LocaleExtension extends AbstractExtension
     public function getFunctions()
     {
         return array(
-            new TwigFunction('get_locale', array($this, 'resolveLocale')),
+            new TwigFunction('get_locale', array($this, 'getLocale')),
         );
     }
 
