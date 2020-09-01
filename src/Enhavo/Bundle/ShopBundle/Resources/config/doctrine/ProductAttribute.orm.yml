@@ -2,4 +2,9 @@ Enhavo\Bundle\ShopBundle\Entity\ProductAttribute:
     type: entity
     table: shop_product_attribute
 
+    fields:
+        name:
+            type: string
+            nullable: true
+
     lifecycleCallbacks: {  }

@@ -43,9 +43,24 @@ sylius_product_attribute_table:
                 columns:
                     id:
                         property: id
-                        width: 12
-                        label: id
+                        width: 1
+                        label: ID
                         type: property
+                    code:
+                        property: code
+                        width: 3
+                        label: Code
+                        type: text
+                    name:
+                        property: name
+                        width: 3
+                        label: Name
+                        type: text
+                    type:
+                        property: type
+                        width: 3
+                        label: Type
+                        type: text
 
 sylius_product_attribute_delete:
     options:

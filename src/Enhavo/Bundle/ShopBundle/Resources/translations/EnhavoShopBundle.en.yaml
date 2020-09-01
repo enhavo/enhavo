@@ -136,3 +136,8 @@ product:
   message:
     error:
       not_found: 'Requested product was not found.'
+product_attribute:
+    label:
+        name: 'Name'
+        storage_type: Storage type
+        position: Position

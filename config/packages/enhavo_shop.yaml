@@ -9,3 +9,4 @@ sylius_attribute:
                     model: Enhavo\Bundle\ShopBundle\Entity\ProductAttribute
                     repository: Enhavo\Bundle\ShopBundle\Repository\ProductAttributeRepository
                     controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
+                    form: Enhavo\Bundle\ShopBundle\Form\Type\ProductAttributeType
