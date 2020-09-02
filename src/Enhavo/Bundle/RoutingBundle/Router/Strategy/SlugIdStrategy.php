@@ -19,7 +19,7 @@ class SlugIdStrategy extends AbstractStrategy
         $id = $this->getProperty($resource, $options['id_property']);
         $slug = $this->getProperty($resource, $options['slug_property']);
         $parameters = array_merge($parameters, ['id' => $id, 'slug' => $slug]);
-        return $this->getRouter()->generate($options['router'], $parameters, $referenceType);
+        return $this->getRouter()->generate($options['route'], $parameters, $referenceType);
     }
 
     public function getType()

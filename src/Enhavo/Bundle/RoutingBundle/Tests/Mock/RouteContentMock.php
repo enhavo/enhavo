@@ -9,10 +9,16 @@
 namespace Enhavo\Bundle\RoutingBundle\Tests\Mock;
 
 
+use Closure;
+use Doctrine\Common\Proxy\Proxy;
 use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
+use Enhavo\Bundle\RoutingBundle\Model\Slugable;
 
-class RouteContentMock
+class RouteContentMock implements Proxy, Slugable
 {
+    private $id = 999;
+
+    private $slug;
     /**
      * @var RouteInterface
      */
@@ -32,6 +38,14 @@ class RouteContentMock
      * @var RouteInterface
      */
     private $redirectRoute;
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * @return RouteInterface
@@ -96,4 +110,62 @@ class RouteContentMock
     {
         $this->redirectRoute = $redirectRoute;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param mixed $slug
+     */
+    public function setSlug($slug): void
+    {
+        $this->slug = $slug;
+    }
+
+    public function __setInitialized($initialized)
+    {
+
+    }
+
+    public function __setInitializer(Closure $initializer = null)
+    {
+
+    }
+
+    public function __getInitializer()
+    {
+        return null;
+    }
+
+    public function __setCloner(Closure $cloner = null)
+    {
+
+    }
+
+    public function __getCloner()
+    {
+        return null;
+    }
+
+    public function __getLazyProperties()
+    {
+        return null;
+    }
+
+    public function __load()
+    {
+
+    }
+
+    public function __isInitialized()
+    {
+        return false;
+    }
+
+
 }
