@@ -12,6 +12,7 @@ use Symfony\Component\Finder\Finder;
 
 class DirThemeFinder
 {
+    /** @var string */
     private $dir;
 
     /**

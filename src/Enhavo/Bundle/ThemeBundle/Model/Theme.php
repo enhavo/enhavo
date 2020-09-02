@@ -39,7 +39,7 @@ class Theme
     /**
      * @return Meta
      */
-    public function getMeta(): Meta
+    public function getMeta(): ?Meta
     {
         return $this->meta;
     }
@@ -47,7 +47,7 @@ class Theme
     /**
      * @param Meta $meta
      */
-    public function setMeta(Meta $meta): void
+    public function setMeta(?Meta $meta): void
     {
         $this->meta = $meta;
     }
@@ -55,7 +55,7 @@ class Theme
     /**
      * @return Webpack
      */
-    public function getWebpack(): Webpack
+    public function getWebpack(): ?Webpack
     {
         return $this->webpack;
     }
@@ -63,7 +63,7 @@ class Theme
     /**
      * @param Webpack $webpack
      */
-    public function setWebpack(Webpack $webpack): void
+    public function setWebpack(?Webpack $webpack): void
     {
         $this->webpack = $webpack;
     }
@@ -71,7 +71,7 @@ class Theme
     /**
      * @return Template
      */
-    public function getTemplate(): Template
+    public function getTemplate(): ?Template
     {
         return $this->template;
     }
@@ -79,7 +79,7 @@ class Theme
     /**
      * @param Template $template
      */
-    public function setTemplate(Template $template): void
+    public function setTemplate(?Template $template): void
     {
         $this->template = $template;
     }
@@ -87,7 +87,7 @@ class Theme
     /**
      * @return string
      */
-    public function getKey(): string
+    public function getKey(): ?string
     {
         return $this->key;
     }
@@ -95,7 +95,7 @@ class Theme
     /**
      * @param string $key
      */
-    public function setKey(string $key): void
+    public function setKey(?string $key): void
     {
         $this->key = $key;
     }
