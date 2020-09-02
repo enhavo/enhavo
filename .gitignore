@@ -2,8 +2,8 @@
 .settings
 .build
 /public/bundles/
-!/public/build/.gitkeep
 /public/build/*
+!/public/build/.gitignore
 /public/videos
 /public/js
 /public/css

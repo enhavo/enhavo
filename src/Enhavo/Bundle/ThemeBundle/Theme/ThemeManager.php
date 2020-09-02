@@ -7,6 +7,7 @@
  */
 
 namespace Enhavo\Bundle\ThemeBundle\Theme;
+
 use Doctrine\ORM\EntityRepository;
 use Enhavo\Bundle\ThemeBundle\Model\Theme;
 use Enhavo\Bundle\ThemeBundle\Theme\Finder\DirThemeFinder;
@@ -16,58 +17,42 @@ use Symfony\Component\Serializer\Serializer;
 
 class ThemeManager
 {
-    /**
-     * @var string[]
-     */
-    private $themesDir;
+    /** @var string[] */
+    private $themeDirs;
 
-    /**
-     * @var Theme[]
-     */
+    /** @var Theme[] */
     private $themes;
 
-    /**
-     * @var Serializer
-     */
+    /** @var Serializer */
     private $serializer;
 
-    /**
-     * @var FileLocatorInterface
-     */
+    /** @var FileLocatorInterface */
     private $locator;
 
-    /**
-     * @var boolean
-     */
+    /** @var boolean */
     private $dynamicEnable;
 
-    /**
-     * @var string
-     */
+    /** @var string[] */
     private $theme;
 
-    /**
-     * @var EntityRepository
-     */
+    /** @var EntityRepository */
     private $repository;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $customFile;
 
     /**
      * ThemeManager constructor.
-     * @param $themesDir
+     * @param $themeDirs
      * @param Serializer $serializer
      * @param FileLocatorInterface $locator
      * @param $dynamicEnable
      * @param $theme
      * @param EntityRepository $repository
-     * @param string $customFile
+     * @param $customFile
      */
     public function __construct(
-        $themesDir,
+        $themeDirs,
         Serializer $serializer,
         FileLocatorInterface $locator,
         $dynamicEnable,
@@ -75,7 +60,7 @@ class ThemeManager
         EntityRepository $repository,
         $customFile
     ) {
-        $this->themesDir = $themesDir;
+        $this->themeDirs = $themeDirs;
         $this->serializer = $serializer;
         $this->locator = $locator;
         $this->dynamicEnable = $dynamicEnable;
@@ -110,7 +95,7 @@ class ThemeManager
             $this->themes = [];
         }
 
-        foreach($this->themesDir as $dir)
+        foreach($this->themeDirs as $dir)
         {
             $finder = new DirThemeFinder($dir);
             $files = $finder->find();

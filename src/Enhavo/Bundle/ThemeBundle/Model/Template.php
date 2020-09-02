@@ -8,34 +8,12 @@
 
 namespace Enhavo\Bundle\ThemeBundle\Model;
 
-
 class Template
 {
-    /**
-     * @var string[]
-     */
-    private $mapping;
-
     /**
      * @var string
      */
     private $path;
-
-    /**
-     * @return string[]
-     */
-    public function getMapping(): array
-    {
-        return $this->mapping;
-    }
-
-    /**
-     * @param string[] $mapping
-     */
-    public function setMapping(array $mapping): void
-    {
-        $this->mapping = $mapping;
-    }
 
     /**
      * @return string
