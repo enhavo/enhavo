@@ -5,3 +5,7 @@ enhavo_theme:
         - '%kernel.project_dir%/node_modules/@enhavo/theme/theme'
         - '%kernel.project_dir%/assets/node_modules/@enhavo/theme/theme'
         - '%kernel.project_dir%/assets/theme'
+
+twig:
+    paths:
+        '%kernel.project_dir%/assets/theme': theme
