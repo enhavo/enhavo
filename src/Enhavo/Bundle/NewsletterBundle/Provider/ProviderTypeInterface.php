@@ -5,7 +5,7 @@ namespace Enhavo\Bundle\NewsletterBundle\Provider;
 use Enhavo\Bundle\NewsletterBundle\Entity\Receiver;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 
-interface ProviderInterface
+interface ProviderTypeInterface
 {
     /**
      * @param NewsletterInterface $newsletter

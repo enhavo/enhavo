@@ -8,11 +8,10 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Storage;
 
-
-use Enhavo\Bundle\AppBundle\Type\TypeInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
+use Enhavo\Component\Type\TypeInterface;
 
-interface StorageInterface extends TypeInterface
+interface StorageTypeInterface extends TypeInterface
 {
     /**
      * @param SubscriberInterface $subscriber
@@ -23,5 +22,5 @@ interface StorageInterface extends TypeInterface
      * @param SubscriberInterface $subscriber
      * @return boolean
      */
-    public function exists(SubscriberInterface $subscriber);
+    public function exists(SubscriberInterface $subscriber): bool;
 }

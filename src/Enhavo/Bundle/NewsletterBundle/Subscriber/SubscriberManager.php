@@ -11,9 +11,9 @@ namespace Enhavo\Bundle\NewsletterBundle\Subscriber;
 use Enhavo\Bundle\AppBundle\Type\TypeCollector;
 use Enhavo\Bundle\NewsletterBundle\Form\Resolver;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
-use Enhavo\Bundle\NewsletterBundle\Storage\StorageInterface;
+use Enhavo\Bundle\NewsletterBundle\Storage\StorageTypeInterface;
 use Enhavo\Bundle\NewsletterBundle\Storage\StorageResolver;
-use Enhavo\Bundle\NewsletterBundle\Strategy\StrategyInterface;
+use Enhavo\Bundle\NewsletterBundle\Strategy\StrategyTypeInterface;
 use Enhavo\Bundle\NewsletterBundle\Strategy\StrategyResolver;
 use Enhavo\Bundle\NewsletterBundle\Event\SubscriberEvent;
 use Enhavo\Bundle\NewsletterBundle\Event\NewsletterEvents;
@@ -83,47 +83,47 @@ class SubscriberManager
     }
 
     /**
-     * @return StrategyInterface
+     * @return StrategyTypeInterface
      * @throws \Enhavo\Bundle\AppBundle\Exception\TypeNotFoundException
      */
     public function getStrategy()
     {
-        /** @var StrategyInterface $strategy */
+        /** @var StrategyTypeInterface $strategy */
         $strategy = $this->strategyTypeCollector->getType($this->strategy);
         return $strategy;
     }
 
     /**
      * @param string $name
-     * @return StrategyInterface
+     * @return StrategyTypeInterface
      * @throws \Enhavo\Bundle\AppBundle\Exception\TypeNotFoundException
      */
     public function getStrategyByName($name)
     {
-        /** @var StrategyInterface $strategy */
+        /** @var StrategyTypeInterface $strategy */
         $strategy = $this->strategyTypeCollector->getType($name);
         return $strategy;
     }
 
     /**
-     * @return StorageInterface
+     * @return StorageTypeInterface
      * @throws \Enhavo\Bundle\AppBundle\Exception\TypeNotFoundException
      */
     public function getStorage()
     {
-        /** @var StorageInterface $storage */
+        /** @var StorageTypeInterface $storage */
         $storage = $this->storageTypeCollector->getType($this->storage);
         return $storage;
     }
 
     /**
      * @param string $name
-     * @return StorageInterface
+     * @return StorageTypeInterface
      * @throws \Enhavo\Bundle\AppBundle\Exception\TypeNotFoundException
      */
     public function getStorageByName($name)
     {
-        /** @var StorageInterface $storage */
+        /** @var StorageTypeInterface $storage */
         $storage = $this->storageTypeCollector->getType($name);
         return $storage;
     }

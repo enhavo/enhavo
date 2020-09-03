@@ -1,0 +1,10 @@
+services:
+    Enhavo\Bundle\NewsletterBundle\Provider\Type\ProviderType:
+        public: true
+        tags:
+            - { name: enhavo_newsletter.provider }
+
+    Enhavo\Bundle\NewsletterBundle\Provider\Type\SubscriberProviderType:
+        public: true
+        tags:
+            - { name: enhavo_newsletter.provider }

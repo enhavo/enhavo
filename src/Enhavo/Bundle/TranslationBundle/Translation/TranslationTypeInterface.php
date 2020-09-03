@@ -8,7 +8,6 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Translation;
 
-use Enhavo\Bundle\TranslationBundle\Translator\TranslatorInterface;
 use Enhavo\Component\Type\TypeInterface;
 
 interface TranslationTypeInterface extends TypeInterface

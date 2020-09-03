@@ -6,14 +6,15 @@
  * Time: 18:44
  */
 
-namespace Enhavo\Bundle\NewsletterBundle\Provider;
+namespace Enhavo\Bundle\NewsletterBundle\Provider\Type;
 
 use Enhavo\Bundle\NewsletterBundle\Entity\Newsletter;
 use Enhavo\Bundle\NewsletterBundle\Entity\Receiver;
 use Enhavo\Bundle\NewsletterBundle\Entity\Subscriber;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
+use Enhavo\Bundle\NewsletterBundle\Provider\AbstractProviderType;
 
-class SubscriberProvider implements ProviderInterface
+class SubscriberProviderType extends AbstractProviderType
 {
     public function getReceivers(NewsletterInterface $newsletter): array
     {
@@ -56,5 +57,10 @@ class SubscriberProvider implements ProviderInterface
             'lastName' => 'Bar'
         ]);
         return [$receiver];
+    }
+
+    public static function getName(): ?string
+    {
+        return 'subscriber';
     }
 }

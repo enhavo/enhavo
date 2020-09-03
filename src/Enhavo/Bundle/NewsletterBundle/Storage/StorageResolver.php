@@ -23,13 +23,13 @@ class StorageResolver
     private $storageTypeCollector;
 
     /**
-     * @var StorageInterface
+     * @var StorageTypeInterface
      */
     private $defaultStorage;
 
     /**
      * StorageResolver constructor.
-     * 
+     *
      * @param $formTypes
      * @param $storageTypeCollector
      * @param $defaultStorage

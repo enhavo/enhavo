@@ -9,22 +9,28 @@ enhavo_newsletter:
                 translation_domain: EnhavoNewsletterBundle
     strategy:
         settings:
-            notify:
-                from: '%env(string:MAILER_FROM)%'
-                admin_email: '%env(string:MAILER_TO)%'
-                sender_name: '%env(string:MAILER_NAME)%'
-            accept:
-                from: '%env(string:MAILER_FROM)%'
-                admin_email: '%env(string:MAILER_TO)%'
-                sender_name: '%env(string:MAILER_NAME)%'
-            double_opt_in:
+            default:
                 from: '%env(string:MAILER_FROM)%'
                 admin_email: '%env(string:MAILER_TO)%'
                 sender_name: '%env(string:MAILER_NAME)%'
     forms:
         default:
-            type: enhavo_newsletter_subscribe
             template: EnhavoNewsletterBundle:Subscriber:subscribe.html.twig
+            strategy:
+                type: double_opt_in
+                settings: '%enhavo_newsletter.strategy.settings.double_opt_in%'
+            provider:
+                type: local
+        coaches:
+#            model:
+            form: ~
+            template: ~
+            strategy:
+                type: double_opt_in
+            provider:
+                type: mailchimp
+                url: '%env(string:MAILCHIMP_URL)%'
+#                groups: expr:model.groups
 
 enhavo_app:
     template_paths:

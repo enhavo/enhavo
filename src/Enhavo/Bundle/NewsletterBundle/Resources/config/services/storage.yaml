@@ -1,0 +1,28 @@
+services:
+    Enhavo\Bundle\NewsletterBundle\Storage\Type\StorageType:
+        public: true
+        tags:
+            - { name: enhavo_newsletter.storage }
+
+    Enhavo\Bundle\NewsletterBundle\Storage\Type\LocalStorageType:
+        public: true
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@enhavo_newsletter.repository.subscriber'
+        tags:
+            - { name: enhavo_newsletter.storage }
+
+    Enhavo\Bundle\NewsletterBundle\Storage\Type\CleverReachStorageType:
+        public: true
+        arguments:
+            - '@enhavo_newsletter.cleverreach_client'
+        tags:
+            - { name: enhavo_newsletter.storage }
+
+    Enhavo\Bundle\NewsletterBundle\Storage\Type\MailChimpStorageType:
+        public: true
+        arguments:
+            - '%enhavo_newsletter.mailchimp.credentials%'
+            - '%enhavo_newsletter.mailchimp.mapping%'
+        tags:
+            - { name: enhavo_newsletter.storage }

@@ -4,8 +4,8 @@ namespace Enhavo\Bundle\NewsletterBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
-use Enhavo\Bundle\NewsletterBundle\Strategy\AcceptStrategy;
-use Enhavo\Bundle\NewsletterBundle\Strategy\DoubleOptInStrategy;
+use Enhavo\Bundle\NewsletterBundle\Strategy\Type\AcceptStrategyType;
+use Enhavo\Bundle\NewsletterBundle\Strategy\Type\DoubleOptInStrategyType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -16,7 +16,7 @@ class SubscriberController extends ResourceController
         $type = $request->get('type');
         $strategy = $this->get('enhavo_newsletter.strategy_resolver')->resolve($type);
 
-        if(!$strategy instanceof DoubleOptInStrategy) {
+        if(!$strategy instanceof DoubleOptInStrategyType) {
             throw $this->createNotFoundException();
         }
 
@@ -43,7 +43,7 @@ class SubscriberController extends ResourceController
         $type = $request->get('type');
         $strategy = $this->get('enhavo_newsletter.strategy_resolver')->resolve($type);
 
-        if(!$strategy instanceof AcceptStrategy) {
+        if(!$strategy instanceof AcceptStrategyType) {
             throw $this->createNotFoundException();
         }
 

@@ -8,7 +8,8 @@ use Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\NewsletterBundle\Exception\SendException;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
-use Enhavo\Bundle\NewsletterBundle\Provider\ProviderInterface;
+use Enhavo\Bundle\NewsletterBundle\Provider\ProviderTypeInterface;
+use Enhavo\Component\Metadata\MetadataRepository;
 use Psr\Log\LoggerInterface;
 use Enhavo\Bundle\NewsletterBundle\Entity\Receiver;
 
@@ -20,15 +21,16 @@ use Enhavo\Bundle\NewsletterBundle\Entity\Receiver;
  */
 class NewsletterManager
 {
-    /**
-     * @var \Swift_Mailer
-     */
-    private $mailer;
 
     /**
      * @var EntityManagerInterface
      */
     private $em;
+
+    /**
+     * @var \Swift_Mailer
+     */
+    private $mailer;
 
     /**
      * @var string
@@ -46,32 +48,41 @@ class NewsletterManager
     private $logger;
 
     /**
-     * @var ProviderInterface
-     */
-    private $provider;
-
-    /**
      * @var NewsletterRenderer
      */
     private $renderer;
 
-    public function __construct(
-        EntityManagerInterface $em,
-        \Swift_Mailer $mailer,
-        $from,
-        TokenGeneratorInterface $tokenGenerator,
-        LoggerInterface $logger,
-        ProviderInterface $provider,
-        NewsletterRenderer $renderer
-    ) {
+    /** @var MetadataRepository */
+    private $metadataRepository;
+
+    /**
+     * @var string
+     */
+    private $provider;
+
+    /**
+     * NewsletterManager constructor.
+     * @param EntityManagerInterface $em
+     * @param \Swift_Mailer $mailer
+     * @param string $from
+     * @param TokenGeneratorInterface $tokenGenerator
+     * @param LoggerInterface $logger
+     * @param NewsletterRenderer $renderer
+     * @param MetadataRepository $metadataRepository
+     * @param string $provider
+     */
+    public function __construct(EntityManagerInterface $em, \Swift_Mailer $mailer, string $from, TokenGeneratorInterface $tokenGenerator, LoggerInterface $logger, NewsletterRenderer $renderer, MetadataRepository $metadataRepository, string $provider)
+    {
         $this->em = $em;
         $this->mailer = $mailer;
         $this->from = $from;
         $this->tokenGenerator = $tokenGenerator;
         $this->logger = $logger;
-        $this->provider = $provider;
         $this->renderer = $renderer;
+        $this->metadataRepository = $metadataRepository;
+        $this->provider = $provider;
     }
+
 
     /**
      * @param NewsletterInterface $newsletter
@@ -189,6 +200,8 @@ class NewsletterManager
 
     public function renderPreview(NewsletterInterface $newsletter)
     {
+        // blutze: get local provider config
+
         $receivers = $this->provider->getTestReceivers($newsletter);
         return $this->render($receivers[0]);
     }

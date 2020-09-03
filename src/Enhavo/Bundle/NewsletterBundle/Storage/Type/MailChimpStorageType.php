@@ -6,14 +6,15 @@
  * Time: 12:21
  */
 
-namespace Enhavo\Bundle\NewsletterBundle\Storage;
+namespace Enhavo\Bundle\NewsletterBundle\Storage\Type;
 
 use Enhavo\Bundle\NewsletterBundle\Entity\Group;
 use Enhavo\Bundle\NewsletterBundle\Exception\NoGroupException;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
+use Enhavo\Bundle\NewsletterBundle\Storage\AbstractStorageType;
 use GuzzleHttp\Exception\GuzzleException;
 
-class MailChimpStorage implements StorageInterface
+class MailChimpStorageType extends AbstractStorageType
 {
 
     /**
@@ -80,7 +81,7 @@ class MailChimpStorage implements StorageInterface
      * @return bool
      * @throws GuzzleException
      */
-    public function exists(SubscriberInterface $subscriber)
+    public function exists(SubscriberInterface $subscriber): bool
     {
         if (count($subscriber->getGroups()) === 0) {
             return false;
@@ -105,7 +106,7 @@ class MailChimpStorage implements StorageInterface
         return true;
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'mailchimp';
     }

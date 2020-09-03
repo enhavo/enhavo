@@ -27,8 +27,9 @@ services:
           - '%enhavo_newsletter.newsletter.mail.from%'
           - '@enhavo_app.util.secure_url_token_generator'
           - '@logger'
-          - '@enhavo_newsletter.newsletter.provider'
           - '@Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterRenderer'
+          - '@Enhavo\Component\Metadata\MetadataRepository[Newsletter]'
+          - '__empty__'
 
     Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterRenderer:
         arguments:
@@ -60,8 +61,6 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: console.command, command: 'enhavo:newsletter:send' }
-
-    Enhavo\Bundle\NewsletterBundle\Provider\SubscriberProvider:
 
     Enhavo\Bundle\NewsletterBundle\Column\NewsletterStateColumnType:
         public: true

@@ -16,7 +16,7 @@ use Enhavo\Bundle\NewsletterBundle\Entity\Newsletter;
 use Enhavo\Bundle\NewsletterBundle\Entity\Receiver;
 use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager;
 use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterRenderer;
-use Enhavo\Bundle\NewsletterBundle\Provider\ProviderInterface;
+use Enhavo\Bundle\NewsletterBundle\Provider\ProviderTypeInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 
@@ -30,7 +30,7 @@ class NewsletterManagerTest extends TestCase
         $dependency->from = 'test@email.de';
         $dependency->tokenGenerator = $this->getMockBuilder(TokenGeneratorInterface::class)->disableOriginalConstructor()->getMock();
         $dependency->logger = $this->getMockBuilder(LoggerInterface::class)->getMock();
-        $dependency->provider = $this->getMockBuilder(ProviderInterface::class)->getMock();
+        $dependency->provider = $this->getMockBuilder(ProviderTypeInterface::class)->getMock();
         $dependency->renderer = $this->getMockBuilder(NewsletterRenderer::class)->disableOriginalConstructor()->getMock();
         return $dependency;
     }
@@ -254,7 +254,7 @@ class DependencyProvider
     /** @var TokenGeneratorInterface|\PHPUnit_Framework_MockObject_MockObject */
     public $tokenGenerator;
     public $logger;
-    /** @var ProviderInterface|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var ProviderTypeInterface|\PHPUnit_Framework_MockObject_MockObject */
     public $provider;
     /** @var NewsletterRenderer|\PHPUnit_Framework_MockObject_MockObject */
     public $renderer;

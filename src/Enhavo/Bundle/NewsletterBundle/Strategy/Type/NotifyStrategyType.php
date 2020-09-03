@@ -1,20 +1,21 @@
 <?php
 /**
- * NotifyStrategy.php
+ * NotifyStrategyType.php
  *
  * @since 21/09/16
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\NewsletterBundle\Strategy;
+namespace Enhavo\Bundle\NewsletterBundle\Strategy\Type;
 
 
 use Enhavo\Bundle\NewsletterBundle\Form\Resolver;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
-use Enhavo\Bundle\NewsletterBundle\Storage\StorageInterface;
+use Enhavo\Bundle\NewsletterBundle\Storage\StorageTypeInterface;
 use Enhavo\Bundle\NewsletterBundle\Storage\StorageResolver;
+use Enhavo\Bundle\NewsletterBundle\Strategy\AbstractStrategyType;
 
-class NotifyStrategy extends AbstractStrategy
+class NotifyStrategyType extends AbstractStrategyType
 {
     /**
      * @var StorageResolver
@@ -27,7 +28,7 @@ class NotifyStrategy extends AbstractStrategy
     private $formResolver;
 
     /**
-     * NotifyStrategy constructor.
+     * NotifyStrategyType constructor.
      *
      * @param array $options
      * @param array $typeOptions
@@ -101,12 +102,12 @@ class NotifyStrategy extends AbstractStrategy
         return $this->container->get('translator')->trans($subject, [], $translationDomain);
     }
 
-    public function exists(SubscriberInterface $subscriber)
+    public function exists(SubscriberInterface $subscriber): bool
     {
         $checkExists = $this->getTypeOption('check_exists',$subscriber->getType(), false);
 
         if($checkExists) {
-            /** @var StorageInterface $storage */
+            /** @var StorageTypeInterface $storage */
             $storage = $this->storageResolver->resolve($subscriber->getType());
             return $storage->exists($subscriber);
         }
@@ -118,7 +119,7 @@ class NotifyStrategy extends AbstractStrategy
         return 'subscriber.form.error.exists';
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'notify';
     }

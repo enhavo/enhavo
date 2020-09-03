@@ -25,7 +25,7 @@ class StrategyResolver
     private $strategyTypeCollector;
 
     /**
-     * @var StrategyInterface
+     * @var StrategyTypeInterface
      */
     private $defaultStrategy;
 

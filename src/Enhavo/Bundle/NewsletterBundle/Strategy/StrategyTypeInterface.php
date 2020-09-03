@@ -1,6 +1,6 @@
 <?php
 /**
- * StrategyInterface.php
+ * StrategyTypeInterface.php
  *
  * @since 21/09/16
  * @author gseidel
@@ -8,10 +8,10 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Strategy;
 
-use Enhavo\Bundle\AppBundle\Type\TypeInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
+use Enhavo\Component\Type\TypeInterface;
 
-interface StrategyInterface extends TypeInterface
+interface StrategyTypeInterface extends TypeInterface
 {
     public function addSubscriber(SubscriberInterface $subscriber);
 
@@ -19,7 +19,7 @@ interface StrategyInterface extends TypeInterface
      * @param SubscriberInterface $subscriber
      * @return boolean
      */
-    public function exists(SubscriberInterface $subscriber);
+    public function exists(SubscriberInterface $subscriber): bool;
 
     /**
      * @param SubscriberInterface $subscriber

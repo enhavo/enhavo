@@ -33,6 +33,7 @@ class EnhavoNewsletterExtension extends AbstractResourceExtension implements Pre
         $container->setParameter('enhavo_newsletter.storage', $config['storage']['default']);
         $container->setParameter('enhavo_newsletter.strategy', $config['strategy']['default']);
         $container->setParameter('enhavo_newsletter.provider', $config['provider']);
+        $container->setParameter('enhavo_newsletter.metadata', $config['metadata']);
 
         if(isset($config['forms'])) {
             $container->setParameter('enhavo_newsletter.forms', $config['forms']);
@@ -46,7 +47,11 @@ class EnhavoNewsletterExtension extends AbstractResourceExtension implements Pre
         $configFiles = array(
             'services/services.yaml',
             'services/newsletter.yaml',
+            'services/provider.yaml',
             'services/subscriber.yaml',
+            'services/storage.yaml',
+            'services/strategy.yaml',
+            'services/metadata.yaml',
         );
 
         foreach ($configFiles as $configFile) {

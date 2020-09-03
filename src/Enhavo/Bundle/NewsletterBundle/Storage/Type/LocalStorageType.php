@@ -6,15 +6,16 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\NewsletterBundle\Storage;
+namespace Enhavo\Bundle\NewsletterBundle\Storage\Type;
 
 
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\NewsletterBundle\Entity\Group;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
+use Enhavo\Bundle\NewsletterBundle\Storage\AbstractStorageType;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 
-class LocalStorage implements StorageInterface
+class LocalStorageType extends AbstractStorageType
 {
     /**
      * @var EntityManagerInterface
@@ -26,7 +27,7 @@ class LocalStorage implements StorageInterface
      */
     private $repository;
 
-    public function __construct($options, EntityManagerInterface $manager, RepositoryInterface $repository)
+    public function __construct(EntityManagerInterface $manager, RepositoryInterface $repository)
     {
         $this->manager = $manager;
         $this->repository = $repository;
@@ -38,7 +39,7 @@ class LocalStorage implements StorageInterface
         $this->manager->flush();
     }
 
-    public function exists(SubscriberInterface $subscriber)
+    public function exists(SubscriberInterface $subscriber): bool
     {
         // subscriber has to be in ALL given groups to return true
         if ($this->getSubscriber($subscriber->getEmail()) === null) {
@@ -79,7 +80,7 @@ class LocalStorage implements StorageInterface
         ]);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'local';
     }
