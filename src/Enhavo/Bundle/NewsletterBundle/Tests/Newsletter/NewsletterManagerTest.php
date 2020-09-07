@@ -49,7 +49,7 @@ class NewsletterManagerTest extends TestCase
     }
 
     /**
-     * @expectedException \Enhavo\Bundle\NewsletterBundle\Exception\SendException
+     * @expectedException \Enhavo\Bundle\NewsletterBundle\Exception\DeliveryException
      */
     public function testAlreadyPrepared()
     {
@@ -168,7 +168,7 @@ class NewsletterManagerTest extends TestCase
     }
 
     /**
-     * @expectedException \Enhavo\Bundle\NewsletterBundle\Exception\SendException
+     * @expectedException \Enhavo\Bundle\NewsletterBundle\Exception\DeliveryException
      */
     public function testSendNewsletterPrepared()
     {
@@ -181,7 +181,7 @@ class NewsletterManagerTest extends TestCase
     }
 
     /**
-     * @expectedException \Enhavo\Bundle\NewsletterBundle\Exception\SendException
+     * @expectedException \Enhavo\Bundle\NewsletterBundle\Exception\DeliveryException
      */
     public function testSendNewsletterAlreadySent()
     {

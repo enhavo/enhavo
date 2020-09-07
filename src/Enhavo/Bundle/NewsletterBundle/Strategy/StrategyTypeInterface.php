@@ -19,21 +19,21 @@ interface StrategyTypeInterface extends TypeInterface
      * @param array $options
      * @return mixed
      */
-    public function addSubscriber(SubscriberInterface $subscriber, array $options = []);
+    public function addSubscriber(SubscriberInterface $subscriber, array $options);
 
     /**
      * @param SubscriberInterface $subscriber
      * @param array $options
      * @return bool
      */
-    public function exists(SubscriberInterface $subscriber, array $options = []): bool;
+    public function exists(SubscriberInterface $subscriber, array $options): bool;
 
     /**
      * @param SubscriberInterface $subscriber
      * @param array $options
      * @return mixed
      */
-    public function handleExists(SubscriberInterface $subscriber, array $options = []);
+    public function handleExists(SubscriberInterface $subscriber, array $options);
 
     /**
      * @param Storage $storage

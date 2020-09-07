@@ -13,26 +13,26 @@ interface StorageTypeInterface
      * @param array $options
      * @return Receiver[]
      */
-    public function getReceivers(NewsletterInterface $newsletter, array $options = []): array;
+    public function getReceivers(NewsletterInterface $newsletter, array $options): array;
 
     /**
      * @param NewsletterInterface $newsletter
      * @param array $options
      * @return Receiver[]
      */
-    public function getTestReceivers(NewsletterInterface $newsletter, array $options = []): array;
+    public function getTestReceivers(NewsletterInterface $newsletter, array $options): array;
 
     /**
      * @param SubscriberInterface $subscriber
      * @param array $options
      * @return mixed
      */
-    public function saveSubscriber(SubscriberInterface $subscriber, array $options = []);
+    public function saveSubscriber(SubscriberInterface $subscriber, array $options);
 
     /**
      * @param SubscriberInterface $subscriber
      * @param array $options
      * @return bool
      */
-    public function exists(SubscriberInterface $subscriber, array $options = []): bool;
+    public function exists(SubscriberInterface $subscriber, array $options): bool;
 }

@@ -5,6 +5,7 @@ namespace Enhavo\Bundle\NewsletterBundle\Strategy;
 
 
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
+use Enhavo\Bundle\NewsletterBundle\Storage\Storage;
 use Enhavo\Component\Type\AbstractContainerType;
 
 class Strategy extends AbstractContainerType
@@ -25,6 +26,16 @@ class Strategy extends AbstractContainerType
     public function handleExists(SubscriberInterface $subscriber)
     {
         return $this->type->handleExists($subscriber, $this->options);
+    }
+
+    public function getStorage(): Storage
+    {
+        return $this->type->getStorage();
+    }
+
+    public function setStorage(Storage $storage)
+    {
+        $this->type->setStorage($storage);
     }
 
 

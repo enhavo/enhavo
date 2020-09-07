@@ -58,23 +58,6 @@ class SubscribtionManager
         $this->configuration = $configuration;
     }
 
-    public function addSubscriber(SubscriberInterface $subscriber, $type = null)
-    {
-        $event = new SubscriberEvent($subscriber, $subscriber->getType());
-        $this->eventDispatcher->dispatch(NewsletterEvents::EVENT_ADD_SUBSCRIBER, $event);
-
-        $subscribtion = $this->getSubscribtion($type);
-        $strategy = $subscribtion->getStrategy();
-
-        return $strategy->addSubscriber($subscriber);
-    }
-
-    public function createSubscriber(SubscriberInterface $subscriber)
-    {
-        $event = new SubscriberEvent($subscriber, $subscriber->getType());
-        $this->eventDispatcher->dispatch(NewsletterEvents::EVENT_CREATE_SUBSCRIBER, $event);
-    }
-
     public function getSubscribtion($name): Subscribtion
     {
         $config = $this->configuration[$name];
@@ -84,8 +67,8 @@ class SubscribtionManager
 
 
 //         blutze: create form? (strategy based email validation)
-        $formType = $this->formResolver->resolveType($config['form']);
-        $form = $this->createForm($formType, $subscriber);
+//        $formType = $this->formResolver->resolveType($config['form']);
+//        $form = $this->createForm($formType, $subscriber);
 
         return new Subscribtion($name, $strategy);
     }

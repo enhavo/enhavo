@@ -8,15 +8,19 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Strategy\Type;
 
-use Enhavo\Bundle\NewsletterBundle\Form\Resolver;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
+use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager;
 use Enhavo\Bundle\NewsletterBundle\Strategy\AbstractStrategyType;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 class DoubleOptInStrategyType extends AbstractStrategyType
 {
+    /** @var NewsletterManager */
+    private $newsletterManager;
+
     /** @var RepositoryInterface */
     private $bufferRepository;
 
@@ -25,113 +29,100 @@ class DoubleOptInStrategyType extends AbstractStrategyType
 
     /**
      * DoubleOptInStrategyType constructor.
+     * @param NewsletterManager $newsletterManager
      * @param RepositoryInterface $bufferRepository
      * @param RouterInterface $router
      */
-    public function __construct(RepositoryInterface $bufferRepository, RouterInterface $router)
+    public function __construct(NewsletterManager $newsletterManager, RepositoryInterface $bufferRepository, RouterInterface $router)
     {
+        $this->newsletterManager = $newsletterManager;
         $this->bufferRepository = $bufferRepository;
         $this->router = $router;
     }
 
-    public function addSubscriber(SubscriberInterface $subscriber, array $options = [])
+    public function addSubscriber(SubscriberInterface $subscriber, array $options)
     {
         $subscriber->setCreatedAt(new \DateTime());
         $this->setToken($subscriber);
-        $this->getStorage()->saveSubscriber($subscriber, 'local');
-        $this->notifySubscriber($subscriber, $subscriber->getType());
+        $this->getStorage()->saveSubscriber($subscriber);
+        $this->notifySubscriber($subscriber, $options);
+
         return 'subscriber.form.message.double_opt_in';
     }
 
-    public function activateSubscriber(SubscriberInterface $subscriber, $type)
+    public function activateSubscriber(SubscriberInterface $subscriber, array $options)
     {
         $this->bufferRepository->delete($subscriber);
         $this->getStorage()->saveSubscriber($subscriber);
-        $this->notifyAdmin($subscriber, $type);
-        $this->confirmSubscriber($subscriber, $subscriber->getType());
+        $this->notifyAdmin($subscriber, $options);
+        $this->confirmSubscriber($subscriber, $options);
     }
 
-    private function notifySubscriber(SubscriberInterface $subscriber, $type)
+    private function notifySubscriber(SubscriberInterface $subscriber, array $options)
     {
-        $notify = $this->getTypeOption('notify', $type, true);
-        if ($notify) {
-            $link = $this->router->generate('enhavo_newsletter_subscribe_activate', [
+        if ($options['notify']) {
+            $link = $this->router->generate($options['activate_route'], [
                 'token' => $subscriber->getToken(),
                 'type' => $subscriber->getType()
             ], UrlGeneratorInterface::ABSOLUTE_URL);
 
-            $template = $this->getTypeOption('template', $type, 'EnhavoNewsletterBundle:Subscriber:Email/double-opt-in.html.twig');
-            $from = $this->getTypeOption('from', $type, 'no-reply@enhavo.com');
-            $senderName = $this->getTypeOption('sender_name', $type, 'enhavo');
+            $template = $options['template'];
+            $from = $options['from'];
+            $senderName = $options['sender_name'];
+            $subject = '';//$this->getSubject();
 
-            $message = new \Swift_Message();
-            $message->setSubject($this->getSubject())
-                ->setFrom($from, $senderName)
-                ->setTo($subscriber->getEmail())
-                ->setBody($this->renderTemplate($template, [
-                    'subscriber' => $subscriber,
-                    'link' => $link
-                ]), 'text/html');
-
-            $this->sendMessage($message);
+            $message = $this->newsletterManager->createMessage($from, $senderName, $subscriber->getEmail(), $subject, $template, [
+                'subscriber' => $subscriber,
+                'link' => $link
+            ]);
+            $this->newsletterManager->sendMessage($message);
         }
     }
 
-    private function confirmSubscriber(SubscriberInterface $subscriber, $type)
+    private function confirmSubscriber(SubscriberInterface $subscriber, array $options)
     {
-        $notify = $this->getTypeOption('confirm', $type, true);
-        if ($notify) {
+        if ($options['confirm']) {
             // TODO add unsubscribe/change subscription link
-            $template = $this->getTypeOption('confirmation_template', $type, 'EnhavoNewsletterBundle:Subscriber:Email/confirmation.html.twig');
-            $from = $this->getTypeOption('from', $type, 'no-reply@enhavo.com');
-            $senderName = $this->getTypeOption('sender_name', $type, 'enhavo');
+            $template = $options['confirmation_template'];
+            $from = $options['from'];
+            $senderName = $options['sender_name'];
+            $subject = '';//$this->getSubject();
 
-            $message = new \Swift_Message();
-            $message->setSubject($this->getSubject())
-                ->setFrom($from, $senderName)
-                ->setTo($subscriber->getEmail())
-                ->setBody($this->renderTemplate($template, [
-                    'subscriber' => $subscriber
-                ]), 'text/html');
-
-            $this->sendMessage($message);
+            $message = $this->newsletterManager->createMessage($from, $senderName, $subscriber->getEmail(), $subject, $template, [
+                'subscriber' => $subscriber
+            ]);
+            $this->newsletterManager->sendMessage($message);
         }
     }
 
-    private function notifyAdmin(SubscriberInterface $subscriber, $type)
+    private function notifyAdmin(SubscriberInterface $subscriber, array $options)
     {
-        $notify = $this->getTypeOption('admin_notify', $type, false);
-        if ($notify) {
-            $template = $this->getTypeOption('admin_template', $type, 'EnhavoNewsletterBundle:Subscriber:Email/notify-admin.html.twig');
-            $from = $this->getTypeOption('from', $$type, 'no-reply@enhavo.com');
-            $senderName = $this->getTypeOption('sender_name', $type, 'enhavo');
-            $to = $this->getTypeOption('admin_email', $type, 'no-reply@enhavo.com');
+        if ($options['notify_admin']) {
+            $template = $options['admin_template'];
+            $from = $options['from'];
+            $senderName = $options['sender_name'];
+            $to = $options['admin_email'];
+            $subject = $this->getAdminSubject($options);
 
-            $message = new \Swift_Message();
-            $message->setSubject($this->getAdminSubject($type))
-                ->setFrom($from, $senderName)
-                ->setTo($to)
-                ->setBody($this->renderTemplate($template, [
-                    'subscriber' => $subscriber
-                ]), 'text/html');
-            $this->sendMessage($message);
+            $message = $this->newsletterManager->createMessage($from, $senderName, $to, $subject, $template, [
+                'subscriber' => $subscriber
+            ]);
+            $this->newsletterManager->sendMessage($message);
         }
     }
 
-    private function getAdminSubject($type)
+    private function getAdminSubject(array $options)
     {
-        $subject = $this->getTypeOption('admin_subject', $type, 'Newsletter Subscription');
-        $translationDomain = $this->getTypeOption('admin_translation_domain', $type, null);
+        $subject = $options['admin_subject'];
+        $translationDomain = $options['translation_domain'];
 
-        return $this->container->get('translator')->trans($subject, [], $translationDomain);
+        return '';//$this->translator->trans($subject, [], $translationDomain);
     }
 
-    public function exists(SubscriberInterface $subscriber, array $options = []): bool
+    public function exists(SubscriberInterface $subscriber, array $options): bool
     {
-        $checkExists = $this->getTypeOption('check_exists', $subscriber->getType(), false);
-
-        if ($checkExists) {
-            if ($this->repository->find($subscriber)) {
+        if ($options['check_exists']) {
+            if ($this->bufferRepository->find($subscriber)) {
                 return true;
             }
 
@@ -143,9 +134,9 @@ class DoubleOptInStrategyType extends AbstractStrategyType
         return false;
     }
 
-    public function handleExists(SubscriberInterface $subscriber, array $options = [])
+    public function handleExists(SubscriberInterface $subscriber, array $options)
     {
-        $subscriber = $this->repository->findOneByEmail($subscriber->getEmail());
+        $subscriber = $this->bufferRepository->findOneByEmail($subscriber->getEmail());
 
         if (!$subscriber->isActive()) {
             $this->setToken($subscriber);
@@ -156,9 +147,22 @@ class DoubleOptInStrategyType extends AbstractStrategyType
         return 'subscriber.form.error.exists';
     }
 
-    public function getActivationTemplate($type)
+    public function getActivationTemplate(array $options)
     {
-        return $this->getTypeOption('activation_template', $type, 'EnhavoNewsletterBundle:Subscriber:activate.html.twig');
+        return $options['activation_template'];
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'notify_admin' => false,
+            'activation_template' => 'EnhavoNewsletterBundle:Subscriber:activate.html.twig',
+            'admin_subject' => 'subscriber.mail.admin.subject',
+            'template' => 'EnhavoNewsletterBundle:Subscriber:Email/double-opt-in.html.twig',
+            'confirmation_template' => 'EnhavoNewsletterBundle:Subscriber:Email/confirmation.html.twig',
+            'admin_template' => 'EnhavoNewsletterBundle:Subscriber:Email/notify-admin.html.twig',
+            'activate_route' => 'enhavo_newsletter_subscribe_activate'
+        ]);
     }
 
     public static function getName(): ?string

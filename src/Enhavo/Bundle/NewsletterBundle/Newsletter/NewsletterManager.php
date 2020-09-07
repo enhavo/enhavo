@@ -6,7 +6,7 @@ namespace Enhavo\Bundle\NewsletterBundle\Newsletter;
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
-use Enhavo\Bundle\NewsletterBundle\Exception\SendException;
+use Enhavo\Bundle\NewsletterBundle\Exception\DeliveryException;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 use Enhavo\Bundle\NewsletterBundle\Storage\StorageTypeInterface;
 use Enhavo\Bundle\NewsletterBundle\Subscribtion\SubscribtionManager;
@@ -23,8 +23,6 @@ use Twig\Environment;
  */
 class NewsletterManager
 {
-    const DEFAULT_PROVIDER = 'local';
-
     /**
      * @var EntityManagerInterface
      */
@@ -58,6 +56,9 @@ class NewsletterManager
     /** @var Environment */
     private $twig;
 
+    /** @var array */
+    private $from;
+
     /**
      * NewsletterManager constructor.
      * @param EntityManagerInterface $em
@@ -67,8 +68,9 @@ class NewsletterManager
      * @param LoggerInterface $logger
      * @param NewsletterRenderer $renderer
      * @param Environment $twig
+     * @param array $from
      */
-    public function __construct(EntityManagerInterface $em, \Swift_Mailer $mailer, SubscribtionManager $subscriberManager, TokenGeneratorInterface $tokenGenerator, LoggerInterface $logger, NewsletterRenderer $renderer, Environment $twig)
+    public function __construct(EntityManagerInterface $em, \Swift_Mailer $mailer, SubscribtionManager $subscriberManager, TokenGeneratorInterface $tokenGenerator, LoggerInterface $logger, NewsletterRenderer $renderer, Environment $twig, array $from)
     {
         $this->em = $em;
         $this->mailer = $mailer;
@@ -77,19 +79,21 @@ class NewsletterManager
         $this->logger = $logger;
         $this->renderer = $renderer;
         $this->twig = $twig;
+        $this->from = $from;
     }
 
 
     /**
      * @param NewsletterInterface $newsletter
-     * @throws SendException
+     * @throws DeliveryException
      */
     public function prepare(NewsletterInterface $newsletter)
     {
         if ($newsletter->isPrepared()) {
-            throw new SendException(sprintf('Newsletter with id "%s" already prepared', $newsletter->getId()));
+            throw new DeliveryException(sprintf('Newsletter with id "%s" already prepared', $newsletter->getId()));
         }
-        $receivers = $this->subscriberManager->getReceivers($newsletter, self::DEFAULT_PROVIDER);
+        $subscribtion = $this->subscriberManager->getSubscribtion('default');
+        $receivers = $subscribtion->getStrategy()->getStorage()->getTestReceivers($newsletter);
 
         /** @var Receiver $receiver */
         foreach ($receivers as $receiver) {
@@ -109,14 +113,14 @@ class NewsletterManager
     public function send(NewsletterInterface $newsletter, $limit = null)
     {
         if (!$newsletter->isPrepared()) {
-            throw new SendException(sprintf(
+            throw new DeliveryException(sprintf(
                     'Newsletter with id "%s" is not prepared yet. Prepare the newsletter first before sending',
                     $newsletter->getId())
             );
         }
 
         if ($newsletter->isSent()) {
-            throw new SendException(sprintf('Newsletter with id "%s" already sent', $newsletter->getId()));
+            throw new DeliveryException(sprintf('Newsletter with id "%s" already sent', $newsletter->getId()));
         }
 
         $this->logger->info(sprintf('"%s" prepared receiver found', count($newsletter->getReceivers())));
@@ -156,6 +160,7 @@ class NewsletterManager
 
     private function sendNewsletter(Receiver $receiver)
     {
+        /** @var \Swift_Message $message */
         $message = $this->mailer->createMessage();
         $message
             ->setSubject($receiver->getNewsletter()->getSubject())
@@ -174,7 +179,9 @@ class NewsletterManager
     public function sendTest(NewsletterInterface $newsletter, string $email): bool
     {
         $return = true;
-        $receivers = $this->subscriberManager->getStorage(self::DEFAULT_PROVIDER)->getTestReceivers($newsletter);
+        $subscribtion = $this->subscriberManager->getSubscribtion('default');
+        $receivers = $subscribtion->getStrategy()->getStorage()->getTestReceivers($newsletter);
+
         foreach ($receivers as $receiver) {
             $receiver->setEmail($email);
             $success = $this->sendNewsletter($receiver);
@@ -199,7 +206,9 @@ class NewsletterManager
 
     public function renderPreview(NewsletterInterface $newsletter)
     {
-        $receivers = $this->subscriberManager->getStorage(self::DEFAULT_PROVIDER)->getTestReceivers($newsletter);
+        $subscribtion = $this->subscriberManager->getSubscribtion('default');
+        $receivers = $subscribtion->getStrategy()->getStorage()->getTestReceivers($newsletter);
+
         return $this->render($receivers[0]);
     }
 
@@ -208,13 +217,25 @@ class NewsletterManager
         return $this->renderer->render($receiver);
     }
 
-    protected function renderTemplate($template, $options)
+    public function createMessage(string $from, string $senderName, string $to, string $subject, string $template, array $context, string $contentType = 'text/html'): \Swift_Message
     {
-        return $this->twig->render($template, $options);
+        $message = new \Swift_Message();
+        $message->setSubject($subject)
+            ->setFrom($from, $senderName)
+            ->setTo($to)
+            ->setBody($this->renderTemplate($template, $context), $contentType);
+
+        return $message;
     }
 
-    protected function sendMessage(\Swift_Message $message)
+    public function sendMessage(\Swift_Message $message)
     {
         $this->mailer->send($message);
     }
+
+    protected function renderTemplate($template, $context)
+    {
+        return $this->twig->render($template, $context);
+    }
+
 }

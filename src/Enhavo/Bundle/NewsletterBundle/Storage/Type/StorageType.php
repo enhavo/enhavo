@@ -11,22 +11,22 @@ use Enhavo\Component\Type\AbstractType;
 
 class StorageType extends AbstractType implements StorageTypeInterface
 {
-    public function getReceivers(NewsletterInterface $newsletter, array $options = []): array
+    public function getReceivers(NewsletterInterface $newsletter, array $options): array
     {
         return [];
     }
 
-    public function getTestReceivers(NewsletterInterface $newsletter, array $options = []): array
+    public function getTestReceivers(NewsletterInterface $newsletter, array $options): array
     {
         return [];
     }
 
-    public function saveSubscriber(SubscriberInterface $subscriber, array $options = [])
+    public function saveSubscriber(SubscriberInterface $subscriber, array $options)
     {
 
     }
 
-    public function exists(SubscriberInterface $subscriber, array $options = []): bool
+    public function exists(SubscriberInterface $subscriber, array $options): bool
     {
         return false;
     }

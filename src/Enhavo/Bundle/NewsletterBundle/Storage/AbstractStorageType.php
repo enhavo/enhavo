@@ -14,22 +14,22 @@ class AbstractStorageType extends AbstractType implements StorageTypeInterface
     /** @var StorageTypeInterface */
     protected $parent;
 
-    public function getReceivers(NewsletterInterface $newsletter, array $options = []): array
+    public function getReceivers(NewsletterInterface $newsletter, array $options): array
     {
         return $this->parent->getReceivers($newsletter, $options);
     }
 
-    public function getTestReceivers(NewsletterInterface $newsletter, array $options = []): array
+    public function getTestReceivers(NewsletterInterface $newsletter, array $options): array
     {
         return $this->parent->getTestReceivers($newsletter, $options);
     }
 
-    public function saveSubscriber(SubscriberInterface $subscriber, array $options = [])
+    public function saveSubscriber(SubscriberInterface $subscriber, array $options)
     {
         $this->parent->saveSubscriber($subscriber, $options);
     }
 
-    public function exists(SubscriberInterface $subscriber, array $options = []): bool
+    public function exists(SubscriberInterface $subscriber, array $options): bool
     {
         return $this->parent->exists($subscriber, $options);
     }

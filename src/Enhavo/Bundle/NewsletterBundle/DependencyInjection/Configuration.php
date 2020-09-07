@@ -92,20 +92,6 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->arrayNode('groups')->addDefaultsIfNotSet()->end()
-                ->arrayNode('provider')
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->variableNode('settings')->defaultValue([])->end()
-                    ->end()
-                ->end()
-
-                ->arrayNode('strategy')
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->variableNode('settings')->defaultValue([])->end()
-                    ->end()
-                ->end()
-
                 ->arrayNode('newsletter')
                     ->addDefaultsIfNotSet()
                     ->children()
@@ -127,7 +113,7 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-                ->variableNode('forms')->end()
+                ->variableNode('subscribtion')->end()
             ->end()
         ;
 

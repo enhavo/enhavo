@@ -37,7 +37,7 @@ class MailChimpStorageType extends AbstractStorageType
      * @throws GuzzleException
      * @throws NoGroupException
      */
-    public function saveSubscriber(SubscriberInterface $subscriber, array $options = [])
+    public function saveSubscriber(SubscriberInterface $subscriber, array $options)
     {
         if (count($subscriber->getGroups()) === 0) {
             throw new NoGroupException('no groups given');
@@ -53,7 +53,7 @@ class MailChimpStorageType extends AbstractStorageType
      * @throws GuzzleException
      * @throws \Enhavo\Bundle\NewsletterBundle\Exception\MappingException
      */
-    public function exists(SubscriberInterface $subscriber, array $options = []): bool
+    public function exists(SubscriberInterface $subscriber, array $options): bool
     {
         // subscriber has to be in ALL given groups to return true
         if (count($subscriber->getGroups()) === 0) {

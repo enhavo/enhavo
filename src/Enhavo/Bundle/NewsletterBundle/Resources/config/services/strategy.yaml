@@ -7,17 +7,16 @@ services:
     Enhavo\Bundle\NewsletterBundle\Strategy\Type\NotifyStrategyType:
         public: true
         arguments:
-            - '@Enhavo\Bundle\NewsletterBundle\Subscriber\SubscriberManager'
-            - '@enhavo_newsletter.form_resolver'
-            - '@twig'
+            - '@Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager'
+            - ''
         tags:
             - { name: enhavo_newsletter.strategy }
 
     Enhavo\Bundle\NewsletterBundle\Strategy\Type\DoubleOptInStrategyType:
         public: true
         arguments:
-            - '@Enhavo\Bundle\NewsletterBundle\Subscriber\SubscriberManager'
-            - '@enhavo_newsletter.form_resolver'
+            - '@Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager'
+            - '@'
             - '@router'
         tags:
             - { name: enhavo_newsletter.strategy }
@@ -25,9 +24,8 @@ services:
     Enhavo\Bundle\NewsletterBundle\Strategy\Type\AcceptStrategyType:
         public: true
         arguments:
-            - '@Enhavo\Bundle\NewsletterBundle\Subscriber\SubscriberManager'
-            - '@enhavo_newsletter.form_resolver'
+            - '@Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager'
+            - ''
             - '@router'
-            - '@translator'
         tags:
             - { name: enhavo_newsletter.strategy }

@@ -26,7 +26,7 @@ class CleverReachStorageType extends AbstractStorageType
         $this->client = $cleverReachClient;
     }
 
-    public function saveSubscriber(SubscriberInterface $subscriber, array $options = [])
+    public function saveSubscriber(SubscriberInterface $subscriber, array $options)
     {
         if (count($subscriber->getGroups()) === 0) {
             throw new NoGroupException('no groups given');
@@ -35,7 +35,7 @@ class CleverReachStorageType extends AbstractStorageType
         $this->client->saveSubscriber($subscriber);
     }
 
-    public function exists(SubscriberInterface $subscriber, array $options = []): bool
+    public function exists(SubscriberInterface $subscriber, array $options): bool
     {
         // subscriber has to be in ALL given groups to return true
         if (count($subscriber->getGroups()) === 0) {

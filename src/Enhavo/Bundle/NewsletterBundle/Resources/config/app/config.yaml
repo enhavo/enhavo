@@ -7,38 +7,6 @@ enhavo_newsletter:
                 template: 'mail/newsletter/template/default.html.twig'
                 label: newsletter.label.default
                 translation_domain: EnhavoNewsletterBundle
-    provider:
-        settings:
-            cleverreach:
-                options:
-                    credentials:
-                    postdata:
-                    gorups:
-                    mapping:
-    strategy:
-        settings:
-            default:
-                from: '%env(string:MAILER_FROM)%'
-                admin_email: '%env(string:MAILER_TO)%'
-                sender_name: '%env(string:MAILER_NAME)%'
-    forms:
-        default:
-            template: EnhavoNewsletterBundle:Subscriber:subscribe.html.twig
-            strategy:
-                type: double_opt_in
-#                settings: '%enhavo_newsletter.strategy.settings.default%'
-            provider:
-                type: local
-        coaches:
-#            model:
-            form: ~
-            template: ~
-            strategy:
-                type: double_opt_in
-            provider:
-                type: mailchimp
-                url: '%env(string:MAILCHIMP_URL)%'
-#                groups: expr:model.groups
 
 enhavo_app:
     template_paths:

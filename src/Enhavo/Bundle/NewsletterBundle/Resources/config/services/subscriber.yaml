@@ -27,22 +27,23 @@ services:
         tags:
             - { name: form.type }
 
-    Enhavo\Bundle\NewsletterBundle\Subscriber\SubscriberManager:
+    Enhavo\Bundle\NewsletterBundle\Subscribtion\SubscribtionManager:
         public: true
         arguments:
             - '@enhavo_newsletter.form_resolver'
             - '@event_dispatcher'
             - '@Enhavo\Component\Type\FactoryInterface[Storage]'
             - '@Enhavo\Component\Type\FactoryInterface[Strategy]'
+            - '%enhavo_newsletter.subscribtion%'
 
-    enhavo_newsletter.strategy_collector:
-        class: Enhavo\Bundle\AppBundle\Type\TypeCollector
-        arguments:
-            - '@service_container'
-            - 'NewsletterStrategy'
-
-    enhavo_newsletter.factory.subscriber:
-        class: Enhavo\Bundle\NewsletterBundle\Factory\SubscriberFactory
+    Enhavo\Bundle\NewsletterBundle\Factory\SubscriberFactory:
         arguments:
             - '%enhavo_newsletter.model.subscriber.class%'
             - '@enhavo_newsletter.repository.group'
+
+    Enhavo\Bundle\NewsletterBundle\Controller\SubscribtionController:
+        arguments:
+            - '@Enhavo\Bundle\NewsletterBundle\Subscribtion\SubscribtionManager'
+            - '@translator'
+        tags:
+            - { name: controller.service_arguments }

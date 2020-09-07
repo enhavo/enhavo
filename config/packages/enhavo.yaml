@@ -1,3 +1,36 @@
+enhavo_newsletter:
+    newsletter:
+        mail:
+            from: '%env(string:MAILER_FROM)%'
+        templates:
+            default:
+                template: 'mail/newsletter/template/default.html.twig'
+                label: newsletter.label.default
+                translation_domain: EnhavoNewsletterBundle
+
+    subscribtion:
+        default:
+            template: EnhavoNewsletterBundle:Subscriber:subscribe.html.twig
+            strategy:
+                type: double_opt_in
+                from: '%env(string:MAILER_FROM)%'
+                admin_email: '%env(string:MAILER_TO)%'
+                sender_name: '%env(string:MAILER_NAME)%'
+            storage:
+                type: local
+        coaches:
+            form: ~
+            template: ~
+            strategy:
+                type: double_opt_in
+                from: '%env(string:MAILER_FROM)%'
+                admin_email: '%env(string:MAILER_TO)%'
+                sender_name: '%env(string:MAILER_NAME)%'
+            storage:
+                type: mailchimp
+                url: '%env(string:MAILCHIMP_URL)%'
+
+
 enhavo_app:
     menu:
         dashboard:

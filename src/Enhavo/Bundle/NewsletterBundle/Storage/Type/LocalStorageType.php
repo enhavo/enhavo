@@ -31,7 +31,7 @@ class LocalStorageType extends AbstractStorageType
         $this->repository = $repository;
     }
 
-    public function getReceivers(NewsletterInterface $newsletter, array $options = []): array
+    public function getReceivers(NewsletterInterface $newsletter, array $options): array
     {
         if (!($newsletter instanceof Newsletter)) {
             throw new \InvalidArgumentException('Newsletter type is not supported by provider');
@@ -62,7 +62,7 @@ class LocalStorageType extends AbstractStorageType
         return $receiver;
     }
 
-    public function getTestReceivers(NewsletterInterface $newsletter, array $options = []): array
+    public function getTestReceivers(NewsletterInterface $newsletter, array $options): array
     {
         $receiver = new Receiver();
         $receiver->setToken('token');
@@ -74,13 +74,13 @@ class LocalStorageType extends AbstractStorageType
         return [$receiver];
     }
 
-    public function saveSubscriber(SubscriberInterface $subscriber, array $options = [])
+    public function saveSubscriber(SubscriberInterface $subscriber, array $options)
     {
         $this->manager->persist($subscriber);
         $this->manager->flush();
     }
 
-    public function exists(SubscriberInterface $subscriber, array $options = []): bool
+    public function exists(SubscriberInterface $subscriber, array $options): bool
     {
         // subscriber has to be in ALL given groups to return true
         if ($this->getSubscriber($subscriber->getEmail()) === null) {

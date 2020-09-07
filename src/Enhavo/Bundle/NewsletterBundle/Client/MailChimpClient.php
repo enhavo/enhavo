@@ -63,7 +63,7 @@ class MailChimpClient
      * @throws NoGroupException
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function saveSubscriber(SubscriberInterface $subscriber, array $options = [])
+    public function saveSubscriber(SubscriberInterface $subscriber, array $options)
     {
         if (count($subscriber->getGroups()) === 0) {
             throw new NoGroupException('no groups given');
