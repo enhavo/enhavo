@@ -1,6 +1,6 @@
 <?php
 /**
- * StrategyInterface.php
+ * StrategyTypeInterface.php
  *
  * @since 18/11/15
  * @author gseidel

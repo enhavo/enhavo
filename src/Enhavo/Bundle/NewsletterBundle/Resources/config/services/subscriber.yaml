@@ -27,18 +27,13 @@ services:
         tags:
             - { name: form.type }
 
-    enhavo_newsletter.subscriber.manager:
+    Enhavo\Bundle\NewsletterBundle\Subscriber\SubscriberManager:
         public: true
-        class: Enhavo\Bundle\NewsletterBundle\Subscriber\SubscriberManager
         arguments:
-            - '@enhavo_newsletter.strategy_collector'
-            - '%enhavo_newsletter.strategy%'
-            - '@enhavo_newsletter.strategy_resolver'
-            - '@enhavo_newsletter.storage_collector'
-            - '%enhavo_newsletter.storage%'
-            - '@enhavo_newsletter.storage_resolver'
             - '@enhavo_newsletter.form_resolver'
             - '@event_dispatcher'
+            - '@Enhavo\Component\Type\FactoryInterface[Storage]'
+            - '@Enhavo\Component\Type\FactoryInterface[Strategy]'
 
     enhavo_newsletter.strategy_collector:
         class: Enhavo\Bundle\AppBundle\Type\TypeCollector

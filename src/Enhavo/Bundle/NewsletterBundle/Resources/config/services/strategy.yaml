@@ -7,40 +7,27 @@ services:
     Enhavo\Bundle\NewsletterBundle\Strategy\Type\NotifyStrategyType:
         public: true
         arguments:
-            - '%enhavo_newsletter.strategy.settings.notify%'
-            - '%enhavo_newsletter.forms%'
-            - '@enhavo_newsletter.storage_resolver'
+            - '@Enhavo\Bundle\NewsletterBundle\Subscriber\SubscriberManager'
             - '@enhavo_newsletter.form_resolver'
-        calls:
-            - [ 'setContainer', ['@service_container']]
-            - [ 'setTokenGenerator', ['@enhavo_app.util.secure_url_token_generator']]
+            - '@twig'
         tags:
             - { name: enhavo_newsletter.strategy }
 
     Enhavo\Bundle\NewsletterBundle\Strategy\Type\DoubleOptInStrategyType:
         public: true
         arguments:
-            - '%enhavo_newsletter.strategy.settings.double_opt_in%'
-            - '%enhavo_newsletter.forms%'
-            - '@Enhavo\Bundle\NewsletterBundle\Storage\Type\LocalStorageType'
-            - '@enhavo_newsletter.storage_resolver'
+            - '@Enhavo\Bundle\NewsletterBundle\Subscriber\SubscriberManager'
             - '@enhavo_newsletter.form_resolver'
-        calls:
-            - [ 'setContainer', ['@service_container']]
-            - [ 'setTokenGenerator', ['@enhavo_app.util.secure_url_token_generator']]
+            - '@router'
         tags:
             - { name: enhavo_newsletter.strategy }
 
     Enhavo\Bundle\NewsletterBundle\Strategy\Type\AcceptStrategyType:
         public: true
         arguments:
-            - '%enhavo_newsletter.strategy.settings.accept%'
-            - '%enhavo_newsletter.forms%'
-            - '@Enhavo\Bundle\NewsletterBundle\Storage\Type\LocalStorageType'
-            - '@enhavo_newsletter.storage_resolver'
+            - '@Enhavo\Bundle\NewsletterBundle\Subscriber\SubscriberManager'
             - '@enhavo_newsletter.form_resolver'
-        calls:
-            - [ 'setContainer', ['@service_container']]
-            - [ 'setTokenGenerator', ['@enhavo_app.util.secure_url_token_generator']]
+            - '@router'
+            - '@translator'
         tags:
             - { name: enhavo_newsletter.strategy }

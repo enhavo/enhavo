@@ -8,48 +8,24 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Strategy\Type;
 
-
 use Enhavo\Bundle\NewsletterBundle\Form\Resolver;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
-use Enhavo\Bundle\NewsletterBundle\Storage\StorageTypeInterface;
-use Enhavo\Bundle\NewsletterBundle\Storage\StorageResolver;
 use Enhavo\Bundle\NewsletterBundle\Strategy\AbstractStrategyType;
+use Enhavo\Bundle\NewsletterBundle\Subscribtion\SubscribtionManager;
+use Twig\Environment;
 
 class NotifyStrategyType extends AbstractStrategyType
 {
-    /**
-     * @var StorageResolver
-     */
-    private $storageResolver;
-
-    /**
-     * @var Resolver
-     */
-    private $formResolver;
-
-    /**
-     * NotifyStrategyType constructor.
-     *
-     * @param array $options
-     * @param array $typeOptions
-     * @param StorageResolver $storageResolver
-     * @param Resolver $formResolver
-     */
-    public function __construct($options, $typeOptions, $storageResolver, $formResolver)
-    {
-        parent::__construct($options, $typeOptions);
-        $this->storageResolver = $storageResolver;
-        $this->formResolver = $formResolver;
-    }
 
     public function addSubscriber(SubscriberInterface $subscriber, $type = null)
     {
         $subscriber->setCreatedAt(new \DateTime());
         $subscriber->setActivatedAt(new \DateTime());
         $subscriber->setActive(true);
-        $this->getSubscriberManager()->saveSubscriber($subscriber, $type);
+        $this->storage->saveSubscriber($subscriber, $type);
         $this->notifySubscriber($subscriber);
         $this->notifyAdmin($subscriber);
+
         return 'subscriber.form.message.notify';
     }
 
@@ -57,7 +33,7 @@ class NotifyStrategyType extends AbstractStrategyType
     {
         $notify = $this->getTypeOption('notify', $subscriber->getType(), true);
 
-        if($notify) {
+        if ($notify) {
             $template = $this->getTypeOption('template', $subscriber->getType(), 'EnhavoNewsletterBundle:Subscriber:Email/notify.html.twig');
             $from = $this->getTypeOption('from', $subscriber->getType(), 'no-reply@enhavo.com');
             $senderName = $this->getTypeOption('sender_name', $subscriber->getType(), 'enhavo');
@@ -77,7 +53,7 @@ class NotifyStrategyType extends AbstractStrategyType
     {
         $notify = $this->getTypeOption('admin_notify', $subscriber->getType(), false);
 
-        if($notify) {
+        if ($notify) {
             $template = $this->getTypeOption('admin_template', $subscriber->getType(), 'EnhavoNewsletterBundle:Subscriber:Email/notify-admin.html.twig');
             $from = $this->getTypeOption('from', $subscriber->getType(), 'no-reply@enhavo.com');
             $senderName = $this->getTypeOption('sender_name', $subscriber->getType(), 'enhavo');
@@ -102,19 +78,17 @@ class NotifyStrategyType extends AbstractStrategyType
         return $this->container->get('translator')->trans($subject, [], $translationDomain);
     }
 
-    public function exists(SubscriberInterface $subscriber): bool
+    public function exists(SubscriberInterface $subscriber, array $options = []): bool
     {
-        $checkExists = $this->getTypeOption('check_exists',$subscriber->getType(), false);
+        $checkExists = $this->getTypeOption('check_exists', $subscriber->getType(), false);
 
-        if($checkExists) {
-            /** @var StorageTypeInterface $storage */
-            $storage = $this->storageResolver->resolve($subscriber->getType());
-            return $storage->exists($subscriber);
+        if ($checkExists) {
+            return $this->subscriberManager->exists($subscriber, $subscriber->getType());
         }
         return false;
     }
 
-    public function handleExists(SubscriberInterface $subscriber)
+    public function handleExists(SubscriberInterface $subscriber, array $options = [])
     {
         return 'subscriber.form.error.exists';
     }
@@ -123,4 +97,5 @@ class NotifyStrategyType extends AbstractStrategyType
     {
         return 'notify';
     }
+
 }

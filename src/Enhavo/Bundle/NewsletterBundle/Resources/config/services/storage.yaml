@@ -15,14 +15,13 @@ services:
     Enhavo\Bundle\NewsletterBundle\Storage\Type\CleverReachStorageType:
         public: true
         arguments:
-            - '@enhavo_newsletter.cleverreach_client'
+            - '@Enhavo\Bundle\NewsletterBundle\Client\CleverReachClient'
         tags:
             - { name: enhavo_newsletter.storage }
 
     Enhavo\Bundle\NewsletterBundle\Storage\Type\MailChimpStorageType:
         public: true
         arguments:
-            - '%enhavo_newsletter.mailchimp.credentials%'
-            - '%enhavo_newsletter.mailchimp.mapping%'
+            - '@Enhavo\Bundle\NewsletterBundle\Client\MailChimpClient'
         tags:
             - { name: enhavo_newsletter.storage }

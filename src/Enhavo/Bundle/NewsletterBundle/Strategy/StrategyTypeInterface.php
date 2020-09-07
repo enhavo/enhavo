@@ -9,21 +9,40 @@
 namespace Enhavo\Bundle\NewsletterBundle\Strategy;
 
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
+use Enhavo\Bundle\NewsletterBundle\Storage\Storage;
 use Enhavo\Component\Type\TypeInterface;
 
 interface StrategyTypeInterface extends TypeInterface
 {
-    public function addSubscriber(SubscriberInterface $subscriber);
+    /**
+     * @param SubscriberInterface $subscriber
+     * @param array $options
+     * @return mixed
+     */
+    public function addSubscriber(SubscriberInterface $subscriber, array $options = []);
 
     /**
      * @param SubscriberInterface $subscriber
-     * @return boolean
+     * @param array $options
+     * @return bool
      */
-    public function exists(SubscriberInterface $subscriber): bool;
+    public function exists(SubscriberInterface $subscriber, array $options = []): bool;
 
     /**
      * @param SubscriberInterface $subscriber
-     * @return string
+     * @param array $options
+     * @return mixed
      */
-    public function handleExists(SubscriberInterface $subscriber);
+    public function handleExists(SubscriberInterface $subscriber, array $options = []);
+
+    /**
+     * @param Storage $storage
+     * @return mixed
+     */
+    public function setStorage(Storage $storage);
+
+    /**
+     * @return Storage
+     */
+    public function getStorage(): Storage;
 }

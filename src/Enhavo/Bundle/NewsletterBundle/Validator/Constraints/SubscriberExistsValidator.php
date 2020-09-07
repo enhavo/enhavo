@@ -9,23 +9,23 @@
 namespace Enhavo\Bundle\NewsletterBundle\Validator\Constraints;
 
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
-use Enhavo\Bundle\NewsletterBundle\Subscriber\SubscriberManager;
+use Enhavo\Bundle\NewsletterBundle\Subscribtion\SubscribtionManager;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
 class SubscriberExistsValidator extends ConstraintValidator
 {
     /**
-     * @var SubscriberManager
+     * @var SubscribtionManager
      */
     private $manager;
 
     /**
      * SubscriberExistsValidator constructor.
      *
-     * @param SubscriberManager $manager
+     * @param SubscribtionManager $manager
      */
-    public function __construct(SubscriberManager $manager)
+    public function __construct(SubscribtionManager $manager)
     {
         $this->manager = $manager;
     }

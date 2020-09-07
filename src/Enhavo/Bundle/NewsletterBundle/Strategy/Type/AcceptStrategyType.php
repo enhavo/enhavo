@@ -10,51 +10,52 @@ namespace Enhavo\Bundle\NewsletterBundle\Strategy\Type;
 
 use Enhavo\Bundle\NewsletterBundle\Form\Resolver;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
-use Enhavo\Bundle\NewsletterBundle\Storage\Type\LocalStorageType;
-use Enhavo\Bundle\NewsletterBundle\Storage\StorageTypeInterface;
-use Enhavo\Bundle\NewsletterBundle\Storage\StorageResolver;
 use Enhavo\Bundle\NewsletterBundle\Strategy\AbstractStrategyType;
+use Enhavo\Bundle\NewsletterBundle\Subscribtion\SubscribtionManager;
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class AcceptStrategyType extends AbstractStrategyType
 {
-    /**
-     * @var LocalStorageType
-     */
-    private $localStorage;
+    const DEFAULT_PROVIDER = 'local';
 
-    /**
-     * @var StorageResolver
-     */
-    private $storageResolver;
-
+    /** @var SubscribtionManager */
+    private $subscriberManager;
     /**
      * @var Resolver
      */
     private $formResolver;
 
+    /** @var RouterInterface */
+    private $router;
+
+    /** @var TranslatorInterface */
+    private $translator;
+
+
     /**
      * AcceptStrategyType constructor.
-     * @param array $options
-     * @param array $typeOptions
-     * @param LocalStorageType $localStorage
-     * @param StorageResolver $storageResolver
+     * @param SubscribtionManager $subscriberManager
      * @param Resolver $formResolver
+     * @param RouterInterface $router
+     * @param TranslatorInterface $translator
      */
-    public function __construct($options, $typeOptions, LocalStorageType $localStorage, StorageResolver $storageResolver, Resolver $formResolver)
+    public function __construct(SubscribtionManager $subscriberManager, Resolver $formResolver, RouterInterface $router, TranslatorInterface $translator)
     {
-        parent::__construct($options, $typeOptions);
-        $this->localStorage = $localStorage;
-        $this->storageResolver = $storageResolver;
+        $this->subscriberManager = $subscriberManager;
         $this->formResolver = $formResolver;
+        $this->router = $router;
+        $this->translator = $translator;
     }
 
-    public function addSubscriber(SubscriberInterface $subscriber)
+    public function addSubscriber(SubscriberInterface $subscriber, array $options = [])
     {
         $subscriber->setCreatedAt(new \DateTime());
         $subscriber->setActive(false);
         $this->setToken($subscriber);
-        $this->localStorage->saveSubscriber($subscriber);
+        $this->subscriberManager->saveSubscriber($subscriber, self::DEFAULT_PROVIDER);
         $this->notifyAdmin($subscriber);
+
         return 'subscriber.form.message.accept';
     }
 
@@ -62,8 +63,8 @@ class AcceptStrategyType extends AbstractStrategyType
     {
         $subscriber->setActive(true);
         $subscriber->setToken(null);
-        $this->localStorage->saveSubscriber($subscriber);
-        $this->getSubscriberManager()->saveSubscriber($subscriber, $type);
+        $this->subscriberManager->saveSubscriber($subscriber, self::DEFAULT_PROVIDER);
+        $this->subscriberManager->saveSubscriber($subscriber, $type);
         $this->notifySubscriber($subscriber);
     }
 
@@ -89,7 +90,7 @@ class AcceptStrategyType extends AbstractStrategyType
 
     private function notifyAdmin(SubscriberInterface $subscriber)
     {
-        $link = $this->getRouter()->generate('enhavo_newsletter_subscribe_accept', [
+        $link = $this->router->generate('enhavo_newsletter_subscribe_accept', [
             'token' => $subscriber->getToken(),
             'type' => $subscriber->getType()
         ], true);
@@ -115,22 +116,20 @@ class AcceptStrategyType extends AbstractStrategyType
         $subject = $this->getTypeOption('admin_subject', $type, 'Newsletter Subscription');
         $translationDomain = $this->getTypeOption('admin_translation_domain', $type, null);
 
-        return $this->container->get('translator')->trans($subject, [], $translationDomain);
+        return $this->translator->trans($subject, [], $translationDomain);
     }
 
-    public function exists(SubscriberInterface $subscriber): bool
+    public function exists(SubscriberInterface $subscriber, array $options = []): bool
     {
         $checkExists = $this->getTypeOption('check_exists', $subscriber->getType(), false);
 
         if($checkExists) {
-            /** @var StorageTypeInterface $storage */
-            $storage = $this->storageResolver->resolve($subscriber->getType());
-            return $storage->exists($subscriber);
+            return $this->subscriberManager->exists($subscriber, $subscriber->getType());
         }
         return false;
     }
 
-    public function handleExists(SubscriberInterface $subscriber)
+    public function handleExists(SubscriberInterface $subscriber, array $options = [])
     {
         return 'subscriber.form.error.exists';
     }
@@ -138,11 +137,6 @@ class AcceptStrategyType extends AbstractStrategyType
     public function getActivationTemplate($type)
     {
         return $this->getTypeOption('activation_template', $type, 'EnhavoNewsletterBundle:Subscriber:accept.html.twig');
-    }
-
-    private function getRouter()
-    {
-        return $this->container->get('router');
     }
 
     public static function getName(): ?string

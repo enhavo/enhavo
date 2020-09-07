@@ -16,7 +16,7 @@ use Enhavo\Bundle\NewsletterBundle\Entity\Newsletter;
 use Enhavo\Bundle\NewsletterBundle\Entity\Receiver;
 use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager;
 use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterRenderer;
-use Enhavo\Bundle\NewsletterBundle\Provider\ProviderTypeInterface;
+use Enhavo\Bundle\NewsletterBundle\Storage\StorageTypeInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 

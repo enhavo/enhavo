@@ -1,35 +1,30 @@
 services:
     Enhavo\Bundle\NewsletterBundle\Batch\SendBatchType:
         arguments:
-            - '@enhavo_newsletter.manager'
+            - '@Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager'
         tags:
             - { name: enhavo_app.batch }
 
     Enhavo\Bundle\NewsletterBundle\Batch\SendTestBatchType:
         arguments:
-            - '@enhavo_newsletter.manager'
+            - '@Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager'
             - '@request_stack'
             - '@translator'
             - '@form.factory'
         tags:
             - { name: enhavo_app.batch }
 
-    enhavo_newsletter.manager:
-        public: true
-        alias: Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager
-
     Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager:
         public: true
-        class: Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager
         arguments:
           - '@doctrine.orm.entity_manager'
           - '@mailer'
-          - '%enhavo_newsletter.newsletter.mail.from%'
+          - '@Enhavo\Bundle\NewsletterBundle\Subscriber\SubscriberManager'
           - '@enhavo_app.util.secure_url_token_generator'
           - '@logger'
           - '@Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterRenderer'
-          - '@Enhavo\Component\Metadata\MetadataRepository[Newsletter]'
-          - '__empty__'
+          - '@twig'
+
 
     Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterRenderer:
         arguments:

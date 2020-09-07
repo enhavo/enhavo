@@ -7,6 +7,14 @@ enhavo_newsletter:
                 template: 'mail/newsletter/template/default.html.twig'
                 label: newsletter.label.default
                 translation_domain: EnhavoNewsletterBundle
+    provider:
+        settings:
+            cleverreach:
+                options:
+                    credentials:
+                    postdata:
+                    gorups:
+                    mapping:
     strategy:
         settings:
             default:
@@ -18,7 +26,7 @@ enhavo_newsletter:
             template: EnhavoNewsletterBundle:Subscriber:subscribe.html.twig
             strategy:
                 type: double_opt_in
-                settings: '%enhavo_newsletter.strategy.settings.double_opt_in%'
+#                settings: '%enhavo_newsletter.strategy.settings.default%'
             provider:
                 type: local
         coaches:

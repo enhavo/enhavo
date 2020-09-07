@@ -6,7 +6,7 @@
  * Time: 18:32
  */
 
-namespace Enhavo\Bundle\NewsletterBundle\CleverReach;
+namespace Enhavo\Bundle\NewsletterBundle\Client;
 
 use Enhavo\Bundle\NewsletterBundle\Entity\Group;
 use Enhavo\Bundle\NewsletterBundle\Event\CleverReachEvent;
@@ -18,7 +18,7 @@ use GuzzleHttp\Exception\ClientException;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
 
-class Client
+class CleverReachClient
 {
     const REST_BASE_URI = 'https://rest.cleverreach.com/v2/';
 
@@ -32,9 +32,9 @@ class Client
      */
     protected $eventDispatcher;
 
-    public function __construct($credentials, $postdata, $defaultGroupNames, $groupMapping, $eventDispatcher)
+    private function connect($credentials, $postdata, $defaultGroupNames, $groupMapping, $eventDispatcher)
     {
-        $this->guzzleClient = new \GuzzleHttp\Client(['base_uri' => Client::REST_BASE_URI]);
+        $this->guzzleClient = new \GuzzleHttp\Client(['base_uri' => CleverReachClient::REST_BASE_URI]);
         $this->credentials = $credentials;
         $this->postdata = $postdata;
         $this->defaultGroupNames = $defaultGroupNames;
@@ -65,7 +65,7 @@ class Client
         if ($this->postdata && count($this->postdata)) {
             $propertyAccessor = new PropertyAccessor();
 
-            foreach($this->postdata as $postKey => $postValue) {
+            foreach ($this->postdata as $postKey => $postValue) {
 
                 $subData = [];
 
@@ -84,7 +84,7 @@ class Client
 
         $event = new CleverReachEvent($subscriber, $data);
         $this->eventDispatcher->dispatch(NewsletterEvents::EVENT_CLEVERREACH_PRE_SEND, $event);
-        if($event->getDataArray()){
+        if ($event->getDataArray()) {
             $data = $event->getDataArray();
         }
 
@@ -120,11 +120,11 @@ class Client
 
         try {
             $res = $this->guzzleClient->request('GET', 'groups.json/' . $groupId . '/receivers/' . $eMail . '?token=' . $token, []);
-        } catch (ClientException $e){ // e.g. 404 for "user not found"
+        } catch (ClientException $e) { // e.g. 404 for "user not found"
             return false;
         }
         $response = $res->getBody()->getContents();
-        if(json_decode($response)->email === $eMail){
+        if (json_decode($response)->email === $eMail) {
             return true;
         }
         return false;

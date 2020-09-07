@@ -1,24 +1,10 @@
 services:
-    enhavo_newsletter.storage_collector:
-        class: Enhavo\Bundle\AppBundle\Type\TypeCollector
-        arguments:
-            - '@service_container'
-            - 'NewsletterStorage'
 
-    enhavo_newsletter.cleverreach_client:
-        class: Enhavo\Bundle\NewsletterBundle\CleverReach\Client
+    Enhavo\Bundle\NewsletterBundle\Client\CleverReachClient:
         arguments:
-            - '%enhavo_newsletter.cleverreach.credentials%'
-            - '%enhavo_newsletter.cleverreach.postdata%'
-            - '%enhavo_newsletter.default_groups%'
-            - '%enhavo_newsletter.cleverreach.mapping%'
             - '@event_dispatcher'
 
-    enhavo_newsletter.provider_collector:
-        class: Enhavo\Bundle\AppBundle\Type\TypeCollector
-        arguments:
-            - '@service_container'
-            - 'Provider'
+    Enhavo\Bundle\NewsletterBundle\Client\MailChimpClient: ~
 
     enhavo_newsletter.add_subscriber_listener:
         class: Enhavo\Bundle\NewsletterBundle\EventListener\SubscriberSubscriber
@@ -27,27 +13,12 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
-    enhavo_newsletter.strategy_resolver:
-        public: true
-        class: Enhavo\Bundle\NewsletterBundle\Strategy\StrategyResolver
-        arguments:
-            - '%enhavo_newsletter.forms%'
-            - '@enhavo_newsletter.strategy_collector'
-            - '%enhavo_newsletter.strategy%'
-
-    enhavo_newsletter.storage_resolver:
-        class: Enhavo\Bundle\NewsletterBundle\Storage\StorageResolver
-        arguments:
-            - '%enhavo_newsletter.forms%'
-            - '@enhavo_newsletter.storage_collector'
-            - '%enhavo_newsletter.storage%'
-
     enhavo_newsletter.form_resolver:
         public: true
         class: Enhavo\Bundle\NewsletterBundle\Form\Resolver
         arguments:
             - '%enhavo_newsletter.forms%'
-            - '%enhavo_newsletter.default_groups%'
+            - '_enhavo_newsletter.default_groups_'
             - '@enhavo_newsletter.group_manager'
 
     enhavo_newsletter.group_manager:
@@ -58,7 +29,7 @@ services:
     enhavo_newsletter.subscriber_exists_validator:
         class: Enhavo\Bundle\NewsletterBundle\Validator\Constraints\SubscriberExistsValidator
         arguments:
-            - '@enhavo_newsletter.subscriber.manager'
+            - '@Enhavo\Bundle\NewsletterBundle\Subscriber\SubscriberManager'
         tags:
             - { name: validator.constraint_validator, alias: subscriber_exists }
 

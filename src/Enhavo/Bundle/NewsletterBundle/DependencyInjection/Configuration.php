@@ -5,7 +5,6 @@ namespace Enhavo\Bundle\NewsletterBundle\DependencyInjection;
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\NewsletterBundle\Entity\Group;
 use Enhavo\Bundle\NewsletterBundle\Form\Type\GroupType;
-use Enhavo\Bundle\NewsletterBundle\Provider\Type\SubscriberProviderType;
 use Enhavo\Bundle\NewsletterBundle\Repository\GroupRepository;
 use Sylius\Component\Resource\Factory\Factory;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -93,15 +92,9 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->arrayNode('groups')->addDefaultsIfNotSet()->end()
-                ->arrayNode('storage')
+                ->arrayNode('provider')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->arrayNode('groups')
-                        ->addDefaultsIfNotSet()
-                            ->children()
-                                ->variableNode('defaults')->defaultValue([])->end()
-                            ->end()
-                        ->end()
                         ->variableNode('settings')->defaultValue([])->end()
                     ->end()
                 ->end()
@@ -135,7 +128,6 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
                 ->variableNode('forms')->end()
-                ->scalarNode('provider')->defaultValue(SubscriberProviderType::class)->end()
             ->end()
         ;
 

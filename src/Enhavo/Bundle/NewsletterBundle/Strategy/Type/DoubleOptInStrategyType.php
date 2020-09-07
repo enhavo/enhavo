@@ -10,61 +10,43 @@ namespace Enhavo\Bundle\NewsletterBundle\Strategy\Type;
 
 use Enhavo\Bundle\NewsletterBundle\Form\Resolver;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
-use Enhavo\Bundle\NewsletterBundle\Storage\Type\LocalStorageType;
-use Enhavo\Bundle\NewsletterBundle\Storage\StorageResolver;
-use Enhavo\Bundle\NewsletterBundle\Storage\StorageTypeInterface;
 use Enhavo\Bundle\NewsletterBundle\Strategy\AbstractStrategyType;
+use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\RouterInterface;
 
 class DoubleOptInStrategyType extends AbstractStrategyType
 {
-    /**
-     * @var LocalStorageType
-     */
-    private $localStorage;
+    /** @var RepositoryInterface */
+    private $bufferRepository;
 
-    /**
-     * @var StorageResolver
-     */
-    private $storageResolver;
-
-    /**
-     * @var Resolver
-     */
-    private $formResolver;
+    /** @var RouterInterface */
+    private $router;
 
     /**
      * DoubleOptInStrategyType constructor.
-     * @param array$options
-     * @param array $typeOptions
-     * @param LocalStorageType $localStorage
-     * @param StorageResolver $storageResolver
-     * @param Resolver $formResolver
+     * @param RepositoryInterface $bufferRepository
+     * @param RouterInterface $router
      */
-    public function __construct($options, $typeOptions, LocalStorageType $localStorage, StorageResolver $storageResolver, Resolver $formResolver)
+    public function __construct(RepositoryInterface $bufferRepository, RouterInterface $router)
     {
-        parent::__construct($options, $typeOptions);
-        $this->localStorage = $localStorage;
-        $this->storageResolver = $storageResolver;
-        $this->formResolver = $formResolver;
+        $this->bufferRepository = $bufferRepository;
+        $this->router = $router;
     }
 
-    public function addSubscriber(SubscriberInterface $subscriber)
+    public function addSubscriber(SubscriberInterface $subscriber, array $options = [])
     {
         $subscriber->setCreatedAt(new \DateTime());
-        $subscriber->setActive(false);
         $this->setToken($subscriber);
-        $this->localStorage->saveSubscriber($subscriber);
+        $this->getStorage()->saveSubscriber($subscriber, 'local');
         $this->notifySubscriber($subscriber, $subscriber->getType());
         return 'subscriber.form.message.double_opt_in';
     }
 
     public function activateSubscriber(SubscriberInterface $subscriber, $type)
     {
-        $subscriber->setActive(true);
-        $subscriber->setToken(null);
-        $this->localStorage->saveSubscriber($subscriber);
-        $this->getSubscriberManager()->saveSubscriber($subscriber, $type);
+        $this->bufferRepository->delete($subscriber);
+        $this->getStorage()->saveSubscriber($subscriber);
         $this->notifyAdmin($subscriber, $type);
         $this->confirmSubscriber($subscriber, $subscriber->getType());
     }
@@ -72,8 +54,8 @@ class DoubleOptInStrategyType extends AbstractStrategyType
     private function notifySubscriber(SubscriberInterface $subscriber, $type)
     {
         $notify = $this->getTypeOption('notify', $type, true);
-        if($notify) {
-            $link = $this->getRouter()->generate('enhavo_newsletter_subscribe_activate', [
+        if ($notify) {
+            $link = $this->router->generate('enhavo_newsletter_subscribe_activate', [
                 'token' => $subscriber->getToken(),
                 'type' => $subscriber->getType()
             ], UrlGeneratorInterface::ABSOLUTE_URL);
@@ -98,7 +80,7 @@ class DoubleOptInStrategyType extends AbstractStrategyType
     private function confirmSubscriber(SubscriberInterface $subscriber, $type)
     {
         $notify = $this->getTypeOption('confirm', $type, true);
-        if($notify) {
+        if ($notify) {
             // TODO add unsubscribe/change subscription link
             $template = $this->getTypeOption('confirmation_template', $type, 'EnhavoNewsletterBundle:Subscriber:Email/confirmation.html.twig');
             $from = $this->getTypeOption('from', $type, 'no-reply@enhavo.com');
@@ -119,7 +101,7 @@ class DoubleOptInStrategyType extends AbstractStrategyType
     private function notifyAdmin(SubscriberInterface $subscriber, $type)
     {
         $notify = $this->getTypeOption('admin_notify', $type, false);
-        if($notify) {
+        if ($notify) {
             $template = $this->getTypeOption('admin_template', $type, 'EnhavoNewsletterBundle:Subscriber:Email/notify-admin.html.twig');
             $from = $this->getTypeOption('from', $$type, 'no-reply@enhavo.com');
             $senderName = $this->getTypeOption('sender_name', $type, 'enhavo');
@@ -144,18 +126,16 @@ class DoubleOptInStrategyType extends AbstractStrategyType
         return $this->container->get('translator')->trans($subject, [], $translationDomain);
     }
 
-    public function exists(SubscriberInterface $subscriber): bool
+    public function exists(SubscriberInterface $subscriber, array $options = []): bool
     {
-        $checkExists = $this->getTypeOption('check_exists',$subscriber->getType(), false);
+        $checkExists = $this->getTypeOption('check_exists', $subscriber->getType(), false);
 
         if ($checkExists) {
-            if ($this->localStorage->exists($subscriber)) {
+            if ($this->repository->find($subscriber)) {
                 return true;
             }
 
-            /** @var StorageTypeInterface $storage */
-            $storage = $this->storageResolver->resolve($subscriber->getType());
-            if ($storage->exists($subscriber)) {
+            if ($this->getStorage()->exists($subscriber)) {
                 return true;
             }
         }
@@ -163,12 +143,14 @@ class DoubleOptInStrategyType extends AbstractStrategyType
         return false;
     }
 
-    public function handleExists(SubscriberInterface $subscriber)
+    public function handleExists(SubscriberInterface $subscriber, array $options = [])
     {
-        $subscriber = $this->localStorage->getSubscriber($subscriber->getEmail());
-        if(!$subscriber->isActive()) {
+        $subscriber = $this->repository->findOneByEmail($subscriber->getEmail());
+
+        if (!$subscriber->isActive()) {
             $this->setToken($subscriber);
             $this->notifySubscriber($subscriber, $subscriber->getType());
+
             return 'subscriber.form.error.sent_again';
         }
         return 'subscriber.form.error.exists';
@@ -177,11 +159,6 @@ class DoubleOptInStrategyType extends AbstractStrategyType
     public function getActivationTemplate($type)
     {
         return $this->getTypeOption('activation_template', $type, 'EnhavoNewsletterBundle:Subscriber:activate.html.twig');
-    }
-
-    private function getRouter()
-    {
-        return $this->container->get('router');
     }
 
     public static function getName(): ?string
