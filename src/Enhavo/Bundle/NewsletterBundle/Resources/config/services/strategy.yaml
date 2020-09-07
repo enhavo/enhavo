@@ -16,7 +16,7 @@ services:
         public: true
         arguments:
             - '@Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager'
-            - '@'
+            - '@pending'
             - '@router'
         tags:
             - { name: enhavo_newsletter.strategy }

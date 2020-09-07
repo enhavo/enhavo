@@ -11,6 +11,8 @@ enhavo_newsletter:
     subscribtion:
         default:
             template: EnhavoNewsletterBundle:Subscriber:subscribe.html.twig
+            form: ~
+            model: ~
             strategy:
                 type: double_opt_in
                 from: '%env(string:MAILER_FROM)%'
@@ -29,6 +31,10 @@ enhavo_newsletter:
             storage:
                 type: mailchimp
                 url: '%env(string:MAILCHIMP_URL)%'
+                mappings: {
+                              a: b,
+                              c: d
+                }
 
 
 enhavo_app:

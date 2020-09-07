@@ -61,10 +61,10 @@ class DoubleOptInStrategyType extends AbstractStrategyType
     private function notifySubscriber(SubscriberInterface $subscriber, array $options)
     {
         if ($options['notify']) {
-            $link = $this->router->generate($options['activate_route'], [
+            $link = $this->router->generate($options['activate_route'], array_merge($options['activate_route_parameters'], [
                 'token' => $subscriber->getToken(),
                 'type' => $subscriber->getType()
-            ], UrlGeneratorInterface::ABSOLUTE_URL);
+            ]), UrlGeneratorInterface::ABSOLUTE_URL);
 
             $template = $options['template'];
             $from = $options['from'];

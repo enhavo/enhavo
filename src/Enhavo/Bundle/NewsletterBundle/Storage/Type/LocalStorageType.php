@@ -18,7 +18,7 @@ class LocalStorageType extends AbstractStorageType
     /**
      * @var EntityManagerInterface
      */
-    private $manager;
+    private $entityManager;
 
     /**
      * @var RepositoryInterface
@@ -27,7 +27,7 @@ class LocalStorageType extends AbstractStorageType
 
     public function __construct(EntityManagerInterface $manager, RepositoryInterface $repository)
     {
-        $this->manager = $manager;
+        $this->entityManager = $manager;
         $this->repository = $repository;
     }
 
@@ -76,8 +76,11 @@ class LocalStorageType extends AbstractStorageType
 
     public function saveSubscriber(SubscriberInterface $subscriber, array $options)
     {
-        $this->manager->persist($subscriber);
-        $this->manager->flush();
+        if (!($subscriber instanceof Subscriber)) {
+            // -->> exception
+        }
+        $this->entityManager->persist($subscriber);
+        $this->entityManager->flush();
     }
 
     public function exists(SubscriberInterface $subscriber, array $options): bool
@@ -98,7 +101,7 @@ class LocalStorageType extends AbstractStorageType
         }
 
         foreach ($subscriber->getGroups() as $group) {
-            $group = $this->manager->getRepository(Group::class)->findOneBy(['name' => $group->getName()]);
+            $group = $this->entityManager->getRepository(Group::class)->findOneBy(['name' => $group->getName()]);
             if ($group === null) {
                 return false;
             }
