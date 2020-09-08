@@ -99,3 +99,16 @@ filter:
     label:
       from: 'Date from'
       to: 'To'
+exception:
+  default:
+    title: 'An error occurred'
+    text: 'Unfortunately an error occurred while processing your request.'
+    link_homepage: 'Back to the starting page'
+  404:
+    title: 'Page not found'
+    text: 'The page you were looking for could not be found. You might have requested a wrong or old URL, or the content might have been deleted.'
+    link_homepage: 'Back to the starting page'
+  403:
+    title: 'Access denied'
+    text: 'You are not allowed to access this page.'
+    link_homepage: 'Back to the starting page'
