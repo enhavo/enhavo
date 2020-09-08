@@ -16,6 +16,6 @@
   },
   "require": {
     "php": "^7.2",
-    "enhavo/app-bundle": "dev-master"
+    "enhavo/app-bundle": "^0.9"
   }
 }

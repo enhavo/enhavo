@@ -13,8 +13,8 @@
   ],
   "require": {
     "php": "^7.2",
-    "enhavo/app-bundle": "dev-master",
-    "enhavo/form-bundle": "dev-master",
+    "enhavo/app-bundle": "^0.9",
+    "enhavo/form-bundle": "^0.9",
     "friendsofsymfony/user-bundle": "^2.1"
   },
   "require-dev": {

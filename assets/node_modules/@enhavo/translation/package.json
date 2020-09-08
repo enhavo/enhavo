@@ -2,15 +2,15 @@
   "name": "@enhavo/translation",
   "license": "MIT",
   "types": "index.ts",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "homepage": "https://www.enhavo.com",
   "repository": {
     "type": "git",
     "url": "https://github.com/enhavo/enhavo.git"
   },
   "dependencies": {
-    "@enhavo/app": "https://github.com/enhavo/app-assets.git",
-    "@enhavo/form": "https://github.com/enhavo/app-assets.git",
+    "@enhavo/app": "^0.9",
+    "@enhavo/form": "^0.9",
     "jquery": "~3.4.1"
   }
 }
