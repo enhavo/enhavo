@@ -6,19 +6,10 @@
         </id>
 
         <field name="email" length="255" nullable="true" />
-        <field name="createdAt" type="datetime" nullable="true" />
+        <field name="subscribtion" length="255" nullable="true" />
         <field name="token" length="255" nullable="true" />
-        <field name="data" type="array" nullable="true" />
+        <field name="createdAt" type="datetime" nullable="true" />
+        <field name="data" type="object" nullable="true" />
 
-        <many-to-many field="groups" target-entity="Enhavo\Bundle\NewsletterBundle\Model\GroupInterface">
-            <join-table name="newsletter_pending_subscriber_group">
-                <join-columns>
-                    <join-column name="subscriber_id" />
-                </join-columns>
-                <inverse-join-columns>
-                    <join-column name="group_id" />
-                </inverse-join-columns>
-            </join-table>
-        </many-to-many>
     </entity>
 </doctrine-mapping>

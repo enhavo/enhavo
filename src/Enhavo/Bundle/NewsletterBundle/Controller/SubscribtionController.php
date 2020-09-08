@@ -2,12 +2,13 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Controller;
 
-use Enhavo\Bundle\NewsletterBundle\Entity\PendingSubscriber;
+use Enhavo\Bundle\NewsletterBundle\Form\Type\SubscriberType;
+use Enhavo\Bundle\NewsletterBundle\Model\Subscriber;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
-use Enhavo\Bundle\NewsletterBundle\Strategy\Type\AcceptStrategyType;
-use Enhavo\Bundle\NewsletterBundle\Strategy\Type\DoubleOptInStrategyType;
+use Enhavo\Bundle\NewsletterBundle\Pending\PendingSubscriberManager;
 use Enhavo\Bundle\NewsletterBundle\Subscribtion\SubscribtionManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -17,114 +18,106 @@ class SubscribtionController extends AbstractController
     /** @var SubscribtionManager */
     private $subscribtionManager;
 
+    /** @var PendingSubscriberManager */
+    private $pendingManager;
+
     /** @var TranslatorInterface */
     private $translator;
 
     /**
      * SubscribtionController constructor.
      * @param SubscribtionManager $subscribtionManager
+     * @param PendingSubscriberManager $pendingManager
      * @param TranslatorInterface $translator
      */
-    public function __construct(SubscribtionManager $subscribtionManager, TranslatorInterface $translator)
+    public function __construct(SubscribtionManager $subscribtionManager, PendingSubscriberManager $pendingManager, TranslatorInterface $translator)
     {
         $this->subscribtionManager = $subscribtionManager;
+        $this->pendingManager = $pendingManager;
         $this->translator = $translator;
     }
-
 
     public function activateAction(Request $request)
     {
         $type = $request->get('type');
+        $token = $request->get('token');
         $subscribtion = $this->subscribtionManager->getSubscribtion($type);
         $strategy = $subscribtion->getStrategy();
 
-        if (!($strategy instanceof DoubleOptInStrategyType)) {
+        $pending = $this->pendingManager->findByToken($token);
+        if (!$pending || !($pending->getData() instanceof SubscriberInterface)) {
             throw $this->createNotFoundException();
         }
 
-        $token = $request->get('token');
+        /** @var SubscriberInterface $subscriber */
+        $subscriber = $pending->getData();
+        try {
+            $strategy->activateSubscriber($subscriber);
+            return $this->render($strategy->getActivationTemplate(), [
+                'subscriber' => $subscriber
+            ]);
+        } catch (\Exception $exception) {
 
-        $subscriber = $strategy->findByToken($token, false);
-
-        if (!$subscriber instanceof SubscriberInterface) {
-            throw $this->createNotFoundException();
         }
 
-        $strategy->activateSubscriber($subscriber, $type);
-
-        return $this->render($strategy->getActivationTemplate($type), [
-            'subscriber' => $subscriber
-        ]);
-    }
-
-    public function acceptAction(Request $request)
-    {
-        $type = $request->get('type');
-        $subscribtion = $this->subscribtionManager->getSubscribtion($type);
-        $strategy = $subscribtion->getStrategy();
-
-        if (!($strategy instanceof AcceptStrategyType)) {
-            throw $this->createNotFoundException();
-        }
-
-        $token = $request->get('token');
-
-        $subscriber = $strategy->findByToken($token, false);
-
-        if (!$subscriber instanceof SubscriberInterface) {
-            throw $this->createNotFoundException();
-        }
-
-        $strategy->activateSubscriber($subscriber, $type);
-
-        return $this->render($strategy->getActivationTemplate($type), [
-            'subscriber' => $subscriber
-        ]);
+        throw $this->createNotFoundException();
     }
 
     public function addAction(Request $request)
     {
         $type = $request->get('type');
+        $subscribtion = $this->subscribtionManager->getSubscribtion($type);
+        $subscriber = $this->subscribtionManager->createModel($subscribtion->getModel());
+        $subscriber->setSubscribtion($type);
 
-        $subscriber = new PendingSubscriber();
-        $form = $this->createSubscriberForm($subscriber);
+        $form = $this->subscribtionManager->createForm($subscribtion, $subscriber);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
-            $message = $this->subscribtionManager->addSubscriber($subscriber, $type);
+        $result = $this->formIsValid($form);
+
+        if ($result === true) {
+            $message = $subscribtion->getStrategy()->addSubscriber($subscriber);
             return new JsonResponse([
                 'message' => $this->translator->trans($message, [], 'EnhavoNewsletterBundle'),
                 'subscriber' => $subscriber
             ]);
         } else {
-            $errorResolver = $this->container->get('enhavo_contact.form_error_resolver');
-            $errors = $errorResolver->getErrors($form);
             return new JsonResponse([
-                'errors' => $errors,
+                'errors' => $result,
                 'subscriber' => $subscriber
             ], 400);
         }
     }
 
-    private function setSubscriberType(SubscriberInterface $subscriber, Request $request)
+    /**
+     * @param $form
+     * @return array|bool
+     */
+    protected function formIsValid($form)
     {
-        $type = $request->get('type');
-        $formResolver = $this->container->get('enhavo_newsletter.form_resolver');
-        $resolveType = $formResolver->resolveType($type);
-        if ($resolveType === null) {
-            throw $this->createNotFoundException('type could not be resolved');
+        $errorResolver = $this->get('enhavo_form.error.error.resolver');
+        $errors = $errorResolver->getErrors($form);
+
+        if (count($errors) > 0) {
+            $errorFields = [];
+            foreach($errors as $error) {
+                $errorFields[] = $this->getSubFormName($error->getOrigin());
+            }
+
+            return $errorFields;
         }
-        $subscriber->setType($type);
+
+        return true;
     }
 
-    private function createSubscriberForm(SubscriberInterface $subscriber)
+
+    protected function getSubFormName(FormInterface $form)
     {
-        $subscribtion = $this->subscribtionManager->getSubscribtion($subscriber->getType());
-
-        $formType = '';//$subscribtion->getFormType();
-        $form = $this->createForm($formType, $subscriber);
-
-        return $form;
+        if ($form->getParent() == null) {
+            return $form->getName();
+        } else {
+            return $this->getSubFormName($form->getParent()) . '[' . $form->getName() . ']';
+        }
     }
 
 }

@@ -8,7 +8,6 @@ services:
         public: true
         arguments:
             - '@Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager'
-            - ''
         tags:
             - { name: enhavo_newsletter.strategy }
 
@@ -16,7 +15,7 @@ services:
         public: true
         arguments:
             - '@Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager'
-            - '@pending'
+            - '@Enhavo\Bundle\NewsletterBundle\Pending\PendingSubscriberManager'
             - '@router'
         tags:
             - { name: enhavo_newsletter.strategy }
@@ -25,7 +24,7 @@ services:
         public: true
         arguments:
             - '@Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager'
-            - ''
+            - '@Enhavo\Bundle\NewsletterBundle\Pending\PendingSubscriberManager'
             - '@router'
         tags:
             - { name: enhavo_newsletter.strategy }

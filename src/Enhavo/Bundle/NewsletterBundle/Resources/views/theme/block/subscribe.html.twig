@@ -1,16 +1,6 @@
 <article class="block">
     <div class="block-newsletter">
         <h2 class="title">Newsletter</h2>
-        <form action="">
-            <input type="text" placeholder="Vorname">
-            <input type="text" placeholder="Nachname">
-            <input type="email" placeholder="E-Mail Adresse">
-            <div class="checkbox">
-                <label for="">Ich habe die <a href="">Datenschutzbestimmungen</a> gelesen und akzeptiere Sie</label>
-                <input type="checkbox">
-                <span></span>
-            </div>
-            <input type="submit" value="Abonnieren">
-        </form>
+        {{ subscribe_form('default') }}
     </div>
 </article>

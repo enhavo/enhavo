@@ -2,14 +2,13 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Form\Type;
 
-use Enhavo\Bundle\FormBundle\Form\Type\BooleanType;
-use Enhavo\Bundle\NewsletterBundle\Model\Subscriber;
+use Enhavo\Bundle\NewsletterBundle\Entity\PendingSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SubscriberType extends AbstractType
+class PendingSubscriberType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -17,12 +16,13 @@ class SubscriberType extends AbstractType
             'label' => 'subscriber.form.label.email',
             'translation_domain' => 'EnhavoNewsletterBundle'
         ));
+
     }
 
     public function resolveOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => Subscriber::class,
+            'data_class' => PendingSubscriber::class,
         ));
     }
 

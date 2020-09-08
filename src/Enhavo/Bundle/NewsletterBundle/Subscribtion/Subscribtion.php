@@ -19,17 +19,26 @@ class Subscribtion
     /** @var Strategy */
     private $strategy;
 
+    /** @var string */
+    private $model;
+
+    /** @var array */
+    private $formConfig;
+
     /**
      * Subscribtion constructor.
      * @param string $name
      * @param Strategy $strategy
+     * @param string $model
+     * @param array $formConfig
      */
-    public function __construct(string $name, Strategy $strategy)
+    public function __construct(string $name, Strategy $strategy, string $model, array $formConfig)
     {
         $this->name = $name;
         $this->strategy = $strategy;
+        $this->model = $model;
+        $this->formConfig = $formConfig;
     }
-
 
     /**
      * @return string
@@ -47,5 +56,27 @@ class Subscribtion
     {
         return $this->strategy;
     }
+
+    /**
+     * @return string
+     */
+    public function getModel(): string
+    {
+        return $this->model;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFormConfig(): array
+    {
+        return $this->formConfig;
+    }
+
+    public function getGroups(): array
+    {
+        return [];
+    }
+
 
 }

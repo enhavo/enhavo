@@ -8,72 +8,29 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Model;
 
-use Sylius\Component\Resource\Model\ResourceInterface;
-
-interface SubscriberInterface extends ResourceInterface
+interface SubscriberInterface
 {
     /**
-     * Set email
-     *
-     * @param string $email
-     *
-     * @return SubscriberInterface
+     * @param string|null $email
      */
-    public function setEmail($email);
+    public function setEmail(?string $email): void;
 
     /**
-     * Get email
-     *
-     * @return string
+     * @return string|null
      */
-    public function getEmail();
+    public function getEmail(): ?string;
 
     /**
-     * Set active
-     *
-     * @param boolean $active
-     *
-     * @return SubscriberInterface
+     * @param string|null $token
      */
-    public function setActive($active);
-
-    /**
-     * Get active
-     *
-     * @return boolean
-     */
-    public function getActive();
-
-    /**
-     * Set token
-     *
-     * @param string $token
-     *
-     * @return SubscriberInterface
-     */
-    public function setToken($token);
+    public function setToken(?string $token): void;
 
     /**
      * Get token
      *
      * @return string
      */
-    public function getToken();
-
-    /**
-     * Set activatedAt
-     *
-     * @param \DateTime $activatedAt
-     * @return SubscriberInterface
-     */
-    public function setActivatedAt($activatedAt);
-
-    /**
-     * Get activatedAt
-     *
-     * @return \DateTime
-     */
-    public function getActivatedAt();
+    public function getToken(): ?string;
 
     /**
      * @return \DateTime
@@ -84,11 +41,6 @@ interface SubscriberInterface extends ResourceInterface
      * @param \DateTime $createdAt
      */
     public function setCreatedAt($createdAt);
-
-    /**
-     * @return boolean
-     */
-    public function isActive();
 
     /**
      * Add group
@@ -115,13 +67,12 @@ interface SubscriberInterface extends ResourceInterface
     public function getGroups();
 
     /**
-     * @param string $type
-     *
+     * @param string|null $subscribtion
      */
-    public function setType($type);
+    public function setSubscribtion(?string $subscribtion): void;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getType();
+    public function getSubscribtion(): ?string;
 }

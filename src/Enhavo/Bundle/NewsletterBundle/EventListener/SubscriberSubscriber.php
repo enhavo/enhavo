@@ -10,25 +10,25 @@ namespace Enhavo\Bundle\NewsletterBundle\EventListener;
 
 use Enhavo\Bundle\NewsletterBundle\Event\NewsletterEvents;
 use Enhavo\Bundle\NewsletterBundle\Event\SubscriberEvent;
-use Enhavo\Bundle\NewsletterBundle\Form\Resolver;
+use Enhavo\Bundle\NewsletterBundle\Subscribtion\SubscribtionManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class SubscriberSubscriber implements EventSubscriberInterface
 {
     /**
-     * @var Resolver
+     * @var SubscribtionManager
      */
-    private $formResolver;
+    private $subscribtionManager;
 
     /**
      * SubscriberSubscriber constructor.
-     *
-     * @param Resolver $formResolver
+     * @param SubscribtionManager $subscribtionManager
      */
-    public function __construct(Resolver $formResolver)
+    public function __construct(SubscribtionManager $subscribtionManager)
     {
-        $this->formResolver = $formResolver;
+        $this->subscribtionManager = $subscribtionManager;
     }
+
 
     public static function getSubscribedEvents()
     {
@@ -40,7 +40,8 @@ class SubscriberSubscriber implements EventSubscriberInterface
     public function onCreateSubscriber(SubscriberEvent $event)
     {
         $subscriber = $event->getSubscriber();
-        $groups = $this->formResolver->resolveGroups($subscriber->getType());
+        $subscribtion = $this->subscribtionManager->getSubscribtion($subscriber->getSubscribtion());
+        $groups = $this->subscribtionManager->resolveGroups($subscribtion->getGroups());
         foreach($groups as $group) {
             $subscriber->addGroup($group);
         }

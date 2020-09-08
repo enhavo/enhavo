@@ -5,6 +5,8 @@ namespace Enhavo\Bundle\NewsletterBundle\DependencyInjection;
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\NewsletterBundle\Entity\Group;
 use Enhavo\Bundle\NewsletterBundle\Form\Type\GroupType;
+use Enhavo\Bundle\NewsletterBundle\Form\Type\SubscriberType;
+use Enhavo\Bundle\NewsletterBundle\Model\Subscriber;
 use Enhavo\Bundle\NewsletterBundle\Repository\GroupRepository;
 use Sylius\Component\Resource\Factory\Factory;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -50,19 +52,18 @@ class Configuration implements ConfigurationInterface
                                 ->end()
                             ->end()
                         ->end()
-
-                        ->arrayNode('subscriber')
+                        ->arrayNode('local_subscriber')
                             ->addDefaultsIfNotSet()
                             ->children()
                                 ->variableNode('options')->end()
                                 ->arrayNode('classes')
                                     ->addDefaultsIfNotSet()
                                     ->children()
-                                        ->scalarNode('model')->defaultValue('Enhavo\Bundle\NewsletterBundle\Entity\Subscriber')->end()
-                                        ->scalarNode('controller')->defaultValue('Enhavo\Bundle\NewsletterBundle\Controller\SubscriberController')->end()
+                                        ->scalarNode('model')->defaultValue('Enhavo\Bundle\NewsletterBundle\Entity\LocalSubscriber')->end()
+                                        ->scalarNode('controller')->defaultValue('Enhavo\Bundle\AppBundle\Controller\ResourceController')->end()
                                         ->scalarNode('repository')->defaultValue('Enhavo\Bundle\NewsletterBundle\Repository\SubscriberRepository')->end()
                                         ->scalarNode('factory')->defaultValue('Sylius\Component\Resource\Factory\Factory')->end()
-                                        ->scalarNode('form')->defaultValue('Enhavo\Bundle\NewsletterBundle\Form\Type\SubscriberType')->cannotBeEmpty()->end()
+                                        ->scalarNode('form')->defaultValue('Enhavo\Bundle\NewsletterBundle\Form\Type\LocalSubscriberType')->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
                             ->end()
@@ -78,7 +79,7 @@ class Configuration implements ConfigurationInterface
                                         ->scalarNode('controller')->defaultValue('Enhavo\Bundle\AppBundle\Controller\ResourceController')->end()
                                         ->scalarNode('repository')->defaultValue('Enhavo\Bundle\NewsletterBundle\Repository\PendingSubscriberRepository')->end()
                                         ->scalarNode('factory')->defaultValue('Sylius\Component\Resource\Factory\Factory')->end()
-//                                        ->scalarNode('form')->defaultValue('Enhavo\Bundle\NewsletterBundle\Form\Type\PendingSubscriberType')->cannotBeEmpty()->end()
+                                        ->scalarNode('form')->defaultValue('Enhavo\Bundle\NewsletterBundle\Form\Type\PendingSubscriberType')->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
                             ->end()
@@ -129,8 +130,25 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-                ->variableNode('subscribtion')->end()
+                ->arrayNode('subscribtion')
+                    ->arrayPrototype()
+                        ->children()
+                            ->variableNode('strategy')->end()
+                            ->variableNode('storage')->end()
+                            ->scalarNode('template')->defaultValue('EnhavoNewsletterBundle:mail/newsletter/template:default.html.twig')->end()
+                            ->scalarNode('model')->defaultValue(Subscriber::class)->end()
+                            ->arrayNode('form')
+                                ->addDefaultsIfNotSet()
+                                ->children()
+                                    ->variableNode('class')->defaultValue(SubscriberType::class)->end()
+                                    ->variableNode('template')->defaultValue('EnhavoNewsletterBundle:theme/resource/subscriber:subscribe.html.twig')->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
             ->end()
+        ->end()
         ;
 
         return $treeBuilder;

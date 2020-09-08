@@ -5,7 +5,6 @@ namespace Enhavo\Bundle\NewsletterBundle\Strategy\Type;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager;
 use Enhavo\Bundle\NewsletterBundle\Strategy\AbstractStrategyType;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class NotifyStrategyType extends AbstractStrategyType
@@ -13,26 +12,19 @@ class NotifyStrategyType extends AbstractStrategyType
     /** @var NewsletterManager */
     private $newsletterManager;
 
-    /** @var RepositoryInterface */
-    private $bufferRepository;
-
     /**
      * NotifyStrategyType constructor.
      * @param NewsletterManager $newsletterManager
-     * @param RepositoryInterface $bufferRepository
      */
-    public function __construct(NewsletterManager $newsletterManager, RepositoryInterface $bufferRepository)
+    public function __construct(NewsletterManager $newsletterManager)
     {
         $this->newsletterManager = $newsletterManager;
-        $this->bufferRepository = $bufferRepository;
     }
 
 
     public function addSubscriber(SubscriberInterface $subscriber, array $options)
     {
         $subscriber->setCreatedAt(new \DateTime());
-        $subscriber->setActivatedAt(new \DateTime());
-        $subscriber->setActive(true);
         $this->getStorage()->saveSubscriber($subscriber);
         $this->notifySubscriber($subscriber, $options);
         $this->notifyAdmin($subscriber, $options);
@@ -46,7 +38,7 @@ class NotifyStrategyType extends AbstractStrategyType
             $template = $options['template'];
             $from = $options['from'];
             $senderName = $options['sender_name'];
-            $subject = '';//$this->getSubject()
+            $subject = $this->getSubject($options);
 
             $message = $this->newsletterManager->createMessage($from, $senderName, $subscriber->getEmail(), $subject, $template, [
                 'subscriber' => $subscriber
@@ -76,7 +68,15 @@ class NotifyStrategyType extends AbstractStrategyType
         $subject = $options['admin_subject'];
         $translationDomain = $options['translation_domain'];
 
-        return '';//$this->translator->trans($subject, [], $translationDomain);
+        return $subject;//$this->translator->trans($subject, [], $translationDomain);
+    }
+
+    private function getSubject(array $options)
+    {
+        $subject = $options['subject'];
+        $translationDomain = $options['translation_domain'];
+
+        return $subject;//$this->translator->trans($subject, [], $translationDomain);
     }
 
     public function exists(SubscriberInterface $subscriber, array $options): bool

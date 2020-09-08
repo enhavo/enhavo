@@ -1,8 +1,9 @@
 services:
-    enhavo_newsletter.twig.subscribe_renderer:
-        class: Enhavo\Bundle\NewsletterBundle\Twig\SubscribeFormRenderer
+    Enhavo\Bundle\NewsletterBundle\Twig\SubscribeFormRenderer:
         arguments:
-            - '@enhavo_newsletter.form_resolver'
+            - '@Enhavo\Bundle\NewsletterBundle\Subscribtion\SubscribtionManager'
+            - '@twig'
+
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
@@ -30,20 +31,21 @@ services:
     Enhavo\Bundle\NewsletterBundle\Subscribtion\SubscribtionManager:
         public: true
         arguments:
-            - '@enhavo_newsletter.form_resolver'
             - '@event_dispatcher'
             - '@Enhavo\Component\Type\FactoryInterface[Storage]'
             - '@Enhavo\Component\Type\FactoryInterface[Strategy]'
+            - '@form.factory'
             - '%enhavo_newsletter.subscribtion%'
 
-    Enhavo\Bundle\NewsletterBundle\Factory\SubscriberFactory:
+    Enhavo\Bundle\NewsletterBundle\Factory\LocalSubscriberFactory:
         arguments:
-            - '%enhavo_newsletter.model.subscriber.class%'
+            - '%enhavo_newsletter.model.local_subscriber.class%'
             - '@enhavo_newsletter.repository.group'
 
     Enhavo\Bundle\NewsletterBundle\Controller\SubscribtionController:
         arguments:
             - '@Enhavo\Bundle\NewsletterBundle\Subscribtion\SubscribtionManager'
+            - '@Enhavo\Bundle\NewsletterBundle\Pending\PendingSubscriberManager'
             - '@translator'
         tags:
             - { name: controller.service_arguments }

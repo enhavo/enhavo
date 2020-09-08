@@ -8,24 +8,15 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Subscribtion;
 
-use Enhavo\Bundle\NewsletterBundle\Event\NewsletterEvents;
-use Enhavo\Bundle\NewsletterBundle\Event\SubscriberEvent;
-use Enhavo\Bundle\NewsletterBundle\Form\Resolver;
-use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
+use Enhavo\Bundle\NewsletterBundle\Entity\Group;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
-use Enhavo\Bundle\NewsletterBundle\Storage\Storage;
-use Enhavo\Bundle\NewsletterBundle\Strategy\Strategy;
 use Enhavo\Component\Type\FactoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Form\FormFactoryInterface;
 
 class SubscribtionManager
 {
     const DEFAULT_PROVIDER = 'local';
-
-    /**
-     * @var Resolver
-     */
-    private $formResolver;
 
     /**
      * @var EventDispatcherInterface
@@ -38,23 +29,26 @@ class SubscribtionManager
     /** @var FactoryInterface */
     private $strategyFactory;
 
+    /** @var FormFactoryInterface */
+    private $formFactory;
+
     /** @var array */
     private $configuration;
 
     /**
-     * SubscriberManager constructor.
-     * @param Resolver $formResolver
+     * SubscribtionManager constructor.
      * @param EventDispatcherInterface $eventDispatcher
      * @param FactoryInterface $storageFactory
      * @param FactoryInterface $strategyFactory
+     * @param FormFactoryInterface $formFactory
      * @param array $configuration
      */
-    public function __construct(Resolver $formResolver, EventDispatcherInterface $eventDispatcher, FactoryInterface $storageFactory, FactoryInterface $strategyFactory, array $configuration)
+    public function __construct(EventDispatcherInterface $eventDispatcher, FactoryInterface $storageFactory, FactoryInterface $strategyFactory, FormFactoryInterface $formFactory, array $configuration)
     {
-        $this->formResolver = $formResolver;
         $this->eventDispatcher = $eventDispatcher;
         $this->storageFactory = $storageFactory;
         $this->strategyFactory = $strategyFactory;
+        $this->formFactory = $formFactory;
         $this->configuration = $configuration;
     }
 
@@ -65,11 +59,25 @@ class SubscribtionManager
         $storage = $this->storageFactory->create($config['storage']);
         $strategy->setStorage($storage);
 
+        return new Subscribtion($name, $strategy, $config['model'], $config['form']);
+    }
 
-//         blutze: create form? (strategy based email validation)
-//        $formType = $this->formResolver->resolveType($config['form']);
-//        $form = $this->createForm($formType, $subscriber);
+    public function createModel($className): SubscriberInterface
+    {
+        return new $className();
+    }
 
-        return new Subscribtion($name, $strategy);
+    public function createForm(Subscribtion $subscribtion, ?SubscriberInterface $subscriber)
+    {
+        $formConfig = $subscribtion->getFormConfig();
+        return $this->formFactory->create($formConfig['class'], $subscriber);
+    }
+
+    /**
+     * @param array|null $groups
+     * @return Group[]
+     */
+    public function resolveGroups(?array $groups): array {
+        return [];
     }
 }

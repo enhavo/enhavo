@@ -7,7 +7,7 @@ use Enhavo\Bundle\NewsletterBundle\Entity\Group;
 use Enhavo\Bundle\SliderBundle\Model\SliderInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 
-class SubscriberFactory extends Factory
+class LocalSubscriberFactory extends Factory
 {
     /**
      * @var RepositoryInterface

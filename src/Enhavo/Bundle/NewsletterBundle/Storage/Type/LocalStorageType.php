@@ -4,12 +4,14 @@ namespace Enhavo\Bundle\NewsletterBundle\Storage\Type;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\NewsletterBundle\Entity\Group;
+use Enhavo\Bundle\NewsletterBundle\Entity\LocalSubscriber;
 use Enhavo\Bundle\NewsletterBundle\Entity\Newsletter;
 use Enhavo\Bundle\NewsletterBundle\Entity\Receiver;
-use Enhavo\Bundle\NewsletterBundle\Entity\Subscriber;
+use Enhavo\Bundle\NewsletterBundle\Model\LocalSubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Storage\AbstractStorageType;
+use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 class LocalStorageType extends AbstractStorageType
@@ -25,10 +27,20 @@ class LocalStorageType extends AbstractStorageType
      */
     private $repository;
 
-    public function __construct(EntityManagerInterface $manager, RepositoryInterface $repository)
+    /** @var FactoryInterface */
+    private $subscriberFactory;
+
+    /**
+     * LocalStorageType constructor.
+     * @param EntityManagerInterface $entityManager
+     * @param RepositoryInterface $repository
+     * @param FactoryInterface $subscriberFactory
+     */
+    public function __construct(EntityManagerInterface $entityManager, RepositoryInterface $repository, FactoryInterface $subscriberFactory)
     {
-        $this->entityManager = $manager;
+        $this->entityManager = $entityManager;
         $this->repository = $repository;
+        $this->subscriberFactory = $subscriberFactory;
     }
 
     public function getReceivers(NewsletterInterface $newsletter, array $options): array
@@ -41,7 +53,7 @@ class LocalStorageType extends AbstractStorageType
         $receivers = [];
         $groups = $newsletter->getGroups();
         foreach ($groups as $group) {
-            /** @var Subscriber $subscriber */
+            /** @var LocalSubscriber $subscriber */
             foreach ($group->getSubscriber() as $subscriber) {
                 if (!isset($subscribers[$subscriber->getId()])) {
                     $subscribers[$subscriber->getId()] = $subscriber;
@@ -52,7 +64,7 @@ class LocalStorageType extends AbstractStorageType
         return $receivers;
     }
 
-    private function createReceiver(Subscriber $subscriber)
+    private function createReceiver(LocalSubscriber $subscriber)
     {
         $receiver = new Receiver();
         $receiver->setEmail($subscriber->getEmail());
@@ -76,10 +88,12 @@ class LocalStorageType extends AbstractStorageType
 
     public function saveSubscriber(SubscriberInterface $subscriber, array $options)
     {
-        if (!($subscriber instanceof Subscriber)) {
-            // -->> exception
-        }
-        $this->entityManager->persist($subscriber);
+        /** @var LocalSubscriberInterface $local */
+        $local = $this->subscriberFactory->createNew();
+        $local->setCreatedAt(new \DateTime());
+        $local->setEmail($subscriber->getEmail());
+        $local->setSubscribtion($subscriber->getSubscribtion());
+        $this->entityManager->persist($local);
         $this->entityManager->flush();
     }
 

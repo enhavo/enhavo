@@ -4,9 +4,10 @@ namespace Enhavo\Bundle\NewsletterBundle\Strategy\Type;
 
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager;
+use Enhavo\Bundle\NewsletterBundle\Pending\PendingSubscriberManager;
 use Enhavo\Bundle\NewsletterBundle\Strategy\AbstractStrategyType;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 class AcceptStrategyType extends AbstractStrategyType
@@ -14,8 +15,8 @@ class AcceptStrategyType extends AbstractStrategyType
     /** @var NewsletterManager */
     private $newsletterManager;
 
-    /** @var RepositoryInterface */
-    private $bufferRepository;
+    /** @var PendingSubscriberManager */
+    private $pendingManager;
 
     /** @var RouterInterface */
     private $router;
@@ -23,30 +24,35 @@ class AcceptStrategyType extends AbstractStrategyType
     /**
      * AcceptStrategyType constructor.
      * @param NewsletterManager $newsletterManager
-     * @param RepositoryInterface $bufferRepository
+     * @param PendingSubscriberManager $pendingManager
      * @param RouterInterface $router
      */
-    public function __construct(NewsletterManager $newsletterManager, RepositoryInterface $bufferRepository, RouterInterface $router)
+    public function __construct(NewsletterManager $newsletterManager, PendingSubscriberManager $pendingManager, RouterInterface $router)
     {
         $this->newsletterManager = $newsletterManager;
-        $this->bufferRepository = $bufferRepository;
+        $this->pendingManager = $pendingManager;
         $this->router = $router;
     }
 
+
     public function addSubscriber(SubscriberInterface $subscriber, array $options)
     {
-        $this->setToken($subscriber);
-        $this->getStorage()->saveSubscriber($subscriber);
+        $subscriber->setCreatedAt(new \DateTime());
+        $pending = $this->pendingManager->createFrom($subscriber);
+
+        $this->pendingManager->save($pending);
         $this->notifyAdmin($subscriber, $options);
 
         return 'subscriber.form.message.accept';
     }
 
-    public function activateSubscriber(SubscriberInterface $subscriber, array $options)
+    public function activateSubscriber(SubscriberInterface $subscriber, array $options): bool
     {
-        $this->bufferRepository->remove($subscriber);
+        $this->pendingManager->removeBy($subscriber->getEmail(), $subscriber->getSubscribtion());
         $this->getStorage()->saveSubscriber($subscriber);
         $this->notifySubscriber($subscriber, $options);
+
+        return true;
     }
 
     private function notifySubscriber(SubscriberInterface $subscriber, array $options)
@@ -55,7 +61,7 @@ class AcceptStrategyType extends AbstractStrategyType
             $template = $options['template'];
             $from = $options['from'];
             $senderName = $options['sender_name'];
-            $subject = '';//$this->getSubject();
+            $subject = $this->getSubject($options);
 
             $message = $this->newsletterManager->createMessage($from, $senderName, $subscriber->getEmail(), $subject, $template, [
                 'subscriber' => $subscriber
@@ -67,10 +73,10 @@ class AcceptStrategyType extends AbstractStrategyType
 
     private function notifyAdmin(SubscriberInterface $subscriber, array $options)
     {
-        $link = $this->router->generate($options['accept_route'], [
+        $link = $this->router->generate($options['activate_route'], array_merge($options['activate_route_parameters'], [
             'token' => $subscriber->getToken(),
-            'type' => $subscriber->getType()
-        ], true);
+            'type' => $subscriber->getSubscribtion()
+        ]), UrlGeneratorInterface::ABSOLUTE_URL);
 
         $template = $options['admin_template'];
         $from = $options['from'];
@@ -90,14 +96,29 @@ class AcceptStrategyType extends AbstractStrategyType
         $subject = $options['admin_subject'];
         $translationDomain = $options['translation_domain'];
 
-        return '';//$this->translator->trans($subject, [], $translationDomain);
+        return $subject;//$this->translator->trans($subject, [], $translationDomain);
+    }
+
+    private function getSubject(array $options)
+    {
+        $subject = $options['subject'];
+        $translationDomain = $options['translation_domain'];
+
+        return $subject;//$this->translator->trans($subject, [], $translationDomain);
     }
 
     public function exists(SubscriberInterface $subscriber, array $options): bool
     {
         if ($options['check_exists']) {
-            return $this->getStorage()->exists($subscriber);
+            if ($this->pendingManager->findOneBy($subscriber->getEmail(), $subscriber->getSubscribtion())) {
+                return true;
+            }
+
+            if ($this->getStorage()->exists($subscriber)) {
+                return true;
+            }
         }
+
         return false;
     }
 
@@ -106,7 +127,7 @@ class AcceptStrategyType extends AbstractStrategyType
         return 'subscriber.form.error.exists';
     }
 
-    public function getActivationTemplate(array $options)
+    public function getActivationTemplate(array $options): ?string
     {
         return $options['activation_template'];
     }
@@ -119,7 +140,8 @@ class AcceptStrategyType extends AbstractStrategyType
             'translation_domain' => 'EnhavoNewsletterBundle',
             'admin_template' => 'EnhavoNewsletterBundle:Subscriber:Email/accept-admin.html.twig',
             'template' => 'EnhavoNewsletterBundle:Subscriber:Email/accept.html.twig',
-            'accept_route' => 'enhavo_newsletter_subscribe_accept'
+            'activate_route' => 'enhavo_newsletter_subscribe_activate',
+            'activate_route_parameters' => [],
         ]);
     }
 

@@ -3,13 +3,13 @@
 namespace Enhavo\Bundle\NewsletterBundle\Entity;
 
 use Doctrine\Common\Collections\Collection;
-use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
+use Enhavo\Bundle\NewsletterBundle\Model\LocalSubscriberInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
 /**
  * Subscriber
  */
-class Subscriber implements ResourceInterface, SubscriberInterface
+class LocalSubscriber implements ResourceInterface, LocalSubscriberInterface
 {
     /**
      * @var integer
@@ -27,21 +27,6 @@ class Subscriber implements ResourceInterface, SubscriberInterface
     private $createdAt;
 
     /**
-     * @var string
-     */
-    private $token;
-
-    /**
-     * @var bool
-     */
-    private $active = false;
-
-    /**
-     * @var \DateTime
-     */
-    private $activatedAt;
-
-    /**
      * @var Collection
      */
     private $groups;
@@ -49,7 +34,7 @@ class Subscriber implements ResourceInterface, SubscriberInterface
     /**
      * @var string
      */
-    private $type;
+    private $subscribtion;
 
     /**
      * @var string
@@ -79,7 +64,7 @@ class Subscriber implements ResourceInterface, SubscriberInterface
      *
      * @param string $email
      *
-     * @return Subscriber
+     * @return LocalSubscriber
      */
     public function setEmail($email)
     {
@@ -96,90 +81,6 @@ class Subscriber implements ResourceInterface, SubscriberInterface
     public function getEmail()
     {
         return $this->email;
-    }
-
-    /**
-     * Set active
-     *
-     * @param boolean $active
-     *
-     * @return Subscriber
-     */
-    public function setActive($active)
-    {
-        $this->active = $active;
-
-        if($active && $this->activatedAt === null) {
-            $this->activatedAt = new \DateTime();
-        }
-
-        if(!$active) {
-            $this->activatedAt = null;
-        }
-
-        return $this;
-    }
-
-    /**
-     * Get active
-     *
-     * @return boolean
-     */
-    public function getActive()
-    {
-        return $this->active;
-    }
-
-    public function isActive()
-    {
-        return (boolean)$this->getActive();
-    }
-
-    /**
-     * Set token
-     *
-     * @param string $token
-     *
-     * @return Subscriber
-     */
-    public function setToken($token)
-    {
-        $this->token = $token;
-
-        return $this;
-    }
-
-    /**
-     * Get token
-     *
-     * @return string
-     */
-    public function getToken()
-    {
-        return $this->token;
-    }
-
-    /**
-     * Set activatedAt
-     *
-     * @param \DateTime $activatedAt
-     * @return Subscriber
-     */
-    public function setActivatedAt($activatedAt)
-    {
-        $this->activatedAt = $activatedAt;
-
-        return $this;
-    }
-
-    /**
-     * Get activatedAt
-     *
-     * @return \DateTime
-     */
-    public function getActivatedAt()
-    {
-        return $this->activatedAt;
     }
 
     /**
@@ -202,7 +103,7 @@ class Subscriber implements ResourceInterface, SubscriberInterface
      * Set condition
      *
      * @param string $condition
-     * @return Subscriber
+     * @return LocalSubscriber
      */
     public function setCondition($condition)
     {
@@ -214,7 +115,7 @@ class Subscriber implements ResourceInterface, SubscriberInterface
     /**
      * Get condition
      *
-     * @return string 
+     * @return string
      */
     public function getCondition()
     {
@@ -225,7 +126,7 @@ class Subscriber implements ResourceInterface, SubscriberInterface
      * Add group
      *
      * @param \Enhavo\Bundle\NewsletterBundle\Entity\Group $group
-     * @return Subscriber
+     * @return LocalSubscriber
      */
     public function addGroup(\Enhavo\Bundle\NewsletterBundle\Entity\Group $group)
     {
@@ -247,7 +148,7 @@ class Subscriber implements ResourceInterface, SubscriberInterface
     /**
      * Get group
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getGroups()
     {
@@ -257,17 +158,17 @@ class Subscriber implements ResourceInterface, SubscriberInterface
     /**
      * @return string
      */
-    public function getType()
+    public function getSubscribtion()
     {
-        return $this->type;
+        return $this->subscribtion;
     }
 
     /**
-     * @param string $type
+     * @param string $key
      */
-    public function setType($type)
+    public function setSubscribtion($key)
     {
-        $this->type = $type;
+        $this->subscribtion = $key;
     }
 
     public function __toString()

@@ -11,5 +11,64 @@ namespace Enhavo\Bundle\NewsletterBundle\Model;
 
 interface LocalSubscriberInterface
 {
+    /**
+     * Set email
+     *
+     * @param string $email
+     *
+     * @return SubscriberInterface
+     */
+    public function setEmail($email);
 
+    /**
+     * Get email
+     *
+     * @return string
+     */
+    public function getEmail();
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt();
+
+    /**
+     * @param \DateTime $createdAt
+     */
+    public function setCreatedAt($createdAt);
+
+    /**
+     * Add group
+     *
+     * @param \Enhavo\Bundle\NewsletterBundle\Entity\Group $group
+     * @return SubscriberInterface
+     */
+    public function addGroup(\Enhavo\Bundle\NewsletterBundle\Entity\Group $group);
+
+
+    /**
+     * Remove group
+     *
+     * @param \Enhavo\Bundle\NewsletterBundle\Entity\Group $group
+     */
+    public function removeGroup(\Enhavo\Bundle\NewsletterBundle\Entity\Group $group);
+
+
+    /**
+     * Get group
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGroups();
+
+    /**
+     * @param string $key
+     *
+     */
+    public function setSubscribtion($key);
+
+    /**
+     * @return string
+     */
+    public function getSubscribtion();
 }

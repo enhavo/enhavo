@@ -9,13 +9,13 @@
 namespace Enhavo\Bundle\NewsletterBundle\Event;
 
 
-use Enhavo\Bundle\NewsletterBundle\Entity\Subscriber;
+use Enhavo\Bundle\NewsletterBundle\Entity\LocalSubscriber;
 use Symfony\Component\EventDispatcher\Event;
 
 class SubscriberEvent extends Event
 {
     /**
-     * @var Subscriber
+     * @var LocalSubscriber
      */
     private $subscriber;
 
@@ -31,7 +31,7 @@ class SubscriberEvent extends Event
     }
 
     /**
-     * @return Subscriber
+     * @return LocalSubscriber
      */
     public function getSubscriber()
     {

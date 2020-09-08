@@ -6,13 +6,11 @@ namespace Enhavo\Bundle\NewsletterBundle\Newsletter;
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
+use Enhavo\Bundle\NewsletterBundle\Entity\Receiver;
 use Enhavo\Bundle\NewsletterBundle\Exception\DeliveryException;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
-use Enhavo\Bundle\NewsletterBundle\Storage\StorageTypeInterface;
 use Enhavo\Bundle\NewsletterBundle\Subscribtion\SubscribtionManager;
-use Enhavo\Component\Metadata\MetadataRepository;
 use Psr\Log\LoggerInterface;
-use Enhavo\Bundle\NewsletterBundle\Entity\Receiver;
 use Twig\Environment;
 
 /**
@@ -36,7 +34,7 @@ class NewsletterManager
     /**
      * @var SubscribtionManager
      */
-    private $subscriberManager;
+    private $subscribtionManager;
 
     /**
      * @var TokenGeneratorInterface
@@ -56,7 +54,7 @@ class NewsletterManager
     /** @var Environment */
     private $twig;
 
-    /** @var array */
+    /** @var string */
     private $from;
 
     /**
@@ -70,11 +68,11 @@ class NewsletterManager
      * @param Environment $twig
      * @param array $from
      */
-    public function __construct(EntityManagerInterface $em, \Swift_Mailer $mailer, SubscribtionManager $subscriberManager, TokenGeneratorInterface $tokenGenerator, LoggerInterface $logger, NewsletterRenderer $renderer, Environment $twig, array $from)
+    public function __construct(EntityManagerInterface $em, \Swift_Mailer $mailer, SubscribtionManager $subscriberManager, TokenGeneratorInterface $tokenGenerator, LoggerInterface $logger, NewsletterRenderer $renderer, Environment $twig, string $from)
     {
         $this->em = $em;
         $this->mailer = $mailer;
-        $this->subscriberManager = $subscriberManager;
+        $this->subscribtionManager = $subscriberManager;
         $this->tokenGenerator = $tokenGenerator;
         $this->logger = $logger;
         $this->renderer = $renderer;
@@ -92,7 +90,7 @@ class NewsletterManager
         if ($newsletter->isPrepared()) {
             throw new DeliveryException(sprintf('Newsletter with id "%s" already prepared', $newsletter->getId()));
         }
-        $subscribtion = $this->subscriberManager->getSubscribtion('default');
+        $subscribtion = $this->subscribtionManager->getSubscribtion('default');
         $receivers = $subscribtion->getStrategy()->getStorage()->getTestReceivers($newsletter);
 
         /** @var Receiver $receiver */
@@ -179,7 +177,7 @@ class NewsletterManager
     public function sendTest(NewsletterInterface $newsletter, string $email): bool
     {
         $return = true;
-        $subscribtion = $this->subscriberManager->getSubscribtion('default');
+        $subscribtion = $this->subscribtionManager->getSubscribtion('default');
         $receivers = $subscribtion->getStrategy()->getStorage()->getTestReceivers($newsletter);
 
         foreach ($receivers as $receiver) {
@@ -206,7 +204,7 @@ class NewsletterManager
 
     public function renderPreview(NewsletterInterface $newsletter)
     {
-        $subscribtion = $this->subscriberManager->getSubscribtion('default');
+        $subscribtion = $this->subscribtionManager->getSubscribtion('default');
         $receivers = $subscribtion->getStrategy()->getStorage()->getTestReceivers($newsletter);
 
         return $this->render($receivers[0]);

@@ -38,5 +38,14 @@ class Strategy extends AbstractContainerType
         $this->type->setStorage($storage);
     }
 
+    public function activateSubscriber(SubscriberInterface $subscriber)
+    {
+        $this->type->activateSubscriber($subscriber, $this->options);
+    }
+
+    public function getActivationTemplate()
+    {
+        $this->type->getActivationTemplate($this->options);
+    }
 
 }

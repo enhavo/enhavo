@@ -2,8 +2,6 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Entity;
 
-use Doctrine\Common\Collections\Collection;
-use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
 /**
@@ -33,30 +31,17 @@ class PendingSubscriber implements ResourceInterface
     private $token;
 
     /**
-     * @var Collection
-     */
-    private $groups;
-
-    /**
      * @var string
      */
-    private $type;
+    private $subscribtion;
 
     /**
      * @var string
      */
     private $condition;
 
-    /** @var array */
+    /** @var object */
     private $data;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Get id
@@ -73,7 +58,7 @@ class PendingSubscriber implements ResourceInterface
      *
      * @param string $email
      *
-     * @return Subscriber
+     * @return LocalSubscriber
      */
     public function setEmail($email)
     {
@@ -95,7 +80,7 @@ class PendingSubscriber implements ResourceInterface
      *
      * @param string $token
      *
-     * @return Subscriber
+     * @return LocalSubscriber
      */
     public function setToken($token)
     {
@@ -132,7 +117,7 @@ class PendingSubscriber implements ResourceInterface
      * Set condition
      *
      * @param string $condition
-     * @return Subscriber
+     * @return LocalSubscriber
      */
     public function setCondition($condition)
     {
@@ -150,64 +135,33 @@ class PendingSubscriber implements ResourceInterface
     }
 
     /**
-     * Add group
-     *
-     * @param \Enhavo\Bundle\NewsletterBundle\Entity\Group $group
-     * @return Subscriber
-     */
-    public function addGroup(\Enhavo\Bundle\NewsletterBundle\Entity\Group $group)
-    {
-        $this->groups[] = $group;
-    }
-
-    /**
-     * Remove group
-     *
-     * @param \Enhavo\Bundle\NewsletterBundle\Entity\Group $group
-     */
-    public function removeGroup(\Enhavo\Bundle\NewsletterBundle\Entity\Group $group)
-    {
-        $this->groups->removeElement($group);
-    }
-
-    /**
-     * Get group
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getGroups()
-    {
-        return $this->groups;
-    }
-
-    /**
      * @return string
      */
-    public function getType()
+    public function getSubscribtion()
     {
-        return $this->type;
+        return $this->subscribtion;
     }
 
     /**
-     * @param string $type
+     * @param string $subscribtion
      */
-    public function setType($type)
+    public function setSubscribtion($subscribtion)
     {
-        $this->type = $type;
+        $this->subscribtion = $subscribtion;
     }
 
     /**
-     * @return array
+     * @return object
      */
-    public function getData(): array
+    public function getData(): object
     {
         return $this->data;
     }
 
     /**
-     * @param array $data
+     * @param object $data
      */
-    public function setData(array $data): void
+    public function setData(object $data): void
     {
         $this->data = $data;
     }

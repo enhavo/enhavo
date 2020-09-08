@@ -19,12 +19,22 @@ class StrategyType extends AbstractType implements StrategyTypeInterface
         return null;
     }
 
+    public function activateSubscriber(SubscriberInterface $subscriber, array $options): bool
+    {
+        return false;
+    }
+
     public function exists(SubscriberInterface $subscriber, array $options): bool
     {
         return false;
     }
 
     public function handleExists(SubscriberInterface $subscriber, array $options)
+    {
+        return null;
+    }
+
+    public function getActivationTemplate(array $options): ?string
     {
         return null;
     }
@@ -42,9 +52,10 @@ class StrategyType extends AbstractType implements StrategyTypeInterface
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'check_exists' => false,
-            'notify' => false,
+            'check_exists' => true,
+            'notify' => true,
             'admin_subject' => 'newsletter.subscribtion',
+            'subject' => 'subscriber.mail.notify.subject'
         ]);
         $resolver->setRequired([
             'from',

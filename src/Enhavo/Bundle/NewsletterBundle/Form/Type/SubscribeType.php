@@ -7,6 +7,12 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * FIXME: why do we need this?
+ *
+ * Class SubscribeType
+ * @package Enhavo\Bundle\NewsletterBundle\Form\Type
+ */
 class SubscribeType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -20,7 +26,7 @@ class SubscribeType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Enhavo\Bundle\NewsletterBundle\Entity\Subscriber'
+            'data_class' => 'Enhavo\Bundle\NewsletterBundle\Entity\LocalSubscriber'
         ));
     }
 

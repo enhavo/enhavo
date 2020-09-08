@@ -2,27 +2,23 @@ enhavo_newsletter:
     newsletter:
         mail:
             from: '%env(string:MAILER_FROM)%'
-        templates:
-            default:
-                template: 'mail/newsletter/template/default.html.twig'
-                label: newsletter.label.default
-                translation_domain: EnhavoNewsletterBundle
 
     subscribtion:
         default:
-            template: EnhavoNewsletterBundle:Subscriber:subscribe.html.twig
-            form: ~
-            model: ~
+#            template: 'EnhavoNewsletterBundle:mail/newsletter/template:servus.html.twig'
+#            form:
+#                class: Enhavo\Bundle\NewsletterBundle\Form\Type\SubscriberType
+#            model: Enhavo\Bundle\NewsletterBundle\Model\Subscriber
             strategy:
                 type: double_opt_in
                 from: '%env(string:MAILER_FROM)%'
                 admin_email: '%env(string:MAILER_TO)%'
                 sender_name: '%env(string:MAILER_NAME)%'
+                check_exists: true
             storage:
                 type: local
         coaches:
-            form: ~
-            template: ~
+            model: Enhavo\Bundle\NewsletterBundle\Model\Subscriber
             strategy:
                 type: double_opt_in
                 from: '%env(string:MAILER_FROM)%'

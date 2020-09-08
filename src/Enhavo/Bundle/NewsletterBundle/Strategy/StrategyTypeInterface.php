@@ -26,6 +26,13 @@ interface StrategyTypeInterface extends TypeInterface
      * @param array $options
      * @return bool
      */
+    public function activateSubscriber(SubscriberInterface $subscriber, array $options): bool;
+
+    /**
+     * @param SubscriberInterface $subscriber
+     * @param array $options
+     * @return bool
+     */
     public function exists(SubscriberInterface $subscriber, array $options): bool;
 
     /**
@@ -34,6 +41,12 @@ interface StrategyTypeInterface extends TypeInterface
      * @return mixed
      */
     public function handleExists(SubscriberInterface $subscriber, array $options);
+
+    /**
+     * @param array $options
+     * @return string|null
+     */
+    public function getActivationTemplate(array $options): ?string;
 
     /**
      * @param Storage $storage
@@ -45,4 +58,5 @@ interface StrategyTypeInterface extends TypeInterface
      * @return Storage
      */
     public function getStorage(): Storage;
+
 }
