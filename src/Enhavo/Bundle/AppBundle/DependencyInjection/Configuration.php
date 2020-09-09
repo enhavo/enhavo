@@ -4,6 +4,7 @@ namespace Enhavo\Bundle\AppBundle\DependencyInjection;
 
 use Enhavo\Bundle\AppBundle\EnhavoAppBundle;
 use Enhavo\Bundle\AppBundle\Locale\FixLocaleResolver;
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -22,73 +23,23 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder('enhavo_app');
         $rootNode = $treeBuilder->getRootNode();
 
-        $rootNode
-            ->children()
-                ->scalarNode('locale')->defaultValue('en')->end()
-                ->scalarNode('locale_resolver')->defaultValue(FixLocaleResolver::class)->end()
-            ->end()
+        $this->addViewerSectionSection($rootNode);
+        $this->addWebpackBuildSection($rootNode);
+        $this->addFormThemesSection($rootNode);
+        $this->addTemplatePathsSection($rootNode);
+        $this->addLoginSection($rootNode);
+        $this->addToolbarWidgetSection($rootNode);
+        $this->addBrandingSection($rootNode);
+        $this->addMenuSection($rootNode);
+        $this->addLocaleSection($rootNode);
+        $this->addRolesSection($rootNode);
 
-            ->children()
-                ->arrayNode('login')
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->scalarNode('route')->defaultValue('enhavo_dashboard_index')->end()
-                        ->scalarNode('route_parameters')->defaultValue([])->end()
-                    ->end()
-                ->end()
-            ->end()
+        return $treeBuilder;
+    }
 
-            ->children()
-                ->arrayNode('template_paths')
-                    ->useAttributeAsKey('name')
-                    ->prototype('array')
-                        ->children()
-                            ->scalarNode('path')->isRequired()->end()
-                            ->scalarNode('priority')->defaultValue(150)->end()
-                        ->end()
-                    ->end()
-                ->end()
-            ->end()
-
-            ->children()
-                ->scalarNode('webpack_build')->defaultValue('_default')->end()
-            ->end()
-
-            ->children()
-                ->arrayNode('form_themes')
-                    ->prototype('scalar')->end()
-                ->end()
-            ->end()
-
-            ->children()
-                ->arrayNode('branding')
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->scalarNode('enable')->defaultValue(true)->end()
-                        ->scalarNode('enable_version')->defaultValue(true)->end()
-                        ->scalarNode('enable_created_by')->defaultValue(true)->end()
-                        ->scalarNode('logo')->defaultValue(null)->end()
-                        ->scalarNode('text')->defaultValue('enhavo is an open source content-management-system based on symfony and sylius.')->end()
-                        ->scalarNode('version')->defaultValue(EnhavoAppBundle::VERSION)->end()
-                        ->scalarNode('background_image')->defaultValue(null)->end()
-                    ->end()
-                ->end()
-            ->end()
-
-            ->children()
-                ->arrayNode('toolbar_widget')
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->arrayNode('primary')
-                            ->prototype('variable')->end()
-                        ->end()
-                        ->arrayNode('secondary')
-                            ->prototype('variable')->end()
-                        ->end()
-                    ->end()
-                ->end()
-            ->end()
-
+    private function addViewerSectionSection(ArrayNodeDefinition $node)
+    {
+        $node
             ->children()
                 ->arrayNode('stylesheets')
                     ->prototype('scalar')->end()
@@ -105,12 +56,116 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('apps')
                     ->prototype('scalar')->end()
                 ->end()
-            ->end()
+            ->end();
+    }
 
+    private function addWebpackBuildSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->scalarNode('webpack_build')->defaultValue('_default')->end()
+            ->end();
+    }
+
+    private function addFormThemesSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('form_themes')
+                    ->prototype('scalar')->end()
+                ->end()
+            ->end();
+    }
+
+    private function addTemplatePathsSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('template_paths')
+                    ->useAttributeAsKey('name')
+                    ->prototype('array')
+                        ->children()
+                            ->scalarNode('path')->isRequired()->end()
+                            ->scalarNode('priority')->defaultValue(150)->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end();
+    }
+
+    private function addLoginSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('login')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('route')->defaultValue('enhavo_dashboard_index')->end()
+                        ->scalarNode('route_parameters')->defaultValue([])->end()
+                    ->end()
+                ->end()
+            ->end();
+    }
+
+    private function addToolbarWidgetSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('toolbar_widget')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->arrayNode('primary')
+                            ->useAttributeAsKey('name')
+                            ->prototype('variable')->end()
+                        ->end()
+                        ->arrayNode('secondary')
+                            ->useAttributeAsKey('name')
+                            ->prototype('variable')->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end();
+    }
+
+    private function addBrandingSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('branding')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('enable')->defaultValue(true)->end()
+                        ->scalarNode('enable_version')->defaultValue(true)->end()
+                        ->scalarNode('enable_created_by')->defaultValue(true)->end()
+                        ->scalarNode('logo')->defaultValue(null)->end()
+                        ->scalarNode('text')->defaultValue('enhavo is an open source content-management-system based on symfony and sylius.')->end()
+                        ->scalarNode('version')->defaultValue(EnhavoAppBundle::VERSION)->end()
+                        ->scalarNode('background_image')->defaultValue(null)->end()
+                    ->end()
+                ->end()
+            ->end();
+    }
+
+    private function addMenuSection(ArrayNodeDefinition $node)
+    {
+        $node
             ->children()
                 ->variableNode('menu')->end()
-            ->end()
+            ->end();
+    }
 
+    private function addLocaleSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->scalarNode('locale')->defaultValue('en')->end()
+                ->scalarNode('locale_resolver')->defaultValue(FixLocaleResolver::class)->end()
+            ->end();
+    }
+
+    private function addRolesSection(ArrayNodeDefinition $node)
+    {
+        $node
             ->children()
                 ->arrayNode('roles')
                     ->useAttributeAsKey('name')
@@ -123,9 +178,6 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-            ->end()
-        ;
-
-        return $treeBuilder;
+            ->end();
     }
 }
