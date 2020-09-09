@@ -23,14 +23,14 @@ interface SubscriberInterface
     /**
      * @param string|null $token
      */
-    public function setToken(?string $token): void;
+    public function setConfirmationToken(?string $token): void;
 
     /**
      * Get token
      *
      * @return string
      */
-    public function getToken(): ?string;
+    public function getConfirmationToken(): ?string;
 
     /**
      * @return \DateTime

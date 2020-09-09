@@ -10,10 +10,12 @@ namespace Enhavo\Bundle\NewsletterBundle\Storage\Type;
 
 use Enhavo\Bundle\NewsletterBundle\Client\MailChimpClient;
 use Enhavo\Bundle\NewsletterBundle\Entity\Group;
+use Enhavo\Bundle\NewsletterBundle\Exception\MappingException;
 use Enhavo\Bundle\NewsletterBundle\Exception\NoGroupException;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Storage\AbstractStorageType;
 use GuzzleHttp\Exception\GuzzleException;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MailChimpStorageType extends AbstractStorageType
 {
@@ -43,7 +45,14 @@ class MailChimpStorageType extends AbstractStorageType
             throw new NoGroupException('no groups given');
         }
 
-        $this->client->saveSubscriber($subscriber, $options);
+        $this->client->init($options['url'], $options['api_key']);
+
+        /** @var Group $group */
+        foreach ($subscriber->getGroups() as $group) {
+            $groupId = $this->mapGroup($group, $options['group_mapping']);
+            $this->client->saveSubscriber($subscriber, $groupId);
+        }
+
     }
 
     /**
@@ -60,14 +69,35 @@ class MailChimpStorageType extends AbstractStorageType
             return false;
         }
 
+        $this->client->init($options['url'], $options['api_key']);
+
         /** @var Group $group */
         foreach ($subscriber->getGroups() as $group) {
-            if (!$this->client->exists($subscriber->getEmail(), $group)) {
+            $groupId = $this->mapGroup($group, $options['groupMapping']);
+            if (!$this->client->exists($subscriber->getEmail(), $groupId)) {
                 return false;
             }
         }
 
         return true;
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setRequired([
+            'url', 'api_key', 'group_mapping'
+        ]);
+    }
+
+    private function mapGroup(Group $group, array $groupMapping)
+    {
+        if (isset($groupMapping[$group->getCode()])) {
+            return $groupMapping[$group->getCode()];
+        }
+
+        throw new MappingException(
+            sprintf('Mapping for group "%s" with code "%s" not exists.', $group->getName(), $group->getCode())
+        );
     }
 
     public static function getName(): ?string

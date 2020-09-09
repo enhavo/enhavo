@@ -28,7 +28,7 @@ class PendingSubscriber implements ResourceInterface
     /**
      * @var string
      */
-    private $token;
+    private $confirmationToken;
 
     /**
      * @var string
@@ -78,13 +78,13 @@ class PendingSubscriber implements ResourceInterface
     /**
      * Set token
      *
-     * @param string $token
+     * @param string $confirmationToken
      *
      * @return LocalSubscriber
      */
-    public function setToken($token)
+    public function setConfirmationToken($confirmationToken)
     {
-        $this->token = $token;
+        $this->confirmationToken = $confirmationToken;
     }
 
     /**
@@ -92,9 +92,9 @@ class PendingSubscriber implements ResourceInterface
      *
      * @return string
      */
-    public function getToken()
+    public function getConfirmationToken()
     {
-        return $this->token;
+        return $this->confirmationToken;
     }
 
     /**

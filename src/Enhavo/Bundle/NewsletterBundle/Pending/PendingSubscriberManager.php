@@ -46,7 +46,7 @@ class PendingSubscriberManager
 
     public function save(PendingSubscriber $subscriber, $andFlush = true)
     {
-        $subscriber->setToken($this->tokenGenerator->generateToken());
+        $subscriber->setConfirmationToken($this->tokenGenerator->generateToken());
         $this->entityManager->persist($subscriber);
 
         if ($andFlush) {

@@ -71,4 +71,14 @@ interface LocalSubscriberInterface
      * @return string
      */
     public function getSubscribtion();
+
+    /**
+     * @return string|null
+     */
+    public function getToken(): ?string;
+
+    /**
+     * @param string|null $token
+     */
+    public function setToken(?string $token): void;
 }

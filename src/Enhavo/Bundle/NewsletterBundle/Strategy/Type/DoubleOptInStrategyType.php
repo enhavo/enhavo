@@ -46,7 +46,7 @@ class DoubleOptInStrategyType extends AbstractStrategyType
         $pending = $this->pendingManager->createFrom($subscriber);
 
         $this->pendingManager->save($pending);
-        $subscriber->setToken($pending->getToken());
+        $subscriber->setConfirmationToken($pending->getConfirmationToken());
         $this->notifySubscriber($subscriber, $options);
 
         return 'subscriber.form.message.double_opt_in';
@@ -64,7 +64,7 @@ class DoubleOptInStrategyType extends AbstractStrategyType
     {
         if ($options['notify']) {
             $link = $this->router->generate($options['activate_route'], array_merge($options['activate_route_parameters'], [
-                'token' => $subscriber->getToken(),
+                'token' => $subscriber->getConfirmationToken(),
                 'type' => $subscriber->getSubscribtion()
             ]), UrlGeneratorInterface::ABSOLUTE_URL);
 

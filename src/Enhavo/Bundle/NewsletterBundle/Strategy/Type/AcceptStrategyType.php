@@ -74,7 +74,7 @@ class AcceptStrategyType extends AbstractStrategyType
     private function notifyAdmin(SubscriberInterface $subscriber, array $options)
     {
         $link = $this->router->generate($options['activate_route'], array_merge($options['activate_route_parameters'], [
-            'token' => $subscriber->getToken(),
+            'token' => $subscriber->getConfirmationToken(),
             'type' => $subscriber->getSubscribtion()
         ]), UrlGeneratorInterface::ABSOLUTE_URL);
 

@@ -4,7 +4,9 @@ services:
         arguments:
             - '@event_dispatcher'
 
-    Enhavo\Bundle\NewsletterBundle\Client\MailChimpClient: ~
+    Enhavo\Bundle\NewsletterBundle\Client\MailChimpClient:
+        arguments:
+            - '@event_dispatcher'
 
     Enhavo\Bundle\NewsletterBundle\EventListener\SubscriberSubscriber:
         arguments:

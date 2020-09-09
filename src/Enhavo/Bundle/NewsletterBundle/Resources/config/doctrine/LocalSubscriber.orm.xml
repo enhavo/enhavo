@@ -7,6 +7,7 @@
 
         <field name="email" length="255" nullable="true" />
         <field name="subscribtion" length="255" nullable="true" />
+        <field name="token" length="255" nullable="true" />
         <field name="createdAt" type="datetime" nullable="true" />
 
         <many-to-many field="groups" target-entity="Enhavo\Bundle\NewsletterBundle\Model\GroupInterface">

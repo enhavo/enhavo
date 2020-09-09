@@ -41,6 +41,9 @@ class LocalSubscriber implements ResourceInterface, LocalSubscriberInterface
      */
     private $condition;
 
+    /** @var string|null */
+    private $token;
+
     /**
      * Constructor
      */
@@ -169,6 +172,22 @@ class LocalSubscriber implements ResourceInterface, LocalSubscriberInterface
     public function setSubscribtion($key)
     {
         $this->subscribtion = $key;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param string|null $token
+     */
+    public function setToken(?string $token): void
+    {
+        $this->token = $token;
     }
 
     public function __toString()

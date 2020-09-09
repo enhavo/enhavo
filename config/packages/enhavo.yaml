@@ -17,8 +17,19 @@ enhavo_newsletter:
                 check_exists: true
             storage:
                 type: local
-        coaches:
-            model: Enhavo\Bundle\NewsletterBundle\Model\Subscriber
+        cleverreach:
+            strategy:
+                type: accept
+            storage:
+                type: cleverreach
+                url: '%env(string:CLEVERREACH_URL)%'
+                client_id: '%env(string:CLEVERREACH_CLIENT_ID)%'
+                postdata: {}
+                group_mapping:
+                    a: b
+                    c: d
+        mailchimp:
+#            model: Enhavo\Bundle\NewsletterBundle\Model\Subscriber
             strategy:
                 type: double_opt_in
                 from: '%env(string:MAILER_FROM)%'
@@ -27,10 +38,10 @@ enhavo_newsletter:
             storage:
                 type: mailchimp
                 url: '%env(string:MAILCHIMP_URL)%'
-                mappings: {
-                              a: b,
-                              c: d
-                }
+                api_key: '%env(string:MAILCHIMP_API_KEY)%'
+                group_mapping:
+                    a: b
+                    c: d
 
 
 enhavo_app:

@@ -10,6 +10,7 @@ use Enhavo\Bundle\NewsletterBundle\Entity\Receiver;
 use Enhavo\Bundle\NewsletterBundle\Model\LocalSubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
+use Enhavo\Bundle\NewsletterBundle\Repository\GroupRepository;
 use Enhavo\Bundle\NewsletterBundle\Storage\AbstractStorageType;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
@@ -61,6 +62,7 @@ class LocalStorageType extends AbstractStorageType
                 }
             }
         }
+
         return $receivers;
     }
 
@@ -69,21 +71,11 @@ class LocalStorageType extends AbstractStorageType
         $receiver = new Receiver();
         $receiver->setEmail($subscriber->getEmail());
         $receiver->setParameters([
-            'token' => $subscriber->getToken()
+            'token' => $subscriber->getToken(),
+            'type' => $subscriber->getSubscribtion(),
         ]);
-        return $receiver;
-    }
 
-    public function getTestReceivers(NewsletterInterface $newsletter, array $options): array
-    {
-        $receiver = new Receiver();
-        $receiver->setToken('token');
-        $receiver->setNewsletter($newsletter);
-        $receiver->setParameters([
-            'firstName' => 'Foo',
-            'lastName' => 'Bar'
-        ]);
-        return [$receiver];
+        return $receiver;
     }
 
     public function saveSubscriber(SubscriberInterface $subscriber, array $options)
@@ -114,8 +106,10 @@ class LocalStorageType extends AbstractStorageType
             $subscriberGroupNames[] = $group->getName();
         }
 
+        /** @var GroupRepository $groupRepository */
+        $groupRepository = $this->entityManager->getRepository(Group::class);
         foreach ($subscriber->getGroups() as $group) {
-            $group = $this->entityManager->getRepository(Group::class)->findOneBy(['name' => $group->getName()]);
+            $group = $groupRepository->findOneBy(['name' => $group->getName()]);
             if ($group === null) {
                 return false;
             }

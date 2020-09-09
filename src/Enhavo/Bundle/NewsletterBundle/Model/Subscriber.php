@@ -8,9 +8,7 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Model;
 
-
 use Doctrine\Common\Collections\Collection;
-use Enhavo\Bundle\NewsletterBundle\Entity\LocalSubscriber;
 
 class Subscriber implements SubscriberInterface
 {
@@ -37,7 +35,7 @@ class Subscriber implements SubscriberInterface
     /**
      * @var string|null
      */
-    private $token;
+    private $confirmationToken;
 
     /**
      * Constructor
@@ -128,17 +126,17 @@ class Subscriber implements SubscriberInterface
     /**
      * @return string|null
      */
-    public function getToken(): ?string
+    public function getConfirmationToken(): ?string
     {
-        return $this->token;
+        return $this->confirmationToken;
     }
 
     /**
      * @param string|null $token
      */
-    public function setToken(?string $token): void
+    public function setConfirmationToken(?string $token): void
     {
-        $this->token = $token;
+        $this->confirmationToken = $token;
     }
 
 

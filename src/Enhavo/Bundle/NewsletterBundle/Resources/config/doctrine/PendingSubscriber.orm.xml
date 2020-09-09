@@ -7,7 +7,7 @@
 
         <field name="email" length="255" nullable="true" />
         <field name="subscribtion" length="255" nullable="true" />
-        <field name="token" length="255" nullable="true" />
+        <field name="confirmationToken" length="255" nullable="true" />
         <field name="createdAt" type="datetime" nullable="true" />
         <field name="data" type="object" nullable="true" />
 

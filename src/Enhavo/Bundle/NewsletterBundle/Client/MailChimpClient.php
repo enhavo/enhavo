@@ -8,97 +8,84 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Client;
 
-use Enhavo\Bundle\NewsletterBundle\Entity\Group;
-use Enhavo\Bundle\NewsletterBundle\Event\CleverReachEvent;
+use Enhavo\Bundle\NewsletterBundle\Event\MailChimpEvent;
 use Enhavo\Bundle\NewsletterBundle\Event\NewsletterEvents;
-use Enhavo\Bundle\NewsletterBundle\Exception\InsertException;
-use Enhavo\Bundle\NewsletterBundle\Exception\MappingException;
-use Enhavo\Bundle\NewsletterBundle\Exception\NoGroupException;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
-use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Client;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\PropertyAccess\PropertyAccessor;
 
 class MailChimpClient
 {
-    const REST_BASE_URI = 'https://rest.cleverreach.com/v2/';
+    /** @var Client */
+    private $guzzleClient;
 
-    protected $credentials;
-    protected $postdata;
-    protected $defaultGroupNames;
-    protected $groupMapping;
+    /** @var string */
+    private $apiKey;
 
-    /**
-     * @var \GuzzleHttp\Client
-     */
-    protected $guzzleClient;
-
-    /**
-     * @var String
-     */
-    protected $apiKey;
-
-    /**
-     * @var bool|string
-     */
-    protected $dataCenter;
+    /** @var bool  */
+    private $initialized = false;
 
     /**
      * @var EventDispatcher
      */
-    protected $eventDispatcher;
+    private $eventDispatcher;
 
-    private function connect($options)
+    /**
+     * MailChimpClient constructor.
+     * @param EventDispatcher $eventDispatcher
+     */
+    public function __construct(EventDispatcher $eventDispatcher)
     {
-        $this->apiKey = $options['api_key'];
-        $this->dataCenter = substr($this->apiKey, strpos($this->apiKey, '-') + 1);
-        $this->guzzleClient = new \GuzzleHttp\Client([
-            'base_uri' => $baseUri = 'https://' . $this->dataCenter . '.api.mailchimp.com/3.0/lists/',
-        ]);
+        $this->eventDispatcher = $eventDispatcher;
+    }
+
+    public function init(string $url, string $apiKey)
+    {
+        if (!$this->initialized) {
+            $this->apiKey = $apiKey;
+
+            $this->guzzleClient = new Client([
+                'base_uri' => $url,
+            ]);
+
+            $this->initialized = true;
+        }
     }
 
     /**
      * @param SubscriberInterface $subscriber
-     * @param array $options
-     * @throws NoGroupException
+     * @param string $groupId
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function saveSubscriber(SubscriberInterface $subscriber, array $options)
+    public function saveSubscriber(SubscriberInterface $subscriber, string $groupId)
     {
-        if (count($subscriber->getGroups()) === 0) {
-            throw new NoGroupException('no groups given');
-        }
+        $event = new MailChimpEvent($subscriber);
+        $this->eventDispatcher->dispatch(NewsletterEvents::EVENT_MAILCHIMP_PRE_SEND, $event);
 
-        /** @var Group $group */
-        foreach ($subscriber->getGroups() as $group) {
-            $this->guzzleClient->request('POST', $this->mapping[$group->getCode()] . '/members', [
-                'auth' => [
-                    'user',
-                    $this->apiKey,
-                ],
-                'headers' => [
-                    'content-type' => 'application/json'
-                ],
-                'body' => json_encode([
-                    'email_address' => $subscriber->getEmail(),
-                    'status' => 'subscribed',
-                ]),
-            ]);
-        }
+        $this->guzzleClient->request('POST', $groupId . '/members', [
+            'auth' => [
+                'user',
+                $this->apiKey,
+            ],
+            'headers' => [
+                'content-type' => 'application/json'
+            ],
+            'body' => json_encode([
+                'email_address' => $subscriber->getEmail(),
+                'status' => 'subscribed',
+            ]),
+        ]);
     }
 
     /**
      * @param $email
-     * @param Group $group
+     * @param string $groupId
      * @return bool
-     * @throws MappingException
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function exists($email, Group $group)
+    public function exists($email, string $groupId)
     {
         $memberID = md5(strtolower($email));
-
-        $groupId = $this->mapGroup($group);
 
         $response = $this->guzzleClient->request('GET', $groupId . '/members/' . $memberID, [
             'http_errors' => false,
@@ -113,17 +100,5 @@ class MailChimpClient
         }
 
         return true;
-    }
-
-
-    private function mapGroup(Group $group)
-    {
-        if (isset($this->groupMapping[$group->getCode()])) {
-            return $this->groupMapping[$group->getCode()];
-        }
-
-        throw new MappingException(
-            sprintf('Mapping for group "%s" with code "%s" not exists.', $group->getName(), $group->getCode())
-        );
     }
 }
