@@ -26,8 +26,8 @@ class ParameterParser implements ParameterParserInterface
         $values = [];
         $this->getValues($parameters, $values);
 
-        $content = preg_replace_callback('/\$\{([A-Z0-9_.]+)\}/', function($matches) use ($values){
-            if(array_key_exists($matches[1], $values)) {
+        $content = preg_replace_callback('/\$\{([A-Z0-9_.]+)\}/', function ($matches) use ($values) {
+            if (array_key_exists($matches[1], $values)) {
                 return $values[$matches[1]];
             }
             return '';
@@ -38,13 +38,13 @@ class ParameterParser implements ParameterParserInterface
 
     private function getValues($parameters, array &$values, array $parentKeys = [])
     {
-        foreach($parameters as $key => $value) {
+        foreach ($parameters as $key => $value) {
             if (is_array($value)) {
                 $parentKeys[] = $key;
                 $this->getValues($value, $values, $parentKeys);
             } else {
                 $valueKey = $key;
-                if($parentKeys) {
+                if ($parentKeys) {
                     $valueKey = sprintf('%s.%s', join('.', $parentKeys), $key);
                 }
                 $values[strtoupper($this->nameTransformer->snakeCase($valueKey))] = $value;
