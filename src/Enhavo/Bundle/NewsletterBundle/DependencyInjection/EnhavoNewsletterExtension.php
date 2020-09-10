@@ -40,7 +40,6 @@ class EnhavoNewsletterExtension extends AbstractResourceExtension implements Pre
         $configFiles = array(
             'services/services.yaml',
             'services/newsletter.yaml',
-            'services/subscriber.yaml',
             'services/storage.yaml',
             'services/strategy.yaml',
         );

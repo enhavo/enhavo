@@ -5,7 +5,7 @@ namespace Enhavo\Bundle\NewsletterBundle\Repository;
 use Enhavo\Bundle\AppBundle\Filter\FilterQuery;
 use Enhavo\Bundle\AppBundle\Repository\EntityRepository;
 
-class SubscriberRepository extends EntityRepository
+class LocalSubscriberRepository extends EntityRepository
 {
     public function findByGroupId(FilterQuery $query, $groupId)
     {

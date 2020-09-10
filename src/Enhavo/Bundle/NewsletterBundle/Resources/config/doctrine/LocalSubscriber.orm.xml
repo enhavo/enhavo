@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
-    <entity name="Enhavo\Bundle\NewsletterBundle\Entity\LocalSubscriber" table="newsletter_local_subscriber">
+    <entity name="Enhavo\Bundle\NewsletterBundle\Entity\LocalSubscriber" table="newsletter_local_subscriber"
+            repository-class="Enhavo\Bundle\NewsletterBundle\Repository\LocalSubscriberRepository">
         <id name="id" type="integer" column="id">
             <generator />
         </id>

@@ -3,11 +3,23 @@
 namespace Enhavo\Bundle\NewsletterBundle\DependencyInjection;
 
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
+use Enhavo\Bundle\NewsletterBundle\Controller\NewsletterController;
 use Enhavo\Bundle\NewsletterBundle\Entity\Group;
+use Enhavo\Bundle\NewsletterBundle\Entity\LocalSubscriber;
+use Enhavo\Bundle\NewsletterBundle\Entity\Newsletter;
+use Enhavo\Bundle\NewsletterBundle\Entity\PendingSubscriber;
+use Enhavo\Bundle\NewsletterBundle\Factory\LocalSubscriberFactory;
+use Enhavo\Bundle\NewsletterBundle\Factory\NewsletterFactory;
 use Enhavo\Bundle\NewsletterBundle\Form\Type\GroupType;
+use Enhavo\Bundle\NewsletterBundle\Form\Type\LocalSubscriberType;
+use Enhavo\Bundle\NewsletterBundle\Form\Type\NewsletterType;
+use Enhavo\Bundle\NewsletterBundle\Form\Type\PendingSubscriberType;
 use Enhavo\Bundle\NewsletterBundle\Form\Type\SubscriberType;
 use Enhavo\Bundle\NewsletterBundle\Model\Subscriber;
 use Enhavo\Bundle\NewsletterBundle\Repository\GroupRepository;
+use Enhavo\Bundle\NewsletterBundle\Repository\LocalSubscriberRepository;
+use Enhavo\Bundle\NewsletterBundle\Repository\NewsletterRepository;
+use Enhavo\Bundle\NewsletterBundle\Repository\PendingSubscriberRepository;
 use Sylius\Component\Resource\Factory\Factory;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -43,11 +55,11 @@ class Configuration implements ConfigurationInterface
                                 ->arrayNode('classes')
                                     ->addDefaultsIfNotSet()
                                     ->children()
-                                        ->scalarNode('model')->defaultValue('Enhavo\Bundle\NewsletterBundle\Entity\Newsletter')->end()
-                                        ->scalarNode('controller')->defaultValue('Enhavo\Bundle\NewsletterBundle\Controller\NewsletterController')->end()
-                                        ->scalarNode('repository')->defaultValue('Enhavo\Bundle\NewsletterBundle\Repository\NewsletterRepository')->end()
-                                        ->scalarNode('factory')->defaultValue('Enhavo\Bundle\NewsletterBundle\Factory\NewsletterFactory')->end()
-                                        ->scalarNode('form')->defaultValue('Enhavo\Bundle\NewsletterBundle\Form\Type\NewsletterType')->cannotBeEmpty()->end()
+                                        ->scalarNode('model')->defaultValue(Newsletter::class)->end()
+                                        ->scalarNode('controller')->defaultValue(NewsletterController::class)->end()
+                                        ->scalarNode('repository')->defaultValue(NewsletterRepository::class)->end()
+                                        ->scalarNode('factory')->defaultValue(NewsletterFactory::class)->end()
+                                        ->scalarNode('form')->defaultValue(NewsletterType::class)->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
                             ->end()
@@ -59,11 +71,11 @@ class Configuration implements ConfigurationInterface
                                 ->arrayNode('classes')
                                     ->addDefaultsIfNotSet()
                                     ->children()
-                                        ->scalarNode('model')->defaultValue('Enhavo\Bundle\NewsletterBundle\Entity\LocalSubscriber')->end()
-                                        ->scalarNode('controller')->defaultValue('Enhavo\Bundle\AppBundle\Controller\ResourceController')->end()
-                                        ->scalarNode('repository')->defaultValue('Enhavo\Bundle\NewsletterBundle\Repository\SubscriberRepository')->end()
-                                        ->scalarNode('factory')->defaultValue('Sylius\Component\Resource\Factory\Factory')->end()
-                                        ->scalarNode('form')->defaultValue('Enhavo\Bundle\NewsletterBundle\Form\Type\LocalSubscriberType')->cannotBeEmpty()->end()
+                                        ->scalarNode('model')->defaultValue(LocalSubscriber::class)->end()
+                                        ->scalarNode('controller')->defaultValue(ResourceController::class)->end()
+                                        ->scalarNode('repository')->defaultValue(LocalSubscriberRepository::class)->end()
+                                        ->scalarNode('factory')->defaultValue(LocalSubscriberFactory::class)->end()
+                                        ->scalarNode('form')->defaultValue(LocalSubscriberType::class)->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
                             ->end()
@@ -75,11 +87,11 @@ class Configuration implements ConfigurationInterface
                                 ->arrayNode('classes')
                                     ->addDefaultsIfNotSet()
                                     ->children()
-                                        ->scalarNode('model')->defaultValue('Enhavo\Bundle\NewsletterBundle\Entity\PendingSubscriber')->end()
-                                        ->scalarNode('controller')->defaultValue('Enhavo\Bundle\AppBundle\Controller\ResourceController')->end()
-                                        ->scalarNode('repository')->defaultValue('Enhavo\Bundle\NewsletterBundle\Repository\PendingSubscriberRepository')->end()
-                                        ->scalarNode('factory')->defaultValue('Sylius\Component\Resource\Factory\Factory')->end()
-                                        ->scalarNode('form')->defaultValue('Enhavo\Bundle\NewsletterBundle\Form\Type\PendingSubscriberType')->cannotBeEmpty()->end()
+                                        ->scalarNode('model')->defaultValue(PendingSubscriber::class)->end()
+                                        ->scalarNode('controller')->defaultValue(ResourceController::class)->end()
+                                        ->scalarNode('repository')->defaultValue(PendingSubscriberRepository::class)->end()
+                                        ->scalarNode('factory')->defaultValue(Factory::class)->end()
+                                        ->scalarNode('form')->defaultValue(PendingSubscriberType::class)->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
                             ->end()
