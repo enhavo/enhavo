@@ -13,7 +13,7 @@ class AppThemePackage
         }
     }
 
-    initEncore(Encore)
+    initEncore(Encore, name)
     {
         Encore
             .enableSingleRuntimeChunk()
@@ -26,10 +26,9 @@ class AppThemePackage
         ;
 
         Encore.copyFiles({
-            from: './assets/enhavo/images',
+            from: this.config.themesPath+'/'+name+'/images',
             to: 'images/[path][name].[ext]'
         })
-
     }
 
     initWebpackConfig(config)
@@ -57,7 +56,7 @@ class AppThemePackage
 class Config
 {
     constructor() {
-
+        this.themesPath = './assets'
     }
 }
 
