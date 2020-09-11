@@ -8,7 +8,6 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Subscription;
 
-
 use Enhavo\Bundle\NewsletterBundle\Strategy\Strategy;
 
 class Subscription

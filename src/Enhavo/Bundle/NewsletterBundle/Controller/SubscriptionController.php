@@ -2,8 +2,6 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Controller;
 
-use Enhavo\Bundle\NewsletterBundle\Form\Type\SubscriberType;
-use Enhavo\Bundle\NewsletterBundle\Model\Subscriber;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Pending\PendingSubscriberManager;
 use Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager;
