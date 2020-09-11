@@ -14,6 +14,8 @@ services:
             - { name: twig.extension }
 
     Enhavo\Bundle\FormBundle\Twig\FormatExtension:
+        arguments:
+            - '@Enhavo\Bundle\FormBundle\Formatter\HtmlSanitizer'
         calls:
             - [setContainer, ['@service_container']]
         tags:
