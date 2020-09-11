@@ -72,7 +72,7 @@ class LocalStorageType extends AbstractStorageType
         $receiver->setEmail($subscriber->getEmail());
         $receiver->setParameters([
             'token' => $subscriber->getToken(),
-            'type' => $subscriber->getSubscribtion(),
+            'type' => $subscriber->getSubscription(),
         ]);
 
         return $receiver;
@@ -84,7 +84,7 @@ class LocalStorageType extends AbstractStorageType
         $local = $this->subscriberFactory->createNew();
         $local->setCreatedAt(new \DateTime());
         $local->setEmail($subscriber->getEmail());
-        $local->setSubscribtion($subscriber->getSubscribtion());
+        $local->setSubscription($subscriber->getSubscription());
         $this->entityManager->persist($local);
         $this->entityManager->flush();
     }

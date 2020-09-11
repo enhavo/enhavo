@@ -34,7 +34,7 @@ class LocalSubscriber implements ResourceInterface, LocalSubscriberInterface
     /**
      * @var string
      */
-    private $subscribtion;
+    private $subscription;
 
     /**
      * @var string
@@ -161,17 +161,17 @@ class LocalSubscriber implements ResourceInterface, LocalSubscriberInterface
     /**
      * @return string
      */
-    public function getSubscribtion()
+    public function getSubscription()
     {
-        return $this->subscribtion;
+        return $this->subscription;
     }
 
     /**
      * @param string $key
      */
-    public function setSubscribtion($key)
+    public function setSubscription($key)
     {
-        $this->subscribtion = $key;
+        $this->subscription = $key;
     }
 
     /**

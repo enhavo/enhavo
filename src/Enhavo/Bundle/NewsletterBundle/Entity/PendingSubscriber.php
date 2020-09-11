@@ -33,7 +33,7 @@ class PendingSubscriber implements ResourceInterface
     /**
      * @var string
      */
-    private $subscribtion;
+    private $subscription;
 
     /**
      * @var string
@@ -137,17 +137,17 @@ class PendingSubscriber implements ResourceInterface
     /**
      * @return string
      */
-    public function getSubscribtion()
+    public function getSubscription()
     {
-        return $this->subscribtion;
+        return $this->subscription;
     }
 
     /**
-     * @param string $subscribtion
+     * @param string $subscription
      */
-    public function setSubscribtion($subscribtion)
+    public function setSubscription($subscription)
     {
-        $this->subscribtion = $subscribtion;
+        $this->subscription = $subscription;
     }
 
     /**

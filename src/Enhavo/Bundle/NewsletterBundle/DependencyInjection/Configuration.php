@@ -142,7 +142,7 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-                ->arrayNode('subscribtion')
+                ->arrayNode('subscription')
                     ->arrayPrototype()
                         ->children()
                             ->variableNode('strategy')->end()

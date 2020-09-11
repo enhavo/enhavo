@@ -54,7 +54,7 @@ class StrategyType extends AbstractType implements StrategyTypeInterface
         $resolver->setDefaults([
             'check_exists' => true,
             'notify' => true,
-            'admin_subject' => 'newsletter.subscribtion',
+            'admin_subject' => 'newsletter.subscription',
             'subject' => 'subscriber.mail.notify.subject'
         ]);
         $resolver->setRequired([

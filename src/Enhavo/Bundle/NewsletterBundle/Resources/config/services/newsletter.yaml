@@ -19,7 +19,7 @@ services:
         arguments:
           - '@doctrine.orm.entity_manager'
           - '@mailer'
-          - '@Enhavo\Bundle\NewsletterBundle\Subscribtion\SubscribtionManager'
+          - '@Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager'
           - '@enhavo_app.util.secure_url_token_generator'
           - '@logger'
           - '@Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterRenderer'

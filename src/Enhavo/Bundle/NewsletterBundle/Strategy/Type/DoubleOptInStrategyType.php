@@ -55,7 +55,7 @@ class DoubleOptInStrategyType extends AbstractStrategyType
     public function activateSubscriber(SubscriberInterface $subscriber, array $options): bool
     {
         $this->getStorage()->saveSubscriber($subscriber);
-        $this->pendingManager->removeBy($subscriber->getEmail(), $subscriber->getSubscribtion());
+        $this->pendingManager->removeBy($subscriber->getEmail(), $subscriber->getSubscription());
         $this->notifyAdmin($subscriber, $options);
         $this->confirmSubscriber($subscriber, $options);
     }
@@ -65,7 +65,7 @@ class DoubleOptInStrategyType extends AbstractStrategyType
         if ($options['notify']) {
             $link = $this->router->generate($options['activate_route'], array_merge($options['activate_route_parameters'], [
                 'token' => $subscriber->getConfirmationToken(),
-                'type' => $subscriber->getSubscribtion()
+                'type' => $subscriber->getSubscription()
             ]), UrlGeneratorInterface::ABSOLUTE_URL);
 
             $template = $options['template'];
@@ -132,7 +132,7 @@ class DoubleOptInStrategyType extends AbstractStrategyType
     public function exists(SubscriberInterface $subscriber, array $options): bool
     {
         if ($options['check_exists']) {
-            if ($this->pendingManager->findOneBy($subscriber->getEmail(), $subscriber->getSubscribtion())) {
+            if ($this->pendingManager->findOneBy($subscriber->getEmail(), $subscriber->getSubscription())) {
                 return true;
             }
 
@@ -146,7 +146,7 @@ class DoubleOptInStrategyType extends AbstractStrategyType
 
     public function handleExists(SubscriberInterface $subscriber, array $options)
     {
-        $pending = $this->pendingManager->findOneBy($subscriber->getEmail(), $subscriber->getSubscribtion());
+        $pending = $this->pendingManager->findOneBy($subscriber->getEmail(), $subscriber->getSubscription());
 
         if ($pending) {
             $this->pendingManager->save($pending);

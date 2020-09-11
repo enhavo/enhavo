@@ -2,11 +2,11 @@ enhavo_newsletter_subscribe_activate:
     path: /newsletter/activate/{token}/{type}
     options:
         expose: true
-    controller: Enhavo\Bundle\NewsletterBundle\Controller\SubscribtionController::activateAction
+    controller: Enhavo\Bundle\NewsletterBundle\Controller\SubscriptionController::activateAction
 
 enhavo_newsletter_subscribe_add:
     path: /newsletter/add/{type}
     options:
         expose: true
-    controller: Enhavo\Bundle\NewsletterBundle\Controller\SubscribtionController::addAction
+    controller: Enhavo\Bundle\NewsletterBundle\Controller\SubscriptionController::addAction
     methods: [POST]

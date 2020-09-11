@@ -30,7 +30,7 @@ class Subscriber implements SubscriberInterface
     /**
      * @var string
      */
-    private $subscribtion;
+    private $subscription;
 
     /**
      * @var string|null
@@ -110,17 +110,17 @@ class Subscriber implements SubscriberInterface
     /**
      * @return string|null
      */
-    public function getSubscribtion(): ?string
+    public function getSubscription(): ?string
     {
-        return $this->subscribtion;
+        return $this->subscription;
     }
 
     /**
-     * @param string|null $subscribtion
+     * @param string|null $subscription
      */
-    public function setSubscribtion(?string $subscribtion): void
+    public function setSubscription(?string $subscription): void
     {
-        $this->subscribtion = $subscribtion;
+        $this->subscription = $subscription;
     }
 
     /**

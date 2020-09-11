@@ -7,7 +7,7 @@
         </id>
 
         <field name="email" length="255" nullable="true" />
-        <field name="subscribtion" length="255" nullable="true" />
+        <field name="subscription" length="255" nullable="true" />
         <field name="token" length="255" nullable="true" />
         <field name="createdAt" type="datetime" nullable="true" />
 

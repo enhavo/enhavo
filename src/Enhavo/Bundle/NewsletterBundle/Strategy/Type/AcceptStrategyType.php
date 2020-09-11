@@ -48,7 +48,7 @@ class AcceptStrategyType extends AbstractStrategyType
 
     public function activateSubscriber(SubscriberInterface $subscriber, array $options): bool
     {
-        $this->pendingManager->removeBy($subscriber->getEmail(), $subscriber->getSubscribtion());
+        $this->pendingManager->removeBy($subscriber->getEmail(), $subscriber->getSubscription());
         $this->getStorage()->saveSubscriber($subscriber);
         $this->notifySubscriber($subscriber, $options);
 
@@ -75,7 +75,7 @@ class AcceptStrategyType extends AbstractStrategyType
     {
         $link = $this->router->generate($options['activate_route'], array_merge($options['activate_route_parameters'], [
             'token' => $subscriber->getConfirmationToken(),
-            'type' => $subscriber->getSubscribtion()
+            'type' => $subscriber->getSubscription()
         ]), UrlGeneratorInterface::ABSOLUTE_URL);
 
         $template = $options['admin_template'];
@@ -110,7 +110,7 @@ class AcceptStrategyType extends AbstractStrategyType
     public function exists(SubscriberInterface $subscriber, array $options): bool
     {
         if ($options['check_exists']) {
-            if ($this->pendingManager->findOneBy($subscriber->getEmail(), $subscriber->getSubscribtion())) {
+            if ($this->pendingManager->findOneBy($subscriber->getEmail(), $subscriber->getSubscription())) {
                 return true;
             }
 
@@ -136,7 +136,7 @@ class AcceptStrategyType extends AbstractStrategyType
     {
         $resolver->setDefaults([
             'activation_template' => 'EnhavoNewsletterBundle:Subscriber:accept.html.twig',
-            'admin_subject' => 'newsletter.subscribtion',
+            'admin_subject' => 'newsletter.subscription',
             'translation_domain' => 'EnhavoNewsletterBundle',
             'admin_template' => 'EnhavoNewsletterBundle:Subscriber:Email/accept-admin.html.twig',
             'template' => 'EnhavoNewsletterBundle:Subscriber:Email/accept.html.twig',

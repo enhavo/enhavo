@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Twig;
 
-use Enhavo\Bundle\NewsletterBundle\Subscribtion\SubscribtionManager;
+use Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
@@ -12,20 +12,20 @@ class SubscribeFormRenderer extends AbstractExtension
 {
     use ContainerAwareTrait;
 
-    /** @var SubscribtionManager */
-    private $subscribtionManager;
+    /** @var SubscriptionManager */
+    private $subscriptionManager;
 
     /** @var Environment */
     private $twig;
 
     /**
      * SubscribeFormRenderer constructor.
-     * @param SubscribtionManager $subscribtionManager
+     * @param SubscriptionManager $subscriptionManager
      * @param Environment $twig
      */
-    public function __construct(SubscribtionManager $subscribtionManager, Environment $twig)
+    public function __construct(SubscriptionManager $subscriptionManager, Environment $twig)
     {
-        $this->subscribtionManager = $subscribtionManager;
+        $this->subscriptionManager = $subscriptionManager;
         $this->twig = $twig;
     }
 
@@ -38,18 +38,18 @@ class SubscribeFormRenderer extends AbstractExtension
     }
 
     /**
-     * @param null $subscribtionName
+     * @param null $subscriptionName
      * @param null $template
      * @return string
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    public function render($subscribtionName = null, $template = null)
+    public function render($subscriptionName = null, $template = null)
     {
-        $subscribtion = $this->subscribtionManager->getSubscribtion($subscribtionName);
-        $formConfig = $subscribtion->getFormConfig();
-        $form = $this->subscribtionManager->createForm($subscribtion, null);
+        $subscription = $this->subscriptionManager->getSubscription($subscriptionName);
+        $formConfig = $subscription->getFormConfig();
+        $form = $this->subscriptionManager->createForm($subscription, null);
 
         $formTemplate = $template ?? $formConfig['template'];
 

@@ -60,24 +60,24 @@ class PendingSubscriberManager
         $this->entityManager->remove($subscriber);
     }
 
-    public function removeBy(string $email, string $subscribtion)
+    public function removeBy(string $email, string $subscription)
     {
         /** @var PendingSubscriberRepository $repository */
         $repository = $this->entityManager->getRepository(PendingSubscriber::class);
         $repository->removeBy([
             'email' => $email,
-            'subscribtion' => $subscribtion
+            'subscription' => $subscription
         ]);
     }
 
-    public function findOneBy(string $email, string $subscribtion): ?PendingSubscriber
+    public function findOneBy(string $email, string $subscription): ?PendingSubscriber
     {
         /** @var PendingSubscriberRepository $repository */
         $repository = $this->entityManager->getRepository(PendingSubscriber::class);
 
         return $repository->findOneBy([
             'email' => $email,
-            'subscribtion' => $subscribtion
+            'subscription' => $subscription
         ]);
     }
 
@@ -97,7 +97,7 @@ class PendingSubscriberManager
         $pending = $this->subscriberFactory->createNew();
         $pending->setEmail($subscriber->getEmail());
         $pending->setCreatedAt($subscriber->getCreatedAt());
-        $pending->setSubscribtion($subscriber->getSubscribtion());
+        $pending->setSubscription($subscriber->getSubscription());
         $pending->setData($subscriber);
 
         return $pending;

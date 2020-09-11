@@ -10,23 +10,23 @@ namespace Enhavo\Bundle\NewsletterBundle\EventListener;
 
 use Enhavo\Bundle\NewsletterBundle\Event\NewsletterEvents;
 use Enhavo\Bundle\NewsletterBundle\Event\SubscriberEvent;
-use Enhavo\Bundle\NewsletterBundle\Subscribtion\SubscribtionManager;
+use Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class SubscriberSubscriber implements EventSubscriberInterface
 {
     /**
-     * @var SubscribtionManager
+     * @var SubscriptionManager
      */
-    private $subscribtionManager;
+    private $subscriptionManager;
 
     /**
      * SubscriberSubscriber constructor.
-     * @param SubscribtionManager $subscribtionManager
+     * @param SubscriptionManager $subscriptionManager
      */
-    public function __construct(SubscribtionManager $subscribtionManager)
+    public function __construct(SubscriptionManager $subscriptionManager)
     {
-        $this->subscribtionManager = $subscribtionManager;
+        $this->subscriptionManager = $subscriptionManager;
     }
 
 
@@ -40,8 +40,8 @@ class SubscriberSubscriber implements EventSubscriberInterface
     public function onCreateSubscriber(SubscriberEvent $event)
     {
         $subscriber = $event->getSubscriber();
-        $subscribtion = $this->subscribtionManager->getSubscribtion($subscriber->getSubscribtion());
-        $groups = $this->subscribtionManager->resolveGroups($subscribtion->getGroups());
+        $subscription = $this->subscriptionManager->getSubscription($subscriber->getSubscription());
+        $groups = $this->subscriptionManager->resolveGroups($subscription->getGroups());
         foreach($groups as $group) {
             $subscriber->addGroup($group);
         }

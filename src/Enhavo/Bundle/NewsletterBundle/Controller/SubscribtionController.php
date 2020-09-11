@@ -6,17 +6,17 @@ use Enhavo\Bundle\NewsletterBundle\Form\Type\SubscriberType;
 use Enhavo\Bundle\NewsletterBundle\Model\Subscriber;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Pending\PendingSubscriberManager;
-use Enhavo\Bundle\NewsletterBundle\Subscribtion\SubscribtionManager;
+use Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class SubscribtionController extends AbstractController
+class SubscriptionController extends AbstractController
 {
-    /** @var SubscribtionManager */
-    private $subscribtionManager;
+    /** @var SubscriptionManager */
+    private $subscriptionManager;
 
     /** @var PendingSubscriberManager */
     private $pendingManager;
@@ -25,14 +25,14 @@ class SubscribtionController extends AbstractController
     private $translator;
 
     /**
-     * SubscribtionController constructor.
-     * @param SubscribtionManager $subscribtionManager
+     * SubscriptionController constructor.
+     * @param SubscriptionManager $subscriptionManager
      * @param PendingSubscriberManager $pendingManager
      * @param TranslatorInterface $translator
      */
-    public function __construct(SubscribtionManager $subscribtionManager, PendingSubscriberManager $pendingManager, TranslatorInterface $translator)
+    public function __construct(SubscriptionManager $subscriptionManager, PendingSubscriberManager $pendingManager, TranslatorInterface $translator)
     {
-        $this->subscribtionManager = $subscribtionManager;
+        $this->subscriptionManager = $subscriptionManager;
         $this->pendingManager = $pendingManager;
         $this->translator = $translator;
     }
@@ -41,8 +41,8 @@ class SubscribtionController extends AbstractController
     {
         $type = $request->get('type');
         $token = $request->get('token');
-        $subscribtion = $this->subscribtionManager->getSubscribtion($type);
-        $strategy = $subscribtion->getStrategy();
+        $subscription = $this->subscriptionManager->getSubscription($type);
+        $strategy = $subscription->getStrategy();
 
         $pending = $this->pendingManager->findByToken($token);
         if (!$pending || !($pending->getData() instanceof SubscriberInterface)) {
@@ -66,17 +66,17 @@ class SubscribtionController extends AbstractController
     public function addAction(Request $request)
     {
         $type = $request->get('type');
-        $subscribtion = $this->subscribtionManager->getSubscribtion($type);
-        $subscriber = $this->subscribtionManager->createModel($subscribtion->getModel());
-        $subscriber->setSubscribtion($type);
+        $subscription = $this->subscriptionManager->getSubscription($type);
+        $subscriber = $this->subscriptionManager->createModel($subscription->getModel());
+        $subscriber->setSubscription($type);
 
-        $form = $this->subscribtionManager->createForm($subscribtion, $subscriber);
+        $form = $this->subscriptionManager->createForm($subscription, $subscriber);
         $form->handleRequest($request);
 
         $result = $this->formIsValid($form);
 
         if ($result === true) {
-            $message = $subscribtion->getStrategy()->addSubscriber($subscriber);
+            $message = $subscription->getStrategy()->addSubscriber($subscriber);
             return new JsonResponse([
                 'message' => $this->translator->trans($message, [], 'EnhavoNewsletterBundle'),
                 'subscriber' => $subscriber

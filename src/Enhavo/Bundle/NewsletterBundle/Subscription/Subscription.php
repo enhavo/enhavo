@@ -1,17 +1,17 @@
 <?php
 /*
- * Subscribtion.php
+ * Subscription.php
  *
  * @since 04.09.20, 12:44
  * @author blutze
  */
 
-namespace Enhavo\Bundle\NewsletterBundle\Subscribtion;
+namespace Enhavo\Bundle\NewsletterBundle\Subscription;
 
 
 use Enhavo\Bundle\NewsletterBundle\Strategy\Strategy;
 
-class Subscribtion
+class Subscription
 {
     /** @var string */
     private $name;
@@ -26,7 +26,7 @@ class Subscribtion
     private $formConfig;
 
     /**
-     * Subscribtion constructor.
+     * Subscription constructor.
      * @param string $name
      * @param Strategy $strategy
      * @param string $model

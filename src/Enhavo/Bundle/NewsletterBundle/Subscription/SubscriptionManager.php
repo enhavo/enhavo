@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\NewsletterBundle\Subscribtion;
+namespace Enhavo\Bundle\NewsletterBundle\Subscription;
 
 use Enhavo\Bundle\NewsletterBundle\Entity\Group;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
@@ -14,7 +14,7 @@ use Enhavo\Component\Type\FactoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 
-class SubscribtionManager
+class SubscriptionManager
 {
     const DEFAULT_PROVIDER = 'local';
 
@@ -36,7 +36,7 @@ class SubscribtionManager
     private $configuration;
 
     /**
-     * SubscribtionManager constructor.
+     * SubscriptionManager constructor.
      * @param EventDispatcherInterface $eventDispatcher
      * @param FactoryInterface $storageFactory
      * @param FactoryInterface $strategyFactory
@@ -52,14 +52,14 @@ class SubscribtionManager
         $this->configuration = $configuration;
     }
 
-    public function getSubscribtion($name): Subscribtion
+    public function getSubscription($name): Subscription
     {
         $config = $this->configuration[$name];
         $strategy = $this->strategyFactory->create($config['strategy']);
         $storage = $this->storageFactory->create($config['storage']);
         $strategy->setStorage($storage);
 
-        return new Subscribtion($name, $strategy, $config['model'], $config['form']);
+        return new Subscription($name, $strategy, $config['model'], $config['form']);
     }
 
     public function createModel($className): SubscriberInterface
@@ -67,9 +67,9 @@ class SubscribtionManager
         return new $className();
     }
 
-    public function createForm(Subscribtion $subscribtion, ?SubscriberInterface $subscriber)
+    public function createForm(Subscription $subscription, ?SubscriberInterface $subscriber)
     {
-        $formConfig = $subscribtion->getFormConfig();
+        $formConfig = $subscription->getFormConfig();
         return $this->formFactory->create($formConfig['class'], $subscriber);
     }
 

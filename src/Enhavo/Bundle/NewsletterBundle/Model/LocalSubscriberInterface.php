@@ -65,12 +65,12 @@ interface LocalSubscriberInterface
      * @param string $key
      *
      */
-    public function setSubscribtion($key);
+    public function setSubscription($key);
 
     /**
      * @return string
      */
-    public function getSubscribtion();
+    public function getSubscription();
 
     /**
      * @return string|null
