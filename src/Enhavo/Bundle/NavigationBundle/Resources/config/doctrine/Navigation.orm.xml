@@ -10,7 +10,8 @@
 
         <one-to-many field="nodes" target-entity="Enhavo\Bundle\NavigationBundle\Model\NodeInterface" mapped-by="navigation" orphan-removal="true">
             <cascade>
-                <cascade-persist/>
+                <cascade-persist />
+                <cascade-remove />
             </cascade>
             <order-by>
                 <order-by-field name="position" />

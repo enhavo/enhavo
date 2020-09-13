@@ -22,7 +22,7 @@ class LinkNavItemType extends AbstractNavItemType
             'model' => Link::class,
             'factory' => LinkFactory::class,
             'form' => LinkType::class,
-            'template' => 'EnhavoNavigationBundle:Navigation:link.html.twig',
+            'template' => 'theme/navigation/link.html.twig',
             'label' => 'link.label.link',
             'translation_domain' => 'EnhavoNavigationBundle',
         ]);
