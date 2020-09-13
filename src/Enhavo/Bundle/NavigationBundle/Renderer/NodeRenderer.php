@@ -47,17 +47,25 @@ class NodeRenderer
         return $this->twig->render($template, $parameters);
     }
 
+    /**
+     * @param NodeInterface $node
+     * @param null|string|array $renderSet
+     * @return string
+     * @throws RenderException
+     */
     public function render(NodeInterface $node, $renderSet = null)
     {
         $item = $this->itemManager->getNavItem($node->getName());
         $template = $item->getTemplate();
 
-        if($renderSet && isset($this->renderSets[$renderSet][$node->getName()])) {
+        if (is_array($renderSet) && isset($renderSet[$node->getName()])) {
+            $template = $renderSet[$node->getName()];
+        } elseif(is_string($renderSet) && isset($this->renderSets[$renderSet][$node->getName()])) {
             $template = $this->renderSets[$renderSet][$node->getName()];
         }
 
         if($template === null) {
-            if($renderSet) {
+            if(is_string($renderSet)) {
                 throw new RenderException(sprintf('No template found to render node "%s" with render set "%s"', $node->getName(), $renderSet));
             }
             throw new RenderException(sprintf('No default template found for node type "%s"', $node->getName()));
