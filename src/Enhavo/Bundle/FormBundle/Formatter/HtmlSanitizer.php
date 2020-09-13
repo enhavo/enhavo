@@ -9,15 +9,35 @@
 namespace Enhavo\Bundle\FormBundle\Formatter;
 
 
+use Enhavo\Bundle\AppBundle\Filesystem\Filesystem;
+
 class HtmlSanitizer
 {
+    /** @var string */
+    private $serializationPath;
+
+    /** @var Filesystem */
+    private $fs;
+
+    public function __construct(string $serializationPath, Filesystem $fs)
+    {
+        $this->serializationPath = $serializationPath;
+        $this->fs = $fs;
+    }
+
     public function sanitize($value, $options = [])
     {
-        if(empty($value)) {
+        if (empty($value)) {
             return $value;
         }
 
+        if (!$this->fs->exists($this->serializationPath)) {
+            $this->fs->mkdir($this->serializationPath);
+        }
+
         $config = \HTMLPurifier_Config::createDefault();
+        $config->set('Cache.SerializerPath', $this->serializationPath);
+
         $purifier = new \HTMLPurifier($config);
         return $purifier->purify($value);
     }
