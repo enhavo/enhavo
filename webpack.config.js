@@ -24,7 +24,9 @@ EnhavoEncore.add(
 );
 
 EnhavoThemeEncore.addThemes(EnhavoEncore, ThemeLoader, [
-    new AppThemePackage(),
+    new AppThemePackage({
+        themesPath: './assets/theme'
+    }),
     new ThemePackage(ThemeLoader),
 ]);
 

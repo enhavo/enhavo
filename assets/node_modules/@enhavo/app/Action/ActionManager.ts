@@ -44,6 +44,6 @@ export default class ActionManager
     }
 
     hasActions() {
-        return this.primary.length > 0 || this.secondary.length > 0
+        return (this.primary && this.primary.length > 0) || (this.secondary && this.secondary.length > 0)
     }
 }
