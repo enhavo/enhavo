@@ -61,3 +61,4 @@ enhavo_navigation:
             label: page.label.page
             translation_domain: EnhavoPageBundle
             content_form: Enhavo\Bundle\PageBundle\Form\Type\PageChoiceType
+            template: theme/navigation/page.html.twig

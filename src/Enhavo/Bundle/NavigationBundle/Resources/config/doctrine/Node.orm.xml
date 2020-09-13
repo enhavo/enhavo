@@ -17,6 +17,7 @@
             </cascade>
             <join-column on-delete="CASCADE" />
         </many-to-one>
+
         <many-to-one field="navigation" target-entity="Enhavo\Bundle\NavigationBundle\Entity\Navigation">
             <cascade>
                 <cascade-persist/>
@@ -25,7 +26,8 @@
 
         <one-to-many field="children" target-entity="Enhavo\Bundle\NavigationBundle\Model\NodeInterface" mapped-by="parent" orphan-removal="true">
             <cascade>
-                <cascade-persist/>
+                <cascade-persist />
+                <cascade-remove />
             </cascade>
             <order-by>
                 <order-by-field name="position"/>
