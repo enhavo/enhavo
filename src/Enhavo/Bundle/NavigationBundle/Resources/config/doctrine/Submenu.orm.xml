@@ -5,6 +5,8 @@
             <generator />
         </id>
 
-        <many-to-one field="node" target-entity="Enhavo\Bundle\NavigationBundle\Model\NodeInterface" />
+        <many-to-one field="node" target-entity="Enhavo\Bundle\NavigationBundle\Model\NodeInterface">
+            <join-column on-delete="CASCADE" />
+        </many-to-one>
     </entity>
 </doctrine-mapping>
