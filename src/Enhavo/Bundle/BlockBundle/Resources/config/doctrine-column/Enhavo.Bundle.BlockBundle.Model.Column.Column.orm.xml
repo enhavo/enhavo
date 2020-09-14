@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <mapped-superclass name="Enhavo\Bundle\BlockBundle\Model\Column\Column">
+        <field name="width" length="255" nullable="true" />
+        <field name="style" length="255" nullable="true" />
+    </mapped-superclass>
+</doctrine-mapping>

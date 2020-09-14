@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="Enhavo\Bundle\NavigationBundle\Entity\Content" table="navigation_content" repository-class="Enhavo\Bundle\NavigationBundle\Repository\ContentRepository">
+        <id name="id" type="integer" column="id">
+            <generator />
+        </id>
+
+        <field name="contentId" type="integer" nullable="true" />
+        <field name="contentClass" nullable="true" />
+
+        <many-to-one field="node" target-entity="Enhavo\Bundle\NavigationBundle\Model\NodeInterface">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+            <join-column on-delete="CASCADE" />
+        </many-to-one>
+    </entity>
+</doctrine-mapping>

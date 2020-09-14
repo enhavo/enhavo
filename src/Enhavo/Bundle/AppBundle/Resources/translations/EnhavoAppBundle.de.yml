@@ -105,3 +105,16 @@ filter:
     label:
       from: 'Datum von'
       to: 'Bis'
+exception:
+  default:
+    title: 'Ein Fehler ist aufgetreten'
+    text: 'Bei der Bearbeitung Ihrer Anfrage ist leider ein Fehler aufgetreten.'
+    link_homepage: 'Zurück zur Startseite'
+  404:
+    title: 'Seite nicht gefunden'
+    text: 'Die von Ihnen gesuchte Seite konnte leider nicht gefunden werden. Möglicherweise haben Sie eine falsche oder veraltete URL aufgerufen, oder der Inhalt wurde zwischenzeitlich gelöscht.'
+    link_homepage: 'Zurück zur Startseite'
+  403:
+    title: 'Zugriff verweigert'
+    text: 'Sie haben keinen Zugriff auf diese Seite.'
+    link_homepage: 'Zurück zur Startseite'

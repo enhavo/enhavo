@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="Enhavo\Bundle\TranslationBundle\Entity\TranslationFile" table="translation_translation_file" repository-class="Enhavo\Bundle\TranslationBundle\Repository\TranslationFileRepository">
+        <id name="id" type="integer" column="id">
+            <generator />
+        </id>
+
+        <field name="class" nullable="true" />
+        <field name="property" nullable="true" />
+        <field name="refId" type="integer" nullable="true" />
+        <field name="locale" nullable="true" />
+
+        <many-to-one field="file" target-entity="Enhavo\Bundle\MediaBundle\Model\FileInterface">
+            <cascade>
+                <cascade-persist/>
+                <cascade-remove/>
+                <cascade-refresh/>
+            </cascade>
+        </many-to-one>
+    </entity>
+</doctrine-mapping>

@@ -62,12 +62,16 @@ class ReplaceTranslationTypeListener implements EventSubscriberInterface
 
     private function replaceChild($data, string $property, FormInterface $form, FormInterface $child)
     {
+        $options = $child->getConfig()->getOptions();
+
         $form->remove($property);
         $form->add($property, TranslationType::class, [
             'translation_data' => $data,
             'translation_property' => $property,
-            'form_options' => $child->getConfig()->getOptions(),
-            'form_type' => get_class($child->getConfig()->getType()->getInnerType())
+            'form_options' => $options,
+            'form_type' => get_class($child->getConfig()->getType()->getInnerType()),
+            'label' => $options['label'],
+            'translation_domain' => $options['translation_domain']
         ]);
     }
 }

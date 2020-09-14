@@ -1,5 +1,6 @@
 services:
     '@enhavo/app/View/View':
+        chunk: 'view'
         arguments:
             - 'param:data.view'
             - '@enhavo/core/Router'
@@ -9,6 +10,7 @@ services:
             - [setEventDispatcher, ['@enhavo/app/ViewStack/EventDispatcher']]
 
     '@enhavo/app/View/DataLoader[data]':
+        chunk: 'view'
         init: true
         from: '@enhavo/app/View/DataLoader'
         arguments:
@@ -17,6 +19,7 @@ services:
             - 'container:'
 
     '@enhavo/app/View/DataLoader[routes]':
+        chunk: 'view'
         init: true
         from: '@enhavo/app/View/DataLoader'
         arguments:
@@ -25,6 +28,7 @@ services:
             - 'container:'
 
     '@enhavo/app/View/DataLoader[translations]':
+        chunk: 'view'
         init: true
         from: '@enhavo/app/View/DataLoader'
         arguments:
@@ -33,6 +37,7 @@ services:
             - 'container:'
 
     '@enhavo/app/View/Components/ViewComponent':
+        chunk: 'vue'
         static: true
         tags:
             - { name: vue.component, component: 'view-view' }

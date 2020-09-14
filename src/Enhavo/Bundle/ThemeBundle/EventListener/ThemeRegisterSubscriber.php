@@ -12,19 +12,14 @@ use Enhavo\Bundle\AppBundle\Template\TemplateManager;
 use Enhavo\Bundle\ThemeBundle\Theme\ThemeManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
-use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 class ThemeRegisterSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var TemplateManager
-     */
+    /** @var TemplateManager */
     private $templateManager;
 
-    /**
-     * @var ThemeManager
-     */
+    /** @var ThemeManager */
     private $themeManager;
 
     /**
@@ -55,7 +50,7 @@ class ThemeRegisterSubscriber implements EventSubscriberInterface
     {
         $path = $this->themeManager->getTheme()->getTemplate()->getPath();
         if($path !== null) {
-            $this->templateManager->registerPath($path, TemplateManager::PRIORITY_HIGH);
+            $this->templateManager->registerPath($path, 200);
         }
     }
 }

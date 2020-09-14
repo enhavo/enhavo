@@ -58,16 +58,11 @@ compiler_pass:
 
 services:
     '@enhavo/core/Router':
+        chunk: 'view'
         calls:
             - [setRoutingData, ['param:routes']]
 
     '@enhavo/core/Translator':
+        chunk: 'view'
         calls:
             - [setData, ['param:translations']]
-
-    '@enhavo/app/State/StateManager':
-        arguments:
-            - '@enhavo/app/ViewStack/ViewStack'
-            - '@enhavo/app/ViewStack/EventDispatcher'
-            - '@enhavo/app/ViewStack/GlobalDataStorageManager'
-            - '@enhavo/app/Vue/VueRegistry'

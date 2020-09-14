@@ -318,6 +318,46 @@ class TranslationManagerTest extends TestCase
 
     }
 
+    public function testGetProperty()
+    {
+        $dependencies = $this->createDependencies();
+
+        $translation = $this->getMockBuilder(Translation::class)->disableOriginalConstructor()->getMock();
+        $translation->expects($this->once())->method('getDefaultValue')->willReturnCallback(function($data, $property) {
+            return ($property.'-default');
+        });
+        $translation->method('getTranslation')->willReturnCallback(function($data, $property, $locale) {
+            return ($property.'-'.$locale);
+        });
+        $dependencies->factory->method('create')->willReturn($translation);
+
+        $node = $this->getMockBuilder(PropertyNode::class)->getMock();
+        $node->method('getType')->willReturn('text');
+        $node->method('getProperty')->willReturn('name');
+        $node->method('getOptions')->willReturn(['allow_fallback' => true]);
+
+        $metadata = $this->getMockBuilder(Metadata::class)->disableOriginalConstructor()->getMock();
+        $metadata->method('getProperties')->willReturnCallback(function () use ($node) {
+            return [$node];
+        });
+        $metadata->method('getProperty')->willReturnCallback(function ($property) use ($node) {
+            return $node;
+        });
+        $metadata->method('getClassName')->willReturn(TranslatableMock::class);
+
+        $dependencies->metadataRepository->method('hasMetadata')->willReturn(true);
+        $dependencies->metadataRepository->method('getMetadata')->willReturn($metadata);
+        $manager = $this->createInstance($dependencies);
+        $entity = new TranslatableMock();
+        $entity->setName('value-a');
+
+        $value = $manager->getProperty($entity, 'name', 'de');
+        $this->assertEquals('name-de', $value);
+
+        $value = $manager->getProperty($entity, 'name', 'en');
+        $this->assertEquals('name-default', $value);
+    }
+
     public function testFetchBySlug()
     {
         $dependencies = $this->createDependencies();
@@ -338,6 +378,10 @@ class TranslationManagerTest extends TestCase
         $result = $manager->fetchBySlug('test.class', 'sa-lug');
 
         $this->assertEquals(',slug,sa-lug,', $result);
+
+        $result = $manager->fetchBySlug('test.class', 'sa-lug', 'en')->getObject();
+
+        $this->assertEquals('sa-lug', $result);
     }
 }
 
@@ -374,3 +418,8 @@ class TranslationManagerDependencies
     public $requestStack;
 }
 
+//class TranslationManagerMock extends TranslationManager
+//{
+//    /** @var string[] */
+//    public $translatedLocale;
+//}

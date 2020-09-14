@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="Enhavo\Bundle\SettingBundle\Entity\Setting" table="setting_setting">
+        <id name="id" type="integer" column="id">
+            <generator />
+        </id>
+
+        <field name="label" type="text" nullable="true" />
+        <field name="key" column="`key`" length="255" nullable="true" />
+        <field name="type" type="text" nullable="true" />
+        <field name="value" type="text" nullable="true" />
+        <field name="date" type="datetime" nullable="true" />
+        <field name="translationDomain" type="text" nullable="true" />
+
+        <one-to-one field="file" target-entity="Enhavo\Bundle\MediaBundle\Model\FileInterface" orphan-removal="true">
+            <cascade>
+                <cascade-persist />
+                <cascade-remove />
+                <cascade-refresh />
+            </cascade>
+        </one-to-one>
+
+        <many-to-many field="files" target-entity="Enhavo\Bundle\MediaBundle\Model\FileInterface">
+            <cascade>
+                <cascade-persist />
+                <cascade-remove />
+                <cascade-refresh />
+            </cascade>
+            <join-table name="setting_setting_files">
+                <join-columns>
+                    <join-column name="setting_id" on-delete="CASCADE" />
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="file_id" on-delete="CASCADE" />
+                </inverse-join-columns>
+            </join-table>
+            <order-by>
+                <order-by-field name="order"/>
+            </order-by>
+        </many-to-many>
+    </entity>
+</doctrine-mapping>

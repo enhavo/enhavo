@@ -2,13 +2,13 @@
 
 namespace Enhavo\Bundle\RoutingBundle;
 
+use Doctrine\ORM\Mapping\Driver\XmlDriver;
 use Enhavo\Bundle\RoutingBundle\DependencyInjection\Compiler\ConditionResolverPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\Definition;
 use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
 use Doctrine\Common\Persistence\Mapping\Driver\DefaultFileLocator;
-use Doctrine\ORM\Mapping\Driver\YamlDriver;
 use Enhavo\Bundle\AppBundle\Type\TypeCompilerPass;
 
 class EnhavoRoutingBundle extends Bundle
@@ -29,9 +29,9 @@ class EnhavoRoutingBundle extends Bundle
 
     private function buildRouteCompilerPass()
     {
-        $arguments = array(array(realpath(__DIR__.'/Resources/config/doctrine-route')), '.orm.yml');
+        $arguments = array(array(realpath(__DIR__.'/Resources/config/doctrine-route')), '.orm.xml');
         $locator = new Definition(DefaultFileLocator::class, $arguments);
-        $driver = new Definition(YamlDriver::class, array($locator));
+        $driver = new Definition(XmlDriver::class, array($locator));
 
         return new DoctrineOrmMappingsPass(
             $driver,

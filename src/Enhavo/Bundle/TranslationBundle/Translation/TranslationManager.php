@@ -14,6 +14,7 @@ use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface
 use Enhavo\Bundle\TranslationBundle\Exception\TranslationException;
 use Enhavo\Bundle\TranslationBundle\Metadata\Metadata;
 use Enhavo\Bundle\TranslationBundle\Metadata\PropertyNode;
+use Enhavo\Bundle\TranslationBundle\Entity\Translation as TranslationEntity;
 use Enhavo\Component\Metadata\MetadataRepository;
 use Enhavo\Component\Type\FactoryInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -151,6 +152,16 @@ class TranslationManager
         return $translationValues;
     }
 
+    public function getProperty($resource, $property, $locale)
+    {
+        $translation = $this->getTranslation($resource, $property);
+        if ($locale === $this->getDefaultLocale()) {
+            return $translation->getDefaultValue($resource, $property);
+        }
+
+        return $translation->getTranslation($resource, $property, $locale);
+    }
+
     public function setTranslation($data, $property, $locale, $value)
     {
         $this->getTranslation($data, $property)->setTranslation($data, $property, $locale, $value);
@@ -260,6 +271,11 @@ class TranslationManager
         return $metadata->getProperties() ?? [];
     }
 
+    /**
+     * @param $data
+     * @param $propertyName
+     * @return Translation
+     */
     private function getTranslation($data, $propertyName)
     {
         /** @var Metadata $metadata */
@@ -291,8 +307,8 @@ class TranslationManager
             return $entity;
         }
 
-        /** @var \Enhavo\Bundle\TranslationBundle\Entity\Translation $translation */
-        $translation = $this->entityManager->getRepository(Translation::class)->findOneBy([
+        /** @var TranslationEntity $translation */
+        $translation = $this->entityManager->getRepository(TranslationEntity::class)->findOneBy([
             'class' => $this->entityResolver->getName($class),
             'property' => 'slug',
             'translation' => $slug,

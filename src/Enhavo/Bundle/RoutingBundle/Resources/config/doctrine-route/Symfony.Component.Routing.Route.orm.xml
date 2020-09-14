@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <mapped-superclass name="Symfony\Component\Routing\Route">
+        <field name="host" length="255" nullable="true" />
+        <field name="schemes" type="json_array" nullable="true" />
+        <field name="methods" type="json_array" nullable="true" />
+        <field name="defaults" type="json_array" nullable="true" />
+        <field name="requirements" type="json_array" nullable="true" />
+        <field name="options" type="json_array" nullable="true" />
+    </mapped-superclass>
+</doctrine-mapping>

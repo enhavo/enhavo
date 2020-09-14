@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="Enhavo\Bundle\CommentBundle\Entity\Thread" table="comment_thread" repository-class="Enhavo\Bundle\CommentBundle\Repository\ThreadRepository">
+        <id name="id" type="integer" column="id">
+            <generator />
+        </id>
+
+        <field name="enable" type="boolean" />
+        <field name="subjectClass" nullable="true" />
+        <field name="subjectId" nullable="true" />
+
+        <one-to-many field="comments" target-entity="Enhavo\Bundle\CommentBundle\Model\CommentInterface" mapped-by="thread" orphan-removal="true">
+            <cascade>
+                <cascade-persist />
+                <cascade-remove />
+                <cascade-refresh />
+            </cascade>
+            <order-by>
+                <order-by-field name="createdAt" direction="DESC" />
+            </order-by>
+        </one-to-many>
+    </entity>
+</doctrine-mapping>

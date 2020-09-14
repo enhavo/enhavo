@@ -26,7 +26,7 @@ enhavo_routing:
         Enhavo\Bundle\TemplateBundle\Entity\Template:
             router:
                 default:
-                    type: route
+                    type: routable
                 admin:
                     type: id
                     route: enhavo_template_template_update

@@ -77,6 +77,7 @@ services:
             - '@enhavo_app.template.config_webpack_build_resolver'
             - '%enhavo_app.template_paths%'
             - '%twig.default_path%'
+            - '%kernel.project_dir%/assets/theme'
 
     enhavo_app.template.config_webpack_build_resolver:
         class: Enhavo\Bundle\AppBundle\Template\ConfigWebpackBuildResolver
@@ -92,3 +93,13 @@ services:
             - '@session'
         tags:
             - { name: kernel.event_listener, event: kernel.exception, priority: 300 }
+
+    enhavo.error_handler.html:
+        class: Enhavo\Bundle\AppBundle\ErrorRenderer\EnhavoErrorRenderer
+        decorates: twig.error_renderer.html
+        arguments:
+            - '@twig'
+            - '@enhavo.error_handler.html.inner'
+            - '%kernel.project_dir%'
+            - '@request_stack'
+            - '%kernel.debug%'

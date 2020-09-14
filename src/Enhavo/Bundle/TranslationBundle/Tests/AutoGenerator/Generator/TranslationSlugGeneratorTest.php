@@ -1,0 +1,129 @@
+<?php
+
+
+namespace AutoGenerator\Generator;
+
+
+use Enhavo\Bundle\TranslationBundle\AutoGenerator\Generator\LocalePrefixGenerator;
+use Enhavo\Bundle\TranslationBundle\AutoGenerator\Generator\TranslationSlugGenerator;
+use Enhavo\Bundle\TranslationBundle\Tests\Mocks\RouteableMock;
+use Enhavo\Bundle\TranslationBundle\Tests\Mocks\TranslatableMock;
+use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
+use Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator;
+use Enhavo\Bundle\TranslationBundle\Translator\TranslatorInterface;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+class TranslationSlugGeneratorTest extends TestCase
+{
+    private function createDependencies()
+    {
+        $dependencies = new TranslationSlugGeneratorTestDependencies();
+        $dependencies->translationManager = $this->getMockBuilder(TranslationManager::class)->disableOriginalConstructor()->getMock();
+        $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
+
+        return $dependencies;
+    }
+
+    private function createInstance($dependencies)
+    {
+        return new TranslationSlugGenerator(
+            $dependencies->translationManager,
+            $dependencies->translator
+        );
+    }
+
+    public function testConfigureOptions()
+    {
+        $dependencies = $this->createDependencies();
+        $instance = $this->createInstance($dependencies);
+        $resolver = new OptionsResolver();
+        $instance->configureOptions($resolver);
+        $options = $resolver->getDefinedOptions();
+        $assert = [
+            'property',
+            'overwrite',
+            'slug_property',
+        ];
+        sort($options);
+        sort($assert);
+
+        $this->assertEquals($assert, $options);
+    }
+
+    public function testGenerate()
+    {
+        $dependencies = $this->createDependencies();
+        $dependencies->translationManager->method('getLocales')->willReturn([
+            'pl', 'en', 'fr'
+        ]);
+        $dependencies->translationManager->method('getDefaultLocale')->willReturn('pl');
+        $dependencies->translator->method('getTranslation')->willReturnCallback(function($resource, $property, $locale) {
+            if ($property === 'slug') {
+                return null;
+            }
+            return $property.'-'.$locale;
+        });
+        $dependencies->translator->expects($this->exactly(2))->method('setTranslation')->willReturnCallback(function ($resource, $property, $locale, $value) {
+            $this->assertEquals('name-'.$locale, $value);
+        });
+        $instance = $this->createInstance($dependencies);
+
+        $entity = new TranslatableMock();
+        $entity->setName('harry');
+
+        $instance->generate($entity, [
+            'property' => 'name',
+            'slug_property' => 'slug',
+            'overwrite' => false,
+        ]);
+        $slug = $entity->getSlug();
+        $this->assertEquals('harry', $slug);
+    }
+
+    public function testGenerateNoOverwrite()
+    {
+        $dependencies = $this->createDependencies();
+        $dependencies->translationManager->method('getLocales')->willReturn([
+            'pl', 'en', 'fr'
+        ]);
+        $dependencies->translationManager->method('getDefaultLocale')->willReturn('pl');
+        $dependencies->translator->method('getTranslation')->willReturnCallback(function($resource, $property, $locale) {
+            return $property.'-'.$locale;
+        });
+        $dependencies->translator->expects($this->never())->method('setTranslation')->willReturnCallback(function ($resource, $property, $locale, $value) {
+            $this->assertEquals('name-'.$locale, $value);
+        });
+        $instance = $this->createInstance($dependencies);
+
+        $entity = new TranslatableMock();
+        $entity->setName('harry');
+
+        $instance->generate($entity, [
+            'property' => 'name',
+            'slug_property' => 'slug',
+            'overwrite' => false,
+        ]);
+        $slug = $entity->getSlug();
+        $this->assertEquals('harry', $slug);
+    }
+
+    public function testGetType()
+    {
+        $dependencies = $this->createDependencies();
+        $instance = $this->createInstance($dependencies);
+
+        $this->assertEquals('translation_slug', $instance->getType());
+    }
+}
+
+
+class TranslationSlugGeneratorTestDependencies
+{
+    /** @var TranslationManager|MockObject */
+    public $translationManager;
+    /** @var TranslatorInterface|MockObject */
+    public $translator;
+    /** @var TextTranslator|MockObject */
+}

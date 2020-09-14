@@ -1,7 +1,9 @@
 services:
     '@enhavo/app/ViewStack/ViewRegistry':
+        chunk: 'main'
 
     view.iframe-view:
+        chunk: 'main'
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:iframe-view'
@@ -11,12 +13,15 @@ services:
             - 'enhavo_app.view'
 
     '@enhavo/app/ViewStack/Factory/IframeViewFactory':
+        chunk: 'main'
         arguments:
 
     '@enhavo/app/ViewStack/Components/IframeViewComponent.vue':
+        chunk: 'main'
         static: true
 
     view.ajax-view:
+        chunk: 'main'
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:ajax-view'
@@ -26,12 +31,15 @@ services:
             - 'enhavo_app.view'
 
     '@enhavo/app/ViewStack/Factory/AjaxViewFactory':
+        chunk: 'main'
         arguments:
 
     '@enhavo/app/ViewStack/Components/AjaxViewComponent.vue':
+        chunk: 'main'
         static: true
 
     '@enhavo/app/ViewStack/ViewStack':
+        chunk: 'main'
         arguments:
             - 'param:data.view_stack'
             - '@enhavo/app/ViewStack/EventDispatcher'
@@ -41,36 +49,44 @@ services:
             - '@enhavo/app/ViewStack/ArrangeManager'
 
     '@enhavo/app/ViewStack/DataStorageManager':
+        chunk: 'main'
         arguments:
             - '@enhavo/app/ViewStack/ViewStack'
             - '@enhavo/app/ViewStack/EventDispatcher'
 
     '@enhavo/app/ViewStack/GlobalDataStorageManager':
+        chunk: 'main'
         arguments:
             - '@enhavo/app/ViewStack/EventDispatcher'
             - 'param:data.view_stack.storage'
 
     '@enhavo/app/ViewStack/EventDispatcher':
+        chunk: 'main'
 
     '@enhavo/app/ViewStack/FrameStorage':
+        chunk: 'main'
         arguments:
             - '@enhavo/app/ViewStack/EventDispatcher'
 
     '@enhavo/app/ViewStack/Components/ViewStack.vue':
+        chunk: 'vue'
         static: true
         tags:
             - { name: vue.component, component: 'view-stack' }
 
     '@enhavo/app/ViewStack/Components/ViewstackDropdown.vue':
+        chunk: 'vue'
         static: true
         tags:
             - { name: vue.component, component: 'view-stack-dropdown' }
 
     '@enhavo/app/ViewStack/Components/ViewComponent.vue':
+        chunk: 'vue'
         static: true
         tags:
             - { name: vue.component, component: 'view-stack-view' }
 
     '@enhavo/app/ViewStack/ArrangeManager':
+         chunk: 'main'
          arguments:
              - '@enhavo/app/Menu/MenuManager'

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="Enhavo\Bundle\BlockBundle\Model\Block\GalleryBlock" table="block_gallery_block">
+        <field name="title" length="255" nullable="true" />
+        <field name="text" type="text" nullable="true" />
+
+        <many-to-many field="files" target-entity="Enhavo\Bundle\MediaBundle\Model\FileInterface">
+            <cascade>
+                <cascade-persist />
+                <cascade-remove />
+                <cascade-refresh />
+            </cascade>
+            <join-table name="block_gallery_block_file">
+                <join-columns>
+                    <join-column name="gallery_id" on-delete="CASCADE" />
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="file_id" on-delete="CASCADE" />
+                </inverse-join-columns>
+            </join-table>
+            <order-by>
+                <order-by-field name="order" />
+            </order-by>
+        </many-to-many>
+    </entity>
+</doctrine-mapping>

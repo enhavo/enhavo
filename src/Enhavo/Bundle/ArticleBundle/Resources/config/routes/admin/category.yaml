@@ -31,8 +31,6 @@ enhavo_article_category_create:
                 method: createNewOnTaxonomy
                 arguments:
                     - 'article_category'
-            viewer:
-                translation_domain: EnhavoTaxonomyBundle
 
 enhavo_article_category_update:
     options:
@@ -44,7 +42,6 @@ enhavo_article_category_update:
         _sylius:
             form: 'Enhavo\Bundle\ArticleBundle\Form\Type\CategoryType'
             viewer:
-                translation_domain: EnhavoTaxonomyBundle
                 actions_secondary:
                     delete:
                         type: delete
@@ -101,7 +98,7 @@ enhavo_article_category_batch:
 enhavo_article_category_auto_complete:
     options:
         expose: true
-    path: /enhavo/article/tag/auto_complete
+    path: /enhavo/article/category/auto_complete
     defaults:
         _controller: enhavo_form.controller.auto_complete:searchAction
         _config:

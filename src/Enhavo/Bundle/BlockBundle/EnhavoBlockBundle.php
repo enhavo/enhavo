@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\BlockBundle;
 
+use Doctrine\ORM\Mapping\Driver\XmlDriver;
 use Enhavo\Bundle\BlockBundle\Block\Block;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -9,7 +10,6 @@ use Enhavo\Component\Type\TypeCompilerPass;
 use Symfony\Component\DependencyInjection\Definition;
 use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
 use Doctrine\Common\Persistence\Mapping\Driver\DefaultFileLocator;
-use Doctrine\ORM\Mapping\Driver\YamlDriver;
 
 class EnhavoBlockBundle extends Bundle
 {
@@ -34,9 +34,9 @@ class EnhavoBlockBundle extends Bundle
 
     private function buildDoctrineBlockCompilerPass($configDir, $namespace, $enableParameter)
     {
-        $arguments = array(array(realpath(sprintf('%s/Resources/config/%s', __DIR__, $configDir))), '.orm.yml');
+        $arguments = array(array(realpath(sprintf('%s/Resources/config/%s', __DIR__, $configDir))), '.orm.xml');
         $locator = new Definition(DefaultFileLocator::class, $arguments);
-        $driver = new Definition(YamlDriver::class, array($locator));
+        $driver = new Definition(XmlDriver::class, array($locator));
 
         return new DoctrineOrmMappingsPass(
             $driver,

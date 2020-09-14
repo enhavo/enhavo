@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="Enhavo\Bundle\ShopBundle\Entity\Product" table="shop_product">
+        <field name="title" />
+        <field name="price" type="integer" nullable="true" />
+        <field name="height" type="integer" nullable="true" />
+        <field name="width" type="integer" nullable="true" />
+        <field name="depth" type="integer" nullable="true" />
+        <field name="volume" type="integer" nullable="true" />
+        <field name="weight" type="integer" nullable="true" />
+
+        <many-to-one field="picture" target-entity="Enhavo\Bundle\MediaBundle\Model\FileInterface">
+            <join-column on-delete="SET NULL" />
+        </many-to-one>
+
+        <many-to-one field="taxRate" target-entity="Sylius\Component\Taxation\Model\TaxRateInterface">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+            <join-column on-delete="SET NULL" />
+        </many-to-one>
+
+        <many-to-one field="route" target-entity="Enhavo\Bundle\RoutingBundle\Model\RouteInterface">
+            <cascade>
+                <cascade-persist />
+                <cascade-remove />
+                <cascade-refresh />
+            </cascade>
+        </many-to-one>
+    </entity>
+</doctrine-mapping>

@@ -1,5 +1,0 @@
-Enhavo\Bundle\CommentBundle\Entity\CommentBlock:
-    type: entity
-    table: comment_comment_block
-
-    lifecycleCallbacks: {  }

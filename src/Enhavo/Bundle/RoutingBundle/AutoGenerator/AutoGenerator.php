@@ -34,6 +34,11 @@ class AutoGenerator
     {
         /** @var Metadata $metadata */
         $metadata = $this->metadataRepository->getMetadata($resource);
+
+        if ($metadata === null) {
+            return;
+        }
+
         foreach($metadata->getGenerators() as $generatorConfig) {
             /** @var GeneratorInterface $generator */
             $type = $this->collector->getType($generatorConfig->getType());

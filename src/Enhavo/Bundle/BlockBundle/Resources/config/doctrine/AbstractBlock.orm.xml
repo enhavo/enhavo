@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <mapped-superclass name="Enhavo\Bundle\BlockBundle\Entity\AbstractBlock">
+        <id name="id" type="integer" column="id">
+            <generator />
+        </id>
+
+        <many-to-one field="node" target-entity="Enhavo\Bundle\BlockBundle\Model\NodeInterface">
+            <join-column on-delete="CASCADE" />
+        </many-to-one>
+    </mapped-superclass>
+</doctrine-mapping>

@@ -9,7 +9,6 @@
 namespace Enhavo\Bundle\NavigationBundle\Form\Type;
 
 use Enhavo\Bundle\FormBundle\Form\Type\PolyCollectionType;
-use Enhavo\Bundle\NavigationBundle\Entity\Node;
 use Enhavo\Bundle\NavigationBundle\Model\NodeInterface;
 use Enhavo\Bundle\NavigationBundle\NavItem\NavItem;
 use Enhavo\Bundle\NavigationBundle\NavItem\NavItemManager;

@@ -1,0 +1,13 @@
+{% extends template('theme/base.html.twig') %}
+
+{% block main %}
+    <div class="exception exception-{{ status_code }}">
+        <div class="container">
+            <h1 class="exception-headline">{{ 'exception.404.title'|trans({}, 'EnhavoAppBundle') }}</h1>
+            <div class="exception-message">
+                {{ 'exception.404.text'|trans({}, 'EnhavoAppBundle')|raw }}
+            </div>
+            <a class="exception-link" href="/">{{ 'exception.404.link_homepage'|trans({}, 'EnhavoAppBundle') }}</a>
+        </div>
+    </div>
+{% endblock %}

@@ -1,5 +1,0 @@
-Enhavo\Bundle\ShopBundle\Entity\ProductListBlock:
-    type: entity
-    table: shop_product_list_block
-
-    lifecycleCallbacks: {  }

@@ -22,6 +22,7 @@ class SubmenuNavItemType extends AbstractNavItemType
             'form' => SubmenuType::class,
             'label' => 'node.label.submenu',
             'translation_domain' => 'EnhavoNavigationBundle',
+            'template' => 'theme/navigation/submenu.html.twig',
             'factory' => SubmenuFactory::class,
             'model' => Submenu::class
         ]);

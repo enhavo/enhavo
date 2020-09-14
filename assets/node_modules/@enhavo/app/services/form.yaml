@@ -1,5 +1,6 @@
 services:
     '@enhavo/app/Form/FormApp':
+        chunk: 'form'
         arguments:
             - 'param:data'
             - '@enhavo/app/ViewStack/EventDispatcher'
@@ -10,8 +11,10 @@ services:
             - '@enhavo/app/Form/Form'
 
     '@enhavo/app/Form/FormRegistry':
+        chunk: 'form'
 
     '@enhavo/app/Form/Form':
+        chunk: 'form'
         arguments:
             - 'param:data'
             - '@enhavo/app/Form/FormRegistry'
@@ -21,14 +24,17 @@ services:
             - '@enhavo/app/Vue/VueRegistry'
 
     '@enhavo/app/Form/Components/FormComponent.vue':
+        chunk: 'form'
         static: true
 
     '@enhavo/app/Form/Components/TabHead.vue':
+        chunk: 'vue'
         static: true
         tags:
             - { name: vue.component, component: 'form-tab-head' }
 
     '@enhavo/app/Form/Components/TabContainer.vue':
+        chunk: 'vue'
         static: true
         tags:
             - { name: vue.component, component: 'form-tab-container' }

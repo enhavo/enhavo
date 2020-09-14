@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping">
+    <entity name="Enhavo\Bundle\TaxonomyBundle\Entity\Term" table="taxonomy_term" repository-class="Enhavo\Bundle\TaxonomyBundle\Repository\TermRepository">
+        <id name="id" type="integer" column="id">
+            <generator />
+        </id>
+
+        <field name="name" length="255" nullable="true" />
+        <field name="text" type="text" nullable="true" />
+        <field name="position" type="integer" nullable="true" />
+        <field name="slug" length="255" nullable="true">
+            <gedmo:slug fields="name" separator="-" style="default" updatable="false" />
+        </field>
+
+        <many-to-one field="taxonomy" target-entity="Enhavo\Bundle\TaxonomyBundle\Model\TaxonomyInterface">
+            <join-column on-delete="CASCADE" />
+        </many-to-one>
+
+        <many-to-one field="parent" target-entity="Enhavo\Bundle\TaxonomyBundle\Model\TermInterface">
+            <join-column on-delete="CASCADE" />
+        </many-to-one>
+
+        <one-to-many field="children" target-entity="Enhavo\Bundle\TaxonomyBundle\Model\TermInterface" mapped-by="parent" />
+    </entity>
+</doctrine-mapping>

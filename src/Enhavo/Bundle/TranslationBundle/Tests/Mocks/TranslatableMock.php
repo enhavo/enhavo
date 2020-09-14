@@ -6,9 +6,10 @@ namespace Enhavo\Bundle\TranslationBundle\Tests\Mocks;
 
 
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
+use Enhavo\Bundle\RoutingBundle\Model\Slugable;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
-class TranslatableMock implements ResourceInterface
+class TranslatableMock implements ResourceInterface, Slugable
 {
     public $id;
 
@@ -16,6 +17,9 @@ class TranslatableMock implements ResourceInterface
     {
         return $this->id;
     }
+
+    /** @var string|null */
+    private $slug;
 
     private $name;
 
@@ -52,6 +56,22 @@ class TranslatableMock implements ResourceInterface
     public function setFile(FileInterface $file): void
     {
         $this->file = $file;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param string|null $slug
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
     }
 
 

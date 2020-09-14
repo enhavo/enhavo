@@ -36,7 +36,7 @@ enhavo_routing:
         Enhavo\Bundle\PageBundle\Entity\Page:
             router:
                 default:
-                    type: route
+                    type: routable
                 admin:
                     type: id
                     route: enhavo_page_page_update
@@ -61,3 +61,4 @@ enhavo_navigation:
             label: page.label.page
             translation_domain: EnhavoPageBundle
             content_form: Enhavo\Bundle\PageBundle\Form\Type\PageChoiceType
+            template: theme/navigation/page.html.twig

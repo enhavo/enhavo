@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="Enhavo\Bundle\ShopBundle\Entity\Shipment" table="shop_shipment">
+        <one-to-one field="order" target-entity="Enhavo\Bundle\ShopBundle\Model\OrderInterface" mapped-by="shipment"/>
+    </entity>
+</doctrine-mapping>

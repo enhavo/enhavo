@@ -51,6 +51,15 @@ class TextTranslationTypeTest extends TestCase
         $this->assertEquals('Something', $type->getTranslation([], new \stdClass(), 'text', 'de'));
     }
 
+    public function testGetDefaultValue()
+    {
+        $textTranslator = $this->createDependencies();
+        $textTranslator->expects($this->once())->method('getDefaultValue')->willReturn('Something');
+
+        $type = $this->createInstance($textTranslator);
+        $this->assertEquals('Something', $type->getDefaultValue([], new \stdClass(), 'text'));
+    }
+
     public function testTranslate()
     {
         $routeTranslator = $this->createDependencies();

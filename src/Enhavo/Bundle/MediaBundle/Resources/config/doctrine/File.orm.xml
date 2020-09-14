@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping">
+    <entity name="Enhavo\Bundle\MediaBundle\Entity\File" table="media_file" repository-class="Enhavo\Bundle\MediaBundle\Repository\FileRepository">
+        <id name="id" type="integer" column="id">
+            <generator />
+        </id>
+
+        <field name="mimeType" length="255" nullable="true" />
+        <field name="extension" length="255" nullable="true" />
+        <field name="order" type="integer" column="`order`" nullable="true" />
+        <field name="filename" length="255" nullable="true" />
+        <field name="parameters" type="array" nullable="true" />
+        <field name="token" nullable="true" />
+        <field name="md5Checksum" nullable="true" />
+        <field name="library" type="boolean" nullable="true" />
+        <field name="garbage" type="boolean" />
+        <field name="garbageTimestamp" type="datetime" nullable="true" />
+        <field name="createdAt" type="datetime">
+            <gedmo:timestampable on="create" />
+        </field>
+    </entity>
+</doctrine-mapping>
