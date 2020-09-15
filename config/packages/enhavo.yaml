@@ -14,8 +14,8 @@ enhavo_app:
             type: newsletter
         calendar:
             type: calendar
-#        shop:
-#            type: shop
+        shop:
+            type: shop
         navigation:
             type: navigation
         redirect:

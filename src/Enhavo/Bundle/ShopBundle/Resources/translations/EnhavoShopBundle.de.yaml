@@ -117,6 +117,7 @@ product:
   label:
     product: Produkt
     product_option: Option
+    product_attribute: Attribut
     code: Code
     title: Titel
     options: Optionen
@@ -131,8 +132,12 @@ product:
     weight: Gewicht
     volume: Volumen
     taxRate: Umsatzsteuer
+    associations: Assoziationen
   message:
     error:
       not_found: 'Die Ware konnte nicht gefunden werden.'
-
-
+product_attribute:
+    label:
+        name: 'Name'
+        storage_type: Speichertyp
+        position: Position

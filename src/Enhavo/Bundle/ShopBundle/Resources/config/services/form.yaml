@@ -8,6 +8,13 @@ services:
             - '%sylius.model.product.class%'
             - '%sylius.model.tax_rate.class%'
             - '%sylius.model.product_option.class%'
+            - '@sylius.form.event_subscriber.product_variant_generator'
+        tags:
+            - { name: form.type }
+
+    Enhavo\Bundle\ShopBundle\Form\Type\ProductOptionType:
+        arguments:
+            - '%sylius.model.product_option.class%'
         tags:
             - { name: form.type }
 #
@@ -72,11 +79,7 @@ services:
 #        tags:
 #            - { name: form.type }
 #
-#    Enhavo\Bundle\ShopBundle\Form\Type\ProductOptionType:
-#        arguments:
-#            - '%sylius.model.product_option.class%'
-#        tags:
-#            - { name: form.type }
+
 #
 #    Enhavo\Bundle\ShopBundle\Form\Type\ProductVariantCreateType:
 #        arguments:
