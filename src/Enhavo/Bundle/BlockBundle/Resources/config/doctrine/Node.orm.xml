@@ -14,7 +14,7 @@
         <field name="type" nullable="true" />
         <field name="template" nullable="true" />
 
-        <one-to-many field="children" target-entity="Enhavo\Bundle\BlockBundle\Model\NodeInterface" mapped-by="parent">
+        <one-to-many field="children" target-entity="Enhavo\Bundle\BlockBundle\Model\NodeInterface" mapped-by="parent" orphan-removal="true">
             <cascade>
                 <cascade-persist />
                 <cascade-remove />
