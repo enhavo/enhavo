@@ -16,7 +16,7 @@ sylius_tax_rate_create:
     defaults:
         _controller: sylius.controller.tax_rate:createAction
         _sylius:
-            redirect: app_tax_rate_update
+            redirect: sylius_tax_rate_update
             viewer:
 
 sylius_tax_rate_update:
@@ -41,9 +41,34 @@ sylius_tax_rate_table:
                 columns:
                     id:
                         property: id
-                        width: 12
+                        width: 1
                         label: id
                         type: property
+                    name:
+                        property: name
+                        width: 4
+                        label: name
+                        type: property
+                    code:
+                        property: code
+                        width: 2
+                        label: code
+                        type: property
+                    amount:
+                        property: amount
+                        width: 1
+                        label: Amount
+                        type: property
+                    calculator:
+                        property: calculator
+                        width: 3
+                        label: Calculator
+                        type: property
+                    includedInPrice:
+                        property: includedInPrice
+                        width: 1
+                        label: In Price?
+                        type: boolean
 
 sylius_tax_rate_delete:
     options:

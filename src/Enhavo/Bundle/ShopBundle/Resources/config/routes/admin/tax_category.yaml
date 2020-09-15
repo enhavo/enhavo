@@ -16,7 +16,7 @@ sylius_tax_category_create:
     defaults:
         _controller: sylius.controller.tax_category:createAction
         _sylius:
-            redirect: app_tax_category_update
+            redirect: sylius_tax_category_update
             viewer:
 
 sylius_tax_category_update:
@@ -41,8 +41,23 @@ sylius_tax_category_table:
                 columns:
                     id:
                         property: id
-                        width: 12
+                        width: 1
                         label: id
+                        type: property
+                    name:
+                        property: name
+                        width: 3
+                        label: Name
+                        type: property
+                    code:
+                        property: code
+                        width: 2
+                        label: Code
+                        type: property
+                    description:
+                        property: description
+                        width: 6
+                        label: Description
                         type: property
 
 sylius_tax_category_delete:
