@@ -51,11 +51,6 @@ sylius_product_attribute_table:
                         width: 3
                         label: Code
                         type: text
-                    name:
-                        property: name
-                        width: 3
-                        label: Name
-                        type: text
                     type:
                         property: type
                         width: 3

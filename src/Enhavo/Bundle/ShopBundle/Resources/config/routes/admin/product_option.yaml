@@ -86,6 +86,7 @@ sylius_product_option_table:
                         label: product.label.code
                         property: code
                         width: 10
+                        translation_domain: EnhavoShopBundle
 
 sylius_product_option_delete:
     options:

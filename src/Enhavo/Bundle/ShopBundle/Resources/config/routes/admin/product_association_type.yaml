@@ -16,7 +16,7 @@ sylius_product_association_type_create:
     defaults:
         _controller: sylius.controller.product_association_type:createAction
         _sylius:
-            redirect: sylius_product_association_update
+            redirect: sylius_product_association_type_update
             viewer:
 
 sylius_product_association_type_update:
@@ -43,6 +43,16 @@ sylius_product_association_type_table:
                         property: id
                         width: 1
                         label: ID
+                        type: property
+                    name:
+                        property: name
+                        width: 5
+                        label: Name
+                        type: property
+                    code:
+                        property: code
+                        width: 6
+                        label: Code
                         type: property
                     
 sylius_product_association_type_delete:
