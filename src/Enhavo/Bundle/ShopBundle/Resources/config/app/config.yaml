@@ -202,6 +202,7 @@ sylius_product:
             classes:
                 model: Enhavo\Bundle\ShopBundle\Entity\ProductVariant
                 form: Enhavo\Bundle\ShopBundle\Form\Type\ProductType
+                controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
         product_association:
             classes:
                 model: Enhavo\Bundle\ShopBundle\Entity\ProductAssociation
