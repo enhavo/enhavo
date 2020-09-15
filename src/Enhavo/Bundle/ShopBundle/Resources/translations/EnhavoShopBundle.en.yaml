@@ -118,6 +118,7 @@ product:
     product: Product
     product_option: Option
     product_attribute: Attribute
+    product_association_type: Association Types
     code: Code
     title: Title
     options: Options
@@ -136,8 +137,14 @@ product:
   message:
     error:
       not_found: 'Requested product was not found.'
+
 product_attribute:
     label:
         name: 'Name'
         storage_type: Storage type
         position: Position
+
+tax:
+  label:
+      tax_rate: Tax Rates
+      tax_category: Tax Categories

@@ -202,7 +202,30 @@ sylius_product:
             classes:
                 model: Enhavo\Bundle\ShopBundle\Entity\ProductVariant
                 form: Enhavo\Bundle\ShopBundle\Form\Type\ProductType
+                controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
+        product_association:
+            classes:
+                model: Enhavo\Bundle\ShopBundle\Entity\ProductAssociation
+                form: Enhavo\Bundle\ShopBundle\Form\Type\ProductAssociationType
+        product_association_type:
+            classes:
+                model: Enhavo\Bundle\ShopBundle\Entity\ProductAssociationType
+                repository: Enhavo\Bundle\ShopBundle\Repository\ProductAssociationTypeRepository
+                controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
+                form: Enhavo\Bundle\ShopBundle\Form\Type\ProductAssociationTypeType
 
+sylius_taxation:
+    resources:
+        tax_category:
+            classes:
+                model: Enhavo\Bundle\ShopBundle\Entity\TaxCategory
+                controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
+                form: Enhavo\Bundle\ShopBundle\Form\Type\TaxCategoryType
+        tax_rate:
+            classes:
+                model: Enhavo\Bundle\ShopBundle\Entity\TaxRate
+                controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
+                form: Enhavo\Bundle\ShopBundle\Form\Type\TaxRateType
 
 #winzou_state_machine:
 #    sylius_payment:

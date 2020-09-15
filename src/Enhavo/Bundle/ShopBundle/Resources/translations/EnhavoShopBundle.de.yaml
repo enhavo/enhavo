@@ -118,6 +118,7 @@ product:
     product: Produkt
     product_option: Option
     product_attribute: Attribut
+    product_association_type: Vereinigungstypen
     code: Code
     title: Titel
     options: Optionen
@@ -136,8 +137,14 @@ product:
   message:
     error:
       not_found: 'Die Ware konnte nicht gefunden werden.'
+
 product_attribute:
     label:
         name: 'Name'
         storage_type: Speichertyp
         position: Position
+
+tax:
+  label:
+      tax_rate: Steuersatz
+      tax_category: Steuerkategorie

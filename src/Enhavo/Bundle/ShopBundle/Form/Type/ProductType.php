@@ -15,6 +15,7 @@ use Enhavo\Bundle\FormBundle\Form\Type\ListType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Enhavo\Bundle\RoutingBundle\Form\Type\RouteType;
 use Enhavo\Bundle\ShopBundle\Entity\Product;
+use Enhavo\Bundle\ShopBundle\Form\Type\ProductAssociationType;
 use Sylius\Bundle\ProductBundle\Form\Type\ProductAttributeValueType;
 use Sylius\Bundle\ProductBundle\Form\Type\ProductVariantGenerationType;
 use Sylius\Bundle\ShippingBundle\Form\Type\ShippingCategoryChoiceType;
@@ -45,6 +46,9 @@ class ProductType extends AbstractType
      */
     private $optionClass;
 
+    /** @var int */
+    private $productId;
+
 
     /** @var EventSubscriberInterface */
     private $generateProductVariantsSubscriber;
@@ -62,20 +66,9 @@ class ProductType extends AbstractType
         $builder
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
                 /** @var integer $id */
-                $form = $event->getForm();
                 $product = $event->getData();
                 if ($product instanceof Product) {
-                    $id = $product->getId();
-                    $form->add('associations', AutoCompleteEntityType::class, [
-                        'label' => 'product.label.associations',
-                        'translation_domain' => 'EnhavoShopBundle',
-                        'multiple' => true,
-                        'class' => ProductAssociationInterface::class,
-                        'route' => "sylius_product_auto_complete",
-                        'route_parameters' => [
-                            'id' => isset($id) ? $id : 0
-                        ]
-                    ]);
+                    $this->productId = $product->getId();
                 }
             })
         ;
@@ -157,6 +150,18 @@ class ProductType extends AbstractType
             'allow_delete' => true,
             'by_reference' => false,
             'label' => false,
+        ]);
+        $builder->add('associations', ListType::class, [
+            'entry_type' => ProductAssociationType::class,
+            'required' => false,
+            'prototype' => true,
+            'allow_add' => true,
+            'allow_delete' => true,
+            'by_reference' => false,
+            'label' => false,
+            'entry_options' => [
+                'productId' => $this->productId
+            ]
         ]);
 
 //        $builder->add('variants', ListType::class, [
