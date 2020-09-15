@@ -118,6 +118,7 @@ product:
     product: Produkt
     product_option: Option
     product_attribute: Attribut
+    product_association_type: Vereinigungstypen
     code: Code
     title: Titel
     options: Optionen

@@ -34,6 +34,9 @@ class ShopMenu extends ListMenu
                 'productAttribute' => [
                     'type' => 'shop_product_attribute'
                 ],
+                'productAssociation' => [
+                    'type' => 'shop_product_association_type'
+                ],
 //                'voucher' => [
 //                    'type' => 'shop_voucher'
 //                ]

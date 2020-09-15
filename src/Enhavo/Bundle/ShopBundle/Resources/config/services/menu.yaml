@@ -19,6 +19,11 @@ services:
             tags:
                 - { name: enhavo.menu, alias: shop_product_attribute }
 
+    Enhavo\Bundle\ShopBundle\Menu\ProductAssociationTypeMenu:
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
+        tags:
+            - { name: enhavo.menu, alias: shop_product_association_type }
+
     Enhavo\Bundle\ShopBundle\Menu\VoucherMenu:
         parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
