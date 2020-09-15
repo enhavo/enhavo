@@ -1,0 +1,92 @@
+sylius_tax_rate_index:
+    options:
+        expose: true
+    path: /enhavo/shop/tax/rate/index
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.tax_rate:indexAction
+        _sylius:
+            viewer:
+
+sylius_tax_rate_create:
+    options:
+        expose: true
+    path: /enhavo/shop/tax/rate/create
+    methods: [GET,POST]
+    defaults:
+        _controller: sylius.controller.tax_rate:createAction
+        _sylius:
+            redirect: app_tax_rate_update
+            viewer:
+
+sylius_tax_rate_update:
+    options:
+        expose: true
+    path: /enhavo/shop/tax/rate/update/{id}
+    methods: [GET,POST]
+    defaults:
+        _controller: sylius.controller.tax_rate:updateAction
+        _sylius:
+            viewer:
+
+sylius_tax_rate_table:
+    options:
+        expose: true
+    path: /enhavo/shop/tax/rate/table
+    methods: [GET,POST]
+    defaults:
+        _controller: sylius.controller.tax_rate:tableAction
+        _sylius:
+            viewer:
+                columns:
+                    id:
+                        property: id
+                        width: 12
+                        label: id
+                        type: property
+
+sylius_tax_rate_delete:
+    options:
+        expose: true
+    path: /enhavo/shop/tax/rate/delete/{id}
+    methods: [POST]
+    defaults:
+        _controller: sylius.controller.tax_rate:deleteAction
+
+sylius_tax_rate_batch:
+    options:
+        expose: true
+    path: /enhavo/shop/tax/rate/batch
+    methods: [POST]
+    defaults:
+        _controller: sylius.controller.tax_rate:batchAction
+        _sylius:
+            paginate: false
+            criteria:
+                id: $ids
+            batches:
+                delete:
+                    type: delete
+
+sylius_tax_rate_preview:
+    options:
+        expose: true
+    path: /enhavo/shop/tax/rate/preview
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.tax_rate:previewAction
+        _sylius:
+            viewer:
+
+sylius_tax_rate_resource_preview:
+    options:
+        expose: true
+    path: /enhavo/shop/tax/rate/resource/preview
+    methods: [POST]
+    defaults:
+        _controller: sylius.controller.tax_rate:previewResourceAction
+        _sylius:
+            viewer:
+                strategy_options:
+                    service: enhavo_article.controller.article:showResourceAction
+

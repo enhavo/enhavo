@@ -24,6 +24,16 @@ services:
         tags:
             - { name: enhavo.menu, alias: shop_product_association_type }
 
+    Enhavo\Bundle\ShopBundle\Menu\TaxCategoryMenu:
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
+        tags:
+            - { name: enhavo.menu, alias: shop_tax_category }
+
+    Enhavo\Bundle\ShopBundle\Menu\TaxRateMenu:
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
+        tags:
+            - { name: enhavo.menu, alias: shop_tax_rate }
+
     Enhavo\Bundle\ShopBundle\Menu\VoucherMenu:
         parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:

@@ -37,6 +37,12 @@ class ShopMenu extends ListMenu
                 'productAssociation' => [
                     'type' => 'shop_product_association_type'
                 ],
+                'taxRate' => [
+                    'type' => 'shop_tax_rate'
+                ],
+                'taxCategory' => [
+                    'type' => 'shop_tax_category'
+                ],
 //                'voucher' => [
 //                    'type' => 'shop_voucher'
 //                ]
