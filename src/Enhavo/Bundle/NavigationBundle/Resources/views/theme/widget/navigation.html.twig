@@ -1,0 +1,7 @@
+{% if navigation %}
+    <ul>
+        {% for node in navigation.nodes %}
+            <li>{{ navigation_node_render(node) }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}

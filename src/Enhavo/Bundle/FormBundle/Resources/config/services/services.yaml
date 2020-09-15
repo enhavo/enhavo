@@ -8,6 +8,11 @@ services:
     Enhavo\Bundle\FormBundle\Formatter\CurrencyFormatter:
         public: true
 
+    Enhavo\Bundle\FormBundle\Formatter\HtmlSanitizer:
+        arguments:
+            - '%kernel.cache_dir%/purifier/serialization'
+            - '@filesystem'
+
     Enhavo\Bundle\FormBundle\Prototype\PrototypeManager:
         arguments:
             - '@enhavo_app.util.secure_url_token_generator'
