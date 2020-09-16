@@ -54,7 +54,6 @@ enhavo_shop_order_update:
                     packingSlip:
                         type: shop_packing_slip
 
-
 enhavo_shop_order_table:
     options:
         expose: true

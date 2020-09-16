@@ -12,7 +12,7 @@ namespace Enhavo\Bundle\ShopBundle\Menu;
 use Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProductOptionMenu extends BaseMenu
+class ProductAttributeMenu extends BaseMenu
 {
     public function configureOptions(OptionsResolver $resolver)
     {
@@ -20,15 +20,15 @@ class ProductOptionMenu extends BaseMenu
 
         $resolver->setDefaults([
             'icon' => 'sound-mix',
-            'label' => 'product.label.product_option',
+            'label' => 'product.label.product_attribute',
             'translation_domain' => 'EnhavoShopBundle',
-            'route' => 'sylius_product_option_index',
-            'role' => 'ROLE_ENHAVO_SHOP_PRODUCT_OPTION_INDEX',
+            'route' => 'sylius_product_attribute_index',
+            'role' => 'ROLE_ENHAVO_SHOP_PRODUCT_ATTRIBUTE_INDEX',
         ]);
     }
 
     public function getType()
     {
-        return 'shop_product_option';
+        return 'shop_product_attribute';
     }
 }

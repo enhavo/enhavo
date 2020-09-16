@@ -22,15 +22,30 @@ class ShopMenu extends ListMenu
             'label' => 'label.shop',
             'translation_domain' => 'EnhavoShopBundle',
             'children' => [
-                'order' => [
-                    'type' => 'shop_order'
-                ],
+//                'order' => [
+//                    'type' => 'shop_order'
+//                ],
                 'product' => [
                     'type' => 'shop_product'
                 ],
-                'voucher' => [
-                    'type' => 'shop_voucher'
-                ]
+                'productOption' => [
+                    'type' => 'shop_product_option'
+                ],
+                'productAttribute' => [
+                    'type' => 'shop_product_attribute'
+                ],
+                'productAssociation' => [
+                    'type' => 'shop_product_association_type'
+                ],
+                'taxRate' => [
+                    'type' => 'shop_tax_rate'
+                ],
+                'taxCategory' => [
+                    'type' => 'shop_tax_category'
+                ],
+//                'voucher' => [
+//                    'type' => 'shop_voucher'
+//                ]
             ]
         ]);
     }
