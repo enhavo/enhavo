@@ -7,8 +7,11 @@ use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\AppBundle\Template\TemplateTrait;
 use Enhavo\Bundle\NewsletterBundle\Entity\Newsletter;
 use Enhavo\Bundle\NewsletterBundle\Entity\Receiver;
+use Enhavo\Bundle\NewsletterBundle\Form\Type\NewsletterEmailType;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager;
+use Sylius\Component\Resource\Model\ResourceInterface;
+use Sylius\Component\Resource\ResourceActions;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -83,36 +86,34 @@ class NewsletterController extends ResourceController
         /** @var RequestConfiguration $configuration */
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
 
-$resource = $this->get('doctrine.orm.entity_manager')->getRepository(Newsletter::class)->find(1);
+        if ($request->query->has('id')) {
+            $request->attributes->set('id', $request->query->get('id'));
+            /** @var NewsletterInterface|ResourceInterface $resource */
+            $resource = $this->singleResourceProvider->get($configuration, $this->repository);
+            $this->isGrantedOr403($configuration, ResourceActions::UPDATE);
+        } else {
+            /** @var NewsletterInterface|ResourceInterface $resource */
+            $resource = $this->newResourceFactory->create($configuration, $this->factory);
+            $this->isGrantedOr403($configuration, ResourceActions::CREATE);
+        }
 
-//        if($request->query->has('id')) {
-//            $request->attributes->set('id', $request->query->get('id'));
-//            /** @var NewsletterInterface|ResourceInterface $resource */
-//            $resource = $this->singleResourceProvider->get($configuration, $this->repository);
-//            $this->isGrantedOr403($configuration, ResourceActions::UPDATE);
-//        } else {
-//            /** @var NewsletterInterface|ResourceInterface $resource */
-//            $resource = $this->newResourceFactory->create($configuration, $this->factory);
-//            $this->isGrantedOr403($configuration, ResourceActions::CREATE);
-//        }
-//
-//        $form = $this->resourceFormFactory->create($configuration, $resource);
-//        $submittedFormData = [];
-//        parse_str($request->get('form'), $submittedFormData);
-//        $form->submit(isset($submittedFormData[$form->getName()]) ? $submittedFormData[$form->getName()] : []);
-//
-//        $emailForm = $this->createForm(NewsletterEmailType::class);
-//        $emailForm->handleRequest($request);
-//
-//        if(!$emailForm->isValid()) {
-//            return new JsonResponse([
-//                'type' => 'error',
-//                'message' => $this->get('translator')->trans('newsletter.action.test_mail.invalid', [], 'EnhavoNewsletterBundle')
-//            ], 400);
-//        }
+        $form = $this->resourceFormFactory->create($configuration, $resource);
+        $submittedFormData = [];
+        parse_str($request->get('form'), $submittedFormData);
+        $form->submit(isset($submittedFormData[$form->getName()]) ? $submittedFormData[$form->getName()] : []);
+
+        $emailForm = $this->createForm(NewsletterEmailType::class);
+        $emailForm->handleRequest($request);
+
+        if (!$emailForm->isValid()) {
+            return new JsonResponse([
+                'type' => 'error',
+                'message' => $this->get('translator')->trans('newsletter.action.test_mail.invalid', [], 'EnhavoNewsletterBundle')
+            ], 400);
+        }
 
         $manager = $this->get(NewsletterManager::class);
-        $success = $manager->sendTest($resource, 'blutze@xq-web.de');//$emailForm->getData()['email']);
+        $success = $manager->sendTest($resource, $emailForm->getData()['email']);
 
         if ($success) {
             return new JsonResponse([
