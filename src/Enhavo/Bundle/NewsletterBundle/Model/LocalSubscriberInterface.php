@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\NewsletterBundle\Model;
 
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
 interface LocalSubscriberInterface
@@ -71,7 +72,7 @@ interface LocalSubscriberInterface
     public function removeGroup(GroupInterface $group): void;
 
     /**
-     * @return array
+     * @return array|Collection|ArrayCollection
      */
     public function getGroups(): array;
 }

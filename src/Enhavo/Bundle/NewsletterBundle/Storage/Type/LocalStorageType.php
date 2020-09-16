@@ -89,17 +89,22 @@ class LocalStorageType extends AbstractStorageType
         return $receiver;
     }
 
+    /**
+     * @param SubscriberInterface $subscriber
+     * @param array $options
+     * @return mixed|void
+     * @throws MappingException
+     */
     public function saveSubscriber(SubscriberInterface $subscriber, array $options)
     {
-        /** @var LocalSubscriberInterface $local */
-        $local = $this->subscriberFactory->createNew();
-        $local->setCreatedAt(new \DateTime());
-        $local->setEmail($subscriber->getEmail());
-        $local->setSubscription($subscriber->getSubscription());
+        $local = $this->getSubscriber($subscriber) ?? $this->createSubscriber($subscriber);
 
         /** @var Group $group */
         foreach ($options['groups'] as $code) {
             $group = $this->getGroup($code);
+            if ($local->getGroups()->contains($group)) {
+                continue;
+            }
             $local->addGroup($group);
         }
 
@@ -109,7 +114,7 @@ class LocalStorageType extends AbstractStorageType
 
     public function exists(SubscriberInterface $subscriber, array $options): bool
     {
-        $local = $this->getSubscriber($subscriber->getEmail());
+        $local = $this->getSubscriber($subscriber);
         if ($local === null || count($local->getGroups()) == 0) {
             return false;
         }
@@ -128,17 +133,33 @@ class LocalStorageType extends AbstractStorageType
     }
 
     /**
-     * @param string $email
-     * @return LocalSubscriberInterface|null
+     * @param SubscriberInterface $subscriber
+     * @return LocalSubscriberInterface
      */
-    public function getSubscriber(string $email): LocalSubscriberInterface
+    private function getSubscriber(SubscriberInterface $subscriber): LocalSubscriberInterface
     {
         /** @var LocalSubscriberInterface $subscriber */
         $subscriber = $this->subscriberRepository->findOneBy([
-            'email' => $email
+            'email' => $subscriber->getEmail(),
+            'subscription' => $subscriber->getSubscription()
         ]);
 
         return $subscriber;
+    }
+
+    /**
+     * @param SubscriberInterface $subscriber
+     * @return LocalSubscriberInterface
+     */
+    private function createSubscriber(SubscriberInterface $subscriber): LocalSubscriberInterface
+    {
+        /** @var LocalSubscriberInterface $local */
+        $local = $this->subscriberFactory->createNew();
+        $local->setCreatedAt(new \DateTime());
+        $local->setEmail($subscriber->getEmail());
+        $local->setSubscription($subscriber->getSubscription());
+
+        return $local;
     }
 
     public function configureOptions(OptionsResolver $resolver)

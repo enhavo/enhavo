@@ -77,7 +77,8 @@ class SubscriptionManager
      * @param array|null $groups
      * @return Group[]
      */
-    public function resolveGroups(?array $groups): array {
+    public function resolveGroups(?array $groups): array
+    {
         return [];
     }
 }

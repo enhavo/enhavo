@@ -31,16 +31,16 @@ class CleverReachStorageType extends AbstractStorageType
 
     public function saveSubscriber(SubscriberInterface $subscriber, array $options)
     {
-        if (count($subscriber->getGroups()) === 0) {
-            throw new NoGroupException('no groups given');
-        }
+//        if (count($subscriber->getGroups()) === 0) {
+//            throw new NoGroupException('no groups given');
+//        }
 
         $this->client->init($options['url'], $options['client_id'], $options['postdata']);
 
-        $groups = $subscriber->getGroups()->getValues();
-        /** @var Group $group */
-        foreach ($groups as $group) {
-            $groupId = $this->mapGroup($group, $options['group_mapping']);
+//        $groups = $subscriber->getGroups()->getValues();
+//        /** @var Group $group */
+        foreach ($options['group_mapping'] as $key => $groupId) {
+//            $groupId = $this->mapGroup($group, $options['group_mapping']);
             if ($this->client->exists($subscriber->getEmail(), $groupId)) {
                 continue;
             }
