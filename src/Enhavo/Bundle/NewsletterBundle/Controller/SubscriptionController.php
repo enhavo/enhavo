@@ -87,6 +87,28 @@ class SubscriptionController extends AbstractController
         }
     }
 
+    public function unsubscribeAction(Request $request)
+    {
+//        $type = $request->get('type');
+//        $token = $request->get('token');
+//        $subscription = $this->subscriptionManager->getSubscription($type);
+//        $subscription->getStrategy()->getStorage()->removeSubscriber($token);
+//
+//
+//        if ($result === true) {
+//            $message = $subscription->getStrategy()->addSubscriber($subscriber);
+//            return new JsonResponse([
+//                'message' => $this->translator->trans($message, [], 'EnhavoNewsletterBundle'),
+//                'subscriber' => $subscriber
+//            ]);
+//        } else {
+//            return new JsonResponse([
+//                'errors' => $result,
+//                'subscriber' => $subscriber
+//            ], 400);
+//        }
+    }
+
     /**
      * @param $form
      * @return array|bool

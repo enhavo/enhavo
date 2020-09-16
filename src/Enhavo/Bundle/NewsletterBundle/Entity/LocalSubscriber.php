@@ -2,7 +2,9 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Enhavo\Bundle\NewsletterBundle\Model\GroupInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\LocalSubscriberInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
@@ -49,7 +51,7 @@ class LocalSubscriber implements ResourceInterface, LocalSubscriberInterface
      */
     public function __construct()
     {
-        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->groups = new ArrayCollection();
     }
 
     /**
@@ -126,34 +128,25 @@ class LocalSubscriber implements ResourceInterface, LocalSubscriberInterface
     }
 
     /**
-     * Add group
-     *
-     * @param \Enhavo\Bundle\NewsletterBundle\Entity\Group $group
-     * @return LocalSubscriber
+     * @param GroupInterface $group
      */
-    public function addGroup(\Enhavo\Bundle\NewsletterBundle\Entity\Group $group)
+    public function addGroup(GroupInterface $group): void
     {
         $this->groups[] = $group;
-
-        return $this;
     }
 
     /**
-     * Remove group
-     *
-     * @param \Enhavo\Bundle\NewsletterBundle\Entity\Group $group
+     * @param GroupInterface $group
      */
-    public function removeGroup(\Enhavo\Bundle\NewsletterBundle\Entity\Group $group)
+    public function removeGroup(GroupInterface $group): void
     {
         $this->groups->removeElement($group);
     }
 
     /**
-     * Get group
-     *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return array|ArrayCollection|Collection
      */
-    public function getGroups()
+    public function getGroups(): array
     {
         return $this->groups;
     }

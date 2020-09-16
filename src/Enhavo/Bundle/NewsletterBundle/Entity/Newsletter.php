@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
@@ -78,9 +79,9 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
      */
     public function __construct()
     {
-        $this->receivers = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->attachments = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->receivers = new ArrayCollection();
+        $this->groups = new ArrayCollection();
+        $this->attachments = new ArrayCollection();
     }
 
     /**

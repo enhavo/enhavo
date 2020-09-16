@@ -9,6 +9,7 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@enhavo_newsletter.repository.local_subscriber'
+            - '@enhavo_newsletter.repository.group'
             - '@enhavo_newsletter.factory.local_subscriber'
         tags:
             - { name: enhavo_newsletter.storage }

@@ -91,7 +91,7 @@ class NewsletterManager
             throw new DeliveryException(sprintf('Newsletter with id "%s" already prepared', $newsletter->getId()));
         }
         $subscription = $this->subscriptionManager->getSubscription('default');
-        $receivers = $subscription->getStrategy()->getStorage()->getTestReceivers($newsletter);
+        $receivers = $subscription->getStrategy()->getStorage()->getReceivers($newsletter);
 
         /** @var Receiver $receiver */
         foreach ($receivers as $receiver) {

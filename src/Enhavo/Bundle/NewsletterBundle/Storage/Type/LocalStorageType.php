@@ -7,6 +7,8 @@ use Enhavo\Bundle\NewsletterBundle\Entity\Group;
 use Enhavo\Bundle\NewsletterBundle\Entity\LocalSubscriber;
 use Enhavo\Bundle\NewsletterBundle\Entity\Newsletter;
 use Enhavo\Bundle\NewsletterBundle\Entity\Receiver;
+use Enhavo\Bundle\NewsletterBundle\Exception\MappingException;
+use Enhavo\Bundle\NewsletterBundle\Model\GroupInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\LocalSubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
@@ -14,6 +16,7 @@ use Enhavo\Bundle\NewsletterBundle\Repository\GroupRepository;
 use Enhavo\Bundle\NewsletterBundle\Storage\AbstractStorageType;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class LocalStorageType extends AbstractStorageType
 {
@@ -26,7 +29,12 @@ class LocalStorageType extends AbstractStorageType
     /**
      * @var RepositoryInterface
      */
-    private $repository;
+    private $subscriberRepository;
+
+    /**
+     * @var RepositoryInterface
+     */
+    private $groupRepository;
 
     /** @var FactoryInterface */
     private $subscriberFactory;
@@ -34,13 +42,15 @@ class LocalStorageType extends AbstractStorageType
     /**
      * LocalStorageType constructor.
      * @param EntityManagerInterface $entityManager
-     * @param RepositoryInterface $repository
+     * @param RepositoryInterface $subscriberRepository
+     * @param RepositoryInterface $groupRepository
      * @param FactoryInterface $subscriberFactory
      */
-    public function __construct(EntityManagerInterface $entityManager, RepositoryInterface $repository, FactoryInterface $subscriberFactory)
+    public function __construct(EntityManagerInterface $entityManager, RepositoryInterface $subscriberRepository, RepositoryInterface $groupRepository, FactoryInterface $subscriberFactory)
     {
         $this->entityManager = $entityManager;
-        $this->repository = $repository;
+        $this->subscriberRepository = $subscriberRepository;
+        $this->groupRepository = $groupRepository;
         $this->subscriberFactory = $subscriberFactory;
     }
 
@@ -53,9 +63,10 @@ class LocalStorageType extends AbstractStorageType
         $subscribers = [];
         $receivers = [];
         $groups = $newsletter->getGroups();
+        /** @var Group $group */
         foreach ($groups as $group) {
             /** @var LocalSubscriber $subscriber */
-            foreach ($group->getSubscriber() as $subscriber) {
+            foreach ($group->getSubscribers() as $subscriber) {
                 if (!isset($subscribers[$subscriber->getId()])) {
                     $subscribers[$subscriber->getId()] = $subscriber;
                     $receivers[] = $this->createReceiver($subscriber);
@@ -85,36 +96,31 @@ class LocalStorageType extends AbstractStorageType
         $local->setCreatedAt(new \DateTime());
         $local->setEmail($subscriber->getEmail());
         $local->setSubscription($subscriber->getSubscription());
+
+        /** @var Group $group */
+        foreach ($options['groups'] as $code) {
+            $group = $this->getGroup($code);
+            $local->addGroup($group);
+        }
+
         $this->entityManager->persist($local);
         $this->entityManager->flush();
     }
 
     public function exists(SubscriberInterface $subscriber, array $options): bool
     {
-        // subscriber has to be in ALL given groups to return true
-        if ($this->getSubscriber($subscriber->getEmail()) === null) {
+        $local = $this->getSubscriber($subscriber->getEmail());
+        if ($local === null || count($local->getGroups()) == 0) {
             return false;
         }
 
-        $groupsSubscriberIsIn = $this->getSubscriber($subscriber->getEmail())->getGroups()->getValues();
-
-        $subscriberGroupNames = [];
-        /**
-         * @var $group Group
-         */
-        foreach ($groupsSubscriberIsIn as $group) {
-            $subscriberGroupNames[] = $group->getName();
-        }
-
-        /** @var GroupRepository $groupRepository */
-        $groupRepository = $this->entityManager->getRepository(Group::class);
-        foreach ($subscriber->getGroups() as $group) {
-            $group = $groupRepository->findOneBy(['name' => $group->getName()]);
-            if ($group === null) {
-                return false;
-            }
-            if (!in_array($group->getName(), $subscriberGroupNames)) {
-                return false;
+        // subscriber has to be in ALL given groups to return true
+        foreach ($options['groups'] as $code) {
+            $mappedGroup = $this->getGroup($code);
+            foreach ($local->getGroups() as $group) {
+                if ($mappedGroup !== $group) {
+                    return false;
+                }
             }
         }
 
@@ -123,20 +129,49 @@ class LocalStorageType extends AbstractStorageType
 
     /**
      * @param string $email
-     * @return SubscriberInterface|null
+     * @return LocalSubscriberInterface|null
      */
-    public function getSubscriber(string $email)
+    public function getSubscriber(string $email): LocalSubscriberInterface
     {
-        /** @var SubscriberInterface $subscriber */
-        $subscriber = $this->repository->findOneBy([
+        /** @var LocalSubscriberInterface $subscriber */
+        $subscriber = $this->subscriberRepository->findOneBy([
             'email' => $email
         ]);
 
         return $subscriber;
     }
 
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setRequired([
+            'groups'
+        ]);
+    }
+
     public static function getName(): ?string
     {
         return 'local';
     }
+
+    /**
+     * @param string $code
+     * @return GroupInterface
+     * @throws MappingException
+     */
+    private function getGroup(string $code): GroupInterface
+    {
+        /** @var Group $group */
+        $group = $this->groupRepository->findOneBy([
+            'code' => $code
+        ]);
+
+        if ($group) {
+            return $group;
+        }
+
+        throw new MappingException(
+            sprintf('Group with code "%s" does not exists.', $code)
+        );
+    }
+
 }

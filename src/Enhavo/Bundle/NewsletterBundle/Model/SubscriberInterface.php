@@ -43,30 +43,6 @@ interface SubscriberInterface
     public function setCreatedAt($createdAt);
 
     /**
-     * Add group
-     *
-     * @param \Enhavo\Bundle\NewsletterBundle\Entity\Group $group
-     * @return SubscriberInterface
-     */
-    public function addGroup(\Enhavo\Bundle\NewsletterBundle\Entity\Group $group);
-
-
-    /**
-     * Remove group
-     *
-     * @param \Enhavo\Bundle\NewsletterBundle\Entity\Group $group
-     */
-    public function removeGroup(\Enhavo\Bundle\NewsletterBundle\Entity\Group $group);
-
-
-    /**
-     * Get group
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getGroups();
-
-    /**
      * @param string|null $subscription
      */
     public function setSubscription(?string $subscription): void;

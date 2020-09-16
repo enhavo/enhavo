@@ -9,6 +9,8 @@
 namespace Enhavo\Bundle\NewsletterBundle\Model;
 
 
+use Doctrine\Common\Collections\Collection;
+
 interface LocalSubscriberInterface
 {
     /**
@@ -38,30 +40,6 @@ interface LocalSubscriberInterface
     public function setCreatedAt($createdAt);
 
     /**
-     * Add group
-     *
-     * @param \Enhavo\Bundle\NewsletterBundle\Entity\Group $group
-     * @return SubscriberInterface
-     */
-    public function addGroup(\Enhavo\Bundle\NewsletterBundle\Entity\Group $group);
-
-
-    /**
-     * Remove group
-     *
-     * @param \Enhavo\Bundle\NewsletterBundle\Entity\Group $group
-     */
-    public function removeGroup(\Enhavo\Bundle\NewsletterBundle\Entity\Group $group);
-
-
-    /**
-     * Get group
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getGroups();
-
-    /**
      * @param string $key
      *
      */
@@ -81,4 +59,19 @@ interface LocalSubscriberInterface
      * @param string|null $token
      */
     public function setToken(?string $token): void;
+
+    /**
+     * @param GroupInterface $group
+     */
+    public function addGroup(GroupInterface $group): void;
+
+    /**
+     * @param GroupInterface $group
+     */
+    public function removeGroup(GroupInterface $group): void;
+
+    /**
+     * @return array
+     */
+    public function getGroups(): array;
 }

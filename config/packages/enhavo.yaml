@@ -3,7 +3,7 @@ enhavo_newsletter:
         mail:
             from: '%env(string:MAILER_FROM)%'
 
-    subscribtion:
+    subscription:
         default:
 #            template: 'EnhavoNewsletterBundle:mail/newsletter/template:servus.html.twig'
 #            form:
@@ -17,6 +17,8 @@ enhavo_newsletter:
                 check_exists: true
             storage:
                 type: local
+                groups:
+                    - default
         cleverreach:
             strategy:
                 type: accept

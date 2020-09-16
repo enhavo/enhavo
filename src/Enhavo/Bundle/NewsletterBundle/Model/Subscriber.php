@@ -23,11 +23,6 @@ class Subscriber implements SubscriberInterface
     private $createdAt;
 
     /**
-     * @var Collection
-     */
-    private $groups;
-
-    /**
      * @var string
      */
     private $subscription;
@@ -36,14 +31,6 @@ class Subscriber implements SubscriberInterface
      * @var string|null
      */
     private $confirmationToken;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * @param string|null $email
@@ -78,36 +65,6 @@ class Subscriber implements SubscriberInterface
     }
 
     /**
-     * @param \Enhavo\Bundle\NewsletterBundle\Entity\Group $group
-     * @return SubscriberInterface|void
-     */
-    public function addGroup(\Enhavo\Bundle\NewsletterBundle\Entity\Group $group)
-    {
-        $this->groups[] = $group;
-
-    }
-
-    /**
-     * Remove group
-     *
-     * @param \Enhavo\Bundle\NewsletterBundle\Entity\Group $group
-     */
-    public function removeGroup(\Enhavo\Bundle\NewsletterBundle\Entity\Group $group)
-    {
-        $this->groups->removeElement($group);
-    }
-
-    /**
-     * Get group
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getGroups()
-    {
-        return $this->groups;
-    }
-
-    /**
      * @return string|null
      */
     public function getSubscription(): ?string
@@ -138,8 +95,6 @@ class Subscriber implements SubscriberInterface
     {
         $this->confirmationToken = $token;
     }
-
-
 
     public function __toString()
     {

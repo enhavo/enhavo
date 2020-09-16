@@ -9,6 +9,7 @@ use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Storage\StorageTypeInterface;
 use Enhavo\Component\Type\AbstractType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class StorageType extends AbstractType implements StorageTypeInterface
 {
@@ -20,12 +21,12 @@ class StorageType extends AbstractType implements StorageTypeInterface
     public function getTestReceivers(NewsletterInterface $newsletter, array $options): array
     {
         $receiver = new Receiver();
-        $receiver->setToken('token');
+        $receiver->setToken('__ID_TOKEN__');
         $receiver->setNewsletter($newsletter);
         $receiver->setParameters([
             'firstName' => 'Firstname',
             'lastName' => 'Lastname',
-            'token' => '__TOKEN__',
+            'token' => '__TRACKING_TOKEN__',
             'type' => 'default'
         ]);
 

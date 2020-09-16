@@ -59,12 +59,12 @@ enhavo_newsletter_local_subscriber_table:
                     property: email
                     label: subscriber.label.email
                     translation_domain: EnhavoNewsletterBundle
-                active:
-                    type: boolean
-                    property: active
-                    label: subscriber.label.active
-                    translation_domain: EnhavoNewsletterBundle
-                    equals: true
+#                active:
+#                    type: boolean
+#                    property: active
+#                    label: subscriber.label.active
+#                    translation_domain: EnhavoNewsletterBundle
+#                    equals: true
             repository:
                 method: findByGroupId
                 arguments:
@@ -77,11 +77,11 @@ enhavo_newsletter_local_subscriber_table:
                         label: subscriber.label.email
                         property: email
                         width: 10
-                    active:
-                        type: boolean
-                        label: subscriber.label.active
-                        property: active
-                        width: 2
+#                    active:
+#                        type: boolean
+#                        label: subscriber.label.active
+#                        property: active
+#                        width: 2
 
 enhavo_newsletter_local_subscriber_delete:
     options:

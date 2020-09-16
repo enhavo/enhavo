@@ -51,6 +51,7 @@ services:
 
     Enhavo\Bundle\NewsletterBundle\Command\SendNewsletterCommand:
         arguments:
+            - '@Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager'
             - '@doctrine.orm.entity_manager'
             - '@logger'
         calls:
