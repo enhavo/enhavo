@@ -81,13 +81,13 @@ class PendingSubscriberManager
         ]);
     }
 
-    public function findByToken(string $token)
+    public function findByToken(string $confirmationToken)
     {
         /** @var PendingSubscriberRepository $repository */
         $repository = $this->entityManager->getRepository(PendingSubscriber::class);
 
         return $repository->findOneBy([
-            'token' => $token,
+            'confirmationToken' => $confirmationToken,
         ]);
     }
 

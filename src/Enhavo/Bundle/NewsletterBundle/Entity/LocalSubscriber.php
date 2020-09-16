@@ -146,7 +146,7 @@ class LocalSubscriber implements ResourceInterface, LocalSubscriberInterface
     /**
      * @return array|ArrayCollection|Collection
      */
-    public function getGroups(): array
+    public function getGroups()
     {
         return $this->groups;
     }

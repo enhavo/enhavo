@@ -41,18 +41,17 @@ class AcceptStrategyType extends AbstractStrategyType
         $pending = $this->pendingManager->createFrom($subscriber);
 
         $this->pendingManager->save($pending);
+        $subscriber->setConfirmationToken($pending->getConfirmationToken());
         $this->notifyAdmin($subscriber, $options);
 
         return 'subscriber.form.message.accept';
     }
 
-    public function activateSubscriber(SubscriberInterface $subscriber, array $options): bool
+    public function activateSubscriber(SubscriberInterface $subscriber, array $options)
     {
         $this->pendingManager->removeBy($subscriber->getEmail(), $subscriber->getSubscription());
         $this->getStorage()->saveSubscriber($subscriber);
         $this->notifySubscriber($subscriber, $options);
-
-        return true;
     }
 
     private function notifySubscriber(SubscriberInterface $subscriber, array $options)
@@ -135,11 +134,11 @@ class AcceptStrategyType extends AbstractStrategyType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'activation_template' => 'EnhavoNewsletterBundle:Subscriber:accept.html.twig',
+            'activation_template' => 'EnhavoNewsletterBundle:theme/resource/subscriber:accept.html.twig',
             'admin_subject' => 'newsletter.subscription',
             'translation_domain' => 'EnhavoNewsletterBundle',
-            'admin_template' => 'EnhavoNewsletterBundle:Subscriber:Email/accept-admin.html.twig',
-            'template' => 'EnhavoNewsletterBundle:Subscriber:Email/accept.html.twig',
+            'admin_template' => 'EnhavoNewsletterBundle:mail/subscriber:accept-admin.html.twig',
+            'template' => 'EnhavoNewsletterBundle:mail/subscriber:accept.html.twig',
             'activate_route' => 'enhavo_newsletter_subscribe_activate',
             'activate_route_parameters' => [],
         ]);

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7336933841dc945b50b695d5b8f978ea",
+    "content-hash": "8a51ec49b6aa65f59c706a56d3a38806",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -5147,6 +5147,55 @@
                 "uuid"
             ],
             "time": "2020-02-21T04:36:14+00:00"
+        },
+        {
+            "name": "rdoepner/cleverreach",
+            "version": "v1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rdoepner/cleverreach.git",
+                "reference": "5cd32d417c1631cc0e861b6e7edada2d0170950e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rdoepner/cleverreach/zipball/5cd32d417c1631cc0e861b6e7edada2d0170950e",
+                "reference": "5cd32d417c1631cc0e861b6e7edada2d0170950e",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "guzzlehttp/guzzle": "^6.3",
+                "psr/log": "^1.1"
+            },
+            "require-dev": {
+                "monolog/monolog": "^1.24",
+                "phpunit/phpunit": "^7.5",
+                "symfony/dotenv": "^4.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "rdoepner\\CleverReach\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rico Döpner",
+                    "email": "kontakt@rico-doepner.de"
+                }
+            ],
+            "description": "CleverReach REST API v3 client",
+            "homepage": "https://github.com/rdoepner/cleverreach",
+            "keywords": [
+                "cleverreach",
+                "newsletter",
+                "rest-api"
+            ],
+            "time": "2019-03-15T08:30:51+00:00"
         },
         {
             "name": "react/promise",

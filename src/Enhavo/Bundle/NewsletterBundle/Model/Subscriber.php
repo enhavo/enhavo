@@ -8,8 +8,6 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Model;
 
-use Doctrine\Common\Collections\Collection;
-
 class Subscriber implements SubscriberInterface
 {
     /**

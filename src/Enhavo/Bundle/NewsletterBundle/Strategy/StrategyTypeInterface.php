@@ -24,9 +24,9 @@ interface StrategyTypeInterface extends TypeInterface
     /**
      * @param SubscriberInterface $subscriber
      * @param array $options
-     * @return bool
+     * @return mixed
      */
-    public function activateSubscriber(SubscriberInterface $subscriber, array $options): bool;
+    public function activateSubscriber(SubscriberInterface $subscriber, array $options);
 
     /**
      * @param SubscriberInterface $subscriber

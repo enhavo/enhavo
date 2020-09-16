@@ -35,7 +35,7 @@ class CleverReachStorageType extends AbstractStorageType
 //            throw new NoGroupException('no groups given');
 //        }
 
-        $this->client->init($options['url'], $options['client_id'], $options['postdata']);
+        $this->client->init($options['client_id'], $options['client_secret'], $options['postdata']);
 
 //        $groups = $subscriber->getGroups()->getValues();
 //        /** @var Group $group */
@@ -53,7 +53,7 @@ class CleverReachStorageType extends AbstractStorageType
 
     public function exists(SubscriberInterface $subscriber, array $options): bool
     {
-        $this->client->init($options['url'], $options['client_id'], $options['postdata']);
+        $this->client->init($options['client_id'], $options['client_secret'], $options['postdata']);
 
         // subscriber has to be in ALL given groups to return true
         /** @var Group $group */
@@ -69,8 +69,11 @@ class CleverReachStorageType extends AbstractStorageType
 
     public function configureOptions(OptionsResolver $resolver)
     {
+        $resolver->setDefaults([
+            'postdata' => []
+        ]);
         $resolver->setRequired([
-            'url', 'client_id', 'postdata', 'group_mapping'
+            'client_secret', 'client_id', 'group_mapping'
         ]);
     }
 

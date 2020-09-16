@@ -52,7 +52,7 @@ class DoubleOptInStrategyType extends AbstractStrategyType
         return 'subscriber.form.message.double_opt_in';
     }
 
-    public function activateSubscriber(SubscriberInterface $subscriber, array $options): bool
+    public function activateSubscriber(SubscriberInterface $subscriber, array $options)
     {
         $this->getStorage()->saveSubscriber($subscriber);
         $this->pendingManager->removeBy($subscriber->getEmail(), $subscriber->getSubscription());

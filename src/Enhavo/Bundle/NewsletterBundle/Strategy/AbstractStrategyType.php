@@ -17,9 +17,9 @@ abstract class AbstractStrategyType extends AbstractType implements StrategyType
         return $this->parent->addSubscriber($subscriber, $options);
     }
 
-    public function activateSubscriber(SubscriberInterface $subscriber, array $options): bool
+    public function activateSubscriber(SubscriberInterface $subscriber, array $options)
     {
-        return $this->parent->activateSubscriber($subscriber, $options);
+        $this->parent->activateSubscriber($subscriber, $options);
     }
 
     public function handleExists(SubscriberInterface $subscriber, array $options)

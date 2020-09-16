@@ -8,6 +8,7 @@ use Enhavo\Bundle\NewsletterBundle\Entity\LocalSubscriber;
 use Enhavo\Bundle\NewsletterBundle\Entity\Newsletter;
 use Enhavo\Bundle\NewsletterBundle\Entity\Receiver;
 use Enhavo\Bundle\NewsletterBundle\Exception\MappingException;
+use Enhavo\Bundle\NewsletterBundle\Factory\LocalSubscriberFactoryInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\GroupInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\LocalSubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
@@ -36,7 +37,7 @@ class LocalStorageType extends AbstractStorageType
      */
     private $groupRepository;
 
-    /** @var FactoryInterface */
+    /** @var LocalSubscriberFactoryInterface */
     private $subscriberFactory;
 
     /**
@@ -46,7 +47,7 @@ class LocalStorageType extends AbstractStorageType
      * @param RepositoryInterface $groupRepository
      * @param FactoryInterface $subscriberFactory
      */
-    public function __construct(EntityManagerInterface $entityManager, RepositoryInterface $subscriberRepository, RepositoryInterface $groupRepository, FactoryInterface $subscriberFactory)
+    public function __construct(EntityManagerInterface $entityManager, RepositoryInterface $subscriberRepository, RepositoryInterface $groupRepository, LocalSubscriberFactoryInterface $subscriberFactory)
     {
         $this->entityManager = $entityManager;
         $this->subscriberRepository = $subscriberRepository;
@@ -136,7 +137,7 @@ class LocalStorageType extends AbstractStorageType
      * @param SubscriberInterface $subscriber
      * @return LocalSubscriberInterface
      */
-    private function getSubscriber(SubscriberInterface $subscriber): LocalSubscriberInterface
+    private function getSubscriber(SubscriberInterface $subscriber): ?LocalSubscriberInterface
     {
         /** @var LocalSubscriberInterface $subscriber */
         $subscriber = $this->subscriberRepository->findOneBy([
@@ -154,10 +155,7 @@ class LocalStorageType extends AbstractStorageType
     private function createSubscriber(SubscriberInterface $subscriber): LocalSubscriberInterface
     {
         /** @var LocalSubscriberInterface $local */
-        $local = $this->subscriberFactory->createNew();
-        $local->setCreatedAt(new \DateTime());
-        $local->setEmail($subscriber->getEmail());
-        $local->setSubscription($subscriber->getSubscription());
+        $local = $this->subscriberFactory->createFrom($subscriber);
 
         return $local;
     }

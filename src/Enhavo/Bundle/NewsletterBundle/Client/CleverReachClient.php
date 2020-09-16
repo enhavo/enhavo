@@ -8,64 +8,66 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Client;
 
-use Enhavo\Bundle\NewsletterBundle\Entity\Group;
 use Enhavo\Bundle\NewsletterBundle\Event\CleverReachEvent;
 use Enhavo\Bundle\NewsletterBundle\Event\NewsletterEvents;
 use Enhavo\Bundle\NewsletterBundle\Exception\InsertException;
-use Enhavo\Bundle\NewsletterBundle\Exception\MappingException;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ClientException;
-use http\Url;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use rdoepner\CleverReach\ApiManager;
+use rdoepner\CleverReach\Http\Guzzle;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
 
 class CleverReachClient
 {
-    const REST_BASE_URI = 'https://rest.cleverreach.com/v2/';
-
-    /** @var Client */
-    private $guzzleClient;
 
     /** @var string */
     private $clientId;
 
     /** @var string */
-    private $user;
+    private $clientSecret;
+
+    /** @var ApiManager */
+    private $apiManager;
 
     /** @var string */
-    private $password;
+    private $accessToken;
 
     /** @var array */
-    private $postdata;
+    private $postData;
 
     /** @var bool */
     private $initialized = false;
 
     /**
-     * @var EventDispatcher
+     * @var EventDispatcherInterface
      */
     private $eventDispatcher;
 
+
     /**
      * CleverReachClient constructor.
-     * @param EventDispatcher $eventDispatcher
+     * @param EventDispatcherInterface $eventDispatcher
      */
-    public function __construct(EventDispatcher $eventDispatcher)
+    public function __construct(EventDispatcherInterface $eventDispatcher)
     {
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    public function init(string $url, string $clientId, array $postdata)
+    public function init(string $clientId, string $clientSecret, array $postData)
     {
         if (!$this->initialized) {
-            $this->user = urldecode(parse_url($url, PHP_URL_USER));
-            $this->password = urldecode(parse_url($url, PHP_URL_PASS));
             $this->clientId = $clientId;
-            $this->postdata = $postdata;
+            $this->clientSecret = $clientSecret;
+            $this->postData = $postData;
 
-            $baseUri = parse_url($url, PHP_URL_SCHEME) . '://' . parse_url($url, PHP_URL_HOST) . parse_url($url, PHP_URL_PATH);
-            $this->guzzleClient = new Client(['base_uri' => $baseUri]);
+            $httpAdapter = new Guzzle();
+            $response = $httpAdapter->authorize($this->clientId, $this->clientSecret);
+
+            if (isset($response['access_token'])) {
+                $this->accessToken = $response['access_token'];
+                $httpAdapter = new Guzzle(['access_token' => $this->accessToken]);
+                $this->apiManager = new ApiManager($httpAdapter);
+            }
 
             $this->initialized = true;
         }
@@ -78,20 +80,14 @@ class CleverReachClient
      */
     public function saveSubscriber(SubscriberInterface $subscriber, string $groupId)
     {
-        $token = $this->getToken();
-
         $data = [
-            'postdata' => [
-                [
-                    'email' => $subscriber->getEmail()
-                ]
-            ]
+            'email' => $subscriber->getEmail()
         ];
 
-        if ($this->postdata && count($this->postdata)) {
+        if ($this->postData && count($this->postData)) {
             $propertyAccessor = new PropertyAccessor();
 
-            foreach ($this->postdata as $postKey => $postValue) {
+            foreach ($this->postData as $postKey => $postValue) {
                 $subData = [];
 
                 if (is_array($postValue)) {
@@ -103,7 +99,7 @@ class CleverReachClient
                     $subData = $propertyAccessor->getValue($subscriber, $postValue);
                 }
 
-                $data['postdata'][0][$postKey] = $subData;
+                $data[$postKey] = $subData;
             }
         }
 
@@ -114,21 +110,19 @@ class CleverReachClient
             $data = $event->getDataArray();
         }
 
-        $uri = 'groups.json/' . $groupId . '/receivers/insert' . '?token=' . $token;
-        $res = $this->guzzleClient->request('POST', $uri, [
-            'json' => $data
-        ]);
+        $response = $this->apiManager->createSubscriber(
+            $subscriber->getEmail(),
+            $groupId,
+            true,
+            $data,
+            $data
+        );
 
-        $response = $res->getBody()->getContents();
-
-        $decodedResponse = json_decode($response);
-
-        if ($decodedResponse[0]->status !== 'insert success') {
+        if (!isset($response['id'])) {
             throw new InsertException(
                 sprintf('Insertion into group "%s" failed.', $groupId)
             );
         }
-
     }
 
     /**
@@ -138,35 +132,12 @@ class CleverReachClient
      */
     public function exists($eMail, string $groupId)
     {
-        $token = $this->getToken();
+        $response = $this->apiManager->getSubscriber($eMail, $groupId);
 
-        try {
-            $res = $this->guzzleClient->request('GET', 'groups.json/' . $groupId . '/receivers/' . $eMail . '?token=' . $token, []);
-
-        } catch (ClientException $e) { // e.g. 404 for "user not found"
-            return false;
-        }
-        $response = $res->getBody()->getContents();
-
-        if (json_decode($response)->email === $eMail) {
+        if (isset($response['id'])) {
             return true;
         }
 
         return false;
-    }
-
-    private function getToken()
-    {
-        $res = $this->guzzleClient->request('POST', 'login', [
-            'json' => [
-                'client_id' => $this->clientId,
-                'login' => $this->user,
-                'password' => $this->password
-            ]
-        ]);
-
-        $tokenWithQuotationMarks = $res->getBody()->getContents();
-
-        return substr($tokenWithQuotationMarks, 1, -1);
     }
 }

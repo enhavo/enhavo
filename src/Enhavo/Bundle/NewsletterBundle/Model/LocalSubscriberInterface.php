@@ -74,5 +74,5 @@ interface LocalSubscriberInterface
     /**
      * @return array|Collection|ArrayCollection
      */
-    public function getGroups(): array;
+    public function getGroups();
 }

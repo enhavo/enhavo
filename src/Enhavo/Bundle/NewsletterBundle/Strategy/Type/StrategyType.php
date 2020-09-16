@@ -19,9 +19,9 @@ class StrategyType extends AbstractType implements StrategyTypeInterface
         return null;
     }
 
-    public function activateSubscriber(SubscriberInterface $subscriber, array $options): bool
+    public function activateSubscriber(SubscriberInterface $subscriber, array $options)
     {
-        return false;
+
     }
 
     public function exists(SubscriberInterface $subscriber, array $options): bool

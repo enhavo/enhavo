@@ -12,7 +12,7 @@ use Enhavo\Bundle\NewsletterBundle\Event\MailChimpEvent;
 use Enhavo\Bundle\NewsletterBundle\Event\NewsletterEvents;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use GuzzleHttp\Client;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class MailChimpClient
 {
@@ -26,15 +26,15 @@ class MailChimpClient
     private $initialized = false;
 
     /**
-     * @var EventDispatcher
+     * @var EventDispatcherInterface
      */
     private $eventDispatcher;
 
     /**
      * MailChimpClient constructor.
-     * @param EventDispatcher $eventDispatcher
+     * @param EventDispatcherInterface $eventDispatcher
      */
-    public function __construct(EventDispatcher $eventDispatcher)
+    public function __construct(EventDispatcherInterface $eventDispatcher)
     {
         $this->eventDispatcher = $eventDispatcher;
     }
