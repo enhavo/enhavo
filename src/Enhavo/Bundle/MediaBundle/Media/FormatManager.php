@@ -219,13 +219,13 @@ class FormatManager
         $this->em->flush();
     }
 
-    public function deleteFormats(FileInterface $file)
+    public function deleteFormats(FileInterface $file, bool $flush = true)
     {
         $formats = $this->formatRepository->findBy([
             'file' => $file
         ]);
         foreach($formats as $format) {
-            $this->deleteFormat($format);
+            $this->deleteFormat($format, $flush);
         }
     }
 
@@ -236,10 +236,12 @@ class FormatManager
         $this->storage->saveFile($format);
     }
 
-    public function deleteFormat(FormatInterface $format)
+    public function deleteFormat(FormatInterface $format, bool $flush = true)
     {
         $this->em->remove($format);
-        $this->em->flush();
+        if ($flush) {
+            $this->em->flush();
+        }
         $this->storage->deleteFile($format);
     }
 
