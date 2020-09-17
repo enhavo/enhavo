@@ -98,18 +98,21 @@ class LocalStorageType extends AbstractStorageType
      */
     public function saveSubscriber(SubscriberInterface $subscriber, array $options)
     {
-        $local = $this->getSubscriber($subscriber) ?? $this->createSubscriber($subscriber);
+        $localSubscriber = $this->getSubscriber($subscriber) ?? $this->createSubscriber($subscriber);
 
+        // blutze: if ($localSubscriber instanceof GroupAwareInterface) {
+        //  gruppen können aus options oder über die im post enthaltenen groups gesetzt werden
+        //  wenn am ende nicht wenigstens eine gruppe vorhanden, dann exception
         /** @var Group $group */
         foreach ($options['groups'] as $code) {
             $group = $this->getGroup($code);
-            if ($local->getGroups()->contains($group)) {
+            if ($localSubscriber->getGroups()->contains($group)) {
                 continue;
             }
-            $local->addGroup($group);
+            $localSubscriber->addGroup($group);
         }
 
-        $this->entityManager->persist($local);
+        $this->entityManager->persist($localSubscriber);
         $this->entityManager->flush();
     }
 
@@ -154,10 +157,10 @@ class LocalStorageType extends AbstractStorageType
      */
     private function createSubscriber(SubscriberInterface $subscriber): LocalSubscriberInterface
     {
-        /** @var LocalSubscriberInterface $local */
-        $local = $this->subscriberFactory->createFrom($subscriber);
+        /** @var LocalSubscriberInterface $localSubscriber */
+        $localSubscriber = $this->subscriberFactory->createFrom($subscriber);
 
-        return $local;
+        return $localSubscriber;
     }
 
     public function configureOptions(OptionsResolver $resolver)

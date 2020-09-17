@@ -8,12 +8,6 @@ services:
         arguments:
             - '@event_dispatcher'
 
-    Enhavo\Bundle\NewsletterBundle\EventListener\SubscriberSubscriber:
-        arguments:
-            - '@Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager'
-        tags:
-            - { name: kernel.event_subscriber }
-
     Enhavo\Bundle\NewsletterBundle\Group\GroupManager:
         arguments:
             - '@doctrine.orm.entity_manager'
@@ -104,12 +98,6 @@ services:
             - '@Enhavo\Component\Type\FactoryInterface[Strategy]'
             - '@form.factory'
             - '%enhavo_newsletter.subscription%'
-
-    enhavo_newsletter.factory.local_subscriber:
-        class: Enhavo\Bundle\NewsletterBundle\Factory\LocalSubscriberFactory
-        arguments:
-            - '%enhavo_newsletter.model.local_subscriber.class%'
-            - '@enhavo_newsletter.repository.group'
 
     Enhavo\Bundle\NewsletterBundle\Controller\SubscriptionController:
         arguments:

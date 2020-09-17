@@ -6,12 +6,15 @@ use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager;
 use Enhavo\Bundle\NewsletterBundle\Pending\PendingSubscriberManager;
 use Enhavo\Bundle\NewsletterBundle\Strategy\AbstractStrategyType;
+use Enhavo\Bundle\NewsletterBundle\Strategy\MailSubjectTrait;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 class AcceptStrategyType extends AbstractStrategyType
 {
+    use MailSubjectTrait;
+
     /** @var NewsletterManager */
     private $newsletterManager;
 

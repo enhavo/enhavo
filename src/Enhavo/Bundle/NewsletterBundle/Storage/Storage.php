@@ -18,11 +18,6 @@ class Storage extends AbstractContainerType
         return $this->type->getReceivers($newsletter, $this->options);
     }
 
-    public function getTestReceivers(NewsletterInterface $newsletter): array
-    {
-        return $this->type->getTestReceivers($newsletter, $this->options);
-    }
-
     public function saveSubscriber(SubscriberInterface $subscriber)
     {
         $this->type->saveSubscriber($subscriber, $this->options);

@@ -5,10 +5,13 @@ namespace Enhavo\Bundle\NewsletterBundle\Strategy\Type;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager;
 use Enhavo\Bundle\NewsletterBundle\Strategy\AbstractStrategyType;
+use Enhavo\Bundle\NewsletterBundle\Strategy\MailSubjectTrait;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class NotifyStrategyType extends AbstractStrategyType
 {
+    use MailSubjectTrait;
+
     /** @var NewsletterManager */
     private $newsletterManager;
 
@@ -32,7 +35,7 @@ class NotifyStrategyType extends AbstractStrategyType
         return 'subscriber.form.message.notify';
     }
 
-    private function notifySubscriber(SubscriberInterface $subscriber, array $options)
+    private function notifySubscriber(SubscriberInterface $subscriber, array $options) // blutze: NotificationTrait!
     {
         if ($options['notify']) {
             $template = $options['template'];

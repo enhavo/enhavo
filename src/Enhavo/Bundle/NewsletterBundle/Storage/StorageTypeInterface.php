@@ -16,13 +16,6 @@ interface StorageTypeInterface
     public function getReceivers(NewsletterInterface $newsletter, array $options): array;
 
     /**
-     * @param NewsletterInterface $newsletter
-     * @param array $options
-     * @return Receiver[]
-     */
-    public function getTestReceivers(NewsletterInterface $newsletter, array $options): array;
-
-    /**
      * @param SubscriberInterface $subscriber
      * @param array $options
      * @return mixed

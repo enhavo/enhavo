@@ -154,6 +154,7 @@ class Configuration implements ConfigurationInterface
                                 ->children()
                                     ->variableNode('class')->defaultValue(SubscriberType::class)->end()
                                     ->variableNode('template')->defaultValue('EnhavoNewsletterBundle:theme/resource/subscriber:subscribe.html.twig')->end()
+                                    ->variableNode('options')->defaultValue([])->end()
                                 ->end()
                             ->end()
                         ->end()

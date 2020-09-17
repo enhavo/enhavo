@@ -87,7 +87,7 @@ class SubscriptionController extends AbstractController
         }
     }
 
-    public function unsubscribeAction(Request $request)
+    public function unsubscribeAction(Request $request) // blutze: unsubscribe!
     {
 //        $type = $request->get('type');
 //        $token = $request->get('token');

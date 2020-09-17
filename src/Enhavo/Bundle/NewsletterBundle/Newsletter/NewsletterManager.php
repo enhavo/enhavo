@@ -174,18 +174,29 @@ class NewsletterManager
         return $this->mailer->send($message);
     }
 
+    private function getTestReceiver(NewsletterInterface $newsletter): Receiver
+    {
+        $receiver = new Receiver();
+        $receiver->setToken('__TRACKING_TOKEN__');
+        $receiver->setNewsletter($newsletter);
+        $receiver->setParameters([
+            'firstName' => 'Firstname',
+            'lastName' => 'Lastname',
+            'token' => '__ID_TOKEN__',
+            'type' => 'default'
+        ]);
+
+        return $receiver;
+    }
+
     public function sendTest(NewsletterInterface $newsletter, string $email): bool
     {
         $return = true;
-        $subscription = $this->subscriptionManager->getSubscription('default');
-        $receivers = $subscription->getStrategy()->getStorage()->getTestReceivers($newsletter);
-
-        foreach ($receivers as $receiver) {
-            $receiver->setEmail($email);
-            $success = $this->sendNewsletter($receiver);
-            if (!$success) {
-                $return = false;
-            }
+        $receiver = $this->getTestReceiver($newsletter);
+        $receiver->setEmail($email);
+        $success = $this->sendNewsletter($receiver);
+        if (!$success) {
+            $return = false;
         }
         return $return;
     }
@@ -204,10 +215,9 @@ class NewsletterManager
 
     public function renderPreview(NewsletterInterface $newsletter)
     {
-        $subscription = $this->subscriptionManager->getSubscription('default');
-        $receivers = $subscription->getStrategy()->getStorage()->getTestReceivers($newsletter);
+        $receiver = $this->getTestReceiver($newsletter);
 
-        return $this->render($receivers[0]);
+        return $this->render($receiver);
     }
 
     public function render(Receiver $receiver)

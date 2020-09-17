@@ -103,6 +103,8 @@ class CleverReachClient
             }
         }
 
+        // blutze: event dispatching überarbeiten
+        //  StorageEvent (type, subscriber, data)
         $event = new CleverReachEvent($subscriber, $data);
         $this->eventDispatcher->dispatch(NewsletterEvents::EVENT_CLEVERREACH_PRE_SEND, $event);
 

@@ -67,10 +67,11 @@ class SubscriptionManager
         return new $className();
     }
 
-    public function createForm(Subscription $subscription, ?SubscriberInterface $subscriber)
+    public function createForm(Subscription $subscription, ?SubscriberInterface $subscriber, array $options = [])
     {
         $formConfig = $subscription->getFormConfig();
-        return $this->formFactory->create($formConfig['class'], $subscriber);
+        $options = array_merge($formConfig['options'], $options);
+        return $this->formFactory->create($formConfig['class'], $subscriber, $options);
     }
 
     /**

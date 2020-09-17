@@ -19,11 +19,6 @@ class AbstractStorageType extends AbstractType implements StorageTypeInterface
         return $this->parent->getReceivers($newsletter, $options);
     }
 
-    public function getTestReceivers(NewsletterInterface $newsletter, array $options): array
-    {
-        return $this->parent->getTestReceivers($newsletter, $options);
-    }
-
     public function saveSubscriber(SubscriberInterface $subscriber, array $options)
     {
         $this->parent->saveSubscriber($subscriber, $options);

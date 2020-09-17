@@ -18,13 +18,6 @@ class SubscriberType extends AbstractType
         ));
     }
 
-    public function resolveOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(array(
-            'data_class' => Subscriber::class,
-        ));
-    }
-
     public function getBlockPrefix()
     {
         return 'enhavo_newsletter_subscriber';

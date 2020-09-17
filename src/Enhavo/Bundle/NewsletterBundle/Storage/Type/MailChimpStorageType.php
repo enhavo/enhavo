@@ -47,6 +47,10 @@ class MailChimpStorageType extends AbstractStorageType
 
         $this->client->init($options['url'], $options['api_key']);
 
+        // blutze: if ($localSubscriber instanceof GroupAwareInterface) {
+        //  gruppen können aus options oder über die im post enthaltenen groups gesetzt werden
+        //  wenn am ende nicht wenigstens eine gruppe vorhanden, dann exception
+
 //        $groups = $subscriber->getGroups()->getValues();
 //        /** @var Group $group */
         foreach ($options['group_mapping'] as $key => $groupId) {

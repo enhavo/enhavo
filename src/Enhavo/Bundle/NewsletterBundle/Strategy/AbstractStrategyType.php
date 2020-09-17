@@ -56,16 +56,6 @@ abstract class AbstractStrategyType extends AbstractType implements StrategyType
         $this->translator = $translator;
     }
 
-    protected function getAdminSubject(array $options)
-    {
-        return $this->trans($options['admin_subject'], [], $options['translation_domain']);
-    }
-
-    protected function getSubject(array $options)
-    {
-        return $this->trans($options['subject'], [], $options['translation_domain']);
-    }
-
     protected function trans($id, array $parameters = [], $domain = null, $locale = null)
     {
         if ($this->translator !== null) {

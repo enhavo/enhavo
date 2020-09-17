@@ -37,6 +37,10 @@ class CleverReachStorageType extends AbstractStorageType
 
         $this->client->init($options['client_id'], $options['client_secret'], $options['postdata']);
 
+        // blutze: if ($localSubscriber instanceof GroupAwareInterface) {
+        //  gruppen können aus options oder über die im post enthaltenen groups gesetzt werden
+        //  wenn am ende nicht wenigstens eine gruppe vorhanden, dann exception
+
 //        $groups = $subscriber->getGroups()->getValues();
 //        /** @var Group $group */
         foreach ($options['group_mapping'] as $key => $groupId) {
