@@ -137,9 +137,8 @@ class ProductType extends AbstractType
         $builder->add('options', EntityType::class, array(
             'class' => $this->optionClass,
             'choice_label' => 'code',
-            'label' => 'label.options',
+            'label' => 'product.label.options',
             'multiple' => true,
-            'expanded' => true,
             'translation_domain' => 'EnhavoShopBundle',
         ));
         $builder->add('attributes', ListType::class, [

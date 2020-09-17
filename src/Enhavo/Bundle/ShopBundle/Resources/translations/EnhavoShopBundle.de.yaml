@@ -138,11 +138,18 @@ product:
     error:
       not_found: 'Die Ware konnte nicht gefunden werden.'
 
+product_variant:
+  label:
+      code: Code
+      name: Name
+      position: Position
+
+
 product_attribute:
-    label:
-        name: 'Name'
-        storage_type: Speichertyp
-        position: Position
+  label:
+      name: 'Name'
+      storage_type: Speichertyp
+      position: Position
 
 tax:
   label:

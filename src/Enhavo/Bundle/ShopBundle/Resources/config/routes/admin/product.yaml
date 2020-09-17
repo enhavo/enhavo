@@ -7,6 +7,9 @@ sylius_product_index:
         _controller: sylius.controller.product:indexAction
         _sylius:
             viewer:
+                label: product.label.product
+                translation_domain: EnhavoShopBundle
+                open_route: sylius_product_variant_index
 
 sylius_product_create:
     options:
@@ -80,14 +83,22 @@ sylius_product_table:
                         type: property
                     title:
                         property: title
-                        width: 8
+                        width: 6
                         label: title
                         type: text
                     price:
                         property: price
                         width: 2
                         label: price
-                        type: text
+                        type: property
+                    action:
+                        width: 2
+                        label: label.edit
+                        translation_domain: EnhavoAppBundle
+                        type: action
+                        action:
+                            type: update
+                            route: sylius_product_update
 
 sylius_product_delete:
     options:

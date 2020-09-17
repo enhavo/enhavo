@@ -88,3 +88,6 @@ services:
         class: Enhavo\Bundle\ShopBundle\Manager\CouponManager
         calls:
             - [setContainer, ['@service_container']]
+
+
+

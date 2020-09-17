@@ -17,6 +17,14 @@ services:
             - '%sylius.model.product_option.class%'
         tags:
             - { name: form.type }
+
+    Enhavo\Bundle\ShopBundle\Form\Type\ProductVariantType:
+        arguments:
+            - '%sylius.model.product_variant.class%'
+        tags:
+            - { name: form.type }
+
+
 #
 #    Enhavo\Bundle\ShopBundle\Form\Type\OrderAddressType:
 #        arguments:

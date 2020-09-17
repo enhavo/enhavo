@@ -138,6 +138,12 @@ product:
     error:
       not_found: 'Requested product was not found.'
 
+product_variant:
+  label:
+      code: Code
+      name: Name
+      position: Position
+
 product_attribute:
     label:
         name: 'Name'

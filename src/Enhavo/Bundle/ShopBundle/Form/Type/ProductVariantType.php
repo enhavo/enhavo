@@ -1,16 +1,11 @@
 <?php
-/**
- * ProductVariantType.php
- *
- * @since 23/10/16
- * @author gseidel
- */
 
 namespace Enhavo\Bundle\ShopBundle\Form\Type;
 
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Sylius\Bundle\ProductBundle\Form\Type\ProductVariantType as SyliusProductVariantType;
 
 class ProductVariantType extends AbstractType
 {
@@ -20,7 +15,8 @@ class ProductVariantType extends AbstractType
     protected $dataClass;
 
     /**
-     * ProductVariantCreateType constructor.
+     * ProductVariantType constructor.
+     *
      * @param $dataClass
      */
     public function __construct($dataClass)
@@ -30,7 +26,12 @@ class ProductVariantType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('code', TextType::class);
+        $builder->add('position', IntegerType::class);
+    }
+
+    public function getParent()
+    {
+        return SyliusProductVariantType::class;
     }
 
     public function getBlockPrefix()
