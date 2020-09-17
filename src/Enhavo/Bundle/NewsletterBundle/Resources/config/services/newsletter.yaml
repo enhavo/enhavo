@@ -25,6 +25,7 @@ services:
           - '@Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterRenderer'
           - '@twig'
           - '%enhavo_newsletter.newsletter.mail.from%'
+          - '%enhavo_newsletter.newsletter.test_receiver%'
 
 
     Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterRenderer:

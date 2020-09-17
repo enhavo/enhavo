@@ -8,7 +8,9 @@ use Enhavo\Bundle\NewsletterBundle\Entity\LocalSubscriber;
 use Enhavo\Bundle\NewsletterBundle\Entity\Newsletter;
 use Enhavo\Bundle\NewsletterBundle\Entity\Receiver;
 use Enhavo\Bundle\NewsletterBundle\Exception\MappingException;
+use Enhavo\Bundle\NewsletterBundle\Exception\NoGroupException;
 use Enhavo\Bundle\NewsletterBundle\Factory\LocalSubscriberFactoryInterface;
+use Enhavo\Bundle\NewsletterBundle\Model\GroupAwareInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\GroupInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\LocalSubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
@@ -100,12 +102,17 @@ class LocalStorageType extends AbstractStorageType
     {
         $localSubscriber = $this->getSubscriber($subscriber) ?? $this->createSubscriber($subscriber);
 
-        // blutze: if ($localSubscriber instanceof GroupAwareInterface) {
-        //  gruppen können aus options oder über die im post enthaltenen groups gesetzt werden
-        //  wenn am ende nicht wenigstens eine gruppe vorhanden, dann exception
-        /** @var Group $group */
-        foreach ($options['groups'] as $code) {
-            $group = $this->getGroup($code);
+        $groups = $options['groups'];
+        if ($subscriber instanceof GroupAwareInterface) {
+            $groups = $subscriber->getGroups()->getValues();
+        }
+
+        if (count($groups) === 0) {
+            throw new NoGroupException('no groups given');
+        }
+
+        foreach ($groups as $group) {
+            $group = $group instanceof Group ? $group : $this->getGroup($group);
             if ($localSubscriber->getGroups()->contains($group)) {
                 continue;
             }

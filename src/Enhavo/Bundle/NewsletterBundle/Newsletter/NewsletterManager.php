@@ -57,6 +57,9 @@ class NewsletterManager
     /** @var string */
     private $from;
 
+    /** @var array */
+    private $testReceiver;
+
     /**
      * NewsletterManager constructor.
      * @param EntityManagerInterface $em
@@ -68,7 +71,7 @@ class NewsletterManager
      * @param Environment $twig
      * @param array $from
      */
-    public function __construct(EntityManagerInterface $em, \Swift_Mailer $mailer, SubscriptionManager $subscriberManager, TokenGeneratorInterface $tokenGenerator, LoggerInterface $logger, NewsletterRenderer $renderer, Environment $twig, string $from)
+    public function __construct(EntityManagerInterface $em, \Swift_Mailer $mailer, SubscriptionManager $subscriberManager, TokenGeneratorInterface $tokenGenerator, LoggerInterface $logger, NewsletterRenderer $renderer, Environment $twig, string $from, array $testReceiver)
     {
         $this->em = $em;
         $this->mailer = $mailer;
@@ -78,6 +81,7 @@ class NewsletterManager
         $this->renderer = $renderer;
         $this->twig = $twig;
         $this->from = $from;
+        $this->testReceiver = $testReceiver;
     }
 
 
@@ -112,8 +116,8 @@ class NewsletterManager
     {
         if (!$newsletter->isPrepared()) {
             throw new DeliveryException(sprintf(
-                    'Newsletter with id "%s" is not prepared yet. Prepare the newsletter first before sending',
-                    $newsletter->getId())
+                'Newsletter with id "%s" is not prepared yet. Prepare the newsletter first before sending',
+                $newsletter->getId())
             );
         }
 
@@ -177,14 +181,9 @@ class NewsletterManager
     private function getTestReceiver(NewsletterInterface $newsletter): Receiver
     {
         $receiver = new Receiver();
-        $receiver->setToken('__TRACKING_TOKEN__');
+        $receiver->setToken($this->testReceiver['token']);
         $receiver->setNewsletter($newsletter);
-        $receiver->setParameters([
-            'firstName' => 'Firstname',
-            'lastName' => 'Lastname',
-            'token' => '__ID_TOKEN__',
-            'type' => 'default'
-        ]);
+        $receiver->setParameters($this->testReceiver['parameters']);
 
         return $receiver;
     }

@@ -35,7 +35,7 @@ class NotifyStrategyType extends AbstractStrategyType
         return 'subscriber.form.message.notify';
     }
 
-    private function notifySubscriber(SubscriberInterface $subscriber, array $options) // blutze: NotificationTrait!
+    private function notifySubscriber(SubscriberInterface $subscriber, array $options)
     {
         if ($options['notify']) {
             $template = $options['template'];

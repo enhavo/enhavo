@@ -27,6 +27,7 @@ class EnhavoNewsletterExtension extends AbstractResourceExtension implements Pre
         $this->registerResources('enhavo_newsletter', $config['driver'], $config['resources'], $container);
 
         $container->setParameter('enhavo_newsletter.newsletter.mail.from', $config['newsletter']['mail']['from']);
+        $container->setParameter('enhavo_newsletter.newsletter.test_receiver', $config['newsletter']['test_receiver']);
         $container->setParameter('enhavo_newsletter.newsletter.templates', $config['newsletter']['templates']);
 
         $container->setParameter('enhavo_newsletter.subscription', $config['subscription']);

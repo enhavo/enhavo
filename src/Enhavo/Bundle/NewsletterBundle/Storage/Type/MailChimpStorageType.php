@@ -12,6 +12,7 @@ use Enhavo\Bundle\NewsletterBundle\Client\MailChimpClient;
 use Enhavo\Bundle\NewsletterBundle\Entity\Group;
 use Enhavo\Bundle\NewsletterBundle\Exception\MappingException;
 use Enhavo\Bundle\NewsletterBundle\Exception\NoGroupException;
+use Enhavo\Bundle\NewsletterBundle\Model\GroupAwareInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Storage\AbstractStorageType;
 use GuzzleHttp\Exception\GuzzleException;
@@ -41,26 +42,16 @@ class MailChimpStorageType extends AbstractStorageType
      */
     public function saveSubscriber(SubscriberInterface $subscriber, array $options)
     {
-//        if (count($subscriber->getGroups()) === 0) {
-//            throw new NoGroupException('no groups given');
-//        }
+        $groups = $this->getGroups($subscriber, $options['groups']);
 
         $this->client->init($options['url'], $options['api_key']);
 
-        // blutze: if ($localSubscriber instanceof GroupAwareInterface) {
-        //  gruppen können aus options oder über die im post enthaltenen groups gesetzt werden
-        //  wenn am ende nicht wenigstens eine gruppe vorhanden, dann exception
-
-//        $groups = $subscriber->getGroups()->getValues();
-//        /** @var Group $group */
-        foreach ($options['group_mapping'] as $key => $groupId) {
-//            $groupId = $this->mapGroup($group, $options['group_mapping']);
-            if ($this->client->exists($subscriber->getEmail(), $groupId)) {
+        foreach ($groups as $group) {
+            if ($this->client->exists($subscriber->getEmail(), $group)) {
                 continue;
             }
-            $this->client->saveSubscriber($subscriber, $groupId);
+            $this->client->saveSubscriber($subscriber, $group);
         }
-
     }
 
     /**
@@ -75,9 +66,9 @@ class MailChimpStorageType extends AbstractStorageType
         $this->client->init($options['url'], $options['api_key']);
 
         // subscriber has to be in ALL given groups to return true
-        /** @var Group $group */
-        foreach ($options['group_mapping'] as $key => $groupId) {
-            if (!$this->client->exists($subscriber->getEmail(), $groupId)) {
+        $groups = $this->getGroups($subscriber, $options['groups']);
+        foreach ($groups as $group) {
+            if (!$this->client->exists($subscriber->getEmail(), $group)) {
                 return false;
             }
         }
@@ -88,19 +79,27 @@ class MailChimpStorageType extends AbstractStorageType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired([
-            'url', 'api_key', 'group_mapping'
+            'url', 'api_key', 'groups' // blutze: only if group is required in mailchimp api?
         ]);
     }
 
-    private function mapGroup(Group $group, array $groupMapping)
+    private function getGroups(SubscriberInterface $subscriber, $groups)
     {
-        if (isset($groupMapping[$group->getCode()])) {
-            return $groupMapping[$group->getCode()];
+        if ($subscriber instanceof GroupAwareInterface) {
+            /** @var Group[] $groupsValues */
+            $groupsValues = $subscriber->getGroups()->getValues();
+            $groups = [];
+
+            foreach ($groupsValues as $groupsValue) {
+                $groups[] = $groupsValue->getCode();
+            }
         }
 
-        throw new MappingException(
-            sprintf('Mapping for group "%s" with code "%s" not exists.', $group->getName(), $group->getCode())
-        );
+        if (count($groups) === 0) { // blutze: only if group is required in mailchimp api?
+            throw new NoGroupException('no groups given');
+        }
+
+        return $groups;
     }
 
     public static function getName(): ?string
