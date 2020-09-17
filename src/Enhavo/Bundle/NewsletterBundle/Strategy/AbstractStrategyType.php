@@ -6,11 +6,15 @@ use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Storage\Storage;
 use Enhavo\Bundle\NewsletterBundle\Strategy\Type\StrategyType;
 use Enhavo\Component\Type\AbstractType;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 abstract class AbstractStrategyType extends AbstractType implements StrategyTypeInterface
 {
     /** @var StrategyTypeInterface */
     protected $parent;
+
+    /** @var TranslatorInterface */
+    private $translator;
 
     public function addSubscriber(SubscriberInterface $subscriber, array $options)
     {
@@ -47,4 +51,26 @@ abstract class AbstractStrategyType extends AbstractType implements StrategyType
         return StrategyType::class;
     }
 
+    public function setTranslator(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
+
+    protected function getAdminSubject(array $options)
+    {
+        return $this->trans($options['admin_subject'], [], $options['translation_domain']);
+    }
+
+    protected function getSubject(array $options)
+    {
+        return $this->trans($options['subject'], [], $options['translation_domain']);
+    }
+
+    protected function trans($id, array $parameters = [], $domain = null, $locale = null)
+    {
+        if ($this->translator !== null) {
+            return $this->translator->trans($id, $parameters, $domain, $locale);
+        }
+        return $this->parent->trans($id, $parameters, $domain, $locale);
+    }
 }

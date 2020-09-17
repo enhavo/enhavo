@@ -63,22 +63,6 @@ class NotifyStrategyType extends AbstractStrategyType
         }
     }
 
-    private function getAdminSubject(array $options)
-    {
-        $subject = $options['admin_subject'];
-        $translationDomain = $options['translation_domain'];
-
-        return $subject;//$this->translator->trans($subject, [], $translationDomain);
-    }
-
-    private function getSubject(array $options)
-    {
-        $subject = $options['subject'];
-        $translationDomain = $options['translation_domain'];
-
-        return $subject;//$this->translator->trans($subject, [], $translationDomain);
-    }
-
     public function exists(SubscriberInterface $subscriber, array $options): bool
     {
         $checkExists = $options['check_exists'];
@@ -102,7 +86,6 @@ class NotifyStrategyType extends AbstractStrategyType
             'sender_name' => 'enhavo',
             'template' => 'EnhavoNewsletterBundle:mail/subscriber:notify.html.twig',
             'admin_subject' => 'subscriber.mail.admin.subject',
-            'translation_domain' => 'EnhavoNewsletterBundle'
         ]);
     }
 

@@ -121,7 +121,7 @@ class SubscriptionController extends AbstractController
         if (count($errors) > 0) {
             $errorFields = [];
             foreach($errors as $error) {
-                $errorFields[] = $this->getSubFormName($error->getOrigin());
+                $errorFields[$this->getSubFormName($error->getOrigin())] = $error->getMessage();
             }
 
             return $errorFields;

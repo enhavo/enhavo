@@ -82,6 +82,12 @@ subscriber:
     error:
       valid: 'E-Mail not valid'
       sent_again: 'Please confirm your registration'
+      exists: 'E-Mail already exists'
+  mail:
+      admin:
+          subject: 'Newsletter Subscription'
+      notify:
+          subject: 'Your Newsletter Subscription'
 group:
   label:
     create: 'Create Group'

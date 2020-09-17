@@ -90,22 +90,6 @@ class AcceptStrategyType extends AbstractStrategyType
         $this->newsletterManager->sendMessage($message);
     }
 
-    private function getAdminSubject(array $options)
-    {
-        $subject = $options['admin_subject'];
-        $translationDomain = $options['translation_domain'];
-
-        return $subject;//$this->translator->trans($subject, [], $translationDomain);
-    }
-
-    private function getSubject(array $options)
-    {
-        $subject = $options['subject'];
-        $translationDomain = $options['translation_domain'];
-
-        return $subject;//$this->translator->trans($subject, [], $translationDomain);
-    }
-
     public function exists(SubscriberInterface $subscriber, array $options): bool
     {
         if ($options['check_exists']) {
@@ -136,7 +120,6 @@ class AcceptStrategyType extends AbstractStrategyType
         $resolver->setDefaults([
             'activation_template' => 'EnhavoNewsletterBundle:theme/resource/subscriber:accept.html.twig',
             'admin_subject' => 'newsletter.subscription',
-            'translation_domain' => 'EnhavoNewsletterBundle',
             'admin_template' => 'EnhavoNewsletterBundle:mail/subscriber:accept-admin.html.twig',
             'template' => 'EnhavoNewsletterBundle:mail/subscriber:accept.html.twig',
             'activate_route' => 'enhavo_newsletter_subscribe_activate',

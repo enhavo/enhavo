@@ -71,7 +71,7 @@ class DoubleOptInStrategyType extends AbstractStrategyType
             $template = $options['template'];
             $from = $options['from'];
             $senderName = $options['sender_name'];
-            $subject = '';//$this->getSubject();
+            $subject = $this->getSubject($options);
 
             $message = $this->newsletterManager->createMessage($from, $senderName, $subscriber->getEmail(), $subject, $template, [
                 'subscriber' => $subscriber,
@@ -111,22 +111,6 @@ class DoubleOptInStrategyType extends AbstractStrategyType
             ]);
             $this->newsletterManager->sendMessage($message);
         }
-    }
-
-    private function getAdminSubject(array $options)
-    {
-        $subject = $options['admin_subject'];
-        $translationDomain = $options['translation_domain'];
-
-        return $subject;//$this->translator->trans($subject, [], $translationDomain);
-    }
-
-    private function getSubject(array $options)
-    {
-        $subject = $options['subject'];
-        $translationDomain = $options['translation_domain'];
-
-        return $subject;//$this->translator->trans($subject, [], $translationDomain);
     }
 
     public function exists(SubscriberInterface $subscriber, array $options): bool
@@ -174,7 +158,7 @@ class DoubleOptInStrategyType extends AbstractStrategyType
             'admin_template' => 'EnhavoNewsletterBundle:mail/subscriber:notify-admin.html.twig',
             'activate_route' => 'enhavo_newsletter_subscribe_activate',
             'activate_route_parameters' => [],
-            'confirm' => false,
+            'confirm' => true,
         ]);
     }
 

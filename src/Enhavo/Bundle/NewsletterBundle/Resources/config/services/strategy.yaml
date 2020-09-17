@@ -1,6 +1,8 @@
 services:
     Enhavo\Bundle\NewsletterBundle\Strategy\Type\StrategyType:
         public: true
+        arguments:
+            - '@translator'
         tags:
             - { name: enhavo_newsletter.strategy }
 
