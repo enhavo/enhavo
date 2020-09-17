@@ -1,7 +1,7 @@
 <template>
     <div class="view-table-filter-search">
-        <datepicker :typeable="true" :format="data.format" :language="locale" :placeholder="data.label.from" :monday-first="true" v-model="data.value.from"></datepicker>
-        <datepicker :typeable="true" :format="data.format" :language="locale" :placeholder="data.label.to" :monday-first="true" v-model="data.value.to"></datepicker>
+        <datepicker :typeable="true" :format="data.format" :language="locale" :placeholder="data.label.from" :monday-first="true" v-model="data.value.from" @closed="closed"></datepicker>
+        <datepicker :typeable="true" :format="data.format" :language="locale" :placeholder="data.label.to" :monday-first="true" v-model="data.value.to" @closed="closed"></datepicker>
     </div>
 </template>
 
@@ -52,6 +52,15 @@
             if(event.keyCode == 13) {
                 this.$emit('apply')
             }
+        }
+
+        closed() {
+            // Bugfix: The datepicker value sometimes gets lost when losing focus. To fix this we save it, deliberately unfocus and restore it whenever the datepicker closes.
+            let valueFrom = this.data.value.from;
+            let valueTo = this.data.value.to;
+            $(this.$el).find('input').blur();
+            this.data.value.from = valueFrom;
+            this.data.value.to = valueTo;
         }
     }
 </script>
