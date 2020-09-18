@@ -2,21 +2,38 @@ import AbstractAction from "@enhavo/app/Action/Model/AbstractAction";
 import Message from "@enhavo/app/FlashMessage/Message";
 import axios from "axios";
 import FlashMessenger from "@enhavo/app/FlashMessage/FlashMessenger";
-import {FormApplication} from "@enhavo/app/Form/FormApplication";
 import Confirm from "@enhavo/app/View/Confirm";
+import Form from "@enhavo/app/Form/Form";
+import Translator from "@enhavo/core/Translator";
+import View from "@enhavo/app/View/View";
+import Router from "@enhavo/core/Router";
 
 export default class NewsletterSendAction extends AbstractAction
 {
+    private readonly form: Form;
+    private readonly translator: Translator;
+    private readonly view: View;
+    private readonly router: Router;
+    private readonly flashMessenger: FlashMessenger;
+
     public resourceId: number;
+
+    constructor(form: Form, translator: Translator, view: View, router: Router, flashMessenger: FlashMessenger) {
+        super();
+        this.form = form;
+        this.translator = translator;
+        this.view = view;
+        this.router = router;
+        this.flashMessenger = flashMessenger;
+    }
 
     execute(): void
     {
-        let formApplication = <FormApplication>this.application;
-        if(formApplication.getForm != null) {
-            if(!formApplication.getForm().isFormChanged()) {
+        if (this.form !== null) {
+            if(!this.form.isFormChanged()) {
                 this.confirmAndSend();
             } else {
-                formApplication.getView().alert(this.application.getTranslator().trans('enhavo_newsletter.send.message.form_changed'));
+                this.view.alert(this.translator.trans('enhavo_newsletter.send.message.form_changed'));
             }
         } else {
             this.confirmAndSend();
@@ -25,50 +42,44 @@ export default class NewsletterSendAction extends AbstractAction
 
     private confirmAndSend()
     {
-        let formApplication = <FormApplication>this.application;
-        formApplication.getView().confirm(new Confirm(
-            this.application.getTranslator().trans('enhavo_newsletter.send.message.confirm'),
+        this.view.confirm(new Confirm(
+            this.translator.trans('enhavo_newsletter.send.message.confirm'),
             () => { this.send() },
             () => {},
-            this.application.getTranslator().trans('enhavo_app.cancel'),
-            this.application.getTranslator().trans('enhavo_newsletter.send.action.send'),
+            this.translator.trans('enhavo_app.cancel'),
+            this.translator.trans('enhavo_newsletter.send.action.send'),
         ));
     }
 
     private send()
     {
-        this.application.getView().loading();
-        let url = this.application.getRouter().generate('enhavo_newsletter_newsletter_send', {
+        this.view.loading();
+        let url = this.router.generate('enhavo_newsletter_newsletter_send', {
             id: this.resourceId,
         });
         axios
             .post(url, {})
             .then((data) => {
-                this.application.getView().loaded();
-                this.getFlashMessenger().addMessage(new Message(
+                this.view.loaded();
+                this.flashMessenger.addMessage(new Message(
                     data.data.type, data.data.message
                 )
                 );
             })
             .catch((error) => {
-                this.application.getView().loaded();
+                this.view.loaded();
                 if(error.response.status == 400) {
-                    this.getFlashMessenger().addMessage(new Message(
+                    this.flashMessenger.addMessage(new Message(
                         error.response.data.type,
                         error.response.data.message
                     ))
                 } else {
-                    this.getFlashMessenger().addMessage(new Message(
+                    this.flashMessenger.addMessage(new Message(
                         Message.ERROR,
-                        this.application.getTranslator().trans('enhavo_app.error')
+                        this.translator.trans('enhavo_app.error')
                     ))
                 }
             })
-    }
-
-    private getFlashMessenger(): FlashMessenger
-    {
-        return (<FormApplication>this.application).getFlashMessenger();
     }
 }
 
