@@ -114,26 +114,38 @@ product:
       update: 'Product update'
       create: 'Product create'
       delete: 'Product delete'
+  form:
+    label:
+      product_association:
+       type: Association type
+      active: Active
+      code: Code
+      title: Title
+      picture: Picture
+      pictures: Pictures
+      price: Price
+      reducedPrice: Reduced price
+      reduced: Reduced?
+      shippingCategory: Shipping category
+      width: Width
+      height: Height
+      depth: Depth
+      weight: Weight
+      volume: Volume
+      taxRate: Tax rate
+      associations: Associations
+      lengthUnit: Length unit
+      weightUnit: Weight unit
+      volumeUnit: Volumn unit
+      shipping_required: Shipping required?
   label:
     product: Product
     product_option: Option
     product_attribute: Attribute
     product_association_type: Association Types
-    code: Code
-    title: Title
-    options: Options
     dimension: Dimension
+    options: Options
     meta: Meta
-    picture: Picture
-    price: Price
-    shippingCategory: Shipping category
-    width: Width
-    height: Height
-    depth: Depth
-    weight: Weight
-    volume: Volume
-    taxRate: Tax rate
-    associations: Associations
   message:
     error:
       not_found: 'Requested product was not found.'
@@ -142,29 +154,35 @@ product_variant:
   label:
     create: Create
     edit: Edit
-    title: Title
-    options: Options
-    meta: Meta
-    picture: Picture
-    price: Price
-    shippingCategory: Shipping category
-    width: Width
-    height: Height
-    depth: Depth
-    weight: Weight
-    volume: Volume
-    taxRate: Tax rate
-    code: Code
-    name: Name
-    position: Position
     variant: Variant
+    meta: Meta
     customize: Customize
     dimension: Dimension
     inventory: Inventory
-    stock: Stock
-    stock_tracked: Stock tracked?
-    shipping_category: Shipping category
-    shipping_required: Shipping required?
+  form:
+    label:
+      active: Active
+      title: Title
+      options: Options
+      picture: Picture
+      pictures: Pictures
+      price: Price
+      reducedPrice: Reduced price
+      reduced: Reduced?
+      shippingCategory: Shipping category
+      width: Width
+      height: Height
+      depth: Depth
+      weight: Weight
+      volume: Volume
+      taxRate: Tax rate
+      code: Code
+      name: Name
+      position: Position
+      stock: Stock
+      stock_tracked: Stock tracked?
+      shipping_category: Shipping category
+      shipping_required: Shipping required?
 
 product_attribute:
   label:

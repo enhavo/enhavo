@@ -119,53 +119,72 @@ product:
     product_option: Option
     product_attribute: Attribut
     product_association_type: Vereinigungstypen
-    code: Code
-    title: Titel
-    options: Optionen
     dimension: Abmessungen
+    options: Optionen
     meta: Meta
-    picture: Bild
-    price: Preis
-    shippingCategory: Versandkategorie
-    width: Breite
-    height: Höhe
-    depth: Tiefe
-    weight: Gewicht
-    volume: Volumen
-    taxRate: Umsatzsteuer
-    associations: Assoziationen
+  form:
+    label:
+      active: Aktiv
+      product_association:
+        type: Vereinigungstypen
+      code: Code
+      title: Titel
+      picture: Bild
+      pictures: Bilder
+      price: Preis
+      reducedPrice: Reduzierter Preis
+      reduced: Reduziert?
+      shippingCategory: Versandkategorie
+      width: Breite
+      height: Höhe
+      depth: Tiefe
+      weight: Gewicht
+      volume: Volumen
+      taxRate: Umsatzsteuer
+      associations: Assoziationen
+      lengthUnit: Längeneinheit
+      weightUnit: Gewichtseinheit
+      volumeUnit: Volumeneinheit
+      shipping_required: Versand erforderlich?
   message:
     error:
       not_found: 'Die Ware konnte nicht gefunden werden.'
 
 product_variant:
+  form:
+    label:
+      active: Aktiv
+      picture: Bild
+      pictures: Bilder
+      price: Preis
+      reducedPrice: Reduzierter Preis
+      reduced: Reduziert?
+      shippingCategory: Versandkategorie
+      width: Breite
+      height: Höhe
+      depth: Tiefe
+      weight: Gewicht
+      volume: Volumen
+      taxRate: Umsatzsteuer
+      associations: Assoziationen
+      code: Code
+      name: Name
+      position: Position
+      customize: Individualisierung
+      inventory: Inventar
+      stock: Lagerbestand
+      stock_track: Lagerbestand verfolgen?
+      shipping_category: Versandkategorie
+      shipping_required: Versand erforderlich?
   label:
     title: Titel
     options: Optionen
     dimension: Abmessungen
     meta: Meta
-    picture: Bild
-    price: Preis
-    shippingCategory: Versand Kategory
-    width: Breite
-    height: Höhe
-    depth: Tiefe
-    weight: Gewicht
-    volume: Volumen
-    taxRate: Umsatzsteuer
-    associations: Assoziationen
     create: Erstellen
     edit: Bearbeiten
-    code: Code
-    name: Name
-    position: Position
     variant: Variante
-    customize: Individualisierung
-    inventory: Inventar
-    stock: Lagerbestand
-    stock_track: Lagerbestand verfolgen?
-    shipping_category: Versandkategorie
-    shipping_required: Versand erforderlich?
+
 
 product_attribute:
   label:

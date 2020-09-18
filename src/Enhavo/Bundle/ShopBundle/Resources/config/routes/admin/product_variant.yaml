@@ -17,6 +17,7 @@ sylius_product_variant_index:
                         route_parameters:
                             productId: $id
 
+
 sylius_product_variant_create:
     options:
         expose: true
@@ -118,24 +119,30 @@ sylius_product_variant_table:
                 columns:
                     name:
                         type: text
-                        label: product_variant.label.name
+                        label: product_variant.form.label.name
                         translation_domain: EnhavoShopBundle
                         property: name
-                        width: 5
+                        width: 4
+                    stock:
+                        type: text
+                        label: product_variant.form.label.stock
+                        translation_domain: EnhavoShopBundle
+                        property: stock
+                        width: 2
                         sortable: true
                     code:
                         type: text
-                        label: product_variant.label.code
+                        label: product_variant.form.label.code
                         translation_domain: EnhavoShopBundle
                         property: code
-                        width: 5
+                        width: 3
                         sortable: true
                     position:
                         type: text
-                        label: product_variant.label.position
+                        label: product_variant.form.label.position
                         translation_domain: EnhavoShopBundle
                         property: position
-                        width: 2
+                        width: 1
                         sortable: true
 
 sylius_product_variant_delete:

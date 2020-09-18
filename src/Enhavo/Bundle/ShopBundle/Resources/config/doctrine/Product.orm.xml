@@ -3,10 +3,15 @@
     <entity name="Enhavo\Bundle\ShopBundle\Entity\Product" table="shop_product">
         <field name="title" />
         <field name="price" type="integer" nullable="true" />
+        <field name="reducedPrice" type="integer" nullable="true" />
+        <field name="reduced" type="boolean" nullable="true" />
+        <field name="lengthUnit" nullable="true" />
         <field name="height" type="integer" nullable="true" />
         <field name="width" type="integer" nullable="true" />
         <field name="depth" type="integer" nullable="true" />
+        <field name="volumeUnit" nullable="true" />
         <field name="volume" type="integer" nullable="true" />
+        <field name="weightUnit" nullable="true" />
         <field name="weight" type="integer" nullable="true" />
         <field name="shippingCategory" type="integer" nullable="true" />
 
@@ -28,5 +33,21 @@
                 <cascade-refresh />
             </cascade>
         </many-to-one>
+
+        <many-to-many field="pictures" target-entity="Enhavo\Bundle\MediaBundle\Model\FileInterface">
+            <cascade>
+                <cascade-persist />
+                <cascade-remove />
+                <cascade-refresh />
+            </cascade>
+            <join-table name="shop_product_pictures">
+                <join-columns>
+                    <join-column name="product_id" referenced-column-name="id" unique="true" />
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="picture_id" referenced-column-name="id" unique="true" />
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
     </entity>
 </doctrine-mapping>

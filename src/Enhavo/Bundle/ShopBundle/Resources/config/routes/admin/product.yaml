@@ -78,19 +78,28 @@ sylius_product_table:
                 columns:
                     id:
                         property: id
-                        width: 2
-                        label: id
+                        width: 1
+                        label: product.form.label.id
+                        translation_domain: EnhavoShopBundle
                         type: property
                     title:
                         property: title
-                        width: 6
-                        label: title
+                        width: 4
+                        label: product.form.label.title
+                        translation_domain: EnhavoShopBundle
                         type: text
                     price:
                         property: price
                         width: 2
-                        label: price
+                        label: product.form.label.price
+                        translation_domain: EnhavoShopBundle
                         type: property
+                    active:
+                      property: active
+                      width: 1
+                      label: product.form.label.active
+                      translation_domain: EnhavoShopBundle
+                      type: boolean
                     action:
                         width: 2
                         label: label.edit

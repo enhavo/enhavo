@@ -8,15 +8,22 @@
 
 namespace Enhavo\Bundle\ShopBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\RoutingBundle\Entity\Route;
 use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
 use Sylius\Component\Product\Model\ProductVariant as SyliusProductVariant;
 use Sylius\Component\Shipping\Model\ShippingCategoryInterface;
 use Sylius\Component\Taxation\Model\TaxRateInterface;
+use Sylius\Component\Product\Model\ProductVariantInterface;
 
 class ProductVariant extends SyliusProductVariant
 {
+    /**
+     * @var boolean
+     */
+    private $active = true;
+
     /**
      * @var string
      */
@@ -28,9 +35,24 @@ class ProductVariant extends SyliusProductVariant
     private $picture;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $pictures;
+
+    /**
      * @var integer
      */
     private $price;
+
+    /**
+     * @var integer
+     */
+    private $reducedPrice;
+
+    /**
+     * @var boolean
+     */
+    private $reduced;
 
     /**
      * @var ShippingCategoryInterface
@@ -83,6 +105,24 @@ class ProductVariant extends SyliusProductVariant
     private $weight;
 
     /**
+     * @return bool
+     */
+    public function isActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param bool $active
+     */
+    public function setActive(?bool $active): ProductVariantInterface
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
+    /**
      * @return mixed
      */
     public function getTitle()
@@ -93,7 +133,7 @@ class ProductVariant extends SyliusProductVariant
     /**
      * @param mixed $title
      */
-    public function setTitle($title): ProductVariant
+    public function setTitle($title): ProductVariantInterface
     {
         $this->title = $title;
 
@@ -111,7 +151,7 @@ class ProductVariant extends SyliusProductVariant
     /**
      * @param int $height
      */
-    public function setHeight(?int $height): ProductVariant
+    public function setHeight(?int $height): ProductVariantInterface
     {
         $this->height = $height;
 
@@ -129,7 +169,7 @@ class ProductVariant extends SyliusProductVariant
     /**
      * @param int $depth
      */
-    public function setDepth(?int $depth): ProductVariant
+    public function setDepth(?int $depth): ProductVariantInterface
     {
         $this->depth = $depth;
 
@@ -147,7 +187,7 @@ class ProductVariant extends SyliusProductVariant
     /**
      * @param bool $shippingRequired
      */
-    public function setShippingRequired(?bool $shippingRequired): ProductVariant
+    public function setShippingRequired(?bool $shippingRequired): ProductVariantInterface
     {
         $this->shippingRequired = $shippingRequired;
 
@@ -165,7 +205,7 @@ class ProductVariant extends SyliusProductVariant
     /**
      * @param int $width
      */
-    public function setWidth(?int $width): ProductVariant
+    public function setWidth(?int $width): ProductVariantInterface
     {
         $this->width = $width;
 
@@ -183,7 +223,7 @@ class ProductVariant extends SyliusProductVariant
     /**
      * @param int $volume
      */
-    public function setVolume(?int $volume): ProductVariant
+    public function setVolume(?int $volume): ProductVariantInterface
     {
         $this->volume = $volume;
 
@@ -201,7 +241,7 @@ class ProductVariant extends SyliusProductVariant
     /**
      * @param int $weight
      */
-    public function setWeight(?int $weight): ProductVariant
+    public function setWeight(?int $weight): ProductVariantInterface
     {
         $this->weight = $weight;
 
@@ -214,7 +254,7 @@ class ProductVariant extends SyliusProductVariant
      * @param TaxRateInterface $taxRate
      * @return ProductVariant
      */
-    public function setTaxRate(TaxRateInterface $taxRate = null): ProductVariant
+    public function setTaxRate(TaxRateInterface $taxRate = null): ProductVariantInterface
     {
         $this->taxRate = $taxRate;
 
@@ -232,9 +272,45 @@ class ProductVariant extends SyliusProductVariant
     /**
      * @param int $stock
      */
-    public function setStock(int $stock): ProductVariant
+    public function setStock(int $stock): ProductVariantInterface
     {
         $this->stock = $stock;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isReduced(): ?bool
+    {
+        return $this->reduced;
+    }
+
+    /**
+     * @param bool $reduced
+     */
+    public function setReduced(?bool $reduced): ProductVariantInterface
+    {
+        $this->reduced = $reduced;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getReducedPrice(): ?int
+    {
+        return $this->reducedPrice;
+    }
+
+    /**
+     * @param int $reducedPrice
+     */
+    public function setReducedPrice(?int $reducedPrice): ProductVariantInterface
+    {
+        $this->reducedPrice = $reducedPrice;
 
         return $this;
     }
@@ -244,7 +320,7 @@ class ProductVariant extends SyliusProductVariant
      *
      * @return TaxRateInterface
      */
-    public function getTaxRate(): ?int
+    public function getTaxRate(): ?TaxRateInterface
     {
         return $this->taxRate;
     }
@@ -260,7 +336,7 @@ class ProductVariant extends SyliusProductVariant
     /**
      * @param bool $stockTracked
      */
-    public function setStockTracked(bool $stockTracked): ProductVariant
+    public function setStockTracked(bool $stockTracked): ProductVariantInterface
     {
         $this->stockTracked = $stockTracked;
 
@@ -279,7 +355,7 @@ class ProductVariant extends SyliusProductVariant
      * @param ShippingCategoryInterface $shippingCategory
      * @return $this
      */
-    public function setShippingCategory(ShippingCategoryInterface $shippingCategory): ProductVariant // This method is not required.
+    public function setShippingCategory(ShippingCategoryInterface $shippingCategory): ProductVariantInterface // This method is not required.
     {
         $this->shippingCategory = $shippingCategory;
 
@@ -293,7 +369,7 @@ class ProductVariant extends SyliusProductVariant
      *
      * @return ProductVariant
      */
-    public function setPrice($price): ProductVariant
+    public function setPrice($price): ProductVariantInterface
     {
         $this->price = $price;
 
@@ -336,10 +412,43 @@ class ProductVariant extends SyliusProductVariant
     /**
      * @param FileInterface $picture
      */
-    public function setPicture($picture): ProductVariant
+    public function setPicture($picture): ProductVariantInterface
     {
         $this->picture = $picture;
 
         return $this;
+    }
+
+    /**
+     * Add picture
+     *
+     * @param FileInterface $picture
+     * @return Product
+     */
+    public function addPicture(FileInterface $picture): ProductVariantInterface
+    {
+        $this->pictures[] = $picture;
+
+        return $this;
+    }
+
+    /**
+     * Remove picture
+     *
+     * @param FileInterface $picture
+     */
+    public function removePicture(FileInterface $picture): void
+    {
+        $this->pictures->removeElement($picture);
+    }
+
+    /**
+     * Get pictures
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPictures(): Collection
+    {
+        return $this->pictures;
     }
 }
