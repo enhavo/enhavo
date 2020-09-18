@@ -4,12 +4,12 @@ namespace Enhavo\Bundle\ShopBundle\Factory;
 
 use Doctrine\ORM\EntityRepository;
 use Enhavo\Bundle\AppBundle\Factory\Factory;
-use Enhavo\Bundle\ShopBundle\Entity\ProductVariant;
+use Sylius\Component\Product\Factory\ProductVariantFactoryInterface;
 use Sylius\Component\Product\Model\ProductInterface;
 use Sylius\Component\Product\Model\ProductVariantInterface;
 use Sylius\Component\Resource\Factory\TranslatableFactory;
 
-class ProductVariantFactory extends Factory
+class ProductVariantFactory extends Factory implements ProductVariantFactoryInterface
 {
     /**
      * @var EntityRepository

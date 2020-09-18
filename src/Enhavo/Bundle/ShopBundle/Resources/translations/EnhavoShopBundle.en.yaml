@@ -140,17 +140,43 @@ product:
 
 product_variant:
   label:
-      code: Code
-      name: Name
-      position: Position
+    create: Create
+    edit: Edit
+    title: Title
+    options: Options
+    meta: Meta
+    picture: Picture
+    price: Price
+    shippingCategory: Shipping category
+    width: Width
+    height: Height
+    depth: Depth
+    weight: Weight
+    volume: Volume
+    taxRate: Tax rate
+    code: Code
+    name: Name
+    position: Position
+    variant: Variant
+    customize: Customize
+    dimension: Dimension
+    inventory: Inventory
+    stock: Stock
+    stock_tracked: Stock tracked?
+    shipping_category: Shipping category
+    shipping_required: Shipping required?
 
 product_attribute:
-    label:
-        name: 'Name'
-        storage_type: Storage type
-        position: Position
+  label:
+    name: 'Name'
+    storage_type: Storage type
+    position: Position
+    variant: Variant
+    customize: Customize
+    dimension: Dimension
+    inventory: Inventory
 
 tax:
   label:
-      tax_rate: Tax Rates
-      tax_category: Tax Categories
+    tax_rate: Tax Rates
+    tax_category: Tax Categories

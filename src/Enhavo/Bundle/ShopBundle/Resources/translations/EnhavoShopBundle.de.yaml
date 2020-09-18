@@ -126,7 +126,7 @@ product:
     meta: Meta
     picture: Bild
     price: Preis
-    shippingCategory: Versand Kategory
+    shippingCategory: Versandkategorie
     width: Breite
     height: Höhe
     depth: Tiefe
@@ -140,10 +140,32 @@ product:
 
 product_variant:
   label:
-      code: Code
-      name: Name
-      position: Position
-
+    title: Titel
+    options: Optionen
+    dimension: Abmessungen
+    meta: Meta
+    picture: Bild
+    price: Preis
+    shippingCategory: Versand Kategory
+    width: Breite
+    height: Höhe
+    depth: Tiefe
+    weight: Gewicht
+    volume: Volumen
+    taxRate: Umsatzsteuer
+    associations: Assoziationen
+    create: Erstellen
+    edit: Bearbeiten
+    code: Code
+    name: Name
+    position: Position
+    variant: Variante
+    customize: Individualisierung
+    inventory: Inventar
+    stock: Lagerbestand
+    stock_track: Lagerbestand verfolgen?
+    shipping_category: Versandkategorie
+    shipping_required: Versand erforderlich?
 
 product_attribute:
   label:

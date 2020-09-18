@@ -10,6 +10,7 @@
 namespace Enhavo\Bundle\ShopBundle\Form\Type;
 
 use Enhavo\Bundle\FormBundle\Form\Type\AutoCompleteEntityType;
+use Enhavo\Bundle\FormBundle\Form\Type\BooleanType;
 use Enhavo\Bundle\FormBundle\Form\Type\CurrencyType;
 use Enhavo\Bundle\FormBundle\Form\Type\ListType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
@@ -73,7 +74,6 @@ class ProductType extends AbstractType
             })
         ;
 
-
         $builder->add('title', TextType::class, array(
             'label' => 'product.label.title',
             'translation_domain' => 'EnhavoShopBundle',
@@ -97,6 +97,11 @@ class ProductType extends AbstractType
 
         $builder->add('shippingCategory', ShippingCategoryChoiceType::class, array(
             'label' => 'product.label.shippingCategory',
+            'translation_domain' => 'EnhavoShopBundle',
+        ));
+
+        $builder->add('shippingRequired', BooleanType::class, array(
+            'label' => 'product.label.width',
             'translation_domain' => 'EnhavoShopBundle',
         ));
 

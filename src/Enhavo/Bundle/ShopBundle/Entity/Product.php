@@ -75,6 +75,11 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
     private $weight;
 
     /**
+     * @var boolean
+     */
+    private $shippingRequired;
+
+    /**
      * @var Route
      */
     private $route;
@@ -307,6 +312,22 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
     public function getVolume()
     {
         return $this->volume;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isShippingRequired(): bool
+    {
+        return $this->shippingRequired;
+    }
+
+    /**
+     * @param bool $shippingRequired
+     */
+    public function setShippingRequired(bool $shippingRequired): void
+    {
+        $this->shippingRequired = $shippingRequired;
     }
 
     /**

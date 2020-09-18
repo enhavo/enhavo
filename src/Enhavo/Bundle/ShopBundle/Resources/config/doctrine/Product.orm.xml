@@ -8,6 +8,7 @@
         <field name="depth" type="integer" nullable="true" />
         <field name="volume" type="integer" nullable="true" />
         <field name="weight" type="integer" nullable="true" />
+        <field name="shippingCategory" type="integer" nullable="true" />
 
         <many-to-one field="picture" target-entity="Enhavo\Bundle\MediaBundle\Model\FileInterface">
             <join-column on-delete="SET NULL" />

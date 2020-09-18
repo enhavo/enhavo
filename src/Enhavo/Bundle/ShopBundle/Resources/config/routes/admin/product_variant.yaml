@@ -25,6 +25,8 @@ sylius_product_variant_create:
     defaults:
         _controller: sylius.controller.product_variant:createAction
         _sylius:
+            label: product_variant.label.create
+            translation_domain: EnhavoShopBundle
             sortable: true
             redirect: sylius_product_variant_update
             factory:
@@ -34,11 +36,23 @@ sylius_product_variant_create:
             viewer:
                 table_route_parameters:
                     productId: $id
-                translation_domain: EnhavoShopBundle
                 form:
                     action: sylius_product_variant_create
                     action_parameters:
                         productId: $productId
+                tabs:
+                    main:
+                        label: product_variant.label.variant
+                        translation_domain: EnhavoShopBundle
+                        template: EnhavoShopBundle:admin/resource/product-variant:product-variant.html.twig
+                    customize:
+                        label: product_variant.label.customize
+                        translation_domain: EnhavoShopBundle
+                        template: EnhavoShopBundle:admin/resource/product-variant:customize.html.twig
+                    dimension:
+                        label: product_variant.label.dimension
+                        translation_domain: EnhavoShopBundle
+                        template: EnhavoShopBundle:admin/resource/product-variant:dimension.html.twig
 
 sylius_product_variant_update:
     options:
@@ -48,8 +62,23 @@ sylius_product_variant_update:
     defaults:
         _controller: sylius.controller.product_variant:updateAction
         _sylius:
+            label: product_variant.label.edit
+            translation_domain: EnhavoShopBundle
             form: Enhavo\Bundle\ShopBundle\Form\Type\ProductVariantType
             viewer:
+                tabs:
+                    main:
+                        label: product_variant.label.variant
+                        translation_domain: EnhavoShopBundle
+                        template: EnhavoShopBundle:admin/resource/product-variant:product-variant.html.twig
+                    customize:
+                        label: product_variant.label.customize
+                        translation_domain: EnhavoShopBundle
+                        template: EnhavoShopBundle:admin/resource/product-variant:customize.html.twig
+                    dimension:
+                        label: product_variant.label.dimension
+                        translation_domain: EnhavoShopBundle
+                        template: EnhavoShopBundle:admin/resource/product-variant:dimension.html.twig
 #                translation_domain: EnhavoShopBundle
 #                form:
 #                    action: sylius_product_variant_update
