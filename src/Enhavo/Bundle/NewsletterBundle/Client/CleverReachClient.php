@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Client;
 
-use Enhavo\Bundle\NewsletterBundle\Event\CleverReachEvent;
+use Enhavo\Bundle\NewsletterBundle\Event\StorageEvent;
 use Enhavo\Bundle\NewsletterBundle\Event\NewsletterEvents;
 use Enhavo\Bundle\NewsletterBundle\Exception\InsertException;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
@@ -33,7 +33,10 @@ class CleverReachClient
     private $accessToken;
 
     /** @var array */
-    private $postData;
+    private $attributes;
+
+    /** @var array */
+    private $globalAttributes;
 
     /** @var bool */
     private $initialized = false;
@@ -53,12 +56,13 @@ class CleverReachClient
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    public function init(string $clientId, string $clientSecret, array $postData)
+    public function init(string $clientId, string $clientSecret, array $attributes, array $globalAttributes)
     {
         if (!$this->initialized) {
             $this->clientId = $clientId;
             $this->clientSecret = $clientSecret;
-            $this->postData = $postData;
+            $this->attributes = $attributes;
+            $this->globalAttributes = $globalAttributes;
 
             $httpAdapter = new Guzzle();
             $response = $httpAdapter->authorize($this->clientId, $this->clientSecret);
@@ -80,44 +84,25 @@ class CleverReachClient
      */
     public function saveSubscriber(SubscriberInterface $subscriber, string $groupId)
     {
-        $data = [
-            'email' => $subscriber->getEmail()
-        ];
+        $attributes = $this->createAttributes($subscriber, $this->attributes);
+        $globalAttributes = $this->createAttributes($subscriber, $this->globalAttributes);
 
-        if ($this->postData && count($this->postData)) {
-            $propertyAccessor = new PropertyAccessor();
+        $event = new StorageEvent(NewsletterEvents::EVENT_CLEVERREACH_PRE_STORE, $subscriber, [
+            'attributes' => $attributes,
+            'global_attributes' => $globalAttributes
+        ]);
+        $this->eventDispatcher->dispatch($event);
 
-            foreach ($this->postData as $postKey => $postValue) {
-                $subData = [];
-
-                if (is_array($postValue)) {
-                    foreach ($postValue as $key => $value) {
-                        $property = $propertyAccessor->getValue($subscriber, $value);
-                        $subData[$key] = $property;
-                    }
-                } else {
-                    $subData = $propertyAccessor->getValue($subscriber, $postValue);
-                }
-
-                $data[$postKey] = $subData;
-            }
-        }
-
-        // blutze: event dispatching überarbeiten
-        //  StorageEvent (type, subscriber, data)
-        $event = new CleverReachEvent($subscriber, $data);
-        $this->eventDispatcher->dispatch(NewsletterEvents::EVENT_CLEVERREACH_PRE_SEND, $event);
-
-        if ($event->getDataArray()) {
-            $data = $event->getDataArray();
-        }
+        $data = $event->getDataArray();
+        $attributes = $data['attributes'];
+        $globalAttributes = $data['global_attributes'];
 
         $response = $this->apiManager->createSubscriber(
             $subscriber->getEmail(),
             $groupId,
             true,
-            $data,
-            $data
+            $attributes,
+            $globalAttributes
         );
 
         if (!isset($response['id'])) {
@@ -141,5 +126,31 @@ class CleverReachClient
         }
 
         return false;
+    }
+
+    private function createAttributes(SubscriberInterface $subscriber, array $attributes)
+    {
+        $data = [];
+
+        if (count($attributes)) {
+            $propertyAccessor = new PropertyAccessor();
+
+            foreach ($attributes as $postKey => $postValue) {
+                $subData = [];
+
+                if (is_array($postValue)) {
+                    foreach ($postValue as $key => $value) {
+                        $property = $propertyAccessor->getValue($subscriber, $value);
+                        $subData[$key] = $property;
+                    }
+                } else {
+                    $subData = $propertyAccessor->getValue($subscriber, $postValue);
+                }
+
+                $data[$postKey] = $subData;
+            }
+        }
+
+        return $data;
     }
 }

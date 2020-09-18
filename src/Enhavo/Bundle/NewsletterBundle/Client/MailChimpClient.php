@@ -1,18 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jungch
- * Date: 17/10/16
- * Time: 18:32
- */
 
 namespace Enhavo\Bundle\NewsletterBundle\Client;
 
-use Enhavo\Bundle\NewsletterBundle\Event\MailChimpEvent;
 use Enhavo\Bundle\NewsletterBundle\Event\NewsletterEvents;
+use Enhavo\Bundle\NewsletterBundle\Event\StorageEvent;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use GuzzleHttp\Client;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 
 class MailChimpClient
 {
@@ -20,7 +15,16 @@ class MailChimpClient
     private $guzzleClient;
 
     /** @var string */
+    private $user;
+
+    /** @var string */
+    private $password;
+
+    /** @var string */
     private $apiKey;
+
+    /** @var array */
+    private $bodyParameters;
 
     /** @var bool  */
     private $initialized = false;
@@ -39,13 +43,18 @@ class MailChimpClient
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    public function init(string $url, string $apiKey)
+    public function init(string $url, string $apiKey, array $bodyParameters)
     {
         if (!$this->initialized) {
+            $this->bodyParameters = $bodyParameters;
+
             $this->apiKey = $apiKey;
+            $this->user = parse_url($url, PHP_URL_USER);
+            $this->password = urldecode(parse_url($url, PHP_URL_PASS));
+            $url = parse_url($url, PHP_URL_SCHEME) . '://' . parse_url($url, PHP_URL_HOST);
 
             $this->guzzleClient = new Client([
-                'base_uri' => $url,
+                'base_uri' => $url . '/3.0/lists/',
             ]);
 
             $this->initialized = true;
@@ -59,22 +68,27 @@ class MailChimpClient
      */
     public function saveSubscriber(SubscriberInterface $subscriber, string $groupId)
     {
-        $event = new MailChimpEvent($subscriber);
-        $this->eventDispatcher->dispatch(NewsletterEvents::EVENT_MAILCHIMP_PRE_SEND, $event);
+        $bodyParameters = $this->createBodyParameters($subscriber, $this->bodyParameters);
 
-        $this->guzzleClient->request('POST', $groupId . '/members', [
+        $event = new StorageEvent(NewsletterEvents::EVENT_MAILCHIMP_PRE_STORE, $subscriber, []);
+        $this->eventDispatcher->dispatch($event);
+
+        $options = [
             'auth' => [
-                'user',
+                'basic',
                 $this->apiKey,
             ],
             'headers' => [
-                'content-type' => 'application/json'
+                'Authentication' => 'Basic ' . $this->user . ':' . $this->password,
+                'Content-Type' => 'application/json'
             ],
-            'body' => json_encode([
+            'body' => json_encode(array_merge([
                 'email_address' => $subscriber->getEmail(),
                 'status' => 'subscribed',
-            ]),
-        ]);
+            ], $bodyParameters)),
+        ];
+
+        $this->guzzleClient->request('POST', $groupId . '/members', $options);
     }
 
     /**
@@ -90,8 +104,11 @@ class MailChimpClient
         $response = $this->guzzleClient->request('GET', $groupId . '/members/' . $memberID, [
             'http_errors' => false,
             'auth' => [
-                'user',
+                'basic',
                 $this->apiKey,
+            ],
+            'headers' => [
+                'Authentication' => 'Basic ' . $this->user . ':' . $this->password,
             ]
         ]);
 
@@ -100,5 +117,32 @@ class MailChimpClient
         }
 
         return true;
+    }
+
+
+    private function createBodyParameters(SubscriberInterface $subscriber, array $bodyParameters)
+    {
+        $data = [];
+
+        if (count($bodyParameters)) {
+            $propertyAccessor = new PropertyAccessor();
+
+            foreach ($bodyParameters as $postKey => $postValue) {
+                $subData = [];
+
+                if (is_array($postValue)) {
+                    foreach ($postValue as $key => $value) {
+                        $property = $propertyAccessor->getValue($subscriber, $value);
+                        $subData[$key] = $property;
+                    }
+                } else {
+                    $subData = $propertyAccessor->getValue($subscriber, $postValue);
+                }
+
+                $data[$postKey] = $subData;
+            }
+        }
+
+        return $data;
     }
 }

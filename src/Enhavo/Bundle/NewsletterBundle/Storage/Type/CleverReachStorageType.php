@@ -10,8 +10,6 @@ namespace Enhavo\Bundle\NewsletterBundle\Storage\Type;
 
 use Enhavo\Bundle\NewsletterBundle\Client\CleverReachClient;
 use Enhavo\Bundle\NewsletterBundle\Entity\Group;
-use Enhavo\Bundle\NewsletterBundle\Exception\InsertException;
-use Enhavo\Bundle\NewsletterBundle\Exception\MappingException;
 use Enhavo\Bundle\NewsletterBundle\Exception\NoGroupException;
 use Enhavo\Bundle\NewsletterBundle\Model\GroupAwareInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
@@ -34,7 +32,7 @@ class CleverReachStorageType extends AbstractStorageType
     {
         $groups = $this->getGroups($subscriber, $options['groups']);
 
-        $this->client->init($options['client_id'], $options['client_secret'], $options['postdata']);
+        $this->client->init($options['client_id'], $options['client_secret'], $options['attributes'], $options['global_attributes']);
 
         foreach ($groups as $group) {
             if ($this->client->exists($subscriber->getEmail(), $group)) {
@@ -46,7 +44,7 @@ class CleverReachStorageType extends AbstractStorageType
 
     public function exists(SubscriberInterface $subscriber, array $options): bool
     {
-        $this->client->init($options['client_id'], $options['client_secret'], $options['postdata']);
+        $this->client->init($options['client_id'], $options['client_secret'], $options['attributes'], $options['global_attributes']);
 
         // subscriber has to be in ALL given groups to return true
         $groups = $this->getGroups($subscriber, $options['groups']);
@@ -62,10 +60,13 @@ class CleverReachStorageType extends AbstractStorageType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'postdata' => []
+            'attributes' => [],
+            'global_attributes' => [],
+            'groups' => [],
         ]);
         $resolver->setRequired([
-            'client_secret', 'client_id', 'groups'
+            'client_secret',
+            'client_id',
         ]);
     }
 

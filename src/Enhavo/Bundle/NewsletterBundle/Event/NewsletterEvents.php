@@ -13,6 +13,6 @@ class NewsletterEvents
 {
     const EVENT_ADD_SUBSCRIBER = 'newsletter.add_subscriber';
     const EVENT_CREATE_SUBSCRIBER = 'newsletter.create_subscriber';
-    const EVENT_CLEVERREACH_PRE_SEND = 'newsletter.cleverreach_pre_send';
-    const EVENT_MAILCHIMP_PRE_SEND = 'newsletter.mailchimp_pre_send';
+    const EVENT_CLEVERREACH_PRE_STORE = 'newsletter.cleverreach_pre_send';
+    const EVENT_MAILCHIMP_PRE_STORE = 'newsletter.mailchimp_pre_send';
 }
