@@ -3,35 +3,32 @@
 namespace Enhavo\Bundle\ShopBundle\Factory;
 
 use Doctrine\ORM\EntityRepository;
-use Sylius\Component\Product\Factory\ProductVariantFactoryInterface;
+use Enhavo\Bundle\AppBundle\Factory\Factory;
+use Enhavo\Bundle\ShopBundle\Entity\ProductVariant;
 use Sylius\Component\Product\Model\ProductInterface;
 use Sylius\Component\Product\Model\ProductVariantInterface;
-use Sylius\Component\Resource\Factory\FactoryInterface;
+use Sylius\Component\Resource\Factory\TranslatableFactory;
 
-final class ProductVariantFactory implements ProductVariantFactoryInterface
+class ProductVariantFactory extends Factory
 {
-
-    /** @var FactoryInterface */
-    private $factory;
-
-    /** @var EntityRepository
+    /**
+     * @var EntityRepository
      */
     private $repository;
 
-    public function __construct(FactoryInterface $factory, EntityRepository $repository)
+    /**
+     * ProductVariantFactory constructor.
+     * @param EntityRepository $repository
+     */
+    public function __construct(TranslatableFactory $transFactory, EntityRepository $repository, string $class)
     {
-        $this->factory = $factory;
+        parent::__construct($class);
         $this->repository = $repository;
     }
 
     /**
-     * @return ProductVariantInterface
+     * {@inheritdoc}
      */
-    public function createNew(): ProductVariantInterface
-    {
-        return $this->factory->createNew();
-    }
-
     public function createForProduct(ProductInterface $product): ProductVariantInterface
     {
         /** @var ProductVariantInterface $variant */

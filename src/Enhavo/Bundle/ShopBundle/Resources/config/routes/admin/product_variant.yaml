@@ -10,15 +10,6 @@ sylius_product_variant_index:
             viewer:
                 table_route_parameters:
                      productId: $id
-#                blocks:
-#                    table:
-#                        type: table
-#                        table_route: sylius_product_variant_table
-#                        table_route_parameters:
-#                            productId: $productId
-#                        open_route: sylius_product_variant_update
-#                        open_route_parameters:
-#                            productId: $productId
                 actions:
                     create:
                         type: create
@@ -148,19 +139,3 @@ sylius_product_variant_batch:
                     route: sylius_product_variant_delete
                     route_parameters:
                         productId: $id
-
-project_contact_person_batch:
-    options:
-        expose: true
-    path: /project/contact/person/batch
-    defaults:
-        _controller: project.controller.contact_person:batchAction
-        _sylius:
-            paginate: false
-            criteria:
-                id: $ids
-            batches:
-                assign:
-                    type: assign_contact
-                delete:
-                    type: delete

@@ -5,13 +5,3 @@ services:
     _defaults:
         autowire: false
         autoconfigure: false
-
-    enhavo_shop.custom_factory.product_variant:
-        class: Enhavo\Bundle\ShopBundle\Factory\ProductVariantFactory
-        decorates: sylius.factory.product_variant
-        decoration_priority: 255
-        arguments:
-            - '@sylius.custom_factory.product_variant.inner'
-            - '@sylius.repository.product'
-        public: false
-
