@@ -6,24 +6,28 @@ import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface"
 export default class ModalManager
 {
     public modals: ModalInterface[];
-    private readonly modalRegistry: ModalRegistry;
+    private readonly registry: ModalRegistry;
     private readonly componentRegistry: ComponentRegistryInterface;
 
     public constructor(modals: ModalInterface[], modalRegistry: ModalRegistry, componentRegistry: ComponentRegistryInterface)
     {
         this.modals = modals;
-        this.modalRegistry = modalRegistry;
+        this.registry = modalRegistry;
         this.componentRegistry = componentRegistry;
     }
 
     init() {
+        for (let component of this.registry.getComponents()) {
+            this.componentRegistry.registerComponent(component.name, component.component)
+        }
+
         this.componentRegistry.registerStore('modalManager', this);
         this.componentRegistry.registerData(this.modals);
     }
 
     public push(data: ComponentAwareInterface | ComponentAwareType)
     {
-        let factory = this.modalRegistry.getFactory(data.component);
+        let factory = this.registry.getFactory(data.component);
         let modal = factory.createFromData(data);
         modal.init();
         this.modals.push(modal);
