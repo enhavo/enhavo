@@ -11,6 +11,7 @@ namespace Enhavo\Bundle\ShopBundle\Form\Type;
 
 use Enhavo\Bundle\FormBundle\Form\Type\AutoCompleteEntityType;
 use Enhavo\Bundle\ShopBundle\Entity\Product;
+use Sylius\Bundle\ProductBundle\Form\Type\ProductAssociationTypeChoiceType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Sylius\Bundle\ProductBundle\Form\Type\ProductAssociationType as SyliusProductAssociationType;
@@ -22,6 +23,9 @@ class ProductAssociationType extends AbstractType
     {
         $productId = !empty($options['productId']) ? $options['productId'] : 0;
         $builder->remove('product');
+        $builder->add('type', ProductAssociationTypeChoiceType::class, [
+            'label' => 'product.form.label.product_association.type',
+        ]);
         $builder->add('associatedProducts', AutoCompleteEntityType::class, [
             'label' => 'product.label.product',
             'translation_domain' => 'EnhavoShopBundle',

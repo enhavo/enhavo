@@ -81,11 +81,17 @@ sylius_product_option_table:
                         width: 2
                         label: id
                         type: property
+                    name:
+                        type: text
+                        label: product.label.name
+                        property: name
+                        width: 5
+                        translation_domain: EnhavoShopBundle
                     code:
                         type: text
                         label: product.label.code
                         property: code
-                        width: 10
+                        width: 5
                         translation_domain: EnhavoShopBundle
 
 sylius_product_option_delete:

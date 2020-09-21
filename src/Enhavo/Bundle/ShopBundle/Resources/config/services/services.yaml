@@ -88,3 +88,9 @@ services:
         class: Enhavo\Bundle\ShopBundle\Manager\CouponManager
         calls:
             - [setContainer, ['@service_container']]
+
+#    Enhavo\Bundle\ShopBundle\Action\Type\GenerateVariantsActionType:
+#        parent: Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType
+#        public: true
+#        tags:
+#            - { name: enhavo.action, alias: generate_variants }
