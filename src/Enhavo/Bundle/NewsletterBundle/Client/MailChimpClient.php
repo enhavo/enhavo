@@ -79,7 +79,7 @@ class MailChimpClient
                 $this->apiKey,
             ],
             'headers' => [
-                'Authentication' => 'Basic ' . $this->user . ':' . $this->password,
+//                'Authentication' => 'Basic ' . $this->user . ':' . $this->password,
                 'Content-Type' => 'application/json'
             ],
             'body' => json_encode(array_merge([
@@ -107,9 +107,9 @@ class MailChimpClient
                 'basic',
                 $this->apiKey,
             ],
-            'headers' => [
-                'Authentication' => 'Basic ' . $this->user . ':' . $this->password,
-            ]
+//            'headers' => [
+//                'Authentication' => 'Basic ' . $this->user . ':' . $this->password,
+//            ]
         ]);
 
         if ($response->getStatusCode() == 404) {

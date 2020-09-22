@@ -59,6 +59,7 @@ class DoubleOptInStrategyType extends AbstractStrategyType
     {
         $this->getStorage()->saveSubscriber($subscriber);
         $this->pendingManager->removeBy($subscriber->getEmail(), $subscriber->getSubscription());
+
         $this->notifyAdmin($subscriber, $options);
         $this->confirmSubscriber($subscriber, $options);
     }

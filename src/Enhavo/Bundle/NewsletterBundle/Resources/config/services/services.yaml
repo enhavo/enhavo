@@ -46,6 +46,14 @@ services:
         tags:
             - { name: enhavo.action, alias: newsletter_stats }
 
+    Enhavo\Bundle\NewsletterBundle\Action\ActivateActionType:
+        public: true
+        arguments:
+            - '@translator'
+            - '@router'
+        tags:
+            - { name: enhavo.action, alias: newsletter_subscriber_activate }
+
     Enhavo\Bundle\NewsletterBundle\Block\SubscribeBlockType:
         tags:
             - { name: enhavo_block.block }
@@ -54,6 +62,12 @@ services:
         class: Enhavo\Bundle\AppBundle\Factory\Factory
         arguments:
             - 'Enhavo\Bundle\NewsletterBundle\Model\Subscriber'
+
+    enhavo_newsletter.factory.local_subscriber:
+        class: Enhavo\Bundle\NewsletterBundle\Factory\LocalSubscriberFactory
+        arguments:
+            - '%enhavo_newsletter.model.local_subscriber.class%'
+            - '@enhavo_newsletter.repository.group'
 
     Enhavo\Bundle\NewsletterBundle\Pending\PendingSubscriberManager:
         arguments:
@@ -76,6 +90,11 @@ services:
         tags:
             - { name: enhavo.menu, alias: newsletter_subscriber }
 
+    Enhavo\Bundle\NewsletterBundle\Menu\PendingMenu:
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
+        tags:
+            - { name: enhavo.menu, alias: newsletter_pending }
+
     Enhavo\Bundle\NewsletterBundle\Menu\GroupMenu:
         parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
@@ -85,8 +104,16 @@ services:
         tags:
             - { name: form.type, alias: enhavo_newsletter_subscriber }
 
-    enhavo_newsletter_subscribe:
-        class: Enhavo\Bundle\NewsletterBundle\Form\Type\SubscribeType
+    Enhavo\Bundle\NewsletterBundle\Form\Type\SubscriptionType:
+        arguments:
+            - '@Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager'
+        tags:
+            - { name: form.type }
+
+    Enhavo\Bundle\NewsletterBundle\Form\Type\PendingSubscriberType:
+        arguments:
+            - '@Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager'
+            - '@enhavo_newsletter.repository.group'
         tags:
             - { name: form.type }
 
@@ -100,6 +127,14 @@ services:
             - '%enhavo_newsletter.subscription%'
 
     Enhavo\Bundle\NewsletterBundle\Controller\SubscriptionController:
+        arguments:
+            - '@Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager'
+            - '@Enhavo\Bundle\NewsletterBundle\Pending\PendingSubscriberManager'
+            - '@translator'
+        tags:
+            - { name: controller.service_arguments }
+
+    Enhavo\Bundle\NewsletterBundle\Controller\PendingSubscriberController:
         arguments:
             - '@Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager'
             - '@Enhavo\Bundle\NewsletterBundle\Pending\PendingSubscriberManager'

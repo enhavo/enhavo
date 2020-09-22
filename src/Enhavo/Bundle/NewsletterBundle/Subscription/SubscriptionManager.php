@@ -62,6 +62,19 @@ class SubscriptionManager
         return new Subscription($name, $strategy, $config['model'], $config['form']);
     }
 
+    /**
+     * @return Subscription[]
+     */
+    public function getSubscriptions(): array
+    {
+        $subscriptions = [];
+        foreach ($this->configuration as $item => $value) {
+            $subscriptions[] = $this->getSubscription($item);
+        }
+
+        return $subscriptions;
+    }
+
     public function createModel($className): SubscriberInterface
     {
         return new $className();

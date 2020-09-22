@@ -1,7 +1,7 @@
 enhavo_newsletter_local_subscriber_index:
     options:
         expose: true
-    path: /enhavo/newsletter/subscriber/index
+    path: /enhavo/newsletter/local-subscriber/index
     methods: [GET]
     defaults:
         _controller: enhavo_newsletter.controller.local_subscriber:indexAction
@@ -21,7 +21,7 @@ enhavo_newsletter_local_subscriber_index:
 enhavo_newsletter_local_subscriber_create:
     options:
         expose: true
-    path: /enhavo/newsletter/subscriber/create
+    path: /enhavo/newsletter/local-subscriber/create
     methods: [GET,POST]
     defaults:
         _controller: enhavo_newsletter.controller.local_subscriber:createAction
@@ -37,7 +37,7 @@ enhavo_newsletter_local_subscriber_create:
 enhavo_newsletter_local_subscriber_update:
     options:
         expose: true
-    path: /enhavo/newsletter/subscriber/update/{id}
+    path: /enhavo/newsletter/local-subscriber/update/{id}
     methods: [GET,POST]
     defaults:
         _controller: enhavo_newsletter.controller.local_subscriber:updateAction
@@ -49,7 +49,7 @@ enhavo_newsletter_local_subscriber_update:
 enhavo_newsletter_local_subscriber_table:
     options:
         expose: true
-    path: /enhavo/newsletter/subscriber/table
+    path: /enhavo/newsletter/local-subscriber/table
     defaults:
         _controller: enhavo_newsletter.controller.local_subscriber:tableAction
         _sylius:
@@ -59,12 +59,6 @@ enhavo_newsletter_local_subscriber_table:
                     property: email
                     label: subscriber.label.email
                     translation_domain: EnhavoNewsletterBundle
-#                active:
-#                    type: boolean
-#                    property: active
-#                    label: subscriber.label.active
-#                    translation_domain: EnhavoNewsletterBundle
-#                    equals: true
             repository:
                 method: findByGroupId
                 arguments:
@@ -77,16 +71,11 @@ enhavo_newsletter_local_subscriber_table:
                         label: subscriber.label.email
                         property: email
                         width: 10
-#                    active:
-#                        type: boolean
-#                        label: subscriber.label.active
-#                        property: active
-#                        width: 2
 
 enhavo_newsletter_local_subscriber_delete:
     options:
         expose: true
-    path: /enhavo/newsletter/subscriber/delete/{id}
+    path: /enhavo/newsletter/local-subscriber/delete/{id}
     methods: [POST]
     defaults:
         _controller: enhavo_newsletter.controller.local_subscriber:deleteAction
@@ -94,7 +83,7 @@ enhavo_newsletter_local_subscriber_delete:
 enhavo_newsletter_local_subscriber_batch:
     options:
         expose: true
-    path: /enhavo/newsletter/subscriber/batch
+    path: /enhavo/newsletter/local-subscriber/batch
     methods: [POST]
     defaults:
         _controller: enhavo_newsletter.controller.local_subscriber:batchAction
@@ -109,7 +98,7 @@ enhavo_newsletter_local_subscriber_batch:
 enhavo_newsletter_local_subscriber_preview:
     options:
         expose: true
-    path: /enhavo/newsletter/subscriber/preview
+    path: /enhavo/newsletter/local-subscriber/preview
     methods: [POST]
     defaults:
         _controller: enhavo_newsletter.controller.local_subscriber:previewAction

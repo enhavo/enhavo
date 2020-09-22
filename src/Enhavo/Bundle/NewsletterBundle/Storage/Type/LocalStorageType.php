@@ -100,7 +100,8 @@ class LocalStorageType extends AbstractStorageType
      */
     public function saveSubscriber(SubscriberInterface $subscriber, array $options)
     {
-        $localSubscriber = $this->getSubscriber($subscriber) ?? $this->createSubscriber($subscriber);
+        $localSubscriber = $this->getSubscriber($subscriber)
+            ?? $this->createSubscriber($subscriber);
 
         $groups = $options['groups'];
         if ($subscriber instanceof GroupAwareInterface) {
@@ -112,7 +113,7 @@ class LocalStorageType extends AbstractStorageType
         }
 
         foreach ($groups as $group) {
-            $group = $group instanceof Group ? $group : $this->getGroup($group);
+            $group = $group instanceof Group ? $this->getGroup($group->getCode()) : $this->getGroup($group);
             if ($localSubscriber->getGroups()->contains($group)) {
                 continue;
             }

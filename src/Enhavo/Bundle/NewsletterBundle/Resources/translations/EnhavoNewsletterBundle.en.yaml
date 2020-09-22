@@ -67,9 +67,12 @@ subscriber:
   label:
     create: 'Create Subscriber'
     update: 'Edit Subscriber'
-    subscriber: Subscriber
+    subscriber: 'Subscriber'
     subscribers: 'Subscribers'
+    subscription: 'Subscription'
+    pending: 'Pending Subscribers'
     active: 'Active'
+    activate: 'Activate'
     email: 'E-Mail'
   form:
     message:
@@ -79,6 +82,8 @@ subscriber:
     label:
       email: 'E-Mail'
       active: 'Active'
+      subscription: 'Subscription'
+      data: 'Subscriber-Data'
     error:
       valid: 'E-Mail not valid'
       sent_again: 'Please confirm your registration'

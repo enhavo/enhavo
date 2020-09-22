@@ -52,8 +52,9 @@ class AcceptStrategyType extends AbstractStrategyType
 
     public function activateSubscriber(SubscriberInterface $subscriber, array $options)
     {
-        $this->pendingManager->removeBy($subscriber->getEmail(), $subscriber->getSubscription());
         $this->getStorage()->saveSubscriber($subscriber);
+        $this->pendingManager->removeBy($subscriber->getEmail(), $subscriber->getSubscription());
+
         $this->notifySubscriber($subscriber, $options);
     }
 

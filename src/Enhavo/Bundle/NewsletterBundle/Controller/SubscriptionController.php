@@ -42,13 +42,12 @@ class SubscriptionController extends AbstractController
         $subscription = $this->subscriptionManager->getSubscription($type);
         $strategy = $subscription->getStrategy();
 
-        $pending = $this->pendingManager->findByToken($token);
-        if (!$pending || !($pending->getData() instanceof SubscriberInterface)) {
+        $pendingSubscriber = $this->pendingManager->findByToken($token);
+        if (!$pendingSubscriber) {
             throw $this->createNotFoundException();
         }
 
-        /** @var SubscriberInterface $subscriber */
-        $subscriber = $pending->getData();
+        $subscriber = $pendingSubscriber->getData();
         try {
             $strategy->activateSubscriber($subscriber);
             return $this->render($strategy->getActivationTemplate(), [

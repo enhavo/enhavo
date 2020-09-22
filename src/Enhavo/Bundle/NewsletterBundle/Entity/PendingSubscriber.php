@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Entity;
 
+use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
 /**
@@ -40,7 +41,7 @@ class PendingSubscriber implements ResourceInterface
      */
     private $condition;
 
-    /** @var object */
+    /** @var SubscriberInterface */
     private $data;
 
     /**
@@ -151,17 +152,17 @@ class PendingSubscriber implements ResourceInterface
     }
 
     /**
-     * @return object
+     * @return SubscriberInterface
      */
-    public function getData(): object
+    public function getData(): SubscriberInterface
     {
         return $this->data;
     }
 
     /**
-     * @param object $data
+     * @param SubscriberInterface $data
      */
-    public function setData(object $data): void
+    public function setData(SubscriberInterface $data): void
     {
         $this->data = $data;
     }

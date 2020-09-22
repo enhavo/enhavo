@@ -70,6 +70,14 @@ class PendingSubscriberManager
         ]);
     }
 
+    public function find(int $id)
+    {
+        /** @var PendingSubscriberRepository $repository */
+        $repository = $this->entityManager->getRepository(PendingSubscriber::class);
+
+        return $repository->find($id);
+    }
+
     public function findOneBy(string $email, string $subscription): ?PendingSubscriber
     {
         /** @var PendingSubscriberRepository $repository */

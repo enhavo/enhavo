@@ -11,7 +11,7 @@ namespace Enhavo\Bundle\NewsletterBundle\Menu;
 use Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SubscriberMenu extends BaseMenu
+class PendingMenu extends BaseMenu
 {
     public function configureOptions(OptionsResolver $resolver)
     {
@@ -19,15 +19,15 @@ class SubscriberMenu extends BaseMenu
 
         $resolver->setDefaults([
             'icon' => 'add_box',
-            'label' => 'subscriber.label.subscriber',
+            'label' => 'subscriber.label.pending',
             'translation_domain' => 'EnhavoNewsletterBundle',
-            'route' => 'enhavo_newsletter_local_subscriber_index',
-            'role' => 'ROLE_ENHAVO_NEWSLETTER_LOCAL_SUBSCRIBER_INDEX',
+            'route' => 'enhavo_newsletter_pending_subscriber_index',
+            'role' => 'ROLE_ENHAVO_NEWSLETTER_PENDING_SUBSCRIBER_INDEX',
         ]);
     }
 
     public function getType()
     {
-        return 'newsletter_subscriber';
+        return 'newsletter_pending';
     }
 }
