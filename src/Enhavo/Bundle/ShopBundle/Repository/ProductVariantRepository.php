@@ -10,6 +10,12 @@ namespace Enhavo\Bundle\ShopBundle\Repository;
 
 use Enhavo\Bundle\AppBundle\Filter\FilterQuery;
 use Enhavo\Bundle\ContentBundle\Repository\ContentRepository;
+use Sylius\Component\Product\Repository\ProductVariantRepositoryInterface;
+
+//class ProductVariantRepository extends \Sylius\Bundle\ProductBundle\Doctrine\ORM\ProductVariantRepository
+//{
+//
+//}
 
 class ProductVariantRepository extends ContentRepository
 {

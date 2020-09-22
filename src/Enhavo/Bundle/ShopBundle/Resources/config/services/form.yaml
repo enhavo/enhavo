@@ -25,8 +25,14 @@ services:
         tags:
             - { name: form.type }
 
+    enhavo_shop.form.type.product_generate_variants:
+        class: Enhavo\Bundle\ShopBundle\Form\Type\ProductGenerateVariantsType
+        arguments:
+            - "%sylius.model.product.class%"
+            - "%sylius.form.type.product_generate_variants.validation_groups%"
+        tags:
+            - { name: form.type, alias: enhavo_product_generate_variants }
 
-#
 #    Enhavo\Bundle\ShopBundle\Form\Type\OrderAddressType:
 #        arguments:
 #            - '%sylius.model.order.class%'

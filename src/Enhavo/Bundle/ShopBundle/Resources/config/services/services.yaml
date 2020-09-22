@@ -2,39 +2,39 @@ parameters:
     enhavo_shop.controller.user.class: Enhavo\Bundle\ShopBundle\Controller\UserController
 
 services:
-    enhavo_shop.listener.doctrine_sylius_meta:
-        class: Enhavo\Bundle\ShopBundle\EventListener\DoctrineSyliusMetaListener
-        tags:
-            - { name: doctrine.event_subscriber, connection: default }
-
-    Enhavo\Bundle\ShopBundle\Table\Widget\AddressWidget:
-        public: true
-        calls:
-            - [setContainer, ['@service_container']]
-        tags:
-            - { name: enhavo.column, alias: shop_address }
-
-    Enhavo\Bundle\ShopBundle\Table\Widget\ProductVariantWidget:
-        public: true
-        calls:
-            - [setContainer, ['@service_container']]
-        tags:
-            - { name: enhavo.column, alias: shop_product_variant }
-
-    Enhavo\Bundle\ShopBundle\Table\Widget\OrderStateWidget:
-        public: true
-        calls:
-            - [setContainer, ['@service_container']]
-        tags:
-            - { name: enhavo.column, alias: order_state }
-
-    enhavo_shop.locale.country_resolver:
-        class: Enhavo\Bundle\ShopBundle\Locale\CountryResolver
-        arguments:
-            - '@sylius.repository.country'
-
-    enhavo.token_generator:
-        class: Sylius\Component\User\Security\Generator\TokenGenerator
+#    enhavo_shop.listener.doctrine_sylius_meta:
+#        class: Enhavo\Bundle\ShopBundle\EventListener\DoctrineSyliusMetaListener
+#        tags:
+#            - { name: doctrine.event_subscriber, connection: default }
+#
+#    Enhavo\Bundle\ShopBundle\Table\Widget\AddressWidget:
+#        public: true
+#        calls:
+#            - [setContainer, ['@service_container']]
+#        tags:
+#            - { name: enhavo.column, alias: shop_address }
+#
+#    Enhavo\Bundle\ShopBundle\Table\Widget\ProductVariantWidget:
+#        public: true
+#        calls:
+#            - [setContainer, ['@service_container']]
+#        tags:
+#            - { name: enhavo.column, alias: shop_product_variant }
+#
+#    Enhavo\Bundle\ShopBundle\Table\Widget\OrderStateWidget:
+#        public: true
+#        calls:
+#            - [setContainer, ['@service_container']]
+#        tags:
+#            - { name: enhavo.column, alias: order_state }
+#
+#    enhavo_shop.locale.country_resolver:
+#        class: Enhavo\Bundle\ShopBundle\Locale\CountryResolver
+#        arguments:
+#            - '@sylius.repository.country'
+#
+#    enhavo.token_generator:
+#        class: Sylius\Component\User\Security\Generator\TokenGenerator
 
 #    Enhavo\Bundle\ShopBundle\Button\BillingButton:
 #        public: true
@@ -50,47 +50,45 @@ services:
 #        tags:
 #            - { name: enhavo.button, alias: shop_packing_slip }
 
-    enhavo_shop.document.manager:
-        class: Enhavo\Bundle\ShopBundle\Document\DocumentManager
-        calls:
-            - [setContainer, ['@service_container']]
-
-    sylius.invoice_number_generator:
-        class: Enhavo\Bundle\ShopBundle\Document\InvoiceNumberGenerator
-
-    enhavo_shop.twig.country:
-        class: Enhavo\Bundle\ShopBundle\Twig\Country
-        tags:
-            - { name: twig.extension }
-
-    enhavo_shop.controller.user:
-        class: '%enhavo_shop.controller.user.class%'
-        arguments:
-            - '@sylius.resource_controller.request_configuration_factory'
-            - '@view.factory'
-            - '@fos_rest.view_handler'
-        calls:
-            - [setContainer, ['@service_container']]
-
-    enhavo_shop.factory.voucher:
-        class: '%enhavo_shop.factory.voucher.class%'
-        arguments:
-            - '%enhavo_shop.model.voucher.class%'
-        calls:
-            - [setContainer, ['@service_container']]
-
-    enhavo_shop.manager.voucher_manager:
-        class: Enhavo\Bundle\ShopBundle\Manager\VoucherManager
-        calls:
-            - [setContainer, ['@service_container']]
-
-    enhavo_shop.manager.coupon:
-        class: Enhavo\Bundle\ShopBundle\Manager\CouponManager
-        calls:
-            - [setContainer, ['@service_container']]
-
-#    Enhavo\Bundle\ShopBundle\Action\Type\GenerateVariantsActionType:
-#        parent: Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType
-#        public: true
+#    enhavo_shop.document.manager:
+#        class: Enhavo\Bundle\ShopBundle\Document\DocumentManager
+#        calls:
+#            - [setContainer, ['@service_container']]
+#
+#    sylius.invoice_number_generator:
+#        class: Enhavo\Bundle\ShopBundle\Document\InvoiceNumberGenerator
+#
+#    enhavo_shop.twig.country:
+#        class: Enhavo\Bundle\ShopBundle\Twig\Country
 #        tags:
-#            - { name: enhavo.action, alias: generate_variants }
+#            - { name: twig.extension }
+#
+#    enhavo_shop.controller.user:
+#        class: '%enhavo_shop.controller.user.class%'
+#        arguments:
+#            - '@sylius.resource_controller.request_configuration_factory'
+#            - '@view.factory'
+#            - '@fos_rest.view_handler'
+#        calls:
+#            - [setContainer, ['@service_container']]
+#
+#    enhavo_shop.factory.voucher:
+#        class: '%enhavo_shop.factory.voucher.class%'
+#        arguments:
+#            - '%enhavo_shop.model.voucher.class%'
+#        calls:
+#            - [setContainer, ['@service_container']]
+#
+#    enhavo_shop.manager.voucher_manager:
+#        class: Enhavo\Bundle\ShopBundle\Manager\VoucherManager
+#        calls:
+#            - [setContainer, ['@service_container']]
+#
+#    enhavo_shop.manager.coupon:
+#        class: Enhavo\Bundle\ShopBundle\Manager\CouponManager
+#        calls:
+#            - [setContainer, ['@service_container']]
+
+
+
+

@@ -16,7 +16,12 @@ sylius_product_variant_index:
                         route: sylius_product_variant_create
                         route_parameters:
                             productId: $id
-
+                    generate:
+                        type: open
+                        route: sylius_product_variant_generate
+                        target: _view
+                        route_parameters:
+                            productId: $id
 
 sylius_product_variant_create:
     options:
@@ -175,3 +180,8 @@ sylius_product_variant_batch:
                     route: sylius_product_variant_delete
                     route_parameters:
                         productId: $id
+
+sylius_product_variant_generate:
+    path: /product/{productId}/variants/generate
+    defaults:
+        _controller: sylius.controller.product_variant:generateAction
