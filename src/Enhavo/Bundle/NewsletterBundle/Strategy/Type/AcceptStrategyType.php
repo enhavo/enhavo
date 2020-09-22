@@ -123,7 +123,6 @@ class AcceptStrategyType extends AbstractStrategyType
     {
         $resolver->setDefaults([
             'activation_template' => 'EnhavoNewsletterBundle:theme/resource/subscriber:accept.html.twig',
-            'admin_subject' => 'newsletter.subscription',
             'admin_template' => 'EnhavoNewsletterBundle:mail/subscriber:accept-admin.html.twig',
             'template' => 'EnhavoNewsletterBundle:mail/subscriber:accept.html.twig',
             'activate_route' => 'enhavo_newsletter_subscribe_activate',

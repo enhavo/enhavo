@@ -156,7 +156,6 @@ class DoubleOptInStrategyType extends AbstractStrategyType
         $resolver->setDefaults([
             'notify_admin' => false,
             'activation_template' => 'EnhavoNewsletterBundle:theme/resource/subscriber:activate.html.twig',
-            'admin_subject' => 'subscriber.mail.admin.subject',
             'template' => 'EnhavoNewsletterBundle:mail/subscriber:double-opt-in.html.twig',
             'confirmation_template' => 'EnhavoNewsletterBundle:mail/subscriber:confirmation.html.twig',
             'admin_template' => 'EnhavoNewsletterBundle:mail/subscriber:notify-admin.html.twig',

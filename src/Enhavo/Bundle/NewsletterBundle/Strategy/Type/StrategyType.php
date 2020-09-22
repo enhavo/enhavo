@@ -72,7 +72,7 @@ class StrategyType extends AbstractType implements StrategyTypeInterface
         $resolver->setDefaults([
             'check_exists' => true,
             'notify' => true,
-            'admin_subject' => 'newsletter.subscription',
+            'admin_subject' => 'subscriber.mail.admin.subject',
             'subject' => 'subscriber.mail.notify.subject',
             'translation_domain' => 'EnhavoNewsletterBundle',
         ]);
