@@ -143,10 +143,19 @@ class Node implements NodeInterface, ResourceInterface
      */
     public function setParent(NodeInterface $parent = null)
     {
+        if ($parent === null && $this->parent !== null && $this->parent->getChildren()->contains($this)) {
+            $parent = $this->parent;
+            $this->parent = null;
+            $parent->removeChild($this);
+            return $this;
+        }
+
         $this->parent = $parent;
-        if(!$parent->getChildren()->contains($this)) {
+
+        if ($parent !== null && !$parent->getChildren()->contains($this)) {
             $parent->addChild($this);
         }
+
         return $this;
     }
 
