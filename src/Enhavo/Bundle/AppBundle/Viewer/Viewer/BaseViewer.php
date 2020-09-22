@@ -51,6 +51,14 @@ class BaseViewer extends AbstractResourceViewer
         $parameters->set('translations', $translations);
         $parameters->set('routes', $this->getRoutes());
 
+        $data = [
+            'view' => [
+                'id' => $this->getViewId(),
+                'label' => $this->container->get('translator')->trans($options['label'], [], $parameters->get('translation_domain'))
+            ],
+        ];
+        $parameters->set('data', $data);
+
         foreach($options['parameters'] as $key => $value) {
             $parameters->set($key, $value);
         }
@@ -64,7 +72,8 @@ class BaseViewer extends AbstractResourceViewer
             'stylesheets' => [],
             'translation_domain' => null,
             'template' => 'admin/view/base.html.twig',
-            'parameters' => []
+            'parameters' => [],
+            'label' => ''
         ]);
     }
 
