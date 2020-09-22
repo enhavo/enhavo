@@ -1,95 +1,177 @@
-enhavo_shop_product_variant_index:
+sylius_product_variant_index:
     options:
         expose: true
-    path: /enhavo/shop/product/{productId}/variant/index
+    path: /enhavo/shop/product/{$productId}/variant/index
     methods: [GET]
     defaults:
         _controller: sylius.controller.product_variant:indexAction
         _sylius:
-            form: enhavo_shop_product_variant
+            form: sylius_product_variant
             viewer:
-                blocks:
-                    table:
-                        type: table
-                        table_route: enhavo_shop_product_variant_table
-                        table_route_parameters:
-                            productId: $productId
-                        open_route: enhavo_shop_product_variant_update
-                        open_route_parameters:
-                            productId: $productId
+                table_route_parameters:
+                     productId: $id
                 actions:
                     create:
-                        route: enhavo_shop_product_variant_create
-                        routeParameters:
-                            productId: $productId
+                        type: create
+                        route: sylius_product_variant_create
+                        route_parameters:
+                            productId: $id
 
-enhavo_shop_product_variant_create:
+
+sylius_product_variant_create:
     options:
         expose: true
-    path: /enhavo/shop/product/{productId}/variant/create
+    path: /enhavo/shop/product/{$productId}/variant/create
     methods: [GET,POST]
     defaults:
         _controller: sylius.controller.product_variant:createAction
         _sylius:
-            redirect: enhavo_shop_product_variant_update
+            label: product_variant.label.create
+            translation_domain: EnhavoShopBundle
+            sortable: true
+            redirect: sylius_product_variant_update
             factory:
                 method: createForProductWithId
                 arguments: $productId
-            form: enhavo_shop_product_variant_create
+            form: Enhavo\Bundle\ShopBundle\Form\Type\ProductVariantType
             viewer:
-                translation_domain: EnhavoShopBundle
+                table_route_parameters:
+                    productId: $id
                 form:
-                    action: enhavo_shop_product_variant_create
+                    action: sylius_product_variant_create
                     action_parameters:
                         productId: $productId
+                tabs:
+                    main:
+                        label: product_variant.label.variant
+                        translation_domain: EnhavoShopBundle
+                        template: EnhavoShopBundle:admin/resource/product-variant:product-variant.html.twig
+                    customize:
+                        label: product_variant.label.customize
+                        translation_domain: EnhavoShopBundle
+                        template: EnhavoShopBundle:admin/resource/product-variant:customize.html.twig
+                    dimension:
+                        label: product_variant.label.dimension
+                        translation_domain: EnhavoShopBundle
+                        template: EnhavoShopBundle:admin/resource/product-variant:dimension.html.twig
 
-enhavo_shop_product_variant_update:
+sylius_product_variant_update:
     options:
         expose: true
-    path: /enhavo/shop/product/{productId}/variant/update/{id}
+    path: /enhavo/shop/product/{$productId}/variant/update/{id}
     methods: [GET,POST]
     defaults:
         _controller: sylius.controller.product_variant:updateAction
         _sylius:
-            form: enhavo_shop_product_variant
+            label: product_variant.label.edit
+            translation_domain: EnhavoShopBundle
+            form: Enhavo\Bundle\ShopBundle\Form\Type\ProductVariantType
             viewer:
-                translation_domain: EnhavoShopBundle
-                form:
-                    action: enhavo_shop_product_variant_update
-                    action_parameters:
-                        id: $id
-                        productId: $productId
-                    delete: enhavo_shop_product_variant_delete
-                    delete_parameters:
-                        id: $id
-                        productId: $productId
+                tabs:
+                    main:
+                        label: product_variant.label.variant
+                        translation_domain: EnhavoShopBundle
+                        template: EnhavoShopBundle:admin/resource/product-variant:product-variant.html.twig
+                    customize:
+                        label: product_variant.label.customize
+                        translation_domain: EnhavoShopBundle
+                        template: EnhavoShopBundle:admin/resource/product-variant:customize.html.twig
+                    dimension:
+                        label: product_variant.label.dimension
+                        translation_domain: EnhavoShopBundle
+                        template: EnhavoShopBundle:admin/resource/product-variant:dimension.html.twig
+#                translation_domain: EnhavoShopBundle
+#                form:
+#                    action: sylius_product_variant_update
+#                    action_parameters:
+#                        id: $id
+#                        productId: $productId
+#                    delete: sylius_product_variant_delete
+#                    delete_parameters:
+#                        id: $id
+#                        productId: $productId
 
-enhavo_shop_product_variant_table:
+sylius_product_variant_table:
     options:
         expose: true
-    path: /enhavo/shop/product/{productId}/variant/table
+    path: /enhavo/shop/product/{$productId}/variant/table
     defaults:
         page: 1
         _controller: sylius.controller.product_variant:tableAction
         _sylius:
+            filters:
+                name:
+                    type: text
+                    property: translation.name
+                    label: product_variant.label.name
+                    translation_domain: EnhavoShopBundle
+                code:
+                    type: text
+                    property: code
+                    label: product_variant.label.code
+                    translation_domain: EnhavoShopBundle
+            repository:
+                method: findByProductId
+                arguments:
+                    - $productId
             viewer:
                 translation_domain: EnhavoShopBundle
                 columns:
+                    name:
+                        type: text
+                        label: product_variant.form.label.name
+                        translation_domain: EnhavoShopBundle
+                        property: name
+                        width: 4
+                    stock:
+                        type: text
+                        label: product_variant.form.label.stock
+                        translation_domain: EnhavoShopBundle
+                        property: stock
+                        width: 2
+                        sortable: true
                     code:
                         type: text
-                        label: product_variant.label.code
+                        label: product_variant.form.label.code
+                        translation_domain: EnhavoShopBundle
                         property: code
-                        width: 12
+                        width: 3
+                        sortable: true
+                    position:
+                        type: text
+                        label: product_variant.form.label.position
+                        translation_domain: EnhavoShopBundle
+                        property: position
+                        width: 1
+                        sortable: true
 
-enhavo_shop_product_variant_delete:
+sylius_product_variant_delete:
     options:
         expose: true
-    path: /enhavo/shop/product/{productId}/variant/delete/{id}
+    path: /enhavo/shop/product/{$productId}/variant/delete/{id}
     methods: [POST]
     defaults:
         _controller: sylius.controller.product_variant:deleteAction
         _sylius:
             redirect:
-                route: enhavo_shop_product_variant_table
+                route: sylius_product_variant_table
                 parameters:
                     productId: $productId
+
+sylius_product_variant_batch:
+    options:
+        expose: true
+    path: /enhavo/shop/product/{$productId}/variant/batch
+    methods: [POST]
+    defaults:
+        _controller: sylius.controller.product_variant:batchAction
+        _sylius:
+            paginate: false
+            criteria:
+                id: $ids
+            batches:
+                delete:
+                    type: delete
+                    route: sylius_product_variant_delete
+                    route_parameters:
+                        productId: $id

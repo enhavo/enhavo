@@ -55,7 +55,7 @@
         }
 
         trans(text) {
-            return application.getTranslator().trans(text);
+            return this.$translator.trans(text);
         }
 
         @Watch('modal.element')

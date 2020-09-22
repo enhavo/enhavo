@@ -114,37 +114,87 @@ product:
       update: 'Product update'
       create: 'Product create'
       delete: 'Product delete'
+  form:
+    label:
+      product_association:
+       type: Association type
+      active: Active
+      code: Code
+      title: Title
+      picture: Picture
+      pictures: Pictures
+      price: Price
+      reducedPrice: Reduced price
+      reduced: Reduced?
+      shippingCategory: Shipping category
+      width: Width
+      height: Height
+      depth: Depth
+      weight: Weight
+      volume: Volume
+      taxRate: Tax rate
+      associations: Associations
+      lengthUnit: Length unit
+      weightUnit: Weight unit
+      volumeUnit: Volumn unit
+      shipping_required: Shipping required?
   label:
     product: Product
     product_option: Option
     product_attribute: Attribute
     product_association_type: Association Types
-    code: Code
-    title: Title
-    options: Options
     dimension: Dimension
+    options: Options
     meta: Meta
-    picture: Picture
-    price: Price
-    shippingCategory: Shipping category
-    width: Width
-    height: Height
-    depth: Depth
-    weight: Weight
-    volume: Volume
-    taxRate: Tax rate
-    associations: Associations
   message:
     error:
       not_found: 'Requested product was not found.'
 
-product_attribute:
+product_variant:
+  label:
+    create: Create
+    edit: Edit
+    variant: Variant
+    meta: Meta
+    customize: Customize
+    dimension: Dimension
+    inventory: Inventory
+  form:
     label:
-        name: 'Name'
-        storage_type: Storage type
-        position: Position
+      active: Active
+      title: Title
+      options: Options
+      picture: Picture
+      pictures: Pictures
+      price: Price
+      reducedPrice: Reduced price
+      reduced: Reduced?
+      shippingCategory: Shipping category
+      width: Width
+      height: Height
+      depth: Depth
+      weight: Weight
+      volume: Volume
+      taxRate: Tax rate
+      code: Code
+      name: Name
+      position: Position
+      stock: Stock
+      stock_tracked: Stock tracked?
+      shipping_category: Shipping category
+      shipping_required: Shipping required?
+
+product_attribute:
+  label:
+    name: 'Name'
+    storage_type: Storage type
+    position: Position
+    variant: Variant
+    customize: Customize
+    dimension: Dimension
+    inventory: Inventory
 
 tax:
   label:
-      tax_rate: Tax Rates
-      tax_category: Tax Categories
+    tax_rate: Tax Rates
+    tax_category: Tax Categories

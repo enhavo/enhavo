@@ -16,6 +16,8 @@ services:
             - 'string:iframe-modal'
             - '@enhavo/app/Modal/Components/IframeModalComponent.vue'
             - '@enhavo/app/Modal/Factory/IframeModalFactory'
+        tags:
+            - 'enhavo_app.modal'
 
     modal.ajax-form:
         chunk: 'modal'
@@ -24,6 +26,8 @@ services:
             - 'string:ajax-form-modal'
             - '@enhavo/app/Modal/Components/AjaxFormModalComponent.vue'
             - '@enhavo/app/Modal/Factory/AjaxFormModalFactory'
+        tags:
+            - 'enhavo_app.modal'
 
     modal.output-stream:
         chunk: 'modal'
@@ -32,16 +36,24 @@ services:
             - 'string:output-stream'
             - '@enhavo/app/Modal/Components/OutputStreamModalComponent.vue'
             - '@enhavo/app/Modal/Factory/OutputStreamModalFactory'
-
+        tags:
+            - 'enhavo_app.modal'
 
     '@enhavo/app/Modal/Factory/IframeModalFactory':
         chunk: 'modal'
+        arguments:
+            - '@enhavo/app/Modal/ModalManager'
 
     '@enhavo/app/Modal/Factory/AjaxFormModalFactory':
         chunk: 'modal'
+        arguments:
+            - '@enhavo/app/Modal/ModalManager'
+            - '@enhavo/core/Router'
 
     '@enhavo/app/Modal/Factory/OutputStreamModalFactory':
         chunk: 'modal'
+        arguments:
+            - '@enhavo/app/Modal/ModalManager'
 
     '@enhavo/app/Modal/Components/IframeModalComponent.vue':
         chunk: 'modal'

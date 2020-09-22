@@ -26,7 +26,7 @@
         }
 
         executeBatch() {
-            this.$grid.getGrid().executeBatch();
+            this.$grid.executeBatch();
         }
 
         change(value) {

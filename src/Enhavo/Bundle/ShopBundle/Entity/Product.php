@@ -8,6 +8,8 @@
 
 namespace Enhavo\Bundle\ShopBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
+use Enhavo\Bundle\MediaBundle\Entity\File;
 use Enhavo\Bundle\RoutingBundle\Entity\Route;
 use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
 use Enhavo\Bundle\RoutingBundle\Model\Routeable;
@@ -30,6 +32,16 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
     private $title;
 
     /**
+     * @var boolean
+     */
+    private $active = true;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $pictures;
+
+    /**
      * @var FileInterface
      */
     private $picture;
@@ -40,6 +52,16 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
     private $price;
 
     /**
+     * @var integer
+     */
+    private $reducedPrice;
+
+    /**
+     * @var boolean
+     */
+    private $reduced;
+
+    /**
      * @var ShippingCategoryInterface
      */
     private $shippingCategory;
@@ -48,6 +70,11 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
      * @var TaxRateInterface
      */
     private $taxRate;
+
+    /**
+     * @var string
+     */
+    private $lengthUnit;
 
     /**
      * @var integer
@@ -67,7 +94,17 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
     /**
      * @var integer
      */
+    private $volumeUnit;
+
+    /**
+     * @var integer
+     */
     private $volume;
+
+    /**
+     * @var string
+     */
+    private $weightUnit;
 
     /**
      * @var integer
@@ -75,14 +112,19 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
     private $weight;
 
     /**
+     * @var boolean
+     */
+    private $shippingRequired;
+
+    /**
      * @var Route
      */
     private $route;
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getTitle()
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -90,9 +132,11 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
     /**
      * @param mixed $title
      */
-    public function setTitle($title)
+    public function setTitle($title): ProductInterface
     {
         $this->title = $title;
+
+        return $this;
     }
 
     /**
@@ -106,9 +150,11 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
     /**
      * @param FileInterface $picture
      */
-    public function setPicture($picture)
+    public function setPicture($picture): ProductInterface
     {
         $this->picture = $picture;
+
+        return $this;
     }
 
     /**
@@ -118,7 +164,7 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
      *
      * @return Product
      */
-    public function setPrice($price)
+    public function setPrice($price): ProductInterface
     {
         $this->price = $price;
 
@@ -136,6 +182,24 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
     }
 
     /**
+     * @return bool
+     */
+    public function isReduced(): ?bool
+    {
+        return $this->reduced;
+    }
+
+    /**
+     * @param bool $reduced
+     */
+    public function setReduced(?bool $reduced): ProductInterface
+    {
+        $this->reduced = $reduced;
+
+        return $this;
+    }
+
+    /**
      * @return ShippingCategoryInterface
      */
     public function getShippingCategory()
@@ -147,51 +211,11 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
      * @param ShippingCategoryInterface $shippingCategory
      * @return $this
      */
-    public function setShippingCategory(ShippingCategoryInterface $shippingCategory) // This method is not required.
+    public function setShippingCategory(ShippingCategoryInterface $shippingCategory): ProductInterface  // This method is not required.
     {
         $this->shippingCategory = $shippingCategory;
 
         return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getShippingWeight()
-    {
-        return $this->weight;
-    }
-
-    /**
-     * @return int
-     */
-    public function getShippingWidth()
-    {
-        return $this->width;
-    }
-
-    /**
-     * @return int
-     */
-    public function getShippingHeight()
-    {
-        return $this->height;
-    }
-
-    /**
-     * @return int
-     */
-    public function getShippingDepth()
-    {
-        return $this->depth;
-    }
-
-    /**
-     * @return int
-     */
-    public function getShippingVolume()
-    {
-        return $this->volume;
     }
 
     /**
@@ -200,7 +224,7 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
      * @param TaxRateInterface $taxRate
      * @return Product
      */
-    public function setTaxRate(TaxRateInterface $taxRate = null)
+    public function setTaxRate(TaxRateInterface $taxRate = null): ProductInterface
     {
         $this->taxRate = $taxRate;
 
@@ -223,7 +247,7 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
      * @param integer $height
      * @return Product
      */
-    public function setHeight($height)
+    public function setHeight($height): ProductInterface
     {
         $this->height = $height;
 
@@ -246,7 +270,7 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
      * @param integer $width
      * @return Product
      */
-    public function setWidth($width)
+    public function setWidth($width): ProductInterface
     {
         $this->width = $width;
 
@@ -269,7 +293,7 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
      * @param integer $depth
      * @return Product
      */
-    public function setDepth($depth)
+    public function setDepth($depth): ProductInterface
     {
         $this->depth = $depth;
 
@@ -292,7 +316,7 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
      * @param integer $volume
      * @return Product
      */
-    public function setVolume($volume)
+    public function setVolume(?int $volume): ProductInterface
     {
         $this->volume = $volume;
 
@@ -304,9 +328,27 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
      *
      * @return integer
      */
-    public function getVolume()
+    public function getVolume(): ?int
     {
         return $this->volume;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isShippingRequired(): ?bool
+    {
+        return $this->shippingRequired;
+    }
+
+    /**
+     * @param bool $shippingRequired
+     */
+    public function setShippingRequired(bool $shippingRequired): ProductInterface
+    {
+        $this->shippingRequired = $shippingRequired;
+
+        return $this;
     }
 
     /**
@@ -315,7 +357,7 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
      * @param integer $weight
      * @return Product
      */
-    public function setWeight($weight)
+    public function setWeight($weight): ProductInterface
     {
         $this->weight = $weight;
 
@@ -355,9 +397,11 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
         return $this->route;
     }
 
-    public function setRoute(RouteInterface $route)
+    public function setRoute(RouteInterface $route): ProductInterface
     {
         $this->route = $route;
+
+        return $this;
     }
 
     /**
@@ -387,5 +431,128 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
     public function setSlug(?string $slug = null): void
     {
         $this->slug = $slug;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param bool $active
+     */
+    public function setActive(?bool $active): ProductInterface
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
+    /**
+     * Add picture
+     *
+     * @param FileInterface $picture
+     * @return Product
+     */
+    public function addPicture(FileInterface $picture): ProductInterface
+    {
+        $this->pictures[] = $picture;
+
+        return $this;
+    }
+
+    /**
+     * Remove picture
+     *
+     * @param FileInterface $picture
+     */
+    public function removePicture(FileInterface $picture): void
+    {
+        $this->pictures->removeElement($picture);
+    }
+
+    /**
+     * Get pictures
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPictures(): Collection
+    {
+        return $this->pictures;
+    }
+
+    /**
+     * @return int
+     */
+    public function getReducedPrice(): ?int
+    {
+        return $this->reducedPrice;
+    }
+
+    /**
+     * @param int $reducedPrice
+     */
+    public function setReducedPrice(?int $reducedPrice): ProductInterface
+    {
+        $this->reducedPrice = $reducedPrice;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLengthUnit(): ?string
+    {
+        return $this->lengthUnit;
+    }
+
+    /**
+     * @param string $lengthUnit
+     */
+    public function setLengthUnit(?string $lengthUnit): ProductInterface
+    {
+        $this->lengthUnit = $lengthUnit;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getVolumeUnit(): ?int
+    {
+        return $this->volumeUnit;
+    }
+
+    /**
+     * @param int $volumeUnit
+     */
+    public function setVolumeUnit(?int $volumeUnit): ProductInterface
+    {
+        $this->volumeUnit = $volumeUnit;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getWeightUnit(): ?string
+    {
+        return $this->weightUnit;
+    }
+
+    /**
+     * @param string $weightUnit
+     */
+    public function setWeightUnit(?string $weightUnit): ProductInterface
+    {
+        $this->weightUnit = $weightUnit;
+
+        return $this;
     }
 }
