@@ -42,6 +42,9 @@ class NodeTest extends TestCase
 
         $this->assertCount(1, $children, 'Should have child');
         $this->assertContains($daughter, $children, 'After setParent, Node should have this child');
+
+        $daughter->setParent(null);
+        $this->assertNotContains($daughter, $children, 'After setParent to null, Node shouldn\'t have this child');
     }
 
     public function testAddChild()
