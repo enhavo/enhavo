@@ -1,6 +1,7 @@
 const EncoreUtil = require('@enhavo/core/EncoreUtil');
 const _ = require('lodash');
 const path = require('path');
+const DependencyInjectionPlugin = require('@enhavo/dependency-injection/Webpack/DependencyInjectionPlugin');
 
 class AppThemePackage
 {
@@ -28,7 +29,11 @@ class AppThemePackage
         Encore.copyFiles({
             from: this.config.themesPath+'/'+name+'/images',
             to: 'images/[path][name].[ext]'
-        })
+        });
+
+        Encore.addPlugin(new DependencyInjectionPlugin(
+            path.resolve(EncoreUtil.getProjectDir(), './assets/services/theme/*'), 'theme'
+        ));
     }
 
     initWebpackConfig(config)
