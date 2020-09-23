@@ -1,18 +1,21 @@
 const Loader = require('@enhavo/dependency-injection/Loader/Loader');
 const Validator = require('@enhavo/dependency-injection/Validation/Validator');
-const builder = require('@enhavo/dependency-injection/builder');
+const builderBucket = require('@enhavo/dependency-injection/builder-bucket');
 const path = require('path');
 
 class DependencyInjectionPlugin
 {
-    constructor(configurationPath) {
+    constructor(configurationPath, name = null) {
         this.configurationPath = configurationPath;
+        this.name = name;
     }
 
     apply(compiler) {
+        let builder = builderBucket.createBuilder(this.name);
+
         let loader = new Loader;
-        builder.reset();
         loader.loadFile(this.configurationPath, builder);
+
         builder.prepare();
         let validator = new Validator;
         validator.validate(builder);
@@ -31,6 +34,7 @@ class DependencyInjectionPlugin
     }
 
     _addLoader(options) {
+        builderBucket.setCurrentBuilder(this.name);
         options.resolveLoader.modules = [
             'node_modules',
             path.resolve(__dirname, 'Loaders')
@@ -38,6 +42,7 @@ class DependencyInjectionPlugin
     }
 
     _addEntrypoints(entry) {
+        let builder = builderBucket.getBuilder(this.name);
         for (let entrypoint of builder.getEntrypoints()) {
             entry[entrypoint.getName()] = entrypoint.getPath();
         }
