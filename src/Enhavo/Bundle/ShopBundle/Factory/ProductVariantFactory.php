@@ -21,7 +21,7 @@ class ProductVariantFactory extends Factory implements ProductVariantFactoryInte
      * ProductVariantFactory constructor.
      * @param EntityRepository $repository
      */
-    public function __construct(TranslatableFactory $transFactory = null, EntityRepository $repository = null, string $class)
+    public function __construct(TranslatableFactory $transFactory, EntityRepository $repository, string $class)
     {
         parent::__construct($class);
         $this->repository = $repository;
