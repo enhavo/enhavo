@@ -10,8 +10,6 @@ namespace Enhavo\Bundle\ShopBundle\Entity;
 
 use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
-use Enhavo\Bundle\RoutingBundle\Entity\Route;
-use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
 use Sylius\Component\Product\Model\ProductVariant as SyliusProductVariant;
 use Sylius\Component\Shipping\Model\ShippingCategoryInterface;
 use Sylius\Component\Taxation\Model\TaxRateInterface;
@@ -103,6 +101,15 @@ class ProductVariant extends SyliusProductVariant
      * @var integer
      */
     private $weight;
+
+    /**
+     * ProductVariant constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->position = 0;
+    }
 
     /**
      * @return bool

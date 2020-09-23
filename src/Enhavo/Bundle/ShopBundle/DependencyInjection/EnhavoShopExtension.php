@@ -50,7 +50,6 @@ class EnhavoShopExtension extends AbstractResourceExtension implements PrependEx
             'services/form.yaml',
             'services/block.yaml',
             'services/services.yaml',
-            'services/action.yaml',
             'services/promotion.yaml',
 //            'services/order.yaml',
         );

@@ -8,6 +8,7 @@ use Sylius\Component\Product\Factory\ProductVariantFactoryInterface;
 use Sylius\Component\Product\Model\ProductInterface;
 use Sylius\Component\Product\Model\ProductVariantInterface;
 use Sylius\Component\Resource\Factory\TranslatableFactory;
+use Symfony\Component\Intl\Locale;
 
 class ProductVariantFactory extends Factory implements ProductVariantFactoryInterface
 {
@@ -33,8 +34,8 @@ class ProductVariantFactory extends Factory implements ProductVariantFactoryInte
     {
         /** @var ProductVariantInterface $variant */
         $variant = $this->createNew();
-        $variant->setCurrentLocale('%locale%');
-        $variant->setFallbackLocale('%locale%');
+        $variant->setCurrentLocale($GLOBALS['request']->getLocale());
+        $variant->setFallbackLocale($GLOBALS['request']->getLocale());
         $variant->setProduct($product);
 
         return $variant;

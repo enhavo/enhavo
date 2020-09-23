@@ -18,11 +18,10 @@
 namespace Enhavo\Bundle\ShopBundle\Form\Type;
 
 use Enhavo\Bundle\FormBundle\Form\Type\ListType;
-use Sylius\Bundle\ProductBundle\Form\Type\ProductVariantGenerationType;
+//use Sylius\Bundle\ProductBundle\Form\Type\ProductVariantGenerationType;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Enhavo\Bundle\ShopBundle\Form\Type\ProductVariantGenerationType;
 
 class ProductGenerateVariantsType extends AbstractResourceType
 {
@@ -45,6 +44,8 @@ class ProductGenerateVariantsType extends AbstractResourceType
                 'allow_add' => false,
                 'allow_delete' => true,
                 'by_reference' => false,
+                'sortable' => true,
+                'sortable_property' => 'position'
             ]);
     }
 

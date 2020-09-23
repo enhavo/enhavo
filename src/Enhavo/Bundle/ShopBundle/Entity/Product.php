@@ -92,7 +92,7 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
     private $depth;
 
     /**
-     * @var integer
+     * @var string
      */
     private $volumeUnit;
 
@@ -521,17 +521,17 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getVolumeUnit(): ?int
+    public function getVolumeUnit(): ?string
     {
         return $this->volumeUnit;
     }
 
     /**
-     * @param int $volumeUnit
+     * @param string $volumeUnit
      */
-    public function setVolumeUnit(?int $volumeUnit): ProductInterface
+    public function setVolumeUnit(?string $volumeUnit): ProductInterface
     {
         $this->volumeUnit = $volumeUnit;
 
