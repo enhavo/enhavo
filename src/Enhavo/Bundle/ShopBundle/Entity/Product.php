@@ -247,7 +247,7 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
      * @param integer $height
      * @return Product
      */
-    public function setHeight($height): ProductInterface
+    public function setHeight(?int $height): ProductInterface
     {
         $this->height = $height;
 
@@ -270,7 +270,7 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
      * @param integer $width
      * @return Product
      */
-    public function setWidth($width): ProductInterface
+    public function setWidth(?int $width): ProductInterface
     {
         $this->width = $width;
 
@@ -293,7 +293,7 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
      * @param integer $depth
      * @return Product
      */
-    public function setDepth($depth): ProductInterface
+    public function setDepth(?int $depth): ProductInterface
     {
         $this->depth = $depth;
 
@@ -554,9 +554,5 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
         $this->weightUnit = $weightUnit;
 
         return $this;
-    }
-
-    public function getPriceInEuro() {
-        return number_format($this->price / 100, 2, ',', '.') . ' €';
     }
 }

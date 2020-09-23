@@ -4,7 +4,6 @@ namespace Enhavo\Bundle\ShopBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\ShopBundle\Entity\Product;
-//use Sylius\Bundle\ProductBundle\Form\Type\ProductGenerateVariantsType;
 use Enhavo\Bundle\ShopBundle\Model\ProductInterface;
 use Sylius\Bundle\ResourceBundle\Controller\RequestConfiguration;
 use Sylius\Component\Product\Model\ProductVariantInterface;

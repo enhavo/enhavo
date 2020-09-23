@@ -34,6 +34,7 @@ class SyliusCompilerPass implements CompilerPassInterface
     {
         $definition = $container->getDefinition('sylius.custom_factory.product_variant');
         $definition->setClass('Enhavo\Bundle\ShopBundle\Factory\ProductVariantFactory');
+        $definition->addArgument(new Reference('request_stack'));
         $definition->addArgument(new Reference('sylius.repository.product'));
         $definition->addArgument( ProductVariant::class);
     }
