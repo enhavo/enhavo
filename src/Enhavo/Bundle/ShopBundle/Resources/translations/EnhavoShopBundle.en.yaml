@@ -151,6 +151,9 @@ product:
       not_found: 'Requested product was not found.'
 
 product_variant:
+  action:
+    label:
+      generate: Generate variants
   label:
     create: Create
     edit: Edit

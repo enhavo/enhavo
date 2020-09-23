@@ -151,6 +151,9 @@ product:
       not_found: 'Die Ware konnte nicht gefunden werden.'
 
 product_variant:
+  action:
+    label:
+      generate: Varianten generieren
   form:
     label:
       active: Aktiv
