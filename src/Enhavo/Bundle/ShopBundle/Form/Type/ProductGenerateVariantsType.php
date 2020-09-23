@@ -44,6 +44,7 @@ class ProductGenerateVariantsType extends AbstractResourceType
                 'allow_add' => false,
                 'allow_delete' => true,
                 'by_reference' => false,
+                'border' => true,
                 'sortable' => true,
                 'sortable_property' => 'position'
             ]);

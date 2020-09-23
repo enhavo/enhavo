@@ -75,7 +75,7 @@ class ProductVariant extends SyliusProductVariant
     /**
      * @var boolean
      */
-    private $stockTracked;
+    private $stockTracked = false;
 
     /**
      * @var integer

@@ -555,4 +555,8 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
 
         return $this;
     }
+
+    public function getPriceInEuro() {
+        return number_format($this->price / 100, 2, ',', '.') . ' €';
+    }
 }

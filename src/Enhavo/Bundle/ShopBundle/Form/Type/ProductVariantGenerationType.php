@@ -43,7 +43,7 @@ class ProductVariantGenerationType extends AbstractResourceType
                 'translation_domain' => 'EnhavoShopBundle'
             ])
             ->add('price', IntegerType::class, [
-                'label' => 'product_variant.form.label.stock',
+                'label' => 'product_variant.form.label.price',
                 'translation_domain' => 'EnhavoShopBundle'
             ])
             ->add('position', PositionType::class)
