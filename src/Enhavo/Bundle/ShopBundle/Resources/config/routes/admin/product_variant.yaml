@@ -147,13 +147,6 @@ sylius_product_variant_table:
                         property: code
                         width: 3
                         sortable: true
-                    position:
-                        type: text
-                        property: position
-                        label: product_variant.form.label.position
-                        translation_domain: EnhavoShopBundle
-                        width: 1
-                        sortable: true
 
 sylius_product_variant_delete:
     options:
