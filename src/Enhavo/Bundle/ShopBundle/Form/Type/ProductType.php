@@ -9,18 +9,14 @@
 
 namespace Enhavo\Bundle\ShopBundle\Form\Type;
 
-use Enhavo\Bundle\FormBundle\Form\Type\AutoCompleteEntityType;
 use Enhavo\Bundle\FormBundle\Form\Type\BooleanType;
 use Enhavo\Bundle\FormBundle\Form\Type\CurrencyType;
 use Enhavo\Bundle\FormBundle\Form\Type\ListType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Enhavo\Bundle\RoutingBundle\Form\Type\RouteType;
 use Enhavo\Bundle\ShopBundle\Entity\Product;
-use Enhavo\Bundle\ShopBundle\Form\Type\ProductAssociationType;
 use Sylius\Bundle\ProductBundle\Form\Type\ProductAttributeValueType;
-use Sylius\Bundle\ProductBundle\Form\Type\ProductVariantGenerationType;
 use Sylius\Bundle\ShippingBundle\Form\Type\ShippingCategoryChoiceType;
-use Sylius\Component\Product\Model\ProductAssociationInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
