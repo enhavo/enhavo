@@ -45,6 +45,11 @@ export default class View
         this.componentRegistry = componentRegistry;
     }
 
+    public static initView(label: string = '')
+    {
+        (new EventDispatcher()).dispatch(new LoadedEvent(View.getIdFromUrl(), label, true));
+    }
+
     init() {
         if (this.initialized) {
             return;
@@ -60,7 +65,7 @@ export default class View
         }
 
         if(this.data.id == null) {
-            this.data.id = this.getIdFromUrl();
+            this.data.id = View.getIdFromUrl();
         } else if(typeof this.data.id === 'string') {
             this.data.id = parseInt(this.data.id);
         }
@@ -75,7 +80,7 @@ export default class View
         });
     }
 
-    private getIdFromUrl(): number|null
+    private static getIdFromUrl(): number|null
     {
         let url = new URL(window.location.href);
         let id = parseInt(url.searchParams.get("view_id"));
