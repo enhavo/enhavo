@@ -17,6 +17,9 @@ entrypoints:
     'enhavo/app/preview':
         path: '../Entrypoint/preview'
         build: enhavo
+    'enhavo/app/view':
+        path: '../Entrypoint/view'
+        build: enhavo
 
 compiler_pass:
     action:
