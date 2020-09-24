@@ -93,6 +93,7 @@ class SubscriptionManager
      */
     public function resolveGroups(?array $groups): array
     {
+        // blutze: what is it doing?
         return [];
     }
 }
