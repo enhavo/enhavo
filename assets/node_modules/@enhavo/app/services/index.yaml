@@ -8,6 +8,7 @@ services:
             - '@enhavo/app/FlashMessage/FlashMessenger'
             - '@enhavo/app/Modal/ModalManager'
             - '@enhavo/app/Grid/Grid'
+            - '@enhavo/app/Form/FormRegistry'
 
     '@enhavo/app/Index/Components/IndexComponent.vue':
         chunk: 'vue'

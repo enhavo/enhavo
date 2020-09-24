@@ -4,6 +4,7 @@ import View from "@enhavo/app/View/View";
 import FlashMessenger from "@enhavo/app/FlashMessage/FlashMessenger";
 import ModalManager from "@enhavo/app/Modal/ModalManager";
 import Grid from "@enhavo/app/Grid/Grid";
+import FormRegistry from "@enhavo/app/Form/FormRegistry";
 
 export default class IndexApp
 {
@@ -13,6 +14,7 @@ export default class IndexApp
     private readonly flashMessenger: FlashMessenger;
     private readonly modalManager: ModalManager;
     private readonly grid: Grid;
+    private readonly formRegistry: FormRegistry;
 
     constructor(
         eventDispatcher: EventDispatcher,
@@ -20,7 +22,8 @@ export default class IndexApp
         actionManager: ActionManager,
         flashMessenger: FlashMessenger,
         modalManager: ModalManager,
-        grid: Grid
+        grid: Grid,
+        formRegistry: FormRegistry
     ) {
         this.eventDispatcher = eventDispatcher;
         this.view = view;
@@ -28,6 +31,7 @@ export default class IndexApp
         this.flashMessenger = flashMessenger;
         this.modalManager = modalManager;
         this.grid = grid;
+        this.formRegistry = formRegistry;
     }
 
     init()
