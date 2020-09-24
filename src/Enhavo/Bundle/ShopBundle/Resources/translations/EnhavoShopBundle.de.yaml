@@ -190,6 +190,16 @@ product_variant:
 
 
 product_attribute:
+  action:
+    label:
+      text: 'Text'
+      textarea: 'Textfeld'
+      checkbox: 'Checkbox'
+      integer: 'Ganzzahl'
+      percent: 'Prozent'
+      datetime: 'Datum und Uhrzeit'
+      date: 'Datum'
+      select: 'Auswahl'
   label:
       name: 'Name'
       storage_type: Speichertyp
