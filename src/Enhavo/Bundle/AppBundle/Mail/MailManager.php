@@ -13,7 +13,7 @@ use Twig\Environment;
 
 class MailManager
 {
-    const CONTENT_TYPE_MIXED = 'mixed';
+    const CONTENT_TYPE_MIXED = 'multipart/mixed';
     const CONTENT_TYPE_HTML = 'text/html';
     const CONTENT_TYPE_PLAIN = 'text/plain';
 
