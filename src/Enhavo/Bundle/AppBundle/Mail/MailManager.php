@@ -12,6 +12,10 @@ use Twig\Environment;
 
 class MailManager
 {
+    const CONTENT_TYPE_MIXED = 'mixed';
+    const CONTENT_TYPE_HTML = 'text/html';
+    const CONTENT_TYPE_PLAIN = 'text/plain';
+
     /** @var Swift_Mailer */
     private $mailer;
 
@@ -36,21 +40,21 @@ class MailManager
         $this->config = $config;
     }
 
-    public function sendMail(string $namespace, $resource, array $attachments = [])
+    public function sendMail(string $key, $resource, array $attachments = [])
     {
         $vars = [
             'resource' => $resource,
         ];
 
         $message = $this->createMessage(
-            $this->config[$namespace]['from'],
-            $this->config[$namespace]['name'],
-            $this->config[$namespace]['to'],
-            $this->config[$namespace]['subject'],
-            $this->config[$namespace]['template'],
+            $this->config[$key]['from'],
+            $this->config[$key]['name'],
+            $this->config[$key]['to'],
+            $this->config[$key]['subject'],
+            $this->config[$key]['template'],
             $vars,
             $attachments,
-            $this->config[$namespace]['content_type']
+            $this->config[$key]['content_type']
         );
 
         return $this->mailer->send($message);
@@ -70,7 +74,7 @@ class MailManager
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    private function createMessage(string $from, string $senderName, string $to, string $subject, string $template, array $context, array $attachments = [], string $contentType = 'text/plain'): \Swift_Message
+    private function createMessage(string $from, string $senderName, string $to, string $subject, string $template, array $context, array $attachments = [], string $contentType = self::CONTENT_TYPE_PLAIN): \Swift_Message
     {
         $message = new Swift_Message();
         $message->setSubject($this->renderString($subject, $context))
@@ -83,23 +87,11 @@ class MailManager
 
         $template = $this->environment->load($template);
 
-        try {
-            $textPlain = $template->renderBlock('text_plain', $context);
-            $textHtml = $template->renderBlock('text_html', $context);
-        } catch (\Throwable $e) {
-            $body = $template->render($context);
-        }
-
-        if (isset($body)) {
-            $message->setBody($body, $contentType);
-
+        if ($contentType === self::CONTENT_TYPE_MIXED) {
+            $message->setBody($template->renderBlock('text_plain', $context), self::CONTENT_TYPE_PLAIN);
+            $message->addPart($template->renderBlock('text_html', $context), self::CONTENT_TYPE_HTML);
         } else {
-            if (isset($textPlain)) {
-                $message->setBody($textPlain, 'text/plain');
-            }
-            if (isset($textHtml)) {
-                $message->addPart($textHtml, 'text/html');
-            }
+            $message->setBody($template->render($context), $contentType);
         }
 
         foreach ($attachments as $attachment) {
