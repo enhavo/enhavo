@@ -5,10 +5,10 @@ namespace Enhavo\Bundle\AppBundle\Mail;
 
 
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
+use Swift_Mailer;
+use Swift_Message;
 use Symfony\Component\HttpFoundation\File\File;
 use Twig\Environment;
-use \Swift_Mailer;
-use \Swift_Message;
 
 class MailManager
 {
@@ -43,10 +43,10 @@ class MailManager
         ];
 
         $message = $this->createMessage(
-            $this->environment->createTemplate($this->config[$namespace]['from'])->render($vars),
-            $this->environment->createTemplate($this->config[$namespace]['name'])->render($vars),
-            $this->environment->createTemplate($this->config[$namespace]['to'])->render($vars),
-            $this->environment->createTemplate($this->config[$namespace]['subject'])->render($vars),
+            $this->config[$namespace]['from'],
+            $this->config[$namespace]['name'],
+            $this->config[$namespace]['to'],
+            $this->config[$namespace]['subject'],
             $this->config[$namespace]['template'],
             $vars,
             $attachments,
@@ -73,21 +73,25 @@ class MailManager
     private function createMessage(string $from, string $senderName, string $to, string $subject, string $template, array $context, array $attachments = [], string $contentType = 'text/plain'): \Swift_Message
     {
         $message = new Swift_Message();
-        $message->setSubject($subject)
-            ->setFrom($from, $senderName)
-            ->setTo($to)
+        $message->setSubject($this->renderString($subject, $context))
+            ->setFrom(
+                $this->renderString($from, $context),
+                $this->renderString($senderName, $context)
+            )
+            ->setTo($this->renderString($to, $context))
         ;
 
         $template = $this->environment->load($template);
+
         try {
             $textPlain = $template->renderBlock('text_plain', $context);
             $textHtml = $template->renderBlock('text_html', $context);
         } catch (\Throwable $e) {
-            $body = $this->environment->render($template, $context);
+            $body = $template->render($context);
         }
 
         if (isset($body)) {
-            $message->setBody($textPlain, $contentType);
+            $message->setBody($body, $contentType);
 
         } else {
             if (isset($textPlain)) {
@@ -109,5 +113,10 @@ class MailManager
         }
 
         return $message;
+    }
+
+    private function renderString(string $string, array $context)
+    {
+        return $this->environment->createTemplate($string)->render($context);
     }
 }
