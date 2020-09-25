@@ -24,6 +24,7 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->getRootNode();
 
         $this->addViewerSectionSection($rootNode);
+        $this->addMailSectionSection($rootNode);
         $this->addWebpackBuildSection($rootNode);
         $this->addFormThemesSection($rootNode);
         $this->addTemplatePathsSection($rootNode);
@@ -56,7 +57,30 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('apps')
                     ->prototype('scalar')->end()
                 ->end()
-            ->end();
+            ->end()
+        ;
+    }
+
+    private function addMailSectionSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('mails')
+                    ->useAttributeAsKey('key')
+                    ->prototype('array')
+                        ->addDefaultsIfNotSet()
+                        ->children()
+                            ->variableNode('subject')->end()
+                            ->variableNode('from')->end()
+                            ->variableNode('name')->end()
+                            ->variableNode('to')->end()
+                            ->variableNode('template')->end()
+                            ->variableNode('content_type')->defaultValue('text/plain')
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
     }
 
     private function addWebpackBuildSection(ArrayNodeDefinition $node)
@@ -64,7 +88,8 @@ class Configuration implements ConfigurationInterface
         $node
             ->children()
                 ->scalarNode('webpack_build')->defaultValue('_default')->end()
-            ->end();
+            ->end()
+        ;
     }
 
     private function addFormThemesSection(ArrayNodeDefinition $node)
