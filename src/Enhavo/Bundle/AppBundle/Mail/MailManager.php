@@ -4,6 +4,7 @@
 namespace Enhavo\Bundle\AppBundle\Mail;
 
 
+use Enhavo\Bundle\AppBundle\Exception\MailNotFoundException;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Swift_Mailer;
 use Swift_Message;
@@ -42,6 +43,10 @@ class MailManager
 
     public function sendMail(string $key, $resource, array $attachments = [])
     {
+        if (!isset($this->config[$key])) {
+            throw new MailNotFoundException(sprintf('Mail with key "%s" does not exist in enhavo_app.mails', $key));
+        }
+
         $vars = [
             'resource' => $resource,
         ];
