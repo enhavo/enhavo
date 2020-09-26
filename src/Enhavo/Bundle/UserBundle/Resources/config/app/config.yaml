@@ -58,3 +58,24 @@ enhavo_app:
             role: ROLE_ENHAVO_USER_GROUP_DELETE
             label: group.role.label.delete
             translation_domain: EnhavoUserBundle
+    toolbar_widget:
+        secondary:
+            user_menu:
+                type: quick_menu
+                icon: person
+                menu:
+                    logout:
+                        route: enhavo_user_security_logout
+                        label: label.logout
+                        translation_domain: EnhavoAppBundle
+                        target: _self
+                    change_password:
+                        route: enhavo_user_change_password_change
+                        label: label.change_password
+                        translation_domain: EnhavoAppBundle
+                        target: _view
+                    open_homepage:
+                        url: /
+                        label: label.open_homepage
+                        translation_domain: EnhavoAppBundle
+                        target: _blank

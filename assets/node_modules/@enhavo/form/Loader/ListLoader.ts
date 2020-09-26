@@ -1,5 +1,6 @@
 import AbstractLoader from "@enhavo/form/Loader/AbstractLoader";
 import ListType from "@enhavo/form/Type/ListType";
+import "@enhavo/form/assets/styles/form.scss";
 
 export default class ListLoader extends AbstractLoader
 {
