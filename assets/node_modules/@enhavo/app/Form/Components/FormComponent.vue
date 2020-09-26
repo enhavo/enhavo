@@ -26,7 +26,7 @@
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
 import '@enhavo/app/assets/styles/base.scss'
-import '@enhavo/form/assets/styles/form.scss'
+import '@enhavo/app/assets/styles/form.scss'
 import '@enhavo/app/assets/styles/view.scss';
 
 @Component()

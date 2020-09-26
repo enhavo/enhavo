@@ -28,27 +28,28 @@ Add webpack config
 
 Add following ``webpack.config.js`` to your project root directory.
 
-.. code::
+.. code:: js
 
     const EnhavoEncore = require('@enhavo/core/EnhavoEncore');
-    const AppPackage = require('@enhavo/app/Encore/EncoreRegistryPackage');
+    const AppPackage = require('@enhavo/app/Encore/AppPackage');
+    const AppThemePackage = require('@enhavo/app/Encore/AppThemePackage');
+    const FormPackage = require('@enhavo/form/Encore/FormPackage');
 
+    EnhavoEncore.add(
+      'enhavo',
+      [new AppPackage(), new FormPackage()],
+      Encore => {},
+      config => {}
+    );
 
-    EnhavoEncore
-      // register packages
-      .register(new AppPackage())
-    ;
-
-    EnhavoEncore.add('enhavo', (Encore) => {
-      // custom encore config
-      // Encore.enableBuildNotifications();
-    });
-
-    EnhavoEncore.add('theme', (Encore) => {
-      Encore
-        // add theme entry and config
-        .addEntry('base', './assets/theme/base')
-    });
+    EnhavoEncore.add(
+      'theme',
+      [new AppThemePackage()],
+      Encore => {
+        Encore.addEntry('base', './assets/theme/base.js');
+      },
+      config => {}
+    );
 
     module.exports = EnhavoEncore.export();
 
