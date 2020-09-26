@@ -18,28 +18,37 @@ class SyliusCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
+        $this->setSyliusResourceParameter($container);
         $this->overwriteRequestConfigurationFactory($container);
         $this->overwriteController($container);
         $this->overwriteResourceResolver($container);
     }
 
-    protected function overwriteRequestConfigurationFactory(ContainerBuilder $container)
+    private function setSyliusResourceParameter(ContainerBuilder $container)
+    {
+        if (!$container->hasParameter('sylius.resources')) {
+            $container->setParameter('sylius.resources', []);
+        }
+    }
+
+    private function overwriteRequestConfigurationFactory(ContainerBuilder $container)
     {
         $definition = $container->getDefinition('sylius.resource_controller.request_configuration_factory');
         $definition->replaceArgument(1, RequestConfiguration::class);
     }
 
-    protected function overwriteController(ContainerBuilder $container)
+    private function overwriteController(ContainerBuilder $container)
     {
         $controllerDefinitionIds = [];
 
-        $resources = $container->getParameter('sylius.resources');
-        foreach($resources as $resourceName => $values) {
+        $resources = $container->hasParameter('sylius.resources') ? $container->getParameter('sylius.resources') : [];
+
+        foreach ($resources as $resourceName => $values) {
             $nameParts = explode('.', $resourceName);
             $controllerDefinitionIds[] = sprintf('%s.controller.%s', $nameParts[0], $nameParts[1]);
         }
 
-        foreach($controllerDefinitionIds as $definitionName) {
+        foreach ($controllerDefinitionIds as $definitionName) {
             if($container->hasDefinition($definitionName)) {
                 $definition = $container->getDefinition($definitionName);
                 $definition->addArgument($container->getDefinition('view.factory'));
@@ -51,7 +60,7 @@ class SyliusCompilerPass implements CompilerPassInterface
         }
     }
 
-    protected function overwriteResourceResolver(ContainerBuilder $container)
+    private function overwriteResourceResolver(ContainerBuilder $container)
     {
         $definition = $container->getDefinition('sylius.resource_controller.resources_resolver');
         $definition->setClass(ResourcesResolver::class);
