@@ -10,4 +10,4 @@ services:
         arguments:
             - '@Enhavo\Component\Metadata\MetadataRepository[DoctrineExtension]'
         tags:
-            - { name: doctrine.event_subscriber }
+            - { name: doctrine.event_subscriber, priority: 1000 }
