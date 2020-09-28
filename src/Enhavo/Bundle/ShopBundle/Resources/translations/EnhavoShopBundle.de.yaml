@@ -122,6 +122,9 @@ product:
     dimension: Abmessungen
     options: Optionen
     meta: Meta
+    name: Name
+    code: Code
+    variants: Varianten
   form:
     label:
       active: Aktiv

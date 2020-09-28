@@ -8,118 +8,88 @@
 
 namespace Enhavo\Bundle\ShopBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Enhavo\Bundle\MediaBundle\Entity\File;
 use Enhavo\Bundle\RoutingBundle\Entity\Route;
 use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
 use Enhavo\Bundle\RoutingBundle\Model\Routeable;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
-use Sylius\Component\Product\Model\ProductInterface;
+use Enhavo\Bundle\ShopBundle\Model\ProductInterface;
 use Sylius\Component\Product\Model\Product as SyliusProduct;
 use Sylius\Component\Taxation\Model\TaxRateInterface;
 use Sylius\Component\Shipping\Model\ShippingCategoryInterface;
 
 class Product extends SyliusProduct implements ProductInterface, Routeable
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $slug;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $title;
 
-    /**
-     * @var boolean
-     */
+    /** @var boolean */
     private $active = true;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
+    /** @var \Doctrine\Common\Collections\Collection */
     private $pictures;
 
-    /**
-     * @var FileInterface
-     */
+    /** @var FileInterface */
     private $picture;
 
-    /**
-     * @var integer
-     */
+    /** @var integer */
     private $price;
 
-    /**
-     * @var integer
-     */
+    /** @var integer */
     private $reducedPrice;
 
-    /**
-     * @var boolean
-     */
+    /** @var boolean */
     private $reduced;
 
-    /**
-     * @var ShippingCategoryInterface
-     */
+    /** @var ShippingCategoryInterface */
     private $shippingCategory;
 
-    /**
-     * @var TaxRateInterface
-     */
+    /** @var TaxRateInterface */
     private $taxRate;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $lengthUnit;
 
-    /**
-     * @var integer
-     */
+    /** @var integer */
     private $height;
 
-    /**
-     * @var integer
-     */
+    /** @var integer */
     private $width;
 
-    /**
-     * @var integer
-     */
+    /** @var integer */
     private $depth;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $volumeUnit;
 
-    /**
-     * @var integer
-     */
+    /** @var integer */
     private $volume;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $weightUnit;
 
-    /**
-     * @var integer
-     */
+    /** @var integer */
     private $weight;
 
-    /**
-     * @var boolean
-     */
+    /** @var boolean */
     private $shippingRequired;
 
-    /**
-     * @var Route
-     */
+    /** @var Route */
     private $route;
+
+    /**
+     * Product constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->pictures = new ArrayCollection();
+    }
+
 
     /**
      * @return string
@@ -130,7 +100,8 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
     }
 
     /**
-     * @param mixed $title
+     * @param string $title
+     * @return self
      */
     public function setTitle($title): ProductInterface
     {
@@ -149,6 +120,7 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
 
     /**
      * @param FileInterface $picture
+     * @return self
      */
     public function setPicture($picture): ProductInterface
     {
@@ -191,6 +163,7 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
 
     /**
      * @param bool $reduced
+     * @return self
      */
     public function setReduced(?bool $reduced): ProductInterface
     {
@@ -211,7 +184,7 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
      * @param ShippingCategoryInterface $shippingCategory
      * @return $this
      */
-    public function setShippingCategory(ShippingCategoryInterface $shippingCategory): ProductInterface  // This method is not required.
+    public function setShippingCategory(ShippingCategoryInterface $shippingCategory): ProductInterface
     {
         $this->shippingCategory = $shippingCategory;
 
@@ -343,6 +316,7 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
 
     /**
      * @param bool $shippingRequired
+     * @return self
      */
     public function setShippingRequired(bool $shippingRequired): ProductInterface
     {
@@ -443,6 +417,7 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
 
     /**
      * @param bool $active
+     * @return self
      */
     public function setActive(?bool $active): ProductInterface
     {
@@ -494,6 +469,7 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
 
     /**
      * @param int $reducedPrice
+     * @return self
      */
     public function setReducedPrice(?int $reducedPrice): ProductInterface
     {
@@ -512,6 +488,7 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
 
     /**
      * @param string $lengthUnit
+     * @return self
      */
     public function setLengthUnit(?string $lengthUnit): ProductInterface
     {
@@ -530,6 +507,7 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
 
     /**
      * @param string $volumeUnit
+     * @return self
      */
     public function setVolumeUnit(?string $volumeUnit): ProductInterface
     {
@@ -548,6 +526,7 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
 
     /**
      * @param string $weightUnit
+     * @return self
      */
     public function setWeightUnit(?string $weightUnit): ProductInterface
     {
