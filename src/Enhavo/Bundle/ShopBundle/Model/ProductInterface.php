@@ -9,9 +9,11 @@
 namespace Enhavo\Bundle\ShopBundle\Model;
 
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
+use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Taxation\Model\TaxRateInterface;
+use Sylius\Component\Product\Model\ProductInterface as SyliusProductInterface;
 
-interface ProductInterface
+interface ProductInterface extends ResourceInterface,SyliusProductInterface
 {
     /**
      * @return integer
@@ -27,11 +29,6 @@ interface ProductInterface
      * @return TaxRateInterface
      */
     public function getTaxRate();
-
-    /**
-     * @return string
-     */
-    public function getName();
 
     /**
      * @return FileInterface|null

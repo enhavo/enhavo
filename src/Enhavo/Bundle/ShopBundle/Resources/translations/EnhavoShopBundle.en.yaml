@@ -146,6 +146,9 @@ product:
     dimension: Dimension
     options: Options
     meta: Meta
+    name: Name
+    code: Code
+    variants: Variants
   message:
     error:
       not_found: 'Requested product was not found.'

@@ -9,7 +9,6 @@ sylius_product_index:
             viewer:
                 label: product.label.product
                 translation_domain: EnhavoShopBundle
-                open_route: sylius_product_variant_index
 
 sylius_product_create:
     options:
@@ -65,6 +64,10 @@ sylius_product_update:
                         label: Meta
                         translation_domain: EnhavoShopBundle
                         template: EnhavoShopBundle:admin/resource/product:meta.html.twig
+                actions:
+                    variant:
+                        icon: book
+                        type: shop_variant
 
 sylius_product_table:
     options:
@@ -90,19 +93,18 @@ sylius_product_table:
                         type: currency
                         currency: €
                     active:
-                      property: active
-                      width: 1
-                      label: product.form.label.active
-                      translation_domain: EnhavoShopBundle
-                      type: boolean
+                        property: active
+                        width: 1
+                        label: product.form.label.active
+                        translation_domain: EnhavoShopBundle
+                        type: boolean
                     action:
                         width: 2
-                        label: label.edit
-                        translation_domain: EnhavoAppBundle
+                        label: product.label.variants
+                        translation_domain: EnhavoShopBundle
                         type: action
                         action:
-                            type: update
-                            route: sylius_product_update
+                            type: shop_variant
 
 sylius_product_delete:
     options:
@@ -166,3 +168,9 @@ sylius_product_auto_complete:
                   - expr:configuration.getLimit()
            choice_label: name
 
+sylius_product_variant_generate:
+    path: /enhavo/shop/product/{id}/variants/generate
+    defaults:
+        _controller: sylius.controller.product:updateAction
+        _sylius:
+            form: Enhavo\Bundle\ShopBundle\Form\Type\ProductGenerateVariantsType

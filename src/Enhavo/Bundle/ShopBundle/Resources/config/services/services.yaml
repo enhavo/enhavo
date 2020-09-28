@@ -2,6 +2,18 @@ parameters:
     enhavo_shop.controller.user.class: Enhavo\Bundle\ShopBundle\Controller\UserController
 
 services:
+    Enhavo\Bundle\ShopBundle\Action\VariantActionType:
+        parent: Enhavo\Bundle\AppBundle\Action\Type\OpenActionType
+        public: true
+        tags:
+            - { name: enhavo.action, alias: shop_variant }
+
+    Enhavo\Bundle\ShopBundle\Action\GenerateVariantActionType:
+        parent: Enhavo\Bundle\AppBundle\Action\Type\OpenActionType
+        public: true
+        tags:
+            - { name: enhavo.action, alias: shop_generate_variant }
+
 #    enhavo_shop.listener.doctrine_sylius_meta:
 #        class: Enhavo\Bundle\ShopBundle\EventListener\DoctrineSyliusMetaListener
 #        tags:
