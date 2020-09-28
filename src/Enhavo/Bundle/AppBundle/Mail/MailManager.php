@@ -62,7 +62,7 @@ class MailManager
             $this->config[$key]['content_type']
         );
 
-        return $this->mailer->send($message);
+        return $this->sendMessage($message);
     }
 
     /**
@@ -79,7 +79,7 @@ class MailManager
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    private function createMessage(string $from, string $senderName, string $to, string $subject, string $template, array $context, array $attachments = [], string $contentType = self::CONTENT_TYPE_PLAIN): \Swift_Message
+    public function createMessage(string $from, string $senderName, string $to, string $subject, string $template, array $context, array $attachments = [], string $contentType = self::CONTENT_TYPE_PLAIN): \Swift_Message
     {
         $message = new Swift_Message();
         $message->setSubject($this->renderString($subject, $context))
@@ -110,6 +110,11 @@ class MailManager
         }
 
         return $message;
+    }
+
+    public function sendMessage(\Swift_Message $message)
+    {
+        return $this->mailer->send($message);
     }
 
     private function renderString(string $string, array $context)
