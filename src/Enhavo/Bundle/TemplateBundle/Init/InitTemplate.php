@@ -13,6 +13,7 @@ use Enhavo\Bundle\AppBundle\Factory\Factory;
 use Enhavo\Bundle\AppBundle\Init\InitInterface;
 use Enhavo\Bundle\AppBundle\Init\Output;
 use Enhavo\Bundle\AppBundle\Repository\EntityRepository;
+use Enhavo\Bundle\AppBundle\Resource\ResourceManager;
 use Enhavo\Bundle\TemplateBundle\Entity\Template;
 use Enhavo\Bundle\TemplateBundle\Factory\TemplateFactory;
 use Enhavo\Bundle\TemplateBundle\Template\TemplateManager;
@@ -38,23 +39,28 @@ class InitTemplate implements InitInterface
     private $templateFactory;
 
     /**
-     * @var Factory
+     * @var EntityRepository
      */
     private $templateRepository;
+
+    /** @var ResourceManager */
+    private $resourceManager;
 
     /**
      * InitTemplate constructor.
      * @param EntityManagerInterface $em
      * @param TemplateManager $templateManager
-     * @param TemplateFactory $templateFactory
+     * @param Factory $templateFactory
      * @param EntityRepository $templateRepository
+     * @param ResourceManager $resourceManager
      */
-    public function __construct(EntityManagerInterface $em, TemplateManager $templateManager, TemplateFactory $templateFactory, EntityRepository $templateRepository)
+    public function __construct(EntityManagerInterface $em, TemplateManager $templateManager, Factory $templateFactory, EntityRepository $templateRepository, ResourceManager $resourceManager)
     {
         $this->em = $em;
         $this->templateManager = $templateManager;
         $this->templateFactory = $templateFactory;
         $this->templateRepository = $templateRepository;
+        $this->resourceManager = $resourceManager;
     }
 
     public function init(Output $io)
@@ -73,21 +79,21 @@ class InitTemplate implements InitInterface
             }
             if(!$exists) {
                 /** @var Template $newTemplate */
+                $io->writeln(sprintf('Add template "%s"', $code));
                 $newTemplate = $this->templateFactory->createByTemplate($template);
                 $newTemplate->setCode($code);
-                $io->writeln(sprintf('Add template "%s"', $code));
-                $this->em->persist($newTemplate);
+                $this->resourceManager->create($newTemplate);
             }
         }
 
         foreach($currentTemplates as $currentTemplate) {
             if(!array_key_exists($currentTemplate->getCode(), $templates)) {
                 $io->writeln(sprintf('Remove template "%s"', $currentTemplate->getCode()));
+                $this->resourceManager->delete($currentTemplate);
                 $this->em->remove($currentTemplate);
             }
         }
 
-        $this->em->flush();
     }
 
     public function getType()
