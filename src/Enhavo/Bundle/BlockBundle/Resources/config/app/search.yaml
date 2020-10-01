@@ -1,22 +1,19 @@
 enhavo_search:
     metadata:
-        Enhavo\Bundle\BlockBundle\Entity\Container:
-            properties:
-                blocks:
-                    type: collection
-
         Enhavo\Bundle\BlockBundle\Entity\Node:
             properties:
                 block:
                     type: model
+                children:
+                    type: collection
 
-        Enhavo\Bundle\BlockBundle\Entity\BlockquoteText:
+        Enhavo\Bundle\BlockBundle\Model\Block\BlockquoteBlock:
             properties:
                 blockquote:
                     type: text
                     weight: 8
 
-        Enhavo\Bundle\BlockBundle\Entity\Picture:
+        Enhavo\Bundle\BlockBundle\Model\Block\PictureBlock:
             properties:
                 title:
                     type: text
@@ -25,19 +22,7 @@ enhavo_search:
                     type: text
                     weight: 8
 
-        Enhavo\Bundle\BlockBundle\Entity\PicturePicture:
-            properties:
-                title:
-                    type: text
-                    weight: 8
-                captionLeft:
-                    type: text
-                    weight: 8
-                captionRight:
-                    type: text
-                    weight: 8
-
-        Enhavo\Bundle\BlockBundle\Entity\Text:
+        Enhavo\Bundle\BlockBundle\Model\Block\TextBlock:
             properties:
                 title:
                     type: text
@@ -49,7 +34,7 @@ enhavo_search:
                         h2: 10
                         p: 7
 
-        Enhavo\Bundle\BlockBundle\Entity\TextPicture:
+        Enhavo\Bundle\BlockBundle\Model\Block\TextPictureBlock:
             properties:
                 title:
                     type: text
@@ -57,7 +42,7 @@ enhavo_search:
                 text:
                     type: html
 
-        Enhavo\Bundle\BlockBundle\Entity\TextText:
+        Enhavo\Bundle\BlockBundle\Model\Block\TextText:
             properties:
                 title:
                     type: text
@@ -73,13 +58,13 @@ enhavo_search:
                 textRight:
                     type: html
 
-        Enhavo\Bundle\BlockBundle\Entity\Video:
+        Enhavo\Bundle\BlockBundle\Model\Block\VideoBlock:
             properties:
                 title:
                     type: text
                     weight: 8
 
-        Enhavo\Bundle\BlockBundle\Entity\Gallery:
+        Enhavo\Bundle\BlockBundle\Model\Block\GalleryBlock:
             properties:
                 title:
                     type: text
