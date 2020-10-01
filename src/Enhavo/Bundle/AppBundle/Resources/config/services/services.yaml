@@ -109,3 +109,8 @@ services:
             - '@swiftmailer.mailer'
             - '@twig'
             - '%enhavo_app.mails%'
+
+    Enhavo\Bundle\AppBundle\Resource\ResourceManager:
+        arguments:
+            - '@event_dispatcher'
+            - '@doctrine.orm.entity_manager'
