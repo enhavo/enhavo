@@ -30,6 +30,9 @@ class ModelExtractor extends AbstractType implements PropertyExtractorInterface
 
     public function extract($value, $options = [])
     {
+        if ($value === null) {
+            return [];
+        }
         return $this->extractor->extract($value);
     }
 
