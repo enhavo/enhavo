@@ -115,8 +115,15 @@ class Loader
             let beforePath = null;
             while(subPath !== beforePath) {
                 let file = path.resolve(subPath, './node_modules');
-                if(fs.existsSync(file)) {
-                    return path.resolve(subPath, './node_modules', filepath);
+                if (fs.existsSync(file)) {
+                    let resolved = path.resolve(subPath, './node_modules', filepath);
+                    if (!fs.existsSync(resolved)) {
+                        if (this._checkGlobDirExists(resolved)) {
+                            return resolved;
+                        }
+                    } else {
+                        return resolved;
+                    }
                 }
                 beforePath = subPath;
                 subPath = path.resolve(subPath, '..');
@@ -124,6 +131,22 @@ class Loader
             return null;
         }
         return filepath;
+    }
+
+    _checkGlobDirExists(path) {
+        let parts = path.split('/');
+        let index = 0;
+        let part = parts[index++];
+        let cutPath;
+
+        while (part.indexOf('*') === -1) {
+            part = parts[index++];
+            cutPath = path.substr(0, path.indexOf(part));
+        }
+
+        path = cutPath || path;
+
+        return fs.existsSync(path);
     }
 
     /**
