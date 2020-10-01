@@ -11,7 +11,10 @@ namespace Enhavo\Bundle\AppBundle\Tests\Batch\Type;
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Batch\Batch;
 use Enhavo\Bundle\AppBundle\Batch\Type\DeleteBatchType;
+use Enhavo\Bundle\AppBundle\Resource\ResourceManager;
 use Enhavo\Bundle\AppBundle\Tests\Mock\ResourceMock;
+use Enhavo\Bundle\FormBundle\Tests\Serializer\Mock\Resource;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
@@ -20,23 +23,20 @@ class DeleteBatchTypeTest extends TestCase
     private function createDependencies()
     {
         $dependencies = new DeleteBatchTypeDependencies();
-        $dependencies->eventDispatcher = $this->getMockBuilder(EventDispatcherInterface::class)->getMock();
-        $dependencies->em = $this->getMockBuilder(EntityManagerInterface::class)->getMock();
+        $dependencies->resourceManager = $this->getMockBuilder(ResourceManager::class)->disableOriginalConstructor()->getMock();
         return $dependencies;
     }
 
     private function createInstance(DeleteBatchTypeDependencies $dependencies)
     {
-        $type = new DeleteBatchType($dependencies->eventDispatcher, $dependencies->em);
+        $type = new DeleteBatchType($dependencies->resourceManager);
         return $type;
     }
 
     public function testExecute()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->em->expects($this->exactly(2))->method('remove');
-        $dependencies->em->expects($this->once())->method('flush');
-        $dependencies->eventDispatcher->expects($this->exactly(4))->method('dispatch');
+        $dependencies->resourceManager->expects($this->exactly(2))->method('delete');
         $type = $this->createInstance($dependencies);
 
         $batch = new Batch($type, [], []);
@@ -72,8 +72,7 @@ class DeleteBatchTypeTest extends TestCase
 
 class DeleteBatchTypeDependencies
 {
-    /** @var EventDispatcherInterface|\PHPUnit_Framework_MockObject_MockObject */
-    public $eventDispatcher;
-    /** @var EntityManagerInterface|\PHPUnit_Framework_MockObject_MockObject */
-    public $em;
+    /** @var ResourceManager|MockObject */
+    public $resourceManager;
+
 }

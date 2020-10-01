@@ -2,13 +2,10 @@
 
 namespace Enhavo\Bundle\AppBundle\Batch\Type;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Batch\AbstractBatchType;
+use Enhavo\Bundle\AppBundle\Resource\ResourceManager;
 use Enhavo\Bundle\AppBundle\View\ViewData;
-use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
 use Sylius\Component\Resource\Model\ResourceInterface;
-use Sylius\Component\Resource\ResourceActions;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -19,22 +16,18 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class DeleteBatchType extends AbstractBatchType
 {
-    /** @var EventDispatcherInterface */
-    private $eventDispatcher;
-
-    /** @var EntityManagerInterface */
-    private $em;
+    /** @var ResourceManager */
+    private $resourceManager;
 
     /**
-     * DeleteType constructor.
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param EntityManagerInterface $em
+     * DeleteBatchType constructor.
+     * @param ResourceManager $resourceManager
      */
-    public function __construct(EventDispatcherInterface $eventDispatcher, EntityManagerInterface $em)
+    public function __construct(ResourceManager $resourceManager)
     {
-        $this->eventDispatcher = $eventDispatcher;
-        $this->em = $em;
+        $this->resourceManager = $resourceManager;
     }
+
 
     /**
      * @inheritdoc
@@ -42,11 +35,8 @@ class DeleteBatchType extends AbstractBatchType
     public function execute(array $options, array $resources, ResourceInterface $resource = null)
     {
         foreach($resources as $resource) {
-            $this->eventDispatcher->dispatch(sprintf('enhavo_app.pre_%s', ResourceActions::DELETE), new ResourceControllerEvent($resource));
-            $this->em->remove($resource);
-            $this->eventDispatcher->dispatch(sprintf('enhavo_app.post_%s', ResourceActions::DELETE), new ResourceControllerEvent($resource));
+            $this->resourceManager->delete($resource);
         }
-        $this->em->flush();
     }
 
     /**
