@@ -9,6 +9,7 @@ use Enhavo\Bundle\AppBundle\Batch\Type\DeleteBatchType;
 use Enhavo\Bundle\AppBundle\Resource\ResourceManager;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ResourceManagerTest extends TestCase
@@ -34,6 +35,7 @@ class ResourceManagerTest extends TestCase
         $dependencies->em->expects($this->once())->method('flush');
         $dependencies->eventDispatcher->expects($this->exactly(2))->method('dispatch')->willReturnCallback(function ($message, $event) {
             $this->assertRegExp('/enhavo_app\.(pre|post)_delete/', $message);
+            $this->assertInstanceOf(ResourceControllerEvent::class, $event);
         });
         $manager = $this->createInstance($dependencies);
 
@@ -47,6 +49,7 @@ class ResourceManagerTest extends TestCase
         $dependencies->em->expects($this->once())->method('flush');
         $dependencies->eventDispatcher->expects($this->exactly(2))->method('dispatch')->willReturnCallback(function ($message, $event) {
             $this->assertRegExp('/enhavo_app\.(pre|post)_create/', $message);
+            $this->assertInstanceOf(ResourceControllerEvent::class, $event);
         });
         $manager = $this->createInstance($dependencies);
 
@@ -59,6 +62,7 @@ class ResourceManagerTest extends TestCase
         $dependencies->em->expects($this->once())->method('flush');
         $dependencies->eventDispatcher->expects($this->exactly(2))->method('dispatch')->willReturnCallback(function ($message, $event) {
             $this->assertRegExp('/enhavo_app\.(pre|post)_update/', $message);
+            $this->assertInstanceOf(ResourceControllerEvent::class, $event);
         });
         $manager = $this->createInstance($dependencies);
 
