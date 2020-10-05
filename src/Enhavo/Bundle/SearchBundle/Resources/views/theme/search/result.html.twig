@@ -13,7 +13,7 @@
                 <div class="col-xs-12">
                     <h1>{{ result.title }}</h1>
                     {{ result.text|raw }}
-                    <a href="{{ resolve_url(result.subject) }}">{{ result.title }}</a>
+                    <a href="{{ router(result.subject) }}">{{ result.title }}</a>
                 </div>
             </div>
         </div>

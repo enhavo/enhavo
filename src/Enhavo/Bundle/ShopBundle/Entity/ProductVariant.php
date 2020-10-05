@@ -8,10 +8,9 @@
 
 namespace Enhavo\Bundle\ShopBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
-use Enhavo\Bundle\RoutingBundle\Entity\Route;
-use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
 use Sylius\Component\Product\Model\ProductVariant as SyliusProductVariant;
 use Sylius\Component\Shipping\Model\ShippingCategoryInterface;
 use Sylius\Component\Taxation\Model\TaxRateInterface;
@@ -19,90 +18,66 @@ use Sylius\Component\Product\Model\ProductVariantInterface;
 
 class ProductVariant extends SyliusProductVariant
 {
-    /**
-     * @var boolean
-     */
+    /** @var boolean */
     private $active = true;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $title;
 
-    /**
-     * @var FileInterface
-     */
+    /** @var FileInterface */
     private $picture;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
+    /** @var \Doctrine\Common\Collections\Collection */
     private $pictures;
 
-    /**
-     * @var integer
-     */
+    /** @var integer */
     private $price;
 
-    /**
-     * @var integer
-     */
+    /** @var integer */
     private $reducedPrice;
 
-    /**
-     * @var boolean
-     */
+    /** @var boolean */
     private $reduced;
 
-    /**
-     * @var ShippingCategoryInterface
-     */
+    /** @var ShippingCategoryInterface */
     private $shippingCategory;
 
-    /**
-     * @var TaxRateInterface
-     */
+    /** @var TaxRateInterface */
     private $taxRate;
 
-    /**
-     * @var boolean
-     */
+    /** @var boolean */
     private $shippingRequired;
 
-    /**
-     * @var integer
-     */
+    /** @var integer */
     private $stock;
 
-    /**
-     * @var boolean
-     */
-    private $stockTracked;
+    /** @var boolean */
+    private $stockTracked = false;
 
-    /**
-     * @var integer
-     */
+    /** @var integer */
     private $height;
 
-    /**
-     * @var integer
-     */
+    /** @var integer */
     private $width;
 
-    /**
-     * @var integer
-     */
+    /** @var integer */
     private $depth;
 
-    /**
-     * @var integer
-     */
+    /** @var integer */
     private $volume;
 
-    /**
-     * @var integer
-     */
+    /** @var integer */
     private $weight;
+
+    /**
+     * ProductVariant constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->position = 0;
+        $this->pictures = new ArrayCollection();
+    }
 
     /**
      * @return bool
@@ -114,6 +89,7 @@ class ProductVariant extends SyliusProductVariant
 
     /**
      * @param bool $active
+     * @return self
      */
     public function setActive(?bool $active): ProductVariantInterface
     {
@@ -132,6 +108,7 @@ class ProductVariant extends SyliusProductVariant
 
     /**
      * @param mixed $title
+     * @return self
      */
     public function setTitle($title): ProductVariantInterface
     {
@@ -150,6 +127,7 @@ class ProductVariant extends SyliusProductVariant
 
     /**
      * @param int $height
+     * @return self
      */
     public function setHeight(?int $height): ProductVariantInterface
     {
@@ -168,6 +146,7 @@ class ProductVariant extends SyliusProductVariant
 
     /**
      * @param int $depth
+     * @return self
      */
     public function setDepth(?int $depth): ProductVariantInterface
     {
@@ -186,6 +165,7 @@ class ProductVariant extends SyliusProductVariant
 
     /**
      * @param bool $shippingRequired
+     * @return self
      */
     public function setShippingRequired(?bool $shippingRequired): ProductVariantInterface
     {
@@ -204,6 +184,7 @@ class ProductVariant extends SyliusProductVariant
 
     /**
      * @param int $width
+     * @return self
      */
     public function setWidth(?int $width): ProductVariantInterface
     {
@@ -222,6 +203,7 @@ class ProductVariant extends SyliusProductVariant
 
     /**
      * @param int $volume
+     * @return self
      */
     public function setVolume(?int $volume): ProductVariantInterface
     {
@@ -240,6 +222,7 @@ class ProductVariant extends SyliusProductVariant
 
     /**
      * @param int $weight
+     * @return self
      */
     public function setWeight(?int $weight): ProductVariantInterface
     {
@@ -271,6 +254,7 @@ class ProductVariant extends SyliusProductVariant
 
     /**
      * @param int $stock
+     * @return self
      */
     public function setStock(int $stock): ProductVariantInterface
     {
@@ -289,6 +273,7 @@ class ProductVariant extends SyliusProductVariant
 
     /**
      * @param bool $reduced
+     * @return self
      */
     public function setReduced(?bool $reduced): ProductVariantInterface
     {
@@ -307,6 +292,7 @@ class ProductVariant extends SyliusProductVariant
 
     /**
      * @param int $reducedPrice
+     * @return self
      */
     public function setReducedPrice(?int $reducedPrice): ProductVariantInterface
     {
@@ -335,6 +321,7 @@ class ProductVariant extends SyliusProductVariant
 
     /**
      * @param bool $stockTracked
+     * @return self
      */
     public function setStockTracked(bool $stockTracked): ProductVariantInterface
     {
@@ -389,7 +376,7 @@ class ProductVariant extends SyliusProductVariant
     /**
      * Get TaxRate
      *
-     * @return integer
+     * @return float
      */
     public function getTax(): ?float
     {
@@ -411,6 +398,7 @@ class ProductVariant extends SyliusProductVariant
 
     /**
      * @param FileInterface $picture
+     * @return self
      */
     public function setPicture($picture): ProductVariantInterface
     {

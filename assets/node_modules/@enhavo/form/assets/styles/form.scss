@@ -3,8 +3,12 @@
 @import "~@enhavo/font/font.scss";
 @import '~@enhavo/app/assets/styles/blueprints';
 @import '~bootstrap/dist/css/bootstrap-grid.css';
+
+@import '~@enhavo/app/assets/styles/form';
+
+@import 'module/form';
 @import 'module/icheck';
 @import 'module/list';
-@import 'module/select2';
-@import 'module/form';
 @import 'module/poly-collection';
+@import 'module/select2';
+@import 'module/wysiwyg';

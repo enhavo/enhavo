@@ -146,11 +146,17 @@ product:
     dimension: Dimension
     options: Options
     meta: Meta
+    name: Name
+    code: Code
+    variants: Variants
   message:
     error:
       not_found: 'Requested product was not found.'
 
 product_variant:
+  action:
+    label:
+      generate: Generate variants
   label:
     create: Create
     edit: Edit
@@ -185,6 +191,16 @@ product_variant:
       shipping_required: Shipping required?
 
 product_attribute:
+  action:
+    label:
+      text: 'Text'
+      textarea: 'Textarea'
+      checkbox: 'Checkbox'
+      integer: 'Number'
+      percent: 'Percent'
+      datetime: 'DateTime'
+      date: 'Date'
+      select: 'Select'
   label:
     name: 'Name'
     storage_type: Storage type

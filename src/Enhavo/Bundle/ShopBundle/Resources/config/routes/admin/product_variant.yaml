@@ -1,7 +1,7 @@
 sylius_product_variant_index:
     options:
         expose: true
-    path: /enhavo/shop/product/{$productId}/variant/index
+    path: /enhavo/shop/product/{productId}/variant/index
     methods: [GET]
     defaults:
         _controller: sylius.controller.product_variant:indexAction
@@ -9,19 +9,22 @@ sylius_product_variant_index:
             form: sylius_product_variant
             viewer:
                 table_route_parameters:
-                     productId: $id
+                    productId: $productId
                 actions:
                     create:
                         type: create
                         route: sylius_product_variant_create
                         route_parameters:
-                            productId: $id
-
+                            productId: $productId
+                    generate:
+                        type: shop_generate_variant
+                        route_parameters:
+                            id: $productId
 
 sylius_product_variant_create:
     options:
         expose: true
-    path: /enhavo/shop/product/{$productId}/variant/create
+    path: /enhavo/shop/product/{productId}/variant/create
     methods: [GET,POST]
     defaults:
         _controller: sylius.controller.product_variant:createAction
@@ -58,7 +61,7 @@ sylius_product_variant_create:
 sylius_product_variant_update:
     options:
         expose: true
-    path: /enhavo/shop/product/{$productId}/variant/update/{id}
+    path: /enhavo/shop/product/variant/update/{id}
     methods: [GET,POST]
     defaults:
         _controller: sylius.controller.product_variant:updateAction
@@ -80,25 +83,18 @@ sylius_product_variant_update:
                         label: product_variant.label.dimension
                         translation_domain: EnhavoShopBundle
                         template: EnhavoShopBundle:admin/resource/product-variant:dimension.html.twig
-#                translation_domain: EnhavoShopBundle
-#                form:
-#                    action: sylius_product_variant_update
-#                    action_parameters:
-#                        id: $id
-#                        productId: $productId
-#                    delete: sylius_product_variant_delete
-#                    delete_parameters:
-#                        id: $id
-#                        productId: $productId
 
 sylius_product_variant_table:
     options:
         expose: true
-    path: /enhavo/shop/product/{$productId}/variant/table
+    path: /enhavo/shop/product/{productId}/variant/table
     defaults:
         page: 1
         _controller: sylius.controller.product_variant:tableAction
         _sylius:
+            sortable: true
+            sorting:
+                position: asc
             filters:
                 name:
                     type: text
@@ -137,31 +133,19 @@ sylius_product_variant_table:
                         property: code
                         width: 3
                         sortable: true
-                    position:
-                        type: text
-                        label: product_variant.form.label.position
-                        translation_domain: EnhavoShopBundle
-                        property: position
-                        width: 1
-                        sortable: true
 
 sylius_product_variant_delete:
     options:
         expose: true
-    path: /enhavo/shop/product/{$productId}/variant/delete/{id}
+    path: /enhavo/shop/product/variant/delete/{id}
     methods: [POST]
     defaults:
         _controller: sylius.controller.product_variant:deleteAction
-        _sylius:
-            redirect:
-                route: sylius_product_variant_table
-                parameters:
-                    productId: $productId
 
 sylius_product_variant_batch:
     options:
         expose: true
-    path: /enhavo/shop/product/{$productId}/variant/batch
+    path: /enhavo/shop/product/variant/batch
     methods: [POST]
     defaults:
         _controller: sylius.controller.product_variant:batchAction
@@ -172,6 +156,3 @@ sylius_product_variant_batch:
             batches:
                 delete:
                     type: delete
-                    route: sylius_product_variant_delete
-                    route_parameters:
-                        productId: $id

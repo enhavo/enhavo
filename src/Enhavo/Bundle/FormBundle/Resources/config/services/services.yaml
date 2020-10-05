@@ -16,3 +16,12 @@ services:
     Enhavo\Bundle\FormBundle\Prototype\PrototypeManager:
         arguments:
             - '@enhavo_app.util.secure_url_token_generator'
+
+    Enhavo\Bundle\FormBundle\Column\Type\CurrencyType:
+        public: true
+        arguments:
+            - '@Enhavo\Bundle\FormBundle\Formatter\CurrencyFormatter'
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.column, alias: currency }

@@ -103,3 +103,14 @@ services:
             - '%kernel.project_dir%'
             - '@request_stack'
             - '%kernel.debug%'
+
+    Enhavo\Bundle\AppBundle\Mail\MailManager:
+        arguments:
+            - '@swiftmailer.mailer'
+            - '@twig'
+            - '%enhavo_app.mails%'
+
+    Enhavo\Bundle\AppBundle\Resource\ResourceManager:
+        arguments:
+            - '@event_dispatcher'
+            - '@doctrine.orm.entity_manager'

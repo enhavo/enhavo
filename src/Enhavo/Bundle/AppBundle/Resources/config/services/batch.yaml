@@ -1,8 +1,7 @@
 services:
     Enhavo\Bundle\AppBundle\Batch\Type\DeleteBatchType:
         arguments:
-            - '@event_dispatcher'
-            - '@doctrine.orm.entity_manager'
+            - '@Enhavo\Bundle\AppBundle\Resource\ResourceManager'
         tags:
             - { name: enhavo_app.batch }
 

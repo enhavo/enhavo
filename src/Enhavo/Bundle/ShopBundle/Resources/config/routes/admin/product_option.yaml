@@ -76,11 +76,6 @@ sylius_product_option_table:
             viewer:
                 translation_domain: EnhavoShopBundle
                 columns:
-                    id:
-                        property: id
-                        width: 2
-                        label: id
-                        type: property
                     name:
                         type: text
                         label: product.label.name

@@ -8,6 +8,8 @@ use Sylius\Component\Product\Factory\ProductVariantFactoryInterface;
 use Sylius\Component\Product\Model\ProductInterface;
 use Sylius\Component\Product\Model\ProductVariantInterface;
 use Sylius\Component\Resource\Factory\TranslatableFactory;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Intl\Locale;
 
 class ProductVariantFactory extends Factory implements ProductVariantFactoryInterface
 {
@@ -17,13 +19,19 @@ class ProductVariantFactory extends Factory implements ProductVariantFactoryInte
     private $repository;
 
     /**
+     * @var RequestStack
+     */
+    private $requestStack;
+
+    /**
      * ProductVariantFactory constructor.
      * @param EntityRepository $repository
      */
-    public function __construct(TranslatableFactory $transFactory, EntityRepository $repository, string $class)
+    public function __construct(TranslatableFactory $transFactory, RequestStack $requestStack, EntityRepository $repository, string $class)
     {
         parent::__construct($class);
         $this->repository = $repository;
+        $this->requestStack = $requestStack;
     }
 
     /**
@@ -33,6 +41,8 @@ class ProductVariantFactory extends Factory implements ProductVariantFactoryInte
     {
         /** @var ProductVariantInterface $variant */
         $variant = $this->createNew();
+        $variant->setCurrentLocale($this->requestStack->getCurrentRequest()->getLocale());
+        $variant->setFallbackLocale($this->requestStack->getCurrentRequest()->getLocale());
         $variant->setProduct($product);
 
         return $variant;

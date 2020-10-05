@@ -1,0 +1,17 @@
+.form-row {
+    + .form-row {margin-top:15px;}
+
+    .form-errors {font-size:0.75rem;line-height:1.3em;color:$color4;padding:3px;}
+
+    .formwidget-container {
+        input[type="file"] {border:0;background:transparent;}
+        input[type="text"],input[type="password"] {@extend %textfield;}
+        textarea {@extend %textarea;}
+    }
+}
+
+.choice-list {
+    .choice-input-container {
+        .choice-input-with-label {display: block; margin-bottom: 3px;}
+    }
+}

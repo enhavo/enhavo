@@ -122,6 +122,9 @@ product:
     dimension: Abmessungen
     options: Optionen
     meta: Meta
+    name: Name
+    code: Code
+    variants: Varianten
   form:
     label:
       active: Aktiv
@@ -151,6 +154,9 @@ product:
       not_found: 'Die Ware konnte nicht gefunden werden.'
 
 product_variant:
+  action:
+    label:
+      generate: Varianten generieren
   form:
     label:
       active: Aktiv
@@ -187,6 +193,16 @@ product_variant:
 
 
 product_attribute:
+  action:
+    label:
+      text: 'Text'
+      textarea: 'Textfeld'
+      checkbox: 'Checkbox'
+      integer: 'Ganzzahl'
+      percent: 'Prozent'
+      datetime: 'Datum und Uhrzeit'
+      date: 'Datum'
+      select: 'Auswahl'
   label:
       name: 'Name'
       storage_type: Speichertyp

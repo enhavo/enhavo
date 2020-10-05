@@ -1,8 +1,8 @@
+#!/usr/bin/env node
 const Loader = require('@enhavo/dependency-injection/Loader/Loader');
-const CommandException = require('@enhavo/dependency-injection/Exception/CommandException');
 const Compiler = require('@enhavo/dependency-injection/Compiler/Compiler');
 const Validator = require('@enhavo/dependency-injection/Validation/Validator');
-const builder = require('@enhavo/dependency-injection/builder');
+const builderBucket = require('@enhavo/dependency-injection/builder-bucket');
 const process = require('process');
 const path = require('path');
 const fs = require('fs');
@@ -26,6 +26,8 @@ class CommandLineInterface
     }
 
     _list() {
+        let builder = builderBucket.createBuilder(null);
+
         this.loader.loadFile(this.servicePath, builder);
         (new Validator).validate(builder);
 
@@ -51,6 +53,7 @@ class CommandLineInterface
     }
 
     _compile(filePath) {
+        let builder = builderBucket.createBuilder(null);
         this.loader.loadFile(this.servicePath, builder);
         builder.prepare();
         (new Validator).validate(builder);
