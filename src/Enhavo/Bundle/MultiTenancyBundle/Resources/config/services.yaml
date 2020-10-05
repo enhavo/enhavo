@@ -1,0 +1,65 @@
+services:
+    Enhavo\Bundle\MultiTenancyBundle\EventListener\TenantAwareSubscriber:
+        arguments:
+            - '@Enhavo\Bundle\MultiTenancyBundle\Tenant\TenantManager'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    Enhavo\Bundle\MultiTenancyBundle\Tenant\TenantManager:
+        arguments:
+            - '@enhavo_multi_tenancy.resolver'
+            - '@enhavo_multi_tenancy.provider'
+
+    Enhavo\Bundle\MultiTenancyBundle\ExpressionLanguage\TenantExpressionFunctionProvider:
+        arguments:
+            - '@enhavo_multi_tenancy.resolver'
+
+    Enhavo\Bundle\MultiTenancyBundle\Twig\TenantExtension:
+        arguments:
+            - '@Enhavo\Bundle\MultiTenancyBundle\Tenant\TenantManager'
+        tags:
+            - { name: twig.extension }
+
+    Enhavo\Bundle\MultiTenancyBundle\Routing\ConditionResolver:
+        arguments:
+            - '@enhavo_multi_tenancy.resolver'
+
+    Enhavo\Bundle\MultiTenancyBundle\Resolver\HostResolver:
+        arguments:
+            - '@enhavo_multi_tenancy.provider'
+            - '@request_stack'
+
+    Enhavo\Bundle\MultiTenancyBundle\Resolver\EnvResolver:
+        arguments:
+            - '@enhavo_multi_tenancy.provider'
+
+    Enhavo\Bundle\MultiTenancyBundle\Resolver\AssignResolver:
+        arguments:
+            - '@enhavo_multi_tenancy.provider'
+            - ~
+
+    enhavo_multi_tenancy.resolver.default:
+        class: Enhavo\Bundle\MultiTenancyBundle\Resolver\ChainResolver
+        calls:
+            - ['addResolver', ['@Enhavo\Bundle\MultiTenancyBundle\Resolver\AssignResolver']]
+            - ['addResolver', ['@Enhavo\Bundle\MultiTenancyBundle\Resolver\EnvResolver']]
+            - ['addResolver', ['@Enhavo\Bundle\MultiTenancyBundle\Resolver\HostResolver']]
+
+    Enhavo\Bundle\MultiTenancyBundle\AutoGenerator\Generator\TenancyAwarePrefixGenerator:
+        public: true
+        arguments:
+            - '@enhavo_routing.repository.route'
+            - '@enhavo_multi_tenancy.resolver'
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: 'enhavo_route.generator', alias: 'tenancy_aware_prefix' }
+
+    Enhavo\Bundle\MultiTenancyBundle\Router\Strategy\TenancyAwareSlugStrategy:
+        public: true
+        arguments:
+            - '@enhavo_multi_tenancy.resolver'
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: 'enhavo_route.strategy', alias: 'tenancy_aware_slug' }

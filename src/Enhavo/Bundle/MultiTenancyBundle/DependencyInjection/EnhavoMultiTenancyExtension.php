@@ -15,17 +15,18 @@ use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\Yaml\Yaml;
 
-class MultiTenancyExtension extends AbstractResourceExtension implements PrependExtensionInterface
+class EnhavoMultiTenancyExtension extends AbstractResourceExtension implements PrependExtensionInterface
 {
     public function load(array $config, ContainerBuilder $container)
     {
         $config = $this->processConfiguration(new Configuration(), $config);
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
-        $container->setParameter('multiTenancy.configuration', $config['configuration']);
+        $container->setParameter('enhavo_multi_tenancy.provider', $config['provider']);
+        $container->setParameter('enhavo_multi_tenancy.resolver', $config['resolver']);
 
         $configFiles = array(
-            'services.yml'
+            'services.yaml'
         );
 
         foreach ($configFiles as $configFile) {
