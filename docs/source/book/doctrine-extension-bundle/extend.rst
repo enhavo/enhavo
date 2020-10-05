@@ -77,8 +77,8 @@ Just add following to your config.
 
     enhavo_doctrine_extension:
         metadata:
-            GenderPerson:
-                extends: Person
+            App\Entity\GenderPerson:
+                extends: App\Entity\Person
                 discrName: 'app'
 
 
