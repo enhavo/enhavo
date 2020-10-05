@@ -9,6 +9,7 @@ services:
 
     enhavo_setting.manager:
         class: Enhavo\Bundle\SettingBundle\Setting\SettingManager
+        public: true
         arguments:
             - '@enhavo_setting.provider.database_provider'
             - '@enhavo_setting.provider.parameter_provider'
