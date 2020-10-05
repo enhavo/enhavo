@@ -64,18 +64,19 @@ class NewsletterManager
      * NewsletterManager constructor.
      * @param EntityManagerInterface $em
      * @param \Swift_Mailer $mailer
-     * @param SubscriptionManager $subscriberManager
+     * @param SubscriptionManager $subscriptionManager
      * @param TokenGeneratorInterface $tokenGenerator
      * @param LoggerInterface $logger
      * @param NewsletterRenderer $renderer
      * @param Environment $twig
-     * @param array $from
+     * @param string $from
+     * @param array $testReceiver
      */
-    public function __construct(EntityManagerInterface $em, \Swift_Mailer $mailer, SubscriptionManager $subscriberManager, TokenGeneratorInterface $tokenGenerator, LoggerInterface $logger, NewsletterRenderer $renderer, Environment $twig, string $from, array $testReceiver)
+    public function __construct(EntityManagerInterface $em, \Swift_Mailer $mailer, SubscriptionManager $subscriptionManager, TokenGeneratorInterface $tokenGenerator, LoggerInterface $logger, NewsletterRenderer $renderer, Environment $twig, string $from, array $testReceiver)
     {
         $this->em = $em;
         $this->mailer = $mailer;
-        $this->subscriptionManager = $subscriberManager;
+        $this->subscriptionManager = $subscriptionManager;
         $this->tokenGenerator = $tokenGenerator;
         $this->logger = $logger;
         $this->renderer = $renderer;

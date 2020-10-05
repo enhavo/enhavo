@@ -120,7 +120,6 @@ services:
     Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager:
         public: true
         arguments:
-            - '@event_dispatcher'
             - '@Enhavo\Component\Type\FactoryInterface[Storage]'
             - '@Enhavo\Component\Type\FactoryInterface[Strategy]'
             - '@form.factory'

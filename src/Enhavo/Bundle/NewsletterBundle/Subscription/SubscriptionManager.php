@@ -18,11 +18,6 @@ class SubscriptionManager
 {
     const DEFAULT_PROVIDER = 'local';
 
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $eventDispatcher;
-
     /** @var FactoryInterface */
     private $storageFactory;
 
@@ -37,20 +32,19 @@ class SubscriptionManager
 
     /**
      * SubscriptionManager constructor.
-     * @param EventDispatcherInterface $eventDispatcher
      * @param FactoryInterface $storageFactory
      * @param FactoryInterface $strategyFactory
      * @param FormFactoryInterface $formFactory
      * @param array $configuration
      */
-    public function __construct(EventDispatcherInterface $eventDispatcher, FactoryInterface $storageFactory, FactoryInterface $strategyFactory, FormFactoryInterface $formFactory, array $configuration)
+    public function __construct(FactoryInterface $storageFactory, FactoryInterface $strategyFactory, FormFactoryInterface $formFactory, array $configuration)
     {
-        $this->eventDispatcher = $eventDispatcher;
         $this->storageFactory = $storageFactory;
         $this->strategyFactory = $strategyFactory;
         $this->formFactory = $formFactory;
         $this->configuration = $configuration;
     }
+
 
     public function getSubscription($name): Subscription
     {
