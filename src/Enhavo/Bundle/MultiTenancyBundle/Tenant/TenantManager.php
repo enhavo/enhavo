@@ -30,7 +30,7 @@ class TenantManager
         $this->provider = $provider;
     }
 
-    public function getTenant()
+    public function getTenant($key = null)
     {
         return $this->resolver->getTenant();
     }
