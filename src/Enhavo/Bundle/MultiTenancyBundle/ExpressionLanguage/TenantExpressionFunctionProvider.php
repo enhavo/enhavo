@@ -30,7 +30,7 @@ class TenantExpressionFunctionProvider implements ExpressionFunctionProviderInte
     {
         return [
             new ExpressionFunction('tenancy', function () {
-                return '$this->getTenancy()';
+                return '$this->getTenant()';
             }, function () {
                 return $this->resolver->getTenant()->getKey();
             }),

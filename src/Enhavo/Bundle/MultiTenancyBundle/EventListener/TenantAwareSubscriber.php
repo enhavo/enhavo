@@ -8,8 +8,8 @@
 
 namespace Enhavo\Bundle\MultiTenancyBundle\EventListener;
 
-use Enhavo\Bundle\MultiTenancyBundle\Manager\TenantManager;
 use Enhavo\Bundle\MultiTenancyBundle\Model\TenantAwareInterface;
+use Enhavo\Bundle\MultiTenancyBundle\Tenant\TenantManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
 

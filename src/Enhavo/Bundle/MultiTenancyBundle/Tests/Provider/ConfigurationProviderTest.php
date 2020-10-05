@@ -11,8 +11,7 @@ class ConfigurationProviderTest extends TestCase
     public function testProvider()
     {
         $provider = new ConfigurationProvider([
-            [
-                'key' => 'test_key',
+            'test_key' => [
                 'base_url' => 'http://localhost.com',
                 'domains' => [
                     'localhost.com', 'something.com'
@@ -20,8 +19,7 @@ class ConfigurationProviderTest extends TestCase
                 'name' => 'Test',
                 'role' => 'ROLE_TENANT_TEST'
             ],
-            [
-                'key' => 'other_key',
+            'other_key' => [
                 'base_url' => 'http://other.com',
                 'domains' => [
                     'other.com'

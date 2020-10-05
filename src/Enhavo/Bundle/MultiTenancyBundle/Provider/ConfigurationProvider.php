@@ -34,11 +34,12 @@ class ConfigurationProvider implements ProviderInterface
         $tenants = [];
         $propertyAccessor = PropertyAccess::createPropertyAccessor();
 
-        foreach ($this->config as $tenantConfig) {
+        foreach ($this->config as $key => $tenantConfig) {
             $tenant = new $this->class;
             foreach($tenantConfig as $property => $value) {
                 $propertyAccessor->setValue($tenant, $property, $value);
             }
+            $propertyAccessor->setValue($tenant, 'key', $key);
             $tenants[] = $tenant;
         }
 

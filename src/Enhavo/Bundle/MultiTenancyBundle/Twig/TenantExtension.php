@@ -2,8 +2,8 @@
 
 namespace Enhavo\Bundle\MultiTenancyBundle\Twig;
 
-use Enhavo\Bundle\MultiTenancyBundle\Manager\TenantManager;
 use Enhavo\Bundle\MultiTenancyBundle\Model\TenantInterface;
+use Enhavo\Bundle\MultiTenancyBundle\Tenant\TenantManager;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
