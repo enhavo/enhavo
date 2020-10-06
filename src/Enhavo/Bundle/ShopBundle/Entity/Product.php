@@ -90,7 +90,6 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
         $this->pictures = new ArrayCollection();
     }
 
-
     /**
      * @return string
      */
