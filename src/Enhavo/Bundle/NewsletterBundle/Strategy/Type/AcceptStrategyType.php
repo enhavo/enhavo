@@ -111,7 +111,7 @@ class AcceptStrategyType extends AbstractStrategyType
 
     public function handleExists(SubscriberInterface $subscriber, array $options)
     {
-        return 'subscriber.form.error.exists';
+        return null;
     }
 
     public function getActivationTemplate(array $options): ?string

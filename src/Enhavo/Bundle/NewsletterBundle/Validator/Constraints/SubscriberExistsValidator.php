@@ -41,7 +41,8 @@ class SubscriberExistsValidator extends ConstraintValidator
             $subscription = $this->manager->getSubscription($value->getSubscription());
             $strategy = $subscription->getStrategy();
             if ($strategy->exists($value)) {
-                $this->context->buildViolation($constraint->message)
+                $message = $strategy->handleExists($value);
+                $this->context->buildViolation($message ?? $constraint->message)
                     ->setParameter('%email%', $value->getEmail())
                     ->addViolation();
             }

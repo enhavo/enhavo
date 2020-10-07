@@ -25,8 +25,25 @@ class SubscriptionManagerTest extends TestCase
         return $dependencies;
     }
 
-    private function createInstance(SubscriptionManagerTestDependencies $dependencies, array $config)
+    private function createInstance(SubscriptionManagerTestDependencies $dependencies, ?array $config)
     {
+        if (null === $config) {
+            $config = [
+                'default' => [
+                    'storage' => [
+                        'type' => '__STORAGE__'
+                    ],
+                    'strategy' => [
+                        'type' => '__STRATEGY__'
+                    ],
+                    'model' => '__MODEL__',
+                    'form' => [
+                        'class' => '__FORM_CLASS__',
+                    ]
+                ]
+            ];
+        }
+
         return new SubscriptionManager(
             $dependencies->storageFactory,
             $dependencies->strategyFactory,
@@ -52,6 +69,110 @@ class SubscriptionManagerTest extends TestCase
             return $strategy;
         });
 
+        $manager = $this->createInstance($dep, null);
+
+        $subscription = $manager->getSubscription('default');
+        $this->assertEquals(['class' => '__FORM_CLASS__'], $subscription->getFormConfig());
+        $this->assertEquals('default', $subscription->getName());
+        $this->assertEquals('__MODEL__', $subscription->getModel());
+        $this->assertInstanceOf(Subscription::class, $subscription);
+    }
+
+    public function testGetSubscriptions()
+    {
+        $dep = $this->createDependencies();
+        $storage = $this->getMockBuilder(Storage::class)->disableOriginalConstructor()->getMock();
+        $strategy = $this->getMockBuilder(Strategy::class)->disableOriginalConstructor()->getMock();
+
+        $dep->storageFactory->method('create')->willReturnCallback(function (array $config) use ($storage) {
+            return $storage;
+        });
+        $dep->strategyFactory->method('create')->willReturnCallback(function (array $config) use ($strategy) {
+            return $strategy;
+        });
+
+        $manager = $this->createInstance($dep, [
+            'default' => [
+                'storage' => [
+                    'type' => '__STORAGE0__'
+                ],
+                'strategy' => [
+                    'type' => '__STRATEGY0__'
+                ],
+                'model' => '__MODEL0__',
+                'form' => [
+                    'class' => '__FORM_CLASS0__'
+                ]
+            ],
+            'another' => [
+                'storage' => [
+                    'type' => '__STORAGE1__'
+                ],
+                'strategy' => [
+                    'type' => '__STRATEGY1__'
+                ],
+                'model' => '__MODEL1__',
+                'form' => [
+                    'class' => '__FORM_CLASS1__'
+                ]
+            ],
+            'yetanother' => [
+                'storage' => [
+                    'type' => '__STORAGE2__'
+                ],
+                'strategy' => [
+                    'type' => '__STRATEGY2__'
+                ],
+                'model' => '__MODEL2__',
+                'form' => [
+                    'class' => '__FORM_CLASS2__'
+                ]
+            ]
+        ]);
+
+        $subscriptions = $manager->getSubscriptions();
+        $this->assertCount(3, $subscriptions);
+        $i = 0;
+        foreach ($subscriptions as $subscription) {
+            $this->assertEquals(['class' => sprintf('__FORM_CLASS%d__', $i)], $subscription->getFormConfig());
+            $this->assertEquals(sprintf('__MODEL%d__', $i), $subscription->getModel());
+            $this->assertInstanceOf(Subscription::class, $subscription);
+
+            $i++;
+        }
+    }
+
+    public function testCreateModel()
+    {
+        $dep = $this->createDependencies();
+        $manager = $this->createInstance($dep, null);
+        $model = $manager->createModel(Subscriber::class);
+
+        $this->assertInstanceOf(Subscriber::class, $model);
+
+    }
+
+    public function testCreateForm()
+    {
+        $dep = $this->createDependencies();
+        $storage = $this->getMockBuilder(Storage::class)->disableOriginalConstructor()->getMock();
+        $strategy = $this->getMockBuilder(Strategy::class)->disableOriginalConstructor()->getMock();
+
+        $dep->storageFactory->method('create')->willReturnCallback(function (array $config) use ($storage) {
+            return $storage;
+        });
+        $dep->strategyFactory->method('create')->willReturnCallback(function (array $config) use ($strategy) {
+            return $strategy;
+        });
+
+        $dep->formFactory->expects($this->once())->method('create')->willReturnCallback(function ($subscription, $subscriber, $options) {
+            $this->assertEquals('__FORM_CLASS__', $subscription);
+            $this->assertInstanceOf(Subscriber::class, $subscriber);
+            $this->assertEquals(['label' => '__NEW_LABEL__', 'action' => '/action/'], $options);
+
+            return $options;
+        });
+
         $manager = $this->createInstance($dep, [
             'default' => [
                 'storage' => [
@@ -62,16 +183,18 @@ class SubscriptionManagerTest extends TestCase
                 ],
                 'model' => '__MODEL__',
                 'form' => [
-                    'class' => '__FORM_CLASS__'
+                    'class' => '__FORM_CLASS__',
+                    'options' => [
+                        'label' => '__OLD_LABEL__',
+                    ]
                 ]
             ]
         ]);
 
         $subscription = $manager->getSubscription('default');
-        $this->assertEquals(['class' => '__FORM_CLASS__'], $subscription->getFormConfig());
-        $this->assertEquals('default', $subscription->getName());
-        $this->assertEquals('__MODEL__', $subscription->getModel());
-        $this->assertInstanceOf(Subscription::class, $subscription);
+        $model = $manager->createModel(Subscriber::class);
+
+        $manager->createForm($subscription, $model, ['label' => '__NEW_LABEL__', 'action' => '/action/']);
     }
 
 }

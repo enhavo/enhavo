@@ -68,9 +68,7 @@ class NotifyStrategyType extends AbstractStrategyType
 
     public function exists(SubscriberInterface $subscriber, array $options): bool
     {
-        $checkExists = $options['check_exists'];
-
-        if ($checkExists) {
+        if ($options['check_exists']) {
             return $this->getStorage()->exists($subscriber);
         }
         return false;
@@ -78,7 +76,7 @@ class NotifyStrategyType extends AbstractStrategyType
 
     public function handleExists(SubscriberInterface $subscriber, array $options)
     {
-        return 'subscriber.form.error.exists';
+        return null;
     }
 
     public function configureOptions(OptionsResolver $resolver)

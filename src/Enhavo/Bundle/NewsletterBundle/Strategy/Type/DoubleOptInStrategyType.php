@@ -137,13 +137,13 @@ class DoubleOptInStrategyType extends AbstractStrategyType
         $pending = $this->pendingManager->findOneBy($subscriber->getEmail(), $subscriber->getSubscription());
 
         if ($pending) {
-            $this->pendingManager->save($pending);
+            $this->pendingManager->save($pending); // to set a new confirmation token
             $this->notifySubscriber($subscriber, $options);
 
             return 'subscriber.form.error.sent_again';
         }
 
-        return 'subscriber.form.error.exists';
+        return null;
     }
 
     public function getActivationTemplate(array $options): ?string
