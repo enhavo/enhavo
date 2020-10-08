@@ -11,6 +11,7 @@ use Enhavo\Bundle\NewsletterBundle\Pending\PendingSubscriberManager;
 use Enhavo\Bundle\NewsletterBundle\Storage\Storage;
 use Enhavo\Bundle\NewsletterBundle\Strategy\Strategy;
 use Enhavo\Bundle\NewsletterBundle\Strategy\Type\AcceptStrategyType;
+use Enhavo\Bundle\NewsletterBundle\Strategy\Type\DoubleOptInStrategyType;
 use Enhavo\Bundle\NewsletterBundle\Strategy\Type\StrategyType;
 use Enhavo\Component\Type\TypeInterface;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -18,11 +19,11 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class StrategyAcceptTypeTest extends TestCase
+class StrategyDoubleOptInTypeTest extends TestCase
 {
-    private function createDependencies(): StrategyAcceptTypeTestDependencies
+    private function createDependencies(): StrategyDoubleOptInTypeTestDependencies
     {
-        $dependencies = new StrategyAcceptTypeTestDependencies();
+        $dependencies = new StrategyDoubleOptInTypeTestDependencies();
         $dependencies->pendingManager = $this->getMockBuilder(PendingSubscriberManager::class)->disableOriginalConstructor()->getMock();
         $dependencies->newsletterManager = $this->getMockBuilder(NewsletterManager::class)->disableOriginalConstructor()->getMock();
         $dependencies->router = $this->getMockBuilder(RouterInterface::class)->getMock();
@@ -55,11 +56,13 @@ class StrategyAcceptTypeTest extends TestCase
             return $name.'.routed';
         });
         $dependencies->newsletterManager->expects($this->once())->method('createMessage')->willReturnCallback(function ($from, $senderName, $to, $subject, $template, $options) {
+
             $this->assertEquals('from@enhavo.com', $from);
             $this->assertEquals('enhavo', $senderName);
-            $this->assertEquals('admin@enhavo.com', $to);
-            $this->assertEquals('__SUBJECT__.trans', $subject);
-            $this->assertEquals('__TPL__', $template);
+            $this->assertEquals('to@enhavo.com', $to);
+            $this->assertEquals('subscriber.mail.notify.subject.trans', $subject);
+            $this->assertEquals('__NTPL__', $template);
+
             $this->assertInstanceOf(SubscriberInterface::class, $options['subscriber']);
             $this->assertEquals('__ROUTE_NAME__.routed', $options['link']);
 
@@ -68,6 +71,7 @@ class StrategyAcceptTypeTest extends TestCase
 
         /** @var SubscriberInterface|MockObject $subscriber */
         $subscriber = $this->getMockBuilder(SubscriberInterface::class)->getMock();
+        $subscriber->method('getEmail')->willReturn('to@enhavo.com');
         $subscriber->expects($this->once())->method('setCreatedAt')->willReturnCallback(function (\DateTime $date) {
 
         });
@@ -75,21 +79,21 @@ class StrategyAcceptTypeTest extends TestCase
         $subscriber->expects($this->once())->method('getSubscription')->willReturn('default');
         $subscriber->expects($this->once())->method('getConfirmationToken')->willReturn('__TOKEN__');
 
-        $strategyType = new AcceptStrategyType($dependencies->newsletterManager, $dependencies->pendingManager, $dependencies->router);
+        $strategyType = new DoubleOptInStrategyType($dependencies->newsletterManager, $dependencies->pendingManager, $dependencies->router);
         $strategyType->setTranslator($dependencies->translator);
 
         $strategy = $this->createInstance($strategyType, [new StrategyType($dependencies->translator)], [
             'activate_route' => '__ROUTE_NAME__',
             'activate_route_parameters' => [],
-            'admin_template' => '__TPL__',
+            'admin_template' => '__ATPL__',
+            'template' => '__NTPL__',
             'from' => 'from@enhavo.com',
             'sender_name' => 'enhavo',
             'admin_email' => 'admin@enhavo.com',
-            'admin_subject' => '__SUBJECT__',
             'translation_domain' => ''
 
         ]);
-        $this->assertEquals('subscriber.form.message.accept', $strategy->addSubscriber($subscriber));
+        $this->assertEquals('subscriber.form.message.double_opt_in', $strategy->addSubscriber($subscriber));
     }
 
     public function testActivateSubscriber()
@@ -105,7 +109,51 @@ class StrategyAcceptTypeTest extends TestCase
             $this->assertEquals('enhavo', $senderName);
             $this->assertEquals('to@enhavo.com', $to);
             $this->assertEquals('subscriber.mail.notify.subject.trans', $subject);
-            $this->assertEquals('__TPL__', $template);
+            $this->assertEquals('__CTPL__', $template);
+            $this->assertInstanceOf(SubscriberInterface::class, $options['subscriber']);
+
+            return new \Swift_Message();
+        });
+
+        /** @var SubscriberInterface|MockObject $subscriber */
+        $subscriber = $this->getMockBuilder(SubscriberInterface::class)->getMock();
+        $subscriber->expects($this->exactly(2))->method('getEmail')->willReturn('to@enhavo.com');
+        $subscriber->expects($this->once())->method('getSubscription')->willReturn('default');
+
+        $strategyType = new DoubleOptInStrategyType($dependencies->newsletterManager, $dependencies->pendingManager, $dependencies->router);
+        $strategyType->setTranslator($dependencies->translator);
+
+        $strategy = $this->createInstance($strategyType, [new StrategyType($dependencies->translator)], [
+            'activate_route' => '__ROUTE_NAME__',
+            'activate_route_parameters' => [],
+            'admin_template' => '__ATPL__',
+            'template' => '__TPL__',
+            'confirmation_template' => '__CTPL__',
+            'from' => 'from@enhavo.com',
+            'sender_name' => 'enhavo',
+            'admin_email' => 'admin@enhavo.com',
+            'admin_subject' => '__SUBJECT__',
+            'translation_domain' => ''
+
+        ]);
+        $strategy->setStorage($dependencies->storage);
+        $strategy->activateSubscriber($subscriber);
+    }
+
+    public function testActivateSubscriber2()
+    {
+        $dependencies = $this->createDependencies();
+        $dependencies->pendingManager->expects($this->once())->method('removeBy')->willReturnCallback(function ($email, $subscription) {
+            $this->assertEquals('to@enhavo.com', $email);
+            $this->assertEquals('default', $subscription);
+        });
+        $dependencies->storage->expects($this->once())->method('saveSubscriber');
+        $dependencies->newsletterManager->expects($this->once())->method('createMessage')->willReturnCallback(function ($from, $senderName, $to, $subject, $template, $options) {
+            $this->assertEquals('from@enhavo.com', $from);
+            $this->assertEquals('enhavo', $senderName);
+            $this->assertEquals('admin@enhavo.com', $to);
+            $this->assertEquals('subscriber.mail.admin.subject.trans', $subject);
+            $this->assertEquals('__ATPL__', $template);
             $this->assertInstanceOf(SubscriberInterface::class, $options['subscriber']);
 
             return new \Swift_Message();
@@ -116,19 +164,21 @@ class StrategyAcceptTypeTest extends TestCase
         $subscriber->method('getEmail')->willReturn('to@enhavo.com');
         $subscriber->method('getSubscription')->willReturn('default');
 
-        $strategyType = new AcceptStrategyType($dependencies->newsletterManager, $dependencies->pendingManager, $dependencies->router);
+        $strategyType = new DoubleOptInStrategyType($dependencies->newsletterManager, $dependencies->pendingManager, $dependencies->router);
         $strategyType->setTranslator($dependencies->translator);
 
         $strategy = $this->createInstance($strategyType, [new StrategyType($dependencies->translator)], [
             'activate_route' => '__ROUTE_NAME__',
             'activate_route_parameters' => [],
+            'admin_template' => '__ATPL__',
             'template' => '__TPL__',
+            'confirmation_template' => '__CTPL__',
             'from' => 'from@enhavo.com',
             'sender_name' => 'enhavo',
             'admin_email' => 'admin@enhavo.com',
-            'admin_subject' => '__SUBJECT__',
-            'translation_domain' => ''
-
+            'translation_domain' => '',
+            'notify_admin' => true,
+            'confirm' => false,
         ]);
         $strategy->setStorage($dependencies->storage);
         $strategy->activateSubscriber($subscriber);
@@ -147,10 +197,10 @@ class StrategyAcceptTypeTest extends TestCase
 
         /** @var SubscriberInterface|MockObject $subscriber */
         $subscriber = $this->getMockBuilder(SubscriberInterface::class)->getMock();
-        $subscriber->method('getEmail')->willReturn('to@enhavo.com');
-        $subscriber->method('getSubscription')->willReturn('default');
+        $subscriber->expects($this->once())->method('getEmail')->willReturn('to@enhavo.com');
+        $subscriber->expects($this->once())->method('getSubscription')->willReturn('default');
 
-        $strategyType = new AcceptStrategyType($dependencies->newsletterManager, $dependencies->pendingManager, $dependencies->router);
+        $strategyType = new DoubleOptInStrategyType($dependencies->newsletterManager, $dependencies->pendingManager, $dependencies->router);
 
         $strategy = $this->createInstance($strategyType, [new StrategyType($dependencies->translator)], [
             'activate_route' => '__ROUTE_NAME__',
@@ -167,8 +217,8 @@ class StrategyAcceptTypeTest extends TestCase
         $this->assertEquals(true, $strategy->exists($subscriber));
 
         $subscriber = $this->getMockBuilder(SubscriberInterface::class)->getMock();
-        $subscriber->method('getEmail')->willReturn('to@enhavo.com');
-        $subscriber->method('getSubscription')->willReturn('missing');
+        $subscriber->expects($this->once())->method('getEmail')->willReturn('to@enhavo.com');
+        $subscriber->expects($this->once())->method('getSubscription')->willReturn('missing');
 
         $this->assertEquals(true, $strategy->exists($subscriber));
 
@@ -189,7 +239,7 @@ class StrategyAcceptTypeTest extends TestCase
     }
 }
 
-class StrategyAcceptTypeTestDependencies
+class StrategyDoubleOptInTypeTestDependencies
 {
     /** @var NewsletterManager|MockObject */
     public $newsletterManager;

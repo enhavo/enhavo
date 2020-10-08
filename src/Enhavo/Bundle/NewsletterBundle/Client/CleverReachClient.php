@@ -79,10 +79,10 @@ class CleverReachClient
 
     /**
      * @param SubscriberInterface $subscriber
-     * @param string $groupId
+     * @param $groupId
      * @throws InsertException
      */
-    public function saveSubscriber(SubscriberInterface $subscriber, string $groupId)
+    public function saveSubscriber(SubscriberInterface $subscriber, $groupId)
     {
         $attributes = $this->createAttributes($subscriber, $this->attributes);
         $globalAttributes = $this->createAttributes($subscriber, $this->globalAttributes);
@@ -97,9 +97,9 @@ class CleverReachClient
         $attributes = $data['attributes'];
         $globalAttributes = $data['global_attributes'];
 
-        $response = $this->apiManager->createSubscriber(
+        $response = $this->getApiManager()->createSubscriber(
             $subscriber->getEmail(),
-            $groupId,
+            intval($groupId),
             true,
             $attributes,
             $globalAttributes
@@ -114,12 +114,12 @@ class CleverReachClient
 
     /**
      * @param $eMail
-     * @param string $groupId
+     * @param $groupId
      * @return bool
      */
-    public function exists($eMail, string $groupId)
+    public function exists($eMail, $groupId)
     {
-        $response = $this->apiManager->getSubscriber($eMail, $groupId);
+        $response = $this->getApiManager()->getSubscriber($eMail, intval($groupId));
 
         if (isset($response['id'])) {
             return true;
@@ -152,5 +152,10 @@ class CleverReachClient
         }
 
         return $data;
+    }
+
+    protected function getApiManager(): ApiManager
+    {
+        return $this->apiManager;
     }
 }

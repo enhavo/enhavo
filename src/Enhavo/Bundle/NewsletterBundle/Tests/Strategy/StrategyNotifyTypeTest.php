@@ -37,7 +37,7 @@ class StrategyNotifyTypeTest extends TestCase
         return $strategy;
     }
 
-    public function testNotifyTypeAddSubscriber()
+    public function testAddSubscriber()
     {
         $dependencies = $this->createDependencies();
         $dependencies->newsletterManager->expects($this->exactly(2))->method('createMessage')->willReturnCallback(function ($from, $senderName, $to, $subject, $template, $options) {
@@ -46,11 +46,13 @@ class StrategyNotifyTypeTest extends TestCase
             $this->assertRegExp('/(admin|to)@enhavo.com/', $to);
 
             if ($to === 'admin@enhavo.com') {
-                $this->assertEquals('/(__SUBJECT__|subscriber\.mail\.notify\.subject)\.trans/', $subject);
+                $this->assertEquals('subscriber.mail.admin.subject.trans', $subject);
+                $this->assertEquals('__ATPL__', $template);
+            } else {
+                $this->assertEquals('__NTPL__', $template);
+                $this->assertEquals('subscriber.mail.notify.subject.trans', $subject);
             }
 
-            $this->assertRegExp('/(__SUBJECT__|subscriber\.mail\.notify\.subject)\.trans/', $subject);
-            $this->assertEquals('__TPL__', $template);
             $this->assertInstanceOf(SubscriberInterface::class, $options['subscriber']);
 
             return new \Swift_Message();
@@ -58,8 +60,8 @@ class StrategyNotifyTypeTest extends TestCase
 
         /** @var SubscriberInterface|MockObject $subscriber */
         $subscriber = $this->getMockBuilder(SubscriberInterface::class)->getMock();
-        $subscriber->expects($this->once())->method('getEmail')->willReturn('to@enhavo.com');
-        $subscriber->expects($this->once())->method('setCreatedAt')->willReturnCallback(function (\DateTime $date) {
+        $subscriber->method('getEmail')->willReturn('to@enhavo.com');
+        $subscriber->method('setCreatedAt')->willReturnCallback(function (\DateTime $date) {
 
         });
 
@@ -78,7 +80,7 @@ class StrategyNotifyTypeTest extends TestCase
         $this->assertEquals('subscriber.form.message.notify', $strategy->addSubscriber($subscriber));
     }
 
-    public function testNotifyTypeExists()
+    public function testExists()
     {
         $dependencies = $this->createDependencies();
         $dependencies->storage->expects($this->exactly(1))->method('exists')->willReturn(true);
