@@ -132,12 +132,14 @@ class LocalStorageType extends AbstractStorageType
         }
 
         // subscriber has to be in ALL given groups to return true
-        foreach ($options['groups'] as $code) {
-            $mappedGroup = $this->getGroup($code);
-            foreach ($local->getGroups() as $group) {
-                if ($mappedGroup !== $group) {
-                    return false;
-                }
+        $groups = $options['groups'];
+        if ($subscriber instanceof GroupAwareInterface) {
+            $groups = $subscriber->getGroups()->getValues();
+        }
+        foreach ($groups as $group) {
+            $group = $group instanceof Group ? $this->getGroup($group->getCode()) : $this->getGroup($group);
+            if (!$local->getGroups()->contains($group)) {
+                return false;
             }
         }
 
@@ -173,8 +175,8 @@ class LocalStorageType extends AbstractStorageType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired([
-            'groups'
+        $resolver->setDefaults([
+            'groups' => []
         ]);
     }
 

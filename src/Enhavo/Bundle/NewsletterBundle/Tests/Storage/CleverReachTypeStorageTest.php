@@ -4,19 +4,15 @@
 namespace Enhavo\Bundle\NewsletterBundle\Tests\Storage;
 
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\NewsletterBundle\Client\CleverReachClient;
-use Enhavo\Bundle\NewsletterBundle\Entity\Group;
 use Enhavo\Bundle\NewsletterBundle\Exception\InsertException;
 use Enhavo\Bundle\NewsletterBundle\Exception\NoGroupException;
-use Enhavo\Bundle\NewsletterBundle\Model\GroupAwareInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\GroupInterface;
-use Enhavo\Bundle\NewsletterBundle\Model\Subscriber;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Storage\Storage;
 use Enhavo\Bundle\NewsletterBundle\Storage\Type\CleverReachStorageType;
 use Enhavo\Bundle\NewsletterBundle\Storage\Type\StorageType;
+use Enhavo\Bundle\NewsletterBundle\Tests\Mocks\GroupAwareSubscriberMock;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use rdoepner\CleverReach\ApiManager;
@@ -188,45 +184,4 @@ class CleverReachClientMock extends CleverReachClient
     {
         return $this->_apiManager;
     }
-}
-
-class GroupAwareSubscriberMock extends Subscriber implements  GroupAwareInterface
-{
-    /**
-     * @var Collection
-     */
-    private $groups;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->groups = new ArrayCollection();
-    }
-
-    /**
-     * @param GroupInterface $group
-     */
-    public function addGroup(GroupInterface $group): void
-    {
-        $this->groups->add($group);
-    }
-
-    /**
-     * @param GroupInterface $group
-     */
-    public function removeGroup(GroupInterface $group): void
-    {
-        $this->groups->removeElement($group);
-    }
-
-    /**
-     * @return array|ArrayCollection|Collection
-     */
-    public function getGroups()
-    {
-        return $this->groups;
-    }
-
 }
