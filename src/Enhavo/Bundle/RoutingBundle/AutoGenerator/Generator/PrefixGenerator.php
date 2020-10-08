@@ -162,7 +162,7 @@ class PrefixGenerator extends AbstractGenerator
             'route_property' => 'route',
             'overwrite' => false,
             'format' => null,
-            'unique' => false,
+            'unique' => true,
             'unique_property' => null,
             'date_format' => 'Y-m-d'
         ]);

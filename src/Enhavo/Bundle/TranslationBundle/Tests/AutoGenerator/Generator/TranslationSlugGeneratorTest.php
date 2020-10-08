@@ -4,12 +4,10 @@
 namespace AutoGenerator\Generator;
 
 
-use Enhavo\Bundle\TranslationBundle\AutoGenerator\Generator\LocalePrefixGenerator;
+use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\TranslationBundle\AutoGenerator\Generator\TranslationSlugGenerator;
-use Enhavo\Bundle\TranslationBundle\Tests\Mocks\RouteableMock;
 use Enhavo\Bundle\TranslationBundle\Tests\Mocks\TranslatableMock;
 use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
-use Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator;
 use Enhavo\Bundle\TranslationBundle\Translator\TranslatorInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -22,6 +20,7 @@ class TranslationSlugGeneratorTest extends TestCase
         $dependencies = new TranslationSlugGeneratorTestDependencies();
         $dependencies->translationManager = $this->getMockBuilder(TranslationManager::class)->disableOriginalConstructor()->getMock();
         $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
+        $dependencies->em = $this->getMockBuilder(EntityManagerInterface::class)->getMock();
 
         return $dependencies;
     }
@@ -30,7 +29,8 @@ class TranslationSlugGeneratorTest extends TestCase
     {
         return new TranslationSlugGenerator(
             $dependencies->translationManager,
-            $dependencies->translator
+            $dependencies->translator,
+            $dependencies->em
         );
     }
 
@@ -45,6 +45,7 @@ class TranslationSlugGeneratorTest extends TestCase
             'property',
             'overwrite',
             'slug_property',
+            'unique'
         ];
         sort($options);
         sort($assert);
@@ -76,6 +77,7 @@ class TranslationSlugGeneratorTest extends TestCase
         $instance->generate($entity, [
             'property' => 'name',
             'slug_property' => 'slug',
+            'unique' => false,
             'overwrite' => false,
         ]);
         $slug = $entity->getSlug();
@@ -103,6 +105,7 @@ class TranslationSlugGeneratorTest extends TestCase
         $instance->generate($entity, [
             'property' => 'name',
             'slug_property' => 'slug',
+            'unique' => false,
             'overwrite' => false,
         ]);
         $slug = $entity->getSlug();
@@ -125,5 +128,6 @@ class TranslationSlugGeneratorTestDependencies
     public $translationManager;
     /** @var TranslatorInterface|MockObject */
     public $translator;
-    /** @var TextTranslator|MockObject */
+    /** @var EntityManagerInterface|MockObject */
+    public $em;
 }
