@@ -8,11 +8,11 @@
 
 namespace Enhavo\Bundle\TranslationBundle\AutoGenerator\Generator;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator\SlugGenerator;
 use Enhavo\Bundle\RoutingBundle\Slugifier\Slugifier;
 use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
 use Enhavo\Bundle\TranslationBundle\Translator\TranslatorInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TranslationSlugGenerator extends SlugGenerator
 {
@@ -26,9 +26,11 @@ class TranslationSlugGenerator extends SlugGenerator
      * TranslationSlugGenerator constructor.
      * @param TranslationManager $translationManager
      * @param TranslatorInterface $translator
+     * @param EntityManagerInterface $entityManager
      */
-    public function __construct(TranslationManager $translationManager, TranslatorInterface $translator)
+    public function __construct(TranslationManager $translationManager, TranslatorInterface $translator, EntityManagerInterface $entityManager)
     {
+        parent::__construct($entityManager);
         $this->translationManager = $translationManager;
         $this->translator = $translator;
     }
