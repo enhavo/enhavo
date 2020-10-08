@@ -25,3 +25,8 @@ Sylius\Component\Addressing\Model\Address:
             - NotBlank: { groups: [shipping] }
         countryCode:
             - NotBlank: { groups: [shipping] }
+
+Enhavo\Bundle\ShopBundle\Entity\Product:
+    properties:
+        code:
+            - NotBlank: ~

@@ -201,7 +201,8 @@ class ProductType extends AbstractType
             'allow_add' => true,
             'allow_delete' => true,
             'by_reference' => false,
-            'label' => false,
+            'label' => 'product.form.label.attributes',
+            'translation_domain' => 'EnhavoShopBundle'
         ]);
         $builder->add('associations', ListType::class, [
             'entry_type' => ProductAssociationType::class,
