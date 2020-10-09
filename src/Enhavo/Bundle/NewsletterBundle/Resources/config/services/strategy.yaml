@@ -3,16 +3,11 @@ services:
         public: true
         arguments:
             - '@translator'
+            - '@event_dispatcher'
         tags:
             - { name: enhavo_newsletter.strategy }
 
-    Enhavo\Bundle\NewsletterBundle\Strategy\AbstractStrategyType:
-        abstract: true
-        calls:
-            - [setEventDispatcher, ['@event_dispatcher']]
-
     Enhavo\Bundle\NewsletterBundle\Strategy\Type\NotifyStrategyType:
-        parent: Enhavo\Bundle\NewsletterBundle\Strategy\AbstractStrategyType
         public: true
         arguments:
             - '@Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager'
@@ -20,7 +15,6 @@ services:
             - { name: enhavo_newsletter.strategy }
 
     Enhavo\Bundle\NewsletterBundle\Strategy\Type\DoubleOptInStrategyType:
-        parent: Enhavo\Bundle\NewsletterBundle\Strategy\AbstractStrategyType
         public: true
         arguments:
             - '@Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager'
@@ -30,7 +24,6 @@ services:
             - { name: enhavo_newsletter.strategy }
 
     Enhavo\Bundle\NewsletterBundle\Strategy\Type\AcceptStrategyType:
-        parent: Enhavo\Bundle\NewsletterBundle\Strategy\AbstractStrategyType
         public: true
         arguments:
             - '@Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager'

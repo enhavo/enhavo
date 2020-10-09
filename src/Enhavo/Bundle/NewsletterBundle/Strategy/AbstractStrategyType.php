@@ -69,22 +69,38 @@ abstract class AbstractStrategyType extends AbstractType implements StrategyType
 
     protected function preAddSubscriber(SubscriberInterface $subscriber)
     {
-        $this->eventDispatcher->dispatch(NewsletterEvents::EVENT_PRE_ADD_SUBSCRIBER, new SubscriberEvent(NewsletterEvents::EVENT_PRE_ADD_SUBSCRIBER, $subscriber));
+        if ($this->eventDispatcher !== null) {
+            $this->eventDispatcher->dispatch(NewsletterEvents::EVENT_PRE_ADD_SUBSCRIBER, new SubscriberEvent(NewsletterEvents::EVENT_PRE_ADD_SUBSCRIBER, $subscriber));
+        } else {
+            $this->parent->preAddSubscriber($subscriber);
+        }
     }
 
     protected function postAddSubscriber(SubscriberInterface $subscriber)
     {
-        $this->eventDispatcher->dispatch(NewsletterEvents::EVENT_POST_ADD_SUBSCRIBER, new SubscriberEvent(NewsletterEvents::EVENT_POST_ADD_SUBSCRIBER, $subscriber));
+        if ($this->eventDispatcher !== null) {
+            $this->eventDispatcher->dispatch(NewsletterEvents::EVENT_POST_ADD_SUBSCRIBER, new SubscriberEvent(NewsletterEvents::EVENT_POST_ADD_SUBSCRIBER, $subscriber));
+        } else {
+            $this->parent->postAddSubscriber($subscriber);
+        }
     }
 
     protected function preActivateSubscriber(SubscriberInterface $subscriber)
     {
-        $this->eventDispatcher->dispatch(NewsletterEvents::EVENT_PRE_ACTIVATE_SUBSCRIBER, new SubscriberEvent(NewsletterEvents::EVENT_PRE_ACTIVATE_SUBSCRIBER, $subscriber));
+        if ($this->eventDispatcher !== null) {
+            $this->eventDispatcher->dispatch(NewsletterEvents::EVENT_PRE_ACTIVATE_SUBSCRIBER, new SubscriberEvent(NewsletterEvents::EVENT_PRE_ACTIVATE_SUBSCRIBER, $subscriber));
+        } else {
+            $this->parent->preActivateSubscriber($subscriber);
+        }
     }
 
     protected function postActivateSubscriber(SubscriberInterface $subscriber)
     {
-        $this->eventDispatcher->dispatch(NewsletterEvents::EVENT_POST_ACTIVATE_SUBSCRIBER, new SubscriberEvent(NewsletterEvents::EVENT_POST_ACTIVATE_SUBSCRIBER, $subscriber));
+        if ($this->eventDispatcher !== null) {
+            $this->eventDispatcher->dispatch(NewsletterEvents::EVENT_POST_ACTIVATE_SUBSCRIBER, new SubscriberEvent(NewsletterEvents::EVENT_POST_ACTIVATE_SUBSCRIBER, $subscriber));
+        } else {
+            $this->parent->postActivateSubscriber($subscriber);
+        }
     }
 
     protected function trans($id, array $parameters = [], $domain = null, $locale = null)

@@ -5,19 +5,21 @@ namespace Enhavo\Bundle\NewsletterBundle\Tests\Strategy;
 
 
 use Enhavo\Bundle\NewsletterBundle\Entity\PendingSubscriber;
+use Enhavo\Bundle\NewsletterBundle\Event\SubscriberEvent;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager;
 use Enhavo\Bundle\NewsletterBundle\Pending\PendingSubscriberManager;
 use Enhavo\Bundle\NewsletterBundle\Storage\Storage;
 use Enhavo\Bundle\NewsletterBundle\Strategy\Strategy;
-use Enhavo\Bundle\NewsletterBundle\Strategy\Type\AcceptStrategyType;
 use Enhavo\Bundle\NewsletterBundle\Strategy\Type\DoubleOptInStrategyType;
 use Enhavo\Bundle\NewsletterBundle\Strategy\Type\StrategyType;
 use Enhavo\Component\Type\TypeInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use function foo\func;
 
 class StrategyDoubleOptInTypeTest extends TestCase
 {
@@ -31,6 +33,7 @@ class StrategyDoubleOptInTypeTest extends TestCase
         $dependencies->translator->method('trans')->willReturnCallback(function ($message) {
             return $message.'.trans';
         });
+        $dependencies->eventDispatcher = $this->getMockBuilder(EventDispatcherInterface::class)->getMock();
         $dependencies->storage = $this->getMockBuilder(Storage::class)->disableOriginalConstructor()->getMock();
 
         return $dependencies;
@@ -49,6 +52,10 @@ class StrategyDoubleOptInTypeTest extends TestCase
         $dependencies->pendingManager->expects($this->once())->method('createFrom');
         $dependencies->pendingManager->expects($this->once())->method('save')->willReturnCallback(function (PendingSubscriber $subscriber) {
 
+        });
+        $dependencies->eventDispatcher->expects($this->exactly(2))->method('dispatch')->willReturnCallback(function ($key, $event) {
+            $this->assertInstanceOf(SubscriberEvent::class, $event);
+            $this->assertInstanceOf(SubscriberInterface::class, $event->getSubscriber());
         });
         $dependencies->router->expects($this->once())->method('generate')->willReturnCallback(function ($name) {
             $this->assertEquals('__ROUTE_NAME__', $name);
@@ -82,7 +89,7 @@ class StrategyDoubleOptInTypeTest extends TestCase
         $strategyType = new DoubleOptInStrategyType($dependencies->newsletterManager, $dependencies->pendingManager, $dependencies->router);
         $strategyType->setTranslator($dependencies->translator);
 
-        $strategy = $this->createInstance($strategyType, [new StrategyType($dependencies->translator)], [
+        $strategy = $this->createInstance($strategyType, [new StrategyType($dependencies->translator, $dependencies->eventDispatcher)], [
             'activate_route' => '__ROUTE_NAME__',
             'activate_route_parameters' => [],
             'admin_template' => '__ATPL__',
@@ -102,6 +109,11 @@ class StrategyDoubleOptInTypeTest extends TestCase
         $dependencies->pendingManager->expects($this->once())->method('removeBy')->willReturnCallback(function ($email, $subscription) {
             $this->assertEquals('to@enhavo.com', $email);
             $this->assertEquals('default', $subscription);
+        });
+        $dependencies->eventDispatcher->expects($this->exactly(2))->method('dispatch')->willReturnCallback(function ($key, $event) {
+            $this->assertInstanceOf(SubscriberEvent::class, $event);
+            $this->assertInstanceOf(SubscriberInterface::class, $event->getSubscriber());
+
         });
         $dependencies->storage->expects($this->once())->method('saveSubscriber');
         $dependencies->newsletterManager->expects($this->once())->method('createMessage')->willReturnCallback(function ($from, $senderName, $to, $subject, $template, $options) {
@@ -123,7 +135,7 @@ class StrategyDoubleOptInTypeTest extends TestCase
         $strategyType = new DoubleOptInStrategyType($dependencies->newsletterManager, $dependencies->pendingManager, $dependencies->router);
         $strategyType->setTranslator($dependencies->translator);
 
-        $strategy = $this->createInstance($strategyType, [new StrategyType($dependencies->translator)], [
+        $strategy = $this->createInstance($strategyType, [new StrategyType($dependencies->translator, $dependencies->eventDispatcher)], [
             'activate_route' => '__ROUTE_NAME__',
             'activate_route_parameters' => [],
             'admin_template' => '__ATPL__',
@@ -167,7 +179,7 @@ class StrategyDoubleOptInTypeTest extends TestCase
         $strategyType = new DoubleOptInStrategyType($dependencies->newsletterManager, $dependencies->pendingManager, $dependencies->router);
         $strategyType->setTranslator($dependencies->translator);
 
-        $strategy = $this->createInstance($strategyType, [new StrategyType($dependencies->translator)], [
+        $strategy = $this->createInstance($strategyType, [new StrategyType($dependencies->translator, $dependencies->eventDispatcher)], [
             'activate_route' => '__ROUTE_NAME__',
             'activate_route_parameters' => [],
             'admin_template' => '__ATPL__',
@@ -202,7 +214,7 @@ class StrategyDoubleOptInTypeTest extends TestCase
 
         $strategyType = new DoubleOptInStrategyType($dependencies->newsletterManager, $dependencies->pendingManager, $dependencies->router);
 
-        $strategy = $this->createInstance($strategyType, [new StrategyType($dependencies->translator)], [
+        $strategy = $this->createInstance($strategyType, [new StrategyType($dependencies->translator, $dependencies->eventDispatcher)], [
             'activate_route' => '__ROUTE_NAME__',
             'activate_route_parameters' => [],
             'template' => '__TPL__',
@@ -222,7 +234,7 @@ class StrategyDoubleOptInTypeTest extends TestCase
 
         $this->assertEquals(true, $strategy->exists($subscriber));
 
-        $strategy = $this->createInstance($strategyType, [new StrategyType($dependencies->translator)], [
+        $strategy = $this->createInstance($strategyType, [new StrategyType($dependencies->translator, $dependencies->eventDispatcher)], [
             'activate_route' => '__ROUTE_NAME__',
             'activate_route_parameters' => [],
             'template' => '__TPL__',
@@ -255,4 +267,7 @@ class StrategyDoubleOptInTypeTestDependencies
 
     /** @var Storage|MockObject */
     public $storage;
+
+    /** @var EventDispatcherInterface|MockObject */
+    public $eventDispatcher;
 }

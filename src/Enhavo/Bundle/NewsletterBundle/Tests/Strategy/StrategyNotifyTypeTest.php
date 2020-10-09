@@ -4,6 +4,7 @@
 namespace Enhavo\Bundle\NewsletterBundle\Tests\Strategy;
 
 
+use Enhavo\Bundle\NewsletterBundle\Event\SubscriberEvent;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager;
 use Enhavo\Bundle\NewsletterBundle\Storage\Storage;
@@ -13,6 +14,7 @@ use Enhavo\Bundle\NewsletterBundle\Strategy\Type\StrategyType;
 use Enhavo\Component\Type\TypeInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class StrategyNotifyTypeTest extends TestCase
@@ -21,6 +23,7 @@ class StrategyNotifyTypeTest extends TestCase
     {
         $dependencies = new StrategyNotifyTypeTestDependencies();
         $dependencies->newsletterManager = $this->getMockBuilder(NewsletterManager::class)->disableOriginalConstructor()->getMock();
+        $dependencies->eventDispatcher = $this->getMockBuilder(EventDispatcherInterface::class)->getMock();
         $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
         $dependencies->translator->method('trans')->willReturnCallback(function ($message) {
             return $message.'.trans';
@@ -57,6 +60,10 @@ class StrategyNotifyTypeTest extends TestCase
 
             return new \Swift_Message();
         });
+        $dependencies->eventDispatcher->expects($this->exactly(2))->method('dispatch')->willReturnCallback(function ($key, $event) {
+            $this->assertInstanceOf(SubscriberEvent::class, $event);
+            $this->assertInstanceOf(SubscriberInterface::class, $event->getSubscriber());
+        });
 
         /** @var SubscriberInterface|MockObject $subscriber */
         $subscriber = $this->getMockBuilder(SubscriberInterface::class)->getMock();
@@ -68,7 +75,7 @@ class StrategyNotifyTypeTest extends TestCase
         $strategyType = new NotifyStrategyType($dependencies->newsletterManager);
         $strategyType->setTranslator($dependencies->translator);
 
-        $strategy = $this->createInstance($strategyType, [new StrategyType($dependencies->translator)], [
+        $strategy = $this->createInstance($strategyType, [new StrategyType($dependencies->translator, $dependencies->eventDispatcher)], [
             'template' => '__NTPL__',
             'admin_template' => '__ATPL__',
             'from' => 'from@enhavo.com',
@@ -90,7 +97,7 @@ class StrategyNotifyTypeTest extends TestCase
 
         $strategyType = new NotifyStrategyType($dependencies->newsletterManager);
 
-        $strategy = $this->createInstance($strategyType, [new StrategyType($dependencies->translator)], [
+        $strategy = $this->createInstance($strategyType, [new StrategyType($dependencies->translator, $dependencies->eventDispatcher)], [
             'from' => 'from@enhavo.com',
             'sender_name' => 'enhavo',
             'admin_email' => 'admin@enhavo.com',
@@ -98,7 +105,7 @@ class StrategyNotifyTypeTest extends TestCase
         $strategy->setStorage($dependencies->storage);
         $this->assertEquals(true, $strategy->exists($subscriber));
 
-        $strategy = $this->createInstance($strategyType, [new StrategyType($dependencies->translator)], [
+        $strategy = $this->createInstance($strategyType, [new StrategyType($dependencies->translator, $dependencies->eventDispatcher)], [
             'template' => '__TPL__',
             'from' => 'from@enhavo.com',
             'sender_name' => 'enhavo',
@@ -123,4 +130,7 @@ class StrategyNotifyTypeTestDependencies
 
     /** @var Storage|MockObject */
     public $storage;
+
+    /** @var EventDispatcherInterface|MockObject */
+    public $eventDispatcher;
 }

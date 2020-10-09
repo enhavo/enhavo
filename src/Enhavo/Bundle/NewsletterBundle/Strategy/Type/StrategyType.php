@@ -2,10 +2,13 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Strategy\Type;
 
+use Enhavo\Bundle\NewsletterBundle\Event\NewsletterEvents;
+use Enhavo\Bundle\NewsletterBundle\Event\SubscriberEvent;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Storage\Storage;
 use Enhavo\Bundle\NewsletterBundle\Strategy\StrategyTypeInterface;
 use Enhavo\Component\Type\AbstractType;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -15,17 +18,24 @@ class StrategyType extends AbstractType implements StrategyTypeInterface
     /** @var TranslatorInterface */
     private $translator;
 
-    /**
-     * SeoRaterType constructor.
-     * @param TranslatorInterface $translator
-     */
-    public function __construct(TranslatorInterface $translator)
-    {
-        $this->translator = $translator;
-    }
+    /** @var EventDispatcherInterface */
+    private $eventDispatcher;
+
+
 
     /** @var Storage */
     private $storage;
+
+    /**
+     * StrategyType constructor.
+     * @param TranslatorInterface $translator
+     * @param EventDispatcherInterface $eventDispatcher
+     */
+    public function __construct(TranslatorInterface $translator, EventDispatcherInterface $eventDispatcher)
+    {
+        $this->translator = $translator;
+        $this->eventDispatcher = $eventDispatcher;
+    }
 
     public function addSubscriber(SubscriberInterface $subscriber, array $options)
     {
@@ -60,6 +70,26 @@ class StrategyType extends AbstractType implements StrategyTypeInterface
     public function getStorage(): Storage
     {
         return $this->storage;
+    }
+
+    public function preAddSubscriber(SubscriberInterface $subscriber)
+    {
+        $this->eventDispatcher->dispatch(NewsletterEvents::EVENT_PRE_ADD_SUBSCRIBER, new SubscriberEvent(NewsletterEvents::EVENT_PRE_ADD_SUBSCRIBER, $subscriber));
+    }
+
+    public function postAddSubscriber(SubscriberInterface $subscriber)
+    {
+        $this->eventDispatcher->dispatch(NewsletterEvents::EVENT_POST_ADD_SUBSCRIBER, new SubscriberEvent(NewsletterEvents::EVENT_POST_ADD_SUBSCRIBER, $subscriber));
+    }
+
+    public function preActivateSubscriber(SubscriberInterface $subscriber)
+    {
+        $this->eventDispatcher->dispatch(NewsletterEvents::EVENT_PRE_ACTIVATE_SUBSCRIBER, new SubscriberEvent(NewsletterEvents::EVENT_PRE_ACTIVATE_SUBSCRIBER, $subscriber));
+    }
+
+    public function postActivateSubscriber(SubscriberInterface $subscriber)
+    {
+        $this->eventDispatcher->dispatch(NewsletterEvents::EVENT_POST_ACTIVATE_SUBSCRIBER, new SubscriberEvent(NewsletterEvents::EVENT_POST_ACTIVATE_SUBSCRIBER, $subscriber));
     }
 
     public function trans($id, array $parameters = [], $domain = null, $locale = null)

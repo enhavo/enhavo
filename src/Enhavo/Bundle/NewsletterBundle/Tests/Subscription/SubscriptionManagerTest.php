@@ -12,6 +12,7 @@ use Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager;
 use Enhavo\Component\Type\FactoryInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 
 class SubscriptionManagerTest extends TestCase
@@ -22,6 +23,7 @@ class SubscriptionManagerTest extends TestCase
         $dependencies->storageFactory = $this->getMockBuilder(FactoryInterface::class)->getMock();
         $dependencies->strategyFactory = $this->getMockBuilder(FactoryInterface::class)->getMock();
         $dependencies->formFactory = $this->getMockBuilder(FormFactoryInterface::class)->getMock();
+        $dependencies->eventDispatcher = $this->getMockBuilder(EventDispatcherInterface::class)->getMock();
         return $dependencies;
     }
 
@@ -48,6 +50,7 @@ class SubscriptionManagerTest extends TestCase
             $dependencies->storageFactory,
             $dependencies->strategyFactory,
             $dependencies->formFactory,
+            $dependencies->eventDispatcher,
             $config
         );
     }
@@ -207,4 +210,7 @@ class SubscriptionManagerTestDependencies
     public $strategyFactory;
     /** @var FormFactoryInterface|MockObject */
     public $formFactory;
+
+    /** @var EventDispatcherInterface|MockObject */
+    public $eventDispatcher;
 }

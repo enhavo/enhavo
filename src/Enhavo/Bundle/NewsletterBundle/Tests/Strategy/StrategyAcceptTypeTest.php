@@ -5,6 +5,7 @@ namespace Enhavo\Bundle\NewsletterBundle\Tests\Strategy;
 
 
 use Enhavo\Bundle\NewsletterBundle\Entity\PendingSubscriber;
+use Enhavo\Bundle\NewsletterBundle\Event\SubscriberEvent;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager;
 use Enhavo\Bundle\NewsletterBundle\Pending\PendingSubscriberManager;
@@ -15,6 +16,7 @@ use Enhavo\Bundle\NewsletterBundle\Strategy\Type\StrategyType;
 use Enhavo\Component\Type\TypeInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -26,6 +28,7 @@ class StrategyAcceptTypeTest extends TestCase
         $dependencies->pendingManager = $this->getMockBuilder(PendingSubscriberManager::class)->disableOriginalConstructor()->getMock();
         $dependencies->newsletterManager = $this->getMockBuilder(NewsletterManager::class)->disableOriginalConstructor()->getMock();
         $dependencies->router = $this->getMockBuilder(RouterInterface::class)->getMock();
+        $dependencies->eventDispatcher = $this->getMockBuilder(EventDispatcherInterface::class)->getMock();
         $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
         $dependencies->translator->method('trans')->willReturnCallback(function ($message) {
             return $message.'.trans';
@@ -48,6 +51,10 @@ class StrategyAcceptTypeTest extends TestCase
         $dependencies->pendingManager->expects($this->once())->method('createFrom');
         $dependencies->pendingManager->expects($this->once())->method('save')->willReturnCallback(function (PendingSubscriber $subscriber) {
 
+        });
+        $dependencies->eventDispatcher->expects($this->exactly(2))->method('dispatch')->willReturnCallback(function ($key, $event) {
+            $this->assertInstanceOf(SubscriberEvent::class, $event);
+            $this->assertInstanceOf(SubscriberInterface::class, $event->getSubscriber());
         });
         $dependencies->router->expects($this->once())->method('generate')->willReturnCallback(function ($name) {
             $this->assertEquals('__ROUTE_NAME__', $name);
@@ -78,7 +85,7 @@ class StrategyAcceptTypeTest extends TestCase
         $strategyType = new AcceptStrategyType($dependencies->newsletterManager, $dependencies->pendingManager, $dependencies->router);
         $strategyType->setTranslator($dependencies->translator);
 
-        $strategy = $this->createInstance($strategyType, [new StrategyType($dependencies->translator)], [
+        $strategy = $this->createInstance($strategyType, [new StrategyType($dependencies->translator, $dependencies->eventDispatcher)], [
             'activate_route' => '__ROUTE_NAME__',
             'activate_route_parameters' => [],
             'admin_template' => '__TPL__',
@@ -98,6 +105,10 @@ class StrategyAcceptTypeTest extends TestCase
         $dependencies->pendingManager->expects($this->once())->method('removeBy')->willReturnCallback(function ($email, $subscription) {
             $this->assertEquals('to@enhavo.com', $email);
             $this->assertEquals('default', $subscription);
+        });
+        $dependencies->eventDispatcher->expects($this->exactly(2))->method('dispatch')->willReturnCallback(function ($key, $event) {
+            $this->assertInstanceOf(SubscriberEvent::class, $event);
+            $this->assertInstanceOf(SubscriberInterface::class, $event->getSubscriber());
         });
         $dependencies->storage->expects($this->once())->method('saveSubscriber');
         $dependencies->newsletterManager->expects($this->once())->method('createMessage')->willReturnCallback(function ($from, $senderName, $to, $subject, $template, $options) {
@@ -119,7 +130,7 @@ class StrategyAcceptTypeTest extends TestCase
         $strategyType = new AcceptStrategyType($dependencies->newsletterManager, $dependencies->pendingManager, $dependencies->router);
         $strategyType->setTranslator($dependencies->translator);
 
-        $strategy = $this->createInstance($strategyType, [new StrategyType($dependencies->translator)], [
+        $strategy = $this->createInstance($strategyType, [new StrategyType($dependencies->translator, $dependencies->eventDispatcher)], [
             'activate_route' => '__ROUTE_NAME__',
             'activate_route_parameters' => [],
             'template' => '__TPL__',
@@ -152,7 +163,7 @@ class StrategyAcceptTypeTest extends TestCase
 
         $strategyType = new AcceptStrategyType($dependencies->newsletterManager, $dependencies->pendingManager, $dependencies->router);
 
-        $strategy = $this->createInstance($strategyType, [new StrategyType($dependencies->translator)], [
+        $strategy = $this->createInstance($strategyType, [new StrategyType($dependencies->translator, $dependencies->eventDispatcher)], [
             'activate_route' => '__ROUTE_NAME__',
             'activate_route_parameters' => [],
             'template' => '__TPL__',
@@ -172,7 +183,7 @@ class StrategyAcceptTypeTest extends TestCase
 
         $this->assertEquals(true, $strategy->exists($subscriber));
 
-        $strategy = $this->createInstance($strategyType, [new StrategyType($dependencies->translator)], [
+        $strategy = $this->createInstance($strategyType, [new StrategyType($dependencies->translator, $dependencies->eventDispatcher)], [
             'activate_route' => '__ROUTE_NAME__',
             'activate_route_parameters' => [],
             'template' => '__TPL__',
@@ -205,4 +216,7 @@ class StrategyAcceptTypeTestDependencies
 
     /** @var Storage|MockObject */
     public $storage;
+
+    /** @var EventDispatcherInterface|MockObject */
+    public $eventDispatcher;
 }
