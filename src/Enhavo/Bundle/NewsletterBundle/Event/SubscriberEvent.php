@@ -10,40 +10,46 @@ namespace Enhavo\Bundle\NewsletterBundle\Event;
 
 
 use Enhavo\Bundle\NewsletterBundle\Entity\LocalSubscriber;
+use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Symfony\Component\EventDispatcher\Event;
 
 class SubscriberEvent extends Event
 {
     /**
-     * @var LocalSubscriber
-     */
-    private $subscriber;
-
-    /**
      * @var string
      */
     private $type;
 
-    public function __construct($subscriber, $type)
-    {
-        $this->subscriber = $subscriber;
-        $this->type = $type;
-    }
+    /**
+     * @var SubscriberInterface
+     */
+    private $subscriber;
 
     /**
-     * @return LocalSubscriber
+     * SubscriberEvent constructor.
+     * @param string $type
+     * @param SubscriberInterface $subscriber
      */
-    public function getSubscriber()
+    public function __construct(string $type, SubscriberInterface $subscriber)
     {
-        return $this->subscriber;
+        $this->type = $type;
+        $this->subscriber = $subscriber;
     }
 
     /**
      * @return string
      */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
+    }
+
+    /**
+     * @return SubscriberInterface
+     */
+    public function getSubscriber(): SubscriberInterface
+    {
+        return $this->subscriber;
     }
 
 }

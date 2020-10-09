@@ -45,6 +45,7 @@ class DoubleOptInStrategyType extends AbstractStrategyType
 
     public function addSubscriber(SubscriberInterface $subscriber, array $options)
     {
+        $this->preAddSubscriber($subscriber);
         $subscriber->setCreatedAt(new \DateTime());
         $pending = $this->pendingManager->createFrom($subscriber);
 
@@ -52,16 +53,21 @@ class DoubleOptInStrategyType extends AbstractStrategyType
         $subscriber->setConfirmationToken($pending->getConfirmationToken());
         $this->notifySubscriber($subscriber, $options);
 
+        $this->postAddSubscriber($subscriber);
+
         return 'subscriber.form.message.double_opt_in';
     }
 
     public function activateSubscriber(SubscriberInterface $subscriber, array $options)
     {
+        $this->preActivateSubscriber($subscriber);
         $this->getStorage()->saveSubscriber($subscriber);
         $this->pendingManager->removeBy($subscriber->getEmail(), $subscriber->getSubscription());
 
         $this->notifyAdmin($subscriber, $options);
         $this->confirmSubscriber($subscriber, $options);
+
+        $this->postActivateSubscriber($subscriber);
     }
 
     private function notifySubscriber(SubscriberInterface $subscriber, array $options)

@@ -9,6 +9,8 @@
 namespace Enhavo\Bundle\NewsletterBundle\Subscription;
 
 use Enhavo\Bundle\NewsletterBundle\Entity\Group;
+use Enhavo\Bundle\NewsletterBundle\Event\NewsletterEvents;
+use Enhavo\Bundle\NewsletterBundle\Event\SubscriberEvent;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Component\Type\FactoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -27,6 +29,9 @@ class SubscriptionManager
     /** @var FormFactoryInterface */
     private $formFactory;
 
+    /** @var EventDispatcherInterface */
+    private $eventDispatcher;
+
     /** @var array */
     private $configuration;
 
@@ -35,13 +40,15 @@ class SubscriptionManager
      * @param FactoryInterface $storageFactory
      * @param FactoryInterface $strategyFactory
      * @param FormFactoryInterface $formFactory
+     * @param EventDispatcherInterface $eventDispatcher
      * @param array $configuration
      */
-    public function __construct(FactoryInterface $storageFactory, FactoryInterface $strategyFactory, FormFactoryInterface $formFactory, array $configuration)
+    public function __construct(FactoryInterface $storageFactory, FactoryInterface $strategyFactory, FormFactoryInterface $formFactory, EventDispatcherInterface $eventDispatcher, array $configuration)
     {
         $this->storageFactory = $storageFactory;
         $this->strategyFactory = $strategyFactory;
         $this->formFactory = $formFactory;
+        $this->eventDispatcher = $eventDispatcher;
         $this->configuration = $configuration;
     }
 
@@ -71,7 +78,11 @@ class SubscriptionManager
 
     public function createModel($className): SubscriberInterface
     {
-        return new $className();
+        /** @var SubscriberInterface $subscriber */
+        $subscriber = new $className();
+        $event = new SubscriberEvent(NewsletterEvents::EVENT_CREATE_SUBSCRIBER, $subscriber);
+        $this->eventDispatcher->dispatch(NewsletterEvents::EVENT_CREATE_SUBSCRIBER, $event);
+        return $subscriber;
     }
 
     public function createForm(Subscription $subscription, ?SubscriberInterface $subscriber, array $options = [])
@@ -81,13 +92,4 @@ class SubscriptionManager
         return $this->formFactory->create($formConfig['class'], $subscriber, $options);
     }
 
-    /**
-     * @param array|null $groups
-     * @return Group[]
-     */
-    public function resolveGroups(?array $groups): array
-    {
-        // blutze: what is it doing?
-        return [];
-    }
 }

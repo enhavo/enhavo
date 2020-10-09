@@ -123,6 +123,7 @@ services:
             - '@Enhavo\Component\Type\FactoryInterface[Storage]'
             - '@Enhavo\Component\Type\FactoryInterface[Strategy]'
             - '@form.factory'
+            - '@event_dispatcher'
             - '%enhavo_newsletter.subscription%'
 
     Enhavo\Bundle\NewsletterBundle\Controller\SubscriptionController:

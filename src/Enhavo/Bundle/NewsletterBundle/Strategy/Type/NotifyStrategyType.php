@@ -27,10 +27,14 @@ class NotifyStrategyType extends AbstractStrategyType
 
     public function addSubscriber(SubscriberInterface $subscriber, array $options)
     {
+        $this->preAddSubscriber($subscriber);
+
         $subscriber->setCreatedAt(new \DateTime());
         $this->getStorage()->saveSubscriber($subscriber);
         $this->notifySubscriber($subscriber, $options);
         $this->notifyAdmin($subscriber, $options);
+
+        $this->postAddSubscriber($subscriber);
 
         return 'subscriber.form.message.notify';
     }

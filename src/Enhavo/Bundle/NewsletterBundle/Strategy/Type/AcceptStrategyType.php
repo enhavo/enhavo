@@ -40,6 +40,7 @@ class AcceptStrategyType extends AbstractStrategyType
 
     public function addSubscriber(SubscriberInterface $subscriber, array $options)
     {
+        $this->preAddSubscriber($subscriber);
         $subscriber->setCreatedAt(new \DateTime());
         $pending = $this->pendingManager->createFrom($subscriber);
 
@@ -47,15 +48,19 @@ class AcceptStrategyType extends AbstractStrategyType
         $subscriber->setConfirmationToken($pending->getConfirmationToken());
         $this->notifyAdmin($subscriber, $options);
 
+        $this->postAddSubscriber($subscriber);
+
         return 'subscriber.form.message.accept';
     }
 
     public function activateSubscriber(SubscriberInterface $subscriber, array $options)
     {
+        $this->preActivateSubscriber($subscriber);
         $this->getStorage()->saveSubscriber($subscriber);
         $this->pendingManager->removeBy($subscriber->getEmail(), $subscriber->getSubscription());
 
         $this->notifySubscriber($subscriber, $options);
+        $this->postActivateSubscriber($subscriber);
     }
 
     private function notifySubscriber(SubscriberInterface $subscriber, array $options)
