@@ -4,6 +4,7 @@
 namespace Enhavo\Bundle\NewsletterBundle\Storage\Type;
 
 
+use Enhavo\Bundle\NewsletterBundle\Model\GroupInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Storage\StorageTypeInterface;
@@ -26,5 +27,11 @@ class StorageType extends AbstractType implements StorageTypeInterface
     {
         return false;
     }
+
+    public function getGroup($groupId, array $options): ?GroupInterface
+    {
+        return null;
+    }
+
 
 }

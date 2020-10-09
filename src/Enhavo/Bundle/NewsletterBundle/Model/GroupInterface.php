@@ -35,4 +35,6 @@ interface GroupInterface
      * @return mixed
      */
     public function getCode();
+
+    public function getName();
 }

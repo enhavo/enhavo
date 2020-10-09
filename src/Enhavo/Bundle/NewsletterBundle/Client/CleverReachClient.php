@@ -128,6 +128,11 @@ class CleverReachClient
         return false;
     }
 
+    public function getGroup($groupId)
+    {
+        return $this->apiManager->getGroup(intval($groupId));
+    }
+
     private function createAttributes(SubscriberInterface $subscriber, array $attributes)
     {
         $data = [];

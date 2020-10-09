@@ -137,7 +137,7 @@ class LocalStorageType extends AbstractStorageType
             $groups = $subscriber->getGroups()->getValues();
         }
         foreach ($groups as $group) {
-            $group = $group instanceof Group ? $this->getGroup($group->getCode()) : $this->getGroup($group);
+            $group = $group instanceof Group ? $this->findGroup($group->getCode()) : $this->findGroup($group);
             if (!$local->getGroups()->contains($group)) {
                 return false;
             }
@@ -190,7 +190,7 @@ class LocalStorageType extends AbstractStorageType
      * @return GroupInterface
      * @throws MappingException
      */
-    private function getGroup(string $code): GroupInterface
+    private function findGroup(string $code): GroupInterface
     {
         /** @var Group $group */
         $group = $this->groupRepository->findOneBy([

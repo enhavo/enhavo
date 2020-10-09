@@ -32,9 +32,9 @@ class SubscribeFormRenderer extends AbstractExtension
 
     public function getFunctions()
     {
-        return array(
-            new TwigFunction('subscribe_form', array($this, 'render'), array('is_safe' => array('html'))),
-        );
+        return [
+            new TwigFunction('subscribe_form', [$this, 'render'], ['is_safe' => ['html']]),
+        ];
     }
 
     /**
@@ -54,7 +54,8 @@ class SubscribeFormRenderer extends AbstractExtension
         $formTemplate = $template ?? $formConfig['template'];
 
         return $this->twig->render($formTemplate, [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'subscription' => $subscription,
         ]);
     }
 

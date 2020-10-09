@@ -5,6 +5,7 @@ namespace Enhavo\Bundle\NewsletterBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SubscriberType extends AbstractType
 {
@@ -14,6 +15,14 @@ class SubscriberType extends AbstractType
             'label' => 'subscriber.form.label.email',
             'translation_domain' => 'EnhavoNewsletterBundle'
         ));
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'groups' => null,
+            'subscription' => null,
+        ]);
     }
 
     public function getBlockPrefix()

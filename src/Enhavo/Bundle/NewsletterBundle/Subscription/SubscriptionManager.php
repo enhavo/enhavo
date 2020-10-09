@@ -82,14 +82,15 @@ class SubscriptionManager
         $subscriber = new $className();
         $event = new SubscriberEvent(NewsletterEvents::EVENT_CREATE_SUBSCRIBER, $subscriber);
         $this->eventDispatcher->dispatch(NewsletterEvents::EVENT_CREATE_SUBSCRIBER, $event);
+
         return $subscriber;
     }
 
     public function createForm(Subscription $subscription, ?SubscriberInterface $subscriber, array $options = [])
     {
         $formConfig = $subscription->getFormConfig();
-        $options = array_merge($formConfig['options'], $options);
+        $options = array_merge(['subscription' => $subscription->getName()], $formConfig['options'], $options);
+
         return $this->formFactory->create($formConfig['class'], $subscriber, $options);
     }
-
 }

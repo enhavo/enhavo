@@ -104,6 +104,13 @@ services:
         tags:
             - { name: form.type, alias: enhavo_newsletter_subscriber }
 
+    Enhavo\Bundle\NewsletterBundle\Form\Type\CleverReachGroupType:
+        arguments:
+            - '@Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager'
+        tags:
+            - { name: form.type, alias: enhavo_newsletter_clever_reach_group }
+
+
     Enhavo\Bundle\NewsletterBundle\Form\Type\SubscriptionType:
         arguments:
             - '@Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager'

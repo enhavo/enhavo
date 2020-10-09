@@ -11,7 +11,9 @@ namespace Enhavo\Bundle\NewsletterBundle\Storage\Type;
 use Enhavo\Bundle\NewsletterBundle\Client\CleverReachClient;
 use Enhavo\Bundle\NewsletterBundle\Entity\Group;
 use Enhavo\Bundle\NewsletterBundle\Exception\NoGroupException;
+use Enhavo\Bundle\NewsletterBundle\Model\CleverReachGroup;
 use Enhavo\Bundle\NewsletterBundle\Model\GroupAwareInterface;
+use Enhavo\Bundle\NewsletterBundle\Model\GroupInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Storage\AbstractStorageType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -68,6 +70,24 @@ class CleverReachStorageType extends AbstractStorageType
             'client_secret',
             'client_id',
         ]);
+    }
+
+    public function getGroup($groupId, array $options): ?GroupInterface
+    {
+        $this->client->init($options['client_id'], $options['client_secret'], $options['attributes'], $options['global_attributes']);
+
+        $response = $this->client->getGroup($groupId);
+
+        if ($response['id']) {
+            $lastChanged = new \DateTime();
+            $lastChanged->setTimestamp($response['last_changed']);
+            $lastMailing = new \DateTime();
+            $lastMailing->setTimestamp($response['last_mailing']);
+
+            return new CleverReachGroup($response['id'], $response['name'], $response['name'], $lastChanged, $lastMailing);
+        }
+
+        throw new NoGroupException(sprintf('group with id "%s" does not exist', $groupId));
     }
 
     private function getGroups(SubscriberInterface $subscriber, $groups)

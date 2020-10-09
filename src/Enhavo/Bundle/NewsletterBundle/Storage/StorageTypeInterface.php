@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\NewsletterBundle\Storage;
 
 use Enhavo\Bundle\NewsletterBundle\Entity\Receiver;
+use Enhavo\Bundle\NewsletterBundle\Model\GroupInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 
@@ -28,4 +29,11 @@ interface StorageTypeInterface
      * @return bool
      */
     public function exists(SubscriberInterface $subscriber, array $options): bool;
+
+    /**
+     * @param $groupId
+     * @param array $options
+     * @return GroupInterface
+     */
+    public function getGroup($groupId, array $options): ?GroupInterface;
 }
