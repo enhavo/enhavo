@@ -44,23 +44,27 @@ class PendingSubscriberManager
         $this->tokenGenerator = $tokenGenerator;
     }
 
-    public function save(PendingSubscriber $subscriber, $andFlush = true)
+    public function save(PendingSubscriber $subscriber, $flush = true)
     {
         $subscriber->setConfirmationToken($this->tokenGenerator->generateToken());
         $this->entityManager->persist($subscriber);
 
-        if ($andFlush) {
+        if ($flush) {
             $this->entityManager->flush();
         }
 
     }
 
-    public function remove(PendingSubscriber $subscriber)
+    public function remove(PendingSubscriber $subscriber, $flush = true)
     {
         $this->entityManager->remove($subscriber);
+
+        if ($flush) {
+            $this->entityManager->flush();
+        }
     }
 
-    public function removeBy(string $email, string $subscription)
+    public function removeBy(string $email, string $subscription, $flush = true)
     {
         /** @var PendingSubscriberRepository $repository */
         $repository = $this->entityManager->getRepository(PendingSubscriber::class);
@@ -68,6 +72,10 @@ class PendingSubscriberManager
             'email' => $email,
             'subscription' => $subscription
         ]);
+
+        if ($flush) {
+            $this->entityManager->flush();
+        }
     }
 
     public function find(int $id)

@@ -147,6 +147,7 @@ class LocalTypeStorageTest extends TestCase
             'token' => $subscriber->getToken(),
             'type' => $subscriber->getSubscription(),
         ], $receiver->getParameters());
+        $this->assertEquals($subscriber->getEmail(), $receiver->getEmail());
 
         $this->expectException(\InvalidArgumentException::class);
         $storage->getReceivers(new NotNewsletter());
