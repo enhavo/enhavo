@@ -21,6 +21,17 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('provider')->isRequired()->end()
                 ->scalarNode('resolver')->defaultValue('enhavo_multi_tenancy.resolver.default')->end()
+                ->arrayNode('doctrine_filter')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->booleanNode('enabled')->defaultFalse()->end()
+                        ->booleanNode('detect_by_interface')->defaultTrue()->end()
+                        ->booleanNode('detect_inheritance')->defaultFalse()->end()
+                        ->arrayNode('classes')
+                            ->prototype('scalar')->end()
+                        ->end()
+                    ->end()
+                ->end()
             ->end();
         return $treeBuilder;
     }

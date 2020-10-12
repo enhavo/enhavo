@@ -48,6 +48,8 @@ class TenancyFilterType extends AbstractFilterType
 
     public function buildQuery(FilterQuery $query, $options, $value)
     {
+        $this->tenantManager->disableDoctrineFilter();
+
         if($value == '') {
             return;
         }
@@ -75,7 +77,6 @@ class TenancyFilterType extends AbstractFilterType
         $optionsResolver->setDefaults([
             'label' => 'filter.tenancy.label',
             'translation_domain' => 'EnhavoMultiTenancyBundle',
-            'hidden' => true,
             'tenantLabelProperty' => 'name',
             'component' => 'filter-option'
         ]);
