@@ -137,7 +137,7 @@ class CleverReachClient
     public function getGroups()
     {
 //        return $this->apiManager->getGroups(); // todo: to be implemented in cleverreach package
-        return null;
+        return [];
     }
 
     private function createAttributes(SubscriberInterface $subscriber, array $attributes)
