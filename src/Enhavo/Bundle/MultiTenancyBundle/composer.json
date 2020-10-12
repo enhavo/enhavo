@@ -17,6 +17,7 @@
   "require": {
     "php": "^7.2",
     "enhavo/app-bundle": "dev-master",
-    "enhavo/routing-bundle": "dev-master"
+    "enhavo/routing-bundle": "dev-master",
+    "enhavo/doctrine-extension-bundle": "dev-master"
   }
 }

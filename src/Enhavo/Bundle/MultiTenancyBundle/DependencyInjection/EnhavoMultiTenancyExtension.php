@@ -24,6 +24,7 @@ class EnhavoMultiTenancyExtension extends AbstractResourceExtension implements P
 
         $container->setParameter('enhavo_multi_tenancy.provider', $config['provider']);
         $container->setParameter('enhavo_multi_tenancy.resolver', $config['resolver']);
+        $container->setParameter('enhavo_multi_tenancy.doctrine_filter', $config['doctrine_filter']);
 
         $configFiles = array(
             'services.yaml'

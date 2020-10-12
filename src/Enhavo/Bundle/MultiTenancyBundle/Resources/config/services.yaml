@@ -9,6 +9,7 @@ services:
         arguments:
             - '@enhavo_multi_tenancy.resolver'
             - '@enhavo_multi_tenancy.provider'
+            - '@doctrine.orm.entity_manager'
 
     Enhavo\Bundle\MultiTenancyBundle\ExpressionLanguage\TenantExpressionFunctionProvider:
         arguments:
@@ -45,7 +46,7 @@ services:
             - ['addResolver', ['@Enhavo\Bundle\MultiTenancyBundle\Resolver\EnvResolver']]
             - ['addResolver', ['@Enhavo\Bundle\MultiTenancyBundle\Resolver\HostResolver']]
 
-    Enhavo\Bundle\MultiTenancyBundle\AutoGenerator\Generator\TenancyAwarePrefixGenerator:
+    Enhavo\Bundle\MultiTenancyBundle\AutoGenerator\Generator\TenantPrefixGenerator:
         public: true
         arguments:
             - '@enhavo_routing.repository.route'
@@ -55,7 +56,7 @@ services:
         tags:
             - { name: 'enhavo_route.generator', alias: 'tenancy_aware_prefix' }
 
-    Enhavo\Bundle\MultiTenancyBundle\Router\Strategy\TenancyAwareSlugStrategy:
+    Enhavo\Bundle\MultiTenancyBundle\Router\Strategy\TenantSlugStrategy:
         public: true
         arguments:
             - '@enhavo_multi_tenancy.resolver'
@@ -71,3 +72,11 @@ services:
             - '@Enhavo\Bundle\MultiTenancyBundle\Tenant\TenantManager'
         tags:
             - { name: 'enhavo.filter', alias: 'tenancy' }
+
+    Enhavo\Bundle\MultiTenancyBundle\EventListener\TenantDoctrineFilterListener:
+        arguments:
+            - '@enhavo_multi_tenancy.resolver'
+            - '@doctrine.orm.entity_manager'
+            - '%enhavo_multi_tenancy.doctrine_filter%'
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
