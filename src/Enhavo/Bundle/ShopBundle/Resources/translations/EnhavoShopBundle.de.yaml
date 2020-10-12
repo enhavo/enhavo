@@ -145,6 +145,7 @@ product:
       volume: Volumen
       taxRate: Umsatzsteuer
       associations: Assoziationen
+      attributes: Attribute
       lengthUnit: Längeneinheit
       weightUnit: Gewichtseinheit
       volumeUnit: Volumeneinheit

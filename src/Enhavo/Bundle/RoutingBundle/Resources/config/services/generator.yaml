@@ -36,6 +36,8 @@ services:
 
     Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator\SlugGenerator:
         public: true
+        arguments:
+            - '@doctrine.orm.entity_manager'
         calls:
             - [setContainer, ['@service_container']]
         tags:

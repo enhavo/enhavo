@@ -134,6 +134,7 @@ product:
       volume: Volume
       taxRate: Tax rate
       associations: Associations
+      attributes: Attributes
       lengthUnit: Length unit
       weightUnit: Weight unit
       volumeUnit: Volumn unit

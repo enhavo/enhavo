@@ -17,6 +17,6 @@ class ConditionResolver implements ConditionResolverInterface
 
     public function resolve()
     {
-        $this->resolver->getTenant()->getKey();
+        return $this->resolver->getTenant()->getKey();
     }
 }
