@@ -3,7 +3,6 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Tests\EventListener;
 
-
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PostFlushEventArgs;
@@ -16,6 +15,7 @@ use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
 use Enhavo\Component\Metadata\MetadataRepository;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class DoctrineTranslationSubscriberTest extends TestCase
 {
@@ -32,11 +32,23 @@ class DoctrineTranslationSubscriberTest extends TestCase
 
     protected function createInstance($dependencies)
     {
-        return new DoctrineTranslationSubscriber(
-            $dependencies->translationManager,
+        $subscriber =  new DoctrineTranslationSubscriber(
             $dependencies->accessControl,
             $dependencies->metadataRepository
         );
+
+        /** @var ContainerInterface|MockObject $container */
+        $container = $this->getMockBuilder(ContainerInterface::class)->getMock();
+        $container->method('get')->willReturnCallback(function($name) use ($dependencies) {
+            if ($name === TranslationManager::class) {
+                return $dependencies->translationManager;
+            }
+            return null;
+        });
+
+        $subscriber->setContainer($container);
+
+        return $subscriber;
     }
 
     public function testSubscribedEvents()

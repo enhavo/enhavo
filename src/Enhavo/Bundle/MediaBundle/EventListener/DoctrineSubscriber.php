@@ -23,15 +23,9 @@ class DoctrineSubscriber implements EventSubscriber
      */
     private $storage;
 
-    /**
-     * @var FormatManager
-     */
-    private $formatManager;
-
-    public function __construct(StorageInterface $storage, FormatManager $formatManager)
+    public function __construct(StorageInterface $storage)
     {
         $this->storage = $storage;
-        $this->formatManager = $formatManager;
     }
 
     public function getSubscribedEvents()
@@ -75,9 +69,8 @@ class DoctrineSubscriber implements EventSubscriber
         $object = $args->getObject();
         if($object instanceof FileInterface) {
             $this->storage->deleteFile($object);
-            // Delete on files doesn't use a doctrine cascade to formats, but an SQL cascade instead. This means that formats will be deleted without triggering a doctrine event.
-            // So to clean up files associated with formats, we must delete them in the doctrine event for the file instead of the format.
-            $this->formatManager->deleteFormats($object, false);
+        } elseif($object instanceof FormatInterface) {
+            $this->storage->deleteFile($object);
         }
     }
 }
