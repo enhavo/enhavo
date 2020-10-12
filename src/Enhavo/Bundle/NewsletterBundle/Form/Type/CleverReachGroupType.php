@@ -39,9 +39,16 @@ class CleverReachGroupType extends AbstractType
 
                 $subscription = $this->subscriptionManager->getSubscription($options['subscription']);
                 $storage = $subscription->getStrategy()->getStorage();
-                foreach ($options['groups'] as $group) {
-                    $remoteGroup = $storage->getGroup($group);
-                    $choices[$remoteGroup->getName()] = $remoteGroup->getCode();
+                if ($options['groups']) {
+                    foreach ($options['groups'] as $group) {
+                        $remoteGroup = $storage->getGroup($group);
+                        $choices[$remoteGroup->getName()] = $remoteGroup->getCode();
+                    }
+                } else {
+                    $groups = $storage->getGroups();
+                    foreach ($groups as $group) {
+                        $choices[$group->getName()] = $group->getCode();
+                    }
                 }
 
                 return $choices;

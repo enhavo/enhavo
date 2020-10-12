@@ -35,6 +35,11 @@ class AbstractStorageType extends AbstractType implements StorageTypeInterface
         return $this->parent->getGroup($groupId, $options);
     }
 
+    public function getGroups(array $options): array
+    {
+        return $this->parent->getGroups($options);
+    }
+
     public static function getParentType(): ?string
     {
         return StorageType::class;

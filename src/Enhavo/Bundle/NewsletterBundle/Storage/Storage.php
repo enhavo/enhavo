@@ -33,4 +33,9 @@ class Storage extends AbstractContainerType
     {
         return $this->type->getGroup($name, $this->options);
     }
+
+    public function getGroups(): array
+    {
+        return $this->type->getGroups($this->options);
+    }
 }

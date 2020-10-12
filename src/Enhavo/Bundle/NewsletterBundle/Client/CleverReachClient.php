@@ -130,7 +130,14 @@ class CleverReachClient
 
     public function getGroup($groupId)
     {
-        return $this->apiManager->getGroup(intval($groupId));
+//        return $this->apiManager->getGroup(intval($groupId)); // todo: to be implemented in cleverreach package
+        return null;
+    }
+
+    public function getGroups()
+    {
+//        return $this->apiManager->getGroups(); // todo: to be implemented in cleverreach package
+        return null;
     }
 
     private function createAttributes(SubscriberInterface $subscriber, array $attributes)

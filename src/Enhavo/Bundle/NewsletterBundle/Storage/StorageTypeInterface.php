@@ -36,4 +36,10 @@ interface StorageTypeInterface
      * @return GroupInterface
      */
     public function getGroup($groupId, array $options): ?GroupInterface;
+
+    /**
+     * @param array $options
+     * @return GroupInterface[]
+     */
+    public function getGroups(array $options): array;
 }

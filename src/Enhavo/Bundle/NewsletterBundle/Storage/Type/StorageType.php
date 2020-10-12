@@ -17,6 +17,10 @@ class StorageType extends AbstractType implements StorageTypeInterface
         return [];
     }
 
+    public function getGroups(array $options): array
+    {
+        return [];
+    }
 
     public function saveSubscriber(SubscriberInterface $subscriber, array $options)
     {

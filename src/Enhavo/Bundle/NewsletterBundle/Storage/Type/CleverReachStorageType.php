@@ -32,7 +32,7 @@ class CleverReachStorageType extends AbstractStorageType
 
     public function saveSubscriber(SubscriberInterface $subscriber, array $options)
     {
-        $groups = $this->getGroups($subscriber, $options['groups']);
+        $groups = $this->mapGroups($subscriber, $options['groups']);
 
         $this->client->init($options['client_id'], $options['client_secret'], $options['attributes'], $options['global_attributes']);
 
@@ -49,7 +49,7 @@ class CleverReachStorageType extends AbstractStorageType
         $this->client->init($options['client_id'], $options['client_secret'], $options['attributes'], $options['global_attributes']);
 
         // subscriber has to be in ALL given groups to return true
-        $groups = $this->getGroups($subscriber, $options['groups']);
+        $groups = $this->mapGroups($subscriber, $options['groups']);
         foreach ($groups as $group) {
             if (!$this->client->exists($subscriber->getEmail(), $group)) {
                 return false;
@@ -78,19 +78,39 @@ class CleverReachStorageType extends AbstractStorageType
 
         $response = $this->client->getGroup($groupId);
 
-        if ($response['id']) {
+        if (isset($response['id'])) {
             $lastChanged = new \DateTime();
             $lastChanged->setTimestamp($response['last_changed']);
             $lastMailing = new \DateTime();
             $lastMailing->setTimestamp($response['last_mailing']);
 
-            return new CleverReachGroup($response['id'], $response['name'], $response['name'], $lastChanged, $lastMailing);
+            return new CleverReachGroup($response['id'], $response['name'], $response['id'], $lastChanged, $lastMailing);
         }
 
         throw new NoGroupException(sprintf('group with id "%s" does not exist', $groupId));
     }
 
-    private function getGroups(SubscriberInterface $subscriber, $groups)
+    public function getGroups(array $options): array
+    {
+        $this->client->init($options['client_id'], $options['client_secret'], $options['attributes'], $options['global_attributes']);
+
+        $response = $this->client->getGroups();
+
+        $groups = [];
+        foreach ($response as $item) {
+
+            $lastChanged = new \DateTime();
+            $lastChanged->setTimestamp($item['last_changed']);
+            $lastMailing = new \DateTime();
+            $lastMailing->setTimestamp($item['last_mailing']);
+
+            $groups[] = new CleverReachGroup($item['id'], $item['name'], $item['id'], $lastChanged, $lastMailing);
+        }
+
+        return $groups;
+    }
+
+    private function mapGroups(SubscriberInterface $subscriber, $groups)
     {
         if ($subscriber instanceof GroupAwareInterface) {
             /** @var Group[] $groupsValues */

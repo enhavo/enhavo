@@ -42,7 +42,7 @@ class MailChimpStorageType extends AbstractStorageType
      */
     public function saveSubscriber(SubscriberInterface $subscriber, array $options)
     {
-        $groups = $this->getGroups($subscriber, $options['groups']);
+        $groups = $this->mapGroups($subscriber, $options['groups']);
 
         $this->client->init($options['url'], $options['api_key'], $options['body_parameters']);
 
@@ -66,7 +66,7 @@ class MailChimpStorageType extends AbstractStorageType
         $this->client->init($options['url'], $options['api_key'], $options['body_parameters']);
 
         // subscriber has to be in ALL given groups to return true
-        $groups = $this->getGroups($subscriber, $options['groups']);
+        $groups = $this->mapGroups($subscriber, $options['groups']);
         foreach ($groups as $group) {
             if (!$this->client->exists($subscriber->getEmail(), $group)) {
                 return false;
@@ -89,7 +89,7 @@ class MailChimpStorageType extends AbstractStorageType
         ]);
     }
 
-    private function getGroups(SubscriberInterface $subscriber, $groups)
+    private function mapGroups(SubscriberInterface $subscriber, $groups)
     {
         if ($subscriber instanceof GroupAwareInterface) {
             /** @var Group[] $groupsValues */
@@ -101,7 +101,7 @@ class MailChimpStorageType extends AbstractStorageType
             }
         }
 
-        if (count($groups) === 0) { // blutze: only if group is required in mailchimp api?
+        if (count($groups) === 0) { // todo: only if group is required in mailchimp api?
             throw new NoGroupException('no groups given');
         }
 
