@@ -1,3 +1,8 @@
+![alt text](enhavo.svg "enhavo")
+<br/>
+<br/>
+
+
 # CleverReach REST API v3 client
 
 This library makes it easy to interact with the CleverReach REST API v3.
@@ -5,7 +10,7 @@ This library makes it easy to interact with the CleverReach REST API v3.
 ## Installation
 
 ```bash
-composer require rdoepner/cleverreach
+composer require enhavo/cleverreach
 ```
 
 ## Usage
