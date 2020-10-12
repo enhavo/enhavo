@@ -1,8 +1,8 @@
 <?php
 
-namespace rdoepner\CleverReach;
+namespace Enhavo\Component\CleverReach;
 
-use rdoepner\CleverReach\Http\AdapterInterface as HttpAdapter;
+use Enhavo\Component\CleverReach\Http\AdapterInterface as HttpAdapter;
 
 class ApiManager implements ApiManagerInterface
 {

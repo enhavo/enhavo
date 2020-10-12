@@ -1,6 +1,6 @@
 <?php
 
-namespace rdoepner\CleverReach\Http;
+namespace Enhavo\Component\CleverReach\Http;
 
 interface AdapterInterface
 {

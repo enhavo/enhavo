@@ -1,11 +1,11 @@
 <?php
 
-namespace rdoepner\CleverReach\Tests\Http;
+namespace Enhavo\Component\CleverReach\Tests\Http;
 
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
-use rdoepner\CleverReach\Http\Guzzle as HttpAdapter;
+use Enhavo\Component\CleverReach\Http\Guzzle as HttpAdapter;
 
 class AdapterTest extends TestCase
 {

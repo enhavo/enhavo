@@ -13,8 +13,8 @@ composer require rdoepner/cleverreach
 **Get an access token**
 
 ```php
-use rdoepner\CleverReach\ApiManager;
-use rdoepner\CleverReach\Http\Guzzle as HttpAdapter;
+use Enhavo\Component\CleverReach\ApiManager;
+use Enhavo\Component\CleverReach\Http\Guzzle as HttpAdapter;
 
 // Create an HTTP adapter
 $httpAdapter = new HttpAdapter();
@@ -30,8 +30,8 @@ if (isset($response['access_token'])) {
 **Initialize an API manager**
 
 ```php
-use rdoepner\CleverReach\ApiManager;
-use rdoepner\CleverReach\Http\Guzzle as HttpAdapter;
+use Enhavo\Component\CleverReach\ApiManager;
+use Enhavo\Component\CleverReach\Http\Guzzle as HttpAdapter;
 
 // Create an HTTP adapter
 $httpAdapter = new HttpAdapter(

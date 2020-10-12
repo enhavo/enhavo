@@ -1,6 +1,6 @@
 <?php
 
-namespace rdoepner\CleverReach;
+namespace Enhavo\Component\CleverReach;
 
 interface ApiManagerInterface
 {
