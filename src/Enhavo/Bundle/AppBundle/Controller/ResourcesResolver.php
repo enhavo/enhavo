@@ -50,7 +50,7 @@ class ResourcesResolver implements ResourcesResolverInterface
                 $query = $this->filterQueryBuilder->buildQueryFromRequestConfiguration($requestConfiguration);
                 if (null !== $repositoryMethod = $requestConfiguration->getRepositoryMethod()) {
                     $callable = [$repository, $repositoryMethod];
-                    $resources = call_user_func_array($callable, array_merge([$query], $requestConfiguration->getRepositoryArguments()));
+                    $resources = call_user_func_array($callable, array_merge($requestConfiguration->getRepositoryArguments(), [$query]));
 
                 } else {
                     $resources = $repository->filter($query);
