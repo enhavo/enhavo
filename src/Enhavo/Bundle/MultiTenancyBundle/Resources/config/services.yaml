@@ -63,3 +63,11 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: 'enhavo_route.strategy', alias: 'tenancy_aware_slug' }
+
+    Enhavo\Bundle\MultiTenancyBundle\Filter\TenancyFilterType:
+        public: true
+        arguments:
+            - '@translator'
+            - '@Enhavo\Bundle\MultiTenancyBundle\Tenant\TenantManager'
+        tags:
+            - { name: 'enhavo.filter', alias: 'tenancy' }
