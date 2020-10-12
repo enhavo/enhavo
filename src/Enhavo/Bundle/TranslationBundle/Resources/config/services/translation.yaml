@@ -1,5 +1,6 @@
 services:
     Enhavo\Bundle\TranslationBundle\Translation\TranslationManager:
+        public: true
         arguments:
             - '@Enhavo\Component\Metadata\MetadataRepository[Translation]'
             - '@Enhavo\Component\Type\FactoryInterface[Translation]'

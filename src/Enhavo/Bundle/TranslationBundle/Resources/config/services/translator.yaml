@@ -7,9 +7,10 @@ services:
 
     Enhavo\Bundle\TranslationBundle\EventListener\DoctrineTranslationSubscriber:
         arguments:
-            - '@Enhavo\Bundle\TranslationBundle\Translation\TranslationManager'
             - '@Enhavo\Bundle\TranslationBundle\EventListener\AccessControl'
             - '@Enhavo\Component\Metadata\MetadataRepository[Translation]'
+        calls:
+            - ['setContainer', ['@service_container']]
         tags:
             - { name: doctrine.event_subscriber }
 

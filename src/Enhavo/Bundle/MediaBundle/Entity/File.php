@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\MediaBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\MediaBundle\Content\ContentInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 
@@ -76,9 +77,14 @@ class File implements FileInterface
     private $createdAt;
 
     /**
+     * @var Format[]|Collection
+     */
+    private $formats;
+
+    /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -101,7 +107,7 @@ class File implements FileInterface
     /**
      * Get mimeType
      *
-     * @return string 
+     * @return string
      */
     public function getMimeType()
     {
@@ -124,7 +130,7 @@ class File implements FileInterface
     /**
      * Get extension
      *
-     * @return string 
+     * @return string
      */
     public function getExtension()
     {
@@ -157,7 +163,7 @@ class File implements FileInterface
     /**
      * Get order
      *
-     * @return integer 
+     * @return integer
      */
     public function getOrder()
     {
@@ -387,5 +393,31 @@ class File implements FileInterface
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return Collection|Format[]
+     */
+    public function getFormats()
+    {
+        return $this->formats;
+    }
+
+    /**
+     * @param Format $format
+     */
+    public function addFormat(Format $format)
+    {
+        $this->formats->add($format);
+        $format->setFile($this);
+    }
+
+    /**
+     * @param Format $format
+     */
+    public function removeFormat(Format $format)
+    {
+        $this->formats->removeElement($format);
+        $format->setFile(null);
     }
 }

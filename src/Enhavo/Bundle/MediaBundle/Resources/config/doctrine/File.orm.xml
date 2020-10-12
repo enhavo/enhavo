@@ -19,5 +19,13 @@
         <field name="createdAt" type="datetime">
             <gedmo:timestampable on="create" />
         </field>
+
+        <one-to-many field="formats" target-entity="Enhavo\Bundle\MediaBundle\Model\FormatInterface" mapped-by="file">
+            <cascade>
+                <cascade-persist />
+                <cascade-remove />
+                <cascade-refresh />
+            </cascade>
+        </one-to-many>
     </entity>
 </doctrine-mapping>
