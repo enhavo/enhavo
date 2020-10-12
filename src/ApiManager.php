@@ -123,6 +123,22 @@ class ApiManager implements ApiManagerInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function getGroups()
+    {
+        return $this->adapter->action('get', "/v3/groups.json");
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getGroup(int $groupId)
+    {
+        return $this->adapter->action('get', "/v3/groups.json/{$groupId}");
+    }
+
+    /**
      * Returns the HTTP adapter.
      *
      * @return HttpAdapter

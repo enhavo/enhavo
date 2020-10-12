@@ -75,4 +75,19 @@ interface ApiManagerInterface
      * @return mixed
      */
     public function deleteSubscriber(string $email, int $groupId);
+
+    /**
+     * Get group by given id
+     *
+     * @param int $groupId
+     * @return mixed
+     */
+    public function getGroup(int $groupId);
+
+    /**
+     * Retrieve a list of all groups.
+     *
+     * @return mixed
+     */
+    public function getGroups();
 }
