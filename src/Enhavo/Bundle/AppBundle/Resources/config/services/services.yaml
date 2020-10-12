@@ -104,11 +104,14 @@ services:
             - '@request_stack'
             - '%kernel.debug%'
 
-    Enhavo\Bundle\AppBundle\Mail\MailManager:
+    Enhavo\Bundle\AppBundle\Mailer\MailerManager:
+        public: true
         arguments:
             - '@swiftmailer.mailer'
             - '@twig'
-            - '%enhavo_app.mails%'
+            - '%enhavo_app.mailer.defaults%'
+            - '%enhavo_app.mailer.mails%'
+            - '%enhavo_app.mailer.model%'
 
     Enhavo\Bundle\AppBundle\Resource\ResourceManager:
         arguments:
