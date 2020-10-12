@@ -12,6 +12,7 @@ use Doctrine\ORM\Event\PostFlushEventArgs;
 use Doctrine\ORM\Event\PreFlushEventArgs;
 use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
 use Enhavo\Component\Metadata\MetadataRepository;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 /**
  * Class DoctrineTranslatorSubscriber
@@ -24,32 +25,24 @@ use Enhavo\Component\Metadata\MetadataRepository;
  */
 class DoctrineTranslationSubscriber implements EventSubscriber
 {
-    /** @var TranslationManager */
-    private $translationManager;
+    use ContainerAwareTrait;
 
-    /**
-     * @var AccessControl
-     */
+    /** @var AccessControl */
     private $accessControl;
 
-    /**
-     * @var MetadataRepository
-     */
+    /** @var MetadataRepository */
     private $metadataRepository;
 
     /**
      * DoctrineTranslationSubscriber constructor.
-     * @param TranslationManager $translationManager
      * @param AccessControl $accessControl
      * @param MetadataRepository $metadataRepository
      */
-    public function __construct(TranslationManager $translationManager, AccessControl $accessControl, MetadataRepository $metadataRepository)
+    public function __construct(AccessControl $accessControl, MetadataRepository $metadataRepository)
     {
-        $this->translationManager = $translationManager;
         $this->accessControl = $accessControl;
         $this->metadataRepository = $metadataRepository;
     }
-
 
     /**
      * {@inheritdoc}
@@ -86,7 +79,7 @@ class DoctrineTranslationSubscriber implements EventSubscriber
         foreach ($uow->getIdentityMap() as $class => $entities) {
             if ($this->metadataRepository->hasMetadata($class)) {
                 foreach ($entities as $entity) {
-                    $this->translationManager->detach($entity);
+                    $this->getTranslationManager()->detach($entity);
                 }
             }
         }
@@ -108,7 +101,7 @@ class DoctrineTranslationSubscriber implements EventSubscriber
         foreach ($uow->getIdentityMap() as $class => $entities) {
             if ($this->metadataRepository->hasMetadata($class)) {
                 foreach ($entities as $entity) {
-                    $this->translationManager->translate($entity, $this->accessControl->getLocale());
+                    $this->getTranslationManager()->translate($entity, $this->accessControl->getLocale());
                 }
             }
         }
@@ -123,7 +116,7 @@ class DoctrineTranslationSubscriber implements EventSubscriber
     {
         $entity = $args->getEntity();
         if ($this->metadataRepository->hasMetadata($entity)) {
-            $this->translationManager->delete($entity);
+            $this->getTranslationManager()->delete($entity);
         }
     }
 
@@ -141,7 +134,12 @@ class DoctrineTranslationSubscriber implements EventSubscriber
 
         $entity = $args->getEntity();
         if ($this->metadataRepository->hasMetadata($entity)) {
-            $this->translationManager->translate($entity, $this->accessControl->getLocale());
+            $this->getTranslationManager()->translate($entity, $this->accessControl->getLocale());
         }
+    }
+
+    private function getTranslationManager()
+    {
+        return $this->container->get(TranslationManager::class);
     }
 }

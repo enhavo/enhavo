@@ -10,7 +10,6 @@ namespace Enhavo\Bundle\MediaBundle\Storage;
 
 use Enhavo\Bundle\AppBundle\Filesystem\Filesystem;
 use Enhavo\Bundle\MediaBundle\Content\PathContent;
-use Enhavo\Bundle\MediaBundle\Exception\FileException;
 use Enhavo\Bundle\MediaBundle\Exception\StorageException;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\MediaBundle\Model\FormatInterface;
@@ -77,9 +76,7 @@ class LocalFileStorage implements StorageInterface
             }
 
             $savePath = sprintf('%s/%s', $this->path, $file->getId());
-        }
-
-        if($file instanceof FormatInterface) {
+        } elseif($file instanceof FormatInterface) {
             $originFile = $file->getFile();
             if($originFile->getId() === null) {
                 throw new StorageException(sprintf(

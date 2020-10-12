@@ -99,7 +99,6 @@ services:
         class: Enhavo\Bundle\MediaBundle\EventListener\DoctrineSubscriber
         arguments:
             - '@enhavo_media.storage'
-            - '@enhavo_media.media.format_manager'
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
