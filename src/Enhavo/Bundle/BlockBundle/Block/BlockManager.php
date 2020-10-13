@@ -14,8 +14,8 @@ use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 use Enhavo\Bundle\DoctrineExtensionBundle\Util\AssociationFinder;
 use Enhavo\Component\Type\FactoryInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class BlockManager
 {
@@ -94,7 +94,7 @@ class BlockManager
             } else {
                 /** @var AbstractBlockFactory $factory */
                 $factory = new $factoryClass($block->getModel());
-                if($factory instanceof ContainerInterface) {
+                if($factory instanceof ContainerAwareInterface) {
                     $factory->setContainer($this->container);
                 }
             }

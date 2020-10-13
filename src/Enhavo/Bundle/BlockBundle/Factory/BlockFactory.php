@@ -9,10 +9,8 @@
 
 namespace Enhavo\Bundle\BlockBundle\Factory;
 
-use Enhavo\Bundle\BlockBundle\Block\Block;
 use Enhavo\Bundle\BlockBundle\Block\BlockManager;
 use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
-use Sylius\Component\Resource\Factory\FactoryInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 class BlockFactory
