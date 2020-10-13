@@ -49,4 +49,57 @@ class ConfigurationTest extends TestCase
             'primary' => []
         ], $config['toolbar_widget']);
     }
+
+    public function testMailerMailsMerge()
+    {
+        $a = [
+            'mailer' => [
+                'mails' => [
+                    'default' => [
+                        'from' => 'default_from',
+                        'name' => 'default_name',
+                        'to' => 'default_to',
+                        'subject' => 'default_subject',
+                        'template' => 'default_template',
+                    ]
+                ]
+            ]
+        ];
+
+        $b = [
+            'mailer' => [
+                'mails' => [
+                    'other' => [
+                        'from' => 'other_from',
+                        'name' => 'other_name',
+                        'to' => 'other_to',
+                        'subject' => 'other_subject',
+                        'template' => 'other_template',
+                    ]
+                ]
+            ]
+        ];
+
+        $configuration = new Configuration();
+        $config = $this->process($configuration, [$a, $b]);
+
+        $this->assertEquals([
+            'default' => [
+                'from' => 'default_from',
+                'name' => 'default_name',
+                'to' => 'default_to',
+                'subject' => 'default_subject',
+                'template' => 'default_template',
+                'content_type' => 'text/plain'
+            ],
+            'other' => [
+                'from' => 'other_from',
+                'name' => 'other_name',
+                'to' => 'other_to',
+                'subject' => 'other_subject',
+                'template' => 'other_template',
+                'content_type' => 'text/plain'
+            ]
+        ], $config['mailer']['mails']);
+    }
 }

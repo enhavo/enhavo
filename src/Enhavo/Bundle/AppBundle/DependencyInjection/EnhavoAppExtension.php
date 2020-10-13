@@ -27,7 +27,9 @@ class EnhavoAppExtension extends Extension implements PrependExtensionInterface
         $container->setParameter('enhavo_app.stylesheets', $config['stylesheets']);
         $container->setParameter('enhavo_app.javascripts', $config['javascripts']);
         $container->setParameter('enhavo_app.apps', $config['apps']);
-        $container->setParameter('enhavo_app.mails', $config['mails']);
+        $container->setParameter('enhavo_app.mailer.mails', $config['mailer']['mails']);
+        $container->setParameter('enhavo_app.mailer.defaults', $config['mailer']['defaults']);
+        $container->setParameter('enhavo_app.mailer.model', $config['mailer']['model']);
         $container->setParameter('enhavo_app.menu', $config['menu']);
         $container->setParameter('enhavo_app.branding', $config['branding']);
         $container->setParameter('enhavo_app.login.route', $config['login']['route']);

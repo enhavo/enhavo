@@ -4,6 +4,7 @@ namespace Enhavo\Bundle\AppBundle\DependencyInjection;
 
 use Enhavo\Bundle\AppBundle\EnhavoAppBundle;
 use Enhavo\Bundle\AppBundle\Locale\FixLocaleResolver;
+use Enhavo\Bundle\AppBundle\Mailer\Message;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -65,17 +66,30 @@ class Configuration implements ConfigurationInterface
     {
         $node
             ->children()
-                ->arrayNode('mails')
-                    ->useAttributeAsKey('key')
-                    ->prototype('array')
-                        ->addDefaultsIfNotSet()
-                        ->children()
-                            ->variableNode('subject')->end()
-                            ->variableNode('from')->end()
-                            ->variableNode('name')->end()
-                            ->variableNode('to')->end()
-                            ->variableNode('template')->end()
-                            ->variableNode('content_type')->defaultValue('text/plain')
+                ->arrayNode('mailer')
+                    ->children()
+                        ->scalarNode('model')->defaultValue(Message::class)->end()
+                        ->arrayNode('defaults')
+                            ->children()
+                                ->scalarNode('from')->defaultValue(null)->end()
+                                ->scalarNode('name')->defaultValue(null)->end()
+                                ->scalarNode('to')->defaultValue(null)->end()
+                            ->end()
+                        ->end()
+
+                        ->arrayNode('mails')
+                            ->useAttributeAsKey('key')
+                            ->prototype('array')
+                                ->addDefaultsIfNotSet()
+                                ->children()
+                                    ->scalarNode('from')->defaultValue(null)->end()
+                                    ->scalarNode('name')->defaultValue(null)->end()
+                                    ->scalarNode('to')->defaultValue(null)->end()
+                                    ->scalarNode('subject')->end()
+                                    ->scalarNode('template')->end()
+                                    ->scalarNode('content_type')->defaultValue('text/plain')
+                                ->end()
+                            ->end()
                         ->end()
                     ->end()
                 ->end()
