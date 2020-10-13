@@ -12,8 +12,8 @@ use Enhavo\Bundle\NewsletterBundle\Event\StorageEvent;
 use Enhavo\Bundle\NewsletterBundle\Event\NewsletterEvents;
 use Enhavo\Bundle\NewsletterBundle\Exception\InsertException;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
-use rdoepner\CleverReach\ApiManager;
-use rdoepner\CleverReach\Http\Guzzle;
+use Enhavo\Component\CleverReach\ApiManager;
+use Enhavo\Component\CleverReach\Http\Guzzle;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
 
@@ -130,14 +130,12 @@ class CleverReachClient
 
     public function getGroup($groupId)
     {
-//        return $this->apiManager->getGroup(intval($groupId)); // todo: to be implemented in cleverreach package
-        return null;
+        return $this->apiManager->getGroup(intval($groupId));
     }
 
     public function getGroups()
     {
-//        return $this->apiManager->getGroups(); // todo: to be implemented in cleverreach package
-        return [];
+        return $this->apiManager->getGroups();
     }
 
     private function createAttributes(SubscriberInterface $subscriber, array $attributes)

@@ -113,7 +113,7 @@ class LocalStorageType extends AbstractStorageType
         }
 
         foreach ($groups as $group) {
-            $group = $group instanceof Group ? $this->getGroup($group->getCode()) : $this->getGroup($group);
+            $group = $group instanceof Group ? $this->findGroup($group->getCode()) : $this->findGroup($group);
             if ($localSubscriber->getGroups()->contains($group)) {
                 continue;
             }

@@ -80,6 +80,7 @@ subscriber:
       double_opt_in: 'You received an E-Mail to confirm your registration'
       accept: 'Your E-Mail address was registered and need to be confirmed by an admin'
     label:
+      groups: 'Groups'
       email: 'E-Mail'
       active: 'Active'
       subscription: 'Subscription'

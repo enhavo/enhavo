@@ -74,6 +74,7 @@ subscriber:
       double_opt_in: 'Sie haben eine E-Mail erhalten mit der Sie die Registrierung abschließen können'
       accept: 'Ihre E-Mail Addrese wurde hinzugefügt und muss vom Admin freigeschaltet werden'
     label:
+      groups: 'Gruppen'
       email: 'E-Mail'
       active: 'Aktiviert'
     error:

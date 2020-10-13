@@ -24,10 +24,12 @@ class LocalGroupType extends AbstractType
         $resolver->setDefault('query_builder', function (Options $options) {
             return function (EntityRepository $er) use ($options) {
                 $queryBuilder = $er->createQueryBuilder('s');
-                foreach ($options['groups'] as $group) {
-                    $groupKey = md5($group);
-                    $queryBuilder->orWhere(sprintf('s.code = :%s', $groupKey))
-                        ->setParameter($groupKey, $group);
+                if ($options['groups']) {
+                    foreach ($options['groups'] as $group) {
+                        $groupKey = md5($group);
+                        $queryBuilder->orWhere(sprintf('s.code = :%s', $groupKey))
+                            ->setParameter($groupKey, $group);
+                    }
                 }
 
                 return $queryBuilder;
