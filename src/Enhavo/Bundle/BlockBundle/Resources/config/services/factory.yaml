@@ -10,6 +10,8 @@ services:
     enhavo_block.factory.block:
         public: true
         class: Enhavo\Bundle\BlockBundle\Factory\BlockFactory
+        arguments:
+            - '@Enhavo\Bundle\BlockBundle\Block\BlockManager'
         calls:
             - [setContainer, ['@service_container']]
 
