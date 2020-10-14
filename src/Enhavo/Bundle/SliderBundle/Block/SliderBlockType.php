@@ -16,6 +16,15 @@ class SliderBlockType extends AbstractBlockType
     /** @var EntityRepository */
     private $repository;
 
+    /**
+     * SliderBlockType constructor.
+     * @param EntityRepository $repository
+     */
+    public function __construct(EntityRepository $repository)
+    {
+        $this->repository = $repository;
+    }
+
     public function createViewData(BlockInterface $block, ViewData $viewData, $resource, array $options)
     {
         $viewData['slides'] = $this->repository->findAll();
