@@ -44,6 +44,8 @@ services:
         arguments:
             - '@Enhavo\Component\Type\FactoryInterface[NavItem]'
             - '%enhavo_navigation.nav_items%'
+        calls:
+            - [ 'setContainer', [ '@service_container' ] ]
 
     Enhavo\Bundle\NavigationBundle\Widget\NavigationWidgetType:
         public: true

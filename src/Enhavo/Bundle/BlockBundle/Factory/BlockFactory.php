@@ -9,7 +9,7 @@
 
 namespace Enhavo\Bundle\BlockBundle\Factory;
 
-use Enhavo\Bundle\BlockBundle\Block\Block;
+use Enhavo\Bundle\BlockBundle\Block\BlockManager;
 use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
@@ -17,16 +17,29 @@ class BlockFactory
 {
     use ContainerAwareTrait;
 
+    /** @var BlockManager */
+    private $blockManager;
+
+    /**
+     * BlockFactory constructor.
+     * @param BlockManager $blockManager
+     */
+    public function __construct(BlockManager $blockManager)
+    {
+        $this->blockManager = $blockManager;
+    }
+
     /**
      * @param string $name
      * @return BlockInterface
      */
     public function createNew($name)
     {
-        /** @var Block $block */
-        $block = $this->getResolver()->resolveItem($name);
-        $factory = $this->getFactory($block->getName());
-        return $factory->createNew();
+        $factory = $this->blockManager->getFactory($name);
+        /** @var BlockInterface $block */
+        $block = $factory->createNew();
+
+        return $block;
     }
 
     /**
@@ -35,19 +48,8 @@ class BlockFactory
      */
     public function duplicate(BlockInterface $original)
     {
-        /** @var Block $block */
-        $block = $this->getResolver()->resolveItem($original->getNode()->getName());
-        $factory = $this->getFactory($block->getName());
+        $factory = $this->blockManager->getFactory($original->getNode()->getName());
         return $factory->duplicate($original);
     }
 
-    /**
-     * @param string $name
-     * @return FactoryInterface
-     */
-    private function getFactory($name)
-    {
-        $blockManager = $this->container->get('enhavo_block.block.manager');
-        return $blockManager->getFactory($name);
-    }
 }
