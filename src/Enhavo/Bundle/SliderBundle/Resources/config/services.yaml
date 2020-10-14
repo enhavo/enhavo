@@ -41,6 +41,6 @@ services:
 
     Enhavo\Bundle\SliderBundle\Block\SliderBlockType:
         arguments:
-            - 'enhavo_slider.repository.slide'
+            - '@enhavo_slider.repository.slide'
         tags:
             - { name: enhavo_block.block }
