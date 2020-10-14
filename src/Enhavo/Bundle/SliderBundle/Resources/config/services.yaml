@@ -33,6 +33,11 @@ services:
         tags:
             - { name: enhavo.menu, alias: slider }
 
+    Enhavo\Bundle\SliderBundle\Menu\SlideMenu:
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
+        tags:
+            - { name: enhavo.menu, alias: slide }
+
     enhavo_slider.factory.slide:
         class: '%enhavo_slider.factory.slide.class%'
         arguments:

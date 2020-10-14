@@ -19,7 +19,7 @@ class SlideMenu extends BaseMenu
 
         $resolver->setDefaults([
             'icon' => 'slideshow',
-            'label' => 'slider.label.slider',
+            'label' => 'slide.label.slide',
             'translation_domain' => 'EnhavoSliderBundle',
             'route' => 'enhavo_slider_slide_index',
             'role' => 'ROLE_ENHAVO_SLIDER_SLIDE_INDEX'
