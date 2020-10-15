@@ -20,8 +20,12 @@ class SlideFactory extends Factory
         $this->sliderRepository = $sliderRepository;
     }
 
-    public function createWithSliderId($sliderId)
+    public function createWithSliderId($sliderId = null)
     {
+        if ($sliderId === null) {
+            return $this->createNew();
+        }
+
         /** @var SliderInterface $slider */
         $slider = $this->sliderRepository->find($sliderId);
 
