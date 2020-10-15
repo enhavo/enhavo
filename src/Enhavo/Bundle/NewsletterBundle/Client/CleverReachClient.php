@@ -115,7 +115,7 @@ class CleverReachClient
             intval($groupId)
         );
 
-        if (isset($response['error'])) {
+        if (true !== $response) {
             throw new RemoveException(
                 sprintf('Removal from group "%s" failed.', $groupId)
             );

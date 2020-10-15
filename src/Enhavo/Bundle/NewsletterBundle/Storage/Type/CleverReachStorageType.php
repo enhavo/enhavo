@@ -16,6 +16,7 @@ use Enhavo\Bundle\NewsletterBundle\Model\GroupInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Storage\AbstractStorageType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 
 class CleverReachStorageType extends AbstractStorageType
 {
@@ -54,14 +55,14 @@ class CleverReachStorageType extends AbstractStorageType
         }
     }
 
-    public function removeSubscriber(SubscriberInterface $subscriber, array $options): bool
+    public function removeSubscriber(SubscriberInterface $subscriber, array $options)
     {
         $groups = $this->mapGroups($subscriber, $options['groups']);
 
         $this->client->init($options['client_id'], $options['client_secret'], $options['attributes'], $options['global_attributes']);
 
         foreach ($groups as $group) {
-            if ($this->client->exists($subscriber->getEmail(), $group)) {
+            if (!$this->client->exists($subscriber->getEmail(), $group)) {
                 continue;
             }
             $this->client->removeSubscriber($subscriber, $group);
@@ -75,6 +76,10 @@ class CleverReachStorageType extends AbstractStorageType
         $response = $this->client->getSubscriber($subscriber->getEmail());
 
         $subscriber->setEmail($response['email']);
+        $this->setAttributes($subscriber, $options['attributes'], $response['attributes']);
+        $this->setAttributes($subscriber, $options['global_attributes'], $response['global_attributes']);
+
+        return $subscriber;
 
     }
 
@@ -150,7 +155,6 @@ class CleverReachStorageType extends AbstractStorageType
 
         $groups = [];
         foreach ($response as $item) {
-
             $lastChanged = new \DateTime();
             $lastChanged->setTimestamp($item['last_changed']);
             $lastMailing = new \DateTime();
@@ -185,6 +189,23 @@ class CleverReachStorageType extends AbstractStorageType
         }
 
         return $groups;
+    }
+
+    private function setAttributes(SubscriberInterface $subscriber, array $attributes, array $values)
+    {
+        if (count($attributes) && count($values)) {
+            $propertyAccessor = new PropertyAccessor();
+
+            foreach ($values as $valueKey => $valueValue) {
+                if (is_array($valueValue)) {
+                    throw new \Exception('Not implemented');
+                } else {
+                    if (isset($attributes[$valueKey])) {
+                        $propertyAccessor->setValue($subscriber, $attributes[$valueKey], $valueValue);
+                    }
+                }
+            }
+        }
     }
 
     /**
