@@ -32,6 +32,17 @@ class StorageType extends AbstractType implements StorageTypeInterface
         return false;
     }
 
+    public function removeSubscriber(SubscriberInterface $subscriber, array $options)
+    {
+
+    }
+
+    public function getSubscriber(SubscriberInterface $subscriber, array $options): ?SubscriberInterface
+    {
+        return null;
+    }
+
+
     public function getGroup($groupId, array $options): ?GroupInterface
     {
         return null;

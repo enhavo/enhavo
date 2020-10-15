@@ -2,7 +2,6 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Controller;
 
-use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Pending\PendingSubscriberManager;
 use Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -86,26 +85,24 @@ class SubscriptionController extends AbstractController
         }
     }
 
-    public function unsubscribeAction(Request $request) // blutze: unsubscribe!
+    public function unsubscribeAction(Request $request)
     {
-//        $type = $request->get('type');
-//        $token = $request->get('token');
-//        $subscription = $this->subscriptionManager->getSubscription($type);
-//        $subscription->getStrategy()->getStorage()->removeSubscriber($token);
-//
-//
-//        if ($result === true) {
-//            $message = $subscription->getStrategy()->addSubscriber($subscriber);
-//            return new JsonResponse([
-//                'message' => $this->translator->trans($message, [], 'EnhavoNewsletterBundle'),
-//                'subscriber' => $subscriber
-//            ]);
-//        } else {
-//            return new JsonResponse([
-//                'errors' => $result,
-//                'subscriber' => $subscriber
-//            ], 400);
-//        }
+        $type = $request->get('type');
+        $email = $request->get('email');
+        $subscription = $this->subscriptionManager->getSubscription($type);
+        $subscriber = $this->subscriptionManager->createModel($subscription->getModel());
+        $subscriber->setEmail($email);
+        $subscriber = $subscription->getStrategy()->getStorage()->getSubscriber($subscriber);
+
+        if (!$subscriber) {
+            throw $this->createNotFoundException();
+        }
+
+        $subscription->getStrategy()->getStorage()->removeSubscriber($subscriber);
+
+        return new JsonResponse([
+            'subscriber' => $subscriber
+        ]);
     }
 
     /**

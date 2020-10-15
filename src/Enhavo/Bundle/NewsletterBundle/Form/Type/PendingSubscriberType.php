@@ -2,16 +2,12 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Form\Type;
 
-use Doctrine\ORM\EntityRepository;
 use Enhavo\Bundle\NewsletterBundle\Entity\Group;
 use Enhavo\Bundle\NewsletterBundle\Entity\PendingSubscriber;
 use Enhavo\Bundle\NewsletterBundle\Model\GroupAwareInterface;
 use Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager;
-use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;

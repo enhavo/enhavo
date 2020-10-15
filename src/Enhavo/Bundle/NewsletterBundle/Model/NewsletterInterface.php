@@ -134,26 +134,27 @@ interface NewsletterInterface
     /**
      * Get attachments
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getAttachments();
 
     /**
-     * @return \DateTime
+     * @return \DateTime|null
      */
     public function getStartAt(): ?\DateTime;
 
     /**
-     * @param \DateTime $startAt
+     * @param \DateTime|null $startAt
      */
     public function setStartAt(?\DateTime $startAt): void;
 
     /**
-     * @return \DateTime
+     * @return \DateTime|null
      */
     public function getFinishAt(): ?\DateTime;
+
     /**
-     * @param \DateTime $finishAt
+     * @param \DateTime|null $finishAt
      */
     public function setFinishAt(?\DateTime $finishAt): void;
 }

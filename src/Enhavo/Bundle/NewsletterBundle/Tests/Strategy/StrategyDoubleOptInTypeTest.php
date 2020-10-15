@@ -19,7 +19,6 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use function foo\func;
 
 class StrategyDoubleOptInTypeTest extends TestCase
 {

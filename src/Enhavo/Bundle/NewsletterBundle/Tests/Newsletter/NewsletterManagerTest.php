@@ -18,7 +18,6 @@ use Enhavo\Bundle\NewsletterBundle\Exception\DeliveryException;
 use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager;
 use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterRenderer;
 use Enhavo\Bundle\NewsletterBundle\Storage\Storage;
-use Enhavo\Bundle\NewsletterBundle\Storage\StorageTypeInterface;
 use Enhavo\Bundle\NewsletterBundle\Strategy\Strategy;
 use Enhavo\Bundle\NewsletterBundle\Subscription\Subscription;
 use Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager;
@@ -68,7 +67,7 @@ class NewsletterManagerTest extends TestCase
     }
 
     /**
-     * @expectedException \Enhavo\Bundle\NewsletterBundle\Exception\DeliveryException
+     * @throws DeliveryException
      */
     public function testAlreadyPrepared()
     {
@@ -77,6 +76,7 @@ class NewsletterManagerTest extends TestCase
         $newsletter = new Newsletter();
         $newsletter->setState(Newsletter::STATE_PREPARED);
 
+        $this->expectException(DeliveryException::class);
         $newsletterManager->prepare($newsletter);
     }
 

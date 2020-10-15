@@ -9,15 +9,14 @@ use Enhavo\Bundle\NewsletterBundle\Entity\Newsletter;
 use Enhavo\Bundle\NewsletterBundle\Entity\Receiver;
 use Enhavo\Bundle\NewsletterBundle\Exception\MappingException;
 use Enhavo\Bundle\NewsletterBundle\Exception\NoGroupException;
+use Enhavo\Bundle\NewsletterBundle\Exception\RemoveException;
 use Enhavo\Bundle\NewsletterBundle\Factory\LocalSubscriberFactoryInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\GroupAwareInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\GroupInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\LocalSubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
-use Enhavo\Bundle\NewsletterBundle\Repository\GroupRepository;
 use Enhavo\Bundle\NewsletterBundle\Storage\AbstractStorageType;
-use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -47,7 +46,7 @@ class LocalStorageType extends AbstractStorageType
      * @param EntityManagerInterface $entityManager
      * @param RepositoryInterface $subscriberRepository
      * @param RepositoryInterface $groupRepository
-     * @param FactoryInterface $subscriberFactory
+     * @param LocalSubscriberFactoryInterface $subscriberFactory
      */
     public function __construct(EntityManagerInterface $entityManager, RepositoryInterface $subscriberRepository, RepositoryInterface $groupRepository, LocalSubscriberFactoryInterface $subscriberFactory)
     {
@@ -97,10 +96,11 @@ class LocalStorageType extends AbstractStorageType
      * @param array $options
      * @return mixed|void
      * @throws MappingException
+     * @throws NoGroupException
      */
     public function saveSubscriber(SubscriberInterface $subscriber, array $options)
     {
-        $localSubscriber = $this->getSubscriber($subscriber)
+        $localSubscriber = $this->getLocalSubscriber($subscriber)
             ?? $this->createSubscriber($subscriber);
 
         $groups = $options['groups'];
@@ -124,9 +124,56 @@ class LocalStorageType extends AbstractStorageType
         $this->entityManager->flush();
     }
 
+    public function removeSubscriber(SubscriberInterface $subscriber, array $options)
+    {
+        $localSubscriber = $this->getLocalSubscriber($subscriber);
+
+        $groups = $options['groups'];
+        if ($subscriber instanceof GroupAwareInterface) {
+            $groups = $subscriber->getGroups()->getValues();
+        }
+
+        if (count($groups)) {
+            foreach ($groups as $group) {
+                $group = $group instanceof Group ? $this->findGroup($group->getCode()) : $this->findGroup($group);
+                if ($localSubscriber->getGroups()->contains($group)) {
+                    continue;
+                }
+                $localSubscriber->removeGroup($group);
+            }
+        } else {
+            $this->entityManager->remove($localSubscriber);
+        }
+
+        $this->entityManager->flush();
+
+        return true;
+    }
+
+    public function getSubscriber(SubscriberInterface $subscriber, array $options): ?SubscriberInterface
+    {
+        $localSubscriber = $this->getLocalSubscriber($subscriber);
+
+        if ($localSubscriber) {
+            return null;
+        }
+
+        if ($subscriber instanceof GroupAwareInterface) {
+            foreach ($localSubscriber->getGroups() as $group) {
+                $group = $group instanceof Group ? $this->findGroup($group->getCode()) : $this->findGroup($group);
+                $subscriber->addGroup($group);
+            }
+        }
+
+        $subscriber->setSubscription($localSubscriber->getSubscription());
+        $subscriber->setCreatedAt($localSubscriber->getCreatedAt());
+
+        return $subscriber;
+    }
+
     public function exists(SubscriberInterface $subscriber, array $options): bool
     {
-        $local = $this->getSubscriber($subscriber);
+        $local = $this->getLocalSubscriber($subscriber);
         if ($local === null || count($local->getGroups()) == 0) {
             return false;
         }
@@ -150,7 +197,7 @@ class LocalStorageType extends AbstractStorageType
      * @param SubscriberInterface $subscriber
      * @return LocalSubscriberInterface
      */
-    private function getSubscriber(SubscriberInterface $subscriber): ?LocalSubscriberInterface
+    private function getLocalSubscriber(SubscriberInterface $subscriber): ?LocalSubscriberInterface
     {
         /** @var LocalSubscriberInterface $subscriber */
         $subscriber = $this->subscriberRepository->findOneBy([
@@ -167,10 +214,7 @@ class LocalStorageType extends AbstractStorageType
      */
     private function createSubscriber(SubscriberInterface $subscriber): LocalSubscriberInterface
     {
-        /** @var LocalSubscriberInterface $localSubscriber */
-        $localSubscriber = $this->subscriberFactory->createFrom($subscriber);
-
-        return $localSubscriber;
+        return $this->subscriberFactory->createFrom($subscriber);
     }
 
     public function configureOptions(OptionsResolver $resolver)

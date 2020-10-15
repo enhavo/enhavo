@@ -28,10 +28,10 @@ class NewsletterRenderer
 
     /**
      * NewsletterRenderer constructor.
-     *
      * @param Environment $templateEnvironment
      * @param TemplateManager $templateManager
      * @param ParameterParserInterface $parameterParser
+     * @param array $templates
      */
     public function __construct(
         Environment $templateEnvironment,

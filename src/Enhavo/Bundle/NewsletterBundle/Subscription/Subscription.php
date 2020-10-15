@@ -65,7 +65,7 @@ class Subscription
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function getFormConfig(): array
     {

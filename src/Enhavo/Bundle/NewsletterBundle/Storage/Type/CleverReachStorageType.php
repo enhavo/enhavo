@@ -1,15 +1,14 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: jungch
- * Date: 17/10/16
- * Time: 18:31
+ * @author blutze-media
+ * @since 2020-09-03
  */
 
 namespace Enhavo\Bundle\NewsletterBundle\Storage\Type;
 
 use Enhavo\Bundle\NewsletterBundle\Client\CleverReachClient;
 use Enhavo\Bundle\NewsletterBundle\Entity\Group;
+use Enhavo\Bundle\NewsletterBundle\Exception\InsertException;
 use Enhavo\Bundle\NewsletterBundle\Exception\NoGroupException;
 use Enhavo\Bundle\NewsletterBundle\Model\CleverReachGroup;
 use Enhavo\Bundle\NewsletterBundle\Model\GroupAwareInterface;
@@ -25,11 +24,22 @@ class CleverReachStorageType extends AbstractStorageType
      */
     protected $client;
 
+    /**
+     * CleverReachStorageType constructor.
+     * @param $cleverReachClient
+     */
     public function __construct($cleverReachClient)
     {
         $this->client = $cleverReachClient;
     }
 
+    /**
+     * @param SubscriberInterface $subscriber
+     * @param array $options
+     * @return mixed|void
+     * @throws NoGroupException
+     * @throws InsertException
+     */
     public function saveSubscriber(SubscriberInterface $subscriber, array $options)
     {
         $groups = $this->mapGroups($subscriber, $options['groups']);
@@ -44,6 +54,36 @@ class CleverReachStorageType extends AbstractStorageType
         }
     }
 
+    public function removeSubscriber(SubscriberInterface $subscriber, array $options): bool
+    {
+        $groups = $this->mapGroups($subscriber, $options['groups']);
+
+        $this->client->init($options['client_id'], $options['client_secret'], $options['attributes'], $options['global_attributes']);
+
+        foreach ($groups as $group) {
+            if ($this->client->exists($subscriber->getEmail(), $group)) {
+                continue;
+            }
+            $this->client->removeSubscriber($subscriber, $group);
+        }
+    }
+
+    public function getSubscriber(SubscriberInterface $subscriber, array $options): ?SubscriberInterface
+    {
+        $this->client->init($options['client_id'], $options['client_secret'], $options['attributes'], $options['global_attributes']);
+
+        $response = $this->client->getSubscriber($subscriber->getEmail());
+
+        $subscriber->setEmail($response['email']);
+
+    }
+
+    /**
+     * @param SubscriberInterface $subscriber
+     * @param array $options
+     * @return bool
+     * @throws NoGroupException
+     */
     public function exists(SubscriberInterface $subscriber, array $options): bool
     {
         $this->client->init($options['client_id'], $options['client_secret'], $options['attributes'], $options['global_attributes']);
@@ -59,6 +99,9 @@ class CleverReachStorageType extends AbstractStorageType
         return true;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
@@ -72,6 +115,12 @@ class CleverReachStorageType extends AbstractStorageType
         ]);
     }
 
+    /**
+     * @param $groupId
+     * @param array $options
+     * @return GroupInterface|null
+     * @throws NoGroupException
+     */
     public function getGroup($groupId, array $options): ?GroupInterface
     {
         $this->client->init($options['client_id'], $options['client_secret'], $options['attributes'], $options['global_attributes']);
@@ -90,6 +139,9 @@ class CleverReachStorageType extends AbstractStorageType
         throw new NoGroupException(sprintf('group with id "%s" does not exist', $groupId));
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getGroups(array $options): array
     {
         $this->client->init($options['client_id'], $options['client_secret'], $options['attributes'], $options['global_attributes']);
@@ -110,6 +162,12 @@ class CleverReachStorageType extends AbstractStorageType
         return $groups;
     }
 
+    /**
+     * @param SubscriberInterface $subscriber
+     * @param $groups
+     * @return array
+     * @throws NoGroupException
+     */
     private function mapGroups(SubscriberInterface $subscriber, $groups)
     {
         if ($subscriber instanceof GroupAwareInterface) {
@@ -129,6 +187,9 @@ class CleverReachStorageType extends AbstractStorageType
         return $groups;
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function getName(): ?string
     {
         return 'cleverreach';

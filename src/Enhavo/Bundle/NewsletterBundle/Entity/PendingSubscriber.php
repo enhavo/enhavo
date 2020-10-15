@@ -55,11 +55,7 @@ class PendingSubscriber implements ResourceInterface
     }
 
     /**
-     * Set email
-     *
-     * @param string $email
-     *
-     * @return LocalSubscriber
+     * @param $email
      */
     public function setEmail($email)
     {
@@ -77,11 +73,7 @@ class PendingSubscriber implements ResourceInterface
     }
 
     /**
-     * Set token
-     *
-     * @param string $confirmationToken
-     *
-     * @return LocalSubscriber
+     * @param $confirmationToken
      */
     public function setConfirmationToken($confirmationToken)
     {
@@ -115,10 +107,7 @@ class PendingSubscriber implements ResourceInterface
     }
 
     /**
-     * Set condition
-     *
-     * @param string $condition
-     * @return LocalSubscriber
+     * @param $condition
      */
     public function setCondition($condition)
     {

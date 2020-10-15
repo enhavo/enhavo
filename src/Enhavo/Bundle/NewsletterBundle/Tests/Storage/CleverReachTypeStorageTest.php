@@ -13,9 +13,9 @@ use Enhavo\Bundle\NewsletterBundle\Storage\Storage;
 use Enhavo\Bundle\NewsletterBundle\Storage\Type\CleverReachStorageType;
 use Enhavo\Bundle\NewsletterBundle\Storage\Type\StorageType;
 use Enhavo\Bundle\NewsletterBundle\Tests\Mocks\GroupAwareSubscriberMock;
+use Enhavo\Component\CleverReach\ApiManager;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use rdoepner\CleverReach\ApiManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class CleverReachTypeStorageTest extends TestCase

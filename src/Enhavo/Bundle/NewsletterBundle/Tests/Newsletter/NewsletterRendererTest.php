@@ -80,7 +80,7 @@ class NewsletterRendererTest extends TestCase
     }
 
     /**
-     * @expectedException \Exception
+     *
      */
     public function testWithoutTemplateKey()
     {
@@ -95,6 +95,7 @@ class NewsletterRendererTest extends TestCase
         $receiver = new Receiver();
         $receiver->setNewsletter($newsletter);
 
+        $this->expectException(\Exception::class);
         $newsletterRenderer->render($receiver);
     }
 }

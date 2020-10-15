@@ -11,6 +11,8 @@ namespace Enhavo\Bundle\NewsletterBundle\Client;
 use Enhavo\Bundle\NewsletterBundle\Event\StorageEvent;
 use Enhavo\Bundle\NewsletterBundle\Event\NewsletterEvents;
 use Enhavo\Bundle\NewsletterBundle\Exception\InsertException;
+use Enhavo\Bundle\NewsletterBundle\Exception\NotFoundException;
+use Enhavo\Bundle\NewsletterBundle\Exception\RemoveException;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Component\CleverReach\ApiManager;
 use Enhavo\Component\CleverReach\Http\Guzzle;
@@ -20,17 +22,8 @@ use Symfony\Component\PropertyAccess\PropertyAccessor;
 class CleverReachClient
 {
 
-    /** @var string */
-    private $clientId;
-
-    /** @var string */
-    private $clientSecret;
-
     /** @var ApiManager */
     private $apiManager;
-
-    /** @var string */
-    private $accessToken;
 
     /** @var array */
     private $attributes;
@@ -59,17 +52,15 @@ class CleverReachClient
     public function init(string $clientId, string $clientSecret, array $attributes, array $globalAttributes)
     {
         if (!$this->initialized) {
-            $this->clientId = $clientId;
-            $this->clientSecret = $clientSecret;
             $this->attributes = $attributes;
             $this->globalAttributes = $globalAttributes;
 
             $httpAdapter = new Guzzle();
-            $response = $httpAdapter->authorize($this->clientId, $this->clientSecret);
+            $response = $httpAdapter->authorize($clientId, $clientSecret);
 
             if (isset($response['access_token'])) {
-                $this->accessToken = $response['access_token'];
-                $httpAdapter = new Guzzle(['access_token' => $this->accessToken]);
+                $accessToken = $response['access_token'];
+                $httpAdapter = new Guzzle(['access_token' => $accessToken]);
                 $this->apiManager = new ApiManager($httpAdapter);
             }
 
@@ -110,6 +101,36 @@ class CleverReachClient
                 sprintf('Insertion into group "%s" failed.', $groupId)
             );
         }
+    }
+
+    /**
+     * @param SubscriberInterface $subscriber
+     * @param $groupId
+     * @throws RemoveException
+     */
+    public function removeSubscriber(SubscriberInterface $subscriber, $groupId)
+    {
+        $response = $this->getApiManager()->deleteSubscriber(
+            $subscriber->getEmail(),
+            intval($groupId)
+        );
+
+        if (isset($response['error'])) {
+            throw new RemoveException(
+                sprintf('Removal from group "%s" failed.', $groupId)
+            );
+        }
+    }
+
+    public function getSubscriber(string $email)
+    {
+        $response = $this->getApiManager()->getSubscriber($email);
+
+        if (isset($response['error'])) {
+            throw new NotFoundException(sprintf('No user found with e-mail "%s"', $email));
+        }
+
+        return $response;
     }
 
     /**

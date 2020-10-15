@@ -38,4 +38,14 @@ class Storage extends AbstractContainerType
     {
         return $this->type->getGroups($this->options);
     }
+
+    public function removeSubscriber(SubscriberInterface $subscriber)
+    {
+        $this->type->removeSubscriber($subscriber, $this->options);
+    }
+
+    public function getSubscriber(SubscriberInterface $subscriber): ?SubscriberInterface
+    {
+        return $this->type->getSubscriber($subscriber, $this->options);
+    }
 }

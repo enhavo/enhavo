@@ -189,7 +189,7 @@ class NotNewsletter implements NewsletterInterface
 
     public function getTemplate(): ?string
     {
-
+        return null;
     }
 
     public function setTemplate(?string $template)

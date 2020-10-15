@@ -10,7 +10,6 @@ namespace Enhavo\Bundle\NewsletterBundle\Storage\Type;
 
 use Enhavo\Bundle\NewsletterBundle\Client\MailChimpClient;
 use Enhavo\Bundle\NewsletterBundle\Entity\Group;
-use Enhavo\Bundle\NewsletterBundle\Exception\MappingException;
 use Enhavo\Bundle\NewsletterBundle\Exception\NoGroupException;
 use Enhavo\Bundle\NewsletterBundle\Model\GroupAwareInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
@@ -59,7 +58,7 @@ class MailChimpStorageType extends AbstractStorageType
      * @param array $options
      * @return bool
      * @throws GuzzleException
-     * @throws \Enhavo\Bundle\NewsletterBundle\Exception\MappingException
+     * @throws NoGroupException
      */
     public function exists(SubscriberInterface $subscriber, array $options): bool
     {
