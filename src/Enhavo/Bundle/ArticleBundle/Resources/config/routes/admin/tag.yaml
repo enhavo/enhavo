@@ -78,6 +78,8 @@ enhavo_article_tag_delete:
     methods: [POST]
     defaults:
         _controller: enhavo_taxonomy.controller.term:deleteAction
+        _sylius:
+            redirect: enhavo_article_tag_index
 
 enhavo_article_tag_batch:
     options:
