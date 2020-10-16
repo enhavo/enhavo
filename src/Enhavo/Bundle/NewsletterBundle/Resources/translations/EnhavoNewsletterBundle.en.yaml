@@ -56,9 +56,9 @@ newsletter:
         send: 'Do you really want to send all selected newsletters?'
 subscriber:
   storage:
-      remove: 'E-Mail Address "%email%" has been removed'
-      change: 'Subscription for E-Mail Address "%email" has been changed'
-      error: 'Subscription for E-Mail Address "%email" could not be changed'
+    remove: 'E-Mail Address "%email%" has been removed'
+    change: 'Subscription for E-Mail Address "%email" has been changed'
+    error: 'Subscription for E-Mail Address "%email" could not be changed'
   message:
     accept: 'E-Mail Address "%email%" has been added'
     activate: 'E-Mail Address "%email%" has been added'

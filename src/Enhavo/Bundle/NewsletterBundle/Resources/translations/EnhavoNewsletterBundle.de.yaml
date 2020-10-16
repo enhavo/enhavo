@@ -55,10 +55,10 @@ newsletter:
       confirm:
         send: 'Wollen sie wirklich alle ausgewählten Newsletter versenden?'
 subscriber:
-    storage:
-        remove: 'Das Abonnement für die E-Mail Adresse "%email%" wurde beendet'
-        change: 'Das Abonnement für die E-Mail Adresse "%email" wurde geändert'
-        error: 'Das Abonnement für die E-Mail Adresse "%email" konnte nicht geändert werden'
+  storage:
+    remove: 'Das Abonnement für die E-Mail Adresse "%email%" wurde beendet'
+    change: 'Das Abonnement für die E-Mail Adresse "%email" wurde geändert'
+    error: 'Das Abonnement für die E-Mail Adresse "%email" konnte nicht geändert werden'
   message:
     accept: 'Die E-Mail Adresse "%email%" wurde erfolgreich hinzugefügt'
     activate: 'Die E-Mail Adresse "%email%" wurde erfolgreich hinzugefügt'
