@@ -7,7 +7,7 @@ use Enhavo\Bundle\AppBundle\Repository\EntityRepository;
 
 class LocalSubscriberRepository extends EntityRepository
 {
-    public function findByGroupId(FilterQuery $query, $groupId)
+    public function findByGroupId($groupId, FilterQuery $query = null)
     {
         $query = $this->buildFilterQuery($query);
         $query
