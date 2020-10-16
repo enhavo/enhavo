@@ -22,7 +22,8 @@ class ConditionTypeExtension extends AbstractTypeExtension
     {
         $resolver->setDefaults([
             'condition' => null,
-            'condition_observer' => null
+            'condition_observer' => null,
+            'condition_scope' => null
         ]);
     }
 
@@ -48,17 +49,23 @@ class ConditionTypeExtension extends AbstractTypeExtension
                 $data[] = [
                     'id' => $conditionObserver->getSubject()->getId(),
                     'values' => $conditionObserver->getValues(),
-                    'operator' => $conditionObserver->getOperator()
+                    'operator' => $conditionObserver->getOperator(),
+                    'scope' => $conditionObserver->getScope()
                 ];
             }
         }
         if(count($data) > 0) {
             $view->vars['attr']['data-condition-type-observer'] = json_encode($data);
         }
+
+        // scope
+        if(isset($options['condition_scope'])) {
+            $view->vars['attr']['data-condition-scope'] = $options['condition_scope'];
+        }
     }
 
-    public function getExtendedType()
+    public static function getExtendedTypes(): iterable
     {
-        return FormType::class;
+        return [FormType::class];
     }
 }
