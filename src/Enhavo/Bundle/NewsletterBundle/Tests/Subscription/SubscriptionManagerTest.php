@@ -171,7 +171,11 @@ class SubscriptionManagerTest extends TestCase
         $dep->formFactory->expects($this->once())->method('create')->willReturnCallback(function ($subscription, $subscriber, $options) {
             $this->assertEquals('__FORM_CLASS__', $subscription);
             $this->assertInstanceOf(Subscriber::class, $subscriber);
-            $this->assertEquals(['label' => '__NEW_LABEL__', 'action' => '/action/'], $options);
+            $this->assertEquals([
+                'label' => '__NEW_LABEL__',
+                'action' => '/action/',
+                'subscription' => 'default',
+            ], $options);
 
             return $options;
         });
