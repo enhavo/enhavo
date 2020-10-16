@@ -18,6 +18,7 @@ class ArticleTeaserBlockType extends AbstractType
         $builder->add('layout', ChoiceType::class, array(
             'label' => 'article.form.label.layout',
             'translation_domain' => 'EnhavoArticleBundle',
+            'choice_translation_domain' => 'EnhavoArticleBundle',
             'choices' => [
                 '1:1' => ArticleTeaserBlock::LAYOUT_1_1,
                 '1:2' => ArticleTeaserBlock::LAYOUT_1_2,
@@ -27,16 +28,17 @@ class ArticleTeaserBlockType extends AbstractType
             'multiple' => false
         ));
 
-        $builder->add('textLeft', BooleanType::class, array(
+        $builder->add('textLeft', BooleanType::class, [
             'label' => 'article.form.label.text_left',
             'translation_domain' => 'EnhavoArticleBundle',
-            'choices' => array(
+            'choice_translation_domain' => 'EnhavoArticleBundle',
+            'choices' => [
                 'article.form.label.text_left_left' => BooleanType::VALUE_FALSE,
                 'article.form.label.text_left_right' => BooleanType::VALUE_TRUE
-            ),
+            ],
             'expanded' => true,
             'multiple' => false
-        ));
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

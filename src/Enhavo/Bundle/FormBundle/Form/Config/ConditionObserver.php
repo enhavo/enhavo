@@ -25,11 +25,17 @@ class ConditionObserver
      */
     private $operator;
 
-    public function __construct(Condition $subject, array $values, $operator = Condition::AND)
+    /**
+     * @var string|null
+     */
+    private $scope;
+
+    public function __construct(Condition $subject, array $values, $operator = Condition::AND, $scope = null)
     {
         $this->subject = $subject;
         $this->values = $values;
         $this->operator = $operator;
+        $this->scope = $scope;
     }
 
     /**
@@ -78,5 +84,21 @@ class ConditionObserver
     public function setOperator(string $operator)
     {
         $this->operator = $operator;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getScope(): ?string
+    {
+        return $this->scope;
+    }
+
+    /**
+     * @param string|null $scope
+     */
+    public function setScope(?string $scope): void
+    {
+        $this->scope = $scope;
     }
 }

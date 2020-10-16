@@ -8,6 +8,8 @@
 
 namespace Enhavo\Bundle\ArticleBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\ArticleBundle\Model\ArticleInterface;
 use Enhavo\Bundle\CommentBundle\Model\CommentSubjectInterface;
 use Enhavo\Bundle\CommentBundle\Model\CommentSubjectTrait;
@@ -36,12 +38,12 @@ class Article extends Content implements ArticleInterface, CommentSubjectInterfa
     private $content;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Collection
      */
     private $categories;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Collection
      */
     private $tags;
 
@@ -50,8 +52,8 @@ class Article extends Content implements ArticleInterface, CommentSubjectInterfa
      */
     public function __construct()
     {
-        $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->categories = new ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
 
     /**
@@ -80,10 +82,10 @@ class Article extends Content implements ArticleInterface, CommentSubjectInterfa
     /**
      * Set teaser
      *
-     * @param string $teaser
+     * @param ?string $teaser
      * @return Article
      */
-    public function setTeaser($teaser)
+    public function setTeaser(?string $teaser)
     {
         $this->teaser = $teaser;
 
@@ -103,7 +105,7 @@ class Article extends Content implements ArticleInterface, CommentSubjectInterfa
     /**
      * Set content
      *
-     * @param NodeInterface $content
+     * @param ?NodeInterface $content
      * @return Content
      */
     public function setContent(NodeInterface $content = null)
@@ -153,7 +155,7 @@ class Article extends Content implements ArticleInterface, CommentSubjectInterfa
     /**
      * Get categories
      *
-     * @return \Doctrine\Common\Collections\Collection|TermInterface[]
+     * @return Collection|TermInterface[]
      */
     public function getCategories()
     {
@@ -187,7 +189,7 @@ class Article extends Content implements ArticleInterface, CommentSubjectInterfa
     /**
      * Get tags
      *
-     * @return \Doctrine\Common\Collections\Collection|TermInterface[]
+     * @return Collection|TermInterface[]
      */
     public function getTags()
     {
