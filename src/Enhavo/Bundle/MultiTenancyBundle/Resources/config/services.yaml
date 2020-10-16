@@ -80,3 +80,10 @@ services:
             - '%enhavo_multi_tenancy.doctrine_filter%'
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
+    Enhavo\Bundle\MultiTenancyBundle\Column\Type\TenantAwareUrlType:
+        public: true
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.column, alias: tenant_aware_url }
