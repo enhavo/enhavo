@@ -47,3 +47,9 @@ services:
         chunk: 'form'
         tags:
             - 'enhavo_app.form'
+
+    '@enhavo/form/Loader/ConditionLoader':
+        chunk: 'form'
+        arguments:
+        tags:
+            - 'enhavo_app.form'

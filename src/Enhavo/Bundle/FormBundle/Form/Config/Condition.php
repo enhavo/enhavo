@@ -27,9 +27,10 @@ class Condition
     /**
      * @param array|string|null $values
      * @param string $operator
+     * @param string|null $scope
      * @return ConditionObserver
      */
-    public function createObserver($values, $operator = self::AND)
+    public function createObserver($values, $scope = null, $operator = self::AND)
     {
         if(!is_array($values)) {
             $values = [$values];
@@ -38,8 +39,7 @@ class Condition
             $value = (string)$value;
         }
 
-        $observer = new ConditionObserver($this, $values, $operator);
-        return $observer;
+        return new ConditionObserver($this, $values, $operator, $scope);
     }
 
     /**

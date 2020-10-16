@@ -14,6 +14,16 @@ export default class ConditionType
 
     private $input: JQuery;
 
+    public static getFromElement(element: HTMLElement)
+    {
+        for(let condition of this.subjects) {
+            if (condition.$element[0] === element) {
+                return condition;
+            }
+        }
+        return null;
+    }
+
     constructor(element: HTMLElement)
     {
         ConditionType.subjects.push(this);
@@ -49,32 +59,6 @@ export default class ConditionType
         for (let observer of this.observers) {
             observer.wakeUp(this);
         }
-    }
-
-    public static apply(element:HTMLElement)
-    {
-        $(element).find('[data-condition-type]').each(function(index, element:HTMLElement) {
-            new ConditionType(element);
-        });
-
-        $(element).find('[data-condition-type-observer]').each(function(index, element:HTMLElement) {
-            new ConditionObserver(element);
-        });
-    }
-
-    public static init(): void
-    {
-        $(document).on('formOpenAfter', function (event, element:HTMLElement) {
-            ConditionType.apply(element);
-        });
-
-        $(document).on('gridAddAfter', function (event, element:HTMLElement) {
-            ConditionType.apply(element);
-        });
-
-        $(document).on('formListAddItem', function (event, element:HTMLElement) {
-            ConditionType.apply(element);
-        });
     }
 
     public getId(): string
