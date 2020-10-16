@@ -45,6 +45,7 @@ class TextPictureBlockType extends AbstractType
         $builder->add('textLeft', BooleanType::class, array(
             'label' => 'textPicture.form.label.position',
             'translation_domain' => 'EnhavoBlockBundle',
+            'choice_translation_domain' => 'EnhavoBlockBundle',
             'choices' => array(
                 'textPicture.form.label.picture_left-text_right' => BooleanType::VALUE_FALSE,
                 'textPicture.form.label.text_left-picture_right' => BooleanType::VALUE_TRUE
@@ -82,4 +83,4 @@ class TextPictureBlockType extends AbstractType
     {
         return 'enhavo_block_block_text_picture';
     }
-} 
+}
