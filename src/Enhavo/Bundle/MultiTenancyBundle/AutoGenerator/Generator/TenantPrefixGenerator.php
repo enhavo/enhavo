@@ -36,4 +36,8 @@ class TenantPrefixGenerator extends PrefixGenerator
         return count($results);
     }
 
+    public function getType()
+    {
+        return 'tenancy_aware_prefix';
+    }
 }
