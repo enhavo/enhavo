@@ -154,7 +154,7 @@ class LocalStorageType extends AbstractStorageType
     {
         $localSubscriber = $this->getLocalSubscriber($subscriber);
 
-        if ($localSubscriber) {
+        if (!$localSubscriber) {
             return null;
         }
 

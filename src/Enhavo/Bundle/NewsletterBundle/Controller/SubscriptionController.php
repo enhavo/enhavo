@@ -92,6 +92,7 @@ class SubscriptionController extends AbstractController
         $subscription = $this->subscriptionManager->getSubscription($type);
         $subscriber = $this->subscriptionManager->createModel($subscription->getModel());
         $subscriber->setEmail($email);
+        $subscriber->setSubscription($type);
         $subscriber = $subscription->getStrategy()->getStorage()->getSubscriber($subscriber);
 
         if (!$subscriber) {
