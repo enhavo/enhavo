@@ -16,7 +16,7 @@ class ContactController extends AbstractController
     /**
      * @var ContactManager
      */
-    protected $contactManager;
+    private $contactManager;
 
     /**
      * ContactController constructor.
