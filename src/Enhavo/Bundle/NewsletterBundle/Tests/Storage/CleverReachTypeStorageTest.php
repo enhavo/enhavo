@@ -7,7 +7,10 @@ namespace Enhavo\Bundle\NewsletterBundle\Tests\Storage;
 use Enhavo\Bundle\NewsletterBundle\Client\CleverReachClient;
 use Enhavo\Bundle\NewsletterBundle\Exception\InsertException;
 use Enhavo\Bundle\NewsletterBundle\Exception\NoGroupException;
+use Enhavo\Bundle\NewsletterBundle\Exception\NotFoundException;
+use Enhavo\Bundle\NewsletterBundle\Exception\RemoveException;
 use Enhavo\Bundle\NewsletterBundle\Model\GroupInterface;
+use Enhavo\Bundle\NewsletterBundle\Model\Subscriber;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Storage\Storage;
 use Enhavo\Bundle\NewsletterBundle\Storage\Type\CleverReachStorageType;
@@ -131,6 +134,111 @@ class CleverReachTypeStorageTest extends TestCase
         $dependencies->subscriber->removeGroup($group);
         $this->expectException(NoGroupException::class);
         $instance->saveSubscriber($dependencies->subscriber);
+    }
+
+    public function testRemoveSubscriber()
+    {
+        $dependencies = $this->createDependencies();
+        $instance = $this->createInstance(new CleverReachStorageType($dependencies->client), [new StorageType()], [
+            'client_secret' => '_secret_',
+            'client_id' => '_id_',
+            'groups' => ['11', '22'],
+            'attributes' => [
+                'email' => 'email',
+            ],
+            'global_attributes' => [
+                'subscription' => 'subscription',
+            ],
+        ]);
+        $dependencies->apiManager->expects($this->exactly(2))->method('getSubscriber')->willReturn(['id' => 1]);
+        $dependencies->apiManager->expects($this->exactly(2))->method('deleteSubscriber')->willReturnCallback(function ($email, $group) {
+            $this->assertEquals('to@enhavo.com', $email);
+            $this->assertIsNumeric($group);
+
+            return true;
+        });
+        $dependencies->subscriber->method('getEmail')->willReturn('to@enhavo.com');
+        $dependencies->subscriber->method('getSubscription')->willReturn('default');
+        $instance->removeSubscriber($dependencies->subscriber);
+    }
+
+    public function testGetSubscriber()
+    {
+        $dependencies = $this->createDependencies();
+        $instance = $this->createInstance(new CleverReachStorageType($dependencies->client), [new StorageType()], [
+            'client_secret' => '_secret_',
+            'client_id' => '_id_',
+            'groups' => ['11', '22'],
+            'attributes' => [
+                'email' => 'email',
+            ],
+            'global_attributes' => [
+                'subscription' => 'subscription',
+            ],
+        ]);
+        $dependencies->apiManager->expects($this->exactly(1))->method('getSubscriber')->willReturnCallback(function ($email) {
+            $result = [
+                'email' => $email,
+                'attributes' => [],
+                'global_attributes' => [],
+            ];
+
+            return $result;
+        });
+        $dependencies->subscriber->method('getEmail')->willReturn('to@enhavo.com');
+        $dependencies->subscriber->method('getSubscription')->willReturn('default');
+        $subscriber = $instance->getSubscriber($dependencies->subscriber);
+
+        $this->assertInstanceOf(SubscriberInterface::class, $subscriber);
+        $this->assertEquals('to@enhavo.com', $subscriber->getEmail());
+    }
+
+    public function testGetSubscriberError()
+    {
+        $dependencies = $this->createDependencies();
+        $instance = $this->createInstance(new CleverReachStorageType($dependencies->client), [new StorageType()], [
+            'client_secret' => '_secret_',
+            'client_id' => '_id_',
+            'groups' => ['11', '22'],
+            'attributes' => [
+                'email' => 'email',
+            ],
+            'global_attributes' => [
+                'subscription' => 'subscription',
+            ],
+        ]);
+        $dependencies->apiManager->expects($this->exactly(1))->method('getSubscriber')->willReturnCallback(function ($email) {
+            return [
+                'error' => 404
+            ];
+        });
+        $dependencies->subscriber->method('getEmail')->willReturn('to@enhavo.com');
+        $dependencies->subscriber->method('getSubscription')->willReturn('default');
+        $this->expectException(NotFoundException::class);
+        $instance->getSubscriber($dependencies->subscriber);
+
+    }
+
+    public function testRemoveSubscriberFail()
+    {
+        $dependencies = $this->createDependencies();
+        $instance = $this->createInstance(new CleverReachStorageType($dependencies->client), [new StorageType()], [
+            'client_secret' => '_secret_',
+            'client_id' => '_id_',
+            'groups' => ['11', '22'],
+            'attributes' => [
+                'email' => 'email',
+            ],
+            'global_attributes' => [
+                'subscription' => 'subscription',
+            ],
+        ]);
+        $dependencies->apiManager->expects($this->once())->method('getSubscriber')->willReturn(['id' => 1]);
+        $dependencies->apiManager->expects($this->once())->method('deleteSubscriber')->willReturn(false);
+        $dependencies->subscriber->method('getEmail')->willReturn('to@enhavo.com');
+        $dependencies->subscriber->method('getSubscription')->willReturn('default');
+        $this->expectException(RemoveException::class);
+        $instance->removeSubscriber($dependencies->subscriber);
     }
 
     public function testExists()
