@@ -38,17 +38,21 @@ services:
         arguments:
             - '@translator'
 
-    enhavo_contact.controller.contact:
-        class: Enhavo\Bundle\ContactBundle\Controller\ContactController
+    Enhavo\Bundle\ContactBundle\Contact\ContactManager:
         public: true
         arguments:
-            - '@translator'
-            - '@enhavo_contact.mailer'
-            - '@enhavo_contact.configuration.factory'
-            - '@enhavo_contact.form_error_resolver'
-            - '@sylius.resource_controller.request_configuration_factory'
+            - '%enhavo_contact.forms%'
+            - '%enhavo_app.mailer.defaults%'
+            - '@form.factory'
+            - '@Enhavo\Bundle\AppBundle\Mailer\MailerManager'
+            - '@enhavo_app.template.manager'
+
+    Enhavo\Bundle\ContactBundle\Controller\ContactController:
+        public: true
+        arguments:
+            - '@Enhavo\Bundle\ContactBundle\Contact\ContactManager'
         calls:
-            - [setContainer, ['@service_container']]
+            - [ setContainer, [ '@service_container' ] ]
 
     Enhavo\Bundle\ContactBundle\Block\ContactBlockType:
         tags:

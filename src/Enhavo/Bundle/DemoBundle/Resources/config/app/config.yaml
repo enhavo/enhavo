@@ -19,13 +19,6 @@ enhavo_media:
             width: 1300
             height: 600
 
-enhavo_contact:
-    forms:
-        contact:
-            recipient: '%env(string:MAILER_TO)%'
-            from: '%env(string:MAILER_FROM)%'
-            sender_name: '%env(string:MAILER_NAME)%'
-
 enhavo_search:
     search:
         indexing: true
