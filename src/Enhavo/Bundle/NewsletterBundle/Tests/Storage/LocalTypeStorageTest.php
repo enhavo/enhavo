@@ -12,6 +12,7 @@ use Enhavo\Bundle\NewsletterBundle\Entity\LocalSubscriber;
 use Enhavo\Bundle\NewsletterBundle\Entity\Newsletter;
 use Enhavo\Bundle\NewsletterBundle\Entity\Receiver;
 use Enhavo\Bundle\NewsletterBundle\Exception\NoGroupException;
+use Enhavo\Bundle\NewsletterBundle\Factory\LocalSubscriberFactory;
 use Enhavo\Bundle\NewsletterBundle\Factory\LocalSubscriberFactoryInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
@@ -67,6 +68,23 @@ class LocalTypeStorageTest extends TestCase
         $subscriberMock = $this->getMockBuilder(SubscriberInterface::class)->getMock();
         $subscriberMock->method('getEmail')->willReturn('to@enhavo.com');
         $subscriberMock->method('getSubscription')->willReturn('default');
+
+        $storage->saveSubscriber($subscriberMock);
+
+        $dependencies = $this->createDependencies();
+        $dependencies->subscriberRepository->expects($this->once())->method('findOneBy')->willReturn(null);
+        $dependencies->subscriberFactory = new LocalSubscriberFactory(LocalSubscriber::class, $dependencies->groupRepository);
+        $dependencies->groupRepository->expects($this->once())->method('findOneBy')->willReturn($group);
+        $dependencies->entityManager->expects($this->once())->method('persist')->willReturnCallback(function ($subscriber) {
+            /** @var $subscriber LocalSubscriber */
+            $this->assertInstanceOf(LocalSubscriber::class, $subscriber);
+            $this->assertEquals('to@enhavo.com', $subscriber->getEmail());
+            $this->assertEquals('default', $subscriber->getSubscription());
+            $this->assertNotNull($subscriber->getCreatedAt());
+        });
+        $storage = $this->createInstance(new LocalStorageType($dependencies->entityManager, $dependencies->subscriberRepository, $dependencies->groupRepository, $dependencies->subscriberFactory), [new StorageType()], [
+            'groups' => [$group]
+        ]);
 
         $storage->saveSubscriber($subscriberMock);
 

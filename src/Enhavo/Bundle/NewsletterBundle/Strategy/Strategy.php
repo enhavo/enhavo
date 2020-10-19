@@ -43,6 +43,11 @@ class Strategy extends AbstractContainerType
         $this->type->activateSubscriber($subscriber, $this->options);
     }
 
+    public function removeSubscriber(SubscriberInterface $subscriber)
+    {
+        return $this->type->removeSubscriber($subscriber, $this->options);
+    }
+
     public function getActivationTemplate()
     {
         return $this->type->getActivationTemplate($this->options);

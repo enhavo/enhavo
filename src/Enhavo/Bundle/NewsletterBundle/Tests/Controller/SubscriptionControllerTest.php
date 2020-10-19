@@ -7,6 +7,7 @@ namespace Controller;
 use Enhavo\Bundle\NewsletterBundle\Controller\SubscriptionController;
 use Enhavo\Bundle\NewsletterBundle\Entity\PendingSubscriber;
 use Enhavo\Bundle\NewsletterBundle\Model\Subscriber;
+use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Pending\PendingSubscriberManager;
 use Enhavo\Bundle\NewsletterBundle\Storage\Storage;
 use Enhavo\Bundle\NewsletterBundle\Strategy\Strategy;
@@ -29,19 +30,7 @@ class SubscriptionControllerTest extends TestCase
         $dep->subscriptionManager = $this->getMockBuilder(SubscriptionManager::class)->disableOriginalConstructor()->getMock();
         $dep->pendingManager = $this->getMockBuilder(PendingSubscriberManager::class)->disableOriginalConstructor()->getMock();
         $dep->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
-
         $dep->container = $this->getMockBuilder(Container::class)->disableOriginalConstructor()->getMock();
-//        $dep->container->method('has')->willReturn(true);
-//        $dep->container->method('get')->willReturn(function ($key) {
-//            if ($key === 'templating') {
-//                $templating = $this->getMockBuilder(TwigEngine::class)->disableOriginalConstructor()->getMock();
-//                $templating->method('render')->willReturnCallback(function ($name, $params) {
-//                    return $name .'.rendered';
-//                });
-//
-//                return $templating;
-//            }
-//        });
 
         return $dep;
     }
@@ -87,7 +76,7 @@ class SubscriptionControllerTest extends TestCase
 
     public function testActivateAction()
     {
-        $dep = $this->createDependencies();
+        $dependencies = $this->createDependencies();
 
         $pendingSubscriber = new PendingSubscriber();
         $pendingSubscriber->setData(new Subscriber());
@@ -95,10 +84,10 @@ class SubscriptionControllerTest extends TestCase
         $subscription = $this->createSubscription('default');
         $subscription->getStrategy()->expects($this->once())->method('activateSubscriber');
         $subscription->getStrategy()->expects($this->once())->method('getActivationTemplate')->willReturn('tpl.html.twig');
-        $dep->subscriptionManager->method('getSubscription')->willReturn($subscription);
-        $dep->pendingManager->method('findByToken')->willReturn($pendingSubscriber);
+        $dependencies->subscriptionManager->method('getSubscription')->willReturn($subscription);
+        $dependencies->pendingManager->method('findByToken')->willReturn($pendingSubscriber);
 
-        $controller = $this->createInstance($dep);
+        $controller = $this->createInstance($dependencies);
 
         $request = new Request([
             'type' => 'default',
@@ -112,26 +101,83 @@ class SubscriptionControllerTest extends TestCase
 
     public function testAddAction()
     {
-        $dep = $this->createDependencies();
+        $dependencies = $this->createDependencies();
         $form = $this->getMockBuilder(FormInterface::class)->getMock();
         $form->expects($this->once())->method('handleRequest');
+        $form->expects($this->once())->method('isValid')->willReturn(true);
 
-        $dep->subscriptionManager->expects($this->once())->method('createForm')->willReturn($form);
+        $dependencies->subscriptionManager->expects($this->once())->method('createForm')->willReturn($form);
         $subscription = $this->createSubscription('default');
         $subscription->getStrategy()->expects($this->once())->method('addSubscriber')->willReturn('added');
 
-        $dep->translator->expects($this->once())->method('trans')->willReturnCallback(function ($message) {
+        $dependencies->translator->expects($this->once())->method('trans')->willReturnCallback(function ($message) {
             return $message .'.trans';
         });
-        $dep->subscriptionManager->method('getSubscription')->willReturn($subscription);
+        $dependencies->subscriptionManager->method('getSubscription')->willReturn($subscription);
 
-        $controller = $this->createInstance($dep);
+        $controller = $this->createInstance($dependencies);
         $request = new Request([
             'type' => 'default',
         ]);
 
         $response = $controller->addAction($request);
         $this->assertEquals('{"message":"added.trans","subscriber":{}}', $response->getContent());
+    }
+
+    public function testAddActionInvalid()
+    {
+        $dependencies = $this->createDependencies();
+        $form = $this->getMockBuilder(FormInterface::class)->getMock();
+        $form->expects($this->once())->method('handleRequest');
+        $form->expects($this->once())->method('isValid')->willReturn(false);
+        $form->expects($this->once())->method('getErrors')->willReturn([]);
+
+        $dependencies->subscriptionManager->expects($this->once())->method('createForm')->willReturn($form);
+        $subscription = $this->createSubscription('default');
+        $subscription->getStrategy()->expects($this->never())->method('addSubscriber');
+        $dependencies->translator->expects($this->never())->method('trans');
+        $dependencies->subscriptionManager->method('getSubscription')->willReturn($subscription);
+
+        $controller = $this->createInstance($dependencies);
+        $request = new Request([
+            'type' => 'default',
+        ]);
+
+        $response = $controller->addAction($request);
+        $this->assertEquals('{"errors":[],"subscriber":{}}', $response->getContent());
+    }
+
+    public function testUnsubscribeAction()
+    {
+        $dependencies = $this->createDependencies();
+        $subscriberMock = $this->getMockBuilder(SubscriberInterface::class)->getMock();
+
+        $subscription = $this->createSubscription('default');
+        $subscription->getStrategy()->expects($this->once())->method('removeSubscriber')->willReturn('removed');
+        $subscription->getStrategy()->getStorage()->expects($this->once())->method('getSubscriber')->willReturn($subscriberMock);
+
+        $dependencies->translator->expects($this->once())->method('trans')->willReturnCallback(function ($message) {
+            return $message .'.trans';
+        });
+        $dependencies->subscriptionManager->method('getSubscription')->willReturn($subscription);
+
+        $controller = $this->createInstance($dependencies);
+        $request = new Request([
+            'type' => 'default',
+        ]);
+
+        $response = $controller->unsubscribeAction($request);
+        $this->assertEquals('{"message":"removed.trans","subscriber":{}}', $response->getContent());
+
+        $dependencies = $this->createDependencies();
+        $controller = $this->createInstance($dependencies);
+        $subscription = $this->createSubscription('default');
+        $subscription->getStrategy()->expects($this->never())->method('removeSubscriber')->willReturn('removed');
+        $subscription->getStrategy()->getStorage()->expects($this->once())->method('getSubscriber')->willReturn(null);
+        $dependencies->subscriptionManager->method('getSubscription')->willReturn($subscription);
+
+        $this->expectException(NotFoundHttpException::class);
+        $controller->unsubscribeAction($request);
     }
 }
 

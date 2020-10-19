@@ -42,7 +42,7 @@ class AbstractStorageType extends AbstractType implements StorageTypeInterface
 
     public function removeSubscriber(SubscriberInterface $subscriber, array $options)
     {
-        $this->parent->removeSubscriber($subscriber, $options);
+        return $this->parent->removeSubscriber($subscriber, $options);
     }
 
     public function getSubscriber(SubscriberInterface $subscriber, array $options): ?SubscriberInterface

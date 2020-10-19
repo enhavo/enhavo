@@ -41,7 +41,7 @@ class Storage extends AbstractContainerType
 
     public function removeSubscriber(SubscriberInterface $subscriber)
     {
-        $this->type->removeSubscriber($subscriber, $this->options);
+        return $this->type->removeSubscriber($subscriber, $this->options);
     }
 
     public function getSubscriber(SubscriberInterface $subscriber): ?SubscriberInterface

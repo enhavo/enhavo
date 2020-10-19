@@ -69,9 +69,7 @@ class SubscriptionController extends AbstractController
         $form = $this->subscriptionManager->createForm($subscription, $subscriber);
         $form->handleRequest($request);
 
-        $result = $this->formIsValid($form);
-
-        if ($result === true) {
+        if ($form->isValid()) {
             $message = $subscription->getStrategy()->addSubscriber($subscriber);
             return new JsonResponse([
                 'message' => $this->translator->trans($message, [], 'EnhavoNewsletterBundle'),
@@ -79,7 +77,7 @@ class SubscriptionController extends AbstractController
             ]);
         } else {
             return new JsonResponse([
-                'errors' => $result,
+                'errors' => $form->getErrors(true, true),
                 'subscriber' => $subscriber
             ], 400);
         }
@@ -99,42 +97,11 @@ class SubscriptionController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        $subscription->getStrategy()->getStorage()->removeSubscriber($subscriber);
+        $message = $subscription->getStrategy()->removeSubscriber($subscriber);
 
         return new JsonResponse([
+            'message' => $this->translator->trans($message, [], 'EnhavoNewsletterBundle'),
             'subscriber' => $subscriber
         ]);
     }
-
-    /**
-     * @param $form
-     * @return array|bool
-     */
-    protected function formIsValid($form)
-    {
-        $errorResolver = $this->get('enhavo_form.error.error.resolver');
-        $errors = $errorResolver->getErrors($form);
-
-        if (count($errors) > 0) {
-            $errorFields = [];
-            foreach($errors as $error) {
-                $errorFields[$this->getSubFormName($error->getOrigin())] = $error->getMessage();
-            }
-
-            return $errorFields;
-        }
-
-        return true;
-    }
-
-
-    protected function getSubFormName(FormInterface $form)
-    {
-        if ($form->getParent() == null) {
-            return $form->getName();
-        } else {
-            return $this->getSubFormName($form->getParent()) . '[' . $form->getName() . ']';
-        }
-    }
-
 }

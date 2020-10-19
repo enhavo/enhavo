@@ -47,6 +47,13 @@ class StrategyType extends AbstractType implements StrategyTypeInterface
 
     }
 
+    public function removeSubscriber(SubscriberInterface $subscriber, array $options)
+    {
+        $this->getStorage()->removeSubscriber($subscriber);
+
+        return 'subscriber.form.message.remove';
+    }
+
     public function exists(SubscriberInterface $subscriber, array $options): bool
     {
         return false;

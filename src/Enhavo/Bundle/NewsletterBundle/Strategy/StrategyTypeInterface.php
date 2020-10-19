@@ -31,6 +31,13 @@ interface StrategyTypeInterface extends TypeInterface
     /**
      * @param SubscriberInterface $subscriber
      * @param array $options
+     * @return mixed
+     */
+    public function removeSubscriber(SubscriberInterface $subscriber, array $options);
+
+    /**
+     * @param SubscriberInterface $subscriber
+     * @param array $options
      * @return bool
      */
     public function exists(SubscriberInterface $subscriber, array $options): bool;
