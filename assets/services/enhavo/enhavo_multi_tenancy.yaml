@@ -1,0 +1,3 @@
+imports:
+    -
+        path: '@enhavo/multi-tenancy/services/*'

@@ -52,6 +52,7 @@ return [
     Enhavo\Bundle\ShopBundle\EnhavoShopBundle::class => ['all' => true],
     Enhavo\Bundle\SidebarBundle\EnhavoSidebarBundle::class => ['all' => true],
     Enhavo\Bundle\TemplateBundle\EnhavoTemplateBundle::class => ['all' => true],
+    Enhavo\Bundle\MultiTenancyBundle\EnhavoMultiTenancyBundle::class => ['all' => true],
     Sylius\Bundle\PaymentBundle\SyliusPaymentBundle::class => ['all' => true],
     Sylius\Bundle\MoneyBundle\SyliusMoneyBundle::class => ['all' => true],
     Sylius\Bundle\OrderBundle\SyliusOrderBundle::class => ['all' => true],
