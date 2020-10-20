@@ -15,10 +15,12 @@ use Enhavo\Bundle\NewsletterBundle\Exception\NoGroupException;
 use Enhavo\Bundle\NewsletterBundle\Factory\LocalSubscriberFactory;
 use Enhavo\Bundle\NewsletterBundle\Factory\LocalSubscriberFactoryInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
+use Enhavo\Bundle\NewsletterBundle\Model\Subscriber;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Storage\Storage;
 use Enhavo\Bundle\NewsletterBundle\Storage\Type\LocalStorageType;
 use Enhavo\Bundle\NewsletterBundle\Storage\Type\StorageType;
+use Enhavo\Bundle\NewsletterBundle\Tests\Mocks\GroupAwareSubscriberMock;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
@@ -169,6 +171,59 @@ class LocalTypeStorageTest extends TestCase
 
         $this->expectException(\InvalidArgumentException::class);
         $storage->getReceivers(new NotNewsletter());
+    }
+
+    public function testRemoveSubscriber()
+    {
+        $group = new Group();
+        $group->setCode('local');
+
+        $dependencies = $this->createDependencies();
+        $dependencies->groupRepository->expects($this->once())->method('findOneBy')->willReturn($group);
+        $dependencies->entityManager->expects($this->once())->method('remove');
+        $dependencies->entityManager->expects($this->exactly(2))->method('flush');
+        $dependencies->subscriberRepository->expects($this->exactly(3))->method('findOneBy')->willReturnCallback(function ($criteria) use ($group) {
+            if ($criteria['subscription'] === 'missing') {
+                return null;
+            } else if ($criteria['subscription'] === 'found') {
+                return new LocalSubscriber();
+
+            } else if ($criteria['subscription'] === 'groups') {
+                $subscriber = new LocalSubscriber();
+                $subscriber->addGroup($group);
+                return $subscriber;
+            }
+        });
+
+        $storage = $this->createInstance(new LocalStorageType($dependencies->entityManager, $dependencies->subscriberRepository, $dependencies->groupRepository, $dependencies->subscriberFactory), [new StorageType()], [
+            'groups' => []
+        ]);
+
+//        $storage = $this->createInstance(new LocalStorageType($dependencies->entityManager, $dependencies->subscriberRepository, $dependencies->groupRepository, $dependencies->subscriberFactory), [new StorageType()], [
+//            'groups' => [
+//                'local'
+//            ]
+//        ]);
+
+        $subscriber = new Subscriber();
+        $subscriber->setEmail('to@enhavo.com');
+        $subscriber->setSubscription('missing');
+
+        $result = $storage->removeSubscriber($subscriber);
+        $this->assertEquals(false, $result);
+
+        $subscriber->setSubscription('found');
+
+        $result = $storage->removeSubscriber($subscriber);
+        $this->assertEquals(true, $result);
+
+        $subscriber = new GroupAwareSubscriberMock();
+        $subscriber->setEmail('to@enhavo.com');
+        $subscriber->setSubscription('groups');
+        $subscriber->addGroup($group);
+        $result = $storage->removeSubscriber($subscriber);
+        $this->assertEquals(true, $result);
+
     }
 
 }

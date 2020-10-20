@@ -128,6 +128,10 @@ class LocalStorageType extends AbstractStorageType
     {
         $localSubscriber = $this->getLocalSubscriber($subscriber);
 
+        if (!$localSubscriber) {
+            return false;
+        }
+
         $groups = $options['groups'];
         if ($subscriber instanceof GroupAwareInterface) {
             $groups = $subscriber->getGroups()->getValues();
@@ -136,7 +140,7 @@ class LocalStorageType extends AbstractStorageType
         if (count($groups)) {
             foreach ($groups as $group) {
                 $group = $group instanceof Group ? $this->findGroup($group->getCode()) : $this->findGroup($group);
-                if ($localSubscriber->getGroups()->contains($group)) {
+                if (!$localSubscriber->getGroups()->contains($group)) {
                     continue;
                 }
                 $localSubscriber->removeGroup($group);

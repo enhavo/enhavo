@@ -267,6 +267,72 @@ class CleverReachTypeStorageTest extends TestCase
         $this->assertFalse($instance->exists($dependencies->subscriber));
     }
 
+    public function testGetGroup()
+    {
+        $dependencies = $this->createDependencies();
+        $instance = $this->createInstance(new CleverReachStorageType($dependencies->client), [new StorageType()], [
+            'client_secret' => '_secret_',
+            'client_id' => '_id_',
+            'groups' => ['11', '22'],
+            'attributes' => [
+                'email' => 'email',
+            ],
+            'global_attributes' => [
+                'subscription' => 'subscription',
+            ],
+        ]);
+        $dependencies->apiManager->expects($this->exactly(2))->method('getGroup')->willReturnCallback(function ($groupId) {
+            if ($groupId === 123456) {
+                return [
+                    'id' => 123456,
+                    'name' => 'group_name',
+                    'last_changed' => 123456789,
+                    'last_mailing' => 987654321
+                ];
+            }
+
+            return [];
+        });
+
+        $group = $instance->getGroup(123456);
+
+        $this->assertEquals(123456, $group->getCode());
+        $this->assertEquals('group_name', $group->getName());
+
+        $this->expectException(NoGroupException::class);
+        $instance->getGroup(1);
+    }
+
+    public function testGetGroups()
+    {
+        $dependencies = $this->createDependencies();
+        $instance = $this->createInstance(new CleverReachStorageType($dependencies->client), [new StorageType()], [
+            'client_secret' => '_secret_',
+            'client_id' => '_id_',
+            'groups' => ['11', '22'],
+            'attributes' => [
+                'email' => 'email',
+            ],
+            'global_attributes' => [
+                'subscription' => 'subscription',
+            ],
+        ]);
+        $dependencies->apiManager->expects($this->once())->method('getGroups')->willReturn(
+            [[
+                'id' => 123456,
+                'name' => 'group_name',
+                'last_changed' => 123456789,
+                'last_mailing' => 987654321
+            ]]
+        );
+
+        $groups = $instance->getGroups(123456);
+
+        $this->assertCount(1, $groups);
+        $this->assertEquals(123456, $groups[0]->getCode());
+        $this->assertEquals('group_name', $groups[0]->getName());
+    }
+
 }
 
 class CleverReachTypeStorageTestDependencies

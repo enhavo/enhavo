@@ -133,12 +133,7 @@ class CleverReachStorageType extends AbstractStorageType
         $response = $this->client->getGroup($groupId);
 
         if (isset($response['id'])) {
-            $lastChanged = new \DateTime();
-            $lastChanged->setTimestamp($response['last_changed']);
-            $lastMailing = new \DateTime();
-            $lastMailing->setTimestamp($response['last_mailing']);
-
-            return new CleverReachGroup($response['id'], $response['name'], $response['id'], $lastChanged, $lastMailing);
+            return $this->createGroup($response);
         }
 
         throw new NoGroupException(sprintf('group with id "%s" does not exist', $groupId));
@@ -155,15 +150,20 @@ class CleverReachStorageType extends AbstractStorageType
 
         $groups = [];
         foreach ($response as $item) {
-            $lastChanged = new \DateTime();
-            $lastChanged->setTimestamp($item['last_changed']);
-            $lastMailing = new \DateTime();
-            $lastMailing->setTimestamp($item['last_mailing']);
-
-            $groups[] = new CleverReachGroup($item['id'], $item['name'], $item['id'], $lastChanged, $lastMailing);
+            $groups[] = $this->createGroup($item);
         }
 
         return $groups;
+    }
+
+    private function createGroup(array $data): CleverReachGroup
+    {
+        $lastChanged = new \DateTime();
+        $lastChanged->setTimestamp($data['last_changed']);
+        $lastMailing = new \DateTime();
+        $lastMailing->setTimestamp($data['last_mailing']);
+
+        return new CleverReachGroup($data['id'], $data['name'], $data['id'], $lastChanged, $lastMailing);
     }
 
     /**

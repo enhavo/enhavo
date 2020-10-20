@@ -151,12 +151,12 @@ class CleverReachClient
 
     public function getGroup($groupId)
     {
-        return $this->apiManager->getGroup(intval($groupId));
+        return $this->getApiManager()->getGroup(intval($groupId));
     }
 
     public function getGroups()
     {
-        return $this->apiManager->getGroups();
+        return $this->getApiManager()->getGroups();
     }
 
     private function createAttributes(SubscriberInterface $subscriber, array $attributes)

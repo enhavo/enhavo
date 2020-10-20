@@ -29,9 +29,9 @@ class Storage extends AbstractContainerType
         return $this->type->exists($subscriber, $this->options);
     }
 
-    public function getGroup($name): GroupInterface
+    public function getGroup($groupId): GroupInterface
     {
-        return $this->type->getGroup($name, $this->options);
+        return $this->type->getGroup($groupId, $this->options);
     }
 
     public function getGroups(): array
