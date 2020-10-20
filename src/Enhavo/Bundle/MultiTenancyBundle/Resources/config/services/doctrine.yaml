@@ -1,0 +1,14 @@
+services:
+    Enhavo\Bundle\MultiTenancyBundle\EventListener\TenantDoctrineFilterListener:
+        arguments:
+            - '@enhavo_multi_tenancy.resolver'
+            - '@doctrine.orm.entity_manager'
+            - '%enhavo_multi_tenancy.doctrine_filter%'
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
+    Enhavo\Bundle\MultiTenancyBundle\EventListener\TenantAwareSubscriber:
+        arguments:
+            - '@Enhavo\Bundle\MultiTenancyBundle\Tenant\TenantManager'
+        tags:
+            - { name: kernel.event_subscriber }

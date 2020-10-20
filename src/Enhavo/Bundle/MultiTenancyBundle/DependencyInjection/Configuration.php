@@ -32,6 +32,13 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
+                ->arrayNode('tenant_switch_menu')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('url_prefix')->defaultValue('/admin/')->end()
+                        ->scalarNode('session_key')->defaultValue('admin_selected_tenant')->end()
+                    ->end()
+                ->end()
             ->end();
         return $treeBuilder;
     }
