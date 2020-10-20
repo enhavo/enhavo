@@ -4,6 +4,7 @@
 namespace Enhavo\Bundle\NewsletterBundle\Tests\Strategy;
 
 
+use Enhavo\Bundle\AppBundle\Mailer\Message;
 use Enhavo\Bundle\NewsletterBundle\Event\SubscriberEvent;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager;
@@ -58,7 +59,7 @@ class StrategyNotifyTypeTest extends TestCase
 
             $this->assertInstanceOf(SubscriberInterface::class, $options['subscriber']);
 
-            return new \Swift_Message();
+            return new Message();
         });
         $dependencies->eventDispatcher->expects($this->exactly(2))->method('dispatch')->willReturnCallback(function ($key, $event) {
             $this->assertInstanceOf(SubscriberEvent::class, $event);

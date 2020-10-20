@@ -5,6 +5,7 @@ namespace Enhavo\Bundle\NewsletterBundle\Newsletter;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Mailer\MailerManager;
+use Enhavo\Bundle\AppBundle\Mailer\Message;
 use Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\NewsletterBundle\Entity\Receiver;
@@ -172,20 +173,17 @@ class NewsletterManager
 
     private function sendNewsletter(Receiver $receiver)
     {
-        /** @var \Swift_Message $message */
-        $message = $this->mailerManager->createMessage();
-        $message
-            ->setSubject($receiver->getNewsletter()->getSubject())
-            ->setContentType("text/html")
-            ->setFrom($this->from)
-            ->setTo($receiver->getEmail())
-            ->setBody($this->render($receiver));
+        $newsletter = $receiver->getNewsletter();
+        $message = $this->createMessage($this->from, '', $receiver->getEmail(), $newsletter->getSubject(), $newsletter->getTemplate(), [
+            'resource' => $newsletter,
+            'receiver' => $receiver,
+        ], 'text/html');
 
         if (!empty($receiver->getNewsletter()->getAttachments())) {
             $this->addAttachmentsToMessage($receiver->getNewsletter()->getAttachments(), $message);
         }
 
-        return $this->mailerManager->send($message);
+        return $this->mailerManager->sendMessage($message);
     }
 
     private function getTestReceiver(NewsletterInterface $newsletter): Receiver
@@ -210,15 +208,11 @@ class NewsletterManager
         return $return;
     }
 
-    private function addAttachmentsToMessage($attachments, \Swift_Message $message)
+    private function addAttachmentsToMessage($files, Message $message)
     {
-        /** @var FileInterface $attachment */
-        foreach ($attachments as $attachment) {
-            $attach = new \Swift_Attachment();
-            $attach->setFilename($attachment->getFilename());
-            $attach->setContentType($attachment->getMimeType());
-            $attach->setBody($attachment->getContent()->getContent());
-            $message->attach($attach);
+        /** @var FileInterface $file */
+        foreach ($files as $file) {
+            $message->addAttachment($file);
         }
     }
 
@@ -234,20 +228,23 @@ class NewsletterManager
         return $this->renderer->render($receiver);
     }
 
-    public function createMessage(string $from, string $senderName, string $to, string $subject, string $template, array $context, string $contentType = 'text/html'): \Swift_Message
+    public function createMessage(string $from, string $senderName, string $to, string $subject, string $template, array $context, string $contentType = 'text/html'): Message
     {
-        $message = new \Swift_Message();
-        $message->setSubject($subject)
-            ->setFrom($from, $senderName)
-            ->setTo($to)
-            ->setBody($this->renderTemplate($template, $context), $contentType);
+        $message = $this->mailerManager->createMessage();
+        $message->setSubject($subject);
+        $message->setFrom($from);
+        $message->setSenderName($senderName);
+        $message->setTo($to);
+        $message->setTemplate($template);
+        $message->setContext($context);
+        $message->setContentType($contentType);
 
         return $message;
     }
 
-    public function sendMessage(\Swift_Message $message)
+    public function sendMessage(Message $message)
     {
-        $this->mailerManager->send($message);
+        $this->mailerManager->sendMessage($message);
     }
 
     protected function renderTemplate($template, $context)

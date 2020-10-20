@@ -4,6 +4,7 @@
 namespace Enhavo\Bundle\NewsletterBundle\Tests\Strategy;
 
 
+use Enhavo\Bundle\AppBundle\Mailer\Message;
 use Enhavo\Bundle\NewsletterBundle\Entity\PendingSubscriber;
 use Enhavo\Bundle\NewsletterBundle\Event\SubscriberEvent;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
@@ -72,7 +73,7 @@ class StrategyDoubleOptInTypeTest extends TestCase
             $this->assertInstanceOf(SubscriberInterface::class, $options['subscriber']);
             $this->assertEquals('__ROUTE_NAME__.routed', $options['link']);
 
-            return new \Swift_Message();
+            return new Message();
         });
 
         /** @var SubscriberInterface|MockObject $subscriber */
@@ -123,7 +124,7 @@ class StrategyDoubleOptInTypeTest extends TestCase
             $this->assertEquals('__CTPL__', $template);
             $this->assertInstanceOf(SubscriberInterface::class, $options['subscriber']);
 
-            return new \Swift_Message();
+            return new Message();
         });
 
         /** @var SubscriberInterface|MockObject $subscriber */
@@ -167,7 +168,7 @@ class StrategyDoubleOptInTypeTest extends TestCase
             $this->assertEquals('__ATPL__', $template);
             $this->assertInstanceOf(SubscriberInterface::class, $options['subscriber']);
 
-            return new \Swift_Message();
+            return new Message();
         });
 
         /** @var SubscriberInterface|MockObject $subscriber */

@@ -56,7 +56,6 @@ class MailChimpClient
             $this->guzzleClient = new Client([
                 'base_uri' => $url . '/3.0/lists/',
                 'headers' => [
-//                'Authentication' => 'Basic ' . $this->user . ':' . $this->password,
                     'Content-Type' => 'application/json'
                 ],
             ]);
