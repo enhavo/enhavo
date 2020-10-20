@@ -1,0 +1,3 @@
+enhavo_multi_tenancy_admin:
+    resource: "@EnhavoMultiTenancyBundle/Resources/config/routes/admin/*"
+    prefix: /admin

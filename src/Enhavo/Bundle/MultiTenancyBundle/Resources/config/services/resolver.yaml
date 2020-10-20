@@ -1,0 +1,33 @@
+services:
+    Enhavo\Bundle\MultiTenancyBundle\Routing\ConditionResolver:
+        arguments:
+            - '@enhavo_multi_tenancy.resolver'
+
+    Enhavo\Bundle\MultiTenancyBundle\Resolver\HostResolver:
+        arguments:
+            - '@enhavo_multi_tenancy.provider'
+            - '@request_stack'
+
+    Enhavo\Bundle\MultiTenancyBundle\Resolver\EnvResolver:
+        arguments:
+            - '@enhavo_multi_tenancy.provider'
+
+    Enhavo\Bundle\MultiTenancyBundle\Resolver\AssignResolver:
+        arguments:
+            - '@enhavo_multi_tenancy.provider'
+            - ~
+
+    Enhavo\Bundle\MultiTenancyBundle\Resolver\SessionResolver:
+        arguments:
+            - '@enhavo_multi_tenancy.provider'
+            - '@request_stack'
+            - '%enhavo_multi_tenancy.tenant_switch_menu.url_prefix%'
+            - '%enhavo_multi_tenancy.tenant_switch_menu.session_key%'
+
+    enhavo_multi_tenancy.resolver.default:
+        class: Enhavo\Bundle\MultiTenancyBundle\Resolver\ChainResolver
+        calls:
+            - [ 'addResolver', [ '@Enhavo\Bundle\MultiTenancyBundle\Resolver\AssignResolver' ] ]
+            - [ 'addResolver', [ '@Enhavo\Bundle\MultiTenancyBundle\Resolver\EnvResolver' ] ]
+            - [ 'addResolver', [ '@Enhavo\Bundle\MultiTenancyBundle\Resolver\SessionResolver' ] ]
+            - [ 'addResolver', [ '@Enhavo\Bundle\MultiTenancyBundle\Resolver\HostResolver' ] ]

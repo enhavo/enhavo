@@ -1,0 +1,7 @@
+enhavo_multi_tenancy_switch:
+    options:
+        expose: true
+    path:  /tenant/switch
+    methods: [ GET ]
+    defaults:
+        _controller: Enhavo\Bundle\MultiTenancyBundle\Controller\MultiTenancyController::switchTenantAction
