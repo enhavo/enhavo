@@ -55,6 +55,10 @@ class MailChimpClient
 
             $this->guzzleClient = new Client([
                 'base_uri' => $url . '/3.0/lists/',
+                'headers' => [
+//                'Authentication' => 'Basic ' . $this->user . ':' . $this->password,
+                    'Content-Type' => 'application/json'
+                ],
             ]);
 
             $this->initialized = true;
@@ -77,10 +81,6 @@ class MailChimpClient
             'auth' => [
                 'basic',
                 $this->apiKey,
-            ],
-            'headers' => [
-//                'Authentication' => 'Basic ' . $this->user . ':' . $this->password,
-                'Content-Type' => 'application/json'
             ],
             'body' => json_encode(array_merge([
                 'email_address' => $subscriber->getEmail(),
@@ -107,9 +107,6 @@ class MailChimpClient
                 'basic',
                 $this->apiKey,
             ],
-//            'headers' => [
-//                'Authentication' => 'Basic ' . $this->user . ':' . $this->password,
-//            ]
         ]);
 
         if ($response->getStatusCode() == 404) {

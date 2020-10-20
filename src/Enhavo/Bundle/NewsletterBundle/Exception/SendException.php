@@ -9,6 +9,6 @@
 namespace Enhavo\Bundle\NewsletterBundle\Exception;
 
 
-class DeliveryException extends \Exception
+class SendException extends \Exception
 {
 }

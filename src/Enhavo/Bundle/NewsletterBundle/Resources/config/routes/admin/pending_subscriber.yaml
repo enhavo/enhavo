@@ -16,19 +16,6 @@ enhavo_newsletter_pending_subscriber_index:
                         type: create
                         hidden: true
 
-#enhavo_newsletter_pending_subscriber_create:
-#    options:
-#        expose: true
-#    path: /enhavo/newsletter/pending-subscriber/create
-#    methods: [GET,POST]
-#    defaults:
-#        _controller: enhavo_newsletter.controller.pending_subscriber:createAction
-#        _sylius:
-#            redirect: enhavo_newsletter_pending_subscriber_update
-#            viewer:
-#                label: subscriber.label.create
-#                translation_domain: EnhavoNewsletterBundle
-
 enhavo_newsletter_pending_subscriber_update:
     options:
         expose: true

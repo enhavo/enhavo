@@ -36,11 +36,6 @@ class PendingSubscriber implements ResourceInterface
      */
     private $subscription;
 
-    /**
-     * @var string
-     */
-    private $condition;
-
     /** @var SubscriberInterface */
     private $data;
 
@@ -104,24 +99,6 @@ class PendingSubscriber implements ResourceInterface
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-    }
-
-    /**
-     * @param $condition
-     */
-    public function setCondition($condition)
-    {
-        $this->condition = $condition;
-    }
-
-    /**
-     * Get condition
-     *
-     * @return string
-     */
-    public function getCondition()
-    {
-        return $this->condition;
     }
 
     /**

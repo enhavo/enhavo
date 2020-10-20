@@ -18,7 +18,7 @@ services:
         public: true
         arguments:
           - '@doctrine.orm.entity_manager'
-          - '@mailer'
+          - '@Enhavo\Bundle\AppBundle\Mailer\MailerManager'
           - '@Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager'
           - '@enhavo_app.util.secure_url_token_generator'
           - '@logger'

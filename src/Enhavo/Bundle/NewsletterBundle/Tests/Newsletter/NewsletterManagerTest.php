@@ -14,7 +14,7 @@ use Enhavo\Bundle\MediaBundle\Content\Content;
 use Enhavo\Bundle\MediaBundle\Entity\File;
 use Enhavo\Bundle\NewsletterBundle\Entity\Newsletter;
 use Enhavo\Bundle\NewsletterBundle\Entity\Receiver;
-use Enhavo\Bundle\NewsletterBundle\Exception\DeliveryException;
+use Enhavo\Bundle\NewsletterBundle\Exception\SendException;
 use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager;
 use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterRenderer;
 use Enhavo\Bundle\NewsletterBundle\Storage\Storage;
@@ -67,7 +67,7 @@ class NewsletterManagerTest extends TestCase
     }
 
     /**
-     * @throws DeliveryException
+     * @throws SendException
      */
     public function testAlreadyPrepared()
     {
@@ -76,7 +76,7 @@ class NewsletterManagerTest extends TestCase
         $newsletter = new Newsletter();
         $newsletter->setState(Newsletter::STATE_PREPARED);
 
-        $this->expectException(DeliveryException::class);
+        $this->expectException(SendException::class);
         $newsletterManager->prepare($newsletter);
     }
 
@@ -206,7 +206,7 @@ class NewsletterManagerTest extends TestCase
 
         $newsletter = new Newsletter();
         $newsletter->setState(Newsletter::STATE_CREATED);
-        $this->expectException(DeliveryException::class);
+        $this->expectException(SendException::class);
         $newsletterManager->send($newsletter);
 
     }
@@ -218,7 +218,7 @@ class NewsletterManagerTest extends TestCase
 
         $newsletter = new Newsletter();
         $newsletter->setState(Newsletter::STATE_SENT);
-        $this->expectException(DeliveryException::class);
+        $this->expectException(SendException::class);
         $newsletterManager->send($newsletter);
 
     }
