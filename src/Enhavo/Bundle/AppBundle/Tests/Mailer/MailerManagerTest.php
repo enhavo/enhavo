@@ -5,6 +5,7 @@ namespace Enhavo\Bundle\AppBundle\Tests\Mailer;
 use Enhavo\Bundle\AppBundle\Exception\MailNotFoundException;
 use Enhavo\Bundle\AppBundle\Mailer\MailerManager;
 use Enhavo\Bundle\AppBundle\Mailer\Message;
+use Enhavo\Bundle\AppBundle\Template\TemplateManager;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Twig\Environment;
@@ -15,6 +16,10 @@ class MailerManagerTest extends TestCase
     private function createDependencies()
     {
         $dependencies = new MailerManagerTestDependencies();
+        $dependencies->templateManager = $this->getMockBuilder(TemplateManager::class)->disableOriginalConstructor()->getMock();
+        $dependencies->templateManager->method('getTemplate')->willReturnCallback(function ($tpl) {
+            return $tpl;
+        });
         $dependencies->environment = new Environment(new FilesystemLoader([
             'Fixtures/Mail/MailManager',
         ], __DIR__ . '/../'));
@@ -29,6 +34,7 @@ class MailerManagerTest extends TestCase
     {
         return new MailerManager(
             $dependencies->mailer,
+            $dependencies->templateManager,
             $dependencies->environment,
             $dependencies->defaultConfig,
             $dependencies->mailsConfig,
@@ -130,6 +136,8 @@ class MailerManagerTest extends TestCase
 
 class MailerManagerTestDependencies
 {
+    /** @var TemplateManager|MockObject */
+    public $templateManager;
     /** @var Environment|MockObject */
     public $environment;
     /** @var \Swift_Mailer|MockObject */

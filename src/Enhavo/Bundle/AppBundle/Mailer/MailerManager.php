@@ -4,6 +4,7 @@
 namespace Enhavo\Bundle\AppBundle\Mailer;
 
 use Enhavo\Bundle\AppBundle\Exception\MailNotFoundException;
+use Enhavo\Bundle\AppBundle\Template\TemplateManager;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Swift_Mailer;
 use Swift_Message;
@@ -15,6 +16,9 @@ class MailerManager
 {
     /** @var Swift_Mailer */
     private $mailer;
+
+    /** @var TemplateManager */
+    private $templateManager;
 
     /** @var Environment */
     private $environment;
@@ -31,19 +35,22 @@ class MailerManager
     /**
      * MailerManager constructor.
      * @param Swift_Mailer $mailer
+     * @param TemplateManager $templateManager
      * @param Environment $environment
      * @param array $defaultConfig
      * @param array $mailsConfig
-     * @param $model
+     * @param string $model
      */
-    public function __construct(Swift_Mailer $mailer, Environment $environment, array $defaultConfig, array $mailsConfig, $model)
+    public function __construct(Swift_Mailer $mailer, TemplateManager $templateManager, Environment $environment, array $defaultConfig, array $mailsConfig, string $model)
     {
         $this->mailer = $mailer;
+        $this->templateManager = $templateManager;
         $this->environment = $environment;
         $this->defaultConfig = $defaultConfig;
         $this->mailsConfig = $mailsConfig;
         $this->model = $model;
     }
+
 
     public function sendMail(string $key, $resource, array $attachments = []): int
     {
@@ -96,7 +103,7 @@ class MailerManager
             ->setTo($this->renderString($message->getTo(), $message->getContext()))
         ;
 
-        $template = $this->environment->load($message->getTemplate());
+        $template = $this->environment->load($this->templateManager->getTemplate($message->getTemplate()));
 
         if ($message->getContentType() === Message::CONTENT_TYPE_MIXED) {
             $swiftMessage->setBody($template->renderBlock('text_plain', $message->getContext()), Message::CONTENT_TYPE_PLAIN);
