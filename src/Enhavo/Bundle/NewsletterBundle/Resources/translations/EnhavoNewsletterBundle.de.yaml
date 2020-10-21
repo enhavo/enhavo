@@ -84,6 +84,11 @@ subscriber:
     error:
       valid: 'E-Mail nicht gültig'
       sent_again: 'Bitte bestätigen Sie ihre Registrierung'
+  mail:
+      admin:
+          subject: 'Neues Newsletter Abonnement'
+      notify:
+          subject: 'Newsletter Abonnement'
 group:
   label:
     group: Gruppe

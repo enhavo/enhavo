@@ -49,7 +49,7 @@ class NotifyStrategyType extends AbstractStrategyType
 
             $message = $this->newsletterManager->createMessage($from, $senderName, $subscriber->getEmail(), $subject, $template, [
                 'subscriber' => $subscriber
-            ]);
+            ], $options['content_type']);
             $this->newsletterManager->sendMessage($message);
         }
     }
@@ -65,7 +65,7 @@ class NotifyStrategyType extends AbstractStrategyType
 
             $message = $this->newsletterManager->createMessage($from, $senderName, $to, $subject, $template, [
                 'subscriber' => $subscriber
-            ]);
+            ], $options['content_type']);
             $this->newsletterManager->sendMessage($message);
         }
     }
