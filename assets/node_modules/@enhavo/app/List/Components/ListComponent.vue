@@ -4,7 +4,7 @@
             <div class="view-table-head">
                 <div class="view-table-head-columns">
                     <div
-                        v-for="column in $list.data.columns"
+                        v-for="column in $columnManager.columns"
                         v-bind:key="column.key"
                         v-bind:style="getColumnStyle(column)"
                         class="view-table-col"
