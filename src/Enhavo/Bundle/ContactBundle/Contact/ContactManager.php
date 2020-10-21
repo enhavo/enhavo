@@ -85,7 +85,7 @@ class ContactManager
         $message->setSenderName($options['sender_name'] ?? $this->mailerDefaults['name']);
 
         $message->setSubject($options['subject']);
-        $message->setTemplate($this->getTemplate($options['template']));
+        $message->setTemplate($this->templateManager->getTemplate($options['template']));
         $message->setContext([
             'resource' => $contact,
         ]);
@@ -121,8 +121,9 @@ class ContactManager
         );
     }
 
-    private function getTemplate($template)
+    public function getTemplate($key, $templateKey)
     {
-        return $this->templateManager->getTemplate($template);
+        $templateConfiguration = $this->getOption($key, 'template');
+        return $this->templateManager->getTemplate($templateConfiguration[$templateKey]);
     }
 }

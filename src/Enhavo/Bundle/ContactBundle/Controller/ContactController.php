@@ -51,13 +51,13 @@ class ContactController extends AbstractController
             }
         }
 
-        return $this->render($this->getTemplate(sprintf('theme/contact/%s/submit.html.twig', $key)), [
+        return $this->render($this->contactManager->getTemplate($key, 'submit'), [
             'form' => $form->createView()
         ]);
     }
 
     public function finishAction($key)
     {
-        return $this->render($this->getTemplate(sprintf('theme/contact/%s/finish.html.twig', $key)));
+        return $this->render($this->contactManager->getTemplate($key, 'finish'));
     }
 }

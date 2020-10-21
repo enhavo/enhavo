@@ -3,7 +3,3 @@ enhavo_app:
         enhavo_contact:
             path: '@EnhavoContactBundle/Resources/views'
             priority: 10
-
-enhavo_contact:
-    forms:
-        default: ~

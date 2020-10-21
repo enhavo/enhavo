@@ -10,28 +10,15 @@ services:
         tags:
             - { name: form.type, alias: 'enhavo_contact_contact' }
 
-    enhavo_contact.configuration.factory:
-        class: Enhavo\Bundle\ContactBundle\Configuration\ConfigurationFactory
-        calls:
-            - [setContainer, ['@service_container']]
-
     Enhavo\Bundle\ContactBundle\Widget\ContactWidgetType:
         public: true
         arguments:
-            - '@enhavo_contact.configuration.factory'
-            - '@form.factory'
+            - '@Enhavo\Bundle\ContactBundle\Contact\ContactManager'
+            - '@enhavo_app.template.manager'
         calls:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.widget, alias: 'contact' }
-
-    enhavo_contact.mailer:
-        class: Enhavo\Bundle\ContactBundle\Mailer\ContactMailer
-        arguments:
-            - '@enhavo_contact.configuration.factory'
-            - '@templating'
-            - '@translator'
-            - '@mailer'
 
     enhavo_contact.form_error_resolver:
         class: Enhavo\Bundle\ContactBundle\ErrorResolver\FormErrorResolver
@@ -57,3 +44,11 @@ services:
     Enhavo\Bundle\ContactBundle\Block\ContactBlockType:
         tags:
             - { name: enhavo_block.block }
+
+    Enhavo\Bundle\ContactBundle\Form\Type\ContactFormChoiceType:
+        public: true
+        arguments:
+            - '%enhavo_contact.forms%'
+            - '@translator'
+        tags:
+            - { name: form.type }

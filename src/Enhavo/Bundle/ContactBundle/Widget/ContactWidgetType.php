@@ -8,27 +8,27 @@
 
 namespace Enhavo\Bundle\ContactBundle\Widget;
 
+use Enhavo\Bundle\AppBundle\Template\TemplateManager;
 use Enhavo\Bundle\AppBundle\Widget\AbstractWidgetType;
-use Enhavo\Bundle\ContactBundle\Configuration\ConfigurationFactory;
-use Symfony\Component\Form\FormFactoryInterface;
+use Enhavo\Bundle\ContactBundle\Contact\ContactManager;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ContactWidgetType extends AbstractWidgetType
 {
     /**
-     * @var ConfigurationFactory
+     * @var ContactManager
      */
-    private $configurationFactory;
+    private $contactManager;
 
     /**
-     * @var FormFactoryInterface
+     * @var TemplateManager
      */
-    private $formFactory;
+    private $templateManager;
 
-    public function __construct(ConfigurationFactory $configurationFactory, FormFactoryInterface $formFactory)
+    public function __construct(ContactManager $contactManager, TemplateManager $templateManager)
     {
-        $this->configurationFactory = $configurationFactory;
-        $this->formFactory = $formFactory;
+        $this->contactManager = $contactManager;
+        $this->templateManager = $templateManager;
     }
 
     public function getType()
@@ -38,12 +38,11 @@ class ContactWidgetType extends AbstractWidgetType
 
     public function createViewData(array $options, $resource = null)
     {
-        $configuration = $this->configurationFactory->create($options['name']);
-        $form = $this->formFactory->create($configuration->getForm());
+        $form = $this->contactManager->createForm($options['key']);
 
         return [
             'form' => $form->createView(),
-            'name' => $options['name'],
+            'key' => $options['key'],
         ];
     }
 
@@ -52,23 +51,13 @@ class ContactWidgetType extends AbstractWidgetType
         parent::configureOptions($optionsResolver);
 
         $optionsResolver->setDefaults([
-            'name' => 'contact',
-            'template' => null,
+            'key' => 'default',
+            'template' => $this->contactManager->getTemplate('default', 'submit'),
         ]);
     }
 
     public function getTemplate($options)
     {
-        if ($options['template']) {
-            return $options['template'];
-        }
-
-        $configuration = $this->configurationFactory->create($options['name']);
-        $template = $configuration->getFormTemplate();
-        if ($template) {
-            return $template;
-        }
-
-        return 'theme/widget/contact.html.twig';
+        return $this->templateManager->getTemplate($options['template']);
     }
 }

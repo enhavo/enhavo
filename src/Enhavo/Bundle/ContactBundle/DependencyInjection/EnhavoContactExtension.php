@@ -29,6 +29,9 @@ class EnhavoContactExtension extends Extension implements PrependExtensionInterf
                 $container->setParameter(sprintf('enhavo_contact.%s.model', $name), $form['model']);
                 $container->setParameter(sprintf('enhavo_contact.%s.form', $name), $form['form']);
                 $container->setParameter(sprintf('enhavo_contact.%s.form_options', $name), $form['form_options']);
+                $container->setParameter(sprintf('enhavo_contact.%s.label', $name), $form['label']);
+                $container->setParameter(sprintf('enhavo_contact.%s.translation_domain', $name), $form['translation_domain']);
+                $container->setParameter(sprintf('enhavo_contact.%s.template', $name), $form['template']);
                 $container->setParameter(sprintf('enhavo_contact.%s.recipient', $name), $form['recipient']);
                 $container->setParameter(sprintf('enhavo_contact.%s.confirm', $name), $form['confirm']);
             }

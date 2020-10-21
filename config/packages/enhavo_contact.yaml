@@ -1,2 +1,3 @@
-imports:
-    - { resource: '@EnhavoContactBundle/Resources/config/app/config.yaml' }
+enhavo_contact:
+    forms:
+        default: ~
