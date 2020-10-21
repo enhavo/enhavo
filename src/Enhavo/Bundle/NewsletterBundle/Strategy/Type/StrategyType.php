@@ -111,6 +111,7 @@ class StrategyType extends AbstractType implements StrategyTypeInterface
             'admin_subject' => 'subscriber.mail.admin.subject',
             'subject' => 'subscriber.mail.notify.subject',
             'translation_domain' => 'EnhavoNewsletterBundle',
+            'content_type' => 'text/html',
         ]);
         $resolver->setRequired([
             'from',
