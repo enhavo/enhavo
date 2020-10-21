@@ -14,7 +14,6 @@ use Enhavo\Bundle\NewsletterBundle\Exception\NotFoundException;
 use Enhavo\Bundle\NewsletterBundle\Exception\RemoveException;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Component\CleverReach\ApiManager;
-use Enhavo\Component\CleverReach\Http\Guzzle;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
 
@@ -38,15 +37,20 @@ class CleverReachClient
      */
     private $eventDispatcher;
 
+    /** @var string */
+    private $adapterClass;
 
     /**
      * CleverReachClient constructor.
      * @param EventDispatcherInterface $eventDispatcher
+     * @param string $adapterClass
      */
-    public function __construct(EventDispatcherInterface $eventDispatcher)
+    public function __construct(EventDispatcherInterface $eventDispatcher, string $adapterClass)
     {
         $this->eventDispatcher = $eventDispatcher;
+        $this->adapterClass = $adapterClass;
     }
+
 
     public function init(string $clientId, string $clientSecret, array $attributes, array $globalAttributes)
     {
@@ -54,13 +58,13 @@ class CleverReachClient
             $this->attributes = $attributes;
             $this->globalAttributes = $globalAttributes;
 
-            $httpAdapter = new Guzzle();
-            $response = $httpAdapter->authorize($clientId, $clientSecret);
+            $adapter = new $this->adapterClass();
+            $response = $adapter->authorize($clientId, $clientSecret);
 
             if (isset($response['access_token'])) {
                 $accessToken = $response['access_token'];
-                $httpAdapter = new Guzzle(['access_token' => $accessToken]);
-                $this->apiManager = new ApiManager($httpAdapter);
+                $adapter = new $this->adapterClass(['access_token' => $accessToken]);
+                $this->apiManager = new ApiManager($adapter);
             }
 
             $this->initialized = true;

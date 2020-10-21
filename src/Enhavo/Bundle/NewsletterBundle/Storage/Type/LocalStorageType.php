@@ -9,7 +9,6 @@ use Enhavo\Bundle\NewsletterBundle\Entity\Newsletter;
 use Enhavo\Bundle\NewsletterBundle\Entity\Receiver;
 use Enhavo\Bundle\NewsletterBundle\Exception\MappingException;
 use Enhavo\Bundle\NewsletterBundle\Exception\NoGroupException;
-use Enhavo\Bundle\NewsletterBundle\Exception\RemoveException;
 use Enhavo\Bundle\NewsletterBundle\Factory\LocalSubscriberFactoryInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\GroupAwareInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\GroupInterface;

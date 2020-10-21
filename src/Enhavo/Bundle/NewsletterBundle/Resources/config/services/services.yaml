@@ -3,14 +3,11 @@ services:
     Enhavo\Bundle\NewsletterBundle\Client\CleverReachClient:
         arguments:
             - '@event_dispatcher'
+            - 'Enhavo\Component\CleverReach\Http\Guzzle'
 
     Enhavo\Bundle\NewsletterBundle\Client\MailChimpClient:
         arguments:
             - '@event_dispatcher'
-
-    Enhavo\Bundle\NewsletterBundle\Group\GroupManager:
-        arguments:
-            - '@doctrine.orm.entity_manager'
 
     Enhavo\Bundle\NewsletterBundle\Validator\Constraints\SubscriberExistsValidator:
         class: Enhavo\Bundle\NewsletterBundle\Validator\Constraints\SubscriberExistsValidator

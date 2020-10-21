@@ -10,13 +10,13 @@ use Enhavo\Bundle\NewsletterBundle\Exception\NoGroupException;
 use Enhavo\Bundle\NewsletterBundle\Exception\NotFoundException;
 use Enhavo\Bundle\NewsletterBundle\Exception\RemoveException;
 use Enhavo\Bundle\NewsletterBundle\Model\GroupInterface;
-use Enhavo\Bundle\NewsletterBundle\Model\Subscriber;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Storage\Storage;
 use Enhavo\Bundle\NewsletterBundle\Storage\Type\CleverReachStorageType;
 use Enhavo\Bundle\NewsletterBundle\Storage\Type\StorageType;
 use Enhavo\Bundle\NewsletterBundle\Tests\Mocks\GroupAwareSubscriberMock;
 use Enhavo\Component\CleverReach\ApiManager;
+use Enhavo\Component\CleverReach\Http\Guzzle;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -29,8 +29,9 @@ class CleverReachTypeStorageTest extends TestCase
         $dependencies->subscriber = $this->getMockBuilder(SubscriberInterface::class)->getMock();
         $dependencies->eventDispatcher = $this->getMockBuilder(EventDispatcherInterface::class)->getMock();
         $dependencies->apiManager = $this->getMockBuilder(ApiManager::class)->disableOriginalConstructor()->getMock();
-        $dependencies->client = new CleverReachClientMock($dependencies->eventDispatcher);
+        $dependencies->client = new CleverReachClientMock($dependencies->eventDispatcher, CleverReachGuzzleHttpMock::class);
         $dependencies->client->_apiManager = $dependencies->apiManager;
+
         return $dependencies;
     }
 
@@ -326,7 +327,7 @@ class CleverReachTypeStorageTest extends TestCase
             ]]
         );
 
-        $groups = $instance->getGroups(123456);
+        $groups = $instance->getGroups();
 
         $this->assertCount(1, $groups);
         $this->assertEquals(123456, $groups[0]->getCode());
@@ -357,5 +358,13 @@ class CleverReachClientMock extends CleverReachClient
     protected function getApiManager(): ApiManager
     {
         return $this->_apiManager;
+    }
+}
+
+class CleverReachGuzzleHttpMock extends Guzzle
+{
+    public function authorize(string $clientId, string $clientSecret)
+    {
+        return false;
     }
 }
