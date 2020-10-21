@@ -1,0 +1,6 @@
+services:
+    Enhavo\Bundle\MultiTenancyBundle\Twig\TenantExtension:
+        arguments:
+            - '@Enhavo\Bundle\MultiTenancyBundle\Tenant\TenantManager'
+        tags:
+            - { name: twig.extension }

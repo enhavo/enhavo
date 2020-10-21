@@ -1,0 +1,19 @@
+services:
+    Enhavo\Bundle\MultiTenancyBundle\AutoGenerator\Generator\TenantPrefixGenerator:
+        public: true
+        arguments:
+            - '@enhavo_routing.repository.route'
+            - '@enhavo_multi_tenancy.resolver'
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: 'enhavo_route.generator', alias: 'tenancy_aware_prefix' }
+
+    Enhavo\Bundle\MultiTenancyBundle\Router\Strategy\TenantSlugStrategy:
+        public: true
+        arguments:
+            - '@enhavo_multi_tenancy.resolver'
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: 'enhavo_route.strategy', alias: 'tenancy_aware_slug' }

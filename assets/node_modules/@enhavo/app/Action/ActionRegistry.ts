@@ -7,8 +7,4 @@ export default class ActionRegistry extends Registry
     getFactory(name: string): ActionFactoryInterface {
         return <ActionFactoryInterface>super.getFactory(name);
     }
-
-    register(name: string, component: object, factory: ActionFactoryInterface): RegistryInterface {
-        return super.register(name, component, factory);
-    }
 }

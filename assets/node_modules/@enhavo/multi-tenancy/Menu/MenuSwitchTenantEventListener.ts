@@ -1,0 +1,28 @@
+import * as $ from 'jquery'
+import * as URI from "urijs";
+import Router from "@enhavo/core/Router";
+
+export default class MenuSwitchTenantEventListener
+{
+    private alreadyRunning = false;
+    private readonly router: Router;
+
+    constructor(router: Router) {
+        this.router = router;
+    }
+
+    public listen(): void
+    {
+        if (this.alreadyRunning) {
+            return;
+        }
+        let self = this;
+        $(document).on('tenantChange', function (event, data) {
+            let uri = new URI(self.router.generate('enhavo_multi_tenancy_switch'));
+            uri.addQuery('tenant', data);
+            uri.addQuery('redirect', window.location.href);
+            window.location.href = uri + '';
+        });
+        this.alreadyRunning = true;
+    }
+}
