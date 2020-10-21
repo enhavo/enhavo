@@ -12,7 +12,7 @@ namespace Enhavo\Bundle\NewsletterBundle\Model;
  * Interface LocalSubscriberInterface
  * @package Enhavo\Bundle\NewsletterBundle\Model
  *
- * @method getGroups(): ArrayCollection|Collection
+ * @method getGroups() ArrayCollection|Collection
  */
 interface LocalSubscriberInterface extends GroupAwareInterface
 {
