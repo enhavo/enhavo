@@ -7,14 +7,13 @@ use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\AppBundle\Template\TemplateTrait;
 use Enhavo\Bundle\NewsletterBundle\Entity\Newsletter;
 use Enhavo\Bundle\NewsletterBundle\Entity\Receiver;
-use Enhavo\Bundle\NewsletterBundle\Entity\Tracking;
 use Enhavo\Bundle\NewsletterBundle\Form\Type\NewsletterEmailType;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\ResourceActions;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class NewsletterController extends ResourceController
@@ -44,12 +43,12 @@ class NewsletterController extends ResourceController
         $manager = $this->get(NewsletterManager::class);
 
         $token = $request->get('token');
-        if($token) {
+        if ($token) {
             $receiver = $this->getDoctrine()->getRepository(Receiver::class)->findOneBy([
                 'token' => $token
             ]);
 
-            if($receiver instanceof Receiver && $receiver->getNewsletter() === $contentDocument) {
+            if ($receiver instanceof Receiver && $receiver->getNewsletter() === $contentDocument) {
                 $content = $manager->render($receiver);
                 return new Response($content);
             }
@@ -66,7 +65,7 @@ class NewsletterController extends ResourceController
         /** @var NewsletterInterface $newsletter */
         $newsletter = $this->singleResourceProvider->get($configuration, $this->repository);
 
-        if($newsletter->isPrepared()) {
+        if ($newsletter->isPrepared()) {
             return new JsonResponse([
                 'type' => 'error',
                 'message' => $this->get('translator')->trans('newsletter.action.send.error.already_sent', [], 'EnhavoNewsletterBundle')
@@ -87,7 +86,7 @@ class NewsletterController extends ResourceController
         /** @var RequestConfiguration $configuration */
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
 
-        if($request->query->has('id')) {
+        if ($request->query->has('id')) {
             $request->attributes->set('id', $request->query->get('id'));
             /** @var NewsletterInterface|ResourceInterface $resource */
             $resource = $this->singleResourceProvider->get($configuration, $this->repository);
@@ -106,7 +105,7 @@ class NewsletterController extends ResourceController
         $emailForm = $this->createForm(NewsletterEmailType::class);
         $emailForm->handleRequest($request);
 
-        if(!$emailForm->isValid()) {
+        if (!$emailForm->isValid()) {
             return new JsonResponse([
                 'type' => 'error',
                 'message' => $this->get('translator')->trans('newsletter.action.test_mail.invalid', [], 'EnhavoNewsletterBundle')
@@ -116,7 +115,7 @@ class NewsletterController extends ResourceController
         $manager = $this->get(NewsletterManager::class);
         $success = $manager->sendTest($resource, $emailForm->getData()['email']);
 
-        if($success) {
+        if ($success) {
             return new JsonResponse([
                 'type' => 'success',
                 'message' => $this->get('translator')->trans('newsletter.action.test_mail.success', [], 'EnhavoNewsletterBundle')

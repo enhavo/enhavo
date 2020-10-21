@@ -1,91 +1,18 @@
 services:
-    enhavo_newsletter.storage_collector:
-        class: Enhavo\Bundle\AppBundle\Type\TypeCollector
-        arguments:
-            - '@service_container'
-            - 'NewsletterStorage'
 
-    enhavo_newsletter.storage.local:
-        public: true
-        class: Enhavo\Bundle\NewsletterBundle\Storage\LocalStorage
+    Enhavo\Bundle\NewsletterBundle\Client\CleverReachClient:
         arguments:
-            - []
-            - '@doctrine.orm.entity_manager'
-            - '@enhavo_newsletter.repository.subscriber'
-        tags:
-            - { name: enhavo.newsletter_storage, alias: local }
+            - '@event_dispatcher'
+            - 'Enhavo\Component\CleverReach\Http\Guzzle'
 
-    enhavo_newsletter.storage.cleverreach:
-        public: true
-        class: Enhavo\Bundle\NewsletterBundle\Storage\CleverReachStorage
+    Enhavo\Bundle\NewsletterBundle\Client\MailChimpClient:
         arguments:
-            - '@enhavo_newsletter.cleverreach_client'
-        tags:
-            - { name: enhavo.newsletter_storage, alias: cleverreach}
-
-    enhavo_newsletter.storage.mailchimp:
-        public: true
-        class: Enhavo\Bundle\NewsletterBundle\Storage\MailChimpStorage
-        arguments:
-            - '%enhavo_newsletter.mailchimp.credentials%'
-            - '%enhavo_newsletter.mailchimp.mapping%'
-        tags:
-            - { name: enhavo.newsletter_storage, alias: mailchimp }
-
-    enhavo_newsletter.cleverreach_client:
-        class: Enhavo\Bundle\NewsletterBundle\CleverReach\Client
-        arguments:
-            - '%enhavo_newsletter.cleverreach.credentials%'
-            - '%enhavo_newsletter.cleverreach.postdata%'
-            - '%enhavo_newsletter.default_groups%'
-            - '%enhavo_newsletter.cleverreach.mapping%'
             - '@event_dispatcher'
 
-    enhavo_newsletter.provider_collector:
-        class: Enhavo\Bundle\AppBundle\Type\TypeCollector
-        arguments:
-            - '@service_container'
-            - 'Provider'
-
-    enhavo_newsletter.add_subscriber_listener:
-        class: Enhavo\Bundle\NewsletterBundle\EventListener\SubscriberSubscriber
-        arguments:
-            - '@enhavo_newsletter.form_resolver'
-        tags:
-            - { name: kernel.event_subscriber }
-
-    enhavo_newsletter.strategy_resolver:
-        public: true
-        class: Enhavo\Bundle\NewsletterBundle\Strategy\StrategyResolver
-        arguments:
-            - '%enhavo_newsletter.forms%'
-            - '@enhavo_newsletter.strategy_collector'
-            - '%enhavo_newsletter.strategy%'
-
-    enhavo_newsletter.storage_resolver:
-        class: Enhavo\Bundle\NewsletterBundle\Storage\StorageResolver
-        arguments:
-            - '%enhavo_newsletter.forms%'
-            - '@enhavo_newsletter.storage_collector'
-            - '%enhavo_newsletter.storage%'
-
-    enhavo_newsletter.form_resolver:
-        public: true
-        class: Enhavo\Bundle\NewsletterBundle\Form\Resolver
-        arguments:
-            - '%enhavo_newsletter.forms%'
-            - '%enhavo_newsletter.default_groups%'
-            - '@enhavo_newsletter.group_manager'
-
-    enhavo_newsletter.group_manager:
-        class: Enhavo\Bundle\NewsletterBundle\Group\GroupManager
-        arguments:
-            - '@doctrine.orm.entity_manager'
-
-    enhavo_newsletter.subscriber_exists_validator:
+    Enhavo\Bundle\NewsletterBundle\Validator\Constraints\SubscriberExistsValidator:
         class: Enhavo\Bundle\NewsletterBundle\Validator\Constraints\SubscriberExistsValidator
         arguments:
-            - '@enhavo_newsletter.subscriber.manager'
+            - '@Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager'
         tags:
             - { name: validator.constraint_validator, alias: subscriber_exists }
 
@@ -116,6 +43,105 @@ services:
         tags:
             - { name: enhavo.action, alias: newsletter_stats }
 
+    Enhavo\Bundle\NewsletterBundle\Action\ActivateActionType:
+        public: true
+        arguments:
+            - '@translator'
+            - '@router'
+        tags:
+            - { name: enhavo.action, alias: newsletter_subscriber_activate }
+
     Enhavo\Bundle\NewsletterBundle\Block\SubscribeBlockType:
         tags:
             - { name: enhavo_block.block }
+
+    enhavo_newsletter.factory.subscriber:
+        class: Enhavo\Bundle\AppBundle\Factory\Factory
+        arguments:
+            - 'Enhavo\Bundle\NewsletterBundle\Model\Subscriber'
+
+    enhavo_newsletter.factory.local_subscriber:
+        class: Enhavo\Bundle\NewsletterBundle\Factory\LocalSubscriberFactory
+        arguments:
+            - '%enhavo_newsletter.model.local_subscriber.class%'
+            - '@enhavo_newsletter.repository.group'
+
+    Enhavo\Bundle\NewsletterBundle\Pending\PendingSubscriberManager:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@enhavo_newsletter.factory.pending_subscriber'
+            - '@enhavo_app.util.secure_url_token_generator'
+
+    Enhavo\Bundle\NewsletterBundle\Twig\SubscribeFormRenderer:
+        arguments:
+            - '@Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager'
+            - '@twig'
+
+        calls:
+            - [ 'setContainer', [ '@service_container' ] ]
+        tags:
+            - { name: twig.extension }
+
+    Enhavo\Bundle\NewsletterBundle\Menu\SubscriberMenu:
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
+        tags:
+            - { name: enhavo.menu, alias: newsletter_subscriber }
+
+    Enhavo\Bundle\NewsletterBundle\Menu\PendingMenu:
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
+        tags:
+            - { name: enhavo.menu, alias: newsletter_pending }
+
+    Enhavo\Bundle\NewsletterBundle\Menu\GroupMenu:
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
+        tags:
+            - { name: enhavo.menu, alias: newsletter_group }
+
+    Enhavo\Bundle\NewsletterBundle\Form\Type\SubscriberType:
+        tags:
+            - { name: form.type, alias: enhavo_newsletter_subscriber }
+
+    Enhavo\Bundle\NewsletterBundle\Form\Type\CleverReachGroupType:
+        arguments:
+            - '@Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager'
+        tags:
+            - { name: form.type, alias: enhavo_newsletter_clever_reach_group }
+
+
+    Enhavo\Bundle\NewsletterBundle\Form\Type\SubscriptionType:
+        arguments:
+            - '@Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager'
+        tags:
+            - { name: form.type }
+
+    Enhavo\Bundle\NewsletterBundle\Form\Type\PendingSubscriberType:
+        arguments:
+            - '@Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager'
+            - '@enhavo_newsletter.repository.group'
+        tags:
+            - { name: form.type }
+
+    Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager:
+        public: true
+        arguments:
+            - '@Enhavo\Component\Type\FactoryInterface[Storage]'
+            - '@Enhavo\Component\Type\FactoryInterface[Strategy]'
+            - '@form.factory'
+            - '@event_dispatcher'
+            - '%enhavo_newsletter.subscription%'
+
+    Enhavo\Bundle\NewsletterBundle\Controller\SubscriptionController:
+        arguments:
+            - '@Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager'
+            - '@Enhavo\Bundle\NewsletterBundle\Pending\PendingSubscriberManager'
+            - '@translator'
+        tags:
+            - { name: controller.service_arguments }
+
+    Enhavo\Bundle\NewsletterBundle\Controller\PendingSubscriberController:
+        arguments:
+            - '@Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager'
+            - '@Enhavo\Bundle\NewsletterBundle\Pending\PendingSubscriberManager'
+            - '@translator'
+        tags:
+            - { name: controller.service_arguments }

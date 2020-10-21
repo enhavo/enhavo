@@ -4,6 +4,7 @@ namespace Enhavo\Bundle\NewsletterBundle\Batch;
 
 use Enhavo\Bundle\AppBundle\Batch\AbstractBatchType;
 use Enhavo\Bundle\NewsletterBundle\Entity\Newsletter;
+use Enhavo\Bundle\NewsletterBundle\Exception\SendException;
 use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -24,6 +25,8 @@ class SendBatchType extends AbstractBatchType
     /**
      * @param array $options
      * @param Newsletter[] $resources
+     * @param ResourceInterface|null $resource
+     * @throws SendException
      */
     public function execute(array $options, array $resources, ResourceInterface $resource = null)
     {

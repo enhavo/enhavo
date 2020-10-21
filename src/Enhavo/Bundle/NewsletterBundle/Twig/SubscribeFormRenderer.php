@@ -2,8 +2,9 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Twig;
 
-use Enhavo\Bundle\NewsletterBundle\Form\Resolver;
+use Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -11,57 +12,55 @@ class SubscribeFormRenderer extends AbstractExtension
 {
     use ContainerAwareTrait;
 
-    /**
-     * @var array
-     */
-    private $formResolver;
+    /** @var SubscriptionManager */
+    private $subscriptionManager;
+
+    /** @var Environment */
+    private $twig;
 
     /**
-     * SubscriberRenderer constructor.
-     *
-     * @param $formResolver Resolver
+     * SubscribeFormRenderer constructor.
+     * @param SubscriptionManager $subscriptionManager
+     * @param Environment $twig
      */
-    public function __construct($formResolver)
+    public function __construct(SubscriptionManager $subscriptionManager, Environment $twig)
     {
-        $this->formResolver = $formResolver;
+        $this->subscriptionManager = $subscriptionManager;
+        $this->twig = $twig;
     }
+
 
     public function getFunctions()
     {
-        return array(
-            new TwigFunction('subscribe_form', array($this, 'render'), array('is_safe' => array('html'))),
-        );
+        return [
+            new TwigFunction('subscribe_form', [$this, 'render'], ['is_safe' => ['html']]),
+        ];
     }
 
-    public function render($formTypeName = null, $template = null)
+    /**
+     * @param null $subscriptionName
+     * @param null $template
+     * @return string
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     */
+    public function render($subscriptionName = null, $template = null)
     {
-        if ($formTypeName === null) {
-            $formTypeName = 'default';
-        }
+        $subscription = $this->subscriptionManager->getSubscription($subscriptionName);
+        $formConfig = $subscription->getFormConfig();
+        $form = $this->subscriptionManager->createForm($subscription, null);
 
-        $form = $this->getFormFactory()->create($this->formResolver->resolveType($formTypeName));
+        $formTemplate = $template ?? $formConfig['template'];
 
-        $formTemplate = $this->formResolver->resolveTemplate($formTypeName);
-        if($template !== null){
-            $formTemplate = $template;
-        }
-        return $this->getTemplateEngine()->render($formTemplate, array(
-            'form' => $form->createView()
-        ));
-    }
-
-    private function getTemplateEngine()
-    {
-        return $this->container->get('templating');
-    }
-
-    private function getFormFactory()
-    {
-        return $this->container->get('form.factory');
+        return $this->twig->render($formTemplate, [
+            'form' => $form->createView(),
+            'subscription' => $subscription,
+        ]);
     }
 
     public function getName()
     {
         return 'subscribe_form';
     }
-} 
+}

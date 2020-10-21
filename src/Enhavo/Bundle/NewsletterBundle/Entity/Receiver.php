@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
@@ -145,7 +146,7 @@ class Receiver implements ResourceInterface
     }
 
     /**
-     * @param string $token
+     * @param string|null $token
      */
     public function setToken(?string $token): void
     {
@@ -153,23 +154,16 @@ class Receiver implements ResourceInterface
     }
 
     /**
-     * Add tracking
-     *
-     * @param \Enhavo\Bundle\NewsletterBundle\Entity\Tracking $tracking
-     * @return Receiver
+     * @param Tracking $tracking
      */
-    public function addTracking(Tracking $tracking): Receiver
+    public function addTracking(Tracking $tracking): void
     {
         $this->tracking[] = $tracking;
         $tracking->setReceiver($this);
-
-        return $this;
     }
 
     /**
-     * Remove receiver
-     *
-     * @param \Enhavo\Bundle\NewsletterBundle\Entity\Tracking $tracking
+     * @param Tracking $tracking
      */
     public function removeTracking(Tracking $tracking): void
     {
@@ -178,9 +172,7 @@ class Receiver implements ResourceInterface
     }
 
     /**
-     * Get group
-     *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ArrayCollection|Collection
      */
     public function getTracking()
     {

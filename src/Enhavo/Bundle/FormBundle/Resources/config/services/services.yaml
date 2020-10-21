@@ -1,5 +1,6 @@
 services:
     enhavo_form.error.error.resolver:
+        public: true
         class: Enhavo\Bundle\FormBundle\Error\FormErrorResolver
         arguments:
             - '@translator'

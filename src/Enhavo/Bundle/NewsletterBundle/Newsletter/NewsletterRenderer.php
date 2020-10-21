@@ -28,17 +28,18 @@ class NewsletterRenderer
 
     /**
      * NewsletterRenderer constructor.
-     *
      * @param Environment $templateEnvironment
      * @param TemplateManager $templateManager
      * @param ParameterParserInterface $parameterParser
+     * @param array $templates
      */
     public function __construct(
         Environment $templateEnvironment,
         TemplateManager $templateManager,
         ParameterParserInterface $parameterParser,
         array $templates
-    ) {
+    )
+    {
         $this->templateEnvironment = $templateEnvironment;
         $this->templateManager = $templateManager;
         $this->parameterParser = $parameterParser;
@@ -54,7 +55,7 @@ class NewsletterRenderer
         ]);
 
         $parameters = $receiver->getParameters();
-        if($parameters) {
+        if ($parameters) {
             $content = $this->parameterParser->parse($content, $receiver->getParameters());
         }
 
@@ -63,8 +64,8 @@ class NewsletterRenderer
 
     private function getTemplate(?string $key): string
     {
-        if($key === null) {
-            if(count($this->templates) === 1) {
+        if ($key === null) {
+            if (count($this->templates) === 1) {
                 $key = array_keys($this->templates)[0];
                 return $this->templates[$key]['template'];
             }

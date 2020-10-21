@@ -8,72 +8,29 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Model;
 
-use Sylius\Component\Resource\Model\ResourceInterface;
-
-interface SubscriberInterface extends ResourceInterface
+interface SubscriberInterface
 {
     /**
-     * Set email
-     *
-     * @param string $email
-     *
-     * @return SubscriberInterface
+     * @param string|null $email
      */
-    public function setEmail($email);
+    public function setEmail(?string $email): void;
 
     /**
-     * Get email
-     *
-     * @return string
+     * @return string|null
      */
-    public function getEmail();
+    public function getEmail(): ?string;
 
     /**
-     * Set active
-     *
-     * @param boolean $active
-     *
-     * @return SubscriberInterface
+     * @param string|null $token
      */
-    public function setActive($active);
-
-    /**
-     * Get active
-     *
-     * @return boolean
-     */
-    public function getActive();
-
-    /**
-     * Set token
-     *
-     * @param string $token
-     *
-     * @return SubscriberInterface
-     */
-    public function setToken($token);
+    public function setConfirmationToken(?string $token): void;
 
     /**
      * Get token
      *
      * @return string
      */
-    public function getToken();
-
-    /**
-     * Set activatedAt
-     *
-     * @param \DateTime $activatedAt
-     * @return SubscriberInterface
-     */
-    public function setActivatedAt($activatedAt);
-
-    /**
-     * Get activatedAt
-     *
-     * @return \DateTime
-     */
-    public function getActivatedAt();
+    public function getConfirmationToken(): ?string;
 
     /**
      * @return \DateTime
@@ -86,42 +43,12 @@ interface SubscriberInterface extends ResourceInterface
     public function setCreatedAt($createdAt);
 
     /**
-     * @return boolean
+     * @param string|null $subscription
      */
-    public function isActive();
+    public function setSubscription(?string $subscription): void;
 
     /**
-     * Add group
-     *
-     * @param \Enhavo\Bundle\NewsletterBundle\Entity\Group $group
-     * @return SubscriberInterface
+     * @return string|null
      */
-    public function addGroup(\Enhavo\Bundle\NewsletterBundle\Entity\Group $group);
-
-
-    /**
-     * Remove group
-     *
-     * @param \Enhavo\Bundle\NewsletterBundle\Entity\Group $group
-     */
-    public function removeGroup(\Enhavo\Bundle\NewsletterBundle\Entity\Group $group);
-
-
-    /**
-     * Get group
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getGroups();
-
-    /**
-     * @param string $type
-     *
-     */
-    public function setType($type);
-
-    /**
-     * @return string
-     */
-    public function getType();
+    public function getSubscription(): ?string;
 }

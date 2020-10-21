@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\NewsletterBundle\Form\Type;
 
 use Enhavo\Bundle\BlockBundle\Form\Type\BlockNodeType;
+use Enhavo\Bundle\FormBundle\Form\Type\AutoCompleteEntityType;
 use Enhavo\Bundle\FormBundle\Form\Type\DateTimeType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Enhavo\Bundle\NewsletterBundle\Model\GroupInterface;
@@ -12,7 +13,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Enhavo\Bundle\FormBundle\Form\Type\AutoCompleteEntityType;
 
 class NewsletterType extends AbstractType
 {

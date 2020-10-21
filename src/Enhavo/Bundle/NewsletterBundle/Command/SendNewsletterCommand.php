@@ -42,15 +42,18 @@ class SendNewsletterCommand extends Command
 
     /**
      * SendNewsletterCommand constructor.
+     * @param NewsletterManager $manager
      * @param EntityManager $em
      * @param Logger $logger
      */
-    public function __construct(EntityManager $em, Logger $logger)
+    public function __construct(NewsletterManager $manager, EntityManager $em, Logger $logger)
     {
+        parent::__construct();
+        $this->manager = $manager;
         $this->em = $em;
         $this->logger = $logger;
-        parent::__construct();
     }
+
 
     protected function configure()
     {
@@ -62,12 +65,10 @@ class SendNewsletterCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if(!$this->lock()){
+        if (!$this->lock()) {
             $output->writeln('Skip sending.. Command is already running in another process.');
             return;
         }
-
-        $this->manager = $this->container->get(NewsletterManager::class);
 
         $limit = $input->getOption('limit');
         $limit = is_numeric($limit) ? intval($limit) : null;
@@ -77,15 +78,15 @@ class SendNewsletterCommand extends Command
         $mailsSent = 0;
 
         /** @var NewsletterInterface $newsletter */
-        foreach($newsletters as $newsletter) {
-            if($mailsSent === $limit){
+        foreach ($newsletters as $newsletter) {
+            if ($mailsSent === $limit) {
                 break;
             }
             $output->writeln(sprintf('Start sending newsletter "%s"', $newsletter->getSubject()));
             $mailsSent += $this->manager->send($newsletter, is_numeric($limit) ? $limit - $mailsSent : null);
         }
 
-        $output->writeln('Finish sending');
+        $output->writeln('Delivery finished');
 
         $this->release();
     }

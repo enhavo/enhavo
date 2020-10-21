@@ -6,7 +6,6 @@ use Enhavo\Bundle\AppBundle\Action\AbstractActionType;
 use Enhavo\Bundle\AppBundle\Action\ActionTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Symfony\Component\Routing\RouterInterface;
 
 class SendActionType extends AbstractActionType implements ActionTypeInterface
 {

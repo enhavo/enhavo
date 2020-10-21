@@ -11,5 +11,4 @@ namespace Enhavo\Bundle\NewsletterBundle\Exception;
 
 class SendException extends \Exception
 {
-
 }

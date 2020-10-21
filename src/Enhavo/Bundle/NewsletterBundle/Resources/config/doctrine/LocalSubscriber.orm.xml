@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="Enhavo\Bundle\NewsletterBundle\Entity\LocalSubscriber" table="newsletter_local_subscriber"
+            repository-class="Enhavo\Bundle\NewsletterBundle\Repository\LocalSubscriberRepository">
+        <id name="id" type="integer" column="id">
+            <generator />
+        </id>
+
+        <field name="email" length="255" nullable="true" />
+        <field name="subscription" length="255" nullable="true" />
+        <field name="token" length="255" nullable="true" />
+        <field name="createdAt" type="datetime" nullable="true" />
+
+        <many-to-many field="groups" target-entity="Enhavo\Bundle\NewsletterBundle\Model\GroupInterface">
+            <join-table name="newsletter_local_subscriber_group">
+                <join-columns>
+                    <join-column name="subscriber_id" />
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="group_id" />
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
+    </entity>
+</doctrine-mapping>

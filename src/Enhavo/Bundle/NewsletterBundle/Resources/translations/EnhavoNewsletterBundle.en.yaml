@@ -55,6 +55,10 @@ newsletter:
       confirm:
         send: 'Do you really want to send all selected newsletters?'
 subscriber:
+  storage:
+    remove: 'E-Mail Address "%email%" has been removed'
+    change: 'Subscription for E-Mail Address "%email" has been changed'
+    error: 'Subscription for E-Mail Address "%email" could not be changed'
   message:
     accept: 'E-Mail Address "%email%" has been added'
     activate: 'E-Mail Address "%email%" has been added'
@@ -67,9 +71,12 @@ subscriber:
   label:
     create: 'Create Subscriber'
     update: 'Edit Subscriber'
-    subscriber: Subscriber
+    subscriber: 'Subscriber'
     subscribers: 'Subscribers'
+    subscription: 'Subscription'
+    pending: 'Pending Subscribers'
     active: 'Active'
+    activate: 'Activate'
     email: 'E-Mail'
   form:
     message:
@@ -77,11 +84,20 @@ subscriber:
       double_opt_in: 'You received an E-Mail to confirm your registration'
       accept: 'Your E-Mail address was registered and need to be confirmed by an admin'
     label:
+      groups: 'Groups'
       email: 'E-Mail'
       active: 'Active'
+      subscription: 'Subscription'
+      data: 'Subscriber-Data'
     error:
       valid: 'E-Mail not valid'
       sent_again: 'Please confirm your registration'
+      exists: 'E-Mail already exists'
+  mail:
+      admin:
+          subject: 'Newsletter Subscription'
+      notify:
+          subject: 'Your Newsletter Subscription'
 group:
   label:
     create: 'Create Group'

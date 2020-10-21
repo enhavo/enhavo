@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="Enhavo\Bundle\NewsletterBundle\Entity\PendingSubscriber" table="newsletter_pending_subscriber" repository-class="Enhavo\Bundle\NewsletterBundle\Repository\PendingSubscriberRepository">
+        <id name="id" type="integer" column="id">
+            <generator />
+        </id>
+
+        <field name="email" length="255" nullable="true" />
+        <field name="subscription" length="255" nullable="true" />
+        <field name="confirmationToken" length="255" nullable="true" />
+        <field name="createdAt" type="datetime" nullable="true" />
+        <field name="data" type="object" nullable="true" />
+
+    </entity>
+</doctrine-mapping>

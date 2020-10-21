@@ -2,30 +2,27 @@
 
 namespace Enhavo\Bundle\NewsletterBundle;
 
-use Enhavo\Bundle\NewsletterBundle\DependencyInjection\Compiler\ProviderCompilerPass;
-use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Enhavo\Bundle\NewsletterBundle\Storage\Storage;
+use Enhavo\Bundle\NewsletterBundle\Strategy\Strategy;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Enhavo\Bundle\AppBundle\Type\TypeCompilerPass;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class EnhavoNewsletterBundle extends Bundle
 {
+    public function build(ContainerBuilder $container)
+    {
+        $container->addCompilerPass(
+            new \Enhavo\Component\Type\TypeCompilerPass('Storage', 'enhavo_newsletter.storage', Storage::class)
+        );
+        $container->addCompilerPass(
+            new \Enhavo\Component\Type\TypeCompilerPass('Strategy', 'enhavo_newsletter.strategy', Strategy::class)
+        );
+
+    }
+
     public static function getSupportedDrivers()
     {
         return array('doctrine/orm');
     }
 
-    public function build(ContainerBuilder $container)
-    {
-        parent::build($container);
-
-        $container->addCompilerPass(
-            new TypeCompilerPass('enhavo_newsletter.strategy_collector', 'enhavo.newsletter_strategy')
-        );
-
-        $container->addCompilerPass(
-            new TypeCompilerPass('enhavo_newsletter.storage_collector', 'enhavo.newsletter_storage')
-        );
-
-        $container->addCompilerPass(new ProviderCompilerPass);
-    }
 }

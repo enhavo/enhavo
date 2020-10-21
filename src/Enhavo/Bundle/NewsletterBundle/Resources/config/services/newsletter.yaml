@@ -1,34 +1,32 @@
 services:
     Enhavo\Bundle\NewsletterBundle\Batch\SendBatchType:
         arguments:
-            - '@enhavo_newsletter.manager'
+            - '@Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager'
         tags:
             - { name: enhavo_app.batch }
 
     Enhavo\Bundle\NewsletterBundle\Batch\SendTestBatchType:
         arguments:
-            - '@enhavo_newsletter.manager'
+            - '@Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager'
             - '@request_stack'
             - '@translator'
             - '@form.factory'
         tags:
             - { name: enhavo_app.batch }
 
-    enhavo_newsletter.manager:
-        public: true
-        alias: Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager
-
     Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager:
         public: true
-        class: Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager
         arguments:
           - '@doctrine.orm.entity_manager'
-          - '@mailer'
-          - '%enhavo_newsletter.newsletter.mail.from%'
+          - '@Enhavo\Bundle\AppBundle\Mailer\MailerManager'
+          - '@Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager'
           - '@enhavo_app.util.secure_url_token_generator'
           - '@logger'
-          - '@enhavo_newsletter.newsletter.provider'
           - '@Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterRenderer'
+          - '@twig'
+          - '%enhavo_newsletter.newsletter.mail.from%'
+          - '%enhavo_newsletter.newsletter.test_receiver%'
+
 
     Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterRenderer:
         arguments:
@@ -54,14 +52,13 @@ services:
 
     Enhavo\Bundle\NewsletterBundle\Command\SendNewsletterCommand:
         arguments:
+            - '@Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager'
             - '@doctrine.orm.entity_manager'
             - '@logger'
         calls:
             - [setContainer, ['@service_container']]
         tags:
             - { name: console.command, command: 'enhavo:newsletter:send' }
-
-    Enhavo\Bundle\NewsletterBundle\Provider\SubscriberProvider:
 
     Enhavo\Bundle\NewsletterBundle\Column\NewsletterStateColumnType:
         public: true
