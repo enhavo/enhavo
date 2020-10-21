@@ -25,7 +25,7 @@ interface GroupAwareInterface
     public function removeGroup(GroupInterface $group): void;
 
     /**
-     * @return array|Collection|ArrayCollection
+     * @return array
      */
     public function getGroups();
 }
