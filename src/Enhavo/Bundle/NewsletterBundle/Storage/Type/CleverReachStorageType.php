@@ -175,8 +175,7 @@ class CleverReachStorageType extends AbstractStorageType
     private function mapGroups(SubscriberInterface $subscriber, $groups)
     {
         if ($subscriber instanceof GroupAwareInterface) {
-            /** @var Group[] $groupsValues */
-            $groupsValues = $subscriber->getGroups()->getValues();
+            $groupsValues = $subscriber->getGroups();
             $groups = [];
 
             foreach ($groupsValues as $groupsValue) {
