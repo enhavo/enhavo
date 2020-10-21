@@ -4,6 +4,8 @@ import ConditionObserverConfig from "@enhavo/form/Type/ConditionObserverConfig";
 
 export default class ConditionObserver
 {
+    private static observers: ConditionObserver[] = [];
+
     private $element: JQuery;
 
     private configs: ConditionObserverConfig[];
@@ -12,6 +14,13 @@ export default class ConditionObserver
 
     private subjects: ConditionType[] = [];
 
+    public static registerAll()
+    {
+        for(let observer of this.observers) {
+            observer.register();
+        }
+    }
+
     constructor(element: HTMLElement)
     {
         this.$element = $(element);
@@ -19,23 +28,41 @@ export default class ConditionObserver
         let parent = this.$element.parents('[data-form-row]').get(0);
         this.$row = $(parent);
 
-        for (let subject of ConditionType.subjects) {
-            let config = this.getConfig(subject);
-            if(config !== null) {
-                this.subjects.push(subject);
-                subject.register(this);
+        ConditionObserver.observers.push(this);
+    }
+
+    private register() {
+        for(let config of this.configs) {
+            let self = this;
+
+            let $scopeParent = $('body');
+            if (config.scope !== null) {
+                $scopeParent = this.$element.closest('[data-condition-scope="' + config.scope + '"]');
             }
+
+            $scopeParent.find('[data-condition-type]').each(function () {
+                let subject = ConditionType.getFromElement(this);
+                if (subject !== null && subject.getId() == config.id) {
+                    self.registerToSubject(subject);
+                }
+            });
         }
     }
 
-    private getConfig(subject: ConditionType) : ConditionObserverConfig|null
+    private registerToSubject(subject: ConditionType)
     {
-        for (let config of this.configs) {
-            if (subject.getId() == config.id) {
-                return config;
+        let alreadyRegistered = false;
+        for(let registeredSubject of this.subjects) {
+            if (subject === registeredSubject) {
+                alreadyRegistered = true;
+                break;
             }
         }
-        return null;
+
+        if (!alreadyRegistered) {
+            this.subjects.push(subject);
+            subject.register(this);
+        }
     }
 
     public wakeUp(subject: ConditionType)
@@ -60,6 +87,16 @@ export default class ConditionObserver
         } else {
             this.hide();
         }
+    }
+
+    private getConfig(subject: ConditionType) : ConditionObserverConfig|null
+    {
+        for (let config of this.configs) {
+            if (subject.getId() == config.id) {
+                return config;
+            }
+        }
+        return null;
     }
 
     private hide()

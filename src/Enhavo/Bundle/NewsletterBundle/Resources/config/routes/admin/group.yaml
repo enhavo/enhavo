@@ -9,7 +9,7 @@ enhavo_newsletter_group_index:
             viewer:
                 label: group.label.group
                 translation_domain: EnhavoNewsletterBundle
-                open_route: enhavo_newsletter_subscriber_index
+                open_route: enhavo_newsletter_local_subscriber_index
 
 enhavo_newsletter_group_create:
     options:

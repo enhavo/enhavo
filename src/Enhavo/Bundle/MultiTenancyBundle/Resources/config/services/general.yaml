@@ -1,0 +1,25 @@
+services:
+    Enhavo\Bundle\MultiTenancyBundle\Tenant\TenantManager:
+        arguments:
+            - '@enhavo_multi_tenancy.resolver'
+            - '@enhavo_multi_tenancy.provider'
+            - '@doctrine.orm.entity_manager'
+
+    Enhavo\Bundle\MultiTenancyBundle\ExpressionLanguage\TenantExpressionFunctionProvider:
+        arguments:
+            - '@enhavo_multi_tenancy.resolver'
+
+    Enhavo\Bundle\MultiTenancyBundle\Filter\TenancyFilterType:
+        public: true
+        arguments:
+            - '@translator'
+            - '@Enhavo\Bundle\MultiTenancyBundle\Tenant\TenantManager'
+        tags:
+            - { name: 'enhavo.filter', alias: 'tenancy' }
+
+    Enhavo\Bundle\MultiTenancyBundle\Column\Type\TenantAwareUrlType:
+        public: true
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.column, alias: tenant_aware_url }

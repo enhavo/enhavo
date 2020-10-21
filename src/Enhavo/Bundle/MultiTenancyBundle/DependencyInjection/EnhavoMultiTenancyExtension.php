@@ -25,9 +25,16 @@ class EnhavoMultiTenancyExtension extends AbstractResourceExtension implements P
         $container->setParameter('enhavo_multi_tenancy.provider', $config['provider']);
         $container->setParameter('enhavo_multi_tenancy.resolver', $config['resolver']);
         $container->setParameter('enhavo_multi_tenancy.doctrine_filter', $config['doctrine_filter']);
+        $container->setParameter('enhavo_multi_tenancy.tenant_switch_menu.url_prefix', $config['tenant_switch_menu']['url_prefix']);
+        $container->setParameter('enhavo_multi_tenancy.tenant_switch_menu.session_key', $config['tenant_switch_menu']['session_key']);
 
         $configFiles = array(
-            'services.yaml'
+            'services/general.yaml',
+            'services/doctrine.yaml',
+            'services/menu.yaml',
+            'services/resolver.yaml',
+            'services/routing.yaml',
+            'services/twig.yaml',
         );
 
         foreach ($configFiles as $configFile) {

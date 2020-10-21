@@ -3,8 +3,8 @@
 namespace Enhavo\Bundle\NewsletterBundle\Action;
 
 use Enhavo\Bundle\AppBundle\Action\ActionTypeInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Enhavo\Bundle\AppBundle\Action\Type\ModalActionType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SendTestActionType extends ModalActionType implements ActionTypeInterface
 {

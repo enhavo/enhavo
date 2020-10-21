@@ -192,7 +192,7 @@ enhavo_newsletter_newsletter_send:
     options:
         expose: true
     path: /enhavo/newsletter/newsletter/{id}/send
-    methods: [POST]
+#    methods: [POST]
     defaults:
         _controller: enhavo_newsletter.controller.newsletter:sendAction
 
@@ -200,7 +200,7 @@ enhavo_newsletter_newsletter_test:
     options:
         expose: true
     path: /enhavo/newsletter/newsletter/test
-    methods: [POST]
+#    methods: [POST]
     defaults:
         _controller: enhavo_newsletter.controller.newsletter:testAction
 

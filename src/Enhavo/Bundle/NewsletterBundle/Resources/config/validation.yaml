@@ -1,4 +1,4 @@
-Enhavo\Bundle\NewsletterBundle\Entity\Subscriber:
+Enhavo\Bundle\NewsletterBundle\Model\Subscriber:
     properties:
         email:
             - Email: ~

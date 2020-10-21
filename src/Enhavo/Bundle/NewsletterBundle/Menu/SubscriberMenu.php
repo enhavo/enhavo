@@ -21,8 +21,8 @@ class SubscriberMenu extends BaseMenu
             'icon' => 'add_box',
             'label' => 'subscriber.label.subscriber',
             'translation_domain' => 'EnhavoNewsletterBundle',
-            'route' => 'enhavo_newsletter_subscriber_index',
-            'role' => 'ROLE_ENHAVO_NEWSLETTER_SUBSCRIBER_INDEX',
+            'route' => 'enhavo_newsletter_local_subscriber_index',
+            'role' => 'ROLE_ENHAVO_NEWSLETTER_LOCAL_SUBSCRIBER_INDEX',
         ]);
     }
 

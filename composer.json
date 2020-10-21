@@ -40,6 +40,7 @@
     "payum/payum-bundle": "^2.3",
     "php-ffmpeg/php-ffmpeg": "^0.13.0",
     "php-http/guzzle6-adapter": "^1|^2",
+    "enhavo/cleverreach": "dev-master",
     "ruflin/elastica": "^6.0",
     "sensio/framework-extra-bundle": "^5.1",
     "simshaun/recurr": "^2.2",

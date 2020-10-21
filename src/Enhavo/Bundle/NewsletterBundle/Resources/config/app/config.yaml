@@ -7,24 +7,6 @@ enhavo_newsletter:
                 template: 'mail/newsletter/template/default.html.twig'
                 label: newsletter.label.default
                 translation_domain: EnhavoNewsletterBundle
-    strategy:
-        settings:
-            notify:
-                from: '%env(string:MAILER_FROM)%'
-                admin_email: '%env(string:MAILER_TO)%'
-                sender_name: '%env(string:MAILER_NAME)%'
-            accept:
-                from: '%env(string:MAILER_FROM)%'
-                admin_email: '%env(string:MAILER_TO)%'
-                sender_name: '%env(string:MAILER_NAME)%'
-            double_opt_in:
-                from: '%env(string:MAILER_FROM)%'
-                admin_email: '%env(string:MAILER_TO)%'
-                sender_name: '%env(string:MAILER_NAME)%'
-    forms:
-        default:
-            type: enhavo_newsletter_subscribe
-            template: EnhavoNewsletterBundle:Subscriber:subscribe.html.twig
 
 enhavo_app:
     template_paths:
@@ -32,21 +14,26 @@ enhavo_app:
             path: '@EnhavoNewsletterBundle/Resources/views'
             priority: 10
     roles:
-        enhavo_newsletter_subscriber_index:
-            role: ROLE_ENHAVO_NEWSLETTER_SUBSCRIBER_INDEX
+        enhavo_newsletter_local_subscriber_index:
+            role: ROLE_ENHAVO_NEWSLETTER_LOCAL_SUBSCRIBER_INDEX
             label: subscriber.role.label.index
             translation_domain: EnhavoNewsletterBundle
-        enhavo_newsletter_subscriber_create:
-            role: ROLE_ENHAVO_NEWSLETTER_SUBSCRIBER_CREATE
+        enhavo_newsletter_local_subscriber_create:
+            role: ROLE_ENHAVO_NEWSLETTER_LOCAL_SUBSCRIBER_CREATE
             label: subscriber.role.label.create
             translation_domain: EnhavoNewsletterBundle
-        enhavo_newsletter_subscriber_update:
-            role: ROLE_ENHAVO_NEWSLETTER_SUBSCRIBER_UPDATE
+        enhavo_newsletter_local_subscriber_update:
+            role: ROLE_ENHAVO_NEWSLETTER_LOCAL_SUBSCRIBER_UPDATE
             label: subscriber.role.label.update
             translation_domain: EnhavoNewsletterBundle
-        enhavo_newsletter_subscriber_delete:
-            role: ROLE_ENHAVO_NEWSLETTER_SUBSCRIBER_DELETE
+        enhavo_newsletter_local_subscriber_delete:
+            role: ROLE_ENHAVO_NEWSLETTER_LOCAL_SUBSCRIBER_DELETE
             label: subscriber.role.label.delete
+            translation_domain: EnhavoNewsletterBundle
+
+        enhavo_newsletter_pending_subscriber_index:
+            role: ROLE_ENHAVO_NEWSLETTER_PENDING_SUBSCRIBER_INDEX
+            label: subscriber.role.label.index
             translation_domain: EnhavoNewsletterBundle
 
         enhavo_newsletter_group_index:
@@ -117,6 +104,6 @@ enhavo_routing:
 doctrine:
     orm:
         resolve_target_entities:
-            Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface: Enhavo\Bundle\NewsletterBundle\Entity\Subscriber
+#            Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface: Enhavo\Bundle\NewsletterBundle\Model\Subscriber
             Enhavo\Bundle\NewsletterBundle\Model\GroupInterface: Enhavo\Bundle\NewsletterBundle\Entity\Group
             Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface: Enhavo\Bundle\NewsletterBundle\Entity\Newsletter

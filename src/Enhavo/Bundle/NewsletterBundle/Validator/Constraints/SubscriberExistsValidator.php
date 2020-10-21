@@ -9,23 +9,23 @@
 namespace Enhavo\Bundle\NewsletterBundle\Validator\Constraints;
 
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
-use Enhavo\Bundle\NewsletterBundle\Subscriber\SubscriberManager;
+use Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
 class SubscriberExistsValidator extends ConstraintValidator
 {
     /**
-     * @var SubscriberManager
+     * @var SubscriptionManager
      */
     private $manager;
 
     /**
      * SubscriberExistsValidator constructor.
      *
-     * @param SubscriberManager $manager
+     * @param SubscriptionManager $manager
      */
-    public function __construct(SubscriberManager $manager)
+    public function __construct(SubscriptionManager $manager)
     {
         $this->manager = $manager;
     }
@@ -37,9 +37,12 @@ class SubscriberExistsValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
-        if($value instanceof SubscriberInterface) {
-            if($this->manager->exists($value, $value->getType())) {
-                $this->context->buildViolation($constraint->message)
+        if ($value instanceof SubscriberInterface) {
+            $subscription = $this->manager->getSubscription($value->getSubscription());
+            $strategy = $subscription->getStrategy();
+            if ($strategy->exists($value)) {
+                $message = $strategy->handleExists($value);
+                $this->context->buildViolation($message ?? $constraint->message)
                     ->setParameter('%email%', $value->getEmail())
                     ->addViolation();
             }

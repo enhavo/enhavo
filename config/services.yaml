@@ -5,3 +5,8 @@ services:
     _defaults:
         autowire: false
         autoconfigure: false
+
+    app.multi-tenancy.provider:
+        class: Enhavo\Bundle\MultiTenancyBundle\Provider\ConfigurationProvider
+        arguments:
+            -  { de: { name: Deutsch, role: ROLE_LANGUAGE_DE, baseUrl: enhavo.de, domains: [ dev.enhavo.de ] }, en: { name: English, role: ROLE_LANGUAGE_EN, baseUrl: enhavo.com, domains: [ dev.enhavo.com ] } }

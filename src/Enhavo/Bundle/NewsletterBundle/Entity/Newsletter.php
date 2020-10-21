@@ -2,8 +2,10 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
+use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 use Enhavo\Bundle\RoutingBundle\Model\Slugable;
 use Sylius\Component\Resource\Model\ResourceInterface;
@@ -78,9 +80,9 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
      */
     public function __construct()
     {
-        $this->receivers = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->attachments = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->receivers = new ArrayCollection();
+        $this->groups = new ArrayCollection();
+        $this->attachments = new ArrayCollection();
     }
 
     /**
@@ -172,7 +174,7 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
     }
 
     /**
-     * @param \DateTime $createdAt
+     * @param \DateTime|null $createdAt
      */
     public function setCreatedAt(?\DateTime $createdAt): void
     {
@@ -188,7 +190,7 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
     }
 
     /**
-     * @param \DateTime $startAt
+     * @param \DateTime|null $startAt
      */
     public function setStartAt(?\DateTime $startAt): void
     {
@@ -196,7 +198,7 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTime|null
      */
     public function getFinishAt(): ?\DateTime
     {
@@ -204,7 +206,7 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
     }
 
     /**
-     * @param \DateTime $finishAt
+     * @param \DateTime|null $finishAt
      */
     public function setFinishAt(?\DateTime $finishAt): void
     {
@@ -220,7 +222,7 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
     }
 
     /**
-     * @param string $template
+     * @param string|null $template
      */
     public function setTemplate(?string $template): void
     {
@@ -252,10 +254,8 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
     }
 
     /**
-     * Add receiver
-     *
-     * @param \Enhavo\Bundle\NewsletterBundle\Entity\Receiver $receiver
-     * @return Newsletter
+     * @param Receiver $receiver
+     * @return $this|NewsletterInterface
      */
     public function addReceiver(Receiver $receiver)
     {
@@ -265,9 +265,7 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
     }
 
     /**
-     * Remove receiver
-     *
-     * @param \Enhavo\Bundle\NewsletterBundle\Entity\Receiver $receiver
+     * @param Receiver $receiver
      */
     public function removeReceiver(Receiver $receiver)
     {
@@ -276,9 +274,7 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
     }
 
     /**
-     * Get group
-     *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ArrayCollection|Collection|Receiver[]
      */
     public function getReceivers()
     {
@@ -286,32 +282,23 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
     }
 
     /**
-     * Add attachments
-     *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File $attachments
-     * @return Newsletter
+     * @param FileInterface $attachment
      */
-    public function addAttachment($attachments)
+    public function addAttachment(FileInterface $attachment)
     {
-        $this->attachments[] = $attachments;
-
-        return $this;
+        $this->attachments[] = $attachment;
     }
 
     /**
-     * Remove attachments
-     *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File $attachments
+     * @param FileInterface $attachment
      */
-    public function removeAttachment($attachments)
+    public function removeAttachment(FileInterface $attachment)
     {
-        $this->attachments->removeElement($attachments);
+        $this->attachments->removeElement($attachment);
     }
 
     /**
-     * Get attachments
-     *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ArrayCollection|Collection|FileInterface[]
      */
     public function getAttachments()
     {

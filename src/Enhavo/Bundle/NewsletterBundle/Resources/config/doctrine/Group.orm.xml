@@ -8,7 +8,7 @@
         <field name="name" type="text" nullable="true" />
         <field name="code" nullable="true" />
 
-        <many-to-many field="subscribers" target-entity="Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface" mapped-by="groups" />
+        <many-to-many field="subscribers" target-entity="Enhavo\Bundle\NewsletterBundle\Model\LocalSubscriberInterface" mapped-by="groups" />
         <many-to-many field="newsletters" target-entity="Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface" mapped-by="groups" />
     </entity>
 </doctrine-mapping>

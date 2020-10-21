@@ -55,6 +55,10 @@ newsletter:
       confirm:
         send: 'Wollen sie wirklich alle ausgewählten Newsletter versenden?'
 subscriber:
+  storage:
+    remove: 'Das Abonnement für die E-Mail Adresse "%email%" wurde beendet'
+    change: 'Das Abonnement für die E-Mail Adresse "%email" wurde geändert'
+    error: 'Das Abonnement für die E-Mail Adresse "%email" konnte nicht geändert werden'
   message:
     accept: 'Die E-Mail Adresse "%email%" wurde erfolgreich hinzugefügt'
     activate: 'Die E-Mail Adresse "%email%" wurde erfolgreich hinzugefügt'
@@ -74,6 +78,7 @@ subscriber:
       double_opt_in: 'Sie haben eine E-Mail erhalten mit der Sie die Registrierung abschließen können'
       accept: 'Ihre E-Mail Addrese wurde hinzugefügt und muss vom Admin freigeschaltet werden'
     label:
+      groups: 'Gruppen'
       email: 'E-Mail'
       active: 'Aktiviert'
     error:

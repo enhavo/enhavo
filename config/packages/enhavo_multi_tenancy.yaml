@@ -1,0 +1,2 @@
+enhavo_multi_tenancy:
+    provider: 'app.multi-tenancy.provider'

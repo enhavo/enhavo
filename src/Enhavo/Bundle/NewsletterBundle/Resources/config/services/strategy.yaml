@@ -1,0 +1,33 @@
+services:
+    Enhavo\Bundle\NewsletterBundle\Strategy\Type\StrategyType:
+        public: true
+        arguments:
+            - '@translator'
+            - '@event_dispatcher'
+        tags:
+            - { name: enhavo_newsletter.strategy }
+
+    Enhavo\Bundle\NewsletterBundle\Strategy\Type\NotifyStrategyType:
+        public: true
+        arguments:
+            - '@Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager'
+        tags:
+            - { name: enhavo_newsletter.strategy }
+
+    Enhavo\Bundle\NewsletterBundle\Strategy\Type\DoubleOptInStrategyType:
+        public: true
+        arguments:
+            - '@Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager'
+            - '@Enhavo\Bundle\NewsletterBundle\Pending\PendingSubscriberManager'
+            - '@router'
+        tags:
+            - { name: enhavo_newsletter.strategy }
+
+    Enhavo\Bundle\NewsletterBundle\Strategy\Type\AcceptStrategyType:
+        public: true
+        arguments:
+            - '@Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager'
+            - '@Enhavo\Bundle\NewsletterBundle\Pending\PendingSubscriberManager'
+            - '@router'
+        tags:
+            - { name: enhavo_newsletter.strategy }

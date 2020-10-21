@@ -38,6 +38,14 @@ class TenantManager
 
     public function getTenant($key = null)
     {
+        if ($key) {
+            foreach($this->provider->getTenants() as $tenant) {
+                if ($tenant->getKey() == $key) {
+                    return $tenant;
+                }
+            }
+            return null;
+        }
         return $this->resolver->getTenant();
     }
 

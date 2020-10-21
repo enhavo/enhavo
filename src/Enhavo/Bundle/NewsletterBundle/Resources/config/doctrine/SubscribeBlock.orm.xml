@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
     <entity name="Enhavo\Bundle\NewsletterBundle\Entity\SubscribeBlock" table="newsletter_subscribe_block">
+        <field name="subscription" nullable="true"/>
     </entity>
 </doctrine-mapping>

@@ -9,11 +9,11 @@
 namespace Enhavo\Bundle\NewsletterBundle\Entity;
 
 
-use Enhavo\Bundle\NewsletterBundle\Model\GroupInterface;
-use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
-use Sylius\Component\Resource\Model\ResourceInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
+use Enhavo\Bundle\NewsletterBundle\Model\GroupInterface;
+use Enhavo\Bundle\NewsletterBundle\Model\LocalSubscriberInterface;
+use Sylius\Component\Resource\Model\ResourceInterface;
 
 class Group implements GroupInterface, ResourceInterface
 {
@@ -47,8 +47,8 @@ class Group implements GroupInterface, ResourceInterface
      */
     public function __construct()
     {
-        $this->subscribers = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->newsletters = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->subscribers = new ArrayCollection();
+        $this->newsletters = new ArrayCollection();
     }
 
     /**
@@ -93,12 +93,10 @@ class Group implements GroupInterface, ResourceInterface
     }
 
     /**
-     * Add subscriber
-     *
-     * @param SubscriberInterface $subscriber
-     * @return GroupInterface
+     * @param LocalSubscriberInterface $subscriber
+     * @return $this|GroupInterface
      */
-    public function addSubscriber(SubscriberInterface $subscriber): GroupInterface
+    public function addSubscriber(LocalSubscriberInterface $subscriber): GroupInterface
     {
         $this->subscribers[] = $subscriber;
 
@@ -106,21 +104,18 @@ class Group implements GroupInterface, ResourceInterface
     }
 
     /**
-     * Remove subscriber
-     *
-     * @param SubscriberInterface $subscriber
+     * @param LocalSubscriberInterface $subscriber
+     * @return mixed|void
      */
-    public function removeSubscriber(SubscriberInterface $subscriber)
+    public function removeSubscriber(LocalSubscriberInterface $subscriber)
     {
         $this->subscribers->removeElement($subscriber);
     }
 
     /**
-     * Get subscriber
-     *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
-    public function getSubscriber()
+    public function getSubscribers(): Collection
     {
         return $this->subscribers;
     }
@@ -146,7 +141,7 @@ class Group implements GroupInterface, ResourceInterface
     public function removeNewsletter(Newsletter $newsletter)
     {
         $this->newsletters->removeElement($newsletter);
-        $newsletter->getGroups()->remove($this);
+        $newsletter->removeGroup($this);
     }
 
     /**
