@@ -9,9 +9,6 @@
 namespace Enhavo\Bundle\NewsletterBundle\Model;
 
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-
 interface GroupAwareInterface
 {
     /**
@@ -25,7 +22,7 @@ interface GroupAwareInterface
     public function removeGroup(GroupInterface $group): void;
 
     /**
-     * @return array|Collection|ArrayCollection
+     * @return array
      */
     public function getGroups();
 }

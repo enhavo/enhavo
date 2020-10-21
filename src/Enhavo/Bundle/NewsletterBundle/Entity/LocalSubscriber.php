@@ -144,7 +144,7 @@ class LocalSubscriber implements ResourceInterface, LocalSubscriberInterface
     }
 
     /**
-     * @return array|ArrayCollection|Collection
+     * @return ArrayCollection|Collection
      */
     public function getGroups()
     {
