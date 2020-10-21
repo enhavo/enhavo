@@ -2,7 +2,6 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Client;
 
-use Enhavo\Bundle\NewsletterBundle\Event\NewsletterEvents;
 use Enhavo\Bundle\NewsletterBundle\Event\StorageEvent;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use GuzzleHttp\Client;
@@ -73,7 +72,7 @@ class MailChimpClient
     {
         $bodyParameters = $this->createBodyParameters($subscriber, $this->bodyParameters);
 
-        $event = new StorageEvent(NewsletterEvents::EVENT_MAILCHIMP_PRE_STORE, $subscriber, []);
+        $event = new StorageEvent(StorageEvent::EVENT_MAILCHIMP_PRE_STORE, $subscriber, []);
         $this->eventDispatcher->dispatch($event);
 
         $options = [

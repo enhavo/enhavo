@@ -14,6 +14,11 @@ use Symfony\Component\EventDispatcher\Event;
 
 class SubscriberEvent extends Event
 {
+    public const EVENT_PRE_ADD_SUBSCRIBER = 'newsletter.pre_add_subscriber';
+    public const EVENT_CREATE_SUBSCRIBER = 'newsletter.create_subscriber';
+    public const EVENT_POST_ACTIVATE_SUBSCRIBER = 'newsletter.post_activate_subscriber';
+    public const EVENT_POST_ADD_SUBSCRIBER = 'newsletter.post_add_subscriber';
+    public const EVENT_PRE_ACTIVATE_SUBSCRIBER = 'newsletter.pre_activate_subscriber';
     /**
      * @var string
      */

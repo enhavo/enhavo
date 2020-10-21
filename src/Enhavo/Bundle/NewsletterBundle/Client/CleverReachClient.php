@@ -9,7 +9,6 @@
 namespace Enhavo\Bundle\NewsletterBundle\Client;
 
 use Enhavo\Bundle\NewsletterBundle\Event\StorageEvent;
-use Enhavo\Bundle\NewsletterBundle\Event\NewsletterEvents;
 use Enhavo\Bundle\NewsletterBundle\Exception\InsertException;
 use Enhavo\Bundle\NewsletterBundle\Exception\NotFoundException;
 use Enhavo\Bundle\NewsletterBundle\Exception\RemoveException;
@@ -78,7 +77,7 @@ class CleverReachClient
         $attributes = $this->createAttributes($subscriber, $this->attributes);
         $globalAttributes = $this->createAttributes($subscriber, $this->globalAttributes);
 
-        $event = new StorageEvent(NewsletterEvents::EVENT_CLEVERREACH_PRE_STORE, $subscriber, [
+        $event = new StorageEvent(StorageEvent::EVENT_CLEVERREACH_PRE_STORE, $subscriber, [
             'attributes' => $attributes,
             'global_attributes' => $globalAttributes
         ]);

@@ -8,7 +8,6 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Subscription;
 
-use Enhavo\Bundle\NewsletterBundle\Event\NewsletterEvents;
 use Enhavo\Bundle\NewsletterBundle\Event\SubscriberEvent;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Component\Type\FactoryInterface;
@@ -79,8 +78,8 @@ class SubscriptionManager
     {
         /** @var SubscriberInterface $subscriber */
         $subscriber = new $className();
-        $event = new SubscriberEvent(NewsletterEvents::EVENT_CREATE_SUBSCRIBER, $subscriber);
-        $this->eventDispatcher->dispatch(NewsletterEvents::EVENT_CREATE_SUBSCRIBER, $event);
+        $event = new SubscriberEvent(SubscriberEvent::EVENT_CREATE_SUBSCRIBER, $subscriber);
+        $this->eventDispatcher->dispatch(SubscriberEvent::EVENT_CREATE_SUBSCRIBER, $event);
 
         return $subscriber;
     }

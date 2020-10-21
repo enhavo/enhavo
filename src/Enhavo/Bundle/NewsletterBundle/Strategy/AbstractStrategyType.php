@@ -2,7 +2,6 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Strategy;
 
-use Enhavo\Bundle\NewsletterBundle\Event\NewsletterEvents;
 use Enhavo\Bundle\NewsletterBundle\Event\SubscriberEvent;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Storage\Storage;
@@ -75,7 +74,7 @@ abstract class AbstractStrategyType extends AbstractType implements StrategyType
     protected function preAddSubscriber(SubscriberInterface $subscriber)
     {
         if ($this->eventDispatcher !== null) {
-            $this->eventDispatcher->dispatch(NewsletterEvents::EVENT_PRE_ADD_SUBSCRIBER, new SubscriberEvent(NewsletterEvents::EVENT_PRE_ADD_SUBSCRIBER, $subscriber));
+            $this->eventDispatcher->dispatch(SubscriberEvent::EVENT_PRE_ADD_SUBSCRIBER, new SubscriberEvent(SubscriberEvent::EVENT_PRE_ADD_SUBSCRIBER, $subscriber));
         } else {
             $this->parent->preAddSubscriber($subscriber);
         }
@@ -84,7 +83,7 @@ abstract class AbstractStrategyType extends AbstractType implements StrategyType
     protected function postAddSubscriber(SubscriberInterface $subscriber)
     {
         if ($this->eventDispatcher !== null) {
-            $this->eventDispatcher->dispatch(NewsletterEvents::EVENT_POST_ADD_SUBSCRIBER, new SubscriberEvent(NewsletterEvents::EVENT_POST_ADD_SUBSCRIBER, $subscriber));
+            $this->eventDispatcher->dispatch(SubscriberEvent::EVENT_POST_ADD_SUBSCRIBER, new SubscriberEvent(SubscriberEvent::EVENT_POST_ADD_SUBSCRIBER, $subscriber));
         } else {
             $this->parent->postAddSubscriber($subscriber);
         }
@@ -93,7 +92,7 @@ abstract class AbstractStrategyType extends AbstractType implements StrategyType
     protected function preActivateSubscriber(SubscriberInterface $subscriber)
     {
         if ($this->eventDispatcher !== null) {
-            $this->eventDispatcher->dispatch(NewsletterEvents::EVENT_PRE_ACTIVATE_SUBSCRIBER, new SubscriberEvent(NewsletterEvents::EVENT_PRE_ACTIVATE_SUBSCRIBER, $subscriber));
+            $this->eventDispatcher->dispatch(SubscriberEvent::EVENT_PRE_ACTIVATE_SUBSCRIBER, new SubscriberEvent(SubscriberEvent::EVENT_PRE_ACTIVATE_SUBSCRIBER, $subscriber));
         } else {
             $this->parent->preActivateSubscriber($subscriber);
         }
@@ -102,7 +101,7 @@ abstract class AbstractStrategyType extends AbstractType implements StrategyType
     protected function postActivateSubscriber(SubscriberInterface $subscriber)
     {
         if ($this->eventDispatcher !== null) {
-            $this->eventDispatcher->dispatch(NewsletterEvents::EVENT_POST_ACTIVATE_SUBSCRIBER, new SubscriberEvent(NewsletterEvents::EVENT_POST_ACTIVATE_SUBSCRIBER, $subscriber));
+            $this->eventDispatcher->dispatch(SubscriberEvent::EVENT_POST_ACTIVATE_SUBSCRIBER, new SubscriberEvent(SubscriberEvent::EVENT_POST_ACTIVATE_SUBSCRIBER, $subscriber));
         } else {
             $this->parent->postActivateSubscriber($subscriber);
         }

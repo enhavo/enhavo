@@ -14,6 +14,8 @@ use Symfony\Contracts\EventDispatcher\Event;
 class StorageEvent extends Event
 {
     const TYPE_PRE_STORE = 'pre-store';
+    public const EVENT_MAILCHIMP_PRE_STORE = 'newsletter.mailchimp_pre_store';
+    public const EVENT_CLEVERREACH_PRE_STORE = 'newsletter.cleverreach_pre_store';
 
     /**
      * @var string
