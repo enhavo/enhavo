@@ -4,6 +4,7 @@
 namespace Controller;
 
 
+use Enhavo\Bundle\AppBundle\Template\TemplateManager;
 use Enhavo\Bundle\NewsletterBundle\Controller\SubscriptionController;
 use Enhavo\Bundle\NewsletterBundle\Entity\PendingSubscriber;
 use Enhavo\Bundle\NewsletterBundle\Model\Subscriber;
@@ -26,13 +27,13 @@ class SubscriptionControllerTest extends TestCase
 {
     private function createDependencies(): SubscriptionControllerTestDependencies
     {
-        $dep = new SubscriptionControllerTestDependencies();
-        $dep->subscriptionManager = $this->getMockBuilder(SubscriptionManager::class)->disableOriginalConstructor()->getMock();
-        $dep->pendingManager = $this->getMockBuilder(PendingSubscriberManager::class)->disableOriginalConstructor()->getMock();
-        $dep->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
-        $dep->container = $this->getMockBuilder(Container::class)->disableOriginalConstructor()->getMock();
+        $dependencies = new SubscriptionControllerTestDependencies();
+        $dependencies->subscriptionManager = $this->getMockBuilder(SubscriptionManager::class)->disableOriginalConstructor()->getMock();
+        $dependencies->pendingManager = $this->getMockBuilder(PendingSubscriberManager::class)->disableOriginalConstructor()->getMock();
+        $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
+        $dependencies->container = $this->getMockBuilder(Container::class)->disableOriginalConstructor()->getMock();
 
-        return $dep;
+        return $dependencies;
     }
 
 
@@ -77,6 +78,11 @@ class SubscriptionControllerTest extends TestCase
     public function testActivateAction()
     {
         $dependencies = $this->createDependencies();
+        $templateManager = $this->getMockBuilder(TemplateManager::class)->disableOriginalConstructor()->getMock();
+        $templateManager->expects($this->once())->method('getTemplate')->willReturnCallback(function ($tpl) {
+            return $tpl;
+        });
+        $dependencies->container->expects($this->once())->method('get')->willReturn($templateManager);
 
         $pendingSubscriber = new PendingSubscriber();
         $pendingSubscriber->setData(new Subscriber());

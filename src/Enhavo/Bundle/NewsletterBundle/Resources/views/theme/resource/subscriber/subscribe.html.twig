@@ -1,6 +1,5 @@
-{{ dump(block) }}
 <div class='subscribe'>
-    <form method="post" action="{{ path('enhavo_newsletter_subscribe_add', { 'type': subscription.name }) }}" data-newsletter-subscribe-form>
+    <form method="{{ form.vars.method }}" action="{{ form.vars.action }}" data-newsletter-subscribe-form>
         {{ form_widget(form._token) }}
         {{ form_widget(form.email) }}
         <button type="submit" id="addEmail" class="button">Add email</button>

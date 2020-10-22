@@ -98,6 +98,8 @@ services:
             - { name: enhavo.menu, alias: newsletter_group }
 
     Enhavo\Bundle\NewsletterBundle\Form\Type\SubscriberType:
+        arguments:
+            - '@router'
         tags:
             - { name: form.type, alias: enhavo_newsletter_subscriber }
 
