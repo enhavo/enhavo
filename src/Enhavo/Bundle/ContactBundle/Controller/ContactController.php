@@ -2,120 +2,62 @@
 
 namespace Enhavo\Bundle\ContactBundle\Controller;
 
-use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
-use Enhavo\Bundle\ContactBundle\Configuration\ConfigurationFactory;
-use Enhavo\Bundle\ContactBundle\ErrorResolver\FormErrorResolver;
-use Enhavo\Bundle\ContactBundle\Mailer\ContactMailer;
-use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactory;
+use Enhavo\Bundle\AppBundle\Template\TemplateTrait;
+use Enhavo\Bundle\ContactBundle\Contact\ContactManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ContactController extends AbstractController
 {
-    /**
-     * @var TranslatorInterface
-     */
-    protected $translator;
+    use TemplateTrait;
 
     /**
-     * @var ContactMailer
+     * @var ContactManager
      */
-    protected $contactMailer;
+    private $contactManager;
 
     /**
-     * @var ConfigurationFactory
+     * ContactController constructor.
+     * @param ContactManager $contactManager
      */
-    protected $configurationFactory;
-
-    /**
-     * @var FormErrorResolver
-     */
-    protected $formErrorResolver;
-
-    /**
-     * @var RequestConfigurationFactory
-     */
-    protected $requestConfigurationFactory;
-
-    public function __construct(
-        TranslatorInterface $translator,
-        ContactMailer $contactMailer,
-        ConfigurationFactory $configurationFactory,
-        FormErrorResolver $formErrorResolver,
-        RequestConfigurationFactory $requestConfigurationFactory
-    ) {
-        $this->translator = $translator;
-        $this->contactMailer = $contactMailer;
-        $this->configurationFactory = $configurationFactory;
-        $this->formErrorResolver = $formErrorResolver;
-        $this->requestConfigurationFactory = $requestConfigurationFactory;
+    public function __construct(ContactManager $contactManager)
+    {
+        $this->contactManager = $contactManager;
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
-    public function submitAction(Request $request)
+    public function submitAction(Request $request, $key)
     {
-        $name = $request->get('name');
-
-        /** @var RequestConfiguration $configuration */
-        $configuration = $this->requestConfigurationFactory->createSimple($request);
-        $formConfiguration = $this->configurationFactory->create($name);
-
-        $form = $this->createForm($formConfiguration->getForm());
+        /** @var FormInterface $form */
+        $form = $this->contactManager->createForm($key);
         $form->handleRequest($request);
-
-        $sent = false;
         if($form->isSubmitted()) {
-            if($form->isValid()) {
-                $model = $form->getData();
-                $this->contactMailer->send($name, $model);
-                $form = $this->createForm($formConfiguration->getForm());
-                $sent = true;
+            if ($form->isValid()) {
+                $this->contactManager->submit($form->getData(), $key);
 
-                if($request->isXmlHttpRequest()) {
-                    return new JsonResponse(array(
-                        'message' => $this->translator->trans($formConfiguration->getMessageSuccess(), [], $formConfiguration->getTranslationDomain())
-                    ));
+                if ($request->isXmlHttpRequest()) {
+                    return new JsonResponse([
+                        'success' => true
+                    ]);
                 }
+                return $this->redirectToRoute('enhavo_contact_finish', ['key' => $key]);
             } else {
-                $errors = $this->formErrorResolver->getErrors($form);
-                if($request->isXmlHttpRequest()) {
-                    return new JsonResponse(array(
-                        'message' => $errors[0]
-                    ), 400);
-                } else {
-                    $this->addFlash('error', $errors);
+                if ($request->isXmlHttpRequest()) {
+                    return new JsonResponse([
+                        'success' => false
+                    ], 400);
                 }
             }
         }
 
-        $redirectRoute = null;
-        if($request->get('_redirect_route')) {
-            $redirectRoute = ($request->get('_redirect_route'));
-        }
-
-        $redirectParameters = [];
-        if($request->get('_redirect_route_parameters')) {
-            $redirectParameters = json_decode($request->get('_redirect_route_parameters'));
-        }
-
-        if($redirectRoute) {
-            return $this->redirectToRoute($redirectRoute, $redirectParameters, 302);
-        }
-
-        $template = $configuration->getTemplate($formConfiguration->getPageTemplate());
-        return $this->render($template, [
-            'form' => $form->createView(),
-            'name' => $name,
-            'sent' => $sent,
-            'messageSuccess' => $formConfiguration->getMessageSuccess(),
-            'messageInvalid' => $formConfiguration->getMessageInvalid(),
-            'translationDomain' => $formConfiguration->getTranslationDomain()
+        return $this->render($this->contactManager->getTemplate($key, 'submit'), [
+            'form' => $form->createView()
         ]);
+    }
+
+    public function finishAction($key)
+    {
+        return $this->render($this->contactManager->getTemplate($key, 'finish'));
     }
 }
