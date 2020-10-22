@@ -6,7 +6,7 @@
                 <i v-if="!data.expand" class="icon icon-unfold_less"></i>
             </div>
             <div class="view-table-row-columns">
-                <template v-for="column in $list.data.columns">
+                <template v-for="column in $columnManager.columns">
                     <component
                         class="view-table-col"
                         v-bind:is="column.component"

@@ -51,6 +51,8 @@ export default class List
     {
         this.flashMessenger.init();
         this.view.init();
+
+        this.columnManager.columns = this.data.columns;
         this.columnManager.init();
 
         this.eventDispatcher.on('updated', (event: UpdatedEvent) => {
