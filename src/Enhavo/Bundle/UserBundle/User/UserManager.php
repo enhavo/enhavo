@@ -1,101 +1,129 @@
 <?php
 /**
- * UserManager.php
- *
- * @since 23/09/16
- * @author gseidel
+ * @author blutze-media
+ * @since 2020-10-22
  */
 
 namespace Enhavo\Bundle\UserBundle\User;
 
-use Doctrine\Common\Persistence\ObjectManager;
-use FOS\UserBundle\Doctrine\UserManager as FOSUserManager;
+use Doctrine\ORM\EntityManagerInterface;
+use Enhavo\Bundle\AppBundle\Mailer\MailerManager;
+use Enhavo\Bundle\AppBundle\Mailer\Message;
+use Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
-use FOS\UserBundle\Security\LoginManagerInterface;
-use FOS\UserBundle\Util\CanonicalFieldsUpdater;
-use FOS\UserBundle\Util\PasswordUpdaterInterface;
-use FOS\UserBundle\Util\TokenGenerator;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Exception\AccountStatusException;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
-class UserManager extends FOSUserManager
+class UserManager
 {
-    use ContainerAwareTrait;
+    /** @var EntityManagerInterface */
+    private $entityManager;
 
-    /**
-     * @var TokenGenerator
-     */
+    /** @var MailerManager */
+    private $mailerManager;
+
+    /** @var TokenGeneratorInterface */
     private $tokenGenerator;
 
-    /**
-     * @var UserMailer
-     */
-    private $mailer;
+    /** @var TranslatorInterface */
+    private $translator;
 
-    /**
-     * @var LoginManagerInterface
-     */
-    private $loginManager;
+    /** @var FormFactoryInterface */
+    private $formFactory;
 
-    /**
-     * @var string
-     */
-    private $firewall;
+    /** @var array */
+    private $config;
 
     /**
      * UserManager constructor.
-     *
-     * @param PasswordUpdaterInterface $passwordUpdater
-     * @param CanonicalFieldsUpdater $canonicalFieldsUpdater
-     * @param ObjectManager $om
-     * @param $class
-     * @param TokenGenerator $tokenGenerator
-     * @param UserMailer $mailer
-     * @param $firewall
+     * @param EntityManagerInterface $entityManager
+     * @param MailerManager $mailerManager
+     * @param TokenGeneratorInterface $tokenGenerator
+     * @param TranslatorInterface $translator
+     * @param FormFactoryInterface $formFactory
+     * @param array $config
      */
-    public function __construct(
-        PasswordUpdaterInterface $passwordUpdater,
-        CanonicalFieldsUpdater $canonicalFieldsUpdater,
-        ObjectManager $om,
-        $class,
-        TokenGenerator $tokenGenerator,
-        UserMailer $mailer,
-        $firewall
-    ) {
-        parent::__construct($passwordUpdater, $canonicalFieldsUpdater, $om, $class);
+    public function __construct(EntityManagerInterface $entityManager, MailerManager $mailerManager, TokenGeneratorInterface $tokenGenerator, TranslatorInterface $translator, FormFactoryInterface $formFactory, array $config)
+    {
+        $this->entityManager = $entityManager;
+        $this->mailerManager = $mailerManager;
         $this->tokenGenerator = $tokenGenerator;
-        $this->mailer = $mailer;
-        $this->firewall = $firewall;
+        $this->translator = $translator;
+        $this->formFactory = $formFactory;
+        $this->config = $config;
     }
 
-    public function setLoginManager(LoginManagerInterface $loginManager)
+
+    public function register(UserInterface $user, array $options = [])
     {
-        $this->loginManager = $loginManager;
+
     }
 
-    public function sendResetEmail(UserInterface $user, $template = null, $route = null)
+    public function confirm(UserInterface $user, array $options = [])
     {
-        $user->setConfirmationToken($this->tokenGenerator->generateToken());
-        $this->mailer->sendResettingEmailMessage($user, $template, $route);
-        $user->setPasswordRequestedAt(new \DateTime());
-        $this->updateUser($user);
+
     }
 
-    public function sendRegisterConfirmEmail(UserInterface $user, $template = null, $route = null)
+    public function resetPassword(UserInterface $user, array $options = [])
     {
-        $user->setConfirmationToken($this->tokenGenerator->generateToken());
-        $this->mailer->sendRegisterConfirmMessage($user, $template, $route);
-        $this->updateUser($user);
+
     }
 
-    public function authenticateUser(UserInterface $user, Response $response)
+    public function updatePassword(UserInterface $user)
     {
-        try {
-            $this->loginManager->logInUser( $this->firewall, $user, $response);
-        } catch (AccountStatusException $ex) {
-            // We simply do not authenticate users which do not pass the user
-            // checker (not enabled, expired, etc.).
-        }
+
+    }
+
+    public function getTemplate($config)
+    {
+        return $this->config[$config]['template'];
+    }
+
+    public function createForm($config, ?UserInterface $user, array $options = []): FormInterface
+    {
+        $formConfig = $this->config[$config]['form'];
+        $options = array_merge($formConfig['options'], $options);
+
+        return $this->formFactory->create($formConfig['class'], $user, $options);
+    }
+
+    private function sendRegistrationConfirmMail(UserInterface $user, array $options)
+    {
+        $message = $this->createMessage($user, $options);
+        $this->mailerManager->sendMessage($message);
+    }
+
+    private function sendResetPasswordMail(UserInterface $user, array $options)
+    {
+        $message = $this->createMessage($user, $options);
+        $this->mailerManager->sendMessage($message);
+    }
+
+    private function sendConfirmationMail(UserInterface $user, array $options)
+    {
+        $message = $this->createMessage($user, $options);
+        $this->mailerManager->sendMessage($message);
+    }
+
+    private function createMessage(UserInterface $user, array $options): Message
+    {
+        $message = $this->mailerManager->createMessage();
+        $message->setSubject($options['mail_subject']);
+        $message->setTemplate($options['mail_template']);
+        $message->setTo($user->getEmail());
+        $message->setFrom($options['mail_from']);
+        $message->setSenderName($options['sender_name']);
+        $message->setContentType($options['content_type']);
+        $message->setContext([
+            'user' => $user
+        ]);
+
+        return $message;
+    }
+
+    private function trans(string $id, array $parameters = [], string $domain = null, string $locale = null)
+    {
+        return $this->translator->trans($id, $parameters, $domain, $locale);
     }
 }

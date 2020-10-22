@@ -4,21 +4,37 @@ doctrine:
             Enhavo\Bundle\UserBundle\Model\UserInterface: Enhavo\Bundle\UserBundle\Entity\User
             Enhavo\Bundle\UserBundle\Model\GroupInterface: Enhavo\Bundle\UserBundle\Entity\Group
 
-fos_user:
+enhavo_user:
+    config:
+        theme:
+            register:
+                template: theme/security/registration/register.html.twig
+                email_template: mail/security/registration.html.twig
+                email_subject: ''
+                translation_domain: 'EnhavoUserBundle'
+                form:
+                    class:
+                    options: ~
+            confirm:
+                template: theme/security/registration/confirm.html.twig
+                email_template: mail/security/confirm.html.twig
+                email_subject: ''
+                translation_domain: 'EnhavoUserBundle'
+            reset_password:
+                template: theme/security/reset-password/reset.html.twig
+                email_template: mail/security/reset-password.html.twig
+                email_subject: ''
+                translation_domain: 'EnhavoUserBundle'
+        admin:
+            reset_password:
+                template: admin/security/reset-password/reset.html.twig
+                email_template: mail/security/reset-password.html.twig
+                email_subject: ''
+                translation_domain: 'EnhavoUserBundle'
     from_email:
         address: '%env(string:MAILER_FROM)%'
         sender_name: '%env(string:MAILER_NAME)%'
-    db_driver: orm
     firewall_name: main
-    user_class: Enhavo\Bundle\UserBundle\Entity\User
-    group:
-        group_class: Enhavo\Bundle\UserBundle\Entity\Group
-    resetting:
-        email:
-            template: mail/security/reset-password.html.twig
-    registration:
-        confirmation:
-            template: mail/security/registration.html.twig
 
 enhavo_app:
     template_paths:

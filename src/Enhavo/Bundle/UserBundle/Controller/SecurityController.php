@@ -1,50 +1,58 @@
 <?php
 /**
- * SecurityController.php
- *
- * @since 23/09/16
- * @author gseidel
+ * @author blutze-media
+ * @since 2020-10-22
  */
 
 namespace Enhavo\Bundle\UserBundle\Controller;
 
-use FOS\RestBundle\View\ViewHandler;
-use FOS\UserBundle\Controller\SecurityController as FOSSecurityController;
-use Enhavo\Bundle\AppBundle\Viewer\ViewFactory;
-use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+use Enhavo\Bundle\AppBundle\Template\TemplateManager;
+use Enhavo\Bundle\UserBundle\Model\UserInterface;
+use Enhavo\Bundle\UserBundle\User\UserManager;
+use Sylius\Component\Resource\Factory\FactoryInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 
-class SecurityController extends FOSSecurityController
+class SecurityController extends AbstractController
 {
-    /**
-     * @var ViewFactory
-     */
-    private $viewFactory;
+    /** @var UserManager */
+    private $userManager;
+
+    /** @var FactoryInterface */
+    private $userFactory;
+
+    /** @var TemplateManager */
+    private $templateManager;
 
     /**
-     * @var ViewHandler
+     * SecurityController constructor.
+     * @param UserManager $userManager
+     * @param FactoryInterface $userFactory
+     * @param TemplateManager $templateManager
      */
-    private $viewHandler;
-
-    public function __construct(
-        ViewFactory $viewFactory,
-        ViewHandler $viewHandler,
-        CsrfTokenManagerInterface $tokenManager
-    ) {
-        parent::__construct($tokenManager);
-        $this->viewFactory = $viewFactory;
-        $this->viewHandler = $viewHandler;
+    public function __construct(UserManager $userManager, FactoryInterface $userFactory, TemplateManager $templateManager)
+    {
+        $this->userManager = $userManager;
+        $this->userFactory = $userFactory;
+        $this->templateManager = $templateManager;
     }
 
-    public function renderLogin(array $data)
+    public function registerAction(Request $request)
     {
-        if(isset($data['error']) && $data['error']) {
-            $this->addFlash('error', $this->container->get('translator')->trans('login.error.credentials', [], 'EnhavoUserBundle'));
+        $config = $request->attributes->get('_config');
+        /** @var UserInterface $user */
+        $user = $this->userFactory->createNew();
+        $form = $this->userManager->createForm($config, $user);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $this->userManager->register($user);
+
+            $template = $this->templateManager->getTemplate($this->userManager->getTemplate($config));
+            return $this->render($template, [
+                'user' => $user
+            ]);
         }
-
-        $view = $this->viewFactory->create('login', [
-            'parameters' => $data,
-        ]);
-
-        return $this->viewHandler->handle($view);
     }
 }

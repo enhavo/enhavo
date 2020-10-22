@@ -8,22 +8,27 @@
 
 namespace Enhavo\Bundle\UserBundle\EventListener;
 
-use FOS\UserBundle\Model\UserManager;
+use Enhavo\Bundle\UserBundle\Model\UserInterface;
+use Enhavo\Bundle\UserBundle\User\UserManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
-use FOS\UserBundle\Model\UserInterface;
 
 class SaveUserSubscriber implements EventSubscriberInterface
 {
     /**
-     * @var $userManager
+     * @var UserManager
      */
-    protected $userManager;
+    private $userManager;
 
-    public function __construct(UserManager $userManger)
+    /**
+     * SaveUserSubscriber constructor.
+     * @param UserManager $userManager
+     */
+    public function __construct(UserManager $userManager)
     {
-        $this->userManager = $userManger;
+        $this->userManager = $userManager;
     }
+
 
     public static function getSubscribedEvents()
     {
@@ -37,10 +42,9 @@ class SaveUserSubscriber implements EventSubscriberInterface
     {
         /** @var $user UserInterface */
         $user = $event->getSubject();
-        if($user->getPlainPassword()) {
+        if ($user->getPlainPassword()) {
             $this->userManager->updatePassword($user);
         }
 
-        $this->userManager->updateCanonicalFields($user);
     }
 }

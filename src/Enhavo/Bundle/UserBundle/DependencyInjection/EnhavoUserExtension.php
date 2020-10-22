@@ -25,12 +25,14 @@ class EnhavoUserExtension extends AbstractResourceExtension implements PrependEx
         $config = $this->processConfiguration(new Configuration(), $config);
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $this->registerResources('enhavo_user', $config['driver'], $config['resources'], $container);
+
+        $container->setParameter('enhavo_user.config', $config['config']);
+
         $configFiles = array(
             'services/controller.yaml',
             'services/services.yaml',
             'services/form.yaml',
             'services/menu.yaml',
-            'services/viewer.yaml',
         );
         foreach ($configFiles as $configFile) {
             $loader->load($configFile);

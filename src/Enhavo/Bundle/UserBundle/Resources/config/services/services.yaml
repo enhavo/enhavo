@@ -1,13 +1,20 @@
 services:
-    enhavo_user.event.save_user:
-        class: Enhavo\Bundle\UserBundle\EventListener\SaveUserSubscriber
+    Enhavo\Bundle\UserBundle\User\UserManager:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@Enhavo\Bundle\AppBundle\Mailer\MailerManager'
+            - '@enhavo_app.util.secure_url_token_generator'
+            - '@translator'
+            - '@enhavo_user.factory.user'
+            - '%enhavo_user.config%'
+
+    Enhavo\Bundle\UserBundle\EventListener\SaveUserSubscriber:
         arguments:
             - '@fos_user.user_manager'
         tags:
             - { name: kernel.event_subscriber }
 
-    security.authentication.voter.group_role_voter:
-        class: Enhavo\Bundle\UserBundle\Security\Authentication\Voter\GroupRoleVoter
+    Enhavo\Bundle\UserBundle\Security\Authentication\Voter\GroupRoleVoter:
         public: false
         tags:
             - { name: security.voter }
