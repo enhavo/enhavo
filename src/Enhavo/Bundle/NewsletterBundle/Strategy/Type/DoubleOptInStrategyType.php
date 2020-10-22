@@ -144,6 +144,7 @@ class DoubleOptInStrategyType extends AbstractStrategyType
 
         if ($pending) {
             $this->pendingManager->save($pending); // to set a new confirmation token
+            $subscriber->setConfirmationToken($pending->getConfirmationToken());
             $this->notifySubscriber($subscriber, $options);
 
             return 'subscriber.form.error.sent_again';
