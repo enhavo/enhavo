@@ -48,7 +48,8 @@ class SubscriptionController extends AbstractController
         $subscriber = $pendingSubscriber->getData();
         try {
             $strategy->activateSubscriber($subscriber);
-            return $this->render($strategy->getActivationTemplate(), [
+            $templateManager = $this->get('enhavo_app.template.manager');
+            return $this->render($templateManager->getTemplate($strategy->getActivationTemplate()), [
                 'subscriber' => $subscriber
             ]);
         } catch (\Exception $exception) {
