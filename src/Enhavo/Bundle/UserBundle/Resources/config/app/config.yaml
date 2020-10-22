@@ -9,11 +9,12 @@ enhavo_user:
         theme:
             register:
                 template: theme/security/registration/register.html.twig
+                success_template: theme/security/registration/check.html.twig
                 email_template: mail/security/registration.html.twig
                 email_subject: ''
                 translation_domain: 'EnhavoUserBundle'
                 form:
-                    class:
+                    class: Enhavo\Bundle\UserBundle\Form\Type\RegistrationFormType
                     options: ~
             confirm:
                 template: theme/security/registration/confirm.html.twig
@@ -25,12 +26,17 @@ enhavo_user:
                 email_template: mail/security/reset-password.html.twig
                 email_subject: ''
                 translation_domain: 'EnhavoUserBundle'
+                form:
+                    class: Enhavo\Bundle\UserBundle\Form\Type\ResetPasswordType
+                    options: ~
         admin:
             reset_password:
                 template: admin/security/reset-password/reset.html.twig
                 email_template: mail/security/reset-password.html.twig
                 email_subject: ''
                 translation_domain: 'EnhavoUserBundle'
+            change_password:
+
     from_email:
         address: '%env(string:MAILER_FROM)%'
         sender_name: '%env(string:MAILER_NAME)%'

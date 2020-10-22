@@ -1,7 +1,11 @@
 services:
-    Enhavo\Bundle\UserBundle\Form\Type\RegistrationFormType:
+    Enhavo\Bundle\UserBundle\Form\Type\RegistrationType:
         arguments:
             - '%enhavo_user.model.user.class%'
+        tags:
+            - { name: form.type }
+
+    Enhavo\Bundle\UserBundle\Form\Type\ResetPasswordType:
         tags:
             - { name: form.type }
 

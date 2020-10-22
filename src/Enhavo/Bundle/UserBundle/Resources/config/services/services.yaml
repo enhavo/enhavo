@@ -5,7 +5,8 @@ services:
             - '@Enhavo\Bundle\AppBundle\Mailer\MailerManager'
             - '@enhavo_app.util.secure_url_token_generator'
             - '@translator'
-            - '@enhavo_user.factory.user'
+            - '@form.factory'
+            - '@security.encoder_factory.generic'
             - '%enhavo_user.config%'
 
     Enhavo\Bundle\UserBundle\EventListener\SaveUserSubscriber:
