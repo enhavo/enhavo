@@ -127,9 +127,9 @@ class AcceptStrategyType extends AbstractStrategyType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'activation_template' => 'EnhavoNewsletterBundle:theme/resource/subscriber:accept.html.twig',
-            'admin_template' => 'EnhavoNewsletterBundle:mail/subscriber:accept-admin.html.twig',
-            'template' => 'EnhavoNewsletterBundle:mail/subscriber:accept.html.twig',
+            'activation_template' => 'theme/resource/subscriber/accept.html.twig',
+            'admin_template' => 'mail/subscriber/accept-admin.html.twig',
+            'template' => 'mail/subscriber/accept.html.twig',
             'activate_route' => 'enhavo_newsletter_subscribe_activate',
             'activate_route_parameters' => [],
         ]);
