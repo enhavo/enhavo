@@ -87,9 +87,9 @@ class NotifyStrategyType extends AbstractStrategyType
     {
         $resolver->setDefaults([
             'notify_admin' => true,
-            'admin_template' => 'EnhavoNewsletterBundle:mail/subscriber:notify-admin.html.twig',
+            'admin_template' => 'mail/subscriber/notify-admin.html.twig',
             'sender_name' => 'enhavo',
-            'template' => 'EnhavoNewsletterBundle:mail/subscriber:notify.html.twig',
+            'template' => 'mail/subscriber/notify.html.twig',
         ]);
     }
 
