@@ -11,7 +11,7 @@ class ContactBlockType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        // TODO: Insert form fields
+        $builder->add('key', ContactFormChoiceType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -7,3 +7,6 @@ contact:
       invalid: 'Please check form for errors.'
     action:
       send: Send
+  forms:
+    default:
+      label: Default
