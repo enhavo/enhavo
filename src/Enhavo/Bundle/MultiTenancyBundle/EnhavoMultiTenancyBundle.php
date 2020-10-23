@@ -8,10 +8,10 @@
 
 namespace Enhavo\Bundle\MultiTenancyBundle;
 
-use Enhavo\Bundle\MultiTenancyBundle\DependencyInjection\CompilerPass\ProviderCompilerPass;
-use Enhavo\Bundle\MultiTenancyBundle\DependencyInjection\CompilerPass\ResolverCompilerPass;
-use Enhavo\Bundle\MultiTenancyBundle\DependencyInjection\CompilerPass\SyliusCompilerPass;
-use Enhavo\Bundle\MultiTenancyBundle\DependencyInjection\CompilerPass\TenantResolverAwareCompilerPass;
+use Enhavo\Bundle\MultiTenancyBundle\DependencyInjection\Compiler\ProviderCompilerPass;
+use Enhavo\Bundle\MultiTenancyBundle\DependencyInjection\Compiler\ResolverCompilerPass;
+use Enhavo\Bundle\MultiTenancyBundle\DependencyInjection\Compiler\SyliusCompilerPass;
+use Enhavo\Bundle\MultiTenancyBundle\DependencyInjection\Compiler\TenantResolverAwareCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

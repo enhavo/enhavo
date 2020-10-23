@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Enhavo\Bundle\MultiTenancyBundle\Model;
 
 class Tenant implements TenantInterface
@@ -19,6 +18,9 @@ class Tenant implements TenantInterface
 
     /** @var string[] */
     private $domains = [];
+
+    /** @var string|null */
+    private $locale = null;
 
     /**
      * @return string
@@ -98,5 +100,21 @@ class Tenant implements TenantInterface
     public function setDomains(array $domains): void
     {
         $this->domains = $domains;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getLocale(): ?string
+    {
+        return $this->locale;
+    }
+
+    /**
+     * @param string|null $locale
+     */
+    public function setLocale(?string $locale): void
+    {
+        $this->locale = $locale;
     }
 }
