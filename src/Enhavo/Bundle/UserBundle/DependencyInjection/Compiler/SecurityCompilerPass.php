@@ -21,8 +21,8 @@ class SecurityCompilerPass implements CompilerPassInterface
 
     protected function overwriteAuthenticationSuccessHandler(ContainerBuilder $container)
     {
-        $definition = $container->getDefinition('security.authentication.success_handler');
-        $definition->setClass('Enhavo\Bundle\UserBundle\Security\Authentication\AuthenticationSuccessHandler');
-        $definition->addMethodCall('setContainer', array(new Reference('service_container')));
+//        $definition = $container->getDefinition('security.authentication.success_handler');
+//        $definition->setClass('Enhavo\Bundle\UserBundle\Security\Authentication\AuthenticationSuccessHandler');
+//        $definition->addMethodCall('setContainer', array(new Reference('service_container')));
     }
 }

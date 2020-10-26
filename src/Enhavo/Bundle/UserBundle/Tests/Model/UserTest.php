@@ -1,11 +1,11 @@
 <?php
 
 
-namespace Enhavo\Bundle\UserBundle\Tests\Entity;
+namespace Enhavo\Bundle\UserBundle\Tests\Model;
 
 
-use Enhavo\Bundle\UserBundle\Entity\Group;
-use Enhavo\Bundle\UserBundle\Entity\User;
+use Enhavo\Bundle\UserBundle\Model\Group;
+use Enhavo\Bundle\UserBundle\Model\User;
 use PHPUnit\Framework\TestCase;
 
 class UserTest extends TestCase

@@ -1,13 +1,16 @@
 security:
     encoders:
         Symfony\Component\Security\Core\User\User: plaintext
-        FOS\UserBundle\Model\UserInterface: sha512
+        Enhavo\Bundle\UserBundle\Model\UserInterface: sha512
 
     role_hierarchy:
 
     providers:
-        fos_userbundle:
-            id: fos_user.user_provider.username
+        enhavo_user_provider:
+            entity:
+                class: Enhavo\Bundle\UserBundle\Model\User
+#                property: email
+                property: username
 
     firewalls:
         dev:
@@ -15,10 +18,14 @@ security:
             security: false
 
         admin:
+            guard:
+                authenticators:
+#                    - Enhavo\Bundle\UserBundle\Security\Authentication\EmailFormLoginAuthenticator
+                    - Enhavo\Bundle\UserBundle\Security\Authentication\UsernameFormLoginAuthenticator
             pattern:  ^/admin/.*
             context: user
             form_login:
-                provider:       fos_userbundle
+                provider:       enhavo_user_provider
                 login_path:     /admin/login
                 use_forward:    false
                 check_path:     /admin/login/check
@@ -30,10 +37,15 @@ security:
             anonymous:  true
 
         user:
+            guard:
+                authenticators:
+#                    - Enhavo\Bundle\UserBundle\Security\Authentication\EmailFormLoginAuthenticator
+                    - Enhavo\Bundle\UserBundle\Security\Authentication\UsernameFormLoginAuthenticator
+
             pattern: ^/user/.*
             context: user
             form_login:
-                provider:       fos_userbundle
+                provider:       enhavo_user_provider
                 login_path:     /user/login
                 use_forward:    false
                 check_path:     /user/login/check
@@ -48,7 +60,7 @@ security:
             pattern: .*
             context: user
             form_login:
-                provider:       fos_userbundle
+                provider:       enhavo_user_provider
                 login_path:     /user/login
                 use_forward:    false
                 check_path:     /user/login/check

@@ -9,38 +9,49 @@
 
 namespace Enhavo\Bundle\UserBundle\Model;
 
-use FOS\UserBundle\Model\UserInterface as BaseUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface as BaseUserInterface;
 
 interface UserInterface extends BaseUserInterface
 {
+    const ROLE_DEFAULT = 'ROLE_USER';
+    const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
     const ROLE_ADMIN = 'ROLE_ADMIN';
 
-    /**
-     * Set firstName
-     *
-     * @param string $firstName
-     * @return UserInterface
-     */
-    public function setFirstName($firstName);
+    public function setUsername($username);
 
-    /**
-     * Get firstName
-     *
-     * @return string
-     */
-    public function getFirstName();
-    /**
-     * Set lastName
-     *
-     * @param string $lastName
-     * @return UserInterface
-     */
-    public function setLastName($lastName);
+    public function setSalt($salt);
 
-    /**
-     * Get lastName
-     *
-     * @return string
-     */
-    public function getLastName();
+    public function getEmail();
+
+    public function setEmail($email);
+
+    public function getPlainPassword();
+
+    public function setPlainPassword($password);
+
+    public function setPassword($password);
+
+    public function isSuperAdmin();
+
+    public function setEnabled($boolean);
+
+    public function setSuperAdmin($boolean);
+
+    public function getConfirmationToken();
+
+    public function setConfirmationToken($confirmationToken);
+
+    public function setPasswordRequestedAt(\DateTime $date = null);
+
+    public function isPasswordRequestNonExpired($ttl);
+
+    public function setLastLogin(\DateTime $time = null);
+
+    public function hasRole($role);
+
+    public function setRoles(array $roles);
+
+    public function addRole($role);
+
+    public function removeRole($role);
 }

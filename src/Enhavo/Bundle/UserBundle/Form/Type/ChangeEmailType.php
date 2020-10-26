@@ -31,14 +31,14 @@ class ChangeEmailType extends AbstractType
     {
         $builder->add('current_password', PasswordType::class, array(
             'label' => 'form.current_password',
-            'translation_domain' => 'FOSUserBundle',
+            'translation_domain' => 'EnhavoUserBundle',
             'mapped' => false,
             'constraints' => new UserPassword(),
         ));
 
         $builder->add('email', RepeatedType::class, array(
             'type' => 'text',
-            'options' => array('translation_domain' => 'FOSUserBundle'),
+            'options' => array('translation_domain' => 'EnhavoUserBundle'),
             'first_options' => array('label' => 'form.new_email'),
             'second_options' => array('label' => 'form.new_email_confirmation'),
             'invalid_message' => 'form.email.mismatch',

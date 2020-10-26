@@ -29,9 +29,10 @@ class RegistrationType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        // todo: add unique validation based on registration type (email/username/email+username/customerid/etc.)
         $builder
-            ->add('email', EmailType::class, array('label' => 'form.email', 'translation_domain' => 'EnhavoUserBundle'))
-            ->add('username', null, array('label' => 'form.username', 'translation_domain' => 'EnhavoUserBundle'))
+            ->add('email', EmailType::class, array('label' => 'registration.form.email', 'translation_domain' => 'EnhavoUserBundle'))
+            ->add('username', null, array('label' => 'registration.form.username', 'translation_domain' => 'EnhavoUserBundle'))
             ->add('plainPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,
                 'options' => array(
@@ -40,9 +41,9 @@ class RegistrationType extends AbstractType
                         'autocomplete' => 'new-password',
                     ),
                 ),
-                'first_options' => array('label' => 'form.password'),
-                'second_options' => array('label' => 'form.password_confirmation'),
-                'invalid_message' => 'fos_user.password.mismatch',
+                'first_options' => array('label' => 'registration.form.password'),
+                'second_options' => array('label' => 'registration.form.password_confirmation'),
+                'invalid_message' => 'enhavo_user.password.mismatch',
             ))
         ;
     }

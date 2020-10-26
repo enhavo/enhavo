@@ -56,6 +56,12 @@ reset:
       text: Please click on following link to reset your password
       subject: Reset Password
 registration:
+    form:
+        email: 'E-Mail'
+        username: 'Username'
+        password: 'Password'
+        password_confirmation: 'Password confirmation'
+        submit:
     mail:
         text: Please click on following link to to verify your email address
         subject: Registration

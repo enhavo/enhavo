@@ -10,7 +10,7 @@ namespace Enhavo\Bundle\UserBundle\Security\Authentication\Voter;
 
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Enhavo\Bundle\UserBundle\Entity\User;
+use Enhavo\Bundle\UserBundle\Model\User;
 
 class GroupRoleVoter  implements VoterInterface
 {
@@ -40,4 +40,4 @@ class GroupRoleVoter  implements VoterInterface
         }
         return VoterInterface::ACCESS_ABSTAIN;
     }
-} 
+}

@@ -39,10 +39,10 @@ class UserType extends AbstractResourceType
 
         $builder->add('plainPassword', RepeatedType::class, array(
             'type' => PasswordType::class,
-            'options' => array('translation_domain' => 'FOSUserBundle'),
+            'options' => array('translation_domain' => 'EnhavoUserBundle'),
             'first_options' => array('label' => 'form.password'),
             'second_options' => array('label' => 'form.password_confirmation'),
-            'invalid_message' => 'fos_user.password.mismatch',
+            'invalid_message' => 'enhavo_user.password.mismatch',
         ));
 
         $builder->add('firstName', TextType::class, array(

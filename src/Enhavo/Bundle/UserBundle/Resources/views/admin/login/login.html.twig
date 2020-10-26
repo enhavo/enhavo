@@ -1,6 +1,6 @@
 {% extends template('admin/login/base.html.twig') %}
 
-{% trans_default_domain 'FOSUserBundle' %}
+{% trans_default_domain 'EnhavoUserBundle' %}
 
 {% block form %}
     <form action="{{ path("enhavo_user_security_login_check") }}" method="post" novalidate>

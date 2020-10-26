@@ -3,15 +3,17 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@Enhavo\Bundle\AppBundle\Mailer\MailerManager'
+            - '@enhavo_user.repository.user'
             - '@enhavo_app.util.secure_url_token_generator'
             - '@translator'
             - '@form.factory'
             - '@security.encoder_factory.generic'
+            - '@router'
             - '%enhavo_user.config%'
 
     Enhavo\Bundle\UserBundle\EventListener\SaveUserSubscriber:
         arguments:
-            - '@fos_user.user_manager'
+            - '@Enhavo\Bundle\UserBundle\User\UserManager'
         tags:
             - { name: kernel.event_subscriber }
 
@@ -27,5 +29,18 @@ services:
         tags:
             - { name: enhavo.widget, alias: login }
 
+    Enhavo\Bundle\UserBundle\Security\Authentication\EmailFormLoginAuthenticator:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@router'
+            - '@security.csrf.token_manager'
+            - '@security.user_password_encoder.generic'
+            - '%enhavo_user.model.user.class%'
 
-
+    Enhavo\Bundle\UserBundle\Security\Authentication\UsernameFormLoginAuthenticator:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@router'
+            - '@security.csrf.token_manager'
+            - '@security.user_password_encoder.generic'
+            - '%enhavo_user.model.user.class%'

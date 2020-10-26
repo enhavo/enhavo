@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\UserBundle\Form\Type;
 
-use Enhavo\Bundle\UserBundle\Entity\User;
+use Enhavo\Bundle\UserBundle\Model\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;

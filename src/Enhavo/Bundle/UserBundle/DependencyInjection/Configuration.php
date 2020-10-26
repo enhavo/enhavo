@@ -3,14 +3,15 @@
 namespace Enhavo\Bundle\UserBundle\DependencyInjection;
 
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
-use Enhavo\Bundle\UserBundle\Entity\Group;
-use Enhavo\Bundle\UserBundle\Entity\User;
 use Enhavo\Bundle\UserBundle\Form\Type\GroupType;
 use Enhavo\Bundle\UserBundle\Form\Type\UserType;
+use Enhavo\Bundle\UserBundle\Model\Group;
+use Enhavo\Bundle\UserBundle\Model\User;
 use Enhavo\Bundle\UserBundle\Repository\GroupRepository;
 use Enhavo\Bundle\UserBundle\Repository\UserRepository;
 use Sylius\Bundle\ResourceBundle\SyliusResourceBundle;
 use Sylius\Component\Resource\Factory\Factory;
+use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -28,6 +29,8 @@ class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder('enhavo_user');
         $rootNode = $treeBuilder->getRootNode();
+
+        $this->addConfigNode($rootNode);
 
         $rootNode
             // Driver used by the resource bundle
@@ -78,5 +81,18 @@ class Configuration implements ConfigurationInterface
         ;
 
         return $treeBuilder;
+    }
+
+    private function addConfigNode(NodeDefinition $rootNode): NodeDefinition
+    {
+        $rootNode->children()
+            ->arrayNode('config')
+                ->children()
+                    ->variableNode('theme')->end()
+                    ->variableNode('admin')->end()
+                ->end()
+            ->end()
+        ->end();
+        return $rootNode;
     }
 }

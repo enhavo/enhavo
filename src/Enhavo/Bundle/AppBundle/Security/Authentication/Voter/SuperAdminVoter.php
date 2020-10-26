@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Security\Authentication\Voter;
 
-use Enhavo\Bundle\UserBundle\Entity\User;
+use Enhavo\Bundle\UserBundle\Model\User;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 

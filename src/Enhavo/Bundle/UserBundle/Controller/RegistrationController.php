@@ -2,21 +2,19 @@
 
 namespace Enhavo\Bundle\UserBundle\Controller;
 
+use Enhavo\Bundle\AppBundle\Template\TemplateManager;
+use Enhavo\Bundle\UserBundle\Event\FilterUserResponseEvent;
+use Enhavo\Bundle\UserBundle\Event\FormEvent;
+use Enhavo\Bundle\UserBundle\Event\GetResponseUserEvent;
 use Enhavo\Bundle\UserBundle\Event\UserEvents;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Enhavo\Bundle\UserBundle\User\UserManager;
-use FOS\UserBundle\Event\FilterUserResponseEvent;
-use FOS\UserBundle\Event\FormEvent;
-use FOS\UserBundle\Event\GetResponseUserEvent;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Class RegistrationController
@@ -30,6 +28,9 @@ class RegistrationController extends AbstractController
     /** @var UserManager  */
     private $userManager;
 
+    /** @var TemplateManager */
+    private $templateManager;
+
     /** @var FactoryInterface */
     private $userFactory;
 
@@ -37,25 +38,24 @@ class RegistrationController extends AbstractController
      * RegistrationController constructor.
      * @param EventDispatcherInterface $eventDispatcher
      * @param UserManager $userManager
+     * @param TemplateManager $templateManager
      * @param FactoryInterface $userFactory
      */
-    public function __construct(EventDispatcherInterface $eventDispatcher, UserManager $userManager, FactoryInterface $userFactory)
+    public function __construct(EventDispatcherInterface $eventDispatcher, UserManager $userManager, TemplateManager $templateManager, FactoryInterface $userFactory)
     {
         $this->eventDispatcher = $eventDispatcher;
         $this->userManager = $userManager;
+        $this->templateManager = $templateManager;
         $this->userFactory = $userFactory;
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return Response
-     */
+
     public function registerAction(Request $request)
     {
+        $config = $request->attributes->get('_config');
+
         /** @var UserInterface $user */
         $user = $this->userFactory->createNew();
-        $user->setEnabled(true);
 
         $event = new GetResponseUserEvent($user, $request);
         $this->eventDispatcher->dispatch(UserEvents::REGISTRATION_INITIALIZE, $event);
@@ -64,80 +64,54 @@ class RegistrationController extends AbstractController
             return $event->getResponse();
         }
 
-        $form = $this->formFactory->createForm();
-        $form->setData($user);
-
+        $form = $this->userManager->createForm($config, 'register', $user);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
+        $valid = true;
+        if($form->isSubmitted()) {
             if ($form->isValid()) {
+                $user = $form->getData();
+
                 $event = new FormEvent($form, $request);
                 $this->eventDispatcher->dispatch(UserEvents::REGISTRATION_SUCCESS, $event);
 
+                $this->userManager->updatePassword($user);
                 $this->userManager->updateUser($user);
 
                 if (null === $response = $event->getResponse()) {
-                    $url = $this->generateUrl('fos_user_registration_confirmed');
+                    $url = $this->generateUrl($this->userManager->getRedirectRoute($config, 'register'));
                     $response = new RedirectResponse($url);
                 }
 
                 $this->eventDispatcher->dispatch(UserEvents::REGISTRATION_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
+                $this->userManager->sendRegistrationConfirmMail($user, $config);
 
                 return $response;
-            }
 
-            $event = new FormEvent($form, $request);
-            $this->eventDispatcher->dispatch(UserEvents::REGISTRATION_FAILURE, $event);
 
-            if (null !== $response = $event->getResponse()) {
-                return $response;
+            } else {
+                $valid = false;
             }
         }
 
-        return $this->render('@FOSUser/Registration/register.html.twig', array(
+        return $this->render($this->getTemplate($this->userManager->getTemplate($config, 'register')), [
             'form' => $form->createView(),
-        ));
+        ])->setStatusCode($valid ? 200 : 400);
     }
 
-    /**
-     * Tell the user to check their email provider.
-     */
-    public function checkEmailAction(Request $request)
+    public function checkAction(Request $request)
     {
-        $email = $request->getSession()->get('fos_user_send_confirmation_email/email');
-
-        if (empty($email)) {
-            return new RedirectResponse($this->generateUrl('fos_user_registration_register'));
-        }
-
-        $request->getSession()->remove('fos_user_send_confirmation_email/email');
-        $user = $this->userManager->findUserByEmail($email);
-
-        if (null === $user) {
-            return new RedirectResponse($this->container->get('router')->generate('fos_user_security_login'));
-        }
-
-        return $this->render('@FOSUser/Registration/check_email.html.twig', array(
-            'user' => $user,
-        ));
+        $config = $request->attributes->get('_config');
+        return $this->render($this->getTemplate($this->userManager->getTemplate($config, 'check')));
     }
 
-    /**
-     * Receive the confirmation token from user email provider, login the user.
-     *
-     * @param Request $request
-     * @param string  $token
-     *
-     * @return Response
-     */
     public function confirmAction(Request $request, $token)
     {
-        $userManager = $this->userManager;
-
-        $user = $userManager->findUserByConfirmationToken($token);
+        $config = $request->attributes->get('_config');
+        $user = $this->userManager->findByConfirmationToken($token);
 
         if (null === $user) {
-            throw new NotFoundHttpException(sprintf('The user with confirmation token "%s" does not exist', $token));
+            throw new NotFoundHttpException(sprintf('A user with confirmation token "%s" does not exist', $token));
         }
 
         $user->setConfirmationToken(null);
@@ -146,10 +120,10 @@ class RegistrationController extends AbstractController
         $event = new GetResponseUserEvent($user, $request);
         $this->eventDispatcher->dispatch(UserEvents::REGISTRATION_CONFIRM, $event);
 
-        $userManager->updateUser($user);
+        $this->userManager->updateUser($user);
 
         if (null === $response = $event->getResponse()) {
-            $url = $this->generateUrl('fos_user_registration_confirmed');
+            $url = $this->generateUrl($this->userManager->getRedirectRoute($config, 'confirm'));
             $response = new RedirectResponse($url);
         }
 
@@ -158,33 +132,18 @@ class RegistrationController extends AbstractController
         return $response;
     }
 
-    /**
-     * Tell the user his account is now confirmed.
-     */
-    public function confirmedAction(Request $request)
+    public function finishAction(Request $request)
     {
-        $user = $this->getUser();
-        if (!is_object($user) || !$user instanceof UserInterface) {
-            throw new AccessDeniedException('This user does not have access to this section.');
-        }
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        $config = $request->attributes->get('_config');
 
-        return $this->render('@FOSUser/Registration/confirmed.html.twig', array(
-            'user' => $user,
-            'targetUrl' => $this->getTargetUrlFromSession($request->getSession()),
-        ));
+        return $this->render($this->getTemplate($this->userManager->getTemplate($config, 'finish')), [
+
+        ]);
     }
 
-    /**
-     * @return string|null
-     */
-    private function getTargetUrlFromSession(SessionInterface $session)
+    private function getTemplate($template)
     {
-        $key = sprintf('_security.%s.target_path', $this->tokenStorage->getToken()->getProviderKey());
-
-        if ($session->has($key)) {
-            return $session->get($key);
-        }
-
-        return null;
+        return $this->templateManager->getTemplate($template);
     }
 }

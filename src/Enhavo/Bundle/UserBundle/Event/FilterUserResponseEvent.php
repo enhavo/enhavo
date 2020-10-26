@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\UserBundle\Event;
 
+use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 

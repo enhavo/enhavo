@@ -7,81 +7,71 @@
 namespace Enhavo\Bundle\UserBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Template\TemplateManager;
-use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Enhavo\Bundle\UserBundle\User\UserManager;
-use Sylius\Component\Resource\Factory\FactoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
     /** @var UserManager */
     private $userManager;
 
-    /** @var FactoryInterface */
-    private $userFactory;
+    /** @var RouterInterface */
+    private $router;
 
     /** @var TemplateManager */
     private $templateManager;
 
+    /** @var CsrfTokenManagerInterface */
+    private $tokenManager;
+
     /**
      * SecurityController constructor.
      * @param UserManager $userManager
-     * @param FactoryInterface $userFactory
+     * @param RouterInterface $router
      * @param TemplateManager $templateManager
+     * @param CsrfTokenManagerInterface $tokenManager
      */
-    public function __construct(UserManager $userManager, FactoryInterface $userFactory, TemplateManager $templateManager)
+    public function __construct(UserManager $userManager, RouterInterface $router, TemplateManager $templateManager, CsrfTokenManagerInterface $tokenManager)
     {
         $this->userManager = $userManager;
-        $this->userFactory = $userFactory;
+        $this->router = $router;
         $this->templateManager = $templateManager;
+        $this->tokenManager = $tokenManager;
     }
 
-    public function registerAction(Request $request)
+    public function loginAction(Request $request, AuthenticationUtils $authenticationUtils)
     {
         $config = $request->attributes->get('_config');
-        /** @var UserInterface $user */
-        $user = $this->userFactory->createNew();
-        $form = $this->userManager->createForm($config, $user);
 
-        $form->handleRequest($request);
-
-        $errorMessage = null;
-
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                $this->userManager->register($user);
-
-                if ($request->isXmlHttpRequest()) {
-                    return new JsonResponse([
-                        'user' => $user,
-                        'errors' => null,
-                        'redirect' => $this->userManager->getRedirect($config)
-                    ]);
-                }
-
-                $template = $this->templateManager->getTemplate($this->userManager->getSuccessTemplate($config));
-                return $this->render($template, [
-                    'user' => $user,
-                    'form' => $form->createView(),
-                ]);
-
-            } else {
-                if ($request->isXmlHttpRequest()) {
-                    return new JsonResponse([
-                        'user' => $user,
-                        'errors' => [],
-                    ]);
-                }
-            }
+        if ($this->isGranted('ROLE_USER')) {
+            $route = $this->userManager->getRedirectRoute($config, 'login');
+            return new RedirectResponse($this->router->generate($route));
         }
 
-        $template = $this->templateManager->getTemplate($this->userManager->getTemplate($config));
-        return $this->render($template, [
-            'user' => $user,
-            'form' => $form->createView(),
-            'message' => $errorMessage,
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
+        $csrfToken = $this->tokenManager
+            ? $this->tokenManager->getToken('authenticate')->getValue()
+            : null;
+
+        $template = $this->userManager->getTemplate($config, 'login');
+
+        return $this->render($this->templateManager->getTemplate($template), [
+            'last_username' => $lastUsername,
+            'error' => $error,
+            'csrf_token' => $csrfToken,
         ]);
+    }
+
+    public function logoutAction()
+    {
+
     }
 }

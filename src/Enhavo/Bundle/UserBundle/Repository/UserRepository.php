@@ -10,6 +10,10 @@ namespace Enhavo\Bundle\UserBundle\Repository;
 
 use Enhavo\Bundle\AppBundle\Repository\EntityRepository;
 
+/**
+ * Class UserRepository
+ * @package Enhavo\Bundle\UserBundle\Repository
+ */
 class UserRepository extends EntityRepository
 {
     public function findByTerm($term)
