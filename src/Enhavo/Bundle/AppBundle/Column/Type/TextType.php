@@ -16,6 +16,11 @@ class TextType extends AbstractColumnType
     public function createResourceViewData(array $options, $resource)
     {
         $property = $this->getProperty($resource, $options['property']);
+
+        if ($options['stripHtmlTags']) {
+            $property = strip_tags($property);
+        }
+
         return $property;
     }
 
@@ -38,7 +43,8 @@ class TextType extends AbstractColumnType
         $resolver->setDefaults([
             'component' => 'column-text',
             'sortingProperty' => null,
-            'wrap' => true
+            'wrap' => true,
+            'stripHtmlTags' => false
         ]);
         $resolver->setRequired(['property']);
     }
