@@ -86,6 +86,7 @@ class ContactManager
 
         $message->setSubject($options['subject']);
         $message->setTemplate($this->templateManager->getTemplate($options['template']));
+        $message->setContentType($options['content_type']);
         $message->setContext([
             'resource' => $contact,
         ]);
