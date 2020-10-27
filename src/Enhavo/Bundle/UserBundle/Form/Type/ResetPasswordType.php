@@ -8,12 +8,10 @@
 
 namespace Enhavo\Bundle\UserBundle\Form\Type;
 
-use Enhavo\Bundle\UserBundle\Model\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ResetPasswordType extends AbstractType
 {
@@ -22,12 +20,5 @@ class ResetPasswordType extends AbstractType
         $builder->add('plainPassword', RepeatedType::class, array(
             'type' => PasswordType::class,
         ));
-    }
-
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults([
-            'data_class' => User::class
-        ]);
     }
 }

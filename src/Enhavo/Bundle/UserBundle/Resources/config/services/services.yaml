@@ -9,6 +9,7 @@ services:
             - '@form.factory'
             - '@security.encoder_factory.generic'
             - '@router'
+            - '@event_dispatcher'
             - '%enhavo_user.config%'
 
     Enhavo\Bundle\UserBundle\EventListener\SaveUserSubscriber:

@@ -8,7 +8,6 @@ use Enhavo\Bundle\UserBundle\Factory\UserFactory;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Enhavo\Bundle\UserBundle\Repository\UserRepository;
 use Enhavo\Bundle\UserBundle\User\UserManager;
-use Sylius\Component\Resource\Factory\FactoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -16,12 +15,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * Class RegistrationController
+ * Class ResetPasswordController
  * @package Enhavo\Bundle\UserBundle\Controller
- *
- * @property $userFactory UserFactory
  */
-class RegistrationController extends AbstractController
+class ResetPasswordController extends AbstractController
 {
     /** @var UserManager */
     private $userManager;
@@ -32,17 +29,17 @@ class RegistrationController extends AbstractController
     /** @var TemplateManager */
     private $templateManager;
 
-    /** @var FactoryInterface */
+    /** @var UserFactory */
     private $userFactory;
 
     /**
-     * RegistrationController constructor.
+     * ResetPasswordController constructor.
      * @param UserManager $userManager
      * @param UserRepository $userRepository
      * @param TemplateManager $templateManager
-     * @param FactoryInterface $userFactory
+     * @param UserFactory $userFactory
      */
-    public function __construct(UserManager $userManager, UserRepository $userRepository, TemplateManager $templateManager, FactoryInterface $userFactory)
+    public function __construct(UserManager $userManager, UserRepository $userRepository, TemplateManager $templateManager, UserFactory $userFactory)
     {
         $this->userManager = $userManager;
         $this->userRepository = $userRepository;
@@ -50,22 +47,23 @@ class RegistrationController extends AbstractController
         $this->userFactory = $userFactory;
     }
 
-
-    public function registerAction(Request $request)
+    public function requestAction(Request $request)
     {
         $config = $request->attributes->get('_config');
 
         /** @var UserInterface $user */
         $user = $this->userFactory->createNew();
 
-        $form = $this->userManager->createForm($config, 'register', $user);
+        $form = $this->userManager->createForm($config, 'reset_password_request', $user);
         $form->handleRequest($request);
 
         $valid = true;
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                $this->userManager->register($user, $config);
-                $url = $this->generateUrl($this->userManager->getRedirectRoute($config, 'register'));
+                $user = $this->userRepository->findByUsername($user->getUsername()) ?? $this->userRepository->findByEmail($user->getUsername()); // todo: solve it pretty
+
+                $this->userManager->resetPassword($user, $config);
+                $url = $this->generateUrl($this->userManager->getRedirectRoute($config, 'reset_password_request'));
                 // todo: json response on xhttp
 
                 return new RedirectResponse($url);
@@ -77,7 +75,7 @@ class RegistrationController extends AbstractController
 
         // todo: json response on xhttp
 
-        return $this->render($this->getTemplate($this->userManager->getTemplate($config, 'register')), [
+        return $this->render($this->getTemplate($this->userManager->getTemplate($config, 'reset_password_request')), [
             'form' => $form->createView(),
         ])->setStatusCode($valid ? 200 : 400);
     }
@@ -97,10 +95,29 @@ class RegistrationController extends AbstractController
             throw new NotFoundHttpException(sprintf('A user with confirmation token "%s" does not exist', $token));
         }
 
-        $this->userManager->confirm($user, $config);
+        $form = $this->userManager->createForm($config, 'reset_password_confirm', $user);
+        $form->handleRequest($request);
 
-        $url = $this->generateUrl($this->userManager->getRedirectRoute($config, 'confirm'));
-        return new RedirectResponse($url);
+        $valid = true;
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $this->userManager->changePassword($user);
+                $url = $this->generateUrl($this->userManager->getRedirectRoute($config, 'reset_password_confirm'));
+                // todo: json response on xhttp
+
+                return new RedirectResponse($url);
+
+            } else {
+                $valid = false;
+            }
+        }
+
+        // todo: json response on xhttp
+
+        return $this->render($this->getTemplate($this->userManager->getTemplate($config, 'reset_password_confirm')), [
+            'form' => $form->createView(),
+        ])->setStatusCode($valid ? 200 : 400);
+
     }
 
     public function finishAction(Request $request)

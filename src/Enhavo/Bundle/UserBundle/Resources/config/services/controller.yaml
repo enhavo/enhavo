@@ -2,12 +2,24 @@ services:
     Enhavo\Bundle\UserBundle\Controller\RegistrationController:
         public: true
         arguments:
-            - '@event_dispatcher'
             - '@Enhavo\Bundle\UserBundle\User\UserManager'
+            - '@enhavo_user.repository.user'
             - '@enhavo_app.template.manager'
             - '@enhavo_user.factory.user'
         calls:
             - [setContainer, ['@service_container']]
+        tags:
+            - { name: controller.service_arguments }
+
+    Enhavo\Bundle\UserBundle\Controller\ResetPasswordController:
+        public: true
+        arguments:
+            - '@Enhavo\Bundle\UserBundle\User\UserManager'
+            - '@enhavo_user.repository.user'
+            - '@enhavo_app.template.manager'
+            - '@enhavo_user.factory.user'
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
         tags:
             - { name: controller.service_arguments }
 

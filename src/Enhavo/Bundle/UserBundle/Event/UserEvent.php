@@ -8,10 +8,14 @@ use Symfony\Component\HttpFoundation\Request;
 
 class UserEvent extends Event
 {
-    /**
-     * @var null|Request
-     */
-    protected $request;
+    public const TYPE_CREATED = 'enhavo_user.user.created';
+    public const TYPE_ACTIVATED = 'enhavo_user.user.activated';
+    public const TYPE_REGISTRATION_CONFIRMED = 'enhavo_user.user.registration_confirmed';
+    public const TYPE_PASSWORD_CHANGED = 'enhavo_user.user.password_changed';
+    public const TYPE_PASSWORD_RESET_REQUESTED = 'enhavo_user.user.password_reset_requested';
+
+    /** @var string */
+    protected $type;
 
     /**
      * @var UserInterface
@@ -20,15 +24,15 @@ class UserEvent extends Event
 
     /**
      * UserEvent constructor.
-     *
+     * @param string $type
      * @param UserInterface $user
-     * @param Request|null  $request
      */
-    public function __construct(UserInterface $user, Request $request = null)
+    public function __construct(string $type, UserInterface $user)
     {
+        $this->type = $type;
         $this->user = $user;
-        $this->request = $request;
     }
+
 
     /**
      * @return UserInterface
@@ -39,10 +43,12 @@ class UserEvent extends Event
     }
 
     /**
-     * @return Request
+     * @return string
      */
-    public function getRequest()
+    public function getType(): string
     {
-        return $this->request;
+        return $this->type;
     }
+
+
 }

@@ -9,6 +9,10 @@ services:
         tags:
             - { name: form.type }
 
+    Enhavo\Bundle\UserBundle\Form\Type\RequestPasswordResetType:
+        tags:
+            - { name: form.type }
+
     Enhavo\Bundle\UserBundle\Form\Type\UserType:
         arguments:
             - '%enhavo_user.model.user.class%'

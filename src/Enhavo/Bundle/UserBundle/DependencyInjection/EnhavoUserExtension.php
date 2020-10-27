@@ -30,6 +30,7 @@ class EnhavoUserExtension extends AbstractResourceExtension implements PrependEx
         $configFiles = array(
             'services/controller.yaml',
             'services/services.yaml',
+            'services/command.yaml',
             'services/form.yaml',
             'services/menu.yaml',
         );

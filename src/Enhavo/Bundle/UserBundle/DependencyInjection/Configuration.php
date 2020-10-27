@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\UserBundle\DependencyInjection;
 
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
+use Enhavo\Bundle\UserBundle\Factory\UserFactory;
 use Enhavo\Bundle\UserBundle\Form\Type\GroupType;
 use Enhavo\Bundle\UserBundle\Form\Type\UserType;
 use Enhavo\Bundle\UserBundle\Model\Group;
@@ -53,7 +54,7 @@ class Configuration implements ConfigurationInterface
                                         ->scalarNode('model')->defaultValue(User::class)->end()
                                         ->scalarNode('controller')->defaultValue(ResourceController::class)->end()
                                         ->scalarNode('repository')->defaultValue(UserRepository::class)->end()
-                                        ->scalarNode('factory')->defaultValue(Factory::class)->end()
+                                        ->scalarNode('factory')->defaultValue(UserFactory::class)->end()
                                         ->scalarNode('form')->defaultValue(UserType::class)->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()

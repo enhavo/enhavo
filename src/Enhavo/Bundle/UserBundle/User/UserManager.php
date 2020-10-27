@@ -10,8 +10,10 @@ use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Mailer\MailerManager;
 use Enhavo\Bundle\AppBundle\Mailer\Message;
 use Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface;
+use Enhavo\Bundle\UserBundle\Event\UserEvent;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\Exception\OptionDefinitionException;
@@ -46,6 +48,9 @@ class UserManager
     /** @var RouterInterface */
     private $router;
 
+    /** @var EventDispatcherInterface */
+    private $eventDispatcher;
+
     /** @var array */
     private $config;
 
@@ -59,9 +64,10 @@ class UserManager
      * @param FormFactoryInterface $formFactory
      * @param EncoderFactoryInterface $encoderFactory
      * @param RouterInterface $router
+     * @param EventDispatcherInterface $eventDispatcher
      * @param array $config
      */
-    public function __construct(EntityManagerInterface $entityManager, MailerManager $mailerManager, RepositoryInterface $userRepository, TokenGeneratorInterface $tokenGenerator, TranslatorInterface $translator, FormFactoryInterface $formFactory, EncoderFactoryInterface $encoderFactory, RouterInterface $router, array $config)
+    public function __construct(EntityManagerInterface $entityManager, MailerManager $mailerManager, RepositoryInterface $userRepository, TokenGeneratorInterface $tokenGenerator, TranslatorInterface $translator, FormFactoryInterface $formFactory, EncoderFactoryInterface $encoderFactory, RouterInterface $router, EventDispatcherInterface $eventDispatcher, array $config)
     {
         $this->entityManager = $entityManager;
         $this->mailerManager = $mailerManager;
@@ -71,23 +77,80 @@ class UserManager
         $this->formFactory = $formFactory;
         $this->encoderFactory = $encoderFactory;
         $this->router = $router;
+        $this->eventDispatcher = $eventDispatcher;
         $this->config = $config;
     }
 
-    /**
-     * @param $token
-     * @return UserInterface|object|null
-     */
-    public function findByConfirmationToken($token): ?UserInterface
+    public function add(UserInterface $user)
     {
-        return $this->userRepository->findOneBy([
-            'confirmationToken' => $token,
-        ]);
+        $this->update($user, true);
+
+        $event = new UserEvent(UserEvent::TYPE_CREATED, $user);
+        $this->eventDispatcher->dispatch($event);
     }
 
-    public function updatePassword(UserInterface $user)
+    public function register(UserInterface $user, $config)
     {
-        $this->hashPassword($user);
+        $user->setConfirmationToken($this->tokenGenerator->generateToken());
+        $this->add($user);
+
+        $this->sendRegistrationConfirmMail($user, $config);
+    }
+
+    /**
+     * @param UserInterface $user
+     */
+    public function activate(UserInterface $user)
+    {
+        $this->enable($user);
+        $this->update($user);
+
+        $event = new UserEvent(UserEvent::TYPE_ACTIVATED, $user);
+        $this->eventDispatcher->dispatch($event);
+    }
+
+    /**
+     * @param UserInterface $user
+     * @param $config
+     */
+    public function confirm(UserInterface $user, $config)
+    {
+        $this->enable($user);
+        $this->update($user);
+
+        $event = new UserEvent(UserEvent::TYPE_REGISTRATION_CONFIRMED, $user);
+        $this->eventDispatcher->dispatch($event);
+
+        $this->sendConfirmationMail($user, $config);
+    }
+
+    public function resetPassword(UserInterface $user, $config)
+    {
+        $user->setConfirmationToken($this->tokenGenerator->generateToken());
+        $this->update($user);
+
+        $event = new UserEvent(UserEvent::TYPE_PASSWORD_RESET_REQUESTED, $user);
+        $this->eventDispatcher->dispatch($event);
+
+        $this->sendResetPasswordMail($user, $config);
+    }
+
+    private function enable(UserInterface $user)
+    {
+        $user->setEnabled(true);
+        $user->setConfirmationToken(null);
+    }
+
+    /**
+     * @param UserInterface $user
+     */
+    public function changePassword(UserInterface $user)
+    {
+        $user->setConfirmationToken(null);
+        $this->update($user);
+
+        $event = new UserEvent(UserEvent::TYPE_PASSWORD_CHANGED, $user);
+        $this->eventDispatcher->dispatch($event);
     }
 
     public function getTemplate($config, $action)
@@ -100,8 +163,10 @@ class UserManager
         return $this->getConfig($config, $action, 'redirect_route');
     }
 
-    public function updateUser(UserInterface $user, $persist = true, $flush = true)
+    public function update(UserInterface $user, $persist = true, $flush = true)
     {
+        $this->updatePassword($user);
+
         if ($persist) {
             $this->entityManager->persist($user);
         }
@@ -116,6 +181,11 @@ class UserManager
         $options = array_merge($formConfig['options'], $options);
 
         return $this->formFactory->create($formConfig['class'], $user, $options);
+    }
+
+    private function updatePassword(UserInterface $user)
+    {
+        $this->hashPassword($user);
     }
 
     private function hashPassword(UserInterface $user)
@@ -140,17 +210,33 @@ class UserManager
         $user->eraseCredentials();
     }
 
-    public function sendRegistrationConfirmMail(UserInterface $user, $config)
+    private function sendRegistrationConfirmMail(UserInterface $user, $config)
     {
-        $user->setConfirmationToken($this->tokenGenerator->generateToken());
         $options = $this->getConfig($config, 'register');
         $message = $this->createMessage($user, $options, [
             'user' => $user,
             'confirmation_url' => $this->router->generate($options['confirmation_route'], ['token' => $user->getConfirmationToken()], RouterInterface::ABSOLUTE_URL)
         ]);
         $this->mailerManager->sendMessage($message);
+    }
 
-        $this->updateUser($user, false);
+    private function sendResetPasswordMail(UserInterface $user, $config)
+    {
+        $options = $this->getConfig($config, 'reset_password');
+        $message = $this->createMessage($user, $options, [
+            'user' => $user,
+            'confirmation_url' => $this->router->generate($options['confirmation_route'], ['token' => $user->getConfirmationToken()], RouterInterface::ABSOLUTE_URL)
+        ]);
+        $this->mailerManager->sendMessage($message);
+    }
+
+    private function sendConfirmationMail(UserInterface $user, $config)
+    {
+        $options = $this->getConfig($config, 'confirm');
+        $message = $this->createMessage($user, $options, [
+            'user' => $user
+        ]);
+        $this->mailerManager->sendMessage($message);
     }
 
     public function getConfig($config, $action = null, $item = null)
@@ -184,20 +270,6 @@ class UserManager
         }
 
         return $options;
-    }
-
-    private function sendResetPasswordMail(UserInterface $user, array $options)
-    {
-        $message = $this->createMessage($user, $options);
-        $this->mailerManager->sendMessage($message);
-    }
-
-    private function sendConfirmationMail(UserInterface $user, array $options)
-    {
-        $message = $this->createMessage($user, $options, [
-            'user' => $user,
-        ]);
-        $this->mailerManager->sendMessage($message);
     }
 
     private function createMessage(UserInterface $user, array $options, array $context): Message
