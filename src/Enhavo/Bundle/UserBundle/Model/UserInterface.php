@@ -35,6 +35,8 @@ interface UserInterface extends BaseUserInterface
 
     public function setEnabled($boolean);
 
+    public function isEnabled(): bool;
+
     public function setSuperAdmin($boolean);
 
     public function getConfirmationToken();

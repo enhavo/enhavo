@@ -182,9 +182,9 @@ class User implements UserInterface, GroupableInterface, ResourceInterface
         return in_array(strtoupper($role), $this->getRoles(), true);
     }
 
-    public function isEnabled()
+    public function isEnabled(): bool
     {
-        return $this->enabled;
+        return $this->enabled === true;
     }
 
     public function removeRole($role)

@@ -45,3 +45,5 @@ services:
             - '@security.csrf.token_manager'
             - '@security.user_password_encoder.generic'
             - '%enhavo_user.model.user.class%'
+
+    Enhavo\Bundle\UserBundle\Security\UserChecker: ~

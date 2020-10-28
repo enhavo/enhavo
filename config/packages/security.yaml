@@ -9,8 +9,8 @@ security:
         enhavo_user_provider:
             entity:
                 class: Enhavo\Bundle\UserBundle\Model\User
-#                property: email
-                property: username
+                property: email
+#                property: username
 
     firewalls:
         dev:
@@ -18,10 +18,11 @@ security:
             security: false
 
         admin:
+            user_checker: Enhavo\Bundle\UserBundle\Security\UserChecker
             guard:
                 authenticators:
-#                    - Enhavo\Bundle\UserBundle\Security\Authentication\EmailFormLoginAuthenticator
-                    - Enhavo\Bundle\UserBundle\Security\Authentication\UsernameFormLoginAuthenticator
+                    - Enhavo\Bundle\UserBundle\Security\Authentication\EmailFormLoginAuthenticator
+#                    - Enhavo\Bundle\UserBundle\Security\Authentication\UsernameFormLoginAuthenticator
             pattern:  ^/admin/.*
             context: user
             form_login:
@@ -37,10 +38,11 @@ security:
             anonymous:  true
 
         user:
+            user_checker: Enhavo\Bundle\UserBundle\Security\UserChecker
             guard:
                 authenticators:
-#                    - Enhavo\Bundle\UserBundle\Security\Authentication\EmailFormLoginAuthenticator
-                    - Enhavo\Bundle\UserBundle\Security\Authentication\UsernameFormLoginAuthenticator
+                    - Enhavo\Bundle\UserBundle\Security\Authentication\EmailFormLoginAuthenticator
+#                    - Enhavo\Bundle\UserBundle\Security\Authentication\UsernameFormLoginAuthenticator
 
             pattern: ^/user/.*
             context: user
@@ -59,6 +61,7 @@ security:
         main:
             pattern: .*
             context: user
+            user_checker: Enhavo\Bundle\UserBundle\Security\UserChecker
             form_login:
                 provider:       enhavo_user_provider
                 login_path:     /user/login

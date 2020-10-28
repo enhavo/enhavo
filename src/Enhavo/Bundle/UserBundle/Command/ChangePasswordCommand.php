@@ -67,7 +67,7 @@ EOT
         $username = $input->getArgument('username');
         $password = $input->getArgument('password');
 
-        $user = $this->userRepository->findByUsername($username) ?? $this->userRepository->findByEmail($username);
+        $user = $this->userRepository->loadUserByUsername($username);
         $user->setPlainPassword($password);
         $this->userManager->changePassword($user);
 

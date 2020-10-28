@@ -59,7 +59,7 @@ EOT
     {
         $username = $input->getArgument('username');
 
-        $user = $this->userRepository->findByUsername($username) ?? $this->userRepository->findByEmail($username);
+        $user = $this->userRepository->loadUserByUsername($username);
 
         $this->userManager->activate($user);
 

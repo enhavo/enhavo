@@ -10,12 +10,13 @@ namespace Enhavo\Bundle\UserBundle\Repository;
 
 use Enhavo\Bundle\AppBundle\Repository\EntityRepository;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
+use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 
 /**
  * Class UserRepository
  * @package Enhavo\Bundle\UserBundle\Repository
  */
-class UserRepository extends EntityRepository
+class UserRepository extends EntityRepository implements UserLoaderInterface
 {
     public function findByTerm($term)
     {
@@ -65,4 +66,8 @@ class UserRepository extends EntityRepository
         ]);
     }
 
+    public function loadUserByUsername($username)
+    {
+        return $this->findByEmail($username) ?? $this->findByUsername($username);
+    }
 }
