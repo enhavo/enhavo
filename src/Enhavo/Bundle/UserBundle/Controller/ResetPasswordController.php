@@ -3,13 +3,11 @@
 namespace Enhavo\Bundle\UserBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Template\TemplateManager;
-use Enhavo\Bundle\UserBundle\Event\UserEvent;
 use Enhavo\Bundle\UserBundle\Factory\UserFactory;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Enhavo\Bundle\UserBundle\Repository\UserRepository;
 use Enhavo\Bundle\UserBundle\User\UserManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -60,9 +58,9 @@ class ResetPasswordController extends AbstractController
         $valid = true;
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                $user = $this->userRepository->findByUsername($user->getUsername()) ?? $this->userRepository->findByEmail($user->getUsername()); // todo: solve it pretty
+                $user = $this->userRepository->loadUserByUsername($user->getUsername());
 
-                $this->userManager->resetPassword($user, $config);
+                $this->userManager->resetPassword($user, $config, 'reset_password_request');
                 $url = $this->generateUrl($this->userManager->getRedirectRoute($config, 'reset_password_request'));
                 // todo: json response on xhttp
 
@@ -83,7 +81,7 @@ class ResetPasswordController extends AbstractController
     public function checkAction(Request $request)
     {
         $config = $request->attributes->get('_config');
-        return $this->render($this->getTemplate($this->userManager->getTemplate($config, 'check')));
+        return $this->render($this->getTemplate($this->userManager->getTemplate($config, 'reset_password_check')));
     }
 
     public function confirmAction(Request $request, $token)
@@ -115,7 +113,9 @@ class ResetPasswordController extends AbstractController
         // todo: json response on xhttp
 
         return $this->render($this->getTemplate($this->userManager->getTemplate($config, 'reset_password_confirm')), [
+            'user' => $user,
             'form' => $form->createView(),
+            'token' => $token,
         ])->setStatusCode($valid ? 200 : 400);
 
     }
@@ -125,7 +125,7 @@ class ResetPasswordController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_USER');
         $config = $request->attributes->get('_config');
 
-        return $this->render($this->getTemplate($this->userManager->getTemplate($config, 'finish')), [
+        return $this->render($this->getTemplate($this->userManager->getTemplate($config, 'reset_password_finish')), [
 
         ]);
     }

@@ -89,17 +89,14 @@ class UserManager
         $this->eventDispatcher->dispatch($event);
     }
 
-    public function register(UserInterface $user, $config)
+    public function register(UserInterface $user, $config, $action)
     {
         $user->setConfirmationToken($this->tokenGenerator->generateToken());
         $this->add($user);
 
-        $this->sendRegistrationConfirmMail($user, $config);
+        $this->sendRegistrationConfirmMail($user, $config, $action);
     }
 
-    /**
-     * @param UserInterface $user
-     */
     public function activate(UserInterface $user)
     {
         $this->enable($user);
@@ -109,11 +106,7 @@ class UserManager
         $this->eventDispatcher->dispatch($event);
     }
 
-    /**
-     * @param UserInterface $user
-     * @param $config
-     */
-    public function confirm(UserInterface $user, $config)
+    public function confirm(UserInterface $user, $config, $action)
     {
         $this->enable($user);
         $this->update($user);
@@ -121,10 +114,10 @@ class UserManager
         $event = new UserEvent(UserEvent::TYPE_REGISTRATION_CONFIRMED, $user);
         $this->eventDispatcher->dispatch($event);
 
-        $this->sendConfirmationMail($user, $config);
+        $this->sendConfirmationMail($user, $config, $action);
     }
 
-    public function resetPassword(UserInterface $user, $config)
+    public function resetPassword(UserInterface $user, $config, $action)
     {
         $user->setConfirmationToken($this->tokenGenerator->generateToken());
         $this->update($user);
@@ -132,7 +125,7 @@ class UserManager
         $event = new UserEvent(UserEvent::TYPE_PASSWORD_RESET_REQUESTED, $user);
         $this->eventDispatcher->dispatch($event);
 
-        $this->sendResetPasswordMail($user, $config);
+        $this->sendResetPasswordMail($user, $config, $action);
     }
 
     private function enable(UserInterface $user)
@@ -141,9 +134,6 @@ class UserManager
         $user->setConfirmationToken(null);
     }
 
-    /**
-     * @param UserInterface $user
-     */
     public function changePassword(UserInterface $user)
     {
         $user->setConfirmationToken(null);
@@ -210,9 +200,9 @@ class UserManager
         $user->eraseCredentials();
     }
 
-    private function sendRegistrationConfirmMail(UserInterface $user, $config)
+    private function sendRegistrationConfirmMail(UserInterface $user, $config, $action)
     {
-        $options = $this->getConfig($config, 'register');
+        $options = $this->getConfig($config, $action);
         $message = $this->createMessage($user, $options, [
             'user' => $user,
             'confirmation_url' => $this->router->generate($options['confirmation_route'], ['token' => $user->getConfirmationToken()], RouterInterface::ABSOLUTE_URL)
@@ -220,9 +210,9 @@ class UserManager
         $this->mailerManager->sendMessage($message);
     }
 
-    private function sendResetPasswordMail(UserInterface $user, $config)
+    private function sendResetPasswordMail(UserInterface $user, $config, $action)
     {
-        $options = $this->getConfig($config, 'reset_password');
+        $options = $this->getConfig($config, $action);
         $message = $this->createMessage($user, $options, [
             'user' => $user,
             'confirmation_url' => $this->router->generate($options['confirmation_route'], ['token' => $user->getConfirmationToken()], RouterInterface::ABSOLUTE_URL)
@@ -230,9 +220,9 @@ class UserManager
         $this->mailerManager->sendMessage($message);
     }
 
-    private function sendConfirmationMail(UserInterface $user, $config)
+    private function sendConfirmationMail(UserInterface $user, $config, $action)
     {
-        $options = $this->getConfig($config, 'confirm');
+        $options = $this->getConfig($config, $action);
         $message = $this->createMessage($user, $options, [
             'user' => $user
         ]);

@@ -58,14 +58,14 @@ class RegistrationController extends AbstractController
         /** @var UserInterface $user */
         $user = $this->userFactory->createNew();
 
-        $form = $this->userManager->createForm($config, 'register', $user);
+        $form = $this->userManager->createForm($config, 'registration_register', $user);
         $form->handleRequest($request);
 
         $valid = true;
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                $this->userManager->register($user, $config);
-                $url = $this->generateUrl($this->userManager->getRedirectRoute($config, 'register'));
+                $this->userManager->register($user, $config, 'registration_register');
+                $url = $this->generateUrl($this->userManager->getRedirectRoute($config, 'registration_register'));
                 // todo: json response on xhttp
 
                 return new RedirectResponse($url);
@@ -77,7 +77,7 @@ class RegistrationController extends AbstractController
 
         // todo: json response on xhttp
 
-        return $this->render($this->getTemplate($this->userManager->getTemplate($config, 'register')), [
+        return $this->render($this->getTemplate($this->userManager->getTemplate($config, 'registration_register')), [
             'form' => $form->createView(),
         ])->setStatusCode($valid ? 200 : 400);
     }
@@ -85,7 +85,7 @@ class RegistrationController extends AbstractController
     public function checkAction(Request $request)
     {
         $config = $request->attributes->get('_config');
-        return $this->render($this->getTemplate($this->userManager->getTemplate($config, 'check')));
+        return $this->render($this->getTemplate($this->userManager->getTemplate($config, 'registration_check')));
     }
 
     public function confirmAction(Request $request, $token)
@@ -97,9 +97,9 @@ class RegistrationController extends AbstractController
             throw new NotFoundHttpException(sprintf('A user with confirmation token "%s" does not exist', $token));
         }
 
-        $this->userManager->confirm($user, $config);
+        $this->userManager->confirm($user, $config, 'registration_confirm');
 
-        $url = $this->generateUrl($this->userManager->getRedirectRoute($config, 'confirm'));
+        $url = $this->generateUrl($this->userManager->getRedirectRoute($config, 'registration_confirm'));
         return new RedirectResponse($url);
     }
 
@@ -108,7 +108,7 @@ class RegistrationController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_USER');
         $config = $request->attributes->get('_config');
 
-        return $this->render($this->getTemplate($this->userManager->getTemplate($config, 'finish')), [
+        return $this->render($this->getTemplate($this->userManager->getTemplate($config, 'registration_finish')), [
 
         ]);
     }

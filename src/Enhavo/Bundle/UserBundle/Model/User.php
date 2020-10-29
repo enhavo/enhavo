@@ -283,7 +283,7 @@ class User implements UserInterface, GroupableInterface, ResourceInterface
 
     public function __toString()
     {
-        return (string) $this->getUsername();
+        return (string) ($this->getEmail() ?? $this->getUsername());
     }
 
     /**

@@ -1,4 +1,4 @@
-{% extends template('admin/login/base.html.twig') %}
+{% extends template('admin/security/base.html.twig') %}
 
 {% trans_default_domain 'EnhavoUserBundle' %}
 
@@ -22,14 +22,14 @@
                     <label for="_remember">{{ 'security.login.remember_me'|trans|nl2br }}</label>
                 </div>
                 <div class="reset-pw">
-                    <a href="{{ path('enhavo_user_reset_password_reset') }}">{{ 'resetting.request.submit'|trans|nl2br }}</a>
+                    <a href="{{ path('enhavo_user_reset_password_request') }}">{{ 'resetting.request.submit'|trans|nl2br }}</a>
                 </div>
             </div>
         <button class="btn loginButton" type="submit" id="_submit" name="_submit">{{ 'security.login.submit'|trans|nl2br }}</button>
         <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-        {% if redirect_uri %}
-            <input type="hidden" name="_target_path" value="{{ redirect_uri }}" />
-        {% endif %}
+{#        {% if redirect_uri %}#}
+{#            <input type="hidden" name="_target_path" value="{{ redirect_uri }}" />#}
+{#        {% endif %}#}
     </form>
 {% endblock %}
 

@@ -67,11 +67,21 @@ class SecurityController extends AbstractController
             'last_username' => $lastUsername,
             'error' => $error,
             'csrf_token' => $csrfToken,
+            'stylesheets' => $this->userManager->getConfig($config, 'login', 'stylesheets'),
+            'javascripts' => $this->userManager->getConfig($config, 'login', 'javascripts'),
+            'data' => [
+                'messages' => [],
+            ],
         ]);
+    }
+
+    public function checkAction()
+    {
+        throw new \RuntimeException('You must configure the check path to be handled by the firewall using form_login in your security firewall configuration.');
     }
 
     public function logoutAction()
     {
-
+        throw new \RuntimeException('You must activate the logout in your security firewall configuration.');
     }
 }

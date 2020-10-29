@@ -13,7 +13,7 @@ doctrine:
 enhavo_user:
     config:
         theme:
-            register:
+            registration_register:
                 template: 'theme/security/registration/register.html.twig'
                 redirect_route: 'enhavo_user_theme_registration_check'
                 confirmation_route: enhavo_user_theme_registration_confirm
@@ -23,9 +23,9 @@ enhavo_user:
                 form:
                     class: Enhavo\Bundle\UserBundle\Form\Type\RegistrationType
                     options: []
-            check:
-                template: '/theme/security/registration/check.html.twig'
-            confirm:
+            registration_check:
+                template: 'theme/security/registration/check.html.twig'
+            registration_confirm:
                 template: 'theme/security/registration/confirm.html.twig'
                 mail_template: 'mail/security/confirm.html.twig'
                 mail_subject: 'confirmation.mail.subject'
@@ -37,32 +37,48 @@ enhavo_user:
                 mail_subject: 'reset_password_request.mail.subject'
                 translation_domain: 'EnhavoUserBundle'
                 redirect_route: 'enhavo_user_theme_reset_password_check'
+                confirmation_route: 'enhavo_user_theme_reset_password_confirm'
                 form:
-                    class: Enhavo\Bundle\UserBundle\Form\Type\RequestPasswordResetType
+                    class: Enhavo\Bundle\UserBundle\Form\Type\ResetPasswordRequestType
                     options: []
             reset_password_check:
-                template: 'theme/security/reset-password/finish.html.twig'
+                template: 'theme/security/reset-password/check.html.twig'
             reset_password_confirm:
                 template: 'theme/security/reset-password/confirm.html.twig'
-                translation_domain: 'EnhavoUserBundle'
                 redirect_route: 'enhavo_user_theme_reset_password_finish'
                 form:
-                    class: Enhavo\Bundle\UserBundle\Form\Type\RequestPasswordResetType
+                    class: Enhavo\Bundle\UserBundle\Form\Type\ResetPasswordType
                     options: []
             reset_password_finish:
                 template: 'theme/security/reset-password/finish.html.twig'
             login:
                 template: 'theme/security/login.html.twig'
                 redirect_route: 'enhavo_user_theme_user_profile'
+                stylesheets: []
+                javascripts: []
                 form:
                     class: Enhavo\Bundle\UserBundle\Form\Type\LoginType
         admin:
-            reset_password:
-                template: 'admin/security/reset-password/reset.html.twig'
+            login:
+                template: 'admin/security/login/login.html.twig'
+                redirect_route: 'enhavo_app_index'
+                stylesheets:
+                    - 'enhavo/user/login'
+                javascripts:
+                    - 'enhavo/user/login'
+                form:
+                    class: Enhavo\Bundle\UserBundle\Form\Type\LoginType
+                    options: []
+            reset_password_request:
+                template: 'admin/security/reset-password/request.html.twig'
                 mail_template: 'mail/security/reset-password.html.twig'
                 mail_subject: 'reset_password.mail.subject'
                 translation_domain: 'EnhavoUserBundle'
             change_password:
+                form:
+                    class: Enhavo\Bundle\UserBundle\Form\Type\ChangePasswordFormType
+                    options: []
+
 
 enhavo_app:
     template_paths:

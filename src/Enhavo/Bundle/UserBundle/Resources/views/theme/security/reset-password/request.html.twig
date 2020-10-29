@@ -2,19 +2,10 @@
 {% trans_default_domain 'EnhavoUserBundle' %}
 
 {% block main %}
-    <div id="background" style="background-image: url({{ asset(branding_background_image()) }})">
-        <div id="loginBox">
-            <div class="loginContainer">
-                <form action="{{ path("enhavo_user_theme_reset_password_request") }}" method="post">
-                    <div class="input-container mb1">
-                        <input placeholder="{{ 'security.login.username'|trans({}, 'EnhavoUserBundle') }}" type="text" id="username" name="username" value="" required="required" />
-                    </div>
-                    <button class="btn loginButton" type="submit" id="_submit" name="_submit">{{ 'reset.form.action.reset-password'|trans }}</button>
-                    <div class="reset">
-                        <button class="btn resetButton"><a href="{{ path('enhavo_user_theme_security_login') }}">{{ 'reset.label.login'|trans }}</a></button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+    <form action="{{ path('enhavo_user_theme_reset_password_request') }}" method="POST">
+        {{ form_row(form.username, {'label': 'registration.form.email'}) }}
+        <button type="submit">{{ 'reset.form.action.reset-password'|trans }}</button>
+        <a href="{{ path('enhavo_user_theme_security_login') }}">{{ 'reset.label.login'|trans }}</a>
+        {{ form_row(form._token) }}
+    </form>
 {% endblock %}

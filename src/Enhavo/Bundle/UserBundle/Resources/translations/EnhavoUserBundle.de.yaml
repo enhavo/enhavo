@@ -1,72 +1,154 @@
 login:
-  error:
-    credentials: 'Falsche Logindaten'
-group:
-  role:
-    label:
-      index: 'Gruppe anzeigen'
-      update: 'Gruppe bearbeiten'
-      create: 'Gruppe erstellen'
-      delete: 'Gruppe löschen'
-  form:
-    label:
-      name: 'Name'
-      roles: 'Rechte'
-  label:
-    name: 'Name'
-    id: 'ID'
-    group: 'Gruppe'
-    permission: 'Rechte'
-user:
-  role:
-    label:
-      index: 'Benutzer anzeigen'
-      update: 'Benutzer bearbeiten'
-      create: 'Benutzer erstellen'
-      delete: 'Benutzer löschen'
-  form:
-    label:
-      username: 'Benutzername'
-      email: 'E-Mail'
-      firstName: 'Vorname'
-      lastName: 'Nachname'
-      groups: 'Gruppen'
-      password: 'Passwort'
-      admin: 'Admin'
-      super_admin: 'Super Admin'
-    help:
-      admin: 'Nur wenn diese Feld gesetzt ist kann sich der User im Adminbereich einloggen'
-  label:
-    username: 'Benutzername'
-    id: 'ID'
-    user: 'Benutzer'
-    email: 'Email'
-reset:
-  form:
     error:
-      non-expired: Ihre Passwort zurücksetzen Email ist noch gültig, wir haben Ihnen aber nochmal eine zugesendet
-      invalid-user: Der Username existiert nicht
-    action:
-      reset-password: Passwort zurücksetzen
-  label:
-    login: Zur Anmeldung
-  message:
-    success: Eine Email wurde an Ihr Konto versendet.
-  mail:
-      text: Bitte klicken sie auf folgenden Link um ihr Passwort zurückzusetzen
-      subject: Passwort zurückzusetzen
+        credentials: 'Falsche Logindaten'
+group:
+    edit:
+        submit: 'Gruppe aktualisieren'
+    show:
+        name: Gruppenname
+    new:
+        submit: 'Gruppe erstellen'
+    flash:
+        updated: 'Die Gruppe wurde aktualisiert.'
+        created: 'Die Gruppe wurde erstellt.'
+        deleted: 'Die Gruppe wurde gelöscht.'
+    role:
+        label:
+            index: 'Gruppe anzeigen'
+            update: 'Gruppe bearbeiten'
+            create: 'Gruppe erstellen'
+            delete: 'Gruppe löschen'
+    form:
+        label:
+            name: 'Name'
+            roles: 'Rechte'
+    label:
+        name: 'Name'
+        id: 'ID'
+        group: 'Gruppe'
+        permission: 'Rechte'
+user:
+    role:
+        label:
+            index: 'Benutzer anzeigen'
+            update: 'Benutzer bearbeiten'
+            create: 'Benutzer erstellen'
+            delete: 'Benutzer löschen'
+    form:
+        label:
+            username: 'Benutzername'
+            email: 'E-Mail'
+            firstName: 'Vorname'
+            lastName: 'Nachname'
+            groups: 'Gruppen'
+            password: 'Passwort'
+            admin: 'Admin'
+            super_admin: 'Super Admin'
+        help:
+            admin: 'Nur wenn diese Feld gesetzt ist kann sich der User im Adminbereich einloggen'
+    label:
+        username: 'Benutzername'
+        id: 'ID'
+        user: 'Benutzer'
+        email: 'Email'
+reset:
+    form:
+        error:
+            non-expired: Ihre Passwort zurücksetzen Email ist noch gültig, wir haben Ihnen aber nochmal eine zugesendet
+            invalid-user: Der Username existiert nicht
+        action:
+            reset-password: Passwort zurücksetzen
+    label:
+        login: Zur Anmeldung
+    message:
+        success: Eine Email wurde an Ihr Konto versendet.
+    mail:
+        text: Bitte klicken sie auf folgenden Link um ihr Passwort zurückzusetzen
+        subject: Passwort zurückzusetzen
+confirm:
+    form:
+        label:
+            password: Passwort
+            password-repeat: Passwort wiederholen
+        action:
+            reset: Zurücksetzen
+security:
+    login:
+        username: Benutzername
+        password: Passwort
+        remember_me: 'An mich erinnern'
+        submit: Anmelden
+profile:
+    show:
+        username: Benutzername
+        email: E-Mail
+    edit:
+        submit: 'Benutzer aktualisieren'
+    flash:
+        updated: 'Das Benutzerprofil wurde aktualisiert.'
+change_password:
+    submit: 'Passwort ändern'
+    flash:
+        success: 'Das Passwort wurde geändert.'
+    message:
+        success: 'Passwort erfolgreich geändert'
+        error: 'Fehler beim speichern'
 registration:
     mail:
         text: Bitte klicken sie auf folgenden Link um ihre Email zu verifizieren
         subject: Registration
-change_password:
-  message:
-    success: 'Passwort erfolgreich geändert'
-    error: 'Fehler beim speichern'
-confirm:
-  form:
-    label:
-      password: Passwort
-      password-repeat: Passwort wiederholen
-    action:
-      reset: Zurücksetzen
+    check_email: 'Eine E-Mail wurde an %email% gesendet. Sie enthält einen Link, den Sie anklicken müssen, um Ihr Benutzerkonto zu bestätigen.'
+    confirmed: 'Glückwunsch %username%, Ihr Benutzerkonto ist jetzt bestätigt.'
+    back: 'Zurück zur ursprünglichen Seite.'
+    submit: Registrieren
+    flash:
+        user_created: 'Der Benutzer wurde erfolgreich erstellt.'
+    email:
+        subject: 'Willkommen %username%!'
+        message: |
+            Hallo %username%!
+
+            Besuchen Sie bitte folgende Seite, um Ihr Benutzerkonto zu bestätigen: %confirmationUrl%
+
+            Mit besten Grüßen,
+            das Team.
+
+resetting:
+    check_email: |
+        Eine E-Mail wurde verschickt. Sie beinhaltet einen Link zum Zurücksetzen des Passwortes.
+        Hinweis: Ein neues Passwort kann nur alle %tokenLifetime% Stunden beantragt werden.
+
+        Eventuell wurde diese E-Mail als Spam markiert, wenn sie nicht angekommen ist.
+
+    request:
+        username: 'Benutzername oder E-Mail-Adresse'
+        submit: 'Passwort zurücksetzen'
+    reset:
+        submit: 'Passwort ändern'
+    flash:
+        success: 'Das Passwort wurde erfolgreich zurückgesetzt.'
+    email:
+        subject: 'Passwort zurücksetzen'
+        message: |
+            Hallo %username%!
+
+            Besuchen Sie bitte folgende Seite, um Ihr Passwort zurückzusetzen: %confirmationUrl%
+
+            Mit besten Grüßen,
+            das Team.
+
+layout:
+    logout: Abmelden
+    login: Anmelden
+    register: Registrieren
+    logged_in_as: 'Angemeldet als %username%'
+form:
+    group_name: Gruppenname
+    username: Benutzername
+    email: E-Mail-Adresse
+    current_password: 'Derzeitiges Passwort'
+    password: Passwort
+    password_confirmation: 'Passwort bestätigen'
+    new_password: 'Neues Passwort'
+    new_password_confirmation: 'Neues Passwort bestätigen'
+
