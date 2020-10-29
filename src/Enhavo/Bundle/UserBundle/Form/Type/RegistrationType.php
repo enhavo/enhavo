@@ -44,8 +44,7 @@ class RegistrationType extends AbstractType
                 'first_options' => array('label' => 'registration.form.password'),
                 'second_options' => array('label' => 'registration.form.password_confirmation'),
                 'invalid_message' => 'enhavo_user.password.mismatch',
-            ))
-        ;
+            ));
     }
 
     /**

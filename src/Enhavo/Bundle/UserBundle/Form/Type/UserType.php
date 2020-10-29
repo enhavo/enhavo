@@ -61,7 +61,7 @@ class UserType extends AbstractResourceType
             'help' => 'user.form.help.admin'
         ));
 
-        if($this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN')) {
+        if ($this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN')) {
             $builder->add('superAdmin', BooleanType::class, array(
                 'label' => 'user.form.label.super_admin',
                 'translation_domain' => 'EnhavoUserBundle'

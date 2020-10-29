@@ -50,7 +50,7 @@ class ChangeEmailType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => $this->class,
-            'intention'  => 'change_email',
+            'intention' => 'change_email',
         ));
     }
 
