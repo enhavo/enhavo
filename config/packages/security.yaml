@@ -77,11 +77,11 @@ security:
     access_control:
         - { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/login/check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/reset-password, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/reset-password/.+, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
 
         - { path: ^/user/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/user/login/check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/user/registration, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/user/reset-password, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/user/registration/.+, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/user/reset-password/.+, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/user/, role: ROLE_USER }

@@ -49,7 +49,7 @@ class SecurityController extends AbstractController
         $config = $request->attributes->get('_config');
 
         if ($this->isGranted('ROLE_USER')) {
-            $route = $this->userManager->getRedirectRoute($config, 'login');
+            $route = $this->userManager->getRedirectRoute($config, 'login', null);
             return new RedirectResponse($this->router->generate($route));
         }
 
@@ -67,8 +67,8 @@ class SecurityController extends AbstractController
             'last_username' => $lastUsername,
             'error' => $error,
             'csrf_token' => $csrfToken,
-            'stylesheets' => $this->userManager->getConfig($config, 'login', 'stylesheets'),
-            'javascripts' => $this->userManager->getConfig($config, 'login', 'javascripts'),
+            'stylesheets' => $this->userManager->getStylesheets($config, 'login'),
+            'javascripts' => $this->userManager->getJavascripts($config, 'login'),
             'data' => [
                 'messages' => [],
             ],

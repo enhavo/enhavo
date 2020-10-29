@@ -58,7 +58,9 @@ class RegistrationController extends AbstractController
         /** @var UserInterface $user */
         $user = $this->userFactory->createNew();
 
-        $form = $this->userManager->createForm($config, 'registration_register', $user);
+        $form = $this->userManager->createForm($config, 'registration_register', $user, [
+            'validation_groups' => ['register']
+        ]);
         $form->handleRequest($request);
 
         $valid = true;

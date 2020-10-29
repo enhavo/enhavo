@@ -143,16 +143,6 @@ class UserManager
         $this->eventDispatcher->dispatch($event);
     }
 
-    public function getTemplate($config, $action)
-    {
-        return $this->getConfig($config, $action, 'template');
-    }
-
-    public function getRedirectRoute($config, $action)
-    {
-        return $this->getConfig($config, $action, 'redirect_route');
-    }
-
     public function update(UserInterface $user, $persist = true, $flush = true)
     {
         $this->updatePassword($user);
@@ -173,7 +163,78 @@ class UserManager
         return $this->formFactory->create($formConfig['class'], $user, $options);
     }
 
-    private function updatePassword(UserInterface $user)
+
+    public function getConfig($config, $action = null, $item = null, $fallback = null)
+    {
+        if (!isset($this->config[$config])) {
+            if ($fallback === null) {
+                throw new OptionDefinitionException(sprintf('Could not find config "%s"', $config));
+            }
+
+            return $fallback;
+        }
+
+        $options = $this->config[$config];
+
+        if ($action) {
+            if (!isset($options[$action])) {
+                if ($fallback === null) {
+                    throw new OptionDefinitionException(sprintf('Could not find action "%s" in "%s"', $action, $config));
+                }
+
+                return $fallback;
+            }
+            $options = $options[$action];
+            $options = array_merge([
+                'content_type' => Message::CONTENT_TYPE_HTML,
+                'mail_from' => 'todo@enhavo.com',
+                'sender_name' => 'enhavo todo',
+            ], $options);
+
+            if ($item) {
+                if (!isset($options[$item])) {
+                    if ($fallback === null) {
+                        throw new OptionDefinitionException(sprintf('Could not find item "%s" in "%s.%s"', $item, $config, $action));
+                    }
+
+                    return $fallback;
+                }
+
+                return $options[$item];
+            }
+
+            return $options;
+        }
+
+        return $options;
+    }
+
+    public function getTemplate($config, $action)
+    {
+        return $this->getConfig($config, $action, 'template');
+    }
+
+    public function getRedirectRoute($config, $action, $fallback = false)
+    {
+        return $this->getConfig($config, $action, 'redirect_route', $fallback);
+    }
+
+    public function getStylesheets($config, $action, $fallback = [])
+    {
+        return $this->getConfig($config, $action, 'stylesheets', $fallback);
+    }
+
+    public function getJavascripts($config, $action, $fallback = [])
+    {
+        return $this->getConfig($config, $action, 'javascripts', $fallback);
+    }
+
+    private function getMailSubject($options)
+    {
+        return $this->trans($options['mail_subject'], [], $options['translation_domain']);
+    }
+
+    public function updatePassword(UserInterface $user)
     {
         $this->hashPassword($user);
     }
@@ -229,39 +290,6 @@ class UserManager
         $this->mailerManager->sendMessage($message);
     }
 
-    public function getConfig($config, $action = null, $item = null)
-    {
-        if (!isset($this->config[$config])) {
-            throw new OptionDefinitionException(sprintf('Could not find config "%s"', $config));
-        }
-
-        $options = $this->config[$config];
-
-        if ($action) {
-            if (!isset($options[$action])) {
-                throw new OptionDefinitionException(sprintf('Could not find action "%s" in "%s"', $action, $config));
-            }
-            $options = $options[$action];
-            $options = array_merge([
-                'content_type' => Message::CONTENT_TYPE_HTML,
-                'mail_from' => 'todo@enhavo.com',
-                'sender_name' => 'enhavo todo',
-            ], $options);
-
-            if ($item) {
-                if (!isset($options[$item])) {
-                    throw new OptionDefinitionException(sprintf('Could not find item "%s" in "%s.%s"', $item, $config, $action));
-                }
-
-                return $options[$item];
-            }
-
-            return $options;
-        }
-
-        return $options;
-    }
-
     private function createMessage(UserInterface $user, array $options, array $context): Message
     {
         $message = $this->mailerManager->createMessage();
@@ -274,11 +302,6 @@ class UserManager
         $message->setContext($context);
 
         return $message;
-    }
-
-    private function getMailSubject($options)
-    {
-        return $this->trans($options['mail_subject'], [], $options['translation_domain']);
     }
 
     private function trans(string $id, array $parameters = [], string $domain = null, string $locale = null)

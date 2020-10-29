@@ -5,12 +5,13 @@
 {% block form %}
     <form action="{{ path("enhavo_user_reset_password_request") }}" method="post" novalidate>
         <div class="input-container mb1">
-            <input placeholder="{{ 'security.login.username'|trans({}, 'EnhavoUserBundle') }}" type="text" id="username" name="username" value="" required="required" />
+            <input placeholder="{{ 'security.login.username'|trans({}, 'EnhavoUserBundle') }}" type="text" id="{{ form.username.vars.id }}" name="{{ form.username.vars.full_name }}" value="" required="required" />
         </div>
         <button class="btn loginButton" type="submit" id="_submit" name="_submit">{{ 'reset.form.action.reset-password'|trans }}</button>
         <div class="reset">
             <button class="btn resetButton"><a href="{{ path('enhavo_user_security_login') }}">{{ 'reset.label.login'|trans }}</a></button>
         </div>
+        {{ form_row(form._token) }}
     </form>
 {% endblock %}
 

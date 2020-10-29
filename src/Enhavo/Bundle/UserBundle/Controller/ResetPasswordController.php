@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class ResetPasswordController
@@ -30,41 +31,56 @@ class ResetPasswordController extends AbstractController
     /** @var UserFactory */
     private $userFactory;
 
+    /** @var TranslatorInterface */
+    private $translator;
+
     /**
      * ResetPasswordController constructor.
      * @param UserManager $userManager
      * @param UserRepository $userRepository
      * @param TemplateManager $templateManager
      * @param UserFactory $userFactory
+     * @param TranslatorInterface $translator
      */
-    public function __construct(UserManager $userManager, UserRepository $userRepository, TemplateManager $templateManager, UserFactory $userFactory)
+    public function __construct(UserManager $userManager, UserRepository $userRepository, TemplateManager $templateManager, UserFactory $userFactory, TranslatorInterface $translator)
     {
         $this->userManager = $userManager;
         $this->userRepository = $userRepository;
         $this->templateManager = $templateManager;
         $this->userFactory = $userFactory;
+        $this->translator = $translator;
     }
+
 
     public function requestAction(Request $request)
     {
         $config = $request->attributes->get('_config');
+        $action = 'reset_password_request';
 
         /** @var UserInterface $user */
         $user = $this->userFactory->createNew();
 
-        $form = $this->userManager->createForm($config, 'reset_password_request', $user);
+        $form = $this->userManager->createForm($config, $action, $user);
         $form->handleRequest($request);
 
         $valid = true;
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $user = $this->userRepository->loadUserByUsername($user->getUsername());
+                if($user === null) {
+                    $this->addFlash('error', $this->translator->trans('reset.form.error.invalid-user', [], 'EnhavoUserBundle'));
+                } else {
+                    $this->addFlash('success', $this->translator->trans('reset.message.success', [], 'EnhavoUserBundle'));
 
-                $this->userManager->resetPassword($user, $config, 'reset_password_request');
-                $url = $this->generateUrl($this->userManager->getRedirectRoute($config, 'reset_password_request'));
-                // todo: json response on xhttp
+                    $this->userManager->resetPassword($user, $config, $action);
+                    $route = $this->userManager->getRedirectRoute($config, $action);
+                    if ($route) {
+                        $url = $this->generateUrl($route);
+                        // todo: json response on xhttp
+                        return new RedirectResponse($url);
+                    }
+                }
 
-                return new RedirectResponse($url);
 
             } else {
                 $valid = false;
@@ -73,8 +89,13 @@ class ResetPasswordController extends AbstractController
 
         // todo: json response on xhttp
 
-        return $this->render($this->getTemplate($this->userManager->getTemplate($config, 'reset_password_request')), [
+        return $this->render($this->getTemplate($this->userManager->getTemplate($config, $action)), [
             'form' => $form->createView(),
+            'stylesheets' => $this->userManager->getStylesheets($config, $action),
+            'javascripts' => $this->userManager->getJavascripts($config, $action),
+            'data' => [
+                'messages' => $this->getFlashMessages(),
+            ],
         ])->setStatusCode($valid ? 200 : 400);
     }
 
@@ -87,20 +108,21 @@ class ResetPasswordController extends AbstractController
     public function confirmAction(Request $request, $token)
     {
         $config = $request->attributes->get('_config');
+        $action = 'reset_password_confirm';
         $user = $this->userRepository->findByConfirmationToken($token);
 
         if (null === $user) {
             throw new NotFoundHttpException(sprintf('A user with confirmation token "%s" does not exist', $token));
         }
 
-        $form = $this->userManager->createForm($config, 'reset_password_confirm', $user);
+        $form = $this->userManager->createForm($config, $action, $user);
         $form->handleRequest($request);
 
         $valid = true;
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $this->userManager->changePassword($user);
-                $url = $this->generateUrl($this->userManager->getRedirectRoute($config, 'reset_password_confirm'));
+                $url = $this->generateUrl($this->userManager->getRedirectRoute($config, $action));
                 // todo: json response on xhttp
 
                 return new RedirectResponse($url);
@@ -112,10 +134,15 @@ class ResetPasswordController extends AbstractController
 
         // todo: json response on xhttp
 
-        return $this->render($this->getTemplate($this->userManager->getTemplate($config, 'reset_password_confirm')), [
+        return $this->render($this->getTemplate($this->userManager->getTemplate($config, $action)), [
             'user' => $user,
             'form' => $form->createView(),
             'token' => $token,
+            'stylesheets' => $this->userManager->getStylesheets($config, $action),
+            'javascripts' => $this->userManager->getJavascripts($config, $action),
+            'data' => [
+                'messages' => $this->getFlashMessages(),
+            ]
         ])->setStatusCode($valid ? 200 : 400);
 
     }
@@ -133,5 +160,21 @@ class ResetPasswordController extends AbstractController
     private function getTemplate($template)
     {
         return $this->templateManager->getTemplate($template);
+    }
+
+    private function getFlashMessages()
+    {
+        $flashBag = $this->container->get('session')->getFlashBag();
+        $messages = [];
+        $types = ['success', 'error', 'notice', 'warning'];
+        foreach($types as $type) {
+            foreach($flashBag->get($type) as $message) {
+                $messages[] = [
+                    'message' => is_array($message) ? $message['message'] : $message,
+                    'type' => $type
+                ];
+            }
+        }
+        return $messages;
     }
 }
