@@ -8,6 +8,7 @@ namespace Enhavo\Bundle\UserBundle\Security\Authentication;
 
 
 use Doctrine\ORM\EntityManagerInterface;
+use Enhavo\Bundle\UserBundle\Mapper\UserMapperInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -24,12 +25,12 @@ use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticato
 use Symfony\Component\Security\Guard\PasswordAuthenticatedInterface;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
-class UsernameFormLoginAuthenticator extends AbstractFormLoginAuthenticator implements PasswordAuthenticatedInterface
+class FormLoginAuthenticator extends AbstractFormLoginAuthenticator implements PasswordAuthenticatedInterface
 {
     use TargetPathTrait;
     use AuthenticationSuccessTrait;
 
-    public const LOGIN_ROUTE = 'enhavo_user_theme_security_login'; // todo: use from config?!
+    public const LOGIN_ROUTE = 'enhavo_user_theme_security_login';
 
     /** @var EntityManagerInterface  */
     private $entityManager;
@@ -43,45 +44,54 @@ class UsernameFormLoginAuthenticator extends AbstractFormLoginAuthenticator impl
     /** @var UserPasswordEncoderInterface  */
     private $passwordEncoder;
 
+    /** @var UserMapperInterface */
+    private $userMapper;
+
     /** @var string */
     private $className;
 
     /**
-     * UsernameFormLoginAuthenticator constructor.
+     * FormLoginAuthenticator constructor.
      * @param EntityManagerInterface $entityManager
      * @param UrlGeneratorInterface $urlGenerator
      * @param CsrfTokenManagerInterface $csrfTokenManager
      * @param UserPasswordEncoderInterface $passwordEncoder
+     * @param UserMapperInterface $userMapper
      * @param string $className
      */
-    public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder, string $className)
+    public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder, UserMapperInterface $userMapper, string $className)
     {
         $this->entityManager = $entityManager;
         $this->urlGenerator = $urlGenerator;
         $this->csrfTokenManager = $csrfTokenManager;
         $this->passwordEncoder = $passwordEncoder;
+        $this->userMapper = $userMapper;
         $this->className = $className;
     }
 
 
     public function supports(Request $request)
     {
-        $return = self::LOGIN_ROUTE === $request->attributes->get('_route')
+        return self::LOGIN_ROUTE === $request->attributes->get('_route')
             && $request->isMethod('POST');
-
-        return $return;
     }
 
     public function getCredentials(Request $request)
     {
+        $properties = $this->userMapper->getCredentialProperties();
+
         $credentials = [
-            'username' => $request->request->get('username'),
             'password' => $request->request->get('password'),
             'csrf_token' => $request->request->get('_csrf_token'),
         ];
+
+        foreach ($properties as $property) {
+            $credentials[$property] = $request->request->get($property);
+        }
+
         $request->getSession()->set(
             Security::LAST_USERNAME,
-            $credentials['username']
+            $this->userMapper->getUsername($credentials)
         );
 
         return $credentials;
@@ -94,7 +104,8 @@ class UsernameFormLoginAuthenticator extends AbstractFormLoginAuthenticator impl
             throw new InvalidCsrfTokenException();
         }
 
-        $user = $this->entityManager->getRepository($this->className)->findOneBy(['username' => $credentials['username']]);
+        $userName = $this->userMapper->getUsername($credentials);
+        $user = $this->entityManager->getRepository($this->className)->findOneBy(['username' => $userName]);
 
         if (!$user) {
             // fail authentication with a custom error

@@ -3,6 +3,7 @@ services:
         arguments:
             - '@Enhavo\Bundle\UserBundle\User\UserManager'
             - '@enhavo_user.factory.user'
+            - '@Enhavo\Bundle\UserBundle\Mapper\UserMapper'
         tags:
             - { name: console.command }
 
@@ -10,6 +11,7 @@ services:
         arguments:
             - '@Enhavo\Bundle\UserBundle\User\UserManager'
             - '@enhavo_user.repository.user'
+            - '@Enhavo\Bundle\UserBundle\Mapper\UserMapper'
         tags:
             - { name: console.command }
 
@@ -17,5 +19,6 @@ services:
         arguments:
             - '@Enhavo\Bundle\UserBundle\User\UserManager'
             - '@enhavo_user.repository.user'
+            - '@Enhavo\Bundle\UserBundle\Mapper\UserMapper'
         tags:
             - { name: console.command }

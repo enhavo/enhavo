@@ -87,6 +87,14 @@ class Configuration implements ConfigurationInterface
     private function addConfigNode(NodeDefinition $rootNode): NodeDefinition
     {
         $rootNode->children()
+            ->arrayNode('mapper')
+                ->addDefaultsIfNotSet()
+                ->children()
+                    ->variableNode('credential_properties')->end()
+                    ->variableNode('register_properties')->end()
+                    ->scalarNode('glue')->defaultValue('.')->end()
+                ->end()
+            ->end()
             ->arrayNode('config')
                 ->children()
                     ->variableNode('theme')->end()

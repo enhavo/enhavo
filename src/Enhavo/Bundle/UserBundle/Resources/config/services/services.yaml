@@ -30,20 +30,17 @@ services:
         tags:
             - { name: enhavo.widget, alias: login }
 
-    Enhavo\Bundle\UserBundle\Security\Authentication\EmailFormLoginAuthenticator:
+    Enhavo\Bundle\UserBundle\Security\Authentication\FormLoginAuthenticator:
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@router'
             - '@security.csrf.token_manager'
             - '@security.user_password_encoder.generic'
-            - '%enhavo_user.model.user.class%'
-
-    Enhavo\Bundle\UserBundle\Security\Authentication\UsernameFormLoginAuthenticator:
-        arguments:
-            - '@doctrine.orm.entity_manager'
-            - '@router'
-            - '@security.csrf.token_manager'
-            - '@security.user_password_encoder.generic'
+            - '@Enhavo\Bundle\UserBundle\Mapper\UserMapper'
             - '%enhavo_user.model.user.class%'
 
     Enhavo\Bundle\UserBundle\Security\UserChecker: ~
+
+    Enhavo\Bundle\UserBundle\Mapper\UserMapper:
+        arguments:
+            - '%enhavo_user.mapper%'

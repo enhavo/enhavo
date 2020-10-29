@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\UserBundle\Command;
 
+use Enhavo\Bundle\UserBundle\Mapper\UserMapperInterface;
 use Enhavo\Bundle\UserBundle\Repository\UserRepository;
 use Enhavo\Bundle\UserBundle\User\UserManager;
 use Symfony\Component\Console\Command\Command;
@@ -20,30 +21,42 @@ class ChangePasswordCommand extends Command
     /** @var UserRepository */
     private $userRepository;
 
+    /** @var UserMapperInterface */
+    private $userMapper;
+
     /**
      * ChangePasswordCommand constructor.
      * @param UserManager $userManager
      * @param UserRepository $userRepository
+     * @param UserMapperInterface $userMapper
      */
-    public function __construct(UserManager $userManager, UserRepository $userRepository)
+    public function __construct(UserManager $userManager, UserRepository $userRepository, UserMapperInterface $userMapper)
     {
-        parent::__construct();
         $this->userManager = $userManager;
         $this->userRepository = $userRepository;
+        $this->userMapper = $userMapper;
+
+        parent::__construct();
     }
+
 
     /**
      * {@inheritdoc}
      */
     protected function configure()
     {
+        $definitions = [];
+        $properties = $this->userMapper->getRegisterProperties();
+        foreach ($properties as $property) {
+            $definitions[] = new InputArgument($property, InputArgument::REQUIRED, sprintf('The %s required for login', $property));
+        }
+
+        $definitions[] = new InputArgument('password', InputArgument::REQUIRED, 'The password');
+
         $this
             ->setName('enhavo:user:change-password')
             ->setDescription('Change the password of a user.')
-            ->setDefinition(array(
-                new InputArgument('username', InputArgument::REQUIRED, 'The username/email'),
-                new InputArgument('password', InputArgument::REQUIRED, 'The password'),
-            ))
+            ->setDefinition($definitions)
             ->setHelp(<<<'EOT'
 The <info>enhavo:user:change-password</info> command changes the password of a user:
 
@@ -64,9 +77,15 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $username = $input->getArgument('username');
+        $credentials = [];
+        $properties = $this->userMapper->getRegisterProperties();
+        foreach ($properties as $property) {
+            $credentials[$property] = $input->getArgument($property);
+        }
+
         $password = $input->getArgument('password');
 
+        $username = $this->userMapper->getUsername($credentials);
         $user = $this->userRepository->loadUserByUsername($username);
         $user->setPlainPassword($password);
         $this->userManager->changePassword($user);
@@ -79,18 +98,21 @@ EOT
      */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
-        $questions = array();
+        $questions = [];
+        $properties = $this->userMapper->getRegisterProperties();
 
-        if (!$input->getArgument('username')) {
-            $question = new Question('Please give the username:');
-            $question->setValidator(function ($username) {
-                if (empty($username)) {
-                    throw new \Exception('Username can not be empty');
-                }
+        foreach ($properties as $property) {
+            if (!$input->getArgument($property)) {
+                $question = new Question(sprintf('Please choose a %s:', $property));
+                $question->setValidator(function ($username) use ($property) {
+                    if (empty($username)) {
+                        throw new \Exception(sprintf('%s can not be empty', $property));
+                    }
 
-                return $username;
-            });
-            $questions['username'] = $question;
+                    return $username;
+                });
+                $questions[$property] = $question;
+            }
         }
 
         if (!$input->getArgument('password')) {

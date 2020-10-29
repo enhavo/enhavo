@@ -1,8 +1,8 @@
 doctrine:
     orm:
         resolve_target_entities:
-#            Enhavo\Bundle\UserBundle\Model\UserInterface: Enhavo\Bundle\UserBundle\Model\User
-#            Enhavo\Bundle\UserBundle\Model\GroupInterface: Enhavo\Bundle\UserBundle\Model\Group
+            Enhavo\Bundle\UserBundle\Model\UserInterface: Enhavo\Bundle\UserBundle\Model\User
+            Enhavo\Bundle\UserBundle\Model\GroupInterface: Enhavo\Bundle\UserBundle\Model\Group
         mappings:
             EnhavoUserBundle:
                 type: xml
@@ -11,6 +11,11 @@ doctrine:
                 prefix: Enhavo\Bundle\UserBundle\Model
 
 enhavo_user:
+    mapper:
+        credential_properties:
+            - 'email'
+        register_properties:
+            - 'email'
     config:
         theme:
             registration_register:

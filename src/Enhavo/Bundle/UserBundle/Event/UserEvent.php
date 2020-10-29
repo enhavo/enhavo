@@ -3,8 +3,7 @@
 namespace Enhavo\Bundle\UserBundle\Event;
 
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
-use Symfony\Component\EventDispatcher\Event;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class UserEvent extends Event
 {

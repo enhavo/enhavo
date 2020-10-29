@@ -10,7 +10,6 @@ security:
             entity:
                 class: Enhavo\Bundle\UserBundle\Model\User
                 property: email
-#                property: username
 
     firewalls:
         dev:
@@ -21,8 +20,7 @@ security:
             user_checker: Enhavo\Bundle\UserBundle\Security\UserChecker
             guard:
                 authenticators:
-                    - Enhavo\Bundle\UserBundle\Security\Authentication\EmailFormLoginAuthenticator
-#                    - Enhavo\Bundle\UserBundle\Security\Authentication\UsernameFormLoginAuthenticator
+                    - Enhavo\Bundle\UserBundle\Security\Authentication\FormLoginAuthenticator
             pattern:  ^/admin/.*
             context: user
             form_login:
@@ -41,8 +39,7 @@ security:
             user_checker: Enhavo\Bundle\UserBundle\Security\UserChecker
             guard:
                 authenticators:
-                    - Enhavo\Bundle\UserBundle\Security\Authentication\EmailFormLoginAuthenticator
-#                    - Enhavo\Bundle\UserBundle\Security\Authentication\UsernameFormLoginAuthenticator
+                    - Enhavo\Bundle\UserBundle\Security\Authentication\FormLoginAuthenticator
 
             pattern: ^/user/.*
             context: user
