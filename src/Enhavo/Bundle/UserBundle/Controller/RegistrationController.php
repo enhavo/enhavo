@@ -3,14 +3,11 @@
 namespace Enhavo\Bundle\UserBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Template\TemplateManager;
-use Enhavo\Bundle\UserBundle\Event\UserEvent;
-use Enhavo\Bundle\UserBundle\Factory\UserFactory;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Enhavo\Bundle\UserBundle\Repository\UserRepository;
 use Enhavo\Bundle\UserBundle\User\UserManager;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;

@@ -67,7 +67,7 @@ class ResetPasswordController extends AbstractController
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $user = $this->userRepository->loadUserByUsername($user->getUsername());
-                if($user === null) {
+                if ($user === null) {
                     $this->addFlash('error', $this->translator->trans('reset.form.error.invalid-user', [], 'EnhavoUserBundle'));
                 } else {
                     $this->addFlash('success', $this->translator->trans('reset.message.success', [], 'EnhavoUserBundle'));
@@ -167,8 +167,8 @@ class ResetPasswordController extends AbstractController
         $flashBag = $this->container->get('session')->getFlashBag();
         $messages = [];
         $types = ['success', 'error', 'notice', 'warning'];
-        foreach($types as $type) {
-            foreach($flashBag->get($type) as $message) {
+        foreach ($types as $type) {
+            foreach ($flashBag->get($type) as $message) {
                 $messages[] = [
                     'message' => is_array($message) ? $message['message'] : $message,
                     'type' => $type

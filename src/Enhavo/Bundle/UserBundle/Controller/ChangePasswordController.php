@@ -58,7 +58,7 @@ class ChangePasswordController extends AbstractController
         $form = $this->userManager->createForm($config, 'change_password', $user);
         $form->setData($user);
         $form->handleRequest($request);
-        if($request->getMethod() == 'POST') {
+        if ($request->getMethod() == 'POST') {
             if ($form->isValid()) {
                 $this->userManager->update($user, false);
                 $this->addFlash('success', $this->get('translator')->trans('change_password.message.success', [], 'EnhavoUserBundle'));
