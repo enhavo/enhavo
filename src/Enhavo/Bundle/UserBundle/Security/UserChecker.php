@@ -10,14 +10,14 @@ use Enhavo\Bundle\UserBundle\Exception\AccountDisabledException;
 use Enhavo\Bundle\UserBundle\Exception\UserNotSupportedException;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Enhavo\Bundle\UserBundle\Model\UserInterface as EnhavoUser;
+use Enhavo\Bundle\UserBundle\Model\UserInterface as EnhavoUserInterface;
 
 class UserChecker implements UserCheckerInterface
 {
     public function checkPreAuth(UserInterface $user)
     {
-        if (!$user instanceof EnhavoUser) {
-            throw new UserNotSupportedException(sprintf('User has to be of type "%s"', EnhavoUser::class ));
+        if (!$user instanceof EnhavoUserInterface) {
+            throw new UserNotSupportedException(sprintf('User has to be of type "%s"', EnhavoUserInterface::class ));
         }
 
         if (false === $user->isEnabled()) {
@@ -27,8 +27,8 @@ class UserChecker implements UserCheckerInterface
 
     public function checkPostAuth(UserInterface $user)
     {
-        if (!$user instanceof EnhavoUser) {
-            throw new UserNotSupportedException(sprintf('User has to be of type "%s"', EnhavoUser::class ));
+        if (!$user instanceof EnhavoUserInterface) {
+            throw new UserNotSupportedException(sprintf('User has to be of type "%s"', EnhavoUserInterface::class ));
         }
     }
 }

@@ -33,7 +33,6 @@
     "ezyang/htmlpurifier": "^4.12",
     "facebook/graph-sdk": "^5.4",
     "friendsofsymfony/jsrouting-bundle": "2.2.*",
-    "friendsofsymfony/user-bundle": "^2.1",
     "guzzlehttp/guzzle": "^6.2",
     "imagine/imagine": "^1.2",
     "johngrogg/ics-parser": "^2.0",

@@ -4,7 +4,7 @@
 {% trans_default_domain 'EnhavoUserBundle' %}
 
 {% block main %}
-    {{ form_start(form, { 'action': path('enhavo_user_theme_user_change_email', {_format: 'json'}), 'attr': { 'class': 'fos_user_change_password' } }) }}
+    {{ form_start(form, { 'action': path('enhavo_user_theme_user_change_email', {_format: 'json'}) }) }}
     <div class="row tabContainer">
         <div class="container-fluid">
             <a href="#" tabid="tab1" class="selected"><span>{{ 'label.changePassword'|trans({ }, 'EnhavoAppBundle')|nl2br }}</span></a>

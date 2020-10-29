@@ -48,7 +48,7 @@ class ChangePasswordFormType extends AbstractType
             ),
             'first_options' => array('label' => 'form.new_password'),
             'second_options' => array('label' => 'form.new_password_confirmation'),
-            'invalid_message' => 'fos_user.password.mismatch',
+            'invalid_message' => 'enhavo_user.password.mismatch',
         ));
     }
 
