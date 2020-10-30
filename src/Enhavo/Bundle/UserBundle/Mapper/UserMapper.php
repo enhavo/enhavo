@@ -13,6 +13,9 @@ use Symfony\Component\PropertyAccess\PropertyAccessor;
 
 class UserMapper implements UserMapperInterface
 {
+    const REGISTER_PROPERTIES = 'register_properties';
+    const CREDENTIAL_PROPERTIES = 'credential_properties';
+
     /** @var array */
     private $config;
 
@@ -28,7 +31,7 @@ class UserMapper implements UserMapperInterface
 
     public function getCredentialProperties(): array
     {
-        return $this->config['credential_properties'];
+        return $this->config[self::CREDENTIAL_PROPERTIES];
     }
 
     public function setUsername(UserInterface $user, array $credentials)
@@ -53,15 +56,21 @@ class UserMapper implements UserMapperInterface
 
     public function getRegisterProperties(): array
     {
-        return $this->config['register_properties'];
+        return $this->config[self::REGISTER_PROPERTIES];
     }
 
-    public function setRegisterValues(UserInterface $user, array $values)
+    public function hasProperty($property)
+    {
+        $reg = false !== array_search($property, $this->config[self::REGISTER_PROPERTIES]);
+        $cre = false !== array_search($property, $this->config[self::CREDENTIAL_PROPERTIES]);
+        return $reg || $cre;
+    }
+
+    public function mapValues(UserInterface $user, array $values)
     {
         $propertyAccessor = new PropertyAccessor();
-        $properties = $this->getCredentialProperties();
-        foreach ($properties as $property) {
-            if (isset($values[$property]) && $propertyAccessor->isWritable($user, $property)) {
+        foreach ($values as $property => $value) {
+            if ($this->hasProperty($property) && $propertyAccessor->isWritable($user, $property)) {
                 $value = $values[$property];
                 $propertyAccessor->setValue($user, $property, $value);
             } else {

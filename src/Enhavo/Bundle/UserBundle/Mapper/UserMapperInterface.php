@@ -19,6 +19,6 @@ interface UserMapperInterface
 
     public function getRegisterProperties(): array;
 
-    public function setRegisterValues(UserInterface $user, array $properties);
+    public function mapValues(UserInterface $user, array $properties);
 
 }
