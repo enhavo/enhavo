@@ -10,12 +10,39 @@
 namespace Enhavo\Bundle\UserBundle\Widget;
 
 use Enhavo\Bundle\AppBundle\Widget\AbstractWidgetType;
+use Enhavo\Bundle\UserBundle\User\UserManager;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class LoginWidgetType extends AbstractWidgetType
 {
+    /** @var UserManager */
+    private $userManager;
+
+    /** @var RequestStack */
+    private $requestStack;
+
+    /** @var CsrfTokenManagerInterface */
+    private $tokenManager;
+
+    /**
+     * LoginWidgetType constructor.
+     * @param UserManager $userManager
+     * @param RequestStack $requestStack
+     * @param CsrfTokenManagerInterface $tokenManager
+     */
+    public function __construct(UserManager $userManager, RequestStack $requestStack, CsrfTokenManagerInterface $tokenManager)
+    {
+        $this->userManager = $userManager;
+        $this->requestStack = $requestStack;
+        $this->tokenManager = $tokenManager;
+    }
+
+
     /**
      * @inheritDoc
      */
@@ -43,7 +70,7 @@ class LoginWidgetType extends AbstractWidgetType
         } else {
             $error = $this->getError();
         }
-        
+
         return [
             'csrf_token' => $token,
             'last_username' => $lastUsername,
@@ -52,11 +79,20 @@ class LoginWidgetType extends AbstractWidgetType
         ];
     }
 
+
+    public function getTemplate($options)
+    {
+        $config = $this->userManager->getConfig($options['config'], $options['config_action']);
+        return $config['widget_template'] ?? $options['template'];
+    }
+
     public function configureOptions(OptionsResolver $optionsResolver)
     {
         parent::configureOptions($optionsResolver);
 
         $optionsResolver->setDefaults([
+            'config' => 'theme',
+            'config_action' => 'login',
             'template' => 'theme/widget/login.html.twig',
             'csrf_token' => null,
             'last_username' => null,
@@ -67,12 +103,12 @@ class LoginWidgetType extends AbstractWidgetType
 
     private function getCsrfToken()
     {
-        return $this->container->get('security.csrf.token_manager')->getToken('authenticate')->getValue();
+        return $this->tokenManager->getToken('authenticate')->getValue();
     }
 
     private function getError()
     {
-        $request = $this->container->get('request_stack')->getMasterRequest();
+        $request = $this->requestStack->getMasterRequest();
         $session = $request->getSession();
         $authErrorKey = Security::AUTHENTICATION_ERROR;
 
@@ -93,9 +129,8 @@ class LoginWidgetType extends AbstractWidgetType
 
     private function getLastUserName()
     {
-        $session = $this->container->get('session');
-        $lastUsernameKey = Security::LAST_USERNAME;
-        $lastUsername = (null === $session) ? '' : $session->get($lastUsernameKey);
-        return $lastUsername;
+        $request = $this->requestStack->getMasterRequest();
+        $session = $request->getSession();
+        return (null === $session) ? '' : $session->get(Security::LAST_USERNAME);
     }
 }

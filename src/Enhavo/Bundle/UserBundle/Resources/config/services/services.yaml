@@ -4,6 +4,7 @@ services:
             - '@doctrine.orm.entity_manager'
             - '@Enhavo\Bundle\AppBundle\Mailer\MailerManager'
             - '@enhavo_user.repository.user'
+            - '@Enhavo\Bundle\UserBundle\Mapper\UserMapper'
             - '@enhavo_app.util.secure_url_token_generator'
             - '@translator'
             - '@form.factory'
@@ -25,6 +26,10 @@ services:
 
     Enhavo\Bundle\UserBundle\Widget\LoginWidgetType:
         public: true
+        arguments:
+            - '@Enhavo\Bundle\UserBundle\User\UserManager'
+            - '@request_stack'
+            - '@security.csrf.token_manager'
         calls:
             - [setContainer, ['@service_container']]
         tags:
@@ -37,6 +42,7 @@ services:
             - '@security.csrf.token_manager'
             - '@security.user_password_encoder.generic'
             - '@Enhavo\Bundle\UserBundle\Mapper\UserMapper'
+            - '@event_dispatcher'
             - '%enhavo_user.model.user.class%'
 
     Enhavo\Bundle\UserBundle\Security\UserChecker: ~

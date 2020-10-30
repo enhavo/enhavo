@@ -109,7 +109,6 @@ EOT
         $user->setPlainPassword($password);
         $user->setEnabled((bool) !$inactive);
         $user->setSuperAdmin((bool) $superadmin);
-        $this->userMapper->setUsername($user, $credentials);
         $this->userMapper->mapValues($user, $credentials);
         $this->userManager->add($user);
 

@@ -28,7 +28,6 @@ services:
         public: true
         arguments:
             - '@Enhavo\Bundle\UserBundle\User\UserManager'
-            - '@router'
             - '@enhavo_app.template.manager'
             - '@security.csrf.token_manager'
         calls:

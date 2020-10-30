@@ -34,9 +34,28 @@ class UserMapper implements UserMapperInterface
         return $this->config[self::CREDENTIAL_PROPERTIES];
     }
 
-    public function setUsername(UserInterface $user, array $credentials)
+    public function setUsername(UserInterface $user, ?array $credentials = null)
     {
+        if ($credentials === null) {
+            $credentials = $this->getCredentials($user);
+        }
+
         $user->setUsername($this->getUsername($credentials));
+    }
+
+    private function getCredentials(UserInterface $user): array
+    {
+        $properties = $this->getCredentialProperties();
+        $values = [];
+        $propertyAccessor = new PropertyAccessor();
+
+        foreach ($properties as $property) {
+            if ($propertyAccessor->isReadable($user, $property)) {
+                $values[$property] = $propertyAccessor->getValue($user, $property);
+            }
+        }
+
+        return $values;
     }
 
     public function getUsername(array $credentials): string
@@ -59,7 +78,7 @@ class UserMapper implements UserMapperInterface
         return $this->config[self::REGISTER_PROPERTIES];
     }
 
-    public function hasProperty($property)
+    private function hasProperty($property)
     {
         $reg = false !== array_search($property, $this->config[self::REGISTER_PROPERTIES]);
         $cre = false !== array_search($property, $this->config[self::CREDENTIAL_PROPERTIES]);

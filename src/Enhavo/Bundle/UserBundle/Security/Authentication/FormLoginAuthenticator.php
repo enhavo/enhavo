@@ -8,7 +8,9 @@ namespace Enhavo\Bundle\UserBundle\Security\Authentication;
 
 
 use Doctrine\ORM\EntityManagerInterface;
+use Enhavo\Bundle\UserBundle\Event\UserLoginEvent;
 use Enhavo\Bundle\UserBundle\Mapper\UserMapperInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -28,9 +30,9 @@ use Symfony\Component\Security\Http\Util\TargetPathTrait;
 class FormLoginAuthenticator extends AbstractFormLoginAuthenticator implements PasswordAuthenticatedInterface
 {
     use TargetPathTrait;
-    use AuthenticationSuccessTrait;
 
     public const LOGIN_ROUTE = 'enhavo_user_theme_security_login';
+    public const LOGIN_CHECK_ROUTE = 'enhavo_user_theme_security_login_check';
 
     /** @var EntityManagerInterface  */
     private $entityManager;
@@ -47,6 +49,9 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator implements P
     /** @var UserMapperInterface */
     private $userMapper;
 
+    /** @var EventDispatcherInterface */
+    private $eventDispatcher;
+
     /** @var string */
     private $className;
 
@@ -57,23 +62,26 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator implements P
      * @param CsrfTokenManagerInterface $csrfTokenManager
      * @param UserPasswordEncoderInterface $passwordEncoder
      * @param UserMapperInterface $userMapper
+     * @param EventDispatcherInterface $eventDispatcher
      * @param string $className
      */
-    public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder, UserMapperInterface $userMapper, string $className)
+    public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder, UserMapperInterface $userMapper, EventDispatcherInterface $eventDispatcher, string $className)
     {
         $this->entityManager = $entityManager;
         $this->urlGenerator = $urlGenerator;
         $this->csrfTokenManager = $csrfTokenManager;
         $this->passwordEncoder = $passwordEncoder;
         $this->userMapper = $userMapper;
+        $this->eventDispatcher = $eventDispatcher;
         $this->className = $className;
     }
 
-
     public function supports(Request $request)
     {
-        return self::LOGIN_ROUTE === $request->attributes->get('_route')
-            && $request->isMethod('POST');
+        $isRoute = self::LOGIN_CHECK_ROUTE === $request->attributes->get('_route');
+        $isPost = $request->isMethod('POST');
+
+        return $isRoute && $isPost;
     }
 
     public function getCredentials(Request $request)
@@ -81,12 +89,12 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator implements P
         $properties = $this->userMapper->getCredentialProperties();
 
         $credentials = [
-            'password' => $request->request->get('password'),
+            'password' => $request->request->get('_password'),
             'csrf_token' => $request->request->get('_csrf_token'),
         ];
 
         foreach ($properties as $property) {
-            $credentials[$property] = $request->request->get($property);
+            $credentials[$property] = $request->request->get('_' .$property);
         }
 
         $request->getSession()->set(
@@ -104,8 +112,8 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator implements P
             throw new InvalidCsrfTokenException();
         }
 
-        $userName = $this->userMapper->getUsername($credentials);
-        $user = $this->entityManager->getRepository($this->className)->findOneBy(['username' => $userName]);
+        $username = $this->userMapper->getUsername($credentials);
+        $user = $this->entityManager->getRepository($this->className)->findOneBy(['username' => $username]);
 
         if (!$user) {
             // fail authentication with a custom error
@@ -139,6 +147,14 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator implements P
 
         // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
         throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
+    }
+
+
+    private function dispatch(TokenInterface $token)
+    {
+        /** @var \Enhavo\Bundle\UserBundle\Model\UserInterface $user */
+        $user = $token->getUser();
+        $this->eventDispatcher->dispatch(new UserLoginEvent($user));
     }
 
     protected function getLoginUrl()

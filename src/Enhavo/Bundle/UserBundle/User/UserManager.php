@@ -11,6 +11,7 @@ use Enhavo\Bundle\AppBundle\Mailer\MailerManager;
 use Enhavo\Bundle\AppBundle\Mailer\Message;
 use Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface;
 use Enhavo\Bundle\UserBundle\Event\UserEvent;
+use Enhavo\Bundle\UserBundle\Mapper\UserMapperInterface;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -32,6 +33,9 @@ class UserManager
 
     /** @var RepositoryInterface */
     private $userRepository;
+
+    /** @var UserMapperInterface */
+    private $userMapper;
 
     /** @var TokenGeneratorInterface */
     private $tokenGenerator;
@@ -59,6 +63,7 @@ class UserManager
      * @param EntityManagerInterface $entityManager
      * @param MailerManager $mailerManager
      * @param RepositoryInterface $userRepository
+     * @param UserMapperInterface $userMapper
      * @param TokenGeneratorInterface $tokenGenerator
      * @param TranslatorInterface $translator
      * @param FormFactoryInterface $formFactory
@@ -67,11 +72,12 @@ class UserManager
      * @param EventDispatcherInterface $eventDispatcher
      * @param array $config
      */
-    public function __construct(EntityManagerInterface $entityManager, MailerManager $mailerManager, RepositoryInterface $userRepository, TokenGeneratorInterface $tokenGenerator, TranslatorInterface $translator, FormFactoryInterface $formFactory, EncoderFactoryInterface $encoderFactory, RouterInterface $router, EventDispatcherInterface $eventDispatcher, array $config)
+    public function __construct(EntityManagerInterface $entityManager, MailerManager $mailerManager, RepositoryInterface $userRepository, UserMapperInterface $userMapper, TokenGeneratorInterface $tokenGenerator, TranslatorInterface $translator, FormFactoryInterface $formFactory, EncoderFactoryInterface $encoderFactory, RouterInterface $router, EventDispatcherInterface $eventDispatcher, array $config)
     {
         $this->entityManager = $entityManager;
         $this->mailerManager = $mailerManager;
         $this->userRepository = $userRepository;
+        $this->userMapper = $userMapper;
         $this->tokenGenerator = $tokenGenerator;
         $this->translator = $translator;
         $this->formFactory = $formFactory;
@@ -80,6 +86,7 @@ class UserManager
         $this->eventDispatcher = $eventDispatcher;
         $this->config = $config;
     }
+
 
     public function add(UserInterface $user)
     {
@@ -145,6 +152,7 @@ class UserManager
 
     public function update(UserInterface $user, $persist = true, $flush = true)
     {
+        $this->updateUsername($user);
         $this->updatePassword($user);
 
         if ($persist) {
@@ -237,6 +245,16 @@ class UserManager
     public function updatePassword(UserInterface $user)
     {
         $this->hashPassword($user);
+    }
+
+    public function updateUsername(UserInterface $user)
+    {
+        $this->userMapper->setUsername($user);
+    }
+
+    public function mapValues(UserInterface $user, array $values)
+    {
+        $this->userMapper->mapValues($user, $values);
     }
 
     private function hashPassword(UserInterface $user)

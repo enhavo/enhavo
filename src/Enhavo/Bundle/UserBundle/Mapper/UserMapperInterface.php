@@ -13,7 +13,7 @@ interface UserMapperInterface
 {
     public function getCredentialProperties(): array;
 
-    public function setUsername(UserInterface $user, array $credentials);
+    public function setUsername(UserInterface $user, ?array $credentials = null);
 
     public function getUsername(array $credentials): string;
 
