@@ -20,9 +20,6 @@ class SecurityController extends AbstractController
     /** @var UserManager */
     private $userManager;
 
-    /** @var RouterInterface */
-    private $router;
-
     /** @var TemplateManager */
     private $templateManager;
 
@@ -32,25 +29,24 @@ class SecurityController extends AbstractController
     /**
      * SecurityController constructor.
      * @param UserManager $userManager
-     * @param RouterInterface $router
      * @param TemplateManager $templateManager
      * @param CsrfTokenManagerInterface $tokenManager
      */
-    public function __construct(UserManager $userManager, RouterInterface $router, TemplateManager $templateManager, CsrfTokenManagerInterface $tokenManager)
+    public function __construct(UserManager $userManager, TemplateManager $templateManager, CsrfTokenManagerInterface $tokenManager)
     {
         $this->userManager = $userManager;
-        $this->router = $router;
         $this->templateManager = $templateManager;
         $this->tokenManager = $tokenManager;
     }
+
 
     public function loginAction(Request $request, AuthenticationUtils $authenticationUtils)
     {
         $config = $request->attributes->get('_config');
 
         if ($this->isGranted('ROLE_USER')) {
-            $route = $this->userManager->getRedirectRoute($config, 'login', null);
-            return new RedirectResponse($this->router->generate($route));
+            $url = $this->generateUrl($this->userManager->getRedirectRoute($config, 'login', null));
+            return new RedirectResponse($url);
         }
 
         // get the login error if there is one

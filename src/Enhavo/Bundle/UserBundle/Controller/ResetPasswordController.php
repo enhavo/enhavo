@@ -8,6 +8,7 @@ use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Enhavo\Bundle\UserBundle\Repository\UserRepository;
 use Enhavo\Bundle\UserBundle\User\UserManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -64,19 +65,31 @@ class ResetPasswordController extends AbstractController
         $form->handleRequest($request);
 
         $valid = true;
+        $message = null;
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $user = $this->userRepository->loadUserByUsername($user->getUsername());
                 if ($user === null) {
-                    $this->addFlash('error', $this->translator->trans('reset.form.error.invalid-user', [], 'EnhavoUserBundle'));
+                    $message = 'reset.form.error.invalid-user';
+                    $this->addFlash('error', $this->translator->trans($message, [], 'EnhavoUserBundle'));
                 } else {
-                    $this->addFlash('success', $this->translator->trans('reset.message.success', [], 'EnhavoUserBundle'));
+                    $message = 'reset.message.success';
+                    $this->addFlash('success', $this->translator->trans($message, [], 'EnhavoUserBundle'));
 
                     $this->userManager->resetPassword($user, $config, $action);
                     $route = $this->userManager->getRedirectRoute($config, $action);
                     if ($route) {
                         $url = $this->generateUrl($route);
-                        // todo: json response on xhttp
+
+                        if ($request->isXmlHttpRequest()) {
+                            return new JsonResponse([
+                                'error' => false,
+                                'errors' => [],
+                                'message' => $message,
+                                'redirect_url' => $url,
+                            ]);
+                        }
+
                         return new RedirectResponse($url);
                     }
                 }
@@ -87,7 +100,13 @@ class ResetPasswordController extends AbstractController
             }
         }
 
-        // todo: json response on xhttp
+        if ($request->isXmlHttpRequest()) {
+            return new JsonResponse([
+                'error' => !$valid,
+                'errors' => [], // todo: add errors from enhavo form error resolver
+                'message' => $message,
+            ]);
+        }
 
         return $this->render($this->getTemplate($this->userManager->getTemplate($config, $action)), [
             'form' => $form->createView(),

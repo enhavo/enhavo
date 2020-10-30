@@ -8,6 +8,7 @@ use Enhavo\Bundle\UserBundle\Repository\UserRepository;
 use Enhavo\Bundle\UserBundle\User\UserManager;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -65,7 +66,14 @@ class RegistrationController extends AbstractController
             if ($form->isValid()) {
                 $this->userManager->register($user, $config, 'registration_register');
                 $url = $this->generateUrl($this->userManager->getRedirectRoute($config, 'registration_register'));
-                // todo: json response on xhttp
+
+                if ($request->isXmlHttpRequest()) {
+                    return new JsonResponse([
+                        'error' => false,
+                        'errors' => [],
+                        'redirect_url' => $url
+                    ]);
+                }
 
                 return new RedirectResponse($url);
 
@@ -74,7 +82,12 @@ class RegistrationController extends AbstractController
             }
         }
 
-        // todo: json response on xhttp
+        if ($request->isXmlHttpRequest()) {
+            return new JsonResponse([
+                'error' => !$valid,
+                'errors' => [], // todo: insert errors from enhavo form-error-resolver
+            ]);
+        }
 
         return $this->render($this->getTemplate($this->userManager->getTemplate($config, 'registration_register')), [
             'form' => $form->createView(),
@@ -93,12 +106,27 @@ class RegistrationController extends AbstractController
         $user = $this->userRepository->findByConfirmationToken($token);
 
         if (null === $user) {
+            if ($request->isXmlHttpRequest()) {
+                return new JsonResponse([
+                    'error' => true,
+                    'errors' => ['registration.confirm.user.missing']
+                ]);
+            }
+
             throw new NotFoundHttpException(sprintf('A user with confirmation token "%s" does not exist', $token));
         }
 
         $this->userManager->confirm($user, $config, 'registration_confirm');
 
         $url = $this->generateUrl($this->userManager->getRedirectRoute($config, 'registration_confirm'));
+        if ($request->isXmlHttpRequest()) {
+            return new JsonResponse([
+                'error' => false,
+                'errors' => [],
+                'redirect_url' => $url,
+            ]);
+        }
+
         return new RedirectResponse($url);
     }
 
