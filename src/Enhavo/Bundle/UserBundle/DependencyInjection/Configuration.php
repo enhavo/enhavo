@@ -4,7 +4,11 @@ namespace Enhavo\Bundle\UserBundle\DependencyInjection;
 
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\UserBundle\Factory\UserFactory;
+use Enhavo\Bundle\UserBundle\Form\Type\ChangePasswordFormType;
 use Enhavo\Bundle\UserBundle\Form\Type\GroupType;
+use Enhavo\Bundle\UserBundle\Form\Type\RegistrationType;
+use Enhavo\Bundle\UserBundle\Form\Type\ResetPasswordRequestType;
+use Enhavo\Bundle\UserBundle\Form\Type\ResetPasswordType;
 use Enhavo\Bundle\UserBundle\Form\Type\UserType;
 use Enhavo\Bundle\UserBundle\Model\Group;
 use Enhavo\Bundle\UserBundle\Model\User;
@@ -47,7 +51,7 @@ class Configuration implements ConfigurationInterface
                         ->arrayNode('user')
                             ->addDefaultsIfNotSet()
                             ->children()
-                                ->variableNode('options')->end()
+                                ->scalarNode('options')->end()
                                 ->arrayNode('classes')
                                     ->addDefaultsIfNotSet()
                                     ->children()
@@ -63,7 +67,7 @@ class Configuration implements ConfigurationInterface
                         ->arrayNode('group')
                             ->addDefaultsIfNotSet()
                             ->children()
-                                ->variableNode('options')->end()
+                                ->scalarNode('options')->end()
                                 ->arrayNode('classes')
                                     ->addDefaultsIfNotSet()
                                     ->children()
@@ -86,22 +90,125 @@ class Configuration implements ConfigurationInterface
 
     private function addConfigNode(NodeDefinition $rootNode): NodeDefinition
     {
-        $rootNode->children()
-            ->arrayNode('mapper')
-                ->addDefaultsIfNotSet()
-                ->children()
-                    ->variableNode('credential_properties')->end()
-                    ->variableNode('register_properties')->end()
-                    ->scalarNode('glue')->defaultValue('.')->end()
-                ->end()
-            ->end()
-            ->arrayNode('config')
-                ->children()
-                    ->variableNode('theme')->end()
-                    ->variableNode('admin')->end()
-                ->end()
+        $subNode = $rootNode->children();
+
+        $mapperNode = $subNode->arrayNode('mapper')->addDefaultsIfNotSet()->children();
+        $mapperNode
+            ->variableNode('credential_properties')->defaultValue(['email'])->end()
+            ->variableNode('register_properties')->defaultValue(['email'])->end()
+            ->scalarNode('glue')->defaultValue('.')->end();
+
+        $mapperNode->end();
+
+        $configNode = $subNode->arrayNode('config')->ignoreExtraKeys()->addDefaultsIfNotSet()->children();
+        $themeNode = $configNode->arrayNode('theme')->ignoreExtraKeys()->addDefaultsIfNotSet()->children();
+        $themeNode->arrayNode('registration_register')->addDefaultsIfNotSet()->children()
+            ->scalarNode('template')->defaultValue('theme/security/registration/register.html.twig')->end()
+            ->scalarNode('redirect_route')->defaultValue('enhavo_user_theme_registration_check')->end()
+            ->scalarNode('confirmation_route')->defaultValue('enhavo_user_theme_registration_confirm')->end()
+            ->scalarNode('mail_template')->defaultValue('mail/security/registration.html.twig')->end()
+            ->scalarNode('mail_subject')->defaultValue('registration.mail.subject')->end()
+            ->scalarNode('translation_domain')->defaultValue('EnhavoUserBundle')->end()
+            ->arrayNode('form')->addDefaultsIfNotSet()->children()
+                ->scalarNode('class')->defaultValue(RegistrationType::class)->end()
+                ->scalarNode('options')->defaultValue([])->end()
             ->end()
         ->end();
+
+        $themeNode->arrayNode('registration_check')->addDefaultsIfNotSet()->children()
+            ->scalarNode('template')->defaultValue('theme/security/registration/check.html.twig')->end()
+        ->end();
+
+        $themeNode->arrayNode('registration_confirm')->addDefaultsIfNotSet()->children()
+            ->scalarNode('template')->defaultValue('theme/security/registration/confirm.html.twig')->end()
+            ->scalarNode('mail_template')->defaultValue('mail/security/confirm.html.twig')->end()
+            ->scalarNode('mail_subject')->defaultValue('confirmation.mail.subject')->end()
+            ->scalarNode('translation_domain')->defaultValue('EnhavoUserBundle')->end()
+            ->scalarNode('redirect_route')->defaultValue('enhavo_user_theme_registration_finish')->end()
+        ->end();
+
+        $themeNode->arrayNode('reset_password_request')->addDefaultsIfNotSet()->children()
+            ->scalarNode('template')->defaultValue('theme/security/reset-password/request.html.twig')->end()
+            ->scalarNode('mail_template')->defaultValue('mail/security/reset-password.html.twig')->end()
+            ->scalarNode('mail_subject')->defaultValue('reset_password_request.mail.subject')->end()
+            ->scalarNode('translation_domain')->defaultValue('EnhavoUserBundle')->end()
+            ->scalarNode('redirect_route')->defaultValue('enhavo_user_theme_reset_password_check')->end()
+            ->scalarNode('confirmation_route')->defaultValue('enhavo_user_theme_reset_password_confirm')->end()
+            ->arrayNode('form')->addDefaultsIfNotSet()->children()
+                ->scalarNode('class')->defaultValue(ResetPasswordRequestType::class)->end()
+                ->scalarNode('options')->defaultValue([])->end()
+            ->end()
+        ->end();
+
+        $themeNode->arrayNode('reset_password_check')->addDefaultsIfNotSet()->children()
+            ->scalarNode('template')->defaultValue('theme/security/reset-password/check.html.twig')->end()
+        ->end();
+
+        $themeNode->arrayNode('reset_password_confirm')->addDefaultsIfNotSet()->children()
+            ->scalarNode('template')->defaultValue('theme/security/reset-password/confirm.html.twig')->end()
+            ->scalarNode('redirect_route')->defaultValue('enhavo_user_theme_reset_password_finish')->end()
+            ->arrayNode('form')->addDefaultsIfNotSet()->children()
+                ->scalarNode('class')->defaultValue(ResetPasswordType::class)->end()
+                ->scalarNode('options')->defaultValue([])->end()
+            ->end()
+        ->end();
+
+        $themeNode->arrayNode('reset_password_finish')->addDefaultsIfNotSet()->children()
+            ->scalarNode('template')->defaultValue('theme/security/reset-password/finish.html.twig')->end()
+        ->end();
+
+        $themeNode->arrayNode('login')->addDefaultsIfNotSet()->children()
+            ->scalarNode('template')->defaultValue('theme/security/login.html.twig')->end()
+            ->scalarNode('redirect_route')->defaultValue('enhavo_user_theme_user_profile')->end()
+        ->end();
+
+        $themeNode->end();
+
+        $adminNode = $configNode->arrayNode('admin')->ignoreExtraKeys()->addDefaultsIfNotSet()->children();
+
+        $adminNode->arrayNode('reset_password_request')->addDefaultsIfNotSet()->children()
+            ->scalarNode('template')->defaultValue('admin/security/reset-password/request.html.twig')->end()
+            ->scalarNode('mail_template')->defaultValue('mail/security/reset-password.html.twig')->end()
+            ->scalarNode('mail_subject')->defaultValue('reset_password_request.mail.subject')->end()
+            ->scalarNode('translation_domain')->defaultValue('EnhavoUserBundle')->end()
+            ->scalarNode('confirmation_route')->defaultValue('enhavo_user_reset_password_confirm')->end()
+            ->scalarNode('stylesheets')->defaultValue(['enhavo/user/login'])->end()
+            ->scalarNode('javascripts')->defaultValue(['enhavo/user/login'])->end()
+            ->arrayNode('form')->addDefaultsIfNotSet()->children()
+                ->scalarNode('class')->defaultValue(ResetPasswordRequestType::class)->end()
+                ->scalarNode('options')->defaultValue([])->end()
+            ->end()
+            ->end();
+
+        $adminNode->arrayNode('reset_password_confirm')->addDefaultsIfNotSet()->children()
+            ->scalarNode('template')->defaultValue('admin/security/reset-password/confirm.html.twig')->end()
+            ->scalarNode('redirect_route')->defaultValue('enhavo_app_index')->end()
+            ->scalarNode('stylesheets')->defaultValue(['enhavo/user/login'])->end()
+            ->scalarNode('javascripts')->defaultValue(['enhavo/user/login'])->end()
+            ->arrayNode('form')->addDefaultsIfNotSet()->children()
+                ->scalarNode('class')->defaultValue(ResetPasswordType::class)->end()
+                ->scalarNode('options')->defaultValue([])->end()
+            ->end()
+            ->end();
+
+        $adminNode->arrayNode('login')->addDefaultsIfNotSet()->children()
+            ->scalarNode('template')->defaultValue('admin/security/login/login.html.twig')->end()
+            ->scalarNode('redirect_route')->defaultValue('enhavo_app_index')->end()
+            ->scalarNode('stylesheets')->defaultValue(['enhavo/user/login'])->end()
+            ->scalarNode('javascripts')->defaultValue(['enhavo/user/login'])->end()
+        ->end();
+
+        $adminNode->arrayNode('change_password')->addDefaultsIfNotSet()->children()
+            ->arrayNode('form')->addDefaultsIfNotSet()->children()
+                ->scalarNode('class')->defaultValue(ChangePasswordFormType::class)->end()
+                ->scalarNode('options')->defaultValue([])->end()
+            ->end()
+        ->end();
+
+        $adminNode->end();
+
+        $configNode->end();
+        $subNode->end();
         return $rootNode;
     }
 }
