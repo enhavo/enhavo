@@ -10,7 +10,7 @@ class OutputStreamActionType extends AbstractUrlActionType implements ActionType
 {
     public function createViewData(array $options, $resource = null)
     {
-        $data = parent::createViewData($options);
+        $data = parent::createViewData($options, $resource);
 
         $data = array_merge($data, [
             'modal' => [
