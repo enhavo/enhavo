@@ -6,7 +6,7 @@ security:
     providers:
         entity_user_provider:
             entity:
-                class: Enhavo\Bundle\UserBundle\Model\CustomUser
+                class: Enhavo\Bundle\UserBundle\Model\User
 
     firewalls:
         dev:
