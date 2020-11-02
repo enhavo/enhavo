@@ -8,6 +8,7 @@ use Enhavo\Bundle\UserBundle\Repository\UserRepository;
 use Enhavo\Bundle\UserBundle\User\UserManager;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Exception\SuspiciousOperationException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -79,14 +80,14 @@ class RegistrationController extends AbstractController
 
             } else {
                 $valid = false;
-            }
-        }
 
-        if ($request->isXmlHttpRequest()) {
-            return new JsonResponse([
-                'error' => !$valid,
-                'errors' => [], // todo: insert errors from enhavo form-error-resolver
-            ]);
+                if ($request->isXmlHttpRequest()) {
+                    return new JsonResponse([
+                        'error' => true,
+                        'errors' => [], // todo: insert errors from enhavo form-error-resolver
+                    ]);
+                }
+            }
         }
 
         return $this->render($this->getTemplate($this->userManager->getTemplate($config, 'registration_register')), [
@@ -118,7 +119,6 @@ class RegistrationController extends AbstractController
 
     public function finishAction(Request $request)
     {
-        $this->denyAccessUnlessGranted('ROLE_USER');
         $config = $request->attributes->get('_config');
 
         return $this->render($this->getTemplate($this->userManager->getTemplate($config, 'registration_finish')), [
@@ -126,7 +126,7 @@ class RegistrationController extends AbstractController
         ]);
     }
 
-    private function getTemplate($template)
+    protected function getTemplate($template)
     {
         return $this->templateManager->getTemplate($template);
     }

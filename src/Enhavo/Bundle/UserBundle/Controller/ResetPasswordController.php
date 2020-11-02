@@ -3,11 +3,12 @@
 namespace Enhavo\Bundle\UserBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Template\TemplateManager;
-use Enhavo\Bundle\UserBundle\Factory\UserFactory;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Enhavo\Bundle\UserBundle\Repository\UserRepository;
 use Enhavo\Bundle\UserBundle\User\UserManager;
+use Sylius\Component\Resource\Factory\FactoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Exception\SuspiciousOperationException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,7 +30,7 @@ class ResetPasswordController extends AbstractController
     /** @var TemplateManager */
     private $templateManager;
 
-    /** @var UserFactory */
+    /** @var FactoryInterface */
     private $userFactory;
 
     /** @var TranslatorInterface */
@@ -40,10 +41,10 @@ class ResetPasswordController extends AbstractController
      * @param UserManager $userManager
      * @param UserRepository $userRepository
      * @param TemplateManager $templateManager
-     * @param UserFactory $userFactory
+     * @param FactoryInterface $userFactory
      * @param TranslatorInterface $translator
      */
-    public function __construct(UserManager $userManager, UserRepository $userRepository, TemplateManager $templateManager, UserFactory $userFactory, TranslatorInterface $translator)
+    public function __construct(UserManager $userManager, UserRepository $userRepository, TemplateManager $templateManager, FactoryInterface $userFactory, TranslatorInterface $translator)
     {
         $this->userManager = $userManager;
         $this->userRepository = $userRepository;
@@ -51,7 +52,6 @@ class ResetPasswordController extends AbstractController
         $this->userFactory = $userFactory;
         $this->translator = $translator;
     }
-
 
     public function requestAction(Request $request)
     {
@@ -70,11 +70,19 @@ class ResetPasswordController extends AbstractController
             if ($form->isValid()) {
                 $user = $this->userRepository->loadUserByUsername($user->getUsername());
                 if ($user === null) {
-                    $message = 'reset.form.error.invalid-user';
-                    $this->addFlash('error', $this->translator->trans($message, [], 'EnhavoUserBundle'));
+                    $message = $this->translator->trans('reset.form.error.invalid-user', [], 'EnhavoUserBundle');
+                    $this->addFlash('error', $message);
+
+                    if ($request->isXmlHttpRequest()) {
+                        return new JsonResponse([
+                            'error' => true,
+                            'errors' => [],
+                            'message' => $message,
+                        ]);
+                    }
                 } else {
-                    $message = 'reset.message.success';
-                    $this->addFlash('success', $this->translator->trans($message, [], 'EnhavoUserBundle'));
+                    $message = $this->translator->trans('reset.message.success', [], 'EnhavoUserBundle');
+                    $this->addFlash('success', $message);
 
                     $this->userManager->resetPassword($user, $config, $action);
                     $route = $this->userManager->getRedirectRoute($config, $action);
@@ -97,15 +105,14 @@ class ResetPasswordController extends AbstractController
 
             } else {
                 $valid = false;
-            }
-        }
 
-        if ($request->isXmlHttpRequest()) {
-            return new JsonResponse([
-                'error' => !$valid,
-                'errors' => [], // todo: add errors from enhavo form error resolver
-                'message' => $message,
-            ]);
+                if ($request->isXmlHttpRequest()) {
+                    return new JsonResponse([
+                        'error' => true,
+                        'errors' => [], // todo: add errors from enhavo form error resolver
+                    ]);
+                }
+            }
         }
 
         return $this->render($this->getTemplate($this->userManager->getTemplate($config, $action)), [
@@ -181,7 +188,7 @@ class ResetPasswordController extends AbstractController
         return $this->templateManager->getTemplate($template);
     }
 
-    private function getFlashMessages()
+    protected function getFlashMessages()
     {
         $flashBag = $this->container->get('session')->getFlashBag();
         $messages = [];
