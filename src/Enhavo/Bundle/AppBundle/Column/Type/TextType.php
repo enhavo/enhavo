@@ -17,7 +17,7 @@ class TextType extends AbstractColumnType
     {
         $property = $this->getProperty($resource, $options['property']);
 
-        if ($options['stripHtmlTags']) {
+        if ($options['strip_html_tags']) {
             $property = strip_tags($property);
         }
 
@@ -44,7 +44,7 @@ class TextType extends AbstractColumnType
             'component' => 'column-text',
             'sortingProperty' => null,
             'wrap' => true,
-            'stripHtmlTags' => false
+            'strip_html_tags' => false
         ]);
         $resolver->setRequired(['property']);
     }
