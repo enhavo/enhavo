@@ -43,5 +43,6 @@ class SaveUserSubscriber implements EventSubscriberInterface
         /** @var $user UserInterface */
         $user = $event->getSubject();
         $this->userManager->updatePassword($user);
+        $this->userManager->updateUsername($user);
     }
 }
