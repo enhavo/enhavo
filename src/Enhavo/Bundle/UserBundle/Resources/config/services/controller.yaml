@@ -46,3 +46,13 @@ services:
             - [ setContainer, [ '@service_container' ] ]
         tags:
             - { name: controller.service_arguments }
+
+    Enhavo\Bundle\UserBundle\Controller\UserController:
+        public: true
+        arguments:
+            - '@Enhavo\Bundle\UserBundle\User\UserManager'
+            - '@enhavo_app.template.manager'
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
+        tags:
+            - { name: controller.service_arguments }
