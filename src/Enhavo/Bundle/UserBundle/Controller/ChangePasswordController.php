@@ -69,7 +69,7 @@ class ChangePasswordController extends AbstractController
 
         $view = $this->viewFactory->create('form', [
             'resource' => $user,
-            'form' => $form
+            'form' => $form,
         ]);
 
         return $this->viewHandler->handle($view);

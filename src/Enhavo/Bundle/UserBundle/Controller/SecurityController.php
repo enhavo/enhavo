@@ -67,17 +67,20 @@ class SecurityController extends AbstractController
             'javascripts' => $this->userManager->getJavascripts($config, 'login'),
             'data' => [
                 'messages' => [],
+                'base_url' => '',
+                'host' => $request->getHost(),
+                'scheme' => $request->getScheme(),
             ],
         ]);
     }
 
     public function checkAction()
     {
-        throw new \RuntimeException('You must configure the check path to be handled by the firewall using form_login in your security firewall configuration.');
+        throw new \LogicException('You must configure the check path to be handled by the firewall using form_login in your security firewall configuration.');
     }
 
     public function logoutAction()
     {
-        throw new \RuntimeException('You must activate the logout in your security firewall configuration.');
+        throw new \LogicException('You must activate the logout in your security firewall configuration.');
     }
 }
