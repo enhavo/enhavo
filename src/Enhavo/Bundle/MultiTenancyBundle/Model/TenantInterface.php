@@ -15,4 +15,6 @@ interface TenantInterface
     public function getBaseUrl(): string;
 
     public function getDomains(): array;
+
+    public function getLocale(): ?string;
 }

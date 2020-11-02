@@ -23,3 +23,8 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.column, alias: tenant_aware_url }
+
+    Enhavo\Bundle\MultiTenancyBundle\Locale\TenantLocaleResolver:
+        arguments:
+            - '@enhavo_multi_tenancy.resolver'
+            - '@enhavo_app.locale_resolver'
