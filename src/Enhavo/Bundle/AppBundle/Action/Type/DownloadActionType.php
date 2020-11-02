@@ -10,7 +10,7 @@ class DownloadActionType extends AbstractUrlActionType implements ActionTypeInte
 {
     public function createViewData(array $options, $resource = null)
     {
-        $data = parent::createViewData($options);
+        $data = parent::createViewData($options, $resource);
         $data['ajax'] = $options['ajax'];
         return $data;
     }
