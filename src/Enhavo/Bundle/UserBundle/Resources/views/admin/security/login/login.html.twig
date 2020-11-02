@@ -3,7 +3,7 @@
 {% trans_default_domain 'EnhavoUserBundle' %}
 
 {% block form %}
-    <form action="{{ path("enhavo_user_security_login_check") }}" method="post" novalidate>
+    <form action="{{ path("enhavo_user_security_login") }}" method="post" novalidate>
         <input type="hidden" id="remember_me" name="_remember_me" value="on">
         <div class="mb1">
             <div class="input-container">

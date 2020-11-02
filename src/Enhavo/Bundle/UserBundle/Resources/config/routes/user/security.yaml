@@ -2,7 +2,7 @@ enhavo_user_theme_security_login:
     options:
         expose: true
     path: /login
-    methods: [GET]
+    methods: [GET, POST]
     controller: Enhavo\Bundle\UserBundle\Controller\SecurityController::loginAction
     defaults:
         _config: theme

@@ -160,6 +160,7 @@ class Configuration implements ConfigurationInterface
         $themeNode->arrayNode('login')->addDefaultsIfNotSet()->children()
             ->scalarNode('template')->defaultValue('theme/security/login.html.twig')->end()
             ->scalarNode('redirect_route')->defaultValue('enhavo_user_theme_user_profile')->end()
+            ->scalarNode('route')->defaultValue('enhavo_user_theme_security_login')->cannotBeEmpty()->end()
         ->end();
 
         $themeNode->end();
@@ -194,6 +195,7 @@ class Configuration implements ConfigurationInterface
         $adminNode->arrayNode('login')->addDefaultsIfNotSet()->children()
             ->scalarNode('template')->defaultValue('admin/security/login/login.html.twig')->end()
             ->scalarNode('redirect_route')->defaultValue('enhavo_app_index')->end()
+            ->scalarNode('route')->defaultValue('enhavo_user_security_login')->cannotBeEmpty()->end()
             ->scalarNode('stylesheets')->defaultValue(['enhavo/user/login'])->end()
             ->scalarNode('javascripts')->defaultValue(['enhavo/user/login'])->end()
         ->end();

@@ -19,6 +19,11 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
+    Enhavo\Bundle\UserBundle\EventListener\TargetPathSubscriber:
+        arguments: [ '@session' ]
+        tags:
+            - { name: kernel.event_subscriber }
+
     Enhavo\Bundle\UserBundle\Security\Authentication\Voter\GroupRoleVoter:
         public: false
         tags:
@@ -37,6 +42,7 @@ services:
 
     Enhavo\Bundle\UserBundle\Security\Authentication\FormLoginAuthenticator:
         arguments:
+            - '@Enhavo\Bundle\UserBundle\User\UserManager'
             - '@doctrine.orm.entity_manager'
             - '@router'
             - '@security.csrf.token_manager'
