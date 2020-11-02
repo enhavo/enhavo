@@ -106,26 +106,12 @@ class RegistrationController extends AbstractController
         $user = $this->userRepository->findByConfirmationToken($token);
 
         if (null === $user) {
-            if ($request->isXmlHttpRequest()) {
-                return new JsonResponse([
-                    'error' => true,
-                    'errors' => ['registration.confirm.user.missing']
-                ]);
-            }
-
             throw new NotFoundHttpException(sprintf('A user with confirmation token "%s" does not exist', $token));
         }
 
         $this->userManager->confirm($user, $config, 'registration_confirm');
 
         $url = $this->generateUrl($this->userManager->getRedirectRoute($config, 'registration_confirm'));
-        if ($request->isXmlHttpRequest()) {
-            return new JsonResponse([
-                'error' => false,
-                'errors' => [],
-                'redirect_url' => $url,
-            ]);
-        }
 
         return new RedirectResponse($url);
     }
