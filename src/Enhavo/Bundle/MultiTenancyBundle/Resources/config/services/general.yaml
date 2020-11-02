@@ -27,4 +27,3 @@ services:
     Enhavo\Bundle\MultiTenancyBundle\Locale\TenantLocaleResolver:
         arguments:
             - '@enhavo_multi_tenancy.resolver'
-            - '@enhavo_app.locale_resolver'
