@@ -33,7 +33,7 @@ abstract class AbstractUrlActionType extends AbstractActionType
 
     public function createViewData(array $options, $resource = null)
     {
-        $data = parent::createViewData($options);
+        $data = parent::createViewData($options, $resource);
 
         $data = ArrayUtil::merge($data, [
             'url' => $this->getUrl($options, $resource)

@@ -12,6 +12,15 @@ class TenantExtension extends AbstractExtension
     /** @var TenantManager */
     private $manager;
 
+    /**
+     * TenantExtension constructor.
+     * @param TenantManager $manager
+     */
+    public function __construct(TenantManager $manager)
+    {
+        $this->manager = $manager;
+    }
+
     public function getFunctions()
     {
         return array(

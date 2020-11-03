@@ -1,6 +1,6 @@
 <?php
 
-namespace Enhavo\Bundle\MultiTenancyBundle\DependencyInjection\CompilerPass;
+namespace Enhavo\Bundle\MultiTenancyBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
