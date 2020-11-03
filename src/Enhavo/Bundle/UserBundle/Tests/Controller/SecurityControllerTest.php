@@ -1,0 +1,167 @@
+<?php
+/**
+ * @author blutze-media
+ * @since 2020-11-02
+ */
+
+namespace Controller;
+
+
+use Enhavo\Bundle\AppBundle\Template\TemplateManager;
+use Enhavo\Bundle\AppBundle\Viewer\ViewFactory;
+use Enhavo\Bundle\UserBundle\Controller\SecurityController;
+use Enhavo\Bundle\UserBundle\Model\User;
+use Enhavo\Bundle\UserBundle\Model\UserInterface;
+use Enhavo\Bundle\UserBundle\User\UserManager;
+use FOS\RestBundle\View\View;
+use FOS\RestBundle\View\ViewHandler;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\ParameterBag;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Csrf\CsrfToken;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Contracts\Translation\TranslatorInterface;
+
+class SecurityControllerTest extends TestCase
+{
+    private function createInstance(SecurityControllerTestDependencies $dependencies)
+    {
+        return new SecurityControllerMock(
+            $dependencies->userManager,
+            $dependencies->templateManager,
+            $dependencies->tokenManager
+        );
+    }
+
+    private function createDependencies(): SecurityControllerTestDependencies
+    {
+        $dependencies = new SecurityControllerTestDependencies();
+        $dependencies->userManager = $this->getMockBuilder(UserManager::class)->disableOriginalConstructor()->getMock();
+        $dependencies->templateManager = $this->getMockBuilder(TemplateManager::class)->disableOriginalConstructor()->getMock();
+        $dependencies->tokenManager = $this->getMockBuilder(CsrfTokenManagerInterface::class)->getMock();
+
+        return $dependencies;
+    }
+
+    public function testLoginAction()
+    {
+        $dependencies = $this->createDependencies();
+        $controller = $this->createInstance($dependencies);
+
+        /** @var Request|MockObject $request */
+        $request = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();
+        $request->attributes = new ParameterBag();
+        $request->attributes->set('_config', 'theme');
+
+        /** @var AuthenticationUtils|MockObject $authenticationUtils */
+        $authenticationUtils = $this->getMockBuilder(AuthenticationUtils::class)->disableOriginalConstructor()->getMock();
+        $authenticationUtils->method('getLastAuthenticationError')->willReturn('error');
+        $authenticationUtils->method('getLastUsername')->willReturn('username@enhavo.com');
+        $dependencies->tokenManager->method('getToken')->willReturn(new CsrfToken('_id_', '_value_'));
+        $dependencies->userManager->method('getTemplate')->willReturnCallback(function ($config, $action) {
+            $this->assertEquals('theme', $config);
+            $this->assertEquals('login', $action);
+
+            return 'login.html.twig';
+        });
+        $dependencies->userManager->method('getStylesheets')->willReturnCallback(function ($config, $action) {
+            $this->assertEquals('theme', $config);
+            $this->assertEquals('login', $action);
+
+            return [];
+        });
+        $dependencies->userManager->method('getJavascripts')->willReturnCallback(function ($config, $action) {
+            $this->assertEquals('theme', $config);
+            $this->assertEquals('login', $action);
+
+            return [];
+        });
+        $dependencies->templateManager->method('getTemplate')->willReturnCallback(function($template) {
+            return $template .'.managed';
+        });
+
+        $response = $controller->loginAction($request, $authenticationUtils);
+        $this->assertEquals('login.html.twig.managed.rendered', $response->getContent());
+    }
+
+    public function testLoginActionGranted()
+    {
+        $dependencies = $this->createDependencies();
+        $controller = $this->createInstance($dependencies);
+        $controller->isGranted = true;
+
+        /** @var Request|MockObject $request */
+        $request = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();
+        $request->attributes = new ParameterBag();
+        $request->attributes->set('_config', 'theme');
+
+        /** @var AuthenticationUtils|MockObject $authenticationUtils */
+        $authenticationUtils = $this->getMockBuilder(AuthenticationUtils::class)->disableOriginalConstructor()->getMock();
+
+        $dependencies->userManager->method('getRedirectRoute')->willReturnCallback(function ($config, $action) {
+            $this->assertEquals('theme', $config);
+            $this->assertEquals('login', $action);
+
+            return 'redirect.route';
+        });
+
+        $response = $controller->loginAction($request, $authenticationUtils);
+        $this->assertInstanceOf(RedirectResponse::class, $response);
+        $this->assertEquals('redirect.route.generated', $response->getTargetUrl());
+    }
+
+    public function testCheckAction()
+    {
+        $dependencies = $this->createDependencies();
+        $controller = $this->createInstance($dependencies);
+        $this->expectException(\LogicException::class);
+        $controller->checkAction();
+    }
+
+    public function testLogoutAction()
+    {
+        $dependencies = $this->createDependencies();
+        $controller = $this->createInstance($dependencies);
+        $this->expectException(\LogicException::class);
+        $controller->logoutAction();
+    }
+}
+
+class SecurityControllerTestDependencies
+{
+    /** @var UserManager|MockObject */
+    public $userManager;
+
+    /** @var TemplateManager|MockObject */
+    public $templateManager;
+
+    /** @var CsrfTokenManagerInterface|MockObject */
+    public $tokenManager;
+}
+
+class SecurityControllerMock extends SecurityController
+{
+    public $isGranted = false;
+    public $flashMessages = [];
+
+    protected function isGranted($role, $subject = null): bool
+    {
+        return $this->isGranted;
+    }
+
+    protected function render(string $view, array $parameters = [], Response $response = null): Response
+    {
+        return new Response($view . '.rendered', 200);
+    }
+
+    protected function generateUrl(string $route, array $parameters = [], int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
+    {
+        return $route . '.generated';
+    }
+}
