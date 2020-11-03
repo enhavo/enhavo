@@ -42,6 +42,7 @@ services:
             - '@fos_rest.view_handler'
             - '@view.factory'
             - '@Enhavo\Bundle\UserBundle\User\UserManager'
+            - '@translator'
         calls:
             - [ setContainer, [ '@service_container' ] ]
         tags:

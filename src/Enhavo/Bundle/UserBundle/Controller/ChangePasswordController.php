@@ -14,6 +14,7 @@ use Enhavo\Bundle\UserBundle\User\UserManager;
 use FOS\RestBundle\View\ViewHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ChangePasswordController extends AbstractController
 {
@@ -34,17 +35,22 @@ class ChangePasswordController extends AbstractController
      */
     private $userManager;
 
+    /** @var TranslatorInterface */
+    private $translator;
+
     /**
      * ChangePasswordController constructor.
      * @param ViewHandler $viewHandler
      * @param ViewFactory $viewFactory
      * @param UserManager $userManager
+     * @param TranslatorInterface $translator
      */
-    public function __construct(ViewHandler $viewHandler, ViewFactory $viewFactory, UserManager $userManager)
+    public function __construct(ViewHandler $viewHandler, ViewFactory $viewFactory, UserManager $userManager, TranslatorInterface $translator)
     {
         $this->viewHandler = $viewHandler;
         $this->viewFactory = $viewFactory;
         $this->userManager = $userManager;
+        $this->translator = $translator;
     }
 
     public function changeAction(Request $request)
@@ -61,9 +67,9 @@ class ChangePasswordController extends AbstractController
         if ($request->isMethod('POST')) {
             if ($form->isValid()) {
                 $this->userManager->update($user, false);
-                $this->addFlash('success', $this->get('translator')->trans('change_password.message.success', [], 'EnhavoUserBundle'));
+                $this->addFlash('success', $this->translator->trans('change_password.message.success', [], 'EnhavoUserBundle'));
             } else {
-                $this->addFlash('error', $this->get('translator')->trans('change_password.message.error', [], 'EnhavoUserBundle'));
+                $this->addFlash('error', $this->translator->trans('change_password.message.error', [], 'EnhavoUserBundle'));
             }
         }
 
