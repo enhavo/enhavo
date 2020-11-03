@@ -149,16 +149,28 @@ class ResetPasswordController extends AbstractController
             if ($form->isValid()) {
                 $this->userManager->changePassword($user);
                 $url = $this->generateUrl($this->userManager->getRedirectRoute($config, $action));
-                // todo: json response on xhttp
+
+                if ($request->isXmlHttpRequest()) {
+                    return new JsonResponse([
+                        'error' => false,
+                        'errors' => [],
+                        'redirect_url' => $url,
+                    ]);
+                }
+
 
                 return new RedirectResponse($url);
 
             } else {
                 $valid = false;
+                if ($request->isXmlHttpRequest()) {
+                    return new JsonResponse([
+                        'error' => true,
+                        'errors' => [], // todo: add errors from enhavo form error resolver
+                    ]);
+                }
             }
         }
-
-        // todo: json response on xhttp
 
         return $this->render($this->getTemplate($this->userManager->getTemplate($config, $action)), [
             'user' => $user,
@@ -175,7 +187,6 @@ class ResetPasswordController extends AbstractController
 
     public function finishAction(Request $request)
     {
-        $this->denyAccessUnlessGranted('ROLE_USER');
         $config = $request->attributes->get('_config');
 
         return $this->render($this->getTemplate($this->userManager->getTemplate($config, 'reset_password_finish')), [

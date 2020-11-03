@@ -21,6 +21,7 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -169,6 +170,146 @@ class ResetPasswordControllerTest extends TestCase
         $this->assertInstanceOf(Response::class, $response);
         $this->assertEquals('{"error":true,"errors":[],"message":"reset.form.error.invalid-user.translated"}', $response->getContent());
         $this->assertEquals('reset.form.error.invalid-user.translated', $controller->flashMessages['error']);
+    }
+
+    public function testCheck()
+    {
+        $dependencies = $this->createDependencies();
+        $dependencies->userManager->method('getTemplate')->willReturnCallback(function($config, $action) {
+            $this->assertEquals('theme', $config);
+            $this->assertEquals('reset_password_check', $action);
+
+            return 'check.html.twig';
+        });
+        $controller = $this->createInstance($dependencies);
+
+        /** @var Request|MockObject $request */
+        $request = $dependencies->request;
+        $request->attributes->set('_config', 'theme');
+
+        $response = $controller->checkAction($request);
+        $this->assertInstanceOf(Response::class, $response);
+        $this->assertEquals('check.html.twig.managed.rendered', $response->getContent());
+    }
+
+    public function testConfirm()
+    {
+        $dependencies = $this->createDependencies();
+        $dependencies->userManager->method('getRedirectRoute')->willReturn('redirect.route');
+        $dependencies->userRepository->method('findByConfirmationToken')->willReturn(new User());
+        $dependencies->userManager->method('getTemplate')->willReturnCallback(function($config, $action) {
+            $this->assertEquals('theme', $config);
+            $this->assertEquals('reset_password_confirm', $action);
+
+            return 'confirm.html.twig';
+        });
+        $controller = $this->createInstance($dependencies);
+
+        /** @var Request|MockObject $request */
+        $request = $dependencies->request;
+        $request->attributes->set('_config', 'theme');
+
+        $token = '__TOKEN__';
+
+        // unsubmitted
+        $response = $controller->confirmAction($request, $token);
+        $this->assertInstanceOf(Response::class, $response);
+        $this->assertEquals('confirm.html.twig.managed.rendered', $response->getContent());
+        $this->assertEquals(200, $response->getStatusCode());
+
+        // submitted invalid
+        $dependencies->isSubmitted = true;
+        $response = $controller->confirmAction($request, $token);
+        $this->assertInstanceOf(Response::class, $response);
+        $this->assertEquals('confirm.html.twig.managed.rendered', $response->getContent());
+        $this->assertEquals(400, $response->getStatusCode());
+
+        // submitted valid
+        $dependencies->isSubmitted = true;
+        $dependencies->isValid = true;
+        $response = $controller->confirmAction($request, $token);
+        $this->assertInstanceOf(RedirectResponse::class, $response);
+        $this->assertEquals('redirect.route.generated', $response->getTargetUrl());
+    }
+
+    public function testConfirmAjax()
+    {
+        $dependencies = $this->createDependencies();
+        $dependencies->userManager->method('getRedirectRoute')->willReturn('redirect.route');
+        $dependencies->userRepository->method('findByConfirmationToken')->willReturn(new User());
+        $dependencies->userManager->method('getTemplate')->willReturnCallback(function($config, $action) {
+            $this->assertEquals('theme', $config);
+            $this->assertEquals('reset_password_confirm', $action);
+
+            return 'confirm.html.twig';
+        });
+        $controller = $this->createInstance($dependencies);
+
+        /** @var Request|MockObject $request */
+        $request = $dependencies->request;
+        $request->method('isXmlHttpRequest')->willReturn(true);
+        $request->attributes->set('_config', 'theme');
+
+        $token = '__TOKEN__';
+
+        // unsubmitted
+        $response = $controller->confirmAction($request, $token);
+        $this->assertInstanceOf(Response::class, $response);
+        $this->assertEquals('confirm.html.twig.managed.rendered', $response->getContent());
+        $this->assertEquals(200, $response->getStatusCode());
+
+        // submitted invalid
+        $dependencies->isSubmitted = true;
+        $response = $controller->confirmAction($request, $token);
+        $this->assertInstanceOf(JsonResponse::class, $response);
+        $this->assertEquals('{"error":true,"errors":[]}', $response->getContent());
+
+        // submitted valid
+        $dependencies->isSubmitted = true;
+        $dependencies->isValid = true;
+        $response = $controller->confirmAction($request, $token);
+        $this->assertInstanceOf(JsonResponse::class, $response);
+        $this->assertEquals('{"error":false,"errors":[],"redirect_url":"redirect.route.generated"}', $response->getContent());
+    }
+
+
+    public function testConfirmNotFound()
+    {
+        $dependencies = $this->createDependencies();
+        $dependencies->userRepository->method('findByConfirmationToken')->willReturn(null);
+        $dependencies->userManager->expects($this->never())->method('confirm');
+        $controller = $this->createInstance($dependencies);
+
+        /** @var Request|MockObject $request */
+        $request = $dependencies->request;
+        $request->attributes->set('_config', 'theme');
+
+        $token = '__TOKEN__';
+        $this->expectException(NotFoundHttpException::class);
+        $controller->confirmAction($request, $token);
+
+    }
+
+    public function testFinish()
+    {
+        $dependencies = $this->createDependencies();
+        $dependencies->userManager->method('getTemplate')->willReturnCallback(function($config, $action) {
+            $this->assertEquals('theme', $config);
+            $this->assertEquals('reset_password_finish', $action);
+
+            return 'finish.html.twig';
+        });
+
+        $controller = $this->createInstance($dependencies);
+
+        /** @var Request|MockObject $request */
+        $request = $dependencies->request;
+        $request->attributes->set('_config', 'theme');
+
+        $response = $controller->finishAction($request);
+        $this->assertInstanceOf(Response::class, $response);
+        $this->assertEquals('finish.html.twig.managed.rendered', $response->getContent());
+
     }
 }
 

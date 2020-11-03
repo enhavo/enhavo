@@ -145,7 +145,12 @@ class RegistrationControllerTest extends TestCase
     public function testCheck()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->userManager->method('getTemplate')->willReturn('check.html.twig');
+        $dependencies->userManager->method('getTemplate')->willReturnCallback(function($config, $action) {
+            $this->assertEquals('theme', $config);
+            $this->assertEquals('registration_check', $action);
+
+            return 'check.html.twig';
+        });
         $controller = $this->createInstance($dependencies);
 
         /** @var Request|MockObject $request */
@@ -197,7 +202,12 @@ class RegistrationControllerTest extends TestCase
     public function testFinish()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->userManager->method('getTemplate')->willReturn('finish.html.twig');
+        $dependencies->userManager->method('getTemplate')->willReturnCallback(function($config, $action) {
+            $this->assertEquals('theme', $config);
+            $this->assertEquals('registration_finish', $action);
+
+            return 'finish.html.twig';
+        });
         $controller = $this->createInstance($dependencies);
 
         /** @var Request|MockObject $request */
