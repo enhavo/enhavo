@@ -8,7 +8,6 @@ use Enhavo\Bundle\UserBundle\Repository\UserRepository;
 use Enhavo\Bundle\UserBundle\User\UserManager;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Exception\SuspiciousOperationException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,6 +20,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class ResetPasswordController extends AbstractController
 {
+    use FlashMessagesTrait;
+
     /** @var UserManager */
     private $userManager;
 
@@ -197,21 +198,5 @@ class ResetPasswordController extends AbstractController
     private function getTemplate($template)
     {
         return $this->templateManager->getTemplate($template);
-    }
-
-    protected function getFlashMessages()
-    {
-        $flashBag = $this->container->get('session')->getFlashBag();
-        $messages = [];
-        $types = ['success', 'error', 'notice', 'warning'];
-        foreach ($types as $type) {
-            foreach ($flashBag->get($type) as $message) {
-                $messages[] = [
-                    'message' => is_array($message) ? $message['message'] : $message,
-                    'type' => $type
-                ];
-            }
-        }
-        return $messages;
     }
 }

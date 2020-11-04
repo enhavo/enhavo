@@ -6,6 +6,7 @@ use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\UserBundle\Factory\UserFactory;
 use Enhavo\Bundle\UserBundle\Form\Type\ChangePasswordFormType;
 use Enhavo\Bundle\UserBundle\Form\Type\GroupType;
+use Enhavo\Bundle\UserBundle\Form\Type\ProfileType;
 use Enhavo\Bundle\UserBundle\Form\Type\RegistrationType;
 use Enhavo\Bundle\UserBundle\Form\Type\ResetPasswordRequestType;
 use Enhavo\Bundle\UserBundle\Form\Type\ResetPasswordType;
@@ -125,6 +126,14 @@ class Configuration implements ConfigurationInterface
             ->scalarNode('mail_subject')->defaultValue('confirmation.mail.subject')->end()
             ->scalarNode('translation_domain')->defaultValue('EnhavoUserBundle')->end()
             ->scalarNode('redirect_route')->defaultValue('enhavo_user_theme_registration_finish')->end()
+        ->end();
+
+        $themeNode->arrayNode('profile')->addDefaultsIfNotSet()->children()
+            ->scalarNode('template')->defaultValue('theme/resource/user/profile.html.twig')->end()
+            ->arrayNode('form')->addDefaultsIfNotSet()->children()
+                ->scalarNode('class')->defaultValue(ProfileType::class)->end()
+                ->scalarNode('options')->defaultValue([])->end()
+            ->end()
         ->end();
 
         $themeNode->arrayNode('reset_password_request')->addDefaultsIfNotSet()->children()

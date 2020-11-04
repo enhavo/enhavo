@@ -9,6 +9,7 @@ use Enhavo\Bundle\UserBundle\User\UserManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class UserController
@@ -16,29 +17,38 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class UserController extends AbstractController
 {
+    use FlashMessagesTrait;
+
     /** @var UserManager */
     private $userManager;
 
     /** @var TemplateManager */
     private $templateManager;
 
+    /** @var TranslatorInterface */
+    private $translator;
+
     /**
      * UserController constructor.
      * @param UserManager $userManager
      * @param TemplateManager $templateManager
+     * @param TranslatorInterface $translator
      */
-    public function __construct(UserManager $userManager, TemplateManager $templateManager)
+    public function __construct(UserManager $userManager, TemplateManager $templateManager, TranslatorInterface $translator)
     {
         $this->userManager = $userManager;
         $this->templateManager = $templateManager;
+        $this->translator = $translator;
     }
 
 
     public function profileAction(Request $request)
     {
+        $config = $request->attributes->get('_config');
+
         /** @var UserInterface $user */
         $user = $this->getUser();
-        $form = $this->createForm(ProfileType::class, $user);
+        $form = $this->userManager->createForm($config, 'profile', $user);
         $form->handleRequest($request);
 
         $message = null;
@@ -47,7 +57,8 @@ class UserController extends AbstractController
             if ($form->isValid()) {
 
                 $this->userManager->update($user);
-                $message = 'success';
+                $message = $this->translator->trans('profile.update.success', [], 'EnhavoUserBundle');
+                $this->addFlash('success', $message);
 
                 if ($request->isXmlHttpRequest()) {
                     return new JsonResponse([
@@ -57,21 +68,23 @@ class UserController extends AbstractController
                     ]);
                 }
             } else {
-                $message = 'error';
-
+                $message = $this->translator->trans('profile.update.error', [], 'EnhavoUserBundle');
+                $this->addFlash('error', $message);
                 if ($request->isXmlHttpRequest()) {
                     return new JsonResponse([
                         'error' => true,
-                        'errors' => ['error'],
+                        'errors' => [], // todo: add errors from enhavo error resolver
                         'message' => $message,
                     ]);
                 }
             }
         }
 
-        return $this->render($this->templateManager->getTemplate('theme/resource/user/profile.html.twig'), [
+        return $this->render($this->templateManager->getTemplate($this->userManager->getTemplate($config, 'profile')), [
             'form' => $form->createView(),
-            'message' => $message,
+            'data' => [
+                'messages' => $this->getFlashMessages()
+            ],
         ]);
     }
 }

@@ -345,8 +345,6 @@ class ResetPasswordControllerTestDependencies
 
 class ResetPasswordControllerMock extends ResetPasswordController
 {
-    public $flashMessages = [];
-
     protected function render(string $view, array $parameters = [], Response $response = null): Response
     {
         return new Response($view .'.rendered');
@@ -357,6 +355,7 @@ class ResetPasswordControllerMock extends ResetPasswordController
         return $route .'.generated';
     }
 
+    public $flashMessages = [];
     protected function getFlashMessages()
     {
         return $this->flashMessages;
