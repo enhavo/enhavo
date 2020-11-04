@@ -30,5 +30,9 @@ class UserChecker implements UserCheckerInterface
         if (!$user instanceof EnhavoUserInterface) {
             throw new UserNotSupportedException(sprintf('User has to be of type "%s"', EnhavoUserInterface::class ));
         }
+
+        if (false === $user->isEnabled()) {
+            throw new AccountDisabledException('User account not enabled');
+        }
     }
 }

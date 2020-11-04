@@ -23,7 +23,7 @@ class User implements UserInterface, GroupableInterface, ResourceInterface
     /**
      * @var bool
      */
-    protected $enabled = true;
+    protected $enabled = false;
 
     /**
      * @var string|null

@@ -43,7 +43,6 @@ services:
     Enhavo\Bundle\UserBundle\Security\Authentication\FormLoginAuthenticator:
         arguments:
             - '@Enhavo\Bundle\UserBundle\User\UserManager'
-            - '@doctrine.orm.entity_manager'
             - '@router'
             - '@security.csrf.token_manager'
             - '@security.user_password_encoder.generic'

@@ -3,7 +3,6 @@
 namespace Enhavo\Bundle\UserBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Template\TemplateManager;
-use Enhavo\Bundle\UserBundle\Form\Type\ProfileType;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Enhavo\Bundle\UserBundle\User\UserManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

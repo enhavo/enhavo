@@ -53,6 +53,7 @@ services:
         arguments:
             - '@Enhavo\Bundle\UserBundle\User\UserManager'
             - '@enhavo_app.template.manager'
+            - '@translator'
         calls:
             - [ setContainer, [ '@service_container' ] ]
         tags:
