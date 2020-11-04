@@ -18,4 +18,4 @@ services:
             - '@doctrine.orm.entity_manager'
             - '@Enhavo\Bundle\BlockBundle\Block\BlockManager'
         tags:
-            - { name: console.command, command: 'debug:enhavo-block-use' }
+            - { name: console.command, command: 'debug:enhavo:block' }
