@@ -66,6 +66,9 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $this->userManager->register($user, $config, 'registration_register');
+                if ($this->userManager->getConfig($config, 'registration_register', 'auto_login', false)) {
+                    $this->userManager->login($user);
+                }
                 $url = $this->generateUrl($this->userManager->getRedirectRoute($config, 'registration_register'));
 
                 if ($request->isXmlHttpRequest()) {
@@ -111,6 +114,9 @@ class RegistrationController extends AbstractController
         }
 
         $this->userManager->confirm($user, $config, 'registration_confirm');
+        if ($this->userManager->getConfig($config, 'registration_confirm', 'auto_login', false)) {
+            $this->userManager->login($user);
+        }
 
         $url = $this->generateUrl($this->userManager->getRedirectRoute($config, 'registration_confirm'));
 

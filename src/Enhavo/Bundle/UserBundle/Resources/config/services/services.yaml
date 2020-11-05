@@ -11,6 +11,8 @@ services:
             - '@security.encoder_factory.generic'
             - '@router'
             - '@event_dispatcher'
+            - '@security.token_storage'
+            - '@session'
             - '%enhavo_user.config%'
 
     Enhavo\Bundle\UserBundle\EventListener\SaveUserSubscriber:

@@ -149,6 +149,10 @@ class ResetPasswordController extends AbstractController
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $this->userManager->changePassword($user);
+                if ($this->userManager->getConfig($config, $action, 'auto_login', false)) {
+                    $this->userManager->login($user);
+                }
+
                 $url = $this->generateUrl($this->userManager->getRedirectRoute($config, $action));
 
                 if ($request->isXmlHttpRequest()) {
@@ -158,7 +162,6 @@ class ResetPasswordController extends AbstractController
                         'redirect_url' => $url,
                     ]);
                 }
-
 
                 return new RedirectResponse($url);
 

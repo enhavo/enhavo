@@ -20,8 +20,8 @@ Feature: Admin Login
     @web
     Scenario: Log in with bad credentials
         Given I am on "/admin/login"
-        And I wait for "[name=_username]"
-        And I fill in "_username" with "admin@enhavo.com"
+        And I wait for "[name=_email]"
+        And I fill in "_email" with "admin@enhavo.com"
         And I fill in "_password" with "wrong_password"
         And I press "#_submit"
         And I wait for "#overlayMessage"
@@ -31,8 +31,8 @@ Feature: Admin Login
     @web
     Scenario: Go to login page
         Given I am on "/admin"
-        And I wait for "[name=_username]"
-        And I fill in "_username" with "admin@enhavo.com"
+        And I wait for "[name=_email]"
+        And I fill in "_email" with "admin@enhavo.com"
         And I fill in "_password" with "admin"
         And I press "#_submit"
         And I wait for ".app-toolbar" seconds

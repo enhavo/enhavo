@@ -17,10 +17,16 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\OptionsResolver\Exception\OptionDefinitionException;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class UserManager
@@ -55,6 +61,12 @@ class UserManager
     /** @var EventDispatcherInterface */
     private $eventDispatcher;
 
+    /** @var TokenStorageInterface */
+    private $tokenStorage;
+
+    /** @var Session */
+    private $session;
+
     /** @var array */
     private $config;
 
@@ -70,9 +82,11 @@ class UserManager
      * @param EncoderFactoryInterface $encoderFactory
      * @param RouterInterface $router
      * @param EventDispatcherInterface $eventDispatcher
+     * @param TokenStorageInterface $tokenStorage
+     * @param Session $session
      * @param array $config
      */
-    public function __construct(EntityManagerInterface $entityManager, MailerManager $mailerManager, RepositoryInterface $userRepository, UserMapperInterface $userMapper, TokenGeneratorInterface $tokenGenerator, TranslatorInterface $translator, FormFactoryInterface $formFactory, EncoderFactoryInterface $encoderFactory, RouterInterface $router, EventDispatcherInterface $eventDispatcher, array $config)
+    public function __construct(EntityManagerInterface $entityManager, MailerManager $mailerManager, RepositoryInterface $userRepository, UserMapperInterface $userMapper, TokenGeneratorInterface $tokenGenerator, TranslatorInterface $translator, FormFactoryInterface $formFactory, EncoderFactoryInterface $encoderFactory, RouterInterface $router, EventDispatcherInterface $eventDispatcher, TokenStorageInterface $tokenStorage, Session $session, array $config)
     {
         $this->entityManager = $entityManager;
         $this->mailerManager = $mailerManager;
@@ -84,9 +98,40 @@ class UserManager
         $this->encoderFactory = $encoderFactory;
         $this->router = $router;
         $this->eventDispatcher = $eventDispatcher;
+        $this->tokenStorage = $tokenStorage;
+        $this->session = $session;
         $this->config = $config;
     }
 
+    public function login($firewallName, UserInterface $user, ?Response $response)
+    {
+        $this->userChecker->checkPreAuth($user);
+
+        $token = $this->createToken($firewallName, $user);
+        $request = $this->requestStack->getCurrentRequest();
+
+        if (null !== $request) {
+            $this->sessionStrategy->onAuthentication($request, $token);
+
+            if (null !== $response && null !== $this->rememberMeService) {
+                $this->rememberMeService->loginSuccess($request, $response, $token);
+            }
+        }
+
+        $this->tokenStorage->setToken($token);
+
+    }
+
+//    public function login(UserInterface $user)
+//    {
+//        $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
+//        $this->tokenStorage->setToken($token);
+//
+//        $this->session->set('_security_main', serialize($token));
+//
+////        $event = new InteractiveLoginEvent($request, $token);
+////        $this->eventDispatcher->dispatch($event);
+//    }
 
     public function add(UserInterface $user)
     {
