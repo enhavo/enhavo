@@ -218,6 +218,34 @@ class FormLoginAuthenticatorTest extends TestCase
         $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertEquals('config.login.route.generated', $response->getTargetUrl());
     }
+
+    public function testGetPassword()
+    {
+        $dependencies = $this->createDependencies();
+        $instance = $this->createInstance($dependencies);
+
+        $this->assertEquals('__PW__', $instance->getPassword([
+            'password' => '__PW__',
+            'bassword' => '__BW__'
+        ]));
+    }
+
+    public function testCheckCredentials()
+    {
+        $dependencies = $this->createDependencies();
+        $dependencies->passwordEncoder->expects($this->once())->method('isPasswordValid')->willReturnCallback(function ($user, $pw) {
+            $this->assertEquals('__PW__', $pw);
+
+            return true;
+        });
+
+        $instance = $this->createInstance($dependencies);
+
+        $user = new UserMock();
+        $this->assertTrue($instance->checkCredentials([
+            'password' => '__PW__',
+        ], $user));
+    }
 }
 
 class FormLoginAuthenticatorTestDependencies
