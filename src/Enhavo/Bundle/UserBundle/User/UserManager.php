@@ -163,6 +163,16 @@ class UserManager
         }
     }
 
+    public function updatePassword(UserInterface $user)
+    {
+        $this->hashPassword($user);
+    }
+
+    public function updateUsername(UserInterface $user)
+    {
+        $this->userMapper->setUsername($user);
+    }
+
     public function createForm($config, $action, ?UserInterface $user, array $options = []): FormInterface
     {
         $formConfig = $this->getConfig($config, $action, 'form');
@@ -170,7 +180,6 @@ class UserManager
 
         return $this->formFactory->create($formConfig['class'], $user, $options);
     }
-
 
     public function getConfig($config, $action = null, $item = null, $fallback = null)
     {
@@ -240,16 +249,6 @@ class UserManager
     private function getMailSubject($options)
     {
         return $this->trans($options['mail_subject'], [], $options['translation_domain']);
-    }
-
-    public function updatePassword(UserInterface $user)
-    {
-        $this->hashPassword($user);
-    }
-
-    public function updateUsername(UserInterface $user)
-    {
-        $this->userMapper->setUsername($user);
     }
 
     public function mapValues(UserInterface $user, array $values)

@@ -34,7 +34,6 @@ class UserContext implements Context, ClientAwareContext, KernelAwareContext
             }
             if(array_key_exists('password', $data)) {
                 $user->setPlainPassword($data['password']);
-                $this->getContainer()->get('Enhavo\Bundle\UserBundle\User\UserManager')->updatePassword($user);
             }
             if(array_key_exists('roles', $data)) {
                 $roles = explode(',', $data['roles']);
@@ -44,7 +43,7 @@ class UserContext implements Context, ClientAwareContext, KernelAwareContext
                 $user->setRoles($roles);
             }
         }
-        $this->getManager()->flush();
+        $this->getContainer()->get('Enhavo\Bundle\UserBundle\User\UserManager')->update($user);
     }
 
     /**
@@ -60,7 +59,7 @@ class UserContext implements Context, ClientAwareContext, KernelAwareContext
             $em->persist($group);
         }
         $user->setRoles(['ROLE_SUPER_ADMIN']);
-        $em->persist($user);
+        $this->get('Enhavo\Bundle\UserBundle\User\UserManager')->update($user, true, false);
         $em->flush();
     }
 
@@ -139,8 +138,7 @@ class UserContext implements Context, ClientAwareContext, KernelAwareContext
         if($user === null) {
             $user = new User();
             $user->setEmail($email);
-            $user->setUsername($username);
-            $this->getManager()->persist($user);
+            $this->get('Enhavo\Bundle\UserBundle\User\UserManager')->update($user);
         }
 
         return $user;
