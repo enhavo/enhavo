@@ -19,11 +19,6 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
-    Enhavo\Bundle\UserBundle\EventListener\TargetPathSubscriber:
-        arguments: [ '@session' ]
-        tags:
-            - { name: kernel.event_subscriber }
-
     Enhavo\Bundle\UserBundle\Security\Authentication\Voter\GroupRoleVoter:
         public: false
         tags:

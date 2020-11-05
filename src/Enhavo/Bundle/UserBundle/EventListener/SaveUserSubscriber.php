@@ -32,10 +32,10 @@ class SaveUserSubscriber implements EventSubscriberInterface
 
     public static function getSubscribedEvents()
     {
-        return array(
-            'enhavo_user.user.pre_update' => array('onSave', 1),
-            'enhavo_user.user.pre_create' => array('onSave', 1),
-        );
+        return [
+            'enhavo_user.user.pre_update' => ['onSave', 1],
+            'enhavo_user.user.pre_create' => ['onSave', 1],
+        ];
     }
 
     public function onSave(GenericEvent $event)
