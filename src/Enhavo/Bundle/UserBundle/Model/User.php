@@ -37,7 +37,7 @@ class User implements UserInterface, GroupableInterface, ResourceInterface
 
     /**
      *
-     * @var string
+     * @var string|null
      */
     protected $salt;
 
@@ -359,9 +359,9 @@ class User implements UserInterface, GroupableInterface, ResourceInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getSalt(): string
+    public function getSalt()
     {
         return $this->salt;
     }

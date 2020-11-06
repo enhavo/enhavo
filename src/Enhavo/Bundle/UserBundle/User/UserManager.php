@@ -140,7 +140,7 @@ class UserManager
 
     public function add(UserInterface $user)
     {
-        $this->update($user, true);
+        $this->update($user);
 
         $event = new UserEvent(UserEvent::TYPE_CREATED, $user);
         $this->eventDispatcher->dispatch($event);
@@ -157,7 +157,7 @@ class UserManager
     public function activate(UserInterface $user)
     {
         $this->enable($user);
-        $this->update($user);
+        $this->update($user, false);
 
         $event = new UserEvent(UserEvent::TYPE_ACTIVATED, $user);
         $this->eventDispatcher->dispatch($event);
@@ -166,7 +166,7 @@ class UserManager
     public function confirm(UserInterface $user, $config, $action)
     {
         $this->enable($user);
-        $this->update($user);
+        $this->update($user, false);
 
         $event = new UserEvent(UserEvent::TYPE_REGISTRATION_CONFIRMED, $user);
         $this->eventDispatcher->dispatch($event);
@@ -177,7 +177,7 @@ class UserManager
     public function resetPassword(UserInterface $user, $config, $action)
     {
         $user->setConfirmationToken($this->tokenGenerator->generateToken());
-        $this->update($user);
+        $this->update($user, false);
 
         $event = new UserEvent(UserEvent::TYPE_PASSWORD_RESET_REQUESTED, $user);
         $this->eventDispatcher->dispatch($event);
@@ -194,7 +194,7 @@ class UserManager
     public function changePassword(UserInterface $user)
     {
         $user->setConfirmationToken(null);
-        $this->update($user);
+        $this->update($user, false);
 
         $event = new UserEvent(UserEvent::TYPE_PASSWORD_CHANGED, $user);
         $this->eventDispatcher->dispatch($event);

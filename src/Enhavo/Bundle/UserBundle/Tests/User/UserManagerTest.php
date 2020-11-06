@@ -8,11 +8,13 @@ namespace Enhavo\Bundle\UserBundle\Tests\User;
 
 
 use Doctrine\ORM\EntityManagerInterface;
+use Enhavo\Bundle\AppBundle\Exception\PropertyNotExistsException;
 use Enhavo\Bundle\AppBundle\Mailer\MailerManager;
 use Enhavo\Bundle\AppBundle\Mailer\Message;
 use Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface;
 use Enhavo\Bundle\UserBundle\Event\UserEvent;
 use Enhavo\Bundle\UserBundle\Mapper\UserMapper;
+use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Enhavo\Bundle\UserBundle\Repository\UserRepository;
 use Enhavo\Bundle\UserBundle\Tests\Mocks\UserMock;
 use Enhavo\Bundle\UserBundle\User\UserManager;
@@ -21,20 +23,39 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\Exception\OptionDefinitionException;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
+use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
+use Symfony\Component\Security\Http\RememberMe\RememberMeServicesInterface;
 use Symfony\Component\Security\Http\Session\SessionAuthenticationStrategyInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class UserManagerTest extends TestCase
 {
-    private function createInstance(UserManagerTestDependencies $dependencies, $config, $mapping)
+    private function createInstance(UserManagerTestDependencies $dependencies, $config, array $mapping = null)
     {
+        if (!$mapping) {
+            $mapping = [
+                UserMapper::REGISTER_PROPERTIES => [
+                    'customerId',
+                    'email'
+                ],
+                UserMapper::CREDENTIAL_PROPERTIES => [
+                    'customerId',
+                    'email'
+                ],
+                'glue' => '.',
+            ];
+        }
+
         return new UserManager(
             $dependencies->entityManager,
             $dependencies->mailerManager,
@@ -48,9 +69,9 @@ class UserManagerTest extends TestCase
             $dependencies->eventDispatcher,
             $dependencies->tokenStorage,
             $dependencies->requestStack,
-            $dependencies->authenticationStrategy,
+            $dependencies->sessionStrategy,
             $dependencies->userChecker,
-            null,
+            $dependencies->rememberMeService,
             $config
         );
     }
@@ -86,7 +107,7 @@ class UserManagerTest extends TestCase
 
         $dependencies->tokenStorage = $this->getMockBuilder(TokenStorageInterface::class)->getMock();
         $dependencies->requestStack = $this->getMockBuilder(RequestStack::class)->disableOriginalConstructor()->getMock();
-        $dependencies->authenticationStrategy = $this->getMockBuilder(SessionAuthenticationStrategyInterface::class)->getMock();
+        $dependencies->sessionStrategy = $this->getMockBuilder(SessionAuthenticationStrategyInterface::class)->getMock();
         $dependencies->userChecker = $this->getMockBuilder(UserCheckerInterface::class)->getMock();
 
         return $dependencies;
@@ -140,16 +161,6 @@ class UserManagerTest extends TestCase
                     'content_type' => 'content/type'
                 ]
             ]
-        ], [
-            UserMapper::REGISTER_PROPERTIES => [
-                'customerId',
-                'email'
-            ],
-            UserMapper::CREDENTIAL_PROPERTIES => [
-                'customerId',
-                'email'
-            ],
-            'glue' => '.',
         ]);
 
         $manager->register($user, 'theme', 'register');
@@ -209,16 +220,6 @@ class UserManagerTest extends TestCase
                     'content_type' => 'content/type'
                 ]
             ]
-        ], [
-            UserMapper::REGISTER_PROPERTIES => [
-                'customerId',
-                'email'
-            ],
-            UserMapper::CREDENTIAL_PROPERTIES => [
-                'customerId',
-                'email'
-            ],
-            'glue' => '.',
         ]);
 
         $manager->confirm($user, 'theme', 'confirm');
@@ -278,16 +279,6 @@ class UserManagerTest extends TestCase
                     'content_type' => 'content/type'
                 ]
             ]
-        ], [
-            UserMapper::REGISTER_PROPERTIES => [
-                'customerId',
-                'email'
-            ],
-            UserMapper::CREDENTIAL_PROPERTIES => [
-                'customerId',
-                'email'
-            ],
-            'glue' => '.',
         ]);
 
         $manager->resetPassword($user, 'theme', 'reset_password');
@@ -313,17 +304,7 @@ class UserManagerTest extends TestCase
             $this->assertEquals($user, $event->getUser());
         });
 
-        $manager = $this->createInstance($dependencies, [], [
-            UserMapper::REGISTER_PROPERTIES => [
-                'customerId',
-                'email'
-            ],
-            UserMapper::CREDENTIAL_PROPERTIES => [
-                'customerId',
-                'email'
-            ],
-            'glue' => '.',
-        ]);
+        $manager = $this->createInstance($dependencies, []);
 
         $manager->changePassword($user);
         $this->assertEquals('password.hashed', $user->getPassword());
@@ -463,6 +444,107 @@ class UserManagerTest extends TestCase
         ], $manager->getConfig('section1'));
     }
 
+    public function testActivate()
+    {
+        $user = new UserMock();
+        $user->setCustomerId('1337');
+        $user->setEmail('activate@enhavo.com');
+        $user->setEnabled(false);
+        $user->setConfirmationToken('token');
+        $user->setPlainPassword('');
+
+        $dependencies = $this->createDependencies();
+        $dependencies->eventDispatcher->expects($this->once())->method('dispatch')->willReturnCallback(function ($event) use ($user) {
+            /** @var UserEvent $event */
+            $this->assertInstanceOf(UserEvent::class, $event);
+            $this->assertEquals(UserEvent::TYPE_ACTIVATED, $event->getType());
+            $this->assertEquals($user, $event->getUser());
+        });
+        $dependencies->entityManager->expects($this->never())->method('persist');
+        $dependencies->entityManager->expects($this->once())->method('flush');
+        $dependencies->encoderFactory->expects($this->never())->method('getEncoder');
+
+        $manager = $this->createInstance($dependencies, []);
+
+        $manager->activate($user);
+
+        $this->assertTrue($user->isEnabled());
+        $this->assertNull($user->getConfirmationToken());
+    }
+
+    public function testLogin()
+    {
+        $user = new UserMock();
+        $user->addRole(UserInterface::ROLE_DEFAULT);
+        $user->setCustomerId('1337');
+        $user->setEmail('activate@enhavo.com');
+
+        $request = new Request();
+
+        $dependencies = $this->createDependencies();
+        $dependencies->tokenStorage->expects($this->exactly(2))->method('setToken')->willReturnCallback(function ($token) {
+            $this->assertInstanceOf(UsernamePasswordToken::class, $token);
+        });
+        $dependencies->sessionStrategy->expects($this->exactly(2))->method('onAuthentication');
+        $dependencies->requestStack->expects($this->exactly(2))->method('getCurrentRequest')->willReturn($request);
+        $manager = $this->createInstance($dependencies, []);
+
+        $manager->login('main', $user, null);
+
+        $dependencies->rememberMeService = $this->getMockBuilder(RememberMeServicesInterface::class)->getMock();
+        $dependencies->rememberMeService->expects($this->once())->method('loginSuccess')->willReturnCallback(function ($request, $response, $token) {
+            $this->assertInstanceOf(Request::class, $request);
+            $this->assertInstanceOf(Response::class, $response);
+        });
+        $manager = $this->createInstance($dependencies, []);
+
+        $manager->login('main', $user, new Response());
+    }
+
+
+    public function testUpdatePassword()
+    {
+        $dependencies = $this->createDependencies();
+        $dependencies->encoderFactory = $this->getMockBuilder(EncoderFactoryInterface::class)->getMock();
+        $encoder = new NativePasswordEncoder();
+        $dependencies->encoderFactory->method('getEncoder')->willReturn($encoder);
+        $manager = $this->createInstance($dependencies, []);
+
+        $user = new UserMock();
+        $user->setPlainPassword('nosalt');
+        $user->setSalt('notnull');
+
+        $manager->updatePassword($user);
+
+        $this->assertNull($user->getPlainPassword());
+        $this->assertNull($user->getSalt());
+    }
+
+    public function testMapValues()
+    {
+        $dependencies = $this->createDependencies();
+        $manager = $this->createInstance($dependencies, []);
+
+        $user = new UserMock();
+        $values = [
+            'customerId' => 1337,
+            'email' => 'e@mail.com',
+        ];
+
+        $manager->mapValues($user, $values);
+
+        $this->assertEquals(1337, $user->getCustomerId());
+        $this->assertEquals('e@mail.com', $user->getEmail());
+
+        $this->expectException(PropertyNotExistsException::class);
+
+        $values = [
+            'clusterId' => 'abcdefg',
+            'email' => 'hijklmnop',
+        ];
+
+        $manager->mapValues($user, $values);
+    }
 }
 
 class UserManagerTestDependencies
@@ -510,10 +592,13 @@ class UserManagerTestDependencies
     public $requestStack;
 
     /** @var SessionAuthenticationStrategyInterface|MockObject */
-    public $authenticationStrategy;
+    public $sessionStrategy;
 
     /** @var UserCheckerInterface|MockObject */
     public $userChecker;
+
+    /** @var RememberMeServicesInterface|MockObject */
+    public $rememberMeService;
 
     public function getUserMapper($config): UserMapper
     {

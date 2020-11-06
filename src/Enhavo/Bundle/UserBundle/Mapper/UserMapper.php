@@ -80,9 +80,9 @@ class UserMapper implements UserMapperInterface
 
     private function hasProperty($property)
     {
-        $reg = false !== array_search($property, $this->config[self::REGISTER_PROPERTIES]);
-        $cre = false !== array_search($property, $this->config[self::CREDENTIAL_PROPERTIES]);
-        return $reg || $cre;
+        $register = false !== array_search($property, $this->config[self::REGISTER_PROPERTIES]);
+        $credential = false !== array_search($property, $this->config[self::CREDENTIAL_PROPERTIES]);
+        return $register || $credential;
     }
 
     public function mapValues(UserInterface $user, array $values)
