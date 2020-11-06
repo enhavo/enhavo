@@ -93,11 +93,19 @@ class Configuration implements ConfigurationInterface
     {
         $subNode = $rootNode->children();
 
+        $mailNode = $subNode->arrayNode('mail')->addDefaultsIfNotSet()->children();
+        $mailNode
+            ->variableNode('from')->end()
+            ->variableNode('sender_name')->end()
+        ;
+        $mailNode->end();
+
         $mapperNode = $subNode->arrayNode('mapper')->addDefaultsIfNotSet()->children();
         $mapperNode
             ->variableNode('credential_properties')->defaultValue(['email'])->end()
             ->variableNode('register_properties')->defaultValue(['email'])->end()
-            ->scalarNode('glue')->defaultValue('.')->end();
+            ->scalarNode('glue')->defaultValue('.')->end()
+        ;
 
         $mapperNode->end();
 

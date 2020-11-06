@@ -17,6 +17,7 @@ services:
             - '@security.user_checker.main'
             - ~
             - '%enhavo_user.config%'
+            - '%enhavo_user.mail%'
 
     Enhavo\Bundle\UserBundle\EventListener\SaveUserSubscriber:
         arguments:

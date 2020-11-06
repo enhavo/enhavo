@@ -80,6 +80,9 @@ class UserManager
     /** @var array */
     private $config;
 
+    /** @var array */
+    private $mail;
+
     /**
      * UserManager constructor.
      * @param EntityManagerInterface $entityManager
@@ -98,8 +101,9 @@ class UserManager
      * @param UserCheckerInterface $userChecker
      * @param RememberMeServicesInterface|null $rememberMeService
      * @param array $config
+     * @param array $mail
      */
-    public function __construct(EntityManagerInterface $entityManager, MailerManager $mailerManager, RepositoryInterface $userRepository, UserMapperInterface $userMapper, TokenGeneratorInterface $tokenGenerator, TranslatorInterface $translator, FormFactoryInterface $formFactory, EncoderFactoryInterface $encoderFactory, RouterInterface $router, EventDispatcherInterface $eventDispatcher, TokenStorageInterface $tokenStorage, RequestStack $requestStack, SessionAuthenticationStrategyInterface $sessionStrategy, UserCheckerInterface $userChecker, ?RememberMeServicesInterface $rememberMeService, array $config)
+    public function __construct(EntityManagerInterface $entityManager, MailerManager $mailerManager, RepositoryInterface $userRepository, UserMapperInterface $userMapper, TokenGeneratorInterface $tokenGenerator, TranslatorInterface $translator, FormFactoryInterface $formFactory, EncoderFactoryInterface $encoderFactory, RouterInterface $router, EventDispatcherInterface $eventDispatcher, TokenStorageInterface $tokenStorage, RequestStack $requestStack, SessionAuthenticationStrategyInterface $sessionStrategy, UserCheckerInterface $userChecker, ?RememberMeServicesInterface $rememberMeService, array $config, array $mail)
     {
         $this->entityManager = $entityManager;
         $this->mailerManager = $mailerManager;
@@ -117,7 +121,9 @@ class UserManager
         $this->userChecker = $userChecker;
         $this->rememberMeService = $rememberMeService;
         $this->config = $config;
+        $this->mail = $mail;
     }
+
 
     public function login($firewallName, UserInterface $user, ?Response $response)
     {
@@ -254,8 +260,8 @@ class UserManager
             $options = $options[$action];
             $options = array_merge([
                 'content_type' => Message::CONTENT_TYPE_HTML,
-                'mail_from' => 'todo@enhavo.com',
-                'sender_name' => 'enhavo todo',
+                'mail_from' => $this->mail['from'],
+                'sender_name' => $this->mail['sender_name'],
             ], $options);
 
             if ($item) {

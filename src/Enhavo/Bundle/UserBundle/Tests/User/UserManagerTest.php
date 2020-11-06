@@ -72,7 +72,8 @@ class UserManagerTest extends TestCase
             $dependencies->sessionStrategy,
             $dependencies->userChecker,
             $dependencies->rememberMeService,
-            $config
+            $config,
+            [ 'from' => 'from@enhavo.com', 'sender_name' => 'enhavo' ]
         );
     }
 
@@ -199,10 +200,10 @@ class UserManagerTest extends TestCase
             $this->assertEquals('user@enhavo.com', $subject);
         });
         $dependencies->message->method('setFrom')->willReturnCallback(function ($subject) {
-            $this->assertEquals('admin@enhavo.com', $subject);
+            $this->assertEquals('from@enhavo.com', $subject);
         });
         $dependencies->message->method('setSenderName')->willReturnCallback(function ($subject) {
-            $this->assertEquals('Enhavo', $subject);
+            $this->assertEquals('enhavo', $subject);
         });
         $dependencies->message->method('setContentType')->willReturnCallback(function ($subject) {
             $this->assertEquals('content/type', $subject);
@@ -215,8 +216,6 @@ class UserManagerTest extends TestCase
                     'mail_subject' => 'mail.subject',
                     'confirmation_route' => 'confirmation.route',
                     'translation_domain' => 'EnhavoUserBundle',
-                    'mail_from' => 'admin@enhavo.com',
-                    'sender_name' => 'Enhavo',
                     'content_type' => 'content/type'
                 ]
             ]
