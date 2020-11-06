@@ -16,4 +16,4 @@ Feature: Admin Login
         And I fill in "_email" with "peter@enhavo.com"
         And I fill in "_password" with "peter"
         And I press "#_submit"
-        Then I should be on "/admin/"
+        Then I should be on "/admin/login"
