@@ -12,8 +12,8 @@ Feature: Admin Login
     @web
     Scenario: Log in with missing permission
         Given I am on "/admin/login"
-        And I wait for "[name=_username]"
-        And I fill in "_username" with "peter@enhavo.com"
+        And I wait for "[name=_email]"
+        And I fill in "_email" with "peter@enhavo.com"
         And I fill in "_password" with "peter"
         And I press "#_submit"
         Then I should be on "/admin/"

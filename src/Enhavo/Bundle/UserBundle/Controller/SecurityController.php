@@ -14,9 +14,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SecurityController extends AbstractController
 {
+    use FlashMessagesTrait;
+
     /** @var UserManager */
     private $userManager;
 
@@ -26,19 +29,23 @@ class SecurityController extends AbstractController
     /** @var CsrfTokenManagerInterface */
     private $tokenManager;
 
+    /** @var TranslatorInterface */
+    private $translator;
+
     /**
      * SecurityController constructor.
      * @param UserManager $userManager
      * @param TemplateManager $templateManager
      * @param CsrfTokenManagerInterface $tokenManager
+     * @param TranslatorInterface $translator
      */
-    public function __construct(UserManager $userManager, TemplateManager $templateManager, CsrfTokenManagerInterface $tokenManager)
+    public function __construct(UserManager $userManager, TemplateManager $templateManager, CsrfTokenManagerInterface $tokenManager, TranslatorInterface $translator)
     {
         $this->userManager = $userManager;
         $this->templateManager = $templateManager;
         $this->tokenManager = $tokenManager;
+        $this->translator = $translator;
     }
-
 
     public function loginAction(Request $request, AuthenticationUtils $authenticationUtils)
     {
@@ -51,6 +58,9 @@ class SecurityController extends AbstractController
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
+        if ($error) {
+            $this->addFlash('error', $this->translator->trans('login.error.credentials', [], 'EnhavoUserBundle'));
+        }
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
         $csrfToken = $this->tokenManager
@@ -66,7 +76,7 @@ class SecurityController extends AbstractController
             'stylesheets' => $this->userManager->getStylesheets($config, 'login'),
             'javascripts' => $this->userManager->getJavascripts($config, 'login'),
             'data' => [
-                'messages' => [],
+                'messages' => $this->getFlashMessages(),
                 'base_url' => '',
                 'host' => $request->getHost(),
                 'scheme' => $request->getScheme(),

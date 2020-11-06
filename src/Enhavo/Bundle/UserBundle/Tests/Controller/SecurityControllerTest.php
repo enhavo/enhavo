@@ -35,7 +35,8 @@ class SecurityControllerTest extends TestCase
         return new SecurityControllerMock(
             $dependencies->userManager,
             $dependencies->templateManager,
-            $dependencies->tokenManager
+            $dependencies->tokenManager,
+            $dependencies->translator
         );
     }
 
@@ -45,6 +46,10 @@ class SecurityControllerTest extends TestCase
         $dependencies->userManager = $this->getMockBuilder(UserManager::class)->disableOriginalConstructor()->getMock();
         $dependencies->templateManager = $this->getMockBuilder(TemplateManager::class)->disableOriginalConstructor()->getMock();
         $dependencies->tokenManager = $this->getMockBuilder(CsrfTokenManagerInterface::class)->getMock();
+        $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
+        $dependencies->translator->method('trans')->willReturnCallback(function ($id, $params, $domain) {
+            return $id.'.translated';
+        });
 
         return $dependencies;
     }
@@ -143,12 +148,14 @@ class SecurityControllerTestDependencies
 
     /** @var CsrfTokenManagerInterface|MockObject */
     public $tokenManager;
+
+    /** @var TranslatorInterface */
+    public $translator;
 }
 
 class SecurityControllerMock extends SecurityController
 {
     public $isGranted = false;
-    public $flashMessages = [];
 
     protected function isGranted($role, $subject = null): bool
     {
@@ -163,5 +170,17 @@ class SecurityControllerMock extends SecurityController
     protected function generateUrl(string $route, array $parameters = [], int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
     {
         return $route . '.generated';
+    }
+
+
+    public $flashMessages = [];
+    protected function getFlashMessages()
+    {
+        return $this->flashMessages;
+    }
+
+    protected function addFlash(string $type, $message)
+    {
+        $this->flashMessages[$type] = $message;
     }
 }

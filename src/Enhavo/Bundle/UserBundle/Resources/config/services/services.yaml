@@ -12,7 +12,10 @@ services:
             - '@router'
             - '@event_dispatcher'
             - '@security.token_storage'
-            - '@session'
+            - '@request_stack'
+            - '@security.authentication.session_strategy.main'
+            - '@security.user_checker.main'
+            - ~
             - '%enhavo_user.config%'
 
     Enhavo\Bundle\UserBundle\EventListener\SaveUserSubscriber:

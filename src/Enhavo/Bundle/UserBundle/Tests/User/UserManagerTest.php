@@ -13,7 +13,6 @@ use Enhavo\Bundle\AppBundle\Mailer\Message;
 use Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface;
 use Enhavo\Bundle\UserBundle\Event\UserEvent;
 use Enhavo\Bundle\UserBundle\Mapper\UserMapper;
-use Enhavo\Bundle\UserBundle\Model\User;
 use Enhavo\Bundle\UserBundle\Repository\UserRepository;
 use Enhavo\Bundle\UserBundle\Tests\Mocks\UserMock;
 use Enhavo\Bundle\UserBundle\User\UserManager;
@@ -22,15 +21,19 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\Exception\OptionDefinitionException;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
+use Symfony\Component\Security\Core\User\UserCheckerInterface;
+use Symfony\Component\Security\Http\Session\SessionAuthenticationStrategyInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class UserManagerTest extends TestCase
 {
-    private function createInstance($dependencies, $config, $mapping)
+    private function createInstance(UserManagerTestDependencies $dependencies, $config, $mapping)
     {
         return new UserManager(
             $dependencies->entityManager,
@@ -43,6 +46,11 @@ class UserManagerTest extends TestCase
             $dependencies->encoderFactory,
             $dependencies->router,
             $dependencies->eventDispatcher,
+            $dependencies->tokenStorage,
+            $dependencies->requestStack,
+            $dependencies->authenticationStrategy,
+            $dependencies->userChecker,
+            null,
             $config
         );
     }
@@ -75,6 +83,11 @@ class UserManagerTest extends TestCase
         $dependencies->router = $this->getMockBuilder(RouterInterface::class)->getMock();
         $dependencies->eventDispatcher = $this->getMockBuilder(EventDispatcherInterface::class)->getMock();
         $dependencies->message = $this->getMockBuilder(Message::class)->getMock();
+
+        $dependencies->tokenStorage = $this->getMockBuilder(TokenStorageInterface::class)->getMock();
+        $dependencies->requestStack = $this->getMockBuilder(RequestStack::class)->disableOriginalConstructor()->getMock();
+        $dependencies->authenticationStrategy = $this->getMockBuilder(SessionAuthenticationStrategyInterface::class)->getMock();
+        $dependencies->userChecker = $this->getMockBuilder(UserCheckerInterface::class)->getMock();
 
         return $dependencies;
     }
@@ -489,6 +502,18 @@ class UserManagerTestDependencies
 
     /** @var PasswordEncoderInterface|MockObject */
     public $encoder;
+
+    /** @var TokenStorageInterface|MockObject */
+    public $tokenStorage;
+
+    /** @var RequestStack|MockObject */
+    public $requestStack;
+
+    /** @var SessionAuthenticationStrategyInterface|MockObject */
+    public $authenticationStrategy;
+
+    /** @var UserCheckerInterface|MockObject */
+    public $userChecker;
 
     public function getUserMapper($config): UserMapper
     {

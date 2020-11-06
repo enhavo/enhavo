@@ -30,6 +30,7 @@ services:
             - '@Enhavo\Bundle\UserBundle\User\UserManager'
             - '@enhavo_app.template.manager'
             - '@security.csrf.token_manager'
+            - '@translator'
         calls:
             - [ setContainer, [ '@service_container' ] ]
         tags:
