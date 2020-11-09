@@ -8,9 +8,9 @@ namespace Enhavo\Bundle\UserBundle\Security;
 
 use Enhavo\Bundle\UserBundle\Exception\AccountDisabledException;
 use Enhavo\Bundle\UserBundle\Exception\UserNotSupportedException;
+use Enhavo\Bundle\UserBundle\Model\UserInterface as EnhavoUserInterface;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Enhavo\Bundle\UserBundle\Model\UserInterface as EnhavoUserInterface;
 
 class UserChecker implements UserCheckerInterface
 {

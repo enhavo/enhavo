@@ -8,7 +8,6 @@ namespace Enhavo\Bundle\UserBundle\Factory;
 
 
 use Enhavo\Bundle\AppBundle\Factory\Factory;
-use Enhavo\Bundle\UserBundle\Model\UserInterface;
 
 /**
  * Class UserFactory

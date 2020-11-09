@@ -7,13 +7,12 @@
 namespace Enhavo\Bundle\UserBundle\Tests\Security\Authentication\Voter;
 
 use Enhavo\Bundle\UserBundle\Model\Group;
-use Enhavo\Bundle\UserBundle\Model\GroupInterface;
+use Enhavo\Bundle\UserBundle\Model\User;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Enhavo\Bundle\UserBundle\Security\Authentication\Voter\GroupRoleVoter;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Enhavo\Bundle\UserBundle\Model\User;
+use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
 class GroupRoleVoterTest extends TestCase
 {

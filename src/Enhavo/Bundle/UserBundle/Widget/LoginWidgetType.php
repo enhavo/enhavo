@@ -12,10 +12,9 @@ namespace Enhavo\Bundle\UserBundle\Widget;
 use Enhavo\Bundle\AppBundle\Widget\AbstractWidgetType;
 use Enhavo\Bundle\UserBundle\User\UserManager;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class LoginWidgetType extends AbstractWidgetType
