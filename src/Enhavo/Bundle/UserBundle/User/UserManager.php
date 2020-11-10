@@ -259,7 +259,7 @@ class UserManager
             }
             $options = $options[$action];
             $options = array_merge([
-                'content_type' => Message::CONTENT_TYPE_HTML,
+                'content_type' => Message::CONTENT_TYPE_PLAIN,
                 'mail_from' => $this->mail['from'],
                 'sender_name' => $this->mail['sender_name'],
             ], $options);

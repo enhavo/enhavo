@@ -5,7 +5,7 @@ group:
     edit:
         submit: 'Gruppe aktualisieren'
     show:
-        name: Gruppenname
+        name: 'Gruppenname'
     new:
         submit: 'Gruppe erstellen'
     flash:
@@ -54,17 +54,34 @@ user:
 reset:
     form:
         error:
-            non-expired: Ihre Passwort zurücksetzen Email ist noch gültig, wir haben Ihnen aber nochmal eine zugesendet
-            invalid-user: Der Username existiert nicht
+            invalid-user: 'Der Username existiert nicht'
         action:
-            reset-password: Passwort zurücksetzen
+            reset-password: 'Passwort zurücksetzen'
     label:
-        login: Zur Anmeldung
+        login: 'Zur Anmeldung'
     message:
-        success: Eine Email wurde an Ihr Konto versendet.
+        success: 'Eine Email wurde an Ihr Konto versendet.'
+    check_email: |
+        Eine E-Mail wurde verschickt. Sie beinhaltet einen Link zum Zurücksetzen des Passwortes.
+
+        Eventuell wurde diese E-Mail als Spam markiert, wenn sie nicht angekommen ist.
+    request:
+        username: 'Benutzername oder E-Mail-Adresse'
+        submit: 'Passwort zurücksetzen'
+    reset:
+        submit: 'Passwort ändern'
+    flash:
+        success: 'Das Passwort wurde erfolgreich zurückgesetzt.'
+        error: 'Anfrage fehlgeschlagen'
     mail:
-        text: Bitte klicken sie auf folgenden Link um ihr Passwort zurückzusetzen
-        subject: Passwort zurückzusetzen
+        subject: 'Passwort zurücksetzen'
+        message: |
+            Hallo %username%!
+
+            Besuchen Sie bitte folgende Seite, um Ihr Passwort zurückzusetzen: %confirmation_url%
+
+            Mit besten Grüßen,
+            das Team.
 confirm:
     form:
         label:
@@ -78,70 +95,26 @@ security:
         password: Passwort
         remember_me: 'An mich erinnern'
         submit: Anmelden
-profile:
-    show:
-        username: Benutzername
-        email: E-Mail
-    edit:
-        submit: 'Benutzer aktualisieren'
-    flash:
-        updated: 'Das Benutzerprofil wurde aktualisiert.'
 change_password:
-    submit: 'Passwort ändern'
-    flash:
-        success: 'Das Passwort wurde geändert.'
     message:
         success: 'Passwort erfolgreich geändert'
         error: 'Fehler beim speichern'
+
 registration:
+    check_inbox: |
+        Eine E-Mail wurde an {{ user.email }} gesendet. Sie enthält einen Link, den Sie anklicken müssen, um Ihr Benutzerkonto zu bestätigen.
+    confirmed: 'Glückwunsch, Ihr Benutzerkonto ist jetzt bestätigt.'
+    submit: 'Registrieren'
+    form:
+        email: 'E-Mail'
+        username: 'Benutzername'
+        password: 'Passwort'
+        password_confirmation: 'Passwort bestätigen'
+        submit: Registrieren
     mail:
-        text: Bitte klicken sie auf folgenden Link um ihre Email zu verifizieren
-        subject: Registration
-    check_email: 'Eine E-Mail wurde an %email% gesendet. Sie enthält einen Link, den Sie anklicken müssen, um Ihr Benutzerkonto zu bestätigen.'
-    confirmed: 'Glückwunsch %username%, Ihr Benutzerkonto ist jetzt bestätigt.'
-    back: 'Zurück zur ursprünglichen Seite.'
-    submit: Registrieren
-    flash:
-        user_created: 'Der Benutzer wurde erfolgreich erstellt.'
-    email:
-        subject: 'Willkommen %username%!'
-        message: |
-            Hallo %username%!
+        text: 'Bitte klicken sie auf folgenden Link um ihre Email zu verifizieren %confirmation_url%'
+        subject: Registrierung
 
-            Besuchen Sie bitte folgende Seite, um Ihr Benutzerkonto zu bestätigen: %confirmationUrl%
-
-            Mit besten Grüßen,
-            das Team.
-
-resetting:
-    check_email: |
-        Eine E-Mail wurde verschickt. Sie beinhaltet einen Link zum Zurücksetzen des Passwortes.
-        Hinweis: Ein neues Passwort kann nur alle %tokenLifetime% Stunden beantragt werden.
-
-        Eventuell wurde diese E-Mail als Spam markiert, wenn sie nicht angekommen ist.
-
-    request:
-        username: 'Benutzername oder E-Mail-Adresse'
-        submit: 'Passwort zurücksetzen'
-    reset:
-        submit: 'Passwort ändern'
-    flash:
-        success: 'Das Passwort wurde erfolgreich zurückgesetzt.'
-    email:
-        subject: 'Passwort zurücksetzen'
-        message: |
-            Hallo %username%!
-
-            Besuchen Sie bitte folgende Seite, um Ihr Passwort zurückzusetzen: %confirmationUrl%
-
-            Mit besten Grüßen,
-            das Team.
-
-layout:
-    logout: Abmelden
-    login: Anmelden
-    register: Registrieren
-    logged_in_as: 'Angemeldet als %username%'
 form:
     group_name: Gruppenname
     username: Benutzername
@@ -152,3 +125,7 @@ form:
     new_password: 'Neues Passwort'
     new_password_confirmation: 'Neues Passwort bestätigen'
 
+profile:
+    update:
+        success: 'Profil wurde erfolgreich aktualisiert'
+        error: 'Fehler bei der Aktualisierung des Profils'

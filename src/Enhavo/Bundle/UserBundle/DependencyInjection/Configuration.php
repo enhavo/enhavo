@@ -128,6 +128,10 @@ class Configuration implements ConfigurationInterface
             ->scalarNode('template')->defaultValue('theme/security/registration/check.html.twig')->end()
         ->end();
 
+        $themeNode->arrayNode('registration_finish')->addDefaultsIfNotSet()->children()
+            ->scalarNode('template')->defaultValue('theme/security/registration/finish.html.twig')->end()
+        ->end();
+
         $themeNode->arrayNode('registration_confirm')->addDefaultsIfNotSet()->children()
             ->scalarNode('template')->defaultValue('theme/security/registration/confirm.html.twig')->end()
             ->scalarNode('mail_template')->defaultValue('mail/security/confirm.html.twig')->end()
@@ -147,7 +151,7 @@ class Configuration implements ConfigurationInterface
         $themeNode->arrayNode('reset_password_request')->addDefaultsIfNotSet()->children()
             ->scalarNode('template')->defaultValue('theme/security/reset-password/request.html.twig')->end()
             ->scalarNode('mail_template')->defaultValue('mail/security/reset-password.html.twig')->end()
-            ->scalarNode('mail_subject')->defaultValue('reset_password_request.mail.subject')->end()
+            ->scalarNode('mail_subject')->defaultValue('reset.mail.subject')->end()
             ->scalarNode('translation_domain')->defaultValue('EnhavoUserBundle')->end()
             ->scalarNode('redirect_route')->defaultValue('enhavo_user_theme_reset_password_check')->end()
             ->scalarNode('confirmation_route')->defaultValue('enhavo_user_theme_reset_password_confirm')->end()
@@ -187,7 +191,7 @@ class Configuration implements ConfigurationInterface
         $adminNode->arrayNode('reset_password_request')->addDefaultsIfNotSet()->children()
             ->scalarNode('template')->defaultValue('admin/security/reset-password/request.html.twig')->end()
             ->scalarNode('mail_template')->defaultValue('mail/security/reset-password.html.twig')->end()
-            ->scalarNode('mail_subject')->defaultValue('reset_password_request.mail.subject')->end()
+            ->scalarNode('mail_subject')->defaultValue('reset.mail.subject')->end()
             ->scalarNode('translation_domain')->defaultValue('EnhavoUserBundle')->end()
             ->scalarNode('confirmation_route')->defaultValue('enhavo_user_reset_password_confirm')->end()
             ->scalarNode('stylesheets')->defaultValue(['enhavo/user/login'])->end()

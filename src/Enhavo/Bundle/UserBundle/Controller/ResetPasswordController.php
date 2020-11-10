@@ -150,7 +150,7 @@ class ResetPasswordController extends AbstractController
             if ($form->isValid()) {
                 $this->userManager->changePassword($user);
                 if ($this->userManager->getConfig($config, $action, 'auto_login', false)) {
-                    $this->userManager->login($user);
+                    $this->userManager->login($user); // todo find out current firewall name
                 }
 
                 $url = $this->generateUrl($this->userManager->getRedirectRoute($config, $action));

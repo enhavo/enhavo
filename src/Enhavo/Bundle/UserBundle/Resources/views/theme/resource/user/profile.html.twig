@@ -1,10 +1,8 @@
 {% extends template('theme/base.html.twig') %}
 
-
 {% trans_default_domain 'EnhavoUserBundle' %}
 
 {% block main %}
-    profile
     <form action="{{ path("enhavo_user_theme_user_profile") }}" method="POST">
         {{ form_widget(form) }}
         <button type="submit">Save</button>

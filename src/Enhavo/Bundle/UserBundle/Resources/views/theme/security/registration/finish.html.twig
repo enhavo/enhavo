@@ -1,5 +1,7 @@
 {% extends template('theme/base.html.twig') %}
 
+{% trans_default_domain 'EnhavoUserBundle' %}
+
 {% block main %}
-    Registration-confirmed
+    {{ 'registration.confirmed'|trans }}
 {% endblock %}

@@ -54,82 +54,15 @@ user:
 reset:
     form:
         error:
-            non-expired: Your reset mail isn't expired, but we send an email again
-            invalid-user: Username doesn't exist
+            invalid-user: 'Invalid user'
         action:
-            reset-password: Reset Password
+            reset-password: 'Reset Password'
     label:
-        login: Login
+        login: 'Login'
     message:
-        success: An email was sent to your account.
-    mail:
-        text: Please click on following link to reset your password
-        subject: Reset Password
-registration:
-    check_email: |
-        An email has been sent to %email%. It contains an activation link you must click to activate your account.
-    confirmed: 'Congrats %username%, your account is now activated.'
-    back: 'Back to the originating page.'
-    submit: Register
-    flash:
-        user_created: 'The user has been created successfully.'
-    email:
-        subject: 'Welcome %username%!'
-        message: |
-            Hello %username%!
-
-            To finish activating your account - please visit %confirmationUrl%
-
-            This link can only be used once to validate your account.
-
-            Regards,
-            the Team.
-
-    form:
-        email: 'E-Mail'
-        username: 'Username'
-        password: 'Password'
-        password_confirmation: 'Password confirmation'
-        submit:
-    mail:
-        text: Please click on following link to to verify your email address
-        subject: Registration
-change_password:
-    submit: 'Change password'
-    flash:
-        success: 'The password has been changed.'
-
-    message:
-        success: 'Password saved successfully'
-        error: 'Error while saving'
-confirm:
-    form:
-        label:
-            password: Password
-            password-repeat: Repeat password
-        action:
-            reset: Reset
-
-security:
-    login:
-        username: Username
-        password: Password
-        remember_me: 'Remember me'
-        submit: 'Log in'
-
-profile:
-    show:
-        username: Username
-        email: Email
-    edit:
-        submit: Update
-    flash:
-        updated: 'The profile has been updated.'
-
-resetting:
+        success: 'An email was sent to your account.'
     check_email: |
         An email has been sent. It contains a link you must click to reset your password.
-        Note: You can only request a new password once within %tokenLifetime% hours.
 
         If you don't get an email check your spam folder or try again.
     request:
@@ -139,22 +72,48 @@ resetting:
         submit: 'Change password'
     flash:
         success: 'The password has been reset successfully.'
-    email:
+        error: 'Request failed'
+    mail:
         subject: 'Reset Password'
-        message: |
+        text: |
             Hello %username%!
 
-            To reset your password - please visit %confirmationUrl%
+            To reset your password - please visit %confirmation_url%
 
             Regards,
             the Team.
+confirm:
+    form:
+        label:
+            password: Password
+            password-repeat: Repeat password
+        action:
+            reset: Reset
+security:
+    login:
+        username: Username
+        password: Password
+        remember_me: 'Remember me'
+        submit: 'Log in'
+change_password:
+    message:
+        success: 'Password changed'
+        error: 'Error'
 
-# Global strings
-layout:
-    logout: 'Log out'
-    login: 'Log in'
-    register: Register
-    logged_in_as: 'Logged in as %username%'
+registration:
+    check_inbox: |
+        An email has been sent to {{ user.email }}. It contains an activation link you must click to activate your account.
+    confirmed: 'Congrats, your account is now activated.'
+    submit: 'Register'
+    form:
+        email: 'E-Mail'
+        username: 'Username'
+        password: 'Password'
+        password_confirmation: 'Password confirmation'
+        submit: Register
+    mail:
+        text: 'Please click on the following link to to verify your email address %confirmation_url%'
+        subject: Registration
 
 form:
     group_name: 'Group name'
@@ -165,3 +124,8 @@ form:
     password_confirmation: 'Repeat password'
     new_password: 'New password'
     new_password_confirmation: 'Repeat new password'
+
+profile:
+    update:
+        success: 'Profile updated successfully'
+        error: 'Update failed'

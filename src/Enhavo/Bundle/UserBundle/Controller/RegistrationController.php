@@ -52,11 +52,11 @@ class RegistrationController extends AbstractController
     public function registerAction(Request $request)
     {
         $config = $request->attributes->get('_config');
-
+        $action = 'registration_register';
         /** @var UserInterface $user */
         $user = $this->userFactory->createNew();
 
-        $form = $this->userManager->createForm($config, 'registration_register', $user, [
+        $form = $this->userManager->createForm($config, $action, $user, [
             'validation_groups' => ['register']
         ]);
         $form->handleRequest($request);
@@ -64,11 +64,11 @@ class RegistrationController extends AbstractController
         $valid = true;
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                $this->userManager->register($user, $config, 'registration_register');
-                if ($this->userManager->getConfig($config, 'registration_register', 'auto_login', false)) {
-                    $this->userManager->login($user);
+                $this->userManager->register($user, $config, $action);
+                if ($this->userManager->getConfig($config, $action, 'auto_login', false)) {
+                    $this->userManager->login($user); // todo find out current firewall name
                 }
-                $url = $this->generateUrl($this->userManager->getRedirectRoute($config, 'registration_register'));
+                $url = $this->generateUrl($this->userManager->getRedirectRoute($config, $action));
 
                 if ($request->isXmlHttpRequest()) {
                     return new JsonResponse([
@@ -92,7 +92,7 @@ class RegistrationController extends AbstractController
             }
         }
 
-        return $this->render($this->getTemplate($this->userManager->getTemplate($config, 'registration_register')), [
+        return $this->render($this->getTemplate($this->userManager->getTemplate($config, $action)), [
             'form' => $form->createView(),
         ])->setStatusCode($valid ? 200 : 400);
     }
@@ -114,7 +114,7 @@ class RegistrationController extends AbstractController
 
         $this->userManager->confirm($user, $config, 'registration_confirm');
         if ($this->userManager->getConfig($config, 'registration_confirm', 'auto_login', false)) {
-            $this->userManager->login($user);
+            $this->userManager->login($user); // todo find out current firewall name
         }
 
         $url = $this->generateUrl($this->userManager->getRedirectRoute($config, 'registration_confirm'));
