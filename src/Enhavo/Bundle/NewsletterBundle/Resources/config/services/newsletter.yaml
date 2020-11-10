@@ -22,18 +22,12 @@ services:
           - '@Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager'
           - '@enhavo_app.util.secure_url_token_generator'
           - '@logger'
-          - '@Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterRenderer'
           - '@twig'
+          - '@enhavo_app.template.manager'
+          - '@Enhavo\Bundle\NewsletterBundle\Newsletter\ParameterParser'
           - '%enhavo_newsletter.newsletter.mail.from%'
           - '%enhavo_newsletter.newsletter.test_receiver%'
-
-
-    Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterRenderer:
-        arguments:
-            - '@twig'
-            - '@enhavo_app.template.manager'
-            - '@Enhavo\Bundle\NewsletterBundle\Newsletter\ParameterParser'
-            - '%enhavo_newsletter.newsletter.templates%'
+          - '%enhavo_newsletter.newsletter.templates%'
 
     Enhavo\Bundle\NewsletterBundle\Newsletter\ParameterParser:
 
