@@ -8,6 +8,7 @@ use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\MediaBundle\Security\AuthorizationCheckerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\EventListener\AbstractSessionListener;
 
 class FileController extends ResourceController
 {
@@ -43,10 +44,7 @@ class FileController extends ResourceController
 
         $maxAge = $this->getMaxAge();
         if($maxAge) {
-            $response
-                ->setExpires($this->getDateInSeconds($maxAge))
-                ->setMaxAge($maxAge)
-                ->setPublic();
+            $this->setMaxAge($response, $maxAge);
         }
 
         return $response;
@@ -125,10 +123,7 @@ class FileController extends ResourceController
 
         $maxAge = $this->getMaxAge();
         if($maxAge) {
-            $response
-                ->setExpires($this->getDateInSeconds($maxAge))
-                ->setMaxAge($maxAge)
-                ->setPublic();
+            $this->setMaxAge($response, $maxAge);
         }
 
         return $response;
@@ -137,6 +132,18 @@ class FileController extends ResourceController
     private function getMaxAge()
     {
         return $this->getParameter('enhavo_media.cache_control.max_age');
+    }
+
+    private function setMaxAge(Response $response, $maxAge)
+    {
+        $response
+            ->setExpires($this->getDateInSeconds($maxAge))
+            ->setMaxAge($maxAge)
+            ->setPublic();
+
+        $response->headers->add([
+            AbstractSessionListener::NO_AUTO_CACHE_CONTROL_HEADER => true
+        ]);
     }
 
     private function getDateInSeconds($seconds)
