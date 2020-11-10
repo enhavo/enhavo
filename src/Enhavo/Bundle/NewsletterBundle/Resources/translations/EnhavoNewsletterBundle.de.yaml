@@ -69,6 +69,12 @@ subscriber:
       create: 'Abonennt erstellen'
       delete: 'Abonennt löschen'
   label:
+    pending: 'Unbestätigt'
+    subscribers: 'Abonnenten'
+    create: 'Abonnent hinzufügen'
+    update: 'Abonnent bearbeiten'
+    subscription: 'Abonnement'
+    activate: 'Aktivieren'
     subscriber: Abonnent
     active: 'Aktiviert'
     email: 'Email'
@@ -81,6 +87,7 @@ subscriber:
       groups: 'Gruppen'
       email: 'E-Mail'
       active: 'Aktiviert'
+      subscription: 'Abonnement'
     error:
       valid: 'E-Mail nicht gültig'
       sent_again: 'Bitte bestätigen Sie ihre Registrierung'
@@ -95,3 +102,5 @@ group:
     groups: Gruppen
     name: 'Name'
     code: 'Code'
+    create: 'Newsletter erstellen'
+    update: 'Newsletter bearbeiten'
