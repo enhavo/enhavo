@@ -28,18 +28,12 @@ class EnhavoContactExtension extends Extension implements PrependExtensionInterf
             foreach($config['forms'] as $name => $form) {
                 $container->setParameter(sprintf('enhavo_contact.%s.model', $name), $form['model']);
                 $container->setParameter(sprintf('enhavo_contact.%s.form', $name), $form['form']);
-                $container->setParameter(sprintf('enhavo_contact.%s.template.form', $name), $form['template']['form']);
-                $container->setParameter(sprintf('enhavo_contact.%s.template.recipient', $name), $form['template']['recipient']);
-                $container->setParameter(sprintf('enhavo_contact.%s.template.confirm', $name), $form['template']['confirm']);
-                $container->setParameter(sprintf('enhavo_contact.%s.template.page', $name), $form['template']['page']);
-                $container->setParameter(sprintf('enhavo_contact.%s.message.success', $name), $form['message']['success']);
-                $container->setParameter(sprintf('enhavo_contact.%s.message.invalid', $name), $form['message']['invalid']);
-                $container->setParameter(sprintf('enhavo_contact.%s.recipient', $name), $form['recipient']);
-                $container->setParameter(sprintf('enhavo_contact.%s.from', $name), $form['from']);
-                $container->setParameter(sprintf('enhavo_contact.%s.sender_name', $name), $form['sender_name']);
-                $container->setParameter(sprintf('enhavo_contact.%s.subject', $name), $form['subject']);
+                $container->setParameter(sprintf('enhavo_contact.%s.form_options', $name), $form['form_options']);
+                $container->setParameter(sprintf('enhavo_contact.%s.label', $name), $form['label']);
                 $container->setParameter(sprintf('enhavo_contact.%s.translation_domain', $name), $form['translation_domain']);
-                $container->setParameter(sprintf('enhavo_contact.%s.confirm_mail', $name), $form['confirm_mail']);
+                $container->setParameter(sprintf('enhavo_contact.%s.template', $name), $form['template']);
+                $container->setParameter(sprintf('enhavo_contact.%s.recipient', $name), $form['recipient']);
+                $container->setParameter(sprintf('enhavo_contact.%s.confirm', $name), $form['confirm']);
             }
             $container->setParameter('enhavo_contact.forms', $config['forms']);
         }

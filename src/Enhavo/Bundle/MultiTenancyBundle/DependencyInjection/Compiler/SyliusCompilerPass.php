@@ -6,7 +6,7 @@
  * Time: 10:42
  */
 
-namespace Enhavo\Bundle\MultiTenancyBundle\DependencyInjection\CompilerPass;
+namespace Enhavo\Bundle\MultiTenancyBundle\DependencyInjection\Compiler;
 
 use Enhavo\Bundle\MultiTenancyBundle\ExpressionLanguage\TenantExpressionFunctionProvider;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;

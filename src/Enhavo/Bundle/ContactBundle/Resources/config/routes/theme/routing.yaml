@@ -1,5 +1,12 @@
 enhavo_contact_submit:
-    path: /contact/{name}/submit
+    path: /contact/{key}/submit
     defaults:
-      _controller: enhavo_contact.controller.contact:submitAction
+      _controller: Enhavo\Bundle\ContactBundle\Controller\ContactController::submitAction
+      key: default
     methods: [POST, GET]
+
+enhavo_contact_finish:
+    path: /contact/{key}/finish
+    defaults:
+        _controller: Enhavo\Bundle\ContactBundle\Controller\ContactController::finishAction
+    methods: [GET]

@@ -7,3 +7,6 @@ contact:
       invalid: 'Bitte überprüfen sie das Formular.'
     action:
       send: Versenden
+  forms:
+    default:
+      label: Standart
