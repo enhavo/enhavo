@@ -26,6 +26,7 @@ services:
             - '@enhavo_content.sitemap_collector'
 
     enhavo_content.sitemap_collector.repository:
+        public: true
         class: Enhavo\Bundle\ContentBundle\Sitemap\Collector\RepositoryCollector
         calls:
             - [setContainer, ['@service_container']]
@@ -35,6 +36,7 @@ services:
             - { name: enhavo.sitemap_collector, alias: repository }
 
     enhavo_content.sitemap_collector.publish:
+        public: true
         class: Enhavo\Bundle\ContentBundle\Sitemap\Collector\PublishCollector
         calls:
             - [setContainer, ['@service_container']]
@@ -44,6 +46,7 @@ services:
             - { name: enhavo.sitemap_collector, alias: publish }
 
     enhavo_content.sitemap_collector.configuration:
+        public: true
         class: Enhavo\Bundle\ContentBundle\Sitemap\Collector\ConfigurationCollector
         tags:
             - { name: enhavo.sitemap_collector, alias: configuration }
@@ -52,3 +55,9 @@ services:
         class: Enhavo\Bundle\ContentBundle\EventListener\PublishSubscriber
         tags:
             - { name: kernel.event_subscriber }
+
+    Enhavo\Bundle\ContentBundle\Controller\SitemapController:
+        arguments:
+            - '@enhavo_content.sitemap.generator'
+        tags:
+            - { name: controller.service_arguments }
