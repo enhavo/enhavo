@@ -6,6 +6,7 @@ namespace Enhavo\Bundle\NewsletterBundle\Newsletter;
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Mailer\MailerManager;
 use Enhavo\Bundle\AppBundle\Mailer\Message;
+use Enhavo\Bundle\AppBundle\Template\TemplateManager;
 use Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\NewsletterBundle\Entity\Receiver;
@@ -48,19 +49,23 @@ class NewsletterManager
      */
     private $logger;
 
-    /**
-     * @var NewsletterRenderer
-     */
-    private $renderer;
-
     /** @var Environment */
     private $twig;
+
+    /** @var TemplateManager */
+    private $templateManager;
+
+    /** @var ParameterParserInterface */
+    private $parameterParser;
 
     /** @var string */
     private $from;
 
     /** @var array */
     private $testReceiver;
+
+    /** @var array */
+    private $templates;
 
     /**
      * NewsletterManager constructor.
@@ -69,30 +74,34 @@ class NewsletterManager
      * @param SubscriptionManager $subscriptionManager
      * @param TokenGeneratorInterface $tokenGenerator
      * @param LoggerInterface $logger
-     * @param NewsletterRenderer $renderer
      * @param Environment $twig
      * @param string $from
      * @param array $testReceiver
+     * @param array $templates
      */
     public function __construct(EntityManagerInterface $em,
                                 MailerManager $mailer,
                                 SubscriptionManager $subscriptionManager,
                                 TokenGeneratorInterface $tokenGenerator,
                                 LoggerInterface $logger,
-                                NewsletterRenderer $renderer,
                                 Environment $twig,
+                                TemplateManager $templateManager,
+                                ParameterParser $parameterParser,
                                 string $from,
-                                array $testReceiver)
+                                array $testReceiver,
+                                array $templates)
     {
         $this->em = $em;
         $this->mailerManager = $mailer;
         $this->subscriptionManager = $subscriptionManager;
         $this->tokenGenerator = $tokenGenerator;
         $this->logger = $logger;
-        $this->renderer = $renderer;
+        $this->templateManager = $templateManager;
+        $this->parameterParser = $parameterParser;
         $this->twig = $twig;
         $this->from = $from;
         $this->testReceiver = $testReceiver;
+        $this->templates = $templates;
     }
 
 
@@ -174,7 +183,7 @@ class NewsletterManager
     private function sendNewsletter(Receiver $receiver)
     {
         $newsletter = $receiver->getNewsletter();
-        $message = $this->createMessage($this->from, '', $receiver->getEmail(), $newsletter->getSubject(), $newsletter->getTemplate(), [
+        $message = $this->createMessage($this->from, '', $receiver->getEmail(), $newsletter->getSubject(), $this->getTemplate($newsletter->getTemplate()), [
             'resource' => $newsletter,
             'receiver' => $receiver,
         ], 'text/html');
@@ -183,7 +192,7 @@ class NewsletterManager
             $this->addAttachmentsToMessage($receiver->getNewsletter()->getAttachments(), $message);
         }
 
-        return $this->mailerManager->sendMessage($message);
+        return $this->sendMessage($message);
     }
 
     private function getTestReceiver(NewsletterInterface $newsletter): Receiver
@@ -225,7 +234,18 @@ class NewsletterManager
 
     public function render(Receiver $receiver)
     {
-        return $this->renderer->render($receiver);
+        $template = $this->getTemplate($receiver->getNewsletter()->getTemplate());
+        $content = $this->twig->render($this->templateManager->getTemplate($template), [
+            'resource' => $receiver->getNewsletter(),
+            'receiver' => $receiver,
+        ]);
+
+        $parameters = $receiver->getParameters();
+        if ($parameters) {
+            $content = $this->parameterParser->parse($content, $receiver->getParameters());
+        }
+
+        return $content;
     }
 
     public function createMessage(string $from, string $senderName, string $to, string $subject, string $template, array $context, string $contentType = 'text/html'): Message
@@ -244,12 +264,19 @@ class NewsletterManager
 
     public function sendMessage(Message $message)
     {
-        $this->mailerManager->sendMessage($message);
+        return $this->mailerManager->sendMessage($message);
     }
 
-    protected function renderTemplate($template, $context)
+    public function getTemplate(?string $key): string
     {
-        return $this->twig->render($template, $context);
+        if ($key === null) {
+            if (count($this->templates) === 1) {
+                $key = array_keys($this->templates)[0];
+                return $this->templates[$key]['template'];
+            }
+            throw new \Exception(sprintf('No template found for key "%s"', $key));
+        }
+        return $this->templates[$key]['template'];
     }
 
 }

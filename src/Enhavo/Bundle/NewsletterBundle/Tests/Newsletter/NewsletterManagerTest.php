@@ -11,6 +11,7 @@ namespace Enhavo\Bundle\NewsletterBundle\Tests\Newsletter;
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Mailer\MailerManager;
 use Enhavo\Bundle\AppBundle\Mailer\Message;
+use Enhavo\Bundle\AppBundle\Template\TemplateManager;
 use Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface;
 use Enhavo\Bundle\MediaBundle\Content\Content;
 use Enhavo\Bundle\MediaBundle\Entity\File;
@@ -18,7 +19,7 @@ use Enhavo\Bundle\NewsletterBundle\Entity\Newsletter;
 use Enhavo\Bundle\NewsletterBundle\Entity\Receiver;
 use Enhavo\Bundle\NewsletterBundle\Exception\SendException;
 use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager;
-use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterRenderer;
+use Enhavo\Bundle\NewsletterBundle\Newsletter\ParameterParser;
 use Enhavo\Bundle\NewsletterBundle\Storage\Storage;
 use Enhavo\Bundle\NewsletterBundle\Strategy\Strategy;
 use Enhavo\Bundle\NewsletterBundle\Subscription\Subscription;
@@ -30,13 +31,16 @@ use Twig\Environment;
 
 class NewsletterManagerTest extends TestCase
 {
-    private function createDependency()
+    private function createDependencies()
     {
         $dependency = new DependencyProvider();
         $dependency->em = $this->getMockBuilder(EntityManagerInterface::class)->getMock();
         $dependency->mailerManager = $this->getMockBuilder(MailerManager::class)->disableOriginalConstructor()->getMock();
         $dependency->subscriptionManager = $this->getMockBuilder(SubscriptionManager::class)->disableOriginalConstructor()->getMock();
         $dependency->twig = $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->getMock();
+        $dependency->twig->method('render')->willReturnCallback(function ($template) {
+            return $template.'.rendered';
+        });
         $dependency->from = 'from@enhavo.com';
         $dependency->testReceiver = [
             'token' => '__TRACKING_TOKEN__',
@@ -48,12 +52,19 @@ class NewsletterManagerTest extends TestCase
         ];
         $dependency->tokenGenerator = $this->getMockBuilder(TokenGeneratorInterface::class)->disableOriginalConstructor()->getMock();
         $dependency->logger = $this->getMockBuilder(LoggerInterface::class)->getMock();
-        $dependency->renderer = $this->getMockBuilder(NewsletterRenderer::class)->disableOriginalConstructor()->getMock();
+        $dependency->parameterParser = $this->getMockBuilder(ParameterParser::class)->disableOriginalConstructor()->getMock();
+        $dependency->parameterParser->method('parse')->willReturnCallback(function ($content) {
+            return $content .'.parsed';
+        });
+        $dependency->templateManager = $this->getMockBuilder(TemplateManager::class)->disableOriginalConstructor()->getMock();
+        $dependency->templateManager->method('getTemplate')->willReturnCallback(function ($key) {
+            return $key .'.managed';
+        });
 
         return $dependency;
     }
 
-    private function createNewsletterManager(DependencyProvider $dependency)
+    private function createInstance(DependencyProvider $dependency, array $templates = [])
     {
         return new NewsletterManager(
             $dependency->em,
@@ -61,17 +72,19 @@ class NewsletterManagerTest extends TestCase
             $dependency->subscriptionManager,
             $dependency->tokenGenerator,
             $dependency->logger,
-            $dependency->renderer,
             $dependency->twig,
+            $dependency->templateManager,
+            $dependency->parameterParser,
             $dependency->from,
-            $dependency->testReceiver
+            $dependency->testReceiver,
+            $templates
         );
     }
 
     private function createDummyNewsletter(): Newsletter
     {
         $newsletter = new Newsletter();
-        $newsletter->setTemplate('template.html.twig');
+        $newsletter->setTemplate('default');
         $newsletter->setSubject('subject');
 
         return$newsletter;
@@ -82,7 +95,7 @@ class NewsletterManagerTest extends TestCase
      */
     public function testAlreadyPrepared()
     {
-        $newsletterManager = $this->createNewsletterManager($this->createDependency());
+        $newsletterManager = $this->createInstance($this->createDependencies());
 
         $newsletter = $this->createDummyNewsletter();
         $newsletter->setState(Newsletter::STATE_PREPARED);
@@ -97,7 +110,7 @@ class NewsletterManagerTest extends TestCase
         $receiverOne->setToken('alreadyHasAToken');
 
         $receiverTwo = new Receiver();
-        $dependency = $this->createDependency();
+        $dependency = $this->createDependencies();
 
         $subscription = $this->getMockBuilder(Subscription::class)->disableOriginalConstructor()->getMock();
         $subscription->method('getStrategy')->willReturnCallback(function () use ($receiverOne, $receiverTwo) {
@@ -115,7 +128,7 @@ class NewsletterManagerTest extends TestCase
         $dependency->tokenGenerator->method('generateToken')->willReturn('aGeneratedToken');
         $dependency->em->expects($this->once())->method('flush');
 
-        $newsletterManager = $this->createNewsletterManager($dependency);
+        $newsletterManager = $this->createInstance($dependency);
 
         $newsletter = $this->createDummyNewsletter();
         $newsletter->setState(Newsletter::STATE_CREATED);
@@ -131,11 +144,12 @@ class NewsletterManagerTest extends TestCase
 
     public function testSending()
     {
-        $dependency = $this->createDependency();
+        $dependency = $this->createDependencies();
         $dependency->mailerManager->method('createMessage')->willReturn(new Message());
         $dependency->mailerManager->method('sendMessage')->willReturn(true);
-        $dependency->renderer->method('render')->willReturn('Newsletter Content');
-        $newsletterManager = $this->createNewsletterManager($dependency);
+        $newsletterManager = $this->createInstance($dependency, ['default' => [
+            'template' => 'template.html.twig',
+        ]]);
 
         $receiverOne = new Receiver();
         $receiverOne->setEmail('peter@pan.de');
@@ -158,13 +172,15 @@ class NewsletterManagerTest extends TestCase
     {
         $messageContainer = new MessageContainer();
 
-        $dependency = $this->createDependency();
+        $dependency = $this->createDependencies();
         $dependency->mailerManager->method('createMessage')->willReturn(new Message());
         $dependency->mailerManager->method('sendMessage')->willReturnCallback(function($message) use ($messageContainer) {
             $messageContainer->message = $message;
             return true;
         });
-        $newsletterManager = $this->createNewsletterManager($dependency);
+        $newsletterManager = $this->createInstance($dependency, ['other' => [
+            'template' => 'template.html.twig',
+        ]]);
 
         $receiver = new Receiver();
         $receiver->setEmail('james@bond.com');
@@ -189,11 +205,12 @@ class NewsletterManagerTest extends TestCase
 
     public function testFinishSending()
     {
-        $dependency = $this->createDependency();
+        $dependency = $this->createDependencies();
         $dependency->mailerManager->method('createMessage')->willReturn(new Message());
         $dependency->mailerManager->method('sendMessage')->willReturn(true);
-        $dependency->renderer->method('render')->willReturn('Newsletter Content');
-        $newsletterManager = $this->createNewsletterManager($dependency);
+        $newsletterManager = $this->createInstance($dependency, ['default' => [
+            'template' => 'template.html.twig',
+        ]]);
 
         $receiverOne = new Receiver();
         $receiverOne->setEmail('peter@pan.de');
@@ -215,8 +232,8 @@ class NewsletterManagerTest extends TestCase
 
     public function testSendNewsletterPrepared()
     {
-        $dependency = $this->createDependency();
-        $newsletterManager = $this->createNewsletterManager($dependency);
+        $dependency = $this->createDependencies();
+        $newsletterManager = $this->createInstance($dependency);
 
         $newsletter = $this->createDummyNewsletter();
         $newsletter->setTemplate('other');
@@ -228,8 +245,8 @@ class NewsletterManagerTest extends TestCase
 
     public function testSendNewsletterAlreadySent()
     {
-        $dependency = $this->createDependency();
-        $newsletterManager = $this->createNewsletterManager($dependency);
+        $dependency = $this->createDependencies();
+        $newsletterManager = $this->createInstance($dependency);
 
         $newsletter = $this->createDummyNewsletter();
         $newsletter->setTemplate('other');
@@ -241,26 +258,67 @@ class NewsletterManagerTest extends TestCase
 
     public function testRender()
     {
-        $dependency = $this->createDependency();
-        $dependency->renderer->method('render')->willReturn('content');
-        $newsletterManager = $this->createNewsletterManager($dependency);
+        $dependencies = $this->createDependencies();
+        $dependencies->parameterParser->method('parse')->willReturnCallback(function ($content) { return $content; });
+        $newsletterManager = $this->createInstance($dependencies, ['default' => [
+            'template' => 'tpl.html.twig',
+        ]]);
 
-        $receiverOne = new Receiver();
-        $content = $newsletterManager->render($receiverOne);
+        $newsletter = new Newsletter();
+        $receiver = new Receiver();
+        $receiver->setNewsletter($newsletter);
+        $receiver->setParameters(['param1' => 'someValue']);
 
-        $this->assertEquals('content', $content);
+        $content = $newsletterManager->render($receiver);
+        $this->assertEquals('tpl.html.twig.managed.rendered.parsed', $content);
+    }
+
+    public function testWithTemplateKey()
+    {
+        $dependencies = $this->createDependencies();
+        $dependencies->twig->method('render')->willReturnCallback(function ($template, $parameters) { return $template; });
+        $dependencies->templateManager->method('getTemplate')->willReturnCallback(function ($template) { return $template; });
+        $newsletterRenderer = $this->createInstance($dependencies, ['other' => [
+            'template' => 'pathToOtherTemplate.twig',
+            'label' => 'Other Template'
+        ]]);
+
+        $newsletter = new Newsletter();
+        $newsletter->setTemplate('other');
+        $receiver = new Receiver();
+        $receiver->setNewsletter($newsletter);
+
+        $content = $newsletterRenderer->render($receiver);
+        $this->assertEquals('pathToOtherTemplate.twig.managed.rendered', $content);
+    }
+
+    /**
+     *
+     */
+    public function testWithoutTemplateKey()
+    {
+        $dependencies = $this->createDependencies();
+        $newsletterRenderer = $this->createInstance($dependencies);
+
+        $newsletter = new Newsletter();
+        $receiver = new Receiver();
+        $receiver->setNewsletter($newsletter);
+
+        $this->expectException(\Exception::class);
+        $newsletterRenderer->render($receiver);
     }
 
     public function testRenderPreview()
     {
-        $dependency = $this->createDependency();
-        $dependency->renderer->method('render')->willReturn('content');
-        $newsletterManager = $this->createNewsletterManager($dependency);
+        $dependency = $this->createDependencies();
+        $newsletterManager = $this->createInstance($dependency, ['default' => [
+            'template' => 'template.html.twig',
+        ]]);
 
         $newsletter = $this->createDummyNewsletter();
         $content = $newsletterManager->renderPreview($newsletter);
 
-        $this->assertEquals('content', $content);
+        $this->assertEquals('template.html.twig.managed.rendered.parsed', $content);
     }
 
     public function testSendTest()
@@ -271,17 +329,49 @@ class NewsletterManagerTest extends TestCase
         $receiver = new Receiver();
         $receiver->setNewsletter($newsletter);
 
-        $dependency = $this->createDependency();
-        $dependency->renderer->method('render')->willReturn('content');
+        $dependency = $this->createDependencies();
         $dependency->mailerManager->method('createMessage')->willReturn(new Message());
         $dependency->mailerManager->method('sendMessage')->willReturnCallback(function($message) use ($messageContainer) {
             $messageContainer->message = $message;
             return true;
         });
-        $newsletterManager = $this->createNewsletterManager($dependency);
+        $newsletterManager = $this->createInstance($dependency, ['default' => [
+            'template' => 'template.html.twig',
+        ]]);
 
         $newsletter = $this->createDummyNewsletter();
-        $newsletterManager->sendTest($newsletter, 'peter@pan.de');
+        $this->assertTrue($newsletterManager->sendTest($newsletter, 'peter@pan.de'));
+
+        $this->assertEquals('template.html.twig', $messageContainer->message->getTemplate());
+        $this->assertEquals('from@enhavo.com', $messageContainer->message->getFrom());
+        $this->assertEquals('peter@pan.de', $messageContainer->message->getTo());
+        $this->assertEquals('subject', $messageContainer->message->getSubject());
+        $this->assertEquals('text/html', $messageContainer->message->getContentType());
+        $this->assertInstanceOf(Receiver::class, $messageContainer->message->getContext()['receiver']);
+        $this->assertInstanceOf(Newsletter::class, $messageContainer->message->getContext()['resource']);
+    }
+
+
+    public function testSendTestNotSent()
+    {
+        $messageContainer = new MessageContainer();
+        $newsletter = $this->createDummyNewsletter();
+        $newsletter->setTemplate('other');
+        $receiver = new Receiver();
+        $receiver->setNewsletter($newsletter);
+
+        $dependency = $this->createDependencies();
+        $dependency->mailerManager->method('createMessage')->willReturn(new Message());
+        $dependency->mailerManager->method('sendMessage')->willReturnCallback(function($message) use ($messageContainer) {
+            $messageContainer->message = $message;
+            return false;
+        });
+        $newsletterManager = $this->createInstance($dependency, ['default' => [
+            'template' => 'template.html.twig',
+        ]]);
+
+        $newsletter = $this->createDummyNewsletter();
+        $this->assertFalse($newsletterManager->sendTest($newsletter, 'peter@pan.de'));
 
         $this->assertEquals('template.html.twig', $messageContainer->message->getTemplate());
         $this->assertEquals('from@enhavo.com', $messageContainer->message->getFrom());
@@ -305,12 +395,14 @@ class DependencyProvider
     public $tokenGenerator;
     /** @var LoggerInterface|MockObject */
     public $logger;
-    /** @var NewsletterRenderer|MockObject */
-    public $renderer;
     /** @var SubscriptionManager|MockObject */
     public $subscriptionManager;
     /** @var Environment|MockObject */
     public $twig;
+    /** @var TemplateManager|MockObject */
+    public $templateManager;
+    /** @var ParameterParser|MockObject */
+    public $parameterParser;
     /** @var array */
     public $testReceiver;
 }
