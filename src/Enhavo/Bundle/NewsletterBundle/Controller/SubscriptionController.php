@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Controller;
 
+use Enhavo\Bundle\FormBundle\Error\FormErrorResolver;
 use Enhavo\Bundle\NewsletterBundle\Pending\PendingSubscriberManager;
 use Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,18 +21,24 @@ class SubscriptionController extends AbstractController
     /** @var TranslatorInterface */
     private $translator;
 
+    /** @var FormErrorResolver */
+    private $formErrorResolver;
+
     /**
      * SubscriptionController constructor.
      * @param SubscriptionManager $subscriptionManager
      * @param PendingSubscriberManager $pendingManager
      * @param TranslatorInterface $translator
+     * @param FormErrorResolver $formErrorResolver
      */
-    public function __construct(SubscriptionManager $subscriptionManager, PendingSubscriberManager $pendingManager, TranslatorInterface $translator)
+    public function __construct(SubscriptionManager $subscriptionManager, PendingSubscriberManager $pendingManager, TranslatorInterface $translator, FormErrorResolver $formErrorResolver)
     {
         $this->subscriptionManager = $subscriptionManager;
         $this->pendingManager = $pendingManager;
         $this->translator = $translator;
+        $this->formErrorResolver = $formErrorResolver;
     }
+
 
     public function activateAction(Request $request)
     {
@@ -77,8 +84,13 @@ class SubscriptionController extends AbstractController
             ]);
         } else {
             return new JsonResponse([
-                'errors' => $form->getErrors(true, true),
-                'subscriber' => $subscriber
+                'errors' => [
+                    'fields' => $this->formErrorResolver->getErrorFieldNames($form),
+                    'messages' => $this->formErrorResolver->getErrorMessages($form),
+                ],
+                'subscriber' => $this->get('serializer')->normalize($subscriber, 'json', [
+                    'groups' => ['subscription']
+                ]),
             ], 400);
         }
     }

@@ -137,6 +137,7 @@ services:
             - '@Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager'
             - '@Enhavo\Bundle\NewsletterBundle\Pending\PendingSubscriberManager'
             - '@translator'
+            - '@Enhavo\Bundle\FormBundle\Error\FormErrorResolver'
         tags:
             - { name: controller.service_arguments }
 
