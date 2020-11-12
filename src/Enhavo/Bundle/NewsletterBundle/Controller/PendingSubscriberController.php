@@ -47,7 +47,9 @@ class PendingSubscriberController extends AbstractController
 
         $strategy->activateSubscriber($subscriber);
         return $this->render($strategy->getActivationTemplate(), [
-            'subscriber' => $subscriber
+            'subscriber' => $this->get('serializer')->normalize($subscriber, 'json', [
+                'groups' => ['subscription']
+            ]),
         ]);
     }
 }

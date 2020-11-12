@@ -57,7 +57,9 @@ class SubscriptionController extends AbstractController
             $strategy->activateSubscriber($subscriber);
             $templateManager = $this->get('enhavo_app.template.manager');
             return $this->render($templateManager->getTemplate($strategy->getActivationTemplate()), [
-                'subscriber' => $subscriber
+                'subscriber' => $this->get('serializer')->normalize($subscriber, 'json', [
+                    'groups' => ['subscription']
+                ]),
             ]);
         } catch (\Exception $exception) {
 
@@ -80,7 +82,9 @@ class SubscriptionController extends AbstractController
             $message = $subscription->getStrategy()->addSubscriber($subscriber);
             return new JsonResponse([
                 'message' => $this->translator->trans($message, [], 'EnhavoNewsletterBundle'),
-                'subscriber' => $subscriber
+                'subscriber' => $this->get('serializer')->normalize($subscriber, 'json', [
+                    'groups' => ['subscription']
+                ]),
             ]);
         } else {
             return new JsonResponse([
@@ -113,7 +117,9 @@ class SubscriptionController extends AbstractController
 
         return new JsonResponse([
             'message' => $this->translator->trans($message, [], 'EnhavoNewsletterBundle'),
-            'subscriber' => $subscriber
+            'subscriber' => $this->get('serializer')->normalize($subscriber, 'json', [
+                'groups' => ['subscription']
+            ]),
         ]);
     }
 }
