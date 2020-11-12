@@ -210,6 +210,7 @@ class Configuration implements ConfigurationInterface
 
         $adminNode->arrayNode('reset_password_confirm')->addDefaultsIfNotSet()->children()
             ->scalarNode('template')->defaultValue('admin/security/reset-password/confirm.html.twig')->end()
+            ->scalarNode('auto_login')->defaultValue(true)->end()
             ->scalarNode('redirect_route')->defaultValue('enhavo_app_index')->end()
             ->scalarNode('stylesheets')->defaultValue(['enhavo/user/login'])->end()
             ->scalarNode('javascripts')->defaultValue(['enhavo/user/login'])->end()
