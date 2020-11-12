@@ -1,0 +1,3 @@
+enhavo_user:
+    password:
+        mismatch: 'The entered passwords do not match.'

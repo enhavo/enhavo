@@ -140,7 +140,7 @@ class Configuration implements ConfigurationInterface
 
         $themeNode->arrayNode('registration_confirm')->addDefaultsIfNotSet()->children()
             ->scalarNode('template')->defaultValue('theme/security/registration/confirm.html.twig')->end()
-            ->scalarNode('mail_template')->defaultValue('mail/security/confirm.html.twig')->end()
+            ->scalarNode('mail_template')->defaultValue('mail/security/confirmation.html.twig')->end()
             ->scalarNode('mail_subject')->defaultValue('confirmation.mail.subject')->end()
             ->scalarNode('translation_domain')->defaultValue('EnhavoUserBundle')->end()
             ->scalarNode('redirect_route')->defaultValue('enhavo_user_theme_registration_finish')->end()

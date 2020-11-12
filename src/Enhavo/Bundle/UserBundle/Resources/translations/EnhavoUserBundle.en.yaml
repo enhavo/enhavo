@@ -61,10 +61,6 @@ reset:
         login: 'Login'
     message:
         success: 'An email was sent to your account.'
-    check_email: |
-        An email has been sent. It contains a link you must click to reset your password.
-
-        If you don't get an email check your spam folder or try again.
     request:
         username: 'Username or email address'
         submit: 'Reset password'
@@ -78,21 +74,30 @@ reset:
         text: |
             Hello %username%!
 
-            To reset your password - please visit %confirmation_url%
+            To reset your password, please visit %confirmation_url%
 
             Regards,
             the Team.
-confirm:
+confirmation:
     form:
         label:
-            password: Password
-            password-repeat: Repeat password
+            password: 'Password'
+            password-repeat: 'Repeat password'
         action:
-            reset: Reset
+            reset: 'Reset'
+    mail:
+        subject: 'Account Confirmed'
+        text: |
+            Hello %username%!
+
+            Your account is now enabled.
+
+            Regards,
+            the Team.
 security:
     login:
-        username: Username
-        password: Password
+        username: 'Username'
+        password: 'Password'
         remember_me: 'Remember me'
         submit: 'Log in'
 change_password:
@@ -101,8 +106,6 @@ change_password:
         error: 'Error'
 
 registration:
-    check_inbox: |
-        An email has been sent to {{ user.email }}. It contains an activation link you must click to activate your account.
     confirmed: 'Congrats, your account is now activated.'
     submit: 'Register'
     form:
@@ -112,8 +115,14 @@ registration:
         password_confirmation: 'Password confirmation'
         submit: Register
     mail:
-        text: 'Please click on the following link to to verify your email address %confirmation_url%'
         subject: Registration
+        text: |
+            Hello %username%!
+
+            Please click on the following link to to verify your email address %confirmation_url%
+
+            Regards,
+            the Team.
 
 form:
     group_name: 'Group name'

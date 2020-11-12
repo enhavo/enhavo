@@ -19,6 +19,15 @@ class ResetPasswordType extends AbstractType
     {
         $builder->add('plainPassword', RepeatedType::class, array(
             'type' => PasswordType::class,
+            'options' => array(
+                'translation_domain' => 'EnhavoUserBundle',
+                'attr' => array(
+                    'autocomplete' => 'new-password',
+                ),
+            ),
+            'first_options' => array('label' => 'registration.form.password'),
+            'second_options' => array('label' => 'registration.form.password_confirmation'),
+            'invalid_message' => 'enhavo_user.password.mismatch',
         ));
     }
 }

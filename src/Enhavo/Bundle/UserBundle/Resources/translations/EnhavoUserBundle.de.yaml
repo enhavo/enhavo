@@ -61,10 +61,6 @@ reset:
         login: 'Zur Anmeldung'
     message:
         success: 'Eine Email wurde an Ihr Konto versendet.'
-    check_email: |
-        Eine E-Mail wurde verschickt. Sie beinhaltet einen Link zum Zurücksetzen des Passwortes.
-
-        Eventuell wurde diese E-Mail als Spam markiert, wenn sie nicht angekommen ist.
     request:
         username: 'Benutzername oder E-Mail-Adresse'
         submit: 'Passwort zurücksetzen'
@@ -82,27 +78,34 @@ reset:
 
             Mit besten Grüßen,
             das Team.
-confirm:
+confirmation:
     form:
         label:
-            password: Passwort
-            password-repeat: Passwort wiederholen
+            password: 'Passwort'
+            password-repeat: 'Passwort wiederholen'
         action:
-            reset: Zurücksetzen
+            reset: 'Zurücksetzen'
+    mail:
+        subject: 'Benutzerkonto aktiviert'
+        text: |
+            Hallo %username%!
+
+            Ihr Benutzerkonto ist jetzt aktiviert.
+
+            Mit besten Grüßen,
+            das Team.
 security:
     login:
-        username: Benutzername
-        password: Passwort
+        username: 'Benutzername'
+        password: 'Passwort'
         remember_me: 'An mich erinnern'
-        submit: Anmelden
+        submit: 'Anmelden'
 change_password:
     message:
         success: 'Passwort erfolgreich geändert'
         error: 'Fehler beim speichern'
 
 registration:
-    check_inbox: |
-        Eine E-Mail wurde an {{ user.email }} gesendet. Sie enthält einen Link, den Sie anklicken müssen, um Ihr Benutzerkonto zu bestätigen.
     confirmed: 'Glückwunsch, Ihr Benutzerkonto ist jetzt bestätigt.'
     submit: 'Registrieren'
     form:
@@ -112,8 +115,14 @@ registration:
         password_confirmation: 'Passwort bestätigen'
         submit: Registrieren
     mail:
-        text: 'Bitte klicken sie auf folgenden Link um ihre Email zu verifizieren %confirmation_url%'
         subject: Registrierung
+        text: |
+            Hallo %username%!
+
+            Bitte klicken sie auf folgenden Link um ihre Email zu verifizieren %confirmation_url%
+
+            Mit besten Grüßen,
+            das Team.
 
 form:
     group_name: Gruppenname

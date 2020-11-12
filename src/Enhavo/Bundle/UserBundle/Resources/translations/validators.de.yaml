@@ -1,0 +1,3 @@
+enhavo_user:
+    password:
+        mismatch: 'Die Passwörter stimmen nicht überein.'

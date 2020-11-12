@@ -5,19 +5,19 @@
         <form action="{{ path("enhavo_user_theme_security_login") }}" method="post">
             {% if error %}
                 <div class="col-md-push-2 col-md-4 error loginMessage" id="overlayMessage" style="display: block;">
-                    <div>{{ 'error.login'|trans|nl2br }}</div>
+                    <div>{{ 'login.error.credentials'|trans|nl2br }}</div>
                 </div>
             {% endif %}
 
             <input type="hidden" id="remember_me" name="_remember_me" value="on">
             <div class="mb1">
                 <div class="input-container">
-                    <input placeholder="{{ 'security.login.username'|trans }}" type="text" id="email" name="_email" value="{{ last_username }}" required="required" autofocus />
+                    <input placeholder="{{ 'security.login.username'|trans }}" type="text" id="email" name="_email" value="{{ last_username }}" autofocus />
                 </div>
             </div>
             <div class="mb1">
                 <div class="input-container">
-                    <input placeholder="{{ 'security.login.password'|trans }}" type="password" id="password" name="_password" required="required" />
+                    <input placeholder="{{ 'security.login.password'|trans }}" type="password" id="password" name="_password" />
                 </div>
             </div>
             <div class="row">
