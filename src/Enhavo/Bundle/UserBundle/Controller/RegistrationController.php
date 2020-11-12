@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\UserBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Template\TemplateManager;
+use Enhavo\Bundle\FormBundle\Error\FormErrorResolver;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Enhavo\Bundle\UserBundle\Repository\UserRepository;
 use Enhavo\Bundle\UserBundle\User\UserManager;
@@ -17,7 +18,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  * Class RegistrationController
  * @package Enhavo\Bundle\UserBundle\Controller
  *
- * @property $userFactory UserFactory
  */
 class RegistrationController extends AbstractController
 {
@@ -33,19 +33,24 @@ class RegistrationController extends AbstractController
     /** @var FactoryInterface */
     private $userFactory;
 
+    /** @var FormErrorResolver */
+    private $errorResolver;
+
     /**
      * RegistrationController constructor.
      * @param UserManager $userManager
      * @param UserRepository $userRepository
      * @param TemplateManager $templateManager
      * @param FactoryInterface $userFactory
+     * @param FormErrorResolver $errorResolver
      */
-    public function __construct(UserManager $userManager, UserRepository $userRepository, TemplateManager $templateManager, FactoryInterface $userFactory)
+    public function __construct(UserManager $userManager, UserRepository $userRepository, TemplateManager $templateManager, FactoryInterface $userFactory, FormErrorResolver $errorResolver)
     {
         $this->userManager = $userManager;
         $this->userRepository = $userRepository;
         $this->templateManager = $templateManager;
         $this->userFactory = $userFactory;
+        $this->errorResolver = $errorResolver;
     }
 
 
@@ -66,7 +71,7 @@ class RegistrationController extends AbstractController
             if ($form->isValid()) {
                 $this->userManager->register($user, $config, $action);
                 if ($this->userManager->getConfig($config, $action, 'auto_login', false)) {
-                    $this->userManager->login($user); // todo find out current firewall name
+                    $this->userManager->login($user);
                 }
                 $url = $this->generateUrl($this->userManager->getRedirectRoute($config, $action));
 
@@ -86,7 +91,10 @@ class RegistrationController extends AbstractController
                 if ($request->isXmlHttpRequest()) {
                     return new JsonResponse([
                         'error' => true,
-                        'errors' => [], // todo: insert errors from enhavo form-error-resolver
+                        'errors' => [
+                            'fields' => $this->errorResolver->getErrorFieldNames($form),
+                            'messages' => $this->errorResolver->getErrorMessages($form),
+                        ],
                     ]);
                 }
             }
@@ -114,7 +122,7 @@ class RegistrationController extends AbstractController
 
         $this->userManager->confirm($user, $config, 'registration_confirm');
         if ($this->userManager->getConfig($config, 'registration_confirm', 'auto_login', false)) {
-            $this->userManager->login($user); // todo find out current firewall name
+            $this->userManager->login($user);
         }
 
         $url = $this->generateUrl($this->userManager->getRedirectRoute($config, 'registration_confirm'));

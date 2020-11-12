@@ -93,6 +93,12 @@ class Configuration implements ConfigurationInterface
     {
         $subNode = $rootNode->children();
 
+        $parametersNode = $subNode->arrayNode('parameters')->addDefaultsIfNotSet()->children();
+        $parametersNode
+            ->variableNode('default_firewall')->defaultValue('main')->end()
+        ;
+        $parametersNode->end();
+
         $mailNode = $subNode->arrayNode('mail')->addDefaultsIfNotSet()->children();
         $mailNode
             ->variableNode('from')->end()

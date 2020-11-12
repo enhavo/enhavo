@@ -8,6 +8,7 @@ namespace Controller;
 
 
 use Enhavo\Bundle\AppBundle\Template\TemplateManager;
+use Enhavo\Bundle\FormBundle\Error\FormErrorResolver;
 use Enhavo\Bundle\UserBundle\Controller\UserController;
 use Enhavo\Bundle\UserBundle\Model\User;
 use Enhavo\Bundle\UserBundle\User\UserManager;
@@ -28,7 +29,8 @@ class UserControllerTest extends TestCase
         return new UserControllerMock(
             $dependencies->userManager,
             $dependencies->templateManager,
-            $dependencies->translator
+            $dependencies->translator,
+            $dependencies->errorResolver
         );
     }
 
@@ -52,6 +54,10 @@ class UserControllerTest extends TestCase
         $dependencies->form->method('isValid')->willReturnCallback(function () use ($dependencies) {
             return $dependencies->isValid;
         });
+        $dependencies->errorResolver = $this->getMockBuilder(FormErrorResolver::class)->disableOriginalConstructor()->getMock();
+        $dependencies->errorResolver->method('getErrorFieldNames')->willReturn([]);
+        $dependencies->errorResolver->method('getErrorMessages')->willReturn([]);
+
 
         return $dependencies;
     }
@@ -120,7 +126,7 @@ class UserControllerTest extends TestCase
         $dependencies->isSubmitted = true;
         $response = $controller->profileAction($request);
         $this->assertInstanceOf(JsonResponse::class, $response);
-        $this->assertEquals('{"error":true,"errors":[],"message":"profile.update.error.translated"}', $response->getContent());
+        $this->assertEquals('{"error":true,"errors":{"fields":[],"messages":[]},"message":"profile.update.error.translated"}', $response->getContent());
 
         // submitted valid
         $dependencies->isSubmitted = true;
@@ -144,6 +150,9 @@ class UserControllerTestDependencies
 
     /** @var FormInterface|MockObject */
     public $form;
+
+    /** @var FormErrorResolver|MockObject */
+    public $errorResolver;
 
     public $isSubmitted = false;
     public $isValid = false;

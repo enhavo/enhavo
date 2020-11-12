@@ -6,6 +6,7 @@ services:
             - '@enhavo_user.repository.user'
             - '@enhavo_app.template.manager'
             - '@enhavo_user.factory.user'
+            - '@enhavo_form.error.error.resolver'
         calls:
             - [setContainer, ['@service_container']]
         tags:
@@ -19,6 +20,7 @@ services:
             - '@enhavo_app.template.manager'
             - '@enhavo_user.factory.user'
             - '@translator'
+            - '@Enhavo\Bundle\FormBundle\Error\FormErrorResolver'
         calls:
             - [ setContainer, [ '@service_container' ] ]
         tags:
@@ -55,6 +57,7 @@ services:
             - '@Enhavo\Bundle\UserBundle\User\UserManager'
             - '@enhavo_app.template.manager'
             - '@translator'
+            - '@Enhavo\Bundle\FormBundle\Error\FormErrorResolver'
         calls:
             - [ setContainer, [ '@service_container' ] ]
         tags:

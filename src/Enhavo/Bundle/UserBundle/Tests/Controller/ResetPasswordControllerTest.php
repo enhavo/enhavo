@@ -8,6 +8,7 @@ namespace Controller;
 
 
 use Enhavo\Bundle\AppBundle\Template\TemplateManager;
+use Enhavo\Bundle\FormBundle\Error\FormErrorResolver;
 use Enhavo\Bundle\UserBundle\Controller\ResetPasswordController;
 use Enhavo\Bundle\UserBundle\Model\User;
 use Enhavo\Bundle\UserBundle\Repository\UserRepository;
@@ -34,7 +35,8 @@ class ResetPasswordControllerTest extends TestCase
             $dependencies->userRepository,
             $dependencies->templateManager,
             $dependencies->userFactory,
-            $dependencies->translator
+            $dependencies->translator,
+            $dependencies->errorResolver
         );
     }
 
@@ -55,6 +57,10 @@ class ResetPasswordControllerTest extends TestCase
         $dependencies->form = $this->getMockBuilder(FormInterface::class)->getMock();
         $dependencies->request = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();
         $dependencies->request->attributes = new ParameterBag([]);
+
+        $dependencies->errorResolver = $this->getMockBuilder(FormErrorResolver::class)->disableOriginalConstructor()->getMock();
+        $dependencies->errorResolver->method('getErrorFieldNames')->willReturn([]);
+        $dependencies->errorResolver->method('getErrorMessages')->willReturn([]);
 
         $dependencies->userManager->method('createForm')->willReturn(
             $dependencies->form
@@ -154,7 +160,7 @@ class ResetPasswordControllerTest extends TestCase
         $dependencies->isValid = false;
         $response = $controller->requestAction($dependencies->request);
         $this->assertInstanceOf(JsonResponse::class, $response);
-        $this->assertEquals('{"error":true,"errors":[]}', $response->getContent());
+        $this->assertEquals('{"error":true,"errors":{"fields":[],"messages":[]}}', $response->getContent());
 
 
         // submitted no errors user found
@@ -168,7 +174,7 @@ class ResetPasswordControllerTest extends TestCase
         $dependencies->userExists = false;
         $response = $controller->requestAction($dependencies->request);
         $this->assertInstanceOf(Response::class, $response);
-        $this->assertEquals('{"error":true,"errors":[],"message":"reset.form.error.invalid-user.translated"}', $response->getContent());
+        $this->assertEquals('{"error":true,"errors":{"fields":[],"messages":[]},"message":"reset.form.error.invalid-user.translated"}', $response->getContent());
         $this->assertEquals('reset.form.error.invalid-user.translated', $controller->flashMessages['error']);
     }
 
@@ -262,7 +268,7 @@ class ResetPasswordControllerTest extends TestCase
         $dependencies->isSubmitted = true;
         $response = $controller->confirmAction($request, $token);
         $this->assertInstanceOf(JsonResponse::class, $response);
-        $this->assertEquals('{"error":true,"errors":[]}', $response->getContent());
+        $this->assertEquals('{"error":true,"errors":{"fields":[],"messages":[]}}', $response->getContent());
 
         // submitted valid
         $dependencies->isSubmitted = true;
@@ -335,6 +341,9 @@ class ResetPasswordControllerTestDependencies
 
     /** @var Request|MockObject */
     public $request;
+
+    /** @var FormErrorResolver|MockObject */
+    public $errorResolver;
 
     public $isSubmitted = false;
 

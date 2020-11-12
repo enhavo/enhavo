@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\UserBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Template\TemplateManager;
+use Enhavo\Bundle\FormBundle\Error\FormErrorResolver;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Enhavo\Bundle\UserBundle\Repository\UserRepository;
 use Enhavo\Bundle\UserBundle\User\UserManager;
@@ -37,6 +38,9 @@ class ResetPasswordController extends AbstractController
     /** @var TranslatorInterface */
     private $translator;
 
+    /** @var FormErrorResolver */
+    private $errorResolver;
+
     /**
      * ResetPasswordController constructor.
      * @param UserManager $userManager
@@ -44,14 +48,16 @@ class ResetPasswordController extends AbstractController
      * @param TemplateManager $templateManager
      * @param FactoryInterface $userFactory
      * @param TranslatorInterface $translator
+     * @param FormErrorResolver $errorResolver
      */
-    public function __construct(UserManager $userManager, UserRepository $userRepository, TemplateManager $templateManager, FactoryInterface $userFactory, TranslatorInterface $translator)
+    public function __construct(UserManager $userManager, UserRepository $userRepository, TemplateManager $templateManager, FactoryInterface $userFactory, TranslatorInterface $translator, FormErrorResolver $errorResolver)
     {
         $this->userManager = $userManager;
         $this->userRepository = $userRepository;
         $this->templateManager = $templateManager;
         $this->userFactory = $userFactory;
         $this->translator = $translator;
+        $this->errorResolver = $errorResolver;
     }
 
     public function requestAction(Request $request)
@@ -77,7 +83,10 @@ class ResetPasswordController extends AbstractController
                     if ($request->isXmlHttpRequest()) {
                         return new JsonResponse([
                             'error' => true,
-                            'errors' => [],
+                            'errors' => [
+                                'fields' => $this->errorResolver->getErrorFieldNames($form),
+                                'messages' => $this->errorResolver->getErrorMessages($form),
+                            ],
                             'message' => $message,
                         ]);
                     }
@@ -110,7 +119,10 @@ class ResetPasswordController extends AbstractController
                 if ($request->isXmlHttpRequest()) {
                     return new JsonResponse([
                         'error' => true,
-                        'errors' => [], // todo: add errors from enhavo form error resolver
+                        'errors' => [
+                            'fields' => $this->errorResolver->getErrorFieldNames($form),
+                            'messages' => $this->errorResolver->getErrorMessages($form),
+                        ],
                     ]);
                 }
             }
@@ -150,7 +162,7 @@ class ResetPasswordController extends AbstractController
             if ($form->isValid()) {
                 $this->userManager->changePassword($user);
                 if ($this->userManager->getConfig($config, $action, 'auto_login', false)) {
-                    $this->userManager->login($user); // todo find out current firewall name
+                    $this->userManager->login($user);
                 }
 
                 $url = $this->generateUrl($this->userManager->getRedirectRoute($config, $action));
@@ -170,7 +182,10 @@ class ResetPasswordController extends AbstractController
                 if ($request->isXmlHttpRequest()) {
                     return new JsonResponse([
                         'error' => true,
-                        'errors' => [], // todo: add errors from enhavo form error resolver
+                        'errors' => [
+                            'fields' => $this->errorResolver->getErrorFieldNames($form),
+                            'messages' => $this->errorResolver->getErrorMessages($form),
+                        ],
                     ]);
                 }
             }

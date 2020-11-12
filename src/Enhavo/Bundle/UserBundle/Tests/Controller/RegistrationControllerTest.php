@@ -8,6 +8,7 @@ namespace Controller;
 
 
 use Enhavo\Bundle\AppBundle\Template\TemplateManager;
+use Enhavo\Bundle\FormBundle\Error\FormErrorResolver;
 use Enhavo\Bundle\UserBundle\Controller\RegistrationController;
 use Enhavo\Bundle\UserBundle\Model\User;
 use Enhavo\Bundle\UserBundle\Repository\UserRepository;
@@ -32,7 +33,8 @@ class RegistrationControllerTest extends TestCase
             $dependencies->userManager,
             $dependencies->userRepository,
             $dependencies->templateManager,
-            $dependencies->userFactory
+            $dependencies->userFactory,
+            $dependencies->errorResolver
         );
     }
 
@@ -60,6 +62,10 @@ class RegistrationControllerTest extends TestCase
         $dependencies->form->method('isValid')->willReturnCallback(function () use ($dependencies) {
             return $dependencies->isValid;
         });
+        $dependencies->errorResolver = $this->getMockBuilder(FormErrorResolver::class)->disableOriginalConstructor()->getMock();
+        $dependencies->errorResolver->method('getErrorFieldNames')->willReturn([]);
+        $dependencies->errorResolver->method('getErrorMessages')->willReturn([]);
+
 
         return $dependencies;
     }
@@ -132,7 +138,7 @@ class RegistrationControllerTest extends TestCase
         $response = $controller->registerAction($request);
 
         $this->assertInstanceOf(JsonResponse::class, $response);
-        $this->assertEquals('{"error":true,"errors":[]}', $response->getContent());
+        $this->assertEquals('{"error":true,"errors":{"fields":[],"messages":[]}}', $response->getContent());
 
         // submitted valid ajax
         $dependencies->isValid = true;
@@ -240,6 +246,9 @@ class RegistrationControllerTestDependencies
 
     /** @var Request|MockObject */
     public $request;
+
+    /** @var FormErrorResolver|MockObject */
+    public $errorResolver;
 
     public $isSubmitted = false;
 

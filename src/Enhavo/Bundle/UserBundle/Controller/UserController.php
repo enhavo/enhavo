@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\UserBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Template\TemplateManager;
+use Enhavo\Bundle\FormBundle\Error\FormErrorResolver;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Enhavo\Bundle\UserBundle\User\UserManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,19 +28,23 @@ class UserController extends AbstractController
     /** @var TranslatorInterface */
     private $translator;
 
+    /** @var FormErrorResolver */
+    private $errorResolver;
+
     /**
      * UserController constructor.
      * @param UserManager $userManager
      * @param TemplateManager $templateManager
      * @param TranslatorInterface $translator
+     * @param FormErrorResolver $errorResolver
      */
-    public function __construct(UserManager $userManager, TemplateManager $templateManager, TranslatorInterface $translator)
+    public function __construct(UserManager $userManager, TemplateManager $templateManager, TranslatorInterface $translator, FormErrorResolver $errorResolver)
     {
         $this->userManager = $userManager;
         $this->templateManager = $templateManager;
         $this->translator = $translator;
+        $this->errorResolver = $errorResolver;
     }
-
 
     public function profileAction(Request $request)
     {
@@ -72,7 +77,10 @@ class UserController extends AbstractController
                 if ($request->isXmlHttpRequest()) {
                     return new JsonResponse([
                         'error' => true,
-                        'errors' => [], // todo: add errors from enhavo error resolver
+                        'errors' => [
+                            'fields' => $this->errorResolver->getErrorFieldNames($form),
+                            'messages' => $this->errorResolver->getErrorMessages($form),
+                        ],
                         'message' => $message,
                     ]);
                 }

@@ -73,7 +73,8 @@ class UserManagerTest extends TestCase
             $dependencies->userChecker,
             $dependencies->rememberMeService,
             $config,
-            [ 'from' => 'from@enhavo.com', 'sender_name' => 'enhavo' ]
+            [ 'from' => 'from@enhavo.com', 'sender_name' => 'enhavo' ],
+            [ 'default_firewall' => 'main' ]
         );
     }
 
@@ -488,7 +489,7 @@ class UserManagerTest extends TestCase
         $dependencies->requestStack->expects($this->exactly(2))->method('getCurrentRequest')->willReturn($request);
         $manager = $this->createInstance($dependencies, []);
 
-        $manager->login('main', $user, null);
+        $manager->login($user, null);
 
         $dependencies->rememberMeService = $this->getMockBuilder(RememberMeServicesInterface::class)->getMock();
         $dependencies->rememberMeService->expects($this->once())->method('loginSuccess')->willReturnCallback(function ($request, $response, $token) {
@@ -497,7 +498,7 @@ class UserManagerTest extends TestCase
         });
         $manager = $this->createInstance($dependencies, []);
 
-        $manager->login('main', $user, new Response());
+        $manager->login($user, new Response());
     }
 
 

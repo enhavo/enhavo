@@ -18,6 +18,7 @@ services:
             - ~
             - '%enhavo_user.config%'
             - '%enhavo_user.mail%'
+            - '%enhavo_user.parameters%'
 
     Enhavo\Bundle\UserBundle\EventListener\SaveUserSubscriber:
         arguments:

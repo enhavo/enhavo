@@ -83,6 +83,9 @@ class UserManager
     /** @var array */
     private $mail;
 
+    /** @var array */
+    private $parameters;
+
     /**
      * UserManager constructor.
      * @param EntityManagerInterface $entityManager
@@ -102,8 +105,9 @@ class UserManager
      * @param RememberMeServicesInterface|null $rememberMeService
      * @param array $config
      * @param array $mail
+     * @param array $parameters
      */
-    public function __construct(EntityManagerInterface $entityManager, MailerManager $mailerManager, RepositoryInterface $userRepository, UserMapperInterface $userMapper, TokenGeneratorInterface $tokenGenerator, TranslatorInterface $translator, FormFactoryInterface $formFactory, EncoderFactoryInterface $encoderFactory, RouterInterface $router, EventDispatcherInterface $eventDispatcher, TokenStorageInterface $tokenStorage, RequestStack $requestStack, SessionAuthenticationStrategyInterface $sessionStrategy, UserCheckerInterface $userChecker, ?RememberMeServicesInterface $rememberMeService, array $config, array $mail)
+    public function __construct(EntityManagerInterface $entityManager, MailerManager $mailerManager, RepositoryInterface $userRepository, UserMapperInterface $userMapper, TokenGeneratorInterface $tokenGenerator, TranslatorInterface $translator, FormFactoryInterface $formFactory, EncoderFactoryInterface $encoderFactory, RouterInterface $router, EventDispatcherInterface $eventDispatcher, TokenStorageInterface $tokenStorage, RequestStack $requestStack, SessionAuthenticationStrategyInterface $sessionStrategy, UserCheckerInterface $userChecker, ?RememberMeServicesInterface $rememberMeService, array $config, array $mail, array $parameters)
     {
         $this->entityManager = $entityManager;
         $this->mailerManager = $mailerManager;
@@ -122,14 +126,14 @@ class UserManager
         $this->rememberMeService = $rememberMeService;
         $this->config = $config;
         $this->mail = $mail;
+        $this->parameters = $parameters;
     }
 
-
-    public function login($firewallName, UserInterface $user, ?Response $response)
+    public function login(UserInterface $user, ?Response $response = null, ?string $firewallName = null)
     {
         $this->userChecker->checkPreAuth($user);
 
-        $token = $this->createToken($firewallName, $user);
+        $token = $this->createToken($firewallName??$this->parameters['default_firewall'], $user);
         $request = $this->requestStack->getCurrentRequest();
 
         if (null !== $request) {
