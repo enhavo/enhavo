@@ -18,19 +18,23 @@ use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Serializer\Serializer;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class PendingSubscriberControllerTest extends TestCase
 {
     private function createDependencies(): PendingSubscriberControllerTestDependencies
     {
-        $dep = new PendingSubscriberControllerTestDependencies();
-        $dep->subscriptionManager = $this->getMockBuilder(SubscriptionManager::class)->disableOriginalConstructor()->getMock();
-        $dep->pendingManager = $this->getMockBuilder(PendingSubscriberManager::class)->disableOriginalConstructor()->getMock();
-        $dep->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
-
-        $dep->container = $this->getMockBuilder(Container::class)->disableOriginalConstructor()->getMock();
-        return $dep;
+        $dependencies = new PendingSubscriberControllerTestDependencies();
+        $dependencies->subscriptionManager = $this->getMockBuilder(SubscriptionManager::class)->disableOriginalConstructor()->getMock();
+        $dependencies->pendingManager = $this->getMockBuilder(PendingSubscriberManager::class)->disableOriginalConstructor()->getMock();
+        $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
+        $dependencies->serializer = $this->getMockBuilder(Serializer::class)->disableOriginalConstructor()->getMock();
+        $dependencies->serializer->method('normalize')->willReturnCallback(function ($resource) {
+            return ['email' => $resource->getEmail()];
+        });
+        $dependencies->container = $this->getMockBuilder(Container::class)->disableOriginalConstructor()->getMock();
+        return $dependencies;
     }
 
     private function createInstance(PendingSubscriberControllerTestDependencies $dependencies): PendingSubscriberTestController
@@ -38,7 +42,8 @@ class PendingSubscriberControllerTest extends TestCase
         $controller = new PendingSubscriberTestController(
             $dependencies->subscriptionManager,
             $dependencies->pendingManager,
-            $dependencies->translator
+            $dependencies->translator,
+            $dependencies->serializer
         );
         $controller->setContainer($dependencies->container);
         return $controller;
@@ -103,7 +108,8 @@ class PendingSubscriberControllerTestDependencies
     public $pendingManager;
     /** @var TranslatorInterface|MockObject */
     public $translator;
-
+    /** @var Serializer|MockObject */
+    public $serializer;
     /** @var Container|MockObject */
     public $container;
 }

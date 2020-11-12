@@ -8,6 +8,7 @@ use Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Serializer\Serializer;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SubscriptionController extends AbstractController
@@ -24,19 +25,24 @@ class SubscriptionController extends AbstractController
     /** @var FormErrorResolver */
     private $formErrorResolver;
 
+    /** @var Serializer */
+    private $serializer;
+
     /**
      * SubscriptionController constructor.
      * @param SubscriptionManager $subscriptionManager
      * @param PendingSubscriberManager $pendingManager
      * @param TranslatorInterface $translator
      * @param FormErrorResolver $formErrorResolver
+     * @param Serializer $serializer
      */
-    public function __construct(SubscriptionManager $subscriptionManager, PendingSubscriberManager $pendingManager, TranslatorInterface $translator, FormErrorResolver $formErrorResolver)
+    public function __construct(SubscriptionManager $subscriptionManager, PendingSubscriberManager $pendingManager, TranslatorInterface $translator, FormErrorResolver $formErrorResolver, Serializer $serializer)
     {
         $this->subscriptionManager = $subscriptionManager;
         $this->pendingManager = $pendingManager;
         $this->translator = $translator;
         $this->formErrorResolver = $formErrorResolver;
+        $this->serializer = $serializer;
     }
 
 
@@ -57,7 +63,7 @@ class SubscriptionController extends AbstractController
             $strategy->activateSubscriber($subscriber);
             $templateManager = $this->get('enhavo_app.template.manager');
             return $this->render($templateManager->getTemplate($strategy->getActivationTemplate()), [
-                'subscriber' => $this->get('serializer')->normalize($subscriber, 'json', [
+                'subscriber' => $this->serializer->normalize($subscriber, 'json', [
                     'groups' => ['subscription']
                 ]),
             ]);
@@ -82,7 +88,7 @@ class SubscriptionController extends AbstractController
             $message = $subscription->getStrategy()->addSubscriber($subscriber);
             return new JsonResponse([
                 'message' => $this->translator->trans($message, [], 'EnhavoNewsletterBundle'),
-                'subscriber' => $this->get('serializer')->normalize($subscriber, 'json', [
+                'subscriber' => $this->serializer->normalize($subscriber, 'json', [
                     'groups' => ['subscription']
                 ]),
             ]);
@@ -92,7 +98,7 @@ class SubscriptionController extends AbstractController
                     'fields' => $this->formErrorResolver->getErrorFieldNames($form),
                     'messages' => $this->formErrorResolver->getErrorMessages($form),
                 ],
-                'subscriber' => $this->get('serializer')->normalize($subscriber, 'json', [
+                'subscriber' => $this->serializer->normalize($subscriber, 'json', [
                     'groups' => ['subscription']
                 ]),
             ], 400);
@@ -117,7 +123,7 @@ class SubscriptionController extends AbstractController
 
         return new JsonResponse([
             'message' => $this->translator->trans($message, [], 'EnhavoNewsletterBundle'),
-            'subscriber' => $this->get('serializer')->normalize($subscriber, 'json', [
+            'subscriber' => $this->serializer->normalize($subscriber, 'json', [
                 'groups' => ['subscription']
             ]),
         ]);

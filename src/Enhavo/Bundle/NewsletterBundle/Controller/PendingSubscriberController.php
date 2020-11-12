@@ -6,6 +6,7 @@ use Enhavo\Bundle\NewsletterBundle\Pending\PendingSubscriberManager;
 use Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Serializer\Serializer;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class PendingSubscriberController extends AbstractController
@@ -19,18 +20,24 @@ class PendingSubscriberController extends AbstractController
     /** @var TranslatorInterface */
     private $translator;
 
+    /** @var Serializer */
+    private $serializer;
+
     /**
-     * SubscriptionController constructor.
+     * PendingSubscriberController constructor.
      * @param SubscriptionManager $subscriptionManager
      * @param PendingSubscriberManager $pendingManager
      * @param TranslatorInterface $translator
+     * @param Serializer $serializer
      */
-    public function __construct(SubscriptionManager $subscriptionManager, PendingSubscriberManager $pendingManager, TranslatorInterface $translator)
+    public function __construct(SubscriptionManager $subscriptionManager, PendingSubscriberManager $pendingManager, TranslatorInterface $translator, Serializer $serializer)
     {
         $this->subscriptionManager = $subscriptionManager;
         $this->pendingManager = $pendingManager;
         $this->translator = $translator;
+        $this->serializer = $serializer;
     }
+
 
     public function activateAction(Request $request)
     {
@@ -47,7 +54,7 @@ class PendingSubscriberController extends AbstractController
 
         $strategy->activateSubscriber($subscriber);
         return $this->render($strategy->getActivationTemplate(), [
-            'subscriber' => $this->get('serializer')->normalize($subscriber, 'json', [
+            'subscriber' => $this->serializer->normalize($subscriber, 'json', [
                 'groups' => ['subscription']
             ]),
         ]);
