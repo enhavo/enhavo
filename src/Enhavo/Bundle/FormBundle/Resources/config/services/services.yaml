@@ -1,9 +1,12 @@
 services:
-    enhavo_form.error.error.resolver:
+    Enhavo\Bundle\FormBundle\Error\FormErrorResolver:
         public: true
-        class: Enhavo\Bundle\FormBundle\Error\FormErrorResolver
         arguments:
             - '@translator'
+
+    enhavo_form.error.error.resolver:
+        public: true
+        alias: Enhavo\Bundle\FormBundle\Error\FormErrorResolver
 
     Enhavo\Bundle\FormBundle\Formatter\CurrencyFormatter:
         public: true

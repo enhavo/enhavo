@@ -24,3 +24,10 @@ Enhavo\Bundle\NewsletterBundle\Entity\Tracking:
             groups: ['stats']
         date:
             groups: ['stats']
+
+Enhavo\Bundle\NewsletterBundle\Model\Subscriber:
+    attributes:
+        email:
+            groups: ['subscription']
+        confirmationToken:
+            groups: [ 'subscription' ]

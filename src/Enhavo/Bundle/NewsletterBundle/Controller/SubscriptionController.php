@@ -2,11 +2,13 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Controller;
 
+use Enhavo\Bundle\FormBundle\Error\FormErrorResolver;
 use Enhavo\Bundle\NewsletterBundle\Pending\PendingSubscriberManager;
 use Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Serializer\Serializer;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SubscriptionController extends AbstractController
@@ -20,18 +22,29 @@ class SubscriptionController extends AbstractController
     /** @var TranslatorInterface */
     private $translator;
 
+    /** @var FormErrorResolver */
+    private $formErrorResolver;
+
+    /** @var Serializer */
+    private $serializer;
+
     /**
      * SubscriptionController constructor.
      * @param SubscriptionManager $subscriptionManager
      * @param PendingSubscriberManager $pendingManager
      * @param TranslatorInterface $translator
+     * @param FormErrorResolver $formErrorResolver
+     * @param Serializer $serializer
      */
-    public function __construct(SubscriptionManager $subscriptionManager, PendingSubscriberManager $pendingManager, TranslatorInterface $translator)
+    public function __construct(SubscriptionManager $subscriptionManager, PendingSubscriberManager $pendingManager, TranslatorInterface $translator, FormErrorResolver $formErrorResolver, Serializer $serializer)
     {
         $this->subscriptionManager = $subscriptionManager;
         $this->pendingManager = $pendingManager;
         $this->translator = $translator;
+        $this->formErrorResolver = $formErrorResolver;
+        $this->serializer = $serializer;
     }
+
 
     public function activateAction(Request $request)
     {
@@ -50,7 +63,9 @@ class SubscriptionController extends AbstractController
             $strategy->activateSubscriber($subscriber);
             $templateManager = $this->get('enhavo_app.template.manager');
             return $this->render($templateManager->getTemplate($strategy->getActivationTemplate()), [
-                'subscriber' => $subscriber
+                'subscriber' => $this->serializer->normalize($subscriber, 'json', [
+                    'groups' => ['subscription']
+                ]),
             ]);
         } catch (\Exception $exception) {
 
@@ -73,12 +88,19 @@ class SubscriptionController extends AbstractController
             $message = $subscription->getStrategy()->addSubscriber($subscriber);
             return new JsonResponse([
                 'message' => $this->translator->trans($message, [], 'EnhavoNewsletterBundle'),
-                'subscriber' => $subscriber
+                'subscriber' => $this->serializer->normalize($subscriber, 'json', [
+                    'groups' => ['subscription']
+                ]),
             ]);
         } else {
             return new JsonResponse([
-                'errors' => $form->getErrors(true, true),
-                'subscriber' => $subscriber
+                'errors' => [
+                    'fields' => $this->formErrorResolver->getErrorFieldNames($form),
+                    'messages' => $this->formErrorResolver->getErrorMessages($form),
+                ],
+                'subscriber' => $this->serializer->normalize($subscriber, 'json', [
+                    'groups' => ['subscription']
+                ]),
             ], 400);
         }
     }
@@ -101,7 +123,9 @@ class SubscriptionController extends AbstractController
 
         return new JsonResponse([
             'message' => $this->translator->trans($message, [], 'EnhavoNewsletterBundle'),
-            'subscriber' => $subscriber
+            'subscriber' => $this->serializer->normalize($subscriber, 'json', [
+                'groups' => ['subscription']
+            ]),
         ]);
     }
 }

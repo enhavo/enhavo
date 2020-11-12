@@ -5,6 +5,7 @@ namespace Controller;
 
 
 use Enhavo\Bundle\AppBundle\Template\TemplateManager;
+use Enhavo\Bundle\FormBundle\Error\FormErrorResolver;
 use Enhavo\Bundle\NewsletterBundle\Controller\SubscriptionController;
 use Enhavo\Bundle\NewsletterBundle\Entity\PendingSubscriber;
 use Enhavo\Bundle\NewsletterBundle\Model\Subscriber;
@@ -21,6 +22,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Serializer\Serializer;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SubscriptionControllerTest extends TestCase
@@ -32,6 +34,13 @@ class SubscriptionControllerTest extends TestCase
         $dependencies->pendingManager = $this->getMockBuilder(PendingSubscriberManager::class)->disableOriginalConstructor()->getMock();
         $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
         $dependencies->container = $this->getMockBuilder(Container::class)->disableOriginalConstructor()->getMock();
+        $dependencies->errorResolver = $this->getMockBuilder(FormErrorResolver::class)->disableOriginalConstructor()->getMock();
+        $dependencies->errorResolver->method('getErrorFieldNames')->willReturn([]);
+        $dependencies->errorResolver->method('getErrorMessages')->willReturn([]);
+        $dependencies->serializer = $this->getMockBuilder(Serializer::class)->disableOriginalConstructor()->getMock();
+        $dependencies->serializer->method('normalize')->willReturnCallback(function ($resource) {
+            return ['email' => $resource->getEmail()];
+        });
 
         return $dependencies;
     }
@@ -42,7 +51,9 @@ class SubscriptionControllerTest extends TestCase
         $controller = new SubscriptionTestController(
             $dependencies->subscriptionManager,
             $dependencies->pendingManager,
-            $dependencies->translator
+            $dependencies->translator,
+            $dependencies->errorResolver,
+            $dependencies->serializer
         );
         $controller->setContainer($dependencies->container);
         return $controller;
@@ -64,8 +75,8 @@ class SubscriptionControllerTest extends TestCase
 
     public function testActivateActionNotFound()
     {
-        $dep = $this->createDependencies();
-        $controller = $this->createInstance($dep);
+        $dependencies = $this->createDependencies();
+        $controller = $this->createInstance($dependencies);
         $request = new Request([
             'type' => 'default',
             'token' => '__TOKEN__'
@@ -127,7 +138,7 @@ class SubscriptionControllerTest extends TestCase
         ]);
 
         $response = $controller->addAction($request);
-        $this->assertEquals('{"message":"added.trans","subscriber":{}}', $response->getContent());
+        $this->assertEquals('{"message":"added.trans","subscriber":{"email":null}}', $response->getContent());
     }
 
     public function testAddActionInvalid()
@@ -136,7 +147,6 @@ class SubscriptionControllerTest extends TestCase
         $form = $this->getMockBuilder(FormInterface::class)->getMock();
         $form->expects($this->once())->method('handleRequest');
         $form->expects($this->once())->method('isValid')->willReturn(false);
-        $form->expects($this->once())->method('getErrors')->willReturn([]);
 
         $dependencies->subscriptionManager->expects($this->once())->method('createForm')->willReturn($form);
         $subscription = $this->createSubscription('default');
@@ -150,7 +160,7 @@ class SubscriptionControllerTest extends TestCase
         ]);
 
         $response = $controller->addAction($request);
-        $this->assertEquals('{"errors":[],"subscriber":{}}', $response->getContent());
+        $this->assertEquals('{"errors":{"fields":[],"messages":[]},"subscriber":{"email":null}}', $response->getContent());
     }
 
     public function testUnsubscribeAction()
@@ -173,7 +183,7 @@ class SubscriptionControllerTest extends TestCase
         ]);
 
         $response = $controller->unsubscribeAction($request);
-        $this->assertEquals('{"message":"removed.trans","subscriber":{}}', $response->getContent());
+        $this->assertEquals('{"message":"removed.trans","subscriber":{"email":null}}', $response->getContent());
 
         $dependencies = $this->createDependencies();
         $controller = $this->createInstance($dependencies);
@@ -195,6 +205,10 @@ class SubscriptionControllerTestDependencies
     public $pendingManager;
     /** @var TranslatorInterface|MockObject */
     public $translator;
+    /** @var FormErrorResolver|MockObject */
+    public $errorResolver;
+    /** @var Serializer|MockObject */
+    public $serializer;
 
     /** @var Container|MockObject */
     public $container;

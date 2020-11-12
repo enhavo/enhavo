@@ -40,7 +40,7 @@ class SubscriberExistsValidator extends ConstraintValidator
         if ($value instanceof SubscriberInterface) {
             $subscription = $this->manager->getSubscription($value->getSubscription());
             $strategy = $subscription->getStrategy();
-            if ($strategy->exists($value)) {
+            if ($value->getEmail() !== null && $strategy->exists($value)) {
                 $message = $strategy->handleExists($value);
                 $this->context->buildViolation($message ?? $constraint->message)
                     ->setParameter('%email%', $value->getEmail())
