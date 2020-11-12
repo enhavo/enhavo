@@ -30,14 +30,14 @@ class FormErrorResolver
      */
     public function getErrors(FormInterface $form)
     {
-        return $this->getErrorMessages($form);
+        return $this->getFormErrors($form);
     }
 
     /**
      * @param FormInterface $form
      * @return array
      */
-    protected function getErrorMessages(FormInterface $form)
+    protected function getFormErrors(FormInterface $form)
     {
         $errors = array();
 
@@ -47,7 +47,7 @@ class FormErrorResolver
 
         foreach ($form->all() as $child) {
             if ($child->isSubmitted() && !$child->isValid()) {
-                $childErrors = $this->getErrorMessages($child);
+                $childErrors = $this->getFormErrors($child);
                 foreach($childErrors as $childError) {
                     $errors[] = $childError;
                 }
@@ -57,13 +57,48 @@ class FormErrorResolver
         return $errors;
     }
 
+    public function getErrorMessages(FormInterface $form)
+    {
+        $errors = $this->getFormErrors($form);
+        $messages = [];
+
+        /** @var FormError $error */
+        foreach ($errors as $error) {
+            $messages[$this->getSubFormName($error->getOrigin())] = $error->getMessage();
+        }
+
+        return $messages;
+    }
+
+    public function getErrorFieldNames($form)
+    {
+        $errors = $this->getErrors($form);
+
+        $errorFields = [];
+        if (count($errors) > 0) {
+            foreach($errors as $error) {
+                $errorFields[] = $this->getSubFormName($error->getOrigin());
+            }
+        }
+        return $errorFields;
+    }
+
+    protected function getSubFormName(FormInterface $form)
+    {
+        if ($form->getParent() == null) {
+            return $form->getName();
+        } else {
+            return $this->getSubFormName($form->getParent()) . '[' . $form->getName() . ']';
+        }
+    }
+
     /**
      * @param FormInterface $form
      * @return boolean
      */
     public function hasErrors(FormInterface $form)
     {
-        return (boolean)count($this->getErrorMessages($form));
+        return (boolean)count($this->getFormErrors($form));
     }
 
     /**
