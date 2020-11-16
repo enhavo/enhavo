@@ -9,7 +9,7 @@ namespace Controller;
 
 use Enhavo\Bundle\AppBundle\Template\TemplateManager;
 use Enhavo\Bundle\FormBundle\Error\FormErrorResolver;
-use Enhavo\Bundle\UserBundle\Controller\UserController;
+use Enhavo\Bundle\UserBundle\Controller\ProfileController;
 use Enhavo\Bundle\UserBundle\Model\User;
 use Enhavo\Bundle\UserBundle\User\UserManager;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -22,11 +22,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class UserControllerTest extends TestCase
+class ProfileControllerTest extends TestCase
 {
-    private function createInstance(UserControllerTestDependencies $dependencies)
+    private function createInstance(ProfileControllerTestDependencies $dependencies)
     {
-        return new UserControllerMock(
+        return new ProfileControllerMock(
             $dependencies->userManager,
             $dependencies->templateManager,
             $dependencies->translator,
@@ -34,9 +34,9 @@ class UserControllerTest extends TestCase
         );
     }
 
-    private function createDependencies(): UserControllerTestDependencies
+    private function createDependencies(): ProfileControllerTestDependencies
     {
-        $dependencies = new UserControllerTestDependencies();
+        $dependencies = new ProfileControllerTestDependencies();
         $dependencies->userManager = $this->getMockBuilder(UserManager::class)->disableOriginalConstructor()->getMock();
         $dependencies->templateManager = $this->getMockBuilder(TemplateManager::class)->disableOriginalConstructor()->getMock();
         $dependencies->templateManager->method('getTemplate')->willReturnCallback(function ($template) {
@@ -62,7 +62,7 @@ class UserControllerTest extends TestCase
         return $dependencies;
     }
 
-    public function testProfileAction()
+    public function testIndexAction()
     {
         $dependencies = $this->createDependencies();
         $dependencies->userManager->expects($this->exactly(3))->method('createForm')->willReturnCallback(function ($config, $action, $user) use ($dependencies) {
@@ -83,18 +83,18 @@ class UserControllerTest extends TestCase
         $request->attributes->set('_config', 'theme');
 
         // unsubmitted
-        $response = $controller->profileAction($request);
+        $response = $controller->indexAction($request);
         $this->assertEquals('profile.html.twig.managed.rendered', $response->getContent());
 
         // submitted invalid
         $dependencies->isSubmitted = true;
-        $response = $controller->profileAction($request);
+        $response = $controller->indexAction($request);
         $this->assertEquals('profile.html.twig.managed.rendered', $response->getContent());
 
         // submitted valid
         $dependencies->isSubmitted = true;
         $dependencies->isValid = true;
-        $response = $controller->profileAction($request);
+        $response = $controller->indexAction($request);
         $this->assertEquals('profile.html.twig.managed.rendered', $response->getContent());
     }
 
@@ -119,25 +119,25 @@ class UserControllerTest extends TestCase
         $request->attributes->set('_config', 'theme');
 
         // unsubmitted
-        $response = $controller->profileAction($request);
+        $response = $controller->indexAction($request);
         $this->assertEquals('profile.html.twig.managed.rendered', $response->getContent());
 
         // submitted invalid
         $dependencies->isSubmitted = true;
-        $response = $controller->profileAction($request);
+        $response = $controller->indexAction($request);
         $this->assertInstanceOf(JsonResponse::class, $response);
         $this->assertEquals('{"error":true,"errors":{"fields":[],"messages":[]},"message":"profile.update.error.translated"}', $response->getContent());
 
         // submitted valid
         $dependencies->isSubmitted = true;
         $dependencies->isValid = true;
-        $response = $controller->profileAction($request);
+        $response = $controller->indexAction($request);
         $this->assertInstanceOf(JsonResponse::class, $response);
         $this->assertEquals('{"error":false,"errors":[],"message":"profile.update.success.translated"}', $response->getContent());
     }
 }
 
-class UserControllerTestDependencies
+class ProfileControllerTestDependencies
 {
     /** @var UserManager|MockObject */
     public $userManager;
@@ -158,7 +158,7 @@ class UserControllerTestDependencies
     public $isValid = false;
 }
 
-class UserControllerMock extends UserController
+class ProfileControllerMock extends ProfileController
 {
     public $isGranted = false;
 

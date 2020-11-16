@@ -15,7 +15,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  * Class UserController
  * @package Enhavo\Bundle\UserBundle\Controller
  */
-class UserController extends AbstractController
+class ProfileController extends AbstractController
 {
     use FlashMessagesTrait;
 
@@ -46,7 +46,7 @@ class UserController extends AbstractController
         $this->errorResolver = $errorResolver;
     }
 
-    public function profileAction(Request $request)
+    public function indexAction(Request $request)
     {
         $config = $request->attributes->get('_config');
 

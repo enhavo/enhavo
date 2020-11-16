@@ -3,6 +3,6 @@ enhavo_user_theme_user_profile:
         expose: true
     path: /profile
     methods: [GET, POST]
-    controller: Enhavo\Bundle\UserBundle\Controller\UserController::profileAction
+    controller: Enhavo\Bundle\UserBundle\Controller\ProfileController::indexAction
     defaults:
         _config: theme

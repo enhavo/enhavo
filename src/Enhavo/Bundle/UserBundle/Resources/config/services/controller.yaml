@@ -51,7 +51,7 @@ services:
         tags:
             - { name: controller.service_arguments }
 
-    Enhavo\Bundle\UserBundle\Controller\UserController:
+    Enhavo\Bundle\UserBundle\Controller\ProfileController:
         public: true
         arguments:
             - '@Enhavo\Bundle\UserBundle\User\UserManager'
