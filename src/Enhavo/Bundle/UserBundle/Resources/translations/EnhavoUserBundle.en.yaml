@@ -51,24 +51,18 @@ user:
         id: 'ID'
         user: 'User'
         email: 'Email'
-reset:
-    form:
-        error:
-            invalid-user: 'Invalid user'
-        action:
-            reset-password: 'Reset Password'
+reset_password:
     label:
         login: 'Login'
-    message:
-        success: 'An email was sent to your account.'
     request:
         username: 'Username or email address'
         submit: 'Reset password'
-    reset:
+    confirm:
         submit: 'Change password'
     flash:
-        success: 'The password has been reset successfully.'
-        error: 'Request failed'
+        message:
+            success: 'The password has been reset successfully.'
+            error: 'Request failed'
     mail:
         subject: 'Reset Password'
         text: |
@@ -78,6 +72,28 @@ reset:
 
             Regards,
             the Team.
+
+change_email:
+    form:
+        new_email: 'New Email-Address'
+        confirm_new_email: 'Repeat New Email-Address'
+        submit: 'Change Email'
+    flash:
+        message:
+            success: 'Email-Adress was changed successfully. Please check your inbox.'
+            error: 'Delivery to new email failed.'
+    mail:
+        subject: 'Email-Address Changed'
+        text: |
+            Hello %username%!
+
+            Your email address was changed from %old_email% to %new_email%.
+            Please use %username% as login identifier from now.
+            If you do not receive this email on your %new_email% inbox, please login to your account and change it back!
+
+            Regards,
+            the Team.
+
 confirmation:
     form:
         label:

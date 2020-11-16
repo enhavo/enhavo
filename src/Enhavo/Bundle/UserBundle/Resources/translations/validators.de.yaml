@@ -1,3 +1,7 @@
 enhavo_user:
     password:
         mismatch: 'Die Passwörter stimmen nicht überein.'
+    current_password:
+        invalid: 'Das Passwort ist inkorrekt.'
+    change_email:
+        mismatch: 'E-Mail Adressen stimmen nicht überein.'

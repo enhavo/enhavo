@@ -215,6 +215,33 @@ class UserManager
         $this->eventDispatcher->dispatch($event);
     }
 
+    public function changeEmail(UserInterface $user, $newEmail, $config, $action)
+    {
+        $oldEmail = $user->getEmail();
+        $context = [
+            'old_email' => $oldEmail,
+            'new_email' => $newEmail,
+        ];
+
+        if ($this->sendMail($newEmail, $config, $action, $context)) {
+            $user->setEmail($newEmail);
+            $this->userMapper->setUsername($user);
+
+            $event = new UserEvent(UserEvent::TYPE_EMAIl_CHANGED, $user);
+            $this->eventDispatcher->dispatch($event);
+
+            $this->update($user, false);
+
+            // try to send confirmation to old email address also
+            $this->sendMail($oldEmail, $config, $action, $context);
+
+            return true;
+        }
+
+
+        return false;
+    }
+
     public function update(UserInterface $user, $persist = true, $flush = true)
     {
         $this->updateUsername($user);
@@ -238,7 +265,7 @@ class UserManager
         $this->userMapper->setUsername($user);
     }
 
-    public function createForm($config, $action, ?UserInterface $user, array $options = []): FormInterface
+    public function createForm($config, $action, ?UserInterface $user = null, array $options = []): FormInterface
     {
         $formConfig = $this->getConfig($config, $action, 'form');
         $options = array_merge($formConfig['options'], $options);
@@ -346,7 +373,7 @@ class UserManager
     private function sendRegistrationConfirmMail(UserInterface $user, $config, $action)
     {
         $options = $this->getConfig($config, $action);
-        $message = $this->createMessage($user, $options, [
+        $message = $this->createUserMessage($user, $options, [
             'user' => $user,
             'confirmation_url' => $this->router->generate($options['confirmation_route'], ['token' => $user->getConfirmationToken()], RouterInterface::ABSOLUTE_URL)
         ]);
@@ -356,28 +383,43 @@ class UserManager
     private function sendResetPasswordMail(UserInterface $user, $config, $action)
     {
         $options = $this->getConfig($config, $action);
-        $message = $this->createMessage($user, $options, [
+        $message = $this->createUserMessage($user, $options, [
             'user' => $user,
             'confirmation_url' => $this->router->generate($options['confirmation_route'], ['token' => $user->getConfirmationToken()], RouterInterface::ABSOLUTE_URL)
         ]);
         $this->mailerManager->sendMessage($message);
     }
 
-    private function sendConfirmationMail(UserInterface $user, $config, $action)
+    private function sendConfirmationMail(UserInterface $user, $config, $action, array $context = [])
     {
         $options = $this->getConfig($config, $action);
-        $message = $this->createMessage($user, $options, [
+
+        $context = array_merge([
             'user' => $user
-        ]);
+        ], $context);
+        $message = $this->createUserMessage($user, $options, $context);
         $this->mailerManager->sendMessage($message);
     }
 
-    private function createMessage(UserInterface $user, array $options, array $context): Message
+    private function sendMail(string $to, $config, $action, array $context = []): bool
+    {
+        $options = $this->getConfig($config, $action);
+
+        $message = $this->createMessage($to, $options, $context);
+        return 0 !== $this->mailerManager->sendMessage($message);
+    }
+
+    private function createUserMessage(UserInterface $user, array $options, array $context): Message
+    {
+        return $this->createMessage($user->getEmail(), $options, $context);
+    }
+
+    private function createMessage(string $to, array $options, array $context): Message
     {
         $message = $this->mailerManager->createMessage();
         $message->setSubject($this->getMailSubject($options));
         $message->setTemplate($options['mail_template']);
-        $message->setTo($user->getEmail());
+        $message->setTo($to);
         $message->setFrom($options['mail_from']);
         $message->setSenderName($options['sender_name']);
         $message->setContentType($options['content_type']);

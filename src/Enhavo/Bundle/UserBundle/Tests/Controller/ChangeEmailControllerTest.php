@@ -9,9 +9,10 @@ namespace Controller;
 
 use Enhavo\Bundle\AppBundle\Template\TemplateManager;
 use Enhavo\Bundle\FormBundle\Error\FormErrorResolver;
-use Enhavo\Bundle\UserBundle\Controller\ResetPasswordController;
+use Enhavo\Bundle\UserBundle\Controller\ChangeEmailController;
 use Enhavo\Bundle\UserBundle\Model\User;
 use Enhavo\Bundle\UserBundle\Repository\UserRepository;
+use Enhavo\Bundle\UserBundle\Tests\Mocks\UserMock;
 use Enhavo\Bundle\UserBundle\User\UserManager;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -22,15 +23,14 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class ResetPasswordControllerTest extends TestCase
+class ChangeEmailControllerTest extends TestCase
 {
-    private function createInstance(ResetPasswordControllerTestDependencies $dependencies)
+    private function createInstance(ChangeEmailControllerTestDependencies $dependencies)
     {
-        return new ResetPasswordControllerMock(
+        return new ChangeEmailControllerMock(
             $dependencies->userManager,
             $dependencies->userRepository,
             $dependencies->templateManager,
@@ -40,9 +40,9 @@ class ResetPasswordControllerTest extends TestCase
         );
     }
 
-    private function createDependencies(): ResetPasswordControllerTestDependencies
+    private function createDependencies(): ChangeEmailControllerTestDependencies
     {
-        $dependencies = new ResetPasswordControllerTestDependencies();
+        $dependencies = new ChangeEmailControllerTestDependencies();
         $dependencies->userManager = $this->getMockBuilder(UserManager::class)->disableOriginalConstructor()->getMock();
         $dependencies->userRepository = $this->getMockBuilder(UserRepository::class)->disableOriginalConstructor()->getMock();
         $dependencies->templateManager = $this->getMockBuilder(TemplateManager::class)->disableOriginalConstructor()->getMock();
@@ -65,12 +65,21 @@ class ResetPasswordControllerTest extends TestCase
         $dependencies->userManager->method('createForm')->willReturn(
             $dependencies->form
         );
+        $dependencies->userManager->method('changeEmail')->willReturnCallback(function ($user, $email) use ($dependencies) {
+            return $dependencies->mailSent;
+        });
 
         $dependencies->form->method('isSubmitted')->willReturnCallback(function () use ($dependencies) {
             return $dependencies->isSubmitted;
         });
         $dependencies->form->method('isValid')->willReturnCallback(function () use ($dependencies) {
             return $dependencies->isValid;
+        });
+        $dependencies->form->method('get')->willReturnCallback(function ($key) {
+            $field = $this->getMockBuilder(FormInterface::class)->getMock();
+            $field->method('getData')->willReturn($key .'.data');
+
+            return $field;
         });
 
         return $dependencies;
@@ -84,13 +93,7 @@ class ResetPasswordControllerTest extends TestCase
         $dependencies->userManager->method('getStylesheets')->willReturn([]);
         $dependencies->userManager->method('getJavascripts')->willReturn([]);
         $dependencies->userManager->expects($this->once())->method('getRedirectRoute')->willReturn('redirect.route');
-        $dependencies->userRepository->expects($this->exactly(2))->method('loadUserByUsername')->willReturnCallback(function($username) use ($dependencies) {
-            if ($dependencies->userExists) {
-                return new User();
-            }
 
-            return null;
-        });
         $controller = $this->createInstance($dependencies);
         $dependencies->request->attributes->set('_config', 'theme');
 
@@ -112,19 +115,19 @@ class ResetPasswordControllerTest extends TestCase
         $this->assertEquals(400, $response->getStatusCode());
 
 
-        // submitted no errors user found
+        // submitted no errors
         $dependencies->isSubmitted = true;
         $dependencies->isValid = true;
         $response = $controller->requestAction($dependencies->request);
         $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertEquals('redirect.route.generated', $response->getTargetUrl());
 
-        // submitted no errors no user
-        $dependencies->userExists = false;
+
+        // submitted not sent
+        $dependencies->mailSent = false;
         $response = $controller->requestAction($dependencies->request);
         $this->assertInstanceOf(Response::class, $response);
         $this->assertEquals('request.html.twig.managed.rendered', $response->getContent());
-        $this->assertEquals('reset_password.flash.message.error.translated', $controller->flashMessages['error']);
     }
 
     public function testRequestAjax()
@@ -136,13 +139,7 @@ class ResetPasswordControllerTest extends TestCase
         $dependencies->userManager->method('getStylesheets')->willReturn([]);
         $dependencies->userManager->method('getJavascripts')->willReturn([]);
         $dependencies->userManager->expects($this->once())->method('getRedirectRoute')->willReturn('redirect.route');
-        $dependencies->userRepository->expects($this->exactly(2))->method('loadUserByUsername')->willReturnCallback(function($username) use ($dependencies) {
-            if ($dependencies->userExists) {
-                return new User();
-            }
 
-            return null;
-        });
         $controller = $this->createInstance($dependencies);
         $dependencies->request->attributes->set('_config', 'theme');
 
@@ -162,28 +159,26 @@ class ResetPasswordControllerTest extends TestCase
         $this->assertInstanceOf(JsonResponse::class, $response);
         $this->assertEquals('{"error":true,"errors":{"fields":[],"messages":[]}}', $response->getContent());
 
-
-        // submitted no errors user found
+        // submitted no errors
         $dependencies->isSubmitted = true;
         $dependencies->isValid = true;
         $response = $controller->requestAction($dependencies->request);
         $this->assertInstanceOf(JsonResponse::class, $response);
-        $this->assertEquals('{"error":false,"errors":[],"message":"reset_password.flash.message.success.translated","redirect_url":"redirect.route.generated"}', $response->getContent());
+        $this->assertEquals('{"error":false,"errors":[],"message":"change_email.flash.message.success.translated","redirect_url":"redirect.route.generated"}', $response->getContent());
 
-        // submitted no errors no user
-        $dependencies->userExists = false;
+        // submitted not sent
+        $dependencies->mailSent = false;
         $response = $controller->requestAction($dependencies->request);
-        $this->assertInstanceOf(Response::class, $response);
-        $this->assertEquals('{"error":true,"errors":{"fields":[],"messages":[]},"message":"reset_password.flash.message.error.translated"}', $response->getContent());
-        $this->assertEquals('reset_password.flash.message.error.translated', $controller->flashMessages['error']);
+        $this->assertInstanceOf(JsonResponse::class, $response);
+        $this->assertEquals('{"error":true,"errors":{"fields":[],"messages":[]},"message":"change_email.flash.message.error.translated"}', $response->getContent());
     }
 
     public function testCheck()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->userManager->method('getTemplate')->willReturnCallback(function($config, $action) {
+        $dependencies->userManager->method('getTemplate')->willReturnCallback(function ($config, $action) {
             $this->assertEquals('theme', $config);
-            $this->assertEquals('reset_password_check', $action);
+            $this->assertEquals('change_email_check', $action);
 
             return 'check.html.twig';
         });
@@ -197,129 +192,9 @@ class ResetPasswordControllerTest extends TestCase
         $this->assertInstanceOf(Response::class, $response);
         $this->assertEquals('check.html.twig.managed.rendered', $response->getContent());
     }
-
-    public function testConfirm()
-    {
-        $dependencies = $this->createDependencies();
-        $dependencies->userManager->method('getRedirectRoute')->willReturn('redirect.route');
-        $dependencies->userRepository->method('findByConfirmationToken')->willReturn(new User());
-        $dependencies->userManager->method('getTemplate')->willReturnCallback(function($config, $action) {
-            $this->assertEquals('theme', $config);
-            $this->assertEquals('reset_password_confirm', $action);
-
-            return 'confirm.html.twig';
-        });
-        $controller = $this->createInstance($dependencies);
-
-        /** @var Request|MockObject $request */
-        $request = $dependencies->request;
-        $request->attributes->set('_config', 'theme');
-
-        $token = '__TOKEN__';
-
-        // unsubmitted
-        $response = $controller->confirmAction($request, $token);
-        $this->assertInstanceOf(Response::class, $response);
-        $this->assertEquals('confirm.html.twig.managed.rendered', $response->getContent());
-        $this->assertEquals(200, $response->getStatusCode());
-
-        // submitted invalid
-        $dependencies->isSubmitted = true;
-        $response = $controller->confirmAction($request, $token);
-        $this->assertInstanceOf(Response::class, $response);
-        $this->assertEquals('confirm.html.twig.managed.rendered', $response->getContent());
-        $this->assertEquals(400, $response->getStatusCode());
-
-        // submitted valid
-        $dependencies->isSubmitted = true;
-        $dependencies->isValid = true;
-        $response = $controller->confirmAction($request, $token);
-        $this->assertInstanceOf(RedirectResponse::class, $response);
-        $this->assertEquals('redirect.route.generated', $response->getTargetUrl());
-    }
-
-    public function testConfirmAjax()
-    {
-        $dependencies = $this->createDependencies();
-        $dependencies->userManager->method('getRedirectRoute')->willReturn('redirect.route');
-        $dependencies->userRepository->method('findByConfirmationToken')->willReturn(new User());
-        $dependencies->userManager->method('getTemplate')->willReturnCallback(function($config, $action) {
-            $this->assertEquals('theme', $config);
-            $this->assertEquals('reset_password_confirm', $action);
-
-            return 'confirm.html.twig';
-        });
-        $controller = $this->createInstance($dependencies);
-
-        /** @var Request|MockObject $request */
-        $request = $dependencies->request;
-        $request->method('isXmlHttpRequest')->willReturn(true);
-        $request->attributes->set('_config', 'theme');
-
-        $token = '__TOKEN__';
-
-        // unsubmitted
-        $response = $controller->confirmAction($request, $token);
-        $this->assertInstanceOf(Response::class, $response);
-        $this->assertEquals('confirm.html.twig.managed.rendered', $response->getContent());
-        $this->assertEquals(200, $response->getStatusCode());
-
-        // submitted invalid
-        $dependencies->isSubmitted = true;
-        $response = $controller->confirmAction($request, $token);
-        $this->assertInstanceOf(JsonResponse::class, $response);
-        $this->assertEquals('{"error":true,"errors":{"fields":[],"messages":[]}}', $response->getContent());
-
-        // submitted valid
-        $dependencies->isSubmitted = true;
-        $dependencies->isValid = true;
-        $response = $controller->confirmAction($request, $token);
-        $this->assertInstanceOf(JsonResponse::class, $response);
-        $this->assertEquals('{"error":false,"errors":[],"redirect_url":"redirect.route.generated"}', $response->getContent());
-    }
-
-
-    public function testConfirmNotFound()
-    {
-        $dependencies = $this->createDependencies();
-        $dependencies->userRepository->method('findByConfirmationToken')->willReturn(null);
-        $dependencies->userManager->expects($this->never())->method('confirm');
-        $controller = $this->createInstance($dependencies);
-
-        /** @var Request|MockObject $request */
-        $request = $dependencies->request;
-        $request->attributes->set('_config', 'theme');
-
-        $token = '__TOKEN__';
-        $this->expectException(NotFoundHttpException::class);
-        $controller->confirmAction($request, $token);
-
-    }
-
-    public function testFinish()
-    {
-        $dependencies = $this->createDependencies();
-        $dependencies->userManager->method('getTemplate')->willReturnCallback(function($config, $action) {
-            $this->assertEquals('theme', $config);
-            $this->assertEquals('reset_password_finish', $action);
-
-            return 'finish.html.twig';
-        });
-
-        $controller = $this->createInstance($dependencies);
-
-        /** @var Request|MockObject $request */
-        $request = $dependencies->request;
-        $request->attributes->set('_config', 'theme');
-
-        $response = $controller->finishAction($request);
-        $this->assertInstanceOf(Response::class, $response);
-        $this->assertEquals('finish.html.twig.managed.rendered', $response->getContent());
-
-    }
 }
 
-class ResetPasswordControllerTestDependencies
+class ChangeEmailControllerTestDependencies
 {
     /** @var UserManager|MockObject */
     public $userManager;
@@ -350,9 +225,11 @@ class ResetPasswordControllerTestDependencies
     public $isValid = false;
 
     public $userExists = true;
+
+    public $mailSent = true;
 }
 
-class ResetPasswordControllerMock extends ResetPasswordController
+class ChangeEmailControllerMock extends ChangeEmailController
 {
     protected function render(string $view, array $parameters = [], Response $response = null): Response
     {
@@ -373,5 +250,10 @@ class ResetPasswordControllerMock extends ResetPasswordController
     protected function addFlash(string $type, $message)
     {
         $this->flashMessages[$type] = $message;
+    }
+
+    protected function getUser()
+    {
+        return new UserMock();
     }
 }

@@ -16,10 +16,10 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * Class ResetPasswordController
+ * Class ChangeEmailController
  * @package Enhavo\Bundle\UserBundle\Controller
  */
-class ResetPasswordController extends AbstractController
+class ChangeEmailController extends AbstractController
 {
     use FlashMessagesTrait;
 
@@ -63,21 +63,24 @@ class ResetPasswordController extends AbstractController
     public function requestAction(Request $request)
     {
         $config = $request->attributes->get('_config');
-        $action = 'reset_password_request';
+        $action = 'change_email_request';
 
         /** @var UserInterface $user */
-        $user = $this->userFactory->createNew();
 
-        $form = $this->userManager->createForm($config, $action, $user);
+        $form = $this->userManager->createForm($config, $action);
         $form->handleRequest($request);
 
         $valid = true;
         $message = null;
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                $user = $this->userRepository->loadUserByUsername($user->getUsername());
-                if ($user === null) {
-                    $message = $this->translator->trans('reset_password.flash.message.error', [], 'EnhavoUserBundle');
+                /** @var UserInterface $currentUser */
+                $currentUser = $this->getUser();
+                $newEmail = $form->get('email')->getData();
+                $success = $this->userManager->changeEmail($currentUser, $newEmail, $config, $action);
+
+                if (false === $success) {
+                    $message = $this->translator->trans('change_email.flash.message.error', [], 'EnhavoUserBundle');
                     $this->addFlash('error', $message);
 
                     if ($request->isXmlHttpRequest()) {
@@ -91,10 +94,12 @@ class ResetPasswordController extends AbstractController
                         ]);
                     }
                 } else {
-                    $message = $this->translator->trans('reset_password.flash.message.success', [], 'EnhavoUserBundle');
+
+                    $this->userManager->login($currentUser);
+
+                    $message = $this->translator->trans('change_email.flash.message.success', [], 'EnhavoUserBundle');
                     $this->addFlash('success', $message);
 
-                    $this->userManager->resetPassword($user, $config, $action);
                     $route = $this->userManager->getRedirectRoute($config, $action);
                     if ($route) {
                         $url = $this->generateUrl($route);
@@ -146,81 +151,7 @@ class ResetPasswordController extends AbstractController
     public function checkAction(Request $request)
     {
         $config = $request->attributes->get('_config');
-        return $this->render($this->getTemplate($this->userManager->getTemplate($config, 'reset_password_check')));
-    }
-
-    public function confirmAction(Request $request, $token)
-    {
-        $config = $request->attributes->get('_config');
-        $action = 'reset_password_confirm';
-        $user = $this->userRepository->findByConfirmationToken($token);
-
-        if (null === $user) {
-            throw new NotFoundHttpException(sprintf('A user with confirmation token "%s" does not exist', $token));
-        }
-
-        $form = $this->userManager->createForm($config, $action, $user);
-        $form->handleRequest($request);
-
-        $valid = true;
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                $this->userManager->changePassword($user);
-                if ($this->userManager->getConfig($config, $action, 'auto_login', false)) {
-                    $this->userManager->login($user);
-                }
-
-                $url = $this->generateUrl($this->userManager->getRedirectRoute($config, $action));
-
-                if ($request->isXmlHttpRequest()) {
-                    return new JsonResponse([
-                        'error' => false,
-                        'errors' => [],
-                        'redirect_url' => $url,
-                    ]);
-                }
-
-                return new RedirectResponse($url);
-
-            } else {
-                $valid = false;
-                if ($request->isXmlHttpRequest()) {
-                    return new JsonResponse([
-                        'error' => true,
-                        'errors' => [
-                            'fields' => $this->errorResolver->getErrorFieldNames($form),
-                            'messages' => $this->errorResolver->getErrorMessages($form),
-                        ],
-                    ]);
-                }
-            }
-        }
-
-        return $this->render($this->getTemplate($this->userManager->getTemplate($config, $action)), [
-            'user' => $user,
-            'form' => $form->createView(),
-            'error' => !$valid,
-            'errors' => [
-                'fields' => $this->errorResolver->getErrorFieldNames($form),
-                'messages' => $this->errorResolver->getErrorMessages($form),
-            ],
-            'token' => $token,
-            'stylesheets' => $this->userManager->getStylesheets($config, $action),
-            'javascripts' => $this->userManager->getJavascripts($config, $action),
-            'data' => [
-                'messages' => $this->getFlashMessages(),
-            ]
-        ])->setStatusCode($valid ? 200 : 400);
-
-    }
-
-    public function finishAction(Request $request)
-    {
-        $config = $request->attributes->get('_config');
-
-        return $this->render($this->getTemplate($this->userManager->getTemplate($config, 'reset_password_finish')), [
-
-        ]);
+        return $this->render($this->getTemplate($this->userManager->getTemplate($config, 'change_email_check')));
     }
 
     private function getTemplate($template)

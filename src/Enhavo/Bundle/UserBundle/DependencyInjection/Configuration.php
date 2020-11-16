@@ -4,6 +4,7 @@ namespace Enhavo\Bundle\UserBundle\DependencyInjection;
 
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\UserBundle\Factory\UserFactory;
+use Enhavo\Bundle\UserBundle\Form\Type\ChangeEmailRequestType;
 use Enhavo\Bundle\UserBundle\Form\Type\ChangePasswordFormType;
 use Enhavo\Bundle\UserBundle\Form\Type\GroupType;
 use Enhavo\Bundle\UserBundle\Form\Type\ProfileType;
@@ -157,7 +158,7 @@ class Configuration implements ConfigurationInterface
         $themeNode->arrayNode('reset_password_request')->addDefaultsIfNotSet()->children()
             ->scalarNode('template')->defaultValue('theme/security/reset-password/request.html.twig')->end()
             ->scalarNode('mail_template')->defaultValue('mail/security/reset-password.html.twig')->end()
-            ->scalarNode('mail_subject')->defaultValue('reset.mail.subject')->end()
+            ->scalarNode('mail_subject')->defaultValue('reset_password.mail.subject')->end()
             ->scalarNode('translation_domain')->defaultValue('EnhavoUserBundle')->end()
             ->scalarNode('redirect_route')->defaultValue('enhavo_user_theme_reset_password_check')->end()
             ->scalarNode('confirmation_route')->defaultValue('enhavo_user_theme_reset_password_confirm')->end()
@@ -184,6 +185,36 @@ class Configuration implements ConfigurationInterface
             ->scalarNode('template')->defaultValue('theme/security/reset-password/finish.html.twig')->end()
         ->end();
 
+        $themeNode->arrayNode('change_email_request')->addDefaultsIfNotSet()->children()
+            ->scalarNode('template')->defaultValue('theme/security/change-email/request.html.twig')->end()
+            ->scalarNode('mail_template')->defaultValue('mail/security/change-email.html.twig')->end()
+            ->scalarNode('mail_subject')->defaultValue('change_email.mail.subject')->end()
+            ->scalarNode('translation_domain')->defaultValue('EnhavoUserBundle')->end()
+            ->scalarNode('redirect_route')->defaultValue('enhavo_user_theme_change_email_check')->end()
+            ->scalarNode('confirmation_route')->defaultValue('enhavo_user_theme_change_email_confirm')->end()
+            ->arrayNode('form')->addDefaultsIfNotSet()->children()
+                ->scalarNode('class')->defaultValue(ChangeEmailRequestType::class)->end()
+                ->scalarNode('options')->defaultValue([])->end()
+            ->end()
+        ->end();
+
+        $themeNode->arrayNode('change_email_check')->addDefaultsIfNotSet()->children()
+            ->scalarNode('template')->defaultValue('theme/security/change-email/check.html.twig')->end()
+        ->end();
+
+        $themeNode->arrayNode('change_email_confirm')->addDefaultsIfNotSet()->children()
+            ->scalarNode('template')->defaultValue('theme/security/change-email/confirm.html.twig')->end()
+            ->scalarNode('redirect_route')->defaultValue('enhavo_user_theme_change_email_finish')->end()
+            ->arrayNode('form')->addDefaultsIfNotSet()->children()
+                ->scalarNode('class')->defaultValue(ResetPasswordType::class)->end()
+                ->scalarNode('options')->defaultValue([])->end()
+            ->end()
+        ->end();
+
+        $themeNode->arrayNode('change_email_finish')->addDefaultsIfNotSet()->children()
+            ->scalarNode('template')->defaultValue('theme/security/change-email/finish.html.twig')->end()
+        ->end();
+
         $themeNode->arrayNode('login')->addDefaultsIfNotSet()->children()
             ->scalarNode('template')->defaultValue('theme/security/login.html.twig')->end()
             ->scalarNode('redirect_route')->defaultValue('enhavo_user_theme_user_profile')->end()
@@ -197,7 +228,7 @@ class Configuration implements ConfigurationInterface
         $adminNode->arrayNode('reset_password_request')->addDefaultsIfNotSet()->children()
             ->scalarNode('template')->defaultValue('admin/security/reset-password/request.html.twig')->end()
             ->scalarNode('mail_template')->defaultValue('mail/security/reset-password.html.twig')->end()
-            ->scalarNode('mail_subject')->defaultValue('reset.mail.subject')->end()
+            ->scalarNode('mail_subject')->defaultValue('reset_password.mail.subject')->end()
             ->scalarNode('translation_domain')->defaultValue('EnhavoUserBundle')->end()
             ->scalarNode('confirmation_route')->defaultValue('enhavo_user_reset_password_confirm')->end()
             ->scalarNode('stylesheets')->defaultValue(['enhavo/user/login'])->end()
