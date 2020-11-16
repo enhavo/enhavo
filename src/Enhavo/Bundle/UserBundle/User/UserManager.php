@@ -133,7 +133,7 @@ class UserManager
     {
         $this->userChecker->checkPreAuth($user);
 
-        $token = $this->createToken($firewallName??$this->parameters['default_firewall'], $user);
+        $token = $this->createToken($firewallName??$this->getDefaultFirewall(), $user);
         $request = $this->requestStack->getCurrentRequest();
 
         if (null !== $request) {
@@ -146,6 +146,11 @@ class UserManager
 
         $this->tokenStorage->setToken($token);
 
+    }
+
+    public function getDefaultFirewall()
+    {
+        return $this->parameters['default_firewall'];
     }
 
     public function add(UserInterface $user)
