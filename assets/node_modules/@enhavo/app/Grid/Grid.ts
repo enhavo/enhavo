@@ -58,12 +58,13 @@ export default class Grid
 
         _.extend(configuration, new GridConfiguration());
         this.configuration = configuration;
-        this.checkColumnConditions();
-        this.initListener();
     }
 
     public init()
     {
+        this.checkColumnConditions();
+        this.initListener();
+
         this.batchManager.init();
         this.filterManager.init();
         this.columnManager.init();
