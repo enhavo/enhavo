@@ -80,7 +80,7 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator implements P
 
     public function supports(Request $request)
     {
-        $config = $request->attributes->get('_config');
+        $config = $this->userManager->getConfigKey($request);
         $this->updateLoginRoute($config);
         $isRoute = $this->loginRoute === $request->attributes->get('_route');
         $isPost = $request->isMethod('POST');
@@ -143,8 +143,13 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator implements P
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
         $this->dispatch($token);
-        $targetPath = $this->getTargetPath($request->getSession(), $providerKey);
+        $session = $request->getSession();
+        $targetPath = $request->get('_target_path')
+            ?? $this->getTargetPath($session, $providerKey)
+            ?? $session->get('enhavo.redirect_uri');
         if ($targetPath) {
+            $session->remove('enhavo.redirect_uri');
+
             return new RedirectResponse($targetPath);
         }
     }
@@ -155,7 +160,7 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator implements P
             $request->getSession()->set(Security::AUTHENTICATION_ERROR, $exception);
         }
 
-        $config = $request->attributes->get('_config');
+        $config = $this->userManager->getConfigKey($request);
         $this->updateLoginRoute($config);
         $url = $this->getLoginUrl();
 
@@ -171,7 +176,7 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator implements P
 
     public function start(Request $request, AuthenticationException $authException = null)
     {
-        $config = $request->attributes->get('_config');
+        $config = $this->userManager->getConfigKey($request);
         $this->updateLoginRoute($config);
         $url = $this->getLoginUrl();
 

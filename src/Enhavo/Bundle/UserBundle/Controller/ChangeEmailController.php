@@ -62,7 +62,7 @@ class ChangeEmailController extends AbstractController
 
     public function requestAction(Request $request)
     {
-        $config = $request->attributes->get('_config');
+        $config = $this->userManager->getConfigKey($request);
         $action = 'change_email_request';
 
         /** @var UserInterface $user */
@@ -150,7 +150,7 @@ class ChangeEmailController extends AbstractController
 
     public function checkAction(Request $request)
     {
-        $config = $request->attributes->get('_config');
+        $config = $this->userManager->getConfigKey($request);
         return $this->render($this->getTemplate($this->userManager->getTemplate($config, 'change_email_check')));
     }
 

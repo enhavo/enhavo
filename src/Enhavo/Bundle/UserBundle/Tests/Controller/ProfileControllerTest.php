@@ -38,6 +38,9 @@ class ProfileControllerTest extends TestCase
     {
         $dependencies = new ProfileControllerTestDependencies();
         $dependencies->userManager = $this->getMockBuilder(UserManager::class)->disableOriginalConstructor()->getMock();
+        $dependencies->userManager->method('getConfigKey')->willReturnCallback(function ($request) {
+            return $request->attributes->get('_config');
+        });
         $dependencies->templateManager = $this->getMockBuilder(TemplateManager::class)->disableOriginalConstructor()->getMock();
         $dependencies->templateManager->method('getTemplate')->willReturnCallback(function ($template) {
             return $template .'.managed';

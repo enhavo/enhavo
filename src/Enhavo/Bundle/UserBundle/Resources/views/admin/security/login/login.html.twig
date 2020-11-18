@@ -27,6 +27,9 @@
             </div>
         <button class="btn loginButton" type="submit" id="_submit" name="_submit">{{ 'security.login.submit'|trans|nl2br }}</button>
         <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+        {% if redirect_uri %}
+            <input type="hidden" name="_target_path" value="{{ redirect_uri }}" />
+        {% endif %}
     </form>
 {% endblock %}
 

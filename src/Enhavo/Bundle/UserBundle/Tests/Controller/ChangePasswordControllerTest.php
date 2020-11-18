@@ -39,6 +39,9 @@ class ChangePasswordControllerTest extends TestCase
     {
         $dependencies = new ChangePasswordControllerTestDependencies();
         $dependencies->userManager = $this->getMockBuilder(UserManager::class)->disableOriginalConstructor()->getMock();
+        $dependencies->userManager->method('getConfigKey')->willReturnCallback(function ($request) {
+            return $request->attributes->get('_config');
+        });
         $dependencies->viewHandler = $this->getMockBuilder(ViewHandler::class)->disableOriginalConstructor()->getMock();
         $dependencies->viewFactory = $this->getMockBuilder(ViewFactory::class)->disableOriginalConstructor()->getMock();
         $dependencies->request = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();

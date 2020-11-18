@@ -55,6 +55,9 @@ class RegistrationControllerTest extends TestCase
         $dependencies->userManager->method('createForm')->willReturn(
             $dependencies->form
         );
+        $dependencies->userManager->method('getConfigKey')->willReturnCallback(function ($request) {
+            return $request->attributes->get('_config');
+        });
 
         $dependencies->form->method('isSubmitted')->willReturnCallback(function () use ($dependencies) {
             return $dependencies->isSubmitted;

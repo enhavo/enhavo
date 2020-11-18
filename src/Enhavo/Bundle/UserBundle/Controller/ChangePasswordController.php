@@ -55,7 +55,7 @@ class ChangePasswordController extends AbstractController
 
     public function changeAction(Request $request)
     {
-        $config = $request->attributes->get('_config');
+        $config = $this->userManager->getConfigKey($request);
         $user = $this->getUser();
         if (!is_object($user) || !$user instanceof UserInterface) {
             throw $this->createAccessDeniedException('This user does not have access to this section.');

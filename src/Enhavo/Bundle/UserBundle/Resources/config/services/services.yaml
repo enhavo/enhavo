@@ -26,12 +26,12 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
-    Enhavo\Bundle\UserBundle\EventListener\RequestSubscriber:
-        arguments:
-            - '@session'
-            - '@Enhavo\Bundle\UserBundle\User\UserManager'
-        tags:
-            - { name: kernel.event_subscriber }
+    Enhavo\Bundle\UserBundle\Security\EntryPoint\FormAuthenticationEntryPoint:
+        decoration_priority: 1
+        decoration_on_invalid: exception
+        decoration_inner_name: security.authentication.form_entry_point.admin.inner
+        decorates: security.authentication.form_entry_point.admin
+        arguments: ['@security.authentication.form_entry_point.admin.inner']
 
     Enhavo\Bundle\UserBundle\Security\Authentication\Voter\GroupRoleVoter:
         public: false

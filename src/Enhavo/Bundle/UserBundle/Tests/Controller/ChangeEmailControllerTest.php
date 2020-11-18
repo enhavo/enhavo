@@ -44,6 +44,9 @@ class ChangeEmailControllerTest extends TestCase
     {
         $dependencies = new ChangeEmailControllerTestDependencies();
         $dependencies->userManager = $this->getMockBuilder(UserManager::class)->disableOriginalConstructor()->getMock();
+        $dependencies->userManager->method('getConfigKey')->willReturnCallback(function ($request) {
+            return $request->attributes->get('_config');
+        });
         $dependencies->userRepository = $this->getMockBuilder(UserRepository::class)->disableOriginalConstructor()->getMock();
         $dependencies->templateManager = $this->getMockBuilder(TemplateManager::class)->disableOriginalConstructor()->getMock();
         $dependencies->templateManager->method('getTemplate')->willReturnCallback(function ($template) {

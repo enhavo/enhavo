@@ -17,6 +17,7 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\Exception\OptionDefinitionException;
@@ -271,6 +272,11 @@ class UserManager
         $options = array_merge($formConfig['options'], $options);
 
         return $this->formFactory->create($formConfig['class'], $user, $options);
+    }
+
+    public function getConfigKey(Request $request)
+    {
+        return $request->attributes->get('_config');
     }
 
     public function getConfig($config, $action = null, $item = null, $fallback = null)

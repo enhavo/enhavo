@@ -64,6 +64,9 @@ class FormLoginAuthenticatorTest extends TestCase
         $dependencies->userManager->method('getConfig')->willReturnCallback(function ($config, $action, $item) {
             return implode('.', [$config, $action, $item]);
         });
+        $dependencies->userManager->method('getConfigKey')->willReturnCallback(function ($request) {
+            return $request->attributes->get('_config');
+        });
         $dependencies->urlGenerator = $this->getMockBuilder(UrlGeneratorInterface::class)->getMock();
         $dependencies->urlGenerator->method('generate')->willReturnCallback(function ($route) {
             return $route .'.generated';

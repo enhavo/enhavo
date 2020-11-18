@@ -311,6 +311,20 @@ class UserManagerTest extends TestCase
         $this->assertNull($user->getConfirmationToken());
     }
 
+    public function testChangeEmail()
+    {
+        $user = new UserMock();
+        $user->setCustomerId('1337');
+        $user->setEmail('user@enhavo.com');
+        $user->setPlainPassword('password');
+
+        $dependencies = $this->createDependencies();
+
+        $manager = $this->createInstance($dependencies, []);
+
+        $manager->changeEmail($user, 'new@email.com', 'theme', 'change_email');
+    }
+
     public function testCreateForm()
     {
         $dependencies = $this->createDependencies();

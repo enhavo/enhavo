@@ -38,6 +38,9 @@ class SecurityControllerTest extends TestCase
     {
         $dependencies = new SecurityControllerTestDependencies();
         $dependencies->userManager = $this->getMockBuilder(UserManager::class)->disableOriginalConstructor()->getMock();
+        $dependencies->userManager->method('getConfigKey')->willReturnCallback(function ($request) {
+            return $request->attributes->get('_config');
+        });
         $dependencies->templateManager = $this->getMockBuilder(TemplateManager::class)->disableOriginalConstructor()->getMock();
         $dependencies->tokenManager = $this->getMockBuilder(CsrfTokenManagerInterface::class)->getMock();
         $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
@@ -55,7 +58,9 @@ class SecurityControllerTest extends TestCase
 
         /** @var Request|MockObject $request */
         $request = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();
+        $request->method('getSession')->willReturn(new ParameterBag());
         $request->attributes = new ParameterBag();
+        $request->query = new ParameterBag();
         $request->attributes->set('_config', 'theme');
 
         /** @var AuthenticationUtils|MockObject $authenticationUtils */

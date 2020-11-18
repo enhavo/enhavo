@@ -48,7 +48,7 @@ class SecurityController extends AbstractController
 
     public function loginAction(Request $request, AuthenticationUtils $authenticationUtils)
     {
-        $config = $request->attributes->get('_config');
+        $config = $this->userManager->getConfigKey($request);
 
         if ($this->isGranted('ROLE_USER')) {
             $url = $this->generateUrl($this->userManager->getRedirectRoute($config, 'login', null));
@@ -71,10 +71,12 @@ class SecurityController extends AbstractController
         return $this->render($this->templateManager->getTemplate($template), [
             'last_username' => $lastUsername,
             'error' => $error,
+            'redirect_uri' => $request->query->get('redirect'),
             'csrf_token' => $csrfToken,
             'stylesheets' => $this->userManager->getStylesheets($config, 'login'),
             'javascripts' => $this->userManager->getJavascripts($config, 'login'),
             'data' => [
+                'view_id' => $request->getSession()->get('enhavo.view_id'),
                 'messages' => $this->getFlashMessages(),
                 'base_url' => '',
                 'host' => $request->getHost(),

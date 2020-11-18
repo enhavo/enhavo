@@ -106,7 +106,11 @@
         </div>
         <header>
             {% block navigation %}
+                <a href="/">Home</a>
                 {{ widget('navigation', {'navigation': 'main_nav'}) }}
+                {% if app.user %}<a href="{{ path('enhavo_user_theme_security_logout') }}">Logout</a>
+                {% else %}<a href="{{ path('enhavo_user_theme_security_login') }}">Login</a>
+                {% endif %}
             {% endblock %}
         </header>
         <main>

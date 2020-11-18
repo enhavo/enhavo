@@ -48,7 +48,7 @@ class ProfileController extends AbstractController
 
     public function indexAction(Request $request)
     {
-        $config = $request->attributes->get('_config');
+        $config = $this->userManager->getConfigKey($request);
 
         /** @var UserInterface $user */
         $user = $this->getUser();

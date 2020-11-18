@@ -62,7 +62,7 @@ class ResetPasswordController extends AbstractController
 
     public function requestAction(Request $request)
     {
-        $config = $request->attributes->get('_config');
+        $config = $this->userManager->getConfigKey($request);
         $action = 'reset_password_request';
 
         /** @var UserInterface $user */
@@ -145,13 +145,13 @@ class ResetPasswordController extends AbstractController
 
     public function checkAction(Request $request)
     {
-        $config = $request->attributes->get('_config');
+        $config = $this->userManager->getConfigKey($request);
         return $this->render($this->getTemplate($this->userManager->getTemplate($config, 'reset_password_check')));
     }
 
     public function confirmAction(Request $request, $token)
     {
-        $config = $request->attributes->get('_config');
+        $config = $this->userManager->getConfigKey($request);
         $action = 'reset_password_confirm';
         $user = $this->userRepository->findByConfirmationToken($token);
 
@@ -216,7 +216,7 @@ class ResetPasswordController extends AbstractController
 
     public function finishAction(Request $request)
     {
-        $config = $request->attributes->get('_config');
+        $config = $this->userManager->getConfigKey($request);
 
         return $this->render($this->getTemplate($this->userManager->getTemplate($config, 'reset_password_finish')), [
 

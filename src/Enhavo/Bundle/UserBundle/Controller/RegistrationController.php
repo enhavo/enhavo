@@ -56,7 +56,7 @@ class RegistrationController extends AbstractController
 
     public function registerAction(Request $request)
     {
-        $config = $request->attributes->get('_config');
+        $config = $this->userManager->getConfigKey($request);
         $action = 'registration_register';
         /** @var UserInterface $user */
         $user = $this->userFactory->createNew();
@@ -107,13 +107,13 @@ class RegistrationController extends AbstractController
 
     public function checkAction(Request $request)
     {
-        $config = $request->attributes->get('_config');
+        $config = $this->userManager->getConfigKey($request);
         return $this->render($this->getTemplate($this->userManager->getTemplate($config, 'registration_check')));
     }
 
     public function confirmAction(Request $request, $token)
     {
-        $config = $request->attributes->get('_config');
+        $config = $this->userManager->getConfigKey($request);
         $user = $this->userRepository->findByConfirmationToken($token);
 
         if (null === $user) {
@@ -132,7 +132,7 @@ class RegistrationController extends AbstractController
 
     public function finishAction(Request $request)
     {
-        $config = $request->attributes->get('_config');
+        $config = $this->userManager->getConfigKey($request);
 
         return $this->render($this->getTemplate($this->userManager->getTemplate($config, 'registration_finish')), [
 
