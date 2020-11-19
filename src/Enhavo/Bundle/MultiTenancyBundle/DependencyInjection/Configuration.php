@@ -21,6 +21,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('provider')->isRequired()->end()
                 ->scalarNode('resolver')->defaultValue('enhavo_multi_tenancy.resolver.default')->end()
+                ->scalarNode('default_tenant')->defaultNull()->end()
                 ->arrayNode('doctrine_filter')
                     ->addDefaultsIfNotSet()
                     ->children()
