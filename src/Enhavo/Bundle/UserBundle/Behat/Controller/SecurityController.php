@@ -10,17 +10,15 @@ namespace Enhavo\Bundle\UserBundle\Behat\Controller;
 
 use Doctrine\ORM\EntityRepository;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
-use FOS\UserBundle\Security\LoginManagerInterface;
+use Enhavo\Bundle\UserBundle\User\UserManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class SecurityController extends AbstractController
 {
-    /**
-     * @var LoginManagerInterface
-     */
-    private $loginManager;
+    /** @var UserManager */
+    private $userManager;
 
     /**
      * @var EntityRepository
@@ -29,14 +27,15 @@ class SecurityController extends AbstractController
 
     /**
      * SecurityController constructor.
-     * @param LoginManagerInterface $loginManager
+     * @param UserManager $userManager
      * @param EntityRepository $userRepository
      */
-    public function __construct(LoginManagerInterface $loginManager, EntityRepository $userRepository)
+    public function __construct(UserManager $userManager, EntityRepository $userRepository)
     {
-        $this->loginManager = $loginManager;
+        $this->userManager = $userManager;
         $this->userRepository = $userRepository;
     }
+
 
     /**
      * @param Request $request
@@ -51,8 +50,9 @@ class SecurityController extends AbstractController
             'username' => $username
         ]);
 
+
         $response = new Response('Ok');
-        $this->loginManager->logInUser('main', $user, $response);
+        $this->userManager->login($user, $response);
         return $response;
     }
 }

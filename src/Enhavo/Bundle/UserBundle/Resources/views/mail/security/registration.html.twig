@@ -1,4 +1,1 @@
-{{ 'registration.mail.subject'|trans({}, 'EnhavoUserBundle') }} {# First line is the subject of the mail #}
-
-{{ 'registration.mail.text'|trans({}, 'EnhavoUserBundle') }}
-{{ confirmation_url }}
+{{ 'registration.mail.text'|trans({'%confirmation_url%': confirmation_url, '%username%': user.email}, 'EnhavoUserBundle') }}

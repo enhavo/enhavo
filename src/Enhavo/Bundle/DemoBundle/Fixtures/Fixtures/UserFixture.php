@@ -9,7 +9,7 @@
 namespace Enhavo\Bundle\DemoBundle\Fixtures\Fixtures;
 
 use Enhavo\Bundle\DemoBundle\Fixtures\AbstractFixture;
-use Enhavo\Bundle\UserBundle\Entity\User;
+use Enhavo\Bundle\UserBundle\Model\User;
 
 class UserFixture extends AbstractFixture
 {

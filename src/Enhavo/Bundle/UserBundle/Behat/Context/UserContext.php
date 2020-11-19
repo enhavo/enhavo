@@ -3,20 +3,16 @@
 namespace Enhavo\Bundle\UserBundle\Behat\Context;
 
 use Behat\Behat\Context\Context;
+use Behat\Gherkin\Node\TableNode;
 use Behat\Symfony2Extension\Context\KernelAwareContext;
 use Enhavo\Bundle\AppBundle\Behat\Context\ClientAwareContext;
 use Enhavo\Bundle\AppBundle\Behat\Context\ClientAwareTrait;
-use Enhavo\Bundle\AppBundle\Behat\Context\KernelAwareTrait;
 use Enhavo\Bundle\AppBundle\Behat\Context\ManagerAwareTrait;
 use Enhavo\Bundle\UserBundle\Behat\Exception\UserLoginException;
+use Enhavo\Bundle\UserBundle\Model\Group;
+use Enhavo\Bundle\UserBundle\Model\User;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
-use function League\Uri\parse;
-use Symfony\Component\BrowserKit\Cookie;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Behat\Gherkin\Node\TableNode;
-use Enhavo\Bundle\UserBundle\Entity\User;
-use Enhavo\Bundle\UserBundle\Entity\Group;
 
 /**
  * Defines application features from the specific context.
@@ -38,7 +34,6 @@ class UserContext implements Context, ClientAwareContext, KernelAwareContext
             }
             if(array_key_exists('password', $data)) {
                 $user->setPlainPassword($data['password']);
-                $this->getContainer()->get('fos_user.user_manager')->updatePassword($user);
             }
             if(array_key_exists('roles', $data)) {
                 $roles = explode(',', $data['roles']);
@@ -48,7 +43,7 @@ class UserContext implements Context, ClientAwareContext, KernelAwareContext
                 $user->setRoles($roles);
             }
         }
-        $this->getManager()->flush();
+        $this->getContainer()->get('Enhavo\Bundle\UserBundle\User\UserManager')->update($user);
     }
 
     /**
@@ -64,7 +59,7 @@ class UserContext implements Context, ClientAwareContext, KernelAwareContext
             $em->persist($group);
         }
         $user->setRoles(['ROLE_SUPER_ADMIN']);
-        $em->persist($user);
+        $this->get('Enhavo\Bundle\UserBundle\User\UserManager')->update($user, true, false);
         $em->flush();
     }
 
@@ -143,8 +138,7 @@ class UserContext implements Context, ClientAwareContext, KernelAwareContext
         if($user === null) {
             $user = new User();
             $user->setEmail($email);
-            $user->setUsername($username);
-            $this->getManager()->persist($user);
+            $this->get('Enhavo\Bundle\UserBundle\User\UserManager')->update($user);
         }
 
         return $user;

@@ -10,7 +10,7 @@ namespace Enhavo\Bundle\DemoBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Repository\EntityRepositoryInterface;
-use Enhavo\Bundle\UserBundle\Entity\User;
+use Enhavo\Bundle\UserBundle\Model\User;
 use Enhavo\Bundle\UserBundle\User\UserManager;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Symfony\Component\Console\Command\Command;

@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
-    <entity name="Enhavo\Bundle\UserBundle\Entity\User" table="user_user" repository-class="Enhavo\Bundle\UserBundle\Repository\UserRepository">
+    <entity name="Enhavo\Bundle\UserBundle\Model\User" table="user_user" repository-class="Enhavo\Bundle\UserBundle\Repository\UserRepository">
         <id name="id" type="integer" column="id">
             <generator />
         </id>
 
         <field name="firstName" length="255" nullable="true" />
         <field name="lastName" length="255" nullable="true" />
+        <field name="email" length="180" nullable="true" unique="true" />
+        <field name="username" length="180" nullable="true" unique="true" />
+        <field name="password" length="255" nullable="true" />
+        <field name="enabled" type="boolean" nullable="true" />
+        <field name="salt" length="255" nullable="true" />
+        <field name="confirmationToken" length="255" nullable="true" unique="true" />
+        <field name="passwordRequestedAt" type="datetime" nullable="true" />
+        <field name="lastLogin" type="datetime" nullable="true" />
+        <field name="roles" type="array" nullable="true" />
 
         <many-to-many field="groups" target-entity="Enhavo\Bundle\UserBundle\Model\GroupInterface" inversed-by="users">
             <join-table name="user_user_group">

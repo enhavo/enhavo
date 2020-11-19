@@ -2,23 +2,21 @@ enhavo_user_theme_security_login:
     options:
         expose: true
     path: /login
-    methods: [GET]
+    methods: [GET, POST]
+    controller: Enhavo\Bundle\UserBundle\Controller\SecurityController::loginAction
     defaults:
-        _controller: enhavo_user.controller.security:loginAction
-        _template: theme/security/login.html.twig
+        _config: theme
 
 enhavo_user_theme_security_login_check:
     options:
         expose: true
     path: /login/check
     methods: [POST]
-    defaults:
-        _controller: enhavo_user.controller.security:checkAction
+    controller: Enhavo\Bundle\UserBundle\Controller\SecurityController::checkAction
 
 enhavo_user_theme_security_logout:
     options:
         expose: true
     path: /logout
     methods: [GET, POST]
-    defaults:
-        _controller: enhavo_user.controller.security:logoutAction
+    controller: Enhavo\Bundle\UserBundle\Controller\SecurityController::logoutAction

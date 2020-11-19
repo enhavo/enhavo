@@ -3,7 +3,6 @@
 namespace Enhavo\Bundle\UserBundle\DependencyInjection;
 
 use Sylius\Bundle\ResourceBundle\DependencyInjection\Extension\AbstractResourceExtension;
-use Sylius\Component\Resource\Factory;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
@@ -25,12 +24,18 @@ class EnhavoUserExtension extends AbstractResourceExtension implements PrependEx
         $config = $this->processConfiguration(new Configuration(), $config);
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $this->registerResources('enhavo_user', $config['driver'], $config['resources'], $container);
+
+        $container->setParameter('enhavo_user.mail', $config['mail']);
+        $container->setParameter('enhavo_user.parameters', $config['parameters']);
+        $container->setParameter('enhavo_user.config', $config['config']);
+        $container->setParameter('enhavo_user.mapper', $config['mapper']);
+
         $configFiles = array(
             'services/controller.yaml',
             'services/services.yaml',
+            'services/command.yaml',
             'services/form.yaml',
             'services/menu.yaml',
-            'services/viewer.yaml',
         );
         foreach ($configFiles as $configFile) {
             $loader->load($configFile);

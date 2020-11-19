@@ -1,50 +1,97 @@
 <?php
 /**
- * SecurityController.php
- *
- * @since 23/09/16
- * @author gseidel
+ * @author blutze-media
+ * @since 2020-10-22
  */
 
 namespace Enhavo\Bundle\UserBundle\Controller;
 
-use FOS\RestBundle\View\ViewHandler;
-use FOS\UserBundle\Controller\SecurityController as FOSSecurityController;
-use Enhavo\Bundle\AppBundle\Viewer\ViewFactory;
+use Enhavo\Bundle\AppBundle\Template\TemplateManager;
+use Enhavo\Bundle\UserBundle\User\UserManager;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
-class SecurityController extends FOSSecurityController
+class SecurityController extends AbstractController
 {
-    /**
-     * @var ViewFactory
-     */
-    private $viewFactory;
+    use FlashMessagesTrait;
+
+    /** @var UserManager */
+    private $userManager;
+
+    /** @var TemplateManager */
+    private $templateManager;
+
+    /** @var CsrfTokenManagerInterface */
+    private $tokenManager;
+
+    /** @var TranslatorInterface */
+    private $translator;
 
     /**
-     * @var ViewHandler
+     * SecurityController constructor.
+     * @param UserManager $userManager
+     * @param TemplateManager $templateManager
+     * @param CsrfTokenManagerInterface $tokenManager
+     * @param TranslatorInterface $translator
      */
-    private $viewHandler;
-
-    public function __construct(
-        ViewFactory $viewFactory,
-        ViewHandler $viewHandler,
-        CsrfTokenManagerInterface $tokenManager
-    ) {
-        parent::__construct($tokenManager);
-        $this->viewFactory = $viewFactory;
-        $this->viewHandler = $viewHandler;
+    public function __construct(UserManager $userManager, TemplateManager $templateManager, CsrfTokenManagerInterface $tokenManager, TranslatorInterface $translator)
+    {
+        $this->userManager = $userManager;
+        $this->templateManager = $templateManager;
+        $this->tokenManager = $tokenManager;
+        $this->translator = $translator;
     }
 
-    public function renderLogin(array $data)
+    public function loginAction(Request $request, AuthenticationUtils $authenticationUtils)
     {
-        if(isset($data['error']) && $data['error']) {
-            $this->addFlash('error', $this->container->get('translator')->trans('login.error.credentials', [], 'EnhavoUserBundle'));
+        $config = $this->userManager->getConfigKey($request);
+
+        if ($this->isGranted('ROLE_USER')) {
+            $url = $this->generateUrl($this->userManager->getRedirectRoute($config, 'login', null));
+            return new RedirectResponse($url);
         }
 
-        $view = $this->viewFactory->create('login', [
-            'parameters' => $data,
-        ]);
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+        if ($error) {
+            $this->addFlash('error', $this->translator->trans('login.error.credentials', [], 'EnhavoUserBundle'));
+        }
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
+        $csrfToken = $this->tokenManager
+            ? $this->tokenManager->getToken('authenticate')->getValue()
+            : null;
 
-        return $this->viewHandler->handle($view);
+        $template = $this->userManager->getTemplate($config, 'login');
+
+        return $this->render($this->templateManager->getTemplate($template), [
+            'last_username' => $lastUsername,
+            'error' => $error,
+            'redirect_uri' => $request->query->get('redirect'),
+            'csrf_token' => $csrfToken,
+            'stylesheets' => $this->userManager->getStylesheets($config, 'login'),
+            'javascripts' => $this->userManager->getJavascripts($config, 'login'),
+            'data' => [
+                'view_id' => $request->getSession()->get('enhavo.view_id'),
+                'messages' => $this->getFlashMessages(),
+                'base_url' => '',
+                'host' => $request->getHost(),
+                'scheme' => $request->getScheme(),
+            ],
+        ]);
+    }
+
+    public function checkAction()
+    {
+        throw new \LogicException('You must configure the check path to be handled by the firewall using form_login in your security firewall configuration.');
+    }
+
+    public function logoutAction()
+    {
+        throw new \LogicException('You must activate the logout in your security firewall configuration.');
     }
 }

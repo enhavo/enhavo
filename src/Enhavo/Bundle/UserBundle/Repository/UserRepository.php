@@ -9,8 +9,14 @@
 namespace Enhavo\Bundle\UserBundle\Repository;
 
 use Enhavo\Bundle\AppBundle\Repository\EntityRepository;
+use Enhavo\Bundle\UserBundle\Model\UserInterface;
+use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 
-class UserRepository extends EntityRepository
+/**
+ * Class UserRepository
+ * @package Enhavo\Bundle\UserBundle\Repository
+ */
+class UserRepository extends EntityRepository implements UserLoaderInterface
 {
     public function findByTerm($term)
     {
@@ -24,5 +30,44 @@ class UserRepository extends EntityRepository
 
         $paginator = $this->getPaginator($query);
         return $paginator;
+    }
+
+
+    /**
+     * @param $token
+     * @return UserInterface|object|null
+     */
+    public function findByConfirmationToken($token): ?UserInterface
+    {
+        return $this->findOneBy([
+            'confirmationToken' => $token,
+        ]);
+    }
+
+    /**
+     * @param $username
+     * @return UserInterface|object|null
+     */
+    public function findByUsername($username): ?UserInterface
+    {
+        return $this->findOneBy([
+            'username' => $username,
+        ]);
+    }
+
+    /**
+     * @param $email
+     * @return UserInterface|object|null
+     */
+    public function findByEmail($email): ?UserInterface
+    {
+        return $this->findOneBy([
+            'email' => $email,
+        ]);
+    }
+
+    public function loadUserByUsername($username)
+    {
+        return $this->findByUsername($username);
     }
 }

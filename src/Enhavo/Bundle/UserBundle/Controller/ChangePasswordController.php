@@ -12,13 +12,13 @@ use Enhavo\Bundle\AppBundle\Viewer\ViewFactory;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Enhavo\Bundle\UserBundle\User\UserManager;
 use FOS\RestBundle\View\ViewHandler;
-use FOS\UserBundle\Form\Factory\FactoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ChangePasswordController extends AbstractController
 {
-    use UserConfigurationTrait;
+//    use UserConfigurationTrait;
 
     /**
      * @var ViewHandler
@@ -35,48 +35,47 @@ class ChangePasswordController extends AbstractController
      */
     private $userManager;
 
-    /**
-     * @var FactoryInterface
-     */
-    private $formFactory;
+    /** @var TranslatorInterface */
+    private $translator;
 
     /**
      * ChangePasswordController constructor.
      * @param ViewHandler $viewHandler
      * @param ViewFactory $viewFactory
      * @param UserManager $userManager
-     * @param FactoryInterface $formFactory
+     * @param TranslatorInterface $translator
      */
-    public function __construct(ViewHandler $viewHandler, ViewFactory $viewFactory, UserManager $userManager, FactoryInterface $formFactory)
+    public function __construct(ViewHandler $viewHandler, ViewFactory $viewFactory, UserManager $userManager, TranslatorInterface $translator)
     {
         $this->viewHandler = $viewHandler;
         $this->viewFactory = $viewFactory;
         $this->userManager = $userManager;
-        $this->formFactory = $formFactory;
+        $this->translator = $translator;
     }
 
-    public function changePasswordAction(Request $request)
+    public function changeAction(Request $request)
     {
+        $config = $this->userManager->getConfigKey($request);
         $user = $this->getUser();
         if (!is_object($user) || !$user instanceof UserInterface) {
             throw $this->createAccessDeniedException('This user does not have access to this section.');
         }
 
-        $form = $this->formFactory->createForm();
+        $form = $this->userManager->createForm($config, 'change_password', $user);
         $form->setData($user);
         $form->handleRequest($request);
-        if($request->getMethod() == 'POST') {
+        if ($request->isMethod('POST')) {
             if ($form->isValid()) {
-                $this->userManager->updateUser($user);
-                $this->addFlash('success', $this->get('translator')->trans('change_password.message.success', [], 'EnhavoUserBundle'));
+                $this->userManager->update($user, false);
+                $this->addFlash('success', $this->translator->trans('change_password.message.success', [], 'EnhavoUserBundle'));
             } else {
-                $this->addFlash('error', $this->get('translator')->trans('change_password.message.error', [], 'EnhavoUserBundle'));
+                $this->addFlash('error', $this->translator->trans('change_password.message.error', [], 'EnhavoUserBundle'));
             }
         }
 
         $view = $this->viewFactory->create('form', [
             'resource' => $user,
-            'form' => $form
+            'form' => $form,
         ]);
 
         return $this->viewHandler->handle($view);

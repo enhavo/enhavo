@@ -1,0 +1,7 @@
+enhavo_user:
+    password:
+        mismatch: 'The entered passwords do not match.'
+    current_password:
+        invalid: 'The password is incorrect.'
+    change_email:
+        mismatch: 'Email-Adresses do not match.'

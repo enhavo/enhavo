@@ -8,39 +8,41 @@
 
 namespace Enhavo\Bundle\UserBundle\EventListener;
 
-use FOS\UserBundle\Model\UserManager;
+use Enhavo\Bundle\UserBundle\Model\UserInterface;
+use Enhavo\Bundle\UserBundle\User\UserManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
-use FOS\UserBundle\Model\UserInterface;
 
 class SaveUserSubscriber implements EventSubscriberInterface
 {
     /**
-     * @var $userManager
+     * @var UserManager
      */
-    protected $userManager;
+    private $userManager;
 
-    public function __construct(UserManager $userManger)
+    /**
+     * SaveUserSubscriber constructor.
+     * @param UserManager $userManager
+     */
+    public function __construct(UserManager $userManager)
     {
-        $this->userManager = $userManger;
+        $this->userManager = $userManager;
     }
+
 
     public static function getSubscribedEvents()
     {
-        return array(
-            'enhavo_user.user.pre_update' => array('onSave', 1),
-            'enhavo_user.user.pre_create' => array('onSave', 1),
-        );
+        return [
+            'enhavo_user.user.pre_update' => ['onSave', 1],
+            'enhavo_user.user.pre_create' => ['onSave', 1],
+        ];
     }
 
     public function onSave(GenericEvent $event)
     {
         /** @var $user UserInterface */
         $user = $event->getSubject();
-        if($user->getPlainPassword()) {
-            $this->userManager->updatePassword($user);
-        }
-
-        $this->userManager->updateCanonicalFields($user);
+        $this->userManager->updatePassword($user);
+        $this->userManager->updateUsername($user);
     }
 }

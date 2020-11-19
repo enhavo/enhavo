@@ -1,0 +1,24 @@
+services:
+    Enhavo\Bundle\UserBundle\Command\CreateUserCommand:
+        arguments:
+            - '@Enhavo\Bundle\UserBundle\User\UserManager'
+            - '@enhavo_user.factory.user'
+            - '@Enhavo\Bundle\UserBundle\Mapper\UserMapper'
+        tags:
+            - { name: console.command }
+
+    Enhavo\Bundle\UserBundle\Command\ActivateUserCommand:
+        arguments:
+            - '@Enhavo\Bundle\UserBundle\User\UserManager'
+            - '@enhavo_user.repository.user'
+            - '@Enhavo\Bundle\UserBundle\Mapper\UserMapper'
+        tags:
+            - { name: console.command }
+
+    Enhavo\Bundle\UserBundle\Command\ChangePasswordCommand:
+        arguments:
+            - '@Enhavo\Bundle\UserBundle\User\UserManager'
+            - '@enhavo_user.repository.user'
+            - '@Enhavo\Bundle\UserBundle\Mapper\UserMapper'
+        tags:
+            - { name: console.command }

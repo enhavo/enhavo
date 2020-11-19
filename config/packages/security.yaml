@@ -1,13 +1,12 @@
 security:
     encoders:
         Symfony\Component\Security\Core\User\User: plaintext
-        FOS\UserBundle\Model\UserInterface: sha512
-
-    role_hierarchy:
+        Enhavo\Bundle\UserBundle\Model\UserInterface: sha512
 
     providers:
-        fos_userbundle:
-            id: fos_user.user_provider.username
+        entity_user_provider:
+            entity:
+                class: Enhavo\Bundle\UserBundle\Model\User
 
     firewalls:
         dev:
@@ -15,10 +14,14 @@ security:
             security: false
 
         admin:
+            user_checker: Enhavo\Bundle\UserBundle\Security\UserChecker
+            guard:
+                authenticators:
+                    - Enhavo\Bundle\UserBundle\Security\Authentication\FormLoginAuthenticator
             pattern:  ^/admin/.*
             context: user
             form_login:
-                provider:       fos_userbundle
+                provider:       entity_user_provider
                 login_path:     /admin/login
                 use_forward:    false
                 check_path:     /admin/login/check
@@ -30,10 +33,15 @@ security:
             anonymous:  true
 
         user:
+            user_checker: Enhavo\Bundle\UserBundle\Security\UserChecker
+            guard:
+                authenticators:
+                    - Enhavo\Bundle\UserBundle\Security\Authentication\FormLoginAuthenticator
+
             pattern: ^/user/.*
             context: user
             form_login:
-                provider:       fos_userbundle
+                provider:       entity_user_provider
                 login_path:     /user/login
                 use_forward:    false
                 check_path:     /user/login/check
@@ -47,8 +55,9 @@ security:
         main:
             pattern: .*
             context: user
+            user_checker: Enhavo\Bundle\UserBundle\Security\UserChecker
             form_login:
-                provider:       fos_userbundle
+                provider:       entity_user_provider
                 login_path:     /user/login
                 use_forward:    false
                 check_path:     /user/login/check
@@ -62,11 +71,11 @@ security:
     access_control:
         - { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/login/check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/reset-password, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/reset-password/.+, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
 
         - { path: ^/user/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/user/login/check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/user/registration, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/user/reset-password, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/user/registration/.+, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/user/reset-password/.+, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/user/, role: ROLE_USER }

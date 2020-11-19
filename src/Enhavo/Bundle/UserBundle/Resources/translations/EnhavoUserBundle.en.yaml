@@ -1,72 +1,156 @@
 login:
-  error:
-    credentials: 'Bad credentials'
-group:
-  role:
-    label:
-      index: 'Group list'
-      update: 'Group update'
-      create: 'Group create'
-      delete: 'Group delete'
-  form:
-    label:
-      name: 'Name'
-      roles: 'Rights'
-  label:
-    name: 'Name'
-    id: 'ID'
-    group: 'Group'
-    permission: 'Permission'
-user:
-  role:
-    label:
-      index: 'User list'
-      update: 'User update'
-      create: 'User create'
-      delete: 'User delete'
-  form:
-    label:
-      username: 'Username'
-      email: 'E-Mail'
-      firstName: 'Firstname'
-      lastName: 'Lastname'
-      groups: 'Groups'
-      password: 'Password'
-      admin: 'Admin'
-      super_admin: 'Super Admin'
-    help:
-      admin: 'Only if this field is set to true, the user is able to login into the admin area'
-  label:
-    username: 'Username'
-    id: 'ID'
-    user: 'User'
-    email: 'Email'
-reset:
-  form:
     error:
-      non-expired: Your reset mail isn't expired, but we send an email again
-      invalid-user: Username doesn't exist
-    action:
-      reset-password: Reset Password
-  label:
-    login: Login
-  message:
-      success: An email was sent to your account.
-  mail:
-      text: Please click on following link to reset your password
-      subject: Reset Password
-registration:
+        credentials: 'Bad credentials'
+group:
+    edit:
+        submit: 'Update group'
+    show:
+        name: 'Group name'
+    new:
+        submit: 'Create group'
+    flash:
+        updated: 'The group has been updated.'
+        created: 'The group has been created.'
+        deleted: 'The group has been deleted.'
+    role:
+        label:
+            index: 'Group list'
+            update: 'Group update'
+            create: 'Group create'
+            delete: 'Group delete'
+    form:
+        label:
+            name: 'Name'
+            roles: 'Rights'
+    label:
+        name: 'Name'
+        id: 'ID'
+        group: 'Group'
+        permission: 'Permission'
+user:
+    role:
+        label:
+            index: 'User list'
+            update: 'User update'
+            create: 'User create'
+            delete: 'User delete'
+    form:
+        label:
+            username: 'Username'
+            email: 'E-Mail'
+            firstName: 'Firstname'
+            lastName: 'Lastname'
+            groups: 'Groups'
+            password: 'Password'
+            admin: 'Admin'
+            super_admin: 'Super Admin'
+        help:
+            admin: 'Only if this field is set to true, the user is able to login into the admin area'
+    label:
+        username: 'Username'
+        id: 'ID'
+        user: 'User'
+        email: 'Email'
+reset_password:
+    label:
+        login: 'Login'
+    request:
+        username: 'Username or email address'
+        submit: 'Reset password'
+    confirm:
+        submit: 'Change password'
+    flash:
+        message:
+            success: 'The password has been reset successfully.'
+            error: 'Request failed'
     mail:
-        text: Please click on following link to to verify your email address
-        subject: Registration
+        subject: 'Reset Password'
+        text: |
+            Hello %username%!
+
+            To reset your password, please visit %confirmation_url%
+
+            Regards,
+            the Team.
+
+change_email:
+    form:
+        new_email: 'New Email-Address'
+        confirm_new_email: 'Repeat New Email-Address'
+        submit: 'Change Email'
+    flash:
+        message:
+            success: 'Email-Adress was changed successfully. Please check your inbox.'
+            error: 'Delivery to new email failed.'
+    mail:
+        subject: 'Email-Address Changed'
+        text: |
+            Hello %username%!
+
+            Your email address was changed from %old_email% to %new_email%.
+            Please use %username% as login identifier from now.
+            If you do not receive this email on your %new_email% inbox, please login to your account and change it back!
+
+            Regards,
+            the Team.
+
+confirmation:
+    form:
+        label:
+            password: 'Password'
+            password-repeat: 'Repeat password'
+        action:
+            reset: 'Reset'
+    mail:
+        subject: 'Account Confirmed'
+        text: |
+            Hello %username%!
+
+            Your account is now enabled.
+
+            Regards,
+            the Team.
+security:
+    login:
+        username: 'Username'
+        password: 'Password'
+        remember_me: 'Remember me'
+        submit: 'Log in'
 change_password:
     message:
-        success: 'Password saved successfully'
-        error: 'Error while saving'
-confirm:
-  form:
-    label:
-      password: Password
-      password-repeat: Repeat password
-    action:
-      reset: Reset
+        success: 'Password changed'
+        error: 'Error'
+
+registration:
+    confirmed: 'Congrats, your account is now activated.'
+    submit: 'Register'
+    form:
+        email: 'E-Mail'
+        username: 'Username'
+        password: 'Password'
+        password_confirmation: 'Password confirmation'
+        submit: Register
+    mail:
+        subject: Registration
+        text: |
+            Hello %username%!
+
+            Please click on the following link to to verify your email address %confirmation_url%
+
+            Regards,
+            the Team.
+
+form:
+    group_name: 'Group name'
+    username: Username
+    email: Email
+    current_password: 'Current password'
+    password: Password
+    password_confirmation: 'Repeat password'
+    new_password: 'New password'
+    new_password_confirmation: 'Repeat new password'
+
+profile:
+    update:
+        success: 'Profile updated successfully'
+        error: 'Update failed'

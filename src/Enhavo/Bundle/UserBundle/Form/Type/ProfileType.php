@@ -22,7 +22,7 @@ class ProfileType extends AbstractType
 
     /**
      * ProfileType constructor.
-     * 
+     *
      * @param $dataClass
      */
     public function __construct($dataClass)

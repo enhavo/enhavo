@@ -1,0 +1,11 @@
+{% extends template('theme/base.html.twig') %}
+{% trans_default_domain 'EnhavoUserBundle' %}
+
+{% block main %}
+    <form action="{{ path('enhavo_user_theme_reset_password_request') }}" method="POST">
+        {{ form_row(form.username, {'label': 'registration.form.email'}) }}
+        <button type="submit">{{ 'reset_password.form.submit'|trans }}</button>
+        <a href="{{ path('enhavo_user_theme_security_login') }}">{{ 'reset_password.label.login'|trans }}</a>
+        {{ form_row(form._token) }}
+    </form>
+{% endblock %}

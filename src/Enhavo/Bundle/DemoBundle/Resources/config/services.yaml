@@ -14,7 +14,7 @@ services:
     Enhavo\Bundle\DemoBundle\Command\InstallCommand:
         arguments:
             - '@enhavo_user.repository.user'
-            - '@fos_user.user_manager'
+            - '@Enhavo\Bundle\UserBundle\User\UserManager'
             - '@enhavo_user.factory.user'
             - '@validator'
             - '%kernel.project_dir%'

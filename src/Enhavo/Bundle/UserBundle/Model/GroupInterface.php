@@ -1,16 +1,22 @@
 <?php
-/**
- * GroupInterface.php
- *
- * @since 22/05/16
- * @author gseidel
- */
 
 namespace Enhavo\Bundle\UserBundle\Model;
 
-use FOS\UserBundle\Model\GroupInterface as BaseGroupInterface;
-
-interface GroupInterface extends BaseGroupInterface
+interface GroupInterface
 {
+    public function addRole($role);
 
+    public function getId();
+
+    public function getName();
+
+    public function hasRole($role);
+
+    public function getRoles();
+
+    public function removeRole($role);
+
+    public function setName($name);
+
+    public function setRoles(array $roles);
 }

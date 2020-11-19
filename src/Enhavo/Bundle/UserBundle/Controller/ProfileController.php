@@ -1,76 +1,97 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-01-17
- * Time: 12:29
- */
 
 namespace Enhavo\Bundle\UserBundle\Controller;
 
-
-use Doctrine\ORM\EntityManagerInterface;
-use Enhavo\Bundle\UserBundle\Form\Type\ProfileType;
+use Enhavo\Bundle\AppBundle\Template\TemplateManager;
+use Enhavo\Bundle\FormBundle\Error\FormErrorResolver;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
-use FOS\RestBundle\View\View;
-use FOS\RestBundle\View\ViewHandler;
+use Enhavo\Bundle\UserBundle\User\UserManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
+/**
+ * Class UserController
+ * @package Enhavo\Bundle\UserBundle\Controller
+ */
 class ProfileController extends AbstractController
 {
-    use UserConfigurationTrait;
+    use FlashMessagesTrait;
+
+    /** @var UserManager */
+    private $userManager;
+
+    /** @var TemplateManager */
+    private $templateManager;
+
+    /** @var TranslatorInterface */
+    private $translator;
+
+    /** @var FormErrorResolver */
+    private $errorResolver;
 
     /**
-     * @var EntityManagerInterface
+     * UserController constructor.
+     * @param UserManager $userManager
+     * @param TemplateManager $templateManager
+     * @param TranslatorInterface $translator
+     * @param FormErrorResolver $errorResolver
      */
-    private $em;
-
-    /**
-     * @var ViewHandler
-     */
-    private $viewHandler;
-
-    /**
-     * ProfileController constructor.
-     * @param EntityManagerInterface $em
-     * @param ViewHandler $viewHandler
-     */
-    public function __construct(EntityManagerInterface $em, ViewHandler $viewHandler)
+    public function __construct(UserManager $userManager, TemplateManager $templateManager, TranslatorInterface $translator, FormErrorResolver $errorResolver)
     {
-        $this->em = $em;
-        $this->viewHandler = $viewHandler;
+        $this->userManager = $userManager;
+        $this->templateManager = $templateManager;
+        $this->translator = $translator;
+        $this->errorResolver = $errorResolver;
     }
 
-    public function profileAction(Request $request)
+    public function indexAction(Request $request)
     {
+        $config = $this->userManager->getConfigKey($request);
+
+        /** @var UserInterface $user */
         $user = $this->getUser();
-        if (!is_object($user) || !$user instanceof UserInterface) {
-            throw $this->createAccessDeniedException('This user does not have access to this section.');
-        }
-
-        $configuration = $this->createConfiguration($request);
-
-        $form = $this->createForm($configuration->getForm(ProfileType::class), $user);
-
-        $valid = true;
+        $form = $this->userManager->createForm($config, 'profile', $user);
         $form->handleRequest($request);
-        if (in_array($request->getMethod(), ['POST'])) {
-            if($form->isValid()) {
-                $this->em->flush();
+
+        $message = null;
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+
+                $this->userManager->update($user);
+                $message = $this->translator->trans('profile.update.success', [], 'EnhavoUserBundle');
+                $this->addFlash('success', $message);
+
+                if ($request->isXmlHttpRequest()) {
+                    return new JsonResponse([
+                        'error' => false,
+                        'errors' => [],
+                        'message' => $message,
+                    ]);
+                }
             } else {
-                $valid = false;
+                $message = $this->translator->trans('profile.update.error', [], 'EnhavoUserBundle');
+                $this->addFlash('error', $message);
+                if ($request->isXmlHttpRequest()) {
+                    return new JsonResponse([
+                        'error' => true,
+                        'errors' => [
+                            'fields' => $this->errorResolver->getErrorFieldNames($form),
+                            'messages' => $this->errorResolver->getErrorMessages($form),
+                        ],
+                        'message' => $message,
+                    ]);
+                }
             }
         }
 
-        $view = View::create($form)
-            ->setData([
-                'form' => $form->createView(),
-            ])
-            ->setStatusCode($valid ? 200 : 400)
-            ->setTemplate($configuration->getTemplate('EnhavoUserBundle:Theme:User/profile.html.twig'))
-        ;
-
-        return $this->viewHandler->handle($view);
+        return $this->render($this->templateManager->getTemplate($this->userManager->getTemplate($config, 'profile')), [
+            'form' => $form->createView(),
+            'data' => [
+                'messages' => $this->getFlashMessages()
+            ],
+        ]);
     }
 }

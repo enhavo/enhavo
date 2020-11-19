@@ -1,24 +1,19 @@
+enhavo_user:
+    mail:
+        from: '%env(string:MAILER_FROM)%'
+        sender_name: '%env(string:MAILER_NAME)%'
+
 doctrine:
     orm:
         resolve_target_entities:
-            Enhavo\Bundle\UserBundle\Model\UserInterface: Enhavo\Bundle\UserBundle\Entity\User
-            Enhavo\Bundle\UserBundle\Model\GroupInterface: Enhavo\Bundle\UserBundle\Entity\Group
-
-fos_user:
-    from_email:
-        address: '%env(string:MAILER_FROM)%'
-        sender_name: '%env(string:MAILER_NAME)%'
-    db_driver: orm
-    firewall_name: main
-    user_class: Enhavo\Bundle\UserBundle\Entity\User
-    group:
-        group_class: Enhavo\Bundle\UserBundle\Entity\Group
-    resetting:
-        email:
-            template: mail/security/reset-password.html.twig
-    registration:
-        confirmation:
-            template: mail/security/registration.html.twig
+            Enhavo\Bundle\UserBundle\Model\UserInterface: Enhavo\Bundle\UserBundle\Model\User
+            Enhavo\Bundle\UserBundle\Model\GroupInterface: Enhavo\Bundle\UserBundle\Model\Group
+        mappings:
+            EnhavoUserBundle:
+                type: xml
+                dir: Resources/config/doctrine
+                is_bundle: true
+                prefix: Enhavo\Bundle\UserBundle\Model
 
 enhavo_app:
     template_paths:
