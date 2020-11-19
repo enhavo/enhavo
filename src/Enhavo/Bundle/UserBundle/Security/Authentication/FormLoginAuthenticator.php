@@ -144,12 +144,8 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator implements P
     {
         $this->dispatch($token);
         $session = $request->getSession();
-        $targetPath = $request->get('_target_path')
-            ?? $this->getTargetPath($session, $providerKey)
-            ?? $session->get('enhavo.redirect_uri');
+        $targetPath = $request->get('_target_path') ?? $this->getTargetPath($session, $providerKey);
         if ($targetPath) {
-            $session->remove('enhavo.redirect_uri');
-
             return new RedirectResponse($targetPath);
         }
     }

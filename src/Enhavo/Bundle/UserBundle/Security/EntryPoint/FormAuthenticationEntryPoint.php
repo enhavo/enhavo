@@ -42,8 +42,17 @@ class FormAuthenticationEntryPoint implements AuthenticationEntryPointInterface
     public function start(Request $request, AuthenticationException $authException = null)
     {
         $response = $this->entryPoint->start($request, $authException);
-        if ($request->query->has('view_id')) { // todo: add redirect to query string
-            $response->setTargetUrl($response->getTargetUrl() . '?view_id=' . $request->query->get('view_id'));
+        $params = [];
+        if ($request->query->has('view_id')) {
+            $params['view_id'] = $request->query->get('view_id');
+        }
+        if ($request->hasSession() && $request->getSession()->has('enhavo.redirect_uri')) {
+            $params['redirect'] = $request->getSession()->get('enhavo.redirect_uri');
+            $request->getSession()->remove('enhavo.redirect_uri');
+        }
+
+        if (count($params)) {
+            $response->setTargetUrl($response->getTargetUrl() .'?' .http_build_query($params));
         }
 
         return $response;
