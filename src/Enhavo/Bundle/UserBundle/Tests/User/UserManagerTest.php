@@ -315,14 +315,92 @@ class UserManagerTest extends TestCase
     {
         $user = new UserMock();
         $user->setCustomerId('1337');
-        $user->setEmail('user@enhavo.com');
+        $user->setEmail('old@mail.com');
         $user->setPlainPassword('password');
 
         $dependencies = $this->createDependencies();
+        $dependencies->mailerManager->expects($this->exactly(2))->method('createMessage')->willReturnCallback(function () {
+            return new Message();
+        });
+        $dependencies->mailerManager->expects($this->exactly(2))->method('sendMessage')->willReturnCallback(function (Message $message) {
+            $this->assertEquals('admin@enhavo.com', $message->getFrom());
+            $this->assertEquals('change-email.subject.translated', $message->getSubject());
+            $this->assertEquals('change-email.html.twig', $message->getTemplate());
 
+
+            $this->assertRegExp('%(old@mail.com|new@mail.com)%', $message->getTo());
+
+            $this->assertEquals([
+                'old_email' => 'old@mail.com',
+                'new_email' => 'new@mail.com'
+            ], $message->getContext());
+            return 1;
+        });
+        $dependencies->entityManager->expects($this->never())->method('persist');
+        $dependencies->entityManager->expects($this->once())->method('flush');
+
+        $manager = $this->createInstance($dependencies, [
+            'theme' => [
+                'change_email' => [
+                    'mail_template' => 'change-email.html.twig',
+                    'mail_subject' => 'change-email.subject',
+                    'translation_domain' => 'EnhavoUserBundle',
+                    'mail_from' => 'admin@enhavo.com',
+                    'sender_name' => 'Enhavo',
+                    'content_type' => 'content/type'
+                ]
+            ]
+        ]);
+
+        $result = $manager->changeEmail($user, 'new@mail.com', 'theme', 'change_email');
+        $this->assertTrue($result);
+        $this->assertEquals('new@mail.com', $user->getEmail());
+        $this->assertEquals('1337.new@mail.com', $user->getUsername());
+    }
+
+
+    public function testChangeEmailNotSend()
+    {
+        $user = new UserMock();
+        $user->setCustomerId('1337');
+        $user->setEmail('old@mail.com');
+        $user->setPlainPassword('password');
+        $user->setUsername('1337.old@mail.com');
+
+        $dependencies = $this->createDependencies();
+        $dependencies->mailerManager->expects($this->once())->method('createMessage')->willReturn($dependencies->message);
+        $dependencies->mailerManager->expects($this->once())->method('sendMessage')->willReturn(0);
+        $dependencies->entityManager->expects($this->never())->method('persist');
+        $dependencies->entityManager->expects($this->never())->method('flush');
+
+        $manager = $this->createInstance($dependencies, [
+            'theme' => [
+                'change_email' => [
+                    'mail_template' => 'change-email.html.twig',
+                    'mail_subject' => 'change-email.subject',
+                    'translation_domain' => 'EnhavoUserBundle',
+                    'mail_from' => 'admin@enhavo.com',
+                    'sender_name' => 'Enhavo',
+                    'content_type' => 'content/type'
+                ]
+            ]
+        ]);
+
+        $result = $manager->changeEmail($user, 'new@mail.com', 'theme', 'change_email');
+        $this->assertFalse($result);
+        $this->assertEquals('old@mail.com', $user->getEmail());
+        $this->assertEquals('1337.old@mail.com', $user->getUsername());
+    }
+
+    public function testGetConfigKey()
+    {
+        $dependencies = $this->createDependencies();
         $manager = $this->createInstance($dependencies, []);
-
-        $manager->changeEmail($user, 'new@email.com', 'theme', 'change_email');
+        $request = new Request([], [], [
+            '_config' => '__CONFIG_KEY__',
+        ]);
+        $result = $manager->getConfigKey($request);
+        $this->assertEquals('__CONFIG_KEY__', $result);
     }
 
     public function testCreateForm()
