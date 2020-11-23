@@ -44,7 +44,6 @@ class TenantDoctrineFilterListener
             $this->entityManager->getConfiguration()->addFilter('tenant', TenantDoctrineFilter::class);
             /** @var TenantDoctrineFilter $filter */
             $filter = $this->entityManager->getFilters()->enable('tenant');
-            $filter->setDetectByInterface($this->configuration['detect_by_interface']);
             $filter->setTargetClasses($this->resolveTargetClasses());
             $filter->setParameter('tenant', $this->resolver->getTenant()->getKey());
         }
@@ -53,25 +52,29 @@ class TenantDoctrineFilterListener
     private function resolveTargetClasses()
     {
         $result = [];
-        if ($this->configuration['detect_inheritance']) {
-            $result = $this->detectInheritance();
-        }
+        // TODO: This is too slow and seriously impacts page performance, therefore it is currently not supported. We should look into caching possibilities if we want to support this.
+//        if ($this->configuration['detect_by_interface']) {
+//            $result = $this->detectByInterface();
+//        }
         foreach($this->configuration['classes'] as $class) {
             $result[$class] = $class;
-        }
-        return array_keys($result);
-    }
-
-    private function detectInheritance()
-    {
-        $result = [];
-        $metaData = $this->entityManager->getMetadataFactory()->getAllMetadata();
-        /** @var ClassMetadata $classMetadata */
-        foreach($metaData as $classMetadata) {
-            if ($classMetadata->getReflectionClass()->implementsInterface(TenantAwareInterface::class)) {
-                $result [$classMetadata->rootEntityName] = $classMetadata->rootEntityName;
+            foreach(class_parents($class) as $parentClass) {
+                $result[$parentClass] = $parentClass;
             }
         }
         return $result;
     }
+
+//    private function detectByInterface()
+//    {
+//        $result = [];
+//        $metaData = $this->entityManager->getMetadataFactory()->getAllMetadata();
+//        /** @var ClassMetadata $classMetadata */
+//        foreach($metaData as $classMetadata) {
+//            if ($classMetadata->getReflectionClass()->implementsInterface(TenantAwareInterface::class)) {
+//                $result [$classMetadata->rootEntityName] = $classMetadata->rootEntityName;
+//            }
+//        }
+//        return $result;
+//    }
 }

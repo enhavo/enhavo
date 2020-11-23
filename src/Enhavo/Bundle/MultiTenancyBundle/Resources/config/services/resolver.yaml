@@ -24,6 +24,12 @@ services:
             - '%enhavo_multi_tenancy.tenant_switch_menu.url_prefix%'
             - '%enhavo_multi_tenancy.tenant_switch_menu.session_key%'
 
+    enhavo_multi_tenancy.resolver.default_tenant:
+        class: Enhavo\Bundle\MultiTenancyBundle\Resolver\AssignResolver
+        arguments:
+            - '@enhavo_multi_tenancy.provider'
+            - '%enhavo_multi_tenancy.default_tenant%'
+
     enhavo_multi_tenancy.resolver.inner:
         class: Enhavo\Bundle\MultiTenancyBundle\Resolver\ChainResolver
         calls:
@@ -31,6 +37,7 @@ services:
             - [ 'addResolver', [ '@Enhavo\Bundle\MultiTenancyBundle\Resolver\EnvResolver' ] ]
             - [ 'addResolver', [ '@Enhavo\Bundle\MultiTenancyBundle\Resolver\SessionResolver' ] ]
             - [ 'addResolver', [ '@Enhavo\Bundle\MultiTenancyBundle\Resolver\HostResolver' ] ]
+            - [ 'addResolver', [ '@enhavo_multi_tenancy.resolver.default_tenant' ] ]
 
     enhavo_multi_tenancy.resolver.default:
         class: Enhavo\Bundle\MultiTenancyBundle\Resolver\BufferedResolver

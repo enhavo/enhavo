@@ -20,21 +20,7 @@ class TenantDoctrineFilter extends SQLFilter
 
     public function addFilterConstraint(ClassMetadata $targetEntity, $targetTableAlias)
     {
-        $validClass = false;
-        if ($this->isDetectByInterface() && $targetEntity->reflClass->implementsInterface(TenantAwareInterface::class)) {
-            $validClass = true;
-        }
-
-        if (!$validClass) {
-            foreach($this->getTargetClasses() as $targetClass) {
-                if ($targetClass == $targetEntity->reflClass->getName()) {
-                    $validClass = true;
-                    break;
-                }
-            }
-        }
-
-        if ($validClass) {
+        if (isset($this->getTargetClasses()[$targetEntity->reflClass->getName()])) {
             return $targetTableAlias . '.tenant = ' . $this->getParameter('tenant');
         } else {
             return '';
