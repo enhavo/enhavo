@@ -55,6 +55,12 @@ class UserType extends AbstractResourceType
             'translation_domain' => 'EnhavoUserBundle'
         ));
 
+        $builder->add('enabled', BooleanType::class, array(
+            'label' => 'user.form.label.enabled',
+            'translation_domain' => 'EnhavoUserBundle',
+            'default' => true,
+        ));
+
         $builder->add('admin', BooleanType::class, array(
             'label' => 'user.form.label.admin',
             'translation_domain' => 'EnhavoUserBundle',

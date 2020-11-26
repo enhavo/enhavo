@@ -9,6 +9,7 @@ namespace Enhavo\Bundle\UserBundle\Security;
 use Enhavo\Bundle\UserBundle\Exception\AccountDisabledException;
 use Enhavo\Bundle\UserBundle\Exception\UserNotSupportedException;
 use Enhavo\Bundle\UserBundle\Model\UserInterface as EnhavoUserInterface;
+use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -21,7 +22,7 @@ class UserChecker implements UserCheckerInterface
         }
 
         if (false === $user->isEnabled()) {
-            throw new AccountDisabledException('User account not enabled');
+            throw new BadCredentialsException('User account not activated');
         }
     }
 
@@ -32,7 +33,7 @@ class UserChecker implements UserCheckerInterface
         }
 
         if (false === $user->isEnabled()) {
-            throw new AccountDisabledException('User account not enabled');
+            throw new BadCredentialsException('User account not activated');
         }
     }
 }

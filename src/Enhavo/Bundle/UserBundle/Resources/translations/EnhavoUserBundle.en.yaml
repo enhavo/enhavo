@@ -43,6 +43,7 @@ user:
             groups: 'Groups'
             password: 'Password'
             admin: 'Admin'
+            enabled: 'Enabled'
             super_admin: 'Super Admin'
         help:
             admin: 'Only if this field is set to true, the user is able to login into the admin area'
