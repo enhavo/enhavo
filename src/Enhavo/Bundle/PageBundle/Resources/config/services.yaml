@@ -19,6 +19,7 @@ services:
             - { name: twig.extension }
 
     Enhavo\Bundle\PageBundle\Navigation\Voter\PageHierarchyVoter:
+        parent: Enhavo\Bundle\PageBundle\Navigation\Voter\PageVoter
         tags:
             - { name: enhavo_navigation.voter }
 
