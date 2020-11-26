@@ -24,7 +24,7 @@ class UserType extends AbstractResourceType
      */
     private $authorizationChecker;
 
-    public function __construct(string $dataClass, array $validationGroups = [], AuthorizationCheckerInterface $authorizationChecker)
+    public function __construct(string $dataClass, AuthorizationCheckerInterface $authorizationChecker, array $validationGroups = [])
     {
         parent::__construct($dataClass, $validationGroups);
         $this->authorizationChecker = $authorizationChecker;
@@ -53,6 +53,12 @@ class UserType extends AbstractResourceType
         $builder->add('lastName', TextType::class, array(
             'label' => 'user.form.label.lastName',
             'translation_domain' => 'EnhavoUserBundle'
+        ));
+
+        $builder->add('enabled', BooleanType::class, array(
+            'label' => 'user.form.label.enabled',
+            'translation_domain' => 'EnhavoUserBundle',
+            'default' => true,
         ));
 
         $builder->add('admin', BooleanType::class, array(

@@ -7,11 +7,11 @@
 namespace Enhavo\Bundle\UserBundle\Tests\Security;
 
 
-use Enhavo\Bundle\UserBundle\Exception\AccountDisabledException;
 use Enhavo\Bundle\UserBundle\Exception\UserNotSupportedException;
 use Enhavo\Bundle\UserBundle\Model\User;
 use Enhavo\Bundle\UserBundle\Security\UserChecker;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 
 class UserCheckerTest extends TestCase
 {
@@ -30,7 +30,7 @@ class UserCheckerTest extends TestCase
         $user->setEnabled(false);
         $checker = new UserChecker();
 
-        $this->expectException(AccountDisabledException::class);
+        $this->expectException(BadCredentialsException::class);
         $checker->checkPreAuth($user);
     }
 
@@ -58,7 +58,7 @@ class UserCheckerTest extends TestCase
         $user->setEnabled(false);
         $checker = new UserChecker();
 
-        $this->expectException(AccountDisabledException::class);
+        $this->expectException(BadCredentialsException::class);
         $checker->checkPostAuth($user);
     }
 
