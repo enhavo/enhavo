@@ -13,11 +13,8 @@ use Enhavo\Bundle\NavigationBundle\Model\NodeInterface;
 use Enhavo\Bundle\NavigationBundle\Voter\VoterInterface;
 use Enhavo\Bundle\PageBundle\Entity\Page;
 
-class PageHierarchyVoter implements VoterInterface
+class PageHierarchyVoter extends PageVoter
 {
-    /** @var PageVoter */
-    protected $parent;
-
     public function vote(NodeInterface $node)
     {
         $subject = $node->getSubject();
@@ -26,7 +23,7 @@ class PageHierarchyVoter implements VoterInterface
             $page = $subject->getContent();
             $descendants = $page->getDescendants();
             foreach($descendants as $descendant) {
-                if($this->parent->match($descendant)) {
+                if($this->match($descendant)) {
                     return VoterInterface::VOTE_IN;
                 }
             }
