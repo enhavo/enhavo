@@ -24,7 +24,7 @@ class UserType extends AbstractResourceType
      */
     private $authorizationChecker;
 
-    public function __construct(string $dataClass, array $validationGroups = [], AuthorizationCheckerInterface $authorizationChecker)
+    public function __construct(string $dataClass, AuthorizationCheckerInterface $authorizationChecker, array $validationGroups = [])
     {
         parent::__construct($dataClass, $validationGroups);
         $this->authorizationChecker = $authorizationChecker;
