@@ -26,7 +26,7 @@ class TenantAwareSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            'enhavo_app.pre_create' => 'preCreate'
+            'enhavo_app.pre_create' => ['preCreate', 10]    // Needs to run before RoutingBundle AutoGenerators
         );
     }
 
