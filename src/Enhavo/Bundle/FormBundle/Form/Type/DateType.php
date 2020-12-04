@@ -32,6 +32,9 @@ class DateType extends AbstractType
         if (array_key_exists('data-date-picker', $options['attr'])) {
             $view->vars['attr']['data-date-picker'] = $options['config'];
         }
+        if (!$options['allow_typing']) {
+            $view->vars['attr']['readonly'] = 'readonly';
+        }
     }
 
     public function getBlockPrefix()
@@ -55,10 +58,11 @@ class DateType extends AbstractType
             'widget' => 'single_text',
             'format' => 'dd.MM.yyyy',
             'config' => $this->defaultDateTimePickerConfig,
+            'allow_typing' => false,
             'attr' => [
                 'data-date-picker' => null,
                 'autocomplete' => 'off'
             ]
         ));
     }
-} 
+}
