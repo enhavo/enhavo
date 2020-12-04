@@ -11,7 +11,7 @@
         <field name="parameters" type="json_array" nullable="true" />
         <field name="lockAt" type="datetime" nullable="true" />
 
-        <many-to-one field="file" target-entity="Enhavo\Bundle\MediaBundle\Model\FileInterface">
+        <many-to-one field="file" target-entity="Enhavo\Bundle\MediaBundle\Model\FileInterface" inversed-by="formats">
             <join-column on-delete="CASCADE" />
         </many-to-one>
     </entity>
