@@ -20,6 +20,6 @@ export default class DateTimeType extends FormType
         });
 
         $.datetimepicker.setLocale('de');
-        this.$element.datetimepicker(options).attr('readonly', true);
+        this.$element.datetimepicker(options);
     }
 }

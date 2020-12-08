@@ -32,6 +32,9 @@ class DateTimeType extends AbstractType
         if (array_key_exists('data-date-time-picker', $options['attr'])) {
             $view->vars['attr']['data-date-time-picker'] = $options['config'];
         }
+        if (!$options['allow_typing']) {
+            $view->vars['attr']['readonly'] = 'readonly';
+        }
     }
 
     public function getBlockPrefix()
@@ -55,10 +58,11 @@ class DateTimeType extends AbstractType
             'widget' => 'single_text',
             'format' => 'dd.MM.yyyy HH:mm',
             'config' => $this->defaultDateTimePickerConfig,
+            'allow_typing' => false,
             'attr' => [
                 'data-date-time-picker' => null,
                 'autocomplete' => 'off'
             ]
         ));
     }
-} 
+}
