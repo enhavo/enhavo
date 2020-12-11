@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\TranslationBundle\Translation;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Locale\LocaleResolverInterface;
+use Enhavo\Bundle\AppBundle\Util\NameTransformer;
 use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface;
 use Enhavo\Bundle\TranslationBundle\Exception\TranslationException;
 use Enhavo\Bundle\TranslationBundle\Metadata\Metadata;
@@ -60,6 +61,9 @@ class TranslationManager
     /** @var string[] */
     private $translatedLocale;
 
+    /** @var NameTransformer */
+    private $nameTransformer;
+
     public function __construct(
         MetadataRepository $metadataRepository,
         FactoryInterface $factory,
@@ -84,6 +88,7 @@ class TranslationManager
         $this->translationPaths = $translationPaths;
         $this->requestStack = $requestStack;
         $this->translatedLocale = [];
+        $this->nameTransformer = new NameTransformer();
     }
 
     public function isEnabled()
@@ -141,6 +146,8 @@ class TranslationManager
 
     public function getTranslations($data, $property)
     {
+        $property = $this->nameTransformer->camelCase($property, true);
+
         $translationValues = [];
         $translation = $this->getTranslation($data, $property);
         foreach ($this->locales as $locale) {
@@ -154,6 +161,8 @@ class TranslationManager
 
     public function getProperty($resource, $property, $locale)
     {
+        $property = $this->nameTransformer->camelCase($property, true);
+
         $translation = $this->getTranslation($resource, $property);
         if ($locale === $this->getDefaultLocale()) {
             return $translation->getDefaultValue($resource, $property);
@@ -164,6 +173,8 @@ class TranslationManager
 
     public function setTranslation($data, $property, $locale, $value)
     {
+        $property = $this->nameTransformer->camelCase($property, true);
+
         $this->getTranslation($data, $property)->setTranslation($data, $property, $locale, $value);
     }
 
