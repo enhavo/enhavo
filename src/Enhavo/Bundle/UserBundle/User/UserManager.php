@@ -276,7 +276,12 @@ class UserManager
 
     public function getConfigKey(Request $request)
     {
-        return $request->attributes->get('_config');
+        $key = $request->attributes->get('_config');
+        if (is_array($key) || !isset($this->config[$key])) {
+            return null;
+        }
+
+        return $key;
     }
 
     public function getConfig($config, $action = null, $item = null, $fallback = null)
