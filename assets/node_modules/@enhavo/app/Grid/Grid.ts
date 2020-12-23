@@ -272,12 +272,28 @@ export default class Grid
             parameters = this.configuration.openRouteParameters;
         }
         parameters.id = row.id;
+
+        this.parseParameters(parameters, {
+            row: row,
+            data: row.data,
+            id: row.id,
+        });
+
         this.activateRow(row).then(() => {
             let url = this.router.generate(this.configuration.openRoute, parameters);
             this.view.open(url, 'edit-view').then((view: ViewInterface) => {
                 this.view.storeValue('active-view', view.id);
             });
         });
+    }
+
+    private parseParameters(parameters: object, context: any)
+    {
+        for (const [key, value] of Object.entries(parameters)) {
+            if (typeof value === 'string' && value.match(/^jexl:(.+)/)) {
+                parameters[key] = jexl.evalSync(value.substr(5), context);
+            }
+        }
     }
 
     public applyFilter()
