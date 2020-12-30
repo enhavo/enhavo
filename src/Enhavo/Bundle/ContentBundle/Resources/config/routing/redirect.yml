@@ -7,8 +7,9 @@ enhavo_content_redirect_index:
         _controller: enhavo_content.controller.redirect:indexAction
         _sylius:
             viewer:
+                translationDomain: EnhavoContentBundle
                 title: redirect.label.redirect
-                translation_domain: EnhavoContentBundle
+
 
 enhavo_content_redirect_create:
     options:
@@ -19,7 +20,7 @@ enhavo_content_redirect_create:
         _controller: enhavo_content.controller.redirect:createAction
         _sylius:
             viewer:
-                translation_domain: EnhavoContentBundle
+                translationDomain: EnhavoContentBundle
 
 enhavo_content_redirect_update:
     options:
@@ -30,7 +31,7 @@ enhavo_content_redirect_update:
         _controller: enhavo_content.controller.redirect:updateAction
         _sylius:
             viewer:
-                translation_domain: EnhavoContentBundle
+                translationDomain: EnhavoContentBundle
 
 enhavo_content_redirect_table:
     options:
@@ -59,9 +60,8 @@ enhavo_content_redirect_table:
                         - 302
                     label: form.label.code
                     translation_domain: EnhavoContentBundle
-
             viewer:
-                translation_domain: EnhavoContentBundle
+                translationDomain: EnhavoContentBundle
                 columns:
                     from:
                         type: text
