@@ -7,6 +7,8 @@ Enhavo\Bundle\BlockBundle\Entity\Node:
     properties:
         block:
             - Valid: ~
+        children:
+            - Valid: ~
 
 Enhavo\Bundle\BlockBundle\Entity\Video:
     properties:
