@@ -32,7 +32,7 @@ class InitManager
         $io = new Output($output);
         /** @var InitInterface $initializer */
         foreach($this->collector->getTypes() as $initializer) {
-            $io->writeln('Initalizer');
+            $io->writeln('Initializer');
             $initializer->init($io);
         }
     }
