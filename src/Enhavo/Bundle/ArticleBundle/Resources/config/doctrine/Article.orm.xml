@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
-    <entity name="Enhavo\Bundle\ArticleBundle\Entity\Article" table="article_article" repository-class="Enhavo\Bundle\CalendarBundle\Repository\AppointmentRepository">
+    <entity name="Enhavo\Bundle\ArticleBundle\Entity\Article" table="article_article" repository-class="Enhavo\Bundle\ArticleBundle\Repository\ArticleRepository">
         <field name="teaser" column="teaser" type="text" nullable="true" />
 
         <one-to-one field="picture" target-entity="Enhavo\Bundle\MediaBundle\Model\FileInterface" orphan-removal="true">
