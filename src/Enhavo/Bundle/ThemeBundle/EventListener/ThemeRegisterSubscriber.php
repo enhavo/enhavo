@@ -10,6 +10,8 @@ namespace Enhavo\Bundle\ThemeBundle\EventListener;
 
 use Enhavo\Bundle\AppBundle\Template\TemplateManager;
 use Enhavo\Bundle\ThemeBundle\Theme\ThemeManager;
+use Symfony\Component\Console\ConsoleEvents;
+use Symfony\Component\Console\Event\ConsoleCommandEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -40,6 +42,9 @@ class ThemeRegisterSubscriber implements EventSubscriberInterface
             KernelEvents::REQUEST => [
                 ['onRequest', 10]
             ],
+            ConsoleEvents::COMMAND => [
+                ['onConsoleCommand', 10]
+            ]
         ];
     }
 
@@ -47,6 +52,17 @@ class ThemeRegisterSubscriber implements EventSubscriberInterface
      * @param RequestEvent $event
      */
     public function onRequest(RequestEvent $event)
+    {
+        $path = $this->themeManager->getTheme()->getTemplate()->getPath();
+        if($path !== null) {
+            $this->templateManager->registerPath($path, 200);
+        }
+    }
+
+    /**
+     * @param ConsoleCommandEvent $event
+     */
+    public function onConsoleCommand(ConsoleCommandEvent $event)
     {
         $path = $this->themeManager->getTheme()->getTemplate()->getPath();
         if($path !== null) {
