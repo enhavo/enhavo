@@ -2,8 +2,8 @@
 
 namespace Enhavo\Bundle\TaxonomyBundle\Form\Type;
 
-use Enhavo\Bundle\AppBundle\Filter\Type\EntityType;
 use Enhavo\Bundle\TaxonomyBundle\Repository\TermRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
