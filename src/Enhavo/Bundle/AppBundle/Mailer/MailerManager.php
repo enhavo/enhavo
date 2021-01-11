@@ -114,7 +114,10 @@ class MailerManager
 
         foreach ($message->getAttachments() as $attachment) {
             if ($attachment instanceof FileInterface) {
-                $swiftMessage->attach(Swift_Attachment::fromPath($attachment->getFilename()));
+                $swiftMessage->attach(
+                    Swift_Attachment::fromPath($attachment->getContent()->getFilePath())
+                        ->setFilename($attachment->getFilename())
+                );
             } else if ($attachment instanceof File) {
                 $swiftMessage->attach(Swift_Attachment::fromPath($attachment->getRealPath()));
             } else {
