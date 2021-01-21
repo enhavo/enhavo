@@ -1,5 +1,5 @@
 <template>
-    <div class="grid">
+    <div v-bind:class="['grid', $list.data.cssClass]">
         <div class="view-table">
             <div class="view-table-head">
                 <div class="view-table-head-columns">

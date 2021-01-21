@@ -17,4 +17,5 @@ export default class ListData
     public parentProperty: string;
     public expanded: boolean;
     public sortable: boolean;
+    public cssClass: string;
 }

@@ -1,6 +1,6 @@
 <template>
     <div class="app-view">
-        <div class="form-view">
+        <div v-bind:class="['form-view', $form.data.cssClass]">
             <view-view></view-view>
             <modal-component></modal-component>
             <flash-messages></flash-messages>
