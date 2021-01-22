@@ -31,7 +31,8 @@ class TextType extends AbstractColumnType
         $data = array_merge($data, [
             'property' => $options['property'],
             'sortingProperty' => ($options['sortingProperty'] ? $options['sortingProperty'] : $options['property']),
-            'wrap' => $options['wrap']
+            'wrap' => $options['wrap'],
+            'whitespace' => $options['whitespace']
         ]);
 
         return $data;
@@ -44,7 +45,8 @@ class TextType extends AbstractColumnType
             'component' => 'column-text',
             'sortingProperty' => null,
             'wrap' => true,
-            'strip_tags' => false
+            'strip_tags' => false,
+            'whitespace' => 'normal'
         ]);
         $resolver->setRequired(['property']);
     }
