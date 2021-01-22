@@ -218,7 +218,7 @@
 {%- endblock form_errors -%}
 
 {% block head_line_widget %}
-    <div class="head-line-widget">
+    <div class="head-line-widget" {{ block('attributes') }}>
         {% spaceless %}
             <div class="head-line-widget-text">
                 {{ form_widget(form.text) }}
