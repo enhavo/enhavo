@@ -19,14 +19,14 @@ class AppointmentController extends AbstractController
 
     public function showAction(Request $request)
     {
-        $article = $this->get('enhavo_calendar.repository.appointment')->findOneBy([
+        $appointment = $this->get('enhavo_calendar.repository.appointment')->findOneBy([
             'slug' => $request->get('slug')
         ]);
 
-        if($article === null) {
-            $this->createNotFoundException();
+        if($appointment === null) {
+            throw $this->createNotFoundException();
         }
 
-        return $this->showResourceAction($article);
+        return $this->showResourceAction($appointment);
     }
 }
