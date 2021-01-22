@@ -147,6 +147,7 @@ class IndexViewer extends AppViewer
             'paginationSteps' => [
                 5, 10, 50, 100, 500
             ],
+            'cssClass' => $this->getViewerOption('css_class', $requestConfiguration)
         ];
 
         $parameters->set('data', [

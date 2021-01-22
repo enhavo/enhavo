@@ -107,7 +107,8 @@ class ListViewer extends AppViewer
             'positionProperty' => $positionProperty,
             'parentProperty' => $parentProperty,
             'expanded' => $expanded,
-            'sortable' => $dataConfiguration->isSortable()
+            'sortable' => $dataConfiguration->isSortable(),
+            'cssClass' => $this->getViewerOption('css_class', $requestConfiguration)
         ];
 
         $parameters->set('data', [
