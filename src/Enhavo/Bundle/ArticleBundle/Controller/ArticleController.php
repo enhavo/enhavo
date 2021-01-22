@@ -44,7 +44,7 @@ class ArticleController extends AbstractController
         ]);
 
         if($article === null) {
-            $this->createNotFoundException();
+            throw $this->createNotFoundException();
         }
 
         return $this->showResourceAction($article, $request);
