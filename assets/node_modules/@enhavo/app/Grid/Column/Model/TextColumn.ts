@@ -5,4 +5,5 @@ export default class TextColumn extends AbstractColumn
     property: string;
     sortingProperty: string;
     wrap: boolean;
+    whitespace: string;
 }

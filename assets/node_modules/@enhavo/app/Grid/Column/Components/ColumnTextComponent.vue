@@ -1,7 +1,5 @@
 <template>
-    <div :class="{'view-table-col-text': true, 'text-wrap': column.wrap}">
-        {{ data }}
-    </div>
+    <div :class="{'view-table-col-text': true, 'text-wrap': column.wrap}" :style="{'white-space': column.whitespace}">{{ data }}</div>
 </template>
 
 <script lang="ts">
