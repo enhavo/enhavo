@@ -26,4 +26,5 @@ export default class GridConfiguration implements BatchDataInterface
     public selectAll: boolean = false;
     public showFilter: boolean = false;
     public pages: Array<number> = [];
+    public cssClass: string;
 }

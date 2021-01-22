@@ -132,7 +132,8 @@ class CreateViewer extends BaseViewer
             'view' => [
                 'id' => $this->getViewId(),
                 'label' => $this->container->get('translator')->trans($label, [], $parameters->get('translation_domain'))
-            ]
+            ],
+            'cssClass' => $this->getViewerOption('css_class', $requestConfiguration)
         ]);
     }
 
