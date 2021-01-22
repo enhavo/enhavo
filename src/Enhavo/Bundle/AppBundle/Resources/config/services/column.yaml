@@ -9,6 +9,7 @@ services:
         class: Enhavo\Bundle\AppBundle\Column\ColumnManager
         arguments:
             - '@enhavo_app.column_collector'
+            - '@security.authorization_checker'
 
     Enhavo\Bundle\AppBundle\Column\Type\ListType:
         public: true

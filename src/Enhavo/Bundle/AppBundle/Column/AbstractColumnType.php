@@ -20,6 +20,7 @@ abstract class AbstractColumnType extends AbstractType implements ColumnTypeInte
             'component' => $options['component'],
             'sortable' => isset($options['sortable']) ? $options['sortable'] : false,
             'condition' => $options['condition'],
+            'permission' => $options['permission']
         ];
 
         return $data;
@@ -49,7 +50,8 @@ abstract class AbstractColumnType extends AbstractType implements ColumnTypeInte
             'translation_domain' => null,
             'width' => 1,
             'sortable' => false,
-            'condition' => null
+            'condition' => null,
+            'permission' => null
         ]);
     }
 }
