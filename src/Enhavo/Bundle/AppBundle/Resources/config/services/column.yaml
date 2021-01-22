@@ -26,6 +26,7 @@ services:
 
     Enhavo\Bundle\AppBundle\Column\Type\MultiplePropertyType:
         public: true
+        calls:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.column, alias: multiple_property }
