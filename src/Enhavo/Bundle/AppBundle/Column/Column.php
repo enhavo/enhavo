@@ -45,4 +45,9 @@ class Column
     {
         return $this->type->createResourceViewData($this->options, $resource);
     }
+
+    public function getPermission()
+    {
+        return isset($this->options['permission']) ? $this->options['permission'] : null;
+    }
 }
