@@ -11,6 +11,7 @@ namespace Enhavo\Bundle\AppBundle\Column;
 use Enhavo\Bundle\AppBundle\Exception\TypeMissingException;
 use Enhavo\Bundle\AppBundle\Type\TypeCollector;
 use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class ColumnManager
 {
@@ -20,6 +21,11 @@ class ColumnManager
     private $collector;
 
     /**
+     * @var AuthorizationCheckerInterface
+     */
+    private $checker;
+
+    /**
      * @var \Symfony\Component\PropertyAccess\PropertyAccessor
      */
     private $propertyAccessor;
@@ -27,10 +33,12 @@ class ColumnManager
     /**
      * ActionManager constructor.
      * @param TypeCollector $collector
+     * @param AuthorizationCheckerInterface $checker
      */
-    public function __construct(TypeCollector $collector)
+    public function __construct(TypeCollector $collector, AuthorizationCheckerInterface $checker)
     {
         $this->collector = $collector;
+        $this->checker = $checker;
         $this->propertyAccessor = PropertyAccess::createPropertyAccessor();
     }
 
@@ -39,6 +47,11 @@ class ColumnManager
         $data = [];
         foreach($configuration as $name => $options) {
             $column = $this->createColumn($options);
+
+            if($column->getPermission() !== null && !$this->checker->isGranted($column->getPermission())) {
+                continue;
+            }
+
             $columnData = $column->createColumnViewData();
             $columnData['key'] = $name;
             $data[] = $columnData;
@@ -99,7 +112,7 @@ class ColumnManager
         /** @var ColumnTypeInterface $type */
         $type = $this->collector->getType($options['type']);
         unset($options['type']);
-        $action = new Column($type, $options);
-        return $action;
+        $column = new Column($type, $options);
+        return $column;
     }
 }
