@@ -11,5 +11,5 @@ namespace Enhavo\Component\Type;
 
 interface FactoryInterface
 {
-    public function create(array $options);
+    public function create(array $options, $key = null);
 }

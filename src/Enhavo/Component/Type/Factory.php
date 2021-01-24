@@ -26,10 +26,11 @@ class Factory implements FactoryInterface
 
     /**
      * @param array $options
+     * @param string|null $key
      * @throws TypeCreateException
      * @return object
      */
-    public function create(array $options)
+    public function create(array $options, $key = null)
     {
         if(!isset($options['type'])) {
             throw TypeCreateException::missionOption($this->class, $options);
@@ -38,7 +39,7 @@ class Factory implements FactoryInterface
         $type = $this->registry->getType($options['type']);
         $parents = $this->getParents($type);
         unset($options['type']);
-        $class = new $this->class($type, $parents, $options);
+        $class = new $this->class($type, $parents, $options, $key);
         return $class;
     }
 
