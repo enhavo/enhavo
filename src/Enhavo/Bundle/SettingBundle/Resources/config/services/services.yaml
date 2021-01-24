@@ -1,0 +1,40 @@
+services:
+    Enhavo\Bundle\SettingBundle\Setting\SettingManager:
+        arguments:
+            - '@Enhavo\Component\Type\FactoryInterface[Setting]'
+            - '%enhavo_setting.settings%'
+
+    Enhavo\Bundle\SettingBundle\Menu\SettingMenu:
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
+        tags:
+            - { name: enhavo.menu, alias: setting }
+
+    Enhavo\Bundle\SettingBundle\Init\InitSetting:
+        public: true
+        arguments:
+            - '@doctrine.orm.default_entity_manager'
+            - '@Enhavo\Bundle\SettingBundle\Setting\SettingManager'
+        tags:
+            - { name: enhavo.init, alias: 'setting' }
+
+    enhavo_setting.form.setting:
+        class: Enhavo\Bundle\SettingBundle\Form\Type\SettingType
+        arguments:
+            - '@translator'
+        tags:
+            - { name: form.type }
+
+    Enhavo\Bundle\SettingBundle\Form\Type\ValueType:
+        arguments:
+            - '@Enhavo\Bundle\SettingBundle\Setting\SettingManager'
+        tags:
+            - { name: form.type }
+
+    Enhavo\Bundle\SettingBundle\Column\SettingColumnType:
+        public: true
+        arguments:
+            - '@Enhavo\Bundle\SettingBundle\Setting\SettingManager'
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.column, alias: setting }

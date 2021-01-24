@@ -2,6 +2,13 @@
 
 namespace Enhavo\Bundle\SettingBundle\DependencyInjection;
 
+use Enhavo\Bundle\AppBundle\Controller\ResourceController;
+use Enhavo\Bundle\AppBundle\Factory\Factory;
+use Enhavo\Bundle\SettingBundle\Controller\SettingController;
+use Enhavo\Bundle\SettingBundle\Entity\Setting;
+use Enhavo\Bundle\SettingBundle\Form\Type\SettingType;
+use Enhavo\Bundle\SettingBundle\Repository\SettingRepository;
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -20,22 +27,26 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder('enhavo_setting');
         $rootNode = $treeBuilder->getRootNode();
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
-        $rootNode
-            // Driver used by the resource bundle
+        $this->addDriverSection($rootNode);
+        $this->addResourceSection($rootNode);
+        $this->addGroupsSection($rootNode);
+        $this->addSettingsSection($rootNode);
+
+        return $treeBuilder;
+    }
+
+    private function addDriverSection(ArrayNodeDefinition $node)
+    {
+        $node
             ->children()
                ->scalarNode('driver')->defaultValue('doctrine/orm')->end()
             ->end()
+        ;
+    }
 
-            ->children()
-                ->arrayNode('providers')
-                ->prototype('scalar')->end()
-                    ->defaultValue(array("enhavo_setting.provider.database_provider", "enhavo_setting.provider.parameter_provider"))
-                ->end()
-            ->end()
-
+    private function addResourceSection(ArrayNodeDefinition $node)
+    {
+        $node
             ->children()
                 ->arrayNode('resources')
                     ->addDefaultsIfNotSet()
@@ -47,11 +58,11 @@ class Configuration implements ConfigurationInterface
                                 ->arrayNode('classes')
                                     ->addDefaultsIfNotSet()
                                     ->children()
-                                        ->scalarNode('model')->defaultValue('Enhavo\Bundle\SettingBundle\Entity\Setting')->end()
-                                        ->scalarNode('controller')->defaultValue('Enhavo\Bundle\AppBundle\Controller\ResourceController')->end()
-                                        ->scalarNode('repository')->defaultValue('Enhavo\Bundle\SettingBundle\Repository\SettingRepository')->end()
-                                        ->scalarNode('factory')->defaultValue('Sylius\Component\Resource\Factory\Factory')->end()
-                                        ->scalarNode('form')->defaultValue('Enhavo\Bundle\SettingBundle\Form\Type\SettingType')->cannotBeEmpty()->end()
+                                        ->scalarNode('model')->defaultValue(Setting::class)->end()
+                                        ->scalarNode('controller')->defaultValue(SettingController::class)->end()
+                                        ->scalarNode('repository')->defaultValue(SettingRepository::class)->end()
+                                        ->scalarNode('factory')->defaultValue(Factory::class)->end()
+                                        ->scalarNode('form')->defaultValue(SettingType::class)->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
                             ->end()
@@ -59,9 +70,27 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end()
-
         ;
+    }
 
-        return $treeBuilder;
+    private function addGroupsSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->variableNode('groups')->defaultValue([])->end()
+            ->end()
+        ;
+    }
+
+    private function addSettingsSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('settings')
+                    ->useAttributeAsKey('name')
+                    ->prototype('variable')->end()
+                ->end()
+            ->end()
+        ;
     }
 }

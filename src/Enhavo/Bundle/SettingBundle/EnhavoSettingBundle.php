@@ -2,9 +2,10 @@
 
 namespace Enhavo\Bundle\SettingBundle;
 
-use Enhavo\Bundle\SettingBundle\DependencyInjection\Compiler\ConfigCompilerPass;
-use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Enhavo\Bundle\SettingBundle\Setting\Setting;
+use Enhavo\Component\Type\TypeCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class EnhavoSettingBundle extends Bundle
 {
@@ -16,6 +17,9 @@ class EnhavoSettingBundle extends Bundle
     public function build(ContainerBuilder $container)
     {
         parent::build($container);
-//        $container->addCompilerPass(new ConfigCompilerPass($this->kernel));
+
+        $container->addCompilerPass(
+            new TypeCompilerPass('Setting', 'enhavo_setting.setting', Setting::class)
+        );
     }
 }

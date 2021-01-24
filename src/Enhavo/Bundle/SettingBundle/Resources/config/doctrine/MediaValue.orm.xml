@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="Enhavo\Bundle\SettingBundle\Entity\MediaValue" table="setting_media_value">
+        <id name="id" type="integer" column="id">
+            <generator />
+        </id>
+
+        <field name="multiple" type="boolean" />
+
+        <many-to-one field="setting" target-entity="Enhavo\Bundle\SettingBundle\Entity\Setting" >
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+            <join-column on-delete="CASCADE" />
+        </many-to-one>
+
+        <one-to-one field="file" target-entity="Enhavo\Bundle\MediaBundle\Model\FileInterface" orphan-removal="true">
+            <cascade>
+                <cascade-persist />
+                <cascade-remove />
+                <cascade-refresh />
+            </cascade>
+        </one-to-one>
+
+        <many-to-many field="files" target-entity="Enhavo\Bundle\MediaBundle\Model\FileInterface">
+            <cascade>
+                <cascade-persist />
+                <cascade-remove />
+                <cascade-refresh />
+            </cascade>
+            <join-table name="setting_media_value_files">
+                <join-columns>
+                    <join-column name="file_value_id" on-delete="CASCADE" />
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="file_id" on-delete="CASCADE" />
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
+    </entity>
+</doctrine-mapping>

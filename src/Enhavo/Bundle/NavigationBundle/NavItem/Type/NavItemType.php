@@ -9,10 +9,10 @@
 namespace Enhavo\Bundle\NavigationBundle\NavItem\Type;
 
 use Enhavo\Bundle\NavigationBundle\NavItem\NavItemTypeInterface;
-use Enhavo\Component\Type\TypeInterface;
+use Enhavo\Component\Type\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class NavItemType implements NavItemTypeInterface
+class NavItemType extends AbstractType implements NavItemTypeInterface
 {
     public function getModel($options)
     {
@@ -52,21 +52,6 @@ class NavItemType implements NavItemTypeInterface
     public function render($options)
     {
         return '';
-    }
-
-    public static function getName(): ?string
-    {
-        return null;
-    }
-
-    public static function getParentType(): ?string
-    {
-        return null;
-    }
-
-    public function setParent(TypeInterface $parent)
-    {
-
     }
 
     public function configureOptions(OptionsResolver $resolver)
