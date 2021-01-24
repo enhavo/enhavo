@@ -1,0 +1,48 @@
+services:
+    Enhavo\Bundle\SettingBundle\Setting\Type\BooleanSettingType:
+        tags:
+            - enhavo_setting.setting
+
+    Enhavo\Bundle\SettingBundle\Setting\Type\CurrencySettingType:
+        arguments:
+            - '@Enhavo\Bundle\FormBundle\Formatter\CurrencyFormatter'
+        tags:
+            - enhavo_setting.setting
+
+    Enhavo\Bundle\SettingBundle\Setting\Type\DateTimeSettingType:
+        tags:
+            - enhavo_setting.setting
+
+    Enhavo\Bundle\SettingBundle\Setting\Type\EntitySettingType:
+        arguments:
+            - '@enhavo_setting.repository.setting'
+            - '@enhavo_setting.factory.setting'
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - enhavo_setting.setting
+
+    Enhavo\Bundle\SettingBundle\Setting\Type\MediaSettingType:
+        arguments:
+            - '@enhavo_media.factory.file'
+        tags:
+            - enhavo_setting.setting
+
+    Enhavo\Bundle\SettingBundle\Setting\Type\ParameterSettingType:
+        tags:
+            - enhavo_setting.setting
+
+    Enhavo\Bundle\SettingBundle\Setting\Type\TextSettingType:
+        tags:
+            - enhavo_setting.setting
+
+    Enhavo\Bundle\SettingBundle\Setting\Type\IntegerSettingType:
+        tags:
+            - enhavo_setting.setting
+
+    Enhavo\Bundle\SettingBundle\Setting\Type\FloatSettingType:
+        tags:
+            - enhavo_setting.setting
+
+    Enhavo\Bundle\SettingBundle\Setting\Type\StringSettingType:
+        tags:
+            - enhavo_setting.setting

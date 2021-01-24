@@ -28,8 +28,8 @@ enhavo_app:
             type: template
         theme:
             type: theme
-#        settings:
-#            type: setting
+        settings:
+            type: setting
 
 enhavo_block:
     blocks:

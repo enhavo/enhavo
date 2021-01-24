@@ -9,11 +9,20 @@ enhavo_setting_setting_index:
             viewer:
                 title: label.setting
                 translation_domain: EnhavoSettingBundle
+                table_route_parameters:
+                    group: $group
                 actions:
                     create:
                         type: create
                         hidden: true
                         route: ~
+
+enhavo_setting_setting_edit:
+    options:
+        expose: true
+    path: /enhavo/setting/setting/edit
+    defaults:
+        _controller: enhavo_setting.controller.setting:editAction
 
 enhavo_setting_setting_update:
     options:
@@ -43,6 +52,8 @@ enhavo_setting_setting_table:
         page: 1
         _controller: enhavo_setting.controller.setting:tableAction
         _sylius:
+            criteria:
+                group: $group
             viewer:
                 translation_domain: EnhavoSettingBundle
                 columns:
@@ -52,7 +63,6 @@ enhavo_setting_setting_table:
                         label: setting.label.label
                         width: 6
                     value:
-                        type: text
-                        property: value
+                        type: setting
                         label: setting.label.value
                         width: 6

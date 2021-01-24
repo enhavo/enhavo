@@ -40,7 +40,7 @@ class BaseMenu extends AbstractMenu
 
     public function createViewData(array $options)
     {
-        $url = $this->router->generate($options['route']);
+        $url = $this->router->generate($options['route'], $options['route_parameters']);
         $data = [
             'label' => $this->translator->trans($options['label'], [], $options['translation_domain']),
             'url' => $url,
@@ -88,7 +88,8 @@ class BaseMenu extends AbstractMenu
             'notification_class' => null,
             'notification_label' => null,
             'notification_icon' => null,
-            'notification_info' => null
+            'notification_info' => null,
+            'route_parameters' => [],
         ]);
 
         $resolver->setRequired([
