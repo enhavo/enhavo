@@ -56,6 +56,11 @@ class EntitySettingType extends AbstractSettingType implements SettingTypeInterf
 
     }
 
+    public function getFormTypeOptions(array $options)
+    {
+        return $options['form_options'];
+    }
+
     public function getValue(array $options)
     {
         /** @var SettingEntity $settingEntity */
@@ -79,7 +84,8 @@ class EntitySettingType extends AbstractSettingType implements SettingTypeInterf
             'translation_domain' => null,
             'group' => null,
             'default' => null,
-            'label' => null
+            'label' => null,
+            'form_options' => []
         ]);
     }
 }
