@@ -3,7 +3,6 @@
 namespace Enhavo\Bundle\SettingBundle\DependencyInjection;
 
 use Sylius\Bundle\ResourceBundle\DependencyInjection\Extension\AbstractResourceExtension;
-use Sylius\Component\Resource\Factory;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
@@ -24,9 +23,14 @@ class EnhavoSettingExtension extends AbstractResourceExtension implements Prepen
     {
         $config = $this->processConfiguration(new Configuration(), $config);
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+
+        $container->setParameter('enhavo_setting.settings', $config['settings'] ?? []);
+        $container->setParameter('enhavo_setting.groups', $config['groups'] ?? []);
+
         $this->registerResources('enhavo_setting', $config['driver'], $config['resources'], $container);
         $configFiles = array(
-            'services.yaml',
+            'services/services.yaml',
+            'services/setting.yaml',
         );
         foreach ($configFiles as $configFile) {
             $loader->load($configFile);

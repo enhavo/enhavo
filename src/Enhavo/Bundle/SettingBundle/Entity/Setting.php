@@ -1,284 +1,177 @@
 <?php
 
 namespace Enhavo\Bundle\SettingBundle\Entity;
-use Doctrine\ORM\Mapping as ORM;
-use Enhavo\Bundle\MediaBundle\Model\FileInterface;
+
+use Enhavo\Bundle\SettingBundle\Model\ValueAccessInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
 class Setting implements ResourceInterface
 {
-    const SETTING_TYPE_TEXT = 'text';
-    const SETTING_TYPE_BOOLEAN = 'boolean';
-    const SETTING_TYPE_FILE = 'file';
-    const SETTING_TYPE_FILES = 'files';
-    const SETTING_TYPE_WYSIWYG = 'wysiwyg';
-    const SETTING_TYPE_DATE = 'date';
-    const SETTING_TYPE_DATETIME = 'datetime';
-    const SETTING_TYPE_CURRENCY = 'currency';
+    /** @var integer|null */
+    private $id;
+
+    /** @var string|null */
+    private $label;
+
+    /** @var string|null */
+    private $translationDomain;
+
+    /** @var string|null */
+    private $group;
+
+    /** @var string|null */
+    private $key;
+
+    /** @var ValueAccessInterface|null */
+    private $value;
+
+    /** @var integer|null */
+    private $valueId;
+
+    /** @var string|null */
+    private $valueClass;
+
+    /** @var int|null */
+    private $position;
 
     /**
-     * @var integer
+     * @return int|null
      */
-    protected $id;
-
-    /**
-     * @var string
-     */
-    protected $label;
-
-    /**
-     * @var string
-     */
-    protected $key;
-
-    /**
-     * @var string
-     */
-    protected $type;
-
-    /**
-     * @var mixed
-     */
-    protected $value;
-
-    /**
-     * @var string
-     */
-    protected $translationDomain;
-
-    /**
-     * Pointing to one file
-     *
-     * @var FileInterface
-     */
-    protected $file;
-
-    /**
-     * Pointing to a collection of files
-     *
-     * @var \Doctrine\Common\Collections\ArrayCollection
-     */
-    protected $files;
-
-    /**
-     * @var \DateTime
-     */
-    private $date;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->files = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
     /**
-     * Set label
-     *
-     * @param string $label
-     *
-     * @return Setting
+     * @return string|null
      */
-    public function setLabel($label)
-    {
-        $this->label = $label;
-
-        return $this;
-    }
-
-    /**
-     * Get label
-     *
-     * @return string
-     */
-    public function getLabel()
+    public function getLabel(): ?string
     {
         return $this->label;
     }
 
     /**
-     * Set key
-     *
-     * @param string $key
-     *
-     * @return Setting
+     * @param string|null $label
      */
-    public function setKey($key)
+    public function setLabel(?string $label): void
     {
-        $this->key = $key;
-
-        return $this;
+        $this->label = $label;
     }
 
     /**
-     * Get key
-     *
-     * @return string
+     * @return string|null
      */
-    public function getKey()
+    public function getKey(): ?string
     {
         return $this->key;
     }
 
     /**
-     * Set type
-     *
-     * @param string $type
-     *
-     * @return Setting
+     * @param string|null $key
      */
-    public function setType($type)
+    public function setKey(?string $key): void
     {
-        $this->type = $type;
-
-        return $this;
+        $this->key = $key;
     }
 
     /**
-     * Get type
-     *
-     * @return string
+     * @return ValueAccessInterface|null
      */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * Set value
-     *
-     * @param string $value
-     *
-     * @return Setting
-     */
-    public function setValue($value)
-    {
-        $this->value = $value;
-
-        return $this;
-    }
-
-    /**
-     * Get value
-     *
-     * @return string
-     */
-    public function getValue()
+    public function getValue(): ?object
     {
         return $this->value;
     }
 
     /**
-     * Set file
-     *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File $file
-     *
-     * @return Setting
+     * @param object|null $value
      */
-    public function setFile(\Enhavo\Bundle\MediaBundle\Model\FileInterface $file = null)
+    public function setValue(?object $value): void
     {
-        $this->file = $file;
-
-        return $this;
+        $this->value = $value;
     }
 
     /**
-     * Get file
-     *
-     * @return \Enhavo\Bundle\MediaBundle\Entity\File
+     * @return int|null
      */
-    public function getFile()
+    public function getValueId(): ?int
     {
-        return $this->file;
+        return $this->valueId;
     }
 
     /**
-     * Add file
-     *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File $file
-     *
-     * @return Setting
+     * @param int|null $valueId
      */
-    public function addFile(\Enhavo\Bundle\MediaBundle\Entity\File $file)
+    public function setValueId(?int $valueId): void
     {
-        $this->files[] = $file;
-
-        return $this;
+        $this->valueId = $valueId;
     }
 
     /**
-     * Remove file
-     *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File $file
+     * @return string|null
      */
-    public function removeFile(\Enhavo\Bundle\MediaBundle\Entity\File $file)
+    public function getValueClass(): ?string
     {
-        $this->files->removeElement($file);
+        return $this->valueClass;
     }
 
     /**
-     * Get files
-     *
-     * @return \Doctrine\Common\Collections\Collection
+     * @param string|null $valueClass
      */
-    public function getFiles()
+    public function setValueClass(?string $valueClass): void
     {
-        return $this->files;
-    }
-
-    public function setFiles($files)
-    {
-        $this->files = $files;
+        $this->valueClass = $valueClass;
     }
 
     /**
-     * Set translationDomain
-     *
-     * @param string $translationDomain
-     *
-     * @return Setting
+     * @return string|null
      */
-    public function setTranslationDomain($translationDomain)
-    {
-        $this->translationDomain = $translationDomain;
-
-        return $this;
-    }
-
-    /**
-     * Get translationDomain
-     *
-     * @return string
-     */
-    public function getTranslationDomain()
+    public function getTranslationDomain(): ?string
     {
         return $this->translationDomain;
     }
 
     /**
-     * @return \DateTime
+     * @param string|null $translationDomain
      */
-    public function getDate()
+    public function setTranslationDomain(?string $translationDomain): void
     {
-        return $this->date;
+        $this->translationDomain = $translationDomain;
     }
 
     /**
-     * @param \DateTime $date
+     * @return int|null
      */
-    public function setDate($date)
+    public function getPosition(): ?int
     {
-        $this->date = $date;
+        return $this->position;
+    }
+
+    /**
+     * @param int|null $position
+     */
+    public function setPosition(?int $position): void
+    {
+        $this->position = $position;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getGroup(): ?string
+    {
+        return $this->group;
+    }
+
+    /**
+     * @param string|null $group
+     */
+    public function setGroup(?string $group): void
+    {
+        $this->group = $group;
+    }
+
+    public function __clone()
+    {
+        $this->id = null;
     }
 }

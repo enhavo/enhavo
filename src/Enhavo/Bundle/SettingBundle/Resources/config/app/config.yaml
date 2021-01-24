@@ -3,6 +3,8 @@ enhavo_app:
         enhavo_setting:
             path: '@EnhavoSettingBundle/Resources/views'
             priority: 10
+    form_themes:
+        - '@EnhavoSetting/admin/form/setting/fields.html.twig'
     roles:
         enhavo_setting_setting_index:
             role: ROLE_ENHAVO_SETTING_SETTING_INDEX
@@ -12,3 +14,12 @@ enhavo_app:
             role: ROLE_ENHAVO_SETTING_SETTING_UPDATE
             label: setting.role.label.update
             translation_domain: EnhavoSettingBundle
+
+
+enhavo_doctrine_extension:
+    metadata:
+        Enhavo\Bundle\SettingBundle\Entity\Setting:
+            reference:
+                value:
+                    idField: valueId
+                    nameField: valueClass

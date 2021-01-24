@@ -8,44 +8,70 @@
 
 namespace Enhavo\Bundle\SettingBundle\Setting;
 
-use Enhavo\Bundle\SettingBundle\Provider\ProviderInterface;
+use Enhavo\Bundle\SettingBundle\Exception\SettingNotExists;
+use Enhavo\Bundle\SettingBundle\Model\ValueAccessInterface;
+use Enhavo\Component\Type\FactoryInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class SettingManager
 {
-    /**
-     * @var ProviderInterface
-     */
-    private $databaseProvider;
+    /** @var Setting[] */
+    private $settings = [];
 
-    /**
-     * @var ProviderInterface
-     */
-    private $parameterProvider;
+    /** @var array */
+    private $settingConfig;
 
-    public function __construct(ProviderInterface $databaseProvider, ProviderInterface $parameterProvider)
+    /** @var FactoryInterface */
+    private $factory;
+
+    public function __construct(FactoryInterface $factory, array $settingConfig)
     {
-        $this->databaseProvider = $databaseProvider;
-        $this->parameterProvider = $parameterProvider;
+        $this->settingConfig = $settingConfig;
+        $this->factory = $factory;
     }
 
     public function getSetting($key)
     {
-        if($this->databaseProvider->hasSetting($key)) {
-            return $this->databaseProvider->getSetting($key);
-        }
-        if($this->parameterProvider->hasSetting($key)) {
-            return $this->parameterProvider->getSetting($key);
-        }
-        return null;
+        return $this->getOrCreateSetting($key);
     }
 
-    public function setSetting($key, $value)
+    public function getValue($key)
     {
-        if($this->databaseProvider->hasSetting($key)) {
-            $this->databaseProvider->setSetting($key, $value);
+        return $this->getOrCreateSetting($key)->getValue();
+    }
+
+    public function getKeys()
+    {
+        return array_keys($this->settingConfig);
+    }
+
+    private function getOrCreateSetting($key)
+    {
+        if (array_key_exists($key, $this->settings)) {
+            return $this->settings[$key];
         }
-        if($this->parameterProvider->hasSetting($key)) {
-            $this->parameterProvider->setSetting($key, $value);
+
+        if (!array_key_exists($key, $this->settingConfig)) {
+            throw new SettingNotExists();
         }
+
+        $setting = $this->factory->create($this->settingConfig[$key], $key);
+        $this->settings[$key] = $setting;
+        return $setting;
+    }
+
+    public function getFormType($key)
+    {
+        return $this->getOrCreateSetting($key)->getFormType();
+    }
+
+    public function getFormTypeOptions($key)
+    {
+        return $this->getOrCreateSetting($key)->getFormTypeOptions();
+    }
+
+    public function getViewValue($key, ValueAccessInterface $value)
+    {
+        return $this->getOrCreateSetting($key)->getViewValue($value);
     }
 }
