@@ -1,6 +1,5 @@
 <template>
     <div v-bind:class="['grid', $grid.configuration.cssClass]">
-        <p>Totenkopf</p>
         <filter-bar v-if="$grid.isFilterOn()"></filter-bar>
         <grid-pagination v-if="$grid.hasPagination()"></grid-pagination>
         <grid-table></grid-table>
