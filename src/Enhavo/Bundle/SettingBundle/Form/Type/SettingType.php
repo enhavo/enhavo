@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\SettingBundle\Form\Type;
 
 use Enhavo\Bundle\SettingBundle\Entity\Setting;
+use Enhavo\Bundle\SettingBundle\Setting\SettingManager;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -21,13 +22,17 @@ class SettingType extends AbstractType
     /** @var TranslatorInterface */
     private $translator;
 
+    /** @var SettingManager */
+    private $settingManager;
+
     /**
      * SettingType constructor.
      * @param TranslatorInterface $translator
      */
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(TranslatorInterface $translator, SettingManager $settingManager)
     {
         $this->translator = $translator;
+        $this->settingManager = $settingManager;
     }
 
     /**
@@ -38,7 +43,10 @@ class SettingType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $translator = $this->translator;
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use($translator)
+        $settingManager = $this->settingManager;
+
+
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use($translator, $settingManager)
         {
             $form = $event->getForm();
             /** @var Setting $settingEntity */
@@ -52,9 +60,11 @@ class SettingType extends AbstractType
                 ]
             ]);
 
-            $form->add('value', ValueType::class, [
-                'key' => $settingEntity->getKey()
-            ]);
+            $form->add(
+                'value',
+                $settingManager->getFormType($settingEntity->getKey()),
+                $settingManager->getFormTypeOptions($settingEntity->getKey())
+            );
         });
     }
 }

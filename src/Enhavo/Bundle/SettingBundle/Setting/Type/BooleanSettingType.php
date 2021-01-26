@@ -5,14 +5,28 @@ namespace Enhavo\Bundle\SettingBundle\Setting\Type;
 use Enhavo\Bundle\FormBundle\Form\Type\BooleanType;
 use Enhavo\Bundle\SettingBundle\Entity\BasicValue;
 use Enhavo\Bundle\SettingBundle\Setting\AbstractSettingType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class BooleanSettingType
  * @package Enhavo\Bundle\SettingBundle\Setting\Type
- * @property EntitySettingType $parent
+ * @property ValueAccessSettingType $parent
  */
 class BooleanSettingType extends AbstractSettingType
 {
+    /** @var TranslatorInterface */
+    private $translator;
+
+    /**
+     * BooleanSettingType constructor.
+     * @param TranslatorInterface $translator
+     */
+    public function __construct(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
+
     public function init(array $options)
     {
         $settingEntity = $this->parent->getSettingEntity($options);
@@ -24,9 +38,19 @@ class BooleanSettingType extends AbstractSettingType
         }
     }
 
-    public function getFormType(array $options)
+    public function getViewValue(array $options, $value)
     {
-        return BooleanType::class;
+        if ($value && $value->getValue()) {
+            return $this->translator->trans('label.yes', [], 'EnhavoAppBundle');
+        }
+        return $this->translator->trans('label.no', [], 'EnhavoAppBundle');
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+           'form_type' => BooleanType::class
+        ]);
     }
 
     public static function getName(): ?string
@@ -36,6 +60,6 @@ class BooleanSettingType extends AbstractSettingType
 
     public static function getParentType(): ?string
     {
-        return EntitySettingType::class;
+        return ValueAccessSettingType::class;
     }
 }

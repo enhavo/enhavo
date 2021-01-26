@@ -7,14 +7,13 @@ use Enhavo\Bundle\MediaBundle\Factory\FileFactory;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\SettingBundle\Entity\MediaValue;
-use Enhavo\Bundle\SettingBundle\Model\ValueAccessInterface;
 use Enhavo\Bundle\SettingBundle\Setting\AbstractSettingType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class MediaSettingType
  * @package Enhavo\Bundle\SettingBundle\Setting\Type
- * @property EntitySettingType $parent
+ * @property ValueAccessSettingType $parent
  */
 class MediaSettingType extends AbstractSettingType
 {
@@ -51,7 +50,7 @@ class MediaSettingType extends AbstractSettingType
         }
     }
 
-    public function getViewValue(array $options, ValueAccessInterface $value)
+    public function getViewValue(array $options, $value)
     {
         if ($options['multiple']) {
             $data = [];
@@ -69,18 +68,6 @@ class MediaSettingType extends AbstractSettingType
         return '';
     }
 
-    public function getFormType(array $options)
-    {
-        return MediaType::class;
-    }
-
-    public function getFormTypeOptions(array $options)
-    {
-        return [
-            'multiple' => $options['multiple']
-        ];
-    }
-
     public static function getName(): ?string
     {
         return 'media';
@@ -90,11 +77,18 @@ class MediaSettingType extends AbstractSettingType
     {
         $resolver->setDefaults([
             'multiple' => false,
+            'form_type' => MediaType::class
         ]);
+
+        $resolver->setNormalizer('form_type_options', function($options, $value) {
+            return array_merge([
+                'multiple' => $options['multiple'],
+            ], $value);
+        });
     }
 
     public static function getParentType(): ?string
     {
-        return EntitySettingType::class;
+        return ValueAccessSettingType::class;
     }
 }

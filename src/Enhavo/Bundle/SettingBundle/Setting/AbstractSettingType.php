@@ -44,7 +44,7 @@ abstract class AbstractSettingType extends AbstractType implements SettingTypeIn
         return [];
     }
 
-    public function getViewValue(array $options, ValueAccessInterface $value)
+    public function getViewValue(array $options, $value)
     {
         if ($this->parent) {
             return $this->parent->getViewValue($options, $value);

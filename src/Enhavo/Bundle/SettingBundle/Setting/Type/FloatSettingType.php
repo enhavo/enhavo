@@ -5,11 +5,12 @@ namespace Enhavo\Bundle\SettingBundle\Setting\Type;
 use Enhavo\Bundle\SettingBundle\Entity\BasicValue;
 use Enhavo\Bundle\SettingBundle\Setting\AbstractSettingType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class BooleanSettingType
  * @package Enhavo\Bundle\SettingBundle\Setting\Type
- * @property EntitySettingType $parent
+ * @property ValueAccessSettingType $parent
  */
 class FloatSettingType extends AbstractSettingType
 {
@@ -24,18 +25,20 @@ class FloatSettingType extends AbstractSettingType
         }
     }
 
-    public function getFormType(array $options)
-    {
-        return NumberType::class;
-    }
-
     public static function getName(): ?string
     {
         return 'float';
     }
 
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'form_type' => NumberType::class
+        ]);
+    }
+
     public static function getParentType(): ?string
     {
-        return EntitySettingType::class;
+        return ValueAccessSettingType::class;
     }
 }

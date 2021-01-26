@@ -70,13 +70,13 @@ class BasicValue implements ValueAccessInterface
         $this->boolean = null;
 
         if ($this->type === self::TYPE_VARCHAR) {
-            $this->varchar = $value;
+            $this->varchar = (string)$value;
         } elseif ($this->type === self::TYPE_FLOAT) {
-            $this->float = $value;
+            $this->float = (float)$value;
         } elseif ($this->type === self::TYPE_INT) {
-            $this->int = $value;
+            $this->int = (int)$value;
         } elseif ($this->type === self::TYPE_BOOLEAN) {
-            $this->boolean = $value;
+            $this->boolean = (boolean)$value;
         }
     }
 
