@@ -11,14 +11,14 @@ class ValueAccessType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('value', $options['form_type'], $options['form_type_options']);
+        $builder->add('value', $options['form_type'], $options['form_options']);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => ValueAccessInterface::class,
-            'form_type_options' => []
+            'form_options' => []
         ]);
 
         $resolver->setRequired([
