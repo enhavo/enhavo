@@ -58,7 +58,7 @@ class BaseSettingType extends AbstractSettingType implements SettingTypeInterfac
 
     public function getFormTypeOptions(array $options)
     {
-        return $options['form_options'];
+        return [];
     }
 
     public function getValue(array $options)
@@ -79,7 +79,7 @@ class BaseSettingType extends AbstractSettingType implements SettingTypeInterfac
             'translation_domain' => null,
             'group' => null,
             'default' => null,
-            'label' => null,
+            'label' => null
         ]);
     }
 }

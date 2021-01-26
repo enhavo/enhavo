@@ -2,7 +2,6 @@
 
 namespace Enhavo\Bundle\SettingBundle\Setting;
 
-use Enhavo\Bundle\SettingBundle\Model\ValueAccessInterface;
 use Enhavo\Component\Type\AbstractContainerType;
 
 /**

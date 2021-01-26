@@ -80,7 +80,7 @@ class MediaSettingType extends AbstractSettingType
             'form_type' => MediaType::class
         ]);
 
-        $resolver->setNormalizer('form_type_options', function($options, $value) {
+        $resolver->setNormalizer('form_options', function($options, $value) {
             return array_merge([
                 'multiple' => $options['multiple'],
             ], $value);
