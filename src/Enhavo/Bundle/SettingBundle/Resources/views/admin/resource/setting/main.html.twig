@@ -1,2 +1,10 @@
 {{ form_row(form.name) }}
-{{ form_row(form.value) }}
+{% if form.value.children|length > 1 %}
+    <div class="form-row " data-form-row="">
+        <div class="formwidget-container" data-formwidget-container="">
+            {{ form_widget(form.value) }}
+        </div>
+    </div>
+{% else %}
+    {{ form_row(form.value) }}
+{% endif %}

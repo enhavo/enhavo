@@ -33,14 +33,14 @@ class ValueAccessSettingType extends AbstractSettingType
     {
         return [
             'form_type' => $options['form_type'],
-            'form_type_options' => $options['form_type_options'],
+            'form_options' => $options['form_options'],
         ];
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'form_type_options' => [],
+            'form_options' => [],
         ]);
 
         $resolver->setRequired(['form_type']);
