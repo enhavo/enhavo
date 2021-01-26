@@ -2,75 +2,48 @@
 
 namespace Enhavo\Bundle\SettingBundle\Setting\Type;
 
-use Doctrine\ORM\EntityManagerInterface;
-use Enhavo\Bundle\AppBundle\Factory\Factory;
-use Enhavo\Bundle\AppBundle\Repository\EntityRepository;
-use Enhavo\Bundle\SettingBundle\Entity\Setting as SettingEntity;
 use Enhavo\Bundle\SettingBundle\Setting\AbstractSettingType;
-use Enhavo\Bundle\SettingBundle\Setting\SettingTypeInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 
-class EntitySettingType extends AbstractSettingType implements SettingTypeInterface
+class EntitySettingType extends AbstractSettingType
 {
-    /** @var EntityRepository */
-    private $repository;
-
-    /** @var Factory */
-    private $factory;
-
-    /** @var EntityManagerInterface */
-    private $em;
-
-    /**
-     * EntitySettingType constructor.
-     * @param EntityRepository $repository
-     * @param Factory $factory
-     * @param EntityManagerInterface $em
-     */
-    public function __construct(EntityRepository $repository, Factory $factory, EntityManagerInterface $em)
+    public function getFormType(array $options)
     {
-        $this->repository = $repository;
-        $this->factory = $factory;
-        $this->em = $em;
-    }
-
-    public function getSettingEntity($options): SettingEntity
-    {
-        /** @var SettingEntity $settingEntity */
-        $settingEntity = $this->repository->findOneBy(['key' => $this->key]);
-        if ($settingEntity === null) {
-            $settingEntity = $this->factory->createNew();
-            $settingEntity->setKey($this->key);
-            $this->em->persist($settingEntity);
-        }
-
-        $settingEntity->setLabel($options['label'] ?? $this->key);
-        $settingEntity->setTranslationDomain($options['translation_domain']);
-        $settingEntity->setGroup($options['group']);
-
-        return $settingEntity;
-    }
-
-    public function init(array $options)
-    {
-
+        return EntityType::class;
     }
 
     public function getFormTypeOptions(array $options)
     {
-        return $options['form_options'];
+        return [
+            'class' => $options['class'],
+            'multiple' => false,
+            'expanded' => $options['expanded'],
+        ];
     }
 
-    public function getValue(array $options)
+    public function getViewValue(array $options, $value)
     {
-        /** @var SettingEntity $settingEntity */
-        $settingEntity = $this->repository->findOneBy(['key' => $this->key]);
-
-        if ($settingEntity === null || $settingEntity->getValue() === null) {
-            return null;
+        if ($value === null) {
+            return '';
         }
 
-        $settingEntity->getValue()->getValue();
+        if ($options['property_path']) {
+            return (new PropertyAccessor())->getValue($value, $options['property_path']);
+        }
+
+        return (string) $value;
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'expanded' => false,
+            'property_path' => null,
+        ]);
+
+        $resolver->setRequired(['class']);
     }
 
     public static function getName(): ?string
@@ -78,14 +51,8 @@ class EntitySettingType extends AbstractSettingType implements SettingTypeInterf
         return 'entity';
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public static function getParentType(): ?string
     {
-        $resolver->setDefaults([
-            'translation_domain' => null,
-            'group' => null,
-            'default' => null,
-            'label' => null,
-            'form_options' => []
-        ]);
+        return BaseSettingType::class;
     }
 }

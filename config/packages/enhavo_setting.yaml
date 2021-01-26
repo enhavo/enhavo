@@ -1,2 +1,34 @@
 enhavo_setting:
     settings:
+        app.media:
+            type: media
+
+        app.media.multiple:
+            type: media
+            multiple: true
+
+        app.entity:
+            type: entity
+            class: Enhavo\Bundle\PageBundle\Entity\Page
+
+        app.boolean:
+            type: boolean
+
+        app.float:
+            type: float
+
+        app.integer:
+            type: integer
+
+        app.string:
+            type: string
+
+        app.date:
+            type: datetime
+
+        app.text:
+            type: text
+
+        app.html:
+            type: text
+            wysiwyg: true

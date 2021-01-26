@@ -4,11 +4,15 @@ namespace Enhavo\Bundle\SettingBundle\Setting\Type;
 
 use Enhavo\Bundle\FormBundle\Form\Type\WysiwygType;
 use Enhavo\Bundle\SettingBundle\Entity\TextValue;
-use Enhavo\Bundle\SettingBundle\Model\ValueAccessInterface;
 use Enhavo\Bundle\SettingBundle\Setting\AbstractSettingType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class TextSettingType
+ * @package Enhavo\Bundle\SettingBundle\Setting\Type
+ * @property ValueAccessSettingType $parent
+ */
 class TextSettingType extends AbstractSettingType
 {
     public function init(array $options)
@@ -24,23 +28,14 @@ class TextSettingType extends AbstractSettingType
         }
     }
 
-    public function getFormType(array $options)
-    {
-        if ($options['wysiwyg']) {
-            return WysiwygType::class;
-        } else {
-            return TextareaType::class;
-        }
-    }
-
-    public function getViewValue(array $options, ValueAccessInterface $value)
+    public function getViewValue(array $options, $value)
     {
         return strip_tags($value->getValue());
     }
 
     public static function getParentType(): ?string
     {
-        return EntitySettingType::class;
+        return ValueAccessSettingType::class;
     }
 
     public static function getName(): ?string
@@ -52,6 +47,14 @@ class TextSettingType extends AbstractSettingType
     {
         $resolver->setDefaults([
             'wysiwyg' => false,
+            'form_type' => TextareaType::class
         ]);
+
+        $resolver->setNormalizer('form_type', function ($options, $value) {
+            if ($options['wysiwyg']) {
+                return WysiwygType::class;
+            }
+            return $value;
+        });
     }
 }

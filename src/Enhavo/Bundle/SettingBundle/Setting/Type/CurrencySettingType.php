@@ -4,7 +4,6 @@ namespace Enhavo\Bundle\SettingBundle\Setting\Type;
 
 use Enhavo\Bundle\FormBundle\Form\Type\CurrencyType;
 use Enhavo\Bundle\FormBundle\Formatter\CurrencyFormatter;
-use Enhavo\Bundle\SettingBundle\Model\ValueAccessInterface;
 use Enhavo\Bundle\SettingBundle\Setting\AbstractSettingType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -27,12 +26,7 @@ class CurrencySettingType extends AbstractSettingType
         return 'currency';
     }
 
-    public function getFormType(array $options)
-    {
-        return CurrencyType::class;
-    }
-
-    public function getViewValue(array $options, ValueAccessInterface $value)
+    public function getViewValue(array $options, $value)
     {
         return $this->formatter->getCurrency((int)$value->getValue(), $options['currency'], $options['view_position']);
     }
@@ -46,7 +40,8 @@ class CurrencySettingType extends AbstractSettingType
     {
         $resolver->setDefaults([
             'currency' => 'Euro',
-            'view_position' => 'right'
+            'view_position' => 'right',
+            'form_type' => CurrencyType::class
         ]);
     }
 }

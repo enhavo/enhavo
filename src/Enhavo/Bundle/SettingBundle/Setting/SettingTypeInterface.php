@@ -2,7 +2,6 @@
 
 namespace Enhavo\Bundle\SettingBundle\Setting;
 
-use Enhavo\Bundle\SettingBundle\Model\ValueAccessInterface;
 use Enhavo\Component\Type\TypeInterface;
 
 /**
@@ -20,5 +19,5 @@ interface SettingTypeInterface extends TypeInterface
 
     public function getFormTypeOptions(array $options);
 
-    public function getViewValue(array $options, ValueAccessInterface $value);
+    public function getViewValue(array $options, $value);
 }
