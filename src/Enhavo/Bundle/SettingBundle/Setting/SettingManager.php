@@ -9,9 +9,7 @@
 namespace Enhavo\Bundle\SettingBundle\Setting;
 
 use Enhavo\Bundle\SettingBundle\Exception\SettingNotExists;
-use Enhavo\Bundle\SettingBundle\Model\ValueAccessInterface;
 use Enhavo\Component\Type\FactoryInterface;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class SettingManager
 {
@@ -70,7 +68,7 @@ class SettingManager
         return $this->getOrCreateSetting($key)->getFormTypeOptions();
     }
 
-    public function getViewValue($key, ValueAccessInterface $value)
+    public function getViewValue($key, $value)
     {
         return $this->getOrCreateSetting($key)->getViewValue($value);
     }

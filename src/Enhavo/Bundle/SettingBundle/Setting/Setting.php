@@ -32,7 +32,7 @@ class Setting extends AbstractContainerType
         return $this->type->getFormTypeOptions($this->options);
     }
 
-    public function getViewValue(ValueAccessInterface $value)
+    public function getViewValue($value)
     {
         return $this->type->getViewValue($this->options, $value);
     }

@@ -1,5 +1,7 @@
 services:
     Enhavo\Bundle\SettingBundle\Setting\Type\BooleanSettingType:
+        arguments:
+            - '@translator'
         tags:
             - enhavo_setting.setting
 
@@ -13,7 +15,7 @@ services:
         tags:
             - enhavo_setting.setting
 
-    Enhavo\Bundle\SettingBundle\Setting\Type\EntitySettingType:
+    Enhavo\Bundle\SettingBundle\Setting\Type\BaseSettingType:
         arguments:
             - '@enhavo_setting.repository.setting'
             - '@enhavo_setting.factory.setting'
@@ -44,5 +46,13 @@ services:
             - enhavo_setting.setting
 
     Enhavo\Bundle\SettingBundle\Setting\Type\StringSettingType:
+        tags:
+            - enhavo_setting.setting
+
+    Enhavo\Bundle\SettingBundle\Setting\Type\ValueAccessSettingType:
+        tags:
+            - enhavo_setting.setting
+
+    Enhavo\Bundle\SettingBundle\Setting\Type\EntitySettingType:
         tags:
             - enhavo_setting.setting

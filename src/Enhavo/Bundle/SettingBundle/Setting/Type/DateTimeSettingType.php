@@ -4,10 +4,14 @@ namespace Enhavo\Bundle\SettingBundle\Setting\Type;
 
 use Enhavo\Bundle\FormBundle\Form\Type\DateTimeType;
 use Enhavo\Bundle\SettingBundle\Entity\DateValue;
-use Enhavo\Bundle\SettingBundle\Model\ValueAccessInterface;
 use Enhavo\Bundle\SettingBundle\Setting\AbstractSettingType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class DateTimeSettingType
+ * @package Enhavo\Bundle\SettingBundle\Setting\Type
+ * @property ValueAccessSettingType $parent
+ */
 class DateTimeSettingType extends AbstractSettingType
 {
     public function init(array $options)
@@ -34,7 +38,7 @@ class DateTimeSettingType extends AbstractSettingType
         }
     }
 
-    public function getViewValue(array $options, ValueAccessInterface $value)
+    public function getViewValue(array $options, $value)
     {
         /** @var \DateTime $date */
         $date = $value->getValue();
@@ -53,11 +57,6 @@ class DateTimeSettingType extends AbstractSettingType
         return '';
     }
 
-    public function getFormType(array $options)
-    {
-        return DateTimeType::class;
-    }
-
     public static function getName(): ?string
     {
         return 'datetime';
@@ -68,11 +67,12 @@ class DateTimeSettingType extends AbstractSettingType
         $resolver->setDefaults([
             'time' => true,
             'date' => true,
+            'form_type' => DateTimeType::class
         ]);
     }
 
     public static function getParentType(): ?string
     {
-        return EntitySettingType::class;
+        return ValueAccessSettingType::class;
     }
 }
