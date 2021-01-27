@@ -12,29 +12,33 @@ use Enhavo\Bundle\FormBundle\Error\FormErrorResolver;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormErrorIterator;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 class FormExtension extends AbstractExtension
 {
-    /**
-     * @var FormErrorResolver
-     */
+    /** @var FormErrorResolver */
     private $formErrorResolver;
-    
+
+    /** @var PropertyAccessor */
+    private $propertyAccessor;
+
     public function __construct(FormErrorResolver $formErrorResolver)
     {
         $this->formErrorResolver = $formErrorResolver;
+        $this->propertyAccessor = new PropertyAccessor();
     }
 
     public function getFunctions()
     {
-        return array(
-            new TwigFunction('form_errors_recursive', array($this, 'getErrorRecursive')),
-            new TwigFunction('form_has_errors', array($this, 'hasErrors')),
-            new TwigFunction('form_is_submitted', array($this, 'isSubmitted')),
-            new TwigFunction('form_is_successful', array($this, 'isSuccessful')),
-        );
+        return [
+            new TwigFunction('form_errors_recursive', [$this, 'getErrorRecursive']),
+            new TwigFunction('form_has_errors', [$this, 'hasErrors']),
+            new TwigFunction('form_is_submitted', [$this, 'isSubmitted']),
+            new TwigFunction('form_is_successful', [$this, 'isSuccessful']),
+            new TwigFunction('form_custom_name', [$this, 'getCustomName']),
+        ];
     }
 
     public function getErrorRecursive(FormView $formView)
@@ -89,6 +93,16 @@ class FormExtension extends AbstractExtension
                     return $form;
                 }
             }
+        }
+        return null;
+    }
+
+    public function getCustomName($data, $customNameProperty)
+    {
+        if (is_string($customNameProperty)) {
+            return $this->propertyAccessor->getValue($data, $customNameProperty);
+        } elseif (is_callable($customNameProperty)) {
+            return call_user_func($customNameProperty, [$data]);
         }
         return null;
     }

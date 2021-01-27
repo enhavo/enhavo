@@ -18,9 +18,7 @@ class TwigExtension extends AbstractExtension
 {
     use ContainerAwareTrait;
 
-    /**
-     * @var BlockRendererInterface
-     */
+    /** @var BlockRendererInterface */
     private $renderer;
 
     public function __construct(BlockRendererInterface $renderer)
@@ -31,7 +29,7 @@ class TwigExtension extends AbstractExtension
     public function getFunctions()
     {
         return array(
-            new TwigFunction('block_render', array($this, 'render'), array('is_safe' => array('html'))),
+            new TwigFunction('block_render', [$this, 'render'], ['is_safe' => ['html']]),
         );
     }
 

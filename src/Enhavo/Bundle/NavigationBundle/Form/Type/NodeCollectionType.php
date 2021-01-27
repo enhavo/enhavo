@@ -48,6 +48,7 @@ class NodeCollectionType extends AbstractType
             'prototype_storage' => 'enhavo_navigation',
             'allow_add' => true,
             'allow_delete' => true,
+            'custom_name_property' => 'name'
         ]);
     }
 
