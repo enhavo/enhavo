@@ -4,88 +4,61 @@ namespace Enhavo\Bundle\BlockBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Enhavo\Bundle\BlockBundle\Model\CustomNameInterface;
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
 
 /**
  * Block
  */
-class Node implements NodeInterface
+class Node implements NodeInterface, CustomNameInterface
 {
-    /**
-     * @var integer
-     */
+    /** @var integer */
     private $id;
 
-    /**
-     * @var integer
-     */
+    /** @var integer */
     private $position;
 
-    /**
-     * @var NodeInterface
-     */
+    /** @var NodeInterface */
     private $parent;
 
-    /**
-     * @var NodeInterface[]|Collection
-     */
+    /** @var NodeInterface[]|Collection */
     private $children;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $name;
 
-    /**
-     * @var BlockInterface
-     */
+    /** @var BlockInterface */
     private $block;
 
-    /**
-     * @var integer
-     */
+    /** @var integer */
     private $blockId;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $blockClass;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     private $viewData;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $property;
 
-    /**
-     * @var object
-     */
+    /** @var object */
     private $resource;
 
-    /**
-     * @var boolean
-     */
+    /** @var boolean */
     private $enable;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $type;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $template;
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -457,5 +430,13 @@ class Node implements NodeInterface
             }
         } while($sibling = $sibling->getBefore());
         return $siblings;
+    }
+
+    public function getCustomName(): ?string
+    {
+        if ($this->block instanceof CustomNameInterface) {
+            $this->block->getCustomName();
+        }
+        return null;
     }
 }

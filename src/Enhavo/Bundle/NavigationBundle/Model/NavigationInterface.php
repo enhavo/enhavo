@@ -8,8 +8,6 @@
 
 namespace Enhavo\Bundle\NavigationBundle\Model;
 
-use Enhavo\Bundle\NavigationBundle\Entity\Navigation;
-
 interface NavigationInterface
 {
 

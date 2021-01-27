@@ -67,7 +67,7 @@ interface NodeInterface
     public function getNavigation();
 
     /**
-     * @param Navigation $navigation
+     * @param Navigation|null $navigation
      */
     public function setNavigation(Navigation $navigation = null);
 
@@ -107,7 +107,7 @@ interface NodeInterface
     public function getSubject(): ?SubjectInterface;
 
     /**
-     * @param object|null $navItem
+     * @param SubjectInterface|null $navItem
      */
     public function setSubject(?SubjectInterface $navItem): void;
 

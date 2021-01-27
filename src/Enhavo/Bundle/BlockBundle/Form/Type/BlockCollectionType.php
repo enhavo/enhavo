@@ -8,9 +8,9 @@
 
 namespace Enhavo\Bundle\BlockBundle\Form\Type;
 
-use Enhavo\Bundle\BlockBundle\Block\Block;
 use Enhavo\Bundle\BlockBundle\Block\BlockManager;
-use Enhavo\Bundle\BlockBundle\Entity\Node;
+use Enhavo\Bundle\BlockBundle\Model\CustomNameInterface;
+use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 use Enhavo\Bundle\FormBundle\Form\Type\PolyCollectionType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\Options;
@@ -34,7 +34,7 @@ class BlockCollectionType extends AbstractType
             'entry_types' => $this->getEntryTypes(),
             'entry_types_options' => $this->getEntryTypesOptions(),
             'entry_type_name' => 'name',
-            'entry_type_resolver' => function(Node $node) {
+            'entry_type_resolver' => function(NodeInterface $node) {
                 return $node->getName();
             },
             'allow_add' => true,
@@ -42,6 +42,12 @@ class BlockCollectionType extends AbstractType
             'item_groups' => [],
             'items' => [],
             'prototype_storage' => 'enhavo_block',
+            'custom_name_property' => function (NodeInterface $node) {
+                if ($node instanceof CustomNameInterface) {
+                    return $node->getCustomName();
+                }
+                return null;
+            }
         ]);
 
         $resolver->setNormalizer('entry_type_filter', function (Options $options, $value)
@@ -83,7 +89,6 @@ class BlockCollectionType extends AbstractType
     private function getEntryTypes()
     {
         $types = [];
-        /** @var Block $block */
         foreach($this->blockManager->getBlocks() as $key => $block) {
             $types[$key] = NodeType::class;
         }
@@ -93,7 +98,6 @@ class BlockCollectionType extends AbstractType
     private function getEntryTypesOptions()
     {
         $types = [];
-        /** @var Block $block */
         foreach($this->blockManager->getBlocks() as $key => $block) {
             $types[$key] = [
                 'block_type' => $block->getForm(),

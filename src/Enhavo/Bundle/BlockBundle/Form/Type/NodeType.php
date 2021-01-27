@@ -12,7 +12,6 @@ use Enhavo\Bundle\BlockBundle\Entity\Node;
 use Enhavo\Bundle\FormBundle\Form\Type\PositionType;
 use Enhavo\Bundle\FormBundle\Form\Type\TypeNameType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -39,4 +38,4 @@ class NodeType extends AbstractType
     {
         return 'enhavo_block_node';
     }
-} 
+}
