@@ -41,7 +41,7 @@ class BlockCollectionType extends AbstractType
             'allow_delete' => true,
             'item_groups' => [],
             'items' => [],
-            'prototype_storage' => 'enhavo_block'
+            'prototype_storage' => 'enhavo_block',
         ]);
 
         $resolver->setNormalizer('entry_type_filter', function (Options $options, $value)

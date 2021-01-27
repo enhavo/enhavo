@@ -257,14 +257,14 @@
         <div class="poly-collection-container" data-reindexable data-poly-collection-container>
             {{ helper.addPolyCollectionButton() }}
             {% for item in form.children|filter(child => child.vars.name != '_token') %}
-                {{ helper.addPolyCollectionItem(item, item.vars.label, item.vars.translation_domain) }}
+                {{ helper.addPolyCollectionItem(item, item.vars.label, item.vars.translation_domain, form_custom_name(item.vars.data, custom_name_property)) }}
                 {{ helper.addPolyCollectionButton() }}
             {% endfor %}
         </div>
     </div>
 {% endblock %}
 
-{% macro addPolyCollectionItem(item, label, translation_domain) %}
+{% macro addPolyCollectionItem(item, label, translation_domain, custom_name) %}
     <div class="poly-collection-item" data-poly-collection-item>
         <div class="button-container" data-poly-collection-item-action>
             <div class="button button-up" data-poly-collection-item-action-up>
@@ -282,7 +282,10 @@
             <div class="button button-expand" data-poly-collection-item-action-expand>
                 <i class="icon icon-unfold_more"></i>
             </div>
-            <div class="label">{{ label|trans({}, translation_domain)|nl2br }}</div>
+            <div class="label">
+                {{ label|trans({}, translation_domain)|nl2br }}
+                {% if custom_name %}- {{ custom_name }}{% endif %}
+            </div>
         </div>
 
         <div class="poly-collection-item-content-container" data-poly-collection-item-container>
