@@ -102,7 +102,7 @@ class FormExtension extends AbstractExtension
         if (is_string($customNameProperty)) {
             return $this->propertyAccessor->getValue($data, $customNameProperty);
         } elseif (is_callable($customNameProperty)) {
-            return call_user_func($customNameProperty, [$data]);
+            return call_user_func($customNameProperty, $data);
         }
         return null;
     }
