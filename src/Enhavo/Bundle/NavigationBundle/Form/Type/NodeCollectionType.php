@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\NavigationBundle\Form\Type;
 
 use Enhavo\Bundle\FormBundle\Form\Type\PolyCollectionType;
+use Enhavo\Bundle\NavigationBundle\Model\CustomNameInterface;
 use Enhavo\Bundle\NavigationBundle\Model\NodeInterface;
 use Enhavo\Bundle\NavigationBundle\NavItem\NavItem;
 use Enhavo\Bundle\NavigationBundle\NavItem\NavItemManager;
@@ -48,7 +49,12 @@ class NodeCollectionType extends AbstractType
             'prototype_storage' => 'enhavo_navigation',
             'allow_add' => true,
             'allow_delete' => true,
-            'custom_name_property' => 'name'
+            'custom_name_property' => function (NodeInterface $node) {
+                if ($node instanceof CustomNameInterface) {
+                    return $node->getCustomName();
+                }
+                return null;
+            }
         ]);
     }
 
@@ -60,7 +66,6 @@ class NodeCollectionType extends AbstractType
     private function getEntryTypes()
     {
         $types = [];
-        /** @var NavItem $navItem */
         foreach($this->navItemManager->getNavItems() as $key => $navItem) {
             $types[$key] = NodeType::class;
         }
@@ -70,7 +75,6 @@ class NodeCollectionType extends AbstractType
     private function getEntryTypesOptions()
     {
         $types = [];
-        /** @var NavItem $navItem */
         foreach($this->navItemManager->getNavItems() as $key => $navItem) {
             $types[$key] = [
                 'subject_type' => $navItem->getForm(),

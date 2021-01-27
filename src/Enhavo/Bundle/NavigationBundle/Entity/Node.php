@@ -8,60 +8,43 @@
 
 namespace Enhavo\Bundle\NavigationBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Enhavo\Bundle\NavigationBundle\Model\CustomNameInterface;
 use Enhavo\Bundle\NavigationBundle\Model\NodeInterface;
 use Enhavo\Bundle\NavigationBundle\Model\SubjectInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
-class Node implements NodeInterface, ResourceInterface
+class Node implements NodeInterface, ResourceInterface, CustomNameInterface
 {
-    /**
-     * @var int|null
-     */
+    /** @var int|null */
     private $id;
 
-    /**
-     * @var string|null
-     */
+    /** @var string|null */
     private $name;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
+    /** @var Collection */
     private $children;
 
-    /**
-     * @var \Enhavo\Bundle\NavigationBundle\Model\NodeInterface
-     */
+    /** @var NodeInterface */
     private $parent;
 
-    /**
-     * @var SubjectInterface|null
-     */
+    /** @var SubjectInterface|null */
     private $subject;
 
-    /**
-     * @var integer|null
-     */
+    /** @var integer|null */
     private $subjectId;
 
-    /**
-     * @var string|null
-     */
+    /** @var string|null */
     private $subjectClass;
 
-    /**
-     * @var Navigation|null
-     */
+    /** @var Navigation|null */
     private $navigation;
 
-    /**
-     * @var integer|null
-     */
+    /** @var integer|null */
     private $position;
 
-    /**
-     * @var string|null
-     */
+    /** @var string|null */
     private $label;
 
     /**
@@ -69,13 +52,13 @@ class Node implements NodeInterface, ResourceInterface
      */
     public function __construct()
     {
-        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->children = new ArrayCollection();
     }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -110,7 +93,7 @@ class Node implements NodeInterface, ResourceInterface
     /**
      * Get children
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getChildren()
     {
@@ -283,5 +266,13 @@ class Node implements NodeInterface, ResourceInterface
     public function setSubjectClass(?string $subjectClass): void
     {
         $this->subjectClass = $subjectClass;
+    }
+
+    public function getCustomName(): ?string
+    {
+        if ($this->getSubject() instanceof CustomNameInterface) {
+            return $this->getSubject()->getCustomName();
+        }
+        return null;
     }
 }
