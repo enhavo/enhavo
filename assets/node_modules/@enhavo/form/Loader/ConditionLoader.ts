@@ -1,6 +1,7 @@
 import AbstractLoader from "@enhavo/form/Loader/AbstractLoader";
 import ConditionObserver from "@enhavo/form/Type/ConditionObserver";
 import ConditionType from "@enhavo/form/Type/ConditionType";
+import FormRegistry from "@enhavo/app/Form/FormRegistry";
 
 export default class ConditionLoader extends AbstractLoader
 {
@@ -8,7 +9,7 @@ export default class ConditionLoader extends AbstractLoader
     {
         let conditionTypeElements = this.findElements(element, '[data-condition-type]');
         for(let conditionTypeElement of conditionTypeElements) {
-            new ConditionType(conditionTypeElement);
+            FormRegistry.registerType(new ConditionType(conditionTypeElement));
         }
         let conditionObserverElements = this.findElements(element, '[data-condition-type-observer]');
         for(let conditionObserverElement of conditionObserverElements) {

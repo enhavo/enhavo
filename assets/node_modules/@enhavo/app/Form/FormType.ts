@@ -1,6 +1,7 @@
 import * as $ from "jquery";
+import FormTypeInterface from "@enhavo/app/Form/FormTypeInterface";
 
-export default abstract class FormType
+export default abstract class FormType implements FormTypeInterface
 {
     protected $element: JQuery;
 
@@ -8,6 +9,11 @@ export default abstract class FormType
     {
         this.$element = $(element);
         this.init();
+    }
+
+    public getElement(): HTMLElement
+    {
+        return <HTMLElement>this.$element.get(0);
     }
 
     protected abstract init(): void;

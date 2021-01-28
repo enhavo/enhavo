@@ -24,7 +24,9 @@
         .button-up {order:1;}
         .button-expand {order:3;}
         .button-collapse {order:3;}
-        .label { padding-left:9px;font-weight: 600;order:0;margin-right:auto!important;}
+        .label { padding-left:9px;font-weight: 600;order:0;margin-right:auto!important;
+          .custom { font-weight:normal;color:$grey4;text-overflow:ellipsis; }
+        }
       }
       .poly-collection-item-content-container {padding:15px;}
       .poly-collection-item {box-shadow:none;border: 1px solid $grey5;}
