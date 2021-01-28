@@ -435,7 +435,7 @@ class Node implements NodeInterface, CustomNameInterface
     public function getCustomName(): ?string
     {
         if ($this->block instanceof CustomNameInterface) {
-            $this->block->getCustomName();
+            return $this->block->getCustomName();
         }
         return null;
     }
