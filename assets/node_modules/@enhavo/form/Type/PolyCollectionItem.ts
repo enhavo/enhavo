@@ -1,12 +1,15 @@
 import * as $ from "jquery";
 import PolyCollectionType from "@enhavo/form/Type/PolyCollectionType";
 import FormDispatcher from "@enhavo/app/Form/FormDispatcher";
+import FormRegistry from "@enhavo/app/Form/FormRegistry";
 
 export default class PolyCollectionItem
 {
     private $element: JQuery;
 
     private polyCollection: PolyCollectionType;
+
+    private collapsed: boolean;
 
     constructor(element: HTMLElement, polyCollection: PolyCollectionType)
     {
@@ -22,28 +25,35 @@ export default class PolyCollectionItem
 
     private initActions()
     {
-        let polyCollection = this;
-
         let $actions =  this.$element.children('[data-poly-collection-item-action]');
 
-        $actions.find('[data-poly-collection-item-action-up]').click(function () {
-            polyCollection.up();
+        $actions.dblclick((event) => {
+            event.preventDefault();
+            if (this.collapsed) {
+                this.expand();
+            } else {
+                this.collapse();
+            }
         });
 
-        $actions.find('[data-poly-collection-item-action-down]').click(function () {
-            polyCollection.down();
+        $actions.find('[data-poly-collection-item-action-up]').click(() => {
+            this.up();
         });
 
-        $actions.find('[data-poly-collection-item-action-remove]').click(function () {
-            polyCollection.remove();
+        $actions.find('[data-poly-collection-item-action-down]').click(() => {
+            this.down();
         });
 
-        $actions.find('[data-poly-collection-item-action-collapse]').click(function () {
-            polyCollection.collapse();
+        $actions.find('[data-poly-collection-item-action-remove]').click(() => {
+            this.remove();
         });
 
-        $actions.find('[data-poly-collection-item-action-expand]').click(function () {
-            polyCollection.expand();
+        $actions.find('[data-poly-collection-item-action-collapse]').click(() => {
+            this.collapse();
+        });
+
+        $actions.find('[data-poly-collection-item-action-expand]').click(() => {
+            this.expand();
         });
     }
 
@@ -54,6 +64,7 @@ export default class PolyCollectionItem
 
     public collapse()
     {
+        this.collapsed = true;
         let $actions =  this.$element.children('[data-poly-collection-item-action]');
 
         $actions.find('[data-poly-collection-item-action-expand]').show();
@@ -61,13 +72,40 @@ export default class PolyCollectionItem
         this.$element.children('[data-poly-collection-item-container]').hide();
     }
 
+    public collapseAll()
+    {
+        this.collapse();
+
+        // collapse descendants
+        this.$element.find('[data-poly-collection]').each((index: number, element: HTMLElement) => {
+            let type = <PolyCollectionType>FormRegistry.getType(element);
+            if (type) {
+                type.collapseAll();
+            }
+        })
+    }
+
     public expand()
     {
+        this.collapsed = false;
         let $actions =  this.$element.children('[data-poly-collection-item-action]');
 
         $actions.find('[data-poly-collection-item-action-expand]').hide();
         $actions.find('[data-poly-collection-item-action-collapse]').show();
         this.$element.children('[data-poly-collection-item-container]').show();
+    }
+
+    public expandAll()
+    {
+        this.expand();
+
+        // expand descendants
+        this.$element.find('[data-poly-collection]').each((index: number, element: HTMLElement) => {
+            let type = <PolyCollectionType>FormRegistry.getType(element);
+            if (type) {
+                type.expandAll();
+            }
+        })
     }
 
     public up()

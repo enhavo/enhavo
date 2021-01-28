@@ -1,5 +1,6 @@
 import AbstractLoader from "@enhavo/form/Loader/AbstractLoader";
 import DateType from "@enhavo/form/Type/DateType";
+import FormRegistry from "@enhavo/app/Form/FormRegistry";
 
 export default class DateLoader extends AbstractLoader
 {
@@ -7,7 +8,7 @@ export default class DateLoader extends AbstractLoader
     {
         let elements = this.findElements(element, '[data-date-picker]');
         for(element of elements) {
-           new DateType(element);
+            FormRegistry.registerType(new DateType(element));
         }
     }
 }

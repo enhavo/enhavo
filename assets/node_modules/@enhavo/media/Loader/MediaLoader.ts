@@ -9,6 +9,7 @@ import MediaRouter from "@enhavo/media/MediaRouter";
 import DownloadExtension from "@enhavo/media/Extension/DownloadExtension";
 import View from "@enhavo/app/View/View";
 import Router from "@enhavo/core/Router";
+import FormRegistry from "@enhavo/app/Form/FormRegistry";
 
 export default class MediaLoader extends AbstractLoader
 {
@@ -33,6 +34,7 @@ export default class MediaLoader extends AbstractLoader
         for(element of elements) {
             let type = new MediaType(element);
             MediaType.mediaTypes.push(type);
+            FormRegistry.registerType(type);
         }
     }
 

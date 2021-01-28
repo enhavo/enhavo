@@ -1,6 +1,7 @@
 import AbstractLoader from "@enhavo/form/Loader/AbstractLoader";
 import ListType from "@enhavo/form/Type/ListType";
 import "@enhavo/form/assets/styles/form.scss";
+import FormRegistry from "@enhavo/app/Form/FormRegistry";
 
 export default class ListLoader extends AbstractLoader
 {
@@ -8,7 +9,7 @@ export default class ListLoader extends AbstractLoader
     {
         let elements = this.findElements(element, '[data-list]');
         for(element of elements) {
-            new ListType(element);
+            FormRegistry.registerType(new ListType(element));
         }
     }
 }

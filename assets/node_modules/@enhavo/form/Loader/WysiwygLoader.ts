@@ -1,6 +1,7 @@
 import AbstractLoader from "@enhavo/form/Loader/AbstractLoader";
 import WysiwygType from "@enhavo/form/Type/WysiwygType";
 import * as tinymce from "tinymce";
+import FormRegistry from "@enhavo/app/Form/FormRegistry";
 
 export default class WysiwygLoader extends AbstractLoader
 {
@@ -8,7 +9,7 @@ export default class WysiwygLoader extends AbstractLoader
     {
         let elements = this.findElements(element, '[data-wysiwyg]');
         for(element of elements) {
-            new WysiwygType(element);
+            FormRegistry.registerType(new WysiwygType(element));
         }
     }
 
@@ -32,7 +33,7 @@ export default class WysiwygLoader extends AbstractLoader
     {
         let elements = this.findElements(element, '[data-wysiwyg]');
         for(element of elements) {
-            new WysiwygType(element);
+            FormRegistry.registerType(new WysiwygType(element));
         }
     }
 }

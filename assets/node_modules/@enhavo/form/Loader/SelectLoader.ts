@@ -1,5 +1,6 @@
 import AbstractLoader from "@enhavo/form/Loader/AbstractLoader";
 import SelectType from "@enhavo/form/Type/SelectType";
+import FormRegistry from "@enhavo/app/Form/FormRegistry";
 
 export default class SelectLoader extends AbstractLoader
 {
@@ -7,7 +8,7 @@ export default class SelectLoader extends AbstractLoader
     {
         let elements = this.findElements(element, 'select');
         for(element of elements) {
-           new SelectType(element);
+            FormRegistry.registerType(new SelectType(element));
         }
     }
 }

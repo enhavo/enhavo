@@ -7,6 +7,7 @@ import DataStorageEntry from "@enhavo/app/ViewStack/DataStorageEntry";
 import View from "@enhavo/app/View/View";
 import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 import Router from "@enhavo/core/Router";
+import FormRegistry from "@enhavo/app/Form/FormRegistry";
 
 export default class AutoCompleteLoader extends AbstractLoader
 {
@@ -53,7 +54,7 @@ export default class AutoCompleteLoader extends AbstractLoader
 
         let elements = this.findElements(element, '[data-auto-complete-entity]');
         for(element of elements) {
-            new AutoCompleteType(element, config);
+            FormRegistry.registerType(new AutoCompleteType(element, config));
         }
     }
 }
