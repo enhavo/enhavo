@@ -32,7 +32,6 @@ enhavo_media_library_list:
                 library: true
             sorting:
                 createdAt: desc
-            paginate: 30
             viewer:
                 columns:
                     name:
