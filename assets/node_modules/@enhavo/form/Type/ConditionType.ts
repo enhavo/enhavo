@@ -1,12 +1,11 @@
 import * as $ from 'jquery'
 import ConditionTypeConfig from "@enhavo/form/Type/ConditionTypeConfig";
 import ConditionObserver from "@enhavo/form/Type/ConditionObserver";
+import FormType from "@enhavo/app/Form/FormType";
 
-export default class ConditionType
+export default class ConditionType extends FormType
 {
     public static subjects: ConditionType[] = [];
-
-    private $element: JQuery;
 
     private config: ConditionTypeConfig;
 
@@ -24,8 +23,13 @@ export default class ConditionType
         return null;
     }
 
+    public init() {
+
+    }
+
     constructor(element: HTMLElement)
     {
+        super(element);
         ConditionType.subjects.push(this);
         this.$element = $(element);
         this.config = this.$element.data('condition-type');

@@ -125,7 +125,7 @@ export default class PolyCollectionType extends FormType
         this.$element.children('[data-poly-collection-action]').children('[data-poly-collection-action-expand-all]').show();
         this.collapse = true;
         for (let item of this.items) {
-            item.collapse();
+            item.collapseAll();
         }
     }
 
@@ -135,7 +135,7 @@ export default class PolyCollectionType extends FormType
         this.$element.children('[data-poly-collection-action]').children('[data-poly-collection-action-expand-all]').hide();
         this.collapse = false;
         for (let item of this.items) {
-            item.expand();
+            item.expandAll();
         }
     }
 
