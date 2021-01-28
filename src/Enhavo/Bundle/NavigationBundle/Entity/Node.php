@@ -10,12 +10,11 @@ namespace Enhavo\Bundle\NavigationBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Enhavo\Bundle\NavigationBundle\Model\CustomNameInterface;
 use Enhavo\Bundle\NavigationBundle\Model\NodeInterface;
 use Enhavo\Bundle\NavigationBundle\Model\SubjectInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
-class Node implements NodeInterface, ResourceInterface, CustomNameInterface
+class Node implements NodeInterface, ResourceInterface
 {
     /** @var int|null */
     private $id;
@@ -266,13 +265,5 @@ class Node implements NodeInterface, ResourceInterface, CustomNameInterface
     public function setSubjectClass(?string $subjectClass): void
     {
         $this->subjectClass = $subjectClass;
-    }
-
-    public function getCustomName(): ?string
-    {
-        if ($this->getSubject() instanceof CustomNameInterface) {
-            return $this->getSubject()->getCustomName();
-        }
-        return null;
     }
 }

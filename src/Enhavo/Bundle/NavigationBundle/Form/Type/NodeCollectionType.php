@@ -9,9 +9,7 @@
 namespace Enhavo\Bundle\NavigationBundle\Form\Type;
 
 use Enhavo\Bundle\FormBundle\Form\Type\PolyCollectionType;
-use Enhavo\Bundle\NavigationBundle\Model\CustomNameInterface;
 use Enhavo\Bundle\NavigationBundle\Model\NodeInterface;
-use Enhavo\Bundle\NavigationBundle\NavItem\NavItem;
 use Enhavo\Bundle\NavigationBundle\NavItem\NavItemManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -49,12 +47,7 @@ class NodeCollectionType extends AbstractType
             'prototype_storage' => 'enhavo_navigation',
             'allow_add' => true,
             'allow_delete' => true,
-            'custom_name_property' => function (NodeInterface $node) {
-                if ($node instanceof CustomNameInterface) {
-                    return $node->getCustomName();
-                }
-                return null;
-            }
+            'custom_name_property' => 'label'
         ]);
     }
 
