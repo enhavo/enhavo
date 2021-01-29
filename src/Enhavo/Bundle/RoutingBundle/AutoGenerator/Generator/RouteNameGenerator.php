@@ -26,7 +26,7 @@ class RouteNameGenerator extends AbstractGenerator
 
     protected function getRandomName()
     {
-        return uniqid();
+        return 'r' . uniqid();
     }
 
     public function configureOptions(OptionsResolver $resolver)
