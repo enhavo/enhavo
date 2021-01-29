@@ -12,19 +12,20 @@ class CurrencyFormatter
 {
     public function getCurrency($currencyAsInt, $currency = 'Euro', $position = 'right')
     {
-        $string = (string)$currencyAsInt;
+        $presign = $currencyAsInt < 0 ? '-' : '';
+        $string = (string)abs($currencyAsInt);
         $string = str_pad($string, 3, '0', STR_PAD_LEFT);
         $length = strlen($string);
         $right = substr($string, $length - 2, 2 );
         $left = substr($string, 0, $length - 2);
         if ($currency !== null) {
             if ($position == 'right') {
-                return sprintf('%s,%s %s', $left, $right, $currency);
+                return sprintf('%s%s,%s %s', $presign, $left, $right, $currency);
             } else {
-                return sprintf('%s %s,%s', $currency, $left, $right);
+                return sprintf('%s %s%s,%s', $currency, $presign, $left, $right);
             }
         } else {
-            return sprintf('%s,%s', $left, $right);
+            return sprintf('%s%s,%s', $presign, $left, $right);
         }
     }
 
