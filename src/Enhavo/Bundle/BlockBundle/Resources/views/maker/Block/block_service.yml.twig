@@ -1,6 +1,3 @@
 {{ namespace }}\Block\{{ name }}BlockType:
-    public: true
-    calls:
-        - [setContainer, ['@service_container']]
     tags:
-        - { name: enhavo.block, alias: {{ type }} }
+        - { name: enhavo_block.block }
