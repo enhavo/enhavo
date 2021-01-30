@@ -62,7 +62,7 @@ class MakeBlock extends AbstractMaker
         ->addArgument(
             'name',
             InputArgument::REQUIRED,
-            'What is the name the block should have (Without "Block" postfix, but pre directories allowed)?'
+            'What is the name the block should have (Without "Block" postfix; Directories allowed, e.g. "MyDir/MyBlock")?'
         )
         ->addArgument(
             'type',
@@ -80,7 +80,7 @@ class MakeBlock extends AbstractMaker
     {
         $namespace = $input->getArgument('namespace');
         $name = $input->getArgument('name');
-        $type = 'yes' === $input->getArgument('type') ? true : false;
+        $type = in_array($input->getArgument('type'), ['yes', 'YES', 'y', 'Y']);
 
         $block = new BlockName($this->util, $this->kernel, $namespace, $name);
 

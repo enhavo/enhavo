@@ -16,10 +16,8 @@ class <?= $name_camel ?>BlockType extends AbstractBlockType
 
         $optionsResolver->setDefaults([
             'model' => <?= $name_camel ?>Block::class,
-            'parent' => <?= $name_camel ?>Block::class,
             'form' => <?= $name_camel ?>BlockFormType::class,
             'factory' => <?= $name_camel ?>BlockFactory::class,
-            'repository' => '<?= $name_camel ?>Block::class',
             'template' => 'theme/block/<?= $name_kebab ?>.html.twig',
             'label' => '<?= $name_camel ?>',
             'translationDomain' => <?= $translation_domain ? "'".$translation_domain."'" : 'null' ?>,
@@ -27,7 +25,7 @@ class <?= $name_camel ?>BlockType extends AbstractBlockType
         ]);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return '<?= $name_snake ?>';
     }
