@@ -295,6 +295,11 @@ interface IndirectInterface extends TypeInterface
 
 class IndirectClass implements IndirectInterface
 {
+    public function setKey(?string $key)
+    {
+
+    }
+
     public static function getName(): ?string
     {
         return null;

@@ -19,14 +19,13 @@ services:
         arguments:
           - '@doctrine.orm.entity_manager'
           - '@Enhavo\Bundle\AppBundle\Mailer\MailerManager'
-          - '@Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager'
           - '@enhavo_app.util.secure_url_token_generator'
           - '@logger'
           - '@twig'
           - '@enhavo_app.template.manager'
           - '@Enhavo\Bundle\NewsletterBundle\Newsletter\ParameterParser'
+          - '@enhavo_newsletter.newsletter.provider'
           - '%enhavo_newsletter.newsletter.mail.from%'
-          - '%enhavo_newsletter.newsletter.test_receiver%'
           - '%enhavo_newsletter.newsletter.templates%'
 
     Enhavo\Bundle\NewsletterBundle\Newsletter\ParameterParser:

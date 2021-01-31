@@ -395,7 +395,9 @@ class UserManagerTest extends TestCase
     public function testGetConfigKey()
     {
         $dependencies = $this->createDependencies();
-        $manager = $this->createInstance($dependencies, []);
+        $manager = $this->createInstance($dependencies, [
+            '__CONFIG_KEY__' => []
+        ]);
         $request = new Request([], [], [
             '_config' => '__CONFIG_KEY__',
         ]);

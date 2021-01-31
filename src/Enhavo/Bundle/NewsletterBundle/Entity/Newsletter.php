@@ -230,7 +230,7 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
     }
 
     /**
-     * @return Collection
+     * @return Collection|Group[]
      */
     public function getGroups(): Collection
     {
