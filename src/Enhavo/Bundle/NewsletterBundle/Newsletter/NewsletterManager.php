@@ -12,7 +12,7 @@ use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\NewsletterBundle\Entity\Receiver;
 use Enhavo\Bundle\NewsletterBundle\Exception\SendException;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
-use Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager;
+use Enhavo\Bundle\NewsletterBundle\Provider\ProviderInterface;
 use Psr\Log\LoggerInterface;
 use Twig\Environment;
 
@@ -24,29 +24,16 @@ use Twig\Environment;
  */
 class NewsletterManager
 {
-    /**
-     * @var EntityManagerInterface
-     */
+    /** @var EntityManagerInterface */
     private $em;
 
-    /**
-     * @var MailerManager
-     */
+    /** @var MailerManager */
     private $mailerManager;
 
-    /**
-     * @var SubscriptionManager
-     */
-    private $subscriptionManager;
-
-    /**
-     * @var TokenGeneratorInterface
-     */
+    /** @var TokenGeneratorInterface */
     private $tokenGenerator;
 
-    /**
-     * @var LoggerInterface
-     */
+    /** @var LoggerInterface */
     private $logger;
 
     /** @var Environment */
@@ -62,48 +49,47 @@ class NewsletterManager
     private $from;
 
     /** @var array */
-    private $testReceiver;
-
-    /** @var array */
     private $templates;
+
+    /** @var ProviderInterface */
+    private $provider;
 
     /**
      * NewsletterManager constructor.
      * @param EntityManagerInterface $em
      * @param MailerManager $mailer
-     * @param SubscriptionManager $subscriptionManager
      * @param TokenGeneratorInterface $tokenGenerator
      * @param LoggerInterface $logger
      * @param Environment $twig
+     * @param TemplateManager $templateManager
+     * @param ParameterParser $parameterParser
+     * @param ProviderInterface $provider
      * @param string $from
-     * @param array $testReceiver
      * @param array $templates
      */
-    public function __construct(EntityManagerInterface $em,
-                                MailerManager $mailer,
-                                SubscriptionManager $subscriptionManager,
-                                TokenGeneratorInterface $tokenGenerator,
-                                LoggerInterface $logger,
-                                Environment $twig,
-                                TemplateManager $templateManager,
-                                ParameterParser $parameterParser,
-                                string $from,
-                                array $testReceiver,
-                                array $templates)
-    {
+    public function __construct(
+        EntityManagerInterface $em,
+        MailerManager $mailer,
+        TokenGeneratorInterface $tokenGenerator,
+        LoggerInterface $logger,
+        Environment $twig,
+        TemplateManager $templateManager,
+        ParameterParser $parameterParser,
+        ProviderInterface $provider,
+        string $from,
+        array $templates
+    ) {
         $this->em = $em;
         $this->mailerManager = $mailer;
-        $this->subscriptionManager = $subscriptionManager;
         $this->tokenGenerator = $tokenGenerator;
         $this->logger = $logger;
         $this->templateManager = $templateManager;
         $this->parameterParser = $parameterParser;
         $this->twig = $twig;
         $this->from = $from;
-        $this->testReceiver = $testReceiver;
         $this->templates = $templates;
+        $this->provider = $provider;
     }
-
 
     /**
      * @param NewsletterInterface $newsletter
@@ -114,10 +100,9 @@ class NewsletterManager
         if ($newsletter->isPrepared()) {
             throw new SendException(sprintf('Newsletter with id "%s" already prepared', $newsletter->getId()));
         }
-        $subscription = $this->subscriptionManager->getSubscription('default');
-        $receivers = $subscription->getStrategy()->getStorage()->getReceivers($newsletter);
 
-        /** @var Receiver $receiver */
+        $receivers = $this->provider->getReceivers($newsletter);
+
         foreach ($receivers as $receiver) {
             $this->em->persist($receiver);
 
@@ -195,24 +180,18 @@ class NewsletterManager
         return $this->sendMessage($message);
     }
 
-    private function getTestReceiver(NewsletterInterface $newsletter): Receiver
+    public function sendTest(NewsletterInterface $newsletter, ?string $email = null): bool
     {
-        $receiver = new Receiver();
-        $receiver->setToken($this->testReceiver['token']);
-        $receiver->setNewsletter($newsletter);
-        $receiver->setParameters($this->testReceiver['parameters']);
+        $receivers = $this->provider->getTestReceivers($newsletter);
 
-        return $receiver;
-    }
-
-    public function sendTest(NewsletterInterface $newsletter, string $email): bool
-    {
         $return = true;
-        $receiver = $this->getTestReceiver($newsletter);
-        $receiver->setEmail($email);
-        $success = $this->sendNewsletter($receiver);
-        if (!$success) {
-            $return = false;
+        foreach ($receivers as $receiver) {
+            $receiver->setNewsletter($newsletter);
+            $receiver->setEmail($email);
+            $success = $this->sendNewsletter($receiver);
+            if (!$success) {
+                $return = false;
+            }
         }
         return $return;
     }
@@ -227,9 +206,11 @@ class NewsletterManager
 
     public function renderPreview(NewsletterInterface $newsletter)
     {
-        $receiver = $this->getTestReceiver($newsletter);
-
-        return $this->render($receiver);
+        $receivers = $this->provider->getTestReceivers($newsletter);
+        foreach($receivers as $receiver) {
+            $receiver->setNewsletter($newsletter);
+        }
+        return $this->render($receivers[0]);
     }
 
     public function render(Receiver $receiver)
@@ -278,5 +259,4 @@ class NewsletterManager
         }
         return $this->templates[$key]['template'];
     }
-
 }

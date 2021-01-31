@@ -20,6 +20,7 @@ use Enhavo\Bundle\NewsletterBundle\Entity\Receiver;
 use Enhavo\Bundle\NewsletterBundle\Exception\SendException;
 use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager;
 use Enhavo\Bundle\NewsletterBundle\Newsletter\ParameterParser;
+use Enhavo\Bundle\NewsletterBundle\Provider\ProviderInterface;
 use Enhavo\Bundle\NewsletterBundle\Storage\Storage;
 use Enhavo\Bundle\NewsletterBundle\Strategy\Strategy;
 use Enhavo\Bundle\NewsletterBundle\Subscription\Subscription;
@@ -36,20 +37,11 @@ class NewsletterManagerTest extends TestCase
         $dependency = new DependencyProvider();
         $dependency->em = $this->getMockBuilder(EntityManagerInterface::class)->getMock();
         $dependency->mailerManager = $this->getMockBuilder(MailerManager::class)->disableOriginalConstructor()->getMock();
-        $dependency->subscriptionManager = $this->getMockBuilder(SubscriptionManager::class)->disableOriginalConstructor()->getMock();
         $dependency->twig = $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->getMock();
         $dependency->twig->method('render')->willReturnCallback(function ($template) {
             return $template.'.rendered';
         });
         $dependency->from = 'from@enhavo.com';
-        $dependency->testReceiver = [
-            'token' => '__TRACKING_TOKEN__',
-            'parameters' => [
-                'firstname' => 'Harry',
-                'lastname' => 'Hirsch',
-                'token' => '__ID_TOKEN__'
-            ]
-        ];
         $dependency->tokenGenerator = $this->getMockBuilder(TokenGeneratorInterface::class)->disableOriginalConstructor()->getMock();
         $dependency->logger = $this->getMockBuilder(LoggerInterface::class)->getMock();
         $dependency->parameterParser = $this->getMockBuilder(ParameterParser::class)->disableOriginalConstructor()->getMock();
@@ -61,6 +53,12 @@ class NewsletterManagerTest extends TestCase
             return $key .'.managed';
         });
 
+        $providerMock = $this->getMockBuilder(ProviderInterface::class)->getMock();
+        $providerMock->method('getTestReceivers')->willReturn([
+            $this->createTestReceiver()
+        ]);
+        $dependency->provider = $providerMock;
+
         return $dependency;
     }
 
@@ -69,17 +67,30 @@ class NewsletterManagerTest extends TestCase
         return new NewsletterManager(
             $dependency->em,
             $dependency->mailerManager,
-            $dependency->subscriptionManager,
             $dependency->tokenGenerator,
             $dependency->logger,
             $dependency->twig,
             $dependency->templateManager,
             $dependency->parameterParser,
+            $dependency->provider,
             $dependency->from,
-            $dependency->testReceiver,
             $templates
         );
     }
+
+    private function createTestReceiver()
+    {
+        $receiver = new Receiver();
+        $receiver->setEmail('test@test.de');
+        $receiver->setToken('__TRACKING_TOKEN__');
+        $receiver->setParameters([
+            'firstname' => 'Harry',
+            'lastname' => 'Hirsch',
+            'token' =>  '__ID_TOKEN__'
+        ]);
+        return $receiver;
+    }
+
 
     private function createDummyNewsletter(): Newsletter
     {
@@ -112,18 +123,12 @@ class NewsletterManagerTest extends TestCase
         $receiverTwo = new Receiver();
         $dependency = $this->createDependencies();
 
-        $subscription = $this->getMockBuilder(Subscription::class)->disableOriginalConstructor()->getMock();
-        $subscription->method('getStrategy')->willReturnCallback(function () use ($receiverOne, $receiverTwo) {
-            $strategy = $this->getMockBuilder(Strategy::class)->disableOriginalConstructor()->getMock();
-            $storage = $this->getMockBuilder(Storage::class)->disableOriginalConstructor()->getMock();
-            $storage->method('getReceivers')->willReturn([$receiverOne, $receiverTwo]);
-            $strategy->method('getStorage')->willReturn($storage);
-            return $strategy;
-        });
+        $providerMock = $this->getMockBuilder(ProviderInterface::class)->getMock();
+        $providerMock->method('getReceivers')->willReturn([
+            $receiverOne, $receiverTwo
+        ]);
+        $dependency->provider = $providerMock;
 
-        $dependency->subscriptionManager->method('getSubscription')->willReturnCallback(function ($key) use ($subscription) {
-            return $subscription;
-        });
 
         $dependency->tokenGenerator->method('generateToken')->willReturn('aGeneratedToken');
         $dependency->em->expects($this->once())->method('flush');
@@ -396,15 +401,13 @@ class DependencyProvider
     /** @var LoggerInterface|MockObject */
     public $logger;
     /** @var SubscriptionManager|MockObject */
-    public $subscriptionManager;
-    /** @var Environment|MockObject */
     public $twig;
     /** @var TemplateManager|MockObject */
     public $templateManager;
     /** @var ParameterParser|MockObject */
     public $parameterParser;
-    /** @var array */
-    public $testReceiver;
+    /** @var ProviderInterface */
+    public $provider;
 }
 
 class MessageContainer

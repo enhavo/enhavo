@@ -1,5 +1,4 @@
 services:
-
     Enhavo\Bundle\NewsletterBundle\Client\CleverReachClient:
         arguments:
             - '@event_dispatcher'
@@ -150,3 +149,7 @@ services:
             - '@serializer'
         tags:
             - { name: controller.service_arguments }
+
+    Enhavo\Bundle\NewsletterBundle\Provider\GroupProvider:
+        arguments:
+            - '%enhavo_newsletter.newsletter.test_receiver%'

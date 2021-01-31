@@ -13,6 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\NewsletterBundle\Model\GroupInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\LocalSubscriberInterface;
+use Enhavo\Bundle\NewsletterBundle\Model\Subscriber;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
 class Group implements GroupInterface, ResourceInterface
@@ -113,7 +114,7 @@ class Group implements GroupInterface, ResourceInterface
     }
 
     /**
-     * @return Collection
+     * @return Collection|Subscriber
      */
     public function getSubscribers(): Collection
     {
