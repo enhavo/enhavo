@@ -1,5 +1,5 @@
-.tab-header {height:60px;font-size:0.75rem;line-height:1.1em;letter-spacing:0.06em;text-transform: uppercase;display:flex;align-items:center; background:$grey1;
-  .tab-head {height:100%;padding:0 20px;display:flex;align-items:center;cursor:pointer; flex:1;max-width:250px;justify-content:center; transition:all .3s;
+.tab-header {height:42px;font-size:0.75rem;line-height:1.1em;letter-spacing:0.06em;text-transform: uppercase;display:flex;align-items:center; background:$grey1;
+  .tab-head {height:100%;padding:0 12px;display:flex;align-items:center;cursor:pointer; flex:1;max-width:180px;justify-content:center; transition:all .3s;
     +.tab-head {border-left:1px solid $grey5;
       &.selected {border-left-color:transparent}
     }

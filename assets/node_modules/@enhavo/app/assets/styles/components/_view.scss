@@ -33,14 +33,7 @@
 
       // testing
       &:before, &:after { left:11px;}
-
-      .view-label {position:absolute;top:200px;left:0;padding:5px;z-index:1;color:$color2;text-transform:uppercase;text-align:right;font-size:0.75rem;
-        transform: rotate(-90deg);transform-origin: top left;min-width: 200px;line-height: 10px;letter-spacing: 0.05em;
-
-        // testing
-        padding: 10px;
-
-      }
+      .view-label {position:absolute;top:200px;left:0;z-index:1;color:$color2;text-transform:uppercase;text-align:right;font-size:0.75rem;transform: rotate(-90deg);transform-origin: top left;min-width: 200px;line-height: 10px;letter-spacing: 0.05em;padding: 10px;}
     }
   }
   .toolbar {background-image:linear-gradient(to right, $color1b, $color1);color:#fff;font-size:0.875rem;padding:0 6px 0 11px;font-weight:$fontMedium;height:30px;line-height:30px;position:relative;display:flex;

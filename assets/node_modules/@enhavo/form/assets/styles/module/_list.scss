@@ -1,6 +1,6 @@
 .list-type {
-  .list-add-button-row {margin:10px 0;
-    .list-add-button {cursor:pointer;display:inline-block;background:$grey1;padding:4px 10px 4px 5px;border-radius:3px;color:$grey3;font-size:0.75rem;
+  .list-add-button-row {margin:6px 0 12px 0;
+    .list-add-button {cursor:pointer;display:inline-block;background:$grey1;padding:4px 12px 4px;color:$grey3;font-size:0.85rem;
       &:hover {background:$grey5;}
     }
   }
@@ -14,12 +14,12 @@
     &.sortable {padding-right:56px;
       &.delete {padding-right:84px;}
     }
-    .listElement {position: relative;
+    .listElement {position: relative;padding:8px 7px 7px 7px;border-radius:0px 0px 12px 12px;margin-top:14px;border:1px dashed $grey4;
       + li {margin-top:10px;}
       .buttons-container {position:absolute;left:calc(100% + 3px);top:0;width:82px;
-        .button {display:inline-block;width:26px;line-height:26px;background:#fff;text-align:center;padding:0;margin:0;cursor:pointer;border-radius:3px;
+        .button {display:inline-block;width:26px;line-height:26px;background:#fff;text-align:center;padding:0;margin:0;cursor:pointer;border-radius:3px;color:$grey3;
           + .button {margin-left:2px;}
-          &.button-delete {background:$color6;
+          &.button-delete {background:rgba($color6b,0.1);
             &:hover {background:$color6b;}
           }
           &:hover {background:$color1;

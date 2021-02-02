@@ -1,12 +1,12 @@
 @import "~compass-mixins/lib/_animate.scss";
-%btn {border-radius:35px;font-family:inherit;margin:0;padding:7px 28px;border:0;cursor:pointer;transition:all .2s; font-size:$fontSize; text-align:center; line-height:1.3em;
-  &.has-symbol { padding-left:20px; padding-right:60px;position:relative; text-align:left;}
-  &.disabled, &:disabled { background:transparent; padding-top:6px; padding-bottom:6px; border:2px solid $grey2; color:$grey2;cursor:not-allowed;
+%btn {border-radius:10px;font-family:inherit;margin:0;padding:6px 14px 4px 14px;border:0;cursor:pointer;transition:all .2s; font-size:$fontSize; text-align:center; line-height:1.3em;
+  &.has-symbol { padding-left:14px; padding-right:40px;position:relative; text-align:left;}
+  &.disabled, &:disabled { background:transparent; padding-top:6px; padding-bottom:4px; border:2px solid $grey2; color:$grey2;cursor:not-allowed;
     &:hover {background:transparent; border:2px solid $grey2; color:$grey2;}
   }
 }
-%btn-secondary {@extend %btn;background:$grey5;color:$grey3;
-  &:hover {background:$grey3;color:$grey5;}
+%btn-secondary {@extend %btn;background:$grey1;color:$grey6;
+  &:hover {background:$grey5;color:$grey3;}
 }
 %btn-primary {@extend %btn;background:$color1;color:#fff;
   &:hover {background:$color1b;color:#fff;}
@@ -55,7 +55,9 @@
   &:hover {background:$color2;}
 }
 
-%textfield {background:$grey1;border:1px solid $grey1;border-radius:10px;margin:0;box-shadow:none;padding:6px 14px;font-size:1rem;line-height:1.6em;width:100%;font-family:inherit;}
+%textfield {background:$grey1;border:1px solid $grey1;border-radius:10px;margin:0;box-shadow:none;padding:5px 14px;font-size:1rem;line-height:1.6em;width:100%;font-family:inherit;@include transition(all 200ms);
+  &:focus {border-bottom:1px solid #9f9f9f;border-radius:10px 10px 0 0;background:#fff;}
+}
 %textarea {@extend %textfield;resize:none;min-height:8em;}
 
 %select {

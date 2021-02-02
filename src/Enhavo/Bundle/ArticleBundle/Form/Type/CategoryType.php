@@ -23,7 +23,8 @@ class CategoryType extends AbstractType
             'label' => 'form.label.parent',
             'translation_domain' => 'EnhavoAppBundle',
             'placeholder' => '---',
-            'taxonomy' => 'article_category'
+            'taxonomy' => 'article_category',
+            'expanded' => false
         ));
     }
 
