@@ -50,6 +50,12 @@ class UpdateViewer extends CreateViewer
 
         $data = $parameters->get('data');
         $data['actionsSecondary'] = $this->actionManager->createActionsViewData($actionsSecondary, $options['resource']);
+
+        $resourceData = $this->getResourceData($requestConfiguration, $options);
+        if ($resourceData) {
+            $data['resource'] = $resourceData;
+        }
+
         $parameters->set('data', $data);
     }
 
@@ -80,6 +86,17 @@ class UpdateViewer extends CreateViewer
 
         return $default;
     }
+
+    private function getResourceData(RequestConfiguration $requestConfiguration, array $options)
+    {
+        $resourceData = null;
+        $serializationGroups = $requestConfiguration->getSerializationGroups();
+        if($serializationGroups && $options['resource']) {
+            $resourceData = $this->container->get('serializer')->normalize($options['resource'], null, ['groups' => $serializationGroups]);
+        }
+        return $resourceData;
+    }
+
 
     public function configureOptions(OptionsResolver $optionsResolver)
     {

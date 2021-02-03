@@ -82,8 +82,8 @@ class EntityTypeExtension extends AbstractTypeExtension
         ]);
     }
 
-    public function getExtendedType()
+    public function getExtendedTypes(): iterable
     {
-        return EntityType::class;
+        return [EntityType::class];
     }
 }
