@@ -50,12 +50,10 @@ class ArticleType extends AbstractResourceType
             'multiple' => true,
             'route' => 'enhavo_article_tag_auto_complete',
             'translation_domain' => 'EnhavoArticleBundle',
-            'actions' => [
-                'create' => [
-                    'type' => 'create',
-                    'route' => 'enhavo_article_tag_create',
-                ]
-            ]
+            'create_route' => 'enhavo_article_tag_create',
+            'editable' => true,
+            'edit_route' => 'enhavo_article_tag_update',
+            'view_key' => 'article_tags'
         ]);
     }
 

@@ -1,18 +1,43 @@
 import 'select2'
 import FormType from "@enhavo/app/Form/FormType";
-import AutoCompleteConfig from "@enhavo/form/Type/AutoCompleteConfig";
 import Sortable from 'sortablejs';
+import UpdatedEvent from "@enhavo/app/ViewStack/Event/UpdatedEvent";
+import LoadDataEvent from "@enhavo/app/ViewStack/Event/LoadDataEvent";
+import DataStorageEntry from "@enhavo/app/ViewStack/DataStorageEntry";
+import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
+import Router from "@enhavo/core/Router";
+import View from "@enhavo/app/View/View";
 
 export default class AutoCompleteType extends FormType
 {
-    private config: AutoCompleteConfig;
     private idProperty: string;
     private labelProperty: string;
+    private viewKey: string;
+    private eventDispatcher: EventDispatcher;
+    private router: Router;
+    private view: View;
 
-    constructor(element: HTMLElement, config: AutoCompleteConfig)
+    constructor(element: HTMLElement, eventDispatcher: EventDispatcher, router: Router, view: View)
     {
         super(element);
-        this.config = config;
+        this.eventDispatcher = eventDispatcher;
+        this.router = router;
+        this.view = view;
+        this.initListener(this.viewKey);
+    }
+
+    private initListener(viewKey: string)
+    {
+        this.eventDispatcher.on('updated', (event: UpdatedEvent) => {
+            this.eventDispatcher.dispatch(new LoadDataEvent(viewKey))
+                .then((data: DataStorageEntry) => {
+                    if(data) {
+                        if(event.id == data.value && event.data != null) {
+                            this.addElement(event.data)
+                        }
+                    }
+                });
+        });
     }
 
     protected init()
@@ -20,6 +45,8 @@ export default class AutoCompleteType extends FormType
         let data = this.$element.data('auto-complete-entity');
         this.idProperty = data.id_property;
         this.labelProperty = data.label_property;
+        this.viewKey = data.view_key;
+
         let config: Select2Options = {
             initSelection: ($element: JQuery) => {
                 if(!data.sortable) {
@@ -86,21 +113,12 @@ export default class AutoCompleteType extends FormType
             });
         }
 
-        if(data.multiple && data.editable){
+        if(data.multiple && data.editable) {
             $input.on("change", (event: Select2JQueryEventObject) => {
                 this.initEditFields(data.edit_route);
             });
             this.initEditFields(data.edit_route);
         }
-
-        let $elements = this.$element.find('[data-auto-complete-action]');
-        $elements.click((event) => {
-            event.preventDefault();
-            let url = $(event.target).closest('[data-auto-complete-action]').attr('href');
-            if(this.config.executeAction) {
-                this.config.executeAction(this, url);
-            }
-        });
     }
 
     private initEditFields(route:string)
@@ -114,9 +132,9 @@ export default class AutoCompleteType extends FormType
                 $(this).click((event:any) => {
                     event.preventDefault();
                     let id = $(event.target).data('auto-complete-edit');
-                    if(self.config.edit) {
-                        self.config.edit(self, route, id.toString());
-                    }
+                    // open edit view
+                    let url = self.router.generate(route, {id: id});
+                    self.view.open(url, self.viewKey);
                 });
             }
         })
