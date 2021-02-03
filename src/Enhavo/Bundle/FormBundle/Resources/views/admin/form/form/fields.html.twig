@@ -288,7 +288,7 @@
             </div>
             <div class="label">
                 {{ label|trans({}, translation_domain)|nl2br }}
-                <span class="custom">{% if custom_name %}({{ custom_name }}){% endif %}</span>
+                {% if custom_name %}<span class="custom">({{ custom_name }})</span>{% endif %}
             </div>
         </div>
 

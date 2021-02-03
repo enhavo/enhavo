@@ -7,12 +7,16 @@
     }
   }
   .poly-collection-container {
-    .poly-collection-item-add-button-row {margin:10px auto;position:relative;cursor:pointer;z-index:1; width:50px; text-align:center; background:$color1; padding:5px 0;transition:all 300ms;
-      &:hover { color:$color1b;}
+    .poly-collection-item-add-button-row {margin:10px auto;position:relative;cursor:pointer;z-index:1; width:50px; text-align:center; background:$color1; padding:5px 0;transition:all 300ms;border-radius:10px;
+      &:hover { background:$color1b;}
       i {color:#fff}
     }
     .poly-collection-nested-container {padding-left: 10px;padding-right: 10px;}
     .poly-collection-item {background:#fff;overflow:hidden;border:1px solid $grey5;
+      &.collapsed {
+        .button-container {border-bottom:0;}
+        .poly-collection-item-content-container {display:none;}
+      }
       .button-container {border-bottom: 1px solid $grey5;padding:6px;display:flex;align-items:center;
         .button {cursor: pointer;height:100%;z-index:1;top:0;text-align:center;width:33px;background:#FFF;border-radius:3px;color:$grey3;padding:4px 0;
           &:hover {color:#fff;background:$color1;}
@@ -24,7 +28,7 @@
         .button-up {order:1;}
         .button-expand {order:3;}
         .button-collapse {order:3;}
-        .label {font-weight: 700;order: 0;margin-right: auto !important;background:$grey1;letter-spacing: 0.5px;padding: 3px 12px 1px 20px;border-radius: 0 10px 10px 0;margin-left: -6px;
+        .label {font-weight: 700;order: 0;margin-right:auto;letter-spacing: 0.5px;padding:1px 0 0 9px;
           .custom { font-weight:normal;color:$grey6;text-overflow:ellipsis;margin-left:5px; }
         }
       }
@@ -33,9 +37,9 @@
     }
   }
 
-  .poly-collection-menu-dialogue {display:none;margin:0;border-radius:0 0 3px 3px;padding:10px 20px;background:#FFF;border:1px solid $color1;
-    .item-list {display:flex;flex-wrap:wrap;margin:0 -6px;
-      li {width:150px;margin:6px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;padding:7px;text-align:center;cursor:pointer;flex:1 1 auto;border-radius:10px;background:$grey1;font-size:0.875rem;line-height:1.3em;
+  .poly-collection-menu-dialogue {display:none;margin:0 0 25px 0;padding:8px 13px;background:#FFF;border:1px solid $color1;border-radius:19px;
+    .item-list {display:flex;flex-wrap:wrap;margin:0 -4px;
+      li {width:150px;margin:4px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;padding:7px;border-radius:10px;text-align:center;cursor:pointer;flex:1 1 auto;background:$grey1;font-size:0.875rem;line-height:1.3em;
         &:hover {background:$color1;color:#fff;}
       }
     }
