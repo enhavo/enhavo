@@ -85,6 +85,12 @@ services:
         tags:
             - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 
+    Enhavo\Bundle\FormBundle\Form\Extension\ActionExtension:
+        arguments:
+            - '@enhavo_app.action_manager'
+        tags:
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
+
     Enhavo\Bundle\FormBundle\Form\Transformer\CurrencyTransformer:
         public: true
         arguments:

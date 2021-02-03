@@ -4,6 +4,13 @@ services:
         tags:
             - 'enhavo_app.form'
 
+    '@enhavo/form/Loader/ActionLoader':
+        chunk: 'form'
+        arguments:
+            - '@enhavo/app/Action/ActionRegistry'
+        tags:
+            - 'enhavo_app.form'
+
     '@enhavo/form/Loader/SelectLoader':
         chunk: 'form'
         tags:
