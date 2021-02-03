@@ -2,27 +2,14 @@
   &:last-child {
     .view-resizer {display:none;}
   }
-  &.minimized {flex:0;height:100%;transition:background .2s;background:$grey1;
-
-    //testing
-    min-width: 30px;
-
+  &.minimized {flex:0;height:100%;transition:background .2s;background:$grey1;min-width: 30px;
     &:hover {background:$grey5;}
     &:last-child {
       .view-resizer {display:block;}
     }
-    .toolbar {padding:0;height:30px;position:relative;width:20px;
-
-      // testing
-      width: 30px;
-
+    .toolbar {padding:0;height:30px;position:relative;width: 30px;
       .actions {align-items:initial;
-        .action {padding:0 2px;
-
-          // testing
-          padding: 0 8px;
-
-        }
+        .action {padding: 0 8px;}
       }
     }
     .view-resizer {width:100%;border:0;cursor:pointer;border-right: 1px solid $grey5;
@@ -38,7 +25,9 @@
   }
   .toolbar {background-image:linear-gradient(to right, $color1b, $color1);color:#fff;font-size:0.875rem;padding:0 6px 0 11px;font-weight:$fontMedium;height:30px;line-height:30px;position:relative;display:flex;
     .actions {display:flex;margin-left:auto;align-items:center;flex:0;
-      .action {padding:5px;cursor:pointer;}
+      .action {padding:0 5px;cursor:pointer;
+        &:hover {background:rgba(#000,0.1);}
+      }
     }
   }
   .view-component-inner {height:calc(100% - 30px);position:relative;
