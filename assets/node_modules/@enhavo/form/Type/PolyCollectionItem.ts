@@ -66,10 +66,10 @@ export default class PolyCollectionItem
     {
         this.collapsed = true;
         let $actions =  this.$element.children('[data-poly-collection-item-action]');
+        this.$element.addClass('collapsed');
 
         $actions.find('[data-poly-collection-item-action-expand]').show();
         $actions.find('[data-poly-collection-item-action-collapse]').hide();
-        this.$element.children('[data-poly-collection-item-container]').hide();
     }
 
     public collapseAll()
@@ -89,10 +89,10 @@ export default class PolyCollectionItem
     {
         this.collapsed = false;
         let $actions =  this.$element.children('[data-poly-collection-item-action]');
+        this.$element.removeClass('collapsed');
 
         $actions.find('[data-poly-collection-item-action-expand]').hide();
         $actions.find('[data-poly-collection-item-action-collapse]').show();
-        this.$element.children('[data-poly-collection-item-container]').show();
     }
 
     public expandAll()

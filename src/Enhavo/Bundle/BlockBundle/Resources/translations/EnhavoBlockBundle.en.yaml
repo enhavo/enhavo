@@ -99,10 +99,10 @@ one_column:
     one_column: 'One column'
 two_column:
   label:
-    two_column: 'Two column'
+    two_column: 'Two columns'
 three_column:
   label:
-    three_column: 'Three column'
+    three_column: 'Three columns'
 block:
   label:
     blocks: 'Blocks'
