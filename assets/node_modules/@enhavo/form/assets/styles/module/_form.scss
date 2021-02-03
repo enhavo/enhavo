@@ -1,24 +1,27 @@
 .form-row {
-    .autocomplete-create-button {display:inline-block;margin-top:8px;@extend %btn-secondary;text-decoration: none;
-        &:after {font-family:"enhavo-icons";content:"\f10d";position:absolute;top:8px; right:20px; font-weight:$fontRegular;}
+    .autocomplete-create-button {display:inline-block;@extend %btn-secondary;text-decoration: none;
+        &:after {font-family:"enhavo-icons";content:"\f10d";position:absolute;top:5px; right:10px; font-weight:$fontRegular;}
     }
 
-    .autocomplete-action-button {display:inline-block;margin-top:8px;@extend %btn-secondary;text-decoration: none;
-        i { position:absolute;top:8px; right:20px; font-weight:$fontRegular; }
+    .autocomplete-action-button {display:inline-block;@extend %btn-secondary;text-decoration: none;
+        i { position:absolute;top:5px; right:10px; font-weight:$fontRegular; }
     }
 
-    .entity-tree-children {margin:0 0 10px 0;padding-left:30px;position:relative;
+    .related-buttons-row {margin-top:5px;}
+
+    .entity-tree-children {padding-left:30px;position:relative;
         &:before {content:"";position:absolute;top: 6px;left: 10px;border-left: 1px solid #ccc;border-bottom: 1px solid #ccc;width: 8px;height: 8px;}
         .entity-tree-children {
             &:after {content:"";position:absolute;top: 13px;left: 18px;width: 1px;background:linear-gradient(to bottom, #ccc, transparent);height: calc(100% - 13px);}
         }
     }
 
+    .choice-row {
+        + .choice-row {margin-top:3px;}
+    }
+
     .choice-input-container {padding-top:3px;
         .choice-input-with-label {display: inline-block;white-space:nowrap;margin-right:20px;}
-        .icheckbox {
-            + label {color:$black;display: inline-block;vertical-align: middle; margin-left:7px;transition:all .2s; font-weight:$fontMedium;}
-        }
     }
 
     .head-line-widget { position:relative;
@@ -28,7 +31,7 @@
         }
     }
 
-    .label-help-container {font-size:0.85rem;line-height:1.1em;padding-left:2px;margin-bottom:1px;
+    .label-help-container {font-size:0.85rem;line-height:1.1em;margin-bottom:1px;
         .label {display:inline-block; margin-bottom:2px;
             + .help-container {margin-left:5px;}
         }

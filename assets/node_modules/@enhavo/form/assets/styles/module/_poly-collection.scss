@@ -1,4 +1,4 @@
-.enhavo-poly-collection {position: relative;padding:20px;border-radius:3px;
+.enhavo-poly-collection {position: relative;padding:20px;
   .addItem {cursor: pointer;}
   .add-enhavo_poly-collection-button {font-size:14px;line-height:19px;}
   .poly-collection-actions {
@@ -7,25 +7,25 @@
     }
   }
   .poly-collection-container {
-    .poly-collection-item-add-button-row {margin:10px 0;position:relative;cursor:pointer;z-index:1; width:100%; text-align:center; background:#FFF; padding:11px 0 10px 0;border-radius: 0 0 3px 3px;border: 1px solid $grey5;transition:all .3s;
-      i {color:$grey3}
-      &:hover { color:$color1;
-        i {color:$color1}
-      }
+    .poly-collection-item-add-button-row {margin:10px auto;position:relative;cursor:pointer;z-index:1; width:50px; text-align:center; background:$color1; padding:5px 0;transition:all 300ms;
+      &:hover { color:$color1b;}
+      i {color:#fff}
     }
     .poly-collection-nested-container {padding-left: 10px;padding-right: 10px;}
-    .poly-collection-item {background:#fff; box-shadow: 0 0 4px rgba(0, 0, 0, 0.16), 0 1px 4px rgba(0, 0, 0, 0.23); border-radius:3px;overflow:hidden;
+    .poly-collection-item {background:#fff;overflow:hidden;border:1px solid $grey5;
       .button-container {border-bottom: 1px solid $grey5;padding:6px;display:flex;align-items:center;
         .button {cursor: pointer;height:100%;z-index:1;top:0;text-align:center;width:33px;background:#FFF;border-radius:3px;color:$grey3;padding:4px 0;
           &:hover {color:#fff;background:$color1;}
         }
-        .button-delete {order:5;}
+        .button-delete {order:5;background:rgba($color6b,0.1);
+          &:hover {background:$color6b;}
+        }
         .button-down {order:2;}
         .button-up {order:1;}
         .button-expand {order:3;}
         .button-collapse {order:3;}
-        .label { padding-left:9px;font-weight: 600;order:0;margin-right:auto!important;
-          .custom { font-weight:normal;color:$grey4;text-overflow:ellipsis; }
+        .label {font-weight: 700;order: 0;margin-right: auto !important;background:$grey1;letter-spacing: 0.5px;padding: 3px 12px 1px 20px;border-radius: 0 10px 10px 0;margin-left: -6px;
+          .custom { font-weight:normal;color:$grey6;text-overflow:ellipsis;margin-left:5px; }
         }
       }
       .poly-collection-item-content-container {padding:15px;}
@@ -33,7 +33,7 @@
     }
   }
 
-  .poly-collection-menu-dialogue {display:none;margin-top:-10px;margin-bottom:10px;border-radius:0 0 3px 3px;padding:10px 20px 20px; background:#FFF;border-width: 0 1px 1px 1px;border-style: solid; border-color: $grey5;
+  .poly-collection-menu-dialogue {display:none;margin:0;border-radius:0 0 3px 3px;padding:10px 20px;background:#FFF;border:1px solid $color1;
     .item-list {display:flex;flex-wrap:wrap;margin:0 -6px;
       li {width:150px;margin:6px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;padding:7px;text-align:center;cursor:pointer;flex:1 1 auto;border-radius:10px;background:$grey1;font-size:0.875rem;line-height:1.3em;
         &:hover {background:$color1;color:#fff;}

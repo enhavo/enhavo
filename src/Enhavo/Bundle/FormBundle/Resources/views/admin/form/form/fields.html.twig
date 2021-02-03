@@ -83,7 +83,7 @@
 
         {% if allow_add %}
             <div class="list-add-button-row" data-add-button>
-                <div class="list-add-button"><i class="icon icon-add_box"></i> hinzufügen</div>
+                <div class="list-add-button"><i class="icon icon-add_box"></i></div>
             </div>
         {% endif %}
     </div>
@@ -154,9 +154,13 @@
             {% set valueString = value %}
         {% endif %}
         <input type="hidden" name="{{ full_name }}" value="{{ valueString }}" {% if multiple %}multiple="multiple"{% endif %} data-auto-complete-input />
-        {% for action in actions %}
-            <a href="{{ action.url }}" data-auto-complete-action="{{ action|json_encode|e }}" class="autocomplete-action-button btn has-symbol">{% if action.label %}{{ action.label }}{% endif %} <i aria-hidden="true" class="icon icon-{{action.icon}}"></i></a>
-        {% endfor %}
+        {% if actions|length > 0 %}
+            <div class="related-buttons-row">
+                {% for action in actions %}
+                    <a href="{{ action.url }}" data-auto-complete-action="{{ action|json_encode|e }}" class="autocomplete-action-button btn has-symbol">{% if action.label %}{{ action.label }}{% endif %} <i aria-hidden="true" class="icon icon-{{action.icon}}"></i></a>
+                {% endfor %}
+            </div>
+        {% endif %}
     </div>
 {% endblock %}
 
@@ -179,7 +183,7 @@
 
 {% macro choice_view(choice, choice_translation_domain, children_container_class) %}
     {% import _self as forms %}
-    <div>
+    <div class="choice-row">
         <div>
             {{ form_widget(choice.formView) }}
             {{ form_label(choice.formView, null, {translation_domain: choice_translation_domain}) }}
@@ -298,7 +302,7 @@
 
 {% macro addPolyCollectionButton() %}
     <div class="poly-collection-item-add-button-row" data-poly-collection-add-button>
-        <div class="label"><i class="icon icon-add"></i> <span>{{ 'poly_collection.action.add_block'|trans({}, 'EnhavoFormBundle') }}</span></div>
+        <div class="label"><i class="icon icon-add"></i></div>
     </div>
 {% endmacro %}
 
