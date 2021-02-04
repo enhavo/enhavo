@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\ArticleBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Template\TemplateTrait;
+use Enhavo\Bundle\ArticleBundle\Entity\Article;
 use Enhavo\Bundle\CommentBundle\Comment\CommentManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,9 +12,7 @@ class ArticleController extends AbstractController
 {
     use TemplateTrait;
 
-    /**
-     * @var CommentManager
-     */
+    /** @var CommentManager */
     private $commentManager;
 
     /**
@@ -25,8 +24,12 @@ class ArticleController extends AbstractController
         $this->commentManager = $commentManager;
     }
 
-    public function showResourceAction($contentDocument, Request $request)
+    public function showResourceAction(Article $contentDocument, Request $request)
     {
+        if (!$contentDocument->isPublished()) {
+            throw $this->createNotFoundException();
+        }
+
         $context = $this->commentManager->handleSubmitForm($request, $contentDocument);
         if($context->isInsert()) {
             $this->redirect($request->getRequestUri());
@@ -39,6 +42,7 @@ class ArticleController extends AbstractController
 
     public function showAction(Request $request)
     {
+        /** @var Article $article */
         $article = $this->get('enhavo_article.repository.article')->findOneBy([
             'slug' => $request->get('slug')
         ]);

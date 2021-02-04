@@ -11,19 +11,13 @@ namespace Enhavo\Bundle\ContentBundle\Content;
 
 trait PublishableTrait
 {
-    /**
-     * @var boolean
-     */
-    protected $public;
+    /** @var boolean */
+    protected $public = false;
 
-    /**
-     * @var \DateTime
-     */
+    /** @var \DateTime */
     protected $publicationDate;
 
-    /**
-     * @var \DateTime
-     */
+    /** @var \DateTime */
     protected $publishedUntil;
 
     /**

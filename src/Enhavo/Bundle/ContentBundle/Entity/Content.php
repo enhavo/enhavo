@@ -21,80 +21,50 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 abstract class Content implements Publishable, Routeable, Slugable, SitemapInterface, ResourceInterface
 {
     use PublishableTrait;
-    
-    /**
-     * @var \DateTime
-     */
+
+    /** @var \DateTime */
     protected $created;
 
-    /**
-     * @var \DateTime
-     */
+    /** @var \DateTime */
     protected $updated;
 
-    /**
-     * @var integer
-     */
+    /** @var integer */
     protected $id;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $title;
-    
-    /**
-     * @var string
-     */
+
+    /** @var string */
     protected $slug;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $metaDescription;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $pageTitle;
 
-    /**
-     * @var float
-     */
+    /** @var float */
     protected $priority;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $changeFrequency;
 
-    /**
-     * @var boolean
-     */
+    /** @var boolean */
     protected $noIndex = false;
 
-    /**
-     * @var boolean
-     */
+    /** @var boolean */
     protected $noFollow = false;
 
-    /**
-     * @var FileInterface
-     */
+    /** @var FileInterface */
     protected $openGraphImage;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $openGraphTitle;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $openGraphDescription;
 
-    /**
-     * @var RouteInterface
-     */
+    /** @var RouteInterface */
     protected $route;
 
     /**
@@ -342,7 +312,7 @@ abstract class Content implements Publishable, Routeable, Slugable, SitemapInter
     /**
      * Get public
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getPublic()
     {
@@ -365,7 +335,7 @@ abstract class Content implements Publishable, Routeable, Slugable, SitemapInter
     /**
      * Get openGraphTitle
      *
-     * @return string 
+     * @return string
      */
     public function getOpenGraphTitle()
     {
@@ -388,7 +358,7 @@ abstract class Content implements Publishable, Routeable, Slugable, SitemapInter
     /**
      * Get openGraphDescription
      *
-     * @return string 
+     * @return string
      */
     public function getOpenGraphDescription()
     {
