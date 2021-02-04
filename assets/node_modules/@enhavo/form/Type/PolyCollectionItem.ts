@@ -16,11 +16,7 @@ export default class PolyCollectionItem
         this.polyCollection = polyCollection;
         this.$element = $(element);
         this.initActions();
-        if(polyCollection.isCollapse()) {
-            this.collapse();
-        } else {
-            this.expand();
-        }
+        this.expand();
     }
 
     private initActions()
