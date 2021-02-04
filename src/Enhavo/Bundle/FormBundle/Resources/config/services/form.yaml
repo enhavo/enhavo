@@ -1,10 +1,4 @@
 services:
-    Enhavo\Bundle\FormBundle\Form\Type\MessageType:
-        tags:
-            - { name: form.type }
-        arguments:
-            - '@translator'
-
     Enhavo\Bundle\FormBundle\Form\Type\ListType:
         class: Enhavo\Bundle\FormBundle\Form\Type\ListType
         tags:
@@ -19,10 +13,6 @@ services:
     Enhavo\Bundle\FormBundle\Form\Type\DateType:
         arguments:
             - '%enhavo_form.date_type.config%'
-        tags:
-            - { name: form.type }
-
-    Enhavo\Bundle\FormBundle\Form\Type\WeekendDateType:
         tags:
             - { name: form.type }
 
@@ -82,6 +72,12 @@ services:
             - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 
     Enhavo\Bundle\FormBundle\Form\Extension\HelpExtension:
+        tags:
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
+
+    Enhavo\Bundle\FormBundle\Form\Extension\ActionExtension:
+        arguments:
+            - '@enhavo_app.action_manager'
         tags:
             - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 

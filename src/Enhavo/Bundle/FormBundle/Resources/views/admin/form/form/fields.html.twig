@@ -39,6 +39,13 @@
             </div>
             <div class="formwidget-container" data-formwidget-container>
                 {{ form_widget(form) }}
+                {% if actions|length > 0 %}
+                    <div class="related-buttons-row">
+                        {% for action in actions %}
+                            <a href="#" data-action-button="{{ action|json_encode|e }}" class="btn has-symbol">{% if action.label %}{{ action.label }}{% endif %} <i aria-hidden="true" class="icon icon-{{ action.icon }}"></i></a>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
             {{ form_errors(form) }}
         </div>
@@ -154,13 +161,6 @@
             {% set valueString = value %}
         {% endif %}
         <input type="hidden" name="{{ full_name }}" value="{{ valueString }}" {% if multiple %}multiple="multiple"{% endif %} data-auto-complete-input />
-        {% if actions|length > 0 %}
-            <div class="related-buttons-row">
-                {% for action in actions %}
-                    <a href="{{ action.url }}" data-auto-complete-action="{{ action|json_encode|e }}" class="autocomplete-action-button btn has-symbol">{% if action.label %}{{ action.label }}{% endif %} <i aria-hidden="true" class="icon icon-{{action.icon}}"></i></a>
-                {% endfor %}
-            </div>
-        {% endif %}
     </div>
 {% endblock %}
 
@@ -288,7 +288,7 @@
             </div>
             <div class="label">
                 {{ label|trans({}, translation_domain)|nl2br }}
-                <span class="custom">{% if custom_name %}({{ custom_name }}){% endif %}</span>
+                {% if custom_name %}<span class="custom">({{ custom_name }})</span>{% endif %}
             </div>
         </div>
 

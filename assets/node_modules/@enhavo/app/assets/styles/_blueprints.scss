@@ -56,7 +56,7 @@
 }
 
 %textfield {background:$grey1;border:1px solid $grey1;border-radius:10px;margin:0;box-shadow:none;padding:5px 14px;font-size:1rem;line-height:1.6em;width:100%;font-family:inherit;@include transition(all 200ms);
-  &:focus {border-bottom:1px solid #9f9f9f;border-radius:10px 10px 0 0;background:#fff;}
+  &:focus {background:#fff;}
 }
 %textarea {@extend %textfield;resize:none;min-height:8em;}
 

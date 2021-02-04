@@ -74,7 +74,8 @@ class PolyCollectionType extends AbstractType
                 $options['prototype_storage'],
                 $type,
                 isset($options['entry_types_options'][$key]) ? $options['entry_types_options'][$key] : [],
-                ['key' => $key]
+                ['key' => $key],
+                isset($options['entry_types_prototype_data'][$key]) ? $options['entry_types_prototype_data'][$key] : []
             );
         }
     }
@@ -140,6 +141,7 @@ class PolyCollectionType extends AbstractType
             'entry_type_name' => '_key',
             'entry_type_resolver' => null,
             'entry_type_filter' => null,
+            'entry_types_prototype_data' => [],
             'prototype_storage' => null,
             'by_reference' => false,
             'custom_name_property' => null
