@@ -40,6 +40,7 @@ class NodeCollectionType extends AbstractType
             'translation_domain' => 'EnhavoBlockBundle',
             'entry_types' => $this->getEntryTypes(),
             'entry_types_options' => $this->getEntryTypesOptions(),
+            'entry_types_prototype_data' => $this->getEntryTypesPrototypeData(),
             'entry_type_name' => 'name',
             'entry_type_resolver' => function(NodeInterface $node) {
                 return $node->getName();
@@ -77,5 +78,18 @@ class NodeCollectionType extends AbstractType
             ];
         }
         return $types;
+    }
+
+    private function getEntryTypesPrototypeData()
+    {
+        $data = [];
+        foreach($this->navItemManager->getNavItems() as $key => $item) {
+            /** @var NodeInterface $node */
+            $node = new $this->class;
+            $modelClass = $item->getModel();
+            $node->setSubject(new $modelClass);
+            $data[$key] = $node;
+        }
+        return $data;
     }
 }

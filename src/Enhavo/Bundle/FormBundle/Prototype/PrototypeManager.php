@@ -10,7 +10,6 @@ namespace Enhavo\Bundle\FormBundle\Prototype;
 
 use Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -53,7 +52,7 @@ class PrototypeManager
         return isset($this->storage[$storageName]);
     }
 
-    public function buildPrototype(FormBuilderInterface $builder, $storageName, $type, $options, $parameters)
+    public function buildPrototype(FormBuilderInterface $builder, $storageName, $type, $options, $parameters, $data = null)
     {
         if(!$this->hasStorage($storageName)) {
             throw new \InvalidArgumentException();
@@ -67,6 +66,7 @@ class PrototypeManager
 
         $name = sprintf('__%s__', $this->tokenGenerator->generateToken(8));
         $form = $builder->create($name, $type, $options)->getForm();
+        $form->setData($data);
         $this->prototypes[] = new Prototype($storageName, $name, $form, $parameters);
     }
 
