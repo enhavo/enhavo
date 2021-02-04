@@ -22,8 +22,8 @@ class WidthType extends AbstractType
             'translation_domain' => 'EnhavoBlockBundle',
             'choices_as_values' => true,
             'choices' => [
+                'column.label.width.container' => Column::WIDTH_CONTAINER,
                 'column.label.width.full' => Column::WIDTH_FULL,
-                'column.label.width.container' => Column::WIDTH_CONTAINER
             ]
         ]);
     }

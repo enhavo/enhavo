@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\BlockBundle\Form\Type;
 
 use Enhavo\Bundle\BlockBundle\Block\BlockManager;
+use Enhavo\Bundle\BlockBundle\Entity\Node;
 use Enhavo\Bundle\BlockBundle\Model\CustomNameInterface;
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 use Enhavo\Bundle\FormBundle\Form\Type\PolyCollectionType;
@@ -33,6 +34,7 @@ class BlockCollectionType extends AbstractType
             'translation_domain' => 'EnhavoBlockBundle',
             'entry_types' => $this->getEntryTypes(),
             'entry_types_options' => $this->getEntryTypesOptions(),
+            'entry_types_prototype_data' => $this->getEntryTypesPrototypeData(),
             'entry_type_name' => 'name',
             'entry_type_resolver' => function(NodeInterface $node) {
                 return $node->getName();
@@ -106,6 +108,18 @@ class BlockCollectionType extends AbstractType
             ];
         }
         return $types;
+    }
+
+    private function getEntryTypesPrototypeData()
+    {
+        $data = [];
+        foreach($this->blockManager->getBlocks() as $key => $block) {
+            $node = new Node();
+            $modelClass = $block->getModel();
+            $node->setBlock(new $modelClass);
+            $data[$key] = $node;
+        }
+        return $data;
     }
 
     public function getParent()
