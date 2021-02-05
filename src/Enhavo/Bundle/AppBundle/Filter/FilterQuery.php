@@ -81,7 +81,7 @@ class FilterQuery
     public function removeOrderBy($property, $order)
     {
         if(!$property && !$order){
-            return;
+            return $this;
         }
         foreach ($this->orderBy as $index => $orderBy){
             if($property && $orderBy['property'] !== $property){
@@ -111,7 +111,7 @@ class FilterQuery
     public function removeWhere($property, $operator, $value, $joinProperty = null)
     {
         if(!$property && !$operator && !$value && !$joinProperty){
-            return;
+            return $this;
         }
         foreach ($this->where as $index => $where){
             if($property && $where['property'] !== $property){
@@ -227,6 +227,7 @@ class FilterQuery
                 }
             }
         }
+        return $allLetters;
     }
 
     private function getValue($where)
@@ -267,6 +268,9 @@ class FilterQuery
             case(FilterQuery::OPERATOR_LESS_EQUAL):
                 return '<=';
             case(FilterQuery::OPERATOR_NOT):
+                if($value === null) {
+                    return 'is not';
+                }
                 return '!=';
             case(FilterQuery::OPERATOR_LIKE):
             case(FilterQuery::OPERATOR_START_LIKE):
