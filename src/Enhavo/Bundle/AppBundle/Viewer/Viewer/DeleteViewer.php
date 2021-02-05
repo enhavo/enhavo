@@ -14,28 +14,32 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactory;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DeleteViewer extends BaseViewer
 {
-    /**
-     * @var FlashBag
-     */
+    /** @var FlashBag */
     protected $flashBag;
+
+    private $translator;
 
     /**
      * CreateViewer constructor.
      * @param RequestConfigurationFactory $requestConfigurationFactory
      * @param ViewerUtil $util
      * @param FlashBag $flashBag
+     * @param TranslatorInterface $translator
      */
     public function __construct(
         RequestConfigurationFactory $requestConfigurationFactory,
         ViewerUtil $util,
-        FlashBag $flashBag
+        FlashBag $flashBag,
+        TranslatorInterface $translator
     )
     {
         parent::__construct($requestConfigurationFactory, $util);
         $this->flashBag = $flashBag;
+        $this->translator = $translator;
     }
 
     public function getType()
@@ -70,7 +74,7 @@ class DeleteViewer extends BaseViewer
         foreach($types as $type) {
             foreach($this->flashBag->get($type) as $message) {
                 $messages[] = [
-                    'message' => is_array($message) ? $message['message'] : $message,
+                    'message' => $this->translator->trans(is_array($message) ? $message['message'] : $message),
                     'type' => $type
                 ];
             }
