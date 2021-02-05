@@ -38,3 +38,7 @@ Thu: Do
 Fri: Fr
 Sat: Sa
 Sun: So
+
+sylius:
+    resource:
+        delete: 'Erfolgreich gelöscht'

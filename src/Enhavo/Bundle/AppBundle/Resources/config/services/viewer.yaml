@@ -87,6 +87,7 @@ services:
             - '@sylius.resource_controller.request_configuration_factory'
             - '@Enhavo\Bundle\AppBundle\Viewer\ViewerUtil'
             - '@session.flash_bag'
+            - '@translator'
         calls:
             - ['setContainer', ['@service_container']]
         tags:
