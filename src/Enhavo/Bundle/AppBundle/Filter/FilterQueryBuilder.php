@@ -9,7 +9,6 @@
 namespace Enhavo\Bundle\AppBundle\Filter;
 
 use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
-use Enhavo\Bundle\AppBundle\Exception\FilterException;
 use Symfony\Component\HttpFoundation\Request;
 
 class FilterQueryBuilder

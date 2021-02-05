@@ -10,7 +10,6 @@ namespace Enhavo\Bundle\AppBundle\Repository;
 
 use Doctrine\ORM\QueryBuilder;
 use Enhavo\Bundle\AppBundle\Filter\FilterQuery;
-use Enhavo\Bundle\AppBundle\Exception\FilterException;
 
 trait EntityRepositoryTrait
 {
