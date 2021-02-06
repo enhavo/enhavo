@@ -75,7 +75,7 @@ class PolyCollectionType extends AbstractType
                 $type,
                 isset($options['entry_types_options'][$key]) ? $options['entry_types_options'][$key] : [],
                 ['key' => $key],
-                isset($options['entry_types_prototype_data'][$key]) ? $options['entry_types_prototype_data'][$key] : []
+                isset($options['entry_types_prototype_data'][$key]) ? $options['entry_types_prototype_data'][$key] : null
             );
         }
     }
