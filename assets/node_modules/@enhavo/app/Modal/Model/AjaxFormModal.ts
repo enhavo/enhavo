@@ -12,7 +12,9 @@ export default class AjaxFormModal extends AbstractModal
     public actionRouteParameters: object;
     public actionUrl: string;
     public actionHandler: (modal: AjaxFormModal, data: any, error: string) => Promise<boolean>;
+    public submitHandler: (modal: AjaxFormModal, data: any) => Promise<boolean>;
     public element: HTMLElement = null;
+    public form: HTMLElement = null;
     public saveLabel: string = 'enhavo_app.save';
     public closeLabel: string = 'enhavo_app.abort';
     public loading: boolean = true;
@@ -44,41 +46,48 @@ export default class AjaxFormModal extends AbstractModal
         });
     }
 
-    async sendForm(data: any): Promise<boolean>
+    async submit(): Promise<boolean>
+    {
+        let data = this.getFormData();
+        if (this.submitHandler) {
+            return this.submitHandler(this, data);
+        } else {
+            return this.sendForm(data);
+        }
+    }
+
+    private sendForm(data: any): Promise<boolean>
     {
         this.loading = true;
         return new Promise((resolve, reject) => {
             if(this.data) {
-                data = _.extend(data, this.data)
+                data = _.extend(data, this.data);
             }
+
             axios.post(this.getActionUrl(), this.buildQuery(data)).then((responseData) => {
-                if(this.actionHandler) {
-                    this.actionHandler(this, responseData, null)
-                        .then((value) => {
-                            resolve(value);
-                        })
-                        .catch(() => {
-                            reject();
-                        });
-                } else {
-                    resolve();
-                }
-                this.loading = false;
+                this.receiveForm(responseData, resolve, reject)
             }).catch((error) => {
-                if(this.actionHandler) {
-                    this.actionHandler(this, error.response, error)
-                        .then((value) => {
-                            resolve(value);
-                        })
-                        .catch(() => {
-                            reject();
-                        });
-                } else {
-                    reject();
-                }
-                this.loading = false;
+                this.receiveForm(error.response, resolve, reject)
             });
         });
+    }
+
+    private receiveForm(responseData: any, resolve: (data?: any) => void, reject: () => void)
+    {
+        if(this.actionHandler) {
+            this.actionHandler(this, responseData, null)
+                .then((value) => {
+                    resolve(value);
+                })
+                .catch(() => {
+                    reject();
+                });
+        } else {
+            let html = responseData.data.trim();
+            this.element = <HTMLElement>$.parseHTML(html)[0];
+            resolve();
+        }
+        this.loading = false;
     }
 
     private getActionUrl()
@@ -109,5 +118,15 @@ export default class AjaxFormModal extends AbstractModal
             args[args.length]=prefix+'='+encodeURIComponent(obj);
         }
         return args.join('&');
+    }
+
+    public getFormData(): object
+    {
+        let formData = {};
+        let data = $(this.form).serializeArray();
+        for(let row of data) {
+            formData[row.name] = row.value;
+        }
+        return formData;
     }
 }

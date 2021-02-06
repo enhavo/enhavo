@@ -11,6 +11,7 @@ namespace Enhavo\Bundle\AppBundle\Controller;
 use Enhavo\Bundle\AppBundle\Template\TemplateTrait;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ModalController extends AbstractController
 {
@@ -22,9 +23,16 @@ class ModalController extends AbstractController
         $form = $this->get('form.factory')->create($configuration->getForm(), null, $configuration->getOptions());
         $template = $configuration->getTemplate() ? $configuration->getTemplate() : 'admin/view/modal-form.html.twig';
 
+        $form->handleRequest($request);
+
+        $response = new Response();
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $response->setStatusCode(400);
+        }
+
         return $this->render($this->getTemplate($template), [
             'form' => $form->createView()
-        ]);
+        ], $response);
     }
 
     /**

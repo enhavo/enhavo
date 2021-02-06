@@ -1,2 +1,6 @@
 {% form_theme form with form_themes() %}
-{{ form_widget(form) }}
+{%  if form.children|length > 1 %}
+    {{ form_widget(form) }}
+{% else %}
+    {{ form_row(form) }}
+{% endif %}
