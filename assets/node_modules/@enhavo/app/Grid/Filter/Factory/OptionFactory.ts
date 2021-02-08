@@ -5,13 +5,21 @@ export default class OptionFactory extends AbstractFactory
 {
     createFromData(data: object): OptionFilter
     {
-        let action = this.createNew();
+        let filter = this.createNew();
         let object = <OptionFilter>data;
-        action.component = object.component;
-        return action;
+        filter.component = object.component;
+        if (data.value !== null && data.hasOwnProperty('choices')) {
+            for(let choice: object of data.choices) {
+                if (choice.hasOwnProperty('code') && choice.code == data.value) {
+                    filter.selected = choice;
+                    break;
+                }
+            }
+        }
+        return filter;
     }
 
     createNew(): OptionFilter {
-        return new OptionFilter(this.application)
+        return new OptionFilter();
     }
 }

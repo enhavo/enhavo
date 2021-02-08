@@ -5,13 +5,13 @@ export default class AutoCompleteEntityFactory extends AbstractFactory
 {
     createFromData(data: object): AutoCompleteEntityFilter
     {
-        let action = this.createNew();
+        let filter = this.createNew();
         let object = <AutoCompleteEntityFilter>data;
-        action.component = object.component;
-        return action;
+        filter.component = object.component;
+        return filter;
     }
 
     createNew(): AutoCompleteEntityFilter {
-        return new AutoCompleteEntityFilter(this.application)
+        return new AutoCompleteEntityFilter();
     }
 }

@@ -5,13 +5,13 @@ export default class BetweenFactory extends AbstractFactory
 {
     createFromData(data: object): BetweenFilter
     {
-        let action = this.createNew();
+        let filter = this.createNew();
         let object = <BetweenFilter>data;
-        action.component = object.component;
-        return action;
+        filter.component = object.component;
+        return filter;
     }
 
     createNew(): BetweenFilter {
-        return new BetweenFilter(this.application)
+        return new BetweenFilter();
     }
 }

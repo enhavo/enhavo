@@ -5,13 +5,13 @@ export default class DateBetweenFactory extends AbstractFactory
 {
     createFromData(data: object): DateBetweenFilter
     {
-        let action = this.createNew();
+        let filter = this.createNew();
         let object = <DateBetweenFilter>data;
-        action.component = object.component;
-        return action;
+        filter.component = object.component;
+        return filter;
     }
 
     createNew(): DateBetweenFilter {
-        return new DateBetweenFilter(this.application);
+        return new DateBetweenFilter();
     }
 }
