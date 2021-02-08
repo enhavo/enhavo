@@ -7,7 +7,11 @@
         i { position:absolute;top:5px; right:10px; font-weight:$fontRegular; }
     }
 
-    .related-buttons-row {margin-top:5px;}
+    .btn-secondary {@extend %btn-secondary;}
+
+    .related-buttons-row {margin:2px -3px -3px -3px;
+        .btn-secondary {margin:3px;}
+    }
 
     .entity-tree-children {padding-left:30px;position:relative;
         &:before {content:"";position:absolute;top: 6px;left: 10px;border-left: 1px solid #ccc;border-bottom: 1px solid #ccc;width: 8px;height: 8px;}
