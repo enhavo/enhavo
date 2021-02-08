@@ -99,6 +99,9 @@ filter:
     label:
       from: 'Date from'
       to: 'To'
+  boolean:
+    label_true: 'Yes'
+    label_false: 'No'
 exception:
   default:
     title: 'An error occurred'

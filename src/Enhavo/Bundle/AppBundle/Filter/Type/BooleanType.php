@@ -8,12 +8,16 @@
 
 namespace Enhavo\Bundle\AppBundle\Filter\Type;
 
+use Enhavo\Bundle\AppBundle\Exception\FilterException;
 use Enhavo\Bundle\AppBundle\Filter\AbstractFilterType;
 use Enhavo\Bundle\AppBundle\Filter\FilterQuery;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BooleanType extends AbstractFilterType
 {
+    const VALUE_TRUE = 1;
+    const VALUE_FALSE = 2;
+
     public function createViewData($options, $name)
     {
         $data = [
@@ -25,16 +29,54 @@ class BooleanType extends AbstractFilterType
             'label' => $this->getLabel($options),
         ];
 
+        if (!$options['checkbox']) {
+            if ($data['component'] === 'filter-boolean') {
+                $data['component'] = 'filter-option';
+            }
+            $data['choices'] = $this->getChoices($options);
+        }
+
         return $data;
+    }
+
+    private function getChoices($options)
+    {
+        return [
+            [
+                'label' => $this->translator->trans($options['label_true'], [], $options['translation_domain']),
+                'code' => self::VALUE_TRUE
+            ],
+            [
+                'label' => $this->translator->trans($options['label_false'], [], $options['translation_domain']),
+                'code' => self::VALUE_FALSE
+            ]
+        ];
     }
 
     public function buildQuery(FilterQuery $query, $options, $value)
     {
+        if($value === null) {
+            return;
+        }
         $property = $options['property'];
-        $value = (boolean)$value;
-        if($value) {
-            $equals = $options['equals'];
-            $query->addWhere($property, FilterQuery::OPERATOR_EQUALS, $equals);
+
+        if ($options['checkbox']) {
+            $boolValue = (boolean)$value;
+            if($boolValue) {
+                $equals = $options['equals'];
+                $query->addWhere($property, FilterQuery::OPERATOR_EQUALS, $equals);
+            }
+        } else {
+            if ($value == self::VALUE_TRUE) {
+                $boolValue = true;
+            } elseif ($value == self::VALUE_FALSE) {
+                $boolValue = false;
+            } else {
+                throw new FilterException('Value invalid, must be one of ' . implode(',', [self::VALUE_TRUE, self::VALUE_FALSE]));
+            }
+
+            $property = $options['property'];
+            $query->addWhere($property, FilterQuery::OPERATOR_EQUALS, $boolValue);
         }
     }
 
@@ -43,7 +85,11 @@ class BooleanType extends AbstractFilterType
         parent::configureOptions($optionsResolver);
         $optionsResolver->setDefaults([
             'equals' => true,
-            'component' => 'filter-boolean'
+            'component' => 'filter-boolean',
+            'checkbox' => true,
+            'label_true' => 'filter.boolean.label_true',
+            'label_false' => 'filter.boolean.label_false',
+            'translation_domain' => 'EnhavoAppBundle'
         ]);
     }
 
