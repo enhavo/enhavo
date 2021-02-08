@@ -105,6 +105,9 @@ filter:
     label:
       from: 'Datum von'
       to: 'Bis'
+  boolean:
+    label_true: 'Ja'
+    label_false: 'Nein'
 exception:
   default:
     title: 'Ein Fehler ist aufgetreten'
