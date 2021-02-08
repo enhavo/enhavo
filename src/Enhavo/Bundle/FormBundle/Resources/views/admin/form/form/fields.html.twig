@@ -42,7 +42,7 @@
                 {% if actions|length > 0 %}
                     <div class="related-buttons-row">
                         {% for action in actions %}
-                            <a href="#" data-action-button="{{ action|json_encode|e }}" class="btn has-symbol">{% if action.label %}{{ action.label }}{% endif %} <i aria-hidden="true" class="icon icon-{{ action.icon }}"></i></a>
+                            <a href="#" data-action-button="{{ action|json_encode|e }}" class="btn-secondary has-symbol">{% if action.label %}{{ action.label }}{% endif %} <i aria-hidden="true" class="icon icon-{{ action.icon }}"></i></a>
                         {% endfor %}
                     </div>
                 {% endif %}
