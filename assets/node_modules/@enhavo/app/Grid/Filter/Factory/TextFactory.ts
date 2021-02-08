@@ -5,13 +5,13 @@ export default class TextFactory extends AbstractFactory
 {
     createFromData(data: object): TextFilter
     {
-        let action = this.createNew();
+        let filter = this.createNew();
         let object = <TextFilter>data;
-        action.component = object.component;
-        return action;
+        filter.component = object.component;
+        return filter;
     }
 
     createNew(): TextFilter {
-        return new TextFilter(this.application)
+        return new TextFilter();
     }
 }
