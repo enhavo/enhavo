@@ -5,13 +5,13 @@ export default class BooleanFactory extends AbstractFactory
 {
     createFromData(data: object): BooleanFilter
     {
-        let action = this.createNew();
+        let filter = this.createNew();
         let object = <BooleanFilter>data;
-        action.component = object.component;
-        return action;
+        filter.component = object.component;
+        return filter;
     }
 
     createNew(): BooleanFilter {
-        return new BooleanFilter(this.application)
+        return new BooleanFilter();
     }
 }

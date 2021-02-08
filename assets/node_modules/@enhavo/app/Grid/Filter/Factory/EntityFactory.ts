@@ -5,13 +5,21 @@ export default class EntityFactory extends AbstractFactory
 {
     createFromData(data: object): EntityFilter
     {
-        let action = this.createNew();
+        let filter = this.createNew();
         let object = <EntityFilter>data;
-        action.component = object.component;
-        return action;
+        filter.component = object.component;
+        if (data.value !== null && data.hasOwnProperty('choices')) {
+            for(let choice: object of data.choices) {
+                if (choice.hasOwnProperty('code') && choice.code == data.value) {
+                    filter.selected = choice;
+                    break;
+                }
+            }
+        }
+        return filter;
     }
 
     createNew(): EntityFilter {
-        return new EntityFilter(this.application)
+        return new EntityFilter();
     }
 }

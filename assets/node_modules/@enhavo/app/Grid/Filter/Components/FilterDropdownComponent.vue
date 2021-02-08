@@ -1,12 +1,12 @@
 <template>
     <div class="view-table-filter-search">
-        <v-select :placeholder="data.label" :options="data.choices" @input="change" v-model="data.value" v-bind:class="[{'has-value': hasValue}]"></v-select>
+        <v-select :placeholder="data.label" :options="data.choices" @input="change" v-model="data.selected" v-bind:class="[{'has-value': hasValue}]"></v-select>
     </div>
 </template>
 
 <script lang="ts">
     import { Vue, Component, Prop } from "vue-property-decorator";
-    import AbstractFilter from "@enhavo/app/Grid/Filter/Model/AbstractFilter";
+    import OptionFilter from "@enhavo/app/Grid/Filter/Model/OptionFilter";
 
     @Component
     export default class FilterDropdownComponent extends Vue
@@ -14,7 +14,7 @@
         name: string = 'filter-dropdown';
 
         @Prop()
-        data: AbstractFilter;
+        data: OptionFilter;
 
         change(value) {
             if(value == null) {
