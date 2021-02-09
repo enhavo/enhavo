@@ -42,9 +42,9 @@ class TextType extends AbstractFilterType
                 }
             }
         }
-        
+
         $operator = $options['operator'];
-        if($value) {
+        if($value !== null && trim($value) !== '') {
             $query->addWhere($property, $operator, $value, $joinProperty ? $joinProperty : null);
         }
     }
