@@ -18,7 +18,7 @@
         data: AbstractFilter;
 
         get locale() {
-            if(data.local == 'de') {
+            if(data.locale == 'de') {
                 return de
             }
             return en;
