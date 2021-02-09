@@ -16,8 +16,8 @@ class DateBetweenFilterType extends BetweenFilterType
     public function createViewData($options, $name)
     {
         $data = parent::createViewData($options, $name);
-        $data['locale'] = $this->container->get('enhavo_app.locale_resolver')->resolve();
-        $data['format'] = 'dd.MM.yyyy';
+        $data['locale'] = $options['locale'];
+        $data['format'] = $options['format'];
         return $data;
     }
 
@@ -49,7 +49,9 @@ class DateBetweenFilterType extends BetweenFilterType
         $optionsResolver->setDefaults([
             'component' => 'filter-date-between',
             'label_from' => 'filter.date_between.label.from',
-            'label_to' => 'filter.date_between.label.to'
+            'label_to' => 'filter.date_between.label.to',
+            'locale' => $this->container->get('enhavo_app.locale_resolver')->resolve(),
+            'format' => 'dd.MM.yyyy'
         ]);
     }
 
