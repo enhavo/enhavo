@@ -2,7 +2,7 @@
   "name": "@enhavo/translation",
   "license": "MIT",
   "types": "index.ts",
-  "version": "0.9.11",
+  "version": "0.9.12",
   "homepage": "https://www.enhavo.com",
   "repository": {
     "type": "git",
