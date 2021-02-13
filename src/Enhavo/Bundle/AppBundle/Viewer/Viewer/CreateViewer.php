@@ -158,8 +158,7 @@ class CreateViewer extends BaseViewer
         $default = [
             'save' => [
                 'type' => 'save',
-                'route' => sprintf('%s_%s_create', $metadata->getApplicationName(), $this->getUnderscoreName($metadata)),
-            ],
+            ]
         ];
 
         return $default;
