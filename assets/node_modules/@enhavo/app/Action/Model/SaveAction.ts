@@ -6,6 +6,8 @@ import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 
 export default class SaveAction extends AbstractAction
 {
+    public url: string;
+
     private readonly view: View;
     private readonly eventDispatcher: EventDispatcher;
 
@@ -19,6 +21,13 @@ export default class SaveAction extends AbstractAction
     {
         let event = new LoadingEvent(this.view.getId());
         this.eventDispatcher.dispatch(event);
-        $('form').submit();
+
+        let $form = $('form');
+
+        if (this.url) {
+            $form.attr('action', this.url);
+        }
+
+        $form.submit();
     }
 }
