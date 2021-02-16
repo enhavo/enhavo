@@ -6,8 +6,10 @@ use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\MediaBundle\Media\MediaManager;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\MediaBundle\Security\AuthorizationCheckerInterface;
+use Symfony\Component\HttpFoundation\File\Stream;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpKernel\EventListener\AbstractSessionListener;
 
 class FileController extends ResourceController
@@ -36,11 +38,13 @@ class FileController extends ResourceController
             throw $this->createAccessDeniedException();
         }
 
-        $response = new Response();
-        $content = $file->getContent()->getContent();
-        $response->setContent($content);
+        $response = new StreamedResponse(function () use ($file) {
+            $outputStream = fopen('php://output', 'wb');
+            $fileStream = fopen($file->getContent()->getFilePath(), 'r');
+            stream_copy_to_stream($fileStream, $outputStream);
+        });
         $response->headers->set('Content-Type', $file->getMimeType());
-        $response->headers->set('Content-Length', strlen($content));
+        $response->headers->set('Content-Length', filesize($file->getContent()->getFilePath()));
 
         $maxAge = $this->getMaxAge();
         if($maxAge) {
@@ -115,11 +119,13 @@ class FileController extends ResourceController
             throw $this->createAccessDeniedException();
         }
 
-        $response = new Response();
-        $content = $formatFile->getContent()->getContent();
-        $response->setContent($content);
+        $response = new StreamedResponse(function () use ($file) {
+            $outputStream = fopen('php://output', 'wb');
+            $fileStream = fopen($file->getContent()->getFilePath(), 'r');
+            stream_copy_to_stream($fileStream, $outputStream);
+        });
         $response->headers->set('Content-Type', $formatFile->getMimeType());
-        $response->headers->set('Content-Length', strlen($content));
+        $response->headers->set('Content-Length', filesize($file->getContent()->getFilePath()));
 
         $maxAge = $this->getMaxAge();
         if($maxAge) {
