@@ -2,6 +2,7 @@ import ViewData from "@enhavo/app/View/ViewData";
 import Confirm from "@enhavo/app/View/Confirm";
 import * as _ from 'lodash';
 import * as URI from 'urijs';
+import * as $ from 'jquery';
 import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 import ClickEvent from "@enhavo/app/ViewStack/Event/ClickEvent";
 import CreateEvent from "@enhavo/app/ViewStack/Event/CreateEvent";
@@ -78,6 +79,8 @@ export default class View
         window.addEventListener('click', () => {
             this.eventDispatcher.dispatch(new ClickEvent(this.getId()));
         });
+
+        this.bindEventHandlerLinksWithTargetView();
     }
 
     private static getIdFromUrl(): number|null
@@ -295,6 +298,15 @@ export default class View
                 }
             }
         );
+    }
+
+    private bindEventHandlerLinksWithTargetView()
+    {
+        let self = this;
+        $(document).on('click', 'a[target="_view"]', function(event) {
+            event.preventDefault();
+            self.openView($(this).attr('href'));
+        });
     }
 }
 
