@@ -5,9 +5,11 @@ namespace Enhavo\Bundle\MediaBundle\Controller;
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\MediaBundle\Media\MediaManager;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
+use Enhavo\Bundle\MediaBundle\Model\FormatInterface;
 use Enhavo\Bundle\MediaBundle\Security\AuthorizationCheckerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpKernel\EventListener\AbstractSessionListener;
 
 class FileController extends ResourceController
@@ -36,11 +38,7 @@ class FileController extends ResourceController
             throw $this->createAccessDeniedException();
         }
 
-        $response = new Response();
-        $content = $file->getContent()->getContent();
-        $response->setContent($content);
-        $response->headers->set('Content-Type', $file->getMimeType());
-        $response->headers->set('Content-Length', strlen($content));
+        $response = $this->getResponse($file);
 
         $maxAge = $this->getMaxAge();
         if($maxAge) {
@@ -115,11 +113,7 @@ class FileController extends ResourceController
             throw $this->createAccessDeniedException();
         }
 
-        $response = new Response();
-        $content = $formatFile->getContent()->getContent();
-        $response->setContent($content);
-        $response->headers->set('Content-Type', $formatFile->getMimeType());
-        $response->headers->set('Content-Length', strlen($content));
+        $response = $this->getResponse($formatFile);
 
         $maxAge = $this->getMaxAge();
         if($maxAge) {
@@ -129,9 +123,43 @@ class FileController extends ResourceController
         return $response;
     }
 
+    /**
+     * @param FileInterface|FormatInterface $file
+     * @return Response
+     */
+    private function getResponse($file): Response
+    {
+        $fileSize = filesize($file->getContent()->getFilePath());
+        if (!$this->getStreamingDisabled() && $this->getStreamingThreshold() < $fileSize) {
+            $response = new StreamedResponse(function () use ($file) {
+                $outputStream = fopen('php://output', 'wb');
+                $fileStream = fopen($file->getContent()->getFilePath(), 'r');
+                stream_copy_to_stream($fileStream, $outputStream);
+            });
+        } else {
+            $response = new Response();
+            $content = $file->getContent()->getContent();
+            $response->setContent($content);
+        }
+        $response->headers->set('Content-Type', $file->getMimeType());
+        $response->headers->set('Content-Length', $fileSize);
+
+        return $response;
+    }
+
     private function getMaxAge()
     {
         return $this->getParameter('enhavo_media.cache_control.max_age');
+    }
+
+    private function getStreamingDisabled()
+    {
+        return $this->getParameter('enhavo_media.streaming.disabled');
+    }
+
+    private function getStreamingThreshold()
+    {
+        return $this->getParameter('enhavo_media.streaming.threshold');
     }
 
     private function setMaxAge(Response $response, $maxAge)
