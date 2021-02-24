@@ -83,6 +83,16 @@ class Configuration implements ConfigurationInterface
             ->end()
 
             ->children()
+                ->arrayNode('streaming')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->booleanNode('disabled')->defaultValue(false)->end()
+                        ->scalarNode('threshold')->defaultValue(5242880)->end() // use streaming for files of size 5mb and higher
+                    ->end()
+                ->end()
+            ->end()
+
+            ->children()
 
                 ->arrayNode('resources')
                     ->addDefaultsIfNotSet()

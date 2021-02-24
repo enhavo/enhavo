@@ -33,6 +33,8 @@ class EnhavoMediaExtension extends AbstractResourceExtension implements PrependE
         $container->setParameter('enhavo_media.form', $config['form']);
         $container->setParameter('enhavo_media.cache_control.max_age', $config['cache_control']['max_age']);
         $container->setParameter('enhavo_media.cache_control.class', $config['cache_control']['class']);
+        $container->setParameter('enhavo_media.streaming.disabled', $config['streaming']['disabled']);
+        $container->setParameter('enhavo_media.streaming.threshold', $config['streaming']['threshold']);
 
         $configFiles = array(
             'services/command.yaml',
