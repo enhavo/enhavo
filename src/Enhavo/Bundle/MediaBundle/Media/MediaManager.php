@@ -172,13 +172,7 @@ class MediaManager
     {
         $files = $this->fileRepository->findGarbage();
         foreach($files as $file) {
-            $this->em->remove($file);
-        }
-        $this->em->flush();
-
-        foreach($files as $file) {
-            $this->storage->deleteFile($file);
-            $this->formatManager->deleteFormats($file);
+            $this->deleteFile($file);
         }
     }
 
