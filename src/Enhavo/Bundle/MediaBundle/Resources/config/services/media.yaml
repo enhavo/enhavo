@@ -92,8 +92,8 @@ services:
         arguments:
             - '@enhavo_media.media.media_manager'
         tags:
-            - { name: kernel.event_listener, event: enhavo_app.create, method: collectGarbage }
-            - { name: kernel.event_listener, event: enhavo_app.update, method: collectGarbage }
+            - { name: kernel.event_listener, event: enhavo_app.post_create, method: collectGarbage }
+            - { name: kernel.event_listener, event: enhavo_app.post_update, method: collectGarbage }
 
     enhavo_media.listener.doctrine_subscriber:
         class: Enhavo\Bundle\MediaBundle\EventListener\DoctrineSubscriber
