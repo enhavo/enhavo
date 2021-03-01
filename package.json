@@ -47,7 +47,7 @@
     "ts-loader": "^5.3",
     "typeface-cormorant-garamond": "^0.0.72",
     "typescript": "^3.1.1",
-    "urijs": "^1.19.1",
+    "urijs": "^1.19.6",
     "uuid": "^3.3.2",
     "vue": "^2.5.22",
     "vue-loader": "^15.5.1",
