@@ -87,6 +87,7 @@ class PolyCollectionType extends AbstractType
     {
         $view->vars['allow_add'] = $options['allow_add'];
         $view->vars['allow_delete'] = $options['allow_delete'];
+        $view->vars['add_label'] = $options['add_label'];
 
         $view->vars['poly_collection_config'] = [
             'entryKeys' => $this->buildEntryKeys($options),
@@ -144,7 +145,8 @@ class PolyCollectionType extends AbstractType
             'entry_types_prototype_data' => [],
             'prototype_storage' => null,
             'by_reference' => false,
-            'custom_name_property' => null
+            'custom_name_property' => null,
+            'add_label' => ''
         ]);
 
         $resolver->setRequired(array(
