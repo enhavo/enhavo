@@ -13,14 +13,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class ColumnType extends AbstractType
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $styleForm;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $widthForm;
 
     public function __construct($widthForm, $styleForm)
