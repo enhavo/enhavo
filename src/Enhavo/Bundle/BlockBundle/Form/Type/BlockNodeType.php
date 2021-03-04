@@ -19,7 +19,9 @@ class BlockNodeType extends AbstractType
     {
         $builder->add('children', BlockCollectionType::class, [
             'item_groups' => $options['item_groups'],
-            'items' => $options['items']
+            'items' => $options['items'],
+            'add_label' => $options['add_label'],
+            'translation_domain' => $options['translation_domain']
         ]);
     }
 
@@ -30,7 +32,8 @@ class BlockNodeType extends AbstractType
             'label' => 'block.label.container',
             'translation_domain' => 'EnhavoBlockBundle',
             'item_groups' => [],
-            'items' => []
+            'items' => [],
+            'add_label' => '',
         ));
     }
 

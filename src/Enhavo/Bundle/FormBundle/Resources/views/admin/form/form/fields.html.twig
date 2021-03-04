@@ -238,7 +238,7 @@
     {% import _self as helper %}
     <div class="enhavo-poly-collection"
          data-poly-collection
-         data-poly-collection-add-button-template="{{ helper.addPolyCollectionButton()|e }}"
+         data-poly-collection-add-button-template="{{ helper.addPolyCollectionButton(add_label, translation_domain)|e }}"
          data-poly-collection-config="{{ poly_collection_config|json_encode|e }}"
          data-poly-collection-item-template="{{ helper.addPolyCollectionItem(null, '__label__', null)|e }}"
         {{ block('attributes') }}
@@ -259,10 +259,10 @@
         </div>
 
         <div class="poly-collection-container" data-reindexable data-poly-collection-container>
-            {{ helper.addPolyCollectionButton() }}
+            {{ helper.addPolyCollectionButton(add_label, translation_domain) }}
             {% for item in form.children|filter(child => child.vars.name != '_token') %}
                 {{ helper.addPolyCollectionItem(item, item.vars.label, item.vars.translation_domain, form_custom_name(item.vars.data, custom_name_property)) }}
-                {{ helper.addPolyCollectionButton() }}
+                {{ helper.addPolyCollectionButton(add_label, translation_domain) }}
             {% endfor %}
         </div>
     </div>
@@ -300,10 +300,8 @@
     </div>
 {% endmacro %}
 
-{% macro addPolyCollectionButton() %}
+{% macro addPolyCollectionButton(label, translation_domain) %}
     <div class="poly-collection-item-add-button-row" data-poly-collection-add-button>
-        <div class="label"><i class="icon icon-add"></i></div>
+        <div class="label"><i class="icon icon-add"></i>{{ label|trans({}, translation_domain)|nl2br }}</div>
     </div>
 {% endmacro %}
-
-
