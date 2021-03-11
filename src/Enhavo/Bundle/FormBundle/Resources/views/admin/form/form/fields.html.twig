@@ -302,6 +302,6 @@
 
 {% macro addPolyCollectionButton(label, translation_domain) %}
     <div class="poly-collection-item-add-button-row" data-poly-collection-add-button>
-        <div class="label"><i class="icon icon-add"></i>{{ label|trans({}, translation_domain)|nl2br }}</div>
+        <i class="icon icon-add"></i>{% if label %}<span class="label">{{ label|trans({}, translation_domain)|nl2br }}</span>{% endif %}
     </div>
 {% endmacro %}
