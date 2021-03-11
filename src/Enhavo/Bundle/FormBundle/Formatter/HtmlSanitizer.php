@@ -8,7 +8,6 @@
 
 namespace Enhavo\Bundle\FormBundle\Formatter;
 
-
 use Enhavo\Bundle\AppBundle\Filesystem\Filesystem;
 
 class HtmlSanitizer
@@ -37,6 +36,10 @@ class HtmlSanitizer
 
         $config = \HTMLPurifier_Config::createDefault();
         $config->set('Cache.SerializerPath', $this->serializationPath);
+
+        foreach ($options as $key => $value) {
+            $config->set($key, $value);
+        }
 
         $purifier = new \HTMLPurifier($config);
         return $purifier->purify($value);

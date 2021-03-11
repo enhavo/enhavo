@@ -3,7 +3,6 @@
 namespace Enhavo\Bundle\FormBundle\Tests\Form\Type;
 
 use Enhavo\Bundle\FormBundle\Form\Type\HtmlTagType;
-use Symfony\Component\Form\Exception\InvalidConfigurationException;
 use Symfony\Component\Form\Test\TypeTestCase;
 
 class HtmlTagTypeTest extends TypeTestCase
@@ -52,11 +51,10 @@ class HtmlTagTypeTest extends TypeTestCase
         $this->assertEquals('<span>Hello World</span>', $form->getData());
     }
 
-
     public function testTagOption()
     {
         $form = $this->factory->create(HtmlTagType::class, null, [
-            'tag' => 'p'
+            'tag_empty_data' => 'p'
         ]);
 
         $form->setData(false);
@@ -71,7 +69,7 @@ class HtmlTagTypeTest extends TypeTestCase
     {
         $form = $this->factory->create(HtmlTagType::class, null, [
             'class_choices' => ['foo', 'bar'],
-            'tag' => 'p'
+            'tag_empty_data' => 'p'
         ]);
 
         $form->setData(false);
@@ -86,7 +84,7 @@ class HtmlTagTypeTest extends TypeTestCase
     {
         $form = $this->factory->create(HtmlTagType::class, null, [
             'class_choices' => ['foo', 'bar'],
-            'tag' => 'p'
+            'tag_empty_data' => 'p'
         ]);
 
         $form->setData(false);
@@ -101,8 +99,8 @@ class HtmlTagTypeTest extends TypeTestCase
     public function testClassOption()
     {
         $form = $this->factory->create(HtmlTagType::class, null, [
-            'class' => 'foobar',
-            'tag' => 'p'
+            'class_empty_data' => 'foobar',
+            'tag_empty_data' => 'p'
         ]);
 
         $form->setData(false);
@@ -116,9 +114,9 @@ class HtmlTagTypeTest extends TypeTestCase
     public function testSetDataWithClassAndTag()
     {
         $form = $this->factory->create(HtmlTagType::class, null, [
-            'tag' => 'h1',
+            'tag_empty_data' => 'h1',
+            'tag_choices' => ['p', 'span'],
             'class_choices' => ['foo', 'bar'],
-            'tag_choices' => ['p', 'span']
         ]);
 
         $form->setData('<p class="foo">Hello World</p>');
@@ -132,7 +130,7 @@ class HtmlTagTypeTest extends TypeTestCase
     public function testSetDataWithClass()
     {
         $form = $this->factory->create(HtmlTagType::class, null, [
-            'tag' => 'h1',
+            'tag_empty_data' => 'h1',
             'tag_choices' => ['p', 'span']
         ]);
 
@@ -143,21 +141,73 @@ class HtmlTagTypeTest extends TypeTestCase
         $this->assertEquals('p', $view['tag']);
     }
 
-    public function testClassChoicesMissConfiguration()
+    public function testTextWithHTML()
     {
-        $this->expectException(InvalidConfigurationException::class);
-
-        $this->factory->create(HtmlTagType::class, null, [
-            'class_choices' => ['p', 'span']
+        $form = $this->factory->create(HtmlTagType::class, null, [
+            'tag_choices' => ['h1', 'h2']
         ]);
+
+        $form->submit([
+            'text' => '<p>Hello World</p>',
+            'tag' => 'h2',
+        ]);
+
+        $this->assertEquals('<h2><p>Hello World</p></h2>', $form->getData());
     }
 
-    public function testClassMissConfiguration()
+    public function testReadTextWithTag()
     {
-        $this->expectException(InvalidConfigurationException::class);
-
-        $this->factory->create(HtmlTagType::class, null, [
-            'class' => 'foobar'
+        $form = $this->factory->create(HtmlTagType::class, null, [
+            'tag_choices' => ['h1', 'h2']
         ]);
+
+        $form->setData('<h2><p>Hello World</p></h2>');
+        $view = $form->getViewData();
+
+        $this->assertEquals('<p>Hello World</p>', $view['text']);
+        $this->assertEquals('h2', $view['tag']);
+    }
+
+    public function testReadTextWithClass()
+    {
+        $form = $this->factory->create(HtmlTagType::class, null, [
+            'tag_choices' => ['h1', 'h2']
+        ]);
+
+        $form->setData('<h2><p class="foobar">Hello World</p></h2>');
+        $view = $form->getViewData();
+
+        $this->assertEquals('<p class="foobar">Hello World</p>', $view['text']);
+        $this->assertEquals('h2', $view['tag']);
+    }
+
+    public function testFallbackClassTag()
+    {
+        $form = $this->factory->create(HtmlTagType::class, null, [
+            'class_choices' => ['foo', 'bar']
+        ]);
+
+        $form->submit([
+            'text' => 'Hello World',
+            'class' => 'foo',
+        ]);
+
+        $this->assertEquals('<span class="foo">Hello World</span>', $form->getData());
+    }
+
+    public function testNoClassAndTag()
+    {
+        $form = $this->factory->create(HtmlTagType::class, null, [
+            'class_choices' => ['foo', 'bar'],
+            'tag_choices' => ['h1', 'h2'],
+        ]);
+
+        $form->submit([
+            'text' => 'Hello World',
+            'tag' => '',
+            'class' => '',
+        ]);
+
+        $this->assertEquals('Hello World', $form->getData());
     }
 }
