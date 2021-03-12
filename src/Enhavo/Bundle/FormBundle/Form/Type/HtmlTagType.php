@@ -32,7 +32,7 @@ class HtmlTagType extends AbstractType
         if (is_array($options['class_choices'])) {
             $builder->add('class', ChoiceType::class, [
                 'choices' => $options['class_choices'],
-                'placeholder' => 'class_placeholder',
+                'placeholder' => $options['class_placeholder'],
                 'empty_data' => $options['class_empty_data'],
             ]);
         }
