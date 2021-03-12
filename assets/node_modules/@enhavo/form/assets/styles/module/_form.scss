@@ -28,10 +28,10 @@
         .choice-input-with-label {display: inline-block;white-space:nowrap;margin-right:20px;}
     }
 
-    .head-line-widget { position:relative;
-        .head-line-widget-tag {border-left:1px solid $grey5; width:160px; position:absolute; right:0; top:0;}
-        .head-line-widget-text {
-            input {padding-right:170px; overflow:hidden;}
+    .html-tag-widget { position:relative;
+        .flex-container {display:flex;width:100%;
+            .html-tag-widget-choice {margin-left:2px;width:120px;flex:0 0 auto;}
+            .html-tag-widget-text {flex:1 0 auto;}
         }
     }
 

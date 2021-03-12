@@ -7,9 +7,9 @@
     }
   }
   .poly-collection-container {
-    .poly-collection-item-add-button-row {margin:10px auto;position:relative;cursor:pointer;z-index:1; width:50px; text-align:center; background:$color1; padding:5px 0;transition:all 300ms;border-radius:10px;
+    .poly-collection-item-add-button-row {margin:10px 0;position:relative;cursor:pointer;z-index:1;text-align:center; background:$color1; padding:5px 10px;transition:all 300ms;border-radius:10px;color:#fff;display:inline-block;
       &:hover { background:$color1b;}
-      i {color:#fff}
+      .label {margin-left: 5px;position: relative;top: 1px;padding-right: 4px;}
     }
     .poly-collection-nested-container {padding-left: 10px;padding-right: 10px;}
     .poly-collection-item {background:#fff;overflow:hidden;border:1px solid $grey5;
