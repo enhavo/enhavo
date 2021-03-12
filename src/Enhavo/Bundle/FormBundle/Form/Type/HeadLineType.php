@@ -18,7 +18,14 @@ class HeadLineType extends AbstractType
         $resolver->setDefaults([
             'label' => 'form.label.title',
             'translation_domain' => 'EnhavoAppBundle',
-            'tag_choices' => ['h1' => 0, 'h2' => 1, 'h3' => 2, 'h4' => 3, 'h5' => 4, 'h6' => 5]
+            'tag_choices' => [
+                'h1' => 'h1',
+                'h2' => 'h2',
+                'h3' => 'h3',
+                'h4' => 'h4',
+                'h5' => 'h5',
+                'h6' => 'h6'
+            ]
         ]);
     }
 
