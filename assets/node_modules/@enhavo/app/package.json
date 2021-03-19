@@ -10,10 +10,10 @@
   },
   "dependencies": {
     "@enhavo/core": "https://github.com/enhavo/core-assets.git",
-    "@enhavo/font": "https://github.com/enhavo/font-assets.git",
     "@ibm/plex": "^1.2.3",
     "ansi-to-html": "^0.6.11",
     "async": "^2.6.2",
+    "argparse": "^2.0.1",
     "axios": "^0.18.0",
     "bootstrap": "^4.3.1",
     "compass-mixins": "^0.12.10",
@@ -27,6 +27,7 @@
     "vue-property-decorator": "^6.0.0",
     "vue-select": "^3.0.0",
     "vuedraggable": "^2.20.0",
-    "vuejs-datepicker": "^1.6.2"
+    "vuejs-datepicker": "^1.6.2",
+    "webfonts-loader": "^7.2.0"
   }
 }
