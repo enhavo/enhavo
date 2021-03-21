@@ -25,3 +25,4 @@ Guides
     view/index
     view-stack/index
     form/index
+    icon/index
