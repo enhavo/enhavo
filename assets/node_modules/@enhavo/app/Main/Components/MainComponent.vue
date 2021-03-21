@@ -14,6 +14,7 @@
 
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
+import '@enhavo/app/assets/fonts/enhavo-icons.font'
 import '@enhavo/app/assets/styles/app.scss'
 
 @Component()

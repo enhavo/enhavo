@@ -3,7 +3,6 @@ Install
 
 ```bash
 $ pip install -U Sphinx
-$ make clean html
 ```
 
 Autobuilder

@@ -2,6 +2,7 @@ const EncoreUtil = require('@enhavo/core/EncoreUtil');
 const _ = require('lodash');
 const path = require('path');
 const DependencyInjectionPlugin = require('@enhavo/dependency-injection/Webpack/DependencyInjectionPlugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 class AppThemePackage
 {
@@ -39,6 +40,20 @@ class AppThemePackage
     initWebpackConfig(config)
     {
         const projectDir = EncoreUtil.getProjectDir();
+
+        config.module.rules.unshift({
+            test: /\.font\.js/,
+            use: [
+                MiniCssExtractPlugin.loader,
+                {
+                    loader: 'css-loader',
+                    options: {
+                        url: false
+                    }
+                },
+                require.resolve('webfonts-loader')
+            ]
+        });
 
         config.module.rules.forEach(function(rule) {
             if(".ts".match(rule.test)) {

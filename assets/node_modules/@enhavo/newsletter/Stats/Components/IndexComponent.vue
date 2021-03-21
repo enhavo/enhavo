@@ -18,7 +18,7 @@
 
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
-
+import '@enhavo/app/assets/fonts/enhavo-icons.font'
 import '@enhavo/app/assets/styles/view.scss'
 import 'bootstrap/dist/css/bootstrap.css'
 import Receiver from "@enhavo/newsletter/Model/Receiver";
