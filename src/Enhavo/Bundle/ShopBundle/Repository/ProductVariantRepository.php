@@ -15,7 +15,6 @@ use Sylius\Component\Product\Model\ProductInterface;
 use Sylius\Component\Product\Model\ProductVariantInterface;
 use Sylius\Component\Product\Repository\ProductVariantRepositoryInterface;
 
-
 class ProductVariantRepository extends ContentRepository implements ProductVariantRepositoryInterface
 {
     /**
@@ -174,7 +173,7 @@ class ProductVariantRepository extends ContentRepository implements ProductVaria
      * @param $productId
      * @return mixed
      */
-    public function findByProductId(FilterQuery $filterQuery, $productId)
+    public function findByProductId($productId, FilterQuery $filterQuery)
     {
         $filterQuery->addWhere('product',FilterQuery::OPERATOR_EQUALS, $productId);
         return $this->filter($filterQuery);

@@ -8,7 +8,6 @@
 
 namespace Enhavo\Bundle\ShopBundle\Form\Type;
 
-use Sylius\Bundle\AttributeBundle\Form\Type\AttributeTypeChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\AbstractType;

@@ -10,12 +10,12 @@
 namespace Enhavo\Bundle\ShopBundle\Form\Type;
 
 use Enhavo\Bundle\FormBundle\Form\Type\ListType;
+use Sylius\Bundle\ProductBundle\Form\Type\ProductOptionTranslationType;
+use Sylius\Bundle\ResourceBundle\Form\Type\ResourceTranslationsType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Enhavo\Bundle\ShopBundle\Form\Type\ProductOptionValueType;
 
 class ProductOptionType extends AbstractType
 {
@@ -31,9 +31,13 @@ class ProductOptionType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->add('translations', ResourceTranslationsType::class, [
+            'entry_type' => ProductOptionTranslationType::class,
+            'label' => 'sylius.form.option.name',
+        ]);
+
         $builder->add('code', TextType::class);
-        $builder->add('position', IntegerType::class);
-        $builder->add('name', TextType::class);
+
         $builder->add('values', ListType::class, [
             'entry_type' => ProductOptionValueType::class,
             'sortable' => true,

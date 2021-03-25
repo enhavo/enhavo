@@ -81,18 +81,27 @@ sylius_payment:
 doctrine:
     orm:
         resolve_target_entities:
+            Enhavo\Bundle\ShopBundle\Model\ProductInterface: Enhavo\Bundle\ShopBundle\Entity\Product
+            Enhavo\Bundle\ShopBundle\Model\OrderInterface: Enhavo\Bundle\ShopBundle\Entity\Order
             Sylius\Component\Addressing\Model\AddressInterface: Sylius\Component\Addressing\Model\Address
             Sylius\Component\Promotion\Model\PromotionCouponInterface: Sylius\Component\Promotion\Model\PromotionCoupon
             Sylius\Component\Payment\Model\PaymentInterface: Sylius\Component\Payment\Model\Payment
             Sylius\Component\Shipping\Model\ShipmentInterface: Enhavo\Bundle\ShopBundle\Entity\Shipment
             Sylius\Component\Taxation\Model\TaxRateInterface: Sylius\Component\Taxation\Model\TaxRate
             Sylius\Component\Promotion\Model\PromotionInterface: Enhavo\Bundle\ShopBundle\Entity\Promotion
-            Enhavo\Bundle\ShopBundle\Model\ProductInterface: Enhavo\Bundle\ShopBundle\Entity\Product
-            Enhavo\Bundle\ShopBundle\Model\OrderInterface: Enhavo\Bundle\ShopBundle\Entity\Order
             Sylius\Component\Product\Model\ProductOptionInterface: Sylius\Component\Product\Model\ProductOption
             Sylius\Component\Product\Model\ProductAssociationInterface: Enhavo\Bundle\ShopBundle\Entity\ProductAssociation
+            Sylius\Component\Product\Model\ProductOptionValueInterface: Enhavo\Bundle\ShopBundle\Entity\ProductOptionValue
+
+#enhavo_doctrine_extension:
+#    metadata:
+#        Enhavo\Bundle\ShopBundle\Entity\ProductOptionValue:
+#            extends: Sylius\Component\Product\Model\ProductOptionValue
+#            discrName: 'enhavo'
 
 enhavo_app:
+    form_themes:
+        - '@EnhavoShop/admin/form/shop/fields.html.twig'
     template_paths:
         enhavo_shop:
             path: '@EnhavoShopBundle/Resources/views'
@@ -198,6 +207,10 @@ sylius_product:
             classes:
                 model: Enhavo\Bundle\ShopBundle\Entity\ProductOption
                 form: Enhavo\Bundle\ShopBundle\Form\Type\ProductOptionType
+        product_option_value:
+            classes:
+                model: Enhavo\Bundle\ShopBundle\Entity\ProductOptionValue
+                form: Enhavo\Bundle\ShopBundle\Form\Type\ProductOptionValueType
         product_variant:
             classes:
                 model: Enhavo\Bundle\ShopBundle\Entity\ProductVariant
