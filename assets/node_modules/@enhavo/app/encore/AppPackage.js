@@ -20,7 +20,7 @@ class AppPackage
     {
         // Because we need at least one entrypoint to pass the validation check, we add some empty dummy entrypoint
         // Other entrypoint are loaded via the dependency injection
-        let dummyEntrypoint = './'+path.relative(EncoreUtil.getProjectDir(), path.resolve( __dirname, '../Entrypoint/dummy.ts'));
+        let dummyEntrypoint = './'+path.relative(EncoreUtil.getProjectDir(), path.resolve( __dirname, '../entrypoint/dummy.ts'));
 
         Encore
             .addEntry('enhavo/app/dummy', dummyEntrypoint)

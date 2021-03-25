@@ -1,6 +1,6 @@
 entrypoints:
     'enhavo/user/login':
-        path: '../Entrypoint/login.ts'
+        path: '../entrypoint/login.ts'
         build: enhavo
 
 services:

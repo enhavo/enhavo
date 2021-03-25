@@ -1,6 +1,6 @@
 entrypoints:
     'enhavo/dashboard/dashboard':
-        path: '../Entrypoint/dashboard'
+        path: '../entrypoint/dashboard'
         build: enhavo
 
 compiler_pass:

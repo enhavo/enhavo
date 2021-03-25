@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
-import LoadedEvent from '../Event/LoadedEvent';
+import LoadedEvent from '../event/LoadedEvent';
 
 @Component
 export default class AjaxViewComponent extends Vue {

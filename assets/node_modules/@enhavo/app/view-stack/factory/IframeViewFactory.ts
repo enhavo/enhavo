@@ -1,5 +1,5 @@
 import ViewFactory from "./ViewFactory";
-import IframeView from "../Model/IframeView";
+import IframeView from "../model/IframeView";
 
 export default class IframeViewFactory extends ViewFactory
 {

@@ -1,6 +1,6 @@
 entrypoints:
     'enhavo/newsletter/stats':
-        path: '../Entrypoint/stats'
+        path: '../entrypoint/stats'
         build: enhavo
 
 services:

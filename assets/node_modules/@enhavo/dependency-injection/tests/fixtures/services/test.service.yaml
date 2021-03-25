@@ -8,4 +8,4 @@ services:
 
 compiler_pass:
     test:
-        path: '../../Mock/CompilerPass.js'
+        path: '../../mock/CompilerPass.js'

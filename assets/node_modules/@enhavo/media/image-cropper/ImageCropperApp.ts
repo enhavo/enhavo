@@ -4,7 +4,7 @@ import View from "@enhavo/app/view/View";
 import CloseEvent from "@enhavo/app/view-stack/Event/CloseEvent";
 import RemoveEvent from "@enhavo/app/view-stack/Event/RemoveEvent";
 import Confirm from "@enhavo/app/view/Confirm";
-import FormatData from "@enhavo/media/ImageCropper/FormatData";
+import FormatData from "@enhavo/media/image-cropper/FormatData";
 import FlashMessenger from "@enhavo/app/flash-message/FlashMessenger";
 import UpdatedEvent from "@enhavo/app/view-stack/Event/UpdatedEvent";
 import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";

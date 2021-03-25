@@ -1,5 +1,5 @@
 import ViewFactoryInterface from "../ViewFactoryInterface";
-import View from "../Model/View";
+import View from "../model/View";
 
 export default class ViewFactory implements ViewFactoryInterface
 {

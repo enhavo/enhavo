@@ -1,5 +1,5 @@
 import ViewFactory from "./ViewFactory";
-import AjaxView from "../Model/AjaxView";
+import AjaxView from "../model/AjaxView";
 
 export default class AjaxViewFactory extends ViewFactory
 {
