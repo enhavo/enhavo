@@ -1,4 +1,4 @@
-import Confirm from "@enhavo/app/View/Confirm";
+import Confirm from "@enhavo/app/view/Confirm";
 
 export default class ViewData
 {

@@ -1,5 +1,5 @@
-import ActionInterface from "@enhavo/app/Action/ActionInterface";
-import ActionRegistry from "@enhavo/app/Action/ActionRegistry";
+import ActionInterface from "@enhavo/app/action/ActionInterface";
+import ActionRegistry from "@enhavo/app/action/ActionRegistry";
 import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
 import * as _ from 'lodash';
 

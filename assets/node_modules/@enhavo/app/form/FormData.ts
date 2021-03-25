@@ -1,4 +1,4 @@
-import Tab from "@enhavo/app/Form/Tab";
+import Tab from "@enhavo/app/form/Tab";
 
 export default class FormData
 {

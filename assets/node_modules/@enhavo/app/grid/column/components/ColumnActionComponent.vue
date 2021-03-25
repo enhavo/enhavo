@@ -6,8 +6,8 @@
 
 <script lang="ts">
     import { Vue, Component, Prop } from "vue-property-decorator";
-    import ActionColumn from "@enhavo/app/Grid/Column/Model/ActionColumn";
-    import ActionInterface from "@enhavo/app/Action/ActionInterface";
+    import ActionColumn from "@enhavo/app/grid/column/model/ActionColumn";
+    import ActionInterface from "@enhavo/app/action/ActionInterface";
 
     @Component()
     export default class ColumnActionComponent extends Vue {

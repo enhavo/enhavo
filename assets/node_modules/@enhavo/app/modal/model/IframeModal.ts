@@ -1,4 +1,4 @@
-import AbstractModal from "@enhavo/app/Modal/Model/AbstractModal";
+import AbstractModal from "@enhavo/app/modal/model/AbstractModal";
 
 export default class IframeModal extends AbstractModal
 {

@@ -1,6 +1,6 @@
-import ActionManager from "@enhavo/app/Action/ActionManager";
-import View from "@enhavo/app/View/View";
-import List from "@enhavo/app/List/List";
+import ActionManager from "@enhavo/app/action/ActionManager";
+import View from "@enhavo/app/view/View";
+import List from "@enhavo/app/list/List";
 
 export default class ListApp
 {

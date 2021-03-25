@@ -1,9 +1,9 @@
-import AbstractFactory from "@enhavo/app/Menu/Factory/AbstractFactory";
-import MenuList from "@enhavo/app/Menu/Model/MenuList";
+import AbstractFactory from "@enhavo/app/menu/factory/AbstractFactory";
+import MenuList from "@enhavo/app/menu/model/MenuList";
 import * as _ from "lodash";
-import MenuRegistry from "@enhavo/app/Menu/MenuRegistry";
-import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
-import MenuManager from "@enhavo/app/Menu/MenuManager";
+import MenuRegistry from "@enhavo/app/menu/MenuRegistry";
+import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
+import MenuManager from "@enhavo/app/menu/MenuManager";
 
 export default class MenuListFactory extends AbstractFactory
 {

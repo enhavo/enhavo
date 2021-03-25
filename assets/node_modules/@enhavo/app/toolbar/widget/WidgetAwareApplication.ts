@@ -1,5 +1,5 @@
-import ActionManager from "@enhavo/app/Action/ActionManager";
-import ActionRegistry from "@enhavo/app/Action/ActionRegistry";
+import ActionManager from "@enhavo/app/action/ActionManager";
+import ActionRegistry from "@enhavo/app/action/ActionRegistry";
 import ApplicationInterface from "@enhavo/app/ApplicationInterface";
 
 export default interface WidgetAwareApplication extends ApplicationInterface

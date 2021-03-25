@@ -18,7 +18,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
-import MediaItem from "@enhavo/media/MediaLibrary/MediaItem";
+import MediaItem from "@enhavo/media/media-library/MediaItem";
 import * as $ from "jquery";
 import "blueimp-file-upload/js/jquery.iframe-transport";
 import "blueimp-file-upload/js/jquery.fileupload";

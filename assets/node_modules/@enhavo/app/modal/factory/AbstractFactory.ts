@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import ModalInterface from "@enhavo/app/Modal/ModalInterface";
+import ModalInterface from "@enhavo/app/modal/ModalInterface";
 
 export default abstract class AbstractFactory
 {

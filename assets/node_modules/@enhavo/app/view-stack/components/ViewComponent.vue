@@ -25,9 +25,9 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
-import CloseEvent from  '@enhavo/app/ViewStack/Event/CloseEvent';
-import ArrangeEvent from  '@enhavo/app/ViewStack/Event/ArrangeEvent';
-import ViewInterface from "@enhavo/app/ViewStack/ViewInterface";
+import CloseEvent from  '@enhavo/app/view-stack/Event/CloseEvent';
+import ArrangeEvent from  '@enhavo/app/view-stack/Event/ArrangeEvent';
+import ViewInterface from "@enhavo/app/view-stack/ViewInterface";
 
 @Component()
 export default class ViewComponent extends Vue

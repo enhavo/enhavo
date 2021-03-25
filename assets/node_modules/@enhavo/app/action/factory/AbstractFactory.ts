@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import ActionInterface from "@enhavo/app/Action/ActionInterface";
+import ActionInterface from "@enhavo/app/action/ActionInterface";
 
 export default abstract class AbstractFactory
 {

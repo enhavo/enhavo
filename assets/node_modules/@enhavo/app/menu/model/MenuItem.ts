@@ -1,8 +1,8 @@
-import CreateEvent from '@enhavo/app/ViewStack/Event/CreateEvent';
-import ClearEvent from '@enhavo/app/ViewStack/Event/ClearEvent';
-import SaveStateEvent from '@enhavo/app/ViewStack/Event/SaveStateEvent';
-import AbstractMenu from "@enhavo/app/Menu/Model/AbstractMenu";
-import MenuList from "@enhavo/app/Menu/Model/MenuList";
+import CreateEvent from '@enhavo/app/view-stack/Event/CreateEvent';
+import ClearEvent from '@enhavo/app/view-stack/Event/ClearEvent';
+import SaveStateEvent from '@enhavo/app/view-stack/Event/SaveStateEvent';
+import AbstractMenu from "@enhavo/app/menu/model/AbstractMenu";
+import MenuList from "@enhavo/app/menu/model/MenuList";
 
 export default class MenuItem extends AbstractMenu
 {

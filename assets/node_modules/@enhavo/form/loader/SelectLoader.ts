@@ -1,6 +1,6 @@
-import AbstractLoader from "@enhavo/form/Loader/AbstractLoader";
-import SelectType from "@enhavo/form/Type/SelectType";
-import FormRegistry from "@enhavo/app/Form/FormRegistry";
+import AbstractLoader from "@enhavo/form/loader/AbstractLoader";
+import SelectType from "@enhavo/form/type/SelectType";
+import FormRegistry from "@enhavo/app/form/FormRegistry";
 
 export default class SelectLoader extends AbstractLoader
 {

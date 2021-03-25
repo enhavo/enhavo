@@ -1,4 +1,4 @@
-import FilterInterface from "@enhavo/app/Grid/Filter/FilterInterface";
+import FilterInterface from "@enhavo/app/grid/filter/FilterInterface";
 import * as _ from "lodash";
 
 export default abstract class AbstractFactory

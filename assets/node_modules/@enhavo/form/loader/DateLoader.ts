@@ -1,6 +1,6 @@
-import AbstractLoader from "@enhavo/form/Loader/AbstractLoader";
-import DateType from "@enhavo/form/Type/DateType";
-import FormRegistry from "@enhavo/app/Form/FormRegistry";
+import AbstractLoader from "@enhavo/form/loader/AbstractLoader";
+import DateType from "@enhavo/form/type/DateType";
+import FormRegistry from "@enhavo/app/form/FormRegistry";
 
 export default class DateLoader extends AbstractLoader
 {

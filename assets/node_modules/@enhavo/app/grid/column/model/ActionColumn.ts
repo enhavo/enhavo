@@ -1,6 +1,6 @@
-import AbstractColumn from "@enhavo/app/Grid/Column/Model/AbstractColumn";
-import ActionRegistry from "@enhavo/app/Action/ActionRegistry";
-import ActionInterface from "@enhavo/app/Action/ActionInterface";
+import AbstractColumn from "@enhavo/app/grid/column/model/AbstractColumn";
+import ActionRegistry from "@enhavo/app/action/ActionRegistry";
+import ActionInterface from "@enhavo/app/action/ActionInterface";
 
 export default class ActionColumn extends AbstractColumn
 {

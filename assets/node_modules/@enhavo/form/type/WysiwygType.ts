@@ -1,4 +1,4 @@
-import FormType from "@enhavo/app/Form/FormType";
+import FormType from "@enhavo/app/form/FormType";
 import * as tinymce from "tinymce";
 import 'tinymce/themes/silver/theme';
 import * as $ from "jquery";

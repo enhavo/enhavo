@@ -1,4 +1,4 @@
-import Message from "@enhavo/app/FlashMessage/Message";
+import Message from "@enhavo/app/flash-message/Message";
 import * as _ from "lodash";
 import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
 

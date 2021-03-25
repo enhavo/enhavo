@@ -1,15 +1,15 @@
 services:
-    '@enhavo/app/Index/IndexApp':
+    '@enhavo/app/index/IndexApp':
         chunk: 'index'
         arguments:
-            - '@enhavo/app/ViewStack/EventDispatcher'
-            - '@enhavo/app/View/View'
-            - '@enhavo/app/Action/ActionManager'
-            - '@enhavo/app/FlashMessage/FlashMessenger'
-            - '@enhavo/app/Modal/ModalManager'
-            - '@enhavo/app/Grid/Grid'
-            - '@enhavo/app/Form/FormRegistry'
+            - '@enhavo/app/view-stack/EventDispatcher'
+            - '@enhavo/app/view/View'
+            - '@enhavo/app/action/ActionManager'
+            - '@enhavo/app/flash-message/FlashMessenger'
+            - '@enhavo/app/modal/ModalManager'
+            - '@enhavo/app/grid/Grid'
+            - '@enhavo/app/form/FormRegistry'
 
-    '@enhavo/app/Index/Components/IndexComponent.vue':
+    '@enhavo/app/index/components/IndexComponent.vue':
         chunk: 'vue'
         static: true

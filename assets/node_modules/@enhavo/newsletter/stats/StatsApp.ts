@@ -1,9 +1,9 @@
-import ActionManager from "@enhavo/app/Action/ActionManager";
-import View from "@enhavo/app/View/View";
+import ActionManager from "@enhavo/app/action/ActionManager";
+import View from "@enhavo/app/view/View";
 import * as _ from "lodash";
-import Newsletter from "@enhavo/newsletter/Model/Newsletter";
-import Receiver from "@enhavo/newsletter/Model/Receiver";
-import Tracking from "@enhavo/newsletter/Model/Tracking";
+import Newsletter from "@enhavo/newsletter/model/Newsletter";
+import Receiver from "@enhavo/newsletter/model/Receiver";
+import Tracking from "@enhavo/newsletter/model/Tracking";
 import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
 
 export default class StatsApp

@@ -1,5 +1,5 @@
 import { Registry } from "@enhavo/core";
-import ColumnFactoryInterface from "@enhavo/app/Grid/Column/ColumnFactoryInterface";
+import ColumnFactoryInterface from "@enhavo/app/grid/column/ColumnFactoryInterface";
 import RegistryInterface from "@enhavo/core/RegistryInterface";
 
 export default class ColumnRegistry extends Registry

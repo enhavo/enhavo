@@ -21,7 +21,7 @@
 
 <script lang="ts">
     import { Vue, Component, Prop } from "vue-property-decorator";
-    import RowData from "@enhavo/app/Grid/Column/RowData";
+    import RowData from "@enhavo/app/grid/column/RowData";
     import * as $ from "jquery";
 
     @Component()

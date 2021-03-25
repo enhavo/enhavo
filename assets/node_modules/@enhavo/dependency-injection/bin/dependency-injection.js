@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-const Loader = require('@enhavo/dependency-injection/Loader/Loader');
-const Compiler = require('@enhavo/dependency-injection/Compiler/Compiler');
-const Validator = require('@enhavo/dependency-injection/Validation/Validator');
+const Loader = require('@enhavo/dependency-injection/loader/Loader');
+const Compiler = require('@enhavo/dependency-injection/compiler/Compiler');
+const Validator = require('@enhavo/dependency-injection/validation/Validator');
 const builderBucket = require('@enhavo/dependency-injection/builder-bucket');
 const process = require('process');
 const path = require('path');

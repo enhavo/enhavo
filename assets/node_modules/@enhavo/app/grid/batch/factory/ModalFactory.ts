@@ -1,6 +1,6 @@
-import AbstractFactory from "@enhavo/app/Grid/Batch/Factory/AbstractFactory";
-import ModalBatch from "@enhavo/app/Grid/Batch/Model/ModalBatch";
-import ModalManager from "@enhavo/app/Modal/ModalManager";
+import AbstractFactory from "@enhavo/app/grid/batch/factory/AbstractFactory";
+import ModalBatch from "@enhavo/app/grid/batch/model/ModalBatch";
+import ModalManager from "@enhavo/app/modal/ModalManager";
 
 export default class ModalFactory extends AbstractFactory
 {

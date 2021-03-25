@@ -1,5 +1,5 @@
-import FilterAction from "@enhavo/app/Action/Model/FilterAction";
-import AbstractFactory from "@enhavo/app/Action/Factory/AbstractFactory";
+import FilterAction from "@enhavo/app/action/model/FilterAction";
+import AbstractFactory from "@enhavo/app/action/factory/AbstractFactory";
 
 export default class FilterActionFactory extends AbstractFactory
 {

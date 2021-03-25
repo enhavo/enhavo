@@ -1,34 +1,34 @@
 services:
-    '@enhavo/app/List/ListApp':
+    '@enhavo/app/list/ListApp':
         chunk: 'list'
         arguments:
-            - '@enhavo/app/View/View'
-            - '@enhavo/app/Action/ActionManager'
-            - '@enhavo/app/List/List'
+            - '@enhavo/app/view/View'
+            - '@enhavo/app/action/ActionManager'
+            - '@enhavo/app/list/List'
 
-    '@enhavo/app/List/List':
+    '@enhavo/app/list/List':
         chunk: 'list'
         arguments:
             - 'param:data.list'
-            - '@enhavo/app/ViewStack/EventDispatcher'
-            - '@enhavo/app/View/View'
-            - '@enhavo/app/Grid/Column/ColumnManager'
+            - '@enhavo/app/view-stack/EventDispatcher'
+            - '@enhavo/app/view/View'
+            - '@enhavo/app/grid/column/ColumnManager'
             - '@enhavo/core/Router'
             - '@enhavo/core/Translator'
-            - '@enhavo/app/FlashMessage/FlashMessenger'
-            - '@enhavo/app/Vue/VueRegistry'
+            - '@enhavo/app/flash-message/FlashMessenger'
+            - '@enhavo/app/vue/VueRegistry'
 
-    '@enhavo/app/List/Components/ListApplicationComponent.vue':
+    '@enhavo/app/list/components/ListApplicationComponent.vue':
         chunk: 'list'
         static: true
 
-    '@enhavo/app/List/Components/ListComponent.vue':
+    '@enhavo/app/list/components/ListComponent.vue':
         chunk: 'vue'
         static: true
         tags:
             - { name: vue.component, component: 'list-list' }
 
-    '@enhavo/app/List/Components/ItemComponent.vue':
+    '@enhavo/app/list/components/ItemComponent.vue':
         chunk: 'vue'
         static: true
         tags:

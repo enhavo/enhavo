@@ -1,5 +1,5 @@
-import AbstractFactory from "@enhavo/app/Grid/Column/Factory/AbstractFactory";
-import MediaColumn from "@enhavo/app/Grid/Column/Model/MediaColumn";
+import AbstractFactory from "@enhavo/app/grid/column/factory/AbstractFactory";
+import MediaColumn from "@enhavo/app/grid/column/model/MediaColumn";
 
 export default class TextFactory extends AbstractFactory
 {

@@ -1,5 +1,5 @@
 import { Registry } from "@enhavo/core";
-import WidgetFactoryInterface from "@enhavo/app/Toolbar/Widget/WidgetFactoryInterface";
+import WidgetFactoryInterface from "@enhavo/app/toolbar/widget/WidgetFactoryInterface";
 
 export default class WidgetRegistry extends Registry
 {

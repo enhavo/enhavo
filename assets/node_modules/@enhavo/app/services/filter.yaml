@@ -1,15 +1,15 @@
 services:
-    '@enhavo/app/Grid/Filter/FilterManager':
+    '@enhavo/app/grid/filter/FilterManager':
         chunk: 'grid'
         arguments:
             - 'param:data.grid.filters'
-            - '@enhavo/app/Grid/Filter/FilterRegistry'
-            - '@enhavo/app/Vue/VueRegistry'
+            - '@enhavo/app/grid/filter/FilterRegistry'
+            - '@enhavo/app/vue/VueRegistry'
 
-    '@enhavo/app/Grid/Filter/FilterRegistry':
+    '@enhavo/app/grid/filter/FilterRegistry':
         chunk: 'grid'
 
-    '@enhavo/app/Grid/Filter/Components/FilterBar.vue':
+    '@enhavo/app/grid/filter/components/FilterBar.vue':
         chunk: 'vue'
         static: true
         tags:
@@ -20,8 +20,8 @@ services:
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:filter-autocomplete-entity'
-            - '@enhavo/app/Grid/Filter/Components/FilterAutoCompleteComponent.vue'
-            - '@enhavo/app/Grid/Filter/Factory/AutoCompleteEntityFactory'
+            - '@enhavo/app/grid/filter/components/FilterAutoCompleteComponent.vue'
+            - '@enhavo/app/grid/filter/factory/AutoCompleteEntityFactory'
         tags:
             - 'enhavo_app.filter'
 
@@ -30,8 +30,8 @@ services:
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:filter-boolean'
-            - '@enhavo/app/Grid/Filter/Components/FilterCheckboxComponent.vue'
-            - '@enhavo/app/Grid/Filter/Factory/BooleanFactory'
+            - '@enhavo/app/grid/filter/components/FilterCheckboxComponent.vue'
+            - '@enhavo/app/grid/filter/factory/BooleanFactory'
         tags:
             - 'enhavo_app.filter'
 
@@ -40,8 +40,8 @@ services:
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:filter-entity'
-            - '@enhavo/app/Grid/Filter/Components/FilterDropdownComponent.vue'
-            - '@enhavo/app/Grid/Filter/Factory/EntityFactory'
+            - '@enhavo/app/grid/filter/components/FilterDropdownComponent.vue'
+            - '@enhavo/app/grid/filter/factory/EntityFactory'
         tags:
             - 'enhavo_app.filter'
 
@@ -50,8 +50,8 @@ services:
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:filter-option'
-            - '@enhavo/app/Grid/Filter/Components/FilterDropdownComponent.vue'
-            - '@enhavo/app/Grid/Filter/Factory/OptionFactory'
+            - '@enhavo/app/grid/filter/components/FilterDropdownComponent.vue'
+            - '@enhavo/app/grid/filter/factory/OptionFactory'
         tags:
             - 'enhavo_app.filter'
 
@@ -60,8 +60,8 @@ services:
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:filter-text'
-            - '@enhavo/app/Grid/Filter/Components/FilterTextComponent.vue'
-            - '@enhavo/app/Grid/Filter/Factory/TextFactory'
+            - '@enhavo/app/grid/filter/components/FilterTextComponent.vue'
+            - '@enhavo/app/grid/filter/factory/TextFactory'
         tags:
             - 'enhavo_app.filter'
 
@@ -70,8 +70,8 @@ services:
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:filter-between'
-            - '@enhavo/app/Grid/Filter/Components/FilterBetweenComponent.vue'
-            - '@enhavo/app/Grid/Filter/Factory/BetweenFactory'
+            - '@enhavo/app/grid/filter/components/FilterBetweenComponent.vue'
+            - '@enhavo/app/grid/filter/factory/BetweenFactory'
         tags:
             - 'enhavo_app.filter'
 
@@ -80,52 +80,52 @@ services:
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:filter-date-between'
-            - '@enhavo/app/Grid/Filter/Components/FilterDateBetweenComponent.vue'
-            - '@enhavo/app/Grid/Filter/Factory/DateBetweenFactory'
+            - '@enhavo/app/grid/filter/components/FilterDateBetweenComponent.vue'
+            - '@enhavo/app/grid/filter/factory/DateBetweenFactory'
         tags:
             - 'enhavo_app.filter'
 
-    '@enhavo/app/Grid/Filter/Factory/BooleanFactory':
+    '@enhavo/app/grid/filter/factory/BooleanFactory':
         chunk: 'grid'
 
-    '@enhavo/app/Grid/Filter/Factory/TextFactory':
+    '@enhavo/app/grid/filter/factory/TextFactory':
         chunk: 'grid'
 
-    '@enhavo/app/Grid/Filter/Factory/AutoCompleteEntityFactory':
+    '@enhavo/app/grid/filter/factory/AutoCompleteEntityFactory':
         chunk: 'grid'
 
-    '@enhavo/app/Grid/Filter/Factory/EntityFactory':
+    '@enhavo/app/grid/filter/factory/EntityFactory':
         chunk: 'grid'
 
-    '@enhavo/app/Grid/Filter/Factory/OptionFactory':
+    '@enhavo/app/grid/filter/factory/OptionFactory':
         chunk: 'grid'
 
-    '@enhavo/app/Grid/Filter/Factory/BetweenFactory':
+    '@enhavo/app/grid/filter/factory/BetweenFactory':
         chunk: 'grid'
 
-    '@enhavo/app/Grid/Filter/Factory/DateBetweenFactory':
+    '@enhavo/app/grid/filter/factory/DateBetweenFactory':
         chunk: 'grid'
 
-    '@enhavo/app/Grid/Filter/Components/FilterAutoCompleteComponent.vue':
-        chunk: 'grid'
-        static: true
-
-    '@enhavo/app/Grid/Filter/Components/FilterCheckboxComponent.vue':
+    '@enhavo/app/grid/filter/components/FilterAutoCompleteComponent.vue':
         chunk: 'grid'
         static: true
 
-    '@enhavo/app/Grid/Filter/Components/FilterDropdownComponent.vue':
+    '@enhavo/app/grid/filter/components/FilterCheckboxComponent.vue':
         chunk: 'grid'
         static: true
 
-    '@enhavo/app/Grid/Filter/Components/FilterTextComponent.vue':
+    '@enhavo/app/grid/filter/components/FilterDropdownComponent.vue':
         chunk: 'grid'
         static: true
 
-    '@enhavo/app/Grid/Filter/Components/FilterBetweenComponent.vue':
+    '@enhavo/app/grid/filter/components/FilterTextComponent.vue':
         chunk: 'grid'
         static: true
 
-    '@enhavo/app/Grid/Filter/Components/FilterDateBetweenComponent.vue':
+    '@enhavo/app/grid/filter/components/FilterBetweenComponent.vue':
+        chunk: 'grid'
+        static: true
+
+    '@enhavo/app/grid/filter/components/FilterDateBetweenComponent.vue':
         chunk: 'grid'
         static: true

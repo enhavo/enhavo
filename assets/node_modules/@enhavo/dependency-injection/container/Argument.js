@@ -1,4 +1,4 @@
-const ContainerException = require('@enhavo/dependency-injection/Exception/ContainerException');
+const ContainerException = require('@enhavo/dependency-injection/exception/ContainerException');
 
 const TYPE_NULL = 'null';
 const TYPE_SERVICE = 'service';

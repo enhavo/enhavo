@@ -4,22 +4,22 @@ entrypoints:
         build: enhavo
 
 services:
-    '@enhavo/newsletter/Stats/StatsApp':
+    '@enhavo/newsletter/stats/StatsApp':
         arguments:
             - 'param:data.resource'
-            - '@enhavo/app/View/View'
-            - '@enhavo/app/Action/ActionManager'
-            - '@enhavo/app/Vue/VueRegistry'
+            - '@enhavo/app/view/View'
+            - '@enhavo/app/action/ActionManager'
+            - '@enhavo/app/vue/VueRegistry'
 
-    '@enhavo/newsletter/Stats/Components/IndexComponent.vue':
+    '@enhavo/newsletter/stats/components/IndexComponent.vue':
         static: true
 
     action.newsletter-send:
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:newsletter-send'
-            - '@enhavo/app/Action/Components/ActionComponent.vue'
-            - '@enhavo/newsletter/Action/Factory/NewsletterSendActionFactory'
+            - '@enhavo/app/action/components/ActionComponent.vue'
+            - '@enhavo/newsletter/action/factory/NewsletterSendActionFactory'
         tags:
             - 'enhavo_app.action'
 
@@ -27,23 +27,23 @@ services:
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:newsletter-send-test'
-            - '@enhavo/app/Action/Components/ActionComponent.vue'
-            - '@enhavo/newsletter/Action/Factory/NewsletterSendTestActionFactory'
+            - '@enhavo/app/action/components/ActionComponent.vue'
+            - '@enhavo/newsletter/action/factory/NewsletterSendTestActionFactory'
         tags:
             - 'enhavo_app.action'
 
-    '@enhavo/newsletter/Action/Factory/NewsletterSendActionFactory':
+    '@enhavo/newsletter/action/factory/NewsletterSendActionFactory':
         arguments:
-            - '@enhavo/app/Form/Form'
+            - '@enhavo/app/form/Form'
             - '@enhavo/core/Translator'
-            - '@enhavo/app/View/View'
+            - '@enhavo/app/view/View'
             - '@enhavo/core/Router'
-            - '@enhavo/app/FlashMessage/FlashMessenger'
+            - '@enhavo/app/flash-message/FlashMessenger'
 
-    '@enhavo/newsletter/Action/Factory/NewsletterSendTestActionFactory':
+    '@enhavo/newsletter/action/factory/NewsletterSendTestActionFactory':
         arguments:
-            - '@enhavo/app/FlashMessage/FlashMessenger'
+            - '@enhavo/app/flash-message/FlashMessenger'
             - '@enhavo/core/Translator'
-            - '@enhavo/app/Modal/ModalManager'
-            - '@enhavo/app/View/View'
+            - '@enhavo/app/modal/ModalManager'
+            - '@enhavo/app/view/View'
             - '@enhavo/core/Router'

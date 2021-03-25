@@ -11,7 +11,7 @@
 
 <script lang="ts">
     import { Vue, Component, Prop, Watch } from "vue-property-decorator";
-    import OutputStreamModal from "@enhavo/app/Modal/Model/OutputStreamModal"
+    import OutputStreamModal from "@enhavo/app/modal/model/OutputStreamModal"
     import * as Convert from "ansi-to-html";
     import * as $ from "jquery";
 

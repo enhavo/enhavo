@@ -1,5 +1,5 @@
-import ModalInterface from "@enhavo/app/Modal/ModalInterface";
-import ModalManager from "@enhavo/app/Modal/ModalManager";
+import ModalInterface from "@enhavo/app/modal/ModalInterface";
+import ModalManager from "@enhavo/app/modal/ModalManager";
 
 export default abstract class AbstractModal implements ModalInterface
 {

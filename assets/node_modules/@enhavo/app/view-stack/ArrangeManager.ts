@@ -1,6 +1,6 @@
 import ViewInterface from "./ViewInterface";
-import MenuManager from "@enhavo/app/Menu/MenuManager";
-import MenuList from "@enhavo/app/Menu/Model/MenuList";
+import MenuManager from "@enhavo/app/menu/MenuManager";
+import MenuList from "@enhavo/app/menu/model/MenuList";
 
 export default class ArrangeManager
 {

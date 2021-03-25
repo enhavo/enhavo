@@ -1,42 +1,42 @@
 services:
-    '@enhavo/app/View/View':
+    '@enhavo/app/view/View':
         chunk: 'view'
         arguments:
             - 'param:data.view'
             - '@enhavo/core/Router'
             - '@enhavo/core/Translator'
-            - '@enhavo/app/Vue/VueRegistry'
+            - '@enhavo/app/vue/VueRegistry'
         calls:
-            - [setEventDispatcher, ['@enhavo/app/ViewStack/EventDispatcher']]
+            - [setEventDispatcher, ['@enhavo/app/view-stack/EventDispatcher']]
 
-    '@enhavo/app/View/DataLoader[data]':
+    '@enhavo/app/view/DataLoader[data]':
         chunk: 'view'
         init: true
-        from: '@enhavo/app/View/DataLoader'
+        from: '@enhavo/app/view/DataLoader'
         arguments:
             - 'string:data'
             - 'string:data'
             - 'container:'
 
-    '@enhavo/app/View/DataLoader[routes]':
+    '@enhavo/app/view/DataLoader[routes]':
         chunk: 'view'
         init: true
-        from: '@enhavo/app/View/DataLoader'
+        from: '@enhavo/app/view/DataLoader'
         arguments:
             - 'string:routes'
             - 'string:routes'
             - 'container:'
 
-    '@enhavo/app/View/DataLoader[translations]':
+    '@enhavo/app/view/DataLoader[translations]':
         chunk: 'view'
         init: true
-        from: '@enhavo/app/View/DataLoader'
+        from: '@enhavo/app/view/DataLoader'
         arguments:
             - 'string:translations'
             - 'string:translations'
             - 'container:'
 
-    '@enhavo/app/View/Components/ViewComponent':
+    '@enhavo/app/view/components/ViewComponent':
         chunk: 'vue'
         static: true
         tags:

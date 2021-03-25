@@ -1,8 +1,8 @@
 import * as $ from "jquery";
-import AbstractAction from "@enhavo/app/Action/Model/AbstractAction";
-import LoadingEvent from "@enhavo/app/ViewStack/Event/LoadingEvent";
-import View from "@enhavo/app/View/View";
-import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
+import AbstractAction from "@enhavo/app/action/model/AbstractAction";
+import LoadingEvent from "@enhavo/app/view-stack/Event/LoadingEvent";
+import View from "@enhavo/app/view/View";
+import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
 
 export default class SaveAction extends AbstractAction
 {

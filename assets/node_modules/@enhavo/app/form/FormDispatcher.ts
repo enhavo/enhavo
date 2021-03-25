@@ -1,8 +1,8 @@
 import * as $ from "jquery";
-import FormElementEvent from '@enhavo/app/Form/Event/FormElementEvent';
-import FormConvertEvent from '@enhavo/app/Form/Event/FormConvertEvent';
-import FormInsertEvent from '@enhavo/app/Form/Event/FormInsertEvent';
-import FormReleaseEvent from '@enhavo/app/Form/Event/FormReleaseEvent';
+import FormElementEvent from '@enhavo/app/form/event/FormElementEvent';
+import FormConvertEvent from '@enhavo/app/form/event/FormConvertEvent';
+import FormInsertEvent from '@enhavo/app/form/event/FormInsertEvent';
+import FormReleaseEvent from '@enhavo/app/form/event/FormReleaseEvent';
 
 export default class FormDispatcher
 {

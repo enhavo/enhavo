@@ -1,6 +1,6 @@
-import AbstractWidget from "@enhavo/app/Toolbar/Widget/Model/AbstractWidget";
-import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
-import MenuManager from "@enhavo/app/Menu/MenuManager";
+import AbstractWidget from "@enhavo/app/toolbar/widget/model/AbstractWidget";
+import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
+import MenuManager from "@enhavo/app/menu/MenuManager";
 
 export default class NewWindowWidget extends AbstractWidget
 {

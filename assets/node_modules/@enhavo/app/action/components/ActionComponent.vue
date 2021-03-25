@@ -9,7 +9,7 @@
 
 <script lang="ts">
     import { Vue, Component, Prop } from "vue-property-decorator";
-    import ActionInterface from "@enhavo/app/Action/ActionInterface";
+    import ActionInterface from "@enhavo/app/action/ActionInterface";
 
     @Component
     export default class ActionComponent extends Vue {

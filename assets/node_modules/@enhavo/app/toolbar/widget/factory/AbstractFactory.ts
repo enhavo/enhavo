@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import WidgetInterface from "@enhavo/app/Toolbar/Widget/WidgetInterface";
+import WidgetInterface from "@enhavo/app/toolbar/widget/WidgetInterface";
 
 export default abstract class AbstractFactory
 {

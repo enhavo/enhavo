@@ -1,10 +1,10 @@
-import AbstractFactory from "@enhavo/app/Grid/Batch/Factory/AbstractFactory";
-import UrlBatch from "@enhavo/app/Grid/Batch/Model/UrlBatch";
+import AbstractFactory from "@enhavo/app/grid/batch/factory/AbstractFactory";
+import UrlBatch from "@enhavo/app/grid/batch/model/UrlBatch";
 import Translator from "@enhavo/core/Translator";
-import View from "@enhavo/app/View/View";
-import FlashMessenger from "@enhavo/app/FlashMessage/FlashMessenger";
+import View from "@enhavo/app/view/View";
+import FlashMessenger from "@enhavo/app/flash-message/FlashMessenger";
 import Router from "@enhavo/core/Router";
-import BatchDataInterface from "@enhavo/app/Grid/Batch/BatchDataInterface";
+import BatchDataInterface from "@enhavo/app/grid/batch/BatchDataInterface";
 
 export default class UrlFactory extends AbstractFactory
 {

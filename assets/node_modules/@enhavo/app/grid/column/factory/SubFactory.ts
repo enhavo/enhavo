@@ -1,5 +1,5 @@
-import AbstractFactory from "@enhavo/app/Grid/Column/Factory/AbstractFactory";
-import SubColumn from "@enhavo/app/Grid/Column/Model/SubColumn";
+import AbstractFactory from "@enhavo/app/grid/column/factory/AbstractFactory";
+import SubColumn from "@enhavo/app/grid/column/model/SubColumn";
 
 export default class UrlFactory extends AbstractFactory
 {

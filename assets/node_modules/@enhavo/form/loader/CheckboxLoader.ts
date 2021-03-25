@@ -1,6 +1,6 @@
-import CheckboxType from "@enhavo/form/Type/CheckboxType";
-import AbstractLoader from "@enhavo/form/Loader/AbstractLoader";
-import FormRegistry from "@enhavo/app/Form/FormRegistry";
+import CheckboxType from "@enhavo/form/type/CheckboxType";
+import AbstractLoader from "@enhavo/form/loader/AbstractLoader";
+import FormRegistry from "@enhavo/app/form/FormRegistry";
 
 export default class CheckboxLoader extends AbstractLoader
 {

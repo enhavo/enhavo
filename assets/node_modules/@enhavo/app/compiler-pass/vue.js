@@ -1,5 +1,5 @@
-const Argument = require("@enhavo/dependency-injection/Container/Argument");
-const Call = require("@enhavo/dependency-injection/Container/Call");
+const Argument = require("@enhavo/dependency-injection/container/Argument");
+const Call = require("@enhavo/dependency-injection/container/Call");
 
 /**
  * @param {ContainerBuilder} builder

@@ -1,4 +1,4 @@
-import AbstractAction from "@enhavo/app/Action/Model/AbstractAction";
+import AbstractAction from "@enhavo/app/action/model/AbstractAction";
 import axios from 'axios';
 import * as $ from 'jquery';
 

@@ -4,6 +4,6 @@ entrypoints:
         build: enhavo
 
 services:
-    '@enhavo/user/Login/LoginApp':
+    '@enhavo/user/login/LoginApp':
         arguments:
-            - '@enhavo/app/View/View'
+            - '@enhavo/app/view/View'

@@ -1,7 +1,7 @@
-import QuickMenuWidget from "@enhavo/app/Toolbar/Widget/Model/QuickMenuWidget";
-import AbstractFactory from "@enhavo/app/Toolbar/Widget/Factory/AbstractFactory";
-import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
-import MenuManager from "@enhavo/app/Menu/MenuManager";
+import QuickMenuWidget from "@enhavo/app/toolbar/widget/model/QuickMenuWidget";
+import AbstractFactory from "@enhavo/app/toolbar/widget/factory/AbstractFactory";
+import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
+import MenuManager from "@enhavo/app/menu/MenuManager";
 
 export default class SearchWidgetFactory extends AbstractFactory
 {

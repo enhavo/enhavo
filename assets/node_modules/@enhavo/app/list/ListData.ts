@@ -1,5 +1,5 @@
-import ColumnInterface from "@enhavo/app/Grid/Column/ColumnInterface";
-import Item from "@enhavo/app/List/Item";
+import ColumnInterface from "@enhavo/app/grid/column/ColumnInterface";
+import Item from "@enhavo/app/list/Item";
 
 export default class ListData
 {

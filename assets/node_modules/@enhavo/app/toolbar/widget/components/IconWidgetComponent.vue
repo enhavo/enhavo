@@ -6,7 +6,7 @@
 
 <script lang="ts">
     import { Vue, Component, Prop } from "vue-property-decorator";
-    import IconWidget from "@enhavo/app/Toolbar/Widget/Model/IconWidget";
+    import IconWidget from "@enhavo/app/toolbar/widget/model/IconWidget";
 
     @Component
     export default class IconWidgetComponent extends Vue {

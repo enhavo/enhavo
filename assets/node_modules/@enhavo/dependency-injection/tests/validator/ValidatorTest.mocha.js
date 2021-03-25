@@ -1,6 +1,6 @@
-const Validator = require('@enhavo/dependency-injection/Validation/Validator');
-const Loader = require('@enhavo/dependency-injection/Loader/Loader');
-const ContainerBuilder = require('@enhavo/dependency-injection/Container/ContainerBuilder');
+const Validator = require('@enhavo/dependency-injection/validation/Validator');
+const Loader = require('@enhavo/dependency-injection/loader/Loader');
+const ContainerBuilder = require('@enhavo/dependency-injection/container/ContainerBuilder');
 const chai = require("chai");
 
 describe('dependency-injection/Validation/Validator', () => {

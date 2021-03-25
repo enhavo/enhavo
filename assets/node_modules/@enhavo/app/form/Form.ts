@@ -1,12 +1,12 @@
 import * as _ from "lodash";
-import Tab from "@enhavo/app/Form/Tab";
-import FormData from "@enhavo/app/Form/FormData";
-import FormRegistry from "@enhavo/app/Form/FormRegistry";
-import FlashMessenger from "@enhavo/app/FlashMessage/FlashMessenger";
-import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
-import UpdatedEvent from "@enhavo/app/ViewStack/Event/UpdatedEvent";
-import View from "@enhavo/app/View/View";
-import SaveStateEvent from "@enhavo/app/ViewStack/Event/SaveStateEvent";
+import Tab from "@enhavo/app/form/Tab";
+import FormData from "@enhavo/app/form/FormData";
+import FormRegistry from "@enhavo/app/form/FormRegistry";
+import FlashMessenger from "@enhavo/app/flash-message/FlashMessenger";
+import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
+import UpdatedEvent from "@enhavo/app/view-stack/Event/UpdatedEvent";
+import View from "@enhavo/app/view/View";
+import SaveStateEvent from "@enhavo/app/view-stack/Event/SaveStateEvent";
 import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
 
 export default class Form

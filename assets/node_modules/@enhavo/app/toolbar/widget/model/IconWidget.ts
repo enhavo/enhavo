@@ -1,8 +1,8 @@
-import AbstractWidget from "@enhavo/app/Toolbar/Widget/Model/AbstractWidget";
-import ClearEvent from "@enhavo/app/ViewStack/Event/ClearEvent";
-import CreateEvent from "@enhavo/app/ViewStack/Event/CreateEvent";
-import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
-import MenuManager from "@enhavo/app/Menu/MenuManager";
+import AbstractWidget from "@enhavo/app/toolbar/widget/model/AbstractWidget";
+import ClearEvent from "@enhavo/app/view-stack/Event/ClearEvent";
+import CreateEvent from "@enhavo/app/view-stack/Event/CreateEvent";
+import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
+import MenuManager from "@enhavo/app/menu/MenuManager";
 
 export default class IconWidget extends AbstractWidget
 {

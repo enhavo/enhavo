@@ -12,7 +12,7 @@
 
 <script lang="ts">
     import { Vue, Component, Prop } from "vue-property-decorator";
-    import MenuItem from '@enhavo/app/Menu/Model/MenuItem';
+    import MenuItem from '@enhavo/app/menu/model/MenuItem';
 
     @Component()
     export default class MenuItemComponent extends Vue {

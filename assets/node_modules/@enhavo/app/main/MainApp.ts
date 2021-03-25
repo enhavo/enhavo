@@ -1,9 +1,9 @@
-import ViewStack from '@enhavo/app/ViewStack/ViewStack';
-import MenuManager from '@enhavo/app/Menu/MenuManager';
-import Branding from '@enhavo/app/Main/Branding';
-import StateManager from "@enhavo/app/State/StateManager";
-import DataStorageManager from "@enhavo/app/ViewStack/DataStorageManager";
-import WidgetManager from "@enhavo/app/Toolbar/Widget/WidgetManager";
+import ViewStack from '@enhavo/app/view-stack/ViewStack';
+import MenuManager from '@enhavo/app/menu/MenuManager';
+import Branding from '@enhavo/app/main/Branding';
+import StateManager from "@enhavo/app/state/StateManager";
+import DataStorageManager from "@enhavo/app/view-stack/DataStorageManager";
+import WidgetManager from "@enhavo/app/toolbar/widget/WidgetManager";
 import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
 
 export default class MainApp

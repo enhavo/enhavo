@@ -20,7 +20,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
-import MenuList from '@enhavo/app/Menu/Model/MenuList';
+import MenuList from '@enhavo/app/menu/model/MenuList';
 
 @Component()
 export default class MenuListComponent extends Vue {

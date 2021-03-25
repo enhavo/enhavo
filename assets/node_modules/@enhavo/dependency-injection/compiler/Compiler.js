@@ -1,4 +1,4 @@
-const ContainerBuilder = require("@enhavo/dependency-injection/Container/ContainerBuilder");
+const ContainerBuilder = require("@enhavo/dependency-injection/container/ContainerBuilder");
 
 class Compiler
 {
@@ -10,7 +10,7 @@ class Compiler
     {
         let content = '';
 
-        content += `import {Container} from '@enhavo/dependency-injection/Container/Container'\n`;
+        content += `import {Container} from '@enhavo/dependency-injection/container/Container'\n`;
         content += `class CompiledContainer extends Container {\n`;
         content += this._generateConstructor(builder) + `\n`;
         content += this._generateInitFunction(builder) + `\n`;

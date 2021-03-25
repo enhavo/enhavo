@@ -1,5 +1,5 @@
-import DownloadAction from "@enhavo/app/Action/Model/DownloadAction";
-import AbstractFactory from "@enhavo/app/Action/Factory/AbstractFactory";
+import DownloadAction from "@enhavo/app/action/model/DownloadAction";
+import AbstractFactory from "@enhavo/app/action/factory/AbstractFactory";
 
 export default class DownloadActionFactory extends AbstractFactory
 {

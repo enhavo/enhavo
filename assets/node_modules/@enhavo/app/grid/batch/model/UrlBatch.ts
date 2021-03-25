@@ -1,13 +1,13 @@
-import AbstractBatch from "@enhavo/app/Grid/Batch/Model/AbstractBatch";
-import Confirm from "@enhavo/app/View/Confirm";
+import AbstractBatch from "@enhavo/app/grid/batch/model/AbstractBatch";
+import Confirm from "@enhavo/app/view/Confirm";
 import axios from "axios";
 import * as _ from "lodash";
-import Message from "@enhavo/app/FlashMessage/Message";
-import BatchDataInterface from "@enhavo/app/Grid/Batch/BatchDataInterface";
-import FlashMessenger from "@enhavo/app/FlashMessage/FlashMessenger";
+import Message from "@enhavo/app/flash-message/Message";
+import BatchDataInterface from "@enhavo/app/grid/batch/BatchDataInterface";
+import FlashMessenger from "@enhavo/app/flash-message/FlashMessenger";
 import Router from "@enhavo/core/Router";
 import Translator from "@enhavo/core/Translator";
-import View from "@enhavo/app/View/View";
+import View from "@enhavo/app/view/View";
 
 export default class UrlBatch extends AbstractBatch
 {

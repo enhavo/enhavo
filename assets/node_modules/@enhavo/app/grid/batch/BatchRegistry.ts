@@ -1,5 +1,5 @@
 import { Registry } from "@enhavo/core";
-import BatchFactoryInterface from "@enhavo/app/Grid/Batch/BatchFactoryInterface";
+import BatchFactoryInterface from "@enhavo/app/grid/batch/BatchFactoryInterface";
 import RegistryInterface from "@enhavo/core/RegistryInterface";
 
 export default class BatchRegistry extends Registry

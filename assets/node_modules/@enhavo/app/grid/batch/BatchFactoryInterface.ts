@@ -1,5 +1,5 @@
 import FactoryInterface from "@enhavo/core/FactoryInterface";
-import BatchInterface from "@enhavo/app/Grid/Batch/BatchInterface";
+import BatchInterface from "@enhavo/app/grid/batch/BatchInterface";
 
 export default interface BatchFactoryInterface extends FactoryInterface
 {

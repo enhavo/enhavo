@@ -1,7 +1,7 @@
 const assert = require("chai").assert;
-const ContainerBuilder = require("@enhavo/dependency-injection/Container/ContainerBuilder");
-const Definition = require( "@enhavo/dependency-injection/Container/Definition");
-const Compiler = require("@enhavo/dependency-injection/Compiler/Compiler");
+const ContainerBuilder = require("@enhavo/dependency-injection/container/ContainerBuilder");
+const Definition = require( "@enhavo/dependency-injection/container/Definition");
+const Compiler = require("@enhavo/dependency-injection/compiler/Compiler");
 const acorn  = require("acorn");
 
 describe('dependency-injection/Compiler/Compiler', () => {

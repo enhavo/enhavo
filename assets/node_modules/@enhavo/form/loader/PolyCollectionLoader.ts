@@ -1,9 +1,9 @@
-import AbstractLoader from "@enhavo/form/Loader/AbstractLoader";
-import PolyCollectionType from "@enhavo/form/Type/PolyCollectionType";
-import PolyCollectionConfig from "@enhavo/form/Type/PolyCollectionConfig";
+import AbstractLoader from "@enhavo/form/loader/AbstractLoader";
+import PolyCollectionType from "@enhavo/form/type/PolyCollectionType";
+import PolyCollectionConfig from "@enhavo/form/type/PolyCollectionConfig";
 import * as $ from "jquery";
-import prototypeManager from "@enhavo/form/Prototype/PrototypeManager";
-import FormRegistry from "@enhavo/app/Form/FormRegistry";
+import prototypeManager from "@enhavo/form/prototype/PrototypeManager";
+import FormRegistry from "@enhavo/app/form/FormRegistry";
 
 export default class PolyCollectionLoader extends AbstractLoader
 {

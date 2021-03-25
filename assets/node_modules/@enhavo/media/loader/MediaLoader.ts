@@ -1,15 +1,15 @@
 import * as $ from "jquery";
-import MediaType from "@enhavo/media/Type/MediaType";
-import AbstractLoader from "@enhavo/form/Loader/AbstractLoader";
+import MediaType from "@enhavo/media/type/MediaType";
+import AbstractLoader from "@enhavo/form/loader/AbstractLoader";
 import "@enhavo/media/assets/styles/style.scss";
-import ImageCropperExtension from "@enhavo/media/Extension/ImageCropperExtension";
-import ImageCropperConfiguration from "@enhavo/media/Extension/ImageCropperConfiguration";
-import MediaItem from "@enhavo/media/Type/MediaItem";
+import ImageCropperExtension from "@enhavo/media/extension/ImageCropperExtension";
+import ImageCropperConfiguration from "@enhavo/media/extension/ImageCropperConfiguration";
+import MediaItem from "@enhavo/media/type/MediaItem";
 import MediaRouter from "@enhavo/media/MediaRouter";
-import DownloadExtension from "@enhavo/media/Extension/DownloadExtension";
-import View from "@enhavo/app/View/View";
+import DownloadExtension from "@enhavo/media/extension/DownloadExtension";
+import View from "@enhavo/app/view/View";
 import Router from "@enhavo/core/Router";
-import FormRegistry from "@enhavo/app/Form/FormRegistry";
+import FormRegistry from "@enhavo/app/form/FormRegistry";
 
 export default class MediaLoader extends AbstractLoader
 {

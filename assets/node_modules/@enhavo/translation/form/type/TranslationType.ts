@@ -1,9 +1,9 @@
-import FormType from "@enhavo/app/Form/FormType";
-import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
+import FormType from "@enhavo/app/form/FormType";
+import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
 import * as $ from "jquery";
-import LoadGlobalDataEvent from "@enhavo/app/ViewStack/Event/LoadGlobalDataEvent";
-import SaveGlobalDataEvent from "@enhavo/app/ViewStack/Event/SaveGlobalDataEvent";
-import DataStorageEntry from "@enhavo/app/ViewStack/DataStorageEntry";
+import LoadGlobalDataEvent from "@enhavo/app/view-stack/Event/LoadGlobalDataEvent";
+import SaveGlobalDataEvent from "@enhavo/app/view-stack/Event/SaveGlobalDataEvent";
+import DataStorageEntry from "@enhavo/app/view-stack/DataStorageEntry";
 
 export default class TranslationType extends FormType
 {

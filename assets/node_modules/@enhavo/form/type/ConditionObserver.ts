@@ -1,6 +1,6 @@
 import * as $ from "jquery";
-import ConditionType from "@enhavo/form/Type/ConditionType";
-import ConditionObserverConfig from "@enhavo/form/Type/ConditionObserverConfig";
+import ConditionType from "@enhavo/form/type/ConditionType";
+import ConditionObserverConfig from "@enhavo/form/type/ConditionObserverConfig";
 
 export default class ConditionObserver
 {

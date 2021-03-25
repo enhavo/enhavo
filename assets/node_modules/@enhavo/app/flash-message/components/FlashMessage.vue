@@ -6,7 +6,7 @@
 
 <script lang="ts">
     import { Vue, Component, Prop } from "vue-property-decorator";
-    import Message from "@enhavo/app/FlashMessage/Message";
+    import Message from "@enhavo/app/flash-message/Message";
 
     @Component()
     export default class AppView extends Vue {

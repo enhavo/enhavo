@@ -1,4 +1,4 @@
-import Receiver from '@enhavo/newsletter/Model/Receiver'
+import Receiver from '@enhavo/newsletter/model/Receiver'
 
 export default class Newsletter
 {

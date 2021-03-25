@@ -1,10 +1,10 @@
-import ActionManager from "@enhavo/app/Action/ActionManager";
-import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
-import View from "@enhavo/app/View/View";
-import DataEvent from "@enhavo/app/ViewStack/Event/DataEvent";
+import ActionManager from "@enhavo/app/action/ActionManager";
+import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
+import View from "@enhavo/app/view/View";
+import DataEvent from "@enhavo/app/view-stack/Event/DataEvent";
 import * as $ from "jquery"
 import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
-import PreviewData from "@enhavo/app/Preview/PreviewData";
+import PreviewData from "@enhavo/app/preview/PreviewData";
 
 export default class PreviewApp
 {

@@ -1,5 +1,5 @@
 import * as $ from "jquery";
-import Prototype from "@enhavo/form/Prototype/Prototype";
+import Prototype from "@enhavo/form/prototype/Prototype";
 
 export class PrototypeManager
 {

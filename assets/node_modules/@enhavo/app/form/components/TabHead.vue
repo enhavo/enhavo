@@ -6,7 +6,7 @@
 
 <script lang="ts">
     import { Vue, Component, Prop } from "vue-property-decorator";
-    import Tab from "@enhavo/app/Form/Tab";
+    import Tab from "@enhavo/app/form/Tab";
 
     @Component()
     export default class TabHead extends Vue

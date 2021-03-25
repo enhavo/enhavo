@@ -1,4 +1,4 @@
-import FormType from "@enhavo/app/Form/FormType";
+import FormType from "@enhavo/app/form/FormType";
 import * as $ from "jquery";
 import 'select2'
 import 'select2/select2_locale_de.js'

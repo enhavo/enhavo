@@ -1,22 +1,22 @@
-import FilterManager from "@enhavo/app/Grid/Filter/FilterManager";
-import ColumnManager from "@enhavo/app/Grid/Column/ColumnManager";
-import RowData from "@enhavo/app/Grid/Column/RowData";
-import ColumnInterface from "@enhavo/app/Grid/Column/ColumnInterface";
+import FilterManager from "@enhavo/app/grid/filter/FilterManager";
+import ColumnManager from "@enhavo/app/grid/column/ColumnManager";
+import RowData from "@enhavo/app/grid/column/RowData";
+import ColumnInterface from "@enhavo/app/grid/column/ColumnInterface";
 import Router from "@enhavo/core/Router";
-import GridConfiguration from "@enhavo/app/Grid/GridConfiguration";
+import GridConfiguration from "@enhavo/app/grid/GridConfiguration";
 import axios, {CancelTokenSource} from 'axios';
 import * as _ from "lodash";
 import * as $ from "jquery";
-import BatchManager from "@enhavo/app/Grid/Batch/BatchManager";
-import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
-import View from "@enhavo/app/View/View";
-import UpdatedEvent from "@enhavo/app/ViewStack/Event/UpdatedEvent";
+import BatchManager from "@enhavo/app/grid/batch/BatchManager";
+import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
+import View from "@enhavo/app/view/View";
+import UpdatedEvent from "@enhavo/app/view-stack/Event/UpdatedEvent";
 import Translator from "@enhavo/core/Translator";
-import FlashMessenger from "@enhavo/app/FlashMessage/FlashMessenger";
+import FlashMessenger from "@enhavo/app/flash-message/FlashMessenger";
 import * as jexl from "jexl";
-import ViewInterface from "@enhavo/app/ViewStack/ViewInterface";
+import ViewInterface from "@enhavo/app/view-stack/ViewInterface";
 import * as async from "async";
-import Confirm from "@enhavo/app/View/Confirm";
+import Confirm from "@enhavo/app/view/Confirm";
 import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
 
 export default class Grid

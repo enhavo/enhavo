@@ -1,5 +1,5 @@
 import { Registry } from "@enhavo/core";
-import MenuFactoryInterface from "@enhavo/app/Menu/MenuFactoryInterface";
+import MenuFactoryInterface from "@enhavo/app/menu/MenuFactoryInterface";
 import RegistryInterface from "@enhavo/core/RegistryInterface";
 
 export default class MenuRegistry extends Registry

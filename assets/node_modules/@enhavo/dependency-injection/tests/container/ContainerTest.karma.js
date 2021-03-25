@@ -1,5 +1,5 @@
 import {assert} from "chai";
-import {Container} from "@enhavo/dependency-injection/Container/Container";
+import {Container} from "@enhavo/dependency-injection/container/Container";
 
 class Callable
 {

@@ -1,12 +1,12 @@
-import FormBatch from "@enhavo/app/Grid/Batch/Model/FormBatch";
-import ModalManager from "@enhavo/app/Modal/ModalManager";
-import Grid from "@enhavo/app/Grid/Grid";
-import UrlFactory from "@enhavo/app/Grid/Batch/Factory/UrlFactory";
+import FormBatch from "@enhavo/app/grid/batch/model/FormBatch";
+import ModalManager from "@enhavo/app/modal/ModalManager";
+import Grid from "@enhavo/app/grid/Grid";
+import UrlFactory from "@enhavo/app/grid/batch/factory/UrlFactory";
 import Translator from "@enhavo/core/Translator";
-import View from "@enhavo/app/View/View";
-import FlashMessenger from "@enhavo/app/FlashMessage/FlashMessenger";
+import View from "@enhavo/app/view/View";
+import FlashMessenger from "@enhavo/app/flash-message/FlashMessenger";
 import Router from "@enhavo/core/Router";
-import BatchDataInterface from "@enhavo/app/Grid/Batch/BatchDataInterface";
+import BatchDataInterface from "@enhavo/app/grid/batch/BatchDataInterface";
 
 export default class FormFactory extends UrlFactory
 {

@@ -1,5 +1,5 @@
-import MenuManager from "@enhavo/app/Menu/MenuManager";
-import MenuRegistry from "@enhavo/app/Menu/MenuRegistry";
+import MenuManager from "@enhavo/app/menu/MenuManager";
+import MenuRegistry from "@enhavo/app/menu/MenuRegistry";
 import ApplicationInterface from "@enhavo/app/ApplicationInterface";
 
 export default interface MenuAwareApplication extends ApplicationInterface

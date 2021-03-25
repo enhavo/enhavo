@@ -1,6 +1,6 @@
 const assert = require("chai").assert;
 const chai = require("chai");
-const Argument = require('@enhavo/dependency-injection/Container/Argument');
+const Argument = require('@enhavo/dependency-injection/container/Argument');
 
 describe('dependency-injection/Container/Argument', () => {
     describe('constructor', () => {

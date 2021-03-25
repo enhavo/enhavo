@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
-import WidgetInterface from "@enhavo/dashboard/Widget/WidgetInterface";
-import WidgetRegistry from "@enhavo/dashboard/Widget/WidgetRegistry";
+import WidgetInterface from "@enhavo/dashboard/widget/WidgetInterface";
+import WidgetRegistry from "@enhavo/dashboard/widget/WidgetRegistry";
 import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
 
 export default class WidgetManager

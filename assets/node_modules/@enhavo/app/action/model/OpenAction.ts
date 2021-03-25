@@ -1,5 +1,5 @@
-import AbstractAction from "@enhavo/app/Action/Model/AbstractAction";
-import View from "@enhavo/app/View/View";
+import AbstractAction from "@enhavo/app/action/model/AbstractAction";
+import View from "@enhavo/app/view/View";
 
 export default class OpenAction extends AbstractAction
 {

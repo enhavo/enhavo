@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
-import MenuInterface from "@enhavo/app/Menu/MenuInterface";
-import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
-import MenuManager from "@enhavo/app/Menu/MenuManager";
+import MenuInterface from "@enhavo/app/menu/MenuInterface";
+import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
+import MenuManager from "@enhavo/app/menu/MenuManager";
 
 export default abstract class AbstractFactory
 {

@@ -1,7 +1,7 @@
-import ListItem from "@enhavo/form/Type/ListItem";
-import FormType from "@enhavo/app/Form/FormType";
-import FormDispatcher from "@enhavo/app/Form/FormDispatcher";
-import FormInitializer from "@enhavo/app/Form/FormInitializer";
+import ListItem from "@enhavo/form/type/ListItem";
+import FormType from "@enhavo/app/form/FormType";
+import FormDispatcher from "@enhavo/app/form/FormDispatcher";
+import FormInitializer from "@enhavo/app/form/FormInitializer";
 
 export default class ListType extends FormType
 {

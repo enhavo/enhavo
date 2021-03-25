@@ -1,4 +1,4 @@
-import AbstractMenu from "@enhavo/app/Menu/Model/AbstractMenu";
+import AbstractMenu from "@enhavo/app/menu/model/AbstractMenu";
 
 export default class MenuDropdown extends AbstractMenu
 {

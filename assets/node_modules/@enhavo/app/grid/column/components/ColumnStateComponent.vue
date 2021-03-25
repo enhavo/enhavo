@@ -6,7 +6,7 @@
 
 <script lang="ts">
     import { Vue, Component, Prop } from "vue-property-decorator";
-    import StateColumn from "@enhavo/app/Grid/Column/Model/StateColumn";
+    import StateColumn from "@enhavo/app/grid/column/model/StateColumn";
 
     @Component
     export default class ColumnTextComponent extends Vue

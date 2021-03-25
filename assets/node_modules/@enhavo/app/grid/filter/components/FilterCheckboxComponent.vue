@@ -10,7 +10,7 @@
 
 <script lang="ts">
     import { Vue, Component, Prop, Watch } from "vue-property-decorator";
-    import AbstractFilter from "@enhavo/app/Grid/Filter/Model/AbstractFilter";
+    import AbstractFilter from "@enhavo/app/grid/filter/model/AbstractFilter";
 
     @Component
     export default class FilterCheckboxComponent extends Vue {

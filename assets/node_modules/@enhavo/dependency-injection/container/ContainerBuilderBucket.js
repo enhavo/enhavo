@@ -1,4 +1,4 @@
-const ContainerBuilder = require("@enhavo/dependency-injection/Container/ContainerBuilder");
+const ContainerBuilder = require("@enhavo/dependency-injection/container/ContainerBuilder");
 
 class ContainerBuilderBucket
 {

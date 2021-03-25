@@ -1,5 +1,5 @@
-import AbstractFactory from "@enhavo/app/Action/Factory/AbstractFactory";
-import EventAction from "@enhavo/app/Action/Model/EventAction";
+import AbstractFactory from "@enhavo/app/action/factory/AbstractFactory";
+import EventAction from "@enhavo/app/action/model/EventAction";
 
 export default class EventActionFactory extends AbstractFactory
 {

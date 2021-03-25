@@ -1,4 +1,4 @@
-import {Container} from "@enhavo/dependency-injection/Container/Container";
+import {Container} from "@enhavo/dependency-injection/container/Container";
 
 export default class DataLoader
 {

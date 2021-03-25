@@ -1,9 +1,9 @@
-import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
-import View from "@enhavo/app/View/View";
-import UpdatedEvent from "@enhavo/app/ViewStack/Event/UpdatedEvent";
-import CloseEvent from "@enhavo/app/ViewStack/Event/RemoveEvent";
+import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
+import View from "@enhavo/app/view/View";
+import UpdatedEvent from "@enhavo/app/view-stack/Event/UpdatedEvent";
+import CloseEvent from "@enhavo/app/view-stack/Event/RemoveEvent";
 import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
-import FlashMessenger from "@enhavo/app/FlashMessage/FlashMessenger";
+import FlashMessenger from "@enhavo/app/flash-message/FlashMessenger";
 
 export default class DeleteApp
 {

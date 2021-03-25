@@ -1,6 +1,6 @@
 import Vue, {PluginObject, VueConstructor} from "vue";
-import VueRegistry from "@enhavo/app/Vue/VueRegistry";
-import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
+import VueRegistry from "@enhavo/app/vue/VueRegistry";
+import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
 
 export default class VueApp
 {

@@ -1,5 +1,5 @@
-import NumberWidget from "@enhavo/dashboard/Widget/Model/NumberWidget";
-import AbstractFactory from "@enhavo/dashboard/Widget/Factory/AbstractFactory";
+import NumberWidget from "@enhavo/dashboard/widget/model/NumberWidget";
+import AbstractFactory from "@enhavo/dashboard/widget/factory/AbstractFactory";
 
 export default class NumberWidgetFactory extends AbstractFactory
 {

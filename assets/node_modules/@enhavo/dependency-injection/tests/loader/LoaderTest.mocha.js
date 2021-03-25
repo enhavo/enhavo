@@ -1,5 +1,5 @@
-const ContainerBuilder = require("@enhavo/dependency-injection/Container/ContainerBuilder");
-const Loader = require("@enhavo/dependency-injection/Loader/Loader");
+const ContainerBuilder = require("@enhavo/dependency-injection/container/ContainerBuilder");
+const Loader = require("@enhavo/dependency-injection/loader/Loader");
 const assert = require("chai").assert;
 
 describe('dependency-injection/Loader/Loader', () => {
@@ -14,7 +14,7 @@ describe('dependency-injection/Loader/Loader', () => {
                 }]
             }, null, builder, __dirname);
 
-            assert.equal('@enhavo/dependency-injection/Tests/Mock/TestService', builder.getDefinition('@enhavo/dependency-injection/Tests/Mock/TestService').getName());
+            assert.equal('@enhavo/dependency-injection/tests/mock/TestService', builder.getDefinition('@enhavo/dependency-injection/tests/mock/TestService').getName());
         });
     });
 

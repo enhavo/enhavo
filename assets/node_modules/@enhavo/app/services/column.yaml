@@ -1,12 +1,12 @@
 services:
-    '@enhavo/app/Grid/Column/ColumnManager':
+    '@enhavo/app/grid/column/ColumnManager':
         chunk: 'grid'
         arguments:
             - 'param:data.grid.columns'
-            - '@enhavo/app/Grid/Column/ColumnRegistry'
-            - '@enhavo/app/Vue/VueRegistry'
+            - '@enhavo/app/grid/column/ColumnRegistry'
+            - '@enhavo/app/vue/VueRegistry'
 
-    '@enhavo/app/Grid/Column/ColumnRegistry':
+    '@enhavo/app/grid/column/ColumnRegistry':
         chunk: 'grid'
 
     column.boolean:
@@ -14,8 +14,8 @@ services:
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:column-boolean'
-            - '@enhavo/app/Grid/Column/Components/ColumnBooleanComponent.vue'
-            - '@enhavo/app/Grid/Column/Factory/BooleanFactory'
+            - '@enhavo/app/grid/column/components/ColumnBooleanComponent.vue'
+            - '@enhavo/app/grid/column/factory/BooleanFactory'
         tags:
             - 'enhavo_app.column'
 
@@ -24,8 +24,8 @@ services:
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:column-text'
-            - '@enhavo/app/Grid/Column/Components/ColumnTextComponent.vue'
-            - '@enhavo/app/Grid/Column/Factory/TextFactory'
+            - '@enhavo/app/grid/column/components/ColumnTextComponent.vue'
+            - '@enhavo/app/grid/column/factory/TextFactory'
         tags:
             - 'enhavo_app.column'
 
@@ -34,8 +34,8 @@ services:
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:column-action'
-            - '@enhavo/app/Grid/Column/Components/ColumnActionComponent.vue'
-            - '@enhavo/app/Grid/Column/Factory/ActionFactory'
+            - '@enhavo/app/grid/column/components/ColumnActionComponent.vue'
+            - '@enhavo/app/grid/column/factory/ActionFactory'
         tags:
             - 'enhavo_app.column'
 
@@ -44,8 +44,8 @@ services:
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:column-sub'
-            - '@enhavo/app/Grid/Column/Components/ColumnSubComponent.vue'
-            - '@enhavo/app/Grid/Column/Factory/SubFactory'
+            - '@enhavo/app/grid/column/components/ColumnSubComponent.vue'
+            - '@enhavo/app/grid/column/factory/SubFactory'
         tags:
             - 'enhavo_app.column'
 
@@ -54,8 +54,8 @@ services:
         from: '@enhavo/core/RegistryEntry'
         arguments:
              - 'string:column-media'
-             - '@enhavo/app/Grid/Column/Components/ColumnMediaComponent.vue'
-             - '@enhavo/app/Grid/Column/Factory/MediaFactory'
+             - '@enhavo/app/grid/column/components/ColumnMediaComponent.vue'
+             - '@enhavo/app/grid/column/factory/MediaFactory'
         tags:
             - 'enhavo_app.column'
 
@@ -64,51 +64,51 @@ services:
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:column-state'
-            - '@enhavo/app/Grid/Column/Components/ColumnStateComponent.vue'
-            - '@enhavo/app/Grid/Column/Factory/StateFactory'
+            - '@enhavo/app/grid/column/components/ColumnStateComponent.vue'
+            - '@enhavo/app/grid/column/factory/StateFactory'
         tags:
             - 'enhavo_app.column'
 
-    '@enhavo/app/Grid/Column/Factory/BooleanFactory':
+    '@enhavo/app/grid/column/factory/BooleanFactory':
         chunk: 'grid'
 
-    '@enhavo/app/Grid/Column/Factory/TextFactory':
+    '@enhavo/app/grid/column/factory/TextFactory':
         chunk: 'grid'
 
-    '@enhavo/app/Grid/Column/Factory/ActionFactory':
+    '@enhavo/app/grid/column/factory/ActionFactory':
         chunk: 'grid'
         arguments:
-            - '@enhavo/app/Action/ActionRegistry'
+            - '@enhavo/app/action/ActionRegistry'
 
-    '@enhavo/app/Grid/Column/Factory/SubFactory':
+    '@enhavo/app/grid/column/factory/SubFactory':
         chunk: 'grid'
 
-    '@enhavo/app/Grid/Column/Factory/MediaFactory':
+    '@enhavo/app/grid/column/factory/MediaFactory':
         chunk: 'grid'
 
-    '@enhavo/app/Grid/Column/Factory/StateFactory':
+    '@enhavo/app/grid/column/factory/StateFactory':
         chunk: 'grid'
 
-    '@enhavo/app/Grid/Column/Components/ColumnBooleanComponent.vue':
-        chunk: 'grid'
-        static: true
-
-    '@enhavo/app/Grid/Column/Components/ColumnTextComponent.vue':
+    '@enhavo/app/grid/column/components/ColumnBooleanComponent.vue':
         chunk: 'grid'
         static: true
 
-    '@enhavo/app/Grid/Column/Components/ColumnActionComponent.vue':
+    '@enhavo/app/grid/column/components/ColumnTextComponent.vue':
         chunk: 'grid'
         static: true
 
-    '@enhavo/app/Grid/Column/Components/ColumnSubComponent.vue':
+    '@enhavo/app/grid/column/components/ColumnActionComponent.vue':
         chunk: 'grid'
         static: true
 
-    '@enhavo/app/Grid/Column/Components/ColumnMediaComponent.vue':
+    '@enhavo/app/grid/column/components/ColumnSubComponent.vue':
         chunk: 'grid'
         static: true
 
-    '@enhavo/app/Grid/Column/Components/ColumnStateComponent.vue':
+    '@enhavo/app/grid/column/components/ColumnMediaComponent.vue':
+        chunk: 'grid'
+        static: true
+
+    '@enhavo/app/grid/column/components/ColumnStateComponent.vue':
         chunk: 'grid'
         static: true

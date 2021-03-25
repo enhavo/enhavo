@@ -1,4 +1,4 @@
-import MediaItem from '@enhavo/media/Type/MediaItem';
+import MediaItem from '@enhavo/media/type/MediaItem';
 
 export default class ImageCropperConfiguration
 {

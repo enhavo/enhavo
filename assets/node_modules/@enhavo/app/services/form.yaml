@@ -1,39 +1,39 @@
 services:
-    '@enhavo/app/Form/FormApp':
+    '@enhavo/app/form/FormApp':
         chunk: 'form'
         arguments:
             - 'param:data'
-            - '@enhavo/app/ViewStack/EventDispatcher'
-            - '@enhavo/app/View/View'
-            - '@enhavo/app/Action/ActionManager'
+            - '@enhavo/app/view-stack/EventDispatcher'
+            - '@enhavo/app/view/View'
+            - '@enhavo/app/action/ActionManager'
             - '@enhavo/core/Translator'
-            - '@enhavo/app/Modal/ModalManager'
-            - '@enhavo/app/Form/Form'
+            - '@enhavo/app/modal/ModalManager'
+            - '@enhavo/app/form/Form'
 
-    '@enhavo/app/Form/FormRegistry':
+    '@enhavo/app/form/FormRegistry':
         chunk: 'form'
 
-    '@enhavo/app/Form/Form':
+    '@enhavo/app/form/Form':
         chunk: 'form'
         arguments:
             - 'param:data'
-            - '@enhavo/app/Form/FormRegistry'
-            - '@enhavo/app/FlashMessage/FlashMessenger'
-            - '@enhavo/app/ViewStack/EventDispatcher'
-            - '@enhavo/app/View/View'
-            - '@enhavo/app/Vue/VueRegistry'
+            - '@enhavo/app/form/FormRegistry'
+            - '@enhavo/app/flash-message/FlashMessenger'
+            - '@enhavo/app/view-stack/EventDispatcher'
+            - '@enhavo/app/view/View'
+            - '@enhavo/app/vue/VueRegistry'
 
-    '@enhavo/app/Form/Components/FormComponent.vue':
+    '@enhavo/app/form/components/FormComponent.vue':
         chunk: 'form'
         static: true
 
-    '@enhavo/app/Form/Components/TabHead.vue':
+    '@enhavo/app/form/components/TabHead.vue':
         chunk: 'vue'
         static: true
         tags:
             - { name: vue.component, component: 'form-tab-head' }
 
-    '@enhavo/app/Form/Components/TabContainer.vue':
+    '@enhavo/app/form/components/TabContainer.vue':
         chunk: 'vue'
         static: true
         tags:

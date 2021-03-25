@@ -1,5 +1,5 @@
-import AbstractBatch from "@enhavo/app/Grid/Batch/Model/AbstractBatch";
-import ModalManager from "@enhavo/app/Modal/ModalManager";
+import AbstractBatch from "@enhavo/app/grid/batch/model/AbstractBatch";
+import ModalManager from "@enhavo/app/modal/ModalManager";
 
 export default class ModalBatch extends AbstractBatch
 {

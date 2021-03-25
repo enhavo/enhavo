@@ -1,11 +1,11 @@
-import AbstractAction from "@enhavo/app/Action/Model/AbstractAction";
-import Message from "@enhavo/app/FlashMessage/Message";
+import AbstractAction from "@enhavo/app/action/model/AbstractAction";
+import Message from "@enhavo/app/flash-message/Message";
 import axios from "axios";
-import FlashMessenger from "@enhavo/app/FlashMessage/FlashMessenger";
-import Confirm from "@enhavo/app/View/Confirm";
-import Form from "@enhavo/app/Form/Form";
+import FlashMessenger from "@enhavo/app/flash-message/FlashMessenger";
+import Confirm from "@enhavo/app/view/Confirm";
+import Form from "@enhavo/app/form/Form";
 import Translator from "@enhavo/core/Translator";
-import View from "@enhavo/app/View/View";
+import View from "@enhavo/app/view/View";
 import Router from "@enhavo/core/Router";
 
 export default class NewsletterSendAction extends AbstractAction

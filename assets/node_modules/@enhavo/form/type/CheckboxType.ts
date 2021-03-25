@@ -1,5 +1,5 @@
 import 'icheck'
-import FormType from "@enhavo/app/Form/FormType";
+import FormType from "@enhavo/app/form/FormType";
 
 export default class CheckboxType extends FormType
 {

@@ -1,11 +1,11 @@
-import AbstractFactory from "@enhavo/app/Action/Factory/AbstractFactory";
-import NewsletterSendAction from "@enhavo/newsletter/Action/Model/NewsletterSendAction";
-import ActionInterface from "@enhavo/app/Action/ActionInterface";
-import Form from "@enhavo/app/Form/Form";
+import AbstractFactory from "@enhavo/app/action/factory/AbstractFactory";
+import NewsletterSendAction from "@enhavo/newsletter/action/model/NewsletterSendAction";
+import ActionInterface from "@enhavo/app/action/ActionInterface";
+import Form from "@enhavo/app/form/Form";
 import Translator from "@enhavo/core/Translator";
-import View from "@enhavo/app/View/View";
+import View from "@enhavo/app/view/View";
 import Router from "@enhavo/core/Router";
-import FlashMessenger from "@enhavo/app/FlashMessage/FlashMessenger";
+import FlashMessenger from "@enhavo/app/flash-message/FlashMessenger";
 
 export default class SaveActionFactory extends AbstractFactory
 {

@@ -1,4 +1,4 @@
-import BatchInterface from "@enhavo/app/Grid/Batch/BatchInterface";
+import BatchInterface from "@enhavo/app/grid/batch/BatchInterface";
 
 export default interface BatchDataInterface
 {

@@ -1,10 +1,10 @@
-import AbstractAction from "@enhavo/app/Action/Model/AbstractAction";
+import AbstractAction from "@enhavo/app/action/model/AbstractAction";
 import * as $ from 'jquery';
-import Message from "@enhavo/app/FlashMessage/Message";
-import AjaxFormModal from "@enhavo/app/Modal/Model/AjaxFormModal";
-import FlashMessenger from "@enhavo/app/FlashMessage/FlashMessenger";
+import Message from "@enhavo/app/flash-message/Message";
+import AjaxFormModal from "@enhavo/app/modal/model/AjaxFormModal";
+import FlashMessenger from "@enhavo/app/flash-message/FlashMessenger";
 import Translator from "@enhavo/core/Translator";
-import ModalManager from "@enhavo/app/Modal/ModalManager";
+import ModalManager from "@enhavo/app/modal/ModalManager";
 
 export default class NewsletterSendTestAction extends AbstractAction
 {

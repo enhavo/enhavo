@@ -1,4 +1,4 @@
-import View from "@enhavo/app/View/View";
+import View from "@enhavo/app/view/View";
 import * as $ from "jquery";
 
 export default class LoginApp

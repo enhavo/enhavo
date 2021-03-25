@@ -1,5 +1,5 @@
-import AbstractFactory from "@enhavo/app/Grid/Column/Factory/AbstractFactory";
-import StateColumn from "@enhavo/app/Grid/Column/Model/StateColumn";
+import AbstractFactory from "@enhavo/app/grid/column/factory/AbstractFactory";
+import StateColumn from "@enhavo/app/grid/column/model/StateColumn";
 
 export default class StateFactory extends AbstractFactory
 {

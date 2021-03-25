@@ -1,14 +1,14 @@
-import IndexApp from "@enhavo/app/Index/IndexApp";
+import IndexApp from "@enhavo/app/index/IndexApp";
 import Application from "@enhavo/app/Application";
 import AppInterface from "@enhavo/app/AppInterface";
-import ActionAwareApplication from "@enhavo/app/Action/ActionAwareApplication";
-import Grid from "@enhavo/app/Grid/Grid";
-import FilterManager from "@enhavo/app/Grid/Filter/FilterManager";
-import FilterRegistry from "@enhavo/app/Grid/Filter/FilterRegistry";
-import ColumnManager from "@enhavo/app/Grid/Column/ColumnManager";
-import ColumnRegistry from "@enhavo/app/Grid/Column/ColumnRegistry";
-import BatchManager from "@enhavo/app/Grid/Batch/BatchManager";
-import BatchRegistry from "@enhavo/app/Grid/Batch/BatchRegistry";
+import ActionAwareApplication from "@enhavo/app/action/ActionAwareApplication";
+import Grid from "@enhavo/app/grid/Grid";
+import FilterManager from "@enhavo/app/grid/filter/FilterManager";
+import FilterRegistry from "@enhavo/app/grid/filter/FilterRegistry";
+import ColumnManager from "@enhavo/app/grid/column/ColumnManager";
+import ColumnRegistry from "@enhavo/app/grid/column/ColumnRegistry";
+import BatchManager from "@enhavo/app/grid/batch/BatchManager";
+import BatchRegistry from "@enhavo/app/grid/batch/BatchRegistry";
 
 export class IndexApplication extends Application implements ActionAwareApplication
 {

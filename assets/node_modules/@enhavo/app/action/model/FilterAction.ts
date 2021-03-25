@@ -1,4 +1,4 @@
-import AbstractAction from "@enhavo/app/Action/Model/AbstractAction";
+import AbstractAction from "@enhavo/app/action/model/AbstractAction";
 import * as $ from "jquery";
 
 export default class FilterAction extends AbstractAction

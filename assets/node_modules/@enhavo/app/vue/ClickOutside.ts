@@ -1,8 +1,8 @@
 import { DirectiveOptions, VNode } from "vue"
 import { DirectiveBinding } from "vue/types/options";
-import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
-import ClickEvent from "@enhavo/app/ViewStack/Event/ClickEvent";
-import View from "@enhavo/app/View/View";
+import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
+import ClickEvent from "@enhavo/app/view-stack/Event/ClickEvent";
+import View from "@enhavo/app/view/View";
 
 export default class ClickOutside implements DirectiveOptions
 {

@@ -29,7 +29,7 @@
 
 <script lang="ts">
     import { Vue, Component, Prop } from "vue-property-decorator";
-    import Item from "@enhavo/app/List/Item";
+    import Item from "@enhavo/app/list/Item";
 
     @Component()
     export default class ItemComponent extends Vue

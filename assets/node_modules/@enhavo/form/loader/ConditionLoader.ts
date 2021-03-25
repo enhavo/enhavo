@@ -1,7 +1,7 @@
-import AbstractLoader from "@enhavo/form/Loader/AbstractLoader";
-import ConditionObserver from "@enhavo/form/Type/ConditionObserver";
-import ConditionType from "@enhavo/form/Type/ConditionType";
-import FormRegistry from "@enhavo/app/Form/FormRegistry";
+import AbstractLoader from "@enhavo/form/loader/AbstractLoader";
+import ConditionObserver from "@enhavo/form/type/ConditionObserver";
+import ConditionType from "@enhavo/form/type/ConditionType";
+import FormRegistry from "@enhavo/app/form/FormRegistry";
 
 export default class ConditionLoader extends AbstractLoader
 {

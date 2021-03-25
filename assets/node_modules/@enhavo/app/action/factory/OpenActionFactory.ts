@@ -1,6 +1,6 @@
-import AbstractFactory from "@enhavo/app/Action/Factory/AbstractFactory";
-import OpenAction from "@enhavo/app/Action/Model/OpenAction";
-import View from "@enhavo/app/View/View";
+import AbstractFactory from "@enhavo/app/action/factory/AbstractFactory";
+import OpenAction from "@enhavo/app/action/model/OpenAction";
+import View from "@enhavo/app/view/View";
 
 export default class OpenActionFactory extends AbstractFactory
 {

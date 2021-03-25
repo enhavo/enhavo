@@ -1,4 +1,4 @@
-import FilterInterface from "@enhavo/app/Grid/Filter/FilterInterface";
+import FilterInterface from "@enhavo/app/grid/filter/FilterInterface";
 
 export default abstract class AbstractFilter implements FilterInterface
 {

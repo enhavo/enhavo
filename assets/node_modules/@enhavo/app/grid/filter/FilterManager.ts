@@ -1,5 +1,5 @@
-import FilterInterface from "@enhavo/app/Grid/Filter/FilterInterface";
-import FilterRegistry from "@enhavo/app/Grid/Filter/FilterRegistry";
+import FilterInterface from "@enhavo/app/grid/filter/FilterInterface";
+import FilterRegistry from "@enhavo/app/grid/filter/FilterRegistry";
 import * as _ from 'lodash';
 import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
 

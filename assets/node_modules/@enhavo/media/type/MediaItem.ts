@@ -1,6 +1,6 @@
 import * as $ from "jquery";
-import MediaItemMeta from "@enhavo/media/Type/MediaItemMeta";
-import MediaRow from "@enhavo/media/Type/MediaRow";
+import MediaItemMeta from "@enhavo/media/type/MediaItemMeta";
+import MediaRow from "@enhavo/media/type/MediaRow";
 
 export default class MediaItem
 {

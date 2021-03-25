@@ -1,5 +1,5 @@
-import DateBetweenFilter from "@enhavo/app/Grid/Filter/Model/DateBetweenFilter";
-import AbstractFactory from "@enhavo/app/Grid/Filter/Factory/AbstractFactory";
+import DateBetweenFilter from "@enhavo/app/grid/filter/model/DateBetweenFilter";
+import AbstractFactory from "@enhavo/app/grid/filter/factory/AbstractFactory";
 
 export default class DateBetweenFactory extends AbstractFactory
 {

@@ -1,6 +1,6 @@
-import AbstractLoader from "@enhavo/form/Loader/AbstractLoader";
-import WeekendDateType from "@enhavo/form/Type/WeekendDateType";
-import FormRegistry from "@enhavo/app/Form/FormRegistry";
+import AbstractLoader from "@enhavo/form/loader/AbstractLoader";
+import WeekendDateType from "@enhavo/form/type/WeekendDateType";
+import FormRegistry from "@enhavo/app/form/FormRegistry";
 
 export default class WeekendDateLoader extends AbstractLoader
 {

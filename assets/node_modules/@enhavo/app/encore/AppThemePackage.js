@@ -1,7 +1,7 @@
 const EncoreUtil = require('@enhavo/core/EncoreUtil');
 const _ = require('lodash');
 const path = require('path');
-const DependencyInjectionPlugin = require('@enhavo/dependency-injection/Webpack/DependencyInjectionPlugin');
+const DependencyInjectionPlugin = require('@enhavo/dependency-injection/webpack/DependencyInjectionPlugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 class AppThemePackage

@@ -1,10 +1,10 @@
-import ActionManager from "@enhavo/app/Action/ActionManager";
-import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
-import View from "@enhavo/app/View/View";
-import FlashMessenger from "@enhavo/app/FlashMessage/FlashMessenger";
-import ModalManager from "@enhavo/app/Modal/ModalManager";
-import Grid from "@enhavo/app/Grid/Grid";
-import FormRegistry from "@enhavo/app/Form/FormRegistry";
+import ActionManager from "@enhavo/app/action/ActionManager";
+import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
+import View from "@enhavo/app/view/View";
+import FlashMessenger from "@enhavo/app/flash-message/FlashMessenger";
+import ModalManager from "@enhavo/app/modal/ModalManager";
+import Grid from "@enhavo/app/grid/Grid";
+import FormRegistry from "@enhavo/app/form/FormRegistry";
 
 export default class IndexApp
 {

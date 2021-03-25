@@ -1,8 +1,8 @@
 
-import RowData from "@enhavo/app/Grid/Column/RowData";
-import ColumnInterface from "@enhavo/app/Grid/Column/ColumnInterface";
-import BatchInterface from "@enhavo/app/Grid/Batch/BatchInterface";
-import BatchDataInterface from "@enhavo/app/Grid/Batch/BatchDataInterface";
+import RowData from "@enhavo/app/grid/column/RowData";
+import ColumnInterface from "@enhavo/app/grid/column/ColumnInterface";
+import BatchInterface from "@enhavo/app/grid/batch/BatchInterface";
+import BatchDataInterface from "@enhavo/app/grid/batch/BatchDataInterface";
 
 export default class GridConfiguration implements BatchDataInterface
 {

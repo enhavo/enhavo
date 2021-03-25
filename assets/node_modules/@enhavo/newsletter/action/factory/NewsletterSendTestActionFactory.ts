@@ -1,8 +1,8 @@
-import AbstractFactory from "@enhavo/app/Action/Factory/AbstractFactory";
-import NewsletterSendTestAction from "@enhavo/newsletter/Action/Model/NewsletterSendTestAction";
-import FlashMessenger from "@enhavo/app/FlashMessage/FlashMessenger";
+import AbstractFactory from "@enhavo/app/action/factory/AbstractFactory";
+import NewsletterSendTestAction from "@enhavo/newsletter/action/model/NewsletterSendTestAction";
+import FlashMessenger from "@enhavo/app/flash-message/FlashMessenger";
 import Translator from "@enhavo/core/Translator";
-import ModalManager from "@enhavo/app/Modal/ModalManager";
+import ModalManager from "@enhavo/app/modal/ModalManager";
 
 export default class NewsletterSendTestActionFactory extends AbstractFactory
 {

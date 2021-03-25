@@ -1,7 +1,7 @@
-const Definition = require("@enhavo/dependency-injection/Container/Definition");
-const CompilerPass = require("@enhavo/dependency-injection/Container/CompilerPass");
-const Entrypoint = require("@enhavo/dependency-injection/Container/Entrypoint");
-const Map = require("@enhavo/dependency-injection/Container/Map");
+const Definition = require("@enhavo/dependency-injection/container/Definition");
+const CompilerPass = require("@enhavo/dependency-injection/container/CompilerPass");
+const Entrypoint = require("@enhavo/dependency-injection/container/Entrypoint");
+const Map = require("@enhavo/dependency-injection/container/Map");
 const fs = require("fs");
 
 class ContainerBuilder

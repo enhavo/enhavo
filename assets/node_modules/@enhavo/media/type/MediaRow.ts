@@ -1,7 +1,7 @@
-import MediaType from "@enhavo/media/Type/MediaType";
-import MediaConfig from "@enhavo/media/Type/MediaConfig";
-import MediaItem from "@enhavo/media/Type/MediaItem";
-import MediaItemMeta from "@enhavo/media/Type/MediaItemMeta";
+import MediaType from "@enhavo/media/type/MediaType";
+import MediaConfig from "@enhavo/media/type/MediaConfig";
+import MediaItem from "@enhavo/media/type/MediaItem";
+import MediaItemMeta from "@enhavo/media/type/MediaItemMeta";
 import Sortable from 'sortablejs';
 import * as $ from "jquery";
 

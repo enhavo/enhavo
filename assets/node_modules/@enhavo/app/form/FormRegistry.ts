@@ -1,9 +1,9 @@
-import FormListener from "@enhavo/app/Form/FormListener";
-import FormInsertEvent from "@enhavo/app/Form/Event/FormInsertEvent";
-import LoaderInterface from "@enhavo/app/Form/LoaderInterface";
-import FormReleaseEvent from "@enhavo/app/Form/Event/FormReleaseEvent";
-import FormElementEvent from "@enhavo/app/Form/Event/FormElementEvent";
-import FormTypeInterface from "@enhavo/app/Form/FormTypeInterface";
+import FormListener from "@enhavo/app/form/FormListener";
+import FormInsertEvent from "@enhavo/app/form/event/FormInsertEvent";
+import LoaderInterface from "@enhavo/app/form/LoaderInterface";
+import FormReleaseEvent from "@enhavo/app/form/event/FormReleaseEvent";
+import FormElementEvent from "@enhavo/app/form/event/FormElementEvent";
+import FormTypeInterface from "@enhavo/app/form/FormTypeInterface";
 
 export default class FormRegistry
 {

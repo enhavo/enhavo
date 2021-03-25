@@ -1,5 +1,5 @@
-import ModalInterface from "@enhavo/app/Modal/ModalInterface";
-import ModalRegistry from "@enhavo/app/Modal/ModalRegistry";
+import ModalInterface from "@enhavo/app/modal/ModalInterface";
+import ModalRegistry from "@enhavo/app/modal/ModalRegistry";
 import ComponentAwareInterface, { ComponentAwareType } from "@enhavo/core/ComponentAwareInterface";
 import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
 

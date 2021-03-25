@@ -1,9 +1,9 @@
 import * as URI from 'urijs';
-import ViewStack from "@enhavo/app/ViewStack/ViewStack";
+import ViewStack from "@enhavo/app/view-stack/ViewStack";
 import * as pako from "pako";
-import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
-import GlobalDataStorageManager from "@enhavo/app/ViewStack/GlobalDataStorageManager";
-import ViewInterface from "@enhavo/app/ViewStack/ViewInterface";
+import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
+import GlobalDataStorageManager from "@enhavo/app/view-stack/GlobalDataStorageManager";
+import ViewInterface from "@enhavo/app/view-stack/ViewInterface";
 import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
 
 export default class StateManager

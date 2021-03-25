@@ -1,5 +1,5 @@
-const Loader = require('@enhavo/dependency-injection/Loader/Loader');
-const Validator = require('@enhavo/dependency-injection/Validation/Validator');
+const Loader = require('@enhavo/dependency-injection/loader/Loader');
+const Validator = require('@enhavo/dependency-injection/validation/Validator');
 const builderBucket = require('@enhavo/dependency-injection/builder-bucket');
 const path = require('path');
 

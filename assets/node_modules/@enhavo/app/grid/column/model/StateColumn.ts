@@ -1,4 +1,4 @@
-import AbstractColumn from "@enhavo/app/Grid/Column/Model/AbstractColumn";
+import AbstractColumn from "@enhavo/app/grid/column/model/AbstractColumn";
 
 export default class StateColumn extends AbstractColumn
 {

@@ -1,13 +1,13 @@
-import AbstractAction from "@enhavo/app/Action/Model/AbstractAction";
+import AbstractAction from "@enhavo/app/action/model/AbstractAction";
 import * as $ from 'jquery';
-import DataEvent from "@enhavo/app/ViewStack/Event/DataEvent";
-import ExistsEvent from "@enhavo/app/ViewStack/Event/ExistsEvent";
-import LoadedEvent from "@enhavo/app/ViewStack/Event/LoadedEvent";
-import ExistsData from "@enhavo/app/ViewStack/ExistsData";
-import LoadDataEvent from "@enhavo/app/ViewStack/Event/LoadDataEvent";
-import DataStorageEntry from "@enhavo/app/ViewStack/DataStorageEntry";
-import View from "@enhavo/app/View/View";
-import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
+import DataEvent from "@enhavo/app/view-stack/Event/DataEvent";
+import ExistsEvent from "@enhavo/app/view-stack/Event/ExistsEvent";
+import LoadedEvent from "@enhavo/app/view-stack/Event/LoadedEvent";
+import ExistsData from "@enhavo/app/view-stack/ExistsData";
+import LoadDataEvent from "@enhavo/app/view-stack/Event/LoadDataEvent";
+import DataStorageEntry from "@enhavo/app/view-stack/DataStorageEntry";
+import View from "@enhavo/app/view/View";
+import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
 
 export default class PreviewAction extends AbstractAction
 {

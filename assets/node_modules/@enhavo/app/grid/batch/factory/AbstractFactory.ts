@@ -1,6 +1,6 @@
 import * as _ from "lodash";
-import BatchInterface from "@enhavo/app/Grid/Batch/BatchInterface";
-import BatchFactoryInterface from "@enhavo/app/Grid/Batch/BatchFactoryInterface";
+import BatchInterface from "@enhavo/app/grid/batch/BatchInterface";
+import BatchFactoryInterface from "@enhavo/app/grid/batch/BatchFactoryInterface";
 
 export default abstract class AbstractFactory implements BatchFactoryInterface
 {

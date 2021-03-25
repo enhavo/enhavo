@@ -2,6 +2,6 @@ import Container from "@enhavo/dependency-injection"
 
 (async () => {
     await Container.init();
-    (await Container.get('@enhavo/app/Preview/PreviewApp')).init();
-    (await Container.get('@enhavo/app/Vue/VueApp')).init('app', await Container.get('@enhavo/app/Preview/Components/ApplicationComponent.vue'));
+    (await Container.get('@enhavo/app/preview/PreviewApp')).init();
+    (await Container.get('@enhavo/app/vue/VueApp')).init('app', await Container.get('@enhavo/app/preview/components/ApplicationComponent.vue'));
 })();

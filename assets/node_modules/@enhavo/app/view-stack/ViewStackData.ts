@@ -1,4 +1,4 @@
-import ViewInterface from "@enhavo/app/ViewStack/ViewInterface";
+import ViewInterface from "@enhavo/app/view-stack/ViewInterface";
 
 export default class ViewStackData
 {

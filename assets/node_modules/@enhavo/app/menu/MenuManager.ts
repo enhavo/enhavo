@@ -1,8 +1,8 @@
-import MenuData from "@enhavo/app/Menu/MenuData";
-import MenuRegistry from "@enhavo/app/Menu/MenuRegistry";
+import MenuData from "@enhavo/app/menu/MenuData";
+import MenuRegistry from "@enhavo/app/menu/MenuRegistry";
 import * as _ from "lodash";
-import MenuInterface from "@enhavo/app/Menu/MenuInterface";
-import GlobalDataStorageManager from "@enhavo/app/ViewStack/GlobalDataStorageManager";
+import MenuInterface from "@enhavo/app/menu/MenuInterface";
+import GlobalDataStorageManager from "@enhavo/app/view-stack/GlobalDataStorageManager";
 import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
 
 export default class MenuManager

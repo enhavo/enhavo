@@ -1,5 +1,5 @@
-import AbstractFactory from "@enhavo/app/Menu/Factory/AbstractFactory";
-import MenuDropdown from "@enhavo/app/Menu/Model/MenuDropdown";
+import AbstractFactory from "@enhavo/app/menu/factory/AbstractFactory";
+import MenuDropdown from "@enhavo/app/menu/model/MenuDropdown";
 import * as _ from "lodash";
 
 export default class MenuDropdownFactory extends AbstractFactory

@@ -1,7 +1,7 @@
-import AbstractLoader from "@enhavo/form/Loader/AbstractLoader";
-import WysiwygType from "@enhavo/form/Type/WysiwygType";
+import AbstractLoader from "@enhavo/form/loader/AbstractLoader";
+import WysiwygType from "@enhavo/form/type/WysiwygType";
 import * as tinymce from "tinymce";
-import FormRegistry from "@enhavo/app/Form/FormRegistry";
+import FormRegistry from "@enhavo/app/form/FormRegistry";
 
 export default class WysiwygLoader extends AbstractLoader
 {

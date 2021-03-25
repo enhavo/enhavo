@@ -14,7 +14,7 @@
 
 <script lang="ts">
     import { Vue, Component, Prop } from "vue-property-decorator";
-    import QuickMenuWidget from "@enhavo/app/Toolbar/Widget/Model/QuickMenuWidget";
+    import QuickMenuWidget from "@enhavo/app/toolbar/widget/model/QuickMenuWidget";
 
     @Component()
     export default class QuickMenuWidgetComponent extends Vue {

@@ -6,7 +6,7 @@
 
 <script lang="ts">
     import { Vue, Component, Prop } from "vue-property-decorator";
-    import OptionFilter from "@enhavo/app/Grid/Filter/Model/OptionFilter";
+    import OptionFilter from "@enhavo/app/grid/filter/model/OptionFilter";
 
     @Component
     export default class FilterDropdownComponent extends Vue

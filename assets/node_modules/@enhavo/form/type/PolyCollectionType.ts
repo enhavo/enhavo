@@ -1,12 +1,12 @@
 import * as $ from 'jquery'
-import FormInitializer from "@enhavo/app/Form/FormInitializer";
-import PolyCollectionItem from "@enhavo/form/Type/PolyCollectionItem";
-import PolyCollectionMenu from "@enhavo/form/Type/PolyCollectionMenu";
-import PolyCollectionConfig from "@enhavo/form/Type/PolyCollectionConfig";
-import PolyCollectionItemAddButton from "@enhavo/form/Type/PolyCollectionItemAddButton";
-import FormType from "@enhavo/app/Form/FormType";
-import {PrototypeManager} from "@enhavo/form/Prototype/PrototypeManager";
-import Prototype from "@enhavo/form/Prototype/Prototype";
+import FormInitializer from "@enhavo/app/form/FormInitializer";
+import PolyCollectionItem from "@enhavo/form/type/PolyCollectionItem";
+import PolyCollectionMenu from "@enhavo/form/type/PolyCollectionMenu";
+import PolyCollectionConfig from "@enhavo/form/type/PolyCollectionConfig";
+import PolyCollectionItemAddButton from "@enhavo/form/type/PolyCollectionItemAddButton";
+import FormType from "@enhavo/app/form/FormType";
+import {PrototypeManager} from "@enhavo/form/prototype/PrototypeManager";
+import Prototype from "@enhavo/form/prototype/Prototype";
 
 export default class PolyCollectionType extends FormType
 {

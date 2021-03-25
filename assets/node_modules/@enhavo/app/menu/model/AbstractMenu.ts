@@ -1,6 +1,6 @@
-import MenuInterface from "@enhavo/app/Menu/MenuInterface";
-import MenuManager from "@enhavo/app/Menu/MenuManager";
-import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
+import MenuInterface from "@enhavo/app/menu/MenuInterface";
+import MenuManager from "@enhavo/app/menu/MenuManager";
+import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
 
 export default abstract class AbstractMenu implements MenuInterface
 {

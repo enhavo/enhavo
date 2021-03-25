@@ -1,5 +1,5 @@
 import * as $ from "jquery";
-import PolyCollectionType from "@enhavo/form/Type/PolyCollectionType";
+import PolyCollectionType from "@enhavo/form/type/PolyCollectionType";
 
 export default class PolyCollectionItemAddButton
 {

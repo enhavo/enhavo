@@ -1,5 +1,5 @@
-import EntityFilter from "@enhavo/app/Grid/Filter/Model/EntityFilter";
-import AbstractFactory from "@enhavo/app/Grid/Filter/Factory/AbstractFactory";
+import EntityFilter from "@enhavo/app/grid/filter/model/EntityFilter";
+import AbstractFactory from "@enhavo/app/grid/filter/factory/AbstractFactory";
 
 export default class EntityFactory extends AbstractFactory
 {

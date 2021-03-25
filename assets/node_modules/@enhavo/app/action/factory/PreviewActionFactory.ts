@@ -1,7 +1,7 @@
-import PreviewAction from "@enhavo/app/Action/Model/PreviewAction";
-import AbstractFactory from "@enhavo/app/Action/Factory/AbstractFactory";
-import View from "@enhavo/app/View/View";
-import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
+import PreviewAction from "@enhavo/app/action/model/PreviewAction";
+import AbstractFactory from "@enhavo/app/action/factory/AbstractFactory";
+import View from "@enhavo/app/view/View";
+import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
 
 export default class PreviewActionFactory extends AbstractFactory
 {

@@ -1,7 +1,7 @@
-import AbstractFactory from "@enhavo/app/Modal/Factory/AbstractFactory";
-import AjaxFormModal from "@enhavo/app/Modal/Model/AjaxFormModal";
+import AbstractFactory from "@enhavo/app/modal/factory/AbstractFactory";
+import AjaxFormModal from "@enhavo/app/modal/model/AjaxFormModal";
 import Router from "@enhavo/core/Router";
-import ModalManager from "@enhavo/app/Modal/ModalManager";
+import ModalManager from "@enhavo/app/modal/ModalManager";
 
 export default class IframeModalFactory extends AbstractFactory
 {

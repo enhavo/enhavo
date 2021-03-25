@@ -1,5 +1,5 @@
-import View from "@enhavo/app/View/View";
-import WidgetManager from "@enhavo/dashboard/Widget/WidgetManager";
+import View from "@enhavo/app/view/View";
+import WidgetManager from "@enhavo/dashboard/widget/WidgetManager";
 
 export default class DashboardApp
 {

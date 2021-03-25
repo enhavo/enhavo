@@ -1,5 +1,5 @@
 import { ComponentAwareInterface } from "@enhavo/core/index";
-import DataStorageEntry from "@enhavo/app/ViewStack/DataStorageEntry";
+import DataStorageEntry from "@enhavo/app/view-stack/DataStorageEntry";
 
 export default interface ViewInterface extends ComponentAwareInterface
 {

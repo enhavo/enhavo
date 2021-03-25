@@ -8,7 +8,7 @@
 
 <script lang="ts">
     import { Vue, Component, Prop } from "vue-property-decorator";
-    import DropdownAction from "@enhavo/app/Action/Model/DropdownAction";
+    import DropdownAction from "@enhavo/app/action/model/DropdownAction";
 
     @Component
     export default class DropdownActionComponent extends Vue {

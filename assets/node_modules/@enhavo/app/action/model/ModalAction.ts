@@ -1,5 +1,5 @@
-import AbstractAction from "@enhavo/app/Action/Model/AbstractAction";
-import ModalManager from "@enhavo/app/Modal/ModalManager";
+import AbstractAction from "@enhavo/app/action/model/AbstractAction";
+import ModalManager from "@enhavo/app/modal/ModalManager";
 
 export default class ModalAction extends AbstractAction
 {

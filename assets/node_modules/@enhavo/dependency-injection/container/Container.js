@@ -1,4 +1,4 @@
-import ParameterBag from "@enhavo/dependency-injection/Container/ParameterBag";
+import ParameterBag from "@enhavo/dependency-injection/container/ParameterBag";
 
 export class Container
 {

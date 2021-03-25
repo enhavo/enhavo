@@ -1,4 +1,4 @@
-import FormElementEvent from "@enhavo/app/Form/Event/FormElementEvent";
+import FormElementEvent from "@enhavo/app/form/event/FormElementEvent";
 
 export default class FormReleaseEvent extends FormElementEvent
 {

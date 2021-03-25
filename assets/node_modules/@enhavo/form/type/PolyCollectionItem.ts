@@ -1,7 +1,7 @@
 import * as $ from "jquery";
-import PolyCollectionType from "@enhavo/form/Type/PolyCollectionType";
-import FormDispatcher from "@enhavo/app/Form/FormDispatcher";
-import FormRegistry from "@enhavo/app/Form/FormRegistry";
+import PolyCollectionType from "@enhavo/form/type/PolyCollectionType";
+import FormDispatcher from "@enhavo/app/form/FormDispatcher";
+import FormRegistry from "@enhavo/app/form/FormRegistry";
 
 export default class PolyCollectionItem
 {

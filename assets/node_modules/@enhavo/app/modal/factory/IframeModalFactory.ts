@@ -1,6 +1,6 @@
-import AbstractFactory from "@enhavo/app/Modal/Factory/AbstractFactory";
-import IframeModal from "@enhavo/app/Modal/Model/IframeModal";
-import ModalManager from "@enhavo/app/Modal/ModalManager";
+import AbstractFactory from "@enhavo/app/modal/factory/AbstractFactory";
+import IframeModal from "@enhavo/app/modal/model/IframeModal";
+import ModalManager from "@enhavo/app/modal/ModalManager";
 
 export default class IframeModalFactory extends AbstractFactory
 {

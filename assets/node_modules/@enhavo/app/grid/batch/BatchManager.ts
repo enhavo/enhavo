@@ -1,7 +1,7 @@
-import BatchInterface from "@enhavo/app/Grid/Batch/BatchInterface";
-import BatchRegistry from "@enhavo/app/Grid/Batch/BatchRegistry";
-import BatchDataInterface from "@enhavo/app/Grid/Batch/BatchDataInterface";
-import View from "@enhavo/app/View/View";
+import BatchInterface from "@enhavo/app/grid/batch/BatchInterface";
+import BatchRegistry from "@enhavo/app/grid/batch/BatchRegistry";
+import BatchDataInterface from "@enhavo/app/grid/batch/BatchDataInterface";
+import View from "@enhavo/app/view/View";
 import Translator from "@enhavo/core/Translator";
 import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
 

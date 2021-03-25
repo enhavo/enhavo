@@ -1,5 +1,5 @@
-import TextFilter from "@enhavo/app/Grid/Filter/Model/TextFilter";
-import AbstractFactory from "@enhavo/app/Grid/Filter/Factory/AbstractFactory";
+import TextFilter from "@enhavo/app/grid/filter/model/TextFilter";
+import AbstractFactory from "@enhavo/app/grid/filter/factory/AbstractFactory";
 
 export default class TextFactory extends AbstractFactory
 {

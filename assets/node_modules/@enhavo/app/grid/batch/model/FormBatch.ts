@@ -1,13 +1,13 @@
-import UrlBatch from "@enhavo/app/Grid/Batch/Model/UrlBatch";
-import AjaxFormModal from "@enhavo/app/Modal/Model/AjaxFormModal";
-import Message from "@enhavo/app/FlashMessage/Message";
-import FlashMessenger from "@enhavo/app/FlashMessage/FlashMessenger";
-import BatchDataInterface from "@enhavo/app/Grid/Batch/BatchDataInterface";
+import UrlBatch from "@enhavo/app/grid/batch/model/UrlBatch";
+import AjaxFormModal from "@enhavo/app/modal/model/AjaxFormModal";
+import Message from "@enhavo/app/flash-message/Message";
+import FlashMessenger from "@enhavo/app/flash-message/FlashMessenger";
+import BatchDataInterface from "@enhavo/app/grid/batch/BatchDataInterface";
 import Translator from "@enhavo/core/Translator";
-import View from "@enhavo/app/View/View";
+import View from "@enhavo/app/view/View";
 import Router from "@enhavo/core/Router";
-import ModalManager from "@enhavo/app/Modal/ModalManager";
-import Grid from "@enhavo/app/Grid/Grid";
+import ModalManager from "@enhavo/app/modal/ModalManager";
+import Grid from "@enhavo/app/grid/Grid";
 
 export default class FormBatch extends UrlBatch
 {

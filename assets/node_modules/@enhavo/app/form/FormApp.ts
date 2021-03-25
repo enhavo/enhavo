@@ -1,13 +1,13 @@
-import ActionManager from "@enhavo/app/Action/ActionManager";
-import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
-import View from "@enhavo/app/View/View";
-import CloseEvent from "@enhavo/app/ViewStack/Event/CloseEvent";
-import RemoveEvent from "@enhavo/app/ViewStack/Event/RemoveEvent";
+import ActionManager from "@enhavo/app/action/ActionManager";
+import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
+import View from "@enhavo/app/view/View";
+import CloseEvent from "@enhavo/app/view-stack/Event/CloseEvent";
+import RemoveEvent from "@enhavo/app/view-stack/Event/RemoveEvent";
 import FormData from "@enhavo/app/form/FormData";
-import Confirm from "@enhavo/app/View/Confirm";
+import Confirm from "@enhavo/app/view/Confirm";
 import Translator from "@enhavo/core/Translator";
-import ModalManager from "@enhavo/app/Modal/ModalManager";
-import Form from "@enhavo/app/Form/Form";
+import ModalManager from "@enhavo/app/modal/ModalManager";
+import Form from "@enhavo/app/form/Form";
 
 export default class FormApp
 {

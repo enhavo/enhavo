@@ -1,7 +1,7 @@
 const EncoreUtil = require('@enhavo/core/EncoreUtil');
 const path = require('path');
 const _ = require('lodash');
-const DependencyInjectionPlugin = require('@enhavo/dependency-injection/Webpack/DependencyInjectionPlugin');
+const DependencyInjectionPlugin = require('@enhavo/dependency-injection/webpack/DependencyInjectionPlugin');
 
 class AppTestPackage
 {

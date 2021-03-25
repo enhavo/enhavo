@@ -1,4 +1,4 @@
-const Compiler = require('@enhavo/dependency-injection/Compiler/Compiler');
+const Compiler = require('@enhavo/dependency-injection/compiler/Compiler');
 const builderBucket = require('@enhavo/dependency-injection/builder-bucket');
 const loaderUtils = require('loader-utils');
 

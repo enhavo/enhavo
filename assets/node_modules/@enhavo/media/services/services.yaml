@@ -6,37 +6,37 @@ entrypoints:
         path: '../Entrypoint/media-library.ts'
         build: enhavo
 services:
-    '@enhavo/media/Loader/MediaLoader':
+    '@enhavo/media/loader/MediaLoader':
         chunk: 'form'
         arguments:
-            - '@enhavo/app/View/View'
+            - '@enhavo/app/view/View'
             - '@enhavo/core/Router'
         tags:
             - 'enhavo_app.form'
 
-    '@enhavo/media/MediaLibrary/MediaLibraryApp':
+    '@enhavo/media/media-library/MediaLibraryApp':
         chunk: 'media'
         arguments:
-            - '@enhavo/app/View/View'
-            - '@enhavo/app/Action/ActionManager'
-            - '@enhavo/media/MediaLibrary/MediaLibrary'
-            - '@enhavo/app/FlashMessage/FlashMessenger'
+            - '@enhavo/app/view/View'
+            - '@enhavo/app/action/ActionManager'
+            - '@enhavo/media/media-library/MediaLibrary'
+            - '@enhavo/app/flash-message/FlashMessenger'
 
-    '@enhavo/media/MediaLibrary/MediaLibrary':
+    '@enhavo/media/media-library/MediaLibrary':
         chunk: 'media'
         arguments:
             - 'param:data.media'
             - '@enhavo/core/Router'
-            - '@enhavo/app/ViewStack/EventDispatcher'
-            - '@enhavo/app/View/View'
+            - '@enhavo/app/view-stack/EventDispatcher'
+            - '@enhavo/app/view/View'
             - '@enhavo/core/Translator'
-            - '@enhavo/app/Vue/VueRegistry'
+            - '@enhavo/app/vue/VueRegistry'
 
-    '@enhavo/media/MediaLibrary/Components/ApplicationComponent.vue':
+    '@enhavo/media/media-library/Components/ApplicationComponent.vue':
         chunk: 'media'
         static: true
 
-    '@enhavo/media/MediaLibrary/Components/MediaLibraryComponent.vue':
+    '@enhavo/media/media-library/Components/MediaLibraryComponent.vue':
         chunk: 'media'
         static: true
         tags:
@@ -46,11 +46,11 @@ services:
         chunk: 'image-cropper'
         arguments:
             - 'param:data.format'
-            - '@enhavo/app/ViewStack/EventDispatcher'
-            - '@enhavo/app/View/View'
-            - '@enhavo/app/Action/ActionManager'
-            - '@enhavo/app/FlashMessage/FlashMessenger'
-            - '@enhavo/app/Vue/VueRegistry'
+            - '@enhavo/app/view-stack/EventDispatcher'
+            - '@enhavo/app/view/View'
+            - '@enhavo/app/action/ActionManager'
+            - '@enhavo/app/flash-message/FlashMessenger'
+            - '@enhavo/app/vue/VueRegistry'
 
     '@enhavo/media/ImageCropper/Components/ImageCropperComponent.vue':
         chunk: 'image-cropper'

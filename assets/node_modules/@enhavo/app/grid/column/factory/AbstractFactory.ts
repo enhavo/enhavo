@@ -1,5 +1,5 @@
 import * as _ from "lodash";
-import ColumnInterface from "@enhavo/app/Grid/Column/ColumnInterface";
+import ColumnInterface from "@enhavo/app/grid/column/ColumnInterface";
 
 export default abstract class AbstractFactory
 {

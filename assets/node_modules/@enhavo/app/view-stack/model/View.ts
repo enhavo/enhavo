@@ -1,5 +1,5 @@
 import ViewInterface from "../ViewInterface";
-import DataStorageEntry from "@enhavo/app/ViewStack/DataStorageEntry";
+import DataStorageEntry from "@enhavo/app/view-stack/DataStorageEntry";
 
 export default class View implements ViewInterface
 {

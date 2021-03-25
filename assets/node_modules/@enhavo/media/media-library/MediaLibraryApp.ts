@@ -1,7 +1,7 @@
-import ActionManager from "@enhavo/app/Action/ActionManager";
-import View from "@enhavo/app/View/View";
-import MediaLibrary from "@enhavo/media/MediaLibrary/MediaLibrary";
-import FlashMessenger from "@enhavo/app/FlashMessage/FlashMessenger";
+import ActionManager from "@enhavo/app/action/ActionManager";
+import View from "@enhavo/app/view/View";
+import MediaLibrary from "@enhavo/media/media-library/MediaLibrary";
+import FlashMessenger from "@enhavo/app/flash-message/FlashMessenger";
 
 export default class MediaLibraryApp
 {

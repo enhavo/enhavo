@@ -1,6 +1,6 @@
-import FormType from "@enhavo/app/Form/FormType";
-import MediaRow from "@enhavo/media/Type/MediaRow";
-import MediaConfig from "@enhavo/media/Type/MediaConfig";
+import FormType from "@enhavo/app/form/FormType";
+import MediaRow from "@enhavo/media/type/MediaRow";
+import MediaConfig from "@enhavo/media/type/MediaConfig";
 import * as $ from "jquery";
 import "blueimp-file-upload/js/jquery.iframe-transport";
 import "blueimp-file-upload/js/jquery.fileupload";

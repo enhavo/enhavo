@@ -1,5 +1,5 @@
-import WidgetInterface from "@enhavo/app/Toolbar/Widget/WidgetInterface";
-import WidgetRegistry from "@enhavo/app/Toolbar/Widget/WidgetRegistry";
+import WidgetInterface from "@enhavo/app/toolbar/widget/WidgetInterface";
+import WidgetRegistry from "@enhavo/app/toolbar/widget/WidgetRegistry";
 import * as _ from 'lodash';
 import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
 

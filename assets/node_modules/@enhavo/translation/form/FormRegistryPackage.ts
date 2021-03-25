@@ -1,6 +1,6 @@
 import ApplicationInterface from "@enhavo/app/ApplicationInterface";
-import RegistryPackage from "@enhavo/app/Form/RegistryPackage";
-import TranslationLoader from "@enhavo/translation/Form/Loader/TranslationLoader";
+import RegistryPackage from "@enhavo/app/form/RegistryPackage";
+import TranslationLoader from "@enhavo/translation/form/loader/TranslationLoader";
 
 export default class FormRegistryPackage extends RegistryPackage
 {

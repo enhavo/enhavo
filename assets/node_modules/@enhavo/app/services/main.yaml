@@ -1,34 +1,34 @@
 services:
-    '@enhavo/app/Main/MainApp':
+    '@enhavo/app/main/MainApp':
         chunk: 'main'
         arguments:
             - 'param:data.branding'
-            - '@enhavo/app/ViewStack/ViewStack'
-            - '@enhavo/app/Menu/MenuManager'
-            - '@enhavo/app/State/StateManager'
-            - '@enhavo/app/ViewStack/DataStorageManager'
-            - '@enhavo/app/Toolbar/Widget/WidgetManager'
-            - '@enhavo/app/Vue/VueRegistry'
+            - '@enhavo/app/view-stack/ViewStack'
+            - '@enhavo/app/menu/MenuManager'
+            - '@enhavo/app/state/StateManager'
+            - '@enhavo/app/view-stack/DataStorageManager'
+            - '@enhavo/app/toolbar/widget/WidgetManager'
+            - '@enhavo/app/vue/VueRegistry'
 
-    '@enhavo/app/State/StateManager':
+    '@enhavo/app/state/StateManager':
         chunk: 'main'
         arguments:
-            - '@enhavo/app/ViewStack/ViewStack'
-            - '@enhavo/app/ViewStack/EventDispatcher'
-            - '@enhavo/app/ViewStack/GlobalDataStorageManager'
-            - '@enhavo/app/Vue/VueRegistry'
+            - '@enhavo/app/view-stack/ViewStack'
+            - '@enhavo/app/view-stack/EventDispatcher'
+            - '@enhavo/app/view-stack/GlobalDataStorageManager'
+            - '@enhavo/app/vue/VueRegistry'
 
-    '@enhavo/app/Main/Components/MainComponent.vue':
+    '@enhavo/app/main/components/MainComponent.vue':
         chunk: 'main'
         static: true
 
-    '@enhavo/app/Main/Components/OverlayContainer.vue':
+    '@enhavo/app/main/components/OverlayContainer.vue':
         chunk: 'vue'
         static: true
         tags:
             - { name: vue.component, component: 'overlay-container' }
 
-    '@enhavo/app/Main/Components/LoadingScreen.vue':
+    '@enhavo/app/main/components/LoadingScreen.vue':
         chunk: 'vue'
         static: true
         tags:

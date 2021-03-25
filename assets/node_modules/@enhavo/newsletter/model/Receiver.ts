@@ -1,4 +1,4 @@
-import Tracking from "@enhavo/newsletter/Model/Tracking";
+import Tracking from "@enhavo/newsletter/model/Tracking";
 
 export default class Receiver
 {

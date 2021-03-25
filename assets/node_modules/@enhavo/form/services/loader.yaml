@@ -1,61 +1,61 @@
 services:
-    '@enhavo/form/Loader/CheckboxLoader':
+    '@enhavo/form/loader/CheckboxLoader':
         chunk: 'form'
         tags:
             - 'enhavo_app.form'
 
-    '@enhavo/form/Loader/ActionLoader':
+    '@enhavo/form/loader/ActionLoader':
         chunk: 'form'
         arguments:
-            - '@enhavo/app/Action/ActionRegistry'
+            - '@enhavo/app/action/ActionRegistry'
         tags:
             - 'enhavo_app.form'
 
-    '@enhavo/form/Loader/SelectLoader':
+    '@enhavo/form/loader/SelectLoader':
         chunk: 'form'
         tags:
             - 'enhavo_app.form'
 
-    '@enhavo/form/Loader/DateTimeLoader':
+    '@enhavo/form/loader/DateTimeLoader':
         chunk: 'form'
         tags:
             - 'enhavo_app.form'
 
-    '@enhavo/form/Loader/DateLoader':
+    '@enhavo/form/loader/DateLoader':
         chunk: 'form'
         tags:
             - 'enhavo_app.form'
 
-    '@enhavo/form/Loader/WysiwygLoader':
+    '@enhavo/form/loader/WysiwygLoader':
         chunk: 'form'
         tags:
             - 'enhavo_app.form'
 
-    '@enhavo/form/Loader/ListLoader':
+    '@enhavo/form/loader/ListLoader':
         chunk: 'form'
         tags:
             - 'enhavo_app.form'
 
-    '@enhavo/form/Loader/AutoCompleteLoader':
+    '@enhavo/form/loader/AutoCompleteLoader':
         chunk: 'form'
         arguments:
-            - '@enhavo/app/ViewStack/EventDispatcher'
-            - '@enhavo/app/View/View'
+            - '@enhavo/app/view-stack/EventDispatcher'
+            - '@enhavo/app/view/View'
             - '@enhavo/core/Router'
         tags:
             - 'enhavo_app.form'
 
-    '@enhavo/form/Loader/WeekendDateLoader':
+    '@enhavo/form/loader/WeekendDateLoader':
         chunk: 'form'
         tags:
             - 'enhavo_app.form'
 
-    '@enhavo/form/Loader/PolyCollectionLoader':
+    '@enhavo/form/loader/PolyCollectionLoader':
         chunk: 'form'
         tags:
             - 'enhavo_app.form'
 
-    '@enhavo/form/Loader/ConditionLoader':
+    '@enhavo/form/loader/ConditionLoader':
         chunk: 'form'
         arguments:
         tags:

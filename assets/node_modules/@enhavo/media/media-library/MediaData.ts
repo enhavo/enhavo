@@ -1,4 +1,4 @@
-import MediaItem from "@enhavo/media/MediaLibrary/MediaItem";
+import MediaItem from "@enhavo/media/media-library/MediaItem";
 
 export default class MediaData
 {

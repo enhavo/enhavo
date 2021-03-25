@@ -1,12 +1,12 @@
 import 'select2'
-import FormType from "@enhavo/app/Form/FormType";
+import FormType from "@enhavo/app/form/FormType";
 import Sortable from 'sortablejs';
-import UpdatedEvent from "@enhavo/app/ViewStack/Event/UpdatedEvent";
-import LoadDataEvent from "@enhavo/app/ViewStack/Event/LoadDataEvent";
-import DataStorageEntry from "@enhavo/app/ViewStack/DataStorageEntry";
-import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
+import UpdatedEvent from "@enhavo/app/view-stack/Event/UpdatedEvent";
+import LoadDataEvent from "@enhavo/app/view-stack/Event/LoadDataEvent";
+import DataStorageEntry from "@enhavo/app/view-stack/DataStorageEntry";
+import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
 import Router from "@enhavo/core/Router";
-import View from "@enhavo/app/View/View";
+import View from "@enhavo/app/view/View";
 
 export default class AutoCompleteType extends FormType
 {

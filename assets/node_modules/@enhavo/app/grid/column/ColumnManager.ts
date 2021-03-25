@@ -1,5 +1,5 @@
-import ColumnInterface from "@enhavo/app/Grid/Column/ColumnInterface";
-import ColumnRegistry from "@enhavo/app/Grid/Column/ColumnRegistry";
+import ColumnInterface from "@enhavo/app/grid/column/ColumnInterface";
+import ColumnRegistry from "@enhavo/app/grid/column/ColumnRegistry";
 import * as _ from 'lodash';
 import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
 

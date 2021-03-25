@@ -4,7 +4,7 @@
 
 <script lang="ts">
     import { Vue, Component, Prop } from "vue-property-decorator";
-    import TextColumn from "@enhavo/app/Grid/Column/Model/TextColumn";
+    import TextColumn from "@enhavo/app/grid/column/model/TextColumn";
 
     @Component
     export default class ColumnTextComponent extends Vue {

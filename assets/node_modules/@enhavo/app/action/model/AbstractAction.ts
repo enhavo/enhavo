@@ -1,4 +1,4 @@
-import ActionInterface from "@enhavo/app/Action/ActionInterface";
+import ActionInterface from "@enhavo/app/action/ActionInterface";
 
 export default abstract class AbstractAction implements ActionInterface
 {

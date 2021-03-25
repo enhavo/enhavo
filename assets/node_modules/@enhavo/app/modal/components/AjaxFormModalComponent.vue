@@ -13,8 +13,8 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from "vue-property-decorator";
-import AjaxFormModal from "@enhavo/app/Modal/Model/AjaxFormModal"
-import FormInitializer from "@enhavo/app/Form/FormInitializer";
+import AjaxFormModal from "@enhavo/app/modal/model/AjaxFormModal"
+import FormInitializer from "@enhavo/app/form/FormInitializer";
 
 @Component()
 export default class ModalComponent extends Vue {

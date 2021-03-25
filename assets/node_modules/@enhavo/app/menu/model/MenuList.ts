@@ -1,5 +1,5 @@
-import AbstractMenu from "@enhavo/app/Menu/Model/AbstractMenu";
-import MenuInterface from "@enhavo/app/Menu/MenuInterface";
+import AbstractMenu from "@enhavo/app/menu/model/AbstractMenu";
+import MenuInterface from "@enhavo/app/menu/MenuInterface";
 
 export default class MenuList extends AbstractMenu
 {

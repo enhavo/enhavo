@@ -1,5 +1,5 @@
 const sha1 = require('sha1');
-const Tag = require('@enhavo/dependency-injection/Container/Tag');
+const Tag = require('@enhavo/dependency-injection/container/Tag');
 
 class Definition
 {

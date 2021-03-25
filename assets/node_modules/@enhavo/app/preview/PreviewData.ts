@@ -1,4 +1,4 @@
-import FormInput from "@enhavo/app/Preview/FormInput";
+import FormInput from "@enhavo/app/preview/FormInput";
 
 
 export default class PreviewData

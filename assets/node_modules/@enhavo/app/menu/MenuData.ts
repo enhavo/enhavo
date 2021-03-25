@@ -1,4 +1,4 @@
-import MenuInterface from "@enhavo/app/Menu/MenuInterface";
+import MenuInterface from "@enhavo/app/menu/MenuInterface";
 
 export default class MenuData
 {

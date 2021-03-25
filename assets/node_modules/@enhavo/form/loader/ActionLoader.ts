@@ -1,7 +1,7 @@
-import AbstractLoader from "@enhavo/form/Loader/AbstractLoader";
-import ActionRegistry from "@enhavo/app/Action/ActionRegistry";
+import AbstractLoader from "@enhavo/form/loader/AbstractLoader";
+import ActionRegistry from "@enhavo/app/action/ActionRegistry";
 import * as _ from 'lodash';
-import ActionInterface from "@enhavo/app/Action/ActionInterface";
+import ActionInterface from "@enhavo/app/action/ActionInterface";
 
 export default class CheckboxLoader extends AbstractLoader
 {

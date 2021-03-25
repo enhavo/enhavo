@@ -1,10 +1,10 @@
-import AbstractAction from "@enhavo/app/Action/Model/AbstractAction";
-import Confirm from "@enhavo/app/View/Confirm";
+import AbstractAction from "@enhavo/app/action/model/AbstractAction";
+import Confirm from "@enhavo/app/view/Confirm";
 import * as $ from "jquery";
-import LoadingEvent from "@enhavo/app/ViewStack/Event/LoadingEvent";
+import LoadingEvent from "@enhavo/app/view-stack/Event/LoadingEvent";
 import * as URI from 'urijs';
-import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
-import View from "@enhavo/app/View/View";
+import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
+import View from "@enhavo/app/view/View";
 import Translator from "@enhavo/core/Translator";
 
 export default class DeleteAction extends AbstractAction
