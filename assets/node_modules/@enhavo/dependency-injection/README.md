@@ -28,7 +28,7 @@ Add the ``DependencyInjectionPlugin`` to your webpack config.
 ```js
 // webpack.config.js
 
-const DependencyInjectionPlugin = require('@enhavo/dependency-injection/Webpack/DependencyInjectionPlugin');
+const DependencyInjectionPlugin = require('@enhavo/dependency-injection/webpack/DependencyInjectionPlugin');
 
 module.exports = {
   plugins: [

@@ -1,12 +1,12 @@
 services:
-    '@enhavo/multi-tenancy/Menu/Factory/MenuSwitchTenantFactory':
+    '@enhavo/multi-tenancy/menu/factory/MenuSwitchTenantFactory':
         chunk: 'main'
         arguments:
-            - '@enhavo/app/ViewStack/EventDispatcher'
-            - '@enhavo/app/Menu/MenuManager'
-            - '@enhavo/multi-tenancy/Menu/MenuSwitchTenantEventListener'
+            - '@enhavo/app/view-stack/EventDispatcher'
+            - '@enhavo/app/menu/MenuManager'
+            - '@enhavo/multi-tenancy/menu/MenuSwitchTenantEventListener'
 
-    '@enhavo/multi-tenancy/Menu/MenuSwitchTenantEventListener':
+    '@enhavo/multi-tenancy/menu/MenuSwitchTenantEventListener':
         chunk: 'main'
         arguments:
             - '@enhavo/core/Router'
@@ -16,7 +16,7 @@ services:
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:menu-switch-tenant'
-            - '@enhavo/app/Menu/Components/MenuDropdownComponent.vue'
-            - '@enhavo/multi-tenancy/Menu/Factory/MenuSwitchTenantFactory'
+            - '@enhavo/app/menu/components/MenuDropdownComponent.vue'
+            - '@enhavo/multi-tenancy/menu/factory/MenuSwitchTenantFactory'
         tags:
             - 'enhavo_app.menu'

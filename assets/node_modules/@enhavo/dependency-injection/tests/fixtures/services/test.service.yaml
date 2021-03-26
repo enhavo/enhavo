@@ -1,0 +1,11 @@
+services:
+    '@enhavo/dependency-injection/tests/mock/TestService':
+
+    '@enhavo/dependency-injection/tests/mock/TestDependService':
+        import: TestDependService
+        arguments:
+            - '@enhavo/dependency-injection/tests/mock/TestService'
+
+compiler_pass:
+    test:
+        path: '../../mock/CompilerPass.js'

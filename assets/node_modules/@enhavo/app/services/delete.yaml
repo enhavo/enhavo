@@ -1,13 +1,13 @@
 services:
-    '@enhavo/app/Delete/DeleteApp':
+    '@enhavo/app/delete/DeleteApp':
         chunk: 'delete'
         arguments:
             - 'param:data'
-            - '@enhavo/app/ViewStack/EventDispatcher'
-            - '@enhavo/app/View/View'
-            - '@enhavo/app/FlashMessage/FlashMessenger'
-            - '@enhavo/app/Vue/VueRegistry'
+            - '@enhavo/app/view-stack/EventDispatcher'
+            - '@enhavo/app/view/View'
+            - '@enhavo/app/flash-message/FlashMessenger'
+            - '@enhavo/app/vue/VueRegistry'
 
-    '@enhavo/app/Delete/Components/DeleteComponent.vue':
+    '@enhavo/app/delete/components/DeleteComponent.vue':
         chunk: 'delete'
         static: true

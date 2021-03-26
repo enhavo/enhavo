@@ -1,4 +1,4 @@
-import File from "@enhavo/media/Model/File";
+import File from "@enhavo/media/model/File";
 import Router from "@enhavo/core/Router";
 
 export default class MediaRouter

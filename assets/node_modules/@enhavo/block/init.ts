@@ -1,5 +1,5 @@
 import * as $ from "jquery";
-import GalleryBlock from "@enhavo/block/Block/GalleryBlock";
+import GalleryBlock from "@enhavo/block/block/GalleryBlock";
 import '@enhavo/block/assets/styles/block.scss';
 
 $(() => {

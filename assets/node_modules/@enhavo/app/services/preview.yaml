@@ -1,13 +1,13 @@
 services:
-    '@enhavo/app/Preview/PreviewApp':
+    '@enhavo/app/preview/PreviewApp':
         chunk: 'preview'
         arguments:
             - 'param:data'
-            - '@enhavo/app/ViewStack/EventDispatcher'
-            - '@enhavo/app/View/View'
-            - '@enhavo/app/Action/ActionManager'
-            - '@enhavo/app/Vue/VueRegistry'
+            - '@enhavo/app/view-stack/EventDispatcher'
+            - '@enhavo/app/view/View'
+            - '@enhavo/app/action/ActionManager'
+            - '@enhavo/app/vue/VueRegistry'
 
-    '@enhavo/app/Preview/Components/ApplicationComponent.vue':
+    '@enhavo/app/preview/components/ApplicationComponent.vue':
         chunk: 'preview'
         static: true

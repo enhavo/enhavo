@@ -1,31 +1,31 @@
 services:
-    '@enhavo/app/Menu/MenuManager':
+    '@enhavo/app/menu/MenuManager':
         chunk: 'main'
         arguments:
             - 'param:data.menu'
-            - '@enhavo/app/Menu/MenuRegistry'
-            - '@enhavo/app/ViewStack/GlobalDataStorageManager'
-            - '@enhavo/app/Vue/VueRegistry'
+            - '@enhavo/app/menu/MenuRegistry'
+            - '@enhavo/app/view-stack/GlobalDataStorageManager'
+            - '@enhavo/app/vue/VueRegistry'
 
-    '@enhavo/app/Menu/MenuRegistry':
+    '@enhavo/app/menu/MenuRegistry':
 
     menu.menu-item:
         chunk: 'main'
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:menu-item'
-            - '@enhavo/app/Menu/Components/MenuItemComponent.vue'
-            - '@enhavo/app/Menu/Factory/MenuItemFactory'
+            - '@enhavo/app/menu/components/MenuItemComponent.vue'
+            - '@enhavo/app/menu/factory/MenuItemFactory'
         tags:
             - 'enhavo_app.menu'
 
-    '@enhavo/app/Menu/Factory/MenuItemFactory':
+    '@enhavo/app/menu/factory/MenuItemFactory':
         chunk: 'main'
         arguments:
-            - '@enhavo/app/ViewStack/EventDispatcher'
-            - '@enhavo/app/Menu/MenuManager'
+            - '@enhavo/app/view-stack/EventDispatcher'
+            - '@enhavo/app/menu/MenuManager'
 
-    '@enhavo/app/Menu/Components/MenuItemComponent.vue':
+    '@enhavo/app/menu/components/MenuItemComponent.vue':
         chunk: 'main'
         static: true
 
@@ -34,19 +34,19 @@ services:
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:menu-list'
-            - '@enhavo/app/Menu/Components/MenuListComponent.vue'
-            - '@enhavo/app/Menu/Factory/MenuListFactory'
+            - '@enhavo/app/menu/components/MenuListComponent.vue'
+            - '@enhavo/app/menu/factory/MenuListFactory'
         tags:
             - 'enhavo_app.menu'
 
-    '@enhavo/app/Menu/Factory/MenuListFactory':
+    '@enhavo/app/menu/factory/MenuListFactory':
         chunk: 'main'
         arguments:
-            - '@enhavo/app/ViewStack/EventDispatcher'
-            - '@enhavo/app/Menu/MenuManager'
-            - '@enhavo/app/Menu/MenuRegistry'
+            - '@enhavo/app/view-stack/EventDispatcher'
+            - '@enhavo/app/menu/MenuManager'
+            - '@enhavo/app/menu/MenuRegistry'
 
-    '@enhavo/app/Menu/Components/MenuListComponent.vue':
+    '@enhavo/app/menu/components/MenuListComponent.vue':
         chunk: 'main'
         static: true
 
@@ -55,28 +55,28 @@ services:
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:menu-dropdown'
-            - '@enhavo/app/Menu/Components/MenuDropdownComponent.vue'
-            - '@enhavo/app/Menu/Factory/MenuDropdownFactory'
+            - '@enhavo/app/menu/components/MenuDropdownComponent.vue'
+            - '@enhavo/app/menu/factory/MenuDropdownFactory'
         tags:
             - 'enhavo_app.menu'
 
-    '@enhavo/app/Menu/Factory/MenuDropdownFactory':
+    '@enhavo/app/menu/factory/MenuDropdownFactory':
         chunk: 'main'
         arguments:
-            - '@enhavo/app/ViewStack/EventDispatcher'
-            - '@enhavo/app/Menu/MenuManager'
+            - '@enhavo/app/view-stack/EventDispatcher'
+            - '@enhavo/app/menu/MenuManager'
 
-    '@enhavo/app/Menu/Components/MenuDropdownComponent.vue':
+    '@enhavo/app/menu/components/MenuDropdownComponent.vue':
         chunk: 'main'
         static: true
 
-    '@enhavo/app/Menu/Components/MenuNotificationComponent.vue':
+    '@enhavo/app/menu/components/MenuNotificationComponent.vue':
         chunk: 'vue'
         static: true
         tags:
             - { name: vue.component, component: 'menu-notification' }
 
-    '@enhavo/app/Menu/Components/Menu.vue':
+    '@enhavo/app/menu/components/Menu.vue':
         chunk: 'vue'
         static: true
         tags:

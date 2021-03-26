@@ -1,7 +1,7 @@
 services:
-    '@enhavo/translation/Form/Loader/TranslationLoader':
+    '@enhavo/translation/form/loader/TranslationLoader':
         chunk: 'form'
         arguments:
-            - '@enhavo/app/ViewStack/EventDispatcher'
+            - '@enhavo/app/view-stack/EventDispatcher'
         tags:
             - 'enhavo_app.form'
