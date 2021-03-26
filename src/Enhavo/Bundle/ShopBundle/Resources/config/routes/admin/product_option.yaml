@@ -4,7 +4,7 @@ sylius_product_option_index:
     path: /enhavo/shop/product/option/index
     methods: [GET]
     defaults:
-        _controller: sylius.controller.product_option:indexAction
+        _controller: sylius.controller.product_option:listAction
         _sylius:
             form: enhavo_shop_product_option
             viewer:
@@ -65,15 +65,18 @@ sylius_product_option_update:
                         translation_domain: EnhavoShopBundle
                         template: EnhavoShopBundle:admin/resource/product-option:product-option.html.twig
 
-sylius_product_option_table:
+sylius_product_option_data:
     options:
         expose: true
-    path: /enhavo/shop/product/option/table
+    path: /enhavo/shop/product/option/list/data
     defaults:
-        page: 1
-        _controller: sylius.controller.product_option:tableAction
+        _controller: sylius.controller.product_option:listDataAction
         _sylius:
+            sortable: true
+            sorting:
+                position: asc
             viewer:
+                position_property: position
                 translation_domain: EnhavoShopBundle
                 columns:
                     name:

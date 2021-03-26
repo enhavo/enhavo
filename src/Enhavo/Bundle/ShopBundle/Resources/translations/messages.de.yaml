@@ -1,0 +1,3 @@
+sylius:
+  ui:
+    code: 'Code'

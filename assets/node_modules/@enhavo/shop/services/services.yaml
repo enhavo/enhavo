@@ -1,0 +1,18 @@
+services:
+    action.create_attribute:
+        chunk: 'action'
+        from: '@enhavo/core/RegistryEntry'
+        arguments:
+            - 'string:create-attribute-action'
+            - '@enhavo/app/action/components/ActionComponent.vue'
+            - '@enhavo/shop/action/factory/CreateAttributeFactory'
+        tags:
+            - 'enhavo_app.action'
+
+    '@enhavo/shop/action/factory/CreateAttributeFactory':
+        chunk: 'action'
+        arguments:
+            - '@enhavo/app/view/View'
+            - '@enhavo/core/Router'
+            - '@enhavo/app/modal/ModalManager'
+            - '@enhavo/core/Translator'

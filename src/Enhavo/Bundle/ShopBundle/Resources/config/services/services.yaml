@@ -14,6 +14,29 @@ services:
         tags:
             - { name: enhavo.action, alias: shop_generate_variant }
 
+    Enhavo\Bundle\ShopBundle\Action\CreateAttributeAction:
+        parent: Enhavo\Bundle\AppBundle\Action\Type\OpenActionType
+        public: true
+        tags:
+            - { name: enhavo.action, alias: shop_create_attribute }
+
+    Enhavo\Bundle\ShopBundle\Manager\ProductManager:
+        arguments:
+
+
+    Enhavo\Bundle\ShopBundle\EventListener\ProductSubscriber:
+        arguments:
+            - '@Enhavo\Bundle\ShopBundle\Manager\ProductManager'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    Enhavo\Bundle\ShopBundle\EventListener\ProductOptionSubscriber:
+        arguments:
+            - '@Enhavo\Bundle\ShopBundle\Manager\ProductManager'
+            - '@sylius.translation_locale_provider'
+        tags:
+            - { name: kernel.event_subscriber }
+
 #    enhavo_shop.listener.doctrine_sylius_meta:
 #        class: Enhavo\Bundle\ShopBundle\EventListener\DoctrineSyliusMetaListener
 #        tags:
@@ -100,7 +123,3 @@ services:
 #        class: Enhavo\Bundle\ShopBundle\Manager\CouponManager
 #        calls:
 #            - [setContainer, ['@service_container']]
-
-
-
-

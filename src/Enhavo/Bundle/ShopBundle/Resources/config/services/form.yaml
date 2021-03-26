@@ -25,13 +25,19 @@ services:
         tags:
             - { name: form.type }
 
+    Enhavo\Bundle\ShopBundle\Form\Type\ProductOptionValueType:
+        arguments:
+            - '%sylius.model.product_option_value.class%'
+        tags:
+            - { name: form.type }
+
     enhavo_shop.form.type.product_generate_variants:
         class: Enhavo\Bundle\ShopBundle\Form\Type\ProductGenerateVariantsType
         arguments:
             - "%sylius.model.product.class%"
             - "%sylius.form.type.product_generate_variants.validation_groups%"
         tags:
-            - { name: form.type, alias: enhavo_product_generate_variants }
+            - { name: form.type }
 
     Enhavo\Bundle\ShopBundle\Form\Type\ProductVariantGenerationType:
         arguments:
@@ -39,6 +45,11 @@ services:
         tags:
             - { name: form.type }
 
+    Enhavo\Bundle\ShopBundle\Form\Extension\ResourceTranslationsExtension:
+        arguments:
+            - '@sylius.translation_locale_provider'
+        tags:
+            - { name: form.type_extension, extended_type: Sylius\Bundle\ResourceBundle\Form\Type\ResourceTranslationsType }
 
 #    Enhavo\Bundle\ShopBundle\Form\Type\OrderAddressType:
 #        arguments:

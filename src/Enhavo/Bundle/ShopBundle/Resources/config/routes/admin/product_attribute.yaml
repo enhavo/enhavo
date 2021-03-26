@@ -8,62 +8,9 @@ sylius_product_attribute_index:
         _sylius:
             viewer:
                 actions:
-                    create_text:
-                        type: create
-                        label: product_attribute.action.label.text
-                        translation_domain: EnhavoShopBundle
+                    create:
+                        type: shop_create_attribute
                         route: sylius_product_attribute_create
-                        route_parameters:
-                            type: text
-                    create_textarea:
-                        type: create
-                        label: product_attribute.action.label.textarea
-                        translation_domain: EnhavoShopBundle
-                        route: sylius_product_attribute_create
-                        route_parameters:
-                            type: textarea
-                    create_checkbox:
-                        type: create
-                        label: product_attribute.action.label.checkbox
-                        translation_domain: EnhavoShopBundle
-                        route: sylius_product_attribute_create
-                        route_parameters:
-                            type: checkbox
-                    create_integer:
-                        type: create
-                        label: product_attribute.action.label.integer
-                        translation_domain: EnhavoShopBundle
-                        route: sylius_product_attribute_create
-                        route_parameters:
-                            type: integer
-                    create_percent:
-                        type: create
-                        label: product_attribute.action.label.percent
-                        translation_domain: EnhavoShopBundle
-                        route: sylius_product_attribute_create
-                        route_parameters:
-                            type: percent
-                    create_datetime:
-                        type: create
-                        label: product_attribute.action.label.datetime
-                        translation_domain: EnhavoShopBundle
-                        route: sylius_product_attribute_create
-                        route_parameters:
-                            type: datetime
-                    create_date:
-                        type: create
-                        label: product_attribute.action.label.date
-                        translation_domain: EnhavoShopBundle
-                        route: sylius_product_attribute_create
-                        route_parameters:
-                            type: date
-                    create_select:
-                        type: create
-                        label: product_attribute.action.label.select
-                        translation_domain: EnhavoShopBundle
-                        route: sylius_product_attribute_create
-                        route_parameters:
-                            type: select
 
 sylius_product_attribute_create:
     options:
@@ -78,6 +25,16 @@ sylius_product_attribute_create:
                 arguments: $type
             redirect: sylius_product_attribute_update
             viewer:
+
+sylius_product_attribute_create_form:
+    options:
+        expose: true
+    path: /enhavo/shop/product/attribute/create/form
+    methods: [GET,POST]
+    controller: enhavo_app.controller.modal:formAction
+    defaults:
+        _config:
+            form: Enhavo\Bundle\ShopBundle\Form\Type\ProductAttributeTypeType
 
 sylius_product_attribute_update:
     options:

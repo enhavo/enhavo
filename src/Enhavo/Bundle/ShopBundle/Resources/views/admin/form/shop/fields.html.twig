@@ -1,0 +1,22 @@
+{% block sylius_translations_widget %}
+    {% for form in translation_forms %}
+        <div data-translation-type="{{ translation_locales|json_encode|e }}" class="translation">
+            {% for locale,child in form %}
+                <div data-translation-widget="{{ locale }}" {% if loop.index0 != 0 %}style="display: none"{% endif %}>
+                    {{ form_widget(child) }}
+                </div>
+            {% endfor %}
+
+            {% if translation_locales|length > 1%}
+                <div class="translation-switcher" data-translation-switcher>
+                    <div class="translation-switcher-current" data-translation-switcher-current></div>
+                    <div class="translation-switcher-menu">
+                        {% for locale in translation_locales %}
+                            <div data-translation-switch="{{ locale }}">{{ locale }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+{% endblock %}

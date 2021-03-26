@@ -9,7 +9,8 @@
 
 namespace Enhavo\Bundle\ShopBundle\Form\Type;
 
-use Enhavo\Bundle\FormBundle\Form\Type\BooleanType;
+use
+    Enhavo\Bundle\FormBundle\Form\Type\BooleanType;
 use Enhavo\Bundle\FormBundle\Form\Type\CurrencyType;
 use Enhavo\Bundle\FormBundle\Form\Type\ListType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
@@ -29,24 +30,17 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ProductType extends AbstractType
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $dataClass;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $taxRateClass;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $optionClass;
 
     /** @var int */
     private $productId;
-
 
     /** @var EventSubscriberInterface */
     private $generateProductVariantsSubscriber;
@@ -194,6 +188,7 @@ class ProductType extends AbstractType
             'multiple' => true,
             'translation_domain' => 'EnhavoShopBundle',
         ));
+
         $builder->add('attributes', ListType::class, [
             'entry_type' => ProductAttributeValueType::class,
             'required' => false,
