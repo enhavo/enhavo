@@ -1,7 +1,7 @@
 import AbstractAction from "@enhavo/app/action/model/AbstractAction";
 import Confirm from "@enhavo/app/view/Confirm";
 import * as URI from "urijs";
-import LoadingEvent from "@enhavo/app/view-stack/Event/LoadingEvent";
+import LoadingEvent from "@enhavo/app/view-stack/event/LoadingEvent";
 import * as $ from "jquery";
 import View from "@enhavo/app/view/View";
 import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";

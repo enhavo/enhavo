@@ -7,7 +7,7 @@ export default class ViewRegistryPackage extends RegistryPackage
 {
     constructor(application: ApplicationInterface) {
         super();
-        this.register('iframe-view', () => import('@enhavo/app/view-stack/Components/IframeViewComponent.vue'), new IframeViewFactory());
-        this.register('ajax-view', () => import('@enhavo/app/view-stack/Components/AjaxViewComponent.vue'), new AjaxViewFactory());
+        this.register('iframe-view', () => import('@enhavo/app/view-stack/components/IframeViewComponent.vue'), new IframeViewFactory());
+        this.register('ajax-view', () => import('@enhavo/app/view-stack/components/AjaxViewComponent.vue'), new AjaxViewFactory());
     }
 }

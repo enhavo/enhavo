@@ -1,4 +1,4 @@
-import RemovedEvent from "@enhavo/app/view-stack/Event/RemovedEvent";
+import RemovedEvent from "@enhavo/app/view-stack/event/RemovedEvent";
 import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
 
 export default class FrameStorage

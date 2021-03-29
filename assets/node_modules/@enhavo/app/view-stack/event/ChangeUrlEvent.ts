@@ -1,4 +1,4 @@
-import Event from "@enhavo/app/view-stack/Event/Event";
+import Event from "@enhavo/app/view-stack/event/Event";
 
 export default class ChangeUrlEvent extends Event
 {

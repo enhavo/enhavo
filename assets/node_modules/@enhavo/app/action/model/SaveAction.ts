@@ -1,6 +1,6 @@
 import * as $ from "jquery";
 import AbstractAction from "@enhavo/app/action/model/AbstractAction";
-import LoadingEvent from "@enhavo/app/view-stack/Event/LoadingEvent";
+import LoadingEvent from "@enhavo/app/view-stack/event/LoadingEvent";
 import View from "@enhavo/app/view/View";
 import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
 

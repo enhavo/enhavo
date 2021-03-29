@@ -1,6 +1,6 @@
-import CreateEvent from '@enhavo/app/view-stack/Event/CreateEvent';
-import ClearEvent from '@enhavo/app/view-stack/Event/ClearEvent';
-import SaveStateEvent from '@enhavo/app/view-stack/Event/SaveStateEvent';
+import CreateEvent from '@enhavo/app/view-stack/event/CreateEvent';
+import ClearEvent from '@enhavo/app/view-stack/event/ClearEvent';
+import SaveStateEvent from '@enhavo/app/view-stack/event/SaveStateEvent';
 import AbstractMenu from "@enhavo/app/menu/model/AbstractMenu";
 import MenuList from "@enhavo/app/menu/model/MenuList";
 

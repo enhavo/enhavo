@@ -7,7 +7,7 @@ import Router from "@enhavo/core/Router";
 import axios from "axios";
 import Item from "@enhavo/app/list/Item";
 import Translator from "@enhavo/core/Translator";
-import UpdatedEvent from "@enhavo/app/view-stack/Event/UpdatedEvent";
+import UpdatedEvent from "@enhavo/app/view-stack/event/UpdatedEvent";
 import FlashMessenger from "@enhavo/app/flash-message/FlashMessenger";
 import Message from "@enhavo/app/flash-message/Message";
 import * as async from "async";

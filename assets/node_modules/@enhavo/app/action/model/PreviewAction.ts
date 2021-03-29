@@ -1,10 +1,10 @@
 import AbstractAction from "@enhavo/app/action/model/AbstractAction";
 import * as $ from 'jquery';
-import DataEvent from "@enhavo/app/view-stack/Event/DataEvent";
-import ExistsEvent from "@enhavo/app/view-stack/Event/ExistsEvent";
-import LoadedEvent from "@enhavo/app/view-stack/Event/LoadedEvent";
+import DataEvent from "@enhavo/app/view-stack/event/DataEvent";
+import ExistsEvent from "@enhavo/app/view-stack/event/ExistsEvent";
+import LoadedEvent from "@enhavo/app/view-stack/event/LoadedEvent";
 import ExistsData from "@enhavo/app/view-stack/ExistsData";
-import LoadDataEvent from "@enhavo/app/view-stack/Event/LoadDataEvent";
+import LoadDataEvent from "@enhavo/app/view-stack/event/LoadDataEvent";
 import DataStorageEntry from "@enhavo/app/view-stack/DataStorageEntry";
 import View from "@enhavo/app/view/View";
 import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";

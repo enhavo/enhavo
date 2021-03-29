@@ -1,12 +1,12 @@
 import ActionManager from "@enhavo/app/action/ActionManager";
 import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
 import View from "@enhavo/app/view/View";
-import CloseEvent from "@enhavo/app/view-stack/Event/CloseEvent";
-import RemoveEvent from "@enhavo/app/view-stack/Event/RemoveEvent";
+import CloseEvent from "@enhavo/app/view-stack/event/CloseEvent";
+import RemoveEvent from "@enhavo/app/view-stack/event/RemoveEvent";
 import Confirm from "@enhavo/app/view/Confirm";
 import FormatData from "@enhavo/media/image-cropper/FormatData";
 import FlashMessenger from "@enhavo/app/flash-message/FlashMessenger";
-import UpdatedEvent from "@enhavo/app/view-stack/Event/UpdatedEvent";
+import UpdatedEvent from "@enhavo/app/view-stack/event/UpdatedEvent";
 import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
 import * as _ from "lodash";
 

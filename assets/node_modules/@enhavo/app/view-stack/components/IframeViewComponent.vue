@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
-import IframeView from '@enhavo/app/view-stack/Model/IframeView';
+import IframeView from '@enhavo/app/view-stack/model/IframeView';
 import * as URI from 'urijs';
 
 @Component

@@ -32,11 +32,11 @@ services:
             - '@enhavo/core/Translator'
             - '@enhavo/app/vue/VueRegistry'
 
-    '@enhavo/media/media-library/Components/ApplicationComponent.vue':
+    '@enhavo/media/media-library/components/ApplicationComponent.vue':
         chunk: 'media'
         static: true
 
-    '@enhavo/media/media-library/Components/MediaLibraryComponent.vue':
+    '@enhavo/media/media-library/components/MediaLibraryComponent.vue':
         chunk: 'media'
         static: true
         tags:
@@ -52,11 +52,11 @@ services:
             - '@enhavo/app/flash-message/FlashMessenger'
             - '@enhavo/app/vue/VueRegistry'
 
-    '@enhavo/media/image-cropper/Components/ImageCropperComponent.vue':
+    '@enhavo/media/image-cropper/components/ImageCropperComponent.vue':
         chunk: 'image-cropper'
         static: true
 
-    '@enhavo/media/image-cropper/Components/ImageCropperStageComponent.vue':
+    '@enhavo/media/image-cropper/components/ImageCropperStageComponent.vue':
         chunk: 'vue'
         static: true
         tags:

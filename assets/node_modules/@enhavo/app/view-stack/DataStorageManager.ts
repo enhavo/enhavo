@@ -1,8 +1,8 @@
 import EventDispatcher from '@enhavo/app/view-stack/EventDispatcher';
 import DataStorageEntry from '@enhavo/app/view-stack/DataStorageEntry';
-import SaveDataEvent from '@enhavo/app/view-stack/Event/SaveDataEvent';
-import LoadDataEvent from '@enhavo/app/view-stack/Event/LoadDataEvent';
-import RemoveDataEvent from '@enhavo/app/view-stack/Event/RemoveDataEvent';
+import SaveDataEvent from '@enhavo/app/view-stack/event/SaveDataEvent';
+import LoadDataEvent from '@enhavo/app/view-stack/event/LoadDataEvent';
+import RemoveDataEvent from '@enhavo/app/view-stack/event/RemoveDataEvent';
 import ViewStack from "@enhavo/app/view-stack/ViewStack";
 
 export default class DataStorageManager
