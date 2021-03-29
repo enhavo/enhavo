@@ -10,7 +10,7 @@ import * as $ from "jquery";
 import BatchManager from "@enhavo/app/grid/batch/BatchManager";
 import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
 import View from "@enhavo/app/view/View";
-import UpdatedEvent from "@enhavo/app/view-stack/Event/UpdatedEvent";
+import UpdatedEvent from "@enhavo/app/view-stack/event/UpdatedEvent";
 import Translator from "@enhavo/core/Translator";
 import FlashMessenger from "@enhavo/app/flash-message/FlashMessenger";
 import * as jexl from "jexl";

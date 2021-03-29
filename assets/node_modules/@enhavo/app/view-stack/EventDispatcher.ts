@@ -1,4 +1,4 @@
-import Event, {ResolveEvent, RejectEvent} from '@enhavo/app/view-stack/Event/Event';
+import Event, {ResolveEvent, RejectEvent} from '@enhavo/app/view-stack/event/Event';
 import * as _ from 'lodash';
 import * as URI from 'urijs';
 

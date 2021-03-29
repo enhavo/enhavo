@@ -1,5 +1,5 @@
 import AbstractAction from "@enhavo/app/action/model/AbstractAction";
-import CloseEvent from "@enhavo/app/view-stack/Event/CloseEvent";
+import CloseEvent from "@enhavo/app/view-stack/event/CloseEvent";
 import View from "@enhavo/app/view/View";
 import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
 

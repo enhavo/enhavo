@@ -6,8 +6,8 @@ import axios from 'axios';
 import * as _ from "lodash";
 import View from "@enhavo/app/view/View";
 import Translator from "@enhavo/core/Translator";
-import RemovedEvent from "@enhavo/app/view-stack/Event/RemovedEvent";
-import UpdatedEvent from "@enhavo/app/view-stack/Event/UpdatedEvent";
+import RemovedEvent from "@enhavo/app/view-stack/event/RemovedEvent";
+import UpdatedEvent from "@enhavo/app/view-stack/event/UpdatedEvent";
 import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
 
 export default class MediaLibrary

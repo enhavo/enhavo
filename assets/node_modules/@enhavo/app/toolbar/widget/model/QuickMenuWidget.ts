@@ -1,6 +1,6 @@
 import AbstractWidget from "@enhavo/app/toolbar/widget/model/AbstractWidget";
-import CreateEvent from '@enhavo/app/view-stack/Event/CreateEvent';
-import ClearEvent from '@enhavo/app/view-stack/Event/ClearEvent';
+import CreateEvent from '@enhavo/app/view-stack/event/CreateEvent';
+import ClearEvent from '@enhavo/app/view-stack/event/ClearEvent';
 import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
 import MenuManager from "@enhavo/app/menu/MenuManager";
 

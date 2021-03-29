@@ -4,9 +4,9 @@ import FormData from "@enhavo/app/form/FormData";
 import FormRegistry from "@enhavo/app/form/FormRegistry";
 import FlashMessenger from "@enhavo/app/flash-message/FlashMessenger";
 import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
-import UpdatedEvent from "@enhavo/app/view-stack/Event/UpdatedEvent";
+import UpdatedEvent from "@enhavo/app/view-stack/event/UpdatedEvent";
 import View from "@enhavo/app/view/View";
-import SaveStateEvent from "@enhavo/app/view-stack/Event/SaveStateEvent";
+import SaveStateEvent from "@enhavo/app/view-stack/event/SaveStateEvent";
 import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
 
 export default class Form
