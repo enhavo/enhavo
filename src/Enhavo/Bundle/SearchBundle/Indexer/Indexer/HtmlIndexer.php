@@ -18,7 +18,9 @@ class HtmlIndexer extends AbstractType implements IndexerInterface
     {
         $data = [];
 
-        $tags = $this->getHtmlTags();
+        $tagWeights = isset($options['weights']) ? $options['weights'] : [];
+
+        $tags = $this->getHtmlTags($tagWeights);
 
         // strip off all ignored tags, insert space before and after them to keep word boundaries.
         $value = str_replace(array('<', '>'), array(' <', '> '), $value);
@@ -49,7 +51,7 @@ class HtmlIndexer extends AbstractType implements IndexerInterface
                     if(count($tagStack)) {
                         $currentTag = $tagStack[count($tagStack) - 1];
                     }
-                    $index->setWeight($this->getWeight($currentTag));
+                    $index->setWeight($this->getWeight($currentTag, $tagWeights));
                     $index->setValue(trim($tagValue));
                     $data[] = $index;
                 }
@@ -62,7 +64,7 @@ class HtmlIndexer extends AbstractType implements IndexerInterface
 
     private function getWeight($tag, array $weights = null)
     {
-        $map = $this->getHtmlMap();
+        $map = $this->getHtmlMap($weights);
 
         if(is_array($weights)) {
             $map = array_merge($map, $weights);
