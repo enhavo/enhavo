@@ -1,27 +1,21 @@
 name: Application
 
-on: [push, pull_request]
+on:
+    push:
+    pull_request:
 
 jobs:
     static-checks:
         runs-on: ubuntu-18.04
-
-        name: "Static checks (PHP ${{ matrix.php }}, Symfony ${{ matrix.symfony }})"
-
-        timeout-minutes: 20
-
+        name: "Static checks"
         strategy:
-            fail-fast: false
             matrix:
-                php: [7.3,7.4]
-                symfony: [^4.4]
-
+                php: [7.4]
         steps:
-            -
+            -   name: Checkout
                 uses: actions/checkout@v2
 
-            -
-                name: Setup PHP
+            -   name: Setup PHP
                 uses: shivammathur/setup-php@v2
                 with:
                     php-version: "${{ matrix.php }}"
@@ -30,43 +24,25 @@ jobs:
                     tools: symfony
                     coverage: none
 
-            -
-                name: Restrict Symfony version
-                if: matrix.symfony != ''
-                run: |
-                    composer global require --no-progress --no-scripts --no-plugins "symfony/flex:^1.10"
-                    composer config extra.symfony.require "${{ matrix.symfony }}"
-
-            -
-                name: Get Composer cache directory
-                id: composer-cache
+            -   name: Get composer cache directory
+                id: composercache
                 run: echo "::set-output name=dir::$(composer config cache-files-dir)"
 
-            -
-                name: Cache Composer
+            -   name: Cache dependencies
                 uses: actions/cache@v2
                 with:
-                    path: ${{ steps.composer-cache.outputs.dir }}
-                    key: ${{ runner.os }}-php-${{ matrix.php }}-symfony-${{ matrix.symfony }}-composer-${{ hashFiles('**/composer.json') }}
-                    restore-keys: |
-                        ${{ runner.os }}-php-${{ matrix.php }}-symfony-${{ matrix.symfony }}-composer-
+                    path: ${{ steps.composercache.outputs.dir }}
+                    key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+                    restore-keys: ${{ runner.os }}-composer-
 
-            -
-                name: Install PHP dependencies
-                run: composer update --no-interaction --no-scripts
-                id: end-of-setup
-
-            -
-                name: Validate composer.json
+            -   name: Validate composer.json
                 run: composer validate --strict
-                if: always() && steps.end-of-setup.outcome == 'success'
 
-            -
-                name: Check for security vulnerabilities
+            -   name: Install dependencies
+                run: composer install --prefer-dist
+
+            -   name: Check for security vulnerabilities
                 run: symfony security:check
-                if: always() && steps.end-of-setup.outcome == 'success'
 
-            -
-                name: Validate Doctrine mapping
+            -   name: Validate Doctrine mapping
                 run: bin/console doctrine:schema:validate --skip-sync -vvv
-                if: always() && steps.end-of-setup.outcome == 'success'
