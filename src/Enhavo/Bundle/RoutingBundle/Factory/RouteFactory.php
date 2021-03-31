@@ -9,8 +9,9 @@
 namespace Enhavo\Bundle\RoutingBundle\Factory;
 
 use Enhavo\Bundle\RoutingBundle\Entity\Route;
+use Sylius\Component\Resource\Factory\FactoryInterface;
 
-class RouteFactory
+class RouteFactory implements FactoryInterface
 {
     /**
      * @return Route
