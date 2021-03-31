@@ -20,18 +20,20 @@ class SaveActionTypeTest extends TestCase
     {
         $dependencies = new SaveActionTypeDependencies();
         $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
+        $dependencies->router = $this->getMockBuilder(RouterInterface::class)->getMock();
         return $dependencies;
     }
 
     private function createInstance(SaveActionTypeDependencies $dependencies)
     {
-        return new SaveActionType($dependencies->translator);
+        return new SaveActionType($dependencies->translator, $dependencies->router);
     }
 
     public function testCreateViewData()
     {
         $dependencies = $this->createDependencies();
         $dependencies->translator->method('trans')->willReturnCallback(function ($value) {return $value;});
+        $dependencies->router->method('generate')->willReturn('url');
         $type = $this->createInstance($dependencies);
 
         $action = new Action($type, []);
@@ -54,4 +56,6 @@ class SaveActionTypeDependencies
 {
     /** @var TranslatorInterface|\PHPUnit_Framework_MockObject_MockObject */
     public $translator;
+    /** @var RouterInterface|\PHPUnit_Framework_MockObject_MockObject */
+    public $router;
 }

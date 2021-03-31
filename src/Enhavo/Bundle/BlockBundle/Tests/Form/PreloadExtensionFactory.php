@@ -16,14 +16,8 @@ use Symfony\Component\Form\PreloadedExtension;
 
 class PreloadExtensionFactory
 {
-    public static function createBlockCollectionTypeExtension(TestCase $testCase, $forms = [], $blocks = [])
+    public static function createBlockCollectionTypeExtension(TestCase $testCase, $blocks = [])
     {
-        foreach($forms as $key => $form) {
-            $block = $testCase->getMockBuilder(Block::class)->disableOriginalConstructor()->getMock();
-            $block->method('getForm')->willReturn($form);
-            $blocks[$key] = $block;
-        }
-
         $blockManager = $testCase->getMockBuilder(BlockManager::class)->disableOriginalConstructor()->getMock();
         $blockManager->method('getBlocks')->willReturn($blocks);
 
