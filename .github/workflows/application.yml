@@ -1,10 +1,6 @@
 name: Application
 
-on:
-    push:
-    pull_request:
-    release:
-        types: [created]
+on: [push, pull_request]
 
 jobs:
     static-checks:
