@@ -1,108 +1,93 @@
 Dynamic routing
 ===============
 
-.. note::
-
-  This article outdated and may contain information that are not in use any more
-
-The ``SymfonyCMF RoutingBundle`` is used to add optional dynamic routing for the resources. Usually dynamic routing
-is used for the front end to have a nice seo url.
+The ``EnhavoRoutingBundle`` is used to add optional dynamic routing for the resources, so user are able to enter
+their own url. If you want to generate a url path and the static routing can't fit your needs (e.g. nested paths) you may go for dynamic routing as well.
 
 This following example will show you how to add a url field to your entity and how you map it to a controller action.
 
 Relation
 --------
 
-First we need to tell our application that an entity has a ``manyToOne`` relation to a route. We use yaml
-for the meta data.
+First we need to tell our application that an entity has a ``oneToOne`` relation to a route.
 
 .. code-block:: yaml
 
-    manyToOne:
+    oneToOne:
         route:
             cascade: ['persist', 'refresh', 'remove']
-            targetEntity: Enhavo\Bundle\AppBundle\Entity\Route
+            targetEntity: Enhavo\Bundle\RoutingBundle\Model\RouteInterface
+            joinColumn:
+                onDelete: CASCADE
 
-.. note::
+Or if you use annotations
 
-    Logically, the relation between the entity and route should be ``oneToOne``, but we have some problems with the
-    doctrine configuration of the owning entity in this case. When using a ``manyToOne`` relation and only ever using
-    a single entry, the owning side is clear.
+.. code-block:: php
 
-Here is the php code for the entity class.
+    /**
+     * @var RouteInterface
+     *
+     * @ORM\OneToOne (targetEntity="Enhavo\Bundle\RoutingBundle\Model\RouteInterface", cascade={"persist", "remove", "refresh"})
+     * @ORM\JoinColumn (onDelete="CASCADE")
+     */
+    private $route;
+
+
+Implement the ``Routeable`` interface for your class.
 
 .. code-block:: php
 
     <?php
 
-    //...
+    use Enhavo\Bundle\RoutingBundle\Model\Routeable;
+    use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
 
-    /**
-     * @var \Enhavo\Bundle\AppBundle\Entity\Route
-     */
-    private $route;
-
-    /**
-     * @return \Enhavo\Bundle\AppBundle\Entity\Route
-     */
-    public function getRoute()
+    class Page implements Routeable
     {
-        return $this->route;
+
+        /**
+         * @var RouteInterface
+         */
+        private $route;
+
+        /**
+         * @return RouteInterface
+         */
+        public function getRoute()
+        {
+            return $this->route;
+        }
+
+        /**
+         * @param RouteInterface $route
+         */
+        public function setRoute(RouteInterface $route)
+        {
+            $this->route = $route;
+        }
+
+        //...
     }
-
-    /**
-     * @param \Enhavo\Bundle\AppBundle\Entity\Route $route
-     */
-    public function setRoute($route)
-    {
-        $this->route = $route;
-    }
-
-    //...
-
-
-Service
--------
-
-Did you wonder why we don`t need to add relation information to the route configuration? That is because we use a
-dynamic relation. The content of a route could be any entity. So we only save some type information, and when the route
-tries to access its content, it is loaded on demand.
-
-For this to work, we need to give the application some mapping information. This will be done by creating a service.
-
-.. code-block:: yaml
-
-    parameters:
-        enhavo_page.page.route_content_loader.class: Enhavo\AdminBundle\Route\RouteContentLoader
-
-    services:
-        enhavo_page.page.route_content_loader:
-            class: '%enhavo_page.page.route_content_loader.class%'
-            arguments:
-                - 'enhavo_page.page'
-                - '%enhavo_page.model.page.class%'
-                - 'enhavo_page.repository.page'
-            tags:
-                - { name: enhavo_route_content_loader }
-
-.. note::
-
-    The third argument is the name of the service, but not the service directly.
-    The ``@`` here is missing, because we need some lazy load for getting the service.
-    If we don`t do this, we have some loops in our dependencies.
 
 Form
 ----
 
-To add an url field in our form we just use this simple snippet.
-There is already a form type ``enhavo_route``, which handle
-all we need. Also the constraints, so we use a clean and unique url.
+To add an url field in our form we just use the ``RouteType``.
 
 .. code-block:: php
 
     <?php
 
-    $builder->add('route', 'enhavo_route');
+    use Enhavo\Bundle\RoutingBundle\Form\Type\RouteType;
+
+    // ...
+
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add('route', RouteType::class);
+
+        // ...
+    }
 
 If you render your form manually, you shouln't forget to add it in your template file.
 
@@ -110,35 +95,48 @@ If you render your form manually, you shouln't forget to add it in your template
 
     {{ form_row(form.route) }}
 
+If you use the form in the enhavo admin, no further steps are required, because enhavo will take care to call the ``Generator``
+and routines to update the route properly.
+
 Controller
 ----------
 
 And last but not least, we have to define our controller, and add some
-mapping information to the ``SymfonyCMF RoutingBundle``. The mapping contains
-the class name of our entity and the action which should be called for it.
+mapping information to the ``SymfonyCMF RoutingBundle`` which is used by the ``EnhavoRoutingBundle``.
+The mapping contains the class name of our entity and the controller action which should be called.
 
 .. code-block:: yaml
 
     cmf_routing:
         dynamic:
             controllers_by_class:
-                enhavo\ProjectBundle\Entity\Page: enhavoProjectBundle:Main:page
+                App\Entity\Page: App\Controller\PageController:showAction
 
-In our yaml we use ``enhavoProjectBundle:Main:page`` as action, so we also have to add this to
-our Controller.
+Add the action to your controller. The parameter must named ``$contentDocument`` and will be your entity.
 
 .. code-block:: php
 
     <?php
 
-    public function pageAction(Page $contentDocument)
+    class PageController
     {
-        return $this->render('enhavoProjectBundle:Page:page.html.twig', array(
-            'page' => $contentDocument
-        ));
+        public function showAction(Page $contentDocument)
+        {
+            return $this->render('page/show.html.twig', [
+                'page' => $contentDocument
+            ]);
+        }
     }
 
-.. note::
 
-    The first parameter name for the action must be named ``$contentDocument``.
-    Otherwise you will get some errors.
+Add controller information to route
+-----------------------------------
+
+Like in static routes, it is also possible to save the linked controller to the route itself.
+You can write a ``Generator`` and store the information
+
+.. code-block:: php
+
+    $page->getRoute()->setDefaults([
+        '_controller' => 'App\Controller\PageController:showAction'
+    ])
