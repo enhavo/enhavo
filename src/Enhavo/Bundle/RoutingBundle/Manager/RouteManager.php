@@ -8,25 +8,36 @@
 
 namespace Enhavo\Bundle\RoutingBundle\Manager;
 
+use Enhavo\Bundle\RoutingBundle\Entity\Route;
 use Enhavo\Bundle\RoutingBundle\Model\Routeable;
 use Enhavo\Bundle\RoutingBundle\AutoGenerator\AutoGenerator;
+use Sylius\Component\Resource\Factory\FactoryInterface;
 
 class RouteManager
 {
-    /**
-     * @var AutoGenerator
-     */
-    protected $autoGenerator;
+    /** @var AutoGenerator */
+    private $autoGenerator;
 
-    public function __construct(AutoGenerator $autoGenerator)
+    /** @var FactoryInterface */
+    private $routeFactory;
+
+    public function __construct(AutoGenerator $autoGenerator, FactoryInterface $routeFactory)
     {
         $this->autoGenerator = $autoGenerator;
+        $this->routeFactory = $routeFactory;
     }
 
     public function update($resource)
     {
-        if($resource instanceof Routeable && $resource->getRoute()) {
-            $resource->getRoute()->setContent($resource);
+        if ($resource instanceof Routeable) {
+            if ($resource->getRoute() === null) {
+                /** @var Route $route */
+                $route = $this->routeFactory->createNew();
+                $resource->setRoute($route);
+            }
+
+            $route = $resource->getRoute();
+            $route->setContent($resource);
         }
 
         $this->autoGenerator->generate($resource);
