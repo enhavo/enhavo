@@ -8,9 +8,6 @@ jobs:
     static-checks:
         runs-on: ubuntu-18.04
         name: "Static checks"
-        strategy:
-            matrix:
-                php: [7.4]
         steps:
             -   name: Checkout
                 uses: actions/checkout@v2
@@ -18,7 +15,7 @@ jobs:
             -   name: Setup PHP
                 uses: shivammathur/setup-php@v2
                 with:
-                    php-version: "${{ matrix.php }}"
+                    php-version: 7.4
                     ini-values: date.timezone=Europe/Warsaw, opcache.enable=1, opcache.enable_cli=1, opcache.memory_consumption=256, opcache.max_accelerated_files=32531, opcache.interned_strings_buffer=8, opcache.validate_timestamps=0, opcache.save_comments=1, opcache.fast_shutdown=0
                     extensions: intl, gd, opcache, mysql, pdo_mysql, :xdebug
                     tools: symfony

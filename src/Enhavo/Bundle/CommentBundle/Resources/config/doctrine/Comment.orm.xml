@@ -15,7 +15,7 @@
         <field name="name" nullable="true" />
         <field name="email" nullable="true" />
 
-        <many-to-one field="thread" target-entity="Enhavo\Bundle\CommentBundle\Model\ThreadInterface" fetch="EAGER">
+        <many-to-one field="thread" target-entity="Enhavo\Bundle\CommentBundle\Model\ThreadInterface" fetch="EAGER" inversed-by="comments">
             <cascade>
                 <cascade-persist />
                 <cascade-remove />
@@ -23,7 +23,7 @@
             </cascade>
         </many-to-one>
 
-        <many-to-one field="parent" target-entity="Enhavo\Bundle\CommentBundle\Model\CommentInterface">
+        <many-to-one field="parent" target-entity="Enhavo\Bundle\CommentBundle\Model\CommentInterface" inversed-by="children">
         </many-to-one>
 
         <many-to-one field="user" target-entity="Enhavo\Bundle\UserBundle\Model\UserInterface">

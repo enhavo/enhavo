@@ -11,7 +11,7 @@
         </field>
         <field name="type" nullable="true" />
 
-        <many-to-one field="receiver" target-entity="Enhavo\Bundle\NewsletterBundle\Entity\Receiver">
+        <many-to-one field="receiver" target-entity="Enhavo\Bundle\NewsletterBundle\Entity\Receiver" inversed-by="tracking">
             <join-column on-delete="CASCADE" />
         </many-to-one>
     </entity>

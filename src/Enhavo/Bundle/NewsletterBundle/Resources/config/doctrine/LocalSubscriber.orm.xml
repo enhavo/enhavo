@@ -11,7 +11,7 @@
         <field name="token" length="255" nullable="true" />
         <field name="createdAt" type="datetime" nullable="true" />
 
-        <many-to-many field="groups" target-entity="Enhavo\Bundle\NewsletterBundle\Model\GroupInterface">
+        <many-to-many field="groups" target-entity="Enhavo\Bundle\NewsletterBundle\Model\GroupInterface" inversed-by="subscribers">
             <join-table name="newsletter_local_subscriber_group">
                 <join-columns>
                     <join-column name="subscriber_id" />

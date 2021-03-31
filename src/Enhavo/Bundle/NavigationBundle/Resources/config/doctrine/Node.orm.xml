@@ -11,14 +11,14 @@
         <field name="subjectId" type="integer" nullable="true" />
         <field name="subjectClass" length="255" nullable="true" />
 
-        <many-to-one field="parent" target-entity="Enhavo\Bundle\NavigationBundle\Model\NodeInterface">
+        <many-to-one field="parent" target-entity="Enhavo\Bundle\NavigationBundle\Model\NodeInterface" inversed-by="children">
             <cascade>
                 <cascade-persist/>
             </cascade>
             <join-column on-delete="CASCADE" />
         </many-to-one>
 
-        <many-to-one field="navigation" target-entity="Enhavo\Bundle\NavigationBundle\Entity\Navigation">
+        <many-to-one field="navigation" target-entity="Enhavo\Bundle\NavigationBundle\Entity\Navigation" inversed-by="nodes">
             <cascade>
                 <cascade-persist/>
             </cascade>

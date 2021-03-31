@@ -11,7 +11,7 @@
         <field name="trackingMail" type="boolean" nullable="true" />
         <field name="notice" type="text" nullable="true" />
 
-        <one-to-one field="shipment" target-entity="Sylius\Component\Shipping\Model\ShipmentInterface">
+        <one-to-one field="shipment" target-entity="Sylius\Component\Shipping\Model\ShipmentInterface" inversed-by="order">
             <cascade>
                 <cascade-persist/>
             </cascade>
