@@ -1,0 +1,162 @@
+$tableColor1:#212529;
+$tableColor2:#dee2e6;
+$tableColor3:#343a40;
+$tableColor4:#454d55;
+
+$tableStylePrimary:#b8daff,#7abaff,#9fcdff;
+$tableStyleSecondary:#d6d8db,#b3b7bb,#c8cbcf;
+$tableStyleSuccess:#c3e6cb,#8fd19e,#b1dfbb;
+$tableStyleInfo:#bee5eb,#86cfda,#abdde5;
+$tableStyleWarning:#ffeeba,#ffdf7e,#ffe8a1;
+$tableStyleDanger:#f5c6cb,#ed969e,#f1b0b7;
+$tableStyleLight:#fdfdfe,#fbfcfc,#ececf6;
+$tableStyleDark:#c6c8ca,#95999c,#b9bbbe;
+
+@mixin customTableStyle($affix,$colorList) {
+  .table-#{$affix} {background-color:nth($colorList,1);
+    tbody {
+      + tbody {border-color:nth($colorList,2);}
+    }
+    td,th {border-color:nth($colorList,2);}
+    >td,>th {background-color:nth($colorList,1);}
+    thead {
+      th {border-color:nth($colorList,2);}
+    }
+  }
+
+  .table-hover {
+    .table-#{$affix} {
+      &:hover {background-color:nth($colorList,3);
+        >td,>th {background-color:nth($colorList,3);}
+      }
+    }
+  }
+
+  .table-bordered {
+    &.border-#{$affix} {border-color:nth($colorList, 1);
+      td,th {border-color:nth($colorList, 1);}
+    }
+  }
+}
+
+.table {width: 100%;color:$tableColor1;margin:2rem 0;
+  tbody {
+    + tbody {border-top: 2px solid $tableColor2;}
+  }
+  td,th {padding: 0.75rem;vertical-align: top;border-top: 1px solid $tableColor2;text-align:left;}
+  th {font-weight:700;}
+  thead {
+    th {vertical-align: bottom;border-bottom: 2px solid $tableColor2;}
+  }
+  .thead-dark {
+    th {color: #fff;background-color: #343a40;border-color: #454d55;}
+  }
+  .thead-light {
+    th {color: #495057;background-color: #e9ecef;border-color: #dee2e6;}
+  }
+}
+
+.table-sm {
+  td,th {padding: 0.35rem;}
+}
+
+.table-bordered {border: 1px solid $tableColor2;
+  td,th {border: 1px solid $tableColor2;}
+  thead {
+    td,th {border-bottom-width:2px;}
+  }
+}
+
+.table-borderless {
+  tbody {
+    + tbody {border:0;}
+  }
+  th,td {border:0;}
+  thead {
+    th {border:0;}
+  }
+}
+
+.table-striped {
+  tbody {
+    tr {
+      &:nth-of-type(odd) {background-color:rgba(#000, 0.04);}
+    }
+  }
+}
+
+.table-hover {
+  tbody {
+    tr {
+      &:hover {color:$tableColor1;background-color:rgba(#000, 0.075);}
+    }
+  }
+  .table-active {
+    &:hover {background-color: rgba(#000, 0.075);
+      >td,>th {background-color: rgba(#000, 0.075);}
+    }
+  }
+}
+
+@include customTableStyle('primary', $tableStylePrimary);
+@include customTableStyle('secondary', $tableStyleSecondary);
+@include customTableStyle('success', $tableStyleSuccess);
+@include customTableStyle('info', $tableStyleInfo);
+@include customTableStyle('warning', $tableStyleWarning);
+@include customTableStyle('danger', $tableStyleDanger);
+@include customTableStyle('light', $tableStyleLight);
+@include customTableStyle('dark', $tableStyleDark);
+
+.table-active {background-color: rgba(#000, 0.075);
+  >td,>th {background-color: rgba(#000, 0.075);}
+}
+
+.table-dark {color: #fff;background-color:$tableColor3;
+  &.table-bordered {border: 0;}
+  &.table-hover {
+    tbody {
+      tr {
+        &:hover {color: #fff;background-color: rgba(#fff, 0.075);}
+      }
+    }
+  }
+  &.table-striped {
+    tbody {
+      tr {
+        &:nth-of-type(odd) {background-color: rgba(#fff, 0.05);}
+      }
+    }
+  }
+  td,th {border-color:$tableColor4;}
+  thead {
+    th {border-color:$tableColor4;}
+  }
+}
+
+@media (max-width: 575.98px) {
+  .table-responsive-sm {display: block;width: 100%;overflow-x: auto;-webkit-overflow-scrolling: touch;
+    > .table-bordered {border: 0;}
+  }
+}
+
+@media (max-width: 767.98px) {
+  .table-responsive-md {display: block;width: 100%;overflow-x: auto;-webkit-overflow-scrolling: touch;
+    > .table-bordered {border: 0;}
+  }
+}
+
+@media (max-width: 991.98px) {
+  .table-responsive-lg {display: block;width: 100%;overflow-x: auto;-webkit-overflow-scrolling: touch;
+    > .table-bordered {border: 0;}
+  }
+}
+
+@media (max-width: 1199.98px) {
+  .table-responsive-xl {display: block;width: 100%;overflow-x: auto;-webkit-overflow-scrolling: touch;
+    > .table-bordered {border: 0;}
+  }
+}
+
+.table-responsive {display: block;width: 100%;overflow-x: auto;-webkit-overflow-scrolling: touch;
+  > .table-bordered {border: 0;}
+}
