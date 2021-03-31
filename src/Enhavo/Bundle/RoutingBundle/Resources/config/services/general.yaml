@@ -3,6 +3,7 @@ services:
         public: true
         arguments:
             - '@enhavo_routing.auto_generator'
+            - '@enhavo_routing.factory.route'
 
     enhavo_routing.listener.routeable_listener:
         class: Enhavo\Bundle\RoutingBundle\EventListener\RouteableListener
