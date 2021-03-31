@@ -53,7 +53,6 @@ class UserCartProvider implements CartProviderInterface
         $user = $this->getUser();
         $carts = $this->cartRepository->findBy([
             'user' => $user,
-            'expiresAt' => null,
             'state' => 'cart'
         ], [
             'createdAt' => 'DESC'
