@@ -75,7 +75,7 @@ jobs:
                     restore-keys: ${{ runner.os }}-composer-
 
             -   name: Install dependencies
-                run: composer install --prefer-dist
+                run: composer update --prefer-dist
 
             -   name: Run tests
                 run: vendor/bin/phpunit
@@ -110,7 +110,7 @@ jobs:
                     restore-keys: ${{ runner.os }}-composer-
 
             -   name: Install dependencies
-                run: composer install --prefer-dist --prefer-lowest
+                run: composer update --prefer-dist --prefer-lowest
 
             -   name: Run tests
                 run: vendor/bin/phpunit
