@@ -1,3 +1,0 @@
-admin:
-    prefix: /admin
-    resource: admin/*

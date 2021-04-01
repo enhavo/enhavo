@@ -5,7 +5,7 @@
   "authors": [
     {
       "name": "Gerhard Seidel",
-      "email": "gseidel.message@googlemail.com"
+      "email": "gseidel@xq-web.de"
     }
   ],
   "autoload": {
@@ -15,7 +15,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "App\\": "tests/App"
+      "App\\": "src/App"
     }
   },
   "require": {
