@@ -13,11 +13,11 @@
             <gedmo:slug fields="name" separator="-" style="default" updatable="false" />
         </field>
 
-        <many-to-one field="taxonomy" target-entity="Enhavo\Bundle\TaxonomyBundle\Model\TaxonomyInterface">
+        <many-to-one field="taxonomy" target-entity="Enhavo\Bundle\TaxonomyBundle\Model\TaxonomyInterface" inversed-by="terms">
             <join-column on-delete="CASCADE" />
         </many-to-one>
 
-        <many-to-one field="parent" target-entity="Enhavo\Bundle\TaxonomyBundle\Model\TermInterface">
+        <many-to-one field="parent" target-entity="Enhavo\Bundle\TaxonomyBundle\Model\TermInterface" inversed-by="children">
             <join-column on-delete="CASCADE" />
         </many-to-one>
 

@@ -14,6 +14,8 @@ use Enhavo\Bundle\BlockBundle\Form\Type\BlockCollectionType;
 use Enhavo\Bundle\BlockBundle\Tests\Form\PreloadExtensionFactory;
 use Enhavo\Bundle\BlockBundle\Tests\Mock\Form\ColumnBlockMockType;
 use Enhavo\Bundle\BlockBundle\Tests\Mock\Form\TextBlockMockType;
+use Enhavo\Bundle\BlockBundle\Tests\Mock\Model\Column;
+use Enhavo\Bundle\BlockBundle\Tests\Mock\Model\Text;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Enhavo\Bundle\FormBundle\Tests\Form\PreloadExtensionFactory as FormPreloadExtensionFactory;
 
@@ -81,13 +83,15 @@ class BlockCollectionTypeTest extends TypeTestCase
         $columnBlock = $this->getMockBuilder(Block::class)->disableOriginalConstructor()->getMock();
         $columnBlock->method('getForm')->willReturn(ColumnBlockMockType::class);
         $columnBlock->method('getGroups')->willReturn(['layout']);
+        $columnBlock->method('getModel')->willReturn(Column::class);
 
         $textBlock = $this->getMockBuilder(Block::class)->disableOriginalConstructor()->getMock();
         $textBlock->method('getForm')->willReturn(TextBlockMockType::class);
         $textBlock->method('getGroups')->willReturn(['content']);
+        $textBlock->method('getModel')->willReturn(Text::class);
 
         return [
-            PreloadExtensionFactory::createBlockCollectionTypeExtension($this, [], [
+            PreloadExtensionFactory::createBlockCollectionTypeExtension($this, [
                 'column' => $columnBlock,
                 'text' => $textBlock
             ]),

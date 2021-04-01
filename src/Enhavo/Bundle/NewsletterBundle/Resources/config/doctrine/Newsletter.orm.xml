@@ -34,7 +34,7 @@
             </cascade>
         </one-to-many>
 
-        <many-to-many field="groups" target-entity="Enhavo\Bundle\NewsletterBundle\Model\GroupInterface">
+        <many-to-many field="groups" target-entity="Enhavo\Bundle\NewsletterBundle\Model\GroupInterface" inversed-by="newsletters">
             <cascade>
                 <cascade-persist/>
                 <cascade-refresh/>

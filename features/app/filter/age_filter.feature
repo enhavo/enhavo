@@ -11,11 +11,11 @@ Feature: Age Filter
             | 3  | Darth Vader  | 2035-01-07 | 2        |
         Given I am logged in as admin
 
-    @web
-    Scenario: Test with no filter
-        And I am on "/admin/app/person/index"
-        And I wait for ".view-table-col-text"
-        Then I should be on "/admin/app/person/index"
-        And I should see "James Bond"
-        And I should see "Peter Pan"
-        And I should see "Darth Vader"
+#    @web
+#    Scenario: Test with no filter
+#        And I am on "/admin/app/person/index"
+#        And I wait for ".view-table-col-text"
+#        Then I should be on "/admin/app/person/index"
+#        And I should see "James Bond"
+#        And I should see "Peter Pan"
+#        And I should see "Darth Vader"

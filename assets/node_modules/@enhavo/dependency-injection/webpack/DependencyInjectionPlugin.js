@@ -37,7 +37,7 @@ class DependencyInjectionPlugin
         builderBucket.setCurrentBuilder(this.name);
         options.resolveLoader.modules = [
             'node_modules',
-            path.resolve(__dirname, 'Loaders')
+            path.resolve(__dirname, 'loaders')
         ];
     }
 

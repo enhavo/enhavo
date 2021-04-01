@@ -1,0 +1,212 @@
+name: Continuous Integration
+
+on:
+    push:
+    pull_request:
+
+jobs:
+    static-checks:
+        runs-on: ubuntu-20.04
+        name: "Static checks"
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v2
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: 7.4
+                    ini-values: date.timezone=Europe/Warsaw, opcache.enable=1, opcache.enable_cli=1, opcache.memory_consumption=256, opcache.max_accelerated_files=32531, opcache.interned_strings_buffer=8, opcache.validate_timestamps=0, opcache.save_comments=1, opcache.fast_shutdown=0
+                    extensions: intl, gd, opcache, mysql, pdo_mysql, :xdebug
+                    tools: symfony
+                    coverage: none
+
+            -   name: Get composer cache directory
+                id: composercache
+                run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+            -   name: Cache dependencies
+                uses: actions/cache@v2
+                with:
+                    path: ${{ steps.composercache.outputs.dir }}
+                    key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+                    restore-keys: ${{ runner.os }}-composer-
+
+            -   name: Validate composer.json
+                run: composer validate --strict
+
+            -   name: Install dependencies
+                run: composer install --prefer-dist
+
+            -   name: Check for security vulnerabilities
+                run: symfony security:check
+
+            -   name: Validate Doctrine mapping
+                run: bin/console doctrine:schema:validate --skip-sync -vvv
+
+            -   name: PHP lint check
+                run: vendor/bin/phplint
+
+    phpunit:
+        runs-on: ubuntu-20.04
+        name: "PHPUnit on php ${{ matrix.php-versions }}"
+        strategy:
+            matrix:
+                php-versions: ['7.3', '7.4']
+            fail-fast: false
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v2
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ matrix.php-versions }}
+                    ini-values: date.timezone=Europe/Warsaw, opcache.enable=1, opcache.enable_cli=1, opcache.memory_consumption=256, opcache.max_accelerated_files=32531, opcache.interned_strings_buffer=8, opcache.validate_timestamps=0, opcache.save_comments=1, opcache.fast_shutdown=0
+                    extensions: intl, gd, opcache, mysql, pdo_mysql, :xdebug
+                    coverage: none
+
+            -   name: Get composer cache directory
+                id: composercache
+                run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+            -   name: Cache dependencies
+                uses: actions/cache@v2
+                with:
+                    path: ${{ steps.composercache.outputs.dir }}
+                    key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+                    restore-keys: ${{ runner.os }}-composer-
+
+            -   name: Install dependencies
+                run: composer update --prefer-dist
+
+            -   name: Run tests
+                run: vendor/bin/phpunit
+
+
+    phpunit-lowest:
+        runs-on: ubuntu-20.04
+        name: "PHPUnit on lowest dependencies"
+        strategy:
+            fail-fast: false
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v2
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: 7.3
+                    ini-values: date.timezone=Europe/Warsaw, opcache.enable=1, opcache.enable_cli=1, opcache.memory_consumption=256, opcache.max_accelerated_files=32531, opcache.interned_strings_buffer=8, opcache.validate_timestamps=0, opcache.save_comments=1, opcache.fast_shutdown=0
+                    extensions: intl, gd, opcache, mysql, pdo_mysql, :xdebug
+                    coverage: none
+
+            -   name: Get composer cache directory
+                id: composercache
+                run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+            -   name: Cache dependencies
+                uses: actions/cache@v2
+                with:
+                    path: ${{ steps.composercache.outputs.dir }}
+                    key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+                    restore-keys: ${{ runner.os }}-composer-
+
+            -   name: Install dependencies
+                run: composer update --prefer-dist --prefer-lowest
+
+            -   name: Run tests
+                run: vendor/bin/phpunit
+
+    behat:
+        runs-on: ubuntu-20.04
+        name: "Behat"
+        strategy:
+            fail-fast: false
+        env:
+            APP_ENV: dev
+            DATABASE_URL: "mysql://root:root@127.0.0.1/enhavo?serverVersion=5.7"
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v2
+
+            -   name: Shutdown default MySQL
+                run: sudo service mysql stop
+
+            -   name: Setup MySQL
+                uses: mirromutth/mysql-action@v1.1
+                with:
+                    mysql version: 5.7
+                    mysql root password: "root"
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: 7.4
+                    ini-values: date.timezone=Europe/Warsaw, opcache.enable=1, opcache.enable_cli=1, opcache.memory_consumption=256, opcache.max_accelerated_files=32531, opcache.interned_strings_buffer=8, opcache.validate_timestamps=0, opcache.save_comments=1, opcache.fast_shutdown=0
+                    extensions: intl, gd, opcache, mysql, pdo_mysql, :xdebug
+                    coverage: none
+
+            -   name: Dump the environment
+                run: |
+                    echo "DATABASE_URL=$DATABASE_URL" > .env.test.local
+
+            -   name: Get composer cache directory
+                id: composercache
+                run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+            -   name: Cache dependencies
+                uses: actions/cache@v2
+                with:
+                    path: ${{ steps.composercache.outputs.dir }}
+                    key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+                    restore-keys: ${{ runner.os }}-composer-
+
+            -   name: Install PHP dependencies
+                run: composer update --prefer-dist
+
+            -   name: Setup Node
+                uses: actions/setup-node@v1
+                with:
+                    node-version: "12.x"
+
+            -   name: Setup database
+                run: |
+                    APP_DEBUG=1 bin/console doctrine:database:create -vvv
+                    bin/console doctrine:migrations:migrate -n -vvv --env="test"
+
+            -   name: Setup enhavo
+                run: |
+                    yarn install
+                    yarn routes:dump
+                    yarn encore dev
+                    bin/console enhavo:init
+
+            -   name: Run tests
+                run: vendor/bin/behat
+
+
+    javascript-tests:
+        runs-on: ubuntu-20.04
+        name: "Javascript tests"
+        strategy:
+            fail-fast: false
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v2
+
+            -   name: Setup Node
+                uses: actions/setup-node@v1
+                with:
+                    node-version: "12.x"
+
+            -   name: Build assets
+                run: |
+                    yarn install
+                    yarn encore dev
+
+#            -   name: Run mocha
+#                run: yarn mocha
+
+#            -   name: Run karma
+#                run: yarn karma

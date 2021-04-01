@@ -1,5 +1,5 @@
 const EnhavoEncore = require('./assets/node_modules/@enhavo/core/EnhavoEncore');
-const AppTestPackage = require('./assets/node_modules/@enhavo/app/Encore/AppTestPackage');
+const AppTestPackage = require('./assets/node_modules/@enhavo/app/encore/AppTestPackage');
 const TestFinder = require('./assets/node_modules/@enhavo/core/TestFinder');
 
 EnhavoEncore.add(
