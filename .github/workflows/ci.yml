@@ -173,7 +173,7 @@ jobs:
             -   name: Setup database
                 run: |
                     APP_DEBUG=1 bin/console doctrine:database:create -vvv
-                    bin/console doctrine:migrations:migrate -n -vvv
+                    bin/console doctrine:migrations:migrate -n -vvv --env="test"
 
             -   name: Setup enhavo
                 run: |
