@@ -25,7 +25,7 @@ class AppTestPackage
             .enableTypeScriptLoader()
             .enableVersioning(false)
             .cleanupOutputBeforeBuild()
-            .addPlugin(new DependencyInjectionPlugin(path.resolve(EncoreUtil.getProjectDir(), './assets/node_modules/@enhavo/**/Tests/fixtures/services/*')))
+            .addPlugin(new DependencyInjectionPlugin(path.resolve(EncoreUtil.getProjectDir(), './assets/node_modules/@enhavo/**/tests/fixtures/services/*')))
 
     }
 

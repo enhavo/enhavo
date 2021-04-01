@@ -9,8 +9,8 @@ EnhavoEncore.add(
     ],
     Encore => {
         let files = TestFinder.find([
-            'assets/node_modules/@enhavo/**/Tests/*Test.karma.@(js|ts)',
-            'assets/node_modules/@enhavo/**/Tests/**/*Test.karma.@(js|ts)',
+            'assets/node_modules/@enhavo/**/tests/*Test.karma.@(js|ts)',
+            'assets/node_modules/@enhavo/**/tests/**/*Test.karma.@(js|ts)',
         ]);
 
         for (let file of files) {
