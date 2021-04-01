@@ -44,6 +44,9 @@ jobs:
             -   name: Validate Doctrine mapping
                 run: bin/console doctrine:schema:validate --skip-sync -vvv
 
+            -   name: PHP lint check
+                run: vendor/bin/phplint
+
     phpunit:
         runs-on: ubuntu-18.04
         name: "PHPUnit on php ${{ matrix.php-versions }}"
@@ -117,7 +120,7 @@ jobs:
 
     behat:
         runs-on: ubuntu-18.04
-        name: "PHPUnit on php ${{ matrix.php-versions }}"
+        name: "Behat"
         strategy:
             fail-fast: false
         env:
@@ -126,6 +129,15 @@ jobs:
         steps:
             -   name: Checkout
                 uses: actions/checkout@v2
+
+            -   name: Shutdown default MySQL
+                run: sudo service mysql stop
+
+            -   name: Setup MySQL
+                uses: mirromutth/mysql-action@v1.1
+                with:
+                    mysql version: 5.7
+                    mysql root password: "root"
 
             -   name: Setup PHP
                 uses: shivammathur/setup-php@v2
@@ -150,19 +162,26 @@ jobs:
                     key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
                     restore-keys: ${{ runner.os }}-composer-
 
-            -   name: Install dependencies
+            -   name: Install PHP dependencies
                 run: composer update --prefer-dist
 
-            -   name: Setup MySQL
-                uses: mirromutth/mysql-action@v1.1
+            -   name: Setup Node
+                uses: actions/setup-node@v1
                 with:
-                    mysql version: 5.7
-                    mysql root password: "root"
+                    node-version: "12.x"
 
             -   name: Setup database
                 run: |
                     APP_DEBUG=1 bin/console doctrine:database:create -vvv
                     bin/console doctrine:migrations:migrate -n -vvv
 
+            -   name: Setup enhavo
+                run: |
+                    yarn install
+                    yarn dump:routes
+                    yarn encore dev
+                    bin/console enhavo:init
+
             -   name: Run tests
                 run: vendor/bin/behat
+
