@@ -40,7 +40,9 @@ class ThemePackage
                         if(loader.loader && loader.loader.match(/sass-loader/)) {
                             let themePath = path.join(projectDir, 'var/theme');
                             if(!fs.existsSync(themePath)) {
-                                fs.mkdirSync(themePath);
+                                fs.mkdirSync(themePath, {
+                                    recursive: true
+                                });
                             }
 
                             let customPath = themePath + '/custom.scss';
