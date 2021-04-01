@@ -1,3 +1,3 @@
 doctrine_migrations:
-    dir_name: '%kernel.project_dir%/src/Enhavo/Migration'
+    dir_name: '%kernel.project_dir%/src/App/Migration'
     namespace: DoctrineMigrations

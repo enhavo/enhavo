@@ -43,7 +43,6 @@ return [
     Enhavo\Bundle\DoctrineExtensionBundle\EnhavoDoctrineExtensionBundle::class => ['all' => true],
     Enhavo\Bundle\RoutingBundle\EnhavoRoutingBundle::class => ['all' => true],
     Enhavo\Bundle\NavigationBundle\EnhavoNavigationBundle::class => ['all' => true],
-    Enhavo\Bundle\DemoBundle\EnhavoDemoBundle::class => ['all' => true],
     Enhavo\Bundle\ThemeBundle\EnhavoThemeBundle::class => ['all' => true],
     Enhavo\Bundle\TranslationBundle\EnhavoTranslationBundle::class => ['all' => true],
     Enhavo\Bundle\RedirectBundle\EnhavoRedirectBundle::class => ['all' => true],
