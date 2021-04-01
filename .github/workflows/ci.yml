@@ -185,3 +185,26 @@ jobs:
             -   name: Run tests
                 run: vendor/bin/behat
 
+
+    javascript-tests:
+        runs-on: ubuntu-18.04
+        name: "Javascript tests"
+        strategy:
+            fail-fast: false
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v2
+
+            -   name: Setup Node
+                uses: actions/setup-node@v1
+                with:
+                    node-version: "12.x"
+
+            -   name: Build assets
+                run: yarn encore dev
+
+            -   name: Run mocha
+                run: yarn mocha
+
+            -   name: Run karama
+                run: yarn karma
