@@ -8,11 +8,11 @@ services:
         arguments:
             - 'string:iframe-view'
             - '@enhavo/app/view-stack/components/IframeViewComponent.vue'
-            - '@enhavo/app/view-stack/Factory/IframeViewFactory'
+            - '@enhavo/app/view-stack/factory/IframeViewFactory'
         tags:
             - 'enhavo_app.view'
 
-    '@enhavo/app/view-stack/Factory/IframeViewFactory':
+    '@enhavo/app/view-stack/factory/IframeViewFactory':
         chunk: 'main'
         arguments:
 
@@ -26,11 +26,11 @@ services:
         arguments:
             - 'string:ajax-view'
             - '@enhavo/app/view-stack/components/AjaxViewComponent.vue'
-            - '@enhavo/app/view-stack/Factory/AjaxViewFactory'
+            - '@enhavo/app/view-stack/factory/AjaxViewFactory'
         tags:
             - 'enhavo_app.view'
 
-    '@enhavo/app/view-stack/Factory/AjaxViewFactory':
+    '@enhavo/app/view-stack/factory/AjaxViewFactory':
         chunk: 'main'
         arguments:
 

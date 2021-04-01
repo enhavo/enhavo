@@ -1,7 +1,7 @@
 import RegistryPackage from "@enhavo/core/RegistryPackage";
 import ApplicationInterface from "@enhavo/app/ApplicationInterface";
-import IframeViewFactory from "@enhavo/app/view-stack/Factory/IframeViewFactory";
-import AjaxViewFactory from "@enhavo/app/view-stack/Factory/AjaxViewFactory";
+import IframeViewFactory from "@enhavo/app/view-stack/factory/IframeViewFactory";
+import AjaxViewFactory from "@enhavo/app/view-stack/factory/AjaxViewFactory";
 
 export default class ViewRegistryPackage extends RegistryPackage
 {
