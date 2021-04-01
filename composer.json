@@ -86,6 +86,7 @@
   "require-dev": {
     "behat/behat": "^3.0",
     "behat/symfony2-extension": "^2.0",
+    "dbrekelmans/bdi": "^0.3.0",
     "overtrue/phplint": "^1.1",
     "phpstan/phpstan": "^0.12.29",
     "phpunit/php-code-coverage": "^6.1",
