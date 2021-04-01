@@ -6,7 +6,7 @@ on:
 
 jobs:
     static-checks:
-        runs-on: ubuntu-18.04
+        runs-on: ubuntu-20.04
         name: "Static checks"
         steps:
             -   name: Checkout
@@ -48,7 +48,7 @@ jobs:
                 run: vendor/bin/phplint
 
     phpunit:
-        runs-on: ubuntu-18.04
+        runs-on: ubuntu-20.04
         name: "PHPUnit on php ${{ matrix.php-versions }}"
         strategy:
             matrix:
@@ -85,7 +85,7 @@ jobs:
 
 
     phpunit-lowest:
-        runs-on: ubuntu-18.04
+        runs-on: ubuntu-20.04
         name: "PHPUnit on lowest dependencies"
         strategy:
             fail-fast: false
@@ -119,7 +119,7 @@ jobs:
                 run: vendor/bin/phpunit
 
     behat:
-        runs-on: ubuntu-18.04
+        runs-on: ubuntu-20.04
         name: "Behat"
         strategy:
             fail-fast: false
@@ -187,7 +187,7 @@ jobs:
 
 
     javascript-tests:
-        runs-on: ubuntu-18.04
+        runs-on: ubuntu-20.04
         name: "Javascript tests"
         strategy:
             fail-fast: false
