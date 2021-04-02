@@ -32,3 +32,6 @@ enhavo_setting:
         app.html:
             type: text
             wysiwyg: true
+
+        app.postcode:
+            type: string

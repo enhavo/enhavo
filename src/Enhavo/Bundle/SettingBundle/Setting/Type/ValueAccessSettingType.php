@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\SettingBundle\Setting\Type;
 
+use Enhavo\Bundle\SettingBundle\Exception\SettingNotExists;
 use Enhavo\Bundle\SettingBundle\Form\Type\ValueAccessType;
 use Enhavo\Bundle\SettingBundle\Setting\AbstractSettingType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
