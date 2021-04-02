@@ -50,7 +50,7 @@ class SettingManager
         }
 
         if (!array_key_exists($key, $this->settingConfig)) {
-            throw new SettingNotExists();
+            throw SettingNotExists::keyNotFound($key);
         }
 
         $setting = $this->factory->create($this->settingConfig[$key], $key);

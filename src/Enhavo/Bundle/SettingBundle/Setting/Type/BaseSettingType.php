@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Factory\Factory;
 use Enhavo\Bundle\AppBundle\Repository\EntityRepository;
 use Enhavo\Bundle\SettingBundle\Entity\Setting as SettingEntity;
+use Enhavo\Bundle\SettingBundle\Exception\SettingNotExists;
 use Enhavo\Bundle\SettingBundle\Setting\AbstractSettingType;
 use Enhavo\Bundle\SettingBundle\Setting\SettingTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -67,7 +68,7 @@ class BaseSettingType extends AbstractSettingType implements SettingTypeInterfac
         $settingEntity = $this->repository->findOneBy(['key' => $this->key]);
 
         if ($settingEntity === null) {
-            return null;
+            throw SettingNotExists::entityNotFound();
         }
 
         return $settingEntity->getValue();
