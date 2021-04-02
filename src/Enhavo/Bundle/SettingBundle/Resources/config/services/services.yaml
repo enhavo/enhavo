@@ -37,3 +37,9 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.column, alias: setting }
+
+    Enhavo\Bundle\SettingBundle\Twig\TwigExtension:
+        arguments:
+            - '@Enhavo\Bundle\SettingBundle\Setting\SettingManager'
+        tags:
+            - { name: twig.extension }
