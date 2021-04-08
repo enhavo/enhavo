@@ -1,0 +1,24 @@
+{
+  "name": "enhavo/vue-form-bundle",
+  "type": "symfony-bundle",
+  "description": "EnhavoVueFormBundle",
+  "keywords": ["framework"],
+  "homepage": "https://enhavo.com",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Gerhard Seidel",
+      "email": "gseidel.message@googlemail.com"
+    }
+  ],
+  "require": {
+    "php": "^7.2",
+    "symfony/form-bundle": "^4.4"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^7.4"
+  },
+  "autoload": {
+    "psr-4": { "Enhavo\\Bundle\\VueFormBundle\\": "" }
+  }
+}
