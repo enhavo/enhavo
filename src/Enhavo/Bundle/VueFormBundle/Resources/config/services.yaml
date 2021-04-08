@@ -1,0 +1,6 @@
+services:
+    Enhavo\Bundle\VueFormBundle\Form\VueForm:
+
+    Enhavo\Bundle\VueFormBundle\Form\Extension\VueTypeExtension:
+        tags:
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
