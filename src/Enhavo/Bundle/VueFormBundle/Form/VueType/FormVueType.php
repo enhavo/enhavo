@@ -25,6 +25,7 @@ class FormVueType implements VueTypeInterface
         $data['name'] = $form->getName();
         $data['value'] = $form->getViewData();
         $data['compound'] = $view->vars['compound'];
+        $data['label'] = $view->vars['label'];
     }
 
     public function finishView(FormView $view, FormInterface $form, array $options, VueData $data)
