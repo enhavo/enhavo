@@ -63,3 +63,11 @@ services:
 
     '@enhavo/app/grid/batch/factory/FormFactory':
         chunk: 'batch'
+        arguments:
+            - 'param:data.grid'
+            - '@enhavo/core/Translator'
+            - '@enhavo/app/view/View'
+            - '@enhavo/app/flash-message/FlashMessenger'
+            - '@enhavo/core/Router'
+            - '@enhavo/app/modal/ModalManager'
+            - '@enhavo/app/grid/Grid'
