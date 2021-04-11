@@ -1,0 +1,16 @@
+pull_request_rules:
+    -   name: backport 0.9
+        conditions:
+            - label=backport-0.9
+        actions:
+            backport:
+                branches:
+                    - "0.9"
+
+    -   name: backport 0.8
+        conditions:
+            - label=backport-0.8
+        actions:
+            backport:
+                branches:
+                    - "0.8"
