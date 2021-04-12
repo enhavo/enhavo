@@ -1,6 +1,9 @@
 <template>
-    <div v-if="false">
-        Help
+    <div>
+        <select v-if="!form.expanded & !form.multiple">
+            <option>1</option>
+        </select>
+        <input type="checkbox" />
     </div>
 </template>
 
@@ -9,7 +12,7 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 import {Form} from "@enhavo/vue-form/form/Form";
 
 @Component({})
-export default class FormHelpComponent extends Vue
+export default class FormChoiceComponent extends Vue
 {
     @Prop()
     form: Form

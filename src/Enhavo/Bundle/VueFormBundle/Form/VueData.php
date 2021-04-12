@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\VueFormBundle\Form;
 
-class ViewData implements \IteratorAggregate, \Countable, \ArrayAccess
+class VueData implements \IteratorAggregate, \Countable, \ArrayAccess
 {
     /**
      * Parameter storage.
@@ -139,5 +139,14 @@ class ViewData implements \IteratorAggregate, \Countable, \ArrayAccess
     public function offsetGet($offset)
     {
         return isset($this->data[$offset]) ? $this->data[$offset] : null;
+    }
+    
+    public function toArray()
+    {
+        $array = [];
+        foreach($this->data as $key => $value) {
+            $array[$key] = $value;
+        }
+        return $array;
     }
 }

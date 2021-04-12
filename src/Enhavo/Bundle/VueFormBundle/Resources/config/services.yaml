@@ -2,5 +2,23 @@ services:
     Enhavo\Bundle\VueFormBundle\Form\VueForm:
 
     Enhavo\Bundle\VueFormBundle\Form\Extension\VueTypeExtension:
+        calls:
+            - ['setContainer', ['@service_container']]
         tags:
             - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
+
+    Enhavo\Bundle\VueFormBundle\Form\VueType\FormVueType:
+        tags:
+            - 'vue.type'
+
+    Enhavo\Bundle\VueFormBundle\Form\VueType\TextVueType:
+        tags:
+            - 'vue.type'
+
+    Enhavo\Bundle\VueFormBundle\Form\VueType\HiddenVueType:
+        tags:
+            - 'vue.type'
+
+    Enhavo\Bundle\VueFormBundle\Form\VueType\ChoiceVueType:
+        tags:
+            - 'vue.type'
