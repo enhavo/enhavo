@@ -4,7 +4,8 @@
   "scripts": {
     "routes:dump": "bin/console fos:js-routing:dump --format=json --target=public/js/fos_js_routes.json",
     "karma": "TESTBUILD=true encore dev --config webpack.test.config.js && karma start --single-run --browsers ChromeHeadless karma.conf.js && rm -rf public/build/test/*",
-    "mocha": "mocha assets/node_modules/**/tests/**/*.mocha.js",
+    "mocha": "TS_NODE_SKIP_IGNORE=true TS_NODE_PROJECT=./tsconfig.test.json mocha --require ts-node/register assets/node_modules/**/tests/**/*.mocha.{ts,js}",
+    "mocha:file": "TS_NODE_SKIP_IGNORE=true TS_NODE_PROJECT=./tsconfig.test.json mocha --require ts-node/register",
     "di": "node ./assets/node_modules/@enhavo/dependency-injection/bin/dependency-injection.js \"./assets/services/enhavo/*\"",
     "webfonts:generate": "node ./assets/node_modules/@enhavo/app/bin/webfont-generate.js",
     "dev": "encore dev",
@@ -47,6 +48,7 @@
     "source-sans-pro": "^2.45.0",
     "tinymce": "^5.6.0",
     "ts-loader": "^5.3",
+    "ts-node": "^9.1.1",
     "typeface-cormorant-garamond": "^0.0.72",
     "typescript": "^3.1.1",
     "urijs": "^1.19.1",
