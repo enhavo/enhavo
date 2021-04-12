@@ -28,7 +28,7 @@ export class FormFactory implements FormFactoryInterface
         this.entries.push(new Entry(component, factory));
     }
 
-    private getEntry(name: string): Entry
+    private getEntry(name: string): Entry|null
     {
         for (let entry of this.entries) {
             if (entry.name === name) {
