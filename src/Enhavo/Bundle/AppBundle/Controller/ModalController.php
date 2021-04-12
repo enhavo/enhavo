@@ -57,6 +57,10 @@ class ModalController extends AbstractController
             $configuration->setOptions($config['options']);
         }
 
+        if(isset($config['template'])) {
+            $configuration->setTemplate($config['template']);
+        }
+
         return $configuration;
     }
 }
