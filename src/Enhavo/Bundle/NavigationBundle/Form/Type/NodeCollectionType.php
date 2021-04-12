@@ -87,7 +87,9 @@ class NodeCollectionType extends AbstractType
             /** @var NodeInterface $node */
             $node = new $this->class;
             $modelClass = $item->getModel();
-            $node->setSubject(new $modelClass);
+            if ($modelClass !== null) {
+                $node->setSubject(new $modelClass);
+            }
             $data[$key] = $node;
         }
         return $data;
