@@ -30,22 +30,12 @@ class TextType extends AbstractFilterType
 
     public function buildQuery(FilterQuery $query, $options, $value)
     {
-        $property = $options['property'];
-        $joinProperty = [];
-        if(substr_count($property, '.') >= 1){
-            $exploded = explode('.', $property);
-            foreach ($exploded as $piece) {
-                if(count($exploded) > 1){
-                    $joinProperty[] = array_shift($exploded);
-                } elseif (count($exploded) === 1) {
-                    $property = array_shift($exploded);
-                }
-            }
-        }
+        $propertyPath = explode('.', $options['property']);
+        $property = array_pop($propertyPath);
 
         $operator = $options['operator'];
         if($value !== null && trim($value) !== '') {
-            $query->addWhere($property, $operator, $value, $joinProperty ? $joinProperty : null);
+            $query->addWhere($property, $operator, $value, $propertyPath);
         }
     }
 

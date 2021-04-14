@@ -62,8 +62,9 @@ class OptionType extends AbstractFilterType
             throw new FilterException('Value does not exists in options');
         }
 
-        $property = $options['property'];
-        $query->addWhere($property, FilterQuery::OPERATOR_EQUALS, $value);
+        $propertyPath = explode('.', $options['property']);
+        $property = array_pop($propertyPath);
+        $query->addWhere($property, FilterQuery::OPERATOR_EQUALS, $value, $propertyPath);
     }
 
     public function configureOptions(OptionsResolver $optionsResolver)
