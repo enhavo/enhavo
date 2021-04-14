@@ -58,13 +58,14 @@ class BooleanType extends AbstractFilterType
         if($value === null) {
             return;
         }
-        $property = $options['property'];
+        $propertyPath = explode('.', $options['property']);
+        $property = array_pop($propertyPath);
 
         if ($options['checkbox']) {
             $boolValue = (boolean)$value;
             if($boolValue) {
                 $equals = $options['equals'];
-                $query->addWhere($property, FilterQuery::OPERATOR_EQUALS, $equals);
+                $query->addWhere($property, FilterQuery::OPERATOR_EQUALS, $equals, $propertyPath);
             }
         } else {
             if ($value == self::VALUE_TRUE) {
@@ -75,8 +76,7 @@ class BooleanType extends AbstractFilterType
                 throw new FilterException('Value invalid, must be one of ' . implode(',', [self::VALUE_TRUE, self::VALUE_FALSE]));
             }
 
-            $property = $options['property'];
-            $query->addWhere($property, FilterQuery::OPERATOR_EQUALS, $boolValue);
+            $query->addWhere($property, FilterQuery::OPERATOR_EQUALS, $boolValue, $propertyPath);
         }
     }
 
