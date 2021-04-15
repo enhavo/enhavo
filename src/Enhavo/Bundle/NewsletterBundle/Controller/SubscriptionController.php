@@ -87,6 +87,8 @@ class SubscriptionController extends AbstractController
         if ($form->isValid()) {
             $message = $subscription->getStrategy()->addSubscriber($subscriber);
             return new JsonResponse([
+                'success' => true,
+                'error' => false,
                 'message' => $this->translator->trans($message, [], 'EnhavoNewsletterBundle'),
                 'subscriber' => $this->serializer->normalize($subscriber, 'json', [
                     'groups' => ['subscription']
@@ -94,6 +96,8 @@ class SubscriptionController extends AbstractController
             ]);
         } else {
             return new JsonResponse([
+                'success' => false,
+                'error' => true,
                 'errors' => [
                     'fields' => $this->formErrorResolver->getErrorFieldNames($form),
                     'messages' => $this->formErrorResolver->getErrorMessages($form),
