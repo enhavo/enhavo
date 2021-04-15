@@ -151,7 +151,7 @@ class SubscriptionControllerTest extends TestCase
         $dependencies->subscriptionManager->expects($this->once())->method('createForm')->willReturn($form);
         $subscription = $this->createSubscription('default');
         $subscription->getStrategy()->expects($this->never())->method('addSubscriber');
-        $dependencies->translator->expects($this->never())->method('trans');
+        $dependencies->translator->expects($this->once())->method('trans');
         $dependencies->subscriptionManager->method('getSubscription')->willReturn($subscription);
 
         $controller = $this->createInstance($dependencies);
@@ -160,7 +160,7 @@ class SubscriptionControllerTest extends TestCase
         ]);
 
         $response = $controller->addAction($request);
-        $this->assertEquals('{"success":false,"error":true,"errors":{"fields":[],"messages":[]},"subscriber":{"email":null}}', $response->getContent());
+        $this->assertEquals('{"success":false,"error":true,"message":null,"errors":{"fields":[],"messages":[]},"subscriber":{"email":null}}', $response->getContent());
     }
 
     public function testUnsubscribeAction()
