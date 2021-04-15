@@ -138,7 +138,7 @@ class SubscriptionControllerTest extends TestCase
         ]);
 
         $response = $controller->addAction($request);
-        $this->assertEquals('{"message":"added.trans","subscriber":{"email":null}}', $response->getContent());
+        $this->assertEquals('{"success":true,"error":false,"message":"added.trans","subscriber":{"email":null}}', $response->getContent());
     }
 
     public function testAddActionInvalid()
@@ -160,7 +160,7 @@ class SubscriptionControllerTest extends TestCase
         ]);
 
         $response = $controller->addAction($request);
-        $this->assertEquals('{"errors":{"fields":[],"messages":[]},"subscriber":{"email":null}}', $response->getContent());
+        $this->assertEquals('{"success":false,"error":true,"errors":{"fields":[],"messages":[]},"subscriber":{"email":null}}', $response->getContent());
     }
 
     public function testUnsubscribeAction()
