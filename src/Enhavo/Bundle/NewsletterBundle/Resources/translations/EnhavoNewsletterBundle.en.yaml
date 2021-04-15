@@ -93,6 +93,7 @@ subscriber:
       valid: 'E-Mail not valid'
       sent_again: 'Please confirm your registration'
       exists: 'E-Mail already exists'
+      invalid: 'Please check the input'
   mail:
       admin:
           subject: 'Newsletter Subscription'

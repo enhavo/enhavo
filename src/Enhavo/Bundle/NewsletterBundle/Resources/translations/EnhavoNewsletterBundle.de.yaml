@@ -91,6 +91,7 @@ subscriber:
     error:
       valid: 'E-Mail nicht gültig'
       sent_again: 'Bitte bestätigen Sie ihre Registrierung'
+      invalid: 'Bitte überprüfen sie ihre Angaben'
   mail:
       admin:
           subject: 'Neues Newsletter Abonnement'

@@ -98,6 +98,7 @@ class SubscriptionController extends AbstractController
             return new JsonResponse([
                 'success' => false,
                 'error' => true,
+                'message' => $this->translator->trans('subscriber.form.error.invalid', [], 'EnhavoNewsletterBundle'),
                 'errors' => [
                     'fields' => $this->formErrorResolver->getErrorFieldNames($form),
                     'messages' => $this->formErrorResolver->getErrorMessages($form),
