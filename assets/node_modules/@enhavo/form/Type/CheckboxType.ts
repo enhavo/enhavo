@@ -20,5 +20,9 @@ export default class CheckboxType extends FormType
                 $count.text('(' + count + ')');
             });
         }
+
+        if (this.$element.attr('readonly')) {
+            this.$element.closest('.icheckbox').addClass('readonly');
+        }
     }
 }
