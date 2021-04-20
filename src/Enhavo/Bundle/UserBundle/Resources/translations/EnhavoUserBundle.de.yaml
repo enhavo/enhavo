@@ -114,6 +114,7 @@ confirmation:
 security:
     login:
         username: 'Benutzername'
+        email: 'E-Mail'
         password: 'Passwort'
         remember_me: 'An mich erinnern'
         submit: 'Anmelden'

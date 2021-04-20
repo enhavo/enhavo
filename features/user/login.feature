@@ -24,7 +24,7 @@ Feature: Admin Login
         And I fill in "_email" with "admin@enhavo.com"
         And I fill in "_password" with "wrong_password"
         And I press "#_submit"
-        And I wait for "#overlayMessage"
+        And I wait for ".error"
         Then I should be on "/admin/login"
         Then I should see "Bad credentials"
 
