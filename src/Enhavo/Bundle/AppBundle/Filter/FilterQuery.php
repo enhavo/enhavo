@@ -37,6 +37,11 @@ class FilterQuery
     private $where = [];
 
     /**
+     * @var FilterQueryOr[]
+     */
+    private $orBlocks = [];
+
+    /**
      * @var array
      */
     private $orderBy = [];
@@ -70,6 +75,11 @@ class FilterQuery
 
     public function addOrderBy($property, $order, $joinProperty = null)
     {
+        if ($joinProperty === null) {
+            $joinProperty = [];
+        } elseif (!is_array($joinProperty)) {
+            $joinProperty = [ $joinProperty ];
+        }
         $this->orderBy[] = [
             'property' => $property,
             'order' => $order,
@@ -99,6 +109,11 @@ class FilterQuery
 
     public function addWhere($property, $operator, $value, $joinProperty = null)
     {
+        if ($joinProperty === null) {
+            $joinProperty = [];
+        } elseif (!is_array($joinProperty)) {
+            $joinProperty = [ $joinProperty ];
+        }
         $this->where[] = [
             'property' => $property,
             'operator' => $operator,
@@ -133,6 +148,12 @@ class FilterQuery
         return $this;
     }
 
+    public function or(): FilterQueryOr
+    {
+        $this->orBlocks []= new FilterQueryOr();
+        return $this->orBlocks[count($this->orBlocks) - 1];
+    }
+
     public function getWhere()
     {
         return $this->where;
@@ -155,45 +176,42 @@ class FilterQuery
     {
         /** @var QueryBuilder $query */
         $query = $this->queryBuilder;
-        $i = 0;
-        foreach($this->getWhere() as $index => $where) {
-            $i++;
-            if($where['joinProperty']) {
-                if(is_array($where['joinProperty']) && count($where['joinProperty'])) {
-                    $joinPrefixes = $this->createJoinPropertyArray($index, count($where['joinProperty']) + 1);
-                    foreach($where['joinProperty'] as $joinProperty) {
-                        $joinPrefix = array_shift($joinPrefixes);
-                        $query->join(sprintf('%s.%s', $joinPrefix, $joinProperty), $joinPrefixes[0]);
-                    }
-                    $query->andWhere(sprintf('%s.%s %s %s', $joinPrefixes[0], $where['property'], $this->getOperator($where), $this->getParameter($where, $i)));
-                } else {
-                    $query->join(sprintf('%s.%s', $this->getAlias(), $where['property']), sprintf('j%s', $i));
-                    $query->andWhere(sprintf('j%s.%s %s %s', $i, $where['property'], $this->getOperator($where), $this->getParameter($where, $i)));
-                }
+        $globalIndex = 0;
+        foreach($this->getWhere() as $where) {
+            $globalIndex++;
+            if(count($where['joinProperty'])) {
+                $joinPrefix = $this->createJoins($query, $where['joinProperty'], $globalIndex);
+                $query->andWhere(sprintf('%s.%s %s %s', $joinPrefix, $where['property'], $this->getOperator($where), $this->getParameter($where, $globalIndex)));
             } else {
-                $query->andWhere(sprintf('%s.%s %s %s', $this->getAlias(), $where['property'], $this->getOperator($where), $this->getParameter($where, $i)));
+                $query->andWhere(sprintf('%s.%s %s %s', $this->getAlias(), $where['property'], $this->getOperator($where), $this->getParameter($where, $globalIndex)));
             }
-
             if($this->hasParameter($where)) {
-                $query->setParameter(sprintf('parameter%s', $i), $this->getValue($where));
+                $query->setParameter(sprintf('parameter%s', $globalIndex), $this->getValue($where));
             }
         }
 
-        $indexMin = count($this->getWhere());
-        foreach($this->getOrderBy() as $index => $order) {
-            $i++;
-            if($order['joinProperty']) {
-                if(is_array($order['joinProperty']) && count($order['joinProperty'])) {
-                    $joinPrefixes = $this->createJoinPropertyArray($indexMin + $index, count($order['joinProperty']) + 1);
-                    foreach($order['joinProperty'] as $joinProperty) {
-                        $joinPrefix = array_shift($joinPrefixes);
-                        $query->leftJoin(sprintf('%s.%s', $joinPrefix, $joinProperty), $joinPrefixes[0]);
-                    }
-                    $query->addOrderBy(sprintf('%s.%s', $joinPrefixes[0], $order['property']), $order['order']);
+        foreach($this->orBlocks as $orBlock) {
+            $orQueryStrings = [];
+            foreach($orBlock->getWhere() as $where) {
+                $globalIndex++;
+                if(count($where['joinProperty'])) {
+                    $joinPrefix = $this->createJoins($query, $where['joinProperty'], $globalIndex);
+                    $orQueryStrings []= sprintf('%s.%s %s %s', $joinPrefix, $where['property'], $this->getOperator($where), $this->getParameter($where, $globalIndex));
                 } else {
-                    $query->leftJoin(sprintf('%s.%s', $this->getAlias(), $order['property']), sprintf('j%s', $i));
-                    $query->addOrderBy(sprintf('j%s.%s', $i, $order['property']), $order['order']);
+                    $orQueryStrings []= sprintf('%s.%s %s %s', $this->getAlias(), $where['property'], $this->getOperator($where), $this->getParameter($where, $globalIndex));
                 }
+                if($this->hasParameter($where)) {
+                    $query->setParameter(sprintf('parameter%s', $globalIndex), $this->getValue($where));
+                }
+            }
+            $query->andWhere(sprintf('(%s)', implode(' OR ', $orQueryStrings)));
+        }
+
+        foreach($this->getOrderBy() as $order) {
+            $globalIndex++;
+            if(count($order['joinProperty'])) {
+                $joinPrefix = $this->createJoins($query, $order['joinProperty'], $globalIndex);
+                $query->addOrderBy(sprintf('%s.%s', $joinPrefix, $order['property']), $order['order']);
             } else {
                 $query->addOrderBy(sprintf('%s.%s', $this->getAlias(), $order['property']), $order['order']);
             }
@@ -204,6 +222,16 @@ class FilterQuery
         }
 
         return $this;
+    }
+
+    private function createJoins(QueryBuilder $query, $joins, $index)
+    {
+        $joinPrefixes = $this->createJoinPropertyArray($index, count($joins) + 1);
+        foreach($joins as $joinProperty) {
+            $joinPrefix = array_shift($joinPrefixes);
+            $query->join(sprintf('%s.%s', $joinPrefix, $joinProperty), $joinPrefixes[0]);
+        }
+        return $joinPrefixes[0];
     }
 
     public function createJoinPropertyArray($index, $length)
