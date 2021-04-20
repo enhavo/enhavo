@@ -25,6 +25,7 @@ class ArticleRepository extends ContentRepository
     public function findByCategoriesAndTags($categories = [], $tags = [], $pagination = true, $limit = 10)
     {
         $query = $this->createQueryBuilder('a');
+        $query->distinct(true);
 
         $this->addDefaultConditions($query);
 
