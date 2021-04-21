@@ -11,6 +11,11 @@ class FilterQueryOr
 
     public function addWhere($property, $operator, $value, $joinProperty = null)
     {
+        if ($joinProperty === null) {
+            $joinProperty = [];
+        } elseif (!is_array($joinProperty)) {
+            $joinProperty = [ $joinProperty ];
+        }
         $this->where[] = [
             'property' => $property,
             'operator' => $operator,
