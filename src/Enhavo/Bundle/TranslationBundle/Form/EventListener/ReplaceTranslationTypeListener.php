@@ -54,6 +54,11 @@ class ReplaceTranslationTypeListener implements EventSubscriberInterface
         }
 
         foreach ($form->all() as $property => $child) {
+            // prevent reapply
+            if (get_class($child->getConfig()->getType()->getInnerType()) === TranslationType::class) {
+                continue;
+            }
+
             if ($this->translationManager->isTranslatable($data, $property)) {
                 $this->replaceChild($data, $property, $form, $child);
             }
