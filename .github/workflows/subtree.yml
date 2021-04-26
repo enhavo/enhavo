@@ -5,6 +5,7 @@ on:
         branches:
             - master
             - 0.10
+            - 0.9
 
 jobs:
     push-subtree:
