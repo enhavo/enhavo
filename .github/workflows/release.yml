@@ -30,7 +30,5 @@ jobs:
                     chmod +x enhavo.phar
 
             -   name: Release
-                env:
-                    NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
                 run: |
-                    ./enhavo.phar npm-release ${GITHUB_REF##*/}
+                    ./enhavo.phar push-subtree --yes -vvv --tag ${GITHUB_REF##*/}

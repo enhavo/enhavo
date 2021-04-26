@@ -89,9 +89,6 @@ subtrees:
     UserBundle:
         url: 'git@github.com:enhavo/EnhavoUserBundle.git'
         prefix: src/Enhavo/Bundle/UserBundle
-    VueFormBundle:
-        url: 'git@github.com:enhavo/EnhavoVueFormBundle.git'
-        prefix: src/Enhavo/Bundle/VueFormBundle
 
     app-assets:
         url: 'git@github.com:enhavo/app-assets'
@@ -153,9 +150,6 @@ subtrees:
     multi-tenancy-assets:
         url: 'git@github.com:enhavo/multi-tenancy-assets'
         prefix: 'assets/node_modules/@enhavo/multi-tenancy'
-    vue-form-assets:
-        url: 'git@github.com:enhavo/vue-form-assets'
-        prefix: 'assets/node_modules/@enhavo/vue-form'
 
     ClassAnalyzer:
         url: 'git@github.com:enhavo/ClassAnalyzer'
