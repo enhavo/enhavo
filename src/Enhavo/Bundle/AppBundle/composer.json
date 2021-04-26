@@ -16,7 +16,7 @@
     "ext-ctype": "*",
     "ext-json": "*",
     "ext-zlib": "*",
-    "enhavo/type": "dev-master",
+    "enhavo/type": "^0.10",
     "league/uri": "^5.0",
     "friendsofsymfony/jsrouting-bundle": "^2.2",
     "sylius/resource-bundle": "1.6.*",
