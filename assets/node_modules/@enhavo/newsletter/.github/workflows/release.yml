@@ -26,5 +26,7 @@ jobs:
                     chmod +x enhavo.phar
 
             -   name: Release
+                env:
+                    NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
                 run: |
-                    NPM_TOKEN=
+                    ./enhavo.phar npm-release ${GITHUB_REF##*/}
