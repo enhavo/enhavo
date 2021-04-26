@@ -1,0 +1,30 @@
+name: Release
+
+on:
+    push:
+        tags:
+            - 'v*.*.*'
+
+jobs:
+    push-subtree:
+        runs-on: ubuntu-20.04
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v2
+                with:
+                    fetch-depth: 0
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: 7.4
+                    extensions: json, zlib, curl
+
+            -   name: Download enhavo.phar
+                run: |
+                    curl -sLO https://github.com/enhavo/enhavo-cli/releases/latest/download/enhavo.phar
+                    chmod +x enhavo.phar
+
+            -   name: Release
+                run: |
+                    NPM_TOKEN=
