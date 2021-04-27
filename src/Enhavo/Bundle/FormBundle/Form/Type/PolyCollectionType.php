@@ -93,6 +93,7 @@ class PolyCollectionType extends AbstractType
             'entryKeys' => $this->buildEntryKeys($options),
             'prototypeStorage' => $options['prototype_storage'],
             'collapsed' => $options['collapsed'],
+            'confirmDelete' => $options['confirm_delete'],
         ];
 
         $view->vars['custom_name_property'] = $options['custom_name_property'];
@@ -146,7 +147,8 @@ class PolyCollectionType extends AbstractType
             'prototype_storage' => null,
             'by_reference' => false,
             'custom_name_property' => null,
-            'add_label' => ''
+            'add_label' => '',
+            'confirm_delete' => false
         ]);
 
         $resolver->setRequired(array(

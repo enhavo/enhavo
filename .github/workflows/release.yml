@@ -1,0 +1,36 @@
+name: Release
+
+on:
+    push:
+        tags:
+            - 'v*.*.*'
+
+jobs:
+    push-subtree:
+        runs-on: ubuntu-20.04
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v2
+                with:
+                    fetch-depth: 0
+
+            -   uses: webfactory/ssh-agent@v0.5.2
+                with:
+                    ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY_ENHAVO_BOT }}
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: 7.4
+                    extensions: json, zlib, curl
+
+            -   name: Download enhavo.phar
+                run: |
+                    curl -sLO https://github.com/enhavo/enhavo-cli/releases/latest/download/enhavo.phar
+                    chmod +x enhavo.phar
+
+            -   name: Release
+                run: |
+                    git config --global user.email "bot@enhavo.com"
+                    git config --global user.name "enhavo bot"
+                    ./enhavo.phar push-subtree --yes -vvv --tag ${GITHUB_REF##*/}
