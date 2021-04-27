@@ -148,7 +148,7 @@ class PolyCollectionType extends AbstractType
             'by_reference' => false,
             'custom_name_property' => null,
             'add_label' => '',
-            'confirm_delete' => false
+            'confirm_delete' => true
         ]);
 
         $resolver->setRequired(array(

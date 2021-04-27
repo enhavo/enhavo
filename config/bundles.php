@@ -59,7 +59,6 @@ return [
     Sylius\Bundle\PromotionBundle\SyliusPromotionBundle::class => ['all' => true],
     Sylius\Bundle\ShippingBundle\SyliusShippingBundle::class => ['all' => true],
     Sylius\Bundle\LocaleBundle\SyliusLocaleBundle::class => ['all' => true],
-    Sonata\IntlBundle\SonataIntlBundle::class => ['all' => true],
     Sylius\Bundle\AttributeBundle\SyliusAttributeBundle::class => ['all' => true],
     Sylius\Bundle\ProductBundle\SyliusProductBundle::class => ['all' => true],
     Sylius\Bundle\AddressingBundle\SyliusAddressingBundle::class => ['all' => true],

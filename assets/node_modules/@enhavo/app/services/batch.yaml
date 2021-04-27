@@ -66,8 +66,8 @@ services:
         arguments:
             - 'param:data.grid'
             - '@enhavo/core/Translator'
-            - '@enhavo/app/view/View'
-            - '@enhavo/app/flash-message/FlashMessenger'
+            - '@enhavo/app/View/View'
+            - '@enhavo/app/FlashMessage/FlashMessenger'
             - '@enhavo/core/Router'
-            - '@enhavo/app/modal/ModalManager'
-            - '@enhavo/app/grid/Grid'
+            - '@enhavo/app/Modal/ModalManager'
+            - '@enhavo/app/Grid/Grid'
