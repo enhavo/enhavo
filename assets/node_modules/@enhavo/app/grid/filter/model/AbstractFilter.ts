@@ -7,6 +7,7 @@ export default abstract class AbstractFilter implements FilterInterface
     key: string;
     label: string;
     initialValue: string;
+    active: boolean;
 
     getValue() {
         return this.value;
@@ -14,6 +15,18 @@ export default abstract class AbstractFilter implements FilterInterface
 
     getKey() {
         return this.key;
+    }
+
+    getLabel() {
+        return this.label;
+    }
+
+    setActive(active: boolean) {
+        this.active = active;
+    }
+
+    getActive() {
+        return this.active;
     }
 
     reset() {

@@ -16,15 +16,14 @@ class BetweenFilterType extends AbstractFilterType
 {
     public function createViewData($options, $name)
     {
-        $data = [
-            'type' => $this->getType(),
-            'key' => $name,
+        $data = parent::createViewData($options, $name);
+
+        $data = array_merge($data, [
             'value' => [
                 'from' => '',
                 'to' => '',
             ],
             'initialValue' => null,
-            'component' => $options['component'],
             'label' => [
                 'from' => $options['label_from'] ?
                     $this->translator->trans($options['label_from'], [], $options['translation_domain']) :
@@ -33,7 +32,7 @@ class BetweenFilterType extends AbstractFilterType
                     $this->translator->trans($options['label_to'], [], $options['translation_domain']) :
                     $this->getLabel($options),
             ],
-        ];
+        ]);
 
         return $data;
     }
