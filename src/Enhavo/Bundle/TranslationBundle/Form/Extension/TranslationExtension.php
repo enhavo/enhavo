@@ -46,7 +46,7 @@ class TranslationExtension extends AbstractTypeExtension
         return $options['compound'] && $this->translationManager->isEnabled() && $this->translationManager->isTranslation();
     }
 
-    public function getExtendedTypes()
+    public static function getExtendedTypes()
     {
         return [FormType::class];
     }
