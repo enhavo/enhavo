@@ -52,6 +52,9 @@ services:
 
     '@enhavo/form/Loader/PolyCollectionLoader':
         chunk: 'form'
+        arguments:
+            - '@enhavo/app/View/View'
+            - '@enhavo/core/Translator'
         tags:
             - 'enhavo_app.form'
 

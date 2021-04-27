@@ -7,6 +7,9 @@ import PolyCollectionItemAddButton from "@enhavo/form/Type/PolyCollectionItemAdd
 import FormType from "@enhavo/app/Form/FormType";
 import {PrototypeManager} from "@enhavo/form/Prototype/PrototypeManager";
 import Prototype from "@enhavo/form/Prototype/Prototype";
+import View from "@enhavo/app/View/View";
+import Confirm from "@enhavo/app/View/Confirm";
+import Translator from "@enhavo/core/Translator";
 
 export default class PolyCollectionType extends FormType
 {
@@ -26,12 +29,18 @@ export default class PolyCollectionType extends FormType
 
     private prototypes: Prototype[];
 
-    constructor(element: HTMLElement, config: PolyCollectionConfig, prototypeManager: PrototypeManager)
+    private view: View;
+
+    private translator: Translator;
+
+    constructor(element: HTMLElement, config: PolyCollectionConfig, prototypeManager: PrototypeManager, view: View, translator: Translator)
     {
         super(element);
         this.$container = this.$element.children('[data-poly-collection-container]');
         this.config = config;
         this.prototypeManager = prototypeManager;
+        this.translator = translator;
+        this.view = view;
         this.initPrototypes();
         this.initMenu();
         this.initActions();
@@ -274,6 +283,19 @@ export default class PolyCollectionType extends FormType
             if(typeof callback != "undefined") {
                 callback();
             }
+        }
+    }
+
+    public confirmDelete(callback: (confirm: boolean) => void)
+    {
+        if (this.config.confirmDelete) {
+            this.view.confirm(new Confirm(this.translator.trans('enhavo_app.view.message.delete'), () => {
+                callback(true);
+            }, () => {
+                callback(false);
+            }, this.translator.trans('enhavo_app.view.label.cancel'), this.translator.trans('enhavo_app.view.label.ok')));
+        } else {
+            callback(true);
         }
     }
 

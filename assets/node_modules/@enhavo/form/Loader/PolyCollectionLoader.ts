@@ -4,15 +4,26 @@ import PolyCollectionConfig from "@enhavo/form/Type/PolyCollectionConfig";
 import * as $ from "jquery";
 import prototypeManager from "@enhavo/form/Prototype/PrototypeManager";
 import FormRegistry from "@enhavo/app/Form/FormRegistry";
+import View from "@enhavo/app/View/View";
+import Translator from "@enhavo/core/Translator";
 
 export default class PolyCollectionLoader extends AbstractLoader
 {
+    private view: View;
+    private translator: Translator;
+
+    constructor(view: View, translator: Translator) {
+        super();
+        this.view = view;
+        this.translator = translator;
+    }
+
     public insert(element: HTMLElement): void
     {
         let elements = this.findElements(element, '[data-poly-collection]');
         for(element of elements) {
             let config = <PolyCollectionConfig>$(element).data('poly-collection-config');
-            FormRegistry.registerType(new PolyCollectionType(element, config, prototypeManager));
+            FormRegistry.registerType(new PolyCollectionType(element, config, prototypeManager, this.view, this.translator));
         }
     }
 }

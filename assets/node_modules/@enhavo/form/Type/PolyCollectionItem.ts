@@ -122,7 +122,11 @@ export default class PolyCollectionItem
 
     public remove()
     {
-        FormDispatcher.dispatchRemove(this.getElement());
-        this.polyCollection.removeItem(this);
+        this.polyCollection.confirmDelete((confirm: boolean) => {
+            if (confirm) {
+                FormDispatcher.dispatchRemove(this.getElement());
+                this.polyCollection.removeItem(this);
+            }
+        });
     }
 }
