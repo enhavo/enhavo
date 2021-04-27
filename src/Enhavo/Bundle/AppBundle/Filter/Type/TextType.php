@@ -16,14 +16,12 @@ class TextType extends AbstractFilterType
 {
     public function createViewData($options, $name)
     {
-        $data = [
-            'type' => $this->getType(),
-            'key' => $name,
+        $data = parent::createViewData($options, $name);
+
+        $data = array_merge($data, [
             'value' => null,
             'initialValue' => null,
-            'component' => $options['component'],
-            'label' => $this->getLabel($options),
-        ];
+        ]);
 
         return $data;
     }

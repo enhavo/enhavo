@@ -19,15 +19,13 @@ class EntityType extends AbstractFilterType
     {
         $choices = $this->getChoices($options);
 
-        $data = [
-            'type' => $this->getType(),
+        $data = parent::createViewData($options, $name);
+
+        $data = array_merge($data, [
             'choices' => $choices,
-            'key' => $name,
             'value' => null,
             'initialValue' => null,
-            'component' => $options['component'],
-            'label' => $this->getLabel($options),
-        ];
+        ]);
 
         return $data;
     }
