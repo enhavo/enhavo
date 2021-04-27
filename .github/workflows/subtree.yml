@@ -33,4 +33,6 @@ jobs:
 
             -   name: Push subtrees
                 run: |
+                    git config --global user.email "bot@enhavo.com"
+                    git config --global user.name "enhavo bot"
                     ./enhavo.phar push-subtree --yes -vvv --branch ${GITHUB_REF##*/} --force
