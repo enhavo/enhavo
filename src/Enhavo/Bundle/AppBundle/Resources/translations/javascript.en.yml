@@ -19,6 +19,7 @@ enhavo_app:
         message:
             not_saved: 'Close without saving?'
             unmark_after_filter: 'After applying the filter, all selected rows will be unselected'
+            delete: 'Delete?'
         label:
             ok: 'Ok'
             cancel: 'Cancel'
