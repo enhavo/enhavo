@@ -4,8 +4,8 @@
             <div>
                 <div class="message">{{ $view.data.confirm.message }}</div>
                 <div class="buttons">
-                    <div @click="$view.data.confirm.accept()" class="modal-btn">{{ $view.data.confirm.acceptText }}</div>
-                    <div @click="$view.data.confirm.deny()" class="modal-btn primary">{{ $view.data.confirm.denyText }}</div>
+                    <div @click="$view.data.confirm.accept()" class="modal-btn primary">{{ $view.data.confirm.acceptText }}</div>
+                    <div @click="$view.data.confirm.deny()" class="modal-btn">{{ $view.data.confirm.denyText }}</div>
                 </div>
             </div>
         </div>
