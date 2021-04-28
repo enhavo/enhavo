@@ -36,7 +36,7 @@ class DropdownActionType extends AbstractActionType implements ActionTypeInterfa
 
         $data = array_merge($data, [
             'items' => $items,
-            'closeListOnItemClick' => $options['close_list_on_item_click']
+            'closeAfter' => $options['close_after']
         ]);
 
         return $data;
@@ -48,7 +48,7 @@ class DropdownActionType extends AbstractActionType implements ActionTypeInterfa
 
         $resolver->setDefaults([
             'component' => 'dropdown-action',
-            'close_list_on_item_click' => true,
+            'close_after' => true,
         ]);
 
         $resolver->setRequired([
