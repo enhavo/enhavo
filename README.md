@@ -69,11 +69,11 @@ $ bin/console enhavo:user:create --super-admin
 Make your changes and run the tests.
 
 ```bash
-$ vendor/bin/behat
-$ vendor/bin/phpunit
+$ bin/phpunit
+$ bin/behat
+$ yarn mocha
+$ yarn karma
 ```
-
-
 
 Documentation
 -------------
