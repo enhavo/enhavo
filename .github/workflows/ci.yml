@@ -81,7 +81,7 @@ jobs:
                 run: composer update --prefer-dist
 
             -   name: Run tests
-                run: vendor/bin/phpunit
+                run: bin/phpunit
 
 
     phpunit-lowest:
@@ -116,7 +116,7 @@ jobs:
                 run: composer update --prefer-dist --prefer-lowest
 
             -   name: Run tests
-                run: vendor/bin/phpunit
+                run: bin/phpunit
 
     behat:
         runs-on: ubuntu-20.04
@@ -183,7 +183,7 @@ jobs:
                     bin/console enhavo:init
 
             -   name: Run tests
-                run: vendor/bin/behat
+                run: bin/behat
 
 
     javascript-tests:
