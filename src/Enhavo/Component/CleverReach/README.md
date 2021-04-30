@@ -15,38 +15,19 @@ composer require enhavo/cleverreach
 
 ## Usage
 
-**Get an access token**
-
-```php
-use Enhavo\Component\CleverReach\ApiManager;
-use Enhavo\Component\CleverReach\Http\Guzzle as HttpAdapter;
-
-// Create an HTTP adapter
-$httpAdapter = new HttpAdapter();
-
-// Authorize your app by credentials
-$response = $httpAdapter->authorize('<CLIENT_ID>', '<CLIENT_SECRET>');
-
-if (isset($response['access_token'])) {
-    // Persist the access token for later use...
-}
-```
-
 **Initialize an API manager**
 
 ```php
 use Enhavo\Component\CleverReach\ApiManager;
-use Enhavo\Component\CleverReach\Http\Guzzle as HttpAdapter;
+use Enhavo\Component\CleverReach\Http\GuzzleAdapter;
 
-// Create an HTTP adapter
-$httpAdapter = new HttpAdapter(
-    [
-        'access_token' => '<ACCESS_TOKEN>',
-    ]
-);
+$adapter = new GuzzleAdapter();
+
+// Authorize your app by credentials
+$adapter->authorize('<CLIENT_ID>', '<CLIENT_SECRET>');
 
 // Create the API manager
-$apiManager = new ApiManager($httpAdapter);
+$apiManager = new ApiManager($adapter);
 ```
 
 **Create an inactive subscriber**

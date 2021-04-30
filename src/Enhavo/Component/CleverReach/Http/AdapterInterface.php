@@ -31,13 +31,4 @@ interface AdapterInterface
      * @return string|null
      */
     public function getAccessToken();
-
-    /**
-     * Returns the adapter config.
-     *
-     * @param string|null $key
-     *
-     * @return mixed
-     */
-    public function getConfig($key = null);
 }

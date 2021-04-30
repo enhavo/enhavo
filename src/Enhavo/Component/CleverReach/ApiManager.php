@@ -6,9 +6,7 @@ use Enhavo\Component\CleverReach\Http\AdapterInterface as HttpAdapter;
 
 class ApiManager implements ApiManagerInterface
 {
-    /**
-     * @var HttpAdapter
-     */
+    /** @var HttpAdapter */
     protected $adapter;
 
     /**
