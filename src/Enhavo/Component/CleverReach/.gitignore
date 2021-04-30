@@ -1,0 +1,9 @@
+/.env.local
+/.env.*.local
+/.idea/
+/.php_cs
+/.php_cs.cache
+/composer.lock
+/phpunit.xml
+/var/
+/vendor/
