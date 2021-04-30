@@ -38,4 +38,21 @@ class CurrencyFormatterTest extends TestCase
         $formatted = $formatter->getCurrency($amount);
         $this->assertEquals('-0,21 Euro', $formatted);
     }
+
+    public function testGetInt()
+    {
+        $formatter = new CurrencyFormatter();
+
+        $result = $formatter->getInt('798');
+        $this->assertEquals(79800, $result);
+
+        $result = $formatter->getInt('-381,28');
+        $this->assertEquals(-38128, $result);
+
+        $result = $formatter->getInt('-0,33');
+        $this->assertEquals(-33, $result);
+
+        $result = $formatter->getInt('0,46');
+        $this->assertEquals(46, $result);
+    }
 }
