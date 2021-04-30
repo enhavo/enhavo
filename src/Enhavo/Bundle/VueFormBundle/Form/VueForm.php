@@ -28,8 +28,16 @@ class VueForm
         return $array;
     }
 
-    public function submit($data)
+    public function submit(array $data)
     {
-        return [];
+        if ($data['compound']) {
+            $returnData = [];
+            foreach ($data['children'] as $key => $child) {
+                $returnData[$child['name']] = $this->submit($child);
+            }
+            return $returnData;
+        }
+
+        return $data['value'];
     }
 }
