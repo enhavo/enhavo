@@ -16,7 +16,7 @@ use Enhavo\Bundle\NewsletterBundle\Storage\Type\CleverReachStorageType;
 use Enhavo\Bundle\NewsletterBundle\Storage\Type\StorageType;
 use Enhavo\Bundle\NewsletterBundle\Tests\Mocks\GroupAwareSubscriberMock;
 use Enhavo\Component\CleverReach\ApiManager;
-use Enhavo\Component\CleverReach\Http\Guzzle;
+use Enhavo\Component\CleverReach\Http\GuzzleAdapter;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -361,7 +361,7 @@ class CleverReachClientMock extends CleverReachClient
     }
 }
 
-class CleverReachGuzzleHttpMock extends Guzzle
+class CleverReachGuzzleHttpMock extends GuzzleAdapter
 {
     public function authorize(string $clientId, string $clientSecret)
     {

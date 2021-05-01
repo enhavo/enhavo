@@ -19,7 +19,6 @@ use Symfony\Component\PropertyAccess\PropertyAccessor;
 
 class CleverReachClient
 {
-
     /** @var ApiManager */
     private $apiManager;
 
@@ -32,9 +31,7 @@ class CleverReachClient
     /** @var bool */
     private $initialized = false;
 
-    /**
-     * @var EventDispatcherInterface
-     */
+    /** @var EventDispatcherInterface */
     private $eventDispatcher;
 
     /** @var string */
@@ -59,14 +56,8 @@ class CleverReachClient
             $this->globalAttributes = $globalAttributes;
 
             $adapter = new $this->adapterClass();
-            $response = $adapter->authorize($clientId, $clientSecret);
-
-            if (isset($response['access_token'])) {
-                $accessToken = $response['access_token'];
-                $adapter = new $this->adapterClass(['access_token' => $accessToken]);
-                $this->apiManager = new ApiManager($adapter);
-            }
-
+            $adapter->authorize($clientId, $clientSecret);
+            $this->apiManager = new ApiManager($adapter);
             $this->initialized = true;
         }
     }

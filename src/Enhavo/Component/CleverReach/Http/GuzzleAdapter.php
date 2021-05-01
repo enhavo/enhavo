@@ -101,8 +101,12 @@ class GuzzleAdapter implements AdapterInterface, LoggerAwareInterface
             $data = json_decode($response->getBody()->getContents(), true);
             $this->log(LogLevel::INFO, 'Response data.', ['response' => $data]);
         } catch (ClientException $e) {
-            $this->log(LogLevel::ERROR, $e->getMessage());
-            throw new RequestException($e->getMessage());
+            if ($e->getCode() !== 404) {
+                $this->log(LogLevel::ERROR, $e->getMessage());
+                throw new RequestException($e->getMessage());
+            }
+            $data = json_decode($e->getResponse()->getBody()->getContents(), true);
+            $this->log(LogLevel::INFO, 'Response data.', ['response' => $data]);
         }
 
         return $data;
