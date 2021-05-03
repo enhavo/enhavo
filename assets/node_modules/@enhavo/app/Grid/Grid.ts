@@ -98,10 +98,6 @@ export default class Grid
                 }
             });
         });
-
-        $(document).on('gridFilter', (event, data) => {
-            this.configuration.showFilter = data;
-        });
     }
 
     public load()
@@ -475,11 +471,6 @@ export default class Grid
         for(let currentRow of this.configuration.rows) {
             currentRow.active = false;
         }
-    }
-
-    public isFilterOn()
-    {
-        return this.configuration.showFilter;
     }
 
     public hasPagination()
