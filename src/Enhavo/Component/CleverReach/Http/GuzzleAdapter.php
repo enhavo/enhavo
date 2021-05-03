@@ -4,6 +4,7 @@ namespace Enhavo\Component\CleverReach\Http;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ServerException;
 use Enhavo\Component\CleverReach\Exception\AuthorizeException;
 use Enhavo\Component\CleverReach\Exception\RequestException;
 use Psr\Log\LoggerAwareInterface;
@@ -91,18 +92,21 @@ class GuzzleAdapter implements AdapterInterface, LoggerAwareInterface
         }
 
         try {
-            $response = $this->client->request($method, $path, [
-                'headers' => [
-                    'Authorization' => "Bearer {$this->getAccessToken()}",
-                    'Accept' => 'application/json',
-                ],
-                'json' => $data,
-            ]);
+            $response = $this->client->request($method, $path, ['headers' => ['Authorization' => "Bearer {$this->getAccessToken()}", 'Accept' => 'application/json',], 'json' => $data,]);
             $data = json_decode($response->getBody()->getContents(), true);
             $this->log(LogLevel::INFO, 'Response data.', ['response' => $data]);
-        } catch (ClientException $e) {
+
+
+        } catch (ServerException $e) {
             $this->log(LogLevel::ERROR, $e->getMessage());
             throw new RequestException($e->getMessage());
+        } catch (ClientException $e) {
+            if ($e->getCode() !== 404) {
+                $this->log(LogLevel::ERROR, $e->getMessage());
+                throw new RequestException($e->getMessage());
+            }
+            $data = json_decode($e->getResponse()->getBody()->getContents(), true);
+            $this->log(LogLevel::INFO, 'Response data.', ['response' => $data]);
         }
 
         return $data;

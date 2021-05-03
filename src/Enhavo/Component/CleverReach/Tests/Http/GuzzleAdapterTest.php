@@ -64,6 +64,6 @@ class GuzzleAdapterTest extends TestCase
         $this->expectException(RequestException::class);
         $guzzle = $this->createGuzzleAdapter();
         $guzzle->authorize('cli3ntId', 'clientS3cr3t');
-        $guzzle->action('GET', '/something/wrong');
+        $guzzle->action('GET', '/server/error');
     }
 }
