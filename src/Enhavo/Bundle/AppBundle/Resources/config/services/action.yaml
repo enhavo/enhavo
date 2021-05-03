@@ -101,3 +101,11 @@ services:
         public: true
         tags:
             - { name: enhavo.action, alias: output_stream }
+
+    Enhavo\Bundle\AppBundle\Action\Type\DropdownActionType:
+        parent: Enhavo\Bundle\AppBundle\Action\AbstractActionType
+        arguments:
+            - '@enhavo_app.action_manager'
+        public: true
+        tags:
+            - { name: enhavo.action, alias: dropdown }
