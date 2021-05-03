@@ -34,7 +34,8 @@ abstract class AbstractFilterType extends AbstractType implements FilterTypeInte
             'label' => $this->getLabel($options),
             'type' => $this->getType(),
             'key' => $name,
-            'component' => $options['component']
+            'component' => $options['component'],
+            'active' => $options['initial_active'],
         ];
     }
 
@@ -53,7 +54,8 @@ abstract class AbstractFilterType extends AbstractType implements FilterTypeInte
         $optionsResolver->setDefaults([
             'translation_domain' => null,
             'permission' => null,
-            'hidden' => false
+            'hidden' => false,
+            'initial_active' => false
         ]);
 
         $optionsResolver->setRequired([

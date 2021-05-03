@@ -1,7 +1,6 @@
 import ActionInterface from "@enhavo/app/action/ActionInterface";
 import ActionRegistry from "@enhavo/app/action/ActionRegistry";
 import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
-import * as _ from 'lodash';
 
 export default class ActionManager
 {
@@ -24,15 +23,8 @@ export default class ActionManager
 
     init()
     {
-        for (let i in this.primary) {
-            let action = this.registry.getFactory(this.primary[i].component).createFromData(this.primary[i]);
-            _.extend(this.primary[i], action);
-        }
-
-        for (let i in this.secondary) {
-            let action = this.registry.getFactory(this.secondary[i].component).createFromData(this.secondary[i]);
-            _.extend(this.secondary[i], action);
-        }
+        this.initializeActions(this.primary);
+        this.initializeActions(this.secondary);
 
         for (let component of this.registry.getComponents()) {
             this.componentRegistry.registerComponent(component.name, component.component)
@@ -45,5 +37,12 @@ export default class ActionManager
 
     hasActions() {
         return (this.primary && this.primary.length > 0) || (this.secondary && this.secondary.length > 0)
+    }
+
+    initializeActions(actions: ActionInterface[]): void
+    {
+        for (let i in actions) {
+            actions[i] = this.registry.getFactory(actions[i].component).createFromData(actions[i]);
+        }
     }
 }

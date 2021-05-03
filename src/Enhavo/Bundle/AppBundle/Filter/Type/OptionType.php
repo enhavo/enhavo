@@ -17,15 +17,13 @@ class OptionType extends AbstractFilterType
 {
     public function createViewData($options, $name)
     {
-        $data = [
-            'type' => $this->getType(),
+        $data = parent::createViewData($options, $name);
+
+        $data = array_merge($data, [
             'choices' => $this->formatChoices($options),
-            'key' => $name,
             'value' => null,
             'initialValue' => null,
-            'component' => $options['component'],
-            'label' => $this->getLabel($options)
-        ];
+        ]);
 
         return $data;
     }
