@@ -3,6 +3,8 @@ import AbstractFilter from "@enhavo/app/grid/filter/model/AbstractFilter";
 export default class BetweenFilter extends AbstractFilter
 {
     value: Between;
+    labelFrom: string;
+    labelTo: string;
 
     reset() {
         this.value.from = this.initialValue;
