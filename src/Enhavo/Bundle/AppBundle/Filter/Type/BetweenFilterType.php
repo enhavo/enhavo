@@ -24,11 +24,9 @@ class BetweenFilterType extends AbstractFilterType
                 'to' => '',
             ],
             'initialValue' => null,
-            'label' => [
-                'label' => $this->getMainLabel($options),
-                'from' => $this->getLabelFrom($options),
-                'to' => $this->getLabelTo($options),
-            ],
+            'label' => $this->getMainLabel($options),
+            'labelFrom' => $this->getLabelFrom($options),
+            'labelTo' => $this->getLabelTo($options),
         ]);
 
         return $data;
