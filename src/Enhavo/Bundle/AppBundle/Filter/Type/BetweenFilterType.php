@@ -25,12 +25,9 @@ class BetweenFilterType extends AbstractFilterType
             ],
             'initialValue' => null,
             'label' => [
-                'from' => $options['label_from'] ?
-                    $this->translator->trans($options['label_from'], [], $options['translation_domain']) :
-                    $this->getLabel($options),
-                'to' => $options['label_to'] ?
-                    $this->translator->trans($options['label_to'], [], $options['translation_domain']) :
-                    $this->getLabel($options),
+                'label' => $this->getMainLabel($options),
+                'from' => $this->getLabelFrom($options),
+                'to' => $this->getLabelTo($options),
             ],
         ]);
 
@@ -50,6 +47,27 @@ class BetweenFilterType extends AbstractFilterType
             $this->buildFromQuery($query, $options, $fromValue);
             $this->buildToQuery($query, $options, $toValue);
         }
+    }
+
+    protected function getMainLabel($options): string
+    {
+        return $options['label'] ?
+            $this->translator->trans($options['label'], [], $options['translation_domain']) :
+            $this->getLabelFrom($options);
+    }
+
+    protected function getLabelFrom($options): string
+    {
+        return $options['label_from'] ?
+            $this->translator->trans($options['label_from'], [], $options['translation_domain']) :
+            $this->getLabel($options);
+    }
+
+    protected function getLabelTo($options): string
+    {
+        return $options['label_to'] ?
+            $this->translator->trans($options['label_to'], [], $options['translation_domain']) :
+            $this->getLabel($options);
     }
 
     protected function buildFromQuery(FilterQuery$query, $options, $fromValue)
