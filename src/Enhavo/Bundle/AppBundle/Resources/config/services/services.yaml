@@ -17,30 +17,6 @@ services:
         arguments:
             - '@event_dispatcher'
 
-    enhavo_app.preview.default_renderer:
-        class: Enhavo\Bundle\AppBundle\Preview\DefaultRenderer
-        public: true
-
-    enhavo_app.preview.strategy_resolver:
-        class: Enhavo\Bundle\AppBundle\Preview\StrategyResolver
-        calls:
-            - ['setContainer', ['@service_container']]
-
-    enhavo_app.preview.strategy.dynamic:
-        class: Enhavo\Bundle\AppBundle\Preview\Strategy\DynamicStrategy
-        public: true
-        calls:
-            - ['setContainer', ['@service_container']]
-
-    enhavo_app.preview.strategy.service:
-        class: Enhavo\Bundle\AppBundle\Preview\Strategy\ServiceStrategy
-        public: true
-        arguments:
-            - '@Enhavo\Bundle\AppBundle\Controller\ArgumentResolver'
-            - '@request_stack'
-        calls:
-            - ['setContainer', ['@service_container']]
-
     security.authentication.voter.super_admin:
         class: Enhavo\Bundle\AppBundle\Security\Authentication\Voter\SuperAdminVoter
         tags:
