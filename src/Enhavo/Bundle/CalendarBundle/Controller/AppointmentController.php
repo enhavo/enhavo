@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\CalendarBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Template\TemplateTrait;
+use Enhavo\Bundle\CalendarBundle\Entity\Appointment;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
