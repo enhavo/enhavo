@@ -24,9 +24,9 @@ class ArticleController extends AbstractController
         $this->commentManager = $commentManager;
     }
 
-    public function showResourceAction(Article $contentDocument, Request $request)
+    public function showResourceAction(Article $contentDocument, Request $request, bool $preview)
     {
-        if (!$contentDocument->isPublished()) {
+        if (!$contentDocument->isPublished() && !$preview) {
             throw $this->createNotFoundException();
         }
 
