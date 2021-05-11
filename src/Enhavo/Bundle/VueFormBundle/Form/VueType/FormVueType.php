@@ -46,7 +46,7 @@ class FormVueType implements VueTypeInterface
         $data['disabled'] = $view->vars['disabled'];
         $data['required'] = $view->vars['required'];
 
-        if ($view->vars['translation_domain'] !== false) {
+        if ($view->vars['label'] && $view->vars['translation_domain'] !== false) {
             $data['label'] = $this->translator->trans($view->vars['label'], $view->vars['label_translation_parameters'], $view->vars['translation_domain']);
         } else {
             $data['label'] = $view->vars['label'];
