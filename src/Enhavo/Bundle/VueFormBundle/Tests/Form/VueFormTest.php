@@ -9,6 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Test\TypeTestCase;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class VueFormTest extends TypeTestCase
 {
@@ -16,8 +17,13 @@ class VueFormTest extends TypeTestCase
 
     protected function getTypeExtensions()
     {
+        $translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
+        $translator->method('trans')->willReturnCallback(function($value) {
+            return $value;
+        });
+
         return [
-            $this->createVueTypeExtension([new FormVueType(), new TextVueType()])
+            $this->createVueTypeExtension([new FormVueType($translator), new TextVueType()])
         ];
     }
 
