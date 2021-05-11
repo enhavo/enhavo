@@ -8,6 +8,8 @@ services:
             - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 
     Enhavo\Bundle\VueFormBundle\Form\VueType\FormVueType:
+        arguments:
+            - '@translator'
         tags:
             - 'vue.type'
 
@@ -16,6 +18,10 @@ services:
             - 'vue.type'
 
     Enhavo\Bundle\VueFormBundle\Form\VueType\HiddenVueType:
+        tags:
+            - 'vue.type'
+
+    Enhavo\Bundle\VueFormBundle\Form\VueType\TextareaVueType:
         tags:
             - 'vue.type'
 
