@@ -66,7 +66,7 @@ class BaseMenu extends AbstractMenu
     private function generateMainUrl($url, $options)
     {
         $state = StateEncoder::encode([
-            'views' => [['url' => $url]],
+            'views' => [['url' => $url, 'id' => 2]],
             'storage' => [['key' => 'menu-active-key', 'value' => $options['key']]]
         ]);
 
