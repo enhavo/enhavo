@@ -4,6 +4,7 @@ namespace Enhavo\Bundle\VueFormBundle\Tests\DependencyInjection\Compiler;
 
 use Enhavo\Bundle\VueFormBundle\DependencyInjection\Compiler\VueTypeCompilerPass;
 use Enhavo\Bundle\VueFormBundle\Form\Extension\VueTypeExtension;
+use Enhavo\Bundle\VueFormBundle\Form\VueForm;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -13,7 +14,7 @@ class VueTypeCompilerPassTest extends TestCase
     public function testProcess()
     {
         $extension = new Definition();
-        $extension->setClass(VueTypeExtension::class);
+        $extension->setClass(VueForm::class);
 
         $typeOne = new Definition();
         $typeOne->setClass('TypeOne');
@@ -26,13 +27,13 @@ class VueTypeCompilerPassTest extends TestCase
         $container->addDefinitions([
             'typeOne' => $typeOne,
             'typeTwo' => $typeTwo,
-            VueTypeExtension::class => $extension
+            VueForm::class => $extension
         ]);
 
         $pass = new VueTypeCompilerPass();
         $pass->process($container);
 
-        $extension = $container->getDefinition(VueTypeExtension::class);
+        $extension = $container->getDefinition(VueForm::class);
         $calls = $extension->getMethodCalls();
 
         $this->assertCount(1, $calls);
