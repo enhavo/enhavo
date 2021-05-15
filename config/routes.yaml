@@ -1,3 +1,7 @@
 admin:
     prefix: /admin
     resource: routes/admin/*
+
+app:
+    resource: ../src/App/Controller
+    type: annotation

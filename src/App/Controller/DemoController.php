@@ -8,20 +8,26 @@
 
 namespace App\Controller;
 
-use Enhavo\Bundle\BlockBundle\Form\Type\BlockNodeType;
-use Enhavo\Bundle\FormBundle\Form\Type\DateTimeType;
-use Enhavo\Bundle\FormBundle\Form\Type\DateType;
-use Enhavo\Bundle\FormBundle\Form\Type\ListType;
-use Enhavo\Bundle\FormBundle\Form\Type\WysiwygType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
-use Enhavo\Bundle\NavigationBundle\Entity\Navigation;
-use Enhavo\Bundle\NavigationBundle\Form\Type\NavigationType;
+use Enhavo\Bundle\VueFormBundle\Form\VueForm;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class DemoController
+ * @package App\Controller
+ * @Route("/demo")
+ */
 class DemoController extends AbstractController
 {
+    /**
+     * @Route("/media", name="app_demo_media")
+     */
     public function mediaAction(Request $request)
     {
         $files = [];
@@ -36,79 +42,36 @@ class DemoController extends AbstractController
 
         $formView = $form->createView();
 
-        return $this->render('EnhavoDemoBundle:Theme/Demo:media.html.twig', [
+        return $this->render('theme/demo/media.html.twig', [
             'form' => $formView
         ]);
     }
 
-    public function containerAction(Request $request)
-    {
-        $container = new Container();
-
-        $form = $this->createForm(BlockNodeType::class, $container);
-
-        if($request->isMethod('post')) {
-            $form->submit($request);
-        }
-
-        $formView = $form->createView();
-
-        return $this->render('EnhavoDemoBundle:Theme/Demo:container.html.twig', [
-            'form' => $formView
-        ]);
-    }
-
-    public function navigationAction(Request $request)
-    {
-        $navigation = new Navigation();
-
-        $form = $this->createForm(NavigationType::class, $navigation);
-
-        if($request->isMethod('post')) {
-            $form->submit($request);
-        }
-
-        $formView = $form->createView();
-
-        return $this->render('EnhavoDemoBundle:Theme/Demo:navigation.html.twig', [
-            'form' => $formView
-        ]);
-    }
-
-    public function applicationAction()
-    {
-        return $this->render('EnhavoDemoBundle:Theme/Demo:application.html.twig', [
-
-        ]);
-    }
-
+    /**
+     * @Route("/form", name="app_demo_form")
+     */
     public function formAction(Request $request)
     {
-
         $form = $this->createFormBuilder(null)
             ->add('date', DateType::class, [])
-            ->add('datetime', DateTimeType::class, [])
-            ->add('wysiwyg', WysiwygType::class, [])
-            ->add('checkbox', ChoiceType::class, [
-                'choices' => ['foo', 'bar', 'hello', 'world'],
-                'multiple' => true,
-                'expanded' => true
-            ])
-            ->add('select', ChoiceType::class, [
-                'choices' => ['foo', 'bar', 'hello', 'world'],
-                'multiple' => false,
-                'expanded' => false
-            ])
-            ->add('list', ListType::class, [
-                'entry_type' => ContentType::class,
-                'sortable' => true,
-                'border' => true
-            ])
+            ->add('datetime', TextType::class, [])
+            ->add('wysiwyg', TextareaType::class, [])
+            ->add('choice', ChoiceType::class, [
+                'expanded' => true,
+                'choices' => [
+                    'foo' => 'foo',
+                    'bar' => 'bar',
+                ]
+            ], [])
             ->getForm();
 
-        $form->handleRequest($request);
-        return $this->render('EnhavoDemoBundle:Theme/Demo:form.html.twig', [
-            'form' => $form->createView()
+        $formView = $form->createView();
+        $vueForm = $this->container->get(VueForm::class);
+        $vueData = $vueForm->createData($form->createView());
+
+        return $this->render('theme/demo/form.html.twig', [
+            'form' => $formView,
+            'vue' => $vueData
         ]);
     }
 }
