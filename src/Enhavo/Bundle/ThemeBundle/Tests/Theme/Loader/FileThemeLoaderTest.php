@@ -35,6 +35,5 @@ class FileThemeLoaderTest extends TestCase
         $this->assertEquals('some_key', $theme->getKey());
         $this->assertEquals(sprintf('%s/templates', realpath(__DIR__.'/../../Fixtures/loader/')), $theme->getTemplate()->getPath());
         $this->assertNotNull($theme->getMeta());
-        $this->assertNotNull($theme->getWebpack());
     }
 }
