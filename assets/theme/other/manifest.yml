@@ -1,7 +1,8 @@
-key: base
+key: other
 meta:
-    name: 'Enhavo base template'
+    name: 'Other template'
     image: ~
     description: ''
 options:
     color1:
+

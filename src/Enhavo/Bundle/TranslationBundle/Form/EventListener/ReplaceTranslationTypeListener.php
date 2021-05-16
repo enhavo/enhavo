@@ -27,11 +27,11 @@ class ReplaceTranslationTypeListener implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            FormEvents::POST_SET_DATA => 'preSetData',
+            FormEvents::POST_SET_DATA => 'postSetData',
         ];
     }
 
-    public function preSetData(FormEvent $event)
+    public function postSetData(FormEvent $event)
     {
         $form = $event->getForm();
         $data = $event->getData();
