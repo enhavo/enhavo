@@ -10,6 +10,8 @@ EnhavoEncore.add(
     Encore => {
         Encore
             .addEntry('base', './base')
+            .addEntry('form', './form')
+            .enableVueLoader()
 
     },
     config => {}
