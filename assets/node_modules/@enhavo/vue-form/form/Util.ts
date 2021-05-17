@@ -31,11 +31,10 @@ export class Util
         let formData = new FormData(form);
         let obj = {};
 
-        // better use forEach in typescript here, otherwise this code may compile into a for loop, which can not handle
-        // the map object correctly. This will lead to an empty object.
-        formData.forEach((value: any, key: string) => {
-            obj[key] = value;
-        });
+        let keys = Array.from(formData.keys());
+        for (let key of keys) {
+            obj[key] = formData.get(key);
+        }
 
         return obj;
     }

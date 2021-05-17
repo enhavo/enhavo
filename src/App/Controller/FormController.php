@@ -11,13 +11,13 @@ namespace App\Controller;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Enhavo\Bundle\VueFormBundle\Form\VueForm;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -36,6 +36,13 @@ class FormController extends AbstractController
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
+            if ($request->isXmlHttpRequest()) {
+                return new JsonResponse(['form' => $vueData, 'data' => $form->getData()], $form->isValid() ? 201 : 400);
+            }
+        }
+
+        if ($request->isXmlHttpRequest()) {
+            return new JsonResponse(['form' => $vueData]);
         }
 
         return $this->render(sprintf('theme/form/%s.html.twig', $template), [
@@ -57,6 +64,24 @@ class FormController extends AbstractController
         ]);
 
         return $this->handleForm($form, $request);
+    }
+
+    /**
+     * @Route("/ajax", name="app_form_ajax")
+     */
+    public function ajaxAction(Request $request)
+    {
+        $form = $this->createForm(TextType::class);
+        return $this->handleForm($form, $request, 'ajax');
+    }
+
+    /**
+     * @Route("/submit", name="app_form_submit")
+     */
+    public function submitAction(Request $request)
+    {
+        $form = $this->createForm(TextType::class);
+        return $this->handleForm($form, $request, 'submit');
     }
 
     /**
