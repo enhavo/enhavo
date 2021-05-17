@@ -4,7 +4,6 @@ namespace Enhavo\Bundle\VueFormBundle\Form\VueType;
 
 use Enhavo\Bundle\VueFormBundle\Form\VueData;
 use Enhavo\Bundle\VueFormBundle\Form\VueTypeInterface;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormView;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -37,29 +36,14 @@ class FormVueType implements VueTypeInterface
         $data['name'] = $view->vars['name'];
         $data['value'] = $view->vars['value'];
         $data['compound'] = $view->vars['compound'];
-        $data['labelFormat'] = $view->vars['label_format'];
         $data['id'] = $view->vars['id'];
         $data['required'] = $view->vars['required'];
-        $data['labelAttr'] = $view->vars['label_attr'];
-        $data['attr'] = $view->vars['attr'];
-        $data['disabled'] = $view->vars['disabled'];
-        $data['required'] = $view->vars['required'];
         $data['fullName'] = $view->vars['full_name'];
-
-
-        if ($view->vars['label'] && $view->vars['translation_domain'] !== false) {
-            $data['label'] = $this->translator->trans($view->vars['label'], $view->vars['label_translation_parameters'], $view->vars['translation_domain']);
-        } else {
-            $data['label'] = $view->vars['label'];
-        }
-
-        if (isset($view->vars['attr']['placeholder']) && is_string($view->vars['attr']['placeholder'])) {
-            $view->vars['attr']['placeholder'] = $this->translator->trans($view->vars['attr']['placeholder'], $view->vars['attr_translation_parameters'], $view->vars['translation_domain']);
-        }
-
-        if (isset($view->vars['attr']['title']) && is_string($view->vars['attr']['title'])) {
-            $view->vars['attr']['title'] = $this->translator->trans($view->vars['attr']['title'], $view->vars['attr_translation_parameters'], $view->vars['translation_domain']);
-        }
+        $data['size'] = $view->vars['size'];
+        $data['help'] = $view->vars['help'];
+        $data['helpAttr'] = $view->vars['help_attr'];
+        $data['helpHtml'] = $view->vars['help_html'];
+        $data['rowComponent'] = 'form-row';
 
         $errors = [];
         foreach ($view->vars['errors'] as $error) {
@@ -68,9 +52,5 @@ class FormVueType implements VueTypeInterface
             ];
         }
         $data['errors'] = $errors;
-
-        if (isset($view->vars['type'])) {
-            $data['type'] = $view->vars['type'];
-        }
     }
 }

@@ -1,0 +1,20 @@
+{% extends 'theme/form/base.html.twig' %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('form', null, webpack_build()) }}
+{% endblock %}
+
+{% block stylesheets %}{% endblock %}
+
+
+{% block body %}
+    {{ form(form) }}
+    <hr>
+    <div id="app" data-vue="{{ vue|json_encode|e }}">
+        <form-form :form="form"></form-form>
+    </div>
+    <hr>
+    <div id="data">
+        <pre>{{ data|json_encode(constant('JSON_PRETTY_PRINT')) }}</pre>
+    </div>
+{% endblock %}

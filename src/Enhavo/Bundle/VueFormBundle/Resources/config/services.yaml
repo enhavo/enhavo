@@ -8,6 +8,16 @@ services:
         tags:
             - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 
+    Enhavo\Bundle\VueFormBundle\Form\VueType\ButtonVueType:
+        tags:
+            - 'vue.type'
+
+    Enhavo\Bundle\VueFormBundle\Form\VueType\BaseVueType:
+        arguments:
+            - '@translator'
+        tags:
+            - 'vue.type'
+
     Enhavo\Bundle\VueFormBundle\Form\VueType\FormVueType:
         arguments:
             - '@translator'
