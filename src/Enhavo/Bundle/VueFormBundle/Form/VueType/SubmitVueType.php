@@ -6,20 +6,20 @@ use Enhavo\Bundle\VueFormBundle\Form\VueData;
 use Enhavo\Bundle\VueFormBundle\Form\VueTypeInterface;
 use Symfony\Component\Form\FormView;
 
-class HiddenVueType implements VueTypeInterface
+class SubmitVueType implements VueTypeInterface
 {
     public function getComponent(): ?string
     {
-        return 'form-hidden';
+        return 'form-submit';
     }
 
     public static function getBlocks(): array
     {
-        return ['hidden' => 1];
+        return ['submit' => 1];
     }
 
     public function buildView(FormView $view, VueData $data)
     {
-        $data['rowComponent'] = 'form-hidden-row';
+
     }
 }

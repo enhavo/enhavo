@@ -11,22 +11,42 @@ namespace App\Controller;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Enhavo\Bundle\VueFormBundle\Form\VueForm;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class DemoController
  * @package App\Controller
- * @Route("/demo")
+ * @Route("/form")
  */
-class DemoController extends AbstractController
+class FormController extends AbstractController
 {
+    private function handleForm(FormInterface $form, Request $request, $template = 'form')
+    {
+        $formView = $form->createView();
+        $vueForm = $this->container->get(VueForm::class);
+        $vueData = $vueForm->createData($form->createView());
+
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+        }
+
+        return $this->render(sprintf('theme/form/%s.html.twig', $template), [
+            'form' => $formView,
+            'vue' => $vueData,
+            'data' => $form->getData()
+        ]);
+    }
+
     /**
-     * @Route("/media", name="app_demo_media")
+     * @Route("/media", name="app_form_media")
      */
     public function mediaAction(Request $request)
     {
@@ -36,21 +56,13 @@ class DemoController extends AbstractController
             'multiple' => true
         ]);
 
-        if($request->isMethod('post')) {
-            $form->submit($request);
-        }
-
-        $formView = $form->createView();
-
-        return $this->render('theme/demo/media.html.twig', [
-            'form' => $formView
-        ]);
+        return $this->handleForm($form, $request);
     }
 
     /**
-     * @Route("/form", name="app_demo_form")
+     * @Route("/compound", name="app_demo_form")
      */
-    public function formAction(Request $request)
+    public function compoundFormAction(Request $request)
     {
         $form = $this->createFormBuilder(null)
             ->add('date', DateType::class, [])
@@ -62,16 +74,13 @@ class DemoController extends AbstractController
                     'foo' => 'foo',
                     'bar' => 'bar',
                 ]
-            ], [])
+            ])
+            ->add('button', SubmitType::class, [
+                'label' => 'save'
+            ])
+            ->setMethod('POST')
             ->getForm();
 
-        $formView = $form->createView();
-        $vueForm = $this->container->get(VueForm::class);
-        $vueData = $vueForm->createData($form->createView());
-
-        return $this->render('theme/demo/form.html.twig', [
-            'form' => $formView,
-            'vue' => $vueData
-        ]);
+        return $this->handleForm($form, $request);
     }
 }

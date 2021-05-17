@@ -25,4 +25,18 @@ export class Util
         value = value.charAt(0).toUpperCase() + value.slice(1);
         return value;
     }
+
+    static serializeForm(form: HTMLFormElement)
+    {
+        let formData = new FormData(form);
+        let obj = {};
+
+        // better use forEach in typescript here, otherwise this code may compile into a for loop, which can not handle
+        // the map object correctly. This will lead to an empty object.
+        formData.forEach((value: any, key: string) => {
+            obj[key] = value;
+        });
+
+        return obj;
+    }
 }
