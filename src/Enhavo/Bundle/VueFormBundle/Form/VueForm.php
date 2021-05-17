@@ -70,6 +70,8 @@ class VueForm
 
         $data = $this->normalize($formView);
         $data['root'] = true;
+        $data['method'] = $formView->vars['method'] ?? null;
+        $data['action'] = $formView->vars['action'] ?? null;
         return $data;
     }
 

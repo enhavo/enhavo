@@ -1,20 +1,24 @@
 <template>
-    <div>
-        <select v-if="!form.expanded & !form.multiple">
-            <option>1</option>
-        </select>
-        <input type="checkbox" />
-    </div>
+    <component :is="getComponent()" :form="form"></component>
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from "vue-property-decorator";
-import {Form} from "@enhavo/vue-form/form/Form";
+import {Vue, Component, Prop} from "vue-property-decorator";
+import {ChoiceFormData} from "@enhavo/vue-form/data/ChoiceFormData";
 
 @Component({})
 export default class FormChoiceComponent extends Vue
 {
     @Prop()
-    form: Form
+    form: ChoiceFormData
+
+    getComponent()
+    {
+        if (this.form.expanded) {
+            return 'form-choice-expanded';
+        } else {
+            return 'form-choice-collapsed'
+        }
+    }
 }
 </script>

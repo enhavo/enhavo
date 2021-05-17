@@ -6,12 +6,12 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
-import {Form} from "@enhavo/vue-form/form/Form";
+import {FormData} from "@enhavo/vue-form/data/FormData"
 
 @Component({})
 export default class FormHelpComponent extends Vue
 {
     @Prop()
-    form: Form
+    form: FormData
 }
 </script>
