@@ -3,10 +3,5 @@ meta:
     name: 'base theme'
     image: ~
     description: ''
-webpack:
-    options:
-        color1:
-    entries:
-        base: './base.ts'
-template:
-    path: '@EnhavoDemoBundle/Resources/views'
+options:
+    color1:
