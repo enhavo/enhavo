@@ -1,5 +1,5 @@
 <template>
-    <input type="text" v-model="form.value" />
+    <input type="text" :name="form.fullName" v-model="form.value" />
 </template>
 
 <script lang="ts">
