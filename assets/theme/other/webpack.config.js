@@ -1,5 +1,5 @@
 const EnhavoEncore = require('@enhavo/core/EnhavoEncore');
-const AppThemePackage = require('@enhavo/app/Encore/AppThemePackage');
+const AppThemePackage = require('@enhavo/app/encore/AppThemePackage');
 const ThemePackage = require('@enhavo/theme/encore/ThemePackage');
 const ThemeLoader = require('@enhavo/theme/encore/ThemeLoader');
 
