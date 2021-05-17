@@ -10,6 +10,7 @@
     "url": "https://github.com/enhavo/enhavo.git"
   },
   "dependencies": {
-    "@enhavo/dependency-injection": "^0.10"
+    "axios": "^0.21.1",
+    "qs": "^6.10.1"
   }
 }
