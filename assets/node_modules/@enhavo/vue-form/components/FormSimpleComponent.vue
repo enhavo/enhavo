@@ -1,5 +1,5 @@
 <template>
-    <input :type="form.type" ref="element" />
+    <input :type="form.type" :name="form.fullName" ref="element" />
 </template>
 
 <script lang="ts">
