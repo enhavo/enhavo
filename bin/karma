@@ -1,0 +1,42 @@
+#!/usr/bin/env node
+const child_process = require('child_process');
+const { ArgumentParser } = require('argparse');
+
+
+const parser = new ArgumentParser({
+    description: "Karma test runner.\nThis runner execute a webpack test build first and then trigger karma"
+});
+
+parser.add_argument('-f', '--file', { help: 'select file'  });
+var args = parser.parse_args();
+
+var encoreCommand = ['TESTBUILD=true'];
+if (args.file) {
+    encoreCommand.push('TEST_FILE='+args.file);
+}
+encoreCommand.push('encore');
+
+var encore = child_process.spawn(encoreCommand.join(' '), ['dev', '--config', 'webpack.test.config.js'], {
+    stdio: "inherit",
+    shell: true
+});
+
+encore.on('exit', function(data) {
+
+    if (data !== 0) {
+        return;
+    }
+
+    console.log('')
+    console.log('Running karma ...')
+
+
+    var karma = child_process.spawn('karma', ['start', '--single-run', '--browsers', 'ChromeHeadless', 'karma.conf.js'], {
+        stdio: "inherit",
+        shell: true
+    });
+
+    karma.on('exit', function(data) {
+
+    });
+});

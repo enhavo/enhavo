@@ -71,9 +71,22 @@ Make your changes and run the tests.
 ```bash
 $ bin/phpunit
 $ bin/behat
-$ yarn mocha
-$ yarn karma
+$ bin/mocha
+$ bin/karma
 ```
+
+**Testing stack**
+
+Depending on what you are going to test, choose the right tool.
+
+```
+<----------------------------- Behat ---------------------------------------->
+<------------- PHPUnit ---------------->
+                                        <------------- Karma ---------------->
+                                        <------ Mocha --->
+[**** Database ****][**** PHP File ****][**** JS File ****][**** Browser ****]
+```
+
 
 Documentation
 -------------
@@ -84,19 +97,14 @@ The documentation is available at [docs.enhavo.com](http://docs.enhavo.com).
 
 If you want to contribute to the documentation you need `sphinx`. 
 Read [sphinx-doc.org](https://www.sphinx-doc.org/en/master/usage/installation.html) to install it.
+For the ```--watch``` option you have to [install](https://pypi.org/project/sphinx-autobuild/) `sphinx-autobuild`.
 
 Fork and clone this repository and make your changes under `docs/source`. After each change run following command
 and open the `build/docs/index.html` in your browser to see and valid your changes.
 
 ```bash
-$ sphinx-build -b html docs/source build/docs
-```
-
-Or use the autobuilder to watch your files
-
-```bash
-$ pip install sphinx-autobuild
-$ sphinx-autobuild docs/source build/docs
+$ bin/docs
+$ bin/docs --watch
 ```
 
 MIT License
