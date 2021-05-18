@@ -1,6 +1,6 @@
 export class FormData
 {
-    children: FormData[];
+    children: object|any;
     value: string;
     name: string;
     label: string;

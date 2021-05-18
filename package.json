@@ -94,6 +94,7 @@
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^3.1.0",
     "karma-mocha": "^2.0.1",
+    "karma-sourcemap-loader": "^0.3.8",
     "mocha": "^8.0.1",
     "webpack-notifier": "^1.7.0"
   }

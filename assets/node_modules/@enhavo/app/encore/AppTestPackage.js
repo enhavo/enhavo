@@ -37,7 +37,7 @@ class AppTestPackage
             if(".ts".match(rule.test)) {
                 delete rule.exclude;
                 rule.use.forEach(function(loader) {
-                    if(loader.loader === 'ts-loader') {
+                    if(loader.loader.match(/ts-loader/)) {
                         loader.options.allowTsInNodeModules = true;
                         loader.options.transpileOnly = true;
                     }
