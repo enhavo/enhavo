@@ -1,4 +1,4 @@
-import {Vue as _Vue, PluginObject} from "vue";
+import _Vue, {PluginObject} from "vue";
 import FormChoiceComponent from '@enhavo/vue-form/components/FormChoiceComponent.vue';
 import FormChoiceExpandedComponent from '@enhavo/vue-form/components/FormChoiceExpandedComponent.vue';
 import FormChoiceCollapsedComponent from '@enhavo/vue-form/components/FormChoiceCollapsedComponent.vue';

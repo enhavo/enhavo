@@ -4,6 +4,7 @@ import * as _ from "lodash";
 import {Util} from "@enhavo/vue-form/form/Util";
 import axios, {AxiosPromise,Method} from "axios";
 import * as qs from "qs";
+import {Theme} from "@enhavo/vue-form/form/Theme";
 
 export class Form extends RootFormData
 {
@@ -20,38 +21,18 @@ export class Form extends RootFormData
 
         let searchElement: FormData = this;
         for (let property of propertyChain) {
-            searchElement = this.getChild(searchElement, property);
-            if (searchElement === null) {
+            if (searchElement.children.hasOwnProperty(property)) {
+                searchElement = searchElement.children[property];
+            } else {
                 return null;
             }
         }
         return searchElement;
     }
 
-    private getChild(form: FormData, name: string)
+    public setTheme(theme: Theme)
     {
-        for (let child of form.children) {
-            if (child.name === name) {
-                return child;
-            }
-        }
-        return null;
-    }
-
-    public setTheme(theme: object)
-    {
-        this.updateComponent(this, theme);
-    }
-
-    private updateComponent(form: FormData, theme: object)
-    {
-        if (theme.hasOwnProperty(form.component)) {
-            form.component = theme[form.component];
-        }
-
-        if (theme.hasOwnProperty(form.rowComponent)) {
-            form.rowComponent = theme[form.rowComponent];
-        }
+        theme.apply(this);
     }
 
     public serializeForm()
