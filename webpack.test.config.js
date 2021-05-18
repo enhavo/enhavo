@@ -4,11 +4,10 @@ const TestFinder = require('./assets/node_modules/@enhavo/core/TestFinder');
 
 EnhavoEncore.add(
     'test',
-    [
-        new AppTestPackage()
-    ],
+    [new AppTestPackage()],
     Encore => {
-        let files = TestFinder.find([
+        Encore.cleanupOutputBeforeBuild();
+        let files = TestFinder.find(process.env.TEST_FILE ? process.env.TEST_FILE : [
             'assets/node_modules/@enhavo/**/tests/*Test.karma.@(js|ts)',
             'assets/node_modules/@enhavo/**/tests/**/*Test.karma.@(js|ts)',
         ]);

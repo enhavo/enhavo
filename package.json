@@ -3,9 +3,6 @@
   "license": "MIT",
   "scripts": {
     "routes:dump": "bin/console fos:js-routing:dump --format=json --target=public/js/fos_js_routes.json",
-    "karma": "TESTBUILD=true encore dev --config webpack.test.config.js && karma start --single-run --browsers ChromeHeadless karma.conf.js && rm -rf public/build/test/*",
-    "mocha": "TS_NODE_SKIP_IGNORE=true TS_NODE_PROJECT=./tsconfig.test.json mocha --require ts-node/register assets/node_modules/**/tests/**/*.mocha.{ts,js}",
-    "mocha:file": "TS_NODE_SKIP_IGNORE=true TS_NODE_PROJECT=./tsconfig.test.json mocha --require ts-node/register",
     "di": "node ./assets/node_modules/@enhavo/dependency-injection/bin/dependency-injection.js \"./assets/services/enhavo/*\"",
     "dev": "encore dev",
     "watch": "encore dev --watch",
@@ -88,8 +85,6 @@
     "@types/vue-select": "^2.5.0",
     "acorn": "^7.3.1",
     "chai": "^4.2.0",
-    "download": "^8.0.0",
-    "gulp": "^4.0.0",
     "karma": "^5.1.0",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^3.1.0",

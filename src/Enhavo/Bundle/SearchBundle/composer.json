@@ -12,6 +12,7 @@
     }
   ],
   "require": {
+    "ext-zip": "*",
     "php": "^7.2",
     "enhavo/app-bundle": "dev-master",
     "enhavo/doctrine-extension-bundle": "dev-master",

@@ -1,0 +1,24 @@
+#!/usr/bin/env node
+const child_process = require('child_process');
+const { ArgumentParser } = require('argparse');
+
+
+const parser = new ArgumentParser({
+    description: "Mocha test runner.\nThis runner execute a webpack test build first and then trigger karma"
+});
+
+parser.add_argument('-f', '--file', { help: 'select file'  });
+var args = parser.parse_args();
+
+console.log('Running mocha ...')
+
+var file = args.file ? args.file : 'assets/node_modules/**/tests/**/*.mocha.{ts,js}'
+
+var encore = child_process.spawn('TS_NODE_SKIP_IGNORE=true TS_NODE_PROJECT=./tsconfig.test.json mocha', ['--require', 'ts-node/register', file], {
+    stdio: "inherit",
+    shell: true
+});
+
+encore.on('exit', function(data) {
+    console.log('Running mocha ...')
+});
