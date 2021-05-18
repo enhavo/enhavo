@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+if [ $# -eq 0 ]
+  then
+    sphinx-build -b html docs/source build/docs
+  else
+    if [[ $* == *--watch* ]]
+      then
+        sphinx-autobuild docs/source build/docs
+    fi
+fi
