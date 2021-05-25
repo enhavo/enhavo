@@ -14,18 +14,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TextType extends AbstractFilterType
 {
-    public function createViewData($options, $name)
-    {
-        $data = parent::createViewData($options, $name);
-
-        $data = array_merge($data, [
-            'value' => null,
-            'initialValue' => null,
-        ]);
-
-        return $data;
-    }
-
     public function buildQuery(FilterQuery $query, $options, $value)
     {
         $propertyPath = explode('.', $options['property']);
