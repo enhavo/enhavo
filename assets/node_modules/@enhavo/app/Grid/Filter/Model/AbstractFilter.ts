@@ -6,7 +6,7 @@ export default abstract class AbstractFilter implements FilterInterface
     value: any;
     key: string;
     label: string;
-    initialValue: string;
+    initialValue: any;
     active: boolean;
 
     getValue() {

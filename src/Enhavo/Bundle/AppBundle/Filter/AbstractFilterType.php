@@ -30,13 +30,22 @@ abstract class AbstractFilterType extends AbstractType implements FilterTypeInte
 
     public function createViewData($options, $name)
     {
+        $initialValue = $this->getInitialValue($options);
+
         return [
             'label' => $this->getLabel($options),
             'type' => $this->getType(),
             'key' => $name,
             'component' => $options['component'],
             'active' => $options['initial_active'],
+            'value' => $initialValue,
+            'initialValue' =>  $initialValue
         ];
+    }
+
+    protected function getInitialValue($options)
+    {
+        return $options['initial_value'];
     }
 
     public function getPermission($options)
@@ -55,7 +64,8 @@ abstract class AbstractFilterType extends AbstractType implements FilterTypeInte
             'translation_domain' => null,
             'permission' => null,
             'hidden' => false,
-            'initial_active' => false
+            'initial_active' => false,
+            'initial_value' => null
         ]);
 
         $optionsResolver->setRequired([

@@ -19,10 +19,11 @@ class OptionType extends AbstractFilterType
     {
         $data = parent::createViewData($options, $name);
 
+        $choices = $this->formatChoices($options);
+        $this->validateInitialValue($options['initial_value'], $choices);
+
         $data = array_merge($data, [
-            'choices' => $this->formatChoices($options),
-            'value' => null,
-            'initialValue' => null,
+            'choices' => $choices
         ]);
 
         return $data;
@@ -38,6 +39,20 @@ class OptionType extends AbstractFilterType
             ];
         }
         return $data;
+    }
+
+    private function validateInitialValue($value, $choices)
+    {
+        if ($value === null) {
+            return;
+        }
+        foreach($choices as $choice) {
+            if ($choice['code'] == $value) {
+                return;
+            }
+        }
+
+        throw new \InvalidArgumentException('Parameter "initial_value" must either be null or one of keys in parameter "options"');
     }
 
     public function buildQuery(FilterQuery $query, $options, $value)

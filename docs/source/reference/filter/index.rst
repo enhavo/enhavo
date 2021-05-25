@@ -10,6 +10,7 @@ Filter
     age-filter
     auto-complete-entity-filter
     between-filter
+    date-between-filter
     boolean-filter
     entity-filter
     option-filter
