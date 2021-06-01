@@ -8,24 +8,63 @@
 
 namespace Enhavo\Bundle\AppBundle\Action;
 
+use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 abstract class AbstractActionType implements ActionTypeInterface
 {
-    /**
-     * @var TranslatorInterface
-     */
+    /** @var TranslatorInterface */
     protected $translator;
 
-    public function __construct(TranslatorInterface $translator)
+    /** @var ExpressionLanguage */
+    private $expressionLanguage;
+
+    /** @var AuthorizationCheckerInterface */
+    private $authorizationChecker;
+
+    /** @var TokenStorageInterface */
+    private $tokenStorage;
+
+    /** @var RequestStack */
+    private $requestStack;
+
+    /**
+     * AbstractActionType constructor.
+     * @param TranslatorInterface $translator
+     * @param ExpressionLanguage $expressionLanguage
+     * @param AuthorizationCheckerInterface $authorizationChecker
+     * @param TokenStorageInterface $tokenStorage
+     * @param RequestStack $requestStack
+     */
+    public function __construct(TranslatorInterface $translator, ExpressionLanguage $expressionLanguage, AuthorizationCheckerInterface $authorizationChecker, TokenStorageInterface $tokenStorage, RequestStack $requestStack)
     {
         $this->translator = $translator;
+        $this->expressionLanguage = $expressionLanguage;
+        $this->authorizationChecker = $authorizationChecker;
+        $this->tokenStorage = $tokenStorage;
+        $this->requestStack = $requestStack;
     }
 
     public function isHidden(array $options, $resource = null)
     {
-        return $options['hidden'];
+        if (preg_match('/^exp:/', $options['hidden'])) {
+            $request = $this->requestStack->getCurrentRequest();
+            $user = $this->tokenStorage->getToken()->getUser();
+            $hidden = $this->expressionLanguage->evaluate(substr($options['hidden'], 4), [
+                'resource' => $resource,
+                'request' => $request,
+                'user' => $user,
+                'authorizationChecker' => $this->authorizationChecker,
+                'action' => $this
+            ]);
+        } else {
+            $hidden = $options['hidden'];
+        }
+        return $hidden;
     }
 
     public function getPermission(array $options, $resource = null)

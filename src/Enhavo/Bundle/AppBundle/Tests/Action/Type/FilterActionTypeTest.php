@@ -11,7 +11,11 @@ namespace Enhavo\Bundle\AppBundle\Tests\Action\Type;
 use Enhavo\Bundle\AppBundle\Action\Action;
 use Enhavo\Bundle\AppBundle\Action\Type\FilterActionType;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class FilterActionTypeTest extends TestCase
@@ -20,12 +24,22 @@ class FilterActionTypeTest extends TestCase
     {
         $dependencies = new FilterActionTypeDependencies();
         $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();;
+        $dependencies->expressionLanguage = $this->getMockBuilder(ExpressionLanguage::class)->getMock();
+        $dependencies->authorizationChecker = $this->getMockBuilder(AuthorizationCheckerInterface::class)->getMock();
+        $dependencies->tokenStorage = $this->getMockBuilder(TokenStorageInterface::class)->getMock();
+        $dependencies->requestStack = $this->getMockBuilder(RequestStack::class)->getMock();
         return $dependencies;
     }
 
     private function createInstance(FilterActionTypeDependencies $dependencies)
     {
-        return new FilterActionType($dependencies->translator);
+        return new FilterActionType(
+            $dependencies->translator,
+            $dependencies->expressionLanguage,
+            $dependencies->authorizationChecker,
+            $dependencies->tokenStorage,
+            $dependencies->requestStack
+        );
     }
 
     public function testCreateViewData()
@@ -53,4 +67,12 @@ class FilterActionTypeDependencies
 {
     /** @var TranslatorInterface|\PHPUnit_Framework_MockObject_MockObject */
     public $translator;
+    /** @var ExpressionLanguage|\PHPUnit_Framework_MockObject_MockObject */
+    public $expressionLanguage;
+    /** @var AuthorizationCheckerInterface|\PHPUnit_Framework_MockObject_MockObject */
+    public $authorizationChecker;
+    /** @var TokenStorageInterface|\PHPUnit_Framework_MockObject_MockObject */
+    public $tokenStorage;
+    /** @var RequestStack|\PHPUnit_Framework_MockObject_MockObject */
+    public $requestStack;
 }

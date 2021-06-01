@@ -11,7 +11,11 @@ namespace Enhavo\Bundle\AppBundle\Tests\Action\Type;
 use Enhavo\Bundle\AppBundle\Action\Action;
 use Enhavo\Bundle\AppBundle\Action\Type\OpenActionType;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class OpenActionTypeTest extends TestCase
@@ -20,13 +24,24 @@ class OpenActionTypeTest extends TestCase
     {
         $dependencies = new OpenActionTypeDependencies();
         $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
+        $dependencies->expressionLanguage = $this->getMockBuilder(ExpressionLanguage::class)->getMock();
+        $dependencies->authorizationChecker = $this->getMockBuilder(AuthorizationCheckerInterface::class)->getMock();
+        $dependencies->tokenStorage = $this->getMockBuilder(TokenStorageInterface::class)->getMock();
+        $dependencies->requestStack = $this->getMockBuilder(RequestStack::class)->getMock();
         $dependencies->router = $this->getMockBuilder(RouterInterface::class)->getMock();
         return $dependencies;
     }
 
     private function createInstance(OpenActionTypeDependencies $dependencies)
     {
-        return new OpenActionType($dependencies->translator, $dependencies->router);
+        return new OpenActionType(
+            $dependencies->translator,
+            $dependencies->expressionLanguage,
+            $dependencies->authorizationChecker,
+            $dependencies->tokenStorage,
+            $dependencies->requestStack,
+            $dependencies->router
+        );
     }
 
     public function testCreateViewData()
@@ -63,6 +78,14 @@ class OpenActionTypeDependencies
 {
     /** @var TranslatorInterface|\PHPUnit_Framework_MockObject_MockObject */
     public $translator;
+    /** @var ExpressionLanguage|\PHPUnit_Framework_MockObject_MockObject */
+    public $expressionLanguage;
+    /** @var AuthorizationCheckerInterface|\PHPUnit_Framework_MockObject_MockObject */
+    public $authorizationChecker;
+    /** @var TokenStorageInterface|\PHPUnit_Framework_MockObject_MockObject */
+    public $tokenStorage;
+    /** @var RequestStack|\PHPUnit_Framework_MockObject_MockObject */
+    public $requestStack;
     /** @var RouterInterface|\PHPUnit_Framework_MockObject_MockObject */
     public $router;
 }

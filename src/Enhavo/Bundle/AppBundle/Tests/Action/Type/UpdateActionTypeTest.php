@@ -13,7 +13,11 @@ use Enhavo\Bundle\AppBundle\Action\Type\UpdateActionType;
 use Enhavo\Bundle\AppBundle\Tests\Mock\ResourceMock;
 use Enhavo\Bundle\AppBundle\Tests\Mock\RouterMock;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class UpdateActionTypeTest extends TestCase
@@ -22,13 +26,24 @@ class UpdateActionTypeTest extends TestCase
     {
         $dependencies = new UpdateActionTypeDependencies();
         $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
+        $dependencies->expressionLanguage = $this->getMockBuilder(ExpressionLanguage::class)->getMock();
+        $dependencies->authorizationChecker = $this->getMockBuilder(AuthorizationCheckerInterface::class)->getMock();
+        $dependencies->tokenStorage = $this->getMockBuilder(TokenStorageInterface::class)->getMock();
+        $dependencies->requestStack = $this->getMockBuilder(RequestStack::class)->getMock();
         $dependencies->router = new RouterMock();
         return $dependencies;
     }
 
     private function createInstance(UpdateActionTypeDependencies $dependencies)
     {
-        return new UpdateActionType($dependencies->translator, $dependencies->router);
+        return new UpdateActionType(
+            $dependencies->translator,
+            $dependencies->expressionLanguage,
+            $dependencies->authorizationChecker,
+            $dependencies->tokenStorage,
+            $dependencies->requestStack,
+            $dependencies->router
+        );
     }
 
     public function testCreateViewData()
@@ -60,6 +75,12 @@ class UpdateActionTypeDependencies
 {
     /** @var TranslatorInterface|\PHPUnit_Framework_MockObject_MockObject */
     public $translator;
+    /** @var ExpressionLanguage|\PHPUnit_Framework_MockObject_MockObject */
+    public $expressionLanguage;
+    /** @var AuthorizationCheckerInterface|\PHPUnit_Framework_MockObject_MockObject */
+    public $authorizationChecker;
+    /** @var TokenStorageInterface|\PHPUnit_Framework_MockObject_MockObject */
+    public $tokenStorage;
     /** @var RouterInterface|\PHPUnit_Framework_MockObject_MockObject */
     public $router;
 }

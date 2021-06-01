@@ -15,6 +15,10 @@ services:
         abstract: true
         arguments:
             - '@translator'
+            - '@sylius.expression_language'
+            - '@security.authorization_checker'
+            - '@security.token_storage'
+            - '@request_stack'
 
     Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType:
         parent: Enhavo\Bundle\AppBundle\Action\AbstractActionType

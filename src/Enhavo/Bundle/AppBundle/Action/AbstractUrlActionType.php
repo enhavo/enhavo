@@ -9,8 +9,12 @@
 namespace Enhavo\Bundle\AppBundle\Action;
 
 use Enhavo\Bundle\AppBundle\Util\ArrayUtil;
+use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 abstract class AbstractUrlActionType extends AbstractActionType
@@ -23,11 +27,15 @@ abstract class AbstractUrlActionType extends AbstractActionType
     /**
      * CreateAction constructor.
      * @param TranslatorInterface $translator
+     * @param ExpressionLanguage $expressionLanguage
+     * @param AuthorizationCheckerInterface $authorizationChecker
+     * @param TokenStorageInterface $tokenStorage
+     * @param RequestStack $requestStack
      * @param RouterInterface $router
      */
-    public function __construct(TranslatorInterface $translator, RouterInterface $router)
+    public function __construct(TranslatorInterface $translator, ExpressionLanguage $expressionLanguage, AuthorizationCheckerInterface $authorizationChecker, TokenStorageInterface $tokenStorage, RequestStack $requestStack, RouterInterface $router)
     {
-        parent::__construct($translator);
+        parent::__construct($translator, $expressionLanguage, $authorizationChecker, $tokenStorage, $requestStack);
         $this->router = $router;
     }
 

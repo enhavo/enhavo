@@ -10,8 +10,12 @@ namespace Enhavo\Bundle\AppBundle\Action\Type;
 use Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType;
 use Enhavo\Bundle\AppBundle\Action\ActionTypeInterface;
 use Enhavo\Bundle\AppBundle\Security\Roles\RoleUtil;
+use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManager;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -22,9 +26,9 @@ class DeleteActionType extends AbstractUrlActionType implements ActionTypeInterf
      */
     private $tokenManager;
 
-    public function __construct(TranslatorInterface $translator, RouterInterface $router, CsrfTokenManager $tokenManager)
+    public function __construct(TranslatorInterface $translator, ExpressionLanguage $expressionLanguage, AuthorizationCheckerInterface $authorizationChecker, TokenStorageInterface $tokenStorage, RequestStack $requestStack, RouterInterface $router, CsrfTokenManager $tokenManager)
     {
-        parent::__construct($translator, $router);
+        parent::__construct($translator, $expressionLanguage, $authorizationChecker, $tokenStorage, $requestStack, $router);
         $this->tokenManager = $tokenManager;
     }
 
