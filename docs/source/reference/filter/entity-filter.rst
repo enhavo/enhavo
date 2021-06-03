@@ -1,40 +1,52 @@
 Entity Filter
 =============
 
-The BooleanFilter filters a property for entities as option
+The EntityFilter filters a property for entities as a dropdown.
+
+If the number of possible entities is large, this filter will negatively effect performance.
+If this is the case, consider using AutoCompleteEntityFilter instead.
 
 +-------------+--------------------------------------------------------------------+
 | type        | entity                                                             |
 +-------------+--------------------------------------------------------------------+
-| required    | - property_                                                        |
-|             | - repository_                                                      |
+| required    | - repository_                                                      |
+|             | - property_                                                        |
+|             | - label_                                                           |
 +-------------+--------------------------------------------------------------------+
-| option      | - label_                                                           |
-|             | - translationDomain_                                               |
-|             | - method_                                                          |
+| option      | - method_                                                          |
 |             | - arguments_                                                       |
+|             | - choice_label_                                                    |
+|             | - translation_domain_                                              |
+|             | - permission_                                                      |
+|             | - hidden_                                                          |
+|             | - initial_active_                                                  |
+|             | - initial_value_                                                   |
+|             | - initial_value_arguments_                                         |
 +-------------+--------------------------------------------------------------------+
-| class       | `Enhavo\\AppBundle\\Filter\\Filter\\EntityFilter`                  |
+| class       | `Enhavo\\Bundle\\AppBundle\\Filter\\Filter\\EntityFilter`          |
 +-------------+--------------------------------------------------------------------+
 
 
 Required
 --------
 
-.. include:: /reference/filter/option/property.rst
-
 repository
 ~~~~~~~~~~
 
 **type**: `string`
 
-Define the repository
+Either the name of a public service that points to the entity's repository or the FQCN of the entity to be used on
+EntityManager::getRepository().
 
 .. code-block:: yaml
 
     filter:
         myFilter:
-            repository: AppBundle\Repository\MyEntity
+            repository: AppBundle\Repository\MyEntityRepository
+
+.. include:: /reference/filter/option/property.rst
+
+.. include:: /reference/filter/option/label.rst
 
 Option
 ------
@@ -44,7 +56,7 @@ method
 
 **type**: `string`
 
-Define the function of the repository, which should be called. Default is `findAll`
+The name of the method of the repository which should be called. Default is `findAll`.
 
 .. code-block:: yaml
 
@@ -55,9 +67,9 @@ Define the function of the repository, which should be called. Default is `findA
 arguments
 ~~~~~~~~~
 
-**type**: `array`
+**type**: `array|null`
 
-Define the arguments, which should be use to call the method. Default is `null`
+Optional arguments that will be added to the call of the repository method. Default is `null`.
 
 .. code-block:: yaml
 
@@ -66,21 +78,54 @@ Define the arguments, which should be use to call the method. Default is `null`
             method: findBy
             arguments: { public: true }
 
+choice_label
+~~~~~~~~~~~~
 
-.. include:: /reference/filter/option/label.rst
+**type**: `string|null`
 
-.. include:: /reference/filter/option/translationDomain.rst
+Property of the entity that will be used as label in the options list.
 
+.. code-block:: yaml
 
-
-
-
-
-
-
-
-
+    filter:
+        myFilter:
+            choice_label: title
 
 
+.. include:: /reference/filter/option/translation_domain.rst
 
+.. include:: /reference/filter/option/permission.rst
 
+.. include:: /reference/filter/option/hidden.rst
+
+.. include:: /reference/filter/option/initial_active.rst
+
+initial_value
+~~~~~~~~~~~~~
+
+**type**: `string|null`
+
+If set, this filter will be initially have a set value and the list will initially be filtered by this value.
+This must be a method of the repository defined by the parameter repository_ which returns either a single object
+or an array with at least one entry (the first entry will be used).
+Default `null`.
+
+.. code-block:: yaml
+
+    columns:
+        myFilter:
+            initial_value: findByFoo
+
+initial_value_arguments
+~~~~~~~~~~~~~~~~~~~~~~~
+
+**type**: `array|null`
+
+Optional arguments that will be added to the call of the repository method in parameter initial_value_. Default is `null`.
+
+.. code-block:: yaml
+
+    columns:
+        myFilter:
+            initial_value: findByFoo
+            initial_value_arguments: { foo: 'bar' }
