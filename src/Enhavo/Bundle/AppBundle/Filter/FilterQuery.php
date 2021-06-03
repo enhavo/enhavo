@@ -251,7 +251,7 @@ class FilterQuery
         $joinPrefixes = $this->createJoinAliases($index, count($joins));
         foreach($joins as $joinProperty) {
             $joinPrefix = array_shift($joinPrefixes);
-            $query->innerJoin(sprintf('%s.%s', $joinPrefix, $joinProperty), $joinPrefixes[0]);
+            $query->leftJoin(sprintf('%s.%s', $joinPrefix, $joinProperty), $joinPrefixes[0]);
         }
         return $joinPrefixes[0];
     }
