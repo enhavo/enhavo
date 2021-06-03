@@ -1,12 +1,5 @@
-parameters:
-    security.roles.provider.class: Enhavo\Bundle\AppBundle\Security\Roles\AdminRolesProvider
-
 services:
-    enhavo_app.cache:
-        class: Doctrine\Common\Cache\PhpFileCache
-        arguments: ['%kernel.cache_dir%/cache']
-
-    security.roles.provider:
+    Enhavo\Bundle\AppBundle\Security\Roles\AdminRolesProvider:
         class: '%security.roles.provider.class%'
         arguments:
             - '%enhavo_app.roles%'
@@ -43,6 +36,9 @@ services:
         class: Enhavo\Bundle\AppBundle\Translation\TranslationDumper
         arguments:
             - []
+
+    Enhavo\Bundle\AppBundle\Template\TemplateManager:
+        alias: enhavo_app.template.manager
 
     enhavo_app.template.manager:
         public: true
