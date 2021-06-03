@@ -1,6 +1,6 @@
 services:
-    Enhavo\Bundle\AppBundle\Security\Roles\AdminRolesProvider:
-        class: '%security.roles.provider.class%'
+    security.roles.provider:
+        class: Enhavo\Bundle\AppBundle\Security\Roles\AdminRolesProvider
         arguments:
             - '%enhavo_app.roles%'
             - '@translator'
