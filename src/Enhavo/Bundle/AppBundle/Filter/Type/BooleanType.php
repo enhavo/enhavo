@@ -22,11 +22,6 @@ class BooleanType extends AbstractFilterType
     {
         $data = parent::createViewData($options, $name);
 
-        $data = array_merge($data, [
-            'value' => null,
-            'initialValue' => null,
-        ]);
-
         if (!$options['checkbox']) {
             if ($data['component'] === 'filter-boolean') {
                 $data['component'] = 'filter-option';
@@ -35,6 +30,15 @@ class BooleanType extends AbstractFilterType
         }
 
         return $data;
+    }
+
+    protected function getInitialValue($options)
+    {
+        if ($options['checkbox']) {
+            return $options['initial_value'];
+        } else {
+            return $options['initial_value'] === null ? null : ($options['initial_value'] ? self::VALUE_TRUE : self::VALUE_FALSE);
+        }
     }
 
     private function getChoices($options)

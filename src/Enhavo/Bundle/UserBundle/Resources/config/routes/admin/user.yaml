@@ -51,7 +51,6 @@ enhavo_user_user_table:
                 group:
                     type: entity
                     property: groups
-                    path: name
                     label: group.label.group
                     repository: enhavo_user.repository.group
                     translation_domain: EnhavoUserBundle
