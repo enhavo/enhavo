@@ -28,8 +28,12 @@ class TenancyFilterType extends AbstractFilterType
     {
         $data = parent::createViewData($options, $name);
         $data['choices'] = $this->getTenantChoices($options);
-        $data['value'] = $this->tenantManager->getTenant()->getKey();
         return $data;
+    }
+
+    protected function getInitialValue($options)
+    {
+        return $options['initial_value'] === null ? $this->tenantManager->getTenant()->getKey() : $options['initial_value'];
     }
 
     protected function getTenantChoices($options)
