@@ -3,10 +3,10 @@ label
 
 **type**: `string`
 
-Overwrite the default label. It will be translated over the translation service automatically. (See translationDomain)
+The label of the filter. It will be translated over the translation service automatically. (See translation_domain)
 
 .. code-block:: yaml
 
     columns:
-        myWidget:
+        myFilter:
             label: myLabel
