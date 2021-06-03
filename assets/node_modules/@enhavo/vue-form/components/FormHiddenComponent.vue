@@ -1,5 +1,5 @@
 <template>
-    <input type="hidden" :value="form.value">
+    <input type="hidden" :name="form.fullName" :value="form.value">
 </template>
 
 <script lang="ts">
