@@ -68,3 +68,19 @@
     }
   }
 }
+@media (max-width: 768px) {
+  .app-view {
+    .actions {
+      .action {
+        .dropdown-action-list {
+          .action {padding:8px 15px 8px 5px;
+            .action-icon { margin-right:10px;
+              .icon {font-size:1.25rem;}
+            }
+            .label {line-height:1.5rem;font-size:1rem;}
+          }
+        }
+      }
+    }
+  }
+}
