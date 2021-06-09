@@ -26,7 +26,7 @@ class CurrencySettingType extends AbstractSettingType
         return 'currency';
     }
 
-    public function getViewValue(array $options, $value)
+    public function getViewValue(array $options, $value, $key = null)
     {
         return $this->formatter->getCurrency((int)$value->getValue(), $options['currency'], $options['view_position']);
     }
