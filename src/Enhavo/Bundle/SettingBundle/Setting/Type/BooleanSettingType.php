@@ -27,9 +27,9 @@ class BooleanSettingType extends AbstractSettingType
         $this->translator = $translator;
     }
 
-    public function init(array $options)
+    public function init(array $options, $key = null)
     {
-        $settingEntity = $this->parent->getSettingEntity($options);
+        $settingEntity = $this->parent->getSettingEntity($options, $key);
 
         if ($settingEntity->getValue() === null) {
             $settingEntity->setValue(new BasicValue(BasicValue::TYPE_BOOLEAN, $settingEntity));
@@ -38,7 +38,7 @@ class BooleanSettingType extends AbstractSettingType
         }
     }
 
-    public function getViewValue(array $options, $value)
+    public function getViewValue(array $options, $value, $key = null)
     {
         if ($value && $value->getValue()) {
             return $this->translator->trans('label.yes', [], 'EnhavoAppBundle');

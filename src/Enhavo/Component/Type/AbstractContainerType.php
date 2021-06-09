@@ -40,10 +40,8 @@ abstract class AbstractContainerType
 
         $resolver = new OptionsResolver();
         foreach($this->parents as $parent) {
-            $parent->setKey($key);
             $parent->configureOptions($resolver);
         }
-        $this->type->setKey($key);
         $this->type->configureOptions($resolver);
 
         $this->options = $resolver->resolve($options);

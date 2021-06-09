@@ -9,12 +9,12 @@ use Symfony\Component\PropertyAccess\PropertyAccessor;
 
 class EntitySettingType extends AbstractSettingType
 {
-    public function getFormType(array $options)
+    public function getFormType(array $options, $key = null)
     {
         return EntityType::class;
     }
 
-    public function getFormTypeOptions(array $options)
+    public function getFormTypeOptions(array $options, $key = null)
     {
         return [
             'class' => $options['class'],
@@ -23,7 +23,7 @@ class EntitySettingType extends AbstractSettingType
         ];
     }
 
-    public function getViewValue(array $options, $value)
+    public function getViewValue(array $options, $value, $key = null)
     {
         if ($value === null) {
             return '';

@@ -32,11 +32,6 @@ interface TypeInterface
     public function setParent(TypeInterface $parent);
 
     /**
-     * @param $key string|null
-     */
-    public function setKey(?string $key);
-
-    /**
      * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver);
