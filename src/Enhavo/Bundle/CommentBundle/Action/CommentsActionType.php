@@ -9,14 +9,11 @@
 namespace Enhavo\Bundle\CommentBundle\Action;
 
 use Enhavo\Bundle\AppBundle\Action\AbstractActionType;
+use Enhavo\Bundle\AppBundle\Action\ActionLanguageExpression;
 use Enhavo\Bundle\CommentBundle\Exception\CommentSubjectException;
 use Enhavo\Bundle\CommentBundle\Model\CommentSubjectInterface;
-use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CommentsActionType extends AbstractActionType
@@ -26,9 +23,9 @@ class CommentsActionType extends AbstractActionType
      */
     private $router;
 
-    public function __construct(TranslatorInterface $translator, ExpressionLanguage $expressionLanguage, AuthorizationCheckerInterface $authorizationChecker, TokenStorageInterface $tokenStorage, RequestStack $requestStack, RouterInterface $router)
+    public function __construct(TranslatorInterface $translator, ActionLanguageExpression $actionLanguageExpression, RouterInterface $router)
     {
-        parent::__construct($translator, $expressionLanguage, $authorizationChecker, $tokenStorage, $requestStack);
+        parent::__construct($translator, $actionLanguageExpression);
         $this->router = $router;
     }
 

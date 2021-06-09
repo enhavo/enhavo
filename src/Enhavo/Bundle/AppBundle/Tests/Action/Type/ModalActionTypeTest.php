@@ -9,12 +9,9 @@
 namespace Enhavo\Bundle\AppBundle\Tests\Action\Type;
 
 use Enhavo\Bundle\AppBundle\Action\Action;
+use Enhavo\Bundle\AppBundle\Action\ActionLanguageExpression;
 use Enhavo\Bundle\AppBundle\Action\Type\ModalActionType;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
-use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ModalActionTypeTest extends TestCase
@@ -23,10 +20,7 @@ class ModalActionTypeTest extends TestCase
     {
         $dependencies = new ModalActionTypeDependencies();
         $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
-        $dependencies->expressionLanguage = $this->getMockBuilder(ExpressionLanguage::class)->getMock();
-        $dependencies->authorizationChecker = $this->getMockBuilder(AuthorizationCheckerInterface::class)->getMock();
-        $dependencies->tokenStorage = $this->getMockBuilder(TokenStorageInterface::class)->getMock();
-        $dependencies->requestStack = $this->getMockBuilder(RequestStack::class)->getMock();
+        $dependencies->actionLanguageExpression = $this->getMockBuilder(ActionLanguageExpression::class)->disableOriginalConstructor()->getMock();
         return $dependencies;
     }
 
@@ -34,10 +28,7 @@ class ModalActionTypeTest extends TestCase
     {
         return new ModalActionType(
             $dependencies->translator,
-            $dependencies->expressionLanguage,
-            $dependencies->authorizationChecker,
-            $dependencies->tokenStorage,
-            $dependencies->requestStack
+            $dependencies->actionLanguageExpression
         );
     }
 
@@ -74,12 +65,6 @@ class ModalActionTypeDependencies
 {
     /** @var TranslatorInterface|\PHPUnit_Framework_MockObject_MockObject */
     public $translator;
-    /** @var ExpressionLanguage|\PHPUnit_Framework_MockObject_MockObject */
-    public $expressionLanguage;
-    /** @var AuthorizationCheckerInterface|\PHPUnit_Framework_MockObject_MockObject */
-    public $authorizationChecker;
-    /** @var TokenStorageInterface|\PHPUnit_Framework_MockObject_MockObject */
-    public $tokenStorage;
-    /** @var RequestStack|\PHPUnit_Framework_MockObject_MockObject */
-    public $requestStack;
+    /** @var ActionLanguageExpression|\PHPUnit_Framework_MockObject_MockObject */
+    public $actionLanguageExpression;
 }

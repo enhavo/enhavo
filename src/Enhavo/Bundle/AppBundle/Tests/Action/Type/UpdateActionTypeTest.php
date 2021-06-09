@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\AppBundle\Tests\Action\Type;
 
 use Enhavo\Bundle\AppBundle\Action\Action;
+use Enhavo\Bundle\AppBundle\Action\ActionLanguageExpression;
 use Enhavo\Bundle\AppBundle\Action\Type\UpdateActionType;
 use Enhavo\Bundle\AppBundle\Tests\Mock\ResourceMock;
 use Enhavo\Bundle\AppBundle\Tests\Mock\RouterMock;
@@ -26,10 +27,7 @@ class UpdateActionTypeTest extends TestCase
     {
         $dependencies = new UpdateActionTypeDependencies();
         $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
-        $dependencies->expressionLanguage = $this->getMockBuilder(ExpressionLanguage::class)->getMock();
-        $dependencies->authorizationChecker = $this->getMockBuilder(AuthorizationCheckerInterface::class)->getMock();
-        $dependencies->tokenStorage = $this->getMockBuilder(TokenStorageInterface::class)->getMock();
-        $dependencies->requestStack = $this->getMockBuilder(RequestStack::class)->getMock();
+        $dependencies->actionLanguageExpression = $this->getMockBuilder(ActionLanguageExpression::class)->disableOriginalConstructor()->getMock();
         $dependencies->router = new RouterMock();
         return $dependencies;
     }
@@ -38,10 +36,7 @@ class UpdateActionTypeTest extends TestCase
     {
         return new UpdateActionType(
             $dependencies->translator,
-            $dependencies->expressionLanguage,
-            $dependencies->authorizationChecker,
-            $dependencies->tokenStorage,
-            $dependencies->requestStack,
+            $dependencies->actionLanguageExpression,
             $dependencies->router
         );
     }
@@ -75,12 +70,8 @@ class UpdateActionTypeDependencies
 {
     /** @var TranslatorInterface|\PHPUnit_Framework_MockObject_MockObject */
     public $translator;
-    /** @var ExpressionLanguage|\PHPUnit_Framework_MockObject_MockObject */
-    public $expressionLanguage;
-    /** @var AuthorizationCheckerInterface|\PHPUnit_Framework_MockObject_MockObject */
-    public $authorizationChecker;
-    /** @var TokenStorageInterface|\PHPUnit_Framework_MockObject_MockObject */
-    public $tokenStorage;
+    /** @var ActionLanguageExpression|\PHPUnit_Framework_MockObject_MockObject */
+    public $actionLanguageExpression;
     /** @var RouterInterface|\PHPUnit_Framework_MockObject_MockObject */
     public $router;
 }
