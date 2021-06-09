@@ -11,13 +11,13 @@ use Enhavo\Component\Type\TypeInterface;
  */
 interface SettingTypeInterface extends TypeInterface
 {
-    public function init(array $options);
+    public function init(array $options, $key = null);
 
-    public function getValue(array $options);
+    public function getValue(array $options, $key = null);
 
-    public function getFormType(array $options);
+    public function getFormType(array $options, $key = null);
 
-    public function getFormTypeOptions(array $options);
+    public function getFormTypeOptions(array $options, $key = null);
 
-    public function getViewValue(array $options, $value);
+    public function getViewValue(array $options, $value, $key = null);
 }

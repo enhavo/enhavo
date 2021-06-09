@@ -35,37 +35,37 @@ class BaseSettingType extends AbstractSettingType implements SettingTypeInterfac
         $this->em = $em;
     }
 
-    public function getSettingEntity($options): SettingEntity
+    public function getSettingEntity($options, $key): SettingEntity
     {
         /** @var SettingEntity $settingEntity */
-        $settingEntity = $this->repository->findOneBy(['key' => $this->key]);
+        $settingEntity = $this->repository->findOneBy(['key' => $key]);
         if ($settingEntity === null) {
             $settingEntity = $this->factory->createNew();
-            $settingEntity->setKey($this->key);
+            $settingEntity->setKey($key);
             $this->em->persist($settingEntity);
         }
 
-        $settingEntity->setLabel($options['label'] ?? $this->key);
+        $settingEntity->setLabel($options['label'] ?? $key);
         $settingEntity->setTranslationDomain($options['translation_domain']);
         $settingEntity->setGroup($options['group']);
 
         return $settingEntity;
     }
 
-    public function init(array $options)
+    public function init(array $options, $key = null)
     {
-        $this->getSettingEntity($options);
+        $this->getSettingEntity($options, $key);
     }
 
-    public function getFormTypeOptions(array $options)
+    public function getFormTypeOptions(array $options, $key = null)
     {
         return [];
     }
 
-    public function getValue(array $options)
+    public function getValue(array $options, $key = null)
     {
         /** @var SettingEntity $settingEntity */
-        $settingEntity = $this->repository->findOneBy(['key' => $this->key]);
+        $settingEntity = $this->repository->findOneBy(['key' => $key]);
 
         if ($settingEntity === null) {
             throw SettingNotExists::entityNotFound();
