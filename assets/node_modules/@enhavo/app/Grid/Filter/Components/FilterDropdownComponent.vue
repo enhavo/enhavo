@@ -16,7 +16,7 @@
         @Prop()
         data: OptionFilter;
 
-        change(value) {
+        change(value: any) {
             if(value == null) {
                 this.data.value = null;
                 return;

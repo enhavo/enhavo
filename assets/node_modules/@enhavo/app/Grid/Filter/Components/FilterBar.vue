@@ -33,6 +33,7 @@
 
     reset() {
         this.$grid.resetFilter();
+        this.apply()
     }
   }
 </script>

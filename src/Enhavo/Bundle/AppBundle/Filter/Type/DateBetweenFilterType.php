@@ -21,6 +21,26 @@ class DateBetweenFilterType extends BetweenFilterType
         return $data;
     }
 
+    protected function getInitialValue($options)
+    {
+        $initialValue = parent::getInitialValue($options);
+        if ($initialValue['from']) {
+            if (is_int($initialValue['from'])) {
+                $initialValue['from'] = (new \DateTime())->setTimestamp($initialValue['from'])->format('c');
+            } else {
+                $initialValue['from'] = (new \DateTime($initialValue['from']))->format('c');
+            }
+        }
+        if ($initialValue['to']) {
+            if (is_int($initialValue['to'])) {
+                $initialValue['to'] = (new \DateTime())->setTimestamp($initialValue['to'])->format('c');
+            } else {
+                $initialValue['to'] = (new \DateTime($initialValue['to']))->format('c');
+            }
+        }
+        return $initialValue;
+    }
+
     protected function buildFromQuery(FilterQuery $query, $options, $fromValue)
     {
         $propertyPath = explode('.', $options['property']);

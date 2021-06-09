@@ -1,8 +1,7 @@
-Between Filter
-==============
+Date Between Filter
+===================
 
-The BetweenFilter can be used to filter in a range between two values. It works on any type that can be compared
-using ">=" and "<=" in the database query.
+The DateBetweenFilter can be used to filter for dates in a range.
 
 +-------------+--------------------------------------------------------------------+
 | type        | text                                                               |
@@ -12,13 +11,15 @@ using ">=" and "<=" in the database query.
 | option      | - label_from_                                                      |
 |             | - label_to_                                                        |
 |             | - label_                                                           |
+|             | - locale_                                                          |
+|             | - format_                                                          |
 |             | - translation_domain_                                              |
 |             | - permission_                                                      |
 |             | - hidden_                                                          |
 |             | - initial_active_                                                  |
 |             | - initial_value_                                                   |
 +-------------+--------------------------------------------------------------------+
-| class       | `Enhavo\\Bundle\\AppBundle\\Filter\\Filter\\BetweenFilter`         |
+| class       | `Enhavo\\Bundle\\AppBundle\\Filter\\Filter\\DateBetweenFilter`     |
 +-------------+--------------------------------------------------------------------+
 
 Required
@@ -70,6 +71,32 @@ It will be translated over the translation service automatically. (See translati
     columns:
         myFilter:
             label: myLabel
+
+locale
+~~~~~~
+
+**type**: `string`
+
+The locale used for the Datepicker form fields. Defaults is the default locale of the project.
+
+.. code-block:: yaml
+
+    columns:
+        myFilter:
+            locale: en
+
+format
+~~~~~~
+
+**type**: `string`
+
+The date format used for the Datepicker form fields. Uses the date format of vuejs-datepicker. Default is `dd.MM.yyyy`.
+
+.. code-block:: yaml
+
+    columns:
+        myFilter:
+            format: yyyy-MM-dd
 
 .. include:: /reference/filter/option/translation_domain.rst
 
