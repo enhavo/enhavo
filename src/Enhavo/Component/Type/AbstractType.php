@@ -15,9 +15,6 @@ class AbstractType implements TypeInterface
     /** @var self|null */
     protected $parent;
 
-    /** @var string|null */
-    protected $key;
-
     public function setParent(TypeInterface $parent)
     {
         $this->parent = $parent;
@@ -31,14 +28,6 @@ class AbstractType implements TypeInterface
     public static function getName(): ?string
     {
         return null;
-    }
-
-    /**
-     * @param string|null $key
-     */
-    public function setKey(?string $key): void
-    {
-        $this->key = $key;
     }
 
     public function configureOptions(OptionsResolver $resolver)
