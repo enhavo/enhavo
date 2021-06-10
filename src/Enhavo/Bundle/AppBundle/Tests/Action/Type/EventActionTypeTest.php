@@ -9,9 +9,10 @@
 namespace Enhavo\Bundle\AppBundle\Tests\Action\Type;
 
 use Enhavo\Bundle\AppBundle\Action\Action;
+use Enhavo\Bundle\AppBundle\Action\ActionLanguageExpression;
 use Enhavo\Bundle\AppBundle\Action\Type\EventActionType;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class EventActionTypeTest extends TestCase
@@ -19,13 +20,17 @@ class EventActionTypeTest extends TestCase
     private function createDependencies()
     {
         $dependencies = new EventActionTypeDependencies();
-        $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();;
+        $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
+        $dependencies->actionLanguageExpression = $this->getMockBuilder(ActionLanguageExpression::class)->disableOriginalConstructor()->getMock();
         return $dependencies;
     }
 
     private function createInstance(EventActionTypeDependencies $dependencies)
     {
-        return new EventActionType($dependencies->translator);
+        return new EventActionType(
+            $dependencies->translator,
+            $dependencies->actionLanguageExpression
+        );
     }
 
     public function testCreateViewData()
@@ -60,4 +65,8 @@ class EventActionTypeDependencies
 {
     /** @var TranslatorInterface|\PHPUnit_Framework_MockObject_MockObject */
     public $translator;
+    /** @var ActionLanguageExpression|\PHPUnit_Framework_MockObject_MockObject */
+    public $actionLanguageExpression;
+    /** @var RequestStack|\PHPUnit_Framework_MockObject_MockObject */
+    public $requestStack;
 }

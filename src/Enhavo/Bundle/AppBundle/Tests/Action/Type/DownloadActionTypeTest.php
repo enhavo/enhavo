@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\AppBundle\Tests\Action\Type;
 
 use Enhavo\Bundle\AppBundle\Action\Action;
+use Enhavo\Bundle\AppBundle\Action\ActionLanguageExpression;
 use Enhavo\Bundle\AppBundle\Action\Type\DownloadActionType;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Routing\RouterInterface;
@@ -20,13 +21,18 @@ class DownloadActionTypeTest extends TestCase
     {
         $dependencies = new DownloadActionTypeDependencies();
         $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
+        $dependencies->actionLanguageExpression = $this->getMockBuilder(ActionLanguageExpression::class)->disableOriginalConstructor()->getMock();
         $dependencies->router = $this->getMockBuilder(RouterInterface::class)->getMock();
         return $dependencies;
     }
 
     private function createInstance(DownloadActionTypeDependencies $dependencies)
     {
-        return new DownloadActionType($dependencies->translator, $dependencies->router);
+        return new DownloadActionType(
+            $dependencies->translator,
+            $dependencies->actionLanguageExpression,
+            $dependencies->router
+        );
     }
 
     public function testCreateViewData()
@@ -59,6 +65,8 @@ class DownloadActionTypeDependencies
 {
     /** @var TranslatorInterface|\PHPUnit_Framework_MockObject_MockObject */
     public $translator;
+    /** @var ActionLanguageExpression|\PHPUnit_Framework_MockObject_MockObject */
+    public $actionLanguageExpression;
     /** @var RouterInterface|\PHPUnit_Framework_MockObject_MockObject */
     public $router;
 }

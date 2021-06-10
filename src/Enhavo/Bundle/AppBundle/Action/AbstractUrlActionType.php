@@ -23,11 +23,12 @@ abstract class AbstractUrlActionType extends AbstractActionType
     /**
      * CreateAction constructor.
      * @param TranslatorInterface $translator
+     * @param ActionLanguageExpression $actionLanguageExpression
      * @param RouterInterface $router
      */
-    public function __construct(TranslatorInterface $translator, RouterInterface $router)
+    public function __construct(TranslatorInterface $translator, ActionLanguageExpression $actionLanguageExpression, RouterInterface $router)
     {
-        parent::__construct($translator);
+        parent::__construct($translator, $actionLanguageExpression);
         $this->router = $router;
     }
 

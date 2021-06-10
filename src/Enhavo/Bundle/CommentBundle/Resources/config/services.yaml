@@ -63,9 +63,9 @@ services:
             - '@enhavo_comment.repository.comment'
 
     Enhavo\Bundle\CommentBundle\Action\CommentsActionType:
+        parent: Enhavo\Bundle\AppBundle\Action\AbstractActionType
         public: true
         arguments:
-            - '@Symfony\Contracts\Translation\TranslatorInterface'
             - '@Symfony\Component\Routing\RouterInterface'
         tags:
             - { name: enhavo.action, alias: 'comments' }
