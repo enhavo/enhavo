@@ -8,8 +8,8 @@
 namespace Enhavo\Bundle\AppBundle\Action\Type;
 
 use Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType;
+use Enhavo\Bundle\AppBundle\Action\ActionLanguageExpression;
 use Enhavo\Bundle\AppBundle\Action\ActionTypeInterface;
-use Enhavo\Bundle\AppBundle\Security\Roles\RoleUtil;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManager;
@@ -22,9 +22,9 @@ class DeleteActionType extends AbstractUrlActionType implements ActionTypeInterf
      */
     private $tokenManager;
 
-    public function __construct(TranslatorInterface $translator, RouterInterface $router, CsrfTokenManager $tokenManager)
+    public function __construct(TranslatorInterface $translator, ActionLanguageExpression $actionLanguageExpression, RouterInterface $router, CsrfTokenManager $tokenManager)
     {
-        parent::__construct($translator, $router);
+        parent::__construct($translator, $actionLanguageExpression, $router);
         $this->tokenManager = $tokenManager;
     }
 

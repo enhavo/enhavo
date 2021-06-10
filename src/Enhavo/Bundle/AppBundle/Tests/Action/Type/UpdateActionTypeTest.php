@@ -9,11 +9,16 @@
 namespace Enhavo\Bundle\AppBundle\Tests\Action\Type;
 
 use Enhavo\Bundle\AppBundle\Action\Action;
+use Enhavo\Bundle\AppBundle\Action\ActionLanguageExpression;
 use Enhavo\Bundle\AppBundle\Action\Type\UpdateActionType;
 use Enhavo\Bundle\AppBundle\Tests\Mock\ResourceMock;
 use Enhavo\Bundle\AppBundle\Tests\Mock\RouterMock;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class UpdateActionTypeTest extends TestCase
@@ -22,13 +27,18 @@ class UpdateActionTypeTest extends TestCase
     {
         $dependencies = new UpdateActionTypeDependencies();
         $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
+        $dependencies->actionLanguageExpression = $this->getMockBuilder(ActionLanguageExpression::class)->disableOriginalConstructor()->getMock();
         $dependencies->router = new RouterMock();
         return $dependencies;
     }
 
     private function createInstance(UpdateActionTypeDependencies $dependencies)
     {
-        return new UpdateActionType($dependencies->translator, $dependencies->router);
+        return new UpdateActionType(
+            $dependencies->translator,
+            $dependencies->actionLanguageExpression,
+            $dependencies->router
+        );
     }
 
     public function testCreateViewData()
@@ -60,6 +70,8 @@ class UpdateActionTypeDependencies
 {
     /** @var TranslatorInterface|\PHPUnit_Framework_MockObject_MockObject */
     public $translator;
+    /** @var ActionLanguageExpression|\PHPUnit_Framework_MockObject_MockObject */
+    public $actionLanguageExpression;
     /** @var RouterInterface|\PHPUnit_Framework_MockObject_MockObject */
     public $router;
 }

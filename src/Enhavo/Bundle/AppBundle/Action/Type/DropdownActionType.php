@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\AppBundle\Action\Type;
 
 use Enhavo\Bundle\AppBundle\Action\AbstractActionType;
+use Enhavo\Bundle\AppBundle\Action\ActionLanguageExpression;
 use Enhavo\Bundle\AppBundle\Action\ActionManager;
 use Enhavo\Bundle\AppBundle\Action\ActionTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,11 +17,12 @@ class DropdownActionType extends AbstractActionType implements ActionTypeInterfa
     /**
      * DropdownActionType constructor.
      * @param TranslatorInterface $translator
+     * @param ActionLanguageExpression $actionLanguageExpression
      * @param ActionManager $actionManager
      */
-    public function __construct(TranslatorInterface $translator, ActionManager $actionManager)
+    public function __construct(TranslatorInterface $translator, ActionLanguageExpression $actionLanguageExpression, ActionManager $actionManager)
     {
-        parent::__construct($translator);
+        parent::__construct($translator, $actionLanguageExpression);
         $this->actionManager = $actionManager;
     }
 
