@@ -84,23 +84,39 @@ class MediaExtension extends AbstractExtension
         }
     }
 
-    public function getMediaFilename(File $file)
+    public function getMediaFilename(?File $file)
     {
+        if($file === null) {
+            return '';
+        }
+
         return $file->getFilename();
     }
 
-    public function getMediaParameter(File $file, $parameterName)
+    public function getMediaParameter(?File $file, $parameterName)
     {
+        if($file === null) {
+            return '';
+        }
+
         return $file->getParameter($parameterName);
     }
 
-    public function getMediaExtension(File $file)
+    public function getMediaExtension(?File $file)
     {
+        if($file === null) {
+            return '';
+        }
+
         return strtolower($file->getExtension());
     }
 
-    public function isPicture(File $file)
+    public function isPicture(?File $file)
     {
+        if($file === null) {
+            return false;
+        }
+
         if($this->getMediaExtension($file) == 'jpg' || $this->getMediaExtension($file) == 'jpeg' || $this->getMediaExtension($file) == 'png' || $this->getMediaExtension($file) == 'gif'){
             return true;
         }
@@ -130,4 +146,4 @@ class MediaExtension extends AbstractExtension
         }
         return null;
     }
-} 
+}
