@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\CommentBundle\Action;
 
 use Enhavo\Bundle\AppBundle\Action\AbstractActionType;
+use Enhavo\Bundle\AppBundle\Action\ActionLanguageExpression;
 use Enhavo\Bundle\CommentBundle\Exception\CommentSubjectException;
 use Enhavo\Bundle\CommentBundle\Model\CommentSubjectInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -22,9 +23,9 @@ class CommentsActionType extends AbstractActionType
      */
     private $router;
 
-    public function __construct(TranslatorInterface $translator, RouterInterface $router)
+    public function __construct(TranslatorInterface $translator, ActionLanguageExpression $actionLanguageExpression, RouterInterface $router)
     {
-        parent::__construct($translator);
+        parent::__construct($translator, $actionLanguageExpression);
         $this->router = $router;
     }
 

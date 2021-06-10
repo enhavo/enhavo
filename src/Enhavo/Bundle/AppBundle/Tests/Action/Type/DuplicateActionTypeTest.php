@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\AppBundle\Tests\Action\Type;
 
 use Enhavo\Bundle\AppBundle\Action\Action;
+use Enhavo\Bundle\AppBundle\Action\ActionLanguageExpression;
 use Enhavo\Bundle\AppBundle\Action\Type\DuplicateActionType;
 use Enhavo\Bundle\AppBundle\Tests\Mock\ResourceMock;
 use Enhavo\Bundle\AppBundle\Tests\Mock\RouterMock;
@@ -22,13 +23,18 @@ class DuplicateActionTypeTest extends TestCase
     {
         $dependencies = new DuplicateActionTypeDependencies();
         $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
+        $dependencies->actionLanguageExpression = $this->getMockBuilder(ActionLanguageExpression::class)->disableOriginalConstructor()->getMock();
         $dependencies->router = new RouterMock();
         return $dependencies;
     }
 
     private function createInstance(DuplicateActionTypeDependencies $dependencies)
     {
-        return new DuplicateActionType($dependencies->translator, $dependencies->router);
+        return new DuplicateActionType(
+            $dependencies->translator,
+            $dependencies->actionLanguageExpression,
+            $dependencies->router
+        );
     }
 
     public function testCreateViewData()
@@ -60,6 +66,8 @@ class DuplicateActionTypeDependencies
 {
     /** @var TranslatorInterface|\PHPUnit_Framework_MockObject_MockObject */
     public $translator;
+    /** @var ActionLanguageExpression|\PHPUnit_Framework_MockObject_MockObject */
+    public $actionLanguageExpression;
     /** @var RouterInterface|\PHPUnit_Framework_MockObject_MockObject */
     public $router;
 }
