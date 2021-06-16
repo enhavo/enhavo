@@ -17,7 +17,7 @@ class PageController extends ResourceController
         }
 
         return $this->render($this->getTemplate('theme/resource/page/show.html.twig'), array(
-            'data' => $contentDocument
+            'resource' => $contentDocument
         ));
     }
 }

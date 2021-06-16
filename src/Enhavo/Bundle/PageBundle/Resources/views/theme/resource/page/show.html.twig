@@ -1,5 +1,7 @@
 {% extends template('theme/base.html.twig') %}
 
+{% use '@EnhavoContent/theme/resource/content/meta.html.twig' %}
+
 {% block main %}
-    {{ block_render(data.content) }}
+    {{ block_render(resource.content) }}
 {% endblock %}
