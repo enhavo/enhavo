@@ -21,16 +21,6 @@ class SitemapUrl
     private $lastModified;
 
     /**
-     * @var string
-     */
-    private $changeFrequency;
-
-    /**
-     * @var string
-     */
-    private $priority;
-
-    /**
      * @var SitemapImage[]
      */
     private $images = [];
@@ -70,38 +60,6 @@ class SitemapUrl
     public function setLastModified($lastModified)
     {
         $this->lastModified = $lastModified;
-    }
-
-    /**
-     * @return string
-     */
-    public function getChangeFrequency()
-    {
-        return $this->changeFrequency;
-    }
-
-    /**
-     * @param string $changeFrequency
-     */
-    public function setChangeFrequency($changeFrequency)
-    {
-        $this->changeFrequency = $changeFrequency;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPriority()
-    {
-        return $this->priority;
-    }
-
-    /**
-     * @param string $priority
-     */
-    public function setPriority($priority)
-    {
-        $this->priority = $priority;
     }
 
     /**

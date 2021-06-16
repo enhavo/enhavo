@@ -1,41 +1,11 @@
-<html lang="{{  app.request.locale }}">
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-        <meta charset="utf-8" />
-        <meta name="description" content="{% block meta_description %}{% endblock %}" />
-        <meta name="og:url" content="{{ app.request.uri }}" />
-        <meta name="og:title" content="{% block og_title %}{% endblock %}" />
-        <meta name="og:description" content="{% block og_description %}{% endblock %}" />
-        <meta name="og:image" content="{% block og_image %}{% endblock %}" />
+{% extends '@EnhavoContent/theme/base.html.twig' %}
 
-        <title>{% block meta_title %}{% endblock %}</title>
+{% block header_inner %}
+    {{ parent() }}
 
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('base', null, webpack_build()) }}
-        {% endblock %}
-    </head>
-    {% block body %}
-    <body>
-        <header>
-            {% block navigation %}
-                <a href="/">Home</a>
-                {{ widget('navigation', {'navigation': 'main_nav'}) }}
-                {% if app.user %}
-                    <a href="{{ path('enhavo_user_theme_security_logout') }}">Logout</a>
-                {% else %}
-                    <a href="{{ path('enhavo_user_theme_security_login') }}">Login</a>
-                {% endif %}
-            {% endblock %}
-        </header>
-        <main>
-            {% block main %}{% endblock %}
-        </main>
-        <footer>
-            {% block footer %}{% endblock %}
-        </footer>
-        {% block javascripts %}
-            {{ encore_entry_script_tags('base', null, webpack_build()) }}
-        {% endblock %}
-    </body>
-    {% endblock %}
-</html>
+    {% if app.user %}
+        <a href="{{ path('enhavo_user_theme_security_logout') }}">Logout</a>
+    {% else %}
+        <a href="{{ path('enhavo_user_theme_security_login') }}">Login</a>
+    {% endif %}
+{% endblock %}

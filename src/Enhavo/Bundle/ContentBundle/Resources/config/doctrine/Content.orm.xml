@@ -15,8 +15,6 @@
         <field name="public" type="boolean" nullable="true" />
         <field name="publicationDate" type="datetime" nullable="true" />
         <field name="publishedUntil" type="datetime" nullable="true" />
-        <field name="priority" type="float" nullable="true" />
-        <field name="changeFrequency" length="255" nullable="true" />
         <field name="noIndex" type="boolean" nullable="true" />
         <field name="noFollow" type="boolean" nullable="true" />
         <field name="created" type="datetime" >

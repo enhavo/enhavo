@@ -1,6 +1,0 @@
-{#{{ dump(node) }}#}
-<a class="{% if navigation_node_is_active(node) %}active{% endif %}"
-   target="_{ node.configuration.target }"
-   href="{{ router(node.subject.content) }}">
-    {{ node.label|default(node.subject.content.title) }}
-</a>

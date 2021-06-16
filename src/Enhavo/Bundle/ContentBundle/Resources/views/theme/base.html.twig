@@ -1,0 +1,66 @@
+{% extends '@EnhavoApp/theme/base.html.twig' %}
+
+{% block head %}
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/ico">
+
+    {% if block("canonical_url") %}<link rel="canonical" href="{% block canonical_url %}{% endblock %}" />{% endif %}
+    {% if block("meta_description") %}<meta name="description" content="{% block meta_description %}{% endblock %}" />{% endif %}
+    {% if block("og_url") %}<meta name="og:url" content="{% block og_url %}{{ app.request.uri }}{% endblock %}" />{% endif %}
+    {% if block("og_title") %}<meta name="og:title" content="{% block og_title %}{% endblock %}" />{% endif %}
+    {% if block("og_description") %}<meta name="og:description" content="{% block og_description %}{% endblock %}" />{% endif %}
+    {% if block("og_image") %}<meta name="og:image" content="{% block og_image %}{% endblock %}" />{% endif %}
+    {% if block("robots") %}<meta name="robots" content="{% block robots %}{% endblock %}" />{% endif %}
+    {% if block("page_title") %}<title>{% block page_title %}{% endblock %}</title>{% endif %}
+
+    {{ parent() }}
+{% endblock %}
+
+{% block header %}
+    <div class="container">
+        <div class="inner">
+            {% block header_inner %}
+                {% if block("logo_src") %}
+                    <div class="logo">
+                        {% block logo %}<a class=""><img alt="{% block logo_alt %}{% endblock %}" src="{% block logo_src %}{% endblock %}" /></a>{% endblock %}
+                    </div>
+                {% endif %}
+
+                <nav class="main-navigation">
+                    {% block navigation %}
+                        {{ widget('navigation', {navigation: 'main'}) }}
+                    {% endblock %}
+                </nav>
+            {% endblock %}
+        </div>
+        <div class="mobile-menu-toggle" data-mobile-menu-toggle>
+            {% block mobile_menu_toggle %}{% endblock %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    <div class="container">
+        <div class="inner">
+            <nav class="footer-navigation">
+                {{ widget('navigation', {navigation: 'footer'}) }}
+            </nav>
+            {% if block("social_media") %}
+                <div class="social-media">
+                    {% block social_media %}{% endblock %}
+                </div>
+            {% endif %}
+            {% if block("footer_text") %}
+                <div class="text">
+                    {% block footer_text %}{% endblock %}
+                </div>
+            {% endif %}
+            {% if block("footer_logo_src") %}
+                <div class="logo">
+                    {% block footer_logo %}<a class=""><img alt="{% block footer_logo_alt %}{% endblock %}" src="{% block footer_logo_src %}{% endblock %}" /></a>{% endblock %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
