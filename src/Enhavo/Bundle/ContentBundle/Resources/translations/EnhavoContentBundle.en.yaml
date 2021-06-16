@@ -10,8 +10,6 @@ form:
     meta_description: 'Meta Description'
     page_title: 'Page Title'
     public: 'Public'
-    priority: 'Priority'
-    change_frequency: 'Change frequency'
     no_index: 'Robots NOINDEX'
     no_follow: 'Robots NOFOLLOW'
     publication_date: 'Publication date'

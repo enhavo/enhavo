@@ -1,7 +1,0 @@
-{% if node.name == "page" %}
-    {% include 'theme/navigation/page.html.twig' with {'node': node} %}
-{% elseif node.name == "link" %}
-    {% include 'theme/navigation/link.html.twig' with {'node': node} %}
-{% elseif node.name == "submenu" %}
-    {% include 'theme/navigation:submenu.html.twig' with {'node': node} %}
-{% endif %}
