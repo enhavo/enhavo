@@ -39,41 +39,6 @@ class ContentType extends AbstractType
             'translation_domain' => 'EnhavoContentBundle'
         ));
 
-        $builder->add('priority', ChoiceType::class, array(
-            'label' => 'form.label.priority',
-            'translation_domain' => 'EnhavoContentBundle',
-            'choices'   => array(
-                '1' => '0.1',
-                '2' => '0.2',
-                '3' => '0.3',
-                '4' => '0.4',
-                '5' => '0.5',
-                '6' => '0.6',
-                '7' => '0.7',
-                '8' => '0.8',
-                '9' => '0.9',
-                '10' => '1'
-            ),
-            'expanded' => false,
-            'multiple' => false
-        ));
-
-        $builder->add('change_frequency', ChoiceType::class, array(
-            'label' => 'form.label.change_frequency',
-            'translation_domain' => 'EnhavoContentBundle',
-            'choices'   => array(
-                'form.label.always' => 'always',
-                'form.label.hourly' => 'hourly',
-                'form.label.daily' => 'daily',
-                'form.label.weekly' => 'weekly',
-                'form.label.monthly' => 'monthly',
-                'form.label.yearly' => 'yearly',
-                'form.label.never' => 'never',
-            ),
-            'expanded' => false,
-            'multiple' => false
-        ));
-
         $builder->add('noIndex', BooleanType::class, array(
             'label' => 'form.label.no_index',
             'translation_domain' => 'EnhavoContentBundle'
@@ -81,6 +46,11 @@ class ContentType extends AbstractType
 
         $builder->add('noFollow', BooleanType::class, array(
             'label' => 'form.label.no_follow',
+            'translation_domain' => 'EnhavoContentBundle'
+        ));
+
+        $builder->add('canonicalUrl', TextType::class, array(
+            'label' => 'form.label.canonical_url',
             'translation_domain' => 'EnhavoContentBundle'
         ));
 
@@ -99,7 +69,7 @@ class ContentType extends AbstractType
             'translation_domain' => 'EnhavoContentBundle',
         ));
 
-        $builder->add('openGraphDescription', TextType::class, array(
+        $builder->add('openGraphDescription', TextareaType::class, array(
             'label' => 'form.label.openGraphDescription',
             'translation_domain' => 'EnhavoContentBundle',
         ));
