@@ -18,13 +18,13 @@ interface RouteInterface extends RouteObjectInterface
 
     public function getHost();
 
-    public function setHost($host);
+    public function setHost(?string $pattern);
 
     public function setContent($content);
 
     public function getCondition();
 
-    public function setCondition($condition);
+    public function setCondition(?string $condition);
 
     public function setName($name);
 
@@ -41,7 +41,7 @@ interface RouteInterface extends RouteObjectInterface
      *
      * @return $this
      */
-    public function setOption($name, $value);
+    public function setOption(string $name, $value);
 
     /**
      * Get an option value.
@@ -59,7 +59,7 @@ interface RouteInterface extends RouteObjectInterface
      *
      * @return bool true if the option is set, false otherwise
      */
-    public function hasOption($name);
+    public function hasOption(string $name);
 
     /**
      * Returns the defaults.
@@ -97,7 +97,7 @@ interface RouteInterface extends RouteObjectInterface
      *
      * @return mixed The default value or null when not given
      */
-    public function getDefault($name);
+    public function getDefault(string $name);
 
     /**
      * Checks if a default value is set for the given variable.
@@ -106,7 +106,7 @@ interface RouteInterface extends RouteObjectInterface
      *
      * @return bool true if the default value is set, false otherwise
      */
-    public function hasDefault($name);
+    public function hasDefault(string $name);
 
     /**
      * Sets a default value.
@@ -116,5 +116,5 @@ interface RouteInterface extends RouteObjectInterface
      *
      * @return $this
      */
-    public function setDefault($name, $default);
+    public function setDefault(string $name, $default);
 }

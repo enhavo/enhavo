@@ -35,8 +35,8 @@ class MediaExtension extends AbstractTypeExtension
         $resolver->setDefaults($options);
     }
 
-    public function getExtendedType()
+    public static function getExtendedTypes(): iterable
     {
-        return MediaType::class;
+        return [MediaType::class];
     }
 }

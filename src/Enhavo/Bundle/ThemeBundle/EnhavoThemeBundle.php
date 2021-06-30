@@ -3,7 +3,7 @@
 namespace Enhavo\Bundle\ThemeBundle;
 
 use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
-use Doctrine\Common\Persistence\Mapping\Driver\DefaultFileLocator;
+use Doctrine\Persistence\Mapping\Driver\DefaultFileLocator;
 use Doctrine\ORM\Mapping\Driver\XmlDriver;
 use Enhavo\Bundle\ThemeBundle\DependencyInjection\Compiler\EnhavoCompilerPass;
 use Symfony\Component\DependencyInjection\Definition;

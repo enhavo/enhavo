@@ -35,7 +35,7 @@ use Sylius\Bundle\ResourceBundle\Controller\FlashHelperInterface;
 use Sylius\Bundle\ResourceBundle\Controller\AuthorizationCheckerInterface;
 use Sylius\Bundle\ResourceBundle\Controller\EventDispatcherInterface;
 use Sylius\Bundle\ResourceBundle\Controller\StateMachineInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Viewer\ViewFactory;
 use Sylius\Bundle\ResourceBundle\Controller\RequestConfiguration as SyliusRequestConfiguration;
 
@@ -73,7 +73,7 @@ class ResourceController extends BaseController
         RepositoryInterface $repository,
         FactoryInterface $factory,
         NewResourceFactoryInterface $newResourceFactory,
-        ObjectManager $manager,
+        EntityManagerInterface $manager,
         SingleResourceProviderInterface $singleResourceProvider,
         ResourcesCollectionProviderInterface $resourcesFinder,
         ResourceFormFactoryInterface $resourceFormFactory,

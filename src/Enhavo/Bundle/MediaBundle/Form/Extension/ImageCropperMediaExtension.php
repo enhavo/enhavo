@@ -39,8 +39,8 @@ class ImageCropperMediaExtension extends AbstractTypeExtension
         ]);
     }
 
-    public function getExtendedType()
+    public static function getExtendedTypes(): iterable
     {
-        return MediaType::class;
+        return [MediaType::class];
     }
 }
