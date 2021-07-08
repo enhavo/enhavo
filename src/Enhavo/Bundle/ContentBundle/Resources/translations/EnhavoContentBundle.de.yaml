@@ -8,6 +8,7 @@ form:
   label:
     title: 'Titel'
     meta_description: 'Meta Description'
+    canonical_url: 'Canonical Url'
     page_title: 'Seiten Titel'
     public: 'Öffentlich'
     no_index: 'Robots NOINDEX'
