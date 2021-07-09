@@ -1,12 +1,12 @@
 <?php
 
-
 namespace Enhavo\Bundle\TranslationBundle\Tests\Translation;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Locale\LocaleResolverInterface;
 use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface;
 use Enhavo\Bundle\TranslationBundle\Exception\TranslationException;
+use Enhavo\Bundle\TranslationBundle\Locale\LocaleProviderInterface;
 use Enhavo\Bundle\TranslationBundle\Metadata\Metadata;
 use Enhavo\Bundle\TranslationBundle\Metadata\PropertyNode;
 use Enhavo\Bundle\TranslationBundle\Repository\TranslationRepository;
@@ -30,8 +30,9 @@ class TranslationManagerTest extends TestCase
         $dependencies->entityManager = $this->getMockBuilder(EntityManagerInterface::class)->getMock();
         $dependencies->localeResolver = $this->getMockBuilder(LocaleResolverInterface::class)->getMock();
         $dependencies->entityResolver = $this->getMockBuilder(EntityResolverInterface::class)->getMock();
-        $dependencies->locales = ['en', 'de'];
-        $dependencies->defaultLocale = 'en';
+        $dependencies->localeProvider = $this->getMockBuilder(LocaleProviderInterface::class)->getMock();
+        $dependencies->localeProvider->method('getLocales')->willReturn(['en', 'de']);
+        $dependencies->localeProvider->method('getDefaultLocale')->willReturn('en');
         $dependencies->enabled = true;
         $dependencies->translationPaths = ['#^/admin#'];
         $dependencies->requestStack = $this->getMockBuilder(RequestStack::class)->disableOriginalConstructor()->getMock();
@@ -46,8 +47,7 @@ class TranslationManagerTest extends TestCase
             $dependencies->entityManager,
             $dependencies->localeResolver,
             $dependencies->entityResolver,
-            $dependencies->locales,
-            $dependencies->defaultLocale,
+            $dependencies->localeProvider,
             $dependencies->enabled,
             $dependencies->translationPaths,
             $dependencies->requestStack
@@ -402,11 +402,8 @@ class TranslationManagerDependencies
     /** @var EntityResolverInterface|MockObject */
     public $entityResolver;
 
-    /** @var array */
-    public $locales;
-
-    /** @var string */
-    public $defaultLocale;
+    /** @var LocaleProviderInterface|MockObject */
+    public $localeProvider;
 
     /** @var boolean */
     public $enabled;
@@ -417,9 +414,3 @@ class TranslationManagerDependencies
     /** @var RequestStack|MockObject */
     public $requestStack;
 }
-
-//class TranslationManagerMock extends TranslationManager
-//{
-//    /** @var string[] */
-//    public $translatedLocale;
-//}
