@@ -22,6 +22,22 @@ class SyliusCompilerPass implements CompilerPassInterface
         $this->overwriteRequestConfigurationFactory($container);
         $this->overwriteController($container);
         $this->overwriteResourceResolver($container);
+        $this->setSyliusFormClassParameters($container);
+    }
+
+    private function setSyliusFormClassParameters(ContainerBuilder $container)
+    {
+        if ($container->hasParameter('sylius.resources')) {
+            $parameters = $container->getParameter('sylius.resources');
+            foreach ($parameters as $key => $value) {
+                if (isset($value['classes']['form'])) {
+                    $parts = explode('.', $key);
+                    $formClass = $value['classes']['form'];
+                    $paramName = array_shift($parts) . '.form.' . implode('.', $parts) . '.class';
+                    $container->setParameter($paramName, $formClass);
+                }
+            }
+        }
     }
 
     private function setSyliusResourceParameter(ContainerBuilder $container)
