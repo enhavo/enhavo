@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\TranslationBundle\DependencyInjection;
 
+use Enhavo\Bundle\TranslationBundle\Locale\ConfigurationLocaleProvider;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -40,6 +41,7 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('locales')
                     ->prototype('scalar')->end()
                 ->end()
+                ->scalarNode('provider')->defaultValue(ConfigurationLocaleProvider::class)->end()
             ->end()
             ->children()
                 ->arrayNode('metadata')
