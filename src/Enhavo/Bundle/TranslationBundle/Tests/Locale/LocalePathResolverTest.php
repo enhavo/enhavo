@@ -5,6 +5,7 @@ namespace Enhavo\Bundle\TranslationBundle\Tests\Locale;
 
 
 use Enhavo\Bundle\TranslationBundle\Locale\LocalePathResolver;
+use Enhavo\Bundle\TranslationBundle\Locale\LocaleProviderInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +18,7 @@ class LocalePathResolverTest extends TestCase
         $dependencies = new LocalePathResolverTestDependencies();
         $dependencies->requestStack = $this->getMockBuilder(RequestStack::class)->getMock();
         $dependencies->request = $this->getMockBuilder(Request::class)->getMock();
+        $dependencies->localeProvider = $this->getMockBuilder(LocaleProviderInterface::class)->getMock();
 
         return $dependencies;
     }
@@ -25,8 +27,7 @@ class LocalePathResolverTest extends TestCase
     {
         $resolver = new LocalePathResolver(
             $dependencies->requestStack,
-            ['fr', 'es'],
-            'fr'
+            $dependencies->localeProvider
         );
 
         return $resolver;
@@ -35,6 +36,9 @@ class LocalePathResolverTest extends TestCase
     public function testResolveSuccess()
     {
         $dependencies = $this->createDependencies();
+        $dependencies->localeProvider->method('getLocales')->willReturn(['fr', 'es']);
+        $dependencies->localeProvider->method('getDefaultLocale')->willReturn('fr');
+
         $resolver = $this->createInstance($dependencies);
 
         $dependencies->requestStack->method('getMasterRequest')->willReturn($dependencies->request);
@@ -46,6 +50,9 @@ class LocalePathResolverTest extends TestCase
     public function testResolveFallback()
     {
         $dependencies = $this->createDependencies();
+        $dependencies->localeProvider->method('getLocales')->willReturn(['fr', 'es']);
+        $dependencies->localeProvider->method('getDefaultLocale')->willReturn('fr');
+
         $resolver = $this->createInstance($dependencies);
 
         $dependencies->requestStack->method('getMasterRequest')->willReturn($dependencies->request);
@@ -57,6 +64,9 @@ class LocalePathResolverTest extends TestCase
     public function testResolveRepeat()
     {
         $dependencies = $this->createDependencies();
+        $dependencies->localeProvider->method('getLocales')->willReturn(['fr', 'es']);
+        $dependencies->localeProvider->method('getDefaultLocale')->willReturn('fr');
+
         $resolver = $this->createInstance($dependencies);
 
         $dependencies->requestStack->method('getMasterRequest')->willReturn($dependencies->request);
@@ -78,4 +88,7 @@ class LocalePathResolverTestDependencies
 
     /** @var Request|MockObject */
     public $request;
+
+    /** @var LocaleProviderInterface|MockObject */
+    public $localeProvider;
 }
