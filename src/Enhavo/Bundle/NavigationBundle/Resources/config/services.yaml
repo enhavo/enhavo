@@ -20,6 +20,7 @@ services:
     Enhavo\Bundle\NavigationBundle\Form\Type\NodeCollectionType:
         arguments:
             - '%enhavo_navigation.model.node.class%'
+            - '%enhavo_navigation.form.node.class%'
             - '@Enhavo\Bundle\NavigationBundle\NavItem\NavItemManager'
         tags:
             - { name: form.type, alias: 'enhavo_navigation_nodes' }

@@ -19,17 +19,22 @@ class NodeCollectionType extends AbstractType
     /** @var string */
     private $class;
 
+    /** @var string */
+    private $formClass;
+
     /** @var NavItemManager */
     private $navItemManager;
 
     /**
      * NodeCollectionType constructor.
      * @param string $class
+     * @param string $formClass
      * @param NavItemManager $navItemManager
      */
-    public function __construct(string $class, NavItemManager $navItemManager)
+    public function __construct(string $class, string $formClass, NavItemManager $navItemManager)
     {
         $this->class = $class;
+        $this->formClass = $formClass;
         $this->navItemManager = $navItemManager;
     }
 
@@ -61,7 +66,7 @@ class NodeCollectionType extends AbstractType
     {
         $types = [];
         foreach($this->navItemManager->getNavItems() as $key => $navItem) {
-            $types[$key] = NodeType::class;
+            $types[$key] = $this->formClass;
         }
         return $types;
     }
