@@ -28,25 +28,25 @@ services:
         arguments:
             - '@request_stack'
             - '@Enhavo\Bundle\TranslationBundle\Locale\LocaleProviderInterface'
-            - '%enhavo_translation.default_locale%'
+            - '@Enhavo\Bundle\TranslationBundle\Locale\LocaleProviderInterface'
 
     Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator:
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface'
-            - '%enhavo_translation.default_locale%'
+            - '@Enhavo\Bundle\TranslationBundle\Locale\LocaleProviderInterface'
 
     Enhavo\Bundle\TranslationBundle\Translator\Route\RouteTranslator:
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface'
-            - '%enhavo_translation.default_locale%'
+            - '@Enhavo\Bundle\TranslationBundle\Locale\LocaleProviderInterface'
 
     Enhavo\Bundle\TranslationBundle\Translator\Media\FileTranslator:
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface'
-            - '%enhavo_translation.default_locale%'
+            - '@Enhavo\Bundle\TranslationBundle\Locale\LocaleProviderInterface'
 
 
 #    enhavo_translation.preview_listener:
