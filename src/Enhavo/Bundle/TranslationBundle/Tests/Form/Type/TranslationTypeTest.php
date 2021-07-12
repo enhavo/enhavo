@@ -109,6 +109,36 @@ class TranslationTypeTest extends TypeTestCase
         $this->assertEquals('Hello', $form->getData()->getText());
     }
 
+    public function testSameReferenceForSubmitAndTranslationData()
+    {
+        $this->translationManager->method('isTranslation')->willReturn(true);
+        $this->translationManager->method('isEnabled')->willReturn(true);
+        $this->translationManager->method('isTranslatable')->willReturnCallback(function ($dataClass) {
+            return $dataClass instanceof MockTranslationModel || $dataClass === MockTranslationModel::class;
+        });
+        $this->translationManager->method('getLocales')->willReturn(['en', 'de']);
+        $this->translationManager->method('getDefaultLocale')->willReturn('en');
+        $this->translationManager->method('getTranslations')->willReturn([]);
+
+        $translationData = null;
+        $this->translationManager->method('setTranslation')->willReturnCallback(function($data, $property, $locale, $value) use (&$translationData) {
+            $translationData = $data;
+        });
+
+        $form = $this->factory->create(MockTranslationFormType::class);
+
+        $form->submit([
+            'text' => [
+                'en' => 'Hello',
+                'de' => 'Hallo'
+            ]
+        ]);
+
+        $formData = $form->getData();
+
+        $this->assertTrue($translationData === $formData);
+    }
+
     public function testView()
     {
         $this->translationManager->method('getLocales')->willReturn(['en', 'de']);
