@@ -7,6 +7,7 @@ namespace Enhavo\Bundle\TranslationBundle\Tests\Translator\Text;
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface;
 use Enhavo\Bundle\TranslationBundle\Entity\Translation;
+use Enhavo\Bundle\TranslationBundle\Locale\LocaleProviderInterface;
 use Enhavo\Bundle\TranslationBundle\Repository\TranslationRepository;
 use Enhavo\Bundle\TranslationBundle\Tests\Mocks\TranslatableMock;
 use Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator;
@@ -22,6 +23,8 @@ class TextTranslatorTest extends TestCase
         $dependencies->repository = $this->getMockBuilder(TranslationRepository::class)->disableOriginalConstructor()->getMock();
         $dependencies->entityManager->method('getRepository')->willReturn($dependencies->repository);
         $dependencies->entityResolver = $this->getMockBuilder(EntityResolverInterface::class)->getMock();
+        $dependencies->localeProvider = $this->getMockBuilder(LocaleProviderInterface::class)->getMock();
+        $dependencies->localeProvider->method('getDefaultLocale')->willReturn('es');
 
         return $dependencies;
     }
@@ -31,7 +34,7 @@ class TextTranslatorTest extends TestCase
         $translator = new TextTranslator(
             $dependencies->entityManager,
             $dependencies->entityResolver,
-            'es'
+            $dependencies->localeProvider
         );
 
         return $translator;
@@ -159,4 +162,7 @@ class TextTranslatorTestDependencies
 
     /** @var TranslationRepository|MockObject */
     public $repository;
+
+    /** @var LocaleProviderInterface|MockObject */
+    public $localeProvider;
 }

@@ -22,7 +22,7 @@ class FileTranslator extends AbstractTranslator
 {
     public function setTranslation($entity, $property, $locale, $value): void
     {
-        if ($locale == $this->defaultLocale) {
+        if ($locale == $this->localeProvider->getDefaultLocale()) {
             return;
         }
 
@@ -44,7 +44,7 @@ class FileTranslator extends AbstractTranslator
 
     public function getTranslation($entity, $property, $locale): ?FileInterface
     {
-        if ($locale == $this->defaultLocale) {
+        if ($locale == $this->localeProvider->getDefaultLocale()) {
             return null;
         }
 
@@ -66,7 +66,7 @@ class FileTranslator extends AbstractTranslator
     public function translate($entity, string $property, string $locale, array $options)
     {
         // translation data is stored inside the object
-        if ($locale === $this->defaultLocale) {
+        if ($locale === $this->localeProvider->getDefaultLocale()) {
             return;
         }
 
