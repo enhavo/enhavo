@@ -100,8 +100,8 @@ class RefreshFormatCommand extends Command
             if ($this->formatManager->existsFormat($format->getName())) {
                 $this->formatManager->applyFormat($format->getFile(), $format->getName());
             } else {
-                if (!in_array($format, $notExistingFormats)) {
-                    $notExistingFormats[] = $format;
+                if (!in_array($format->getName(), $notExistingFormats)) {
+                    $notExistingFormats[] = $format->getName();
                 }
             }
         }
@@ -110,8 +110,8 @@ class RefreshFormatCommand extends Command
 
         $output->writeln('');
 
-        foreach ($notExistingFormats as $format) {
-            $output->writeln(sprintf('<comment>Warning: Format "%s" not exists</comment>', $format->getName()));
+        foreach ($notExistingFormats as $formatName) {
+            $output->writeln(sprintf('<comment>Warning: Format "%s" not exists</comment>', $formatName));
         }
 
         $output->writeln('<info>Refreshing finished</info>');
