@@ -96,7 +96,9 @@ class RefreshFormatCommand extends Command
 
         foreach($formats as $format) {
             $progressBar->advance();
-            $this->formatManager->applyFormat($format->getFile(), $format->getName());
+            if ($this->formatManager->existsFormat($format)) {
+                $this->formatManager->applyFormat($format->getFile(), $format->getName());
+            }
         }
 
         $progressBar->finish();
