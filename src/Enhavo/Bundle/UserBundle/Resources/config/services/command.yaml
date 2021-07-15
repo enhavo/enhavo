@@ -22,3 +22,11 @@ services:
             - '@Enhavo\Bundle\UserBundle\Mapper\UserMapper'
         tags:
             - { name: console.command }
+
+    Enhavo\Bundle\UserBundle\Command\RoleCommand:
+        arguments:
+            - '@Enhavo\Bundle\UserBundle\User\UserManager'
+            - '@enhavo_user.repository.user'
+            - '@Enhavo\Bundle\UserBundle\Mapper\UserMapper'
+        tags:
+            - { name: console.command }
