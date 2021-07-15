@@ -249,9 +249,9 @@ class FormatManager
         $this->storage->deleteFile($format);
     }
 
-    public function existsFormat($format)
+    public function existsFormat($formatName)
     {
-        return in_array($format, array_keys($this->formats));
+        return in_array($formatName, array_keys($this->formats));
     }
 
     /**

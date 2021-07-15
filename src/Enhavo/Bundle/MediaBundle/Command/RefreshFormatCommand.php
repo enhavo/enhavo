@@ -94,16 +94,26 @@ class RefreshFormatCommand extends Command
         $progressBar = new ProgressBar($output, count($formats));
         $progressBar->start();
 
+        $notExistingFormats = [];
         foreach($formats as $format) {
             $progressBar->advance();
-            if ($this->formatManager->existsFormat($format)) {
+            if ($this->formatManager->existsFormat($format->getName())) {
                 $this->formatManager->applyFormat($format->getFile(), $format->getName());
+            } else {
+                if (!in_array($format, $notExistingFormats)) {
+                    $notExistingFormats[] = $format;
+                }
             }
         }
 
         $progressBar->finish();
 
         $output->writeln('');
+
+        foreach ($notExistingFormats as $format) {
+            $output->writeln(sprintf('<comment>Warning: Format "%s" not exists</comment>', $format->getName()));
+        }
+
         $output->writeln('<info>Refreshing finished</info>');
     }
 }
