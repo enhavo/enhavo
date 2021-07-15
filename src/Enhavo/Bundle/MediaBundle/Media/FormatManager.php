@@ -112,6 +112,10 @@ class FormatManager
 
     public function applyFormat(FileInterface $file, $format, $parameters = [])
     {
+        if (!$this->existsFormat($format)) {
+            throw new FormatException(sprintf('Format "%s" not exists', $format));
+        }
+
         /** @var Format $fileFormat */
         $fileFormat = $this->formatRepository->findByFormatNameAndFile($format, $file);
         $fileFormat = $this->waitForLock($fileFormat);
@@ -243,6 +247,11 @@ class FormatManager
             $this->em->flush();
         }
         $this->storage->deleteFile($format);
+    }
+
+    public function existsFormat($formatName)
+    {
+        return in_array($formatName, array_keys($this->formats));
     }
 
     /**
