@@ -97,6 +97,8 @@ subscriber:
           subject: 'Neues Newsletter Abonnement'
       notify:
           subject: 'Newsletter Abonnement'
+      confirm:
+          subject: 'Erfolgreich im Newsletter Abonnement eingetragen'
 group:
   label:
     group: Gruppe

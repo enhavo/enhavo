@@ -5,13 +5,10 @@ namespace Enhavo\Bundle\NewsletterBundle\Strategy\Type;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager;
 use Enhavo\Bundle\NewsletterBundle\Strategy\AbstractStrategyType;
-use Enhavo\Bundle\NewsletterBundle\Strategy\MailSubjectTrait;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class NotifyStrategyType extends AbstractStrategyType
 {
-    use MailSubjectTrait;
-
     /** @var NewsletterManager */
     private $newsletterManager;
 
@@ -45,7 +42,7 @@ class NotifyStrategyType extends AbstractStrategyType
             $template = $options['template'];
             $from = $options['from'];
             $senderName = $options['sender_name'];
-            $subject = $this->getSubject($options);
+            $subject = $this->trans($options['subject'], [], $options['translation_domain']);
 
             $message = $this->newsletterManager->createMessage($from, $senderName, $subscriber->getEmail(), $subject, $template, [
                 'subscriber' => $subscriber
@@ -61,7 +58,7 @@ class NotifyStrategyType extends AbstractStrategyType
             $from = $options['from'];
             $senderName = $options['sender_name'];
             $to = $options['admin_email'];
-            $subject = $this->getAdminSubject($options);
+            $subject = $this->trans($options['admin_subject'], [], $options['translation_domain']);
 
             $message = $this->newsletterManager->createMessage($from, $senderName, $to, $subject, $template, [
                 'subscriber' => $subscriber
