@@ -99,6 +99,8 @@ subscriber:
           subject: 'Newsletter Subscription'
       notify:
           subject: 'Your Newsletter Subscription'
+      confirm:
+          subject: 'You subscription is confirmed'
 group:
   label:
     create: 'Create Group'
