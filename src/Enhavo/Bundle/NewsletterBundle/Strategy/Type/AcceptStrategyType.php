@@ -6,15 +6,12 @@ use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager;
 use Enhavo\Bundle\NewsletterBundle\Pending\PendingSubscriberManager;
 use Enhavo\Bundle\NewsletterBundle\Strategy\AbstractStrategyType;
-use Enhavo\Bundle\NewsletterBundle\Strategy\MailSubjectTrait;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 class AcceptStrategyType extends AbstractStrategyType
 {
-    use MailSubjectTrait;
-
     /** @var NewsletterManager */
     private $newsletterManager;
 
@@ -69,7 +66,7 @@ class AcceptStrategyType extends AbstractStrategyType
             $template = $options['template'];
             $from = $options['from'];
             $senderName = $options['sender_name'];
-            $subject = $this->getSubject($options);
+            $subject = $this->trans($options['subject'], [], $options['translation_domain']);
 
             $message = $this->newsletterManager->createMessage($from, $senderName, $subscriber->getEmail(), $subject, $template, [
                 'subscriber' => $subscriber
@@ -90,7 +87,7 @@ class AcceptStrategyType extends AbstractStrategyType
         $from = $options['from'];
         $senderName = $options['sender_name'];
         $to = $options['admin_email'];
-        $subject = $this->getAdminSubject($options);
+        $subject = $this->trans($options['admin_subject'], [], $options['translation_domain']);
 
         $message = $this->newsletterManager->createMessage($from, $senderName, $to, $subject, $template, [
             'subscriber' => $subscriber,

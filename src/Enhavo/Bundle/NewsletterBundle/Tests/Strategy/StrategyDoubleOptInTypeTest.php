@@ -120,7 +120,7 @@ class StrategyDoubleOptInTypeTest extends TestCase
             $this->assertEquals('from@enhavo.com', $from);
             $this->assertEquals('enhavo', $senderName);
             $this->assertEquals('to@enhavo.com', $to);
-            $this->assertEquals('subscriber.mail.notify.subject.trans', $subject);
+            $this->assertEquals('subscriber.mail.confirm.subject.trans', $subject);
             $this->assertEquals('__CTPL__', $template);
             $this->assertInstanceOf(SubscriberInterface::class, $options['subscriber']);
 
