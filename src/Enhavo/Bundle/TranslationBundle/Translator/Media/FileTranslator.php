@@ -82,6 +82,16 @@ class FileTranslator extends AbstractTranslator
         }
     }
 
+    public function detach($entity, string $property, string $locale, array $options)
+    {
+        // translation data is stored inside the object
+        if ($locale === $this->localeProvider->getDefaultLocale()) {
+            return;
+        }
+
+        parent::detach($entity, $property, $locale, $options);
+    }
+
     private function createTranslationFile($entity, $property, $locale, $data): TranslationFile
     {
         $translation = new TranslationFile();
