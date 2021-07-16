@@ -129,4 +129,14 @@ class RouteTranslator extends AbstractTranslator
             $accessor->setValue($entity, $property, $newValue);
         }
     }
+
+    public function detach($entity, string $property, string $locale, array $options)
+    {
+        // translation data is stored inside the object
+        if ($locale === $this->localeProvider->getDefaultLocale()) {
+            return;
+        }
+
+        parent::detach($entity, $property, $locale, $options);
+    }
 }

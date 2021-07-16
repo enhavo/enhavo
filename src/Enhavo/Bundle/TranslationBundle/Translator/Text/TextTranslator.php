@@ -80,6 +80,16 @@ class TextTranslator extends AbstractTranslator
         }
     }
 
+    public function detach($entity, string $property, string $locale, array $options)
+    {
+        // translation data is stored inside the object
+        if ($locale === $this->localeProvider->getDefaultLocale()) {
+            return;
+        }
+
+        parent::detach($entity, $property, $locale, $options);
+    }
+
     private function createTranslation($entity, $property, $locale, $data): Translation
     {
         $translation = new Translation();
