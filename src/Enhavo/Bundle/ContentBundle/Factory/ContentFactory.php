@@ -23,8 +23,6 @@ class ContentFactory extends Factory
         $newResource->setSlug($originalResource->getSlug());
         $newResource->setMetaDescription($originalResource->getMetaDescription());
         $newResource->setPageTitle($originalResource->getPageTitle());
-        $newResource->setPriority($originalResource->getPriority());
-        $newResource->setChangeFrequency($originalResource->getChangeFrequency());
         $newResource->setPublic($originalResource->isPublic());
         $newResource->setPublicationDate($originalResource->getPublicationDate());
         $newResource->setPublishedUntil($originalResource->getPublishedUntil());

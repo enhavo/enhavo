@@ -15,9 +15,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class TextSettingType extends AbstractSettingType
 {
-    public function init(array $options)
+    public function init(array $options, $key = null)
     {
-        $settingEntity = $this->parent->getSettingEntity($options);
+        $settingEntity = $this->parent->getSettingEntity($options, $key);
 
         if ($settingEntity->getValue() === null) {
             $settingEntity->setValue(new TextValue($settingEntity));
@@ -28,7 +28,7 @@ class TextSettingType extends AbstractSettingType
         }
     }
 
-    public function getViewValue(array $options, $value)
+    public function getViewValue(array $options, $value, $key = null)
     {
         return strip_tags($value->getValue());
     }

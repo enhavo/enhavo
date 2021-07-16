@@ -32,6 +32,7 @@ class EnhavoTranslationExtension extends AbstractResourceExtension implements Pr
         $container->setParameter('enhavo_translation.metadata', $config['metadata']);
         $container->setParameter('enhavo_translation.translation_paths', $config['translation_paths']);
         $container->setParameter('enhavo_translation.translator.access_control', $config['translator']['access_control']);
+        $container->setParameter('enhavo_translation.provider', $config['provider']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services/translator.yaml');

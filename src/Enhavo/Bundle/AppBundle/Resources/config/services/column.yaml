@@ -39,6 +39,13 @@ services:
         tags:
             - { name: enhavo.column, alias: property }
 
+    Enhavo\Bundle\AppBundle\Column\Type\StateType:
+        public: true
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.column, alias: state }
+
     Enhavo\Bundle\AppBundle\Column\Type\PositionType:
         public: true
         calls:

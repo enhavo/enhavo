@@ -14,9 +14,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class DateTimeSettingType extends AbstractSettingType
 {
-    public function init(array $options)
+    public function init(array $options, $key = null)
     {
-        $settingEntity = $this->parent->getSettingEntity($options);
+        $settingEntity = $this->parent->getSettingEntity($options, $key);
 
         if ($options['date'] && $options['time']) {
             $type = DateValue::TYPE_DATETIME;
@@ -38,7 +38,7 @@ class DateTimeSettingType extends AbstractSettingType
         }
     }
 
-    public function getViewValue(array $options, $value)
+    public function getViewValue(array $options, $value, $key = null)
     {
         /** @var \DateTime $date */
         $date = $value->getValue();

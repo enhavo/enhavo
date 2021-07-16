@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\AppBundle\Tests\Action\Type;
 
 use Enhavo\Bundle\AppBundle\Action\Action;
+use Enhavo\Bundle\AppBundle\Action\ActionLanguageExpression;
 use Enhavo\Bundle\AppBundle\Action\Type\OutputStreamActionType;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Routing\RouterInterface;
@@ -20,13 +21,18 @@ class OutputStreamActionTypeTest extends TestCase
     {
         $dependencies = new OutputStreamActionTypeDependencies();
         $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
+        $dependencies->actionLanguageExpression = $this->getMockBuilder(ActionLanguageExpression::class)->disableOriginalConstructor()->getMock();
         $dependencies->router = $this->getMockBuilder(RouterInterface::class)->getMock();
         return $dependencies;
     }
 
     private function createInstance(OutputStreamActionTypeDependencies $dependencies)
     {
-        return new OutputStreamActionType($dependencies->translator, $dependencies->router);
+        return new OutputStreamActionType(
+            $dependencies->translator,
+            $dependencies->actionLanguageExpression,
+            $dependencies->router
+        );
     }
 
     public function testCreateViewData()
@@ -61,6 +67,8 @@ class OutputStreamActionTypeDependencies
 {
     /** @var TranslatorInterface|\PHPUnit_Framework_MockObject_MockObject */
     public $translator;
+    /** @var ActionLanguageExpression|\PHPUnit_Framework_MockObject_MockObject */
+    public $actionLanguageExpression;
     /** @var RouterInterface|\PHPUnit_Framework_MockObject_MockObject */
     public $router;
 }

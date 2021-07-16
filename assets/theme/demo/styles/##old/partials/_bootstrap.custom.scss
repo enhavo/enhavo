@@ -1,7 +1,0 @@
-.container {width:$containerWidth;padding-left:$columnSpacing;padding-right:$columnSpacing;}
-.row {margin-left:-$columnSpacing;margin-right:-$columnSpacing;}
-.row + .row {margin-top:2*$columnSpacing;}
-
-[class*=col-xs-] {padding-left:$columnSpacing;padding-right:$columnSpacing;}
-[class*=col-sm-] {padding-left:$columnSpacing;padding-right:$columnSpacing;}
-[class*=col-md-] {padding-left:$columnSpacing;padding-right:$columnSpacing;}

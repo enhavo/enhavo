@@ -1,0 +1,37 @@
+services:
+    Enhavo\Bundle\AppBundle\Preview\PreviewManager:
+
+    Enhavo\Bundle\AppBundle\Preview\ArgumentResolver\ContentDocumentValueArgumentResolver:
+        tags:
+            - { name: controller.argument_value_resolver, priority: 50 }
+
+    Enhavo\Bundle\AppBundle\Preview\ArgumentResolver\PreviewValueArgumentResolver:
+        arguments:
+            - '@Enhavo\Bundle\AppBundle\Preview\PreviewManager'
+        tags:
+            - { name: controller.argument_value_resolver, priority: 50 }
+
+    enhavo_app.preview.default_renderer:
+        class: Enhavo\Bundle\AppBundle\Preview\DefaultRenderer
+        public: true
+
+    enhavo_app.preview.strategy_resolver:
+        class: Enhavo\Bundle\AppBundle\Preview\StrategyResolver
+        calls:
+            - ['setContainer', ['@service_container']]
+
+    enhavo_app.preview.strategy.dynamic:
+        class: Enhavo\Bundle\AppBundle\Preview\Strategy\DynamicStrategy
+        public: true
+        calls:
+            - ['setContainer', ['@service_container']]
+
+    enhavo_app.preview.strategy.service:
+        class: Enhavo\Bundle\AppBundle\Preview\Strategy\ServiceStrategy
+        public: true
+        arguments:
+            - '@argument_resolver'
+            - '@request_stack'
+            - '@Enhavo\Bundle\AppBundle\Preview\PreviewManager'
+        calls:
+            - ['setContainer', ['@service_container']]

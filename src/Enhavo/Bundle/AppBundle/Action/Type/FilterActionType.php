@@ -1,12 +1,5 @@
 <?php
 
-/**
- * CancelButton.php
- *
- * @since 29/05/16
- * @author gseidel
- */
-
 namespace Enhavo\Bundle\AppBundle\Action\Type;
 
 use Enhavo\Bundle\AppBundle\Action\AbstractActionType;

@@ -16,6 +16,7 @@
                 <div @click="$view.data.alert = null" class="modal-btn primary">{{ $translator.trans('enhavo_app.view.label.ok') }}</div>
             </div>
         </div>
+
         <loading-screen v-if="$view.data.loading"></loading-screen>
     </div>
 </template>

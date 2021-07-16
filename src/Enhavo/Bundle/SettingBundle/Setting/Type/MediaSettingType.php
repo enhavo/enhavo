@@ -29,9 +29,9 @@ class MediaSettingType extends AbstractSettingType
         $this->fileFactory = $fileFactory;
     }
 
-    public function init(array $options)
+    public function init(array $options, $key = null)
     {
-        $settingEntity = $this->parent->getSettingEntity($options);
+        $settingEntity = $this->parent->getSettingEntity($options, $key);
 
         if ($settingEntity->getValue() === null) {
             $settingEntity->setValue(new MediaValue($options['multiple'], $settingEntity));
@@ -50,7 +50,7 @@ class MediaSettingType extends AbstractSettingType
         }
     }
 
-    public function getViewValue(array $options, $value)
+    public function getViewValue(array $options, $value, $key = null)
     {
         if ($options['multiple']) {
             $data = [];

@@ -157,12 +157,9 @@ subtrees:
         url: 'git@github.com:enhavo/vue-form-assets'
         prefix: 'assets/node_modules/@enhavo/vue-form'
 
-    ClassAnalyzer:
-        url: 'git@github.com:enhavo/ClassAnalyzer'
-        prefix: 'src/Enhavo/Component/ClassAnalyzer'
-    DoctrineExtension:
-        url: 'git@github.com:enhavo/DoctrineExtension'
-        prefix: 'src/Enhavo/Component/DoctrineExtension'
+    CleverReach:
+        url: 'git@github.com:enhavo/cleverreach'
+        prefix: 'src/Enhavo/Component/CleverReach'
     Metadata:
         url: 'git@github.com:enhavo/Metadata'
         prefix: 'src/Enhavo/Component/Metadata'

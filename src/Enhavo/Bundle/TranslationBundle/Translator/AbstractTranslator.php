@@ -6,6 +6,7 @@ namespace Enhavo\Bundle\TranslationBundle\Translator;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface;
+use Enhavo\Bundle\TranslationBundle\Locale\LocaleProviderInterface;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
 abstract class AbstractTranslator implements TranslatorInterface
@@ -13,31 +14,22 @@ abstract class AbstractTranslator implements TranslatorInterface
     /** @var EntityManagerInterface */
     protected $entityManager;
 
-    /**
-     * @var string
-     */
-    protected $defaultLocale;
-
-    /**
-     * @var EntityResolverInterface
-     */
+    /** @var EntityResolverInterface */
     protected $entityResolver;
 
-    /**
-     * @var DataMap
-     */
+    /** @var DataMap */
     protected $buffer;
 
-    /**
-     * @var DataMap
-     */
+    /** @var DataMap */
     protected $originalData;
 
+    /** @var LocaleProviderInterface  */
+    protected $localeProvider;
 
-    public function __construct(EntityManagerInterface $entityManager, EntityResolverInterface $entityResolver, $defaultLocale)
+    public function __construct(EntityManagerInterface $entityManager, EntityResolverInterface $entityResolver, LocaleProviderInterface $localeProvider)
     {
         $this->entityManager = $entityManager;
-        $this->defaultLocale = $defaultLocale;
+        $this->localeProvider = $localeProvider;
         $this->entityResolver = $entityResolver;
 
         $this->buffer = new DataMap();

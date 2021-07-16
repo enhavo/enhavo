@@ -1,19 +1,35 @@
 <template>
-    <div>
-        <form-row v-if="form.compound" v-for="child in form.children" :form="child" :key="child.name"></form-row>
-        <component v-if="!form.compound" :is="form.component" :form="form" />
-    </div>
+    <component v-if="shouldRender" :is="getComponent()" :form="form" />
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from "vue-property-decorator";
-import {Form} from "@enhavo/vue-form/form/Form";
+import {Vue, Component, Prop} from "vue-property-decorator";
+import {FormData} from "@enhavo/vue-form/data/FormData"
 
 @Component({})
 export default class FormWidgetComponent extends Vue
 {
-    name = 'form-widget';
     @Prop()
-    form: Form
+    form: FormData
+
+    render: boolean;
+
+    getComponent()
+    {
+        if (!this.form.compound || this.form.component !== null) {
+            return this.form.component;
+        }
+        return 'form-rows';
+    }
+
+    shouldRender()
+    {
+        if (!this.form.rendered) {
+            this.form.rendered = true;
+            this.render = true;
+        }
+
+        return this.render;
+    }
 }
 </script>

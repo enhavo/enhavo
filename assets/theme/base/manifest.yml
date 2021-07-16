@@ -3,10 +3,5 @@ meta:
     name: 'Enhavo base template'
     image: ~
     description: ''
-webpack:
-    build: 'enhavo'
-    options:
-        color1:
-    entries:
-        base: './base.ts'
-template:
+options:
+    color1:

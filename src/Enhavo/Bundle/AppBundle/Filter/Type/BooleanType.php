@@ -20,14 +20,7 @@ class BooleanType extends AbstractFilterType
 
     public function createViewData($options, $name)
     {
-        $data = [
-            'type' => $this->getType(),
-            'key' => $name,
-            'value' => null,
-            'initialValue' => null,
-            'component' => $options['component'],
-            'label' => $this->getLabel($options),
-        ];
+        $data = parent::createViewData($options, $name);
 
         if (!$options['checkbox']) {
             if ($data['component'] === 'filter-boolean') {
@@ -37,6 +30,15 @@ class BooleanType extends AbstractFilterType
         }
 
         return $data;
+    }
+
+    protected function getInitialValue($options)
+    {
+        if ($options['checkbox']) {
+            return $options['initial_value'];
+        } else {
+            return $options['initial_value'] === null ? null : ($options['initial_value'] ? self::VALUE_TRUE : self::VALUE_FALSE);
+        }
     }
 
     private function getChoices($options)

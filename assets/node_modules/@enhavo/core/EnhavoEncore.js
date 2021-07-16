@@ -30,8 +30,7 @@ class EnhavoEncore
         }
 
         let config = Encore.getWebpackConfig();
-        config.name = name;
-        this.configs.push(config);
+        this.addConfig(name, config);
 
         for(let enhavoPackage of packages) {
             enhavoPackage.initWebpackConfig(config, name)
@@ -44,6 +43,21 @@ class EnhavoEncore
         return config;
     }
 
+    addConfig(name, config)
+    {
+        for (let key in this.configs) {
+            if (this.configs.hasOwnProperty(key)) {
+                if (this.configs[key].name === name) {
+                    this.configs[key].config;
+                    return;
+                }
+            }
+        }
+
+        config.name = name;
+        this.configs.push(config);
+    }
+
     export(name = null)
     {
         if(name) {
@@ -52,7 +66,7 @@ class EnhavoEncore
                     return config;
                 }
             }
-            throw 'Config name "' + name + '"does not exists';
+            throw 'Config name "' + name + '" does not exists';
         }
         return this.configs;
     }

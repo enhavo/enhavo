@@ -10,6 +10,7 @@
 namespace Enhavo\Bundle\AppBundle\Action\Type;
 
 use Enhavo\Bundle\AppBundle\Action\AbstractActionType;
+use Enhavo\Bundle\AppBundle\Action\ActionLanguageExpression;
 use Enhavo\Bundle\AppBundle\Action\ActionTypeInterface;
 use Enhavo\Bundle\AppBundle\Util\ArrayUtil;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -24,11 +25,12 @@ class SaveActionType extends AbstractActionType implements ActionTypeInterface
     /**
      * CreateAction constructor.
      * @param TranslatorInterface $translator
+     * @param ActionLanguageExpression $actionLanguageExpression
      * @param RouterInterface $router
      */
-    public function __construct(TranslatorInterface $translator, RouterInterface $router)
+    public function __construct(TranslatorInterface $translator, ActionLanguageExpression $actionLanguageExpression, RouterInterface $router)
     {
-        parent::__construct($translator);
+        parent::__construct($translator, $actionLanguageExpression);
         $this->router = $router;
     }
 

@@ -2,7 +2,7 @@ services:
     Enhavo\Bundle\NewsletterBundle\Client\CleverReachClient:
         arguments:
             - '@event_dispatcher'
-            - 'Enhavo\Component\CleverReach\Http\Guzzle'
+            - 'Enhavo\Component\CleverReach\Http\GuzzleAdapter'
 
     Enhavo\Bundle\NewsletterBundle\Client\MailChimpClient:
         arguments:
@@ -21,32 +21,26 @@ services:
             - { name: enhavo.menu, alias: newsletter }
 
     Enhavo\Bundle\NewsletterBundle\Action\SendActionType:
+        parent: Enhavo\Bundle\AppBundle\Action\AbstractActionType
         public: true
-        arguments:
-            - '@translator'
         tags:
             - { name: enhavo.action, alias: newsletter_send }
 
     Enhavo\Bundle\NewsletterBundle\Action\SendTestActionType:
+        parent: Enhavo\Bundle\AppBundle\Action\Type\ModalActionType
         public: true
-        arguments:
-            - '@translator'
         tags:
             - { name: enhavo.action, alias: newsletter_send_test }
 
     Enhavo\Bundle\NewsletterBundle\Action\StatsActionType:
+        parent: Enhavo\Bundle\AppBundle\Action\Type\OpenActionType
         public: true
-        arguments:
-            - '@translator'
-            - '@router'
         tags:
             - { name: enhavo.action, alias: newsletter_stats }
 
     Enhavo\Bundle\NewsletterBundle\Action\ActivateActionType:
+        parent: Enhavo\Bundle\AppBundle\Action\Type\UpdateActionType
         public: true
-        arguments:
-            - '@translator'
-            - '@router'
         tags:
             - { name: enhavo.action, alias: newsletter_subscriber_activate }
 

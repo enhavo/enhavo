@@ -32,7 +32,6 @@ class TaxonomyFilterType extends AbstractFilterType
     {
         $choices = $this->getChoices($options);
         $data = parent::createViewData($options, $name);
-        $data['value'] = null;
         $data['choices'] = $choices;
         return $data;
     }
@@ -46,6 +45,44 @@ class TaxonomyFilterType extends AbstractFilterType
         $property = $options['property'];
         $propertyPath = explode('.', $property);
         $query->addWhere('id', FilterQuery::OPERATOR_EQUALS, $value, $propertyPath);
+    }
+
+    protected function getInitialValue($options)
+    {
+        if ($options['initial_value'] === null) {
+            return 0;
+        }
+
+        $repository = $this->em->getRepository(Term::class);
+        $method = $options['initial_value_method'];
+        if ($options['initial_value_arguments']) {
+            $arguments = $options['initial_value_arguments'];
+        } else {
+            $arguments = [$options['initial_value'], $options['taxonomy']];
+        }
+
+        $reflectionClass = new \ReflectionClass(get_class($repository));
+        if (!$reflectionClass->hasMethod($options['initial_value_method'])) {
+            throw new \InvalidArgumentException('Parameter "initial_value_method" must be a method of the repository defined by parameter "repository"');
+        }
+
+        if($arguments) {
+            if (!is_array($arguments)) {
+                $arguments = [$arguments];
+            }
+            $initialValueEntity = call_user_func_array([$repository, $method], $arguments);
+        } else {
+            $initialValueEntity = call_user_func([$repository, $method]);
+        }
+
+        if (!$initialValueEntity || (is_array($initialValueEntity) && count($initialValueEntity) == 0)) {
+            return null;
+        }
+        if (is_array($initialValueEntity) && count($initialValueEntity) > 0) {
+            $initialValueEntity = $initialValueEntity[0];
+        }
+
+        return $this->getProperty($initialValueEntity, 'id');
     }
 
     private function getChoices($options)
@@ -66,7 +103,9 @@ class TaxonomyFilterType extends AbstractFilterType
     {
         parent::configureOptions($optionsResolver);
         $optionsResolver->setDefaults([
-            'component' => 'filter-entity'
+            'component' => 'filter-entity',
+            'initial_value_method' => 'findOneByNameAndTaxonomy',
+            'initial_value_arguments' => null
         ]);
 
         $optionsResolver->setRequired([

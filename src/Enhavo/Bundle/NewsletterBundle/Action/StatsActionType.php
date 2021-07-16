@@ -32,7 +32,7 @@ class StatsActionType extends OpenActionType implements ActionTypeInterface
         } elseif($resource->getState() === NewsletterInterface::STATE_CREATED) {
             return true;
         }
-        return $options['hidden'];
+        return parent::isHidden($options, $resource);
     }
 
     public function getType()

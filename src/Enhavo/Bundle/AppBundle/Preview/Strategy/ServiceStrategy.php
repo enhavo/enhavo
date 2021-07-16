@@ -10,6 +10,8 @@
 namespace Enhavo\Bundle\AppBundle\Preview\Strategy;
 
 use Enhavo\Bundle\AppBundle\Exception\PreviewException;
+use Enhavo\Bundle\AppBundle\Preview\ArgumentResolver\ContentDocumentValueArgumentResolver;
+use Enhavo\Bundle\AppBundle\Preview\PreviewManager;
 use Enhavo\Bundle\AppBundle\Preview\StrategyInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
@@ -26,17 +28,21 @@ class ServiceStrategy implements StrategyInterface
     /** @var RequestStack */
     private $requestStack;
 
+    /** @var PreviewManager */
+    private $previewManager;
+
     /**
      * ServiceStrategy constructor.
      * @param ArgumentResolverInterface $argumentResolver
      * @param RequestStack $requestStack
+     * @param PreviewManager $previewManager
      */
-    public function __construct(ArgumentResolverInterface $argumentResolver, RequestStack $requestStack)
+    public function __construct(ArgumentResolverInterface $argumentResolver, RequestStack $requestStack, PreviewManager $previewManager)
     {
         $this->argumentResolver = $argumentResolver;
         $this->requestStack = $requestStack;
+        $this->previewManager = $previewManager;
     }
-
 
     public function getPreviewResponse($resource, $options = array())
     {
@@ -76,15 +82,16 @@ class ServiceStrategy implements StrategyInterface
         }
 
         $controller = array($invokeService, $invokeFunction);
-        $arguments = [];
 
-        try {
-            $arguments = $this->argumentResolver->getArguments($this->requestStack->getCurrentRequest(), $controller);
-        } catch (\RuntimeException $exception) {
+        $this->previewManager->enablePreview();
+        $request = $this->requestStack->getCurrentRequest();
+        $arguments = $this->argumentResolver->getArguments($request, $controller);
 
+        foreach ($arguments as &$argument) {
+            if ($argument === ContentDocumentValueArgumentResolver::PLACEHOLDER) {
+                $argument = $resource;
+            }
         }
-
-        array_unshift($arguments, $resource);
 
         return call_user_func($controller, ...$arguments);
     }

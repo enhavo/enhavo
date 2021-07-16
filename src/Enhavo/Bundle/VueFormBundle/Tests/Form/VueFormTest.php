@@ -5,6 +5,8 @@ namespace Enhavo\Bundle\VueFormBundle\Tests\Form;
 use Enhavo\Bundle\VueFormBundle\Form\VueForm;
 use Enhavo\Bundle\VueFormBundle\Form\VueType\FormVueType;
 use Enhavo\Bundle\VueFormBundle\Form\VueType\TextVueType;
+use PHPUnit\Framework\MockObject\MockObject;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -12,24 +14,17 @@ use Symfony\Component\Form\Test\TypeTestCase;
 
 class VueFormTest extends TypeTestCase
 {
-    use VueTypeTestTrait;
-
-    protected function getTypeExtensions()
-    {
-        return [
-            $this->createVueTypeExtension([new FormVueType(), new TextVueType()])
-        ];
-    }
-
     public function createInstance(VueFormDependencies $dependencies)
     {
         $instance = new VueForm();
+        $instance->setContainer($dependencies->container);
         return $instance;
     }
 
     public function createDependencies()
     {
         $dependencies = new VueFormDependencies;
+        $dependencies->container = $this->getMockBuilder(ContainerInterface::class)->getMock();
         return $dependencies;
     }
 
@@ -85,7 +80,8 @@ class VueFormTest extends TypeTestCase
 
 class VueFormDependencies
 {
-
+    /** @var ContainerInterface|MockObject */
+    public $container;
 }
 
 class TestType extends AbstractType

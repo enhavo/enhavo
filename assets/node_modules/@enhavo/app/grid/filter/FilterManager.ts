@@ -6,6 +6,7 @@ import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface"
 export default class FilterManager
 {
     public filters: FilterInterface[];
+    public activeFilters: FilterInterface[] = [];
 
     private readonly registry: FilterRegistry;
     private readonly componentRegistry: ComponentRegistryInterface;
@@ -23,6 +24,7 @@ export default class FilterManager
             let filter = this.registry.getFactory(this.filters[i].component).createFromData(this.filters[i]);
             _.extend(this.filters[i], filter);
         }
+        this.updateActiveFilters();
 
         for (let component of this.registry.getComponents()) {
             this.componentRegistry.registerComponent(component.name, component.component)
@@ -50,4 +52,26 @@ export default class FilterManager
             filter.reset();
         }
     }
+
+    public setFilterActive(filterKey: string, active: boolean)
+    {
+        for (let i in this.filters) {
+            if (this.filters[i].getKey() === filterKey) {
+                this.filters[i].setActive(active);
+                break;
+            }
+        }
+        this.updateActiveFilters();
+    }
+
+    private updateActiveFilters()
+    {
+        this.activeFilters = [];
+        for (let i in this.filters) {
+            if (this.filters[i].getActive()) {
+                this.activeFilters.push(this.filters[i]);
+            }
+        }
+    }
+
 }

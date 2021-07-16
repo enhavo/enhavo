@@ -24,9 +24,9 @@ class ArticleController extends AbstractController
         $this->commentManager = $commentManager;
     }
 
-    public function showResourceAction(Article $contentDocument, Request $request)
+    public function showResourceAction(Article $contentDocument, Request $request, bool $preview = false)
     {
-        if (!$contentDocument->isPublished()) {
+        if (!$contentDocument->isPublished() && !$preview) {
             throw $this->createNotFoundException();
         }
 
@@ -34,6 +34,7 @@ class ArticleController extends AbstractController
         if($context->isInsert()) {
             $this->redirect($request->getRequestUri());
         }
+
         return $this->render($this->getTemplate('theme/resource/article/show.html.twig'), array(
             'resource' => $contentDocument,
             'commentForm' => $context->getForm()

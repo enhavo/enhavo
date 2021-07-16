@@ -28,7 +28,7 @@ class AppThemePackage
         ;
 
         Encore.copyFiles({
-            from: this.config.themesPath+'/'+name+'/images',
+            from: this.config.themePath+'/images',
             to: 'images/[path][name].[ext]'
         });
 
@@ -76,7 +76,7 @@ class AppThemePackage
 class Config
 {
     constructor() {
-        this.themesPath = './assets'
+        this.themePath = './assets/theme'
     }
 }
 

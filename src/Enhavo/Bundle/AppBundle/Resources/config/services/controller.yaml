@@ -26,12 +26,12 @@ services:
         calls:
             - [setContainer, ['@service_container']]
 
+    enhavo_app.controller.modal:
+        public: true
+        alias: Enhavo\Bundle\AppBundle\Controller\ModalController
+
     Enhavo\Bundle\AppBundle\Controller\ModalController:
         calls:
             - [setContainer, ['@service_container']]
         tags:
             - { name: controller.service_arguments }
-
-    enhavo_app.controller.modal:
-        public: true
-        alias: Enhavo\Bundle\AppBundle\Controller\ModalController

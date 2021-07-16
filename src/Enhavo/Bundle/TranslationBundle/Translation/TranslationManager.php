@@ -13,6 +13,7 @@ use Enhavo\Bundle\AppBundle\Locale\LocaleResolverInterface;
 use Enhavo\Bundle\AppBundle\Util\NameTransformer;
 use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface;
 use Enhavo\Bundle\TranslationBundle\Exception\TranslationException;
+use Enhavo\Bundle\TranslationBundle\Locale\LocaleProviderInterface;
 use Enhavo\Bundle\TranslationBundle\Metadata\Metadata;
 use Enhavo\Bundle\TranslationBundle\Metadata\PropertyNode;
 use Enhavo\Bundle\TranslationBundle\Entity\Translation as TranslationEntity;
@@ -32,16 +33,13 @@ class TranslationManager
     private $entityManager;
 
     /** @var LocaleResolverInterface */
-    protected $localeResolver;
+    private $localeResolver;
 
     /** @var EntityResolverInterface */
-    protected $entityResolver;
+    private $entityResolver;
 
-    /** @var string[] */
-    private $locales;
-
-    /** @var string */
-    private $defaultLocale;
+    /** @var EntityResolverInterface */
+    private $localeProvider;
 
     /** @var boolean */
     private $enabled;
@@ -70,8 +68,7 @@ class TranslationManager
         EntityManagerInterface $entityManager,
         LocaleResolverInterface $localeResolver,
         EntityResolverInterface $entityResolver,
-        $locales,
-        $defaultLocale,
+        LocaleProviderInterface $localeProvider,
         $enabled,
         $translationPaths,
         RequestStack $requestStack
@@ -82,8 +79,7 @@ class TranslationManager
         $this->entityManager = $entityManager;
         $this->localeResolver = $localeResolver;
         $this->entityResolver = $entityResolver;
-        $this->locales = $locales;
-        $this->defaultLocale = $defaultLocale;
+        $this->localeProvider = $localeProvider;
         $this->enabled = $enabled;
         $this->translationPaths = $translationPaths;
         $this->requestStack = $requestStack;
@@ -118,7 +114,7 @@ class TranslationManager
 
     public function getLocales()
     {
-        return $this->locales;
+        return $this->localeProvider->getLocales();
     }
 
     public function isTranslation()
@@ -141,7 +137,7 @@ class TranslationManager
 
     public function getDefaultLocale()
     {
-        return $this->defaultLocale;
+        return $this->localeProvider->getDefaultLocale();
     }
 
     public function getTranslations($data, $property)
@@ -150,7 +146,7 @@ class TranslationManager
 
         $translationValues = [];
         $translation = $this->getTranslation($data, $property);
-        foreach ($this->locales as $locale) {
+        foreach ($this->localeProvider->getLocales() as $locale) {
             if ($locale == $this->getDefaultLocale()) {
                 continue;
             }

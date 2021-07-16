@@ -9,6 +9,7 @@ use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface
 use Enhavo\Bundle\MediaBundle\Entity\File;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\TranslationBundle\Entity\TranslationFile;
+use Enhavo\Bundle\TranslationBundle\Locale\LocaleProviderInterface;
 use Enhavo\Bundle\TranslationBundle\Repository\TranslationFileRepository;
 use Enhavo\Bundle\TranslationBundle\Tests\Mocks\TranslatableMock;
 use Enhavo\Bundle\TranslationBundle\Translator\Media\FileTranslator;
@@ -24,16 +25,18 @@ class FileTranslatorTest extends TestCase
         $dependencies->repository = $this->getMockBuilder(TranslationFileRepository::class)->disableOriginalConstructor()->getMock();
         $dependencies->entityManager->method('getRepository')->willReturn($dependencies->repository);
         $dependencies->entityResolver = $this->getMockBuilder(EntityResolverInterface::class)->getMock();
+        $dependencies->localeProvider = $this->getMockBuilder(LocaleProviderInterface::class)->getMock();
+        $dependencies->localeProvider->method('getDefaultLocale')->willReturn('es');
 
         return $dependencies;
     }
 
-    private function createInstance($dependencies)
+    private function createInstance(FileTranslatorTestDependencies $dependencies)
     {
         $translator = new FileTranslator(
             $dependencies->entityManager,
             $dependencies->entityResolver,
-            'es'
+            $dependencies->localeProvider
         );
 
         return $translator;
@@ -211,4 +214,7 @@ class FileTranslatorTestDependencies
 
     /** @var TranslationFileRepository|MockObject */
     public $repository;
+
+    /** @var LocaleProviderInterface|MockObject */
+    public $localeProvider;
 }

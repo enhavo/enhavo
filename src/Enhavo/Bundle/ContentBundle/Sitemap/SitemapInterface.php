@@ -11,9 +11,5 @@ namespace Enhavo\Bundle\ContentBundle\Sitemap;
 
 interface SitemapInterface
 {
-    public function getPriority();
-
-    public function getChangeFrequency();
-
     public function getUpdated();
 }

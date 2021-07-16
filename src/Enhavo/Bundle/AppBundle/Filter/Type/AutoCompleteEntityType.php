@@ -10,24 +10,26 @@ namespace Enhavo\Bundle\AppBundle\Filter\Type;
 
 use Enhavo\Bundle\AppBundle\Filter\AbstractFilterType;
 use Enhavo\Bundle\AppBundle\Filter\FilterQuery;
+use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AutoCompleteEntityType extends AbstractFilterType
 {
     public function createViewData($options, $name)
     {
-        $data = [
-            'type' => $this->getType(),
-            'key' => $name,
-            'value' => null,
-            'initialValue' => null,
-            'component' => $options['component'],
-            'label' => $this->getLabel($options),
+        $data = parent::createViewData($options, $name);
+
+        $initialValue = $this->getInitialValue($options);
+
+        $data = array_merge($data, [
+            'choices' => [],
+            'initialValue' => $initialValue,
+            'value' => $initialValue ? $initialValue['code'] : null,
             'url' => $this->getUrl($options),
             'multiple' => false,
             'minimumInputLength' => $options['minimum_input_length'],
-        ];
-        
+        ]);
+
         return $data;
     }
 
@@ -36,6 +38,78 @@ class AutoCompleteEntityType extends AbstractFilterType
         $router = $this->container->get('router');
         $url = $router->generate($options['route'], $options['route_parameters']);
         return $url;
+    }
+
+    protected function getInitialValue($options)
+    {
+        if ($options['initial_value'] === null) {
+            return 0;
+        }
+
+        if (!$options['initial_value_repository']) {
+            throw new \InvalidArgumentException('If parameter "initial_value" is used, the parameter "initial_value_repository" needs to be set as well');
+        }
+
+        $repository = $this->getRepository($options);
+
+        $method = $options['initial_value'];
+        $arguments =  $options['initial_value_arguments'];
+
+        $reflectionClass = new \ReflectionClass(get_class($repository));
+        if (!$reflectionClass->hasMethod($options['initial_value'])) {
+            throw new \InvalidArgumentException('Parameter "initial_value" must be a method of the repository defined by parameter "repository"');
+        }
+
+        if($arguments) {
+            if (!is_array($arguments)) {
+                $arguments = [$arguments];
+            }
+            $initialValueEntity = call_user_func_array([$repository, $method], $arguments);
+        } else {
+            $initialValueEntity = call_user_func([$repository, $method]);
+        }
+
+        if (!$initialValueEntity || (is_array($initialValueEntity) && count($initialValueEntity) == 0)) {
+            return null;
+        }
+        if (is_array($initialValueEntity) && count($initialValueEntity) > 0) {
+            $initialValueEntity = $initialValueEntity[0];
+        }
+
+        $choiceLabel = $this->getOption('initial_value_choice_label', $options);
+        if ($choiceLabel) {
+            $label = $this->getProperty($initialValueEntity, $choiceLabel);
+        } else {
+            $label = (string)$initialValueEntity;
+        }
+        return [
+            'label' => $label,
+            'code' => $this->getProperty($initialValueEntity, 'id')
+        ];
+    }
+
+    /**
+     * @param array $options
+     * @return EntityRepository
+     */
+    private function getRepository($options)
+    {
+        $repository = null;
+        if($this->container->has($options['initial_value_repository'])) {
+            $repository = $this->container->get($options['initial_value_repository']);
+        } else {
+            $em = $this->container->get('doctrine.orm.entity_manager');
+            $repository = $em->getRepository($options['initial_value_repository']);
+        }
+
+        if(!$repository instanceof EntityRepository) {
+            throw new \InvalidArgumentException(sprintf(
+                'Parameter "initial_value_repository" should to be type of "%s", but got "%s"',
+                EntityRepository::class,
+                get_class($repository)
+            ));
+        }
+        return $repository;
     }
 
     public function buildQuery(FilterQuery $query, $options, $value)
@@ -55,7 +129,10 @@ class AutoCompleteEntityType extends AbstractFilterType
         $optionsResolver->setDefaults([
             'route_parameters' => [],
             'minimum_input_length' => 3,
-            'component' => 'filter-autocomplete-entity'
+            'component' => 'filter-autocomplete-entity',
+            'initial_value_arguments' => null,
+            'initial_value_repository' => null,
+            'initial_value_choice_label' => null
         ]);
 
         $optionsResolver->setRequired([

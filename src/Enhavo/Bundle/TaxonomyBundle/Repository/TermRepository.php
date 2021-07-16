@@ -66,4 +66,20 @@ class TermRepository extends EntityRepository
 
         return $query->getQuery()->getResult();
     }
+
+    public function findOneByNameAndTaxonomy($name, $taxonomy)
+    {
+        $query = $this->createQueryBuilder('t');
+        $query->join('t.taxonomy', 'ta');
+        $query->andWhere('ta.name = :taxonomy');
+        $query->setParameter('taxonomy', $taxonomy);
+        $query->andWhere('t.name = :name');
+        $query->setParameter('name', $name);
+
+        $result = $query->getQuery()->getResult();
+        if ($result && count($result)) {
+            return $result[0];
+        }
+        return null;
+    }
 }

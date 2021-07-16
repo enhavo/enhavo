@@ -4,6 +4,7 @@
 namespace Enhavo\Bundle\TranslationBundle\Tests\Locale;
 
 
+use Enhavo\Bundle\TranslationBundle\Locale\LocaleProviderInterface;
 use Enhavo\Bundle\TranslationBundle\Locale\LocaleResolver;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -19,6 +20,10 @@ class LocaleResolverTest extends TestCase
         $dependencies->requestStack = $this->getMockBuilder(RequestStack::class)->getMock();
         $dependencies->request = $this->getMockBuilder(Request::class)->getMock();
         $dependencies->request->attributes = $this->getMockBuilder(ParameterBag::class)->getMock();
+        $dependencies->localeProvider = $this->getMockBuilder(LocaleProviderInterface::class)->getMock();
+
+        $dependencies->localeProvider->method('getLocales')->willReturn(['fr', 'es']);
+        $dependencies->localeProvider->method('getDefaultLocale')->willReturn('fr');
 
         return $dependencies;
     }
@@ -27,8 +32,7 @@ class LocaleResolverTest extends TestCase
     {
         $resolver = new LocaleResolver(
             $dependencies->requestStack,
-            ['fr', 'es'],
-            'fr'
+            $dependencies->localeProvider
         );
 
         return $resolver;
@@ -45,7 +49,6 @@ class LocaleResolverTest extends TestCase
                 return 'es';
             }
         });
-
 
         $this->assertEquals('es', $resolver->resolve());
     }
@@ -83,4 +86,7 @@ class LocaleResolverTestDependencies
 
     /** @var Request|MockObject */
     public $request;
+
+    /** @var LocaleProviderInterface|MockObject */
+    public $localeProvider;
 }

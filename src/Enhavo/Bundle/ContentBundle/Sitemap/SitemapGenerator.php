@@ -75,14 +75,6 @@ class SitemapGenerator
                 $xml->writeElement('lastmod', $url->getLastModified()->format('c'));
             }
 
-            if($url->getChangeFrequency()) {
-                $xml->writeElement('changefreq', $url->getChangeFrequency());
-            }
-
-            if($url->getPriority()) {
-                $xml->writeElement('priority', $url->getPriority());
-            }
-
             /** @var SitemapImage $image */
             foreach($url->getImages() as $image) {
                 $xml->startElement('image:image');

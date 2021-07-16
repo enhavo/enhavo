@@ -51,14 +51,17 @@ class ReferenceSubscriberTest extends SubscriberTest
         $this->em->getEventManager()->addEventSubscriber($subscriber);
         $this->updateSchema();
 
-        $entityContainer = new EntityContainer();
-        $entityContainer->setName('container_one');
         $node = new NodeOne();
         $node->setName('one');
+
         $entity = new Entity();
         $entity->setName('node_one');
         $entity->setNode($node);
+
+        $entityContainer = new EntityContainer();
+        $entityContainer->setName('container_one');
         $entityContainer->setEntity($entity);
+
         $this->em->persist($entityContainer);
         $this->em->flush();
         $this->em->clear();
@@ -89,6 +92,44 @@ class ReferenceSubscriberTest extends SubscriberTest
 
         $this->em->clear();
         unset($entity);
+    }
+
+    public function testReferenceSameObject()
+    {
+        $this->bootstrap(__DIR__ . "/../Fixtures/Entity/Reference");
+
+        $dependencies = $this->createDependencies([
+            Entity::class => [
+                'reference' => [
+                    'node' => [
+                        'nameField' => 'nodeName',
+                        'idField' => 'nodeId'
+                    ]
+                ]
+            ]
+        ]);
+
+        $subscriber = $this->createInstance($dependencies);
+        $this->em->getEventManager()->addEventSubscriber($subscriber);
+        $this->updateSchema();
+
+        $node = new NodeOne();
+        $node->setName('same');
+
+        $entityOne = new Entity();
+        $entityOne->setName('entity_one');
+        $entityOne->setNode($node);
+
+        $entityTwo = new Entity();
+        $entityTwo->setName('entity_two');
+        $entityTwo->setNode($node);
+
+        $this->em->persist($entityOne);
+        $this->em->persist($entityTwo);
+        $this->em->flush();
+        $this->em->clear();
+
+        $this->assertCount(1, $this->em->getRepository(NodeOne::class)->findAll());
     }
 }
 

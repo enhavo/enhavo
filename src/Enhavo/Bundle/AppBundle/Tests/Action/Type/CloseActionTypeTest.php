@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\AppBundle\Tests\Action\Type;
 
 use Enhavo\Bundle\AppBundle\Action\Action;
+use Enhavo\Bundle\AppBundle\Action\ActionLanguageExpression;
 use Enhavo\Bundle\AppBundle\Action\Type\CloseActionType;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -19,12 +20,16 @@ class CloseActionTypeTest extends TestCase
     {
         $dependencies = new CloseActionTypeTestDependencies();
         $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
+        $dependencies->actionLanguageExpression = $this->getMockBuilder(ActionLanguageExpression::class)->disableOriginalConstructor()->getMock();
         return $dependencies;
     }
 
     private function createInstance(CloseActionTypeTestDependencies $dependencies)
     {
-        return new CloseActionType($dependencies->translator);
+        return new CloseActionType(
+            $dependencies->translator,
+            $dependencies->actionLanguageExpression
+        );
     }
 
     public function testCreateViewData()
@@ -54,4 +59,6 @@ class CloseActionTypeTestDependencies
 {
     /** @var TranslatorInterface|\PHPUnit_Framework_MockObject_MockObject */
     public $translator;
+    /** @var ActionLanguageExpression|\PHPUnit_Framework_MockObject_MockObject */
+    public $actionLanguageExpression;
 }

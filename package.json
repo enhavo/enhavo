@@ -3,12 +3,10 @@
   "license": "MIT",
   "scripts": {
     "routes:dump": "bin/console fos:js-routing:dump --format=json --target=public/js/fos_js_routes.json",
-    "karma": "TESTBUILD=true encore dev --config webpack.test.config.js && karma start --single-run --browsers ChromeHeadless karma.conf.js && rm -rf public/build/test/*",
-    "mocha": "TS_NODE_SKIP_IGNORE=true TS_NODE_PROJECT=./tsconfig.test.json mocha --require ts-node/register assets/node_modules/**/tests/**/*.mocha.{ts,js}",
-    "mocha:file": "TS_NODE_SKIP_IGNORE=true TS_NODE_PROJECT=./tsconfig.test.json mocha --require ts-node/register",
     "di": "node ./assets/node_modules/@enhavo/dependency-injection/bin/dependency-injection.js \"./assets/services/enhavo/*\"",
     "dev": "encore dev",
-    "watch": "encore dev --watch"
+    "watch": "encore dev --watch",
+    "webfont:generate": "node ./assets/node_modules/@enhavo/app/bin/webfont-generate.js"
   },
   "dependencies": {
     "@fullcalendar/core": "^4.2.0",
@@ -38,6 +36,7 @@
     "moment": "^2.18.1",
     "node-sass": "^4.0.0",
     "pako": "^1.0.10",
+    "qs": "^6.10.1",
     "sass-loader": "^8.0.0",
     "select2": "~3.5.1",
     "sha1": "^1.1.1",
@@ -76,6 +75,7 @@
     "@types/lodash": "^4.14.120",
     "@types/mocha": "^8.0.0",
     "@types/pako": "^1.0.1",
+    "@types/qs": "^6.9.6",
     "@types/select2": "4.0.37",
     "@types/slick-carousel": "^1.6.33",
     "@types/sortablejs": "^1.10.2",
@@ -85,12 +85,11 @@
     "@types/vue-select": "^2.5.0",
     "acorn": "^7.3.1",
     "chai": "^4.2.0",
-    "download": "^8.0.0",
-    "gulp": "^4.0.0",
     "karma": "^5.1.0",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^3.1.0",
     "karma-mocha": "^2.0.1",
+    "karma-sourcemap-loader": "^0.3.8",
     "mocha": "^8.0.1",
     "webpack-notifier": "^1.7.0"
   }

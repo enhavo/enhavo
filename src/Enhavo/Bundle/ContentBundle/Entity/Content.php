@@ -43,12 +43,6 @@ abstract class Content implements Publishable, Routeable, Slugable, SitemapInter
     /** @var string */
     protected $pageTitle;
 
-    /** @var float */
-    protected $priority;
-
-    /** @var string */
-    protected $changeFrequency;
-
     /** @var boolean */
     protected $noIndex = false;
 
@@ -66,6 +60,9 @@ abstract class Content implements Publishable, Routeable, Slugable, SitemapInter
 
     /** @var RouteInterface */
     protected $route;
+
+    /** @var string */
+    protected $canonicalUrl;
 
     /**
      * Get id
@@ -209,58 +206,6 @@ abstract class Content implements Publishable, Routeable, Slugable, SitemapInter
     }
 
     /**
-     * Set priority
-     *
-     * @param float $priority
-     * @return Content
-     */
-    public function setPriority($priority)
-    {
-        $this->priority = $priority;
-
-        return $this;
-    }
-
-    /**
-     * Get priority
-     *
-     * @return float
-     */
-    public function getPriority()
-    {
-        if($this->priority === null) {
-            return '0.5';
-        }
-        return $this->priority;
-    }
-
-    /**
-     * Set change_frequency
-     *
-     * @param string $changeFrequency
-     * @return Content
-     */
-    public function setChangeFrequency($changeFrequency)
-    {
-        $this->changeFrequency = $changeFrequency;
-
-        return $this;
-    }
-
-    /**
-     * Get change_frequency
-     *
-     * @return string
-     */
-    public function getChangeFrequency()
-    {
-        if($this->changeFrequency === null) {
-            return 'never';
-        }
-        return $this->changeFrequency;
-    }
-
-    /**
      * @return bool
      */
     public function isNoIndex()
@@ -391,5 +336,21 @@ abstract class Content implements Publishable, Routeable, Slugable, SitemapInter
     public function __toString()
     {
         return (string)$this->getTitle();
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCanonicalUrl(): ?string
+    {
+        return $this->canonicalUrl;
+    }
+
+    /**
+     * @param string|null $canonicalUrl
+     */
+    public function setCanonicalUrl(?string $canonicalUrl): void
+    {
+        $this->canonicalUrl = $canonicalUrl;
     }
 }

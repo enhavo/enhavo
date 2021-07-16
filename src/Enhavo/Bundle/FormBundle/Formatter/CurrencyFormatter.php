@@ -33,10 +33,18 @@ class CurrencyFormatter
     {
         //text -> int
         $string = $currencyAsString;
+        $multiplier = 1;
+
+        if (substr($string, 0, 1) === '-') {
+            $multiplier = -1;
+            $string = substr($string, 1);
+        }
+
         $string = str_replace('.', '', $string);
 
         $parts = explode(',', $string);
         $right = 0;
+
         if (count($parts) > 1) {
             $right = array_pop($parts);
             $right = substr($right, 0, 2);
@@ -52,6 +60,6 @@ class CurrencyFormatter
             $value = $left * 100 + $value;
         }
 
-        return $value;
+        return $multiplier * $value;
     }
 }

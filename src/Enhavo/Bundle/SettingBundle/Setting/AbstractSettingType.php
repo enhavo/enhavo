@@ -2,7 +2,6 @@
 
 namespace Enhavo\Bundle\SettingBundle\Setting;
 
-use Enhavo\Bundle\SettingBundle\Model\ValueAccessInterface;
 use Enhavo\Component\Type\AbstractType;
 
 /**
@@ -12,42 +11,42 @@ use Enhavo\Component\Type\AbstractType;
  */
 abstract class AbstractSettingType extends AbstractType implements SettingTypeInterface
 {
-    public function init(array $options)
+    public function init(array $options, $key = null)
     {
         if ($this->parent) {
-            return $this->parent->init($options);
+            return $this->parent->init($options, $key);
         }
         return null;
     }
 
-    public function getValue(array $options)
+    public function getValue(array $options, $key = null)
     {
         if ($this->parent) {
-            return $this->parent->getValue($options);;
+            return $this->parent->getValue($options, $key);
         }
         return null;
     }
 
-    public function getFormType(array $options)
+    public function getFormType(array $options, $key = null)
     {
         if ($this->parent) {
-            return $this->parent->getFormType($options);
+            return $this->parent->getFormType($options, $key);
         }
         return null;
     }
 
-    public function getFormTypeOptions(array $options)
+    public function getFormTypeOptions(array $options, $key = null)
     {
         if ($this->parent) {
-            return $this->parent->getFormTypeOptions($options);
+            return $this->parent->getFormTypeOptions($options, $key);
         }
         return [];
     }
 
-    public function getViewValue(array $options, $value)
+    public function getViewValue(array $options, $value, $key = null)
     {
         if ($this->parent) {
-            return $this->parent->getViewValue($options, $value);
+            return $this->parent->getViewValue($options, $value, $key);
         }
         return (string) $value->getValue();
     }

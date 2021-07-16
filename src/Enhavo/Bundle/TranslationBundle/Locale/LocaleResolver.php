@@ -9,38 +9,23 @@
 namespace Enhavo\Bundle\TranslationBundle\Locale;
 
 use Enhavo\Bundle\AppBundle\Locale\LocaleResolverInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class LocaleResolver implements LocaleResolverInterface
 {
-    use ContainerAwareTrait;
-
-    /**
-     * @var string[]
-     */
-    private $locales;
-
-    /**
-     * @var string
-     */
-    private $defaultLocale;
-
-    /**
-     * @var string
-     */
+    /** @var string */
     private $locale;
 
-    /**
-     * @var RequestStack
-     */
-    protected $requestStack;
+    /** @var RequestStack */
+    private $localeProvider;
 
-    public function __construct(RequestStack $requestStack, $locales, $defaultLocale)
+    /** @var RequestStack */
+    private $requestStack;
+
+    public function __construct(RequestStack $requestStack, LocaleProviderInterface $localeProvider)
     {
-        $this->locales = $locales;
-        $this->defaultLocale = $defaultLocale;
         $this->requestStack = $requestStack;
+        $this->localeProvider = $localeProvider;
     }
 
     public function resolve()
@@ -55,11 +40,12 @@ class LocaleResolver implements LocaleResolverInterface
 
     private function resolveLocale()
     {
-        $this->locale = $this->defaultLocale;
+        $locales = $this->localeProvider->getLocales();
+        $this->locale = $this->localeProvider->getDefaultLocale();
         $request = $this->requestStack->getMasterRequest();
         if ($request !== null) {
             $locale = $request->attributes->get('_locale');
-            if ($locale) {
+            if ($locale && in_array($locale, $locales)) {
                 $this->locale = $locale;
             }
         }

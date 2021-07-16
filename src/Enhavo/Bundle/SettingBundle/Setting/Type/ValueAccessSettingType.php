@@ -14,23 +14,23 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ValueAccessSettingType extends AbstractSettingType
 {
-    public function getSettingEntity($options)
+    public function getSettingEntity($options, $key)
     {
-        return $this->parent->getSettingEntity($options);
+        return $this->parent->getSettingEntity($options, $key);
     }
 
-    public function getValue(array $options)
+    public function getValue(array $options, $key = null)
     {
-        $value = $this->parent->getValue($options);
+        $value = $this->parent->getValue($options, $key);
         return $value->getValue();
     }
 
-    public function getFormType(array $options)
+    public function getFormType(array $options, $key = null)
     {
         return ValueAccessType::class;
     }
 
-    public function getFormTypeOptions(array $options)
+    public function getFormTypeOptions(array $options, $key = null)
     {
         return [
             'form_type' => $options['form_type'],

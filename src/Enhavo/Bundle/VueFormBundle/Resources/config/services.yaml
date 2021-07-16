@@ -1,13 +1,34 @@
 services:
     Enhavo\Bundle\VueFormBundle\Form\VueForm:
-
-    Enhavo\Bundle\VueFormBundle\Form\Extension\VueTypeExtension:
+        public: true
         calls:
             - ['setContainer', ['@service_container']]
+
+    Enhavo\Bundle\VueFormBundle\Form\Extension\VueTypeExtension:
         tags:
             - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 
+    Enhavo\Bundle\VueFormBundle\Form\VueType\ButtonVueType:
+        tags:
+            - 'vue.type'
+
+    Enhavo\Bundle\VueFormBundle\Form\VueType\BaseVueType:
+        arguments:
+            - '@translator'
+        tags:
+            - 'vue.type'
+
     Enhavo\Bundle\VueFormBundle\Form\VueType\FormVueType:
+        arguments:
+            - '@translator'
+        tags:
+            - 'vue.type'
+
+    Enhavo\Bundle\VueFormBundle\Form\VueType\RadioVueType:
+        tags:
+            - 'vue.type'
+
+    Enhavo\Bundle\VueFormBundle\Form\VueType\CheckboxVueType:
         tags:
             - 'vue.type'
 
@@ -19,6 +40,12 @@ services:
         tags:
             - 'vue.type'
 
+    Enhavo\Bundle\VueFormBundle\Form\VueType\TextareaVueType:
+        tags:
+            - 'vue.type'
+
     Enhavo\Bundle\VueFormBundle\Form\VueType\ChoiceVueType:
+        arguments:
+            - '@translator'
         tags:
             - 'vue.type'

@@ -15,7 +15,7 @@ services:
             - { name: enhavo.action, alias: shop_generate_variant }
 
     Enhavo\Bundle\ShopBundle\Action\CreateAttributeAction:
-        parent: Enhavo\Bundle\AppBundle\Action\Type\OpenActionType
+        parent: Enhavo\Bundle\AppBundle\Action\AbstractActionType
         public: true
         tags:
             - { name: enhavo.action, alias: shop_create_attribute }

@@ -8,10 +8,9 @@ form:
   label:
     title: 'Title'
     meta_description: 'Meta Description'
+    canonical_url: 'Canonical Url'
     page_title: 'Page Title'
     public: 'Public'
-    priority: 'Priority'
-    change_frequency: 'Change frequency'
     no_index: 'Robots NOINDEX'
     no_follow: 'Robots NOFOLLOW'
     publication_date: 'Publication date'

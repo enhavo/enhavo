@@ -11,10 +11,20 @@ services:
             - '@enhavo_app.action_collector'
             - '@security.authorization_checker'
 
+    enhavo_app.action_language_expression:
+        class: Enhavo\Bundle\AppBundle\Action\ActionLanguageExpression
+        arguments:
+            - '@sylius.expression_language'
+        calls:
+            - [ 'addVariable', [ 'authorizationChecker', '@security.authorization_checker' ] ]
+            - [ 'addVariable', [ 'tokenStorage', '@security.token_storage' ] ]
+            - [ 'addVariable', [ 'requestStack', '@request_stack' ] ]
+
     Enhavo\Bundle\AppBundle\Action\AbstractActionType:
         abstract: true
         arguments:
             - '@translator'
+            - '@enhavo_app.action_language_expression'
 
     Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType:
         parent: Enhavo\Bundle\AppBundle\Action\AbstractActionType
@@ -101,3 +111,11 @@ services:
         public: true
         tags:
             - { name: enhavo.action, alias: output_stream }
+
+    Enhavo\Bundle\AppBundle\Action\Type\DropdownActionType:
+        parent: Enhavo\Bundle\AppBundle\Action\AbstractActionType
+        arguments:
+            - '@enhavo_app.action_manager'
+        public: true
+        tags:
+            - { name: enhavo.action, alias: dropdown }

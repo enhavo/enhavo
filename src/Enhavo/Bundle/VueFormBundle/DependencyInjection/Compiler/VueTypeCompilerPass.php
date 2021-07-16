@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\VueFormBundle\DependencyInjection\Compiler;
 
 use Enhavo\Bundle\VueFormBundle\Form\Extension\VueTypeExtension;
+use Enhavo\Bundle\VueFormBundle\Form\VueForm;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -13,7 +14,7 @@ class VueTypeCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $extension = $container->getDefinition(VueTypeExtension::class);
+        $extension = $container->getDefinition(VueForm::class);
 
         $taggedServices = $container->findTaggedServiceIds('vue.type');
 

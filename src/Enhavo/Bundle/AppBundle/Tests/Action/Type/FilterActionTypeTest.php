@@ -9,9 +9,9 @@
 namespace Enhavo\Bundle\AppBundle\Tests\Action\Type;
 
 use Enhavo\Bundle\AppBundle\Action\Action;
+use Enhavo\Bundle\AppBundle\Action\ActionLanguageExpression;
 use Enhavo\Bundle\AppBundle\Action\Type\FilterActionType;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class FilterActionTypeTest extends TestCase
@@ -19,13 +19,17 @@ class FilterActionTypeTest extends TestCase
     private function createDependencies()
     {
         $dependencies = new FilterActionTypeDependencies();
-        $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();;
+        $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
+        $dependencies->actionLanguageExpression = $this->getMockBuilder(ActionLanguageExpression::class)->disableOriginalConstructor()->getMock();
         return $dependencies;
     }
 
     private function createInstance(FilterActionTypeDependencies $dependencies)
     {
-        return new FilterActionType($dependencies->translator);
+        return new FilterActionType(
+            $dependencies->translator,
+            $dependencies->actionLanguageExpression
+        );
     }
 
     public function testCreateViewData()
@@ -53,4 +57,6 @@ class FilterActionTypeDependencies
 {
     /** @var TranslatorInterface|\PHPUnit_Framework_MockObject_MockObject */
     public $translator;
+    /** @var ActionLanguageExpression|\PHPUnit_Framework_MockObject_MockObject */
+    public $actionLanguageExpression;
 }

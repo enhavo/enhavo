@@ -1,20 +1,20 @@
 <template>
     <div class="view-table-filter-search">
-        <input @keyup="keyup" type="text" v-model="data.value.from" :placeholder="data.label.from" :class="['filter-form-field', {'has-value': hasFromValue}]">
-        <input @keyup="keyup" type="text" v-model="data.value.to" :placeholder="data.label.to" :class="['filter-form-field', {'has-value': hasToValue}]">
+        <input @keyup="keyup" type="text" v-model="data.value.from" :placeholder="data.labelFrom" :class="['filter-form-field', {'has-value': hasFromValue}]">
+        <input @keyup="keyup" type="text" v-model="data.value.to" :placeholder="data.labelTo" :class="['filter-form-field', {'has-value': hasToValue}]">
     </div>
 </template>
 
 <script lang="ts">
     import { Vue, Component, Prop } from "vue-property-decorator";
-    import AbstractFilter from "@enhavo/app/grid/filter/model/AbstractFilter";
+    import BetweenFilter from "@enhavo/app/grid/filter/model/BetweenFilter";
 
     @Component
     export default class FilterTextComponent extends Vue {
         name: string = 'filter-between';
 
         @Prop()
-        data: AbstractFilter;
+        data: BetweenFilter;
 
         get hasFromValue(): boolean {
             if(this.data.value.from == "") {

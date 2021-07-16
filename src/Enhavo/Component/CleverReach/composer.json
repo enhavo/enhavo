@@ -1,0 +1,44 @@
+{
+    "name": "enhavo/cleverreach",
+    "type": "library",
+    "description": "CleverReach REST API v3 client",
+    "keywords": [
+        "newsletter",
+        "cleverreach",
+        "rest-api"
+    ],
+    "homepage": "https://github.com/enhavo/cleverreach",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Benjamin Lutze",
+            "email": "blutze@xq-web.de"
+        }
+    ],
+    "require": {
+        "ext-json": "*",
+        "guzzlehttp/guzzle": "^6.5",
+        "psr/log": "^1.1"
+    },
+    "require-dev": {
+        "monolog/monolog": "^1.24",
+        "phpunit/phpunit": "^7.5",
+        "symfony/dotenv": "^4.2"
+    },
+    "config": {
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "Enhavo\\Component\\CleverReach\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Enhavo\\Component\\CleverReach\\Tests\\": "tests/"
+        }
+    }
+}

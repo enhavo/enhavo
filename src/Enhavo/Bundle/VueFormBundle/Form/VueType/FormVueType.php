@@ -4,32 +4,53 @@ namespace Enhavo\Bundle\VueFormBundle\Form\VueType;
 
 use Enhavo\Bundle\VueFormBundle\Form\VueData;
 use Enhavo\Bundle\VueFormBundle\Form\VueTypeInterface;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class FormVueType implements VueTypeInterface
 {
-    public function getComponent($options): string
+    /** @var TranslatorInterface */
+    private $translator;
+
+    /**
+     * FormVueType constructor.
+     * @param TranslatorInterface $translator
+     */
+    public function __construct(TranslatorInterface $translator)
     {
-        return 'form-form';
+        $this->translator = $translator;
     }
 
-    public static function getFormTypes(): array
+    public function getComponent(): ?string
     {
-        return [FormType::class => 1];
+        return null;
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options, VueData $data)
+    public static function getBlocks(): array
     {
-        $data['name'] = $form->getName();
-        $data['value'] = $form->getViewData();
+        return ['form' => 1];
+    }
+
+    public function buildView(FormView $view, VueData $data)
+    {
+        $data['name'] = $view->vars['name'];
+        $data['value'] = $view->vars['value'];
         $data['compound'] = $view->vars['compound'];
-        $data['label'] = $view->vars['label'];
-    }
+        $data['id'] = $view->vars['id'];
+        $data['required'] = $view->vars['required'];
+        $data['fullName'] = $view->vars['full_name'];
+        $data['size'] = $view->vars['size'];
+        $data['help'] = $view->vars['help'];
+        $data['helpAttr'] = $view->vars['help_attr'];
+        $data['helpHtml'] = $view->vars['help_html'];
+        $data['rowComponent'] = 'form-row';
 
-    public function finishView(FormView $view, FormInterface $form, array $options, VueData $data)
-    {
-
+        $errors = [];
+        foreach ($view->vars['errors'] as $error) {
+            $errors[] = [
+                'message' => $error->getMessage()
+            ];
+        }
+        $data['errors'] = $errors;
     }
 }

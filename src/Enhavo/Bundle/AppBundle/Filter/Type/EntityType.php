@@ -17,17 +17,12 @@ class EntityType extends AbstractFilterType
 {
     public function createViewData($options, $name)
     {
+        $data = parent::createViewData($options, $name);
         $choices = $this->getChoices($options);
 
-        $data = [
-            'type' => $this->getType(),
+        $data = array_merge($data, [
             'choices' => $choices,
-            'key' => $name,
-            'value' => null,
-            'initialValue' => null,
-            'component' => $options['component'],
-            'label' => $this->getLabel($options),
-        ];
+        ]);
 
         return $data;
     }
@@ -41,6 +36,41 @@ class EntityType extends AbstractFilterType
         $property = $options['property'];
         $propertyPath = explode('.', $property);
         $query->addWhere('id', FilterQuery::OPERATOR_EQUALS, $value, $propertyPath);
+    }
+
+    protected function getInitialValue($options)
+    {
+        if ($options['initial_value'] === null) {
+            return 0;
+        }
+
+        $repository = $this->getRepository($options);
+
+        $method = $options['initial_value'];
+        $arguments =  $options['initial_value_arguments'];
+
+        $reflectionClass = new \ReflectionClass(get_class($repository));
+        if (!$reflectionClass->hasMethod($options['initial_value'])) {
+            throw new \InvalidArgumentException('Parameter "initial_value" must be a method of the repository defined by parameter "repository"');
+        }
+
+        if($arguments) {
+            if (!is_array($arguments)) {
+                $arguments = [$arguments];
+            }
+            $initialValueEntity = call_user_func([$repository, $method], $arguments);
+        } else {
+            $initialValueEntity = call_user_func([$repository, $method]);
+        }
+
+        if (!$initialValueEntity || (is_array($initialValueEntity) && count($initialValueEntity) == 0)) {
+            return null;
+        }
+        if (is_array($initialValueEntity) && count($initialValueEntity) > 0) {
+            $initialValueEntity = $initialValueEntity[0];
+        }
+
+        return $this->getProperty($initialValueEntity, 'id');
     }
 
     private function getChoices($options)
@@ -102,9 +132,9 @@ class EntityType extends AbstractFilterType
         $optionsResolver->setDefaults([
             'method' => 'findAll',
             'arguments' => null,
-            'path' => null,
             'choice_label' => null,
-            'component' => 'filter-entity'
+            'component' => 'filter-entity',
+            'initial_value_arguments' => null
         ]);
 
         $optionsResolver->setRequired([

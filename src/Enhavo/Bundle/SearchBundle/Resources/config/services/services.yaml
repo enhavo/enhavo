@@ -44,6 +44,11 @@ services:
     enhavo_search.util.text_to_word:
         class: Enhavo\Bundle\SearchBundle\Util\TextToWord
 
+    Enhavo\Bundle\SearchBundle\Elastic\ElasticManager:
+        arguments:
+            - '%kernel.project_dir%'
+            - '@filesystem'
+
     Enhavo\Bundle\SearchBundle\Command\IndexCommand:
         calls:
             - [setContainer, ['@service_container']]
@@ -55,3 +60,9 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: console.command, command: 'enhavo:search:reindex' }
+
+    Enhavo\Bundle\SearchBundle\Command\ElasticInstallCommand:
+        arguments:
+            - '@Enhavo\Bundle\SearchBundle\Elastic\ElasticManager'
+        tags:
+            - { name: console.command, command: 'enhavo:search:elastic:install' }

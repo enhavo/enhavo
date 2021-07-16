@@ -48,7 +48,6 @@ class FileThemeLoader implements ThemeLoaderInterface
             $this->theme->setPath(realpath(dirname($this->path)));
             $this->initTemplate();
             $this->initMeta();
-            $this->initWebpack();
         }
         return $this->theme;
     }

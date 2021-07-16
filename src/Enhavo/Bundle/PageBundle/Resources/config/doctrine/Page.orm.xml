@@ -3,7 +3,9 @@
     <entity name="Enhavo\Bundle\PageBundle\Entity\Page" table="page_page" repository-class="Enhavo\Bundle\PageBundle\Repository\PageRepository">
         <field name="code" nullable="true" />
 
-        <many-to-one field="parent" target-entity="Enhavo\Bundle\PageBundle\Model\PageInterface" inversed-by="children" />
+        <many-to-one field="parent" target-entity="Enhavo\Bundle\PageBundle\Model\PageInterface" inversed-by="children">
+            <join-column on-delete="SET NULL" />
+        </many-to-one>
 
         <one-to-many field="children" target-entity="Enhavo\Bundle\PageBundle\Model\PageInterface" mapped-by="parent" />
 

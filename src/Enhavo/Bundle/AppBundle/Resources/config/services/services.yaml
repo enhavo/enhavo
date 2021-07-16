@@ -1,13 +1,6 @@
-parameters:
-    security.roles.provider.class: Enhavo\Bundle\AppBundle\Security\Roles\AdminRolesProvider
-
 services:
-    enhavo_app.cache:
-        class: Doctrine\Common\Cache\PhpFileCache
-        arguments: ['%kernel.cache_dir%/cache']
-
     security.roles.provider:
-        class: '%security.roles.provider.class%'
+        class: Enhavo\Bundle\AppBundle\Security\Roles\AdminRolesProvider
         arguments:
             - '%enhavo_app.roles%'
             - '@translator'
@@ -16,30 +9,6 @@ services:
         class: Enhavo\Bundle\AppBundle\Controller\AppEventDispatcher
         arguments:
             - '@event_dispatcher'
-
-    enhavo_app.preview.default_renderer:
-        class: Enhavo\Bundle\AppBundle\Preview\DefaultRenderer
-        public: true
-
-    enhavo_app.preview.strategy_resolver:
-        class: Enhavo\Bundle\AppBundle\Preview\StrategyResolver
-        calls:
-            - ['setContainer', ['@service_container']]
-
-    enhavo_app.preview.strategy.dynamic:
-        class: Enhavo\Bundle\AppBundle\Preview\Strategy\DynamicStrategy
-        public: true
-        calls:
-            - ['setContainer', ['@service_container']]
-
-    enhavo_app.preview.strategy.service:
-        class: Enhavo\Bundle\AppBundle\Preview\Strategy\ServiceStrategy
-        public: true
-        arguments:
-            - '@Enhavo\Bundle\AppBundle\Controller\ArgumentResolver'
-            - '@request_stack'
-        calls:
-            - ['setContainer', ['@service_container']]
 
     security.authentication.voter.super_admin:
         class: Enhavo\Bundle\AppBundle\Security\Authentication\Voter\SuperAdminVoter
@@ -67,6 +36,9 @@ services:
         class: Enhavo\Bundle\AppBundle\Translation\TranslationDumper
         arguments:
             - []
+
+    Enhavo\Bundle\AppBundle\Template\TemplateManager:
+        alias: enhavo_app.template.manager
 
     enhavo_app.template.manager:
         public: true

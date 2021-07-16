@@ -22,7 +22,7 @@ class RouteTranslator extends AbstractTranslator
 {
     public function setTranslation($entity, $property, $locale, $value): void
     {
-        if ($locale == $this->defaultLocale) {
+        if ($locale == $this->localeProvider->getDefaultLocale()) {
             return;
         }
 
@@ -44,7 +44,7 @@ class RouteTranslator extends AbstractTranslator
 
     public function getTranslation($entity, $property, $locale): ?RouteInterface
     {
-        if ($locale == $this->defaultLocale) {
+        if ($locale == $this->localeProvider->getDefaultLocale()) {
             return null;
         }
 
@@ -115,7 +115,7 @@ class RouteTranslator extends AbstractTranslator
     public function translate($entity, string $property, string $locale, array $options)
     {
         // translation data is stored inside the object
-        if ($locale === $this->defaultLocale) {
+        if ($locale === $this->localeProvider->getDefaultLocale()) {
             return;
         }
 
@@ -128,5 +128,15 @@ class RouteTranslator extends AbstractTranslator
         if ($newValue !== null || $options['allow_null']) {
             $accessor->setValue($entity, $property, $newValue);
         }
+    }
+
+    public function detach($entity, string $property, string $locale, array $options)
+    {
+        // translation data is stored inside the object
+        if ($locale === $this->localeProvider->getDefaultLocale()) {
+            return;
+        }
+
+        parent::detach($entity, $property, $locale, $options);
     }
 }

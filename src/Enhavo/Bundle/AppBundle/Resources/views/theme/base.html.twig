@@ -1,36 +1,30 @@
-<html lang="{{  app.request.locale }}">
+<html {% if block("html_class") %}class="{% block html_class %}{% endblock %}"{% endif %} {% if block("html_lang") %}lang="{% block html_lang %}{% endblock %}"{% endif %}>
     <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-        <meta charset="utf-8" />
-        <meta name="description" content="{% block meta_description %}{% endblock %}" />
-        <meta name="og:url" content="{{ app.request.uri }}" />
-        <meta name="og:title" content="{% block og_title %}{% endblock %}" />
-        <meta name="og:description" content="{% block og_description %}{% endblock %}" />
-        <meta name="og:image" content="{% block og_image %}{% endblock %}" />
-
-        <title>{% block meta_title %}{% endblock %}</title>
-
-        <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/ico">
-        <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/ico">
-        <link rel="apple-touch-icon" href="{{ asset('favicon.ico') }}">
-        <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('favicon.ico') }}">
-        <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('favicon.ico') }}">
-
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('base', null, webpack_build()) }}
+        {% block head %}
+            {% block stylesheets %}
+                {{ encore_entry_link_tags('base', null, webpack_build()) }}
+            {% endblock %}
         {% endblock %}
     </head>
-    <body class="{% block body_class %}{% endblock %}">
-        <header>
-        </header>
+    <body>
+        {% block body %}
+            <header>
+                {% block header %}{% endblock %}
+            </header>
 
-        <main>
-            {% block main %}{% endblock %}
-        </main>
+            <main>
+                {% block main %}{% endblock %}
+            </main>
+
+            <footer>
+                {% block footer %}{% endblock %}
+            </footer>
 
         {% block javascripts %}
             <script id="routes" type="application/json">{{ routes()|raw }}</script>
             {{ encore_entry_script_tags('base', null, webpack_build()) }}
         {% endblock %}
+
+    {% endblock %}
     </body>
 </html>

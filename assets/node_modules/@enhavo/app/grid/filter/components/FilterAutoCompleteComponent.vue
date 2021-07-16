@@ -1,12 +1,12 @@
 <template>
     <div class="view-table-filter-search">
-        <v-select :options="options" @search="fetchOptions" :placeholder="data.label" @input="change"></v-select>
+        <v-select :options="data.choices" @search="fetchOptions" :placeholder="data.label" v-model="data.selected" @input="change"></v-select>
     </div>
 </template>
 
 <script lang="ts">
     import { Vue, Component, Prop } from "vue-property-decorator";
-    import AbstractFilter from "@enhavo/app/grid/filter/model/AbstractFilter";
+    import AutoCompleteEntityFilter from "@enhavo/app/grid/filter/model/AutoCompleteEntityFilter";
     import axios from 'axios';
     import * as URI from 'urijs';
 
@@ -16,11 +16,9 @@
         name: string = 'filter-autocomplete';
 
         @Prop()
-        data: AbstractFilter;
+        data: AutoCompleteEntityFilter;
 
-        options: object[] = [];
-
-        change(value) {
+        change(value: any) {
             if(value == null) {
                 this.data.value = null;
                 return;
@@ -38,14 +36,14 @@
             let uri = new URI(this.data.url);
             uri.addQuery('q', search);
             uri.addQuery('page', 1);
-            uri = uri + '';
+            let uriString = uri + '';
 
             axios
-                .get(uri)
+                .get(uriString)
                 .then((data) => {
-                    this.options = [];
+                    this.data.choices = [];
                     for(let result of data.data.results) {
-                        this.options.push({
+                        this.data.choices.push({
                             label: result.text,
                             code: result.id
                         })

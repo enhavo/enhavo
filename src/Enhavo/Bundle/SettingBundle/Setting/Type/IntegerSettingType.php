@@ -14,9 +14,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class IntegerSettingType extends AbstractSettingType
 {
-    public function init(array $options)
+    public function init(array $options, $key = null)
     {
-        $settingEntity = $this->parent->getSettingEntity($options);
+        $settingEntity = $this->parent->getSettingEntity($options, $key);
 
         if ($settingEntity->getValue() === null) {
             $settingEntity->setValue(new BasicValue(BasicValue::TYPE_INT, $settingEntity));

@@ -2,7 +2,9 @@
 {% if form.slug is defined %}{{ form_row(form.slug) }}{% endif %}
 {% if form.route is defined %}{{ form_row(form.route) }}{% endif %}
 {{ form_row(form.meta_description) }}
-{{ form_row(form.priority) }}
-{{ form_row(form.change_frequency) }}
+{{ form_row(form.canonicalUrl) }}
 {{ form_row(form.noIndex) }}
 {{ form_row(form.noFollow) }}
+{{ form_row(form.openGraphTitle) }}
+{{ form_row(form.openGraphDescription) }}
+{{ form_row(form.openGraphImage) }}

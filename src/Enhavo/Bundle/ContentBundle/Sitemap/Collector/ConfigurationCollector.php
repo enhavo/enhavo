@@ -34,14 +34,8 @@ class ConfigurationCollector extends AbstractType implements CollectorInterface
         $urls = [];
         foreach($entries as $entry) {
             $url = new SitemapUrl();
-            if(isset($entry['changefreq'])) {
-                $url->setChangeFrequency($entry['changefreq']);
-            }
             if(isset($entry['lastmod'])) {
                 $url->setLastModified(new \DateTime($entry['lastmod']));
-            }
-            if(isset($entry['priority'])) {
-                $url->setPriority($entry['priority']);
             }
             if(isset($entry['loc'])) {
                 $url->setLocation($entry['loc']);

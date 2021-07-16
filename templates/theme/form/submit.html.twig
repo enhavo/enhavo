@@ -1,0 +1,6 @@
+{% extends 'theme/form/base.html.twig' %}
+
+{% block app %}
+    <form-form :form="form"></form-form>
+    <button @click="form.submit()">submit</button>
+{% endblock %}

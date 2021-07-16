@@ -13,19 +13,34 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 abstract class AbstractActionType implements ActionTypeInterface
 {
-    /**
-     * @var TranslatorInterface
-     */
+    /** @var TranslatorInterface */
     protected $translator;
 
-    public function __construct(TranslatorInterface $translator)
+    /** @var ActionLanguageExpression */
+    private $actionLanguageExpression;
+
+    /**
+     * AbstractActionType constructor.
+     * @param TranslatorInterface $translator
+     * @param ActionLanguageExpression $actionLanguageExpression
+     */
+    public function __construct(TranslatorInterface $translator, ActionLanguageExpression $actionLanguageExpression)
     {
         $this->translator = $translator;
+        $this->actionLanguageExpression = $actionLanguageExpression;
     }
 
     public function isHidden(array $options, $resource = null)
     {
-        return $options['hidden'];
+        if (preg_match('/^exp:/', $options['hidden'])) {
+            $hidden = $this->actionLanguageExpression->evaluate(substr($options['hidden'], 4), [
+                'resource' => $resource,
+                'action' => $this
+            ]);
+        } else {
+            $hidden = $options['hidden'];
+        }
+        return $hidden;
     }
 
     public function getPermission(array $options, $resource = null)

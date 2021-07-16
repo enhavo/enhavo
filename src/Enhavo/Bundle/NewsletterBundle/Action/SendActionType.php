@@ -5,16 +5,9 @@ namespace Enhavo\Bundle\NewsletterBundle\Action;
 use Enhavo\Bundle\AppBundle\Action\AbstractActionType;
 use Enhavo\Bundle\AppBundle\Action\ActionTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SendActionType extends AbstractActionType implements ActionTypeInterface
 {
-
-    public function __construct(TranslatorInterface $translator)
-    {
-        parent::__construct($translator);
-    }
-
     public function createViewData(array $options, $resource = null)
     {
         $data = parent::createViewData($options, $resource);

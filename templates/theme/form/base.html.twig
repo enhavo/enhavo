@@ -1,0 +1,21 @@
+<html>
+    <head>
+        {% block head %}{% endblock %}
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+    {% block body %}
+        {% block form %}{% endblock %}
+        <div id="app" data-vue="{{ vue|json_encode|e }}">
+            {% block app %}
+                <form-form :form="form"></form-form>
+            {% endblock %}
+        </div>
+        <hr>
+        <pre id="data">{{ data|json_encode(constant('JSON_PRETTY_PRINT')) }}</pre>
+    {% endblock %}
+    {% block javascripts %}
+        {{ encore_entry_script_tags('form', null, webpack_build()) }}
+    {% endblock %}
+    </body>
+</html>

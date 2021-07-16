@@ -12,15 +12,12 @@ use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager;
 use Enhavo\Bundle\NewsletterBundle\Pending\PendingSubscriberManager;
 use Enhavo\Bundle\NewsletterBundle\Strategy\AbstractStrategyType;
-use Enhavo\Bundle\NewsletterBundle\Strategy\MailSubjectTrait;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 class DoubleOptInStrategyType extends AbstractStrategyType
 {
-    use MailSubjectTrait;
-
     /** @var NewsletterManager */
     private $newsletterManager;
 
@@ -81,7 +78,7 @@ class DoubleOptInStrategyType extends AbstractStrategyType
             $template = $options['template'];
             $from = $options['from'];
             $senderName = $options['sender_name'];
-            $subject = $this->getSubject($options);
+            $subject = $this->trans($options['subject'], [], $options['translation_domain']);
 
             $message = $this->newsletterManager->createMessage($from, $senderName, $subscriber->getEmail(), $subject, $template, [
                 'subscriber' => $subscriber,
@@ -98,11 +95,12 @@ class DoubleOptInStrategyType extends AbstractStrategyType
             $template = $options['confirmation_template'];
             $from = $options['from'];
             $senderName = $options['sender_name'];
-            $subject = $this->getSubject($options);
+            $subject = $this->trans($options['confirmation_subject'], [], $options['translation_domain']);
 
             $message = $this->newsletterManager->createMessage($from, $senderName, $subscriber->getEmail(), $subject, $template, [
                 'subscriber' => $subscriber
             ], $options['content_type']);
+
             $this->newsletterManager->sendMessage($message);
         }
     }
@@ -114,7 +112,7 @@ class DoubleOptInStrategyType extends AbstractStrategyType
             $from = $options['from'];
             $senderName = $options['sender_name'];
             $to = $options['admin_email'];
-            $subject = $this->getAdminSubject($options);
+            $subject = $this->trans($options['admin_subject'], [], $options['translation_domain']);
 
             $message = $this->newsletterManager->createMessage($from, $senderName, $to, $subject, $template, [
                 'subscriber' => $subscriber
@@ -165,6 +163,7 @@ class DoubleOptInStrategyType extends AbstractStrategyType
             'activation_template' => 'theme/resource/subscriber/activate.html.twig',
             'template' => 'mail/subscriber/double-opt-in.html.twig',
             'confirmation_template' => 'mail/subscriber/confirmation.html.twig',
+            'confirmation_subject' => 'subscriber.mail.confirm.subject',
             'admin_template' => 'mail/subscriber/notify-admin.html.twig',
             'activate_route' => 'enhavo_newsletter_subscribe_activate',
             'activate_route_parameters' => [],

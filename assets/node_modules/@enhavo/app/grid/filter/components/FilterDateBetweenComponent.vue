@@ -1,24 +1,24 @@
 <template>
     <div class="view-table-filter-search">
-        <datepicker :typeable="true" :format="data.format" :language="locale" :placeholder="data.label.from" :monday-first="true" v-model="data.value.from" @closed="closed"></datepicker>
-        <datepicker :typeable="true" :format="data.format" :language="locale" :placeholder="data.label.to" :monday-first="true" v-model="data.value.to" @closed="closed"></datepicker>
+        <datepicker :typeable="true" :format="data.format" :language="locale" :placeholder="data.labelFrom" :monday-first="true" v-model="data.value.from" @closed="closed"></datepicker>
+        <datepicker :typeable="true" :format="data.format" :language="locale" :placeholder="data.labelTo" :monday-first="true" v-model="data.value.to" @closed="closed"></datepicker>
     </div>
 </template>
 
 <script lang="ts">
     import { Vue, Component, Prop } from "vue-property-decorator";
-    import AbstractFilter from "@enhavo/app/grid/filter/model/AbstractFilter";
     import {en, de} from 'vuejs-datepicker/dist/locale'
+    import DateBetweenFilter from "@enhavo/app/grid/filter/model/DateBetweenFilter";
 
     @Component
     export default class FilterTextComponent extends Vue {
         name: string = 'filter-date-between';
 
         @Prop()
-        data: AbstractFilter;
+        data: DateBetweenFilter;
 
         get locale() {
-            if(data.locale == 'de') {
+            if(this.data.locale == 'de') {
                 return de
             }
             return en;

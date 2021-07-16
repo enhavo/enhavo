@@ -22,11 +22,6 @@ class Theme
     private $meta;
 
     /**
-     * @var Webpack
-     */
-    private $webpack;
-
-    /**
      * @var Template
      */
     private $template;
@@ -50,22 +45,6 @@ class Theme
     public function setMeta(?Meta $meta): void
     {
         $this->meta = $meta;
-    }
-
-    /**
-     * @return Webpack
-     */
-    public function getWebpack(): ?Webpack
-    {
-        return $this->webpack;
-    }
-
-    /**
-     * @param Webpack $webpack
-     */
-    public function setWebpack(?Webpack $webpack): void
-    {
-        $this->webpack = $webpack;
     }
 
     /**

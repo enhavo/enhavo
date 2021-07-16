@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\AppBundle\Tests\Action\Type;
 
 use Enhavo\Bundle\AppBundle\Action\Action;
+use Enhavo\Bundle\AppBundle\Action\ActionLanguageExpression;
 use Enhavo\Bundle\AppBundle\Action\Type\DeleteActionType;
 use Enhavo\Bundle\AppBundle\Tests\Mock\ResourceMock;
 use Enhavo\Bundle\AppBundle\Tests\Mock\RouterMock;
@@ -23,6 +24,7 @@ class DeleteActionTypeTest extends TestCase
     {
         $dependencies = new DeleteActionTypeDependencies();
         $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
+        $dependencies->actionLanguageExpression = $this->getMockBuilder(ActionLanguageExpression::class)->disableOriginalConstructor()->getMock();
         $dependencies->router = new RouterMock();
         $dependencies->tokenManager = $this->getMockBuilder(CsrfTokenManager::class)->getMock();
         return $dependencies;
@@ -30,7 +32,12 @@ class DeleteActionTypeTest extends TestCase
 
     private function createInstance(DeleteActionTypeDependencies $dependencies)
     {
-        return new DeleteActionType($dependencies->translator, $dependencies->router, $dependencies->tokenManager);
+        return new DeleteActionType(
+            $dependencies->translator,
+            $dependencies->actionLanguageExpression,
+            $dependencies->router,
+            $dependencies->tokenManager
+        );
     }
 
     public function testCreateViewData()
@@ -64,6 +71,8 @@ class DeleteActionTypeDependencies
 {
     /** @var TranslatorInterface|\PHPUnit_Framework_MockObject_MockObject */
     public $translator;
+    /** @var ActionLanguageExpression|\PHPUnit_Framework_MockObject_MockObject */
+    public $actionLanguageExpression;
     /** @var RouterInterface|\PHPUnit_Framework_MockObject_MockObject */
     public $router;
     /** @var CsrfTokenManager|\PHPUnit_Framework_MockObject_MockObject */
