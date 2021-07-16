@@ -10,6 +10,7 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PostFlushEventArgs;
 use Doctrine\ORM\Event\PreFlushEventArgs;
+use Doctrine\ORM\Proxy\Proxy;
 use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
 use Enhavo\Component\Metadata\MetadataRepository;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
@@ -79,7 +80,9 @@ class DoctrineTranslationSubscriber implements EventSubscriber
         foreach ($uow->getIdentityMap() as $class => $entities) {
             if ($this->metadataRepository->hasMetadata($class)) {
                 foreach ($entities as $entity) {
-                    $this->getTranslationManager()->detach($entity);
+                    if (!($entity instanceof Proxy)) {
+                        $this->getTranslationManager()->detach($entity);
+                    }
                 }
             }
         }
