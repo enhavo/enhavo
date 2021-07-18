@@ -1,23 +1,17 @@
 Using block
 ===========
 
-.. note::
-
-  This article outdated and may contain information that are not in use any more
-
-
 Adding to the model
 -------------------
 
-To add a property of type ``grid`` to your resource model, add a one-to-one association to your doctrine definition
-and update your entity.
+To add a property of type ``node`` to your resource model, add a one-to-one association to your doctrine definition and update your entity. In this case, the property is called "content".
 
 .. code-block:: yaml
 
     oneToOne:
-        grid:
+        content:
             cascade: ['persist', 'refresh', 'remove']
-            targetEntity: Enhavo\Bundle\GridBundle\Model\GridInterface
+            targetEntity: Enhavo\Bundle\BlockBundle\Model\NodeInterface
 
 .. code-block:: php
 
@@ -29,10 +23,13 @@ and update your entity.
 
     //...
 
-    protected $grid;
+    /**
+     * @var NodeInterface
+     */
+    protected $content;
 
-    public function getGrid() {...}
-    public function setGrid(...) {...}
+    public function getContent() {...}
+    public function setContent(...) {...}
 
     //...
 
@@ -42,28 +39,50 @@ and update your entity.
 Adding to form
 --------------
 
-To properly edit a property of the type ``grid`` in your form, use the form type ``enhavo_grid``.
+To properly edit a property of the type ``node`` in your form, use the form type ``BlockNodeType::class`` or ``enhavo_block_block_node``.
 
 .. code-block:: php
 
-    $builder->add('grid', 'enhavo_grid');
+    $builder->add('content', BlockNodeType::class);
 
 
-Types of grid
+Limit node types for a FormType
 -------------
 
-If you don't add any options, all item types configured in app/config/enhavo.yml will be available in the form. You
-can restrict the available types by setting the option ``items``.
+If you don't add any options, all item types configured in config/packages/enhavo_block.yaml will be available in the form
+
+items (array)
+~~~~~
+
+You can restrict the available types by setting the option ``items``.
 
 .. code-block:: php
 
-    $builder->add('grid', 'enhavo_grid', array(
-        'items' => array(
-            array('type' => 'text'),
-            array('type' => 'picture', 'label' => 'Picture'),
-            array('type' => 'video', 'label' => 'label.video', 'translationDomain' => 'AcmeFooBundle')
-        )
+    $builder->add('content', BlockNodeType::class, array(
+        'items' => ['text','my_block_node_name']
     ));
 
-The parameter ``label`` is optional, its default value can be configured in app/config/enhavo.yml.
-The parameter ``translationDomain`` defaults to "EnhavoGridBundle" if it is not set.
+item_groups (array)
+~~~~~~~~~~~
+
+You can restrict the available types also by setting the option ``item_groups``. Beforehand you need to define these ``item_groups`` in each block node definition in config/packages/enhavo_block.yaml like so:
+
+.. code-block:: yaml
+
+    enhavo_block:
+        blocks:
+            my_block_node:
+                groups: [ my_group, maybe_a_second_group ]
+            my_second_block_node:
+                groups: [ maybe_a_second_group ]
+
+
+Afterwards you can use these groups in your FormType:
+
+.. code-block:: php
+
+    $builder->add('content', BlockNodeType::class, array(
+        'item_groups' => ['my_group']
+    ));
+
+In this case, only "my_block_node" would be available, as "my_second_block_node" does not belong to that group.
