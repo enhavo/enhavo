@@ -104,7 +104,9 @@ class DoctrineTranslationSubscriber implements EventSubscriber
         foreach ($uow->getIdentityMap() as $class => $entities) {
             if ($this->metadataRepository->hasMetadata($class)) {
                 foreach ($entities as $entity) {
-                    $this->getTranslationManager()->translate($entity, $this->accessControl->getLocale());
+                    if (!($entity instanceof Proxy)) {
+                        $this->getTranslationManager()->translate($entity, $this->accessControl->getLocale());
+                    }
                 }
             }
         }
