@@ -44,7 +44,7 @@ class LinkVoterTest extends TestCase
         $dependencies = $this->createDependencies();
 
         $request = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();
-        $request->method('getBasePath')->willReturn('test');
+        $request->method('getRequestUri')->willReturn('/test');
         $dependencies->requestStack->method('getCurrentRequest')->willReturn($request);
 
         $voter = $this->createInstance($dependencies);
@@ -57,7 +57,7 @@ class LinkVoterTest extends TestCase
         $dependencies = $this->createDependencies();
 
         $request = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();
-        $request->method('getBasePath')->willReturn('something');
+        $request->method('getRequestUri')->willReturn('/something');
         $dependencies->requestStack->method('getCurrentRequest')->willReturn($request);
 
         $voter = $this->createInstance($dependencies);
