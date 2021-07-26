@@ -23,15 +23,10 @@ class BackgroundFilter extends AbstractFilter
     {
         $content = $this->getContent($file);
 
-        try {
-            $imagine = new Imagine();
-            $imagine = $imagine->load($content->getContent());
-            $imagine = $this->format($imagine, $setting);
-            $imagine->save($content->getFilePath(), array('format' => $setting->getSetting('format')));
-        } catch (RuntimeException $e) {
-            // if image cant be created we make an empty file
-            file_put_contents($content->getFilePath(), '');
-        }
+        $imagine = new Imagine();
+        $imagine = $imagine->load($content->getContent());
+        $imagine = $this->format($imagine, $setting);
+        $imagine->save($content->getFilePath(), array('format' => $setting->getSetting('format')));
     }
 
     public function format(ImageInterface $image, FilterSetting $setting)
