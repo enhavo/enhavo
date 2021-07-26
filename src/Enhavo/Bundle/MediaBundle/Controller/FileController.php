@@ -129,6 +129,12 @@ class FileController extends ResourceController
      */
     private function getResponse($file): Response
     {
+        $path = $file->getContent()->getFilePath();
+
+        if (!file_exists($path))  {
+            throw $this->createNotFoundException('File not exists, please refresh format');
+        }
+
         $fileSize = filesize($file->getContent()->getFilePath());
         if (!$this->getStreamingDisabled() && $this->getStreamingThreshold() < $fileSize) {
             $response = new StreamedResponse(function () use ($file) {
