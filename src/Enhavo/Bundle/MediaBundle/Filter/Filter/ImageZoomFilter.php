@@ -20,24 +20,19 @@ class ImageZoomFilter extends AbstractFilter
     {
         $content = $this->getContent($file);
 
-        try {
-            $imagine = new Imagine();
-            $imagine = $imagine->load($content->getContent());
-            $factor = $setting->getSetting('zoom', 1);
+        $imagine = new Imagine();
+        $imagine = $imagine->load($content->getContent());
+        $factor = $setting->getSetting('zoom', 1);
 
-            $size = $imagine->getSize();
-            $height = intval(round($size->getHeight()*$factor));
-            $width =  intval(round($size->getWidth()*$factor));
+        $size = $imagine->getSize();
+        $height = intval(round($size->getHeight()*$factor));
+        $width =  intval(round($size->getWidth()*$factor));
 
-            $imagine->resize(new Box($width, $height));
+        $imagine->resize(new Box($width, $height));
 
-            $imagine->save($content->getFilePath(), [
-                'format' => $this->getImageFormat($content)
-            ]);
-        } catch (RuntimeException $e) {
-            // if image cant be created we make an empty file
-            file_put_contents($content->getFilePath(), '');
-        }
+        $imagine->save($content->getFilePath(), [
+            'format' => $this->getImageFormat($content)
+        ]);
     }
 
     public function getType()

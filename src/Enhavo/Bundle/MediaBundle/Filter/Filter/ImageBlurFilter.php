@@ -18,22 +18,18 @@ class ImageBlurFilter extends AbstractFilter
     public function apply($file, FilterSetting $setting)
     {
         $content = $this->getContent($file);
-        try {
-            if(class_exists('\\Imagick')) {
-                $image = new \Imagick($content->getFilePath());
-                $image->blurImage($setting->getSetting('radius', 5), $setting->getSetting('sigma', 3));
-                file_put_contents($content->getFilePath(), $image);
-            } else {
-                $imagine = new Imagine();
-                $imagine = $imagine->load($content->getContent());
-                $imagine->effects()->blur($setting->getSetting('sigma', 3));
-                $imagine->save($content->getFilePath(), [
-                    'format' => $this->getImageFormat($content)
-                ]);
-            }
-        } catch (RuntimeException $e) {
-            // if image cant be created we make an empty file
-            file_put_contents($content->getFilePath(), '');
+
+        if(class_exists('\\Imagick')) {
+            $image = new \Imagick($content->getFilePath());
+            $image->blurImage($setting->getSetting('radius', 5), $setting->getSetting('sigma', 3));
+            file_put_contents($content->getFilePath(), $image);
+        } else {
+            $imagine = new Imagine();
+            $imagine = $imagine->load($content->getContent());
+            $imagine->effects()->blur($setting->getSetting('sigma', 3));
+            $imagine->save($content->getFilePath(), [
+                'format' => $this->getImageFormat($content)
+            ]);
         }
     }
 

@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\MediaBundle\Command;
 
 use Enhavo\Bundle\MediaBundle\Entity\Format;
+use Enhavo\Bundle\MediaBundle\Exception\FormatException;
 use Enhavo\Bundle\MediaBundle\Media\FormatManager;
 use Enhavo\Bundle\MediaBundle\Media\MediaManager;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
@@ -95,15 +96,25 @@ class RefreshFormatCommand extends Command
         $progressBar->start();
 
         $notExistingFormats = [];
+        $errors = [];
         foreach($formats as $format) {
-            $progressBar->advance();
             if ($this->formatManager->existsFormat($format->getName())) {
-                $this->formatManager->applyFormat($format->getFile(), $format->getName());
+                try {
+                    $this->formatManager->applyFormat($format->getFile(), $format->getName());
+                } catch (FormatException $e) {
+                    $errors[] = [
+                        'message' => $e->getMessage(),
+                        'format' => $format->getName(),
+                        'id' => $format->getId()
+                    ];
+                }
             } else {
                 if (!in_array($format->getName(), $notExistingFormats)) {
                     $notExistingFormats[] = $format->getName();
                 }
             }
+
+            $progressBar->advance();
         }
 
         $progressBar->finish();
@@ -114,6 +125,16 @@ class RefreshFormatCommand extends Command
             $output->writeln(sprintf('<comment>Warning: Format "%s" not exists</comment>', $formatName));
         }
 
+        foreach ($errors as $error) {
+            $output->writeln(sprintf('<error>Error on format "%s" with id "%s" : %s</error>', $error['format'], $error['id'], $error['message']));
+        }
+
         $output->writeln('<info>Refreshing finished</info>');
+
+        if (count($errors)) {
+            return 1;
+        }
+
+        return 0;
     }
 }

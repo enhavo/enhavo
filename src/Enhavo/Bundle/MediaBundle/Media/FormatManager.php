@@ -24,46 +24,30 @@ use Enhavo\Bundle\MediaBundle\Storage\StorageInterface;
 
 class FormatManager
 {
-    const LOCK_TIMEOUT = 180; // 3 minutes
+    const LOCK_TIMEOUT = 60; // 3 minutes
 
-    /**
-     * @var array
-     */
+    /** @var array */
     private $formats;
 
-    /**
-     * @var StorageInterface
-     */
+    /** @var StorageInterface */
     private $storage;
 
-    /**
-     * @var FormatRepository
-     */
+    /** @var FormatRepository */
     private $formatRepository;
 
-    /**
-     * @var FormatFactory
-     */
+    /** @var FormatFactory */
     private $formatFactory;
 
-    /**
-     * @var TypeCollector
-     */
+    /** @var TypeCollector */
     private $filterCollector;
 
-    /**
-     * @var EntityManagerInterface
-     */
+    /** @var EntityManagerInterface */
     private $em;
 
-    /**
-     * @var ProviderInterface
-     */
+    /** @var ProviderInterface */
     private $provider;
 
-    /**
-     * @var CacheInterface
-     */
+    /** @var CacheInterface */
     private $cache;
 
     public function __construct(
@@ -92,20 +76,39 @@ class FormatManager
         $fileFormat = $this->formatFactory->createFromMediaFile($file);
         $fileFormat->setName($format);
         $this->em->persist($fileFormat);
-        return $this->applyFilter($fileFormat, $parameters);
+        return $fileFormat;
     }
 
     public function getFormat(FileInterface $file, $format, $parameters = [])
     {
-        /** @var FormatInterface|null $fileFormat */
-        $fileFormat = $this->formatRepository->findByFormatNameAndFile($format, $file);
-        $fileFormat = $this->waitForLock($fileFormat);
-
-        if($fileFormat === null) {
-            $fileFormat = $this->createFormat($file, $format, $parameters);
+        if (!$this->existsFormat($format)) {
+            throw new FormatException(sprintf('Format "%s" not exists', $format));
         }
 
-        $this->cleanUpTimedOutLockFormats();
+        /** @var FormatInterface|null $fileFormat */
+        $fileFormat = $this->formatRepository->findByFormatNameAndFile($format, $file);
+
+        if ($fileFormat === null) {
+            $fileFormat = $this->createFormat($file, $format, $parameters);
+            $this->lockFormat($fileFormat); // will flush entity
+            try {
+                $this->applyFilter($fileFormat, $parameters);
+            } catch (\Exception $e) {
+                $this->unlockFormat($fileFormat);
+                $this->deleteFormat($fileFormat);
+                throw new FormatException(sprintf('Can\'t create format: "%s"', $e->getMessage()), 0, $e);
+            }
+            $this->unlockFormat($fileFormat);
+            return $fileFormat;
+        }
+
+        // Check if someone lock the file, so we wait
+        $result = $this->waitForLock($fileFormat);
+        if (!$result) {
+            // timeout handling
+            $this->cleanUpTimedOutLockFormats();
+            throw new FormatException('Timeout while someone creating format');
+        }
 
         return $fileFormat;
     }
@@ -118,14 +121,24 @@ class FormatManager
 
         /** @var Format $fileFormat */
         $fileFormat = $this->formatRepository->findByFormatNameAndFile($format, $file);
-        $fileFormat = $this->waitForLock($fileFormat);
 
-        if($fileFormat === null) {
-            return $this->createFormat($file, $format, $parameters);
+        $new = false;
+        if ($fileFormat === null) {
+            $new = true;
+            $fileFormat = $this->createFormat($file, $format, $parameters);
         }
-        $this->applyFilter($fileFormat, $parameters);
 
-        $this->cleanUpTimedOutLockFormats();
+        try {
+            $this->lockFormat($fileFormat); // will flush entity
+            $this->applyFilter($fileFormat, $parameters);
+            $this->unlockFormat($fileFormat);
+        } catch (\Exception $e) {
+            $this->unlockFormat($fileFormat);
+            if ($new) {
+                $this->deleteFormat($fileFormat);
+            }
+            throw new FormatException(sprintf('Can\'t create format: "%s"', $e->getMessage()), 0, $e);
+        }
 
         return $fileFormat;
     }
@@ -155,13 +168,12 @@ class FormatManager
 
     private function applyFilter(FormatInterface $fileFormat, $parameters)
     {
-        $this->lockFormat($fileFormat);
-
         $parameters = array_merge($fileFormat->getParameters(), $parameters);
         $settings = $this->getFormatSettings($fileFormat->getName(), $parameters);
 
         $newFileFormat = $this->formatFactory->createFromMediaFile($fileFormat->getFile());
         $fileFormat->setContent($newFileFormat->getContent());
+
 
         foreach($settings as $setting) {
             $filter = $this->getFilter($setting->getType());
@@ -170,45 +182,50 @@ class FormatManager
 
         $this->storage->saveFile($fileFormat);
 
-        $this->unlockFormat($fileFormat);
-
         $this->cache->refresh($fileFormat->getFile(), $fileFormat->getName());
 
         return $fileFormat;
     }
 
+    /**
+     * Return true if waiting was finish successfully, otherwise the lock timeout was exceeded
+     *
+     * @param FormatInterface|null $fileFormat
+     * @return bool
+     */
     private function waitForLock(?FormatInterface $fileFormat)
     {
         $timeoutThreshold = new \DateTime(self::LOCK_TIMEOUT . ' seconds ago');
 
-        // No format found
-        if ($fileFormat === null) {
-            return null;
-        }
-
         // No lock, just return format
         if ($fileFormat->getLockAt() === null) {
-            return $fileFormat;
+            return true;
         }
 
         // Lock is timed out, assume error on build
         if ($fileFormat->getLockAt() < $timeoutThreshold) {
-            return null;
+            return false;
         }
 
         // Wait for operation to finish
-        while($fileFormat->getLockAt() !== null && $fileFormat->getLockAt() >= $timeoutThreshold) {
+        while ($fileFormat->getLockAt() !== null && ($fileFormat->getLockAt() >= $timeoutThreshold)) {
             sleep(1);
             $this->em->refresh($fileFormat);
+
+            $timeoutThreshold = new \DateTime(self::LOCK_TIMEOUT . ' seconds ago');
+            // Lock is timed out, assume error on build
+            if ($fileFormat->getLockAt() < $timeoutThreshold) {
+                return false;
+            }
         }
 
         // Operation finished, return format
         if ($fileFormat->getLockAt() === null) {
-            return $fileFormat;
+            return true;
         }
 
         // Timeout while waiting
-        return null;
+        return false;
     }
 
     private function lockFormat(FormatInterface $fileFormat)
