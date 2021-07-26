@@ -31,40 +31,37 @@ class ImageFilter extends AbstractFilter
     {
         $content = $this->getContent($file);
 
-        try {
-            $format = $this->getFormat($content, $setting);
-            if($format == 'gif' && class_exists('Imagick') && $this->isAnimatedGif($content->getContent())) {
-                $imagine = new ImagickImagine();
-                $image = $imagine->load($content->getContent());
-                $image->layers()->coalesce();
-                $resultImage = $image->copy();
-                $resultImage = $this->resize($resultImage, $setting);
-                $options = $this->getSaveOptions($format, $setting);
-                $options['animated'] = true;
-                $resultImage->save($content->getFilePath(), $options);
-            } elseif($format == 'bmp' && class_exists('Imagick') ) {
-                $imagine = new ImagickImagine();
-                $image = $imagine->load($content->getContent());
-                $resultImage = $image->copy();
-                $resultImage = $this->resize($resultImage, $setting);
-                $resultImage->save($content->getFilePath(), $this->getSaveOptions($format, $setting));
-            } elseif(class_exists('Imagick') ) {
-                $imagine = new ImagickImagine();
-                $imagine = $imagine->load($content->getContent());
-                $imagine = $this->resize($imagine, $setting);
-                $imagine->save($content->getFilePath(), $this->getSaveOptions($format, $setting));
-            } else {
-                $imagine = new Imagine();
-                $imagine = $imagine->load($content->getContent());
-                $imagine = $this->resize($imagine, $setting);
-                $imagine->save($content->getFilePath(), $this->getSaveOptions($format, $setting));
-            }
-            $this->setMimeType($file, $this->getMimeTypeFromImageFormat($format));
-            $this->setExtension($file, $format);
-        } catch (RuntimeException $e) {
-            // if image cant be created we make an empty file
-            file_put_contents($content->getFilePath(), '');
+        $format = $this->getFormat($content, $setting);
+
+        if ($format == 'gif' && class_exists('Imagick') && $this->isAnimatedGif($content->getContent())) {
+            $imagine = new ImagickImagine();
+            $image = $imagine->load($content->getContent());
+            $image->layers()->coalesce();
+            $resultImage = $image->copy();
+            $resultImage = $this->resize($resultImage, $setting);
+            $options = $this->getSaveOptions($format, $setting);
+            $options['animated'] = true;
+            $resultImage->save($content->getFilePath(), $options);
+        } elseif($format == 'bmp' && class_exists('Imagick') ) {
+            $imagine = new ImagickImagine();
+            $image = $imagine->load($content->getContent());
+            $resultImage = $image->copy();
+            $resultImage = $this->resize($resultImage, $setting);
+            $resultImage->save($content->getFilePath(), $this->getSaveOptions($format, $setting));
+        } elseif(class_exists('Imagick') ) {
+            $imagine = new ImagickImagine();
+            $imagine = $imagine->load($content->getContent());
+            $imagine = $this->resize($imagine, $setting);
+            $imagine->save($content->getFilePath(), $this->getSaveOptions($format, $setting));
+        } else {
+            $imagine = new Imagine();
+            $imagine = $imagine->load($content->getContent());
+            $imagine = $this->resize($imagine, $setting);
+            $imagine->save($content->getFilePath(), $this->getSaveOptions($format, $setting));
         }
+
+        $this->setMimeType($file, $this->getMimeTypeFromImageFormat($format));
+        $this->setExtension($file, $format);
     }
 
     /**
@@ -238,7 +235,7 @@ class ImageFilter extends AbstractFilter
         }
         $newImage = $imagine->create(new Box($width, $height), $backgroundColor);
         $newImage->resize(new Box($width, $height));
-        
+
         $size = $image->getSize();
         if($size->getHeight() !== $height) {
             $y =  intval($height / 2) - intval($size->getHeight() / 2);
