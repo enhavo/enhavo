@@ -37,16 +37,15 @@ class LinkVoter implements VoterInterface
     protected function match($url)
     {
         $request = $this->requestStack->getCurrentRequest();
-        $path = sprintf('/%s', $request->getBasePath());
-        $host = $request->getHost();
+        $requestInfo = parse_url($request->getRequestUri());
 
         $linkInfo = parse_url($url);
 
-        if(isset($linkInfo['host']) && ($linkInfo['host'] != $host)) {
+        if(isset($linkInfo['host']) && ($linkInfo['host'] != $request->getHost())) {
             return false;
         }
 
-        if(isset($linkInfo['path']) && ($linkInfo['path'] == $path)) {
+        if(isset($linkInfo['path']) && ($linkInfo['path'] == $requestInfo['path'])) {
             return true;
         }
 
