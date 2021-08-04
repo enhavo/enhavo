@@ -14,10 +14,10 @@ class EnhavoNewsletterBundle extends Bundle
     public function build(ContainerBuilder $container)
     {
         $container->addCompilerPass(
-            new TypeCompilerPass('Storage', 'enhavo_newsletter.storage', Storage::class)
+            new TypeCompilerPass('NewsletterStorage', 'enhavo_newsletter.storage', Storage::class)
         );
         $container->addCompilerPass(
-            new TypeCompilerPass('Strategy', 'enhavo_newsletter.strategy', Strategy::class)
+            new TypeCompilerPass('NewsletterStrategy', 'enhavo_newsletter.strategy', Strategy::class)
         );
         $container->addCompilerPass(new ProviderCompilerPass());
     }
