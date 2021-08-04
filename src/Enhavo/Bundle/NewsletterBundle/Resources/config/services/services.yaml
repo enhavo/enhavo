@@ -119,8 +119,8 @@ services:
     Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager:
         public: true
         arguments:
-            - '@Enhavo\Component\Type\FactoryInterface[Storage]'
-            - '@Enhavo\Component\Type\FactoryInterface[Strategy]'
+            - '@Enhavo\Component\Type\FactoryInterface[NewsletterStorage]'
+            - '@Enhavo\Component\Type\FactoryInterface[NewsletterStrategy]'
             - '@form.factory'
             - '@event_dispatcher'
             - '%enhavo_newsletter.subscription%'
