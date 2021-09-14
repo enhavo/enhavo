@@ -28,7 +28,7 @@ class ChoiceTypeExtension extends AbstractTypeExtension
         $view->vars['list'] = $options['list'];
     }
 
-    public function getExtendedTypes(): iterable
+    public static function getExtendedTypes(): iterable
     {
         return [ChoiceType::class];
     }
