@@ -49,7 +49,7 @@ class ActionExtension extends AbstractTypeExtension
         return $this->actionManager->createActionsViewData($options, $resource);
     }
 
-    public function getExtendedTypes(): iterable
+    public static function getExtendedTypes(): iterable
     {
         return [FormType::class];
     }
