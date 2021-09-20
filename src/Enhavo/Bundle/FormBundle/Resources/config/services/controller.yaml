@@ -2,6 +2,7 @@ services:
     enhavo_form.controller.auto_complete:
         class: Enhavo\Bundle\FormBundle\Controller\AutoCompleteController
         arguments:
+            - '@sylius.resource_controller.parameters_parser'
             - '@sylius.expression_language'
         public: true
         calls:
