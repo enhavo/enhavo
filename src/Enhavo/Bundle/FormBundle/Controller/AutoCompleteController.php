@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\FormBundle\Controller;
 
 use Pagerfanta\Pagerfanta;
+use Sylius\Bundle\ResourceBundle\Controller\ParametersParserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -22,12 +23,16 @@ class AutoCompleteController extends AbstractController
      */
     private $expressionLanguage;
 
+    /** @var ParametersParserInterface */
+    private $parametersParser;
+
     /**
      * AutoCompleteController constructor.
      * @param ExpressionLanguage $expressionLanguage
      */
-    public function __construct(ExpressionLanguage $expressionLanguage)
+    public function __construct(ParametersParserInterface $parametersParser, ExpressionLanguage $expressionLanguage)
     {
+        $this->parametersParser = $parametersParser;
         $this->expressionLanguage = $expressionLanguage;
     }
 
@@ -69,6 +74,8 @@ class AutoCompleteController extends AbstractController
             $arguments[] = $configuration->getSearchTerm();
             $arguments[] = $configuration->getLimit();
         }
+
+        $arguments = $this->parametersParser->parseRequestValues($arguments, $request);
 
         $repository = $this->getDoctrine()->getRepository($configuration->getClass());
         $result = call_user_func_array([$repository, $configuration->getRepositoryMethod()], $arguments);
