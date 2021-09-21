@@ -259,4 +259,11 @@ class NewsletterManager
         }
         return $this->templates[$key]['template'];
     }
+
+    public function update(NewsletterInterface $newsletter)
+    {
+        if ($newsletter->getCreatedAt() === null) {
+            $newsletter->setCreatedAt(new \DateTime());
+        }
+    }
 }
