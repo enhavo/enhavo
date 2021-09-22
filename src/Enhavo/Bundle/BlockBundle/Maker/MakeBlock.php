@@ -65,6 +65,11 @@ class MakeBlock extends AbstractMaker
             'What is the name the block should have (Without "Block" postfix; Directories allowed, e.g. "MyDir/MyBlock")?'
         )
         ->addArgument(
+            'items',
+            InputArgument::REQUIRED,
+            'Does this block have a list of items? [no/yes]'
+        )
+        ->addArgument(
             'type',
             InputArgument::REQUIRED,
             'Create block type? [no/yes]'
@@ -81,16 +86,23 @@ class MakeBlock extends AbstractMaker
         $namespace = $input->getArgument('namespace');
         $name = $input->getArgument('name');
         $type = in_array($input->getArgument('type'), ['yes', 'YES', 'y', 'Y']);
+        $items = in_array($input->getArgument('items'), ['yes', 'YES', 'y', 'Y']);
 
-        $block = new BlockName($this->util, $this->kernel, $namespace, $name);
+        $block = new BlockName($this->util, $this->kernel, $namespace, $name, $items);
 
         $this->generateDoctrineOrmFile($generator, $block);
         $this->generateEntityFile($generator, $block);
         $this->generateFormTypeFile($generator, $block);
         $this->generateFactoryFile($generator, $block);
         $this->generateTemplateFile($generator, $block);
+        if ($items) {
+            $this->generateItemDoctrineOrmFile($generator, $block);
+            $this->generateItemEntityFile($generator, $block);
+            $this->generateItemFormTypeFile($generator, $block);
+            $this->generateItemFactoryFile($generator, $block);
+        }
 
-        if($type) {
+        if ($type) {
             $this->generateTypeFile($generator, $block);
         }
 
@@ -119,7 +131,24 @@ class MakeBlock extends AbstractMaker
             [
                 'namespace' => $block->getEntityNamespace(),
                 'name' => $block->getName(),
-                'table_name' => $tableName
+                'table_name' => $tableName,
+                'has_items' => $block->getHasItems(),
+            ]
+        );
+    }
+
+    private function generateItemDoctrineOrmFile(Generator $generator, BlockName $block)
+    {
+        $applicationName = $this->nameTransformer->snakeCase($block->getApplicationName());
+        $applicationName = str_replace('enhavo_', '', $applicationName); // special case for enhavo
+        $tableName = sprintf('%s_%s_block_item', $applicationName, $this->nameTransformer->snakeCase($block->getName()));
+        $generator->generateFile(
+            $block->getItemDoctrineORMFilePath(),
+            $this->createTemplatePath('block/item-doctrine.tpl.php'),
+            [
+                'namespace' => $block->getEntityNamespace(),
+                'name' => $block->getName(),
+                'table_name' => $tableName,
             ]
         );
     }
@@ -131,7 +160,20 @@ class MakeBlock extends AbstractMaker
             $this->createTemplatePath('block/entity.tpl.php'),
             [
                 'entity_namespace' => $block->getEntityNamespace(),
-                'name' => $block->getName()
+                'name' => $block->getName(),
+                'has_items' => $block->getHasItems(),
+            ]
+        );
+    }
+
+    private function generateItemEntityFile(Generator $generator, BlockName $block)
+    {
+        $generator->generateFile(
+            $block->getItemEntityFilePath(),
+            $this->createTemplatePath('block/item-entity.tpl.php'),
+            [
+                'entity_namespace' => $block->getEntityNamespace(),
+                'name' => $block->getName(),
             ]
         );
     }
@@ -146,7 +188,23 @@ class MakeBlock extends AbstractMaker
                 'form_namespace' => $block->getFormNamespace(),
                 'name' => $block->getName(),
                 'entity_namespace' => $block->getEntityNamespace(),
-                'form_type_name' => $formTypeName
+                'form_type_name' => $formTypeName,
+                'has_items' => $block->getHasItems(),
+            ]
+        );
+    }
+
+    private function generateItemFormTypeFile(Generator $generator, BlockName $block)
+    {
+        $formTypeName = sprintf('%s_%s_block', $this->nameTransformer->snakeCase($block->getApplicationName()), $this->nameTransformer->snakeCase($block->getName()));
+        $generator->generateFile(
+            $block->getItemFormTypeFilePath(),
+            $this->createTemplatePath('block/item-form-type.tpl.php'),
+            [
+                'form_namespace' => $block->getFormNamespace(),
+                'name' => $block->getName(),
+                'entity_namespace' => $block->getEntityNamespace(),
+                'form_type_name' => $formTypeName,
             ]
         );
     }
@@ -156,6 +214,18 @@ class MakeBlock extends AbstractMaker
         $generator->generateFile(
             $block->getFactoryFilePath(),
             $this->createTemplatePath('block/factory.tpl.php'),
+            [
+                'factory_namespace' => $block->getFactoryNamespace(),
+                'name' => $block->getName()
+            ]
+        );
+    }
+
+    private function generateItemFactoryFile(Generator $generator, BlockName $block)
+    {
+        $generator->generateFile(
+            $block->getItemFactoryFilePath(),
+            $this->createTemplatePath('block/item-factory.tpl.php'),
             [
                 'factory_namespace' => $block->getFactoryNamespace(),
                 'name' => $block->getName()
