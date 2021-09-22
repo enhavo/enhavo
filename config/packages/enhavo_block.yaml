@@ -42,11 +42,3 @@ enhavo_block:
             type: newsletter_subscribe
         comment:
             type: comment
-        sers:
-            type: base
-            model: App\Entity\SersBlock
-            label: Sers
-            form: App\Form\Type\SersBlockType
-            template: 'theme/block/sers.html.twig'
-            factory: App\Factory\SersBlockFactory
-            groups: [layout, content]
