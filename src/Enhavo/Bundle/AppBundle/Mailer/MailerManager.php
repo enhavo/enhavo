@@ -103,13 +103,17 @@ class MailerManager
             ->setTo($this->renderString($message->getTo(), $message->getContext()))
         ;
 
-        $template = $this->environment->load($this->templateManager->getTemplate($message->getTemplate()));
+        if ($message->getContent() === null) {
+            $template = $this->environment->load($this->templateManager->getTemplate($message->getTemplate()));
 
-        if ($message->getContentType() === Message::CONTENT_TYPE_MIXED) {
-            $swiftMessage->setBody($template->renderBlock('text_plain', $message->getContext()), Message::CONTENT_TYPE_PLAIN);
-            $swiftMessage->addPart($template->renderBlock('text_html', $message->getContext()), Message::CONTENT_TYPE_HTML);
+            if ($message->getContentType() === Message::CONTENT_TYPE_MIXED) {
+                $swiftMessage->setBody($template->renderBlock('text_plain', $message->getContext()), Message::CONTENT_TYPE_PLAIN);
+                $swiftMessage->addPart($template->renderBlock('text_html', $message->getContext()), Message::CONTENT_TYPE_HTML);
+            } else {
+                $swiftMessage->setBody($template->render($message->getContext()), $message->getContentType());
+            }
         } else {
-            $swiftMessage->setBody($template->render($message->getContext()), $message->getContentType());
+            $swiftMessage->setBody($message->getContent(), $message->getContentType());
         }
 
         foreach ($message->getAttachments() as $attachment) {

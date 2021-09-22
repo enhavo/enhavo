@@ -173,6 +173,8 @@ class NewsletterManager
             'receiver' => $receiver,
         ], 'text/html');
 
+        $message->setContent($this->render($receiver));
+
         if (!empty($receiver->getNewsletter()->getAttachments())) {
             $this->addAttachmentsToMessage($receiver->getNewsletter()->getAttachments(), $message);
         }
