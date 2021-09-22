@@ -147,3 +147,10 @@ services:
     Enhavo\Bundle\NewsletterBundle\Provider\GroupProvider:
         arguments:
             - '%enhavo_newsletter.newsletter.test_receiver%'
+
+    Enhavo\Bundle\NewsletterBundle\EventListener\NewsletterSubscriber:
+        class:
+        arguments:
+            - '@Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager'
+        tags:
+            - { name: kernel.event_subscriber }

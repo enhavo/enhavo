@@ -339,6 +339,16 @@ class NotNewsletter implements NewsletterInterface
     {
 
     }
+
+    public function getCreatedAt(): ?\DateTime
+    {
+
+    }
+
+    public function setCreatedAt(?\DateTime $createdAt): void
+    {
+
+    }
 }
 
 class LocalTypeStorageTestDependencies
