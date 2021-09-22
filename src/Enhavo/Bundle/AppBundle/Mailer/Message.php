@@ -32,6 +32,9 @@ class Message
     /** @var string */
     private $contentType;
 
+    /** @var string */
+    private $content;
+
     public function __construct(
         string $from = null,
         string $senderName = null,
@@ -214,5 +217,21 @@ class Message
         if (false !== $key = array_search($attachment, $this->attachments, true)) {
             array_splice($this->attachments, $key, 1);
         }
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getContent(): ?string
+    {
+        return $this->content;
+    }
+
+    /**
+     * @param string|null $content
+     */
+    public function setContent(?string $content): void
+    {
+        $this->content = $content;
     }
 }
