@@ -56,23 +56,17 @@ class BlockName
     private $path;
 
     /**
-     * @var bool
-     */
-    private $hasItems;
-
-    /**
      * BlockName constructor.
      * @param MakerUtil $util
      * @param KernelInterface $kernel
      * @param string $namespace
      * @param string $name
      */
-    public function __construct(MakerUtil $util, KernelInterface $kernel, string $namespace, string $name, bool $hasItems)
+    public function __construct(MakerUtil $util, KernelInterface $kernel, string $namespace, string $name)
     {
         $this->util = $util;
         $this->kernel = $kernel;
         $this->name = $name;
-        $this->hasItems = $hasItems;
 
         if(preg_match('/Bundle$/', $namespace)) {
             $this->bundle = $this->kernel->getBundle($namespace);
@@ -91,19 +85,7 @@ class BlockName
     public function getDoctrineORMFilePath()
     {
         $subDirectory = $this->subDirectories ? implode('.', $this->subDirectories).'.' : '';
-        $filename = sprintf('%s%sBlock.orm.yml', $subDirectory, $this->nameTransformer->camelCase($this->name));
-
-        if($this->bundle) {
-            return sprintf( 'src/%s/Resources/config/doctrine/%s', $this->path, $filename);
-        } else {
-            return sprintf('%s/config/doctrine/%s', $this->util->getProjectPath(), $filename);
-        }
-    }
-
-    public function getItemDoctrineORMFilePath()
-    {
-        $subDirectory = $this->subDirectories ? implode('.', $this->subDirectories).'.' : '';
-        $filename = sprintf('%s%sBlockItem.orm.yml', $subDirectory, $this->nameTransformer->camelCase($this->name));
+        $filename = sprintf('%s%s.orm.yml', $subDirectory, $this->nameTransformer->camelCase($this->name));
 
         if($this->bundle) {
             return sprintf( 'src/%s/Resources/config/doctrine/%s', $this->path, $filename);
@@ -115,19 +97,7 @@ class BlockName
     public function getEntityFilePath()
     {
         $subDirectory = $this->subDirectories ? implode('/', $this->subDirectories).'/' : '';
-        $filename = sprintf('%s%sBlock.php', $subDirectory, $this->nameTransformer->camelCase($this->name));
-
-        if($this->bundle) {
-            return sprintf( 'src/%s/Entity/%s', $this->path, $filename);
-        } else {
-            return sprintf('%s/src/Entity/%s', $this->util->getProjectPath(), $filename);
-        }
-    }
-
-    public function getItemEntityFilePath()
-    {
-        $subDirectory = $this->subDirectories ? implode('/', $this->subDirectories).'/' : '';
-        $filename = sprintf('%s%sBlockItem.php', $subDirectory, $this->nameTransformer->camelCase($this->name));
+        $filename = sprintf('%s%s.php', $subDirectory, $this->nameTransformer->camelCase($this->name));
 
         if($this->bundle) {
             return sprintf( 'src/%s/Entity/%s', $this->path, $filename);
@@ -145,19 +115,7 @@ class BlockName
     public function getFormTypeFilePath()
     {
         $subDirectory = $this->subDirectories ? implode('/', $this->subDirectories).'/' : '';
-        $filename = sprintf('%s%sBlockType.php', $subDirectory, $this->nameTransformer->camelCase($this->name));
-
-        if($this->bundle) {
-            return sprintf( 'src/%s/Form/Type/%s', $this->path, $filename);
-        } else {
-            return sprintf('%s/src/Form/Type/%s', $this->util->getProjectPath(), $filename);
-        }
-    }
-
-    public function getItemFormTypeFilePath()
-    {
-        $subDirectory = $this->subDirectories ? implode('/', $this->subDirectories).'/' : '';
-        $filename = sprintf('%s%sBlockItemType.php', $subDirectory, $this->nameTransformer->camelCase($this->name));
+        $filename = sprintf('%s%sType.php', $subDirectory, $this->nameTransformer->camelCase($this->name));
 
         if($this->bundle) {
             return sprintf( 'src/%s/Form/Type/%s', $this->path, $filename);
@@ -178,19 +136,7 @@ class BlockName
     public function getFactoryFilePath()
     {
         $subDirectory = $this->subDirectories ? implode('/', $this->subDirectories).'/' : '';
-        $filename = sprintf('%s%sBlockFactory.php', $subDirectory, $this->nameTransformer->camelCase($this->name));
-
-        if($this->bundle) {
-            return sprintf( 'src/%s/Factory/%s', $this->path, $filename);
-        } else {
-            return sprintf('%s/src/Factory/%s', $this->util->getProjectPath(), $filename);
-        }
-    }
-
-    public function getItemFactoryFilePath()
-    {
-        $subDirectory = $this->subDirectories ? implode('/', $this->subDirectories).'/' : '';
-        $filename = sprintf('%s%sBlockItemFactory.php', $subDirectory, $this->nameTransformer->camelCase($this->name));
+        $filename = sprintf('%s%sFactory.php', $subDirectory, $this->nameTransformer->camelCase($this->name));
 
         if($this->bundle) {
             return sprintf( 'src/%s/Factory/%s', $this->path, $filename);
@@ -202,9 +148,9 @@ class BlockName
     public function getTypeFilePath()
     {
         if($this->bundle) {
-            return sprintf( 'src/%s/Block/%sBlockType.php', $this->path, $this->name);
+            return sprintf( 'src/%s/Block/%sType.php', $this->path, $this->name);
         } else {
-            return sprintf('%s/src/Block/%sBlockType.php', $this->util->getProjectPath(), $this->name);
+            return sprintf('%s/src/Block/%sType.php', $this->util->getProjectPath(), $this->name);
         }
     }
 
@@ -228,14 +174,6 @@ class BlockName
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getHasItems(): bool
-    {
-        return $this->hasItems;
     }
 
     public function getTranslationDomain()
