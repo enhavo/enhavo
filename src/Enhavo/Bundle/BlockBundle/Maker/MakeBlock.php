@@ -4,7 +4,6 @@ namespace Enhavo\Bundle\BlockBundle\Maker;
 
 use Enhavo\Bundle\AppBundle\Maker\MakerUtil;
 use Enhavo\Bundle\AppBundle\Util\NameTransformer;
-use Enhavo\Bundle\BlockBundle\Maker\Definition\BlockDefinition;
 use Symfony\Bundle\MakerBundle\ConsoleStyle;
 use Symfony\Bundle\MakerBundle\DependencyBuilder;
 use Symfony\Bundle\MakerBundle\Generator;
@@ -67,7 +66,7 @@ class MakeBlock extends AbstractMaker
 //            ->addArgument(
 //                'name',
 //                InputArgument::REQUIRED,
-//                'What is the name the block should have (Without "Block" postfix; Directories allowed, e.g. "MyDir/MyBlock")?'
+//                'What is the name the block should have (Including "Block" postfix; Directories allowed, e.g. "MyDir/MyBlock")?'
 //            )
 //            ->addArgument(
 //                'type',
@@ -85,8 +84,10 @@ class MakeBlock extends AbstractMaker
     private function generateBlockFromYamlFile($file, ConsoleStyle $io, Generator $generator)
     {
         $config = Yaml::parseFile($file);
-        $definition = new BlockDefinition($config);
+        $definition = new BlockDefinition($this->util, $this->kernel, $this->nameTransformer, $config);
         $this->generateBlockEntityFile($generator, $definition);
+        $this->generateBlockDoctrineOrmFile($generator, $definition);
+        $this->generateBlockFactoryFile($generator, $definition);
     }
 
     private function generateBlocksFromPath($path, ConsoleStyle $io, Generator $generator)
@@ -143,59 +144,37 @@ class MakeBlock extends AbstractMaker
         $generator->writeChanges();
     }
 
-    private function generateDoctrineOrmFile(Generator $generator, BlockName $block)
+    private function generateBlockDoctrineOrmFile(Generator $generator, BlockDefinition $blockDefinition)
     {
-        $applicationName = $this->nameTransformer->snakeCase($block->getApplicationName());
-        $applicationName = str_replace('enhavo_', '', $applicationName); // special case for enhavo
-        $tableName = sprintf('%s_%s_block', $applicationName, $this->nameTransformer->snakeCase($block->getName()));
         $generator->generateFile(
-            $block->getDoctrineORMFilePath(),
-            $this->createTemplatePath('block/doctrine.tpl.php'),
-            [
-                'namespace' => $block->getEntityNamespace(),
-                'name' => $block->getName(),
-                'table_name' => $tableName,
+            $blockDefinition->getDoctrineORMFilePath(),
+            $this->createTemplatePath('block/doctrine.tpl.php'), [
+                'definition' => $blockDefinition,
+                'yaml' => $blockDefinition->createDoctrineOrmYaml(),
             ]
         );
     }
 
-    private function generateEntityFile(Generator $generator, BlockName $block)
+    private function generateBlockEntityFile(Generator $generator, BlockDefinition $blockDefinition)
     {
         $generator->generateFile(
-            $block->getEntityFilePath(),
+            $blockDefinition->getEntityFilePath(),
             $this->createTemplatePath('block/entity.tpl.php'),
             [
-                'entity_namespace' => $block->getEntityNamespace(),
-                'name' => $block->getName(),
+                'definition' => $blockDefinition,
+                'class' => $blockDefinition->createEntityPhpClass(),
             ]
         );
     }
 
-    private function generateBlockEntityFile(Generator $generator, BlockDefinition $block)
+    private function generateBlockFormTypeFile(Generator $generator, BlockDefinition $block)
     {
-        $blockName = new BlockName($this->util, $this->kernel, $block->getNamespace(), $block->getName());
-        $generator->generateFile(
-            $blockName->getEntityFilePath(),
-            $this->createTemplatePath('block/entity.tpl.php'),
-            [
-                'entity_namespace' => $blockName->getEntityNamespace(),
-                'definition' => $block,
-                'class' => $block->createPhpClass(),
-            ]
-        );
-    }
-
-    private function generateFormTypeFile(Generator $generator, BlockName $block)
-    {
-        $formTypeName = sprintf('%s_%s_block', $this->nameTransformer->snakeCase($block->getApplicationName()), $this->nameTransformer->snakeCase($block->getName()));
         $generator->generateFile(
             $block->getFormTypeFilePath(),
             $this->createTemplatePath('block/form-type.tpl.php'),
             [
-                'form_namespace' => $block->getFormNamespace(),
-                'name' => $block->getName(),
-                'entity_namespace' => $block->getEntityNamespace(),
-                'form_type_name' => $formTypeName,
+                'definition' => $block->getFormDefinition(),
+                'class' => $block->createFormTypePhpClass(),
             ]
         );
     }
@@ -208,6 +187,16 @@ class MakeBlock extends AbstractMaker
             [
                 'factory_namespace' => $block->getFactoryNamespace(),
                 'name' => $block->getName()
+            ]
+        );
+    }
+
+    private function generateBlockFactoryFile(Generator $generator, BlockDefinition $blockDefinition)
+    {
+        $generator->generateFile(
+            $blockDefinition->getFactoryFilePath(),
+            $this->createTemplatePath('block/factory.tpl.php'), [
+                'definition' => $blockDefinition,
             ]
         );
     }
@@ -241,7 +230,7 @@ class MakeBlock extends AbstractMaker
         );
     }
 
-    private function generateEnhavoConfigCode(BlockName $block, $type)
+    private function generateEnhavoConfigCode(BlockDefinition $block, $type)
     {
         return $this->twigEnvironment->render('@EnhavoBlock/maker/Block/enhavo_config_entry.yml.twig', array(
             'namespace' => $block->getNamespace(),

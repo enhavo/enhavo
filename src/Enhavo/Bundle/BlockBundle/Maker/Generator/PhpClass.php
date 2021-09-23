@@ -6,10 +6,6 @@
 
 namespace Enhavo\Bundle\BlockBundle\Maker\Generator;
 
-use Enhavo\Bundle\BlockBundle\Maker\Definition\ClassProperty;
-use Nette\PhpGenerator\ClassType;
-use Nette\PhpGenerator\PhpNamespace;
-
 class PhpClass
 {
     /** @var string */
@@ -50,37 +46,53 @@ class PhpClass
     {
         $properties = [];
         foreach ($this->properties as $key => $config) {
-            $properties[] = new ClassProperty($key, $config);
+            $properties[] = $this->getProperty($key);
         }
 
         return $properties;
+    }
+
+    public function getProperty($key): PhpClassProperty
+    {
+        return new PhpClassProperty($key, $this->properties[$key]);
+    }
+
+    /**
+     * @return array|PhpFunction[]
+     */
+    public function getFunctions(): array
+    {
+        return $this->functions;
     }
 
     public function generateGetterSetters()
     {
         foreach ($this->properties as $key => $config) {
 
-            $this->functions[] = $this->generateGetter($key, $config);
-            $this->functions[] = $this->generateSetter($key, $config);
+            $this->functions[] = $this->generateGetter($key);
+            $this->functions[] = $this->generateSetter($key);
         }
     }
 
-    public function generateGetter($key, $config): PhpFunction
+    public function generateGetter($key): PhpFunction
     {
-        $nullable = $config['nullable'] ? '?' : '';
+        $classProperty = $this->getProperty($key);
+        $nullable = $classProperty->getNullable();
         $name = sprintf('get%s', ucfirst($key));
-        $returns = sprintf('%s%s', $nullable, $config['type']);
-        $body = [sprintf('return $this->%s', $key)];
+        $returns = sprintf('%s%s', $nullable, $classProperty->getType());
+        $body = [sprintf('return $this->%s;', $key)];
         return new PhpFunction($name, 'public', [], $body, $returns);
     }
 
-    public function generateSetter($key, $config): PhpFunction
+    public function generateSetter($key): PhpFunction
     {
-        $name = sprintf('set%s', ucfirst($key));
+        $classProperty = $this->getProperty($key);
+        $nullable = $classProperty->getNullable();
+        $name = sprintf('set%s', ucfirst($classProperty->getName()));
         $args = [
-            $config['type'] => $key,
+            sprintf('%s%s', $nullable, $classProperty->getType()) => $classProperty->getName(),
         ];
-        $body = [sprintf('$this->%s = %s;', $key, $config['type'])];
+        $body = [sprintf('$this->%s = $%s;', $classProperty->getName(), $classProperty->getName())];
         return new PhpFunction($name, 'public', $args, $body, 'void');
     }
 

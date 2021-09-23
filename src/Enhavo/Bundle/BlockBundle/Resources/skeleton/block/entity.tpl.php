@@ -1,6 +1,6 @@
 <?= "<?php\n" ?>
 
-namespace <?= $entity_namespace ?>;
+namespace <?= $definition->getEntityNamespace() ?>;
 
 use Enhavo\Bundle\BlockBundle\Entity\AbstractBlock;
 <?php foreach ($class->getUse() as $item): ?>
@@ -11,5 +11,9 @@ class <?= $definition->getName() ?> extends AbstractBlock
 {
 <?php foreach ($class->getProperties() as $property): ?>
 <?= $property ?>
+<?php endforeach; ?>
+
+<?php foreach ($class->getFunctions() as $function): ?>
+<?= $function ?>
 <?php endforeach; ?>
 }

@@ -39,18 +39,70 @@ class PhpFunction
         $this->returns = $returns;
     }
 
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVisibility(): string
+    {
+        return $this->visibility;
+    }
+
+    /**
+     * @return array
+     */
+    public function getArgs(): array
+    {
+        return $this->args;
+    }
+
+    /**
+     * @return array
+     */
+    public function getBody(): array
+    {
+        return $this->body;
+    }
+
+    /**
+     * @return string
+     */
+    public function getReturns(): string
+    {
+        return $this->returns;
+    }
+
+    public function getArgumentString()
+    {
+        $strings = [];
+        foreach ($this->args as $key => $value) {
+            $strings[] = sprintf('%s $%s', $key, $value);
+        }
+
+        return implode(', ', $strings);
+    }
+
     public function __toString()
     {
         $string = <<<TXT
     %s function %s(%s): %s
     {
-        %s;
+        %s
     }
+
 
 TXT;
         return sprintf($string, $this->visibility, $this->name,
-            http_build_query($this->args,'',', '),
+            $this->getArgumentString(),
             $this->returns,
-            http_build_query($this->body, '', '    \n'));
+            implode('\n    ', $this->body));
     }
+
 }

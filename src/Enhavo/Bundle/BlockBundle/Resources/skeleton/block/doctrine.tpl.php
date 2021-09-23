@@ -1,15 +1,11 @@
-<?= $namespace; ?>\<?= $name; ?>Block:
+<?= $yaml->getNamespace() ?>\<?= $yaml->getName() ?>:
     type: entity
-    table: <?= $table_name; ?><?= "\n"; ?>
+    table: <?= $yaml->getTableName(); ?><?= "\n"; ?>
 
-<?php if ($has_items): ?>
-    oneToMany:
-        items:
-            cascade: [ 'persist', 'refresh' ]
-            targetEntity: <?= $namespace; ?>\<?= $name; ?>BlockItem
-            mappedBy: <?= strtolower($name); ?>Block
-            orphanRemoval: true
-            orderBy: { position: asc }
-<?php endif; ?>
+    fields:
+<?php foreach($yaml->getFields() as $field): ?>
+<?= $field ?>
+<?php endforeach; ?>
+
 
     lifecycleCallbacks: {  }
