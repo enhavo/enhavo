@@ -1,19 +1,23 @@
 <?= "<?php\n" ?>
 
-namespace <?= $definition->getFormNamespace() ?>;
+namespace <?= $class->getNamespace() ?>;
 
-use <?= $definition->getEntityNamespace() ?>\<?= $definition->getName() ?>;
+use Symfony\Component\Form\AbstractType;
+use <?= $entity->getNamespace() ?>\<?= $entity->getName() ?>;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+<?php foreach ($class->getUse() as $item): ?>
+use <?= $item; ?>;
+<?php endforeach; ?>
 
-class <?= $class->getName() ?> extends <?= $class->getExtends() ?>
+class <?= $class->getName() ?> extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         // TODO: Insert form fields
         $builder
 <?php foreach ($definition->getFields() as $field): ?>
-            ->add('<?= $field->getName() ?>', <?= $field->getClass() ?>, <?= $field->getOptionsString() ?>)
+            ->add('<?= $field->getName() ?>', <?= $field->getClass() ?>::class, <?= $field->getOptionsString() ?>)
 
 <?php endforeach; ?>
         ;
@@ -22,7 +26,7 @@ class <?= $class->getName() ?> extends <?= $class->getExtends() ?>
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => <?= $definition->getName() ?>::class
+            'data_class' => <?= $entity->getName() ?>::class
         ));
     }
 

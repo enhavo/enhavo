@@ -56,17 +56,14 @@ class FormTypeField
 
         foreach ($array as $key => $item) {
             if (is_array($item)) {
-                $lines[] = $this->__arrayToString($item, 4+$indentation);
+                $lines[] = $this->__arrayToString($item, $indentation+4);
             } else {
-                if (is_string($item)) {
-                    $item = sprintf("'%s'", $item);
-                }
-                $lines[] = sprintf("%s'%s' => %s", str_repeat(' ', $indentation), $key, $item);
+                $lines[] = sprintf("%s'%s' => %s,", str_repeat(' ', $indentation), $key, $item);
             }
         }
 
-        $lines[] = sprintf('%s]', $indentation);
+        $lines[] = sprintf('%s]', str_repeat(' ', $indentation-4));
 
-        return implode('\n', $lines);
+        return implode("\n", $lines);
     }
 }

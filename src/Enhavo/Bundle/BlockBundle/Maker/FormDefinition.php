@@ -29,6 +29,22 @@ class FormDefinition
     /**
      * @return string
      */
+    public function getNamespace(): string
+    {
+        return $this->namespace;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return string
+     */
     public function getBlockPrefix(): string
     {
         return $this->blockPrefix;
@@ -39,10 +55,13 @@ class FormDefinition
         $fields = [];
 
         foreach ($this->properties as $key => $config) {
-            $fields[] = new FormTypeField($key, $config['form'] ?? []);
+            $formConfig = $config['form'] ?? null;
+            if ($formConfig) {
+                $fields[] = new FormTypeField($key, $formConfig);
+            }
         }
 
-        return $field;
+        return $fields;
     }
 
 }

@@ -9,27 +9,17 @@ namespace Enhavo\Bundle\BlockBundle\Maker\Generator;
 class DoctrineOrmYaml
 {
     /** @var string */
-    private $namespace;
-
-    /** @var string */
-    private $name;
-
-    /** @var string */
     private $tableName;
 
     /** @var array */
     private $fields;
 
     /**
-     * @param string $namespace
-     * @param string $name
      * @param string $tableName
      * @param array $fields
      */
-    public function __construct(string $namespace, string $name, string $tableName, array $fields)
+    public function __construct(string $tableName, array $fields)
     {
-        $this->namespace = $namespace;
-        $this->name = $name;
         $this->tableName = $tableName;
         $this->fields = $fields;
     }
@@ -38,7 +28,22 @@ class DoctrineOrmYaml
     {
         $properties = [];
         foreach ($this->fields as $key => $config) {
-            $properties[] = $this->getField($key);
+            if (!isset($config['type_options']['relation'])) {
+                $properties[] = $this->getField($key);
+            }
+        }
+
+        return $properties;
+    }
+
+    public function getRelations(string $type): array
+    {
+        $properties = [];
+        foreach ($this->fields as $key => $config) {
+            $hit = isset($config['type_options']['relation']) && $config['type_options']['relation'] === $type;
+            if ($hit) {
+                $properties[] = $this->getRelation($key);
+            }
         }
 
         return $properties;
@@ -49,12 +54,9 @@ class DoctrineOrmYaml
         return new DoctrineOrmField($key, $this->fields[$key]);
     }
 
-    /**
-     * @return string
-     */
-    public function getNamespace(): string
+    public function getRelation($key): DoctrineOrmRelation
     {
-        return $this->namespace;
+        return new DoctrineOrmRelation($key, $this->fields[$key]);
     }
 
     /**
@@ -65,11 +67,4 @@ class DoctrineOrmYaml
         return $this->tableName;
     }
 
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
 }

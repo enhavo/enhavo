@@ -104,5 +104,27 @@ class PhpClass
         return $this->use;
     }
 
+    /**
+     * @return string
+     */
+    public function getNamespace(): string
+    {
+        return $this->namespace;
+    }
 
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getExtends(): string
+    {
+        return $this->extends;
+    }
 }

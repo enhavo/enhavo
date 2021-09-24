@@ -1,9 +1,9 @@
         {{ name_snake }}:
 {% if block_type %}            type: {{ name_snake }}
 {% else %}            type: base
-            model: {{ entity_namespace }}\{{ name_camel }}Block
+            model: {{ entity_namespace }}\{{ name_camel }}
             label: {{ name_camel }}
-            form: {{ form_namespace }}\{{ name_camel }}BlockType
-            template: 'theme/block/{{ name_kebab }}.html.twig'
-            factory: {{ factory_namespace }}\{{ name_camel }}BlockFactory
+            form: {{ form_namespace }}\{{ name_camel }}FormType
+            template: '{{ template_file }}'
+            factory: {{ factory_namespace }}\{{ name_camel }}Factory
 {% endif %}

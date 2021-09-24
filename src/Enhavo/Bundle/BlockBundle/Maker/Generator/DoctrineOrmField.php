@@ -31,7 +31,7 @@ class DoctrineOrmField
 
     public function getNullable(): string
     {
-        return $this->config['nullable'] ? true : false;
+        return isset($this->config['nullable']) && $this->config['nullable'];
     }
 
     public function getType(): ?string

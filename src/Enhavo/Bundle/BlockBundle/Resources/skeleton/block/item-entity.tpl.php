@@ -1,55 +1,19 @@
 <?= "<?php\n" ?>
 
-namespace <?= $entity_namespace ?>;
+namespace <?= $class->getNamespace(); ?>;
 
-class <?= $name ?>BlockItem
+<?php foreach ($class->getUse() as $item): ?>
+use <?= $item; ?>;
+<?php endforeach; ?>
+
+class <?= $class->getName(); ?>
 {
-    /** @var int|null */
-    private $id;
 
-    /** @var <?= $name ?>Block|null */
-    private $<?= strtolower($name) ?>Block;
+<?php foreach ($class->getProperties() as $property): ?>
+<?= $property; ?>
+<?php endforeach; ?>
 
-    /** @var int|null */
-    private $position;
-
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    /**
-     * @return <?= $name ?>Block|null
-     */
-    public function get<?= $name ?>Block(): ?<?= $name ?>Block
-    {
-        return $this-><?= strtolower($name) ?>Block;
-    }
-
-    /**
-     * @param <?= $name ?>Block|null $<?= strtolower($name) ?>Block
-     */
-    public function set<?= $name ?>Block(?<?= $name ?>Block $<?= strtolower($name) ?>Block): void
-    {
-        $this-><?= strtolower($name) ?>Block = $<?= strtolower($name) ?>Block;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getPosition(): ?int
-    {
-        return $this->position;
-    }
-
-    /**
-     * @param int|null $position
-     */
-    public function setPosition(?int $position): void
-    {
-        $this->position = $position;
-    }
+<?php foreach ($class->getFunctions() as $function): ?>
+<?= $function; ?>
+<?php endforeach; ?>
 }

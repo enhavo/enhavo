@@ -36,7 +36,8 @@ class PhpClassProperty
 
     public function getNullable(): string
     {
-        return $this->config['nullable'] ? '?' : '';
+        return (isset($this->config['nullable']) && $this->config['nullable'])
+            ? '?' : '';
     }
 
     public function getDefault(): string
