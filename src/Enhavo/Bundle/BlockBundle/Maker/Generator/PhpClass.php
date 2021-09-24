@@ -40,6 +40,7 @@ class PhpClass
         $this->extends = $extends;
         $this->use = $use;
         $this->properties = $properties;
+        $this->functions = [];
     }
 
     public function getProperties(): array
@@ -65,13 +66,39 @@ class PhpClass
         return $this->functions;
     }
 
-    public function generateGetterSetters()
+    public function generateGettersSetters()
     {
         foreach ($this->properties as $key => $config) {
-
             $this->functions[] = $this->generateGetter($key);
             $this->functions[] = $this->generateSetter($key);
         }
+    }
+
+    public function generateAddersRemovers()
+    {
+        foreach ($this->properties as $key => $config) {
+            $classProperty = $this->getProperty($key);
+            if ($classProperty->getEntryClass()) {
+                $this->functions[] = $this->generateAdder($key);
+                $this->functions[] = $this->generateRemover($key);
+            }
+        }
+    }
+
+    public function generateConstructor(): void
+    {
+        $body = [];
+        foreach ($this->properties as $key => $config) {
+            $classProperty = $this->getProperty($key);
+            if ($classProperty->getConstructor()) {
+                $body[] = sprintf('$this->%s = new %s();', $classProperty->getName(), $classProperty->getConstructor());
+            }
+        }
+
+        if (count($body)) {
+            array_unshift($this->functions, new PhpFunction('__constructor', 'public', [], $body, null));
+        }
+
     }
 
     public function generateGetter($key): PhpFunction
@@ -94,6 +121,45 @@ class PhpClass
         ];
         $body = [sprintf('$this->%s = $%s;', $classProperty->getName(), $classProperty->getName())];
         return new PhpFunction($name, 'public', $args, $body, 'void');
+    }
+
+
+    public function generateAdder($key): PhpFunction
+    {
+        $classProperty = $this->getProperty($key);
+        $nullable = $classProperty->getNullable();
+        $adder = $classProperty->getAdder();
+        $parentProperty = $classProperty->getMappedBy();
+        $name = sprintf('add%s', ucfirst($key));
+        $args = [
+            sprintf('%s%s', $nullable, $classProperty->getEntryClass()) => 'item',
+        ];
+
+        $body = [sprintf('$this->%s->%s($%s);', $classProperty->getName(), $adder, 'item')];
+        if ($parentProperty) {
+            $body[] = sprintf('$%s->set%s($this);', 'item', ucfirst($parentProperty));
+        }
+
+        return new PhpFunction($name, 'public', $args, $body, null);
+    }
+
+    public function generateRemover($key): PhpFunction
+    {
+        $classProperty = $this->getProperty($key);
+        $nullable = $classProperty->getNullable();
+        $remover = $classProperty->getRemover();
+        $parentProperty = $classProperty->getMappedBy();
+        $name = sprintf('remove%s', ucfirst($key));
+        $args = [
+            sprintf('%s%s', $nullable, $classProperty->getEntryClass()) => 'item',
+        ];
+
+        $body = [sprintf('$this->%s->%s($%s);', $classProperty->getName(), $remover, 'item')];
+        if ($parentProperty) {
+            $body[] = sprintf('$%s->set%s(null);', 'item', ucfirst($parentProperty));
+        }
+
+        return new PhpFunction($name, 'public', $args, $body, null);
     }
 
     /**

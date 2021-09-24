@@ -29,7 +29,7 @@ class DoctrineOrmField
         $this->config = $config;
     }
 
-    public function getNullable(): string
+    public function getNullable(): bool
     {
         return isset($this->config['nullable']) && $this->config['nullable'];
     }
@@ -47,12 +47,12 @@ class DoctrineOrmField
     public function __toString()
     {
         $string = <<<TXT
-    %s:
-        type: %s
-        nullable: %s
+        %s:
+            type: %s
+            nullable: %s
 
 TXT;
-        return sprintf($string, $this->getName(), $this->getType(), $this->getNullable());
+        return sprintf($string, $this->getName(), $this->getType(), (string)$this->getNullable());
     }
 
 }

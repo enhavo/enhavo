@@ -28,7 +28,7 @@ class DoctrineOrmYaml
     {
         $properties = [];
         foreach ($this->fields as $key => $config) {
-            if (!isset($config['type_options']['relation'])) {
+            if (!isset($config['relation'])) {
                 $properties[] = $this->getField($key);
             }
         }
@@ -40,7 +40,7 @@ class DoctrineOrmYaml
     {
         $properties = [];
         foreach ($this->fields as $key => $config) {
-            $hit = isset($config['type_options']['relation']) && $config['type_options']['relation'] === $type;
+            $hit = isset($config['relation']) && $config['relation']['type'] === $type;
             if ($hit) {
                 $properties[] = $this->getRelation($key);
             }
@@ -56,7 +56,7 @@ class DoctrineOrmYaml
 
     public function getRelation($key): DoctrineOrmRelation
     {
-        return new DoctrineOrmRelation($key, $this->fields[$key]);
+        return new DoctrineOrmRelation($key, $this->fields[$key]['relation']);
     }
 
     /**

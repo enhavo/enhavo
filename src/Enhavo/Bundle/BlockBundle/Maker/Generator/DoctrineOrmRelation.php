@@ -75,11 +75,11 @@ class DoctrineOrmRelation
         } else if ($this->getType() === 'manyToOne') {
             return $this->__toManyToOneString();
 
-        } else if ($this->getType() === 'manyToMany') {
-            return $this->__toManyToManyString();
+//        } else if ($this->getType() === 'manyToMany') {
+//            return $this->__toManyToManyString();
         }
 
-        return '';
+        return sprintf('# relation setting %s not implemented', $this->getType());
     }
 
     private function __toManyToManyString()
@@ -128,7 +128,7 @@ TXT;
     private function __arrayToString(?array $array, int $indentation = 8)
     {
         if (null === $array) {
-            return null;
+            return 'null';
         }
 
         $lines = [];

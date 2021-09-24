@@ -9,17 +9,17 @@
 
     oneToOne:
 <?php foreach($yaml->getRelations('oneToOne') as $field): ?>
-    <?= $field ?>
+<?= $field ?>
 <?php endforeach; ?>
 
     oneToMany:
 <?php foreach($yaml->getRelations('oneToMany') as $field): ?>
-    <?= $field ?>
+<?= $field ?>
 <?php endforeach; ?>
 
     manyToOne:
 <?php foreach($yaml->getRelations('manyToOne') as $field): ?>
-    <?= $field ?>
+<?= $field ?>
 <?php endforeach; ?>
 
     manyToMany:

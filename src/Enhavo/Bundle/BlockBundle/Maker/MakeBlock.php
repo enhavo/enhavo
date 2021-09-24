@@ -10,8 +10,6 @@ use Symfony\Bundle\MakerBundle\Generator;
 use Symfony\Bundle\MakerBundle\InputConfiguration;
 use Symfony\Bundle\MakerBundle\Maker\AbstractMaker;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Finder\Finder;
@@ -83,11 +81,11 @@ class MakeBlock extends AbstractMaker
 
     }
 
-    private function generateBlockFromYamlFile($file, ConsoleStyle $io, Generator $generator)
+    private function generateFromYamlFile($file, ConsoleStyle $io, Generator $generator)
     {
         $config = Yaml::parseFile($file);
         $definition = new BlockDefinition($this->util, $this->kernel, $this->nameTransformer, $config);
-        $this->generateItemFiles($generator, $definition);
+        $this->generateBlockItemFiles($generator, $definition);
         $this->generateBlockEntityFile($generator, $definition);
         $this->generateBlockDoctrineOrmFile($generator, $definition);
         $this->generateBlockFactoryFile($generator, $definition);
@@ -95,13 +93,13 @@ class MakeBlock extends AbstractMaker
         $this->generateTemplateFile($generator, $definition);
     }
 
-    private function generateBlocksFromPath($path, ConsoleStyle $io, Generator $generator)
+    private function generateFromPath($path, ConsoleStyle $io, Generator $generator)
     {
         $finder = new Finder();
         $finder->files()->in($path);
 
         foreach ($finder as $file) {
-            $this->generateBlockFromYamlFile($file, $io, $generator);
+            $this->generateFromYamlFile($file, $io, $generator);
         }
     }
 
@@ -113,9 +111,9 @@ class MakeBlock extends AbstractMaker
         if ($file || $path) {
             $input->setInteractive(false);
             if ($file) {
-                $this->generateBlockFromYamlFile(sprintf('%s/%s', $this->kernel->getProjectDir(), $file), $io, $generator);
+                $this->generateFromYamlFile(sprintf('%s/%s', $this->kernel->getProjectDir(), $file), $io, $generator);
             } else {
-                $this->generateBlocksFromPath(sprintf('%s/%s', $this->kernel->getProjectDir(), $path), $io, $generator);
+                $this->generateFromPath(sprintf('%s/%s', $this->kernel->getProjectDir(), $path), $io, $generator);
             }
 
         } else {
@@ -194,7 +192,7 @@ class MakeBlock extends AbstractMaker
         );
     }
 
-    private function generateItemFiles(Generator $generator, BlockDefinition $blockDefinition)
+    private function generateBlockItemFiles(Generator $generator, BlockDefinition $blockDefinition)
     {
         $itemDefinition = $blockDefinition->createItemDefinition();
         if ($itemDefinition) {

@@ -20,17 +20,17 @@ class PhpFunction
     /** @var array */
     private $body;
 
-    /** @var string  */
-    private $returns = 'void';
+    /** @var ?string  */
+    private $returns;
 
     /**
      * @param string $name
      * @param string $visibility
      * @param array $args
      * @param array $body
-     * @param string $returns
+     * @param ?string $returns
      */
-    public function __construct(string $name, string $visibility, array $args, array $body, string $returns)
+    public function __construct(string $name, string $visibility, array $args, array $body, ?string $returns)
     {
         $this->name = $name;
         $this->visibility = $visibility;
@@ -74,7 +74,7 @@ class PhpFunction
     /**
      * @return string
      */
-    public function getReturns(): string
+    public function getReturns(): ?string
     {
         return $this->returns;
     }
@@ -92,7 +92,7 @@ class PhpFunction
     public function __toString()
     {
         $string = <<<TXT
-    %s function %s(%s): %s
+    %s function %s(%s)%s
     {
         %s
     }
@@ -101,8 +101,8 @@ class PhpFunction
 TXT;
         return sprintf($string, $this->visibility, $this->name,
             $this->getArgumentString(),
-            $this->returns,
-            implode('\n    ', $this->body));
+            $this->returns ? sprintf(': %s', $this->returns) : '',
+            implode("\n        ", $this->body));
     }
 
 }

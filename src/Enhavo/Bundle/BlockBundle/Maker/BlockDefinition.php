@@ -182,7 +182,7 @@ class BlockDefinition
 
     public function getFormTypeName(): string
     {
-        return sprintf('%s%s', $this->nameTransformer->camelCase($this->name), 'FormType');
+        return sprintf('%s%s', $this->nameTransformer->camelCase($this->name), 'Type');
     }
 
     public function getTranslationDomain(): ?string
@@ -206,7 +206,9 @@ class BlockDefinition
     public function createEntityPhpClass(): PhpClass
     {
         $class = new PhpClass($this->getEntityNamespace(), $this->getName(), AbstractBlock::class, $this->getUse(), $this->getProperties());
-        $class->generateGetterSetters();
+        $class->generateConstructor();
+        $class->generateGettersSetters();
+        $class->generateAddersRemovers();
 
         return $class;
     }
@@ -216,8 +218,8 @@ class BlockDefinition
         $config = $this->getConfig('item_class');
         if ($config) {
             $definition = new BlockDefinition($this->util, $this->kernel, $this->nameTransformer, $config);
-//            $definition->addUse(sprintf('%s\%s', $this->getEntityNamespace(), $this->getName()));
-//            $this->addUse(sprintf('%s\%s', $definition->getEntityNamespace(), $definition->getName()));
+            $definition->addUse(sprintf('%s\%s', $this->getEntityNamespace(), $this->getName()));
+            $this->addUse(sprintf('%s\%s', $definition->getEntityNamespace(), $definition->getName()));
 
             return $definition;
         }

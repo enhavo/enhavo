@@ -40,6 +40,31 @@ class PhpClassProperty
             ? '?' : '';
     }
 
+    public function getAdder(): string
+    {
+        return $this->config['type_options']['adder'] ?? 'add';
+    }
+
+    public function getRemover(): string
+    {
+        return $this->config['type_options']['adder'] ?? 'add';
+    }
+
+    public function getEntryClass(): ?string
+    {
+        return $this->config['type_options']['entry_class'] ?? null;
+    }
+
+    public function getConstructor(): ?string
+    {
+        return $this->config['type_options']['constructor'] ?? null;
+    }
+
+    public function getMappedBy(): ?string
+    {
+        return $this->config['relation']['mapped_by'] ?? null;
+    }
+
     public function getDefault(): string
     {
         return $this->config['default'] ?? 'null';
