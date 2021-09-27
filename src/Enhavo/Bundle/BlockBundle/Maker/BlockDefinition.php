@@ -274,6 +274,16 @@ class BlockDefinition
         $this->config['namespace'] = $namespace;
     }
 
+    public function getGroups(): ?string
+    {
+        return isset($this->config['groups']) ? sprintf('[ %s ]', implode(', ', $this->config['groups'])) : null;
+    }
+
+    public function getBlockType(): ?bool
+    {
+        return $this->config['block_type'] ?? false;
+    }
+
     /**
      * @param mixed $config
      */

@@ -16,16 +16,21 @@ class PhpClassProperty
     /** @var string */
     private $name;
 
+    /** @var string */
+    private $visibility = 'private';
+
     /** @var array */
     private $config;
 
     /**
      * @param string $name
+     * @param string $visibility
      * @param array $config
      */
-    public function __construct(string $name, array $config)
+    public function __construct(string $name, string $visibility, array $config)
     {
         $this->name = $name;
+        $this->visibility = $visibility;
         $this->config = $config;
     }
 
@@ -38,6 +43,14 @@ class PhpClassProperty
     {
         return (isset($this->config['nullable']) && $this->config['nullable'])
             ? '?' : '';
+    }
+
+    /**
+     * @return string
+     */
+    public function getVisibility(): string
+    {
+        return $this->visibility;
     }
 
     public function getAdder(): string
@@ -78,22 +91,6 @@ class PhpClassProperty
     public function getName(): string
     {
         return $this->name;
-    }
-
-    public function getVisibility(): string
-    {
-        return 'private';
-    }
-
-    public function __toString()
-    {
-        $string = <<<TXT
-    /** @var %s%s */
-    public $%s = %s;
-
-
-TXT;
-        return sprintf($string, $this->getNullable(), $this->getType(), $this->name, $this->getDefault());
     }
 
 }

@@ -61,7 +61,7 @@ class DoctrineOrmRelation
 
     public function getOrderByString(): string
     {
-        return $this->__arrayToString($this->getOrderBy());
+        return $this->__arrayToString($this->getOrderBy(), 16);
     }
 
     public function __toString()

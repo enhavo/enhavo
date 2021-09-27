@@ -71,12 +71,17 @@ class PhpFunction
         return $this->body;
     }
 
+    public function getBodyString(int $indentation = 8): string
+    {
+        return implode(sprintf("\n%s", str_repeat(' ', $indentation)), $this->body);
+    }
+
     /**
      * @return string
      */
-    public function getReturns(): ?string
+    public function getReturnsString(): string
     {
-        return $this->returns;
+        return $this->returns ? sprintf(': %s', $this->returns) : '';
     }
 
     public function getArgumentString()
@@ -87,22 +92,6 @@ class PhpFunction
         }
 
         return implode(', ', $strings);
-    }
-
-    public function __toString()
-    {
-        $string = <<<TXT
-    %s function %s(%s)%s
-    {
-        %s
-    }
-
-
-TXT;
-        return sprintf($string, $this->visibility, $this->name,
-            $this->getArgumentString(),
-            $this->returns ? sprintf(': %s', $this->returns) : '',
-            implode("\n        ", $this->body));
     }
 
 }

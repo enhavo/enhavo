@@ -6,4 +6,5 @@
             form: {{ form_namespace }}\{{ name_camel }}FormType
             template: '{{ template_file }}'
             factory: {{ factory_namespace }}\{{ name_camel }}Factory
+{% if groups %}            groups: {{ groups }}{% endif %}
 {% endif %}

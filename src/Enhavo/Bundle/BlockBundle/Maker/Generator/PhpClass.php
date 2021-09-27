@@ -55,7 +55,7 @@ class PhpClass
 
     public function getProperty($key): PhpClassProperty
     {
-        return new PhpClassProperty($key, $this->properties[$key]);
+        return new PhpClassProperty($key, 'private', $this->properties[$key]);
     }
 
     /**

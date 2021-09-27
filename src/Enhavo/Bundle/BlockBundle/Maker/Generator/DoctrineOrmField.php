@@ -34,9 +34,14 @@ class DoctrineOrmField
         return isset($this->config['nullable']) && $this->config['nullable'];
     }
 
+    public function getNullableString(): string
+    {
+        return $this->getNullable() ? 'true' : 'false';
+    }
+
     public function getType(): ?string
     {
-        return $this->config['type'] ?? null;
+        return $this->config['orm_type'] ?? $this->config['type'] ?? null;
     }
 
     public function getName(): string
@@ -52,7 +57,7 @@ class DoctrineOrmField
             nullable: %s
 
 TXT;
-        return sprintf($string, $this->getName(), $this->getType(), (string)$this->getNullable());
+        return sprintf($string, $this->getName(), $this->getType(), $this->getNullableString());
     }
 
 }
