@@ -64,67 +64,6 @@ class DoctrineOrmRelation
         return $this->__arrayToString($this->getOrderBy(), 16);
     }
 
-    public function __toString()
-    {
-        if ($this->getType() === 'oneToOne') {
-            return $this->__toOneToOneString();
-
-        } else if ($this->getType() === 'oneToMany') {
-            return $this->__toOneToManyString();
-
-        } else if ($this->getType() === 'manyToOne') {
-            return $this->__toManyToOneString();
-
-//        } else if ($this->getType() === 'manyToMany') {
-//            return $this->__toManyToManyString();
-        }
-
-        return sprintf('# relation setting %s not implemented', $this->getType());
-    }
-
-    private function __toManyToManyString()
-    {
-        return '';
-    }
-
-    private function __toOneToManyString()
-    {
-        $string = <<<TXT
-        %s:
-            targetEntity: %s
-            mappedBy: %s
-            cascade: [ 'persist', 'refresh', 'remove' ]
-            orderBy: %s
-            orphanRemoval: true
-TXT;
-        return sprintf($string, $this->getName(), $this->getTargetEntity(), $this->getMappedBy(), $this->getOrderByString());
-    }
-
-    private function __toManyToOneString()
-    {
-        $string = <<<TXT
-        %s:
-            targetEntity: %s
-            cascade: [ 'persist', 'refresh', 'remove' ]
-            inversedBy: %s
-            joinColumn:
-                onDelete: CASCADE
-
-TXT;
-        return sprintf($string, $this->getName(), $this->getTargetEntity(), $this->getInversedBy());
-    }
-
-    private function __toOneToOneString()
-    {
-        $string = <<<TXT
-        %s:
-            cascade: [ 'persist', 'refresh', 'remove' ]
-            targetEntity: %s
-TXT;
-        return sprintf($string, $this->getName(), $this->getTargetEntity());
-    }
-
-
     private function __arrayToString(?array $array, int $indentation = 8)
     {
         if (null === $array) {

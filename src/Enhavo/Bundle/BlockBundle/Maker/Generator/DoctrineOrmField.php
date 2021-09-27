@@ -49,15 +49,4 @@ class DoctrineOrmField
         return $this->name;
     }
 
-    public function __toString()
-    {
-        $string = <<<TXT
-        %s:
-            type: %s
-            nullable: %s
-
-TXT;
-        return sprintf($string, $this->getName(), $this->getType(), $this->getNullableString());
-    }
-
 }
