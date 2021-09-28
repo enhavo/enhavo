@@ -26,6 +26,9 @@
         </one-to-many>
 
         <many-to-one field="parent" target-entity="Enhavo\Bundle\BlockBundle\Model\NodeInterface" inversed-by="children">
+            <cascade>
+                <cascade-persist />
+            </cascade>
             <join-column on-delete="CASCADE" />
         </many-to-one>
 
