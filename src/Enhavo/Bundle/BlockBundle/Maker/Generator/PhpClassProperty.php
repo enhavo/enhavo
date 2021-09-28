@@ -11,6 +11,8 @@
 
 namespace Enhavo\Bundle\BlockBundle\Maker\Generator;
 
+use Symfony\Component\String\Inflector\EnglishInflector;
+
 class PhpClassProperty
 {
     /** @var string */
@@ -63,6 +65,18 @@ class PhpClassProperty
         return $this->config['type_options']['adder'] ?? 'add';
     }
 
+    public function getSingular(): string
+    {
+        return $this->config['type_options']['singular'] ?? $this->__getSingular();
+    }
+
+    private function __getSingular(): string
+    {
+        $inflector = new EnglishInflector();
+        $result = $inflector->singularize($this->getName());
+        return array_shift($result);
+    }
+
     public function getEntryClass(): ?string
     {
         return $this->config['type_options']['entry_class'] ?? null;
@@ -86,6 +100,16 @@ class PhpClassProperty
     public function getType(): ?string
     {
         return $this->config['type'] ?? null;
+    }
+
+    public function getTypeOptions(): ?array
+    {
+        return $this->config['type_options'] ?? null;
+    }
+
+    public function getTypeOption(string $key): ?array
+    {
+        return $this->config['type_options'][$key] ?? null;
     }
 
     public function getName(): string

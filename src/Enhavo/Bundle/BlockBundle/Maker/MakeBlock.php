@@ -323,7 +323,7 @@ class MakeBlock extends AbstractMaker
             'factory_namespace' => $block->getFactoryNamespace(),
             'name_snake' => $this->nameTransformer->snakeCase($block->getName()),
             'name_camel' => $this->nameTransformer->camelCase($block->getName()),
-            'template_file' => sprintf('%s/%s.html.twig', 'theme/block/' ,str_replace('-block', '', $this->nameTransformer->kebabCase($block->getName()))),
+            'template_file' => sprintf('theme/block/%s.html.twig', str_replace('-block', '', $this->nameTransformer->kebabCase($block->getName()))),
             'translation_domain' => $block->getTranslationDomain(),
             'block_type' => $block->getBlockType(),
             'groups' => $block->getGroups(),

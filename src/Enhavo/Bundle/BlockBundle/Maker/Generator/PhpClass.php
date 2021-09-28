@@ -96,7 +96,7 @@ class PhpClass
         }
 
         if (count($body)) {
-            array_unshift($this->functions, new PhpFunction('__constructor', 'public', [], $body, null));
+            array_unshift($this->functions, new PhpFunction('__construct', 'public', [], $body, null));
         }
 
     }
@@ -120,6 +120,19 @@ class PhpClass
             sprintf('%s%s', $nullable, $classProperty->getType()) => $classProperty->getName(),
         ];
         $body = [sprintf('$this->%s = $%s;', $classProperty->getName(), $classProperty->getName())];
+
+        if ($classProperty->getTypeOption('setter')) {
+            $setterOptions = $classProperty->getTypeOption('setter');
+            $calls = $setterOptions['calls'] ?? null;
+            if ($calls) {
+                $body[] = sprintf('if ($%s) {', $classProperty->getName());
+                foreach ($calls as $call) {
+                    $body[] = sprintf('%s$%s->%s(%s);', str_repeat(' ', 4), $classProperty->getName(), array_shift($call), implode(', ', $call));
+                }
+                $body[] = '}';
+            }
+        }
+
         return new PhpFunction($name, 'public', $args, $body, 'void');
     }
 
@@ -130,7 +143,7 @@ class PhpClass
         $nullable = $classProperty->getNullable();
         $adder = $classProperty->getAdder();
         $parentProperty = $classProperty->getMappedBy();
-        $name = sprintf('add%s', ucfirst($key));
+        $name = sprintf('add%s', ucfirst($classProperty->getSingular()));
         $args = [
             sprintf('%s%s', $nullable, $classProperty->getEntryClass()) => 'item',
         ];
@@ -149,7 +162,7 @@ class PhpClass
         $nullable = $classProperty->getNullable();
         $remover = $classProperty->getRemover();
         $parentProperty = $classProperty->getMappedBy();
-        $name = sprintf('remove%s', ucfirst($key));
+        $name = sprintf('remove%s', ucfirst($classProperty->getSingular()));
         $args = [
             sprintf('%s%s', $nullable, $classProperty->getEntryClass()) => 'item',
         ];

@@ -14,7 +14,6 @@ class <?= $class->getName() ?> extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        // TODO: Insert form fields
         $builder
 <?php foreach ($definition->getFields() as $field): ?>
             ->add('<?= $field->getName() ?>', <?= $field->getClass() ?>::class, <?= $field->getOptionsString() ?>)
