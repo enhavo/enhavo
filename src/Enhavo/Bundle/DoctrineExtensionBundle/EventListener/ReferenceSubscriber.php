@@ -260,6 +260,7 @@ class ReferenceSubscriber implements EventSubscriber
     private function executeChanges($changes, EntityManagerInterface $em)
     {
         $queries = [];
+        $entities = [];
         foreach ($changes as $change) {
             $query = $em->createQueryBuilder()
                 ->update(get_class($change->getEntity()), 'e')
@@ -269,10 +270,18 @@ class ReferenceSubscriber implements EventSubscriber
             ;
 
             $queries[] = $query;
+
+            if (!in_array($change->getEntity(), $entities)) {
+                $entities[] = $change->getEntity();
+            }
         }
 
         foreach ($queries as $query) {
             $query->execute();
+        }
+
+        foreach ($entities as $entity) {
+            $em->refresh($entity);
         }
     }
 }
