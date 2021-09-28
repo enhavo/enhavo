@@ -194,6 +194,22 @@ class MakeBlock extends AbstractMaker
         );
     }
 
+
+    private function generateBlockItemDoctrineOrmFile(Generator $generator, BlockDefinition $blockDefinition)
+    {
+        $filePath = $blockDefinition->getDoctrineORMFilePath();
+        $this->checkExists($filePath);
+
+        $generator->generateFile(
+            $filePath,
+            $this->getTemplatePath('block/item-doctrine.tpl.php'), [
+                'definition' => $blockDefinition,
+                'class' => $blockDefinition->createEntityPhpClass(),
+                'yaml' => $blockDefinition->createDoctrineOrmYaml(),
+            ]
+        );
+    }
+
     private function generateBlockEntityFile(Generator $generator, BlockDefinition $blockDefinition)
     {
         $filePath = $blockDefinition->getEntityFilePath();
@@ -230,7 +246,7 @@ class MakeBlock extends AbstractMaker
         if ($itemDefinition) {
             $this->generateItemEntityFile($generator, $itemDefinition);
             $this->generateBlockFormTypeFile($generator, $itemDefinition);
-            $this->generateBlockDoctrineOrmFile($generator, $itemDefinition);
+            $this->generateBlockItemDoctrineOrmFile($generator, $itemDefinition);
         }
     }
 

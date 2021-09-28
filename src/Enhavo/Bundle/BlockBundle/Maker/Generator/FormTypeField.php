@@ -56,7 +56,8 @@ class FormTypeField
 
         foreach ($array as $key => $item) {
             if (is_array($item)) {
-                $lines[] = $this->__arrayToString($item, $indentation+4);
+                $subArray = $this->__arrayToString($item, $indentation+4);
+                $lines[] = sprintf("%s'%s' => %s,", str_repeat(' ', $indentation), $key, $subArray);
             } else {
                 $lines[] = sprintf("%s'%s' => %s,", str_repeat(' ', $indentation), $key, $item);
             }

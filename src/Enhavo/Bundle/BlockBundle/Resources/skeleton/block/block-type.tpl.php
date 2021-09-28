@@ -8,7 +8,7 @@ use <?= $form_namespace ?>\<?= $name_camel ?>Type as <?= $name_camel ?>FormType;
 use Enhavo\Bundle\BlockBundle\Block\AbstractBlockType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class <?= $name_camel ?>BlockType extends AbstractBlockType
+class <?= $name_camel ?>Type extends AbstractBlockType
 {
     public function configureOptions(OptionsResolver $optionsResolver)
     {

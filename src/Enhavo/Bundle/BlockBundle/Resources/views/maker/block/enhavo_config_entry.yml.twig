@@ -3,7 +3,7 @@
 {% else %}            type: base
             model: {{ entity_namespace }}\{{ name_camel }}
             label: {{ name_camel }}
-            form: {{ form_namespace }}\{{ name_camel }}FormType
+            form: {{ form_namespace }}\{{ name_camel }}Type
             template: '{{ template_file }}'
             factory: {{ factory_namespace }}\{{ name_camel }}Factory
 {% if groups %}            groups: {{ groups }}{% endif %}

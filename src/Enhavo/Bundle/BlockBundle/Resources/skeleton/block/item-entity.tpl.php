@@ -10,11 +10,19 @@ class <?= $class->getName(); ?>
 
 {
 
+    /** @var ?int */
+    private $id;
+
 <?php foreach ($class->getProperties() as $property): ?>
     /** @var <?= $property->getNullable() .$property->getType() ?> */
     private $<?= $property->getName(); ?> = <?= $property->getDefault(); ?>;
 
 <?php endforeach; ?>
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
 
 <?php foreach ($class->getFunctions() as $function): ?>
 
