@@ -50,7 +50,7 @@ class ReferenceSubscriber implements EventSubscriber
     {
         /** @var Metadata $metadata */
         $metadata = $this->metadataRepository->getMetadata($object);
-        if($metadata === null) {
+        if ($metadata === null) {
             return null;
         }
         return $metadata;
@@ -63,8 +63,8 @@ class ReferenceSubscriber implements EventSubscriber
     {
         $data = [];
         /** @var Metadata $metadata */
-        foreach($this->metadataRepository->getAllMetadata() as $metadata) {
-            if(count($metadata->getReferences()) > 0 && !in_array($metadata, $data)) {
+        foreach ($this->metadataRepository->getAllMetadata() as $metadata) {
+            if (count($metadata->getReferences()) > 0 && !in_array($metadata, $data)) {
                 $data[] = $metadata;
             }
         }
@@ -76,11 +76,11 @@ class ReferenceSubscriber implements EventSubscriber
      */
     public function getSubscribedEvents()
     {
-        return array(
+        return [
             Events::postLoad,
             Events::preFlush,
             Events::postFlush,
-        );
+        ];
     }
 
     /**
@@ -97,8 +97,8 @@ class ReferenceSubscriber implements EventSubscriber
             return;
         }
 
-        if(get_class($object) === $metadata->getClassName() || $this->isParentClass($object, $metadata->getClassName())) {
-            foreach($metadata->getReferences() as $reference) {
+        if (get_class($object) === $metadata->getClassName() || $this->isParentClass($object, $metadata->getClassName())) {
+            foreach ($metadata->getReferences() as $reference) {
                 $this->loadEntity($reference, $object);
             }
         }
@@ -107,9 +107,9 @@ class ReferenceSubscriber implements EventSubscriber
     private function isParentClass($object, $class)
     {
         $parentClass = get_parent_class($object);
-        if($parentClass === false) {
+        if ($parentClass === false) {
             return false;
-        } elseif($parentClass === $class) {
+        } elseif ($parentClass === $class) {
             return true;
         } else {
             return $this->isParentClass($parentClass, $class);
@@ -122,9 +122,9 @@ class ReferenceSubscriber implements EventSubscriber
         $id = $propertyAccessor->getValue($entity, $reference->getIdField());
         $class = $propertyAccessor->getValue($entity, $reference->getNameField());
 
-        if($id && $class) {
+        if ($id && $class) {
             $targetEntity = $this->entityResolver->getEntity($id, $class);
-            if($targetEntity !== null) {
+            if ($targetEntity !== null) {
                 $propertyAccessor->setValue($entity, $reference->getProperty(), $targetEntity);
             }
         }
@@ -167,7 +167,7 @@ class ReferenceSubscriber implements EventSubscriber
         $propertyAccessor = PropertyAccess::createPropertyAccessor();
         $targetProperty = $propertyAccessor->getValue($entity, $reference->getProperty());
 
-        if($targetProperty && $em->getUnitOfWork()->getEntityState($targetProperty) !== UnitOfWork::STATE_MANAGED) {
+        if ($targetProperty && $em->getUnitOfWork()->getEntityState($targetProperty) !== UnitOfWork::STATE_MANAGED) {
             $em->persist($targetProperty);
         }
     }
@@ -179,10 +179,12 @@ class ReferenceSubscriber implements EventSubscriber
      */
     public function postFlush(PostFlushEventArgs $args)
     {
+        $persist = false;
+        $changes = [];
+
+        $em = $args->getEntityManager();
         $uow = $args->getEntityManager()->getUnitOfWork();
         $result = $uow->getIdentityMap();
-
-        $changes = [];
 
         foreach ($this->getAllMetadata() as $metadata) {
             if (isset($result[$metadata->getClassName()])) {
@@ -192,6 +194,14 @@ class ReferenceSubscriber implements EventSubscriber
                         foreach ($entityChanges as $entityChange) {
                             $changes[] = $entityChange;
                         }
+
+                        $propertyAccessor = PropertyAccess::createPropertyAccessor();
+                        $targetProperty = $propertyAccessor->getValue($entity, $reference->getProperty());
+
+                        if ($targetProperty && $uow->getEntityState($targetProperty) !== UnitOfWork::STATE_MANAGED) {
+                            $em->persist($targetProperty);
+                            $persist = true;
+                        }
                     }
                 }
             }
@@ -199,6 +209,10 @@ class ReferenceSubscriber implements EventSubscriber
 
         if (count($changes)) {
             $this->executeChanges($changes, $args->getEntityManager());
+        }
+
+        if ($persist) {
+            $em->flush();
         }
     }
 
@@ -226,7 +240,7 @@ class ReferenceSubscriber implements EventSubscriber
             // update id property
             $idProperty = $propertyAccessor->getValue($entity, $reference->getIdField());
             $id = $propertyAccessor->getValue($targetProperty, 'id');
-            if($idProperty != $id) {
+            if ($idProperty != $id) {
                 $propertyAccessor->setValue($entity, $reference->getIdField(), $id);
                 $changes[] = new ReferenceChange($entity, $reference->getIdField(), $id);
             }
@@ -265,7 +279,9 @@ class ReferenceSubscriber implements EventSubscriber
             $query = $em->createQueryBuilder()
                 ->update(get_class($change->getEntity()), 'e')
                 ->set(sprintf('e.%s', $change->getProperty()), ':value')
+                ->where('e.id = :id')
                 ->setParameter('value', $change->getValue())
+                ->setParameter('id', $change->getEntity()->getId())
                 ->getQuery()
             ;
 
