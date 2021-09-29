@@ -41,7 +41,7 @@ class FormTypeField
 
     public function getOptionsString(): string
     {
-        return $this->__arrayToString($this->getOptions());
+        return $this->arrayToString($this->getOptions());
     }
 
     public function getName(): string
@@ -49,14 +49,14 @@ class FormTypeField
         return $this->name;
     }
 
-    private function __arrayToString(array $array, int $indentation = 16)
+    private function arrayToString(array $array, int $indentation = 16): string
     {
         $lines = [];
         $lines[] = '[';
 
         foreach ($array as $key => $item) {
             if (is_array($item)) {
-                $subArray = $this->__arrayToString($item, $indentation+4);
+                $subArray = $this->arrayToString($item, $indentation+4);
                 $lines[] = sprintf("%s'%s' => %s,", str_repeat(' ', $indentation), $key, $subArray);
             } else {
                 $lines[] = sprintf("%s'%s' => %s,", str_repeat(' ', $indentation), $key, $item);
