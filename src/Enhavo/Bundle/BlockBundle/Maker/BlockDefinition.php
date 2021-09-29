@@ -181,9 +181,29 @@ class BlockDefinition
         return $this->name;
     }
 
+    public function getSnakeName(): string
+    {
+        return $this->nameTransformer->snakeCase($this->getName());
+    }
+
+    public function getCamelName(): string
+    {
+        return $this->nameTransformer->camelCase($this->getName());
+    }
+
+    public function getKebabName(): string
+    {
+        return $this->nameTransformer->kebabCase($this->getName());
+    }
+
     public function getFormTypeName(): string
     {
         return sprintf('%s%s', $this->nameTransformer->camelCase($this->name), 'Type');
+    }
+
+    public function getFactoryName(): string
+    {
+        return sprintf('%s%s', $this->nameTransformer->camelCase($this->name), 'Factory');
     }
 
     public function getTranslationDomain(): ?string

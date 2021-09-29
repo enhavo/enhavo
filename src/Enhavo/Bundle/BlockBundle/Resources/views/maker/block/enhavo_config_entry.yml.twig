@@ -1,10 +1,10 @@
-        {{ name_snake }}:
-{% if block_type %}            type: {{ name_snake }}
+        {{ definition.snakeName }}:
+{% if definition.blockType %}            type: {{ definition.snakeName }}
 {% else %}            type: base
-            model: {{ entity_namespace }}\{{ name_camel }}
-            label: {{ name_camel }}
-            form: {{ form_namespace }}\{{ name_camel }}Type
+            model: {{ definition.entityNamespace }}\{{ definition.camelName }}
+            label: {{ definition.camelName }}
+            form: {{ definition.formNamespace }}\{{ definition.formTypeName }}
             template: '{{ template_file }}'
-            factory: {{ factory_namespace }}\{{ name_camel }}Factory
-{% if groups %}            groups: {{ groups }}{% endif %}
+            factory: {{ definition.factoryNamespace }}\{{ definition.factoryName }}
+{% if definition.groups %}            groups: {{ definition.groups }}{% endif %}
 {% endif %}

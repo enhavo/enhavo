@@ -1,32 +1,32 @@
 <?= "<?php\n" ?>
 
-namespace <?= $namespace ?>\Block;
+namespace <?= $definition->getNamespace(); ?>\Block;
 
-use <?= $entity_namespace ?>\<?= $name_camel ?>;
-use <?= $factory_namespace ?>\<?= $name_camel ?>Factory;
-use <?= $form_namespace ?>\<?= $name_camel ?>Type as <?= $name_camel ?>FormType;
+use <?= $definition->getEntityNamespace(); ?>\<?= $definition->getCamelName(); ?>;
+use <?= $definition->getFactoryNamespace(); ?>\<?= $definition->getCamelName(); ?>Factory;
+use <?= $definition->getFormNamespace(); ?>\<?= $definition->getCamelName(); ?>Type as <?= $definition->getCamelName(); ?>FormType;
 use Enhavo\Bundle\BlockBundle\Block\AbstractBlockType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class <?= $name_camel ?>Type extends AbstractBlockType
+class <?= $definition->getCamelName(); ?>Type extends AbstractBlockType
 {
     public function configureOptions(OptionsResolver $optionsResolver)
     {
         parent::configureOptions($optionsResolver);
 
         $optionsResolver->setDefaults([
-            'model' => <?= $name_camel ?>::class,
-            'form' => <?= $name_camel ?>FormType::class,
-            'factory' => <?= $name_camel ?>Factory::class,
-            'template' => 'theme/block/<?= $name_kebab ?>.html.twig',
-            'label' => '<?= $name_camel ?>',
-            'translationDomain' => <?= $translation_domain ? "'".$translation_domain."'" : 'null' ?>,
+            'model' => <?= $definition->getCamelName(); ?>::class,
+            'form' => <?= $definition->getCamelName(); ?>FormType::class,
+            'factory' => <?= $definition->getCamelName(); ?>Factory::class,
+            'template' => 'theme/block/<?= $definition->getKebabName(); ?>.html.twig',
+            'label' => '<?= $definition->getCamelName(); ?>',
+            'translationDomain' => <?= $definition->getTranslationDomain() ? "'".$definition->getTranslationDomain()."'" : 'null' ?>,
             'groups' => ['default', 'content']
         ]);
     }
 
     public static function getName(): ?string
     {
-        return '<?= $name_snake ?>';
+        return '<?= $definition->getSnakeName(); ?>';
     }
 }

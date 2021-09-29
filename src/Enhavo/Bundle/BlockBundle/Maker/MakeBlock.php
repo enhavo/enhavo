@@ -300,16 +300,8 @@ class MakeBlock extends AbstractMaker
 
         $generator->generateFile(
             $filePath,
-            $this->getTemplatePath('block/block-type.tpl.php'),
-            [
-                'namespace' => $block->getNamespace(),
-                'entity_namespace' => $block->getEntityNamespace(),
-                'form_namespace' => $block->getFormNamespace(),
-                'factory_namespace' => $block->getFactoryNamespace(),
-                'name_snake' => $this->nameTransformer->snakeCase($block->getName()),
-                'name_camel' => $this->nameTransformer->camelCase($block->getName()),
-                'name_kebab' => $this->nameTransformer->kebabCase($block->getName()),
-                'translation_domain' => $block->getTranslationDomain(),
+            $this->getTemplatePath('block/block-type.tpl.php'), [
+                'definition' => $block,
             ]
         );
     }
@@ -317,16 +309,8 @@ class MakeBlock extends AbstractMaker
     private function generateEnhavoConfigCode(BlockDefinition $block)
     {
         return $this->twigEnvironment->render('@EnhavoBlock/maker/block/enhavo_config_entry.yml.twig', [
-            'namespace' => $block->getNamespace(),
-            'entity_namespace' => $block->getEntityNamespace(),
-            'form_namespace' => $block->getFormNamespace(),
-            'factory_namespace' => $block->getFactoryNamespace(),
-            'name_snake' => $this->nameTransformer->snakeCase($block->getName()),
-            'name_camel' => $this->nameTransformer->camelCase($block->getName()),
-            'template_file' => sprintf('theme/block/%s.html.twig', str_replace('-block', '', $this->nameTransformer->kebabCase($block->getName()))),
-            'translation_domain' => $block->getTranslationDomain(),
-            'block_type' => $block->getBlockType(),
-            'groups' => $block->getGroups(),
+            'definition' => $block,
+            'template_file' => sprintf('theme/block/%s.html.twig', str_replace('-block', '', $block->getKebabName())),
         ]);
     }
 
