@@ -129,10 +129,11 @@ class MakeBlock extends AbstractMaker
             $helper = $command->getHelper('question');
 
             $input->setArgument('namespace', $helper->ask($input, $io, new Question("What is the name of the bundle or namespace? (Press return for 'App')\n", 'App')));
-            $name = $helper->ask($input, $io, new Question("What is the name the block should have (Including 'Block' postfix; Directories allowed, e.g. 'MyDir/AcmeBlock')?\n"));
-            if ($name) {
-                $input->setArgument('name', $name);
-            }
+            do {
+                $name = $helper->ask($input, $io, new Question("What is the name the block should have (Including 'Block' postfix; Directories allowed, e.g. 'MyDir/AcmeBlock')?\n"));
+            } while(!$name);
+
+            $input->setArgument('name', $name);
             $input->setArgument('type', $helper->ask($input, $io, new Question("Create block type? [no/yes] (Press return for 'no'\n", 'no')));
         }
     }
