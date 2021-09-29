@@ -14,6 +14,7 @@ use Enhavo\Bundle\DoctrineExtensionBundle\EventListener\ReferenceSubscriber;
 use Enhavo\Bundle\DoctrineExtensionBundle\Tests\EventListener\SubscriberTest;
 use Enhavo\Bundle\DoctrineExtensionBundle\Tests\Fixtures\Entity\Reference\Entity;
 use Enhavo\Bundle\DoctrineExtensionBundle\Tests\Fixtures\Entity\Reference\EntityContainer;
+use Enhavo\Bundle\DoctrineExtensionBundle\Tests\Fixtures\Entity\Reference\NodeContainer;
 use Enhavo\Bundle\DoctrineExtensionBundle\Tests\Fixtures\Entity\Reference\NodeOne;
 use Enhavo\Component\Metadata\MetadataRepository;
 
@@ -130,6 +131,51 @@ class ReferenceSubscriberTest extends SubscriberTest
         $this->em->clear();
 
         $this->assertCount(1, $this->em->getRepository(NodeOne::class)->findAll());
+    }
+
+    public function testPersistence()
+    {
+        $this->bootstrap(__DIR__ . "/../Fixtures/Entity/Reference");
+
+        $dependencies = $this->createDependencies([
+            Entity::class => [
+                'reference' => [
+                    'node' => [
+                        'nameField' => 'nodeName',
+                        'idField' => 'nodeId'
+                    ]
+                ]
+            ]
+        ]);
+
+        $subscriber = $this->createInstance($dependencies);
+        $this->em->getEventManager()->addEventSubscriber($subscriber);
+        $this->updateSchema();
+
+        $node = new NodeOne();
+        $node->setName('inner');
+
+        $entityInner = new Entity();
+        $entityInner->setName('entity_inner');
+        $entityInner->setNode($node);
+
+        $nodeContainer = new NodeContainer();
+        $nodeContainer->setName('node_container');
+        $nodeContainer->setEntity($entityInner);
+
+        $entityOuter = new Entity();
+        $entityOuter->setName('entity_outer');
+        $entityOuter->setNode($nodeContainer);
+
+        $this->em->persist($entityOuter);
+        $this->em->flush();
+        $this->em->clear();
+
+        $entityOuter = $this->em->getRepository(Entity::class)->findOneBy(['name' => 'entity_outer']);
+
+        $this->assertEquals('node_container', $entityOuter->getNode()->getName());
+        $this->assertEquals('entity_inner', $entityOuter->getNode()->getEntity()->getName());
+        $this->assertEquals('inner', $entityOuter->getNode()->getEntity()->getNode()->getName());
     }
 }
 
