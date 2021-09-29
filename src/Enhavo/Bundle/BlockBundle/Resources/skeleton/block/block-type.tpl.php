@@ -18,7 +18,7 @@ class <?= $definition->getCamelName(); ?>Type extends AbstractBlockType
             'model' => <?= $definition->getCamelName(); ?>::class,
             'form' => <?= $definition->getCamelName(); ?>FormType::class,
             'factory' => <?= $definition->getFactoryName(); ?>::class,
-            'template' => '<?= $definition->getTemplateFileName(); ?>.html.twig',
+            'template' => '<?= $definition->getTemplateFileName(); ?>',
             'label' => '<?= $definition->getName(); ?>',
             'translationDomain' => <?= $definition->getTranslationDomain() ? "'".$definition->getTranslationDomain()."'" : 'null' ?>,
             'groups' => ['default', 'content']
