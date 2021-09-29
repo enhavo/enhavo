@@ -1,0 +1,13 @@
+type: FileInterface
+nullable: true
+relation:
+    type: manyToMany
+    target_entity: Enhavo\Bundle\MediaBundle\Model\FileInterface
+    order_by:
+        order: asc
+form:
+    class: MediaType
+    options:
+        label: "'file.label.file'"
+        translation_domain: "'EnhavoMediaBundle'"
+        multiple: 'true'

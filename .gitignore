@@ -26,4 +26,4 @@
 /composer.lock
 /yarn.lock
 /drivers
-/config/blocks/
+/config/block/

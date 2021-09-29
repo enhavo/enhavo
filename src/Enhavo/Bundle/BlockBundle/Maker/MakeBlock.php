@@ -82,7 +82,7 @@ class MakeBlock extends AbstractMaker
     private function generateFromYamlFile($file, ConsoleStyle $io, Generator $generator)
     {
         $config = Yaml::parseFile($file);
-        $blockDefinition = new BlockDefinition($this->util, $this->kernel, $config);
+        $blockDefinition = new BlockDefinition($this->util, $this->kernel, $this->fileSystem, $config);
 
         $this->generateBlockItemFiles($generator, $blockDefinition);
         $this->generateBlockEntityFile($generator, $blockDefinition);
@@ -168,7 +168,7 @@ class MakeBlock extends AbstractMaker
         $name = $input->getArgument('name');
         $type = in_array($input->getArgument('type'), ['yes', 'YES', 'y', 'Y']);
 
-        $block = new BlockDefinition($this->util, $this->kernel, [
+        $block = new BlockDefinition($this->util, $this->kernel, $this->fileSystem, [
             $name => [
                 'namespace' => $namespace,
                 'block_type' => $type,

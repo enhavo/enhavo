@@ -12,6 +12,7 @@ use Enhavo\Bundle\BlockBundle\Entity\AbstractBlock;
 use Enhavo\Bundle\BlockBundle\Maker\Generator\DoctrineOrmYaml;
 use Enhavo\Bundle\BlockBundle\Maker\Generator\FormType;
 use Enhavo\Bundle\BlockBundle\Maker\Generator\PhpClass;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -54,6 +55,9 @@ class BlockDefinition
      */
     private $kernel;
 
+    /** @var Filesystem */
+    private $filesystem;
+
     /**
      * @var string
      */
@@ -67,9 +71,10 @@ class BlockDefinition
     /**
      * @param MakerUtil $util
      * @param KernelInterface $kernel
+     * @param Filesystem $filesystem
      * @param array $config
      */
-    public function __construct(MakerUtil $util, KernelInterface $kernel, array $config)
+    public function __construct(MakerUtil $util, KernelInterface $kernel, Filesystem $filesystem, array $config)
     {
         foreach ($config as $key => $value) {
             $this->name = $key;
@@ -79,9 +84,10 @@ class BlockDefinition
 
         $this->util = $util;
         $this->kernel = $kernel;
+        $this->filesystem = $filesystem;
         $this->nameTransformer = new NameTransformer();
 
-        if(preg_match('/Bundle$/', $this->getNamespace())) {
+        if (preg_match('/Bundle$/', $this->getNamespace())) {
             $this->bundle = $this->kernel->getBundle($this->getNamespace());
             $this->setNamespace($this->bundle->getNamespace());
         }
@@ -99,7 +105,7 @@ class BlockDefinition
     {
         foreach ($this->getProperties() as $key => $property) {
             if (isset($property['template'])) {
-                $config = Yaml::parseFile(sprintf('%s/%s', $this->util->getProjectPath(), $property['template']));
+                $config = Yaml::parseFile($this->getTemplatePath($property['template']));
                 $this->config['properties'][$key] = array_merge($config, $this->config['properties'][$key]);
                 unset($this->config['properties'][$key]['template']);
             }
@@ -258,7 +264,7 @@ class BlockDefinition
         $definitions = [];
         $classes = $this->getConfig('classes');
         foreach ($classes as $key => $config) {
-            $definition = new BlockDefinition($this->util, $this->kernel, [
+            $definition = new BlockDefinition($this->util, $this->kernel, $this->filesystem, [
                 $key => $config
             ]);
             $definition->addUse(sprintf('%s\%s', $this->getEntityNamespace(), $this->getName()));
@@ -311,14 +317,14 @@ class BlockDefinition
         return isset($this->config['properties'][$key]) ?? $this->config['properties'][$key];
     }
 
-    public function getNamespace(): string
+    public function getNamespace()
     {
-        return $this->config['namespace'] ?? 'App';
+        return $this->namespace ?? $this->config['namespace'] ?? 'App';
     }
 
     public function setNamespace($namespace): void
     {
-        $this->config['namespace'] = $namespace;
+        $this->namespace = $namespace;
     }
 
     public function getGroupsString(): ?string
@@ -351,5 +357,20 @@ class BlockDefinition
     private function getFormUse()
     {
         return $this->config['form']['use'] ?? [];
+    }
+
+    private function getTemplatePath($template): ?string
+    {
+        $paths = [];
+        $paths[] = sprintf('%s/%s.yaml', $this->util->getProjectPath(), $template);
+        $paths[] = sprintf('%s/%s/%s.yaml', $this->util->getProjectPath(), 'config/block/templates', $template);
+        $paths[] = sprintf('%s%s/%s.yaml', $this->util->getBundlePath('EnhavoBlockBundle'), 'Resources/block/templates', $template);
+        foreach ($paths as $path) {
+            if ($this->filesystem->exists($path)) {
+                return $path;
+            }
+        }
+
+        return null;
     }
 }

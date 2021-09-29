@@ -1,0 +1,11 @@
+type: FileInterface
+nullable: true
+relation:
+    type: oneToOne
+    target_entity: Enhavo\Bundle\MediaBundle\Model\FileInterface
+form:
+    class: MediaType
+    options:
+        label: "'file.label.file'"
+        translation_domain: "'EnhavoMediaBundle'"
+        multiple: 'false'
