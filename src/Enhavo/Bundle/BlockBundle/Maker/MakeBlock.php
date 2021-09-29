@@ -291,14 +291,14 @@ class MakeBlock extends AbstractMaker
     private function generateTemplateFile(Generator $generator, BlockDefinition $block)
     {
         $filePath = $block->getTemplateFilePath();
-        $this->checkExists($filePath);
-
-        $generator->generateFile(
-            $filePath,
-            $this->getTemplatePath('block/template.tpl.php'), [
-                'name' => $this->nameTransformer->snakeCase($block->getName()),
-            ]
-        );
+        if ($this->checkExists($filePath, true)) {
+            $generator->generateFile(
+                $filePath,
+                $this->getTemplatePath('block/template.tpl.php'), [
+                    'name' => $this->nameTransformer->snakeCase($block->getName()),
+                ]
+            );
+        }
     }
 
     private function generateBlockTypeFile(Generator $generator, BlockDefinition $block)
@@ -350,10 +350,10 @@ class MakeBlock extends AbstractMaker
         $io->writeln('');
     }
 
-    private function checkExists($filePath)
+    private function checkExists($filePath, $noOverwrite = false)
     {
         if ($this->fileSystem->exists($filePath)) {
-            if ($this->overwriteExisting) {
+            if (!$noOverwrite && $this->overwriteExisting) {
                 $this->fileSystem->remove($filePath);
                 return true;
             }
