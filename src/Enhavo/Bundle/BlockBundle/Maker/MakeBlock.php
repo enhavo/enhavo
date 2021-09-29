@@ -82,7 +82,7 @@ class MakeBlock extends AbstractMaker
     private function generateFromYamlFile($file, ConsoleStyle $io, Generator $generator)
     {
         $config = Yaml::parseFile($file);
-        $blockDefinition = new BlockDefinition($this->util, $this->kernel, $this->nameTransformer, $config);
+        $blockDefinition = new BlockDefinition($this->util, $this->kernel, $config);
 
         $this->generateBlockItemFiles($generator, $blockDefinition);
         $this->generateBlockEntityFile($generator, $blockDefinition);
@@ -92,7 +92,7 @@ class MakeBlock extends AbstractMaker
         $this->generateTemplateFile($generator, $blockDefinition);
 
         if ($blockDefinition->getBlockType()) {
-            $this->generateTypeFile($generator, $blockDefinition);
+            $this->generateBlockTypeFile($generator, $blockDefinition);
         }
 
         $this->writeConfigMessage($blockDefinition, $io);
@@ -101,10 +101,12 @@ class MakeBlock extends AbstractMaker
     private function generateFromPath($path, ConsoleStyle $io, Generator $generator)
     {
         $finder = new Finder();
-        $finder->files()->in($path);
+        $finder->files()->in($path)->depth(0);
 
         foreach ($finder as $file) {
-            $this->generateFromYamlFile($file, $io, $generator);
+            if ($file->isFile()) {
+                $this->generateFromYamlFile($file, $io, $generator);
+            }
         }
     }
 
@@ -166,7 +168,7 @@ class MakeBlock extends AbstractMaker
         $name = $input->getArgument('name');
         $type = in_array($input->getArgument('type'), ['yes', 'YES', 'y', 'Y']);
 
-        $block = new BlockDefinition($this->util, $this->kernel, $this->nameTransformer, [
+        $block = new BlockDefinition($this->util, $this->kernel, [
             $name => [
                 'namespace' => $namespace,
                 'block_type' => $type,
@@ -180,7 +182,7 @@ class MakeBlock extends AbstractMaker
         $this->generateTemplateFile($generator, $block);
 
         if ($block->getBlockType()) {
-            $this->generateTypeFile($generator, $block);
+            $this->generateBlockTypeFile($generator, $block);
         }
 
         $this->writeConfigMessage($block, $io);
@@ -293,14 +295,13 @@ class MakeBlock extends AbstractMaker
 
         $generator->generateFile(
             $filePath,
-            $this->getTemplatePath('block/template.tpl.php'),
-            [
+            $this->getTemplatePath('block/template.tpl.php'), [
                 'name' => $this->nameTransformer->snakeCase($block->getName()),
             ]
         );
     }
 
-    private function generateTypeFile(Generator $generator, BlockDefinition $block)
+    private function generateBlockTypeFile(Generator $generator, BlockDefinition $block)
     {
         $filePath = $block->getTypeFilePath();
         $this->checkExists($filePath);
@@ -308,7 +309,7 @@ class MakeBlock extends AbstractMaker
         $generator->generateFile(
             $filePath,
             $this->getTemplatePath('block/block-type.tpl.php'), [
-                'definition' => $block,
+                'definition' => $block
             ]
         );
     }

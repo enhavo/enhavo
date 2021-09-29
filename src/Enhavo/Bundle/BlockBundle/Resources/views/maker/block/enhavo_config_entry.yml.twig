@@ -4,7 +4,7 @@
             model: {{ definition.entityNamespace }}\{{ definition.camelName }}
             label: {{ definition.camelName }}
             form: {{ definition.formNamespace }}\{{ definition.formTypeName }}
-            template: '{{ template_file }}'
+            template: '{{ definition.templateFileName }}'
             factory: {{ definition.factoryNamespace }}\{{ definition.factoryName }}
 {% if definition.groups %}            groups: {{ definition.groups }}{% endif %}
 {% endif %}

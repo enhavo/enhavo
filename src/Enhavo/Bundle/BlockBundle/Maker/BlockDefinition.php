@@ -15,6 +15,7 @@ use Enhavo\Bundle\BlockBundle\Maker\Generator\PhpClass;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\Yaml\Yaml;
 
 class BlockDefinition
 {
@@ -68,7 +69,7 @@ class BlockDefinition
      * @param KernelInterface $kernel
      * @param array $config
      */
-    public function __construct(MakerUtil $util, KernelInterface $kernel, NameTransformer $nameTransformer, array $config)
+    public function __construct(MakerUtil $util, KernelInterface $kernel, array $config)
     {
         foreach ($config as $key => $value) {
             $this->name = $key;
@@ -78,7 +79,7 @@ class BlockDefinition
 
         $this->util = $util;
         $this->kernel = $kernel;
-        $this->nameTransformer = $nameTransformer;
+        $this->nameTransformer = new NameTransformer();
 
         if(preg_match('/Bundle$/', $this->getNamespace())) {
             $this->bundle = $this->kernel->getBundle($this->getNamespace());
@@ -89,7 +90,20 @@ class BlockDefinition
         $this->name = array_pop($nameParts);
         $this->subDirectories = $nameParts;
         $this->path = str_replace('\\', '/', $this->getNamespace());
-        $this->nameTransformer = new NameTransformer();
+
+        $this->loadTemplates();
+
+    }
+
+    private function loadTemplates()
+    {
+        foreach ($this->getProperties() as $key => $property) {
+            if (isset($property['template'])) {
+                $config = Yaml::parseFile(sprintf('%s/%s', $this->util->getProjectPath(), $property['template']));
+                $this->config['properties'][$key] = array_merge($this->config['properties'][$key], $config);
+                unset($this->config['properties'][$key]['template']);
+            }
+        }
     }
 
     public function getDoctrineORMFilePath()
@@ -137,10 +151,15 @@ class BlockDefinition
     public function getTemplateFilePath()
     {
         if($this->bundle) {
-            return sprintf( 'src/%s/Resources/views/theme/block/%s.html.twig', $this->path, $this->nameTransformer->kebabCase($this->name));
+            return sprintf( 'src/%s/Resources/views/%s', $this->path, $this->getTemplateFileName());
         } else {
-            return sprintf('%s/templates/theme/block/%s.html.twig', $this->util->getProjectPath(), $this->nameTransformer->kebabCase($this->name));
+            return sprintf('%s/templates/%s', $this->util->getProjectPath(), $this->getTemplateFileName());
         }
+    }
+
+    public function getTemplateFileName()
+    {
+        return sprintf('theme/block/%s.html.twig', str_replace('-block', '', $this->getKebabName()));
     }
 
     public function getFactoryFilePath()
@@ -238,7 +257,7 @@ class BlockDefinition
     {
         $config = $this->getConfig('item_class');
         if ($config) {
-            $definition = new BlockDefinition($this->util, $this->kernel, $this->nameTransformer, $config);
+            $definition = new BlockDefinition($this->util, $this->kernel, $config);
             $definition->addUse(sprintf('%s\%s', $this->getEntityNamespace(), $this->getName()));
             $this->addUse(sprintf('%s\%s', $definition->getEntityNamespace(), $definition->getName()));
 
@@ -273,7 +292,6 @@ class BlockDefinition
     {
         return $this->config['properties'] ?? [];
     }
-
 
     public function getConfig(string $key)
     {

@@ -17,9 +17,9 @@ class <?= $definition->getCamelName(); ?>Type extends AbstractBlockType
         $optionsResolver->setDefaults([
             'model' => <?= $definition->getCamelName(); ?>::class,
             'form' => <?= $definition->getCamelName(); ?>FormType::class,
-            'factory' => <?= $definition->getCamelName(); ?>Factory::class,
-            'template' => 'theme/block/<?= $definition->getKebabName(); ?>.html.twig',
-            'label' => '<?= $definition->getCamelName(); ?>',
+            'factory' => <?= $definition->getFactoryName(); ?>::class,
+            'template' => '<?= $definition->getTemplateFileName(); ?>.html.twig',
+            'label' => '<?= $definition->getName(); ?>',
             'translationDomain' => <?= $definition->getTranslationDomain() ? "'".$definition->getTranslationDomain()."'" : 'null' ?>,
             'groups' => ['default', 'content']
         ]);
