@@ -6,5 +6,5 @@
             form: {{ definition.formNamespace }}\{{ definition.formTypeName }}
             template: '{{ definition.templateFileName }}'
             factory: {{ definition.factoryNamespace }}\{{ definition.factoryName }}
-{% if definition.groups %}            groups: {{ definition.groups }}{% endif %}
+{% if definition.groupsString %}            groups: {{ definition.groupsString|raw }}{% endif %}
 {% endif %}

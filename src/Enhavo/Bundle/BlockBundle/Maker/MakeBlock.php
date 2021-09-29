@@ -251,11 +251,11 @@ class MakeBlock extends AbstractMaker
 
     private function generateBlockItemFiles(Generator $generator, BlockDefinition $blockDefinition)
     {
-        $itemDefinition = $blockDefinition->createItemDefinition();
-        if ($itemDefinition) {
-            $this->generateItemEntityFile($generator, $itemDefinition);
-            $this->generateBlockFormTypeFile($generator, $itemDefinition);
-            $this->generateBlockItemDoctrineOrmFile($generator, $itemDefinition);
+        $classes = $blockDefinition->getClasses();
+        foreach ($classes as $class) {
+            $this->generateItemEntityFile($generator, $class);
+            $this->generateBlockFormTypeFile($generator, $class);
+            $this->generateBlockItemDoctrineOrmFile($generator, $class);
         }
     }
 

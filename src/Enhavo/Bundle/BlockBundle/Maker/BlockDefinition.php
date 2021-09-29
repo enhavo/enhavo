@@ -253,18 +253,26 @@ class BlockDefinition
         return $class;
     }
 
-    public function createItemDefinition(): ?BlockDefinition
+    public function getClasses(): array
     {
-        $config = $this->getConfig('item_class');
-        if ($config) {
-            $definition = new BlockDefinition($this->util, $this->kernel, $config);
+        $definitions = [];
+        $classes = $this->getConfig('classes');
+        foreach ($classes as $key => $config) {
+            $definition = new BlockDefinition($this->util, $this->kernel, [
+                $key => $config
+            ]);
             $definition->addUse(sprintf('%s\%s', $this->getEntityNamespace(), $this->getName()));
             $this->addUse(sprintf('%s\%s', $definition->getEntityNamespace(), $definition->getName()));
 
-            return $definition;
+            $definitions[] = $definition;
         }
 
-        return null;
+        return $definitions;
+    }
+
+    public function getLabel(): string
+    {
+        return $this->getConfig('label') ?? $this->getCamelName();
     }
 
     public function createFormTypePhpClass(): PhpClass
@@ -313,9 +321,9 @@ class BlockDefinition
         $this->config['namespace'] = $namespace;
     }
 
-    public function getGroups(): ?string
+    public function getGroupsString(): ?string
     {
-        return isset($this->config['groups']) ? sprintf('[ %s ]', implode(', ', $this->config['groups'])) : null;
+        return isset($this->config['groups']) ? sprintf("[ '%s' ]\n", implode("', '", $this->config['groups'])) : null;
     }
 
     public function getBlockType(): ?bool

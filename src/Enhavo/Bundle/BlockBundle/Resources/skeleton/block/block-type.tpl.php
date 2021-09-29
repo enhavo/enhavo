@@ -19,9 +19,9 @@ class <?= $definition->getCamelName(); ?>Type extends AbstractBlockType
             'form' => <?= $definition->getCamelName(); ?>FormType::class,
             'factory' => <?= $definition->getFactoryName(); ?>::class,
             'template' => '<?= $definition->getTemplateFileName(); ?>',
-            'label' => '<?= $definition->getName(); ?>',
+            'label' => '<?= $definition->getLabel(); ?>',
             'translationDomain' => <?= $definition->getTranslationDomain() ? "'".$definition->getTranslationDomain()."'" : 'null' ?>,
-            'groups' => ['default', 'content']
+            'groups' => <?= $definition->getGroupsString(); ?>
         ]);
     }
 
