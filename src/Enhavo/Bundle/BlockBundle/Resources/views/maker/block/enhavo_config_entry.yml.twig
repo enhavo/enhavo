@@ -2,7 +2,7 @@
 {% if definition.blockType %}            type: {{ definition.snakeName }}
 {% else %}            type: base
             model: {{ definition.entityNamespace }}\{{ definition.camelName }}
-            label: {{ definition.camelName }}
+            label: {{ definition.label }}
             form: {{ definition.formNamespace }}\{{ definition.formTypeName }}
             template: '{{ definition.templateFileName }}'
             factory: {{ definition.factoryNamespace }}\{{ definition.factoryName }}

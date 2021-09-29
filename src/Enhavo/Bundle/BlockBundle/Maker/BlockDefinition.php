@@ -262,7 +262,7 @@ class BlockDefinition
     public function getClasses(): array
     {
         $definitions = [];
-        $classes = $this->getConfig('classes');
+        $classes = $this->getConfig('classes', []);
         foreach ($classes as $key => $config) {
             $definition = new BlockDefinition($this->util, $this->kernel, $this->filesystem, [
                 $key => $config
@@ -307,9 +307,9 @@ class BlockDefinition
         return $this->config['properties'] ?? [];
     }
 
-    public function getConfig(string $key)
+    public function getConfig(string $key, $default = null)
     {
-        return $this->config[$key] ?? null;
+        return $this->config[$key] ?? $default;
     }
 
     public function getProperty(string $key)
