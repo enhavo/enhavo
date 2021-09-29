@@ -13,6 +13,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -110,24 +111,29 @@ class MakeBlock extends AbstractMaker
     public function interact(InputInterface $input, ConsoleStyle $io, Command $command)
     {
         if (!$input->getOption('file') && !$input->getOption('path')) {
-            $input->setInteractive(true);
             $command
                 ->addArgument(
                     'namespace',
-                    InputArgument::REQUIRED,
-                    'What is the name of the bundle or namespace?'
+                    InputArgument::REQUIRED
                 )
                 ->addArgument(
                     'name',
-                    InputArgument::REQUIRED,
-                    'What is the name the block should have (Including "Block" postfix; Directories allowed, e.g. "MyDir/MyBlock")?'
+                    InputArgument::REQUIRED
                 )
                 ->addArgument(
                     'type',
-                    InputArgument::REQUIRED,
-                    'Create block type? [no/yes]'
+                    InputArgument::REQUIRED
                 )
             ;
+
+            $helper = $command->getHelper('question');
+
+            $input->setArgument('namespace', $helper->ask($input, $io, new Question("What is the name of the bundle or namespace? (Press return for 'App')\n", 'App')));
+            $name = $helper->ask($input, $io, new Question("What is the name the block should have (Including 'Block' postfix; Directories allowed, e.g. 'MyDir/AcmeBlock')?\n"));
+            if ($name) {
+                $input->setArgument('name', $name);
+            }
+            $input->setArgument('type', $helper->ask($input, $io, new Question("Create block type? [no/yes] (Press return for 'no'\n", 'no')));
         }
     }
 
@@ -331,12 +337,12 @@ class MakeBlock extends AbstractMaker
     private function writeConfigMessage(BlockDefinition $blockDefinition, ConsoleStyle $io)
     {
         $io->writeln('');
-        $io->writeln('<options=bold>Add this to your enhavo.yaml config file under enhavo_block -> blocks:</>');
+        $io->writeln('<options=bold>Add this to your enhavo_block.yaml config file under enhavo_block -> blocks:</>');
         $io->writeln($this->generateEnhavoConfigCode($blockDefinition));
         $io->writeln('');
 
         if ($blockDefinition->getBlockType()) {
-            $io->writeln('<options=bold>Add this to your service.yaml config</>');
+            $io->writeln('<options=bold>Add this to your services.yaml config</>');
             $io->writeln($this->generateServiceCode($blockDefinition));
         }
         $io->writeln('');
