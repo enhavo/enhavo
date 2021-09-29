@@ -100,7 +100,7 @@ class BlockDefinition
         foreach ($this->getProperties() as $key => $property) {
             if (isset($property['template'])) {
                 $config = Yaml::parseFile(sprintf('%s/%s', $this->util->getProjectPath(), $property['template']));
-                $this->config['properties'][$key] = array_merge($this->config['properties'][$key], $config);
+                $this->config['properties'][$key] = array_merge($config, $this->config['properties'][$key]);
                 unset($this->config['properties'][$key]['template']);
             }
         }
