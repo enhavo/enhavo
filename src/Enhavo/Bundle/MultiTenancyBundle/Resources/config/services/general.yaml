@@ -27,3 +27,8 @@ services:
     Enhavo\Bundle\MultiTenancyBundle\Locale\TenantLocaleResolver:
         arguments:
             - '@enhavo_multi_tenancy.resolver'
+
+    Enhavo\Bundle\MultiTenancyBundle\Security\Roles\TenancyRolesProvider:
+        arguments:
+            - '@enhavo_multi_tenancy.provider'
+            - '@translator'
