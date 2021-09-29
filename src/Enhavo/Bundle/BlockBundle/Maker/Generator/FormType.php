@@ -4,11 +4,9 @@
  * @since 2021-09-23
  */
 
-namespace Enhavo\Bundle\BlockBundle\Maker;
+namespace Enhavo\Bundle\BlockBundle\Maker\Generator;
 
-use Enhavo\Bundle\BlockBundle\Maker\Generator\FormTypeField;
-
-class FormDefinition
+class FormType
 {
     /** @var string */
     private $blockPrefix;

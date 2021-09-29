@@ -259,7 +259,7 @@ class MakeBlock extends AbstractMaker
             $filePath,
             $this->getTemplatePath('block/form-type.tpl.php'),
             [
-                'definition' => $blockDefinition->getFormDefinition(),
+                'form' => $blockDefinition->getFormType(),
                 'class' => $blockDefinition->createFormTypePhpClass(),
                 'entity' => $blockDefinition->createEntityPhpClass(),
             ]

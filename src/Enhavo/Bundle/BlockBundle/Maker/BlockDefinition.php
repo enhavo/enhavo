@@ -10,6 +10,7 @@ use Enhavo\Bundle\AppBundle\Maker\MakerUtil;
 use Enhavo\Bundle\AppBundle\Util\NameTransformer;
 use Enhavo\Bundle\BlockBundle\Entity\AbstractBlock;
 use Enhavo\Bundle\BlockBundle\Maker\Generator\DoctrineOrmYaml;
+use Enhavo\Bundle\BlockBundle\Maker\Generator\FormType;
 use Enhavo\Bundle\BlockBundle\Maker\Generator\PhpClass;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
@@ -241,11 +242,11 @@ class BlockDefinition
         return new DoctrineOrmYaml($tableName, $this->getProperties());
     }
 
-    public function getFormDefinition(): FormDefinition
+    public function getFormType(): FormType
     {
         $blockPrefix = sprintf('%s_%s', $this->nameTransformer->snakeCase($this->getApplicationName()), $this->nameTransformer->snakeCase($this->getName()));
 
-        return new FormDefinition($blockPrefix, $this->getProperties());
+        return new FormType($blockPrefix, $this->getProperties());
     }
 
     public function getProperties(): array

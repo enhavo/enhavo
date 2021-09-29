@@ -15,7 +15,7 @@ class <?= $class->getName() ?> extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-<?php foreach ($definition->getFields() as $field): ?>
+<?php foreach ($form->getFields() as $field): ?>
             ->add('<?= $field->getName() ?>', <?= $field->getClass() ?>::class, <?= $field->getOptionsString() ?>)
 
 <?php endforeach; ?>
@@ -31,6 +31,6 @@ class <?= $class->getName() ?> extends AbstractType
 
     public function getBlockPrefix()
     {
-        return '<?= $definition->getBlockPrefix() ?>';
+        return '<?= $form->getBlockPrefix() ?>';
     }
 }
