@@ -108,8 +108,24 @@ class BlockDefinition
                 $config = Yaml::parseFile($this->getTemplatePath($property['template']));
                 $this->config['properties'][$key] = $this->deepMerge($config, $this->config['properties'][$key]);
                 unset($this->config['properties'][$key]['template']);
+
+                $classUse = $this->extractFromProperty($key, ['type_options', 'use']);
+                $this->addUse($classUse);
+                $formUse = $this->extractFromProperty($key, ['form', 'use']);
+                $this->addFormUse($formUse);
             }
         }
+    }
+
+    private function extractFromProperty(string $key, array $path)
+    {
+        $property = $this->config['properties'][$key];
+
+        foreach ($path as $part) {
+            $property = $property[$part] ?? [];
+        }
+
+        return $property;
     }
 
     public function getDoctrineORMFilePath()
@@ -338,25 +354,48 @@ class BlockDefinition
     }
 
     /**
-     * @param mixed $config
+     * @param mixed $use
      */
     public function addUse($use)
     {
         if (!isset($this->config['use'])) {
             $this->config['use'] = [];
         }
-        $this->config['use'][] = $use;
+        if (is_array($use)) {
+            foreach ($use as $part) {
+                $this->addUse($part);
+            }
+        } else {
+            $this->config['use'][] = $use;
+        }
+    }
+
+    /**
+     * @param mixed $use
+     */
+    public function addFormUse($use)
+    {
+        if (!isset($this->config['form']['use'])) {
+            $this->config['form']['use'] = [];
+        }
+        if (is_array($use)) {
+            foreach ($use as $part) {
+                $this->addFormUse($part);
+            }
+        } else {
+            $this->config['form']['use'][] = $use;
+        }
     }
 
 
     private function getUse()
     {
-        return $this->config['use'] ?? [];
+        return array_unique($this->config['use']) ?? [];
     }
 
     private function getFormUse()
     {
-        return $this->config['form']['use'] ?? [];
+        return array_unique($this->config['form']['use']) ?? [];
     }
 
     private function deepMerge($array1, $array2)

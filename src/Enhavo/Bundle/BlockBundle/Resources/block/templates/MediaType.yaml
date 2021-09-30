@@ -1,9 +1,14 @@
 type: FileInterface
+type_options:
+    use:
+        - Enhavo\Bundle\MediaBundle\Model\FileInterface
 nullable: true
 relation:
     type: oneToOne
     target_entity: Enhavo\Bundle\MediaBundle\Model\FileInterface
 form:
+    use:
+        - Enhavo\Bundle\MediaBundle\Form\Type\MediaType
     class: MediaType
     options:
         label: "'file.label.file'"
