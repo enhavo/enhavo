@@ -106,7 +106,7 @@ class BlockDefinition
         foreach ($this->getProperties() as $key => $property) {
             if (isset($property['template'])) {
                 $config = Yaml::parseFile($this->getTemplatePath($property['template']));
-                $this->config['properties'][$key] = array_merge($config, $this->config['properties'][$key]);
+                $this->config['properties'][$key] = $this->deepMerge($config, $this->config['properties'][$key]);
                 unset($this->config['properties'][$key]['template']);
             }
         }
@@ -357,6 +357,20 @@ class BlockDefinition
     private function getFormUse()
     {
         return $this->config['form']['use'] ?? [];
+    }
+
+    private function deepMerge($array1, $array2)
+    {
+        foreach ($array2 as $key => $value) {
+            if (is_array($value)) {
+                $array1[$key] = $this->deepMerge($array1[$key] ?? [], $array2[$key]);
+
+            } else {
+                $array1[$key] = $value;
+            }
+        }
+
+        return $array1;
     }
 
     private function getTemplatePath($template): ?string
