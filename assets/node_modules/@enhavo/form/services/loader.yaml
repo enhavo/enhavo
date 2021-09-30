@@ -55,6 +55,7 @@ services:
         arguments:
             - '@enhavo/app/view/View'
             - '@enhavo/core/Translator'
+            - '@enhavo/app/view-stack/EventDispatcher'
         tags:
             - 'enhavo_app.form'
 

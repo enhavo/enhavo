@@ -10,6 +10,8 @@ import Prototype from "@enhavo/form/prototype/Prototype";
 import View from "@enhavo/app/view/View";
 import Confirm from "@enhavo/app/view/Confirm";
 import Translator from "@enhavo/core/Translator";
+import SaveStateEvent from "@enhavo/app/view-stack/event/SaveStateEvent";
+import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
 
 export default class PolyCollectionType extends FormType
 {
@@ -33,7 +35,9 @@ export default class PolyCollectionType extends FormType
 
     private translator: Translator;
 
-    constructor(element: HTMLElement, config: PolyCollectionConfig, prototypeManager: PrototypeManager, view: View, translator: Translator)
+    private eventDispatcher: EventDispatcher;
+
+    constructor(element: HTMLElement, config: PolyCollectionConfig, prototypeManager: PrototypeManager, view: View, translator: Translator, eventDispatcher: EventDispatcher)
     {
         super(element);
         this.$container = this.$element.children('[data-poly-collection-container]');
@@ -41,17 +45,36 @@ export default class PolyCollectionType extends FormType
         this.prototypeManager = prototypeManager;
         this.translator = translator;
         this.view = view;
+        this.eventDispatcher = eventDispatcher;
         this.initPrototypes();
         this.initMenu();
         this.initActions();
         this.initItems();
         this.initContainer();
         this.placeholderIndex = this.$container.children('[data-poly-collection-item]').length - 1;
+        this.initState()
     }
 
     protected init()
     {
 
+    }
+
+    private initState()
+    {
+        if (!this.isRootElement()) {
+            return;
+        }
+
+        this.view.loadValue('poly-collection-expand', (value) => {
+            if (value === null) {
+                return;
+            } else if (value) {
+                this.expandAll();
+            } else {
+                this.collapseAll();
+            }
+        });
     }
 
     private initPrototypes()
@@ -96,12 +119,17 @@ export default class PolyCollectionType extends FormType
         }
 
         this.$element.children('[data-poly-collection-action]').children('[data-poly-collection-action-collapse-all]').click(function() {
-            polyCollection.collapseAll();
+            polyCollection.collapseAll(true);
         });
 
         this.$element.children('[data-poly-collection-action]').children('[data-poly-collection-action-expand-all]').click(function() {
-            polyCollection.expandAll();
+            polyCollection.expandAll(true);
         });
+    }
+
+    private isRootElement()
+    {
+        return this.$element.parents('[data-poly-collection]').length === 0;
     }
 
     public getConfig()
@@ -128,8 +156,14 @@ export default class PolyCollectionType extends FormType
         return entries;
     }
 
-    public collapseAll()
+    public collapseAll(saveState = false)
     {
+        if (saveState && this.isRootElement()) {
+            this.view.storeValue('poly-collection-expand', false, () => {
+                this.eventDispatcher.dispatch(new SaveStateEvent());
+            });
+        }
+
         this.$element.children('[data-poly-collection-action]').children('[data-poly-collection-action-collapse-all]').hide();
         this.$element.children('[data-poly-collection-action]').children('[data-poly-collection-action-expand-all]').show();
         this.collapse = true;
@@ -138,8 +172,14 @@ export default class PolyCollectionType extends FormType
         }
     }
 
-    public expandAll()
+    public expandAll(saveState = false)
     {
+        if (saveState && this.isRootElement()) {
+            this.view.storeValue('poly-collection-expand', true, () => {
+                this.eventDispatcher.dispatch(new SaveStateEvent());
+            });
+        }
+
         this.$element.children('[data-poly-collection-action]').children('[data-poly-collection-action-collapse-all]').show();
         this.$element.children('[data-poly-collection-action]').children('[data-poly-collection-action-expand-all]').hide();
         this.collapse = false;
