@@ -6,7 +6,7 @@ import prototypeManager from "@enhavo/form/Prototype/PrototypeManager";
 import FormRegistry from "@enhavo/app/Form/FormRegistry";
 import View from "@enhavo/app/View/View";
 import Translator from "@enhavo/core/Translator";
-import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
+import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 
 export default class PolyCollectionLoader extends AbstractLoader
 {
