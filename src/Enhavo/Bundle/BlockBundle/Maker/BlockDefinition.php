@@ -224,7 +224,7 @@ class BlockDefinition
 
     public function getSnakeName(): string
     {
-        return $this->nameTransformer->snakeCase($this->getName());
+        return str_replace('_block', '', $this->nameTransformer->snakeCase($this->getName()));
     }
 
     public function getCamelName(): string
@@ -395,7 +395,7 @@ class BlockDefinition
 
     private function getFormUse()
     {
-        return array_unique($this->config['form']['use']) ?? [];
+        return array_unique($this->config['form']['use'] ?? []);
     }
 
     private function deepMerge($array1, $array2)
