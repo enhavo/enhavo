@@ -10,6 +10,7 @@ services:
             - '@kernel'
             - '@enhavo_app.maker.util'
             - '@twig'
+            - '@filesystem'
         tags:
             - { name: 'maker.command' }
 

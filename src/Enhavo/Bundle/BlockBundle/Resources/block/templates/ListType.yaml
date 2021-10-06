@@ -1,0 +1,16 @@
+type: Collection
+type_options:
+    constructor: ArrayCollection
+relation:
+    type: oneToMany
+    order_by:
+        position: asc
+use:
+    - Doctrine\Common\Collections\Collection
+    - Doctrine\Common\Collections\ArrayCollection
+form:
+    use:
+        - Enhavo\Bundle\FormBundle\Form\Type\ListType
+    class: ListType
+    options:
+        sortable: 'true'

@@ -1,0 +1,6 @@
+type: string
+nullable: true
+form:
+    use:
+        - Enhavo\Bundle\FormBundle\Form\Type\BooleanType
+    class: BooleanType

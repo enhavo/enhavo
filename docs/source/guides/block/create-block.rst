@@ -6,6 +6,10 @@ Create block
   This article is not finished and need to be updated
 
 
+Use make command
+------------
+:doc:`../../reference/make/block`
+
 Create model
 ------------
 

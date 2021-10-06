@@ -1,35 +1,36 @@
 <?= "<?php\n" ?>
 
-namespace <?= $form_namespace ?>;
+namespace <?= $class->getNamespace() ?>;
 
-use <?= $entity_namespace ?>\<?= $name ?>Block;
-<?php if ($has_items): ?>
-use Enhavo\Bundle\FormBundle\Form\Type\ListType;
-<?php endif; ?>
 use Symfony\Component\Form\AbstractType;
+use <?= $entity->getNamespace() ?>\<?= $entity->getName() ?>;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+<?php foreach ($class->getUse() as $item): ?>
+use <?= $item; ?>;
+<?php endforeach; ?>
 
-class <?= $name ?>BlockType extends AbstractType
+class <?= $class->getName() ?> extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        // TODO: Insert form fields
-<?php if ($has_items): ?>
         $builder
-            ->add('items', ListType::class, [
-                  'label' => 'Items',
-                  'entry_type' => <?= $name ?>BlockItemType::class,
-                  'sortable' => true,
-            ])
+<?php foreach ($form->getFields() as $field): ?>
+            ->add('<?= $field->getName() ?>', <?= $field->getClass() ?>::class, <?= $field->getOptionsString() ?>)
+
+<?php endforeach; ?>
         ;
-<?php endif; ?>
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => <?= $name ?>Block::class
+            'data_class' => <?= $entity->getName() ?>::class
         ));
+    }
+
+    public function getBlockPrefix()
+    {
+        return '<?= $form->getBlockPrefix() ?>';
     }
 }
