@@ -1,0 +1,20 @@
+type: NodeInterface
+nullable: true
+type_options:
+    use:
+        - Enhavo\Bundle\BlockBundle\Model\NodeInterface
+    setter:
+        calls:
+            - [setType, NodeInterface::TYPE_ROOT]
+            - [setProperty, "'content'"]
+relation:
+    type: oneToOne
+    target_entity: Enhavo\Bundle\BlockBundle\Model\NodeInterface
+form:
+    use:
+        - Enhavo\Bundle\BlockBundle\Form\Type\BlockNodeType
+    class: BlockNodeType
+    options:
+        label: "'form.label.content'"
+        translation_domain: "'EnhavoAppBundle'"
+        item_groups: "['layout']"

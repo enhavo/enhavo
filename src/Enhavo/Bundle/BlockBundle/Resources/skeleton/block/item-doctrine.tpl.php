@@ -2,6 +2,13 @@
     type: entity
     table: <?= $yaml->getTableName(); ?><?= "\n"; ?>
 
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
     fields:
 <?php foreach($yaml->getFields() as $field): ?>
         <?= $field->getName() ?>:
@@ -19,8 +26,6 @@
 
 <?php endforeach; ?>
 
-<<<<<<< HEAD
-=======
     oneToMany:
 <?php foreach($yaml->getRelations('oneToMany') as $relation): ?>
         <?= $relation->getName() ?>:
@@ -69,5 +74,4 @@
 
 <?php endforeach; ?>
 
->>>>>>> 941963ef3 (Block maker by yaml (#1355))
     lifecycleCallbacks: {  }

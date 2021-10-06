@@ -12,7 +12,12 @@ use Symfony\Bundle\MakerBundle\Maker\AbstractMaker;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Question\Question;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\Yaml\Yaml;
 use Twig\Environment;
 
 class MakeBlock extends AbstractMaker
@@ -33,15 +38,24 @@ class MakeBlock extends AbstractMaker
     private $twigEnvironment;
 
     /**
+     * @var Filesystem
+     */
+    private $fileSystem;
+
+    /**
      * @var NameTransformer
      */
     private $nameTransformer;
 
-    public function __construct(KernelInterface $kernel, MakerUtil $util, Environment $twigEnvironment)
+    /** @var bool */
+    private $overwriteExisting = false;
+
+    public function __construct(KernelInterface $kernel, MakerUtil $util, Environment $twigEnvironment, Filesystem $fileSystem)
     {
         $this->kernel = $kernel;
         $this->util = $util;
         $this->twigEnvironment = $twigEnvironment;
+        $this->fileSystem = $fileSystem;
         $this->nameTransformer = new NameTransformer();
     }
 
@@ -53,6 +67,7 @@ class MakeBlock extends AbstractMaker
     public function configureCommand(Command $command, InputConfiguration $inputConfig)
     {
         $command
+<<<<<<< HEAD
         ->setDescription('Creates a new block')
         ->addArgument(
             'namespace',
@@ -69,6 +84,12 @@ class MakeBlock extends AbstractMaker
             InputArgument::REQUIRED,
             'Create block type? [no/yes]'
         );
+=======
+            ->setDescription('Creates a new block from YAML or CLI')
+            ->addOption('path', 'p', InputOption::VALUE_OPTIONAL, 'Path containing block definition yaml file(s)')
+            ->addOption('overwrite', 'o', null, 'Set true to overwrite existing files')
+        ;
+>>>>>>> 941963ef3 (Block maker by yaml (#1355))
     }
 
     public function configureDependencies(DependencyBuilder $dependencies)
@@ -76,8 +97,9 @@ class MakeBlock extends AbstractMaker
 
     }
 
-    public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator)
+    private function generateFromYamlFile($file, ConsoleStyle $io, Generator $generator)
     {
+<<<<<<< HEAD
         $namespace = $input->getArgument('namespace');
         $name = $input->getArgument('name');
         $type = in_array($input->getArgument('type'), ['yes', 'YES', 'y', 'Y']);
@@ -92,24 +114,91 @@ class MakeBlock extends AbstractMaker
 
         if($type) {
             $this->generateTypeFile($generator, $block);
+=======
+        $config = Yaml::parseFile($file);
+        $blockDefinition = new BlockDefinition($this->util, $this->kernel, $this->fileSystem, $config);
+
+        $this->generateBlockItemFiles($generator, $blockDefinition);
+        $this->generateBlockEntityFile($generator, $blockDefinition);
+        $this->generateBlockDoctrineOrmFile($generator, $blockDefinition);
+        $this->generateBlockFactoryFile($generator, $blockDefinition);
+        $this->generateBlockFormTypeFile($generator, $blockDefinition);
+        $this->generateTemplateFile($generator, $blockDefinition);
+
+        if ($blockDefinition->getBlockType()) {
+            $this->generateBlockTypeFile($generator, $blockDefinition);
         }
 
-        $io->writeln('');
-        $io->writeln('<options=bold>Add this to your enhavo.yaml config file under enhavo_block -> blocks:</>');
-        $io->writeln($this->generateEnhavoConfigCode($block, $type));
-        $io->writeln('');
+        $this->writeConfigMessage($blockDefinition, $io);
+    }
 
-        if($type) {
-            $io->writeln('<options=bold>Add this to your service.yaml config</>');
-            $io->writeln($this->generateServiceCode($block));
+    private function generateFromPath($path, ConsoleStyle $io, Generator $generator)
+    {
+        $finder = new Finder();
+        $finder->files()->in($path)->depth(0);
+
+        foreach ($finder as $file) {
+            if ($file->isFile()) {
+                $this->generateFromYamlFile($file, $io, $generator);
+            }
+>>>>>>> 941963ef3 (Block maker by yaml (#1355))
         }
-        $io->writeln('');
+    }
+
+    public function interact(InputInterface $input, ConsoleStyle $io, Command $command)
+    {
+        if (!$input->getOption('path')) {
+            $command
+                ->addArgument(
+                    'namespace',
+                    InputArgument::REQUIRED
+                )
+                ->addArgument(
+                    'name',
+                    InputArgument::REQUIRED
+                )
+                ->addArgument(
+                    'type',
+                    InputArgument::REQUIRED
+                )
+            ;
+
+            $helper = $command->getHelper('question');
+
+            $input->setArgument('namespace', $helper->ask($input, $io, new Question("What is the name of the bundle or namespace? (Press return for 'App')\n", 'App')));
+            do {
+                $name = $helper->ask($input, $io, new Question("What is the name the block should have (Including 'Block' postfix; Directories allowed, e.g. 'MyDir/AcmeBlock')?\n"));
+            } while(!$name);
+
+            $input->setArgument('name', $name);
+            $input->setArgument('type', $helper->ask($input, $io, new Question("Create block type? [no/yes] (Press return for 'no'\n", 'no')));
+        }
+    }
+
+    public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator)
+    {
+        $path = $input->getOption('path');
+        $this->overwriteExisting = $input->getOption('overwrite');
+
+        if ($path) {
+            if (is_file($path)) {
+                $this->generateFromYamlFile(sprintf('%s/%s', $this->kernel->getProjectDir(), $path), $io, $generator);
+
+            } else {
+                $this->generateFromPath(sprintf('%s/%s', $this->kernel->getProjectDir(), $path), $io, $generator);
+            }
+
+        } else {
+            $this->generateFromInputArguments($input, $io, $generator);
+
+        }
 
         $generator->writeChanges();
     }
 
-    private function generateDoctrineOrmFile(Generator $generator, BlockName $block)
+    private function generateFromInputArguments(InputInterface $input, ConsoleStyle $io, Generator $generator)
     {
+<<<<<<< HEAD
         $applicationName = $this->nameTransformer->snakeCase($block->getApplicationName());
         $applicationName = str_replace('enhavo_', '', $applicationName); // special case for enhavo
         $tableName = sprintf('%s_%s_block', $applicationName, $this->nameTransformer->snakeCase($block->getName()));
@@ -120,26 +209,92 @@ class MakeBlock extends AbstractMaker
                 'namespace' => $block->getEntityNamespace(),
                 'name' => $block->getName(),
                 'table_name' => $tableName
+=======
+        $namespace = $input->getArgument('namespace');
+        $name = $input->getArgument('name');
+        $type = in_array($input->getArgument('type'), ['yes', 'YES', 'y', 'Y']);
+
+        $block = new BlockDefinition($this->util, $this->kernel, $this->fileSystem, [
+            $name => [
+                'namespace' => $namespace,
+                'block_type' => $type,
+            ]
+        ]);
+
+        $this->generateBlockDoctrineOrmFile($generator, $block);
+        $this->generateBlockEntityFile($generator, $block);
+        $this->generateBlockFormTypeFile($generator, $block);
+        $this->generateBlockFactoryFile($generator, $block);
+        $this->generateTemplateFile($generator, $block);
+
+        if ($block->getBlockType()) {
+            $this->generateBlockTypeFile($generator, $block);
+        }
+
+        $this->writeConfigMessage($block, $io);
+    }
+
+    private function generateBlockDoctrineOrmFile(Generator $generator, BlockDefinition $blockDefinition)
+    {
+        $filePath = $blockDefinition->getDoctrineORMFilePath();
+        $this->checkExists($filePath);
+
+        $generator->generateFile(
+            $filePath,
+            $this->getTemplatePath('block/doctrine.tpl.php'), [
+                'definition' => $blockDefinition,
+                'class' => $blockDefinition->createEntityPhpClass(),
+                'yaml' => $blockDefinition->createDoctrineOrmYaml(),
+>>>>>>> 941963ef3 (Block maker by yaml (#1355))
             ]
         );
     }
 
-    private function generateEntityFile(Generator $generator, BlockName $block)
+
+    private function generateBlockItemDoctrineOrmFile(Generator $generator, BlockDefinition $blockDefinition)
     {
+        $filePath = $blockDefinition->getDoctrineORMFilePath();
+        $this->checkExists($filePath);
+
         $generator->generateFile(
+<<<<<<< HEAD
             $block->getEntityFilePath(),
             $this->createTemplatePath('block/entity.tpl.php'),
             [
                 'entity_namespace' => $block->getEntityNamespace(),
                 'name' => $block->getName()
+=======
+            $filePath,
+            $this->getTemplatePath('block/item-doctrine.tpl.php'), [
+                'definition' => $blockDefinition,
+                'class' => $blockDefinition->createEntityPhpClass(),
+                'yaml' => $blockDefinition->createDoctrineOrmYaml(),
             ]
         );
     }
 
-    private function generateFormTypeFile(Generator $generator, BlockName $block)
+    private function generateBlockEntityFile(Generator $generator, BlockDefinition $blockDefinition)
     {
-        $formTypeName = sprintf('%s_%s_block', $this->nameTransformer->snakeCase($block->getApplicationName()), $this->nameTransformer->snakeCase($block->getName()));
+        $filePath = $blockDefinition->getEntityFilePath();
+        $this->checkExists($filePath);
+
         $generator->generateFile(
+            $filePath,
+            $this->getTemplatePath('block/entity.tpl.php'), [
+                'definition' => $blockDefinition,
+                'class' => $blockDefinition->createEntityPhpClass(),
+>>>>>>> 941963ef3 (Block maker by yaml (#1355))
+            ]
+        );
+    }
+
+    private function generateItemEntityFile(Generator $generator, BlockDefinition $blockDefinition)
+    {
+        $filePath = $blockDefinition->getEntityFilePath();
+        $this->checkExists($filePath);
+
+        $generator->generateFile(
+<<<<<<< HEAD
             $block->getFormTypeFilePath(),
             $this->createTemplatePath('block/form-type.tpl.php'),
             [
@@ -149,75 +304,130 @@ class MakeBlock extends AbstractMaker
                 'form_type_name' => $formTypeName
             ]
         );
-    }
-
-    private function generateFactoryFile(Generator $generator, BlockName $block)
-    {
-        $generator->generateFile(
-            $block->getFactoryFilePath(),
-            $this->createTemplatePath('block/factory.tpl.php'),
-            [
-                'factory_namespace' => $block->getFactoryNamespace(),
-                'name' => $block->getName()
+=======
+            $filePath,
+            $this->getTemplatePath('block/item-entity.tpl.php'), [
+                'definition' => $blockDefinition,
+                'class' => $blockDefinition->createEntityPhpClass(),
             ]
         );
     }
 
+    private function generateBlockItemFiles(Generator $generator, BlockDefinition $blockDefinition)
+    {
+        $classes = $blockDefinition->getClasses();
+        foreach ($classes as $class) {
+            $this->generateItemEntityFile($generator, $class);
+            $this->generateBlockFormTypeFile($generator, $class);
+            $this->generateBlockItemDoctrineOrmFile($generator, $class);
+        }
+>>>>>>> 941963ef3 (Block maker by yaml (#1355))
+    }
+
+    private function generateBlockFormTypeFile(Generator $generator, BlockDefinition $blockDefinition)
+    {
+        $filePath = $blockDefinition->getFormTypeFilePath();
+        $this->checkExists($filePath);
+
+        $generator->generateFile(
+            $filePath,
+            $this->getTemplatePath('block/form-type.tpl.php'), [
+                'form' => $blockDefinition->getFormType(),
+                'class' => $blockDefinition->createFormTypePhpClass(),
+                'entity' => $blockDefinition->createEntityPhpClass(),
+            ]
+        );
+    }
+
+<<<<<<< HEAD
     private function generateTemplateFile(Generator $generator, BlockName $block)
+=======
+    private function generateBlockFactoryFile(Generator $generator, BlockDefinition $blockDefinition)
     {
+        $filePath = $blockDefinition->getFactoryFilePath();
+        $this->checkExists($filePath);
+
         $generator->generateFile(
-            $block->getTemplateFilePath(),
-            $this->createTemplatePath('block/template.tpl.php'),
-            [
-                'name' => $this->nameTransformer->snakeCase($block->getName()),
+            $filePath,
+            $this->getTemplatePath('block/factory.tpl.php'), [
+                'definition' => $blockDefinition,
             ]
         );
     }
 
-    private function generateTypeFile(Generator $generator, BlockName $block)
+    private function generateTemplateFile(Generator $generator, BlockDefinition $block)
+>>>>>>> 941963ef3 (Block maker by yaml (#1355))
     {
+        $filePath = $block->getTemplateFilePath();
+        if ($this->checkExists($filePath, true)) {
+            $generator->generateFile(
+                $filePath,
+                $this->getTemplatePath('block/template.tpl.php'), [
+                    'name' => $this->nameTransformer->snakeCase($block->getName()),
+                ]
+            );
+        }
+    }
+
+    private function generateBlockTypeFile(Generator $generator, BlockDefinition $block)
+    {
+        $filePath = $block->getTypeFilePath();
+        $this->checkExists($filePath);
+
         $generator->generateFile(
-            $block->getTypeFilePath(),
-            $this->createTemplatePath('block/block-type.tpl.php'),
-            [
-                'namespace' => $block->getNamespace(),
-                'entity_namespace' => $block->getEntityNamespace(),
-                'form_namespace' => $block->getFormNamespace(),
-                'factory_namespace' => $block->getFactoryNamespace(),
-                'name_snake' => $this->nameTransformer->snakeCase($block->getName()),
-                'name_camel' => $this->nameTransformer->camelCase($block->getName()),
-                'name_kebab' => $this->nameTransformer->kebabCase($block->getName()),
-                'translation_domain' => $block->getTranslationDomain(),
+            $filePath,
+            $this->getTemplatePath('block/block-type.tpl.php'), [
+                'definition' => $block
             ]
         );
     }
 
-    private function generateEnhavoConfigCode(BlockName $block, $type)
+    private function generateEnhavoConfigCode(BlockDefinition $block)
     {
-        return $this->twigEnvironment->render('@EnhavoBlock/maker/Block/enhavo_config_entry.yml.twig', array(
-            'namespace' => $block->getNamespace(),
-            'entity_namespace' => $block->getEntityNamespace(),
-            'form_namespace' => $block->getFormNamespace(),
-            'factory_namespace' => $block->getFactoryNamespace(),
-            'name_snake' => $this->nameTransformer->snakeCase($block->getName()),
-            'name_camel' => $this->nameTransformer->camelCase($block->getName()),
-            'name_kebab' => $this->nameTransformer->kebabCase($block->getName()),
-            'translation_domain' => $block->getTranslationDomain(),
-            'block_type' => $type,
-        ));
+        return $this->twigEnvironment->render('@EnhavoBlock/maker/block/enhavo_config_entry.yml.twig', [
+            'definition' => $block,
+            'template_file' => sprintf('theme/block/%s.html.twig', str_replace('-block', '', $block->getKebabName())),
+        ]);
     }
 
-    private function generateServiceCode(BlockName $block)
+    private function generateServiceCode(BlockDefinition $block): string
     {
-        return $this->twigEnvironment->render('@EnhavoBlock/maker/Block/block_service.yml.twig', array(
+        return $this->twigEnvironment->render('@EnhavoBlock/maker/block/block_service.yml.twig', [
             'namespace' => $block->getNamespace(),
             'type' => $this->nameTransformer->snakeCase($block->getName()),
             'name' => $block->getName(),
-        ));
+        ]);
     }
 
-    private function createTemplatePath($name)
+    private function getTemplatePath($name): string
     {
-        return __DIR__.'/../Resources/skeleton/'.$name;
+        return sprintf('%s/../Resources/skeleton/%s', __DIR__, $name);
+    }
+
+    private function writeConfigMessage(BlockDefinition $blockDefinition, ConsoleStyle $io)
+    {
+        $io->writeln('');
+        $io->writeln('<options=bold>Add this to your enhavo_block.yaml config file under enhavo_block -> blocks:</>');
+        $io->writeln($this->generateEnhavoConfigCode($blockDefinition));
+        $io->writeln('');
+
+        if ($blockDefinition->getBlockType()) {
+            $io->writeln('<options=bold>Add this to your services.yaml config</>');
+            $io->writeln($this->generateServiceCode($blockDefinition));
+        }
+        $io->writeln('');
+    }
+
+    private function checkExists($filePath, $noOverwrite = false)
+    {
+        if ($this->fileSystem->exists($filePath)) {
+            if (!$noOverwrite && $this->overwriteExisting) {
+                $this->fileSystem->remove($filePath);
+                return true;
+            }
+            return false;
+        }
+
+        return true;
     }
 }

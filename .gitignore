@@ -23,3 +23,10 @@
 /npm-debug.log
 /yarn-error.log
 /assets/theme/custom.scss
+<<<<<<< HEAD
+=======
+/composer.lock
+/yarn.lock
+/drivers
+/config/block/
+>>>>>>> 941963ef3 (Block maker by yaml (#1355))

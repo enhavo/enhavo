@@ -2,24 +2,27 @@
 
 namespace <?= $class->getNamespace(); ?>;
 
-use Enhavo\Bundle\BlockBundle\Entity\AbstractBlock;
-<<<<<<< HEAD
-=======
 <?php foreach ($class->getUse() as $item): ?>
 use <?= $item; ?>;
 <?php endforeach; ?>
->>>>>>> 941963ef3 (Block maker by yaml (#1355))
 
-class <?= $class->getName(); ?> extends AbstractBlock
+class <?= $class->getName(); ?>
+
 {
 
-<<<<<<< HEAD
-=======
+    /** @var ?int */
+    private $id;
+
 <?php foreach ($class->getProperties() as $property): ?>
     /** @var <?= $property->getNullable() .$property->getType() ?> */
     private $<?= $property->getName(); ?> = <?= $property->getDefault(); ?>;
 
 <?php endforeach; ?>
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
 
 <?php foreach ($class->getFunctions() as $function): ?>
 
@@ -30,5 +33,4 @@ class <?= $class->getName(); ?> extends AbstractBlock
 
     }
 <?php endforeach; ?>
->>>>>>> 941963ef3 (Block maker by yaml (#1355))
 }
