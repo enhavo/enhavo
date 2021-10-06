@@ -1,3 +1,5 @@
 filter:
   tenancy:
     label: Subpage
+roles:
+  label: "Tenant %name%"
