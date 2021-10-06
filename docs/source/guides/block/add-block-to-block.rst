@@ -9,7 +9,7 @@ First update your meta file of your block.
 .. code-block:: yaml
 
     manyToOne:
-        column:
+        content:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\BlockBundle\Model\NodeInterface
 
@@ -29,22 +29,20 @@ This steps are important to browse correctly through the node three later.
         /**
          * @param NodeInterface|null
          */
-        private $column;
+        private $content;
 
         public function getContent(): ?NodeInterface
         {
-            return $this->column;
+            return $this->content;
         }
 
-        public function setColumn(?NodeInterface $column)
+        public function setContent(?NodeInterface $content)
         {
-            if($column) {
-                $column->setType(NodeInterface::TYPE_LIST);
-                $column->setProperty('column');
-                $column->setParent($this->getNode())
+            $this->content = $content;
+            if ($content) {
+                $content->setType(NodeInterface::TYPE_ROOT);
+                $content->setProperty('content');
             }
-            $this->column = $column;
-            return $this;
         }
     }
 
@@ -63,6 +61,6 @@ To show the block form, you need add the ``Enhavo\Bundle\BlockBundle\Form\Type\B
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
-            $builder->add('column', BlockNodeType::class);
+            $builder->add('content', BlockNodeType::class);
         }
     }
