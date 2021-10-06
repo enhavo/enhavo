@@ -1,55 +1,36 @@
 <?= "<?php\n" ?>
 
-namespace <?= $entity_namespace ?>;
+namespace <?= $class->getNamespace(); ?>;
 
-class <?= $name ?>BlockItem
+<?php foreach ($class->getUse() as $item): ?>
+use <?= $item; ?>;
+<?php endforeach; ?>
+
+class <?= $class->getName(); ?>
+
 {
-    /** @var int|null */
+
+    /** @var ?int */
     private $id;
 
-    /** @var <?= $name ?>Block|null */
-    private $<?= strtolower($name) ?>Block;
+<?php foreach ($class->getProperties() as $property): ?>
+    /** @var <?= $property->getNullable() .$property->getType() ?> */
+    private $<?= $property->getName(); ?> = <?= $property->getDefault(); ?>;
 
-    /** @var int|null */
-    private $position;
+<?php endforeach; ?>
 
-    /**
-     * @return int|null
-     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return <?= $name ?>Block|null
-     */
-    public function get<?= $name ?>Block(): ?<?= $name ?>Block
-    {
-        return $this-><?= strtolower($name) ?>Block;
-    }
+<?php foreach ($class->getFunctions() as $function): ?>
 
-    /**
-     * @param <?= $name ?>Block|null $<?= strtolower($name) ?>Block
-     */
-    public function set<?= $name ?>Block(?<?= $name ?>Block $<?= strtolower($name) ?>Block): void
-    {
-        $this-><?= strtolower($name) ?>Block = $<?= strtolower($name) ?>Block;
-    }
+    <?= $function->getVisibility(); ?> function <?= $function->getName(); ?>(<?= $function->getArgumentString(); ?>)<?= $function->getReturnsString(); ?>
 
-    /**
-     * @return int|null
-     */
-    public function getPosition(): ?int
     {
-        return $this->position;
-    }
+        <?= $function->getBodyString(8); ?>
 
-    /**
-     * @param int|null $position
-     */
-    public function setPosition(?int $position): void
-    {
-        $this->position = $position;
     }
+<?php endforeach; ?>
 }

@@ -1,9 +1,0 @@
-        {{ name_snake }}:
-{% if block_type %}            type: {{ name_snake }}
-{% else %}            type: base
-            model: {{ entity_namespace }}\{{ name_camel }}Block
-            label: {{ name_camel }}
-            form: {{ form_namespace }}\{{ name_camel }}BlockType
-            template: 'theme/block/{{ name_kebab }}.html.twig'
-            factory: {{ factory_namespace }}\{{ name_camel }}BlockFactory
-{% endif %}

@@ -9,3 +9,4 @@ BlockBundle
     use-block
     rendering
     node-model
+    make-block-configuration

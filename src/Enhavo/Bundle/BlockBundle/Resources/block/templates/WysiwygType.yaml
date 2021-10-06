@@ -1,0 +1,7 @@
+type: string
+orm_type: text
+nullable: true
+form:
+    use:
+        - Enhavo\Bundle\FormBundle\Form\Type\WysiwygType
+    class: WysiwygType

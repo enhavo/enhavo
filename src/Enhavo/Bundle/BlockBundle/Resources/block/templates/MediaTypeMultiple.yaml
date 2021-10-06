@@ -1,0 +1,21 @@
+type: Collection
+type_options:
+    use:
+        - Doctrine\Common\Collections\Collection
+        - Enhavo\Bundle\MediaBundle\Model\FileInterface
+        - Doctrine\Common\Collections\ArrayCollection
+    entry_class: FileInterface
+    constructor: ArrayCollection
+relation:
+    type: manyToMany
+    target_entity: Enhavo\Bundle\MediaBundle\Model\FileInterface
+    order_by:
+        order: asc
+form:
+    use:
+        - Enhavo\Bundle\MediaBundle\Form\Type\MediaType
+    class: MediaType
+    options:
+        label: "'file.label.file'"
+        translation_domain: "'EnhavoMediaBundle'"
+        multiple: 'true'
