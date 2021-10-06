@@ -68,8 +68,7 @@ class MakeBlock extends AbstractMaker
     {
         $command
             ->setDescription('Creates a new block from YAML or CLI')
-            ->addOption('file', 'f', InputOption::VALUE_OPTIONAL, 'Path to a block definition yaml file')
-            ->addOption('path', 'p', InputOption::VALUE_OPTIONAL, 'Path containing block definition yaml files')
+            ->addOption('path', 'p', InputOption::VALUE_OPTIONAL, 'Path containing block definition yaml file(s)')
             ->addOption('overwrite', 'o', null, 'Set true to overwrite existing files')
         ;
     }
@@ -112,7 +111,7 @@ class MakeBlock extends AbstractMaker
 
     public function interact(InputInterface $input, ConsoleStyle $io, Command $command)
     {
-        if (!$input->getOption('file') && !$input->getOption('path')) {
+        if (!$input->getOption('path')) {
             $command
                 ->addArgument(
                     'namespace',
@@ -142,13 +141,12 @@ class MakeBlock extends AbstractMaker
 
     public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator)
     {
-        $file = $input->getOption('file');
         $path = $input->getOption('path');
         $this->overwriteExisting = $input->getOption('overwrite');
 
-        if ($file || $path) {
-            if ($file) {
-                $this->generateFromYamlFile(sprintf('%s/%s', $this->kernel->getProjectDir(), $file), $io, $generator);
+        if ($path) {
+            if (is_file($path)) {
+                $this->generateFromYamlFile(sprintf('%s/%s', $this->kernel->getProjectDir(), $path), $io, $generator);
 
             } else {
                 $this->generateFromPath(sprintf('%s/%s', $this->kernel->getProjectDir(), $path), $io, $generator);
@@ -226,8 +224,7 @@ class MakeBlock extends AbstractMaker
 
         $generator->generateFile(
             $filePath,
-            $this->getTemplatePath('block/entity.tpl.php'),
-            [
+            $this->getTemplatePath('block/entity.tpl.php'), [
                 'definition' => $blockDefinition,
                 'class' => $blockDefinition->createEntityPhpClass(),
             ]
@@ -241,8 +238,7 @@ class MakeBlock extends AbstractMaker
 
         $generator->generateFile(
             $filePath,
-            $this->getTemplatePath('block/item-entity.tpl.php'),
-            [
+            $this->getTemplatePath('block/item-entity.tpl.php'), [
                 'definition' => $blockDefinition,
                 'class' => $blockDefinition->createEntityPhpClass(),
             ]
@@ -266,8 +262,7 @@ class MakeBlock extends AbstractMaker
 
         $generator->generateFile(
             $filePath,
-            $this->getTemplatePath('block/form-type.tpl.php'),
-            [
+            $this->getTemplatePath('block/form-type.tpl.php'), [
                 'form' => $blockDefinition->getFormType(),
                 'class' => $blockDefinition->createFormTypePhpClass(),
                 'entity' => $blockDefinition->createEntityPhpClass(),
