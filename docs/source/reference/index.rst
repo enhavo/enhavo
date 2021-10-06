@@ -21,3 +21,4 @@ This section contains a short reference information to following topics:
     toolbar-widget/index
     twig/index
     make/index
+    validation/index

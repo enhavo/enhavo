@@ -2,3 +2,5 @@ Enhavo\Bundle\PageBundle\Entity\Page:
     properties:
         content:
             - Valid: ~
+    constraints:
+        - Enhavo\Bundle\FormBundle\Validator\Constraints\HierarchyNotCircular: ~
