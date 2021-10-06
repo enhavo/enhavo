@@ -45,43 +45,13 @@ Templates can then be used by simply adding them to the property config:
 Templates already included
 ************
 
-BlockNodeType
-""""""""""""
-.. literalinclude:: ../../../../src/Enhavo/Bundle/BlockBundle/Resources/block/templates/BlockNodeType.yaml
-  :language: yaml
-BooleanType
-""""""""""""
-.. literalinclude:: ../../../../src/Enhavo/Bundle/BlockBundle/Resources/block/templates/BooleanType.yaml
-  :language: yaml
-ChoiceType
-""""""""""""
-.. literalinclude:: ../../../../src/Enhavo/Bundle/BlockBundle/Resources/block/templates/ChoiceType.yaml
-  :language: yaml
-ListType
-""""""""""""
-.. literalinclude:: ../../../../src/Enhavo/Bundle/BlockBundle/Resources/block/templates/ListType.yaml
-  :language: yaml
-MediaType
-""""""""""""
-.. literalinclude:: ../../../../src/Enhavo/Bundle/BlockBundle/Resources/block/templates/MediaType.yaml
-  :language: yaml
-MediaTypeMultiple
-""""""""""""
-.. literalinclude:: ../../../../src/Enhavo/Bundle/BlockBundle/Resources/block/templates/MediaTypeMultiple.yaml
-  :language: yaml
-PositionType
-""""""""""""
-.. literalinclude:: ../../../../src/Enhavo/Bundle/BlockBundle/Resources/block/templates/PositionType.yaml
-  :language: yaml
-TextareaType
-""""""""""""
-.. literalinclude:: ../../../../src/Enhavo/Bundle/BlockBundle/Resources/block/templates/TextareaType.yaml
-  :language: yaml
-TextType
-""""""""""""
-.. literalinclude:: ../../../../src/Enhavo/Bundle/BlockBundle/Resources/block/templates/TextType.yaml
-  :language: yaml
-WysiwygType
-""""""""""""
-.. literalinclude:: ../../../../src/Enhavo/Bundle/BlockBundle/Resources/block/templates/WysiwygType.yaml
-  :language: yaml
+* BlockNodeType
+* BooleanType
+* ChoiceType
+* ListType
+* MediaType
+* MediaTypeMultiple
+* PositionType
+* TextareaType
+* TextType
+* WysiwygType
