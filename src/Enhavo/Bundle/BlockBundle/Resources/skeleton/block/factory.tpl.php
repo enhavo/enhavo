@@ -1,9 +1,9 @@
 <?= "<?php\n" ?>
 
-namespace <?= $factory_namespace ?>;
+namespace <?= $definition->getFactoryNamespace() ?>;
 
 use Enhavo\Bundle\BlockBundle\Factory\AbstractBlockFactory;
 
-class <?= $name ?>BlockFactory extends AbstractBlockFactory
+class <?= $definition->getFactoryName() ?> extends AbstractBlockFactory
 {
 }

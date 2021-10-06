@@ -1,52 +1,28 @@
 <?= "<?php\n" ?>
 
-namespace <?= $entity_namespace ?>;
+namespace <?= $class->getNamespace(); ?>;
 
 use Enhavo\Bundle\BlockBundle\Entity\AbstractBlock;
-<?php if ($has_items): ?>
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-<?php endif; ?>
+<?php foreach ($class->getUse() as $item): ?>
+use <?= $item; ?>;
+<?php endforeach; ?>
 
-class <?= $name ?>Block extends AbstractBlock
+class <?= $class->getName(); ?> extends AbstractBlock
 {
-<?php if ($has_items): ?>
-    /** @var Collection<<?= $name ?>BlockItem> */
-    private $items;
 
-    /**
-    * LogowallBlock constructor.
-    */
-    public function __construct()
+<?php foreach ($class->getProperties() as $property): ?>
+    /** @var <?= $property->getNullable() .$property->getType() ?> */
+    private $<?= $property->getName(); ?> = <?= $property->getDefault(); ?>;
+
+<?php endforeach; ?>
+
+<?php foreach ($class->getFunctions() as $function): ?>
+
+    <?= $function->getVisibility(); ?> function <?= $function->getName(); ?>(<?= $function->getArgumentString(); ?>)<?= $function->getReturnsString(); ?>
+
     {
-        $this->items = new ArrayCollection();
-    }
+        <?= $function->getBodyString(8); ?>
 
-    /**
-    * @return Collection
-    */
-    public function getItems()
-    {
-        return $this->items;
     }
-
-    /**
-    * @param <?= $name ?>BlockItem $item
-    */
-    public function addItem(<?= $name ?>BlockItem $item)
-    {
-        $this->items->add($item);
-        $item->set<?= $name ?>Block($this);
-    }
-
-    /**
-    * @param <?= $name ?>BlockItem $item
-    */
-    public function removeItem(<?= $name ?>BlockItem $item)
-    {
-        $this->items->removeElement($item);
-        $item->set<?= $name ?>Block(null);
-    }
-
-<?php endif; ?>
+<?php endforeach; ?>
 }

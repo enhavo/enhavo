@@ -1,0 +1,7 @@
+type: string
+orm_type: text
+nullable: true
+form:
+    use:
+        - Symfony\Component\Form\Extension\Core\Type\TextareaType
+    class: TextareaType
