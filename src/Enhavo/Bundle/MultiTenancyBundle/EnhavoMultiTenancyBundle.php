@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\MultiTenancyBundle;
 
 use Enhavo\Bundle\MultiTenancyBundle\DependencyInjection\Compiler\ProviderCompilerPass;
 use Enhavo\Bundle\MultiTenancyBundle\DependencyInjection\Compiler\ResolverCompilerPass;
+use Enhavo\Bundle\MultiTenancyBundle\DependencyInjection\Compiler\RolesProviderCompilerPass;
 use Enhavo\Bundle\MultiTenancyBundle\DependencyInjection\Compiler\SyliusCompilerPass;
 use Enhavo\Bundle\MultiTenancyBundle\DependencyInjection\Compiler\TenantResolverAwareCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -25,5 +26,6 @@ class EnhavoMultiTenancyBundle extends Bundle
         $container->addCompilerPass(new ProviderCompilerPass());
         $container->addCompilerPass(new ResolverCompilerPass());
         $container->addCompilerPass(new TenantResolverAwareCompilerPass());
+        $container->addCompilerPass(new RolesProviderCompilerPass());
     }
 }
