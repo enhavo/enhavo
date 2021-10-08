@@ -4,8 +4,9 @@ namespace Enhavo\Bundle\UserBundle\DependencyInjection;
 
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\UserBundle\Factory\UserFactory;
+use Enhavo\Bundle\UserBundle\Form\Type\ChangeEmailConfirmType;
 use Enhavo\Bundle\UserBundle\Form\Type\ChangeEmailRequestType;
-use Enhavo\Bundle\UserBundle\Form\Type\ChangePasswordFormType;
+use Enhavo\Bundle\UserBundle\Form\Type\ChangePasswordType;
 use Enhavo\Bundle\UserBundle\Form\Type\GroupType;
 use Enhavo\Bundle\UserBundle\Form\Type\ProfileType;
 use Enhavo\Bundle\UserBundle\Form\Type\RegistrationType;
@@ -18,6 +19,7 @@ use Enhavo\Bundle\UserBundle\Repository\GroupRepository;
 use Enhavo\Bundle\UserBundle\Repository\UserRepository;
 use Sylius\Bundle\ResourceBundle\SyliusResourceBundle;
 use Sylius\Component\Resource\Factory\Factory;
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -37,10 +39,19 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder('enhavo_user');
         $rootNode = $treeBuilder->getRootNode();
 
+        $this->addResourceSection($rootNode);
+        $this->addParametersSection($rootNode);
+        $this->addMapperSection($rootNode);
+        $this->addMailSection($rootNode);
+
         $this->addConfigNode($rootNode);
 
-        $rootNode
-            // Driver used by the resource bundle
+        return $treeBuilder;
+    }
+
+    private function addResourceSection(ArrayNodeDefinition $node)
+    {
+        $node
             ->addDefaultsIfNotSet()
             ->children()
                 ->scalarNode('driver')->defaultValue(SyliusResourceBundle::DRIVER_DOCTRINE_ORM)->end()
@@ -86,190 +97,282 @@ class Configuration implements ConfigurationInterface
                 ->end()
             ->end()
         ;
-
-        return $treeBuilder;
     }
 
-    private function addConfigNode(NodeDefinition $rootNode): NodeDefinition
+    private function addParametersSection(ArrayNodeDefinition $node)
     {
-        $subNode = $rootNode->children();
-
-        $parametersNode = $subNode->arrayNode('parameters')->addDefaultsIfNotSet()->children();
-        $parametersNode
-            ->variableNode('default_firewall')->defaultValue('main')->end()
+        $node
+            ->children()
+                ->arrayNode('parameters')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->variableNode('default_firewall')->defaultValue('main')->end()
+                    ->end()
+                ->end()
+            ->end()
         ;
-        $parametersNode->end();
+    }
 
-        $mailNode = $subNode->arrayNode('mail')->addDefaultsIfNotSet()->children();
-        $mailNode
-            ->variableNode('from')->end()
-            ->variableNode('sender_name')->end()
+    private function addMailSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('mail')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->variableNode('from')->end()
+                        ->variableNode('sender_name')->end()
+                    ->end()
+                ->end()
+            ->end()
         ;
-        $mailNode->end();
+    }
 
-        $mapperNode = $subNode->arrayNode('mapper')->addDefaultsIfNotSet()->children();
-        $mapperNode
-            ->variableNode('credential_properties')->defaultValue(['email'])->end()
-            ->variableNode('register_properties')->defaultValue(['email'])->end()
-            ->scalarNode('glue')->defaultValue('.')->end()
+    private function addMapperSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('mapper')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->variableNode('credential_properties')->defaultValue(['email'])->end()
+                        ->variableNode('register_properties')->defaultValue(['email'])->end()
+                        ->scalarNode('glue')->defaultValue('.')->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+    }
+
+    private function addConfigNode(NodeDefinition $node)
+    {
+        $prototype = $node
+            ->children()
+                ->arrayNode('config')
+                    ->useAttributeAsKey('key')
+                    ->prototype('array')
+                        ->addDefaultsIfNotSet()
+
         ;
 
-        $mapperNode->end();
+        $this->addConfigRegistrationSection($prototype);
+        $this->addConfigProfileSection($prototype);
+        $this->addConfigResetPasswordSection($prototype);
+        $this->addConfigChangeEmailSection($prototype);
+        $this->addConfigLoginSection($prototype);
+        $this->addConfigChangePasswordSection($prototype);
+    }
 
-        $configNode = $subNode->arrayNode('config')->ignoreExtraKeys()->addDefaultsIfNotSet()->children();
-        $themeNode = $configNode->arrayNode('theme')->ignoreExtraKeys()->addDefaultsIfNotSet()->children();
-        $themeNode->arrayNode('registration_register')->addDefaultsIfNotSet()->children()
-            ->scalarNode('template')->defaultValue('theme/security/registration/register.html.twig')->end()
-            ->scalarNode('redirect_route')->defaultValue('enhavo_user_theme_registration_check')->end()
-            ->scalarNode('confirmation_route')->defaultValue('enhavo_user_theme_registration_confirm')->end()
-            ->scalarNode('mail_template')->defaultValue('mail/security/registration.html.twig')->end()
-            ->scalarNode('mail_subject')->defaultValue('registration.mail.subject')->end()
-            ->scalarNode('translation_domain')->defaultValue('EnhavoUserBundle')->end()
-            ->arrayNode('form')->addDefaultsIfNotSet()->children()
-                ->scalarNode('class')->defaultValue(RegistrationType::class)->end()
-                ->scalarNode('options')->defaultValue([])->end()
+    private function addConfigRegistrationSection(NodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('registration_register')
+                    ->children()
+                        ->scalarNode('template')->isRequired()->cannotBeEmpty()->end()
+                        ->scalarNode('redirect_route')->defaultValue(null)->end()
+                        ->scalarNode('confirmation_route')->isRequired()->cannotBeEmpty()->end()
+                        ->scalarNode('mail_template')->isRequired()->cannotBeEmpty()->end()
+                        ->scalarNode('mail_subject')->defaultValue('registration.mail.subject')->end()
+                        ->scalarNode('mail_name')->defaultValue(null)->end()
+                        ->scalarNode('mail_content_type')->defaultValue('text/plain')->end()
+                        ->scalarNode('auto_login')->defaultValue(true)->end()
+                        ->scalarNode('auto_enabled')->defaultValue(true)->end()
+                        ->scalarNode('auto_verified')->defaultValue(false)->end()
+                        ->scalarNode('translation_domain')->defaultValue('EnhavoUserBundle')->end()
+                        ->arrayNode('form')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('class')->defaultValue(RegistrationType::class)->end()
+                                ->variableNode('options')->defaultValue([])->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+
+                ->arrayNode('registration_check')
+                    ->children()
+                        ->scalarNode('template')->isRequired()->cannotBeEmpty()->end()
+                    ->end()
+                ->end()
+
+                ->arrayNode('registration_finish')
+                    ->children()
+                        ->scalarNode('template')->isRequired()->cannotBeEmpty()->end()
+                    ->end()
+                ->end()
+
+                ->arrayNode('registration_confirm')
+                    ->children()
+                        ->scalarNode('template')->isRequired()->cannotBeEmpty()->end()
+                        ->scalarNode('mail_template')->isRequired()->cannotBeEmpty()->end()
+                        ->scalarNode('mail_subject')->defaultValue('confirmation.mail.subject')->end()
+                        ->scalarNode('translation_domain')->defaultValue(null)->end()
+                        ->scalarNode('redirect_route')->defaultValue(null)->end()
+                     ->end()
+                ->end()
             ->end()
-        ->end();
+        ;
+    }
 
-        $themeNode->arrayNode('registration_check')->addDefaultsIfNotSet()->children()
-            ->scalarNode('template')->defaultValue('theme/security/registration/check.html.twig')->end()
-        ->end();
-
-        $themeNode->arrayNode('registration_finish')->addDefaultsIfNotSet()->children()
-            ->scalarNode('template')->defaultValue('theme/security/registration/finish.html.twig')->end()
-        ->end();
-
-        $themeNode->arrayNode('registration_confirm')->addDefaultsIfNotSet()->children()
-            ->scalarNode('template')->defaultValue('theme/security/registration/confirm.html.twig')->end()
-            ->scalarNode('mail_template')->defaultValue('mail/security/confirmation.html.twig')->end()
-            ->scalarNode('mail_subject')->defaultValue('confirmation.mail.subject')->end()
-            ->scalarNode('translation_domain')->defaultValue('EnhavoUserBundle')->end()
-            ->scalarNode('redirect_route')->defaultValue('enhavo_user_theme_registration_finish')->end()
-        ->end();
-
-        $themeNode->arrayNode('profile')->addDefaultsIfNotSet()->children()
-            ->scalarNode('template')->defaultValue('theme/resource/user/profile.html.twig')->end()
-            ->arrayNode('form')->addDefaultsIfNotSet()->children()
-                ->scalarNode('class')->defaultValue(ProfileType::class)->end()
-                ->scalarNode('options')->defaultValue([])->end()
+    private function addConfigProfileSection(NodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('profile')
+                    ->children()
+                        ->scalarNode('template')->isRequired()->cannotBeEmpty()->end()
+                        ->arrayNode('form')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('class')->defaultValue(ProfileType::class)->end()
+                                ->variableNode('options')->defaultValue([])->end()
+                            ->end()
+                    ->end()
+                ->end()
             ->end()
-        ->end();
+        ;
+    }
 
-        $themeNode->arrayNode('reset_password_request')->addDefaultsIfNotSet()->children()
-            ->scalarNode('template')->defaultValue('theme/security/reset-password/request.html.twig')->end()
-            ->scalarNode('mail_template')->defaultValue('mail/security/reset-password.html.twig')->end()
-            ->scalarNode('mail_subject')->defaultValue('reset_password.mail.subject')->end()
-            ->scalarNode('translation_domain')->defaultValue('EnhavoUserBundle')->end()
-            ->scalarNode('redirect_route')->defaultValue('enhavo_user_theme_reset_password_check')->end()
-            ->scalarNode('confirmation_route')->defaultValue('enhavo_user_theme_reset_password_confirm')->end()
-            ->arrayNode('form')->addDefaultsIfNotSet()->children()
-                ->scalarNode('class')->defaultValue(ResetPasswordRequestType::class)->end()
-                ->scalarNode('options')->defaultValue([])->end()
+    private function addConfigResetPasswordSection(NodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('reset_password_request')
+                    ->children()
+                        ->scalarNode('template')->isRequired()->cannotBeEmpty()->end()
+                        ->scalarNode('mail_template')->isRequired()->cannotBeEmpty()->end()
+                        ->scalarNode('mail_subject')->isRequired()->cannotBeEmpty()->end()
+                        ->scalarNode('translation_domain')->defaultValue(null)->end()
+                        ->scalarNode('redirect_route')->defaultValue(null)->end()
+                        ->scalarNode('confirmation_route')->isRequired()->cannotBeEmpty()->end()
+                        ->arrayNode('form')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('class')->defaultValue(ResetPasswordRequestType::class)->end()
+                                ->variableNode('options')->defaultValue([])->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+
+                ->arrayNode('reset_password_check')
+                    ->children()
+                        ->scalarNode('template')->isRequired()->cannotBeEmpty()->end()
+                    ->end()
+                ->end()
+
+                ->arrayNode('reset_password_confirm')
+                    ->children()
+                        ->scalarNode('auto_login')->defaultValue(true)->end()
+                        ->scalarNode('template')->isRequired()->cannotBeEmpty()->end()
+                        ->scalarNode('redirect_route')->defaultValue(null)->end()
+                        ->arrayNode('form')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('class')->defaultValue(ResetPasswordType::class)->end()
+                                ->variableNode('options')->defaultValue([])->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+
+                ->arrayNode('reset_password_finish')
+                    ->children()
+                        ->scalarNode('template')->isRequired()->cannotBeEmpty()->end()
+                    ->end()
+                ->end()
+            ;
+    }
+
+    private function addConfigChangeEmailSection(NodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('change_email_request')
+                    ->children()
+                        ->scalarNode('template')->isRequired()->cannotBeEmpty()->end()
+                        ->scalarNode('mail_template')->isRequired()->cannotBeEmpty()->end()
+                        ->scalarNode('mail_subject')->isRequired()->cannotBeEmpty()->end()
+                        ->scalarNode('translation_domain')->defaultValue(null)->end()
+                        ->scalarNode('redirect_route')->defaultValue(null)->end()
+                        ->scalarNode('confirmation_route')->isRequired()->cannotBeEmpty()->end()
+                        ->arrayNode('form')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('class')->defaultValue(ChangeEmailRequestType::class)->end()
+                                ->variableNode('options')->defaultValue([])->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+
+                ->arrayNode('change_email_check')
+                    ->children()
+                        ->scalarNode('template')->isRequired()->cannotBeEmpty()->end()
+                    ->end()
+                ->end()
+
+                ->arrayNode('change_email_confirm')
+                    ->children()
+                        ->scalarNode('template')->isRequired()->cannotBeEmpty()->end()
+                        ->scalarNode('redirect_route')->defaultValue(null)->end()
+                        ->scalarNode('mail_template')->isRequired()->cannotBeEmpty()->end()
+                        ->scalarNode('mail_subject')->defaultValue('registration.mail.subject')->end()
+                        ->scalarNode('mail_name')->defaultValue(null)->end()
+                        ->scalarNode('mail_content_type')->defaultValue('text/plain')->end()
+                        ->scalarNode('translation_domain')->defaultValue(null)->end()
+                        ->scalarNode('confirmation_route')->isRequired()->cannotBeEmpty()->end()
+                        ->arrayNode('form')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('class')->defaultValue(ChangeEmailConfirmType::class)->end()
+                                ->variableNode('options')->defaultValue([])->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+
+                ->arrayNode('change_email_finish')
+                    ->children()
+                        ->scalarNode('template')->isRequired()->cannotBeEmpty()->end()
+                    ->end()
+                ->end()
             ->end()
-        ->end();
+        ;
+    }
 
-        $themeNode->arrayNode('reset_password_check')->addDefaultsIfNotSet()->children()
-            ->scalarNode('template')->defaultValue('theme/security/reset-password/check.html.twig')->end()
-        ->end();
-
-        $themeNode->arrayNode('reset_password_confirm')->addDefaultsIfNotSet()->children()
-            ->scalarNode('template')->defaultValue('theme/security/reset-password/confirm.html.twig')->end()
-            ->scalarNode('redirect_route')->defaultValue('enhavo_user_theme_reset_password_finish')->end()
-            ->arrayNode('form')->addDefaultsIfNotSet()->children()
-                ->scalarNode('class')->defaultValue(ResetPasswordType::class)->end()
-                ->scalarNode('options')->defaultValue([])->end()
+    private function addConfigLoginSection(NodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('login')
+                    ->children()
+                        ->scalarNode('template')->isRequired()->cannotBeEmpty()->end()
+                        ->scalarNode('redirect_route')->defaultValue(null)->end()
+                        ->scalarNode('route')->isRequired()->cannotBeEmpty()->end()
+                    ->end()
+                ->end()
             ->end()
-        ->end();
+        ;
+    }
 
-        $themeNode->arrayNode('reset_password_finish')->addDefaultsIfNotSet()->children()
-            ->scalarNode('template')->defaultValue('theme/security/reset-password/finish.html.twig')->end()
-        ->end();
-
-        $themeNode->arrayNode('change_email_request')->addDefaultsIfNotSet()->children()
-            ->scalarNode('template')->defaultValue('theme/security/change-email/request.html.twig')->end()
-            ->scalarNode('mail_template')->defaultValue('mail/security/change-email.html.twig')->end()
-            ->scalarNode('mail_subject')->defaultValue('change_email.mail.subject')->end()
-            ->scalarNode('translation_domain')->defaultValue('EnhavoUserBundle')->end()
-            ->scalarNode('redirect_route')->defaultValue('enhavo_user_theme_change_email_check')->end()
-            ->scalarNode('confirmation_route')->defaultValue('enhavo_user_theme_change_email_confirm')->end()
-            ->arrayNode('form')->addDefaultsIfNotSet()->children()
-                ->scalarNode('class')->defaultValue(ChangeEmailRequestType::class)->end()
-                ->scalarNode('options')->defaultValue([])->end()
+    private function addConfigChangePasswordSection(NodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('change_password')
+                    ->children()
+                        ->scalarNode('template')->defaultValue(null)->end()
+                        ->arrayNode('form')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('class')->defaultValue(ChangePasswordType::class)->end()
+                                ->variableNode('options')->defaultValue([])->end()
+                            ->end()
+                        ->end()
+                ->end()
             ->end()
-        ->end();
-
-        $themeNode->arrayNode('change_email_check')->addDefaultsIfNotSet()->children()
-            ->scalarNode('template')->defaultValue('theme/security/change-email/check.html.twig')->end()
-        ->end();
-
-        $themeNode->arrayNode('change_email_confirm')->addDefaultsIfNotSet()->children()
-            ->scalarNode('template')->defaultValue('theme/security/change-email/confirm.html.twig')->end()
-            ->scalarNode('redirect_route')->defaultValue('enhavo_user_theme_change_email_finish')->end()
-            ->arrayNode('form')->addDefaultsIfNotSet()->children()
-                ->scalarNode('class')->defaultValue(ResetPasswordType::class)->end()
-                ->scalarNode('options')->defaultValue([])->end()
-            ->end()
-        ->end();
-
-        $themeNode->arrayNode('change_email_finish')->addDefaultsIfNotSet()->children()
-            ->scalarNode('template')->defaultValue('theme/security/change-email/finish.html.twig')->end()
-        ->end();
-
-        $themeNode->arrayNode('login')->addDefaultsIfNotSet()->children()
-            ->scalarNode('template')->defaultValue('theme/security/login.html.twig')->end()
-            ->scalarNode('redirect_route')->defaultValue('enhavo_user_theme_user_profile')->end()
-            ->scalarNode('route')->defaultValue('enhavo_user_theme_security_login')->cannotBeEmpty()->end()
-        ->end();
-
-        $themeNode->end();
-
-        $adminNode = $configNode->arrayNode('admin')->ignoreExtraKeys()->addDefaultsIfNotSet()->children();
-
-        $adminNode->arrayNode('reset_password_request')->addDefaultsIfNotSet()->children()
-            ->scalarNode('template')->defaultValue('admin/security/reset-password/request.html.twig')->end()
-            ->scalarNode('mail_template')->defaultValue('mail/security/reset-password.html.twig')->end()
-            ->scalarNode('mail_subject')->defaultValue('reset_password.mail.subject')->end()
-            ->scalarNode('translation_domain')->defaultValue('EnhavoUserBundle')->end()
-            ->scalarNode('confirmation_route')->defaultValue('enhavo_user_reset_password_confirm')->end()
-            ->scalarNode('stylesheets')->defaultValue(['enhavo/user/login'])->end()
-            ->scalarNode('javascripts')->defaultValue(['enhavo/user/login'])->end()
-            ->arrayNode('form')->addDefaultsIfNotSet()->children()
-                ->scalarNode('class')->defaultValue(ResetPasswordRequestType::class)->end()
-                ->scalarNode('options')->defaultValue([])->end()
-            ->end()
-            ->end();
-
-        $adminNode->arrayNode('reset_password_confirm')->addDefaultsIfNotSet()->children()
-            ->scalarNode('template')->defaultValue('admin/security/reset-password/confirm.html.twig')->end()
-            ->scalarNode('auto_login')->defaultValue(true)->end()
-            ->scalarNode('redirect_route')->defaultValue('enhavo_app_index')->end()
-            ->scalarNode('stylesheets')->defaultValue(['enhavo/user/login'])->end()
-            ->scalarNode('javascripts')->defaultValue(['enhavo/user/login'])->end()
-            ->arrayNode('form')->addDefaultsIfNotSet()->children()
-                ->scalarNode('class')->defaultValue(ResetPasswordType::class)->end()
-                ->scalarNode('options')->defaultValue([])->end()
-            ->end()
-            ->end();
-
-        $adminNode->arrayNode('login')->addDefaultsIfNotSet()->children()
-            ->scalarNode('template')->defaultValue('admin/security/login/login.html.twig')->end()
-            ->scalarNode('redirect_route')->defaultValue('enhavo_app_index')->end()
-            ->scalarNode('route')->defaultValue('enhavo_user_security_login')->cannotBeEmpty()->end()
-            ->scalarNode('stylesheets')->defaultValue(['enhavo/user/login'])->end()
-            ->scalarNode('javascripts')->defaultValue(['enhavo/user/login'])->end()
-        ->end();
-
-        $adminNode->arrayNode('change_password')->addDefaultsIfNotSet()->children()
-            ->arrayNode('form')->addDefaultsIfNotSet()->children()
-                ->scalarNode('class')->defaultValue(ChangePasswordFormType::class)->end()
-                ->scalarNode('options')->defaultValue([])->end()
-            ->end()
-        ->end();
-
-        $adminNode->end();
-
-        $configNode->end();
-        $subNode->end();
-        return $rootNode;
+        ;
     }
 }

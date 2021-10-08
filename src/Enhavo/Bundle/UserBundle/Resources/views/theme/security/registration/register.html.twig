@@ -6,8 +6,6 @@
         {{ form_row(form.email) }}
         {{ form_row(form.plainPassword) }}
         {{ form_row(form._token) }}
-        <div>
-            <input type="submit" value="{{ 'registration.form.submit'|trans }}" />
-        </div>
+        <button type="submit">{{ 'registration.form.submit'|trans }}</button>
     </form>
 {% endblock %}

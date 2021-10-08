@@ -2,11 +2,10 @@
 
 namespace Enhavo\Bundle\UserBundle\Controller;
 
-use Enhavo\Bundle\AppBundle\Template\TemplateManager;
 use Enhavo\Bundle\FormBundle\Error\FormErrorResolver;
+use Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Enhavo\Bundle\UserBundle\User\UserManager;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -15,16 +14,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  * Class UserController
  * @package Enhavo\Bundle\UserBundle\Controller
  */
-class ProfileController extends AbstractController
+class ProfileController extends AbstractUserController
 {
-    use FlashMessagesTrait;
-
-    /** @var UserManager */
-    private $userManager;
-
-    /** @var TemplateManager */
-    private $templateManager;
-
     /** @var TranslatorInterface */
     private $translator;
 
@@ -34,29 +25,29 @@ class ProfileController extends AbstractController
     /**
      * UserController constructor.
      * @param UserManager $userManager
-     * @param TemplateManager $templateManager
+     * @param ConfigurationProvider $configurationProvider
      * @param TranslatorInterface $translator
      * @param FormErrorResolver $errorResolver
      */
-    public function __construct(UserManager $userManager, TemplateManager $templateManager, TranslatorInterface $translator, FormErrorResolver $errorResolver)
+    public function __construct(UserManager $userManager, ConfigurationProvider $configurationProvider, TranslatorInterface $translator, FormErrorResolver $errorResolver)
     {
-        $this->userManager = $userManager;
-        $this->templateManager = $templateManager;
+        parent::__construct($userManager, $configurationProvider);
+
         $this->translator = $translator;
         $this->errorResolver = $errorResolver;
     }
 
     public function indexAction(Request $request)
     {
-        $config = $this->userManager->getConfigKey($request);
+        $configKey = $this->getConfigKey($request);
+        $configuration = $this->provider->getProfileConfiguration($configKey);
 
         /** @var UserInterface $user */
         $user = $this->getUser();
-        $form = $this->userManager->createForm($config, 'profile', $user);
+        $form = $this->createForm($configuration->getFormClass(), $user, $configuration->getFormOptions());
         $form->handleRequest($request);
 
         $message = null;
-
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
 
@@ -87,7 +78,7 @@ class ProfileController extends AbstractController
             }
         }
 
-        return $this->render($this->templateManager->getTemplate($this->userManager->getTemplate($config, 'profile')), [
+        return $this->render($this->getTemplate($configuration->getTemplate()), [
             'form' => $form->createView(),
             'data' => [
                 'messages' => $this->getFlashMessages()

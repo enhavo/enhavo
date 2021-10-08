@@ -3,8 +3,8 @@ services:
         public: true
         arguments:
             - '@Enhavo\Bundle\UserBundle\User\UserManager'
+            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
             - '@enhavo_user.repository.user'
-            - '@enhavo_app.template.manager'
             - '@enhavo_user.factory.user'
             - '@enhavo_form.error.error.resolver'
         calls:
@@ -16,8 +16,8 @@ services:
         public: true
         arguments:
             - '@Enhavo\Bundle\UserBundle\User\UserManager'
+            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
             - '@enhavo_user.repository.user'
-            - '@enhavo_app.template.manager'
             - '@enhavo_user.factory.user'
             - '@translator'
             - '@Enhavo\Bundle\FormBundle\Error\FormErrorResolver'
@@ -25,14 +25,13 @@ services:
             - [ setContainer, [ '@service_container' ] ]
         tags:
             - { name: controller.service_arguments }
-
 
     Enhavo\Bundle\UserBundle\Controller\ChangeEmailController:
         public: true
         arguments:
             - '@Enhavo\Bundle\UserBundle\User\UserManager'
+            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
             - '@enhavo_user.repository.user'
-            - '@enhavo_app.template.manager'
             - '@enhavo_user.factory.user'
             - '@translator'
             - '@Enhavo\Bundle\FormBundle\Error\FormErrorResolver'
@@ -41,12 +40,11 @@ services:
         tags:
             - { name: controller.service_arguments }
 
-
     Enhavo\Bundle\UserBundle\Controller\SecurityController:
         public: true
         arguments:
             - '@Enhavo\Bundle\UserBundle\User\UserManager'
-            - '@enhavo_app.template.manager'
+            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
             - '@security.csrf.token_manager'
             - '@translator'
         calls:
@@ -54,13 +52,13 @@ services:
         tags:
             - { name: controller.service_arguments }
 
-
     Enhavo\Bundle\UserBundle\Controller\ChangePasswordController:
         public: true
         arguments:
+            - '@Enhavo\Bundle\UserBundle\User\UserManager'
+            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
             - '@fos_rest.view_handler'
             - '@view.factory'
-            - '@Enhavo\Bundle\UserBundle\User\UserManager'
             - '@translator'
         calls:
             - [ setContainer, [ '@service_container' ] ]
@@ -71,7 +69,7 @@ services:
         public: true
         arguments:
             - '@Enhavo\Bundle\UserBundle\User\UserManager'
-            - '@enhavo_app.template.manager'
+            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
             - '@translator'
             - '@Enhavo\Bundle\FormBundle\Error\FormErrorResolver'
         calls:

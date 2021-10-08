@@ -95,6 +95,6 @@ EOT
             $output->writeln(sprintf('Add role <comment>%s</comment> for user <comment>%s</comment>', $role, $username));
         }
 
-        $this->userManager->update($user, false);
+        $this->userManager->update($user);
     }
 }

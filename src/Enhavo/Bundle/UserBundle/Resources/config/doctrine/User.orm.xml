@@ -11,6 +11,7 @@
         <field name="username" length="180" nullable="true" unique="true" />
         <field name="password" length="255" nullable="true" />
         <field name="enabled" type="boolean" nullable="true" />
+        <field name="verified" type="boolean" nullable="true" />
         <field name="salt" length="255" nullable="true" />
         <field name="confirmationToken" length="255" nullable="true" unique="true" />
         <field name="passwordRequestedAt" type="datetime" nullable="true" />
