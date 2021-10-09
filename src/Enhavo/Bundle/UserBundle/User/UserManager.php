@@ -17,13 +17,13 @@ use Enhavo\Bundle\UserBundle\Configuration\MailConfigurationInterface;
 use Enhavo\Bundle\UserBundle\Configuration\Registration\RegistrationConfirmConfiguration;
 use Enhavo\Bundle\UserBundle\Configuration\Registration\RegistrationRegisterConfiguration;
 use Enhavo\Bundle\UserBundle\Configuration\ResetPassword\ResetPasswordRequestConfiguration;
+use Enhavo\Bundle\UserBundle\Configuration\Verification\VerificationRequestConfiguration;
 use Enhavo\Bundle\UserBundle\Event\UserEvent;
 use Enhavo\Bundle\UserBundle\Mapper\UserMapperInterface;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
@@ -164,10 +164,14 @@ class UserManager
         $user->setConfirmationToken(null);
     }
 
-    private function verify(UserInterface $user)
+    public function verify(UserInterface $user, $flush = true)
     {
         $user->setVerified(true);
         $user->setConfirmationToken(null);
+
+        if ($flush) {
+            $this->entityManager->flush();
+        }
     }
 
     public function changePassword(UserInterface $user)
@@ -259,7 +263,7 @@ class UserManager
 
     public function confirm(UserInterface $user, RegistrationConfirmConfiguration $configuration)
     {
-        $this->verify($user);
+        $this->verify($user, false);
         $this->update($user);
         $event = new UserEvent(UserEvent::TYPE_REGISTRATION_CONFIRMED, $user);
         $this->eventDispatcher->dispatch($event);
@@ -348,11 +352,35 @@ class UserManager
         $this->sendDeleteMail($user, $configuration);
     }
 
-    public function sendDeleteMail(UserInterface $user, DeleteConfirmConfiguration $configuration)
+    private function sendDeleteMail(UserInterface $user, DeleteConfirmConfiguration $configuration)
     {
         $message = $this->createUserMessage($user, $configuration);
         $message->setContext([
             'user' => $user,
+            'configuration' => $configuration
+        ]);
+        $this->mailerManager->sendMessage($message);
+    }
+
+    public function requestVerification(UserInterface $user, VerificationRequestConfiguration $configuration)
+    {
+        if ($user->isVerified()) {
+            return;
+        }
+
+        $user->setConfirmationToken($this->tokenGenerator->generateToken());
+        $this->update($user);
+        $this->sendVerificationMail($user, $configuration);
+    }
+
+    private function sendVerificationMail(UserInterface $user, VerificationRequestConfiguration $configuration)
+    {
+        $message = $this->createUserMessage($user, $configuration);
+        $message->setContext([
+            'user' => $user,
+            'confirmation_url' => $this->router->generate($configuration->getConfirmationRoute(), [
+                'token' => $user->getConfirmationToken()
+            ], RouterInterface::ABSOLUTE_URL),
             'configuration' => $configuration
         ]);
         $this->mailerManager->sendMessage($message);

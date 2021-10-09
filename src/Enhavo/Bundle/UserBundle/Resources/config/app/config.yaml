@@ -90,6 +90,15 @@ enhavo_user:
             delete_finish:
                 template: theme/security/delete/finish.html.twig
 
+            verification_request:
+                template: theme/security/verification/request.html.twig
+                mail_template: mail/security/verification.html.twig
+                mail_subject: verification.mail.subject
+                route: enhavo_user_theme_verification_request
+                confirmation_route: enhavo_user_theme_verification_confirm
+
+            verification_confirm:
+                template: theme/security/verification/confirm.html.twig
 
         admin:
             reset_password_request:

@@ -85,3 +85,11 @@ services:
             - '@security.token_storage'
         tags:
             - { name: validator.constraint_validator }
+
+    Enhavo\Bundle\UserBundle\Twig\TwigExtension:
+        arguments:
+            - '@security.csrf.token_manager'
+            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
+            - '@router'
+        tags:
+            - { name: twig.extension }

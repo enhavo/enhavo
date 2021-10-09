@@ -88,3 +88,14 @@ services:
             - [ setContainer, [ '@service_container' ] ]
         tags:
             - { name: controller.service_arguments }
+
+    Enhavo\Bundle\UserBundle\Controller\VerificationController:
+        public: true
+        arguments:
+            - '@Enhavo\Bundle\UserBundle\User\UserManager'
+            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
+            - '@enhavo_user.repository.user'
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
+        tags:
+            - { name: controller.service_arguments }

@@ -163,6 +163,7 @@ class Configuration implements ConfigurationInterface
         $this->addConfigLoginSection($prototype);
         $this->addConfigChangePasswordSection($prototype);
         $this->addConfigDeleteSection($prototype);
+        $this->addConfigVerificationSection($prototype);
     }
 
     private function addConfigRegistrationSection(NodeDefinition $node)
@@ -402,6 +403,32 @@ class Configuration implements ConfigurationInterface
                 ->end()
 
                 ->arrayNode('delete_finish')
+                    ->children()
+                        ->scalarNode('template')->isRequired()->cannotBeEmpty()->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+    }
+
+    private function addConfigVerificationSection(NodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('verification_request')
+                    ->children()
+                        ->scalarNode('template')->isRequired()->cannotBeEmpty()->end()
+                        ->scalarNode('route')->defaultValue(null)->end()
+                        ->scalarNode('confirmation_route')->isRequired()->cannotBeEmpty()->end()
+                        ->scalarNode('mail_template')->isRequired()->cannotBeEmpty()->end()
+                        ->scalarNode('mail_subject')->defaultValue('registration.mail.subject')->end()
+                        ->scalarNode('mail_name')->defaultValue(null)->end()
+                        ->scalarNode('mail_content_type')->defaultValue('text/plain')->end()
+                        ->scalarNode('translation_domain')->defaultValue('EnhavoUserBundle')->end()
+                    ->end()
+                ->end()
+
+                ->arrayNode('verification_confirm')
                     ->children()
                         ->scalarNode('template')->isRequired()->cannotBeEmpty()->end()
                     ->end()

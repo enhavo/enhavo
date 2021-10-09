@@ -19,6 +19,8 @@ use Enhavo\Bundle\UserBundle\Configuration\ResetPassword\ResetPasswordCheckConfi
 use Enhavo\Bundle\UserBundle\Configuration\ResetPassword\ResetPasswordConfirmConfiguration;
 use Enhavo\Bundle\UserBundle\Configuration\ResetPassword\ResetPasswordFinishConfiguration;
 use Enhavo\Bundle\UserBundle\Configuration\ResetPassword\ResetPasswordRequestConfiguration;
+use Enhavo\Bundle\UserBundle\Configuration\Verification\VerificationConfirmConfiguration;
+use Enhavo\Bundle\UserBundle\Configuration\Verification\VerificationRequestConfiguration;
 use Enhavo\Bundle\UserBundle\Exception\ConfigurationException;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
 
@@ -198,6 +200,22 @@ class ConfigurationProvider
     {
         $configuration = new DeleteFinishConfiguration;
         $config = $this->getConfig($key, 'delete_finish');
+        $this->autoApply($configuration, $config);
+        return $configuration;
+    }
+
+    public function getVerificationRequestConfiguration($key): VerificationRequestConfiguration
+    {
+        $configuration = new VerificationRequestConfiguration;
+        $config = $this->getConfig($key, 'verification_request');
+        $this->autoApply($configuration, $config);
+        return $configuration;
+    }
+
+    public function getVerificationConfirmConfiguration($key): VerificationConfirmConfiguration
+    {
+        $configuration = new VerificationConfirmConfiguration;
+        $config = $this->getConfig($key, 'verification_confirm');
         $this->autoApply($configuration, $config);
         return $configuration;
     }
