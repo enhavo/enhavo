@@ -7,6 +7,7 @@ use Enhavo\Bundle\UserBundle\Factory\UserFactory;
 use Enhavo\Bundle\UserBundle\Form\Type\ChangeEmailConfirmType;
 use Enhavo\Bundle\UserBundle\Form\Type\ChangeEmailRequestType;
 use Enhavo\Bundle\UserBundle\Form\Type\ChangePasswordType;
+use Enhavo\Bundle\UserBundle\Form\Type\DeleteConfirmType;
 use Enhavo\Bundle\UserBundle\Form\Type\GroupType;
 use Enhavo\Bundle\UserBundle\Form\Type\ProfileType;
 use Enhavo\Bundle\UserBundle\Form\Type\RegistrationType;
@@ -161,6 +162,7 @@ class Configuration implements ConfigurationInterface
         $this->addConfigChangeEmailSection($prototype);
         $this->addConfigLoginSection($prototype);
         $this->addConfigChangePasswordSection($prototype);
+        $this->addConfigDeleteSection($prototype);
     }
 
     private function addConfigRegistrationSection(NodeDefinition $node)
@@ -371,6 +373,38 @@ class Configuration implements ConfigurationInterface
                                 ->variableNode('options')->defaultValue([])->end()
                             ->end()
                         ->end()
+                ->end()
+            ->end()
+        ;
+    }
+
+    private function addConfigDeleteSection(NodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('delete_confirm')
+                    ->children()
+                        ->scalarNode('template')->isRequired()->cannotBeEmpty()->end()
+                        ->scalarNode('redirect_route')->defaultValue(null)->end()
+                        ->scalarNode('mail_template')->isRequired()->cannotBeEmpty()->end()
+                        ->scalarNode('mail_subject')->defaultValue('registration.mail.subject')->end()
+                        ->scalarNode('mail_name')->defaultValue(null)->end()
+                        ->scalarNode('mail_content_type')->defaultValue('text/plain')->end()
+                        ->scalarNode('translation_domain')->defaultValue('EnhavoUserBundle')->end()
+                        ->arrayNode('form')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('class')->defaultValue(DeleteConfirmType::class)->end()
+                                ->variableNode('options')->defaultValue([])->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+
+                ->arrayNode('delete_finish')
+                    ->children()
+                        ->scalarNode('template')->isRequired()->cannotBeEmpty()->end()
+                    ->end()
                 ->end()
             ->end()
         ;

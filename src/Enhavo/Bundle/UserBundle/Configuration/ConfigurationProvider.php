@@ -7,6 +7,8 @@ use Enhavo\Bundle\UserBundle\Configuration\ChangeEmail\ChangeEmailConfirmConfigu
 use Enhavo\Bundle\UserBundle\Configuration\ChangeEmail\ChangeEmailFinishConfiguration;
 use Enhavo\Bundle\UserBundle\Configuration\ChangeEmail\ChangeEmailRequestConfiguration;
 use Enhavo\Bundle\UserBundle\Configuration\ChangePassword\ChangePasswordConfiguration;
+use Enhavo\Bundle\UserBundle\Configuration\Delete\DeleteConfirmConfiguration;
+use Enhavo\Bundle\UserBundle\Configuration\Delete\DeleteFinishConfiguration;
 use Enhavo\Bundle\UserBundle\Configuration\Login\LoginConfiguration;
 use Enhavo\Bundle\UserBundle\Configuration\Profile\ProfileConfiguration;
 use Enhavo\Bundle\UserBundle\Configuration\Registration\RegistrationCheckConfiguration;
@@ -180,6 +182,22 @@ class ConfigurationProvider
     {
         $configuration = new ChangePasswordConfiguration;
         $config = $this->getConfig($key, 'change_password');
+        $this->autoApply($configuration, $config);
+        return $configuration;
+    }
+
+    public function getDeleteConfirmConfiguration($key): DeleteConfirmConfiguration
+    {
+        $configuration = new DeleteConfirmConfiguration;
+        $config = $this->getConfig($key, 'delete_confirm');
+        $this->autoApply($configuration, $config);
+        return $configuration;
+    }
+
+    public function getDeleteFinishConfiguration($key): DeleteFinishConfiguration
+    {
+        $configuration = new DeleteFinishConfiguration;
+        $config = $this->getConfig($key, 'delete_finish');
         $this->autoApply($configuration, $config);
         return $configuration;
     }

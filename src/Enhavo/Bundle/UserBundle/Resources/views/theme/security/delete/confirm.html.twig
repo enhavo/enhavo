@@ -1,0 +1,12 @@
+{% extends template('theme/base.html.twig') %}
+{% trans_default_domain 'EnhavoUserBundle' %}
+
+{% block main %}
+    <form action="{{ path('enhavo_user_theme_delete_confirm') }}" method="POST">
+        {{ form_row(form.email) }}
+        {{ form_row(form.password) }}
+        {{ form_row(form.confirm) }}
+        {{ form_row(form._token) }}
+        <button type="submit">{{ 'delete.form.submit'|trans }}</button>
+    </form>
+{% endblock %}

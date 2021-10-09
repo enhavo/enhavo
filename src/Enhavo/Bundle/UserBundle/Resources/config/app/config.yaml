@@ -81,6 +81,16 @@ enhavo_user:
             change_password:
                 template: theme/security/change-password/change.html.twig
 
+            delete_confirm:
+                template: theme/security/delete/confirm.html.twig
+                mail_template: mail/security/delete-confirm.html.twig
+                mail_subject: delete_confirm.mail.subject
+                redirect_route: enhavo_user_theme_delete_finish
+
+            delete_finish:
+                template: theme/security/delete/finish.html.twig
+
+
         admin:
             reset_password_request:
                 template: admin/security/reset-password/request.html.twig

@@ -79,3 +79,9 @@ services:
             - '@enhavo_user.repository.user'
         tags:
             - { name: validator.constraint_validator }
+
+    Enhavo\Bundle\UserBundle\Validator\Constraints\UserEmailValidator:
+        arguments:
+            - '@security.token_storage'
+        tags:
+            - { name: validator.constraint_validator }

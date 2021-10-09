@@ -12,6 +12,7 @@ use Enhavo\Bundle\AppBundle\Mailer\Message;
 use Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface;
 use Enhavo\Bundle\UserBundle\Configuration\ChangeEmail\ChangeEmailConfirmConfiguration;
 use Enhavo\Bundle\UserBundle\Configuration\ChangeEmail\ChangeEmailRequestConfiguration;
+use Enhavo\Bundle\UserBundle\Configuration\Delete\DeleteConfirmConfiguration;
 use Enhavo\Bundle\UserBundle\Configuration\MailConfigurationInterface;
 use Enhavo\Bundle\UserBundle\Configuration\Registration\RegistrationConfirmConfiguration;
 use Enhavo\Bundle\UserBundle\Configuration\Registration\RegistrationRegisterConfiguration;
@@ -22,6 +23,7 @@ use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
@@ -196,6 +198,15 @@ class UserManager
         $this->tokenStorage->setToken($token);
     }
 
+    public function logout()
+    {
+        $request = $this->requestStack->getCurrentRequest();
+        if (null !== $request) {
+            $request->getSession()->invalidate();
+        }
+        $this->tokenStorage->setToken(null);
+    }
+
     private function hashPassword(UserInterface $user)
     {
         $plainPassword = $user->getPlainPassword();
@@ -325,6 +336,23 @@ class UserManager
             'confirmation_url' => $this->router->generate($configuration->getConfirmationRoute(), [
                 'token' => $user->getConfirmationToken()
             ], RouterInterface::ABSOLUTE_URL),
+            'configuration' => $configuration
+        ]);
+        $this->mailerManager->sendMessage($message);
+    }
+
+    public function delete(UserInterface $user, DeleteConfirmConfiguration $configuration)
+    {
+        $this->entityManager->remove($user);
+        $this->entityManager->flush();
+        $this->sendDeleteMail($user, $configuration);
+    }
+
+    public function sendDeleteMail(UserInterface $user, DeleteConfirmConfiguration $configuration)
+    {
+        $message = $this->createUserMessage($user, $configuration);
+        $message->setContext([
+            'user' => $user,
             'configuration' => $configuration
         ]);
         $this->mailerManager->sendMessage($message);
