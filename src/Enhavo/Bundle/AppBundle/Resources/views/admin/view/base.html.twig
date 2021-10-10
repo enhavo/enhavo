@@ -7,9 +7,11 @@
     <meta name="robots" content="noindex, nofollow">
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     {% block stylesheets %}
-        {% for stylesheet in stylesheets %}
-            {{ encore_entry_link_tags(stylesheet, null, 'enhavo') }}
-        {% endfor %}
+        {% if stylesheets is defined %}
+            {% for stylesheet in stylesheets %}
+                {{ encore_entry_link_tags(stylesheet, null, 'enhavo') }}
+            {% endfor %}
+        {% endif %}
     {% endblock %}
 </head>
 <body>
@@ -26,9 +28,11 @@
         <script id="translations" type="application/json">{{ translations|json_encode|raw }}</script>
     {% endif %}
     {% block javascripts %}
-        {% for javascript in javascripts %}
-            {{ encore_entry_script_tags(javascript, null, 'enhavo') }}
-        {% endfor %}
+        {% if javascripts is defined %}
+            {% for javascript in javascripts %}
+                {{ encore_entry_script_tags(javascript, null, 'enhavo') }}
+            {% endfor %}
+        {% endif %}
     {% endblock %}
 </body>
 </html>

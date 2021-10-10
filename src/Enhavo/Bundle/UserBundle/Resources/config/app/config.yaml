@@ -106,6 +106,7 @@ enhavo_user:
                 mail_template: mail/security/reset-password.html.twig
                 mail_subject: reset_password.mail.subject
                 translation_domain: EnhavoUserBundle
+                redirect_route: enhavo_user_reset_password_request
                 confirmation_route: enhavo_user_reset_password_confirm
                 form:
                      class: Enhavo\Bundle\UserBundle\Form\Type\ResetPasswordRequestType
@@ -125,6 +126,7 @@ enhavo_user:
                 route: enhavo_user_security_login
 
             change_password:
+                template: '@EnhavoApp/admin/view/form.html.twig'
 
 doctrine:
     orm:

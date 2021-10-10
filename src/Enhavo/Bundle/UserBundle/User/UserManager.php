@@ -264,6 +264,7 @@ class UserManager
     public function confirm(UserInterface $user, RegistrationConfirmConfiguration $configuration)
     {
         $this->verify($user, false);
+        $this->enable($user);
         $this->update($user);
         $event = new UserEvent(UserEvent::TYPE_REGISTRATION_CONFIRMED, $user);
         $this->eventDispatcher->dispatch($event);

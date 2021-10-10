@@ -6,8 +6,9 @@
 
 namespace Enhavo\Bundle\UserBundle\Tests\Security\Authentication;
 
-
 use Doctrine\ORM\EntityManagerInterface;
+use Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider;
+use Enhavo\Bundle\UserBundle\Configuration\Login\LoginConfiguration;
 use Enhavo\Bundle\UserBundle\Event\UserLoginEvent;
 use Enhavo\Bundle\UserBundle\Mapper\UserMapper;
 use Enhavo\Bundle\UserBundle\Model\User;
@@ -48,6 +49,7 @@ class FormLoginAuthenticatorTest extends TestCase
 
         return new FormLoginAuthenticator(
             $dependencies->userManager,
+            $dependencies->configurationProvider,
             $dependencies->urlGenerator,
             $dependencies->tokenManager,
             $dependencies->passwordEncoder,
@@ -61,12 +63,7 @@ class FormLoginAuthenticatorTest extends TestCase
     {
         $dependencies = new FormLoginAuthenticatorTestDependencies();
         $dependencies->userManager = $this->getMockBuilder(UserManager::class)->disableOriginalConstructor()->getMock();
-        $dependencies->userManager->method('getConfig')->willReturnCallback(function ($config, $action, $item) {
-            return implode('.', [$config, $action, $item]);
-        });
-        $dependencies->userManager->method('getConfigKey')->willReturnCallback(function ($request) {
-            return $request->attributes->get('_config');
-        });
+        $dependencies->configurationProvider = $this->getMockBuilder(ConfigurationProvider::class)->disableOriginalConstructor()->getMock();
         $dependencies->urlGenerator = $this->getMockBuilder(UrlGeneratorInterface::class)->getMock();
         $dependencies->urlGenerator->method('generate')->willReturnCallback(function ($route) {
             return $route .'.generated';
@@ -97,8 +94,14 @@ class FormLoginAuthenticatorTest extends TestCase
         $dependencies = $this->createDependencies();
         $dependencies->request->attributes->set('_config', 'config');
         $dependencies->request->method('isMethod')->willReturn(true);
-
         $dependencies->request->attributes->set('_route', 'config.login.route');
+
+        $dependencies->configurationProvider->method('getLoginConfiguration')->willReturnCallback(function() {
+           $configuration = new LoginConfiguration();
+           $configuration->setRoute('config.login.route');
+           return $configuration;
+        });
+
         $instance = $this->createInstance($dependencies);
         $this->assertTrue($instance->supports($dependencies->request));
 
@@ -203,7 +206,13 @@ class FormLoginAuthenticatorTest extends TestCase
     public function testAuthenticationFailure()
     {
         $dependencies = $this->createDependencies();
-       $instance = $this->createInstance($dependencies);
+        $dependencies->configurationProvider->method('getLoginConfiguration')->willReturnCallback(function() {
+            $configuration = new LoginConfiguration();
+            $configuration->setRoute('config.login.route');
+            return $configuration;
+        });
+
+        $instance = $this->createInstance($dependencies);
 
         $response = $instance->onAuthenticationFailure($dependencies->request, new AuthenticationException());
 
@@ -214,6 +223,12 @@ class FormLoginAuthenticatorTest extends TestCase
     public function testStart()
     {
         $dependencies = $this->createDependencies();
+        $dependencies->configurationProvider->method('getLoginConfiguration')->willReturnCallback(function() {
+            $configuration = new LoginConfiguration();
+            $configuration->setRoute('config.login.route');
+            return $configuration;
+        });
+
         $instance = $this->createInstance($dependencies);
 
         $response = $instance->start($dependencies->request, new AuthenticationException());
@@ -255,6 +270,9 @@ class FormLoginAuthenticatorTestDependencies
 {
     /** @var UserManager|MockObject */
     public $userManager;
+
+    /** @var ConfigurationProvider|MockObject */
+    public $configurationProvider;
 
     /** @var EntityManagerInterface|MockObject */
     public $entityManager;
