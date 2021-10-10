@@ -10,7 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class ChangePasswordFormType extends AbstractType
+class ChangePasswordType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -52,24 +52,11 @@ class ChangePasswordFormType extends AbstractType
         ));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'csrf_token_id' => 'change_password',
-        ));
-    }
-
-    // BC for SF < 3.0
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return $this->getBlockPrefix();
+        ]);
     }
 
     /**

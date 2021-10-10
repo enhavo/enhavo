@@ -5,3 +5,8 @@ enhavo_user:
         invalid: 'Das Passwort ist inkorrekt.'
     change_email:
         mismatch: 'E-Mail Adressen stimmen nicht überein.'
+    user:
+        exists: 'Der Benutzer existriert bereits'
+        not_exists: "Der Benutzer existriert nicht"
+    email:
+        exists: 'Die Email Addresse ist bereits vergeben'

@@ -3,6 +3,131 @@ enhavo_user:
         from: '%env(string:MAILER_FROM)%'
         sender_name: '%env(string:MAILER_NAME)%'
 
+    config:
+        theme:
+            registration_register:
+                template: theme/security/registration/register.html.twig
+                redirect_route: enhavo_user_theme_registration_check
+                confirmation_route: enhavo_user_theme_registration_confirm
+                mail_template: mail/security/registration.html.twig
+                mail_subject: registration.mail.subject
+                translation_domain: 'EnhavoUserBundle'
+                form:
+                    class: Enhavo\Bundle\UserBundle\Form\Type\RegistrationType
+                    options: []
+
+            registration_check:
+                template: theme/security/registration/check.html.twig
+
+            registration_confirm:
+                template: 'theme/security/registration/confirm.html.twig'
+                mail_template: 'mail/security/confirmation.html.twig'
+                mail_subject: 'confirmation.mail.subject'
+                translation_domain: 'EnhavoUserBundle'
+                redirect_route: 'enhavo_user_theme_registration_finish'
+
+            registration_finish:
+                template: 'theme/security/registration/finish.html.twig'
+
+            profile:
+                template: theme/resource/user/profile.html.twig
+
+            reset_password_request:
+                template: theme/security/reset-password/request.html.twig
+                mail_template: mail/security/reset-password.html.twig
+                mail_subject: reset_password.mail.subject
+                translation_domain: EnhavoUserBundle
+                redirect_route: enhavo_user_theme_reset_password_check
+                confirmation_route: enhavo_user_theme_reset_password_confirm
+
+            reset_password_check:
+                template: 'theme/security/reset-password/check.html.twig'
+
+            reset_password_confirm:
+                auto_login: true
+                template: 'theme/security/reset-password/confirm.html.twig'
+                redirect_route: 'enhavo_user_theme_reset_password_finish'
+
+            reset_password_finish:
+                template: 'theme/security/reset-password/finish.html.twig'
+
+            change_email_request:
+                template: theme/security/change-email/request.html.twig
+                mail_template: mail/security/change-email.html.twig
+                mail_subject: change_email.mail.subject
+                translation_domain: EnhavoUserBundle
+                redirect_route: enhavo_user_theme_change_email_check
+                confirmation_route: enhavo_user_theme_change_email_confirm
+
+            change_email_check:
+                template: theme/security/change-email/check.html.twig
+
+            change_email_confirm:
+                template: theme/security/change-email/confirm.html.twig
+                mail_template: mail/security/change-email-confirm.html.twig
+                mail_subject: change_email_confirm.mail.subject
+                translation_domain: EnhavoUserBundle
+                redirect_route: enhavo_user_theme_change_email_finish
+                confirmation_route: enhavo_user_theme_registration_confirm
+
+            change_email_finish:
+                template: theme/security/change-email/finish.html.twig
+
+            login:
+                template: theme/security/login.html.twig
+                redirect_route: enhavo_user_theme_user_profile
+                route: enhavo_user_theme_security_login
+
+            change_password:
+                template: theme/security/change-password/change.html.twig
+
+            delete_confirm:
+                template: theme/security/delete/confirm.html.twig
+                mail_template: mail/security/delete-confirm.html.twig
+                mail_subject: delete_confirm.mail.subject
+                redirect_route: enhavo_user_theme_delete_finish
+
+            delete_finish:
+                template: theme/security/delete/finish.html.twig
+
+            verification_request:
+                template: theme/security/verification/request.html.twig
+                mail_template: mail/security/verification.html.twig
+                mail_subject: verification.mail.subject
+                route: enhavo_user_theme_verification_request
+                confirmation_route: enhavo_user_theme_verification_confirm
+
+            verification_confirm:
+                template: theme/security/verification/confirm.html.twig
+
+        admin:
+            reset_password_request:
+                template: admin/security/reset-password/request.html.twig
+                mail_template: mail/security/reset-password.html.twig
+                mail_subject: reset_password.mail.subject
+                translation_domain: EnhavoUserBundle
+                redirect_route: enhavo_user_reset_password_request
+                confirmation_route: enhavo_user_reset_password_confirm
+                form:
+                     class: Enhavo\Bundle\UserBundle\Form\Type\ResetPasswordRequestType
+                     options: []
+
+            reset_password_confirm:
+                template: admin/security/reset-password/confirm.html.twig
+                auto_login: true
+                redirect_route: enhavo_app_index
+                form:
+                     class: Enhavo\Bundle\UserBundle\Form\Type\ResetPasswordType
+                     options: []
+
+            login:
+                template: admin/security/login/login.html.twig
+                redirect_route: enhavo_app_index
+                route: enhavo_user_security_login
+
+            change_password:
+                template: '@EnhavoApp/admin/view/form.html.twig'
+
 doctrine:
     orm:
         resolve_target_entities:

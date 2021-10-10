@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class ProfileControllerTest extends TestCase
+class ProfileControllerTest //extends TestCase
 {
     private function createInstance(ProfileControllerTestDependencies $dependencies)
     {

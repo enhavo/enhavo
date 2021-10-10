@@ -23,3 +23,11 @@ Enhavo\Bundle\UserBundle\Model\Group:
     properties:
         name:
             - NotBlank: ~
+
+Enhavo\Bundle\UserBundle\Form\Data\ResetPassword:
+    properties:
+        username:
+            - Enhavo\Bundle\UserBundle\Validator\Constraints\UserExists:
+                  groups: [exists]
+            - NotBlank:
+                  groups: [exists]

@@ -78,4 +78,5 @@ security:
         - { path: ^/user/login/check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/user/registration/.+, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/user/reset-password/.+, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/user/delete/finish$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/user/, role: ROLE_USER }
