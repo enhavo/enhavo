@@ -2,164 +2,231 @@ subtrees:
     ApiBundle:
         url: 'git@github.com:enhavo/EnhavoApiBundle.git'
         prefix: src/Enhavo/Bundle/ApiBundle
+        package: enhavo/api-bundle
     AppBundle:
         url: 'git@github.com:enhavo/EnhavoAppBundle.git'
         prefix: src/Enhavo/Bundle/AppBundle
+        package: enhavo/app-bundle
     ArticleBundle:
         url: 'git@github.com:enhavo/EnhavoArticleBundle.git'
         prefix: src/Enhavo/Bundle/ArticleBundle
+        package: enhavo/article-bundle
     BlockBundle:
         url: 'git@github.com:enhavo/EnhavoBlockBundle.git'
         prefix: src/Enhavo/Bundle/BlockBundle
+        package: enhavo/block-bundle
     CalendarBundle:
         url: 'git@github.com:enhavo/EnhavoCalendarBundle.git'
         prefix: src/Enhavo/Bundle/CalendarBundle
+        package: enhavo/calendar-bundle
     CommentBundle:
         url: 'git@github.com:enhavo/EnhavoCommentBundle.git'
         prefix: src/Enhavo/Bundle/CommentBundle
+        package: enhavo/comment-bundle
     ContactBundle:
         url: 'git@github.com:enhavo/EnhavoContactBundle.git'
         prefix: src/Enhavo/Bundle/ContactBundle
+        package: enhavo/contact-bundle
     ContentBundle:
         url: 'git@github.com:enhavo/EnhavoContentBundle.git'
         prefix: src/Enhavo/Bundle/ContentBundle
+        package: enhavo/content-bundle
     DoctrineExtensionBundle:
         url: 'git@github.com:enhavo/DoctrineExtensionBundle.git'
         prefix: src/Enhavo/Bundle/DoctrineExtensionBundle
+        package: enhavo/doctrine-extension-bundle
     DashboardBundle:
         url: 'git@github.com:enhavo/EnhavoDashboardBundle.git'
         prefix: src/Enhavo/Bundle/DashboardBundle
+        package: enhavo/dashboard-bundle
     FormBundle:
         url: 'git@github.com:enhavo/EnhavoFormBundle.git'
         prefix: src/Enhavo/Bundle/FormBundle
+        package: enhavo/form-bundle
     MediaBundle:
         url: 'git@github.com:enhavo/EnhavoMediaBundle.git'
         prefix: src/Enhavo/Bundle/MediaBundle
+        package: enhavo/media-bundle
     MultiTenancyBundle:
         url: 'git@github.com:enhavo/EnhavoMultiTenancyBundle.git'
         prefix: src/Enhavo/Bundle/MultiTenancyBundle
+        package: enhavo/multi-tenancy-bundle
     NavigationBundle:
         url: 'git@github.com:enhavo/EnhavoNavigationBundle.git'
         prefix: src/Enhavo/Bundle/NavigationBundle
+        package: enhavo/navigation-bundle
     NewsletterBundle:
         url: 'git@github.com:enhavo/EnhavoNewsletterBundle.git'
         prefix: src/Enhavo/Bundle/NewsletterBundle
+        package: enhavo/newsletter-bundle
     PageBundle:
         url: 'git@github.com:enhavo/EnhavoPageBundle.git'
         prefix: src/Enhavo/Bundle/PageBundle
+        package: enhavo/page-bundle
     PaymentBundle:
         url: 'git@github.com:enhavo/EnhavoPaymentBundle.git'
         prefix: src/Enhavo/Bundle/PaymentBundle
+        package: enhavo/payment-bundle
     RedirectBundle:
         url: 'git@github.com:enhavo/EnhavoRedirectBundle.git'
         prefix: src/Enhavo/Bundle/RedirectBundle
+        package: enhavo/redirect-bundle
     RevisionBundle:
         url: 'git@github.com:enhavo/EnhavoRevisionBundle.git'
         prefix: src/Enhavo/Bundle/RevisionBundle
+        package: enhavo/revision-bundle
     RoutingBundle:
         url: 'git@github.com:enhavo/EnhavoRoutingBundle.git'
         prefix: src/Enhavo/Bundle/RoutingBundle
+        package: enhavo/routing-bundle
     SearchBundle:
         url: 'git@github.com:enhavo/EnhavoSearchBundle.git'
         prefix: src/Enhavo/Bundle/SearchBundle
+        package: enhavo/search-bundle
     SettingBundle:
         url: 'git@github.com:enhavo/EnhavoSettingBundle.git'
         prefix: src/Enhavo/Bundle/SettingBundle
+        package: enhavo/setting-bundle
     ShopBundle:
         url: 'git@github.com:enhavo/EnhavoShopBundle.git'
         prefix: src/Enhavo/Bundle/ShopBundle
+        package: enhavo/shop-bundle
     SidebarBundle:
         url: 'git@github.com:enhavo/EnhavoSidebarBundle.git'
         prefix: src/Enhavo/Bundle/SidebarBundle
+        package: enhavo/sidebar-bundle
     SliderBundle:
         url: 'git@github.com:enhavo/EnhavoSliderBundle.git'
         prefix: src/Enhavo/Bundle/SliderBundle
+        package: enhavo/slider-bundle
     TaxonomyBundle:
         url: 'git@github.com:enhavo/EnhavoTaxonomyBundle.git'
         prefix: src/Enhavo/Bundle/TaxonomyBundle
+        package: taxonomy-bundle
     TemplateBundle:
         url: 'git@github.com:enhavo/EnhavoTemplateBundle.git'
         prefix: src/Enhavo/Bundle/TemplateBundle
+        package: enhavo/template-bundle
     ThemeBundle:
         url: 'git@github.com:enhavo/EnhavoThemeBundle.git'
         prefix: src/Enhavo/Bundle/ThemeBundle
+        package: enhavo/theme-bundle
     TranslationBundle:
         url: 'git@github.com:enhavo/EnhavoTranslationBundle.git'
         prefix: src/Enhavo/Bundle/TranslationBundle
+        package: enhavo/translation-bundle
     UserBundle:
         url: 'git@github.com:enhavo/EnhavoUserBundle.git'
         prefix: src/Enhavo/Bundle/UserBundle
+<<<<<<< HEAD
+=======
+        package: enhavo/user-bundle
+    VueFormBundle:
+        url: 'git@github.com:enhavo/EnhavoVueFormBundle.git'
+        prefix: src/Enhavo/Bundle/VueFormBundle
+        package: enhavo/vue-form-bundle
+>>>>>>> 6e55f3c17 (Define package names in enhavo config (#1383))
 
     app-assets:
         url: 'git@github.com:enhavo/app-assets'
         prefix: 'assets/node_modules/@enhavo/app'
+        package: '@enhavo/app'
     article-assets:
         url: 'git@github.com:enhavo/article-assets'
         prefix: 'assets/node_modules/@enhavo/article'
+        package: '@enhavo/article'
     block-assets:
         url: 'git@github.com:enhavo/block-assets'
         prefix: 'assets/node_modules/@enhavo/block'
+        package: '@enhavo/block'
     calendar-assets:
         url: 'git@github.com:enhavo/calendar-assets'
         prefix: 'assets/node_modules/@enhavo/calendar'
+        package: '@enhavo/calendar'
     contact-assets:
         url: 'git@github.com:enhavo/contact-assets'
         prefix: 'assets/node_modules/@enhavo/contact'
+        package: '@enhavo/contact'
     core-assets:
         url: 'git@github.com:enhavo/core-assets'
         prefix: 'assets/node_modules/@enhavo/core'
+        package: '@enhavo/core'
     dashboard-assets:
         url: 'git@github.com:enhavo/dashboard-assets'
         prefix: 'assets/node_modules/@enhavo/dashboard'
+        package: '@enhavo/dashboard'
     dependency-injection-assets:
         url: 'git@github.com:enhavo/dependency-injection.git'
         prefix: 'assets/node_modules/@enhavo/dependency-injection'
+        package: '@enhavo/dependency-injection'
     font-assets:
         url: 'git@github.com:enhavo/font-assets'
         prefix: 'assets/node_modules/@enhavo/font'
+        package: '@enhavo/font'
     form-assets:
         url: 'git@github.com:enhavo/form-assets'
         prefix: 'assets/node_modules/@enhavo/form'
+        package: '@enhavo/form'
     media-assets:
         url: 'git@github.com:enhavo/media-assets'
         prefix: 'assets/node_modules/@enhavo/media'
+        package: '@enhavo/media'
     newsletter-assets:
         url: 'git@github.com:enhavo/newsletter-assets'
         prefix: 'assets/node_modules/@enhavo/newsletter'
+        package: '@enhavo/newsletter'
     search-assets:
         url: 'git@github.com:enhavo/search-assets'
         prefix: 'assets/node_modules/@enhavo/search'
+        package: '@enhavo/search'
     shop-assets:
         url: 'git@github.com:enhavo/shop-assets'
         prefix: 'assets/node_modules/@enhavo/shop'
+        package: '@enhavo/shop'
     slider-assets:
         url: 'git@github.com:enhavo/slider-assets'
         prefix: 'assets/node_modules/@enhavo/slider'
+        package: '@enhavo/slider'
     theme-assets:
         url: 'git@github.com:enhavo/theme-assets'
         prefix: 'assets/node_modules/@enhavo/theme'
+        package: '@enhavo/theme'
     translation-assets:
         url: 'git@github.com:enhavo/translation-assets'
         prefix: 'assets/node_modules/@enhavo/translation'
+        package: '@enhavo/translation'
     user-assets:
         url: 'git@github.com:enhavo/user-assets'
         prefix: 'assets/node_modules/@enhavo/user'
+        package: '@enhavo/user'
     content-assets:
         url: 'git@github.com:enhavo/content-assets'
         prefix: 'assets/node_modules/@enhavo/content'
+        package: '@enhavo/content'
     multi-tenancy-assets:
         url: 'git@github.com:enhavo/multi-tenancy-assets'
         prefix: 'assets/node_modules/@enhavo/multi-tenancy'
+        package: '@enhavo/multi-tenancy'
     vue-form-assets:
         url: 'git@github.com:enhavo/vue-form-assets'
         prefix: 'assets/node_modules/@enhavo/vue-form'
+        package: '@enhavo/vue-form'
 
+<<<<<<< HEAD
+=======
+    CleverReach:
+        url: 'git@github.com:enhavo/cleverreach'
+        prefix: 'src/Enhavo/Component/CleverReach'
+        package: 'enhavo/cleverreach'
+>>>>>>> 6e55f3c17 (Define package names in enhavo config (#1383))
     Metadata:
         url: 'git@github.com:enhavo/Metadata'
         prefix: 'src/Enhavo/Component/Metadata'
+        package: 'enhavo/metadata'
     Type:
         url: 'git@github.com:enhavo/Type'
         prefix: 'src/Enhavo/Component/Type'
+        package: 'enhavo/type'
 
     docs:
         url: 'git@github.com:enhavo/enhavo-docs.git'
