@@ -16,7 +16,6 @@ services:
             - '@security.authentication.session_strategy.main'
             - '@security.user_checker.main'
             - ~
-            - '%enhavo_user.config%'
             - '%enhavo_user.mail%'
             - '%enhavo_user.parameters%'
 
@@ -41,7 +40,6 @@ services:
     Enhavo\Bundle\UserBundle\Widget\LoginWidgetType:
         public: true
         arguments:
-            - '@Enhavo\Bundle\UserBundle\User\UserManager'
             - '@request_stack'
             - '@security.csrf.token_manager'
         calls:
@@ -52,6 +50,7 @@ services:
     Enhavo\Bundle\UserBundle\Security\Authentication\FormLoginAuthenticator:
         arguments:
             - '@Enhavo\Bundle\UserBundle\User\UserManager'
+            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
             - '@router'
             - '@security.csrf.token_manager'
             - '@security.user_password_encoder.generic'
@@ -64,3 +63,33 @@ services:
     Enhavo\Bundle\UserBundle\Mapper\UserMapper:
         arguments:
             - '%enhavo_user.mapper%'
+
+    Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider:
+        arguments:
+            - '%enhavo_user.config%'
+
+    Enhavo\Bundle\UserBundle\Validator\Constraints\UserExistsValidator:
+        arguments:
+            - '@enhavo_user.repository.user'
+        tags:
+            - { name: validator.constraint_validator }
+
+    Enhavo\Bundle\UserBundle\Validator\Constraints\EmailNotExistsValidator:
+        arguments:
+            - '@enhavo_user.repository.user'
+        tags:
+            - { name: validator.constraint_validator }
+
+    Enhavo\Bundle\UserBundle\Validator\Constraints\UserEmailValidator:
+        arguments:
+            - '@security.token_storage'
+        tags:
+            - { name: validator.constraint_validator }
+
+    Enhavo\Bundle\UserBundle\Twig\TwigExtension:
+        arguments:
+            - '@security.csrf.token_manager'
+            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
+            - '@router'
+        tags:
+            - { name: twig.extension }

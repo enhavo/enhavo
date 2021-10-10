@@ -8,76 +8,49 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 class User implements UserInterface, GroupableInterface, ResourceInterface
 {
     /** @var int|null */
-    protected $id;
+    private $id;
 
-    /**
-     * @var string|null
-     */
+    /** @var string|null */
     private $firstName;
 
-    /**
-     * @var string|null
-     */
+    /** @var string|null */
     private $lastName;
 
-    /**
-     * @var bool
-     */
-    protected $enabled = false;
+    /** @var bool */
+    private $enabled = false;
 
-    /**
-     * @var string|null
-     */
-    protected $username;
+    /** @var bool */
+    private $verified = false;
 
-    /**
-     * @var string|null
-     */
-    protected $email;
+    /** @var string|null */
+    private $username;
 
-    /**
-     *
-     * @var string|null
-     */
-    protected $salt;
+    /** @var string|null */
+    private $email;
 
-    /**
-     *
-     * @var string
-     */
-    protected $password;
+    /** @var string|null */
+    private $salt;
 
-    /**
-     * @var string|null
-     */
-    protected $plainPassword;
+    /** @var string */
+    private $password;
 
-    /**
-     * @var \DateTime|null
-     */
-    protected $lastLogin;
+    /** @var string|null */
+    private $plainPassword;
 
-    /**
-     * Random string sent to the user email address in order to verify it.
-     *
-     * @var string|null
-     */
-    protected $confirmationToken;
+    /** @var \DateTime|null */
+    private $lastLogin;
 
-    /**
-     * @var \DateTime|null
-     */
-    protected $passwordRequestedAt;
+    /** @var string|null */
+    private $confirmationToken;
 
-    /**
-     * @var GroupInterface[]
-     */
-    protected $groups;
+    /** @var \DateTime|null */
+    private $passwordRequestedAt;
 
-    /**
-     * @var string[]
-     */
-    protected $roles = [];
+    /** @var GroupInterface[] */
+    private $groups;
+
+    /** @var string[] */
+    private $roles = [];
 
     /**
      * Constructor
@@ -412,5 +385,21 @@ class User implements UserInterface, GroupableInterface, ResourceInterface
     public function getConfirmationToken(): ?string
     {
         return $this->confirmationToken;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isVerified(): bool
+    {
+        return $this->verified;
+    }
+
+    /**
+     * @param bool $verified
+     */
+    public function setVerified(bool $verified): void
+    {
+        $this->verified = $verified;
     }
 }

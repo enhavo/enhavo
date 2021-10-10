@@ -7,6 +7,7 @@
 namespace Enhavo\Bundle\UserBundle\Security\Authentication;
 
 
+use Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider;
 use Enhavo\Bundle\UserBundle\Event\UserLoginEvent;
 use Enhavo\Bundle\UserBundle\Mapper\UserMapperInterface;
 use Enhavo\Bundle\UserBundle\User\UserManager;
@@ -56,9 +57,13 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator implements P
     /** @var string */
     private $loginRoute;
 
+    /** @var ConfigurationProvider  */
+    private $configurationProvider;
+
     /**
      * FormLoginAuthenticator constructor.
      * @param UserManager $userManager
+     * @param ConfigurationProvider $configurationProvider
      * @param UrlGeneratorInterface $urlGenerator
      * @param CsrfTokenManagerInterface $csrfTokenManager
      * @param UserPasswordEncoderInterface $passwordEncoder
@@ -66,7 +71,7 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator implements P
      * @param EventDispatcherInterface $eventDispatcher
      * @param string $className
      */
-    public function __construct(UserManager $userManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder, UserMapperInterface $userMapper, EventDispatcherInterface $eventDispatcher, string $className)
+    public function __construct(UserManager $userManager, ConfigurationProvider $configurationProvider, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder, UserMapperInterface $userMapper, EventDispatcherInterface $eventDispatcher, string $className)
     {
         $this->userManager = $userManager;
         $this->urlGenerator = $urlGenerator;
@@ -75,13 +80,14 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator implements P
         $this->userMapper = $userMapper;
         $this->eventDispatcher = $eventDispatcher;
         $this->className = $className;
+        $this->configurationProvider = $configurationProvider;
     }
 
 
     public function supports(Request $request)
     {
-        $config = $this->userManager->getConfigKey($request);
-        $this->updateLoginRoute($config);
+        $configKey = $this->getConfigKey($request);
+        $this->updateLoginRoute($configKey);
         $isRoute = $this->loginRoute === $request->attributes->get('_route');
         $isPost = $request->isMethod('POST');
 
@@ -156,8 +162,8 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator implements P
             $request->getSession()->set(Security::AUTHENTICATION_ERROR, $exception);
         }
 
-        $config = $this->userManager->getConfigKey($request);
-        $this->updateLoginRoute($config);
+        $configKey = $this->getConfigKey($request);
+        $this->updateLoginRoute($configKey);
         $url = $this->getLoginUrl();
 
         return new RedirectResponse($url);
@@ -172,8 +178,8 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator implements P
 
     public function start(Request $request, AuthenticationException $authException = null)
     {
-        $config = $this->userManager->getConfigKey($request);
-        $this->updateLoginRoute($config);
+        $configKey = $this->getConfigKey($request);
+        $this->updateLoginRoute($configKey);
         $url = $this->getLoginUrl();
 
         return new RedirectResponse($url);
@@ -182,12 +188,18 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator implements P
     protected function updateLoginRoute(?string $config)
     {
         if ($config) {
-            $this->loginRoute = $this->userManager->getConfig($config, 'login', 'route');
+            $this->loginRoute = $this->configurationProvider->getLoginConfiguration($config)->getRoute();
         }
     }
 
     protected function getLoginUrl()
     {
         return $this->urlGenerator->generate($this->loginRoute);
+    }
+
+    protected function getConfigKey(Request $request)
+    {
+        $key = $request->attributes->get('_config');
+        return $key;
     }
 }
