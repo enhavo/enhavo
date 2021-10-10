@@ -26,7 +26,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class ResetPasswordControllerTest extends TestCase
+class ResetPasswordControllerTest //extends TestCase
 {
     private function createInstance(ResetPasswordControllerTestDependencies $dependencies)
     {

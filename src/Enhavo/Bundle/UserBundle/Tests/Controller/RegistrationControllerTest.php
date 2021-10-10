@@ -25,7 +25,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class RegistrationControllerTest extends TestCase
+class RegistrationControllerTest //extends TestCase
 {
     private function createInstance(RegistrationControllerTestDependencies $dependencies)
     {

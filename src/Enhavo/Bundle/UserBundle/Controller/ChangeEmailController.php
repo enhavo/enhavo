@@ -2,13 +2,13 @@
 
 namespace Enhavo\Bundle\UserBundle\Controller;
 
-use Enhavo\Bundle\AppBundle\Template\TemplateManager;
 use Enhavo\Bundle\FormBundle\Error\FormErrorResolver;
+use Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider;
+use Enhavo\Bundle\UserBundle\Form\Data\ChangeEmail;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Enhavo\Bundle\UserBundle\Repository\UserRepository;
 use Enhavo\Bundle\UserBundle\User\UserManager;
 use Sylius\Component\Resource\Factory\FactoryInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,18 +19,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  * Class ChangeEmailController
  * @package Enhavo\Bundle\UserBundle\Controller
  */
-class ChangeEmailController extends AbstractController
+class ChangeEmailController extends AbstractUserController
 {
-    use FlashMessagesTrait;
-
-    /** @var UserManager */
-    private $userManager;
-
     /** @var UserRepository */
     private $userRepository;
-
-    /** @var TemplateManager */
-    private $templateManager;
 
     /** @var FactoryInterface */
     private $userFactory;
@@ -44,17 +36,17 @@ class ChangeEmailController extends AbstractController
     /**
      * ResetPasswordController constructor.
      * @param UserManager $userManager
+     * @param ConfigurationProvider $provider
      * @param UserRepository $userRepository
-     * @param TemplateManager $templateManager
      * @param FactoryInterface $userFactory
      * @param TranslatorInterface $translator
      * @param FormErrorResolver $errorResolver
      */
-    public function __construct(UserManager $userManager, UserRepository $userRepository, TemplateManager $templateManager, FactoryInterface $userFactory, TranslatorInterface $translator, FormErrorResolver $errorResolver)
+    public function __construct(UserManager $userManager, ConfigurationProvider $provider, UserRepository $userRepository, FactoryInterface $userFactory, TranslatorInterface $translator, FormErrorResolver $errorResolver)
     {
-        $this->userManager = $userManager;
+        parent::__construct($userManager, $provider);
+
         $this->userRepository = $userRepository;
-        $this->templateManager = $templateManager;
         $this->userFactory = $userFactory;
         $this->translator = $translator;
         $this->errorResolver = $errorResolver;
@@ -62,62 +54,40 @@ class ChangeEmailController extends AbstractController
 
     public function requestAction(Request $request)
     {
-        $config = $this->userManager->getConfigKey($request);
-        $action = 'change_email_request';
+        $configKey = $this->getConfigKey($request);
+        $configuration = $this->provider->getChangeEmailRequestConfiguration($configKey);
 
         /** @var UserInterface $user */
+        $user = $this->getUser();
 
-        $form = $this->userManager->createForm($config, $action);
+        $form = $this->createForm($configuration->getFormClass(), $user, $configuration->getFormOptions());
         $form->handleRequest($request);
 
         $valid = true;
         $message = null;
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                /** @var UserInterface $currentUser */
-                $currentUser = $this->getUser();
-                $newEmail = $form->get('email')->getData();
-                $success = $this->userManager->changeEmail($currentUser, $newEmail, $config, $action);
+                /** @var UserInterface $user */
+                $this->userManager->requestChangeEmail($user, $configuration);
 
-                if (false === $success) {
-                    $message = $this->translator->trans('change_email.flash.message.error', [], 'EnhavoUserBundle');
-                    $this->addFlash('error', $message);
+                $message = $this->translator->trans('change_email.flash.message.error', [], 'EnhavoUserBundle');
+                $this->addFlash('error', $message);
 
-                    if ($request->isXmlHttpRequest()) {
-                        return new JsonResponse([
-                            'error' => true,
-                            'errors' => [
-                                'fields' => $this->errorResolver->getErrorFieldNames($form),
-                                'messages' => $this->errorResolver->getErrorMessages($form),
-                            ],
-                            'message' => $message,
-                        ]);
-                    }
-                } else {
+                $url = $this->generateUrl($configuration->getRedirectRoute());
 
-                    $this->userManager->login($currentUser);
-
-                    $message = $this->translator->trans('change_email.flash.message.success', [], 'EnhavoUserBundle');
-                    $this->addFlash('success', $message);
-
-                    $route = $this->userManager->getRedirectRoute($config, $action);
-                    if ($route) {
-                        $url = $this->generateUrl($route);
-
-                        if ($request->isXmlHttpRequest()) {
-                            return new JsonResponse([
-                                'error' => false,
-                                'errors' => [],
-                                'message' => $message,
-                                'redirect_url' => $url,
-                            ]);
-                        }
-
-                        return new RedirectResponse($url);
-                    }
+                if ($request->isXmlHttpRequest()) {
+                    return new JsonResponse([
+                        'error' => true,
+                        'errors' => [
+                            'fields' => $this->errorResolver->getErrorFieldNames($form),
+                            'messages' => $this->errorResolver->getErrorMessages($form),
+                        ],
+                        'message' => $message,
+                        'redirect' => $url
+                    ]);
                 }
 
-
+                return new RedirectResponse($url);
             } else {
                 $valid = false;
 
@@ -133,29 +103,108 @@ class ChangeEmailController extends AbstractController
             }
         }
 
-        return $this->render($this->getTemplate($this->userManager->getTemplate($config, $action)), [
+        $response = $this->render($this->getTemplate($configuration->getTemplate()), [
             'form' => $form->createView(),
             'error' => !$valid,
             'errors' => [
                 'fields' => $this->errorResolver->getErrorFieldNames($form),
                 'messages' => $this->errorResolver->getErrorMessages($form),
             ],
-            'stylesheets' => $this->userManager->getStylesheets($config, $action),
-            'javascripts' => $this->userManager->getJavascripts($config, $action),
             'data' => [
                 'messages' => $this->getFlashMessages(),
             ],
-        ])->setStatusCode($valid ? 200 : 400);
+        ]);
+
+        if (!$valid) {
+            $response->setStatusCode(400);
+        }
+
+        return $response;
     }
 
     public function checkAction(Request $request)
     {
-        $config = $this->userManager->getConfigKey($request);
-        return $this->render($this->getTemplate($this->userManager->getTemplate($config, 'change_email_check')));
+        $configKey = $this->getConfigKey($request);
+        $configuration = $this->provider->getChangeEmailCheckConfiguration($configKey);
+
+        return $this->render($this->getTemplate($configuration->getTemplate()));
     }
 
-    private function getTemplate($template)
+    public function confirmAction(Request $request, $token)
     {
-        return $this->templateManager->getTemplate($template);
+        $configKey = $this->getConfigKey($request);
+        $configuration = $this->provider->getChangeEmailConfirmConfiguration($configKey);
+
+        $user = $this->userRepository->findByConfirmationToken($token);
+
+        if (null === $user) {
+            throw new NotFoundHttpException(sprintf('A user with confirmation token "%s" does not exist', $token));
+        }
+
+        $changeEmail = new ChangeEmail();
+        $form = $this->createForm($configuration->getFormClass(), $changeEmail, $configuration->getFormOptions());
+        $form->handleRequest($request);
+
+        $valid = true;
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $this->userManager->changeEmail($user, $changeEmail->getEmail(), $configuration);
+                if ($configuration->isAutoLogin()) {
+                    $this->userManager->login($user);
+                }
+
+                $url = $this->generateUrl($configuration->getRedirectRoute());
+
+                if ($request->isXmlHttpRequest()) {
+                    return new JsonResponse([
+                        'error' => false,
+                        'errors' => [],
+                        'redirect_url' => $url,
+                    ]);
+                }
+
+                return new RedirectResponse($url);
+
+            } else {
+                $valid = false;
+                if ($request->isXmlHttpRequest()) {
+                    return new JsonResponse([
+                        'error' => true,
+                        'errors' => [
+                            'fields' => $this->errorResolver->getErrorFieldNames($form),
+                            'messages' => $this->errorResolver->getErrorMessages($form),
+                        ],
+                    ]);
+                }
+            }
+        }
+
+        $response = $this->render($this->getTemplate($configuration->getTemplate()), [
+            'user' => $user,
+            'form' => $form->createView(),
+            'error' => !$valid,
+            'errors' => [
+                'fields' => $this->errorResolver->getErrorFieldNames($form),
+                'messages' => $this->errorResolver->getErrorMessages($form),
+            ],
+            'token' => $token,
+            'data' => [
+                'messages' => $this->getFlashMessages(),
+            ]
+        ]);
+
+        if (!$valid) {
+            $response->setStatusCode(400);
+        }
+
+        return $response;
+    }
+
+    public function finishAction(Request $request)
+    {
+        $configKey = $this->getConfigKey($request);
+        $configuration = $this->provider->getChangeEmailFinishConfiguration($configKey);
+
+        return $this->render($this->getTemplate($configuration->getTemplate()));
     }
 }

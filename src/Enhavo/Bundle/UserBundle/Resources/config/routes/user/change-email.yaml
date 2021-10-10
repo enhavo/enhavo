@@ -15,3 +15,21 @@ enhavo_user_theme_change_email_check:
     controller: Enhavo\Bundle\UserBundle\Controller\ChangeEmailController::checkAction
     defaults:
         _config: theme
+
+enhavo_user_theme_change_email_confirm:
+    options:
+        expose: true
+    path: /change-email/confirm/{token}
+    methods: [GET, POST]
+    controller: Enhavo\Bundle\UserBundle\Controller\ChangeEmailController:confirmAction
+    defaults:
+        _config: theme
+
+enhavo_user_theme_change_email_finish:
+    options:
+        expose: true
+    path: /change-email/finish
+    methods: [GET, POST]
+    controller: Enhavo\Bundle\UserBundle\Controller\ChangeEmailController::finishAction
+    defaults:
+        _config: theme

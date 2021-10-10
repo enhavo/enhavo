@@ -29,6 +29,7 @@ class UserContext implements Context, ClientAwareContext, KernelAwareContext
     {
         foreach ($table->getHash() as $data) {
             $user = $this->findOrCreateUser($data['username'], $data['email']);
+            $user->setEnabled(true);
             if(array_key_exists('enabled', $data)) {
                 $user->setEnabled($data['enabled']);
             }
@@ -58,6 +59,7 @@ class UserContext implements Context, ClientAwareContext, KernelAwareContext
             $user = $this->createAdminUser($group);
             $em->persist($group);
         }
+        $user->setEnabled(true);
         $user->setRoles(['ROLE_SUPER_ADMIN']);
         $this->get('Enhavo\Bundle\UserBundle\User\UserManager')->update($user, true, false);
         $em->flush();

@@ -1,0 +1,17 @@
+enhavo_user_theme_verification_request:
+    options:
+        expose: true
+    path: /verification/request/{csrfToken}
+    methods: [GET]
+    controller: Enhavo\Bundle\UserBundle\Controller\VerificationController::requestAction
+    defaults:
+        _config: theme
+
+enhavo_user_theme_verification_confirm:
+    options:
+        expose: true
+    path: /verification/confirm/{token}
+    methods: [GET]
+    controller: Enhavo\Bundle\UserBundle\Controller\VerificationController::confirmAction
+    defaults:
+        _config: theme

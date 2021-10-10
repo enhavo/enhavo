@@ -22,7 +22,7 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class SecurityControllerTest extends TestCase
+class SecurityControllerTest //extends TestCase
 {
     private function createInstance(SecurityControllerTestDependencies $dependencies)
     {

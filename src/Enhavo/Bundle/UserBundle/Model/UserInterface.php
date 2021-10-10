@@ -56,4 +56,8 @@ interface UserInterface extends BaseUserInterface
     public function addRole($role);
 
     public function removeRole($role);
+
+    public function isVerified(): bool;
+
+    public function setVerified(bool $verified): void;
 }

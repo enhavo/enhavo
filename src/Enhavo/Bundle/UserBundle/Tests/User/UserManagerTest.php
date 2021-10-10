@@ -6,12 +6,15 @@
 
 namespace Enhavo\Bundle\UserBundle\Tests\User;
 
-
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Exception\PropertyNotExistsException;
 use Enhavo\Bundle\AppBundle\Mailer\MailerManager;
 use Enhavo\Bundle\AppBundle\Mailer\Message;
 use Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface;
+use Enhavo\Bundle\UserBundle\Configuration\ChangeEmail\ChangeEmailConfirmConfiguration;
+use Enhavo\Bundle\UserBundle\Configuration\Registration\RegistrationConfirmConfiguration;
+use Enhavo\Bundle\UserBundle\Configuration\Registration\RegistrationRegisterConfiguration;
+use Enhavo\Bundle\UserBundle\Configuration\ResetPassword\ResetPasswordRequestConfiguration;
 use Enhavo\Bundle\UserBundle\Event\UserEvent;
 use Enhavo\Bundle\UserBundle\Mapper\UserMapper;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
@@ -26,7 +29,6 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\OptionsResolver\Exception\OptionDefinitionException;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -40,7 +42,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class UserManagerTest extends TestCase
 {
-    private function createInstance(UserManagerTestDependencies $dependencies, $config, array $mapping = null)
+    private function createInstance(UserManagerTestDependencies $dependencies, array $mapping = null)
     {
         if (!$mapping) {
             $mapping = [
@@ -72,7 +74,6 @@ class UserManagerTest extends TestCase
             $dependencies->sessionStrategy,
             $dependencies->userChecker,
             $dependencies->rememberMeService,
-            $config,
             [ 'from' => 'from@enhavo.com', 'sender_name' => 'enhavo' ],
             [ 'default_firewall' => 'main' ]
         );
@@ -145,27 +146,23 @@ class UserManagerTest extends TestCase
             $this->assertEquals('admin@enhavo.com', $subject);
         });
         $dependencies->message->method('setSenderName')->willReturnCallback(function ($subject) {
-            $this->assertEquals('Enhavo', $subject);
+            $this->assertEquals('Enhavo.translated', $subject);
         });
         $dependencies->message->method('setContentType')->willReturnCallback(function ($subject) {
             $this->assertEquals('content/type', $subject);
         });
 
-        $manager = $this->createInstance($dependencies, [
-            'theme' => [
-                'register' => [
-                    'mail_template' => 'mail.html.twig',
-                    'mail_subject' => 'mail.subject',
-                    'confirmation_route' => 'confirmation.route',
-                    'translation_domain' => 'EnhavoUserBundle',
-                    'mail_from' => 'admin@enhavo.com',
-                    'sender_name' => 'Enhavo',
-                    'content_type' => 'content/type'
-                ]
-            ]
-        ]);
+        $configuration = new RegistrationRegisterConfiguration();
+        $configuration->setMailTemplate('mail.html.twig');
+        $configuration->setMailSubject('mail.subject');
+        $configuration->setConfirmationRoute('confirmation.route');
+        $configuration->setTranslationDomain('EnhavoUserBundle');
+        $configuration->setMailFrom('admin@enhavo.com');
+        $configuration->setMailName('Enhavo');
+        $configuration->setMailContentType('content/type');
 
-        $manager->register($user, 'theme', 'register');
+        $manager= $this->createInstance($dependencies);
+        $manager->register($user, $configuration);
 
         $this->assertEquals('1337.user@enhavo.com', $user->getUsername());
         $this->assertEquals('password.hashed', $user->getPassword());
@@ -181,6 +178,7 @@ class UserManagerTest extends TestCase
         $user->setEmail('user@enhavo.com');
         $user->setPlainPassword('password');
         $user->setConfirmationToken('__TOKEN__');
+        $user->setEnabled(false);
 
         $dependencies = $this->createDependencies();
         $dependencies->eventDispatcher->expects($this->once())->method('dispatch')->willReturnCallback(function ($event) use ($user) {
@@ -204,25 +202,21 @@ class UserManagerTest extends TestCase
             $this->assertEquals('from@enhavo.com', $subject);
         });
         $dependencies->message->method('setSenderName')->willReturnCallback(function ($subject) {
-            $this->assertEquals('enhavo', $subject);
+            $this->assertEquals('enhavo.translated', $subject);
         });
         $dependencies->message->method('setContentType')->willReturnCallback(function ($subject) {
             $this->assertEquals('content/type', $subject);
         });
 
-        $manager = $this->createInstance($dependencies, [
-            'theme' => [
-                'confirm' => [
-                    'mail_template' => 'mail.html.twig',
-                    'mail_subject' => 'mail.subject',
-                    'confirmation_route' => 'confirmation.route',
-                    'translation_domain' => 'EnhavoUserBundle',
-                    'content_type' => 'content/type'
-                ]
-            ]
-        ]);
+        $manager = $this->createInstance($dependencies);
 
-        $manager->confirm($user, 'theme', 'confirm');
+        $configuration = new RegistrationConfirmConfiguration();
+        $configuration->setMailTemplate('mail.html.twig');
+        $configuration->setMailSubject('mail.subject');
+        $configuration->setTranslationDomain('EnhavoUserBundle');
+        $configuration->setMailContentType('content/type');
+
+        $manager->confirm($user, $configuration);
 
         $this->assertEquals('1337.user@enhavo.com', $user->getUsername());
         $this->assertEquals('password.hashed', $user->getPassword());
@@ -261,27 +255,24 @@ class UserManagerTest extends TestCase
             $this->assertEquals('admin@enhavo.com', $subject);
         });
         $dependencies->message->method('setSenderName')->willReturnCallback(function ($subject) {
-            $this->assertEquals('Enhavo', $subject);
+            $this->assertEquals('Enhavo.translated', $subject);
         });
         $dependencies->message->method('setContentType')->willReturnCallback(function ($subject) {
             $this->assertEquals('content/type', $subject);
         });
 
-        $manager = $this->createInstance($dependencies, [
-            'theme' => [
-                'reset_password' => [
-                    'mail_template' => 'mail.html.twig',
-                    'mail_subject' => 'mail.subject',
-                    'confirmation_route' => 'confirmation.route',
-                    'translation_domain' => 'EnhavoUserBundle',
-                    'mail_from' => 'admin@enhavo.com',
-                    'sender_name' => 'Enhavo',
-                    'content_type' => 'content/type'
-                ]
-            ]
-        ]);
+        $manager = $this->createInstance($dependencies);
 
-        $manager->resetPassword($user, 'theme', 'reset_password');
+        $configuration = new ResetPasswordRequestConfiguration();
+        $configuration->setMailTemplate('mail.html.twig');
+        $configuration->setMailSubject('mail.subject');
+        $configuration->setMailFrom('admin@enhavo.com');
+        $configuration->setMailName('Enhavo');
+        $configuration->setMailContentType('content/type');
+        $configuration->setTranslationDomain('EnhavoUserBundle');
+        $configuration->setConfirmationRoute('confirmation.route');
+
+        $manager->resetPassword($user, $configuration);
 
         $this->assertEquals('1337.user@enhavo.com', $user->getUsername());
         $this->assertEquals('password.hashed', $user->getPassword());
@@ -304,7 +295,7 @@ class UserManagerTest extends TestCase
             $this->assertEquals($user, $event->getUser());
         });
 
-        $manager = $this->createInstance($dependencies, []);
+        $manager = $this->createInstance($dependencies);
 
         $manager->changePassword($user);
         $this->assertEquals('password.hashed', $user->getPassword());
@@ -319,223 +310,32 @@ class UserManagerTest extends TestCase
         $user->setPlainPassword('password');
 
         $dependencies = $this->createDependencies();
-        $dependencies->mailerManager->expects($this->exactly(2))->method('createMessage')->willReturnCallback(function () {
+        $dependencies->mailerManager->expects($this->exactly(1))->method('createMessage')->willReturnCallback(function () {
             return new Message();
         });
-        $dependencies->mailerManager->expects($this->exactly(2))->method('sendMessage')->willReturnCallback(function (Message $message) {
+        $dependencies->mailerManager->expects($this->once())->method('sendMessage')->willReturnCallback(function (Message $message) {
             $this->assertEquals('admin@enhavo.com', $message->getFrom());
             $this->assertEquals('change-email.subject.translated', $message->getSubject());
             $this->assertEquals('change-email.html.twig', $message->getTemplate());
-
-
-            $this->assertRegExp('%(old@mail.com|new@mail.com)%', $message->getTo());
-
-            $this->assertEquals([
-                'old_email' => 'old@mail.com',
-                'new_email' => 'new@mail.com'
-            ], $message->getContext());
             return 1;
         });
         $dependencies->entityManager->expects($this->never())->method('persist');
         $dependencies->entityManager->expects($this->once())->method('flush');
 
-        $manager = $this->createInstance($dependencies, [
-            'theme' => [
-                'change_email' => [
-                    'mail_template' => 'change-email.html.twig',
-                    'mail_subject' => 'change-email.subject',
-                    'translation_domain' => 'EnhavoUserBundle',
-                    'mail_from' => 'admin@enhavo.com',
-                    'sender_name' => 'Enhavo',
-                    'content_type' => 'content/type'
-                ]
-            ]
-        ]);
+        $manager = $this->createInstance($dependencies);
 
-        $result = $manager->changeEmail($user, 'new@mail.com', 'theme', 'change_email');
-        $this->assertTrue($result);
+        $configuration = new ChangeEmailConfirmConfiguration();
+        $configuration->setMailTemplate('change-email.html.twig');
+        $configuration->setMailSubject('change-email.subject');
+        $configuration->setMailContentType('content/type');
+        $configuration->setMailFrom('admin@enhavo.com');
+        $configuration->setTranslationDomain('EnhavoUserBundle');
+        $configuration->setConfirmationRoute('confirmation.route');
+
+        $manager->changeEmail($user, 'new@mail.com', $configuration);
+
         $this->assertEquals('new@mail.com', $user->getEmail());
         $this->assertEquals('1337.new@mail.com', $user->getUsername());
-    }
-
-
-    public function testChangeEmailNotSend()
-    {
-        $user = new UserMock();
-        $user->setCustomerId('1337');
-        $user->setEmail('old@mail.com');
-        $user->setPlainPassword('password');
-        $user->setUsername('1337.old@mail.com');
-
-        $dependencies = $this->createDependencies();
-        $dependencies->mailerManager->expects($this->once())->method('createMessage')->willReturn($dependencies->message);
-        $dependencies->mailerManager->expects($this->once())->method('sendMessage')->willReturn(0);
-        $dependencies->entityManager->expects($this->never())->method('persist');
-        $dependencies->entityManager->expects($this->never())->method('flush');
-
-        $manager = $this->createInstance($dependencies, [
-            'theme' => [
-                'change_email' => [
-                    'mail_template' => 'change-email.html.twig',
-                    'mail_subject' => 'change-email.subject',
-                    'translation_domain' => 'EnhavoUserBundle',
-                    'mail_from' => 'admin@enhavo.com',
-                    'sender_name' => 'Enhavo',
-                    'content_type' => 'content/type'
-                ]
-            ]
-        ]);
-
-        $result = $manager->changeEmail($user, 'new@mail.com', 'theme', 'change_email');
-        $this->assertFalse($result);
-        $this->assertEquals('old@mail.com', $user->getEmail());
-        $this->assertEquals('1337.old@mail.com', $user->getUsername());
-    }
-
-    public function testGetConfigKey()
-    {
-        $dependencies = $this->createDependencies();
-        $manager = $this->createInstance($dependencies, [
-            '__CONFIG_KEY__' => []
-        ]);
-        $request = new Request([], [], [
-            '_config' => '__CONFIG_KEY__',
-        ]);
-        $result = $manager->getConfigKey($request);
-        $this->assertEquals('__CONFIG_KEY__', $result);
-    }
-
-    public function testCreateForm()
-    {
-        $dependencies = $this->createDependencies();
-
-        $manager = $this->createInstance($dependencies, [
-            'admin' => [
-                'create' => [
-                    'form' => [
-                        'class' => 'form.class',
-                        'options' => ['option'=>'value'],
-                    ],
-                ],
-            ],
-        ], []);
-        $user = new UserMock();
-
-        $dependencies->formFactory = $this->getMockBuilder(FormFactoryInterface::class)->getMock();
-        $dependencies->formFactory->method('create')->willReturnCallback(function ($type, $resource, $options) use ($dependencies, $user) {
-            $this->assertEquals('form.class', $type);
-            $this->assertEquals($user, $resource);
-            $this->assertEquals(['option1'=>'value1', 'option2'=>'value2'], $options);
-
-            return $dependencies->form;
-        });
-
-        $form = $manager->createForm('admin', 'create', $user, ['option2' => 'value2']);
-
-        $this->assertEquals($dependencies->form, $form);
-    }
-
-    public function testConfigShortcuts()
-    {
-        $dependencies = $this->createDependencies();
-
-        $manager = $this->createInstance($dependencies, [
-            'section1' => [
-                'action1' => [
-                    'template' => 'tpl1',
-                ],
-            ],
-            'section2' => [
-                'action2' => [
-                    'redirect_route' => 'route1',
-                ],
-            ],
-            'section3' => [
-                'action3' => [
-                    'javascripts' => ['path1'],
-                ],
-            ],
-            'section4' => [
-                'action4' => [
-                    'stylesheets' => ['path2'],
-                ],
-            ],
-        ], []);
-
-        $this->assertEquals('tpl1', $manager->getTemplate('section1', 'action1'));
-        $this->assertEquals('route1', $manager->getRedirectRoute('section2', 'action2'));
-        $this->assertEquals(['path1'], $manager->getJavascripts('section3', 'action3'));
-        $this->assertEquals(['path2'], $manager->getStylesheets('section4', 'action4'));
-    }
-
-    public function testConfigExceptionLevel0()
-    {
-        $dependencies = $this->createDependencies();
-
-        $manager = $this->createInstance($dependencies, [
-            'section1' => [
-                'action1' => [
-                    'item1' => 'value1',
-                ],
-            ],
-        ], []);
-
-        $this->assertEquals('_fallback', $manager->getConfig('section2', 'action1', 'item1', '_fallback'));
-        $this->expectException(OptionDefinitionException::class);
-        $manager->getConfig('section2', 'action1', 'item1');
-    }
-
-    public function testConfigExceptionLevel1()
-    {
-        $dependencies = $this->createDependencies();
-
-        $manager = $this->createInstance($dependencies, [
-            'section1' => [
-                'action1' => [
-                    'item1' => 'value1',
-                ],
-            ],
-        ], []);
-
-        $this->assertEquals('_fallback', $manager->getConfig('section1', 'action2', 'item1', '_fallback'));
-        $this->expectException(OptionDefinitionException::class);
-        $manager->getConfig('section1', 'action2', 'item1');
-    }
-
-    public function testConfigExceptionLevel2()
-    {
-        $dependencies = $this->createDependencies();
-
-        $manager = $this->createInstance($dependencies, [
-            'section1' => [
-                'action1' => [
-                    'item1' => 'value1',
-                ],
-            ],
-        ], []);
-
-        $this->assertEquals('_fallback', $manager->getConfig('section1', 'action1', 'item2', '_fallback'));
-        $this->expectException(OptionDefinitionException::class);
-        $manager->getConfig('section1', 'action1', 'item2');
-    }
-
-    public function testConfigLevel0()
-    {
-        $dependencies = $this->createDependencies();
-
-        $manager = $this->createInstance($dependencies, [
-            'section1' => [
-                'action1' => [
-                    'item1' => 'value1',
-                ],
-            ],
-        ], []);
-
-        $this->assertEquals([
-            'action1' => [
-                'item1' => 'value1',
-            ],
-        ], $manager->getConfig('section1'));
     }
 
     public function testActivate()

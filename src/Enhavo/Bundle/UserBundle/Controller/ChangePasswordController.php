@@ -9,64 +9,56 @@
 namespace Enhavo\Bundle\UserBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Viewer\ViewFactory;
+use Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Enhavo\Bundle\UserBundle\User\UserManager;
 use FOS\RestBundle\View\ViewHandler;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class ChangePasswordController extends AbstractController
+class ChangePasswordController extends AbstractUserController
 {
-//    use UserConfigurationTrait;
-
-    /**
-     * @var ViewHandler
-     */
+    /** @var ViewHandler*/
     private $viewHandler;
 
-    /**
-     * @var ViewFactory
-     */
+    /** @var ViewFactory */
     private $viewFactory;
-
-    /**
-     * @var UserManager
-     */
-    private $userManager;
 
     /** @var TranslatorInterface */
     private $translator;
 
     /**
      * ChangePasswordController constructor.
+     * @param UserManager $userManager
+     * @param ConfigurationProvider $provider
      * @param ViewHandler $viewHandler
      * @param ViewFactory $viewFactory
-     * @param UserManager $userManager
      * @param TranslatorInterface $translator
      */
-    public function __construct(ViewHandler $viewHandler, ViewFactory $viewFactory, UserManager $userManager, TranslatorInterface $translator)
+    public function __construct(UserManager $userManager, ConfigurationProvider $provider, ViewHandler $viewHandler, ViewFactory $viewFactory, TranslatorInterface $translator)
     {
+        parent::__construct($userManager, $provider);
+
         $this->viewHandler = $viewHandler;
         $this->viewFactory = $viewFactory;
-        $this->userManager = $userManager;
         $this->translator = $translator;
     }
 
     public function changeAction(Request $request)
     {
-        $config = $this->userManager->getConfigKey($request);
+        $configKey = $this->getConfigKey($request);
+        $configuration = $this->provider->getChangePasswordConfiguration($configKey);
+
         $user = $this->getUser();
         if (!is_object($user) || !$user instanceof UserInterface) {
             throw $this->createAccessDeniedException('This user does not have access to this section.');
         }
 
-        $form = $this->userManager->createForm($config, 'change_password', $user);
-        $form->setData($user);
+        $form = $this->createForm($configuration->getFormClass(), $user, $configuration->getFormOptions());
         $form->handleRequest($request);
         if ($request->isMethod('POST')) {
             if ($form->isValid()) {
-                $this->userManager->update($user, false);
+                $this->userManager->update($user);
                 $this->addFlash('success', $this->translator->trans('change_password.message.success', [], 'EnhavoUserBundle'));
             } else {
                 $this->addFlash('error', $this->translator->trans('change_password.message.error', [], 'EnhavoUserBundle'));
@@ -76,6 +68,7 @@ class ChangePasswordController extends AbstractController
         $view = $this->viewFactory->create('form', [
             'resource' => $user,
             'form' => $form,
+            'template' => $configuration->getTemplate()
         ]);
 
         return $this->viewHandler->handle($view);
