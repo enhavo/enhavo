@@ -57,14 +57,15 @@ class ConfigurationProvider
             if ($this->propertyAccessor->isWritable($configuration, $property)) {
                 $this->propertyAccessor->setValue($configuration, $property, $value);
             }
-        }
 
-        if (isset($config['form']['class'])) {
-            $this->propertyAccessor->setValue($configuration, 'formClass', $config['form']['class']);
-        }
-
-        if (isset($config['form']['options'])) {
-            $this->propertyAccessor->setValue($configuration, 'formOptions', $config['form']['options']);
+            if (is_array($value)) {
+                foreach ($value as $childProperty => $childValue) {
+                    $childPropertyPath = $property.ucfirst($childProperty);
+                    if ($this->propertyAccessor->isWritable($configuration, $childPropertyPath)) {
+                        $this->propertyAccessor->setValue($configuration, $childPropertyPath, $childValue);
+                    }
+                }
+            }
         }
     }
 

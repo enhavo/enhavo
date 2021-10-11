@@ -60,8 +60,10 @@ class ConfigurationTest extends TestCase
                             'template' => 'theme/security/registration/register.html.twig',
                             'redirect_route' => 'enhavo_user_theme_registration_check',
                             'confirmation_route' => 'enhavo_user_theme_registration_confirm' ,
-                            'mail_template' => 'mail/security/registration.html.twig',
-                            'mail_subject' => 'registration.mail.subject'
+                            'mail' => [
+                                'template' => 'mail/security/registration.html.twig',
+                                'subject' => 'registration.mail.subject'
+                            ]
                         ]
                     ]
                 ]

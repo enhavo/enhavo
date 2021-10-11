@@ -2,7 +2,7 @@ services:
     Enhavo\Bundle\UserBundle\Controller\RegistrationController:
         public: true
         arguments:
-            - '@Enhavo\Bundle\UserBundle\User\UserManager'
+            - '@enhavo_user.user.manager'
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
             - '@enhavo_user.repository.user'
             - '@enhavo_user.factory.user'
@@ -15,7 +15,7 @@ services:
     Enhavo\Bundle\UserBundle\Controller\ResetPasswordController:
         public: true
         arguments:
-            - '@Enhavo\Bundle\UserBundle\User\UserManager'
+            - '@enhavo_user.user.manager'
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
             - '@enhavo_user.repository.user'
             - '@enhavo_user.factory.user'
@@ -29,7 +29,7 @@ services:
     Enhavo\Bundle\UserBundle\Controller\ChangeEmailController:
         public: true
         arguments:
-            - '@Enhavo\Bundle\UserBundle\User\UserManager'
+            - '@enhavo_user.user.manager'
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
             - '@enhavo_user.repository.user'
             - '@enhavo_user.factory.user'
@@ -43,7 +43,7 @@ services:
     Enhavo\Bundle\UserBundle\Controller\SecurityController:
         public: true
         arguments:
-            - '@Enhavo\Bundle\UserBundle\User\UserManager'
+            - '@enhavo_user.user.manager'
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
             - '@security.csrf.token_manager'
             - '@translator'
@@ -55,7 +55,7 @@ services:
     Enhavo\Bundle\UserBundle\Controller\ChangePasswordController:
         public: true
         arguments:
-            - '@Enhavo\Bundle\UserBundle\User\UserManager'
+            - '@enhavo_user.user.manager'
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
             - '@fos_rest.view_handler'
             - '@view.factory'
@@ -68,7 +68,7 @@ services:
     Enhavo\Bundle\UserBundle\Controller\ProfileController:
         public: true
         arguments:
-            - '@Enhavo\Bundle\UserBundle\User\UserManager'
+            - '@enhavo_user.user.manager'
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
             - '@translator'
             - '@Enhavo\Bundle\FormBundle\Error\FormErrorResolver'
@@ -80,7 +80,7 @@ services:
     Enhavo\Bundle\UserBundle\Controller\DeleteController:
         public: true
         arguments:
-            - '@Enhavo\Bundle\UserBundle\User\UserManager'
+            - '@enhavo_user.user.manager'
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
             - '@translator'
             - '@Enhavo\Bundle\FormBundle\Error\FormErrorResolver'
@@ -92,7 +92,7 @@ services:
     Enhavo\Bundle\UserBundle\Controller\VerificationController:
         public: true
         arguments:
-            - '@Enhavo\Bundle\UserBundle\User\UserManager'
+            - '@enhavo_user.user.manager'
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
             - '@enhavo_user.repository.user'
         calls:
