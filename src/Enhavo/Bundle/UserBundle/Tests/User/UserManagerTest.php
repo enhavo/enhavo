@@ -75,7 +75,7 @@ class UserManagerTest extends TestCase
             $dependencies->userChecker,
             $dependencies->rememberMeService,
             [ 'from' => 'from@enhavo.com', 'sender_name' => 'enhavo' ],
-            [ 'default_firewall' => 'main' ]
+            $dependencies->defaultFirewall
         );
     }
 
@@ -112,6 +112,7 @@ class UserManagerTest extends TestCase
         $dependencies->requestStack = $this->getMockBuilder(RequestStack::class)->disableOriginalConstructor()->getMock();
         $dependencies->sessionStrategy = $this->getMockBuilder(SessionAuthenticationStrategyInterface::class)->getMock();
         $dependencies->userChecker = $this->getMockBuilder(UserCheckerInterface::class)->getMock();
+        $dependencies->defaultFirewall = 'main';
 
         return $dependencies;
     }
@@ -158,7 +159,7 @@ class UserManagerTest extends TestCase
         $configuration->setConfirmationRoute('confirmation.route');
         $configuration->setTranslationDomain('EnhavoUserBundle');
         $configuration->setMailFrom('admin@enhavo.com');
-        $configuration->setMailName('Enhavo');
+        $configuration->setMailSenderName('Enhavo');
         $configuration->setMailContentType('content/type');
 
         $manager= $this->createInstance($dependencies);
@@ -267,7 +268,7 @@ class UserManagerTest extends TestCase
         $configuration->setMailTemplate('mail.html.twig');
         $configuration->setMailSubject('mail.subject');
         $configuration->setMailFrom('admin@enhavo.com');
-        $configuration->setMailName('Enhavo');
+        $configuration->setMailSenderName('Enhavo');
         $configuration->setMailContentType('content/type');
         $configuration->setTranslationDomain('EnhavoUserBundle');
         $configuration->setConfirmationRoute('confirmation.route');
@@ -493,6 +494,9 @@ class UserManagerTestDependencies
 
     /** @var RememberMeServicesInterface|MockObject */
     public $rememberMeService;
+
+    /** @var string */
+    public $defaultFirewall;
 
     public function getUserMapper($config): UserMapper
     {

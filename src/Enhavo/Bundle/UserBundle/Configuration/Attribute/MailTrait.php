@@ -4,6 +4,9 @@ namespace Enhavo\Bundle\UserBundle\Configuration\Attribute;
 
 trait MailTrait
 {
+    /** @var boolean */
+    private $mailEnabled = true;
+
     /** @var ?string */
     private $mailSubject;
 
@@ -11,7 +14,7 @@ trait MailTrait
     private $mailFrom;
 
     /** @var ?string */
-    private $mailName;
+    private $mailSenderName;
 
     /** @var ?string */
     private $mailContext;
@@ -21,6 +24,22 @@ trait MailTrait
 
     /** @var ?string */
     private $mailContentType;
+
+    /**
+     * @return bool
+     */
+    public function isMailEnabled(): bool
+    {
+        return $this->mailEnabled;
+    }
+
+    /**
+     * @param bool $mailEnabled
+     */
+    public function setMailEnabled(bool $mailEnabled): void
+    {
+        $this->mailEnabled = $mailEnabled;
+    }
 
     /**
      * @return string|null
@@ -41,17 +60,17 @@ trait MailTrait
     /**
      * @return string|null
      */
-    public function getMailName(): ?string
+    public function getMailSenderName(): ?string
     {
-        return $this->mailName;
+        return $this->mailSenderName;
     }
 
     /**
-     * @param string|null $mailName
+     * @param string|null $mailSenderName
      */
-    public function setMailName(?string $mailName): void
+    public function setMailSenderName(?string $mailSenderName): void
     {
-        $this->mailName = $mailName;
+        $this->mailSenderName = $mailSenderName;
     }
 
     /**
@@ -117,4 +136,6 @@ trait MailTrait
     {
         $this->mailFrom = $mailFrom;
     }
+
+
 }

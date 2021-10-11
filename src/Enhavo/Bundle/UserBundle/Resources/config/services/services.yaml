@@ -17,11 +17,11 @@ services:
             - '@security.user_checker.main'
             - ~
             - '%enhavo_user.mail%'
-            - '%enhavo_user.parameters%'
+            - '%enhavo_user.default_firewall%'
 
     Enhavo\Bundle\UserBundle\EventListener\SaveUserSubscriber:
         arguments:
-            - '@Enhavo\Bundle\UserBundle\User\UserManager'
+            - '@enhavo_user.user.manager'
         tags:
             - { name: kernel.event_subscriber }
 
@@ -49,7 +49,7 @@ services:
 
     Enhavo\Bundle\UserBundle\Security\Authentication\FormLoginAuthenticator:
         arguments:
-            - '@Enhavo\Bundle\UserBundle\User\UserManager'
+            - '@enhavo_user.user.manager'
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
             - '@router'
             - '@security.csrf.token_manager'
