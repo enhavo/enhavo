@@ -42,7 +42,7 @@ class UserManager
     private $entityManager;
 
     /** @var MailerManager */
-    private $mailerManager;
+    protected $mailerManager;
 
     /** @var RepositoryInterface */
     private $userRepository;
@@ -87,7 +87,7 @@ class UserManager
     private $mail;
 
     /** @var array */
-    private $parameters;
+    private $defaultFirewall;
 
     /**
      * UserManager constructor.
@@ -107,9 +107,9 @@ class UserManager
      * @param UserCheckerInterface $userChecker
      * @param RememberMeServicesInterface|null $rememberMeService
      * @param array $mail
-     * @param array $parameters
+     * @param string $defaultFirewall
      */
-    public function __construct(EntityManagerInterface $entityManager, MailerManager $mailerManager, RepositoryInterface $userRepository, UserMapperInterface $userMapper, TokenGeneratorInterface $tokenGenerator, TranslatorInterface $translator, FormFactoryInterface $formFactory, EncoderFactoryInterface $encoderFactory, RouterInterface $router, EventDispatcherInterface $eventDispatcher, TokenStorageInterface $tokenStorage, RequestStack $requestStack, SessionAuthenticationStrategyInterface $sessionStrategy, UserCheckerInterface $userChecker, ?RememberMeServicesInterface $rememberMeService, array $mail, array $parameters)
+    public function __construct(EntityManagerInterface $entityManager, MailerManager $mailerManager, RepositoryInterface $userRepository, UserMapperInterface $userMapper, TokenGeneratorInterface $tokenGenerator, TranslatorInterface $translator, FormFactoryInterface $formFactory, EncoderFactoryInterface $encoderFactory, RouterInterface $router, EventDispatcherInterface $eventDispatcher, TokenStorageInterface $tokenStorage, RequestStack $requestStack, SessionAuthenticationStrategyInterface $sessionStrategy, UserCheckerInterface $userChecker, ?RememberMeServicesInterface $rememberMeService, array $mail, string $defaultFirewall)
     {
         $this->entityManager = $entityManager;
         $this->mailerManager = $mailerManager;
@@ -127,7 +127,7 @@ class UserManager
         $this->userChecker = $userChecker;
         $this->rememberMeService = $rememberMeService;
         $this->mail = $mail;
-        $this->parameters = $parameters;
+        $this->defaultFirewall = $defaultFirewall;
     }
 
     public function add(UserInterface $user)
@@ -191,7 +191,7 @@ class UserManager
     {
         $this->userChecker->checkPreAuth($user);
 
-        $token = new UsernamePasswordToken($user, null, $firewallName ?? $this->parameters['default_firewall'], $user->getRoles());
+        $token = new UsernamePasswordToken($user, null, $firewallName ?? $this->defaultFirewall, $user->getRoles());
         $request = $this->requestStack->getCurrentRequest();
         if (null !== $request) {
             $this->sessionStrategy->onAuthentication($request, $token);
@@ -237,7 +237,10 @@ class UserManager
         $user->setVerified($configuration->isAutoVerified());
 
         $this->add($user);
-        $this->sendRegistrationConfirmMail($user, $configuration);
+
+        if ($configuration->isMailEnabled()) {
+            $this->sendRegistrationConfirmMail($user, $configuration);
+        }
     }
 
     private function sendRegistrationConfirmMail(UserInterface $user, RegistrationRegisterConfiguration $configuration)
@@ -268,7 +271,10 @@ class UserManager
         $this->update($user);
         $event = new UserEvent(UserEvent::TYPE_REGISTRATION_CONFIRMED, $user);
         $this->eventDispatcher->dispatch($event);
-        $this->sendConfirmationMail($user, $configuration);
+
+        if ($configuration->isMailEnabled()) {
+            $this->sendConfirmationMail($user, $configuration);
+        }
     }
 
     private function sendConfirmationMail(UserInterface $user, RegistrationConfirmConfiguration $configuration)
@@ -287,7 +293,10 @@ class UserManager
         $this->update($user);
         $event = new UserEvent(UserEvent::TYPE_PASSWORD_RESET_REQUESTED, $user);
         $this->eventDispatcher->dispatch($event);
-        $this->sendResetPasswordMail($user, $configuration);
+
+        if ($configuration->isMailEnabled()) {
+            $this->sendResetPasswordMail($user, $configuration);
+        }
     }
 
     private function sendResetPasswordMail(UserInterface $user, ResetPasswordRequestConfiguration $configuration)
@@ -306,7 +315,10 @@ class UserManager
     {
         $user->setConfirmationToken($this->tokenGenerator->generateToken());
         $this->update($user);
-        $this->sendChangeEmailRequest($user, $configuration);
+
+        if ($configuration->isMailEnabled()) {
+            $this->sendChangeEmailRequest($user, $configuration);
+        }
     }
 
     public function sendChangeEmailRequest(UserInterface $user, ChangeEmailRequestConfiguration $configuration)
@@ -330,7 +342,10 @@ class UserManager
         $this->update($user);
         $event = new UserEvent(UserEvent::TYPE_EMAIl_CHANGED, $user);
         $this->eventDispatcher->dispatch($event);
-        $this->sendChangeEmailConfirmMail($user, $configuration);
+
+        if ($configuration->isMailEnabled()) {
+            $this->sendChangeEmailConfirmMail($user, $configuration);
+        }
     }
 
     public function sendChangeEmailConfirmMail(UserInterface $user, ChangeEmailConfirmConfiguration $configuration)
@@ -350,7 +365,10 @@ class UserManager
     {
         $this->entityManager->remove($user);
         $this->entityManager->flush();
-        $this->sendDeleteMail($user, $configuration);
+
+        if ($configuration->isMailEnabled()) {
+            $this->sendDeleteMail($user, $configuration);
+        }
     }
 
     private function sendDeleteMail(UserInterface $user, DeleteConfirmConfiguration $configuration)
@@ -371,7 +389,10 @@ class UserManager
 
         $user->setConfirmationToken($this->tokenGenerator->generateToken());
         $this->update($user);
-        $this->sendVerificationMail($user, $configuration);
+
+        if ($configuration->isMailEnabled()) {
+            $this->sendVerificationMail($user, $configuration);
+        }
     }
 
     private function sendVerificationMail(UserInterface $user, VerificationRequestConfiguration $configuration)
@@ -394,7 +415,7 @@ class UserManager
         $message->setTemplate($configuration->getMailTemplate());
         $message->setTo($user->getEmail());
         $message->setFrom($configuration->getMailFrom() ?? $this->mail['from']);
-        $message->setSenderName($this->translator->trans($configuration->getMailName() ?? $this->mail['sender_name'], [], $configuration->getTranslationDomain()));
+        $message->setSenderName($this->translator->trans($configuration->getMailSenderName() ?? $this->mail['sender_name'], [], $configuration->getTranslationDomain()));
         $message->setContentType($configuration->getMailContentType() ?? Message::CONTENT_TYPE_PLAIN);
         return $message;
     }

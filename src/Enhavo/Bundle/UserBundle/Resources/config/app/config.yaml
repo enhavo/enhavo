@@ -9,8 +9,9 @@ enhavo_user:
                 template: theme/security/registration/register.html.twig
                 redirect_route: enhavo_user_theme_registration_check
                 confirmation_route: enhavo_user_theme_registration_confirm
-                mail_template: mail/security/registration.html.twig
-                mail_subject: registration.mail.subject
+                mail:
+                    template: mail/security/registration.html.twig
+                    subject: registration.mail.subject
                 translation_domain: 'EnhavoUserBundle'
                 form:
                     class: Enhavo\Bundle\UserBundle\Form\Type\RegistrationType
@@ -21,8 +22,9 @@ enhavo_user:
 
             registration_confirm:
                 template: 'theme/security/registration/confirm.html.twig'
-                mail_template: 'mail/security/confirmation.html.twig'
-                mail_subject: 'confirmation.mail.subject'
+                mail:
+                    template: 'mail/security/confirmation.html.twig'
+                    subject: 'confirmation.mail.subject'
                 translation_domain: 'EnhavoUserBundle'
                 redirect_route: 'enhavo_user_theme_registration_finish'
 
@@ -34,8 +36,9 @@ enhavo_user:
 
             reset_password_request:
                 template: theme/security/reset-password/request.html.twig
-                mail_template: mail/security/reset-password.html.twig
-                mail_subject: reset_password.mail.subject
+                mail:
+                    template: mail/security/reset-password.html.twig
+                    subject: reset_password.mail.subject
                 translation_domain: EnhavoUserBundle
                 redirect_route: enhavo_user_theme_reset_password_check
                 confirmation_route: enhavo_user_theme_reset_password_confirm
@@ -53,8 +56,9 @@ enhavo_user:
 
             change_email_request:
                 template: theme/security/change-email/request.html.twig
-                mail_template: mail/security/change-email.html.twig
-                mail_subject: change_email.mail.subject
+                mail:
+                    template: mail/security/change-email.html.twig
+                    subject: change_email.mail.subject
                 translation_domain: EnhavoUserBundle
                 redirect_route: enhavo_user_theme_change_email_check
                 confirmation_route: enhavo_user_theme_change_email_confirm
@@ -64,8 +68,9 @@ enhavo_user:
 
             change_email_confirm:
                 template: theme/security/change-email/confirm.html.twig
-                mail_template: mail/security/change-email-confirm.html.twig
-                mail_subject: change_email_confirm.mail.subject
+                mail:
+                    template: mail/security/change-email-confirm.html.twig
+                    subject: change_email_confirm.mail.subject
                 translation_domain: EnhavoUserBundle
                 redirect_route: enhavo_user_theme_change_email_finish
                 confirmation_route: enhavo_user_theme_registration_confirm
@@ -83,8 +88,9 @@ enhavo_user:
 
             delete_confirm:
                 template: theme/security/delete/confirm.html.twig
-                mail_template: mail/security/delete-confirm.html.twig
-                mail_subject: delete_confirm.mail.subject
+                mail:
+                    template: mail/security/delete-confirm.html.twig
+                    subject: delete_confirm.mail.subject
                 redirect_route: enhavo_user_theme_delete_finish
 
             delete_finish:
@@ -92,8 +98,9 @@ enhavo_user:
 
             verification_request:
                 template: theme/security/verification/request.html.twig
-                mail_template: mail/security/verification.html.twig
-                mail_subject: verification.mail.subject
+                mail:
+                    template: mail/security/verification.html.twig
+                    subject: verification.mail.subject
                 route: enhavo_user_theme_verification_request
                 confirmation_route: enhavo_user_theme_verification_confirm
 
@@ -103,8 +110,9 @@ enhavo_user:
         admin:
             reset_password_request:
                 template: admin/security/reset-password/request.html.twig
-                mail_template: mail/security/reset-password.html.twig
-                mail_subject: reset_password.mail.subject
+                mail:
+                    template: mail/security/reset-password.html.twig
+                    subject: reset_password.mail.subject
                 translation_domain: EnhavoUserBundle
                 redirect_route: enhavo_user_reset_password_request
                 confirmation_route: enhavo_user_reset_password_confirm
