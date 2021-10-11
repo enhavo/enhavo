@@ -18,6 +18,7 @@ use Enhavo\Bundle\UserBundle\Model\Group;
 use Enhavo\Bundle\UserBundle\Model\User;
 use Enhavo\Bundle\UserBundle\Repository\GroupRepository;
 use Enhavo\Bundle\UserBundle\Repository\UserRepository;
+use Enhavo\Bundle\UserBundle\User\UserManager;
 use Sylius\Bundle\ResourceBundle\SyliusResourceBundle;
 use Sylius\Component\Resource\Factory\Factory;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
@@ -104,12 +105,8 @@ class Configuration implements ConfigurationInterface
     {
         $node
             ->children()
-                ->arrayNode('parameters')
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->variableNode('default_firewall')->defaultValue('main')->end()
-                    ->end()
-                ->end()
+                ->scalarNode('default_firewall')->defaultValue('main')->end()
+                ->scalarNode('user_manager')->defaultValue(UserManager::class)->end()
             ->end()
         ;
     }
@@ -175,10 +172,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('template')->isRequired()->cannotBeEmpty()->end()
                         ->scalarNode('redirect_route')->defaultValue(null)->end()
                         ->scalarNode('confirmation_route')->isRequired()->cannotBeEmpty()->end()
-                        ->scalarNode('mail_template')->isRequired()->cannotBeEmpty()->end()
-                        ->scalarNode('mail_subject')->defaultValue('registration.mail.subject')->end()
-                        ->scalarNode('mail_name')->defaultValue(null)->end()
-                        ->scalarNode('mail_content_type')->defaultValue('text/plain')->end()
+                        ->append($this->addConfigMailNode())
                         ->scalarNode('auto_login')->defaultValue(true)->end()
                         ->scalarNode('auto_enabled')->defaultValue(true)->end()
                         ->scalarNode('auto_verified')->defaultValue(false)->end()
@@ -208,8 +202,7 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('registration_confirm')
                     ->children()
                         ->scalarNode('template')->isRequired()->cannotBeEmpty()->end()
-                        ->scalarNode('mail_template')->isRequired()->cannotBeEmpty()->end()
-                        ->scalarNode('mail_subject')->defaultValue('confirmation.mail.subject')->end()
+                        ->append($this->addConfigMailNode())
                         ->scalarNode('translation_domain')->defaultValue(null)->end()
                         ->scalarNode('redirect_route')->defaultValue(null)->end()
                      ->end()
@@ -244,8 +237,7 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('reset_password_request')
                     ->children()
                         ->scalarNode('template')->isRequired()->cannotBeEmpty()->end()
-                        ->scalarNode('mail_template')->isRequired()->cannotBeEmpty()->end()
-                        ->scalarNode('mail_subject')->isRequired()->cannotBeEmpty()->end()
+                        ->append($this->addConfigMailNode())
                         ->scalarNode('translation_domain')->defaultValue(null)->end()
                         ->scalarNode('redirect_route')->defaultValue(null)->end()
                         ->scalarNode('confirmation_route')->isRequired()->cannotBeEmpty()->end()
@@ -295,8 +287,7 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('change_email_request')
                     ->children()
                         ->scalarNode('template')->isRequired()->cannotBeEmpty()->end()
-                        ->scalarNode('mail_template')->isRequired()->cannotBeEmpty()->end()
-                        ->scalarNode('mail_subject')->isRequired()->cannotBeEmpty()->end()
+                        ->append($this->addConfigMailNode())
                         ->scalarNode('translation_domain')->defaultValue(null)->end()
                         ->scalarNode('redirect_route')->defaultValue(null)->end()
                         ->scalarNode('confirmation_route')->isRequired()->cannotBeEmpty()->end()
@@ -320,10 +311,7 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->scalarNode('template')->isRequired()->cannotBeEmpty()->end()
                         ->scalarNode('redirect_route')->defaultValue(null)->end()
-                        ->scalarNode('mail_template')->isRequired()->cannotBeEmpty()->end()
-                        ->scalarNode('mail_subject')->defaultValue('registration.mail.subject')->end()
-                        ->scalarNode('mail_name')->defaultValue(null)->end()
-                        ->scalarNode('mail_content_type')->defaultValue('text/plain')->end()
+                        ->append($this->addConfigMailNode())
                         ->scalarNode('translation_domain')->defaultValue(null)->end()
                         ->scalarNode('confirmation_route')->isRequired()->cannotBeEmpty()->end()
                         ->arrayNode('form')
@@ -387,10 +375,7 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->scalarNode('template')->isRequired()->cannotBeEmpty()->end()
                         ->scalarNode('redirect_route')->defaultValue(null)->end()
-                        ->scalarNode('mail_template')->isRequired()->cannotBeEmpty()->end()
-                        ->scalarNode('mail_subject')->defaultValue('registration.mail.subject')->end()
-                        ->scalarNode('mail_name')->defaultValue(null)->end()
-                        ->scalarNode('mail_content_type')->defaultValue('text/plain')->end()
+                        ->append($this->addConfigMailNode())
                         ->scalarNode('translation_domain')->defaultValue('EnhavoUserBundle')->end()
                         ->arrayNode('form')
                             ->addDefaultsIfNotSet()
@@ -420,10 +405,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('template')->isRequired()->cannotBeEmpty()->end()
                         ->scalarNode('route')->defaultValue(null)->end()
                         ->scalarNode('confirmation_route')->isRequired()->cannotBeEmpty()->end()
-                        ->scalarNode('mail_template')->isRequired()->cannotBeEmpty()->end()
-                        ->scalarNode('mail_subject')->defaultValue('registration.mail.subject')->end()
-                        ->scalarNode('mail_name')->defaultValue(null)->end()
-                        ->scalarNode('mail_content_type')->defaultValue('text/plain')->end()
+                        ->append($this->addConfigMailNode())
                         ->scalarNode('translation_domain')->defaultValue('EnhavoUserBundle')->end()
                     ->end()
                 ->end()
@@ -433,6 +415,21 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('template')->isRequired()->cannotBeEmpty()->end()
                     ->end()
                 ->end()
+            ->end()
+        ;
+    }
+
+    private function addConfigMailNode()
+    {
+        $treeBuilder = new TreeBuilder('mail');
+
+        return $treeBuilder->getRootNode()
+            ->canBeDisabled()
+            ->children()
+                ->scalarNode('template')->isRequired()->cannotBeEmpty()->end()
+                ->scalarNode('subject')->defaultValue('registration.mail.subject')->end()
+                ->scalarNode('sender_name')->defaultValue(null)->end()
+                ->scalarNode('content_type')->defaultValue('text/plain')->end()
             ->end()
         ;
     }

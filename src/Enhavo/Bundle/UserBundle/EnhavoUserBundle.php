@@ -2,13 +2,14 @@
 
 namespace Enhavo\Bundle\UserBundle;
 
+use Enhavo\Bundle\UserBundle\DependencyInjection\Compiler\UserManagerCompilerPass;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class EnhavoUserBundle extends Bundle
 {
-    public static function getSupportedDrivers()
+    public function build(ContainerBuilder $container)
     {
-        return array('doctrine/orm');
+        $container->addCompilerPass(new UserManagerCompilerPass());
     }
-
 }

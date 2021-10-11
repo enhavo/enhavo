@@ -1,7 +1,7 @@
 services:
     Enhavo\Bundle\UserBundle\Command\CreateUserCommand:
         arguments:
-            - '@Enhavo\Bundle\UserBundle\User\UserManager'
+            - '@enhavo_user.user.manager'
             - '@enhavo_user.factory.user'
             - '@Enhavo\Bundle\UserBundle\Mapper\UserMapper'
         tags:
@@ -9,7 +9,7 @@ services:
 
     Enhavo\Bundle\UserBundle\Command\ActivateUserCommand:
         arguments:
-            - '@Enhavo\Bundle\UserBundle\User\UserManager'
+            - '@enhavo_user.user.manager'
             - '@enhavo_user.repository.user'
             - '@Enhavo\Bundle\UserBundle\Mapper\UserMapper'
         tags:
@@ -17,7 +17,7 @@ services:
 
     Enhavo\Bundle\UserBundle\Command\ChangePasswordCommand:
         arguments:
-            - '@Enhavo\Bundle\UserBundle\User\UserManager'
+            - '@enhavo_user.user.manager'
             - '@enhavo_user.repository.user'
             - '@Enhavo\Bundle\UserBundle\Mapper\UserMapper'
         tags:
@@ -25,7 +25,7 @@ services:
 
     Enhavo\Bundle\UserBundle\Command\RoleCommand:
         arguments:
-            - '@Enhavo\Bundle\UserBundle\User\UserManager'
+            - '@enhavo_user.user.manager'
             - '@enhavo_user.repository.user'
             - '@Enhavo\Bundle\UserBundle\Mapper\UserMapper'
         tags:
