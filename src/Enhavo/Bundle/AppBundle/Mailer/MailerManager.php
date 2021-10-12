@@ -68,7 +68,7 @@ class MailerManager
 
         $message->setFrom($this->mailsConfig[$key]['from'] ?? $this->defaults->getMailFrom());
         $message->setTo($this->mailsConfig[$key]['to'] ?? $this->defaults->getMailTo());
-        $message->setSenderName($this->mailsConfig[$key]['name'] ?? $this->defaults->getMailName());
+        $message->setSenderName($this->mailsConfig[$key]['name'] ?? $this->defaults->getMailSenderName());
 
         $message->setSubject($this->mailsConfig[$key]['subject']);
         $message->setTemplate($this->mailsConfig[$key]['template']);
