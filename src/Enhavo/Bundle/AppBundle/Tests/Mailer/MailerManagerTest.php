@@ -25,7 +25,11 @@ class MailerManagerTest extends TestCase
         ], __DIR__ . '/../'));
         $dependencies->mailer = $this->getMockBuilder(\Swift_Mailer::class)->disableOriginalConstructor()->getMock();
         $dependencies->mailsConfig = [];
-        $dependencies->defaultConfig = [];
+        $dependencies->defaultConfig = [
+            'from' => 'from@enhavo.com',
+            'name' => 'enhavo',
+            'to' => 'to@enhavo.com',
+        ];
         $dependencies->model = Message::class;
         return $dependencies;
     }
