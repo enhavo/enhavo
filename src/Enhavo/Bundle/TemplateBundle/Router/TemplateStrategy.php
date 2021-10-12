@@ -39,7 +39,7 @@ class TemplateStrategy extends AbstractStrategy
 
         $slug = $this->getProperty($resource, 'slug');
         $parameters = array_merge($parameters, ['slug' => $slug]);
-        return $this->getRouter()->generate($template->getRoute()->getName(), $parameters);
+        return $this->getRouter()->generate($template->getRoute()->getName(), $parameters, $referenceType);
     }
 
     public function getType()
