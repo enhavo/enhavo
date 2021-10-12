@@ -39,7 +39,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class UserManager
 {
     /** @var EntityManagerInterface */
-    private $entityManager;
+    protected $em;
 
     /** @var MailerManager */
     protected $mailerManager;
@@ -56,14 +56,11 @@ class UserManager
     /** @var TranslatorInterface */
     private $translator;
 
-    /** @var FormFactoryInterface */
-    private $formFactory;
-
     /** @var EncoderFactoryInterface */
     private $encoderFactory;
 
     /** @var RouterInterface */
-    private $router;
+    protected $router;
 
     /** @var EventDispatcherInterface */
     private $eventDispatcher;
@@ -82,9 +79,6 @@ class UserManager
 
     /** @var RememberMeServicesInterface|null */
     private $rememberMeService;
-
-    /** @var array */
-    private $mail;
 
     /** @var array */
     private $defaultFirewall;
@@ -106,18 +100,31 @@ class UserManager
      * @param SessionAuthenticationStrategyInterface $sessionStrategy
      * @param UserCheckerInterface $userChecker
      * @param RememberMeServicesInterface|null $rememberMeService
-     * @param array $mail
      * @param string $defaultFirewall
      */
-    public function __construct(EntityManagerInterface $entityManager, MailerManager $mailerManager, RepositoryInterface $userRepository, UserMapperInterface $userMapper, TokenGeneratorInterface $tokenGenerator, TranslatorInterface $translator, FormFactoryInterface $formFactory, EncoderFactoryInterface $encoderFactory, RouterInterface $router, EventDispatcherInterface $eventDispatcher, TokenStorageInterface $tokenStorage, RequestStack $requestStack, SessionAuthenticationStrategyInterface $sessionStrategy, UserCheckerInterface $userChecker, ?RememberMeServicesInterface $rememberMeService, array $mail, string $defaultFirewall)
-    {
-        $this->entityManager = $entityManager;
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        MailerManager $mailerManager,
+        RepositoryInterface $userRepository,
+        UserMapperInterface $userMapper,
+        TokenGeneratorInterface $tokenGenerator,
+        TranslatorInterface $translator,
+        EncoderFactoryInterface $encoderFactory,
+        RouterInterface $router,
+        EventDispatcherInterface $eventDispatcher,
+        TokenStorageInterface $tokenStorage,
+        RequestStack $requestStack,
+        SessionAuthenticationStrategyInterface $sessionStrategy,
+        UserCheckerInterface $userChecker,
+        ?RememberMeServicesInterface $rememberMeService,
+        string $defaultFirewall
+    ) {
+        $this->em = $entityManager;
         $this->mailerManager = $mailerManager;
         $this->userRepository = $userRepository;
         $this->userMapper = $userMapper;
         $this->tokenGenerator = $tokenGenerator;
         $this->translator = $translator;
-        $this->formFactory = $formFactory;
         $this->encoderFactory = $encoderFactory;
         $this->router = $router;
         $this->eventDispatcher = $eventDispatcher;
@@ -126,13 +133,12 @@ class UserManager
         $this->sessionStrategy = $sessionStrategy;
         $this->userChecker = $userChecker;
         $this->rememberMeService = $rememberMeService;
-        $this->mail = $mail;
         $this->defaultFirewall = $defaultFirewall;
     }
 
     public function add(UserInterface $user)
     {
-        $this->entityManager->persist($user);
+        $this->em->persist($user);
         $this->update($user);
         $event = new UserEvent(UserEvent::TYPE_CREATED, $user);
         $this->eventDispatcher->dispatch($event);
@@ -144,7 +150,7 @@ class UserManager
         $this->updatePassword($user);
 
         if ($flush) {
-            $this->entityManager->flush();
+            $this->em->flush();
         }
     }
 
@@ -170,7 +176,7 @@ class UserManager
         $user->setConfirmationToken(null);
 
         if ($flush) {
-            $this->entityManager->flush();
+            $this->em->flush();
         }
     }
 
@@ -363,8 +369,8 @@ class UserManager
 
     public function delete(UserInterface $user, DeleteConfirmConfiguration $configuration)
     {
-        $this->entityManager->remove($user);
-        $this->entityManager->flush();
+        $this->em->remove($user);
+        $this->em->flush();
 
         if ($configuration->isMailEnabled()) {
             $this->sendDeleteMail($user, $configuration);
@@ -414,8 +420,8 @@ class UserManager
         $message->setSubject($this->translator->trans($configuration->getMailSubject(), [], $configuration->getTranslationDomain()));
         $message->setTemplate($configuration->getMailTemplate());
         $message->setTo($user->getEmail());
-        $message->setFrom($configuration->getMailFrom() ?? $this->mail['from']);
-        $message->setSenderName($this->translator->trans($configuration->getMailSenderName() ?? $this->mail['sender_name'], [], $configuration->getTranslationDomain()));
+        $message->setFrom($configuration->getMailFrom() ?? $this->mailerManager->getDefaults()->getMailFrom());
+        $message->setSenderName($this->translator->trans($configuration->getMailSenderName() ?? $this->mailerManager->getDefaults()->getMailSenderName(), [], $configuration->getTranslationDomain()));
         $message->setContentType($configuration->getMailContentType() ?? Message::CONTENT_TYPE_PLAIN);
         return $message;
     }
