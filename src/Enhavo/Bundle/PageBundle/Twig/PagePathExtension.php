@@ -6,6 +6,7 @@ use Enhavo\Bundle\PageBundle\Entity\Page;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -40,7 +41,7 @@ class PagePathExtension extends AbstractExtension
         );
     }
 
-    public function getPagePath($code)
+    public function getPagePath($code, $parameters = [], $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
         $page = $this->pageRepository->findOneBy([
             'code' => $code
@@ -55,7 +56,7 @@ class PagePathExtension extends AbstractExtension
         }
 
         try {
-            return $this->router->generate($page->getRoute());
+            return $this->router->generate($page->getRoute(), $parameters, $referenceType);
         } catch (RouteNotFoundException $e) {
             return $this->getDefaultLink($code);
         }
