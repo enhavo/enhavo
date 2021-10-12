@@ -8,6 +8,7 @@ namespace Enhavo\Bundle\UserBundle\Tests\User;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Exception\PropertyNotExistsException;
+use Enhavo\Bundle\AppBundle\Mailer\Defaults;
 use Enhavo\Bundle\AppBundle\Mailer\MailerManager;
 use Enhavo\Bundle\AppBundle\Mailer\Message;
 use Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface;
@@ -65,7 +66,6 @@ class UserManagerTest extends TestCase
             $dependencies->getUserMapper($mapping),
             $dependencies->tokenGenerator,
             $dependencies->translator,
-            $dependencies->formFactory,
             $dependencies->encoderFactory,
             $dependencies->router,
             $dependencies->eventDispatcher,
@@ -74,7 +74,6 @@ class UserManagerTest extends TestCase
             $dependencies->sessionStrategy,
             $dependencies->userChecker,
             $dependencies->rememberMeService,
-            [ 'from' => 'from@enhavo.com', 'sender_name' => 'enhavo' ],
             $dependencies->defaultFirewall
         );
     }
@@ -84,6 +83,7 @@ class UserManagerTest extends TestCase
         $dependencies = new UserManagerTestDependencies();
         $dependencies->entityManager = $this->getMockBuilder(EntityManagerInterface::class)->getMock();
         $dependencies->mailerManager = $this->getMockBuilder(MailerManager::class)->disableOriginalConstructor()->getMock();
+        $dependencies->mailerManager->method('getDefaults')->willReturn(new Defaults('from@enhavo.com', 'enhavo', 'to@enhavo.com'));
         $dependencies->userRepository = $this->getMockBuilder(UserRepository::class)->disableOriginalConstructor()->getMock();
         $dependencies->tokenGenerator = $this->getMockBuilder(TokenGeneratorInterface::class)->getMock();
         $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
@@ -91,16 +91,11 @@ class UserManagerTest extends TestCase
             return $message .'.translated';
         });
         $dependencies->form = $this->getMockBuilder(FormInterface::class)->getMock();
-        $dependencies->formFactory = $this->getMockBuilder(FormFactoryInterface::class)->getMock();
-        $dependencies->formFactory->method('create')->willReturnCallback(function ($type) use ($dependencies) {
-            return $dependencies->form;
-        });
         $dependencies->encoderFactory = $this->getMockBuilder(EncoderFactoryInterface::class)->getMock();
         $dependencies->encoder = $this->getMockBuilder(PasswordEncoderInterface::class)->getMock();
         $dependencies->encoder->method('encodePassword')->willReturnCallback(function ($password, $salt) {
             $this->assertEquals('password', $password);
             $this->assertNotNull($salt);
-
             return $password .'.hashed';
         });
         $dependencies->encoderFactory->method('getEncoder')->willReturn($dependencies->encoder);
@@ -458,9 +453,6 @@ class UserManagerTestDependencies
 
     /** @var TranslatorInterface|MockObject */
     public $translator;
-
-    /** @var FormFactoryInterface|MockObject */
-    public $formFactory;
 
     /** @var EncoderFactoryInterface|MockObject */
     public $encoderFactory;
