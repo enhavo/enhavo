@@ -44,8 +44,6 @@ class Configuration implements ConfigurationInterface
         $this->addResourceSection($rootNode);
         $this->addParametersSection($rootNode);
         $this->addMapperSection($rootNode);
-        $this->addMailSection($rootNode);
-
         $this->addConfigNode($rootNode);
 
         return $treeBuilder;
@@ -107,21 +105,6 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('default_firewall')->defaultValue('main')->end()
                 ->scalarNode('user_manager')->defaultValue(UserManager::class)->end()
-            ->end()
-        ;
-    }
-
-    private function addMailSection(ArrayNodeDefinition $node)
-    {
-        $node
-            ->children()
-                ->arrayNode('mail')
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->variableNode('from')->end()
-                        ->variableNode('sender_name')->end()
-                    ->end()
-                ->end()
             ->end()
         ;
     }

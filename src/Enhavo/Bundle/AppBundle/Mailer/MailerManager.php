@@ -23,8 +23,8 @@ class MailerManager
     /** @var Environment */
     private $environment;
 
-    /** @var array */
-    private $defaultConfig;
+    /** @var Defaults */
+    private $defaults;
 
     /** @var array */
     private $mailsConfig;
@@ -46,7 +46,7 @@ class MailerManager
         $this->mailer = $mailer;
         $this->templateManager = $templateManager;
         $this->environment = $environment;
-        $this->defaultConfig = $defaultConfig;
+        $this->defaults = new Defaults($defaultConfig['from'], $defaultConfig['name'], $defaultConfig['to']);
         $this->mailsConfig = $mailsConfig;
         $this->model = $model;
     }
@@ -66,9 +66,9 @@ class MailerManager
 
         $message = $this->createMessage();
 
-        $message->setFrom($this->mailsConfig[$key]['from'] ?? $this->defaultConfig['from']);
-        $message->setTo($this->mailsConfig[$key]['to'] ?? $this->defaultConfig['to']);
-        $message->setSenderName($this->mailsConfig[$key]['name'] ?? $this->defaultConfig['name']);
+        $message->setFrom($this->mailsConfig[$key]['from'] ?? $this->defaults->getMailFrom());
+        $message->setTo($this->mailsConfig[$key]['to'] ?? $this->defaults->getMailTo());
+        $message->setSenderName($this->mailsConfig[$key]['name'] ?? $this->defaults->getMailName());
 
         $message->setSubject($this->mailsConfig[$key]['subject']);
         $message->setTemplate($this->mailsConfig[$key]['template']);
@@ -140,5 +140,10 @@ class MailerManager
     private function renderString(string $string, array $context)
     {
         return $this->environment->createTemplate($string)->render($context);
+    }
+
+    public function getDefaults(): Defaults
+    {
+        return $this->defaults;
     }
 }

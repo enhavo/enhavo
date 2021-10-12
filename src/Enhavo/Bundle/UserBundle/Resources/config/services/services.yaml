@@ -7,7 +7,6 @@ services:
             - '@Enhavo\Bundle\UserBundle\Mapper\UserMapper'
             - '@enhavo_app.util.secure_url_token_generator'
             - '@translator'
-            - '@form.factory'
             - '@security.encoder_factory.generic'
             - '@router'
             - '@event_dispatcher'
@@ -16,7 +15,6 @@ services:
             - '@security.authentication.session_strategy.main'
             - '@security.user_checker.main'
             - ~
-            - '%enhavo_user.mail%'
             - '%enhavo_user.default_firewall%'
 
     Enhavo\Bundle\UserBundle\EventListener\SaveUserSubscriber:

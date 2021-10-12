@@ -1,8 +1,4 @@
 enhavo_user:
-    mail:
-        from: '%env(string:MAILER_FROM)%'
-        sender_name: '%env(string:MAILER_NAME)%'
-
     config:
         theme:
             registration_register:
