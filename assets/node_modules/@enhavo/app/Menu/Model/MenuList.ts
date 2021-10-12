@@ -29,12 +29,23 @@ export default class MenuList extends AbstractMenu
 
     closeOtherMenus() {
         let items = this.getManager().getItems();
-        for(let item of items) {
-            if(item !== this) {
-                if((<MenuList>item).close) {
+        for (let item of items) {
+            if (item !== this && !this.isChildOf(item)) {
+                if ((<MenuList>item).close) {
                     (<MenuList>item).close();
                 }
             }
         }
+    }
+
+    private isChildOf(item: MenuInterface)
+    {
+        let children = item.children();
+        for (let child of children) {
+            if (child == this) {
+                return true;
+            }
+        }
+        return false;
     }
 }
