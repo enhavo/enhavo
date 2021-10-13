@@ -12,4 +12,6 @@ namespace Enhavo\Bundle\ContentBundle\Sitemap;
 interface SitemapInterface
 {
     public function getUpdated();
+
+    public function isNoIndex();
 }
