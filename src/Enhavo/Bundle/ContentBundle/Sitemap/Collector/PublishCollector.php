@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\ContentBundle\Sitemap\Collector;
 use Enhavo\Bundle\ContentBundle\Content\Publishable;
+use Enhavo\Bundle\ContentBundle\Sitemap\SitemapInterface;
 use Pagerfanta\Pagerfanta;
 
 /**
@@ -26,6 +27,9 @@ class PublishCollector extends RepositoryCollector
         $urls = [];
         foreach($resources as $resource) {
             if($resource instanceof Publishable && $resource->isPublished()) {
+                if ($resource instanceof SitemapInterface && $resource->isNoIndex()) {
+                    continue;
+                }
                 $urls[] = $this->convertToUrl($resource);
             }
         }

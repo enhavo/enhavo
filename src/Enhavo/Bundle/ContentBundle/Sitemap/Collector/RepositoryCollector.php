@@ -72,6 +72,9 @@ class RepositoryCollector extends AbstractType implements CollectorInterface
         $resources = $this->getResources();
         $urls = [];
         foreach($resources as $resource) {
+            if ($resource instanceof SitemapInterface && $resource->isNoIndex()) {
+                continue;
+            }
             $urls[] = $this->convertToUrl($resource);
         }
         return $urls;
