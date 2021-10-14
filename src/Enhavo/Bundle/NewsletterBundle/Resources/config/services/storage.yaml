@@ -27,3 +27,10 @@ services:
             - '@Enhavo\Bundle\NewsletterBundle\Client\MailChimpClient'
         tags:
             - { name: enhavo_newsletter.storage }
+
+    Enhavo\Bundle\NewsletterBundle\Storage\Type\MailjetStorageType:
+        public: true
+        arguments:
+            - '@Enhavo\Bundle\NewsletterBundle\Client\MailjetClient'
+        tags:
+            - { name: enhavo_newsletter.storage }

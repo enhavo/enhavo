@@ -8,6 +8,10 @@ services:
         arguments:
             - '@event_dispatcher'
 
+    Enhavo\Bundle\NewsletterBundle\Client\MailjetClient:
+        arguments:
+            - '@event_dispatcher'
+
     Enhavo\Bundle\NewsletterBundle\Validator\Constraints\SubscriberExistsValidator:
         class: Enhavo\Bundle\NewsletterBundle\Validator\Constraints\SubscriberExistsValidator
         arguments:
