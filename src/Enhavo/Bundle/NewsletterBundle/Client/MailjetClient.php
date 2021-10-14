@@ -43,39 +43,69 @@ class MailjetClient
     public function init(string $clientKey, string $clientSecret)
     {
         if (!$this->initialized) {
-
             $this->client = new Client($clientKey, $clientSecret,true,['version' => 'v3']);
-
             $this->initialized = true;
         }
     }
 
     /**
      * @param SubscriberInterface $subscriber
-     * @param $groupId
      * @throws InsertException
      */
-    public function saveSubscriber(SubscriberInterface $subscriber, $groupId)
+    public function saveSubscriber(SubscriberInterface $subscriber)
     {
-
-        $event = new StorageEvent(StorageEvent::EVENT_MAILJET_PRE_STORE, $subscriber, [
-
-        ]);
+        $event = new StorageEvent(StorageEvent::EVENT_MAILJET_PRE_STORE, $subscriber, []);
         $this->eventDispatcher->dispatch($event);
 
         $data = $event->getDataArray();
 
-        $body = [
-            'Action' => 'addnoforce',
-            'Email' => $subscriber->getEmail(),
-        ];
-        $response = $this->client->post(Resources::$ContactslistManagecontact, ['id' => $groupId, 'body' => $body]);
+        $response = $this->client->post(Resources::$Contact, [
+            'body' => [
+                'Email' => $subscriber->getEmail(),
+            ],
+        ]);
 
         if (!$response->success()) {
             throw new InsertException(
-                sprintf('Insertion into group "%s" failed.', $groupId)
+                sprintf('Insertion of contact "%s" failed.', $subscriber->getEmail())
             );
         }
+    }
+
+    public function addToGroup(SubscriberInterface $subscriber, $groupId)
+    {
+        $subscriberArray = $this->getSubscriber($subscriber->getEmail(), $groupId);
+        $response = $this->client->post(Resources::$ContactManagecontactslists, [
+            'id' => $subscriberArray['ID'],
+            'body' => [
+                'ContactsLists' => [
+                    [
+                        'Action' => 'addnoforce',
+                        'ListID' => $groupId,
+                    ]
+                ],
+            ],
+        ]);
+
+        return $response->success();
+    }
+
+    public function removeFromGroup(SubscriberInterface $subscriber, $groupId)
+    {
+        $subscriberArray = $this->getSubscriber($subscriber->getEmail(), $groupId);
+        $response = $this->client->post(Resources::$ContactManagecontactslists, [
+            'id' => $subscriberArray['ID'],
+            'body' => [
+                'ContactsLists' => [
+                    [
+                        'Action' => 'remove',
+                        'ListID' => $groupId,
+                    ],
+                ],
+            ],
+        ]);
+
+        return $response->success();
     }
 
     /**
@@ -83,27 +113,24 @@ class MailjetClient
      * @param $groupId
      * @throws RemoveException
      */
-    public function removeSubscriber(SubscriberInterface $subscriber, $groupId)
+    public function removeSubscriber(SubscriberInterface $subscriber)
     {
-        $response = $this->getSubscriber($subscriber->getEmail(), $groupId);
+        $subscriberArray = $this->getSubscriber($subscriber->getEmail());
+        $response = $this->client->delete(Resources::$Contact, [
+            'id' => $subscriberArray['ID'],
+        ]);
 
-        $response = $this->client->delete(Resources::$Contact, ['id' => $id]);
-        $response = $this->client->deleteSubscriber(
-            $subscriber->getEmail(),
-            intval($groupId)
-        );
-
-        if (true !== $response) {
+        if (!$response->success()) {
             throw new RemoveException(
-                sprintf('Removal from group "%s" failed.', $groupId)
+                sprintf('Removal of subscriber "%s" failed.', $subscriber->getEmail())
             );
         }
     }
 
-    public function getSubscriber(string $email, $groupId)
+    public function getSubscriber(string $email)
     {
         $response = $this->client->get(Resources::$Contact, [
-            'id' => urlencode($email),
+            'id' => urlencode($email)
         ]);
 
         if ($response->success()) {
@@ -119,33 +146,11 @@ class MailjetClient
     }
 
     /**
-     * @param $eMail
-     * @param $groupId
+     * @param $email
      * @return bool
      */
-    public function exists($eMail, $groupId)
+    public function exists($email)
     {
-        $response = $this->getSubscriber($eMail, $groupId);
-
-        if (isset($response['ID'])) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public function getGroup($groupId)
-    {
-        return $this->getClient()->getGroup(intval($groupId));
-    }
-
-    public function getGroups()
-    {
-        return $this->getClient()->getGroups();
-    }
-
-    protected function getClient(): Client
-    {
-        return $this->client;
+        return (bool)$this->getSubscriber($email);
     }
 }

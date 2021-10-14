@@ -39,16 +39,31 @@ class MailjetStorageType extends AbstractStorageType
      */
     public function saveSubscriber(SubscriberInterface $subscriber, array $options)
     {
-        $groups = $this->mapGroups($subscriber, $options['groups']);
-
         $this->client->init($options['client_key'], $options['client_secret']);
 
-        foreach ($groups as $group) {
-            if ($this->client->exists($subscriber->getEmail(), $group)) {
-                continue;
-            }
-            $this->client->saveSubscriber($subscriber, $group);
+        if (!$this->client->exists($subscriber->getEmail())) {
+            $this->client->saveSubscriber($subscriber);
         }
+        $groups = $this->mapGroups($subscriber, $options['groups']);
+        foreach ($groups as $group) {
+            $this->client->addToGroup($subscriber, $group);
+        }
+    }
+
+    public function removeSubscriber(SubscriberInterface $subscriber, array $options)
+    {
+//        $groups = $this->mapGroups($subscriber, $options['groups']);
+
+        $this->client->init($options['client_key'], $options['client_secret'], $options['attributes'], $options['global_attributes']);
+
+//        foreach ($groups as $group) {
+//            if (!$this->client->exists($subscriber->getEmail(), $group)) {
+//                continue;
+//            }
+//            $this->client->removeFromGroup($subscriber, $group);
+//        }
+
+        $this->client->removeSubscriber($subscriber);
     }
 
     public function getSubscriber(SubscriberInterface $subscriber, array $options): ?SubscriberInterface
