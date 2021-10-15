@@ -9,6 +9,7 @@ namespace Enhavo\Bundle\UserBundle\Security\Authentication;
 
 use Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider;
 use Enhavo\Bundle\UserBundle\Event\UserLoginEvent;
+use Enhavo\Bundle\UserBundle\Exception\ConfigurationException;
 use Enhavo\Bundle\UserBundle\Mapper\UserMapperInterface;
 use Enhavo\Bundle\UserBundle\User\UserManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -185,10 +186,14 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator implements P
         return new RedirectResponse($url);
     }
 
-    protected function updateLoginRoute(?string $config)
+    protected function updateLoginRoute($config)
     {
-        if ($config) {
-            $this->loginRoute = $this->configurationProvider->getLoginConfiguration($config)->getRoute();
+        if (is_string($config)) {
+            try {
+                $this->loginRoute = $this->configurationProvider->getLoginConfiguration($config)->getRoute();
+            } catch (ConfigurationException $e) {
+                // don't update login route
+            }
         }
     }
 
