@@ -15,14 +15,16 @@ use Doctrine\ORM\EntityRepository;
 
 class PageType extends AbstractType
 {
-    /**
-     * @var string
-     */
-    protected $dataClass;
+    /** @var string */
+    private $dataClass;
 
-    public function __construct($dataClass)
+    /** @var array */
+    private $specialPages;
+
+    public function __construct($dataClass, $specialPages)
     {
         $this->dataClass = $dataClass;
+        $this->specialPages = $specialPages;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -32,6 +34,34 @@ class PageType extends AbstractType
             'translation_domain' => 'EnhavoAppBundle',
             'item_groups' => ['layout'],
         ));
+
+        $specialPages = $this->specialPages;
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) use ($specialPages) {
+            $form = $event->getForm();
+            $data = $event->getData();
+
+            $form->add('parent', EntityType::class, array(
+                'label' => 'page.label.parent',
+                'translation_domain' => 'EnhavoPageBundle',
+                'class' => $this->dataClass,
+                'placeholder' => '---',
+                'query_builder' => function (EntityRepository $er) use ($data) {
+                    $query =  $er->createQueryBuilder('p');
+                    if($data instanceof ResourceInterface && $data->getId()) {
+                        $query->where('p.id != :id');
+                        $query->setParameter('id', $data->getId());
+                    }
+                    return $query;
+                }
+            ));
+
+            if (count($specialPages)) {
+                $form->add('code', SpecialPageType::class, array(
+                    'label' => 'page.label.special_page',
+                    'translation_domain' => 'EnhavoPageBundle',
+                ));
+            }
+        });
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
             $form = $event->getForm();

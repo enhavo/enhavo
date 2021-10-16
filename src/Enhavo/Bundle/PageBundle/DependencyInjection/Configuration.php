@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\PageBundle\DependencyInjection;
 
+use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -20,13 +21,36 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder('enhavo_page');
         $rootNode = $treeBuilder->getRootNode();
 
-        $rootNode
-            // Driver used by the resource bundle
+        $this->addSpecialPageConfiguration($rootNode);
+        $this->addResourceConfiguration($rootNode);
+
+        return $treeBuilder;
+    }
+
+    public function addSpecialPageConfiguration(NodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('special_pages')
+                    ->useAttributeAsKey('code')
+                    ->prototype('array')
+                        ->addDefaultsIfNotSet()
+                        ->children()
+                            ->scalarNode('label')->isRequired()->end()
+                            ->scalarNode('translation_domain')->defaultValue(null)->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end();
+    }
+
+    public function addResourceConfiguration(NodeDefinition $node)
+    {
+        $node
             ->children()
                 ->scalarNode('driver')->defaultValue('doctrine/orm')->end()
             ->end()
 
-            // The resources
             ->children()
                 ->arrayNode('resources')
                     ->addDefaultsIfNotSet()
@@ -58,7 +82,5 @@ class Configuration implements ConfigurationInterface
                 ->end()
             ->end()
         ;
-
-        return $treeBuilder;
     }
 }

@@ -27,6 +27,7 @@ page:
     never: 'Nie'
     assigned: 'zugeordnet'
     parent: 'Elternseite'
+    special_page: 'Spezialseite'
   batch:
     action:
       publish: 'Veröffentlichen'
