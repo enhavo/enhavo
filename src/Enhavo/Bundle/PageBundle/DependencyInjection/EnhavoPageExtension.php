@@ -26,8 +26,7 @@ class EnhavoPageExtension extends AbstractResourceExtension implements PrependEx
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $this->registerResources('enhavo_page', $config['driver'], $config['resources'], $container);
 
-        $container->setParameter('enhavo_page.routing.page.strategy', $config['resources']['page']['routing']['strategy']);
-        $container->setParameter('enhavo_page.routing.page.route', $config['resources']['page']['routing']['route']);
+        $container->setParameter('enhavo_page.special_pages', $config['special_pages']);
 
         $configFiles = array(
             'services.yaml',
