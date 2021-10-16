@@ -45,6 +45,7 @@ user:
             admin: 'Admin'
             enabled: 'Aktiviert'
             super_admin: 'Super Admin'
+            verified: 'Verifiziert'
         help:
             admin: 'Nur wenn diese Feld gesetzt ist kann sich der User im Adminbereich einloggen'
     label:
