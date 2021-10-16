@@ -27,6 +27,7 @@ page:
     never: 'Never'
     assigned: 'assigned'
     parent: 'Parent'
+    special_page: 'Special page'
   batch:
     action:
       publish: 'Publish'

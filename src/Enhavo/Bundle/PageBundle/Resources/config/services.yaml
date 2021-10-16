@@ -2,19 +2,19 @@ services:
     Enhavo\Bundle\PageBundle\Form\Type\PageType:
         arguments:
             - '%enhavo_page.model.page.class%'
+            - '%enhavo_page.special_pages%'
         tags:
-            - { name: form.type, alias: enhavo_page_page }
+            - { name: form.type }
 
     Enhavo\Bundle\PageBundle\Form\Type\PageChoiceType:
         arguments:
             - '%enhavo_page.model.page.class%'
         tags:
-            - { name: form.type, alias: 'enhavo_page_page_choice' }
+            - { name: form.type }
 
     Enhavo\Bundle\PageBundle\Twig\PagePathExtension:
         arguments:
-            - '@enhavo_page.repository.page'
-            - '@router'
+            - '@Enhavo\Bundle\PageBundle\Page\PageManager'
         tags:
             - { name: twig.extension }
 
@@ -40,3 +40,15 @@ services:
             - '%enhavo_page.model.page.class%'
             - '@enhavo_block.factory.node'
             - '@enhavo_routing.factory.route'
+
+    Enhavo\Bundle\PageBundle\Page\PageManager:
+        arguments:
+            - '@enhavo_page.repository.page'
+            - '@router'
+
+    Enhavo\Bundle\PageBundle\Form\Type\SpecialPageType:
+        arguments:
+            - '%enhavo_page.special_pages%'
+            - '@translator'
+        tags:
+            - { name: form.type }
