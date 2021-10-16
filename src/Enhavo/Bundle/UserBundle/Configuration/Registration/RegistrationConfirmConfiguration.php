@@ -18,4 +18,23 @@ class RegistrationConfirmConfiguration implements MailConfigurationInterface
     use AutoLoginTrait;
     use RedirectRouteTrait;
     use TranslationDomainTrait;
+
+    /** @var boolean */
+    private $autoEnabled = true;
+
+    /**
+     * @return bool
+     */
+    public function isAutoEnabled(): bool
+    {
+        return (bool)$this->autoEnabled;
+    }
+
+    /**
+     * @param bool $autoEnabled
+     */
+    public function setAutoEnabled(bool $autoEnabled): void
+    {
+        $this->autoEnabled = $autoEnabled;
+    }
 }

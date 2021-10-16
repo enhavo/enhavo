@@ -176,19 +176,20 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
 
-                ->arrayNode('registration_finish')
-                    ->children()
-                        ->scalarNode('template')->isRequired()->cannotBeEmpty()->end()
-                    ->end()
-                ->end()
-
                 ->arrayNode('registration_confirm')
                     ->children()
                         ->scalarNode('template')->isRequired()->cannotBeEmpty()->end()
+                        ->scalarNode('auto_enabled')->defaultValue(true)->end()
                         ->append($this->addConfigMailNode())
                         ->scalarNode('translation_domain')->defaultValue(null)->end()
                         ->scalarNode('redirect_route')->defaultValue(null)->end()
                      ->end()
+                ->end()
+
+                ->arrayNode('registration_finish')
+                    ->children()
+                        ->scalarNode('template')->isRequired()->cannotBeEmpty()->end()
+                    ->end()
                 ->end()
             ->end()
         ;

@@ -12,9 +12,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class RegistrationType extends AbstractType
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $class;
 
     /**
