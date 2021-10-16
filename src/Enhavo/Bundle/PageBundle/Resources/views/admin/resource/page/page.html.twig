@@ -1,5 +1,6 @@
 {% if form.link is defined %}{{ form_row(form.link) }}{% endif %}
-{{ form_row(form.title) }}
-{{ form_row(form.parent) }}
-{{ form_row(form.public) }}
-{{ form_row(form._token) }}
+{% if form.title is defined %}{{ form_row(form.title) }}{% endif %}
+{% if form.parent is defined %}{{ form_row(form.parent) }}{% endif %}
+{% if form.public is defined %}{{ form_row(form.public) }}{% endif %}
+{% if form.code is defined %}{{ form_row(form.code) }}{% endif %}
+{% if form._token is defined %}{{ form_row(form._token) }}{% endif %}
