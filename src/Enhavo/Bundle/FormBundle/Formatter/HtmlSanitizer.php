@@ -37,8 +37,8 @@ class HtmlSanitizer
         $config = \HTMLPurifier_Config::createDefault();
         $config->set('Cache.SerializerPath', $this->serializationPath);
 
-        foreach ($options as $key => $value) {
-            $config->set($key, $value);
+        foreach ($options as $key => $optionValue) {
+            $config->set($key, $optionValue);
         }
 
         $purifier = new \HTMLPurifier($config);
