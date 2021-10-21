@@ -13,8 +13,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class BooleanType extends AbstractType
 {
-    const VALUE_TRUE = 'true';
-    const VALUE_FALSE = 'false';
+    const VALUE_TRUE = '1';
+    const VALUE_FALSE = '0';
     const VALUE_NULL = 'null';
 
     /**

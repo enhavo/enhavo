@@ -33,7 +33,7 @@ class BooleanTypeTest extends TypeTestCase
         $form = $this->factory->create(BooleanType::class, null, []);
 
         $form->setData(false);
-        $form->submit('true');
+        $form->submit('1');
 
         $this->assertTrue($form->isSynchronized());
         $data = $form->getData();
@@ -45,7 +45,7 @@ class BooleanTypeTest extends TypeTestCase
         $form = $this->factory->create(BooleanType::class, null, []);
 
         $form->setData(true);
-        $form->submit('false');
+        $form->submit('0');
         $form->createView();
 
         $this->assertTrue($form->isSynchronized());
