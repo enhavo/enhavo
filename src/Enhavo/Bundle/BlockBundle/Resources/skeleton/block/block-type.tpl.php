@@ -21,7 +21,7 @@ class <?= $definition->getCamelName(); ?>Type extends AbstractBlockType
             'template' => '<?= $definition->getTemplateFileName(); ?>',
             'label' => '<?= $definition->getLabel(); ?>',
             'translationDomain' => <?= $definition->getTranslationDomain() ? "'".$definition->getTranslationDomain()."'" : 'null' ?>,
-            'groups' => <?= $definition->getGroupsString(); ?>
+            'groups' => <?= $definition->getGroupsString() ? $definition->getGroupsString() : '[]' ?>
         ]);
     }
 
