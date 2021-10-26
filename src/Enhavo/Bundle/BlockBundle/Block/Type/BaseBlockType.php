@@ -19,6 +19,7 @@ class BaseBlockType extends AbstractType implements BlockTypeInterface
     public function createViewData(BlockInterface $block, ViewData $viewData, $resource, array $options)
     {
         $viewData['block'] = $block;
+        $viewData['resource'] = $resource;
     }
 
     public function finishViewData(BlockInterface $block, ViewData $viewData, $resource, array $options)
