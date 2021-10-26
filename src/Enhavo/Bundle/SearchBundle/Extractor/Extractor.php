@@ -45,13 +45,15 @@ class Extractor
         $metadata = $this->metadataRepository->getMetadata($resource);
 
         $data = [];
-        $propertyAccessor = PropertyAccess::createPropertyAccessor();
-        foreach($metadata->getProperties() as $property) {
-            $propertyExtractor = $this->collector->getType($property->getType());
-            $value = $propertyAccessor->getValue($resource, $property->getProperty());
-            $extractions = $propertyExtractor->extract($value, $property->getOptions());
-            foreach($extractions as $extraction) {
-                $data[] = $extraction;
+        if ($metadata) {
+            $propertyAccessor = PropertyAccess::createPropertyAccessor();
+            foreach ($metadata->getProperties() as $property) {
+                $propertyExtractor = $this->collector->getType($property->getType());
+                $value = $propertyAccessor->getValue($resource, $property->getProperty());
+                $extractions = $propertyExtractor->extract($value, $property->getOptions());
+                foreach($extractions as $extraction) {
+                    $data[] = $extraction;
+                }
             }
         }
         return $data;
