@@ -105,7 +105,11 @@ class BlockDefinition
     {
         foreach ($this->getProperties() as $key => $property) {
             if (isset($property['template'])) {
-                $config = Yaml::parseFile($this->getTemplatePath($property['template']));
+                $path = $this->getTemplatePath($property['template']);
+                if ($path === null) {
+                    throw new \Exception(sprintf('Cant find template "%s"', $property['template']));
+                }
+                $config = Yaml::parseFile($path);
                 $this->config['properties'][$key] = $this->deepMerge($config, $this->config['properties'][$key]);
                 unset($this->config['properties'][$key]['template']);
 
@@ -390,7 +394,10 @@ class BlockDefinition
 
     private function getUse()
     {
-        return array_unique($this->config['use']) ?? [];
+        if (isset($this->config['use'])) {
+            return array_unique($this->config['use']) ?? [];
+        }
+        return [];
     }
 
     private function getFormUse()
