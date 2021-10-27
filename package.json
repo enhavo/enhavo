@@ -25,7 +25,6 @@
     "compass-mixins": "^0.12.10",
     "copy-webpack-plugin": "^4.5.2",
     "cropperjs": "~1.2.2",
-    "fullcalendar": "^3.10.0",
     "glob": "^7.1.6",
     "icheck": "~1.0.2",
     "jexl": "^2.1.1",
