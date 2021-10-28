@@ -113,12 +113,13 @@ class SubscriptionController extends AbstractController
     public function unsubscribeAction(Request $request)
     {
         $type = $request->get('type');
-        $email = $request->get('email');
+        $email = urldecode($request->get('token'));
         $subscription = $this->subscriptionManager->getSubscription($type);
+        $strategy = $subscription->getStrategy();
         $subscriber = $this->subscriptionManager->createModel($subscription->getModel());
         $subscriber->setEmail($email);
         $subscriber->setSubscription($type);
-        $subscriber = $subscription->getStrategy()->getStorage()->getSubscriber($subscriber);
+        $subscriber = $strategy->getStorage()->getSubscriber($subscriber);
 
         if (!$subscriber) {
             throw $this->createNotFoundException();
@@ -126,11 +127,19 @@ class SubscriptionController extends AbstractController
 
         $message = $subscription->getStrategy()->removeSubscriber($subscriber);
 
-        return new JsonResponse([
+        $templateManager = $this->get('enhavo_app.template.manager');
+        return $this->render($templateManager->getTemplate($strategy->getUnsubscribeTemplate()), [
             'message' => $this->translator->trans($message, [], 'EnhavoNewsletterBundle'),
             'subscriber' => $this->serializer->normalize($subscriber, 'json', [
                 'groups' => ['subscription']
             ]),
         ]);
+
+//        return new JsonResponse([
+//            'message' => $this->translator->trans($message, [], 'EnhavoNewsletterBundle'),
+//            'subscriber' => $this->serializer->normalize($subscriber, 'json', [
+//                'groups' => ['subscription']
+//            ]),
+//        ]);
     }
 }

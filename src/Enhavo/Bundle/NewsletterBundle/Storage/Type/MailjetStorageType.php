@@ -34,15 +34,15 @@ class MailjetStorageType extends AbstractStorageType
      * @param SubscriberInterface $subscriber
      * @param array $options
      * @return mixed|void
-     * @throws NoGroupException
      * @throws InsertException
+     * @throws NoGroupException
      */
     public function saveSubscriber(SubscriberInterface $subscriber, array $options)
     {
         $this->client->init($options['client_key'], $options['client_secret']);
 
-        if (!$this->client->exists($subscriber->getEmail())) {
-            $this->client->saveSubscriber($subscriber);
+        if (!$this->exists($subscriber, $options)) {
+            $this->client->saveSubscriber($subscriber, null);
         }
         $groups = $this->mapGroups($subscriber, $options['groups']);
         foreach ($groups as $group) {
@@ -52,18 +52,16 @@ class MailjetStorageType extends AbstractStorageType
 
     public function removeSubscriber(SubscriberInterface $subscriber, array $options)
     {
-//        $groups = $this->mapGroups($subscriber, $options['groups']);
+        $groups = $this->mapGroups($subscriber, $options['groups']);
 
-        $this->client->init($options['client_key'], $options['client_secret'], $options['attributes'], $options['global_attributes']);
+        $this->client->init($options['client_key'], $options['client_secret']);
 
-//        foreach ($groups as $group) {
-//            if (!$this->client->exists($subscriber->getEmail(), $group)) {
-//                continue;
-//            }
-//            $this->client->removeFromGroup($subscriber, $group);
-//        }
-
-        $this->client->removeSubscriber($subscriber);
+        foreach ($groups as $group) {
+            if (!$this->client->exists($subscriber->getEmail(), $group)) {
+                continue;
+            }
+            $this->client->removeFromGroup($subscriber, $group);
+        }
     }
 
     public function getSubscriber(SubscriberInterface $subscriber, array $options): ?SubscriberInterface
@@ -72,7 +70,8 @@ class MailjetStorageType extends AbstractStorageType
 
         $response = $this->client->getSubscriber($subscriber->getEmail());
 
-        $subscriber->setEmail($response['email']);
+        $subscriber->setEmail($response['Email']);
+        $subscriber->setConfirmationToken($response['Id']);
 
         return $subscriber;
 

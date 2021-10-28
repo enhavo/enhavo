@@ -46,6 +46,11 @@ abstract class AbstractStrategyType extends AbstractType implements StrategyType
         return $this->parent->getActivationTemplate($options);
     }
 
+    public function getUnsubscribeTemplate(array $options): ?string
+    {
+        return $this->parent->getUnsubscribeTemplate($options);
+    }
+
     public function setStorage(Storage $storage)
     {
         $this->parent->setStorage($storage);

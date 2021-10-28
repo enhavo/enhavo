@@ -100,7 +100,7 @@
                     <td class="footer-text" align="left">
                         <div class="footer"></div>
                         <br>
-                        <a href="{{ path('enhavo_newsletter_subscriber_unsubscribe', { token: receiver.token }) }}">vom Newsletter abmelden</a> <br><br>
+                        <a href="{{ path('enhavo_newsletter_subscriber_unsubscribe', { 'token': receiver.token, 'type': 'default' }) }}">vom Newsletter abmelden</a> <br><br>
                     </td>
                 </tr>
 
