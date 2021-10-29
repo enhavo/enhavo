@@ -135,12 +135,5 @@ class SubscriptionController extends AbstractController
                 'groups' => ['subscription']
             ]),
         ]);
-
-//        return new JsonResponse([
-//            'message' => $this->translator->trans($message, [], 'EnhavoNewsletterBundle'),
-//            'subscriber' => $this->serializer->normalize($subscriber, 'json', [
-//                'groups' => ['subscription']
-//            ]),
-//        ]);
     }
 }

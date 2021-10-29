@@ -91,12 +91,11 @@ class DoubleOptInStrategyType extends AbstractStrategyType
     private function confirmSubscriber(SubscriberInterface $subscriber, array $options)
     {
         if ($options['confirm']) {
-            // TODO add change subscription link
             $template = $options['confirmation_template'];
             $from = $options['from'];
             $senderName = $options['sender_name'];
             $subject = $this->trans($options['confirmation_subject'], [], $options['translation_domain']);
-            $unsubscribeLink = $this->router->generate('enhavo_newsletter_subscriber_unsubscribe', [
+            $unsubscribeLink = $this->router->generate('enhavo_newsletter_subscriber_unsubscribe', [ // add option to set unsubscribe_route
                 'token' => urlencode($subscriber->getConfirmationToken()),
                 'type' => $subscriber->getSubscription(),
             ], UrlGeneratorInterface::ABSOLUTE_URL);
