@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\NewsletterBundle\Controller;
 
 use Enhavo\Bundle\FormBundle\Error\FormErrorResolver;
+use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Pending\PendingSubscriberManager;
 use Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -113,12 +114,13 @@ class SubscriptionController extends AbstractController
     public function unsubscribeAction(Request $request)
     {
         $type = $request->get('type');
-        $email = $request->get('email');
+        $token = urldecode($request->get('token'));
         $subscription = $this->subscriptionManager->getSubscription($type);
+        $strategy = $subscription->getStrategy();
         $subscriber = $this->subscriptionManager->createModel($subscription->getModel());
-        $subscriber->setEmail($email);
+        $subscriber->setConfirmationToken($token);
         $subscriber->setSubscription($type);
-        $subscriber = $subscription->getStrategy()->getStorage()->getSubscriber($subscriber);
+        $subscriber = $strategy->getStorage()->getSubscriber($subscriber);
 
         if (!$subscriber) {
             throw $this->createNotFoundException();
@@ -126,7 +128,8 @@ class SubscriptionController extends AbstractController
 
         $message = $subscription->getStrategy()->removeSubscriber($subscriber);
 
-        return new JsonResponse([
+        $templateManager = $this->get('enhavo_app.template.manager');
+        return $this->render($templateManager->getTemplate($strategy->getUnsubscribeTemplate()), [
             'message' => $this->translator->trans($message, [], 'EnhavoNewsletterBundle'),
             'subscriber' => $this->serializer->normalize($subscriber, 'json', [
                 'groups' => ['subscription']

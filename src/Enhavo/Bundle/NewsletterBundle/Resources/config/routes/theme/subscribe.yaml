@@ -12,7 +12,7 @@ enhavo_newsletter_subscribe_add:
     methods: [POST]
 
 enhavo_newsletter_subscriber_unsubscribe:
-    path: /newsletter/unsubscribe/{email}/{type}
+    path: /newsletter/unsubscribe/{token}/{type}
     options:
         expose: true
     controller: Enhavo\Bundle\NewsletterBundle\Controller\SubscriptionController::unsubscribeAction

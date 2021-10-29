@@ -65,16 +65,28 @@ class MailjetClient
             ],
         ]);
 
-        if (!$response->success()) {
-            throw new InsertException(
-                sprintf('Insertion of contact "%s" failed.', $subscriber->getEmail())
-            );
+        if ($response->success()) {
+            foreach ($response->getData() as $contact) {
+                if ($subscriber->getEmail() === $contact['Email']) {
+                    $subscriber->setConfirmationToken($contact['ID']);
+                    return;
+                }
+            }
         }
+
+        throw new InsertException(
+            sprintf('Insertion of contact "%s" failed.', $subscriber->getEmail())
+        );
     }
 
-    public function addToGroup(SubscriberInterface $subscriber, $groupId)
+    /**
+     * @param SubscriberInterface $subscriber
+     * @param $groupId
+     * @return bool
+     */
+    public function addToGroup(SubscriberInterface $subscriber, $groupId): bool
     {
-        $subscriberArray = $this->getSubscriber($subscriber->getEmail(), $groupId);
+        $subscriberArray = $this->getSubscriber($subscriber->getConfirmationToken());
         $response = $this->client->post(Resources::$ContactManagecontactslists, [
             'id' => $subscriberArray['ID'],
             'body' => [
@@ -90,9 +102,14 @@ class MailjetClient
         return $response->success();
     }
 
-    public function removeFromGroup(SubscriberInterface $subscriber, $groupId)
+    /**
+     * @param SubscriberInterface $subscriber
+     * @param $groupId
+     * @return bool
+     */
+    public function removeFromGroup(SubscriberInterface $subscriber, $groupId): bool
     {
-        $subscriberArray = $this->getSubscriber($subscriber->getEmail(), $groupId);
+        $subscriberArray = $this->getSubscriber($subscriber->getConfirmationToken());
         $response = $this->client->post(Resources::$ContactManagecontactslists, [
             'id' => $subscriberArray['ID'],
             'body' => [
@@ -109,33 +126,18 @@ class MailjetClient
     }
 
     /**
-     * @param SubscriberInterface $subscriber
-     * @param $groupId
-     * @throws RemoveException
+     * @param $id
+     * @return array|null
      */
-    public function removeSubscriber(SubscriberInterface $subscriber)
-    {
-        $subscriberArray = $this->getSubscriber($subscriber->getEmail());
-        $response = $this->client->delete(Resources::$Contact, [
-            'id' => $subscriberArray['ID'],
-        ]);
-
-        if (!$response->success()) {
-            throw new RemoveException(
-                sprintf('Removal of subscriber "%s" failed.', $subscriber->getEmail())
-            );
-        }
-    }
-
-    public function getSubscriber(string $email)
+    public function getSubscriber($id): ?array
     {
         $response = $this->client->get(Resources::$Contact, [
-            'id' => urlencode($email)
+            'id' => urlencode($id)
         ]);
 
         if ($response->success()) {
             foreach ($response->getData() as $contact) {
-                if ($contact['Email'] === $email) {
+                if ($contact['ID'] == $id) {
                     return $contact;
                 }
             }
@@ -146,11 +148,13 @@ class MailjetClient
     }
 
     /**
-     * @param $email
+     * @param $id
+     * @param $group
      * @return bool
      */
-    public function exists($email)
+    public function exists($id, $group): bool
     {
-        return (bool)$this->getSubscriber($email);
+        // todo: determine if exists in given group
+        return (bool)$this->getSubscriber($id);
     }
 }

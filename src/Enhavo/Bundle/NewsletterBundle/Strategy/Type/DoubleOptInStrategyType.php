@@ -91,14 +91,18 @@ class DoubleOptInStrategyType extends AbstractStrategyType
     private function confirmSubscriber(SubscriberInterface $subscriber, array $options)
     {
         if ($options['confirm']) {
-            // TODO add unsubscribe/change subscription link
             $template = $options['confirmation_template'];
             $from = $options['from'];
             $senderName = $options['sender_name'];
             $subject = $this->trans($options['confirmation_subject'], [], $options['translation_domain']);
+            $unsubscribeLink = $this->router->generate('enhavo_newsletter_subscriber_unsubscribe', [ // add option to set unsubscribe_route
+                'token' => urlencode($subscriber->getConfirmationToken()),
+                'type' => $subscriber->getSubscription(),
+            ], UrlGeneratorInterface::ABSOLUTE_URL);
 
             $message = $this->newsletterManager->createMessage($from, $senderName, $subscriber->getEmail(), $subject, $template, [
-                'subscriber' => $subscriber
+                'subscriber' => $subscriber,
+                'unsubscribe_link' => $unsubscribeLink,
             ], $options['content_type']);
 
             $this->newsletterManager->sendMessage($message);
@@ -156,11 +160,17 @@ class DoubleOptInStrategyType extends AbstractStrategyType
         return $options['activation_template'];
     }
 
+    public function getUnsubscribeTemplate(array $options): ?string
+    {
+        return $options['unsubscribe_template'];
+    }
+
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'notify_admin' => false,
             'activation_template' => 'theme/resource/subscriber/activate.html.twig',
+            'unsubscribe_template' => 'theme/resource/subscriber/unsubscribe.html.twig',
             'template' => 'mail/subscriber/double-opt-in.html.twig',
             'confirmation_template' => 'mail/subscriber/confirmation.html.twig',
             'confirmation_subject' => 'subscriber.mail.confirm.subject',
