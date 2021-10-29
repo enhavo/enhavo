@@ -56,6 +56,12 @@ interface StrategyTypeInterface extends TypeInterface
     public function getActivationTemplate(array $options): ?string;
 
     /**
+     * @param array $options
+     * @return string|null
+     */
+    public function getUnsubscribeTemplate(array $options): ?string;
+
+    /**
      * @param Storage $storage
      * @return mixed
      */

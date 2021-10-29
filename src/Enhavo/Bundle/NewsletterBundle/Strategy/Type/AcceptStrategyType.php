@@ -121,10 +121,16 @@ class AcceptStrategyType extends AbstractStrategyType
         return $options['activation_template'];
     }
 
+    public function getUnsubscribeTemplate(array $options): ?string
+    {
+        return $options['unsubscribe_template'];
+    }
+
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'activation_template' => 'theme/resource/subscriber/accept.html.twig',
+            'unsubscribe_template' => 'theme/resource/subscriber/unsubscribe.html.twig',
             'admin_template' => 'mail/subscriber/accept-admin.html.twig',
             'template' => 'mail/subscriber/accept.html.twig',
             'activate_route' => 'enhavo_newsletter_subscribe_activate',

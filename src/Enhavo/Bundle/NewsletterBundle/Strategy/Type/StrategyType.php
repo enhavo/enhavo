@@ -68,6 +68,11 @@ class StrategyType extends AbstractType implements StrategyTypeInterface
         return null;
     }
 
+    public function getUnsubscribeTemplate(array $options): ?string
+    {
+        return null;
+    }
+
     public function setStorage(Storage $storage)
     {
         $this->storage = $storage;
