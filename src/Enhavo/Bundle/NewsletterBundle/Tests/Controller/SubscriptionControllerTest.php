@@ -166,10 +166,18 @@ class SubscriptionControllerTest extends TestCase
     public function testUnsubscribeAction()
     {
         $dependencies = $this->createDependencies();
+        $templateManager = $this->getMockBuilder(TemplateManager::class)->disableOriginalConstructor()->getMock();
+        $templateManager->expects($this->once())->method('getTemplate')->willReturnCallback(function ($tpl) {
+            return $tpl;
+        });
+        $dependencies->container->expects($this->once())->method('get')->willReturn($templateManager);
+
         $subscriberMock = $this->getMockBuilder(SubscriberInterface::class)->getMock();
+
 
         $subscription = $this->createSubscription('default');
         $subscription->getStrategy()->expects($this->once())->method('removeSubscriber')->willReturn('removed');
+        $subscription->getStrategy()->expects($this->once())->method('getUnsubscribeTemplate')->willReturn('tpl.html.twig');
         $subscription->getStrategy()->getStorage()->expects($this->once())->method('getSubscriber')->willReturn($subscriberMock);
 
         $dependencies->translator->expects($this->once())->method('trans')->willReturnCallback(function ($message) {
@@ -183,7 +191,7 @@ class SubscriptionControllerTest extends TestCase
         ]);
 
         $response = $controller->unsubscribeAction($request);
-        $this->assertEquals('{"message":"removed.trans","subscriber":{"email":null}}', $response->getContent());
+        $this->assertEquals('tpl.html.twig.rendered', $response->getContent());
 
         $dependencies = $this->createDependencies();
         $controller = $this->createInstance($dependencies);

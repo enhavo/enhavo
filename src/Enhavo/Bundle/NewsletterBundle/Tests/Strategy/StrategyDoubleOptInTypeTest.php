@@ -130,7 +130,7 @@ class StrategyDoubleOptInTypeTest extends TestCase
         /** @var SubscriberInterface|MockObject $subscriber */
         $subscriber = $this->getMockBuilder(SubscriberInterface::class)->getMock();
         $subscriber->expects($this->exactly(2))->method('getEmail')->willReturn('to@enhavo.com');
-        $subscriber->expects($this->once())->method('getSubscription')->willReturn('default');
+        $subscriber->expects($this->exactly(2))->method('getSubscription')->willReturn('default');
 
         $strategyType = new DoubleOptInStrategyType($dependencies->newsletterManager, $dependencies->pendingManager, $dependencies->router);
         $strategyType->setTranslator($dependencies->translator);

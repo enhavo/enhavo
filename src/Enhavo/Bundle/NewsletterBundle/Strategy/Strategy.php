@@ -53,4 +53,9 @@ class Strategy extends AbstractContainerType
         return $this->type->getActivationTemplate($this->options);
     }
 
+    public function getUnsubscribeTemplate()
+    {
+        return $this->type->getUnsubscribeTemplate($this->options);
+    }
+
 }
