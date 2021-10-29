@@ -57,7 +57,7 @@ class MailjetStorageType extends AbstractStorageType
         $this->client->init($options['client_key'], $options['client_secret']);
 
         foreach ($groups as $group) {
-            if (!$this->client->exists($subscriber->getEmail(), $group)) {
+            if (!$this->client->exists($subscriber->getConfirmationToken(), $group)) {
                 continue;
             }
             $this->client->removeFromGroup($subscriber, $group);
@@ -68,10 +68,10 @@ class MailjetStorageType extends AbstractStorageType
     {
         $this->client->init($options['client_key'], $options['client_secret']);
 
-        $response = $this->client->getSubscriber($subscriber->getEmail());
+        $response = $this->client->getSubscriber($subscriber->getEmail()??$subscriber->getConfirmationToken());
 
         $subscriber->setEmail($response['Email']);
-        $subscriber->setConfirmationToken($response['Id']);
+        $subscriber->setConfirmationToken($response['ID']);
 
         return $subscriber;
 

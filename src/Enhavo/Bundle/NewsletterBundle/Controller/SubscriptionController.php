@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\NewsletterBundle\Controller;
 
 use Enhavo\Bundle\FormBundle\Error\FormErrorResolver;
+use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Pending\PendingSubscriberManager;
 use Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -113,11 +114,11 @@ class SubscriptionController extends AbstractController
     public function unsubscribeAction(Request $request)
     {
         $type = $request->get('type');
-        $email = urldecode($request->get('token'));
+        $token = urldecode($request->get('token'));
         $subscription = $this->subscriptionManager->getSubscription($type);
         $strategy = $subscription->getStrategy();
         $subscriber = $this->subscriptionManager->createModel($subscription->getModel());
-        $subscriber->setEmail($email);
+        $subscriber->setConfirmationToken($token);
         $subscriber->setSubscription($type);
         $subscriber = $strategy->getStorage()->getSubscriber($subscriber);
 

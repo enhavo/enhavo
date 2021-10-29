@@ -97,7 +97,7 @@ class DoubleOptInStrategyType extends AbstractStrategyType
             $senderName = $options['sender_name'];
             $subject = $this->trans($options['confirmation_subject'], [], $options['translation_domain']);
             $unsubscribeLink = $this->router->generate('enhavo_newsletter_subscriber_unsubscribe', [
-                'email' => urlencode($subscriber->getEmail()),
+                'token' => urlencode($subscriber->getConfirmationToken()),
                 'type' => $subscriber->getSubscription(),
             ], UrlGeneratorInterface::ABSOLUTE_URL);
 

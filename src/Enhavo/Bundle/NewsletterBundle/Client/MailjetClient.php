@@ -86,7 +86,7 @@ class MailjetClient
      */
     public function addToGroup(SubscriberInterface $subscriber, $groupId): bool
     {
-        $subscriberArray = $this->getSubscriber($subscriber->getEmail());
+        $subscriberArray = $this->getSubscriber($subscriber->getConfirmationToken());
         $response = $this->client->post(Resources::$ContactManagecontactslists, [
             'id' => $subscriberArray['ID'],
             'body' => [
@@ -109,7 +109,7 @@ class MailjetClient
      */
     public function removeFromGroup(SubscriberInterface $subscriber, $groupId): bool
     {
-        $subscriberArray = $this->getSubscriber($subscriber->getEmail());
+        $subscriberArray = $this->getSubscriber($subscriber->getConfirmationToken());
         $response = $this->client->post(Resources::$ContactManagecontactslists, [
             'id' => $subscriberArray['ID'],
             'body' => [
@@ -126,18 +126,18 @@ class MailjetClient
     }
 
     /**
-     * @param string $email
+     * @param $id
      * @return array|null
      */
-    public function getSubscriber(string $email): ?array
+    public function getSubscriber($id): ?array
     {
         $response = $this->client->get(Resources::$Contact, [
-            'id' => urlencode($email)
+            'id' => urlencode($id)
         ]);
 
         if ($response->success()) {
             foreach ($response->getData() as $contact) {
-                if ($contact['Email'] === $email) {
+                if ($contact['ID'] == $id) {
                     return $contact;
                 }
             }
@@ -148,13 +148,13 @@ class MailjetClient
     }
 
     /**
-     * @param $email
+     * @param $id
      * @param $group
      * @return bool
      */
-    public function exists($email, $group): bool
+    public function exists($id, $group): bool
     {
         // todo: determine if exists in given group
-        return (bool)$this->getSubscriber($email);
+        return (bool)$this->getSubscriber($id);
     }
 }
