@@ -55,3 +55,10 @@ services:
         arguments:
             - '%enhavo_taxonomy.model.term.class%'
             - '@enhavo_taxonomy.repository.taxonomy'
+
+    Enhavo\Bundle\TaxonomyBundle\Form\Type\TermAutoSuggestionEntityType:
+        arguments:
+            - '%enhavo_taxonomy.model.term.class%'
+            - '@enhavo_taxonomy.factory.term'
+        tags:
+            - { name: form.type }

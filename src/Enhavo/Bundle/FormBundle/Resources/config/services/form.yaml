@@ -85,3 +85,9 @@ services:
         public: true
         arguments:
             - '@Enhavo\Bundle\FormBundle\Formatter\CurrencyFormatter'
+
+    Enhavo\Bundle\FormBundle\Form\Type\AutoSuggestEntityType:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: form.type }
