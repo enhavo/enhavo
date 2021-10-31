@@ -10,10 +10,3 @@ services:
         class: Enhavo\Bundle\MultiTenancyBundle\Provider\ConfigurationProvider
         arguments:
             -  { de: { name: Deutsch, role: ROLE_LANGUAGE_DE, baseUrl: enhavo.de, domains: [ dev.enhavo.de ] }, en: { name: English, role: ROLE_LANGUAGE_EN, baseUrl: enhavo.com, domains: [ dev.enhavo.com ] } }
-
-    enhavo_migration.demo_fixtures:
-        class: Enhavo\Bundle\DemoBundle\Fixtures\DemoFixtures
-        arguments:
-            - '@doctrine.orm.entity_manager'
-            - '@service_container'
-
