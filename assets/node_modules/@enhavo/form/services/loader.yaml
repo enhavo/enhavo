@@ -45,6 +45,15 @@ services:
         tags:
             - 'enhavo_app.form'
 
+    '@enhavo/form/loader/AutoSuggestLoader':
+        chunk: 'form'
+        arguments:
+            - '@enhavo/app/view-stack/EventDispatcher'
+            - '@enhavo/app/view/View'
+            - '@enhavo/core/Router'
+        tags:
+            - 'enhavo_app.form'
+
     '@enhavo/form/loader/WeekendDateLoader':
         chunk: 'form'
         tags:

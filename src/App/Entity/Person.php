@@ -8,6 +8,7 @@
 
 namespace App\Entity;
 
+use Enhavo\Bundle\TaxonomyBundle\Entity\Term;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -38,6 +39,12 @@ class Person implements ResourceInterface
      * @var string|null
      */
     private $name;
+
+    /**
+     * @ORM\ManyToOne (targetEntity="Enhavo\Bundle\TaxonomyBundle\Entity\Term", cascade={"persist", "remove", "refresh"})
+     * @var Term|null
+     */
+    private $occupation;
 
     /**
      * @return integer
@@ -77,5 +84,21 @@ class Person implements ResourceInterface
     public function setName(?string $name): void
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return Term|null
+     */
+    public function getOccupation(): ?Term
+    {
+        return $this->occupation;
+    }
+
+    /**
+     * @param Term|null $occupation
+     */
+    public function setOccupation(?Term $occupation): void
+    {
+        $this->occupation = $occupation;
     }
 }

@@ -1,0 +1,4 @@
+enhavo_taxonomy:
+    taxonomies:
+        occupation:
+            label: Occupation
