@@ -314,3 +314,11 @@
         <i class="icon icon-add"></i>{% if label %}<span class="label">{{ label|trans({}, translation_domain)|nl2br }}</span>{% endif %}
     </div>
 {% endmacro %}
+
+
+{% block auto_suggest_widget %}
+    <div data-auto-suggest="{{ { route: route }|json_encode|e }}">
+        <input type="text" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} autocomplete="off" />
+        <div data-auto-suggest-list="{{ suggestions|json_encode|e }}"></div>
+    </div>
+{% endblock %}
