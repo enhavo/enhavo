@@ -81,7 +81,7 @@ class EntityType extends AbstractFilterType
         $arguments =  $options['arguments'];
 
         if(is_array($arguments)) {
-            $entities = call_user_func([$repository, $method], $arguments);
+            $entities = call_user_func_array([$repository, $method], $arguments);
         } else {
             $entities = call_user_func([$repository, $method]);
         }
