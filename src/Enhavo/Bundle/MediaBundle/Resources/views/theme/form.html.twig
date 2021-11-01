@@ -1,0 +1,24 @@
+{% block enhavo_media_widget %}
+    {% import _self as macro %}
+    <div data-media="{{ mediaConfig|json_encode }}" class="media">
+        <ul class="media-list" data-media-list data-prototype="{{ macro.item(full_name, '__index__', '__id__', '__order__', '__filename__')|e }}">
+            {% for key, child in form.children %}
+                {% if key matches '/^\\d+$/' %}
+                    {{ macro.item(full_name, key, child.vars.value.id, child.vars.value.order, child.vars.value.filename)|raw }}
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <button data-media-upload class="btn">Upload</button>
+        <input data-media-input type="file" multiple style="display: none" name="files[]">
+    </div>
+{% endblock %}
+
+{% macro item(name, index, id, order, filename) %}
+    <li data-media-item>
+        {{ filename }}
+
+        <input type="hidden" name="{{ name }}[{{ index }}][id]" value="{{ id }}">
+        <input type="hidden" name="{{ name }}[{{ index }}][order]" value="{{ order }}">
+        <input type="hidden" name="{{ name }}[{{ index }}][filename]" value="{{ filename }}">
+    </li>
+{% endmacro %}
