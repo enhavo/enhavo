@@ -74,7 +74,7 @@ class MediaType extends AbstractType
             'sortable' =>  $options['multiple'] ? $options['sortable'] : false,
             'extensions' => $view->vars['extensions'],
             'upload' => $options['upload'],
-            'edit' => $options['edit']
+            'edit' => $options['edit'],
         ];
     }
 

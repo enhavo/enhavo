@@ -3,6 +3,9 @@ doctrine:
         resolve_target_entities:
             Enhavo\Bundle\MediaBundle\Model\FileInterface: Enhavo\Bundle\MediaBundle\Entity\File
 
+twig:
+    form_themes: ['@EnhavoMedia/theme/form.html.twig']
+
 enhavo_app:
     form_themes:
         - '@EnhavoMedia/admin/form/media/media.html.twig'

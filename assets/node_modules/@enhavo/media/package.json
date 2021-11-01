@@ -10,10 +10,11 @@
   },
   "dependencies": {
     "@enhavo/app": "^0.10",
+    "async": "^2.6.2",
+    "axios": "^0.21.1",
     "blueimp-file-upload": "^9.22.1",
     "cropperjs": "~1.2.2",
     "jquery": "~3.4.1",
-    "lodash": "^4.17.11",
-    "sortablejs": "^1.10.2"
+    "lodash": "^4.17.11"
   }
 }

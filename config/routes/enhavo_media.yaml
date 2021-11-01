@@ -5,3 +5,8 @@ enhavo_media_admin:
 enhavo_media_theme:
     resource: "@EnhavoMediaBundle/Resources/config/routes/theme/*"
     prefix: /
+
+enhavo_media_theme_upload:
+    path: /file/add
+    defaults:
+        _controller: enhavo_media.controller.upload:uploadAction
