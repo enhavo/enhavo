@@ -1,25 +1,17 @@
 import FormType from "@enhavo/app/form/FormType";
-import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
 import Router from "@enhavo/core/Router";
-import View from "@enhavo/app/view/View";
 import axios, {CancelTokenSource} from 'axios';
 
-export default class AutoCompleteType extends FormType
+export default class AutoSuggestType extends FormType
 {
-    private eventDispatcher: EventDispatcher;
     private router: Router;
-    private view: View;
 
     private source: CancelTokenSource;
 
-    constructor(element: HTMLElement, eventDispatcher: EventDispatcher, router: Router, view: View)
+    constructor(element: HTMLElement, router: Router)
     {
         super(element);
-        this.eventDispatcher = eventDispatcher;
         this.router = router;
-        this.view = view;
-
-
     }
 
     protected init()
