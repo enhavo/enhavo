@@ -3,6 +3,7 @@
 namespace App\Form\Type;
 
 use Enhavo\Bundle\FormBundle\Form\Type\DateType;
+use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Enhavo\Bundle\TaxonomyBundle\Form\Type\TermAutoSuggestionEntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -17,6 +18,9 @@ class PersonType extends AbstractType
         $builder->add('occupation', TermAutoSuggestionEntityType::class, [
             'taxonomy' => 'occupation',
             'route' => 'app_term_occupation_auto_complete'
+        ]);
+        $builder->add('picture', MediaType::class, [
+            'multiple' => false
         ]);
     }
 }

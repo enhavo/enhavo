@@ -51,19 +51,22 @@ class UploadController extends AbstractController
     public function uploadAction(Request $request)
     {
         $storedFiles = [];
-        foreach($request->files as $uploadedFile) {
-            try {
-                /** @var $uploadedFile UploadedFile */
-                if ($uploadedFile->getError() != UPLOAD_ERR_OK) {
-                    throw new UploadException('Error in file upload');
-                }
-                $file = $this->fileFactory->createFromUploadedFile($uploadedFile);
-                $file->setGarbage(true);
-                $this->mediaManager->saveFile($file);
-                $storedFiles[] = $file;
-            } catch(StorageException $exception) {
-                foreach($storedFiles as $file) {
-                    $this->mediaManager->deleteFile($file);
+        foreach($request->files as $file) {
+            $uploadedFiles = is_array($file) ? $file : [$file];
+            foreach ($uploadedFiles as $uploadedFile) {
+                try {
+                    /** @var $uploadedFile UploadedFile */
+                    if ($uploadedFile->getError() != UPLOAD_ERR_OK) {
+                        throw new UploadException('Error in file upload');
+                    }
+                    $file = $this->fileFactory->createFromUploadedFile($uploadedFile);
+                    $file->setGarbage(true);
+                    $this->mediaManager->saveFile($file);
+                    $storedFiles[] = $file;
+                } catch(StorageException $exception) {
+                    foreach($storedFiles as $file) {
+                        $this->mediaManager->deleteFile($file);
+                    }
                 }
             }
         }
