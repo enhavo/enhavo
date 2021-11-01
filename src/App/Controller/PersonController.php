@@ -20,7 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class PersonController extends AbstractController
 {
     /**
-     * @Route("/")
+     * @Route("/", name="app_theme_person_index")
      */
     public function indexAction(Request $request)
     {
