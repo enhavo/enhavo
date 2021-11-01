@@ -15,6 +15,7 @@ export class Media
         this.initHighlight();
         this.initDropzone();
         this.initUploadButton();
+        this.initRemoveButton();
     }
 
     private initUploadButton()
@@ -36,7 +37,7 @@ export class Media
 
             $formElement.on('submit', (event) => {
                 event.preventDefault();
-                this.upload(null, $formElement.get(0)).then(() => {
+                this.upload(null, <HTMLFormElement>$formElement.get(0)).then(() => {
                     this.$element.append($input.get(0));
                     $formElement.remove();
                 });
@@ -45,6 +46,17 @@ export class Media
             this.$element.append($formElement.get(0));
 
             $formElement.submit();
+        });
+    }
+
+    private initRemoveButton()
+    {
+        this.$element.find('[data-media-item]').each(function() {
+            let $item = $(this)
+            $item.find('[data-media-remove]').on('click', (event) => {
+                event.preventDefault();
+                $item.remove();
+            });
         });
     }
 
@@ -119,7 +131,7 @@ export class Media
         });
     }
 
-    private createCallback(data): (callback) => void[]
+    private createCallback(data: any): (callback: any) => void[]
     {
         let url = '/file/add';
 
@@ -159,7 +171,10 @@ export class Media
         prototype = prototype.replaceAll('__order__', '');
         prototype = prototype.replaceAll('__filename__', file.filename);
 
-        let $element = $.parseHTML(prototype);
-        $list.append($element);
+        let $element = $($.parseHTML(prototype));
+        $element.find('[data-media-remove]').on('click', () => {
+            $element.remove();
+        })
+        $list.append($element.get(0));
     }
 }
