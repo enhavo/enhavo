@@ -29,6 +29,7 @@ export class Media
             event.preventDefault();
 
             let $formElement = $(document.createElement("form"));
+            $formElement.hide();
             let $input = this.$element.find('[data-media-input]');
 
             if ($input.length) {
@@ -38,12 +39,13 @@ export class Media
             $formElement.on('submit', (event) => {
                 event.preventDefault();
                 this.upload(null, <HTMLFormElement>$formElement.get(0)).then(() => {
+                    $input.val('');
                     this.$element.append($input.get(0));
                     $formElement.remove();
                 });
             });
 
-            this.$element.append($formElement.get(0));
+            $('body').append($formElement.get(0));
 
             $formElement.submit();
         });
