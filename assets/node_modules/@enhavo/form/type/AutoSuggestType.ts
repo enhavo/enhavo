@@ -40,6 +40,7 @@ export default class AutoSuggestType extends FormType
 
     private updateList(value: string)
     {
+        value = value.toLowerCase();
         let route = this.getRoute();
         if (route) {
             this.fetchSuggestions(route, value).then((suggests) => {
@@ -49,7 +50,7 @@ export default class AutoSuggestType extends FormType
             let suggests = this.$element.find('[data-auto-suggest-list]').data('auto-suggest-list');
             let data = [];
             for (let suggest of suggests) {
-                if (suggest.match(value) && suggest != value) {
+                if (suggest.toLowerCase().includes(value) && suggest != value) {
                     data.push(suggest);
                 }
             }

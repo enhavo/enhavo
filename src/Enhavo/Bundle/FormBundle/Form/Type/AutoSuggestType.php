@@ -13,7 +13,7 @@ class AutoSuggestType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['route'] = $options['route'];
-        $view->vars['suggestions'] = array_unique($options['suggestions']);
+        $view->vars['suggestions'] = array_values(array_unique($options['suggestions']));
     }
 
     public function getParent()
