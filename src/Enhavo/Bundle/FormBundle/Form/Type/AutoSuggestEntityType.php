@@ -56,7 +56,7 @@ class AutoSuggestEntityType extends AbstractType
             }
         }
 
-        $view->vars['suggestions'] = array_unique($view->vars['suggestions']);
+        $view->vars['suggestions'] = array_values(array_unique($view->vars['suggestions']));
     }
 
     public function getParent()
