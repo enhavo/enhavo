@@ -26,7 +26,7 @@ export default class WysiwygType extends FormType
         let editorCss = this.$element.data('editor-css');
         let options = {
             base_url: "/build/enhavo", // Because we use dynamic imports, we need to specify the base path to prevent a loading bug in firefox (https://github.com/tinymce/tinymce-docs/issues/1466)
-            toolbar1: "undo redo | styleselect bold italic underline | link | alignleft aligncenter alignright alignjustify | outdent indent | forecolor backcolor",
+            toolbar1: "undo redo | styleselect bold italic underline | forecolor backcolor | link | alignleft aligncenter alignright alignjustify | outdent indent | bullist numlist | code",
             target: this.$element.get(0),
             menubar: false,
             branding: false,
@@ -40,6 +40,7 @@ export default class WysiwygType extends FormType
             convert_fonts_to_spans: true,
             resize: false,
             relative_urls: false,
+            remove_script_host:false,
             plugins: ["advlist autolink lists link image charmap print preview anchor",
                 "searchreplace visualblocks code fullscreen",
                 "insertdatetime media table paste autoresize"],
