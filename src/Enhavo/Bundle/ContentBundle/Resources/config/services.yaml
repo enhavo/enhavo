@@ -61,3 +61,11 @@ services:
             - '@enhavo_content.sitemap.generator'
         tags:
             - { name: controller.service_arguments }
+
+    Enhavo\Bundle\ContentBundle\Command\SitemapDumpCommand:
+        arguments:
+            - '@enhavo_content.sitemap.generator'
+            - '%kernel.project_dir%/public/sitemap.xml'
+            - '@filesystem'
+        tags:
+            - { name: console.command }
