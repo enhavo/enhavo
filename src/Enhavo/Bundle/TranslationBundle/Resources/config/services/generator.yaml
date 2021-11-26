@@ -26,6 +26,7 @@ services:
         arguments:
             - '@Enhavo\Bundle\TranslationBundle\Translation\TranslationManager'
             - '@Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator'
+            - '@doctrine.orm.entity_manager'
         calls:
             - [setContainer, ['@service_container']]
         tags:
