@@ -65,7 +65,21 @@ services:
     Enhavo\Bundle\ContentBundle\Command\SitemapDumpCommand:
         arguments:
             - '@enhavo_content.sitemap.generator'
-            - '%kernel.project_dir%/public/sitemap.xml'
             - '@filesystem'
+            - 'public/sitemap.xml'
+            - '%kernel.project_dir%'
         tags:
             - { name: console.command }
+
+    Enhavo\Bundle\ContentBundle\Factory\VideoFactory:
+        calls:
+            - ['addProvider', ['@Enhavo\Bundle\ContentBundle\Video\VimeoProvider']]
+            - ['addProvider', ['@Enhavo\Bundle\ContentBundle\Video\YoutubeProvider']]
+
+    Enhavo\Bundle\ContentBundle\Video\VimeoProvider:
+        arguments:
+            - '%enhavo_content.video.vimeo.api_key%'
+
+    Enhavo\Bundle\ContentBundle\Video\YoutubeProvider:
+        arguments:
+            - '%enhavo_content.video.youtube.api_key%'

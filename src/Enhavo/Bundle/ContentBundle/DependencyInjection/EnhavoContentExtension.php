@@ -31,6 +31,8 @@ class EnhavoContentExtension extends AbstractResourceExtension implements Prepen
         }
         $container->setParameter('enhavo_content.sitemap.collectors', $collectors);
 
+        $container->setParameter('enhavo_content.video.vimeo.api_key', $config['video']['vimeo']['api_key']);
+        $container->setParameter('enhavo_content.video.youtube.api_key', $config['video']['youtube']['api_key']);
 
         $configFiles = array(
             'services.yaml',
