@@ -6,7 +6,6 @@ Enhavo\Bundle\NewsletterBundle\Model\Subscriber:
     constraints:
         - Enhavo\Bundle\NewsletterBundle\Validator\Constraints\SubscriberExists:
 
-
 Enhavo\Bundle\NewsletterBundle\Entity\Newsletter:
     properties:
         subject:

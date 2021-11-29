@@ -20,6 +20,7 @@ services:
             - '@Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager'
             - '@Enhavo\Bundle\NewsletterBundle\Pending\PendingSubscriberManager'
             - '@router'
+            - '@translator'
         tags:
             - { name: enhavo_newsletter.strategy }
 

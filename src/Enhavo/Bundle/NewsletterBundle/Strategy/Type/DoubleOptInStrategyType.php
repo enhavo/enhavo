@@ -15,6 +15,7 @@ use Enhavo\Bundle\NewsletterBundle\Strategy\AbstractStrategyType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DoubleOptInStrategyType extends AbstractStrategyType
 {
@@ -27,17 +28,22 @@ class DoubleOptInStrategyType extends AbstractStrategyType
     /** @var RouterInterface */
     private $router;
 
+    /** @var TranslatorInterface */
+    private $translator;
+
     /**
      * DoubleOptInStrategyType constructor.
      * @param NewsletterManager $newsletterManager
      * @param PendingSubscriberManager $pendingManager
      * @param RouterInterface $router
+     * @param TranslatorInterface $translator
      */
-    public function __construct(NewsletterManager $newsletterManager, PendingSubscriberManager $pendingManager, RouterInterface $router)
+    public function __construct(NewsletterManager $newsletterManager, PendingSubscriberManager $pendingManager, RouterInterface $router, TranslatorInterface $translator)
     {
         $this->newsletterManager = $newsletterManager;
         $this->pendingManager = $pendingManager;
         $this->router = $router;
+        $this->translator = $translator;
     }
 
     public function addSubscriber(SubscriberInterface $subscriber, array $options)
@@ -52,7 +58,7 @@ class DoubleOptInStrategyType extends AbstractStrategyType
 
         $this->postAddSubscriber($subscriber);
 
-        return 'subscriber.form.message.double_opt_in';
+        return $this->translator->trans('subscriber.form.message.double_opt_in', ['subscriber' => $subscriber], $options['translation_domain']);
     }
 
     public function activateSubscriber(SubscriberInterface $subscriber, array $options)
@@ -149,7 +155,7 @@ class DoubleOptInStrategyType extends AbstractStrategyType
             $subscriber->setConfirmationToken($pending->getConfirmationToken());
             $this->notifySubscriber($subscriber, $options);
 
-            return 'subscriber.form.error.sent_again';
+            return $this->translator->trans('subscriber.form.error.sent_again', ['subscriber' => $subscriber], $options['translation_domain']);
         }
 
         return null;

@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Controller;
 
+use Enhavo\Bundle\AppBundle\Exception\TokenExpiredException;
 use Enhavo\Bundle\FormBundle\Error\FormErrorResolver;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Pending\PendingSubscriberManager;
@@ -56,23 +57,18 @@ class SubscriptionController extends AbstractController
 
         $pendingSubscriber = $this->pendingManager->findByToken($token);
         if (!$pendingSubscriber) {
-            throw $this->createNotFoundException();
+            throw new TokenExpiredException();
         }
 
         $subscriber = $pendingSubscriber->getData();
-        try {
-            $strategy->activateSubscriber($subscriber);
-            $templateManager = $this->get('enhavo_app.template.manager');
-            return $this->render($templateManager->getTemplate($strategy->getActivationTemplate()), [
-                'subscriber' => $this->serializer->normalize($subscriber, 'json', [
-                    'groups' => ['subscription']
-                ]),
-            ]);
-        } catch (\Exception $exception) {
 
-        }
-
-        throw $this->createNotFoundException();
+        $strategy->activateSubscriber($subscriber);
+        $templateManager = $this->get('enhavo_app.template.manager');
+        return $this->render($templateManager->getTemplate($strategy->getActivationTemplate()), [
+            'subscriber' => $this->serializer->normalize($subscriber, 'json', [
+                'groups' => ['subscription']
+            ]),
+        ]);
     }
 
     public function addAction(Request $request)
