@@ -52,7 +52,7 @@ class DoubleOptInStrategyType extends AbstractStrategyType
 
         $this->postAddSubscriber($subscriber);
 
-        return 'subscriber.form.message.double_opt_in';
+        return $this->trans('subscriber.form.message.double_opt_in', ['subscriber' => $subscriber], $options['translation_domain']);
     }
 
     public function activateSubscriber(SubscriberInterface $subscriber, array $options)
@@ -149,7 +149,7 @@ class DoubleOptInStrategyType extends AbstractStrategyType
             $subscriber->setConfirmationToken($pending->getConfirmationToken());
             $this->notifySubscriber($subscriber, $options);
 
-            return 'subscriber.form.error.sent_again';
+            return $this->trans('subscriber.form.error.sent_again', ['subscriber' => $subscriber], $options['translation_domain']);
         }
 
         return null;

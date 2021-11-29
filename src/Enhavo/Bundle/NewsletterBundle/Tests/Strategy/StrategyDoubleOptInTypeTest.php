@@ -100,7 +100,7 @@ class StrategyDoubleOptInTypeTest extends TestCase
             'translation_domain' => ''
 
         ]);
-        $this->assertEquals('subscriber.form.message.double_opt_in', $strategy->addSubscriber($subscriber));
+        $this->assertEquals('subscriber.form.message.double_opt_in.trans', $strategy->addSubscriber($subscriber));
     }
 
     public function testActivateSubscriber()
