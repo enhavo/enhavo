@@ -90,12 +90,12 @@ class MailjetStorageType extends AbstractStorageType
         // subscriber has to be in ALL given groups to return true
         $groups = $this->mapGroups($subscriber, $options['groups']);
         foreach ($groups as $group) {
-            if (!$this->client->exists($subscriber->getEmail(), $group)) {
-                return false;
+            if ($this->client->exists($subscriber->getEmail(), $group)) {
+                return true;
             }
         }
 
-        return true;
+        return false;
     }
 
     /**
