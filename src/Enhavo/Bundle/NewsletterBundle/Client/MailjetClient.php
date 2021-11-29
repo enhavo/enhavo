@@ -87,6 +87,7 @@ class MailjetClient
     public function addToGroup(SubscriberInterface $subscriber, $groupId): bool
     {
         $subscriberArray = $this->getSubscriber($subscriber->getConfirmationToken());
+
         $response = $this->client->post(Resources::$ContactManagecontactslists, [
             'id' => $subscriberArray['ID'],
             'body' => [
@@ -137,11 +138,10 @@ class MailjetClient
 
         if ($response->success()) {
             foreach ($response->getData() as $contact) {
-                if ($contact['ID'] == $id) {
+                if ($contact['ID'] == $id || $contact['Email'] == $id) {
                     return $contact;
                 }
             }
-
         }
 
         return null;
@@ -154,7 +154,8 @@ class MailjetClient
      */
     public function exists($id, $group): bool
     {
-        // todo: determine if exists in given group
-        return (bool)$this->getSubscriber($id);
+        $subscriber = $this->getSubscriber($id);
+        //ToDo: Check if subscriber is in group
+        return $subscriber !== null;
     }
 }
