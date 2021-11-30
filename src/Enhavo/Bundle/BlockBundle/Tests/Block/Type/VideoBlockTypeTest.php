@@ -11,6 +11,7 @@ namespace Enhavo\Bundle\BlockBundle\Tests\Block\Type;
 use Enhavo\Bundle\BlockBundle\Block\Type\VideoBlockType;
 use PHPUnit\Framework\TestCase;
 use Enhavo\Bundle\BlockBundle\Block\BlockTypeInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class VideoBlockTypeTest extends TestCase
@@ -22,7 +23,9 @@ class VideoBlockTypeTest extends TestCase
 
     public function testConfigureOption()
     {
-        $type = new VideoBlockType();
+        $serviceMock = $this->getMockBuilder(ContainerInterface::class)->getMock();
+
+        $type = new VideoBlockType($serviceMock);
         $options = $this->createOptions($type);
         $this->assertIsArray($options);
     }
