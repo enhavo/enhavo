@@ -1,6 +1,5 @@
 {% extends template('theme/base.html.twig') %}
 
-
 {% block main %}
     <form action="{{ path('enhavo_search_theme_submit') }}" data-search-form>
         <input type="text" name="q" value="{{ term }}" placeholder="Search for article"/>
@@ -8,7 +7,7 @@
     </form>
 
     {% for result in results %}
-        <div style="border-bottom: 5px solid #e4e6ea;" class="entry-row">
+        <div class="entry-row">
             <div class="row">
                 <div class="col-xs-12">
                     <h1>{{ result.title }}</h1>
@@ -18,5 +17,4 @@
             </div>
         </div>
     {% endfor %}
-
 {% endblock %}

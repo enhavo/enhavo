@@ -14,14 +14,18 @@ class ElasticInstallCommand extends Command
     /** @var ElasticManager */
     private $elasticManager;
 
+    /** @var string */
+    private $version;
+
     /**
      * ElasticInstallCommand constructor.
      * @param ElasticManager $elasticManager
      */
-    public function __construct(ElasticManager $elasticManager)
+    public function __construct(ElasticManager $elasticManager, $version)
     {
         parent::__construct();
         $this->elasticManager = $elasticManager;
+        $this->version = $version;
     }
 
     protected function configure()
@@ -29,7 +33,7 @@ class ElasticInstallCommand extends Command
         $this
             ->setName('enhavo:search:elastic:install')
             ->setDescription('Install elastic search locally')
-            ->addArgument('version', InputArgument::OPTIONAL, 'Elasticsearch version', '6.0.0')
+            ->addArgument('version', InputArgument::OPTIONAL, 'Elasticsearch version', $this->version)
         ;
     }
 
@@ -57,6 +61,9 @@ class ElasticInstallCommand extends Command
     private function download(InputInterface $input, OutputInterface $output)
     {
         $version = $input->getArgument('version');
+        if ($version === null) {
+            $version = $this->version;
+        }
         $output->writeln(sprintf('Download file version %s', $version));
         $progress = new ProgressBar($output, 100);
         $resource = stream_context_create(array(), array('notification' => function ($notificationCode, $severity, $message, $messageCode, $bytesTransferred, $bytesMax) use ($output, $progress) {
@@ -68,7 +75,7 @@ class ElasticInstallCommand extends Command
             }
         }));
 
-        $this->elasticManager->install( $version, $resource);
+        $this->elasticManager->install($version, $resource);
         $progress->finish();
     }
 }
