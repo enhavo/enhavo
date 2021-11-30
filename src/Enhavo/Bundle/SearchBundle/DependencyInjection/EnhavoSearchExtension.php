@@ -28,6 +28,7 @@ class EnhavoSearchExtension extends Extension implements PrependExtensionInterfa
         $container->setParameter('enhavo_search.search.engine', $config['search']['engine']);
         $container->setParameter('enhavo_search.elastica.host', $config['elastica']['host']);
         $container->setParameter('enhavo_search.elastica.port', $config['elastica']['port']);
+        $container->setParameter('enhavo_search.elastica.version', $config['elastica']['version']);
         $container->setParameter('enhavo_search.index.class', $config['index']['classes']);
         $container->setParameter('enhavo_search.metadata', $config['metadata']);
 
