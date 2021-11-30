@@ -39,6 +39,7 @@ class ElasticManager
             $zip->close();
         }
         $this->fs->rename(sprintf('%s/elasticsearch-%s', $this->projectDir, $version), $targetDir);
+        $this->fs->chmod(sprintf('%s/bin/elasticsearch', $targetDir), 0755);
     }
 
     public function existsInstallation()

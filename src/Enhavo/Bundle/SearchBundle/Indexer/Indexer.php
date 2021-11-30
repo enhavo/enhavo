@@ -46,6 +46,10 @@ class Indexer implements IndexerInterface
         /** @var Metadata $metadata */
         $metadata = $this->metadataRepository->getMetadata($resource);
 
+        if ($metadata === null) {
+            return [];
+        }
+
         $data = [];
         $propertyAccessor = PropertyAccess::createPropertyAccessor();
         foreach($metadata->getProperties() as $property) {
