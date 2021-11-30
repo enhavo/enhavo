@@ -24,6 +24,7 @@ services:
         arguments:
             - '@enhavo_search.result.result_converter'
             - '@enhavo_search.search.engine'
+            - '@Enhavo\Bundle\AppBundle\Template\TemplateManager'
         calls:
             - [setContainer, ['@service_container']]
 
@@ -64,5 +65,6 @@ services:
     Enhavo\Bundle\SearchBundle\Command\ElasticInstallCommand:
         arguments:
             - '@Enhavo\Bundle\SearchBundle\Elastic\ElasticManager'
+            - '%enhavo_search.elastica.version%'
         tags:
             - { name: console.command, command: 'enhavo:search:elastic:install' }
