@@ -20,6 +20,8 @@ services:
             - { name: enhavo_block.block }
 
     Enhavo\Bundle\BlockBundle\Block\Type\VideoBlockType:
+        arguments:
+            - '@service_container'
         tags:
             - { name: enhavo_block.block }
 
