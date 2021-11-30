@@ -8,7 +8,6 @@
 
 namespace Enhavo\Bundle\BlockBundle\Block\Type;
 
-use Enhavo\Bundle\AppBundle\Behat\Context\ContainerAwareTrait;
 use Enhavo\Bundle\AppBundle\View\ViewData;
 use Enhavo\Bundle\BlockBundle\Model\Block\VideoBlock;
 use Enhavo\Bundle\BlockBundle\Factory\VideoBlockFactory;
