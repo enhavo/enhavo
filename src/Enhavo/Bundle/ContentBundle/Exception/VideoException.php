@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\ContentBundle\Exception;
 
-class VideoException
+class VideoException extends \Exception
 {
     public static function noProviderFound($url)
     {

@@ -72,6 +72,7 @@ services:
             - { name: console.command }
 
     Enhavo\Bundle\ContentBundle\Factory\VideoFactory:
+        public: true
         calls:
             - ['addProvider', ['@Enhavo\Bundle\ContentBundle\Video\VimeoProvider']]
             - ['addProvider', ['@Enhavo\Bundle\ContentBundle\Video\YoutubeProvider']]
