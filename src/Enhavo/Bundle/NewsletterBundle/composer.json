@@ -18,8 +18,14 @@
     "enhavo/block-bundle": "^0.10",
     "guzzlehttp/guzzle": "^6.2",
     "symfony/lock": "^4.4",
+<<<<<<< HEAD
     "enhavo/cleverreach": "^0.1",
     "mailjet/mailjet-apiv3-php": "^1.5"
+=======
+    "enhavo/cleverreach": "dev-master",
+    "mailjet/mailjet-apiv3-php": "^1.5",
+    "mailchimp/marketing": "^3.0"
+>>>>>>> 1b60a09ef (update mailchimp support to working status (#1454))
   },
   "require-dev": {
     "phpunit/phpunit": "^7.4"

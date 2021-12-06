@@ -4,14 +4,14 @@ namespace Enhavo\Bundle\NewsletterBundle\Client;
 
 use Enhavo\Bundle\NewsletterBundle\Event\StorageEvent;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
-use GuzzleHttp\Client;
+use MailchimpMarketing\ApiClient;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
 
 class MailChimpClient
 {
-    /** @var Client */
-    private $guzzleClient;
+    /** @var ApiClient */
+    private $mailchimpClient;
 
     /** @var string */
     private $user;
@@ -42,22 +42,18 @@ class MailChimpClient
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    public function init(string $url, string $apiKey, array $bodyParameters)
+    public function init(string $serverPrefix, string $apiKey, array $bodyParameters)
     {
         if (!$this->initialized) {
             $this->bodyParameters = $bodyParameters;
 
-            $this->apiKey = $apiKey;
-            $this->user = parse_url($url, PHP_URL_USER);
-            $this->password = urldecode(parse_url($url, PHP_URL_PASS));
-            $url = parse_url($url, PHP_URL_SCHEME) . '://' . parse_url($url, PHP_URL_HOST);
-
-            $this->guzzleClient = new Client([
-                'base_uri' => $url . '/3.0/lists/',
-                'headers' => [
-                    'Content-Type' => 'application/json'
-                ],
+            $this->mailchimpClient = new ApiClient();
+            $this->mailchimpClient->setConfig([
+                'apiKey' => $apiKey,
+                'server' => $serverPrefix,
             ]);
+
+            $response = $this->mailchimpClient->ping->get();
 
             $this->initialized = true;
         }
@@ -74,19 +70,11 @@ class MailChimpClient
 
         $event = new StorageEvent(StorageEvent::EVENT_MAILCHIMP_PRE_STORE, $subscriber, []);
         $this->eventDispatcher->dispatch($event);
-
-        $options = [
-            'auth' => [
-                'basic',
-                $this->apiKey,
-            ],
-            'body' => json_encode(array_merge([
-                'email_address' => $subscriber->getEmail(),
-                'status' => 'subscribed',
-            ], $bodyParameters)),
-        ];
-
-        $this->guzzleClient->request('POST', $groupId . '/members', $options);
+        $memberID = md5(strtolower($subscriber->getEmail()));
+        $response = $this->mailchimpClient->lists->setListMember($groupId, $memberID, [
+            "email_address" => $subscriber->getEmail(),
+            "status_if_new" => "subscribed",
+        ]);
     }
 
     /**
@@ -99,15 +87,9 @@ class MailChimpClient
     {
         $memberID = md5(strtolower($email));
 
-        $response = $this->guzzleClient->request('GET', $groupId . '/members/' . $memberID, [
-            'http_errors' => false,
-            'auth' => [
-                'basic',
-                $this->apiKey,
-            ],
-        ]);
-
-        if ($response->getStatusCode() == 404) {
+        try {
+            $response = $this->mailchimpClient->lists->getListMember($groupId, $memberID);
+        } catch (\Exception $exception) {
             return false;
         }
 
