@@ -38,6 +38,7 @@
     "imagine/imagine": "^1.2",
     "johngrogg/ics-parser": "^2.0",
     "league/uri": "^5.0",
+    "mailchimp/marketing": "^3.0",
     "mailjet/mailjet-apiv3-php": "^1.5",
     "payum/offline": "^1.5",
     "payum/payum-bundle": "^2.3",
