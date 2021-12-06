@@ -43,7 +43,7 @@ class MailChimpStorageType extends AbstractStorageType
     {
         $groups = $this->mapGroups($subscriber, $options['groups']);
 
-        $this->client->init($options['url'], $options['api_key'], $options['body_parameters']);
+        $this->client->init($options['server'], $options['api_key'], $options['body_parameters']);
 
         foreach ($groups as $group) {
             if ($this->client->exists($subscriber->getEmail(), $group)) {
@@ -62,7 +62,7 @@ class MailChimpStorageType extends AbstractStorageType
      */
     public function exists(SubscriberInterface $subscriber, array $options): bool
     {
-        $this->client->init($options['url'], $options['api_key'], $options['body_parameters']);
+        $this->client->init($options['server'], $options['api_key'], $options['body_parameters']);
 
         // subscriber has to be in ALL given groups to return true
         $groups = $this->mapGroups($subscriber, $options['groups']);
@@ -84,7 +84,7 @@ class MailChimpStorageType extends AbstractStorageType
             'groups' => [],
         ]);
         $resolver->setRequired([
-            'url', 'api_key'
+            'server', 'api_key'
         ]);
     }
 
