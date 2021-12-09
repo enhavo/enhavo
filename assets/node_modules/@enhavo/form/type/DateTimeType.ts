@@ -21,5 +21,9 @@ export default class DateTimeType extends FormType
 
         $.datetimepicker.setLocale('de');
         this.$element.datetimepicker(options);
+
+        this.$element.parent().find('[data-clear-date-button]').on('click', () => {
+            this.$element.val('');
+        });
     }
 }

@@ -35,6 +35,7 @@ class DateTimeType extends AbstractType
         if (!$options['allow_typing']) {
             $view->vars['attr']['readonly'] = 'readonly';
         }
+        $view->vars['allowClear'] = $options['allow_clear'];
     }
 
     public function getBlockPrefix()
@@ -59,6 +60,7 @@ class DateTimeType extends AbstractType
             'format' => 'dd.MM.yyyy HH:mm',
             'config' => $this->defaultDateTimePickerConfig,
             'allow_typing' => false,
+            'allow_clear' => false,
             'attr' => [
                 'data-date-time-picker' => null,
                 'autocomplete' => 'off'
