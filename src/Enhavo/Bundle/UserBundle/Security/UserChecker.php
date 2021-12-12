@@ -17,7 +17,7 @@ class UserChecker implements UserCheckerInterface
     public function checkPreAuth(UserInterface $user)
     {
         if (!$user instanceof EnhavoUserInterface) {
-            throw new UserNotSupportedException(sprintf('User has to be of type "%s"', EnhavoUserInterface::class ));
+           return;
         }
 
         if (false === $user->isEnabled()) {
@@ -28,7 +28,7 @@ class UserChecker implements UserCheckerInterface
     public function checkPostAuth(UserInterface $user)
     {
         if (!$user instanceof EnhavoUserInterface) {
-            throw new UserNotSupportedException(sprintf('User has to be of type "%s"', EnhavoUserInterface::class ));
+            return;
         }
 
         if (false === $user->isEnabled()) {

@@ -34,15 +34,6 @@ class UserCheckerTest extends TestCase
         $checker->checkPreAuth($user);
     }
 
-    public function testCheckPreAuthType()
-    {
-        $user = new \Symfony\Component\Security\Core\User\User('user1', 'pw');
-        $checker = new UserChecker();
-
-        $this->expectException(UserNotSupportedException::class);
-        $checker->checkPreAuth($user);
-    }
-
     public function testCheckPostAuthEnabled()
     {
         $user = new User();
@@ -59,15 +50,6 @@ class UserCheckerTest extends TestCase
         $checker = new UserChecker();
 
         $this->expectException(BadCredentialsException::class);
-        $checker->checkPostAuth($user);
-    }
-
-    public function testCheckPostAuthType()
-    {
-        $user = new \Symfony\Component\Security\Core\User\User('user1', 'pw');
-        $checker = new UserChecker();
-
-        $this->expectException(UserNotSupportedException::class);
         $checker->checkPostAuth($user);
     }
 }
