@@ -279,6 +279,7 @@ class MakeBlock extends AbstractMaker
             $filePath,
             $this->getTemplatePath('block/factory.tpl.php'), [
                 'definition' => $blockDefinition,
+                'class' => $blockDefinition->createEntityPhpClass(),
             ]
         );
     }
