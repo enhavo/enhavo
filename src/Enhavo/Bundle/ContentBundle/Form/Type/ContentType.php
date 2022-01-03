@@ -61,7 +61,8 @@ class ContentType extends AbstractType
 
         $builder->add('published_until', DateTimeType::class, array(
             'label' => 'form.label.published_until',
-            'translation_domain' => 'EnhavoContentBundle'
+            'translation_domain' => 'EnhavoContentBundle',
+            'allow_clear' => true
         ));
 
         $builder->add('openGraphTitle', TextType::class, array(
