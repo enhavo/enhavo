@@ -1,14 +1,16 @@
 {% extends 'form_div_layout.html.twig' %}
 
 {% block enhavo_datetime_widget -%}
-    <div class="input-container">
+    <div class="input-container date-type">
         <input class="datetimepicker" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %} type="text" />
+        {% if allowClear %}<span class="clear-button" data-clear-date-button><i class="icon icon-clear"></i></span>{% endif %}
     </div>
 {%- endblock %}
 
 {% block enhavo_date_widget -%}
-    <div class="input-container">
+    <div class="input-container date-type">
         <input class="datepicker" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %} type="text" />
+        {% if allowClear %}<span class="clear-button" data-clear-date-button><i class="icon icon-clear"></i></span>{% endif %}
     </div>
 {%- endblock %}
 
