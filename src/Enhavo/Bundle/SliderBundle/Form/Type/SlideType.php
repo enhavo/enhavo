@@ -52,7 +52,8 @@ class SlideType extends AbstractType
 
         $builder->add('publishedUntil', DateType::class, array(
             'label' => 'form.label.published_until',
-            'translation_domain' => 'EnhavoContentBundle'
+            'translation_domain' => 'EnhavoContentBundle',
+            'allow_clear' => true
         ));
 
         $builder->add('public', BooleanType::class, array(
@@ -78,4 +79,4 @@ class SlideType extends AbstractType
     {
         return 'enhavo_slider_slide';
     }
-} 
+}
