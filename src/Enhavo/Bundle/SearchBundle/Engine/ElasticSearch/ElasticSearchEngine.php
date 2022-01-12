@@ -69,6 +69,9 @@ class ElasticSearchEngine implements EngineInterface
      */
     private $classes;
 
+    /** @var bool */
+    private $indexing;
+
     public function __construct(
         Indexer $indexer,
         MetadataRepository $metadataRepository,
@@ -76,7 +79,8 @@ class ElasticSearchEngine implements EngineInterface
         Client $client,
         Extractor $extractor,
         FilterData $filterData,
-        $classes
+        $classes,
+        $indexing
     ) {
         $this->indexer = $indexer;
         $this->metadataRepository = $metadataRepository;
@@ -85,6 +89,7 @@ class ElasticSearchEngine implements EngineInterface
         $this->extractor = $extractor;
         $this->filterData = $filterData;
         $this->classes = $classes;
+        $this->indexing = $indexing;
     }
 
     public function initialize()
@@ -261,6 +266,10 @@ class ElasticSearchEngine implements EngineInterface
 
     public function index($resource)
     {
+        if (!$this->indexing) {
+            return;
+        }
+
         /** @var Metadata $metadata */
         $metadata = $this->metadataRepository->getMetadata($resource);
         if($metadata && in_array($metadata->getClassName(), $this->classes)) {

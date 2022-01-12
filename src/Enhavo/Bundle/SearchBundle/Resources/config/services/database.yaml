@@ -12,3 +12,4 @@ services:
             - '@Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface'
             - '@enhavo_search.filter.filter_data'
             - '%enhavo_search.index.class%'
+            - '%enhavo_search.search.indexing%'
