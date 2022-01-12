@@ -73,6 +73,9 @@ class DatabaseSearchEngine implements EngineInterface
      */
     private $classes;
 
+    /** @var bool */
+    private $indexing;
+
     public function __construct(
         Indexer $indexer,
         MetadataRepository $metadataRepository,
@@ -82,7 +85,8 @@ class DatabaseSearchEngine implements EngineInterface
         TextSimplify $simplifier,
         EntityResolverInterface $entityResolver,
         FilterData $filterData,
-        $classes
+        $classes,
+        $indexing
     ) {
         $this->indexer = $indexer;
         $this->metadataRepository = $metadataRepository;
@@ -93,6 +97,7 @@ class DatabaseSearchEngine implements EngineInterface
         $this->entityResolver = $entityResolver;
         $this->filterData = $filterData;
         $this->classes = $classes;
+        $this->indexing = $indexing;
     }
 
     public function search(Filter $filter)
@@ -141,6 +146,10 @@ class DatabaseSearchEngine implements EngineInterface
 
     public function index($resource, $locale = null)
     {
+        if (!$this->indexing) {
+            return;
+        }
+
         /** @var Metadata $metadata */
         $metadata = $this->metadataRepository->getMetadata($resource);
         if($metadata && in_array($metadata->getClassName(), $this->classes)) {
