@@ -6,11 +6,14 @@ export class Media
 {
     protected $element: JQuery;
     protected config: any;
+    protected index: number;
 
     public constructor(element: HTMLElement)
     {
         this.$element = $(element);
         this.config = this.$element.data('media');
+
+        this.index = this.$element.find('[data-media-list]').find('[data-media-item]').length;
 
         this.initHighlight();
         this.initDropzone();
@@ -97,10 +100,10 @@ export class Media
         });
     }
 
-    private upload(files: any, formElement: HTMLFormElement = null)
+    private upload(files: any, formElement: HTMLFormElement = null): Promise<void>
     {
         return new Promise((resolve, reject) => {
-            let callbacks: ((callback) => void)[] = [];
+            let callbacks: ((callback: any) => void)[] = [];
 
             if (files) {
                 if (!this.config.multiple) {
@@ -122,7 +125,7 @@ export class Media
                 });
             } else {
                 let data = new FormData(formElement);
-                this.createCallback(data)((data, err) => {
+                this.createCallback(data)((data: any, err: any) => {
                     if (err) {
                         reject(err);
                         return;
@@ -133,7 +136,7 @@ export class Media
         });
     }
 
-    private createCallback(data: any): (callback: any) => void[]
+    private createCallback(data: any): (callback: any) => void
     {
         let url = '/file/add';
 
@@ -143,35 +146,36 @@ export class Media
                     'Content-Type': 'multipart/form-data'
                 }
             })
-            .then((response) => {
-                for (let file of response.data) {
-                    this.addFile(file);
-                }
-                callback();
-            })
-            .catch((error) => {
-                console.error(error)
-                callback(null, error)
-            });
+                .then((response) => {
+                    for (let file of response.data) {
+                        this.addFile(file);
+                    }
+                    callback();
+                })
+                .catch((error) => {
+                    console.error(error)
+                    callback(null, error)
+                });
         }
     }
 
     protected addFile(file: any)
     {
         let $list = this.$element.find('[data-media-list]');
-        
+
         if (!this.config.multiple) {
             $list.html('');
         }
 
         let prototype = $list.data('prototype');
-        let index = $list.find('[data-media-item]').length;
 
         prototype = prototype.trim();
-        prototype = prototype.replaceAll('__index__', index);
+        prototype = prototype.replaceAll('__index__', this.index);
         prototype = prototype.replaceAll('__id__', file.id);
         prototype = prototype.replaceAll('__order__', '');
         prototype = prototype.replaceAll('__filename__', file.filename);
+
+        this.index++;
 
         let $element = $($.parseHTML(prototype));
         $element.find('[data-media-remove]').on('click', () => {
