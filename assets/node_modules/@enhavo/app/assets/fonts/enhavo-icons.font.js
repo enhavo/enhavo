@@ -1,5 +1,6 @@
 const path = require('path');
 const EncoreUtil = require('@enhavo/core/EncoreUtil');
+const Encore = require('@symfony/webpack-encore');
 
 module.exports = {
     'files': [
@@ -11,6 +12,7 @@ module.exports = {
     'baseSelector': '.icon',
     'types': ['eot', 'woff', 'woff2', 'ttf', 'svg'],
     'fileName': 'fonts/[fontname].[hash].[ext]',
+    'html': Encore.isDev(),
     'htmlTemplate': path.resolve(__dirname, 'enhavo-icons.html.hbs'),
     'codepoints': {
         '3d_rotation': 0xf101,
