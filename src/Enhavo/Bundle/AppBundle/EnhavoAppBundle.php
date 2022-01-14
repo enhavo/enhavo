@@ -10,6 +10,8 @@ use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\SecurityCompilerPass;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\SyliusCompilerPass;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\TranslationDumperCompilerPass;
 use Enhavo\Bundle\AppBundle\Type\TypeCompilerPass;
+use Enhavo\Bundle\AppBundle\View\View;
+use Enhavo\Bundle\AppBundle\View\ViewFactoryInterface;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -42,6 +44,10 @@ class EnhavoAppBundle extends Bundle
         );
 
         $container->addCompilerPass(
+            new \Enhavo\Component\Type\TypeCompilerPass('View', 'enhavo_app.view', View::class)
+        );
+
+        $container->addCompilerPass(
             new TypeCompilerPass('enhavo_app.menu_collector', 'enhavo.menu')
         );
 
@@ -71,10 +77,6 @@ class EnhavoAppBundle extends Bundle
 
         $container->addCompilerPass(
             new FilesystemCompilerPass()
-        );
-
-        $container->addCompilerPass(
-            new FOSRestCompilerPass()
         );
 
         $container->addCompilerPass(

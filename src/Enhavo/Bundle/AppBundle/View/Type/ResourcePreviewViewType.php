@@ -6,9 +6,10 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
+namespace Enhavo\Bundle\AppBundle\View\Type;
 
 use Enhavo\Bundle\AppBundle\Preview\StrategyResolver;
+use Enhavo\Bundle\AppBundle\View\AbstractViewType;
 use Enhavo\Bundle\AppBundle\Viewer\AbstractResourceViewer;
 use Enhavo\Bundle\AppBundle\Viewer\ViewerUtil;
 use FOS\RestBundle\View\View;
@@ -16,7 +17,7 @@ use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactory;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ResourcePreviewViewer extends AbstractResourceViewer
+class ResourcePreviewViewType extends AbstractViewType
 {
     /**
      * @var StrategyResolver

@@ -6,7 +6,7 @@
  * Time: 13:01
  */
 
-namespace Enhavo\Bundle\AppBundle\Viewer;
+namespace Enhavo\Bundle\AppBundle\View;
 
 
 use Sylius\Component\Resource\Metadata\MetadataInterface;

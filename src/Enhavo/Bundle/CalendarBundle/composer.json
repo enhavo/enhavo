@@ -17,7 +17,6 @@
     "enhavo/content-bundle": "dev-master",
     "enhavo/block-bundle": "dev-master",
     "enhavo/form-bundle": "dev-master",
-    "facebook/graph-sdk": "^5.4",
     "johngrogg/ics-parser": "^2.0",
     "guzzlehttp/guzzle": "^6.2",
     "simshaun/recurr": "^2.2"

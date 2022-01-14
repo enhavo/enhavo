@@ -123,8 +123,7 @@ services:
         public: true
         arguments:
             - '@sylius.resource_controller.request_configuration_factory'
-            - '@view.factory'
-            - '@fos_rest.view_handler'
+            - '@Enhavo\Component\Type\FactoryInterface[View]'
         calls:
             - [setContainer, ['@service_container']]
 
@@ -133,8 +132,7 @@ services:
         public: true
         arguments:
             - '@sylius.resource_controller.request_configuration_factory'
-            - '@view.factory'
-            - '@fos_rest.view_handler'
+            - '@Enhavo\Component\Type\FactoryInterface[View]'
         calls:
             - [setContainer, ['@service_container']]
 

@@ -6,118 +6,124 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
+namespace Enhavo\Bundle\AppBundle\View\Type;
 
 use Enhavo\Bundle\AppBundle\Action\ActionManager;
 use Enhavo\Bundle\AppBundle\Batch\BatchManager;
-use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
 use Enhavo\Bundle\AppBundle\Filter\FilterManager;
 use Enhavo\Bundle\AppBundle\Column\ColumnManager;
-use Enhavo\Bundle\AppBundle\Viewer\ViewerUtil;
-use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactory;
+use Enhavo\Bundle\AppBundle\View\AbstractViewType;
+use Enhavo\Bundle\AppBundle\View\ViewData;
+use Enhavo\Bundle\AppBundle\View\ViewUtil;
 use Sylius\Component\Resource\Metadata\MetadataInterface;
-use Symfony\Component\HttpFoundation\ParameterBag;
+use Sylius\Component\Resource\ResourceActions;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
-class IndexViewer extends AppViewer
+class IndexViewType extends AbstractViewType
 {
-    /**
-     * @var ActionManager
-     */
+    /** @var ActionManager */
     private $actionManager;
 
-    /**
-     * @var BatchManager
-     */
+    /** @var BatchManager */
     private $batchManager;
 
-    /**
-     * @var FilterManager
-     */
+    /** @var FilterManager */
     private $filterManager;
 
-    /**
-     * @var ColumnManager
-     */
+    /** @var ColumnManager */
     private $columnManager;
 
+    /** @var ViewUtil */
+    private $util;
+
+    /** @var TranslatorInterface */
+    private $translator;
 
     public function __construct(
-        RequestConfigurationFactory $requestConfigurationFactory,
-        ViewerUtil $util,
         ActionManager $actionManager,
         BatchManager $batchManager,
         FilterManager $filterManager,
-        ColumnManager $columnManager
+        ColumnManager $columnManager,
+        ViewUtil $util,
+        TranslatorInterface $translator
     ) {
-        parent::__construct($requestConfigurationFactory, $util);
         $this->actionManager = $actionManager;
         $this->batchManager = $batchManager;
         $this->filterManager = $filterManager;
         $this->columnManager = $columnManager;
+        $this->util = $util;
+        $this->translator = $translator;
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'index';
     }
 
-    protected function buildTemplateParameters(ParameterBag $parameters, RequestConfiguration $requestConfiguration, array $options)
+    public static function getParentType(): ?string
     {
-        parent::buildTemplateParameters($parameters, $requestConfiguration, $options);
+        return AppViewType::class;
+    }
 
-        $label = $this->mergeConfig([
+    public function createViewData($options, ViewData $data)
+    {
+        $requestConfiguration = $this->util->getRequestConfiguration($options);
+
+        $this->util->isGrantedOr403($requestConfiguration, ResourceActions::INDEX);
+
+        $label = $this->util->mergeConfig([
             $options['label'],
-            $this->getViewerOption('label', $requestConfiguration)
+            $this->util->getViewerOption('label', $requestConfiguration)
         ]);
 
-        $actions = $this->mergeConfigArray([
+        $actions = $this->util->mergeConfigArray([
             $this->createActions($options),
             $options['actions'],
-            $this->getViewerOption('actions', $requestConfiguration)
+            $this->util->getViewerOption('actions', $requestConfiguration)
         ]);
 
-        $tableRoute = $this->mergeConfig([
+        $tableRoute = $this->util->mergeConfig([
             $this->getTableRoute($options),
             $options['table_route'],
-            $this->getViewerOption('table_route', $requestConfiguration)
+            $this->util->getViewerOption('table_route', $requestConfiguration)
         ]);
 
-        $tableRouteParameters = $this->mergeConfig([
+        $tableRouteParameters = $this->util->mergeConfig([
             $options['table_route_parameters'],
-            $this->getViewerOption('table_route_parameters', $requestConfiguration)
+            $this->util->getViewerOption('table_route_parameters', $requestConfiguration)
         ]);
 
         $tableConfiguration = $this->util->createConfigurationFromRoute($tableRoute);
 
         $filterData = $tableConfiguration ? $tableConfiguration->getFilters() : [];
-        $columnData = $tableConfiguration ? $this->getViewerOption('columns', $tableConfiguration) : [];
+        $columnData = $tableConfiguration ? $this->util->getViewerOption('columns', $tableConfiguration) : [];
 
         if($filterData) {
             $actions = $this->addFilterAction($actions);
         }
 
-        $batchRoute = $this->mergeConfig([
+        $batchRoute = $this->util->mergeConfig([
             $this->getBatchRoute($options),
             $options['batch_route'],
-            $this->getViewerOption('batch_route', $requestConfiguration)
+            $this->util->getViewerOption('batch_route', $requestConfiguration)
         ]);
 
-        $batchRouteParameters = $this->mergeConfig([
+        $batchRouteParameters = $this->util->mergeConfig([
             $options['batch_route_parameters'],
-            $this->getViewerOption('batch_route_parameters', $requestConfiguration)
+            $this->util->getViewerOption('batch_route_parameters', $requestConfiguration)
         ]);
 
-        $openRoute = $this->mergeConfig([
+        $openRoute = $this->util->mergeConfig([
             $this->getOpenRoute($options),
             $options['open_route'],
-            $this->getViewerOption('open_route', $requestConfiguration)
+            $this->util->getViewerOption('open_route', $requestConfiguration)
         ]);
 
-        $openRouteParameters = $this->mergeConfig([
+        $openRouteParameters = $this->util->mergeConfig([
             $options['open_route_parameters'],
-            $this->getViewerOption('open_route_parameters', $requestConfiguration)
+            $this->util->getViewerOption('open_route_parameters', $requestConfiguration)
         ]);
 
         $batchConfiguration = $this->util->createConfigurationFromRoute($batchRoute);
@@ -147,21 +153,32 @@ class IndexViewer extends AppViewer
             'paginationSteps' => [
                 5, 10, 50, 100, 500
             ],
-            'cssClass' => $this->getViewerOption('css_class', $requestConfiguration)
+            'cssClass' => $this->util->getViewerOption('css_class', $requestConfiguration)
         ];
 
-        $parameters->set('data', [
-            'messages' => [],
-            'grid' => $grid,
-            'actions' => $this->actionManager->createActionsViewData($actions),
-            'view' => [
-                'id' => $this->getViewId(),
-                'label' => $this->container->get('translator')->trans($label, [], $parameters->get('translation_domain'))
-            ],
-            'modals' => [],
-        ]);
+        $data['messages'] = [];
+        $data['grid'] = $grid;
+        $data['actions'] = $this->actionManager->createActionsViewData($actions);
+//        $data['view']['label'] = $this->translator->trans($label, [], $options['translation_domain']);
+        $data['modals'] = [];
+    }
 
-        return;
+    public function configureOptions(OptionsResolver $optionsResolver)
+    {
+        $optionsResolver->setDefaults([
+            'entrypoint' => 'enhavo/app/index',
+            'request_configuration' => null,
+            'metadata' => null,
+            'actions' => [],
+            'table_route' => null,
+            'table_route_parameters' => null,
+            'batch_route' => null,
+            'batch_route_parameters' => null,
+            'open_route' => null,
+            'open_route_parameters' => null,
+            'label' => 'label.index',
+            'translation_domain' => 'EnhavoAppBundle'
+        ]);
     }
 
     private function addTranslationDomain(&$configuration, $translationDomain)
@@ -177,21 +194,21 @@ class IndexViewer extends AppViewer
     {
         /** @var MetadataInterface $metadata */
         $metadata = $options['metadata'];
-        return sprintf('%s_%s_table', $metadata->getApplicationName(), $this->getUnderscoreName($metadata));
+        return sprintf('%s_%s_table', $metadata->getApplicationName(), $this->util->getUnderscoreName($metadata));
     }
 
     private function getBatchRoute($options)
     {
         /** @var MetadataInterface $metadata */
         $metadata = $options['metadata'];
-        return sprintf('%s_%s_batch', $metadata->getApplicationName(), $this->getUnderscoreName($metadata));
+        return sprintf('%s_%s_batch', $metadata->getApplicationName(), $this->util->getUnderscoreName($metadata));
     }
 
     private function getOpenRoute($options)
     {
         /** @var MetadataInterface $metadata */
         $metadata = $options['metadata'];
-        return sprintf('%s_%s_update', $metadata->getApplicationName(), $this->getUnderscoreName($metadata));
+        return sprintf('%s_%s_update', $metadata->getApplicationName(), $this->util->getUnderscoreName($metadata));
     }
 
     private function createActions($options)
@@ -202,8 +219,8 @@ class IndexViewer extends AppViewer
         $default = [
             'create' => [
                 'type' => 'create',
-                'route' => sprintf('%s_%s_create', $metadata->getApplicationName(), $this->getUnderscoreName($metadata)),
-                'permission' => $this->getRoleNameByResourceName($metadata->getApplicationName(), $this->getUnderscoreName($metadata), 'create')
+                'route' => sprintf('%s_%s_create', $metadata->getApplicationName(), $this->util->getUnderscoreName($metadata)),
+                'permission' => $this->util->getRoleNameByResourceName($metadata->getApplicationName(), $this->util->getUnderscoreName($metadata), 'create')
             ]
         ];
 
@@ -218,28 +235,5 @@ class IndexViewer extends AppViewer
             ];
         }
         return $actions;
-    }
-
-    public function configureOptions(OptionsResolver $optionsResolver)
-    {
-        parent::configureOptions($optionsResolver);
-
-        $optionsResolver->setDefaults([
-            'javascripts' => [
-                'enhavo/app/index'
-            ],
-            'stylesheets' => [
-                'enhavo/app/index'
-            ],
-            'actions' => [],
-            'table_route' => null,
-            'table_route_parameters' => null,
-            'batch_route' => null,
-            'batch_route_parameters' => null,
-            'open_route' => null,
-            'open_route_parameters' => null,
-            'label' => 'label.index',
-            'translation_domain' => 'EnhavoAppBundle'
-        ]);
     }
 }

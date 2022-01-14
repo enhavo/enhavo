@@ -1,0 +1,176 @@
+services:
+    Enhavo\Bundle\AppBundle\View\Type\BaseViewType:
+        tags:
+            - { name: enhavo_app.view }
+
+    Enhavo\Bundle\AppBundle\View\Type\AppViewType:
+        arguments:
+            - '@twig'
+            - '%kernel.project_dir%'
+            - '@translator'
+            - '@request_stack'
+            - '@enhavo_app.translation.translation_dumper'
+            - '@enhavo_app.locale_resolver'
+            - '@Enhavo\Bundle\AppBundle\Template\TemplateManager'
+        tags:
+            - { name: enhavo_app.view }
+
+    Enhavo\Bundle\AppBundle\View\Type\IndexViewType:
+        arguments:
+            - '@enhavo_app.action_manager'
+            - '@Enhavo\Bundle\AppBundle\Batch\BatchManager'
+            - '@enhavo_app.filter_manager'
+            - '@enhavo_app.column_manager'
+            - '@Enhavo\Bundle\AppBundle\View\ViewUtil'
+            - '@translator'
+        tags:
+            - { name: enhavo_app.view }
+
+    Enhavo\Bundle\AppBundle\View\ViewUtil:
+        arguments:
+            - '@sylius.resource_controller.parameters_parser'
+            - 'Enhavo\Bundle\AppBundle\Controller\RequestConfiguration'
+            - '%sylius.resource.settings%'
+            - '@router'
+            - '@sylius.resource_controller.request_configuration_factory'
+            - '@sylius.resource_controller.authorization_checker'
+            - '@Symfony\Component\HttpFoundation\RequestStack'
+
+    Enhavo\Bundle\AppBundle\View\Type\CreateViewType:
+        arguments:
+            - '%enhavo_app.form_themes%'
+            - '@enhavo_app.action_manager'
+            - '@session.flash_bag'
+            - '@Enhavo\Bundle\AppBundle\View\ViewUtil'
+        tags:
+            - { name: enhavo_app.view }
+
+#    Enhavo\Bundle\AppBundle\Viewer\Viewer\IndexViewer:
+#        parent: Enhavo\Bundle\AppBundle\Viewer\Viewer\AppViewer
+#        public: true
+#        arguments:
+#            - '@enhavo_app.action_manager'
+#            - '@Enhavo\Bundle\AppBundle\Batch\BatchManager'
+#            - '@enhavo_app.filter_manager'
+#            - '@enhavo_app.column_manager'
+#        calls:
+#            - ['setContainer', ['@service_container']]
+#        tags:
+#            - { name: enhavo.viewer, alias: index }
+#
+#    Enhavo\Bundle\AppBundle\Viewer\Viewer\FormViewer:
+#        public: true
+#        arguments:
+#            - '@enhavo_app.action_manager'
+#            - '@session.flash_bag'
+#            - '%enhavo_app.form_themes%'
+#        calls:
+#            - ['setContainer', ['@service_container']]
+#        tags:
+#            - { name: enhavo.viewer, alias: form }
+#
+#    Enhavo\Bundle\AppBundle\Viewer\Viewer\CreateViewer:
+#        parent: Enhavo\Bundle\AppBundle\Viewer\Viewer\BaseViewer
+#        public: true
+#        arguments:
+#            - '%enhavo_app.form_themes%'
+#            - '@enhavo_app.action_manager'
+#            - '@session.flash_bag'
+#        calls:
+#            - ['setContainer', ['@service_container']]
+#        tags:
+#            - { name: enhavo.viewer, alias: create }
+#
+#    Enhavo\Bundle\AppBundle\Viewer\Viewer\UpdateViewer:
+#        public: true
+#        parent: Enhavo\Bundle\AppBundle\Viewer\Viewer\CreateViewer
+#        tags:
+#            - { name: enhavo.viewer, alias: update }
+#
+#    Enhavo\Bundle\AppBundle\Viewer\Viewer\AppViewer:
+#        public: true
+#        arguments:
+#            - '@sylius.resource_controller.request_configuration_factory'
+#            - '@Enhavo\Bundle\AppBundle\Viewer\ViewerUtil'
+#        calls:
+#            - ['setContainer', ['@service_container']]
+#        tags:
+#            - { name: enhavo.viewer, alias: app }
+#
+#    Enhavo\Bundle\AppBundle\Viewer\Viewer\BaseViewer:
+#        public: true
+#        arguments:
+#            - '@sylius.resource_controller.request_configuration_factory'
+#            - '@Enhavo\Bundle\AppBundle\Viewer\ViewerUtil'
+#        calls:
+#            - ['setContainer', ['@service_container']]
+#        tags:
+#            - { name: enhavo.viewer, alias: base }
+#
+#    Enhavo\Bundle\AppBundle\Viewer\Viewer\DeleteViewer:
+#        public: true
+#        arguments:
+#            - '@sylius.resource_controller.request_configuration_factory'
+#            - '@Enhavo\Bundle\AppBundle\Viewer\ViewerUtil'
+#            - '@session.flash_bag'
+#            - '@translator'
+#        calls:
+#            - ['setContainer', ['@service_container']]
+#        tags:
+#            - { name: enhavo.viewer, alias: delete }
+#
+#    Enhavo\Bundle\AppBundle\Viewer\Viewer\TableViewer:
+#        public: true
+#        arguments:
+#            - '@sylius.resource_controller.request_configuration_factory'
+#            - '@Enhavo\Bundle\AppBundle\Viewer\ViewerUtil'
+#            - '@enhavo_app.column_manager'
+#        calls:
+#            - ['setContainer', ['@service_container']]
+#        tags:
+#            - { name: enhavo.viewer, alias: table }
+#
+#    Enhavo\Bundle\AppBundle\Viewer\Viewer\ListViewer:
+#        public: true
+#        arguments:
+#            - '@sylius.resource_controller.request_configuration_factory'
+#            - '@Enhavo\Bundle\AppBundle\Viewer\ViewerUtil'
+#            - '@enhavo_app.action_manager'
+#            - '@enhavo_app.column_manager'
+#        calls:
+#            - ['setContainer', ['@service_container']]
+#        tags:
+#            - { name: enhavo.viewer, alias: list }
+#
+#    Enhavo\Bundle\AppBundle\Viewer\Viewer\ListDataViewer:
+#        public: true
+#        arguments:
+#            - '@sylius.resource_controller.request_configuration_factory'
+#            - '@Enhavo\Bundle\AppBundle\Viewer\ViewerUtil'
+#            - '@enhavo_app.column_manager'
+#        calls:
+#            - ['setContainer', ['@service_container']]
+#        tags:
+#            - { name: enhavo.viewer, alias: list_data }
+#
+#    Enhavo\Bundle\AppBundle\Viewer\Viewer\ResourcePreviewViewer:
+#        public: true
+#        arguments:
+#            - '@sylius.resource_controller.request_configuration_factory'
+#            - '@Enhavo\Bundle\AppBundle\Viewer\ViewerUtil'
+#            - '@enhavo_app.preview.strategy_resolver'
+#        calls:
+#            - ['setContainer', ['@service_container']]
+#        tags:
+#            - { name: enhavo.viewer, alias: resource_preview }
+#
+#    Enhavo\Bundle\AppBundle\Viewer\Viewer\PreviewViewer:
+#        public: true
+#        arguments:
+#            - '@enhavo_app.action_manager'
+#        calls:
+#            - ['setContainer', ['@service_container']]
+#        tags:
+#            - { name: enhavo.viewer, alias: preview }
+#
+#    Enhavo\Bundle\AppBundle\Viewer\PreviewViewHandler:

@@ -6,10 +6,7 @@
  * Time: 10:32
  */
 
-namespace Enhavo\Bundle\AppBundle\Tests\View;
-
-
-use Enhavo\Bundle\AppBundle\View\ViewData;
+namespace Enhavo\Bundle\AppBundle\View;
 
 class Component
 {

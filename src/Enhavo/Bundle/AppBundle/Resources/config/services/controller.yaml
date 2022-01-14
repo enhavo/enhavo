@@ -21,8 +21,7 @@ services:
     Enhavo\Bundle\AppBundle\Controller\AbstractViewController:
         abstract: true
         arguments:
-            - '@view.factory'
-            - '@fos_rest.view_handler'
+            - '@Enhavo\Component\Type\FactoryInterface[View]'
         calls:
             - [setContainer, ['@service_container']]
 

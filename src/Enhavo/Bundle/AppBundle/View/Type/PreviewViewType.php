@@ -6,15 +6,16 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
+namespace Enhavo\Bundle\AppBundle\View\Type;
 
+use Enhavo\Bundle\AppBundle\View\AbstractViewType;
 use Enhavo\Bundle\AppBundle\Viewer\AbstractActionViewer;
 use FOS\RestBundle\View\View;
 use Sylius\Component\Resource\Metadata\Metadata;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PreviewViewer extends AbstractActionViewer
+class PreviewViewType extends AbstractViewType
 {
     public function getType()
     {
