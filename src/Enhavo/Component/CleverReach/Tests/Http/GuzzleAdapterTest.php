@@ -13,7 +13,7 @@ class GuzzleAdapterTest extends TestCase
     /** @var WebServerManager */
     private static $server;
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         if (self::$server === null) {
             self::$server = new WebServerManager(__DIR__.'/../fixtures/server', '127.0.0.1', 1234, 'index.php', '/ready');
@@ -21,7 +21,7 @@ class GuzzleAdapterTest extends TestCase
         }
     }
 
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
         if (self::$server instanceof WebServerManager) {
             self::$server->quit();

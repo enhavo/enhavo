@@ -25,13 +25,13 @@ abstract class DoctrineTest extends TestCase
     /** @var string */
     protected $proxyDir;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->bootstrap();
         $this->updateSchema();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->em->close();
         unset($this->em);

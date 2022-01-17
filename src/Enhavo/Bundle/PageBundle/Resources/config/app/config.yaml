@@ -12,6 +12,7 @@ enhavo_app:
     template_paths:
         enhavo_page:
             path: '@EnhavoPageBundle/Resources/views'
+            alias: EnhavoPage
             priority: 10
     roles:
         page_index:

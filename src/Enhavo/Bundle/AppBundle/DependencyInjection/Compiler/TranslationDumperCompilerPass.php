@@ -13,8 +13,9 @@ class TranslationDumperCompilerPass implements CompilerPassInterface
 
     public function process(ContainerBuilder $container)
     {
-        $this->addLoaders($container);
-        $this->replaceArgument($container);
+        // ToDo: Find translation files
+        //$this->addLoaders($container);
+        //$this->replaceArgument($container);
     }
 
     private function addLoaders(ContainerBuilder $container)

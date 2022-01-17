@@ -7,6 +7,7 @@ enhavo_app:
     template_paths:
         enhavo_sidebar:
             path: '@EnhavoSidebarBundle/Resources/views'
+            alias: EnhavoSidebar
             priority: 10
     roles:
         enhavo_sidebar_sidebar_index:

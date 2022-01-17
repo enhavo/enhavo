@@ -373,7 +373,7 @@ class ResetPasswordControllerMock extends ResetPasswordController
         return $this->flashMessages;
     }
 
-    protected function addFlash(string $type, $message)
+    protected function addFlash(string $type, $message): void
     {
         $this->flashMessages[$type] = $message;
     }

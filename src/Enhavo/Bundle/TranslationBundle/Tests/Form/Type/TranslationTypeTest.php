@@ -38,7 +38,7 @@ class TranslationTypeTest extends TypeTestCase
         ];
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->translationManager = $this->getMockBuilder(TranslationManager::class)->disableOriginalConstructor()->getMock();
         parent::setUp();

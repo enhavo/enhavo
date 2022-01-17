@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+<head>
+    <title>{% block title %}enhavo{% endblock %}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    {% block stylesheets %}
+        {% if stylesheets is defined %}
+            {% for stylesheet in stylesheets %}
+                {{ encore_entry_link_tags(stylesheet, null, 'enhavo') }}
+            {% endfor %}
+        {% endif %}
+    {% endblock %}
+</head>
+<body>
+{% block content %}
+    <div id="app"></div>
+{% endblock %}
+{% if data is defined %}
+    <script id="data" type="application/json">{{ data|json_encode|raw }}</script>
+{% endif %}
+{% if routes is defined %}
+    <script id="routes" type="application/json">{{ routes|raw }}</script>
+{% endif %}
+{% if translations is defined %}
+    <script id="translations" type="application/json">{{ translations|json_encode|raw }}</script>
+{% endif %}
+{% block javascripts %}
+    {% if javascripts is defined %}
+        {% for javascript in javascripts %}
+            {{ encore_entry_script_tags(javascript, null, 'enhavo') }}
+        {% endfor %}
+    {% endif %}
+{% endblock %}
+</body>
+</html>

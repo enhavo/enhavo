@@ -6,6 +6,12 @@ services:
         autowire: false
         autoconfigure: false
 
+    App\Controller\:
+        resource: '../src/App/Controller'
+        calls:
+            - [setContainer, ['@service_container']]
+        tags: ['controller.service_arguments']
+
     app.multi-tenancy.provider:
         class: Enhavo\Bundle\MultiTenancyBundle\Provider\ConfigurationProvider
         arguments:

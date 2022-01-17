@@ -13,6 +13,7 @@ enhavo_app:
     template_paths:
         enhavo_block:
             path: '@EnhavoBlockBundle/Resources/views'
+            alias: EnhavoBlock
             priority: 10
     form_themes:
         - '@EnhavoBlock/admin/form/block/fields.html.twig'

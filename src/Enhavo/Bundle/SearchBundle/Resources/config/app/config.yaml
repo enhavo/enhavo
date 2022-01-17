@@ -2,6 +2,7 @@ enhavo_app:
     template_paths:
         enhavo_search:
             path: '@EnhavoSearchBundle/Resources/views'
+            alias: EnhavoSearch
             priority: 10
 
 enhavo_doctrine_extension:

@@ -105,6 +105,7 @@ enhavo_app:
     template_paths:
         enhavo_shop:
             path: '@EnhavoShopBundle/Resources/views'
+            alias: EnhavoShop
             priority: 10
     roles:
         enhavo_shop_product_index:

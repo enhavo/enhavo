@@ -12,6 +12,7 @@ enhavo_app:
     template_paths:
         enhavo_newsletter:
             path: '@EnhavoNewsletterBundle/Resources/views'
+            alias: EnhavoNewsletter
             priority: 10
     roles:
         enhavo_newsletter_local_subscriber_index:

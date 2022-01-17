@@ -8,6 +8,7 @@ enhavo_app:
     template_paths:
         enhavo_comment:
             path: '@EnhavoCommentBundle/Resources/views'
+            alias: 'EnhavoComment'
             priority: 10
 
 enhavo_doctrine_extension:

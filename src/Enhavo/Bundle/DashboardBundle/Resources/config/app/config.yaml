@@ -7,4 +7,5 @@ enhavo_app:
     template_paths:
         enhavo_dashboard:
             path: '@EnhavoDashboardBundle/Resources/views'
+            alias: EnhavoDashboard
             priority: 10

@@ -4,4 +4,5 @@ enhavo_app:
     template_paths:
         enhavo_content:
             path: '@EnhavoContentBundle/Resources/views'
+            alias: EnhavoContent
             priority: 10
