@@ -38,11 +38,10 @@
         <?= $relation->getName() ?>:
             targetEntity: <?= $relation->getTargetEntity() ?>
 
-            cascade: [ 'persist', 'refresh', 'remove' ]
             inversedBy: <?= $relation->getInversedBy() ?>
-
             joinColumn:
-                onDelete: CASCADE
+                onDelete: SET NULL
+
 <?php endforeach; ?>
 
     manyToMany:
