@@ -78,7 +78,7 @@ class PhpClass
     {
         foreach ($this->properties as $key => $config) {
             $classProperty = $this->getProperty($key);
-            if ($classProperty->getEntryClass()) {
+            if ($classProperty->getEntryClass() && $classProperty->getSingular()) {
                 $this->functions[] = $this->generateAdder($key);
                 $this->functions[] = $this->generateRemover($key);
             }

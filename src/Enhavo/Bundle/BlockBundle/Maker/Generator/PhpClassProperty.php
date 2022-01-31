@@ -62,19 +62,12 @@ class PhpClassProperty
 
     public function getRemover(): string
     {
-        return $this->config['type_options']['adder'] ?? 'add';
+        return $this->config['type_options']['remover'] ?? 'remove';
     }
 
-    public function getSingular(): string
+    public function getSingular(): ?string
     {
-        return $this->config['type_options']['singular'] ?? $this->__getSingular();
-    }
-
-    private function __getSingular(): string
-    {
-        $inflector = new EnglishInflector();
-        $result = $inflector->singularize($this->getName());
-        return array_shift($result);
+        return $this->config['type_options']['singular'] ?? null;
     }
 
     public function getEntryClass(): ?string
