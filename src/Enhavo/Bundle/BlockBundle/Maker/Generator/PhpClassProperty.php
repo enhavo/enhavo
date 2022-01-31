@@ -11,8 +11,6 @@
 
 namespace Enhavo\Bundle\BlockBundle\Maker\Generator;
 
-use Symfony\Component\String\Inflector\EnglishInflector;
-
 class PhpClassProperty
 {
     /** @var string */
