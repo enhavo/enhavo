@@ -67,7 +67,7 @@ reset_password:
             error: 'Der Benutzername existiert nicht.'
     mail:
         subject: 'Passwort zurücksetzen'
-        message: |
+        text: |
             Hallo %username%!
 
             Besuchen Sie bitte folgende Seite, um Ihr Passwort zurückzusetzen: %confirmation_url%
