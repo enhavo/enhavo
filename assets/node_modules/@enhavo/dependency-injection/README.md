@@ -7,21 +7,21 @@ The enhavo CMS is a open source PHP project on top of the fullstack Symfony fram
 
 # Dependency Injection
 
-The missing dependency injection for webpack. How it works? First, you have define all your services and their dependencies in a ``yaml`` or ``json`` format.
+Dependency injection for webpack. How does it work? First, you have to define all your services and their dependencies in a ``yaml`` or ``json`` format.
 During the webpack compile time the ``DependencyInjecitonPlugin`` will create a container class. This container class
 can be imported in your entrypoint and you can retrieve your service with all its dependencies. This project is heavily inspired by the symfony dependency injection.
 If you like it, please leave a github star.
 
 ### Install
 
-Add package the package to your project
+Add the package to your project
 
 ```
 $ yarn add @enhavo/dependency-injection
 $ npm install @enhavo/dependency-injection
 ```
 
-Create a `json` or `yaml` for your service definitions. For example a ``service.yaml`` in your root directory.
+Create a `json` or `yaml` file for your service definitions. For example create ``service.yaml`` in your root directory.
 
 Add the ``DependencyInjectionPlugin`` to your webpack config.
 
@@ -31,9 +31,9 @@ Add the ``DependencyInjectionPlugin`` to your webpack config.
 const DependencyInjectionPlugin = require('@enhavo/dependency-injection/webpack/DependencyInjectionPlugin');
 
 module.exports = {
-  plugins: [
-    new DependencyInjectionPlugin('./service.yaml'), // define your path to the configuration file(s)
-  ],
+    plugins: [
+        new DependencyInjectionPlugin('./service.yaml'), // define your path to the configuration file(s)
+    ],
 };
 ```
 
@@ -47,7 +47,7 @@ A simple hello world service inside the project root dir.
 module.exports = () => {
     console.log('Hello World!');
 }
-    
+
 ```
 
 Now you can edit the ``service.yaml`` and add the ``MyService`` module.
@@ -58,7 +58,7 @@ Now you can edit the ``service.yaml`` and add the ``MyService`` module.
 services:
     MyService:
         from: './MyService'
-    
+
 ```
 
 ### Use service
@@ -89,12 +89,12 @@ imports:
     -
         # Relative import
         path: './mypackage/services/*'
-    
+
 ```
 
 ### Overwrite
 
-You can overwrite services by redefining it with the same service name. 
+You can overwrite services by redefining it with the same service name.
 Be careful that you are loading the services files in the correct order.
 The last defined service will be used.
 
@@ -104,7 +104,7 @@ The last defined service will be used.
 services:
     MyService:
         from: './MyService'
-    
+
 ```
 
 ```yaml
@@ -113,7 +113,7 @@ services:
 services:
     MyService:
         from: './MyCustomService'
-    
+
 ```
 
 ### Service options
@@ -131,10 +131,10 @@ services:
         import: MyServiceClass
         # Pass dependency by calling a setter
         calls:
-          - [setDependency, ['MyDependService']]
+            - [setDependency, ['MyDependService']]
         # Pass dependency over the constructor
         arguments:
-          - 'MyDependService'
+            - 'MyDependService'
         # If there is no "new" operator required to create the service you can define the service as static true. The default value is false.
         static: false
         # Dynamic import mode ('lazy'(default)|'lazy-once'|'eager'|'weak')
