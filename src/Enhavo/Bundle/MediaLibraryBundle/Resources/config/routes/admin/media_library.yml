@@ -5,9 +5,31 @@ enhavo_media_library_index:
     path: /media-library/list
     methods: [GET]
     defaults:
-        _controller: enhavo_media_library.controller.media_library:listAction
+        _controller: enhavo_media_library.controller.media_library:indexAction
         _sylius:
             permission: ROLE_ENHAVO_MEDIA_LIBRARY_INDEX
+            viewer:
+
+enhavo_media_library_list:
+    options:
+        expose: true
+    path: /media-library/list
+    methods: [GET]
+    defaults:
+        _controller: enhavo_media_library.controller.media_library:listAction
+        _sylius:
+            permission: ROLE_ENHAVO_MEDIA_LIBRARY_LIST
+            viewer:
+
+enhavo_media_library_tags:
+    options:
+        expose: true
+    path: /media-library/tags
+    methods: [GET]
+    defaults:
+        _controller: enhavo_media_library.controller.media_library:tagsAction
+        _sylius:
+            permission: ROLE_ENHAVO_MEDIA_LIBRARY_TAGS
             viewer:
 
 enhavo_media_library_show:
