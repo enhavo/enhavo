@@ -1,2 +1,1 @@
-# EnhavoMediaLibrary
-EnhavoMediaLibrary
+# EnhavoMediaLibraryBundle
