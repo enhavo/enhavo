@@ -1,0 +1,49 @@
+{% macro renderTags(tags) %}
+    {% import _self as function %}
+    <ul>
+        {% for tag in tag %}
+            <li>
+                <div data-MediaLibrary-tag="{{ tag.MediaLibraryId }}" class="tag-name{% if tag.children|length > 0 %} has-children{% endif %}">{{ tag.title }}</div>
+                {% if tag.children %}
+                    {{ function.renderTag(tag.children) }}
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endmacro %}
+
+<div class="MediaLibrary-overlay" data-MediaLibrary-overlay>
+    <div class="close-MediaLibrary-overlay button-icon icon-cross" data-MediaLibrary-close></div>
+    <div class="title">MediaLibrary</div>
+
+    <div class="inner-content" data-scroll-container>
+        <div class="media-types">
+            {% spaceless %}
+                <ul>
+                    <li data-MediaLibrary-tab="1" class="active">Alle</li>
+                    <li data-MediaLibrary-tab="2">Bilder</li>
+                    <li data-MediaLibrary-tab="4">Videos</li>
+                    <li data-MediaLibrary-tab="5">Dokumente</li>
+                </ul>
+            {% endspaceless %}
+        </div>
+
+        <div class="tag-list">
+            <div class="headline">Tags</div>
+            {{ function.renderTags(tags) }}
+        </div>
+        <div class="result-search">
+            <div class="search">
+                {% spaceless %}
+                    <input type="text" data-MediaLibrary-search />
+                    <span class="media-library-search-reset" data-MediaLibrary-search-reset></span>
+                    <span class="media-library-search-submit" data-MediaLibrary-search-submit>Suche starten</span>
+                {% endspaceless %}
+            </div>
+            <ul class="images" data-MediaLibrary-result></ul>
+        </div>
+    </div>
+    <div class="button-row">
+        <button data-MediaLibrary-add class="add-button">Ausgewählte Bilder hinzufügen</button><div data-MediaLibrary-add-waiting-message class="wait-message">Einen Moment bitte ...</div>
+    </div>
+</div>

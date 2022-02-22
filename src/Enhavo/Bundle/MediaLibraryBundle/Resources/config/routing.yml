@@ -1,0 +1,3 @@
+enhavo_media_library_media_library:
+  resource:   "@EnhavoMediaLibraryBundle/Resources/config/routing/media_library.yml"
+  prefix:     /

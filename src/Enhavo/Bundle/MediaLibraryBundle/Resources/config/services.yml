@@ -1,0 +1,29 @@
+services:
+    enhavo_media_library.controller.media_library:
+        class: Enhavo\Bundle\MediaLibraryBundle\Controller\MediaLibraryController
+        public: true
+        arguments:
+            - '@view.factory'
+            - '@fos_rest.view_handler'
+        calls:
+            - [setContainer, ['@service_container']]
+
+    Enhavo\Bundle\MediaLibraryBundle\Form\Extension\MediaExtension:
+        tags:
+            - { name: form.type_extension, extended_type: Enhavo\Bundle\MediaBundle\Form\Type\MediaType }
+
+    Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryExtension:
+        public: true
+        calls:
+            - [ setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.media_extension , alias: 'media_library' }
+
+    Enhavo\Bundle\MediaLibraryBundle\Viewer\MediaLibraryViewer:
+        public: true
+        arguments:
+            - '@enhavo_app.action_manager'
+        calls:
+            - ['setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo.viewer, alias: MediaLibrary }

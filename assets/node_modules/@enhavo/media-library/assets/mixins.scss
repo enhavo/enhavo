@@ -1,0 +1,18 @@
+@mixin placeholder {
+  &.placeholder { @content; }
+  &:-moz-placeholder { @content; }
+  &::-moz-placeholder { @content; }
+  &:-ms-input-placeholder { @content; }
+  &::-webkit-input-placeholder { @content; }
+}
+
+// we need to use a mixin here for the same purpose as the selector to avoid cross-media-limitations
+@mixin clearfix {
+  &:before,&:after,&:before {content:" ";display:table}
+  &:after {clear:both}
+}
+
+@mixin romaLink($linkColor,$bgColor: #ffffff) {
+  @include box-shadow(0 1px 0 0 $bgColor,0 2px 0 0 $linkColor);text-decoration:none;
+  &:hover {text-decoration:none;@include box-shadow(0 1px 0 0 $bgColor,0 2px 0 0 $color1);}
+}
