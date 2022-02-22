@@ -27,3 +27,8 @@ services:
             - ['setContainer', ['@service_container']]
         tags:
             - { name: enhavo.viewer, alias: MediaLibrary }
+
+    Enhavo\Bundle\MediaLibraryBundle\Menu\LibraryMenu:
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
+        tags:
+            - { name: enhavo.menu, alias: 'media_library' }
