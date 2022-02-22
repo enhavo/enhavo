@@ -1,0 +1,19 @@
+enhavo_app:
+    template_paths:
+        enhavo_media_library:
+            path: '@EnhavoMediaLibraryBundle/Resources/views'
+            priority: 10
+
+enhavo_media:
+    resources:
+        file:
+            classes:
+                model: Enhavo\Bundle\MediaLibraryBundle\Entity\File
+                repository: Enhavo\Bundle\MediaLibraryBundle\Repository\FileRepository
+                factory: Enhavo\Bundle\MediaLibraryBundle\Factory\FileFactory
+
+enhavo_doctrine_extension:
+    metadata:
+        Enhavo\Bundle\MediaLibraryBundle\Entity\File:
+            extends: Enhavo\Bundle\MediaBundle\Entity\File
+            discrName: 'extension'

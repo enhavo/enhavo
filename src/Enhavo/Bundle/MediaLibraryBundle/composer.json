@@ -1,0 +1,22 @@
+{
+  "name": "enhavo/media-library-bundle",
+  "type": "library",
+  "description": "EnhavoMediaLibraryBundle",
+  "keywords": ["framework"],
+  "homepage": "https://enhavo.com",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Benjamin Lutze ",
+      "email": "benjamin.lutze@xq-web.de"
+    }
+  ],
+  "require": {
+    "php": ">=7.4",
+    "enhavo/app-bundle": "*",
+    "enhavo/media-bundle": "*"
+  },
+  "autoload": {
+    "psr-4": { "Enhavo\\Bundle\\MediaLibraryBundle\\": "" }
+  }
+}

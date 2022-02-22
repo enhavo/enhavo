@@ -47,6 +47,10 @@ subtrees:
         url: 'git@github.com:enhavo/EnhavoMediaBundle.git'
         prefix: src/Enhavo/Bundle/MediaBundle
         package: enhavo/media-bundle
+    MediaLibraryBundle:
+        url: 'git@github.com:enhavo/EnhavoMediaLibraryBundle.git'
+        prefix: src/Enhavo/Bundle/MediaLibraryBundle
+        package: enhavo/media-library-bundle
     MultiTenancyBundle:
         url: 'git@github.com:enhavo/EnhavoMultiTenancyBundle.git'
         prefix: src/Enhavo/Bundle/MultiTenancyBundle

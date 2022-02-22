@@ -1,0 +1,29 @@
+enhavo_media_library_show:
+    options:
+        expose: true
+    path: /media-library/show
+    methods: [GET]
+    defaults:
+        _controller: enhavo_media_library.controller.media_library:showAction
+        _sylius:
+            viewer:
+                label: MediaLibrary
+
+enhavo_media_library_list:
+    options:
+        expose: true
+    path: /media-library/list
+    methods: [GET]
+    defaults:
+        _controller: enhavo_media_library.controller.media_library:listAction
+        _sylius:
+            viewer:
+
+enhavo_media_library_add:
+    options:
+        expose: true
+    path: /media-library/add/{id}
+    defaults:
+        _controller: enhavo_media_library.controller.media_library:addAction
+        _sylius:
+            viewer:
