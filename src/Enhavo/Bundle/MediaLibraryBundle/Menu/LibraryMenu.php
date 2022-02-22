@@ -1,4 +1,5 @@
 <?php
+
 /**
  * LibraryMenu.php
  *
@@ -6,7 +7,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\MediaBundle\Menu;
+namespace Enhavo\Bundle\MediaLibraryBundle\Menu;
 
 use Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -20,7 +21,7 @@ class LibraryMenu extends BaseMenu
         $resolver->setDefaults([
             'icon' => 'image',
             'label' => 'media.label.library',
-            'translation_domain' => 'EnhavoMediaBundle',
+            'translation_domain' => 'EnhavoMediaLibraryBundle',
             'route' => 'enhavo_media_library_index',
             'role' => 'ROLE_ENHAVO_MEDIA_LIBRARY_INDEX',
         ]);
