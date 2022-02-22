@@ -7,6 +7,7 @@ use Enhavo\Bundle\AppBundle\Viewer\ViewFactory;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class MediaLibraryController extends AbstractViewController
 {
@@ -16,32 +17,64 @@ class MediaLibraryController extends AbstractViewController
         parent::__construct($viewFactory, $viewHandler);
     }
 
+    public function indexAction(Request $request): Response
+    {
+        $view = $this->viewFactory->create('media_library', [
+        ]);
+        return $this->viewHandler->handle($view);
+    }
+
+
     /**
      * @param Request $request
      * @return JsonResponse
-     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function listAction(Request $request)
+    {
+//        $filter = $this->createFilter($request);
+//        $items = $this->repository->getList($filter);
+//
+        return new JsonResponse([
+            'items' => []
+        ]);
+    }
+
+
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Exception
+     */
+    public function tagsAction(Request $request)
+    {
+//        $filter = $this->createFilter($request);
+//        $items = $this->repository->getTags($filter);
+//
+        return new JsonResponse([
+            'tags' => []
+        ]);
+    }
+
+
+    /**
+     * @param Request $request
+     * @return void
      */
     public function addAction(Request $request)
     {
 //        $id = $request->get('id');
 //        $tab = $request->get('tab', 1);
 //
-//        $file = $this->factory->createApiFile($id, $tab, null);
-//
-//        $file->setFileSize(strlen($file->getContent()->getContent())); // TODO required?
-//        $this->getDoctrine()->getManager()->flush();
-//
 //        return new JsonResponse([
 //            'id' => $file->getId(),
-//            'token' => $file->getToken(),
 //            'filename' => $file->getFilename(),
-//            'extension' => $file->getExtension(),
-//            'mimeType' => $file->getMimeType(),
-//            'md5Checksum' => $file->getMd5Checksum()
 //        ]);
     }
 
+    /**
+     * @param Request $request
+     * @return void
+     */
     public function showAction(Request $request)
     {
 //        $filter = $this->createFilter($request);
@@ -66,37 +99,6 @@ class MediaLibraryController extends AbstractViewController
 //        $view = $this->viewFactory->create('MediaLibrary', $parameters);
 //
 //        return $this->viewHandler->handle($view);
-    }
-
-    /**
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \Exception
-     */
-    public function listAction(Request $request)
-    {
-//        $filter = $this->createFilter($request);
-//        $items = $this->client->getList($filter);
-//
-//        return new JsonResponse([
-//            'items' => $items
-//        ]);
-    }
-
-    private function createCategoriesList($categories)
-    {
-//        $list = [];
-//
-//        /** @var Category $category */
-//        foreach ($categories as $category){
-//            $entry = [];
-//            $entry['title'] = $category->getTitle();
-//            $entry['MediaLibraryId'] = $category->getMediaLibraryId();
-//            $entry['children'] = $this->createCategoriesList($category->getChildren());
-//            $list[] = $entry;
-//        }
-//
-//        return $list;
     }
 
     private function createFilter(Request $request)

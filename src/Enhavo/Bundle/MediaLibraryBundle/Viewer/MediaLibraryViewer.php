@@ -20,7 +20,7 @@ class MediaLibraryViewer extends AbstractActionViewer
         $templateVars['data']['data'] = $options['data'];
         $templateVars['data']['data']['tabs'] = $this->getTabs();
         $templateVars['data']['data']['multiple'] = $options['multiple'];
-        $templateVars['data']['data']['categories'] = $options['categories'];
+        $templateVars['data']['data']['tags'] = $options['tags'];
         $templateVars['data']['messages'] = [];
 
         $view->setTemplateData($templateVars);
@@ -31,20 +31,20 @@ class MediaLibraryViewer extends AbstractActionViewer
     private function getTabs()
     {
         $data = [];
-        $tabs = $this->container->getParameter('enhavo_media_library.tabs');
-        foreach($tabs as $tab) {
-            $data[] = [
-                'id' => $tab['id'],
-                'label' => $tab['label'],
-            ];
-        }
+//        $tabs = $this->container->getParameter('enhavo_media_library.tabs');
+//        foreach($tabs as $tab) {
+//            $data[] = [
+//                'id' => $tab['id'],
+//                'label' => $tab['label'],
+//            ];
+//        }
         return $data;
     }
 
 
     public function getType()
     {
-        return 'MediaLibrary';
+        return 'media_library';
     }
 
     protected function createActions($options)
@@ -68,7 +68,7 @@ class MediaLibraryViewer extends AbstractActionViewer
             'javascripts' => ['enhavo/media-library/media-library'],
             'stylesheets' => ['enhavo/media-library/media-library'],
             'items' => null,
-            'categories' => [],
+            'tags' => [],
             'multiple' => true,
             'data' => [],
             'routes' => true
