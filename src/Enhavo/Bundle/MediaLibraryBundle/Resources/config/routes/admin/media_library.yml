@@ -2,7 +2,7 @@
 enhavo_media_library_index:
     options:
         expose: true
-    path: /media-library/list
+    path: /media-library/index
     methods: [GET]
     defaults:
         _controller: enhavo_media_library.controller.media_library:indexAction
