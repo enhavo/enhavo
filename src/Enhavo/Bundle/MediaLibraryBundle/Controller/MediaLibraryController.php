@@ -17,6 +17,10 @@ class MediaLibraryController extends AbstractViewController
         parent::__construct($viewFactory, $viewHandler);
     }
 
+    /**
+     * @param Request $request
+     * @return Response
+     */
     public function indexAction(Request $request): Response
     {
         $view = $this->viewFactory->create('media_library', [
@@ -29,29 +33,32 @@ class MediaLibraryController extends AbstractViewController
      * @param Request $request
      * @return JsonResponse
      */
-    public function listAction(Request $request)
+    public function listAction(Request $request): JsonResponse
     {
 //        $filter = $this->createFilter($request);
 //        $items = $this->repository->getList($filter);
 //
         return new JsonResponse([
-            'items' => []
+            'items' => [
+                ['id' => 1, 'previewImageUrl' => '', 'name' => '1 bild']
+            ]
         ]);
     }
 
 
     /**
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \Exception
+     * @return JsonResponse
      */
-    public function tagsAction(Request $request)
+    public function tagsAction(Request $request): JsonResponse
     {
 //        $filter = $this->createFilter($request);
 //        $items = $this->repository->getTags($filter);
 //
         return new JsonResponse([
-            'tags' => []
+            'tags' => [
+                ['title' => 'mein erste tag']
+            ]
         ]);
     }
 
