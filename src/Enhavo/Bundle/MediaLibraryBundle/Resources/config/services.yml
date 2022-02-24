@@ -5,8 +5,15 @@ services:
         arguments:
             - '@view.factory'
             - '@fos_rest.view_handler'
+            - '@Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryManager'
         calls:
             - [setContainer, ['@service_container']]
+
+    Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryManager:
+        arguments:
+            - '@enhavo_media.repository.file'
+            - '@enhavo_taxonomy.repository.term'
+            - '@enhavo_media.media.public_url_generator'
 
     Enhavo\Bundle\MediaLibraryBundle\Form\Extension\MediaExtension:
         tags:
@@ -17,7 +24,7 @@ services:
         calls:
             - [ setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.media_extension , alias: 'media_library' }
+            - { name: enhavo.media_extension , alias: media_library }
 
     Enhavo\Bundle\MediaLibraryBundle\Viewer\MediaLibraryViewer:
         public: true
@@ -28,7 +35,17 @@ services:
         tags:
             - { name: enhavo.viewer, alias: media_library }
 
-    Enhavo\Bundle\MediaLibraryBundle\Menu\LibraryMenu:
+    Enhavo\Bundle\MediaLibraryBundle\Menu\MediaLibraryRootMenuType:
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\ListMenu
+        tags:
+            - { name: enhavo.menu, alias: media_library }
+
+    Enhavo\Bundle\MediaLibraryBundle\Menu\MediaLibraryMenu:
         parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: 'media_library' }
+            - { name: enhavo.menu, alias: media_library_library }
+
+    Enhavo\Bundle\MediaLibraryBundle\Menu\TagMenuType:
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
+        tags:
+            - { name: enhavo.menu, alias: media_library_tag }

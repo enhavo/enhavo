@@ -41,6 +41,12 @@ enhavo_media:
             maxWidth: 640
             maxHeight: 480
 
+enhavo_taxonomy:
+    taxonomies:
+        media_library_tag:
+            label: media_library.label.tag
+            translation_domain: EnhavoMediaLibraryBundle
+
 enhavo_doctrine_extension:
     metadata:
         Enhavo\Bundle\MediaLibraryBundle\Entity\File:
