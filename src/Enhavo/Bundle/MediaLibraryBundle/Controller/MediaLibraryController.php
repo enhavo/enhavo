@@ -40,7 +40,7 @@ class MediaLibraryController extends AbstractViewController
      */
     public function listAction(Request $request): JsonResponse
     {
-        $items = $this->mediaLibraryManager->createItemList($request->get('tab'), $request->get('tag'));
+        $items = $this->mediaLibraryManager->createItemList($request->get('content_type'), $request->get('tag'));
 
         return new JsonResponse([
             'items' => $items
@@ -57,6 +57,20 @@ class MediaLibraryController extends AbstractViewController
 
         return new JsonResponse([
             'tags' => $tags,
+        ]);
+    }
+
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function contentTypesAction(Request $request): JsonResponse
+    {
+        $types = $this->mediaLibraryManager->createContentTypeList();
+
+        return new JsonResponse([
+            'content_types' => $types,
         ]);
     }
 

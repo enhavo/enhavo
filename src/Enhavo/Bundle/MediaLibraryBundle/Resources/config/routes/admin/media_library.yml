@@ -31,3 +31,15 @@ enhavo_media_library_tags:
         _sylius:
             permission: ROLE_ENHAVO_MEDIA_LIBRARY_TAGS
             viewer:
+
+
+enhavo_media_library_content_types:
+    options:
+        expose: true
+    path: /media-library/content-types
+    methods: [GET]
+    defaults:
+        _controller: enhavo_media_library.controller.media_library:contentTypesAction
+        _sylius:
+            permission: ROLE_ENHAVO_MEDIA_LIBRARY_CONTENT_TYPES
+            viewer:

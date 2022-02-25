@@ -39,21 +39,36 @@ class MediaLibraryManager
         $tags = [];
         foreach ($terms as $term) {
             $tags[] = [
-                'title' => $term->getName(),
+                'id' => $term->getId(),
+                'slug' => $term->getSlug(),
+                'label' => $term->getName(),
             ];
         }
         return $tags;
     }
 
-    public function createItemList($tab, $tag): array
+    public function createContentTypeList(): array
     {
-        $files = $this->fileRepository->findByContentTypeAndTags($tab, $tag?[$tag]:[]);
+        $terms = ['audio', 'archive', 'document', 'executable', 'image', 'video'];//$this->termRepository->findByTaxonomy('media_library_tag');
+        $contentTypes = [];
+        foreach ($terms as $term) {
+            $contentTypes[] = [
+                'key' => $term,
+                'label' => ucfirst($term),
+            ];
+        }
+        return $contentTypes;
+    }
+
+    public function createItemList($contentType, $tag): array
+    {
+        $files = $this->fileRepository->findByContentTypeAndTags($contentType, $tag?[$tag]:[]);
         $items = [];
         foreach ($files as $file) {
             $items[] = [
                 'id' => $file->getId(),
                 'previewImageUrl' => $this->urlGenerator->generateFormat($file, 'enhavoMediaLibraryThumb'),
-                'name' => $file->getFilename(),
+                'label' => $file->getFilename(),
             ];
         }
 
