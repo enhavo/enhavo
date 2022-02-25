@@ -14,10 +14,10 @@ class FileRepository extends \Enhavo\Bundle\MediaBundle\Repository\FileRepositor
         $query = $this->createQueryBuilder('a');
         $query->distinct(true);
 
-//        if ($contentType) {
-//            $query->andWhere('a.contentType = :contentType');
-//            $query->setParameter('contentType', $contentType);
-//        }
+        if ($contentType) {
+            $query->andWhere('a.contentType = :contentType');
+            $query->setParameter('contentType', $contentType);
+        }
 
         if (count($tags) > 0) {
             $query->innerJoin('a.tags', 't');

@@ -20,7 +20,7 @@ class MediaLibraryRootMenuType extends ListMenu
                     'type' => 'media_library_library'
                 ],
                 'tag' => [
-                    'type' => 'article_tag'
+                    'type' => 'media_library_tag'
                 ],
             ]
         ]);
