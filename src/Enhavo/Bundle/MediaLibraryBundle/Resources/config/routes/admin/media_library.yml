@@ -10,6 +10,18 @@ enhavo_media_library_index:
             permission: ROLE_ENHAVO_MEDIA_LIBRARY_INDEX
             viewer:
 
+
+enhavo_media_library_select:
+    options:
+        expose: true
+    path: /media-library/select
+    methods: [GET]
+    defaults:
+        _controller: enhavo_media_library.controller.media_library:selectAction
+        _sylius:
+            permission: ROLE_ENHAVO_MEDIA_LIBRARY_SELECT
+            viewer:
+
 enhavo_media_library_list:
     options:
         expose: true
@@ -42,4 +54,15 @@ enhavo_media_library_content_types:
         _controller: enhavo_media_library.controller.media_library:contentTypesAction
         _sylius:
             permission: ROLE_ENHAVO_MEDIA_LIBRARY_CONTENT_TYPES
+            viewer:
+
+enhavo_media_library_add:
+    options:
+        expose: true
+    path: /media-library/add/{id}
+    controller: enhavo_media_library.controller.media_library:addAction
+    methods: [GET]
+    defaults:
+        _sylius:
+            permission: ROLE_ENHAVO_MEDIA_LIBRARY_ADD
             viewer:
