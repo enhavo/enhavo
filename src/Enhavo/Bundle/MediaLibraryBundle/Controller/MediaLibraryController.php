@@ -16,12 +16,14 @@ class MediaLibraryController extends AbstractViewController
     /** @var MediaLibraryManager */
     private $mediaLibraryManager;
 
+    /** @var FileRepository */
+    private $fileRepository;
 
-
-    public function __construct(ViewFactory $viewFactory, ViewHandlerInterface $viewHandler, MediaLibraryManager $mediaLibraryManager)
+    public function __construct(ViewFactory $viewFactory, ViewHandlerInterface $viewHandler, MediaLibraryManager $mediaLibraryManager, FileRepository $fileRepository)
     {
         parent::__construct($viewFactory, $viewHandler);
         $this->mediaLibraryManager = $mediaLibraryManager;
+        $this->fileRepository = $fileRepository;
     }
 
     /**
@@ -31,6 +33,18 @@ class MediaLibraryController extends AbstractViewController
     public function indexAction(Request $request): Response
     {
         $view = $this->viewFactory->create('media_library');
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * @param Request $request
+     * @return Response
+     */
+    public function selectAction(Request $request): Response
+    {
+        $view = $this->viewFactory->create('media_library', [
+            'multiple' => $request->get('multiple', false),
+        ]);
         return $this->viewHandler->handle($view);
     }
 
@@ -76,17 +90,17 @@ class MediaLibraryController extends AbstractViewController
 
     /**
      * @param Request $request
-     * @return void
+     * @return JsonResponse
      */
-    public function addAction(Request $request)
+    public function addAction(Request $request): JsonResponse
     {
-//        $id = $request->get('id');
-//        $tab = $request->get('tab', 1);
-//
-//        return new JsonResponse([
-//            'id' => $file->getId(),
-//            'filename' => $file->getFilename(),
-//        ]);
+        $id = $request->get('id');
+        $file = $this->fileRepository->find($id);
+
+        return new JsonResponse([
+            'id' => $file->getId(),
+            'filename' => $file->getFilename(),
+        ]);
     }
 
     public function notify(Request $request)

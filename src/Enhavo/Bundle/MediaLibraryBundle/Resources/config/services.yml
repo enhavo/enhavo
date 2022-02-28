@@ -6,6 +6,7 @@ services:
             - '@view.factory'
             - '@fos_rest.view_handler'
             - '@Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryManager'
+            - '@enhavo_media.repository.file'
         calls:
             - [setContainer, ['@service_container']]
 
