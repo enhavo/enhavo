@@ -125,12 +125,12 @@ class CleanUpCommand extends Command
     private function deleteUnreferencedDatabaseEntries(OutputInterface $output)
     {
         $files = $this->mediaManager->findBy([]);
-        $references = $this->getReferences();
+        $references = $this->getReferences(); // todo: use doctrine extension bundle
 
         $numDeleted = 0;
 
         foreach($files as $file) {
-            if ($file->isLibrary()) {
+            if ($file->isLibrary()) { // todo: ask for delete unreferenced
                 continue;
             }
             try {
