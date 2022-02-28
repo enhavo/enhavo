@@ -35,6 +35,7 @@ class DoctrineSubscriber implements EventSubscriber
             Events::postUpdate,
             Events::postPersist,
             Events::preRemove,
+            Events::postRemove,
         );
     }
 
@@ -72,5 +73,11 @@ class DoctrineSubscriber implements EventSubscriber
         } elseif($object instanceof FormatInterface) {
             $this->storage->deleteFile($object);
         }
+    }
+
+    public function postRemove(LifecycleEventArgs $args)
+    {
+        $object = $args->getObject(); // todo: write test (like doctrine extension bundle)
+        // todo: get referenced files and delete if unreferenced afterwards and (deleted unreferenced) option is enabled
     }
 }

@@ -23,6 +23,9 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->getRootNode();
         $rootNode
             ->children()
+                ->scalarNode('enable_delete_unreferenced')->defaultValue(true)->end()
+            ->end()
+            ->children()
                 ->arrayNode('formats')
                     ->useAttributeAsKey('name')
                     ->prototype('variable')->end()
