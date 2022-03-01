@@ -30,6 +30,7 @@ enhavo_media:
                 model: Enhavo\Bundle\MediaLibraryBundle\Entity\File
                 repository: Enhavo\Bundle\MediaLibraryBundle\Repository\FileRepository
                 factory: Enhavo\Bundle\MediaLibraryBundle\Factory\FileFactory
+                form: Enhavo\Bundle\MediaLibraryBundle\Form\Type\FileType
 
     formats:
         enhavoMediaLibraryThumb:

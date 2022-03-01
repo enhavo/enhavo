@@ -2,7 +2,7 @@
 enhavo_media_library_index:
     options:
         expose: true
-    path: /media-library/index
+    path: /enhavo/media-library/index
     methods: [GET]
     defaults:
         _controller: enhavo_media_library.controller.media_library:indexAction
@@ -10,11 +10,10 @@ enhavo_media_library_index:
             permission: ROLE_ENHAVO_MEDIA_LIBRARY_INDEX
             viewer:
 
-
 enhavo_media_library_select:
     options:
         expose: true
-    path: /media-library/select
+    path: /enhavo/media-library/select
     methods: [GET]
     defaults:
         _controller: enhavo_media_library.controller.media_library:selectAction
@@ -25,7 +24,7 @@ enhavo_media_library_select:
 enhavo_media_library_list:
     options:
         expose: true
-    path: /media-library/list
+    path: /enhavo/media-library/list
     methods: [GET]
     defaults:
         _controller: enhavo_media_library.controller.media_library:listAction
@@ -36,7 +35,7 @@ enhavo_media_library_list:
 enhavo_media_library_tags:
     options:
         expose: true
-    path: /media-library/tags
+    path: /enhavo/media-library/tags
     methods: [GET]
     defaults:
         _controller: enhavo_media_library.controller.media_library:tagsAction
@@ -48,7 +47,7 @@ enhavo_media_library_tags:
 enhavo_media_library_content_types:
     options:
         expose: true
-    path: /media-library/content-types
+    path: /enhavo/media-library/content-types
     methods: [GET]
     defaults:
         _controller: enhavo_media_library.controller.media_library:contentTypesAction
@@ -59,10 +58,44 @@ enhavo_media_library_content_types:
 enhavo_media_library_add:
     options:
         expose: true
-    path: /media-library/add/{id}
-    controller: enhavo_media_library.controller.media_library:addAction
+    path: /enhavo/media-library/add/{id}
+    controller: enhavo_app.
     methods: [GET]
     defaults:
         _sylius:
             permission: ROLE_ENHAVO_MEDIA_LIBRARY_ADD
+            viewer:
+
+
+enhavo_media_library_create:
+    options:
+        expose: true
+    path: /enhavo/media-library/create
+    methods: [GET,POST]
+    defaults:
+        _controller: enhavo_media.controller.file:createAction
+        _sylius:
+            redirect: enhavo_media_library_update
+            viewer:
+
+enhavo_media_library_update:
+    options:
+        expose: true
+    path: /enhavo/media-library/update/{id}
+    methods: [GET,POST]
+    defaults:
+        _controller: enhavo_media.controller.file:updateAction
+        _sylius:
+            redirect: enhavo_media_library_update
+            viewer:
+
+enhavo_media_file_delete:
+    options:
+        expose: true
+    path: /enhavo/media-library/delete
+    methods: [GET,POST]
+    defaults:
+        _controller: enhavo_media.controller.file:createAction
+        _sylius:
+            redirect: enhavo_media_library_update
             viewer:

@@ -8,6 +8,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MediaLibraryViewer extends AbstractActionViewer
 {
+    const MODE_SELECT = 'select';
+    const MODE_EDIT = 'edit';
+
     /**
      * {@inheritdoc}
      */
@@ -18,8 +21,9 @@ class MediaLibraryViewer extends AbstractActionViewer
         $templateVars = $view->getTemplateData();
         $templateVars['data']['items'] = $options['items'];
         $templateVars['data']['data'] = $options['data'];
-        $templateVars['data']['data']['tabs'] = $this->getTabs();
+        $templateVars['data']['data']['content_types'] = $options['content_types'];
         $templateVars['data']['data']['multiple'] = $options['multiple'];
+        $templateVars['data']['data']['mode'] = $options['mode'];
         $templateVars['data']['data']['tags'] = $options['tags'];
         $templateVars['data']['messages'] = [];
 
@@ -28,20 +32,6 @@ class MediaLibraryViewer extends AbstractActionViewer
         return $view;
     }
 
-    private function getTabs()
-    {
-        $data = [];
-//        $tabs = $this->container->getParameter('enhavo_media_library.tabs');
-//        foreach($tabs as $tab) {
-//            $data[] = [
-//                'id' => $tab['id'],
-//                'label' => $tab['label'],
-//            ];
-//        }
-        return $data;
-    }
-
-
     public function getType()
     {
         return 'media_library';
@@ -49,16 +39,40 @@ class MediaLibraryViewer extends AbstractActionViewer
 
     protected function createActions($options)
     {
-        $default = [
-            'add' => [
-                'type' => 'event',
-                'event' => 'add',
-                'icon' => 'add_circle_outline',
-                'label' => 'Hinzufügen'
-            ]
-        ];
+        if ($this->isModeEdit($options)) {
+            $default = [
+                'add' => [
+                    'type' => 'create',
+                    'route' => 'enhavo_media_library_create',
+                    'icon' => 'add_circle_outline',
+                    'translation_domain' => 'EnhavoMediaLibraryBundle',
+                    'label' => 'media.library.create'
+                ]
+            ];
+
+        } else if ($this->isModeSelect($options)) {
+            $default = [
+                'add' => [
+                    'type' => 'event',
+                    'event' => 'add',
+                    'icon' => 'check',
+                    'translation_domain' => 'EnhavoMediaLibraryBundle',
+                    'label' => 'media.library.confirm_selection'
+                ]
+            ];
+        }
 
         return $default;
+    }
+
+    protected function isModeEdit(array $options): bool
+    {
+        return $options['mode'] === self::MODE_EDIT;
+    }
+
+    protected function isModeSelect(array $options): bool
+    {
+        return $options['mode'] === self::MODE_SELECT;
     }
 
     public function configureOptions(OptionsResolver $optionsResolver)
@@ -69,9 +83,11 @@ class MediaLibraryViewer extends AbstractActionViewer
             'stylesheets' => ['enhavo/media-library/media-library'],
             'items' => null,
             'tags' => [],
+            'content_types' => [],
             'multiple' => true,
             'data' => [],
-            'routes' => true
+            'routes' => true,
+            'mode' => self::MODE_EDIT,
         ]);
     }
 }
