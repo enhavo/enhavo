@@ -6,6 +6,7 @@ use Enhavo\Bundle\AppBundle\Controller\AbstractViewController;
 use Enhavo\Bundle\AppBundle\Viewer\ViewFactory;
 use Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryManager;
 use Enhavo\Bundle\MediaLibraryBundle\Repository\FileRepository;
+use Enhavo\Bundle\MediaLibraryBundle\Viewer\MediaLibraryViewer;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -44,6 +45,7 @@ class MediaLibraryController extends AbstractViewController
     {
         $view = $this->viewFactory->create('media_library', [
             'multiple' => $request->get('multiple', false),
+            'mode' => MediaLibraryViewer::MODE_SELECT,
         ]);
         return $this->viewHandler->handle($view);
     }
