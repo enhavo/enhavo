@@ -4,6 +4,7 @@ namespace Enhavo\Bundle\MediaLibraryBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\TaxonomyBundle\Model\TermInterface;
 
 class File extends \Enhavo\Bundle\MediaBundle\Entity\File
@@ -61,5 +62,19 @@ class File extends \Enhavo\Bundle\MediaBundle\Entity\File
     public function getTags()
     {
         return $this->tags;
+    }
+
+    public function setFile(FileInterface $file)
+    {
+        $this->setMimeType($file->getMimeType());
+        $this->setMd5Checksum($file->getMd5Checksum());
+        $this->setOrder($file->getOrder());
+        $this->setExtension($file->getExtension());
+        $this->setContent($file->getContent());
+    }
+
+    public function getFile(): File
+    {
+        return $this;
     }
 }

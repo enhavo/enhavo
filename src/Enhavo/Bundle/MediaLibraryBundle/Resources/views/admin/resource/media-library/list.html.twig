@@ -1,6 +1,0 @@
-{% for item in items %}
-    <li data-MediaLibrary-item="{{ item.Id }}" data-MediaLibrary-url="{{ item.Preview.small }}" data-MediaLibrary-tab="{{ tab }}">
-        <div class="img" style="background-image:url('{{ item.Preview.small }}');"></div>
-        <div class="title">{{ item.Name }}</div>
-    </li>
-{% endfor %}
