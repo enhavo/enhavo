@@ -59,7 +59,7 @@ enhavo_media_library_add:
     options:
         expose: true
     path: /enhavo/media-library/add/{id}
-    controller: enhavo_app.
+    controller: enhavo_media_library.controller.media_library:addAction
     methods: [GET]
     defaults:
         _sylius:
