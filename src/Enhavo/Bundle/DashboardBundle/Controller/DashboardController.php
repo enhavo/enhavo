@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\DashboardBundle\Controller;
 
 use Enhavo\Component\Type\Factory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 
 class DashboardController extends AbstractController
 {
@@ -25,12 +26,12 @@ class DashboardController extends AbstractController
         $this->viewFactory = $viewFactory;
     }
 
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $view = $this->viewFactory->create([
             'type' => 'dashboard'
         ]);
 
-        return $view->getResponse();
+        return $view->getResponse($request);
     }
 }

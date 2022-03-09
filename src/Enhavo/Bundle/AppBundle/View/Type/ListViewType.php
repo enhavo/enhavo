@@ -10,66 +10,57 @@ namespace Enhavo\Bundle\AppBundle\View\Type;
 
 use Enhavo\Bundle\AppBundle\Action\ActionManager;
 use Enhavo\Bundle\AppBundle\Column\ColumnManager;
-use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
 use Enhavo\Bundle\AppBundle\View\AbstractViewType;
+use Enhavo\Bundle\AppBundle\View\ViewData;
+use Enhavo\Bundle\AppBundle\View\ViewUtil;
 use Enhavo\Bundle\AppBundle\Viewer\ViewerUtil;
-use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactory;
 use Sylius\Component\Resource\Metadata\MetadataInterface;
-use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ListViewType extends AbstractViewType
 {
-    /**
-     * @var ActionManager
-     */
-    private $actionManager;
-
-    /**
-     * @var ColumnManager
-     */
-    private $columnManager;
-
     public function __construct(
-        RequestConfigurationFactory $requestConfigurationFactory,
-        ViewerUtil $util,
-        ActionManager $actionManager,
-        ColumnManager $columnManager
-    ) {
-        parent::__construct($requestConfigurationFactory, $util);
-        $this->actionManager = $actionManager;
-        $this->columnManager = $columnManager;
-    }
+        private ViewUtil $util,
+        private ActionManager $actionManager,
+        private ColumnManager $columnManager,
+        private TranslatorInterface $translator,
+    ) {}
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'list';
     }
 
-    protected function buildTemplateParameters(ParameterBag $parameters, RequestConfiguration $requestConfiguration, array $options)
+    public static function getParentType(): ?string
     {
-        parent::buildTemplateParameters($parameters, $requestConfiguration, $options);
+        return AppViewType::class;
+    }
 
-        $label = $this->mergeConfig([
+    public function createViewData($options, ViewData $data)
+    {
+        $configuration = $this->util->getRequestConfiguration($options);
+
+        $label = $this->util->mergeConfig([
             $options['label'],
-            $this->getViewerOption('label', $requestConfiguration)
+            $this->util->getViewerOption('label', $configuration)
         ]);
 
-        $actions = $this->mergeConfigArray([
+        $actions = $this->util->mergeConfigArray([
             $this->createActions($options),
             $options['actions'],
-            $this->getViewerOption('actions', $requestConfiguration)
+            $this->util->getViewerOption('actions', $configuration)
         ]);
 
-        $dataRoute = $this->mergeConfig([
+        $dataRoute = $this->util->mergeConfig([
             $this->getDataRoute($options),
             $options['data_route'],
-            $this->getViewerOption('data_route', $requestConfiguration)
+            $this->util->getViewerOption('data_route', $configuration)
         ]);
 
-        $dataRouteParameters = $this->mergeConfig([
+        $dataRouteParameters = $this->util->mergeConfig([
             $options['data_route_parameters'],
-            $this->getViewerOption('data_route_parameters', $requestConfiguration)
+            $this->util->getViewerOption('data_route_parameters', $configuration)
         ]);
 
 
@@ -77,28 +68,28 @@ class ListViewType extends AbstractViewType
         if($dataConfiguration == null) {
             throw new \Exception(sprintf('Data route "%s" for list viewer is not defined', $dataRoute));
         }
-        $columnData = $this->getViewerOption('columns', $dataConfiguration);
-        $positionProperty = $this->getViewerOption('position_property', $dataConfiguration);
-        $parentProperty = $this->getViewerOption('parent_property', $dataConfiguration);
-        $expanded = $this->getViewerOption('expanded', $dataConfiguration);
+        $columnData = $this->util->getViewerOption('columns', $dataConfiguration);
+        $positionProperty = $this->util->getViewerOption('position_property', $dataConfiguration);
+        $parentProperty = $this->util->getViewerOption('parent_property', $dataConfiguration);
+        $expanded = $this->util->getViewerOption('expanded', $dataConfiguration);
 
-        $openRoute = $this->mergeConfig([
+        $openRoute = $this->util->mergeConfig([
             $this->getopenRoute($options),
             $options['open_route'],
-            $this->getViewerOption('open_route', $requestConfiguration)
+            $this->util->getViewerOption('open_route', $configuration)
         ]);
 
-        $openRouteParameters = $this->mergeConfig([
+        $openRouteParameters = $this->util->mergeConfig([
             $options['open_route_parameters'],
-            $this->getViewerOption('open_route_parameters', $requestConfiguration)
+            $this->util->getViewerOption('open_route_parameters', $configuration)
         ]);
 
-        $viewerOptions = $requestConfiguration->getViewerOptions();
+        $viewerOptions = $configuration->getViewerOptions();
         if(isset($viewerOptions['translation_domain'])) {
             $this->addTranslationDomain($columnData, $viewerOptions['translation_domain']);
         }
 
-        $list = [
+        $data['list'] = [
             'dataRoute' => $dataRoute,
             'dataRouteParameters' => $dataRouteParameters,
             'openRoute' => $openRoute,
@@ -109,20 +100,14 @@ class ListViewType extends AbstractViewType
             'parentProperty' => $parentProperty,
             'expanded' => $expanded,
             'sortable' => $dataConfiguration->isSortable(),
-            'cssClass' => $this->getViewerOption('css_class', $requestConfiguration)
+            'cssClass' => $this->util->getViewerOption('css_class', $configuration)
         ];
 
-        $parameters->set('data', [
-            'messages' => [],
-            'list' => $list,
-            'actions' => $this->actionManager->createActionsViewData($actions),
-            'view' => [
-                'id' => $this->getViewId(),
-                'label' => $this->container->get('translator')->trans($label, [], $parameters->get('translation_domain'))
-            ]
-        ]);
-
-        return;
+        $data['messages'] = [];
+        $data['actions'] = $this->actionManager->createActionsViewData($actions);
+        $data['view'] = [
+            'label' => $this->translator->trans($label, [], $viewerOptions['translation_domain'])
+        ];
     }
 
     private function addTranslationDomain(&$configuration, $translationDomain)
@@ -138,14 +123,14 @@ class ListViewType extends AbstractViewType
     {
         /** @var MetadataInterface $metadata */
         $metadata = $options['metadata'];
-        return sprintf('%s_%s_data', $metadata->getApplicationName(), $this->getUnderscoreName($metadata));
+        return sprintf('%s_%s_data', $metadata->getApplicationName(), $this->util->getUnderscoreName($metadata));
     }
 
     private function getopenRoute($options)
     {
         /** @var MetadataInterface $metadata */
         $metadata = $options['metadata'];
-        return sprintf('%s_%s_update', $metadata->getApplicationName(), $this->getUnderscoreName($metadata));
+        return sprintf('%s_%s_update', $metadata->getApplicationName(), $this->util->getUnderscoreName($metadata));
     }
 
     private function createActions($options)
@@ -156,8 +141,8 @@ class ListViewType extends AbstractViewType
         $default = [
             'create' => [
                 'type' => 'create',
-                'route' => sprintf('%s_%s_create', $metadata->getApplicationName(), $this->getUnderscoreName($metadata)),
-                'permission' => $this->getRoleNameByResourceName($metadata->getApplicationName(), $this->getUnderscoreName($metadata), 'create')
+                'route' => sprintf('%s_%s_create', $metadata->getApplicationName(), $this->util->getUnderscoreName($metadata)),
+                'permission' => $this->util->getRoleNameByResourceName($metadata->getApplicationName(), $this->util->getUnderscoreName($metadata), 'create')
             ]
         ];
 
@@ -169,12 +154,7 @@ class ListViewType extends AbstractViewType
         parent::configureOptions($optionsResolver);
 
         $optionsResolver->setDefaults([
-            'javascripts' => [
-                'enhavo/app/list'
-            ],
-            'stylesheets' => [
-                'enhavo/app/list'
-            ],
+            'entrypoint' => 'enhavo/app/list',
             'actions' => [],
             'data_route' => null,
             'data_route_parameters' => null,
@@ -182,6 +162,8 @@ class ListViewType extends AbstractViewType
             'open_route_parameters' => null,
             'translation_domain' => 'EnhavoAppBundle',
             'label' => 'label.index',
+            'metadata' => null,
+            'request_configuration' => null,
         ]);
     }
 }

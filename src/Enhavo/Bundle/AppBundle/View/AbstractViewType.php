@@ -18,19 +18,19 @@ abstract class AbstractViewType extends AbstractType implements ViewTypeInterfac
 
     }
 
-    public function createTemplateData($options, ViewData $viewData, ViewData $templateData)
+    public function createTemplateData($options, ViewData $viewData, TemplateData $templateData)
     {
 
     }
 
-    public function handleRequest($options, Request $request, ViewData $viewData, ViewData $templateData)
+    public function handleRequest($options, Request $request, ViewData $viewData, TemplateData $templateData)
     {
         return $this->parent->handleRequest($options, $request, $viewData, $templateData);
     }
 
-    public function getResponse($options, Request $request, ViewData $viewData,  ViewData $templateData): Response
+    public function getResponse($options, Request $request, ViewData $viewData, TemplateData $templateData): Response
     {
-        return $this->parent->getResponse($options, $viewData, $templateData);
+        return $this->parent->getResponse($options, $request, $viewData, $templateData);
     }
 
     public static function getParentType(): ?string

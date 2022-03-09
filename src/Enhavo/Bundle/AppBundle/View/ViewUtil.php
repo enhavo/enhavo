@@ -16,8 +16,10 @@ use Sylius\Bundle\ResourceBundle\Controller\ParametersParserInterface;
 use Sylius\Bundle\ResourceBundle\Controller\RequestConfiguration as SyliusRequestConfiguration;
 use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactory;
 use Sylius\Component\Resource\Metadata\MetadataInterface;
+use Sylius\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
@@ -120,7 +122,7 @@ class ViewUtil
         return null;
     }
 
-    public function getRequestConfiguration(array $options): ?RequestConfiguration
+    public function getRequestConfiguration($options): ?RequestConfiguration
     {
         $requestConfiguration = $options['request_configuration'];
         if($requestConfiguration instanceof RequestConfiguration) {

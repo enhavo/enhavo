@@ -9,64 +9,87 @@
 namespace Enhavo\Bundle\AppBundle\View\Type;
 
 use Enhavo\Bundle\AppBundle\Column\ColumnManager;
-use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
+use Enhavo\Bundle\AppBundle\Controller\SortingManager;
 use Enhavo\Bundle\AppBundle\View\AbstractViewType;
-use Enhavo\Bundle\AppBundle\Viewer\AbstractResourceViewer;
-use Enhavo\Bundle\AppBundle\Viewer\ViewerUtil;
-use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactory;
-use Symfony\Component\HttpFoundation\ParameterBag;
+use Enhavo\Bundle\AppBundle\View\TemplateData;
+use Enhavo\Bundle\AppBundle\View\ViewData;
+use Enhavo\Bundle\AppBundle\View\ViewUtil;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Csrf\CsrfTokenManager;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ListDataViewType extends AbstractViewType
 {
-    /**
-     * @var ColumnManager
-     */
-    private $columnManager;
+    public function __construct(
+        private ViewUtil $util,
+        private ColumnManager $columnManager,
+        private TranslatorInterface $translator,
+        private SortingManager $sortingManager,
+        private CsrfTokenManager $tokenManager
+    ) {}
 
-    public function __construct(RequestConfigurationFactory $requestConfigurationFactory, ViewerUtil $util, ColumnManager $columnManager)
-    {
-        parent::__construct($requestConfigurationFactory, $util);
-        $this->columnManager = $columnManager;
-    }
-
-    public function getType()
+    public static function getName(): ?string
     {
         return 'list_data';
     }
 
-    protected function buildTemplateParameters(ParameterBag $parameters, RequestConfiguration $requestConfiguration, array $options)
+    public static function getParentType(): ?string
     {
-        parent::buildTemplateParameters($parameters, $requestConfiguration, $options);
+        return AppViewType::class;
+    }
 
-        $columns = $this->mergeConfigArray([
+    public function handleRequest($options, Request $request, ViewData $viewData, TemplateData $templateData)
+    {
+        $request->query->set('limit', 1000000); // never show pagination
+        $configuration = $this->util->getRequestConfiguration($options);
+
+        if ($request->getMethod() === 'POST') {
+            if ($configuration->isCsrfProtectionEnabled() && !$this->isCsrfTokenValid('list_data', $request->get('_csrf_token'))) {
+                throw new HttpException(Response::HTTP_FORBIDDEN, 'Invalid csrf token.');
+            }
+            $this->sortingManger->handleSort($request, $configuration, $this->repository);
+            return new JsonResponse();
+        }
+    }
+
+    public function createTemplateData($options, ViewData $data, TemplateData $templateData)
+    {
+        $requestConfiguration = $this->util->getRequestConfiguration($options);
+
+        $columns = $this->util->mergeConfigArray([
             $options['columns'],
-            $this->getViewerOption('columns', $requestConfiguration)
+            $this->util->getViewerOption('columns', $requestConfiguration)
         ]);
 
-        $childrenProperty = $this->mergeConfig([
+        $childrenProperty = $this->util->mergeConfig([
             $options['children_property'],
-            $this->getViewerOption('children_property', $requestConfiguration)
+            $this->util->getViewerOption('children_property', $requestConfiguration)
         ]);
 
-        $positionProperty = $this->mergeConfig([
+        $positionProperty = $this->util->mergeConfig([
             $options['position_property'],
-            $this->getViewerOption('position_property', $requestConfiguration)
+            $this->util->getViewerOption('position_property', $requestConfiguration)
         ]);
 
-        $token = $this->container->get('security.csrf.token_manager')->getToken('list_data');
-        $parameters->set('token', $token->getValue());
-        $parameters->set('resources', $this->columnManager->createResourcesViewData($columns, $options['resources'], $childrenProperty, $positionProperty));
+        $token = $this->tokenManager->getToken('list_data');
+        $templateData['token'] = $token->getValue();
+        $templateData['resources'] = $this->columnManager->createResourcesViewData($columns, $options['resources'], $childrenProperty, $positionProperty);
     }
 
     public function configureOptions(OptionsResolver $optionsResolver)
     {
-        parent::configureOptions($optionsResolver);
         $optionsResolver->setDefaults([
             'template' => 'admin/view/data.html.twig',
             'columns' => [],
             'children_property' => null,
             'position_property' => null,
+            'resources' => null,
+            'request_configuration' => null,
+            'metadata' => null,
         ]);
     }
 }

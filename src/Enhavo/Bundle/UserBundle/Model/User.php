@@ -4,8 +4,9 @@ namespace Enhavo\Bundle\UserBundle\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Sylius\Component\Resource\Model\ResourceInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
-class User implements UserInterface, GroupableInterface, ResourceInterface
+class User implements UserInterface, GroupableInterface, ResourceInterface, PasswordAuthenticatedUserInterface
 {
     /** @var int|null */
     private $id;

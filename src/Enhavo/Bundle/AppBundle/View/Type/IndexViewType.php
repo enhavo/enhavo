@@ -17,45 +17,19 @@ use Enhavo\Bundle\AppBundle\View\ViewData;
 use Enhavo\Bundle\AppBundle\View\ViewUtil;
 use Sylius\Component\Resource\Metadata\MetadataInterface;
 use Sylius\Component\Resource\ResourceActions;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class IndexViewType extends AbstractViewType
 {
-    /** @var ActionManager */
-    private $actionManager;
-
-    /** @var BatchManager */
-    private $batchManager;
-
-    /** @var FilterManager */
-    private $filterManager;
-
-    /** @var ColumnManager */
-    private $columnManager;
-
-    /** @var ViewUtil */
-    private $util;
-
-    /** @var TranslatorInterface */
-    private $translator;
-
     public function __construct(
-        ActionManager $actionManager,
-        BatchManager $batchManager,
-        FilterManager $filterManager,
-        ColumnManager $columnManager,
-        ViewUtil $util,
-        TranslatorInterface $translator
-    ) {
-        $this->actionManager = $actionManager;
-        $this->batchManager = $batchManager;
-        $this->filterManager = $filterManager;
-        $this->columnManager = $columnManager;
-        $this->util = $util;
-        $this->translator = $translator;
-    }
+        private ActionManager $actionManager,
+        private BatchManager $batchManager,
+        private FilterManager $filterManager,
+        private ColumnManager $columnManager,
+        private ViewUtil $util,
+        private TranslatorInterface $translator
+    ) {}
 
     public static function getName(): ?string
     {
@@ -129,7 +103,6 @@ class IndexViewType extends AbstractViewType
         $batchConfiguration = $this->util->createConfigurationFromRoute($batchRoute);
         $batchData = !empty($batchConfiguration) ? $batchConfiguration->getBatches() : [];
 
-        /** @var Request $request */
         $request = $requestConfiguration->getRequest();
 
         $viewerOptions = $requestConfiguration->getViewerOptions();
@@ -159,7 +132,7 @@ class IndexViewType extends AbstractViewType
         $data['messages'] = [];
         $data['grid'] = $grid;
         $data['actions'] = $this->actionManager->createActionsViewData($actions);
-//        $data['view']['label'] = $this->translator->trans($label, [], $options['translation_domain']);
+        $data['label'] = $this->translator->trans($label, [], $options['translation_domain']);
         $data['modals'] = [];
     }
 
@@ -190,28 +163,28 @@ class IndexViewType extends AbstractViewType
         }
     }
 
-    private function getTableRoute($options)
+    private function getTableRoute($options): string
     {
         /** @var MetadataInterface $metadata */
         $metadata = $options['metadata'];
         return sprintf('%s_%s_table', $metadata->getApplicationName(), $this->util->getUnderscoreName($metadata));
     }
 
-    private function getBatchRoute($options)
+    private function getBatchRoute($options): string
     {
         /** @var MetadataInterface $metadata */
         $metadata = $options['metadata'];
         return sprintf('%s_%s_batch', $metadata->getApplicationName(), $this->util->getUnderscoreName($metadata));
     }
 
-    private function getOpenRoute($options)
+    private function getOpenRoute($options): string
     {
         /** @var MetadataInterface $metadata */
         $metadata = $options['metadata'];
         return sprintf('%s_%s_update', $metadata->getApplicationName(), $this->util->getUnderscoreName($metadata));
     }
 
-    private function createActions($options)
+    private function createActions($options): array
     {
         /** @var MetadataInterface $metadata */
         $metadata = $options['metadata'];

@@ -7,9 +7,9 @@
     <meta name="robots" content="noindex, nofollow">
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     {% block stylesheets %}
-        {% if stylesheets is defined %}
-            {% for stylesheet in stylesheets %}
-                {{ encore_entry_link_tags(stylesheet, null, 'enhavo') }}
+        {% if entrypoints is defined %}
+            {% for entrypoint in entrypoints %}
+                {{ encore_entry_link_tags(entrypoint, null, 'enhavo') }}
             {% endfor %}
         {% endif %}
     {% endblock %}
@@ -28,9 +28,9 @@
     <script id="translations" type="application/json">{{ translations|json_encode|raw }}</script>
 {% endif %}
 {% block javascripts %}
-    {% if javascripts is defined %}
-        {% for javascript in javascripts %}
-            {{ encore_entry_script_tags(javascript, null, 'enhavo') }}
+    {% if entrypoints is defined %}
+        {% for entrypoint in entrypoints %}
+            {{ encore_entry_script_tags(entrypoint, null, 'enhavo') }}
         {% endfor %}
     {% endif %}
 {% endblock %}

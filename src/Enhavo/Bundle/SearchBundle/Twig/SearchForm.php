@@ -37,7 +37,7 @@ class SearchForm extends AbstractExtension
     public function render($type = 'search', $entities = null, $fields = null)
     {
         if($this->templateEngine === null) {
-            $this->templateEngine = $this->container->get('templating');
+            $this->templateEngine = $this->container->get('twig');
         }
 
         $template =  $this->container->getParameter('enhavo_search.'.$type.'.template');
@@ -53,4 +53,4 @@ class SearchForm extends AbstractExtension
     {
         return 'search_render';
     }
-} 
+}

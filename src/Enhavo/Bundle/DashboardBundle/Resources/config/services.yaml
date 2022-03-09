@@ -20,6 +20,8 @@ services:
     Enhavo\Bundle\DashboardBundle\Controller\DashboardController:
         arguments:
             - '@Enhavo\Component\Type\FactoryInterface[View]'
+        calls:
+            - [setContainer, ['@service_container']]
         tags:
             - { name: controller.service_arguments }
 

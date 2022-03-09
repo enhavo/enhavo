@@ -12,6 +12,7 @@ use Enhavo\Bundle\AppBundle\Locale\LocaleResolverInterface;
 use Enhavo\Bundle\AppBundle\Template\TemplateManager;
 use Enhavo\Bundle\AppBundle\Translation\TranslationDumper;
 use Enhavo\Bundle\AppBundle\View\AbstractViewType;
+use Enhavo\Bundle\AppBundle\View\TemplateData;
 use Enhavo\Bundle\AppBundle\View\ViewData;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -85,14 +86,18 @@ class AppViewType extends AbstractViewType
         ];
     }
 
-    public function getResponse($options, Request $request, ViewData $viewData, ViewData $templateData): Response
+    public function getResponse($options, Request $request, ViewData $viewData, TemplateData $templateData): Response
     {
-        $content = $this->twig->render($this->templateManager->getTemplate($options['template']), [
+        $parameters = [
             'data' => $viewData->normalize(),
             'translations' => $this->translationDumper->getTranslations('javascript', $this->localResolver->resolve()),
             'routes' => $this->getRoutes(),
             'entrypoints' => is_array($options['entrypoint']) ? $options['entrypoint'] : [$options['entrypoint']]
-        ]);
+        ];
+
+        $parameters = array_merge($parameters, $templateData->normalize());
+
+        $content = $this->twig->render($this->templateManager->getTemplate($options['template']), $parameters);
 
         return new Response($content);
     }

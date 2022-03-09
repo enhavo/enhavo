@@ -81,7 +81,7 @@ abstract class AbstractType implements ContainerAwareInterface, TypeInterface
 
     protected function renderTemplate($template, $parameters = [])
     {
-        return $this->container->get('templating')->render($template, $parameters);
+        return $this->container->get('twig')->render($template, $parameters);
     }
 
     protected function setOption($key, &$options, $default = null)

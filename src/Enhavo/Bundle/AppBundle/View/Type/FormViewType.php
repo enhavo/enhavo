@@ -135,7 +135,7 @@ class FormViewType extends AbstractViewType
             'translations' => true,
             'routes' => false,
             'template' => 'admin/view/form.html.twig',
-            'form_template' => 'admin/view/form_template.html.twig',
+            'form_template' => 'admin/view/form-template.html.twig',
             'resource' => null,
             'translation_domain' => null,
             'tabs' => null

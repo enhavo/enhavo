@@ -14,8 +14,8 @@
 
             <div class="form-container">
                 <form method="POST">
-                    <template v-for="tab in form.tabs">
-                        <form-tab-container v-show="tab.active" v-bind:tab="tab"></form-tab-container>
+                    <template v-for="(tab, index) in form.tabs">
+                        <form-tab-container v-show="tab.active" :tab="tab" :tab-key="index"></form-tab-container>
                     </template>
                 </form>
             </div>

@@ -42,8 +42,58 @@ services:
             - '@enhavo_app.action_manager'
             - '@session.flash_bag'
             - '@Enhavo\Bundle\AppBundle\View\ViewUtil'
+            - '@router'
+            - '@translator'
         tags:
             - { name: enhavo_app.view }
+
+    Enhavo\Bundle\AppBundle\View\Type\TableViewType:
+        arguments:
+            - '@Enhavo\Bundle\AppBundle\View\ViewUtil'
+            - '@enhavo_app.column_manager'
+        tags:
+            - { name: enhavo_app.view }
+
+    Enhavo\Bundle\AppBundle\View\Type\UpdateViewType:
+        arguments:
+            - '%enhavo_app.form_themes%'
+            - '@enhavo_app.action_manager'
+            - '@session.flash_bag'
+            - '@Enhavo\Bundle\AppBundle\View\ViewUtil'
+            - '@router'
+            - '@translator'
+            - '@serializer'
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: enhavo_app.view }
+
+    Enhavo\Bundle\AppBundle\View\Type\ListViewType:
+        arguments:
+            - '@Enhavo\Bundle\AppBundle\View\ViewUtil'
+            - '@enhavo_app.action_manager'
+            - '@enhavo_app.column_manager'
+            - '@translator'
+        tags:
+            - { name: enhavo_app.view }
+
+    Enhavo\Bundle\AppBundle\View\Type\ListDataViewType:
+        arguments:
+            - '@Enhavo\Bundle\AppBundle\View\ViewUtil'
+            - '@enhavo_app.column_manager'
+            - '@translator'
+            - '@enhavo.sorting_manager'
+            - '@security.csrf.token_manager'
+        tags:
+            - { name: enhavo_app.view }
+
+    Enhavo\Bundle\AppBundle\View\Type\DeleteViewType:
+        arguments:
+            - '@Enhavo\Bundle\AppBundle\View\ViewUtil'
+            - '@session.flash_bag'
+            - '@translator'
+        tags:
+            - { name: enhavo_app.view }
+
 
 #    Enhavo\Bundle\AppBundle\Viewer\Viewer\IndexViewer:
 #        parent: Enhavo\Bundle\AppBundle\Viewer\Viewer\AppViewer

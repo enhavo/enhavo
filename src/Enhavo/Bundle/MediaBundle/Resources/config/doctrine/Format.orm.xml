@@ -8,7 +8,7 @@
         <field name="name" nullable="true" />
         <field name="mimeType" length="255" nullable="true" />
         <field name="extension" length="255" nullable="true" />
-        <field name="parameters" type="json_array" nullable="true" />
+        <field name="parameters" type="json" nullable="true" />
         <field name="lockAt" type="datetime" nullable="true" />
 
         <many-to-one field="file" target-entity="Enhavo\Bundle\MediaBundle\Model\FileInterface" inversed-by="formats">

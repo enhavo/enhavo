@@ -214,7 +214,7 @@ services:
         class: Enhavo\Bundle\ShopBundle\Mailer\ConfirmMailer
         arguments:
             - '@mailer'
-            - '@templating'
+            - '@twig'
             - '%enhavo_shop.mailer.confirm%'
         calls:
             - [setContainer, ['@service_container']]
@@ -223,7 +223,7 @@ services:
         class: Enhavo\Bundle\ShopBundle\Mailer\TrackingMailer
         arguments:
             - '@mailer'
-            - '@templating'
+            - '@twig'
             - '%enhavo_shop.mailer.tracking%'
         calls:
             - [setContainer, ['@service_container']]
@@ -232,7 +232,7 @@ services:
         class: Enhavo\Bundle\ShopBundle\Mailer\NotificationMailer
         arguments:
             - '@mailer'
-            - '@templating'
+            - '@twig'
             - '%enhavo_shop.mailer.notification%'
         calls:
             - [setContainer, ['@service_container']]

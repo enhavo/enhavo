@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\AppBundle\View\Type;
 
+use Enhavo\Bundle\AppBundle\View\TemplateData;
 use Enhavo\Bundle\AppBundle\View\ViewData;
 use Enhavo\Bundle\AppBundle\View\ViewTypeInterface;
 use Enhavo\Component\Type\AbstractType;
@@ -27,17 +28,17 @@ class BaseViewType extends AbstractType implements ViewTypeInterface
 
     }
 
-    public function createTemplateData($options, ViewData $viewData, ViewData $templateData)
+    public function createTemplateData($options, ViewData $viewData, TemplateData $templateData)
     {
 
     }
 
-    public function handleRequest($options, Request $request, ViewData $viewData, ViewData $templateData)
+    public function handleRequest($options, Request $request, ViewData $viewData, TemplateData $templateData)
     {
 
     }
 
-    public function getResponse($options, Request $request, ViewData $viewData, ViewData $templateData): Response
+    public function getResponse($options, Request $request, ViewData $viewData, TemplateData $templateData): Response
     {
         return new Response();
     }

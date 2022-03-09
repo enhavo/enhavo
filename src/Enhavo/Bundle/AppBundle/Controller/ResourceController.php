@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController as BaseController;
 use Sylius\Component\Resource\ResourceActions;
 
@@ -55,45 +54,21 @@ class ResourceController extends BaseController
      */
     public function updateAction(Request $request): Response
     {
-        $this->updateRequest($request);
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
-        $this->isGrantedOr403($configuration, ResourceActions::UPDATE);
-        $resource = $this->findOr404($configuration);
 
-        $form = $this->resourceFormFactory->create($configuration, $resource);
-
-        $form->handleRequest($request);
-        if (in_array($request->getMethod(), ['POST', 'PUT', 'PATCH']) && $form->isSubmitted()) {
-            if($form->isValid()) {
-                $resource = $form->getData();
-                $this->appEventDispatcher->dispatchPreEvent(ResourceActions::UPDATE, $configuration, $resource);
-                $this->eventDispatcher->dispatchPreEvent(ResourceActions::UPDATE, $configuration, $resource);
-                $this->manager->flush();
-                $this->appEventDispatcher->dispatchPostEvent(ResourceActions::UPDATE, $configuration, $resource);
-                $this->eventDispatcher->dispatchPostEvent(ResourceActions::UPDATE, $configuration, $resource);
-                $this->addFlash('success', $this->get('translator')->trans('form.message.success', [], 'EnhavoAppBundle'));
-                $route = $request->get('_route');
-                return $this->redirectToRoute($route, [
-                    'id' => $resource->getId(),
-                    'tab' => $request->get('tab'),
-                    'view_id' => $request->get('view_id')
-                ]);
-            } else {
-                $this->addFlash('error', $this->get('translator')->trans('form.message.error', [], 'EnhavoAppBundle'));
-                foreach($form->getErrors() as $error) {
-                    $this->addFlash('error', $error->getMessage());
-                }
-            }
-        }
-
-        $view = $this->viewFactory->create('update', [
+        $view = $this->viewFactory->create([
+            'type' => 'update',
             'request_configuration' => $configuration,
             'metadata' => $this->metadata,
-            'resource' => $resource,
-            'form' => $form
+            'resource_factory' => $this->newResourceFactory,
+            'resource_form_factory' => $this->resourceFormFactory,
+            'factory' => $this->factory,
+            'repository' => $this->repository,
+            'event_dispatcher' => $this->eventDispatcher,
+            'single_resource_provider' => $this->singleResourceProvider
         ]);
 
-        return $this->viewHandler->handle($configuration, $view);
+        return $view->getResponse($request);
     }
 
     public function duplicateAction(Request $request): Response
@@ -132,7 +107,7 @@ class ResourceController extends BaseController
             'metadata' => $this->metadata,
         ]);
 
-        return $view->getResponse();
+        return $view->getResponse($request);
     }
 
     public function previewAction(Request $request): Response
@@ -192,16 +167,14 @@ class ResourceController extends BaseController
         $this->isGrantedOr403($configuration, ResourceActions::INDEX);
         $resources = $this->resourcesCollectionProvider->get($configuration, $this->repository);
 
-        $view = $this->viewFactory->create('table', [
-            'request_configuration' => $configuration,
+        $view = $this->viewFactory->create([
+            'type' => 'table',
             'metadata' => $this->metadata,
+            'request_configuration' => $configuration,
             'resources' => $resources,
-            'request' => $request,
         ]);
 
-        $response = $this->viewHandler->handle($configuration, $view);
-        $response->headers->set('Content-Type', 'application/json');
-        return $response;
+        return $view->getResponse($request);
     }
 
     /**
@@ -212,12 +185,13 @@ class ResourceController extends BaseController
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
         $this->isGrantedOr403($configuration, ResourceActions::INDEX);
 
-        $view = $this->viewFactory->create('list', [
+        $view = $this->viewFactory->create([
+            'type' => 'list',
             'request_configuration' => $configuration,
             'metadata' => $this->metadata,
         ]);
 
-        return $this->viewHandler->handle($configuration, $view);
+        return $view->getResponse($request);
     }
 
     /**
@@ -225,43 +199,25 @@ class ResourceController extends BaseController
      */
     public function listDataAction(Request $request): Response
     {
-        $request->query->set('limit', 1000000); // never show pagination
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
         $this->isGrantedOr403($configuration, ResourceActions::INDEX);
-
-        if(in_array($request->getMethod(), ['POST'])) {
-            if ($configuration->isCsrfProtectionEnabled() && !$this->isCsrfTokenValid('list_data', $request->get('_csrf_token'))) {
-                throw new HttpException(Response::HTTP_FORBIDDEN, 'Invalid csrf token.');
-            }
-            $this->sortingManger->handleSort($request, $configuration, $this->repository);
-            return new JsonResponse();
-        }
-
         $resources = $this->resourcesCollectionProvider->get($configuration, $this->repository);
-        $view = $this->viewFactory->create('list_data', [
+
+        $view = $this->viewFactory->create([
+            'type' => 'list_data',
             'request_configuration' => $configuration,
             'metadata' => $this->metadata,
-            'resources' => $resources,
-            'request' => $request,
+            'resources' => $resources
         ]);
 
-        $response = $this->viewHandler->handle($configuration, $view);
-        $response->headers->set('Content-Type', 'application/json');
-        return $response;
+        return $view->getResponse($request);
     }
 
     public function deleteAction(Request $request): Response
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
         $response = parent::deleteAction($request);
-        if($response instanceof RedirectResponse) {
-            $view = $this->viewFactory->create('delete', [
-                'metadata' => $this->metadata,
-                'request_configuration' => $configuration,
-                'request' => $request
-            ]);
-            return $this->viewHandler->handle($configuration, $view);
-        }
+
         return $response;
     }
 

@@ -8,64 +8,124 @@
 
 namespace Enhavo\Bundle\AppBundle\View\Type;
 
-use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
 use Enhavo\Bundle\AppBundle\View\AbstractViewType;
+use Enhavo\Bundle\AppBundle\View\TemplateData;
+use Enhavo\Bundle\AppBundle\View\ViewData;
 use Enhavo\Bundle\AppBundle\Viewer\ViewerUtil;
-use Symfony\Component\HttpFoundation\ParameterBag;
+use Sylius\Component\Resource\Exception\DeleteHandlingException;
+use Sylius\Component\Resource\ResourceActions;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactory;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DeleteViewType extends AbstractViewType
 {
-    /** @var FlashBag */
-    protected $flashBag;
-
-    private $translator;
-
-    /**
-     * CreateViewer constructor.
-     * @param RequestConfigurationFactory $requestConfigurationFactory
-     * @param ViewerUtil $util
-     * @param FlashBag $flashBag
-     * @param TranslatorInterface $translator
-     */
     public function __construct(
-        RequestConfigurationFactory $requestConfigurationFactory,
         ViewerUtil $util,
         FlashBag $flashBag,
         TranslatorInterface $translator
-    )
-    {
-        parent::__construct($requestConfigurationFactory, $util);
-        $this->flashBag = $flashBag;
-        $this->translator = $translator;
-    }
+    ) {}
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'delete';
     }
 
-    protected function buildTemplateParameters(ParameterBag $parameters, RequestConfiguration $requestConfiguration, array $options)
+    public static function getParentType(): ?string
     {
-        parent::buildTemplateParameters($parameters, $requestConfiguration, $options);
+        return AppViewType::class;
+    }
 
-        $label = $this->mergeConfig([
+    public function handleRequest($options, Request $request, ViewData $viewData, TemplateData $templateData)
+    {
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+
+        $this->isGrantedOr403($configuration, ResourceActions::DELETE);
+        $resource = $this->findOr404($configuration);
+
+        if ($configuration->isCsrfProtectionEnabled() && !$this->isCsrfTokenValid((string) $resource->getId(), $request->request->get('_csrf_token'))) {
+            throw new HttpException(Response::HTTP_FORBIDDEN, 'Invalid csrf token.');
+        }
+
+        $event = $this->eventDispatcher->dispatchPreEvent(ResourceActions::DELETE, $configuration, $resource);
+
+        if ($event->isStopped() && !$configuration->isHtmlRequest()) {
+            throw new HttpException($event->getErrorCode(), $event->getMessage());
+        }
+        if ($event->isStopped()) {
+            $this->flashHelper->addFlashFromEvent($configuration, $event);
+
+            $eventResponse = $event->getResponse();
+            if (null !== $eventResponse) {
+                return $eventResponse;
+            }
+
+            return $this->redirectHandler->redirectToIndex($configuration, $resource);
+        }
+
+        try {
+            $this->resourceDeleteHandler->handle($resource, $this->repository);
+        } catch (DeleteHandlingException $exception) {
+            if (!$configuration->isHtmlRequest()) {
+                return $this->createRestView($configuration, null, $exception->getApiResponseCode());
+            }
+
+            $this->flashHelper->addErrorFlash($configuration, $exception->getFlash());
+
+            return $this->redirectHandler->redirectToReferer($configuration);
+        }
+
+        if ($configuration->isHtmlRequest()) {
+            $this->flashHelper->addSuccessFlash($configuration, ResourceActions::DELETE, $resource);
+        }
+
+        $postEvent = $this->eventDispatcher->dispatchPostEvent(ResourceActions::DELETE, $configuration, $resource);
+
+        if (!$configuration->isHtmlRequest()) {
+            return $this->createRestView($configuration, null, Response::HTTP_NO_CONTENT);
+        }
+
+        $postEventResponse = $postEvent->getResponse();
+        if (null !== $postEventResponse) {
+            return $postEventResponse;
+        }
+
+        return $this->redirectHandler->redirectToIndex($configuration, $resource);
+
+        if($response instanceof RedirectResponse) {
+            $view = $this->viewFactory->create('delete', [
+                'metadata' => $this->metadata,
+                'request_configuration' => $configuration,
+                'request' => $request
+            ]);
+            return $this->viewHandler->handle($configuration, $view);
+        }
+    }
+
+    public function createViewData($options, ViewData $data)
+    {
+        $configuration = $this->util->getRequestConfiguration($options);
+
+        $label = $this->util->mergeConfig([
             $options['label'],
-            $this->getViewerOption('label', $requestConfiguration)
+            $this->util->getViewerOption('label', $configuration)
         ]);
 
-        $parameters->set('data', [
-            'messages' => $this->getFlashMessages(),
-            'view' => [
-                'id' => $this->getViewId(),
-                'label' => $this->container->get('translator')->trans($label, [], $parameters->get('translation_domain'))
-            ]
-        ]);
+        $viewerOptions = $configuration->getViewerOptions();
+        $data['messages'] = $this->getFlashMessages();
+        $data['view'] = [
+            'id' => $this->getViewId(),
+            'label' => $this->translator->trans($label, [], $viewerOptions['translation_domain'])
+        ];
+    }
 
-        $parameters->set('resource', $options['resource']);
+    public function createTemplateData($options, ViewData $viewData, TemplateData $templateData)
+    {
+        $templateData['resource'] = $options['resource'];
     }
 
     private function getFlashMessages()
@@ -85,14 +145,8 @@ class DeleteViewType extends AbstractViewType
 
     public function configureOptions(OptionsResolver $optionsResolver)
     {
-        parent::configureOptions($optionsResolver);
         $optionsResolver->setDefaults([
-            'javascripts' => [
-                'enhavo/app/delete'
-            ],
-            'stylesheets' => [
-                'enhavo/app/delete'
-            ],
+            'entrypoint' => 'enhavo/app/delete',
         ]);
     }
 }

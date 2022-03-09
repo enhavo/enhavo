@@ -11,7 +11,7 @@
             <gedmo:timestampable on="create" />
         </field>
         <field name="sentAt" type="datetime" nullable="true" />
-        <field name="parameters" type="json_array" nullable="true" />
+        <field name="parameters" type="json" nullable="true" />
         <field name="token" />
 
         <many-to-one field="newsletter" target-entity="Enhavo\Bundle\NewsletterBundle\Entity\Newsletter" inversed-by="receivers">

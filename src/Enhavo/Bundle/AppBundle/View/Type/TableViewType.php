@@ -12,82 +12,64 @@ use Enhavo\Bundle\AppBundle\Column\ColumnManager;
 use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
 use Enhavo\Bundle\AppBundle\Filter\FilterQuery;
 use Enhavo\Bundle\AppBundle\View\AbstractViewType;
-use Enhavo\Bundle\AppBundle\Viewer\AbstractResourceViewer;
-use Enhavo\Bundle\AppBundle\Viewer\ViewerUtil;
+use Enhavo\Bundle\AppBundle\View\TemplateData;
+use Enhavo\Bundle\AppBundle\View\ViewData;
+use Enhavo\Bundle\AppBundle\View\ViewUtil;
 use Pagerfanta\Pagerfanta;
-use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactory;
 use Sylius\Component\Resource\Metadata\MetadataInterface;
-use Symfony\Component\HttpFoundation\ParameterBag;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TableViewType extends AbstractViewType
 {
-    /**
-     * @var ColumnManager
-     */
-    private $columnManager;
-
-    /**
-     * TableViewer constructor.
-     * @param RequestConfigurationFactory $requestConfigurationFactory
-     * @param ViewerUtil $util
-     * @param ColumnManager $columnManager
-     */
     public function __construct(
-        RequestConfigurationFactory $requestConfigurationFactory,
-        ViewerUtil $util,
-        ColumnManager $columnManager
-        )
-    {
-        parent::__construct($requestConfigurationFactory, $util);
-        $this->columnManager = $columnManager;
-    }
-
-    public function getType()
-    {
-        return 'table';
-    }
+        private ViewUtil $util,
+        private ColumnManager $columnManager
+    ) {}
 
     private function getBatches($batchRoute)
     {
         $configuration = $this->util->createConfigurationFromRoute($batchRoute);
-        if($configuration) {
+        if ($configuration) {
             $batches = $configuration->getBatches();
             return $batches;
         }
         return [];
     }
 
-    protected function buildTemplateParameters(ParameterBag $parameters, RequestConfiguration $requestConfiguration, array $options)
+    public function createViewData($options, ViewData $data)
     {
-        parent::buildTemplateParameters($parameters, $requestConfiguration, $options);
+        /** @var RequestConfiguration $requestConfiguration */
+        $requestConfiguration = $options['request_configuration'];
 
         /** @var MetadataInterface $metadata */
         $metadata = $options['metadata'];
 
-        $parameters->set('data',  $options['resources']);
+        $data->set('data', $options['resources']);
 
-        $parameters->set('sortable', $this->mergeConfig([
+        $data->set('sortable', $this->util->mergeConfig([
             $options['sortable'],
             $requestConfiguration->isSortable(),
         ]));
 
-        $columns = $this->getViewerOption('columns', $requestConfiguration);
+        $columns = $this->util->getViewerOption('columns', $requestConfiguration);
 
-        $parameters->set('batch_route', $this->mergeConfig([
-            sprintf('%s_%s_batch', $metadata->getApplicationName(), $this->getUnderscoreName($metadata)),
+        $data->set('batch_route', $this->util->mergeConfig([
+            sprintf('%s_%s_batch', $metadata->getApplicationName(), $this->util->getUnderscoreName($metadata)),
             $options['batch_route'],
         ]));
 
-        $parameters->set('batches', $this->getBatches($parameters->get('batch_route')));
+        $data->set('batches', $this->getBatches($data->get('batch_route')));
 
-        $parameters->set('width', $this->mergeConfig([
+        $data->set('width', $this->util->mergeConfig([
             $options['width']
         ]));
 
         $resources = $options['resources'];
-        if($resources instanceof Pagerfanta) {
-            $parameters->set('pages', [
+        if ($resources instanceof Pagerfanta) {
+            $data->set('pages', [
                 'count' => $resources->count(),
                 'page' => $resources->getCurrentPage()
             ]);
@@ -98,17 +80,23 @@ class TableViewType extends AbstractViewType
         }
 
         if ($requestConfiguration->getHydrate() === FilterQuery::HYDRATE_ID) {
-            $parameters->set('resources', $options['resources']);
+            $data->set('resources', $options['resources']);
         } else {
-            $parameters->set('resources', $this->columnManager->createResourcesViewData($columns, $options['resources']));
+            $data->set('resources', $this->columnManager->createResourcesViewData($columns, $options['resources']));
         }
-
     }
 
-    public function configureOptions(OptionsResolver $optionsResolver)
+    public function getResponse($options, Request $request, ViewData $viewData, TemplateData $templateData): Response
     {
-        parent::configureOptions($optionsResolver);
-        $optionsResolver->setDefaults([
+        return new JsonResponse($viewData->normalize());
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'metadata' => null,
+            'request_configuration' => null,
+            'resources' => null,
             'width' => 12,
             'move_after_route' => null,
             'move_to_page_route' => null,
@@ -117,5 +105,10 @@ class TableViewType extends AbstractViewType
             'sortable' => false,
             'template' => 'admin/view/table.html.twig'
         ]);
+    }
+
+    public static function getName(): ?string
+    {
+        return 'table';
     }
 }
