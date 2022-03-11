@@ -14,7 +14,6 @@ services:
         arguments:
             - '@enhavo_media.repository.file'
             - '@enhavo_taxonomy.repository.term'
-            - '@enhavo_media.media.public_url_generator'
 
     Enhavo\Bundle\MediaLibraryBundle\Form\Extension\MediaExtension:
         tags:
