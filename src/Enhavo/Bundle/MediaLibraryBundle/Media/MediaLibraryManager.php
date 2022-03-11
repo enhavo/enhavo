@@ -6,7 +6,6 @@
 
 namespace Enhavo\Bundle\MediaLibraryBundle\Media;
 
-use Enhavo\Bundle\MediaBundle\Media\UrlGeneratorInterface;
 use Enhavo\Bundle\MediaLibraryBundle\Repository\FileRepository;
 use Enhavo\Bundle\TaxonomyBundle\Repository\TermRepository;
 
@@ -18,60 +17,29 @@ class MediaLibraryManager
     /** @var TermRepository */
     private $termRepository;
 
-    /** @var UrlGeneratorInterface */
-    private $urlGenerator;
-
     /**
      * @param FileRepository $fileRepository
      * @param TermRepository $termRepository
-     * @param UrlGeneratorInterface $urlGenerator
      */
-    public function __construct(FileRepository $fileRepository, TermRepository $termRepository, UrlGeneratorInterface $urlGenerator)
+    public function __construct(FileRepository $fileRepository, TermRepository $termRepository)
     {
         $this->fileRepository = $fileRepository;
         $this->termRepository = $termRepository;
-        $this->urlGenerator = $urlGenerator;
     }
 
-    public function createTagList(): array
+
+    public function getTags()
     {
-        $terms = $this->termRepository->findByTaxonomy('media_library_tag');
-        $tags = [];
-        foreach ($terms as $term) {
-            $tags[] = [
-                'id' => $term->getId(),
-                'slug' => $term->getSlug(),
-                'label' => $term->getName(),
-            ];
-        }
-        return $tags;
+        return $this->termRepository->findByTaxonomy('media_library_tag');
     }
 
-    public function createContentTypeList(): array
+    public function getContentTypes()
     {
-        $terms = ['audio', 'archive', 'document', 'executable', 'image', 'video'];//$this->termRepository->findByTaxonomy('media_library_tag');
-        $contentTypes = [];
-        foreach ($terms as $term) {
-            $contentTypes[] = [
-                'key' => $term,
-                'label' => ucfirst($term),
-            ];
-        }
-        return $contentTypes;
+        return ['audio', 'archive', 'document', 'executable', 'image', 'video'];
     }
 
-    public function createItemList($contentType, $tag): array
+    public function getFiles($contentType, $tag)
     {
-        $files = $this->fileRepository->findByContentTypeAndTags($contentType, $tag?[$tag]:[]);
-        $items = [];
-        foreach ($files as $file) {
-            $items[] = [
-                'id' => $file->getId(),
-                'previewImageUrl' => $this->urlGenerator->generateFormat($file, 'enhavoMediaLibraryThumb'),
-                'label' => $file->getFilename(),
-            ];
-        }
-
-        return $items;
+        return $this->fileRepository->findByContentTypeAndTags($contentType, $tag?[$tag]:[]);
     }
 }

@@ -13,7 +13,7 @@ class MediaLibraryRootMenuType extends ListMenu
 
         $resolver->setDefaults([
             'icon' => 'image',
-            'label' => 'media_library.label.library',
+            'label' => 'media_library.label.media_library',
             'translation_domain' => 'EnhavoMediaLibraryBundle',
             'children' => [
                 'library' => [

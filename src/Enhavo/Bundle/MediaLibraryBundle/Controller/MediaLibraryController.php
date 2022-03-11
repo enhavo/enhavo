@@ -4,6 +4,7 @@ namespace Enhavo\Bundle\MediaLibraryBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Controller\AbstractViewController;
 use Enhavo\Bundle\AppBundle\Viewer\ViewFactory;
+use Enhavo\Bundle\MediaBundle\Media\UrlGeneratorInterface;
 use Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryManager;
 use Enhavo\Bundle\MediaLibraryBundle\Repository\FileRepository;
 use Enhavo\Bundle\MediaLibraryBundle\Viewer\MediaLibraryViewer;
@@ -56,7 +57,7 @@ class MediaLibraryController extends AbstractViewController
      */
     public function listAction(Request $request): JsonResponse
     {
-        $items = $this->mediaLibraryManager->createItemList($request->get('content_type'), $request->get('tag'));
+        $items = $this->createFileList($request->get('content_type'), $request->get('tag'));
 
         return new JsonResponse([
             'items' => $items
@@ -69,7 +70,7 @@ class MediaLibraryController extends AbstractViewController
      */
     public function tagsAction(Request $request): JsonResponse
     {
-        $tags = $this->mediaLibraryManager->createTagList();
+        $tags = $this->createTagList();
 
         return new JsonResponse([
             'tags' => $tags,
@@ -83,7 +84,7 @@ class MediaLibraryController extends AbstractViewController
      */
     public function contentTypesAction(Request $request): JsonResponse
     {
-        $types = $this->mediaLibraryManager->createContentTypeList();
+        $types = $this->createContentTypeList();
 
         return new JsonResponse([
             'content_types' => $types,
@@ -111,4 +112,47 @@ class MediaLibraryController extends AbstractViewController
     }
 
 
+    private function createTagList(): array
+    {
+        $terms = $this->mediaLibraryManager->getTags();
+        $tags = [];
+        foreach ($terms as $term) {
+            $tags[] = [
+                'id' => $term->getId(),
+                'slug' => $term->getSlug(),
+                'label' => $term->getName(),
+            ];
+        }
+        return $tags;
+    }
+
+    private function createContentTypeList(): array
+    {
+        $terms = $this->mediaLibraryManager->getContentTypes();
+        $contentTypes = [];
+        foreach ($terms as $term) {
+            $contentTypes[] = [
+                'key' => $term,
+                'label' => ucfirst($term),
+            ];
+        }
+        return $contentTypes;
+    }
+
+    private function createFileList($contentType, $tag): array
+    {
+        $files = $this->mediaLibraryManager->getFiles($contentType, $tag);
+        $items = [];
+        /** @var UrlGeneratorInterface $urlGenerator */
+        $urlGenerator = $this->get('enhavo_media.media.public_url_generator');
+        foreach ($files as $file) {
+            $items[] = [
+                'id' => $file->getId(),
+                'previewImageUrl' => $urlGenerator->generateFormat($file, 'enhavoMediaLibraryThumb'),
+                'label' => $file->getFilename(),
+            ];
+        }
+
+        return $items;
+    }
 }

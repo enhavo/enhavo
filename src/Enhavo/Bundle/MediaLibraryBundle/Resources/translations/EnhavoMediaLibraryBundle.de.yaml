@@ -1,0 +1,10 @@
+media_library:
+    label:
+        media_library: Mediathek
+        library: 'Dateien'
+        tag: 'Tags'
+        id: 'ID'
+        title: 'Titel'
+    form:
+        label:
+            create_tag: 'Tag erstellen'
