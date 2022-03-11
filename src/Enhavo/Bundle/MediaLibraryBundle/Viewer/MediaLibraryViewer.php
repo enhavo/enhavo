@@ -45,8 +45,6 @@ class MediaLibraryViewer extends AbstractActionViewer
                     'type' => 'create',
                     'route' => 'enhavo_media_library_create',
                     'icon' => 'add_circle_outline',
-                    'translation_domain' => 'EnhavoMediaLibraryBundle',
-                    'label' => 'media.library.create'
                 ]
             ];
 
@@ -57,7 +55,7 @@ class MediaLibraryViewer extends AbstractActionViewer
                     'event' => 'add',
                     'icon' => 'check',
                     'translation_domain' => 'EnhavoMediaLibraryBundle',
-                    'label' => 'media.library.confirm_selection'
+                    'label' => 'media_library.confirm_selection'
                 ]
             ];
         }
