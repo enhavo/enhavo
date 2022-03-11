@@ -69,6 +69,7 @@ class MediaType extends AbstractType
         $view->vars['upload'] = $options['upload'];
         $view->vars['extensionManager'] = $this->extensionManager;
         $view->vars['extensions'] = $options['extensions'];
+        $view->vars['route'] = $options['route'];
         $view->vars['mediaConfig'] = [
             'multiple' => $options['multiple'],
             'sortable' =>  $options['multiple'] ? $options['sortable'] : false,
@@ -120,7 +121,8 @@ class MediaType extends AbstractType
             'prototype_name' => '__name__',
             'item_template' => '@EnhavoMedia/admin/form/media/item.html.twig',
             'upload' => true,
-            'extensions' => []
+            'extensions' => [],
+            'route' => 'enhavo_media_upload',
         ));
     }
 
