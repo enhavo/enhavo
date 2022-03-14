@@ -78,6 +78,15 @@ enhavo_media_library_create:
             redirect: enhavo_media_library_update
             viewer:
 
+enhavo_media_library_upload:
+    path:  /enhavo/media-library/upload
+    methods: [POST]
+    options:
+        expose: true
+    defaults:
+        _controller: enhavo_media.controller.upload:uploadAction
+
+
 enhavo_media_library_update:
     options:
         expose: true
