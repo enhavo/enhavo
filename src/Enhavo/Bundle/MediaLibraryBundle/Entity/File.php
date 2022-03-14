@@ -63,18 +63,4 @@ class File extends \Enhavo\Bundle\MediaBundle\Entity\File
     {
         return $this->tags;
     }
-
-    public function setFile(FileInterface $file)
-    {
-        $this->setMimeType($file->getMimeType());
-        $this->setMd5Checksum($file->getMd5Checksum());
-        $this->setOrder($file->getOrder());
-        $this->setExtension($file->getExtension());
-        $this->setContent($file->getContent());
-    }
-
-    public function getFile(): File
-    {
-        return $this;
-    }
 }
