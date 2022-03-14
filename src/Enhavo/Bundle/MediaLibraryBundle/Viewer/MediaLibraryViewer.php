@@ -41,11 +41,13 @@ class MediaLibraryViewer extends AbstractActionViewer
     {
         if ($this->isModeEdit($options)) {
             $default = [
-                'add' => [
-                    'type' => 'create',
-                    'route' => 'enhavo_media_library_create',
-                    'icon' => 'add_circle_outline',
-                ]
+                'upload' => [
+                    'type' => 'event',
+                    'event' => 'upload',
+                    'icon' => 'cloud_upload',
+                    'label' => 'media_library.upload',
+                    'translation_domain' => 'EnhavoMediaLibraryBundle',
+                ],
             ];
 
         } else if ($this->isModeSelect($options)) {
