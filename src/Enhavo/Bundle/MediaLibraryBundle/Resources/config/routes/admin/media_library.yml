@@ -77,6 +77,11 @@ enhavo_media_library_create:
         _sylius:
             redirect: enhavo_media_library_update
             viewer:
+                tabs:
+                    main:
+                        label: ~
+                        translation_domain: EnhavoMediaLibraryBundle
+                        template: 'admin/resource/file/main.html.twig'
 
 enhavo_media_library_upload:
     path:  /enhavo/media-library/upload
@@ -97,6 +102,11 @@ enhavo_media_library_update:
         _sylius:
             redirect: enhavo_media_library_update
             viewer:
+                tabs:
+                    main:
+                        label: ~
+                        translation_domain: EnhavoMediaLibraryBundle
+                        template: 'admin/resource/file/main.html.twig'
 
 enhavo_media_file_delete:
     options:
