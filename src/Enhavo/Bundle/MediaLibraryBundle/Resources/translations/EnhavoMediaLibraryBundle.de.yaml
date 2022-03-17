@@ -5,6 +5,8 @@ media_library:
         tag: 'Tags'
         id: 'ID'
         title: 'Titel'
+        upload: 'Upload'
+        confirm_selection: 'Confirm Selection'
     form:
         label:
             create_tag: 'Tag erstellen'
