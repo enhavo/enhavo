@@ -50,7 +50,8 @@ class MediaLibraryManager
         foreach ($this->contentTypes as $key => $config) {
             $matchers = $config['mime_types'];
             foreach ($matchers as $matcher) {
-                if (preg_match('/' . preg_quote($matcher, '/') . '/', $mimeType)) {
+                $regex = '%' . $matcher . '%';
+                if (preg_match($regex, $mimeType)) {
                     return $key;
                 }
             }
