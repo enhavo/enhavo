@@ -2,7 +2,6 @@
 
 namespace Enhavo\Bundle\MediaLibraryBundle\DependencyInjection;
 
-use Enhavo\Bundle\MediaLibraryBundle\Entity\File;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -22,6 +21,14 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->getRootNode();
         $rootNode
             ->children()
+                ->arrayNode('content_type')
+                    ->arrayPrototype()
+                        ->children()
+                            ->scalarNode('label')->end()
+                            ->variableNode('mime_types')->end()
+                        ->end()
+                    ->end()
+                ->end()
             ->end()
         ;
 

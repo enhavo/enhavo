@@ -10,8 +10,18 @@ services:
         calls:
             - [setContainer, ['@service_container']]
 
+    Enhavo\Bundle\MediaLibraryBundle\Controller\UploadController:
+        arguments:
+            - '@Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryManager'
+            - '@enhavo_media.factory.file'
+            - '@enhavo_media.media.media_manager'
+            - '@enhavo_media.factory.format'
+        tags:
+            - { name: controller.service_arguments }
+
     Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryManager:
         arguments:
+            - '%enhavo_media_library.content_type%'
             - '@enhavo_media.repository.file'
             - '@enhavo_taxonomy.repository.term'
 
@@ -49,3 +59,9 @@ services:
         parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
             - { name: enhavo.menu, alias: media_library_tag }
+
+    Enhavo\Bundle\MediaLibraryBundle\Form\Type\FileType:
+        arguments:
+            - '@Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryManager'
+        tags:
+            - { name: form.type }

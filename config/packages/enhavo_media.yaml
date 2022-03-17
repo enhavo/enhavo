@@ -1,4 +1,8 @@
 enhavo_media:
+    filter:
+        video_image:
+            ffmpeg_path: /usr/bin/ffmpeg
+            ffprobe_path: /usr/bin/ffprobe
     formats:
         articleThumbnail:
             type: image

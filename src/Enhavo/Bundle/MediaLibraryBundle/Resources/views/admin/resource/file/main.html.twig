@@ -1,11 +1,13 @@
 {{ form_row(form.filename) }}
+{{ form_row(form.contentType) }}
+{{ form_row(form.tags) }}
 {#{{ form_row(form.url) }}#}
-{% if resource.image %}
+{#{% if resource.image %}#}
     <br><br>
     <div class="row">
         <div class="col-md-push-2 col-md-9">
-            <img src="{{ media_url(resource, 'enhavoMediaLibrary') }}" />
+            <img src="{{ media_url(resource, 'enhavoMediaLibraryThumb') }}" />
         </div>
     </div>
-{% endif %}
+{#{% endif %}#}
 {{ form_row(form._token) }}
