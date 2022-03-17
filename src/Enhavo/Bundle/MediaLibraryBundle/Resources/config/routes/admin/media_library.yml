@@ -88,8 +88,7 @@ enhavo_media_library_upload:
     methods: [POST]
     options:
         expose: true
-    defaults:
-        _controller: enhavo_media.controller.upload:uploadAction
+    controller: Enhavo\Bundle\MediaLibraryBundle\Controller\UploadController::uploadAction
 
 
 enhavo_media_library_update:

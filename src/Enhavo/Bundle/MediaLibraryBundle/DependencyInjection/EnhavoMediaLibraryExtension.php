@@ -21,7 +21,9 @@ class EnhavoMediaLibraryExtension extends Extension implements PrependExtensionI
      */
     public function load(array $configs, ContainerBuilder $container)
     {
+        $config = $this->processConfiguration(new Configuration(), $configs);
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $container->setParameter('enhavo_media_library.content_type', $config['content_type']);
         $loader->load('services.yml');
     }
 

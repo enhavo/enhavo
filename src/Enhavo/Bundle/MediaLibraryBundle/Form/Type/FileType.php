@@ -7,6 +7,7 @@
 namespace Enhavo\Bundle\MediaLibraryBundle\Form\Type;
 
 use Enhavo\Bundle\MediaLibraryBundle\Entity\File;
+use Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryManager;
 use Enhavo\Bundle\TaxonomyBundle\Form\Type\TermAutoCompleteChoiceType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -16,6 +17,17 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class FileType extends AbstractType
 {
+    private MediaLibraryManager $mediaLibraryManager;
+
+    /**
+     * @param MediaLibraryManager $mediaLibraryManager
+     */
+    public function __construct(MediaLibraryManager $mediaLibraryManager)
+    {
+        $this->mediaLibraryManager = $mediaLibraryManager;
+    }
+
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -23,9 +35,8 @@ class FileType extends AbstractType
 
             ])
             ->add('contentType', ChoiceType::class, [
-                'choices' => [
-                    'image' => 'image',
-                ],
+                'choices' => array_flip($this->mediaLibraryManager->getContentTypes()),
+                'placeholder' => '---',
             ])
             ->add('tags', TermAutoCompleteChoiceType::class, [
                 'multiple' => true,
