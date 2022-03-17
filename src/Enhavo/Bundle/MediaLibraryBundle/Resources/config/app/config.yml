@@ -33,14 +33,28 @@ enhavo_media:
                 form: Enhavo\Bundle\MediaLibraryBundle\Form\Type\FileType
 
     formats:
+        enhavoMediaLibraryImage:
+            type: image
+            width: 250
+            height: 250
+        enhavoMediaLibraryPdf:
+            type: pdf_image
+            method: ghostscript
+        enhavoMediaLibraryVideo:
+            type: video_image
         enhavoMediaLibraryThumb:
-            type: image
-            width: 150
-            height: 150
-        enhavoMediaLibrary:
-            type: image
-            maxWidth: 640
-            maxHeight: 480
+            -
+                type: mimetype
+                format: enhavoMediaLibraryPdf
+                mimetypes: [application/pdf]
+            -
+                type: mimetype
+                format: enhavoMediaLibraryImage
+                mimetypes: [image/jpg, image/png, image/jpeg, image/bmp]
+            -
+                type: mimetype
+                format: enhavoMediaLibraryVideo
+                mimetypes: [video/mp4]
 
 enhavo_taxonomy:
     taxonomies:

@@ -62,3 +62,12 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.media_filter, alias: parent }
+
+    Enhavo\Bundle\MediaBundle\Filter\Filter\MimetypeFilter:
+        public: true
+        arguments:
+            - '@enhavo_media.media.format_manager'
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.media_filter, alias: mimetype }
