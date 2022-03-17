@@ -23,6 +23,42 @@ enhavo_app:
             label: library.role.label.delete
             translation_domain: EnhavoMediaBundle
 
+enhavo_media_library:
+    content_type:
+        audio:
+            label: 'Audio'
+            mime_types:
+                - ^audio/.+
+        archive:
+            label: 'Archive'
+            mime_types:
+                - application/gzip
+                - application/zip
+                - application/x-tar
+                - application/x-gtar
+        document:
+            label: 'Document'
+            mime_types:
+                - application/pdf
+                - application/postscript
+                - application/rtc
+                - application/rtf
+                - ^application/ms.+
+                - ^application/vnd\.oasis\.opendocument\..+
+                - ^vnd\.openxmlformats-officedocument\..+
+        text:
+            label: 'Text'
+            mime_types:
+                - ^text/.+
+        image:
+            label: 'Image'
+            mime_types:
+                - ^image/.+
+        video:
+            label: 'Video'
+            mime_types:
+                - ^video/.+
+
 enhavo_media:
     resources:
         file:
@@ -35,8 +71,8 @@ enhavo_media:
     formats:
         enhavoMediaLibraryImage:
             type: image
-            width: 250
-            height: 250
+            width: 512
+            height: 512
         enhavoMediaLibraryPdf:
             type: pdf_image
             method: ghostscript
