@@ -20,21 +20,21 @@ class EnhavoNewsletterExtension extends AbstractResourceExtension implements Pre
     /**
      * {@inheritdoc}
      */
-    public function load(array $config, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container)
     {
-        $config = $this->processConfiguration(new Configuration(), $config);
+        $configs = $this->processConfiguration(new Configuration(), $configs);
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $this->registerResources('enhavo_newsletter', $config['driver'], $config['resources'], $container);
+        $this->registerResources('enhavo_newsletter', $configs['driver'], $configs['resources'], $container);
 
-        $container->setParameter('enhavo_newsletter.newsletter.mail.from', $config['newsletter']['mail']['from']);
-        $container->setParameter('enhavo_newsletter.newsletter.test_receiver', $config['newsletter']['test_receiver']);
-        $container->setParameter('enhavo_newsletter.newsletter.templates', $config['newsletter']['templates']);
-        $container->setParameter('enhavo_newsletter.newsletter.provider', $config['newsletter']['provider']);
+        $container->setParameter('enhavo_newsletter.newsletter.mail.from', $configs['newsletter']['mail']['from']);
+        $container->setParameter('enhavo_newsletter.newsletter.test_receiver', $configs['newsletter']['test_receiver']);
+        $container->setParameter('enhavo_newsletter.newsletter.templates', $configs['newsletter']['templates']);
+        $container->setParameter('enhavo_newsletter.newsletter.provider', $configs['newsletter']['provider']);
 
-        $container->setParameter('enhavo_newsletter.subscription', $config['subscription']);
+        $container->setParameter('enhavo_newsletter.subscription', $configs['subscription']);
 
-        if (isset($config['forms'])) {
-            $container->setParameter('enhavo_newsletter.forms', $config['forms']);
+        if (isset($configs['forms'])) {
+            $container->setParameter('enhavo_newsletter.forms', $configs['forms']);
         } else {
             $container->setParameter('enhavo_newsletter.forms', []);
         }
