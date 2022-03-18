@@ -94,7 +94,7 @@ class Loader
     }
 
     _loadImports(data, builder, cwd, options) {
-        if (data.imports && data.imports.length > 0) {
+        if (data && data.imports && data.imports.length > 0) {
             for (let importData of data.imports) {
                 let filepath = this._buildFilepath(importData.path, cwd);
                 if (filepath === null) {
@@ -155,7 +155,7 @@ class Loader
      * @param {string} cwd
      */
     _addDefinitions(data, builder, cwd) {
-        if(data.services) {
+        if (data && data.services) {
             for (let name in data.services) {
                 if (!data.services.hasOwnProperty(name)) {
                     continue;
@@ -182,7 +182,7 @@ class Loader
      * @param {Definition} definition
      */
     _checkArguments(service, definition) {
-        if(service.arguments) {
+        if (service.arguments) {
             for (let argument of service.arguments) {
                 definition.addArgument(new Argument(argument));
             }
@@ -194,7 +194,7 @@ class Loader
      * @param {Definition} definition
      */
     _checkTags(service, definition) {
-        if(service.tags) {
+        if (service.tags) {
             for (let tag of service.tags) {
                 if(typeof tag === 'string') {
                     definition.addTag(new Tag(tag));
@@ -231,7 +231,7 @@ class Loader
      * @param {string} cwd
      */
     _checkCalls(service, definition) {
-        if(service.calls) {
+        if (service.calls) {
             for (let call of service.calls) {
                 let argumentList = [];
                 if (call.length > 1) {
@@ -250,7 +250,7 @@ class Loader
      * @param {string} cwd
      */
     _addEntrypoints(data, builder, cwd) {
-        if(data.entrypoints) {
+        if (data && data.entrypoints) {
             for (let name in data.entrypoints) {
                 if (!data.entrypoints.hasOwnProperty(name)) {
                     break;
@@ -273,7 +273,7 @@ class Loader
      * @param {string} cwd
      */
     _addCompilerPass(data, builder, cwd) {
-        if(data.compiler_pass) {
+        if (data && data.compiler_pass) {
             for (let name in data.compiler_pass) {
                 if (!data.compiler_pass.hasOwnProperty(name)) {
                     break;
