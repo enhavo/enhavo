@@ -64,6 +64,7 @@ export default class ViewStack
     }
 
     init() {
+        this.data = this.componentRegistry.registerData(this.data);
         if(!this.data.views) {
             this.data.views = [];
             this.views = <ViewInterface[]>this.data.views;
@@ -84,7 +85,6 @@ export default class ViewStack
         }
 
         this.componentRegistry.registerStore('viewStack', this);
-        this.componentRegistry.registerData(this.data);
     }
 
     getFrameStorage() {

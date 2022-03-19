@@ -41,7 +41,7 @@ export default class ImageCropperApp
         this.flashMessenger.init();
 
         this.componentRegistry.registerStore('imageCropper', this);
-        this.componentRegistry.registerData(this.data);
+        this.data = this.componentRegistry.registerData(this.data);
 
         this.addCloseListener();
         this.view.ready();

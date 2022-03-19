@@ -27,7 +27,7 @@ export default class ColumnManager
             this.componentRegistry.registerComponent(component.name, component.component)
         }
 
-        this.componentRegistry.registerData(this.columns);
+        this.columns = this.componentRegistry.registerData(this.columns);
         this.componentRegistry.registerStore('columnManager', this);
     }
 

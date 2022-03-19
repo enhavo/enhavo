@@ -5,7 +5,7 @@ import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface"
 
 export default class WidgetManager
 {
-    public readonly widgets: WidgetInterface[];
+    public widgets: WidgetInterface[];
     private readonly registry: WidgetRegistry;
     private readonly componentRegistry: ComponentRegistryInterface;
 
@@ -26,7 +26,7 @@ export default class WidgetManager
             this.componentRegistry.registerComponent(component.name, component.component)
         }
 
-        this.componentRegistry.registerData(this.widgets);
+        this.widgets = this.componentRegistry.registerData(this.widgets);
         this.componentRegistry.registerStore('widgetManager', this);
     }
 }

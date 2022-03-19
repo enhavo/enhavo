@@ -33,7 +33,7 @@ export default class BatchManager
         }
 
         this.componentRegistry.registerStore('batchManager', this);
-        this.componentRegistry.registerData(this.data);
+        this.data = this.componentRegistry.registerData(this.data);
     }
 
     async execute(ids: number[]): Promise<boolean>

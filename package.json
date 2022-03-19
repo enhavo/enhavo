@@ -54,9 +54,9 @@
     "vue-class-component": "^8.0.0-alpha.6",
     "vue-loader": "^16.0.0",
     "vue-property-decorator": "v10.0.0-rc.3",
-    "vue-select": "^3.18.3",
+    "vue-select": "4.0.0-beta.3",
     "vue-template-compiler": "^2.5.22",
-    "vuedraggable": "^2.23.0",
+    "vuedraggable": "^4.1.0",
     "vuejs-datepicker": "^1.6.2",
     "webfonts-loader": "^7.2.0",
     "yaml": "^1.10.0"

@@ -4,6 +4,7 @@ const _ = require('lodash');
 const DependencyInjectionPlugin = require('@enhavo/dependency-injection/webpack/DependencyInjectionPlugin');
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const Webpack = require('webpack');
 
 class AppPackage
 {
@@ -34,7 +35,11 @@ class AppPackage
             .enableVersioning(Encore.isProduction())
             .addPlugin(new DependencyInjectionPlugin(
                 path.resolve(EncoreUtil.getProjectDir(), './assets/services/enhavo/*')
-            ));
+            ))
+            .addPlugin(new Webpack.DefinePlugin({
+                __VUE_OPTIONS_API__: true,
+                __VUE_PROD_DEVTOOLS__: true
+            }));
     }
 
     initWebpackConfig(config)

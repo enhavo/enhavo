@@ -5,5 +5,5 @@ export default interface ComponentRegistryInterface
     registerDirective(name: string, store: object): ComponentRegistryInterface;
     registerComponent(name: string, component: object): ComponentRegistryInterface;
     registerPlugin(plugin: object): ComponentRegistryInterface;
-    registerData(object: object): ComponentRegistryInterface
+    registerData<Type>(data: Type): Type
 }

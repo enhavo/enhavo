@@ -31,8 +31,8 @@ export default class ActionManager
         }
 
         this.componentRegistry.registerStore('actionManager', this);
-        this.componentRegistry.registerData(this.primary);
-        this.componentRegistry.registerData(this.secondary);
+        this.primary = this.componentRegistry.registerData(this.primary);
+        this.secondary = this.componentRegistry.registerData(this.secondary);
     }
 
     hasActions() {

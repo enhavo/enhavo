@@ -80,7 +80,7 @@ export default class List
         });
 
         this.componentRegistry.registerStore('list', this);
-        this.componentRegistry.registerData(this.data);
+        this.data = this.componentRegistry.registerData(this.data);
     }
 
     public load()

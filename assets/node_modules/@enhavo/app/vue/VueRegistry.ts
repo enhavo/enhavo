@@ -1,4 +1,5 @@
 import ComponentRegistryInterface from '@enhavo/core/ComponentRegistryInterface';
+import * as Vue from "vue";
 
 export default class VueRegistry implements ComponentRegistryInterface
 {
@@ -29,9 +30,12 @@ export default class VueRegistry implements ComponentRegistryInterface
         return this;
     }
 
-    registerData(data: object): ComponentRegistryInterface {
-        this.data.push(data);
-        return this;
+    registerData<Type>(data: Type): Type {
+        if (data === null) {
+            return;
+        }
+        data = Vue.reactive(data);
+        return data;
     }
 
     registerPlugin(plugin: object): ComponentRegistryInterface {
