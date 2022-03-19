@@ -12,11 +12,11 @@
 </template>
 
 <script lang="ts">
-import {Vue, Component, Prop} from "vue-property-decorator";
+import {Vue, Options, Prop} from "vue-property-decorator";
 import {FormData} from "@enhavo/vue-form/data/FormData"
 import {Util} from "@enhavo/vue-form/form/Util";
 
-@Component({})
+@Options({})
 export default class FormTextareaComponent extends Vue
 {
     @Prop()

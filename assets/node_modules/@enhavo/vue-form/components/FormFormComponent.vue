@@ -10,10 +10,10 @@
 </template>
 
 <script lang="ts">
-import {Vue, Component, Prop} from "vue-property-decorator";
+import {Vue, Options, Prop} from "vue-property-decorator";
 import {Form} from "@enhavo/vue-form/form/Form";
 
-@Component({})
+@Options({})
 export default class FormForm extends Vue
 {
     @Prop()

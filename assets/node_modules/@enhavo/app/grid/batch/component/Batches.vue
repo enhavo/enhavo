@@ -6,35 +6,48 @@
 </template>
 
 <script lang="ts">
-    import { Vue, Component } from "vue-property-decorator";
+import {Vue, Options, Inject} from "vue-property-decorator";
+import BatchManager from "@enhavo/app/grid/batch/BatchManager";
+import Grid from "@enhavo/app/grid/Grid";
+import Translator from "@enhavo/core/Translator";
 
-    @Component()
-    export default class Batches extends Vue {
-        get options() {
-            let options = [];
-            for(let batch of this.$batchManager.data.batches) {
-                options.push({
-                    label: batch.label,
-                    code: batch.key
-                })
-            }
-            return options;
-        }
+@Options({})
+export default class extends Vue
+{
+    @Inject()
+    batchManager: BatchManager;
 
-        get placeholder() {
-            return this.$translator.trans('enhavo_app.batch.label.placeholder')
-        }
+    @Inject()
+    grid: Grid;
 
-        executeBatch() {
-            this.$grid.executeBatch();
-        }
+    @Inject()
+    translator: Translator;
 
-        change(value) {
-            let key = null;
-            if(value != null) {
-                key = value.code;
-                this.$batchManager.changeBatch(key);
-            }
+    get options() {
+        let options = [];
+        for(let batch of this.batchManager.data.batches) {
+            options.push({
+                label: batch.label,
+                code: batch.key
+            })
         }
-  }
+        return options;
+    }
+
+    get placeholder() {
+        return this.translator.trans('enhavo_app.batch.label.placeholder')
+    }
+
+    executeBatch() {
+        this.grid.executeBatch();
+    }
+
+    change(value: any) {
+        let key = null;
+        if(value != null) {
+            key = value.code;
+            this.batchManager.changeBatch(key);
+        }
+    }
+}
 </script>

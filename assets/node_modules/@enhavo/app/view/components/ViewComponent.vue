@@ -1,32 +1,38 @@
 <template>
     <div class="view">
-        <div v-if="$view.data.confirm" class="modal-confirm">
+        <div v-if="view.data.confirm" class="modal-confirm">
             <div>
-                <div class="message">{{ $view.data.confirm.message }}</div>
+                <div class="message">{{ view.data.confirm.message }}</div>
                 <div class="buttons">
-                    <div @click="$view.data.confirm.accept()" class="modal-btn primary">{{ $view.data.confirm.acceptText }}</div>
-                    <div @click="$view.data.confirm.deny()" class="modal-btn">{{ $view.data.confirm.denyText }}</div>
+                    <div @click="view.data.confirm.accept()" class="modal-btn primary">{{ view.data.confirm.acceptText }}</div>
+                    <div @click="view.data.confirm.deny()" class="modal-btn">{{ view.data.confirm.denyText }}</div>
                 </div>
             </div>
         </div>
 
-        <div v-if="$view.data.alert" class="modal-confirm">
-            <div class="message">{{ $view.data.alert }}</div>
+        <div v-if="view.data.alert" class="modal-confirm">
+            <div class="message">{{ view.data.alert }}</div>
             <div class="buttons">
-                <div @click="$view.data.alert = null" class="modal-btn primary">{{ $translator.trans('enhavo_app.view.label.ok') }}</div>
+                <div @click="view.data.alert = null" class="modal-btn primary">{{ translator.trans('enhavo_app.view.label.ok') }}</div>
             </div>
         </div>
 
-        <loading-screen v-if="$view.data.loading"></loading-screen>
+        <loading-screen v-if="view.data.loading"></loading-screen>
     </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component } from "vue-property-decorator";
+import {Vue, Options, Inject} from "vue-property-decorator";
+import View from "@enhavo/app/view/View";
+import Translator from "@enhavo/core/Translator";
 
-@Component()
-export default class ViewComponent extends Vue
+@Options({})
+export default class extends Vue
 {
+    @Inject()
+    view: View
 
+    @Inject()
+    translator: Translator
 }
 </script>

@@ -1,12 +1,12 @@
 <template>
     <div class="view-table">
         <div class="view-table-head">
-            <div class="checkbox-container" v-if="$batchManager.hasBatches()">
-                <input type="checkbox" v-on:change="changeSelectAll" :checked="$grid.configuration.selectAll" />
+            <div class="checkbox-container" v-if="batchManager.hasBatches()">
+                <input type="checkbox" v-on:change="changeSelectAll" :checked="grid.configuration.selectAll" />
                 <span></span>
             </div>
             <div class="view-table-head-columns">
-                <template v-for="column in $columnManager.columns">
+                <template v-for="column in columnManager.columns">
                     <div
                         v-if="column.display"
                         v-bind:key="column.key"
@@ -25,8 +25,8 @@
             </div>
         </div>
 
-        <template v-if="! $grid.configuration.loading">
-            <template v-for="row in $grid.configuration.rows">
+        <template v-if="! grid.configuration.loading">
+            <template v-for="row in grid.configuration.rows">
                 <grid-table-row v-bind:data="row"></grid-table-row>
             </template>
         </template>
@@ -44,44 +44,56 @@
 </template>
 
 <script lang="ts">
-    import { Vue, Component } from "vue-property-decorator";
-    import * as $ from "jquery";
+import {Vue, Options, Inject} from "vue-property-decorator";
+import * as $ from "jquery";
+import Grid from "@enhavo/app/grid/Grid";
+import BatchManager from "@enhavo/app/grid/batch/BatchManager";
+import ColumnManager from "@enhavo/app/grid/column/ColumnManager";
 
-    @Component()
-    export default class Table extends Vue
-    {
-        mounted() {
-            $(window).resize(() => {
-                this.$grid.resize();
-                this.$forceUpdate();
-            });
-        }
+@Options({})
+export default class extends Vue
+{
+    @Inject()
+    grid: Grid;
 
-        calcColumnWidth(parts: number): string {
-            let totalWidth = 0;
-            for(let column of this.$columnManager.columns) {
-                if(column.display) {
-                    totalWidth += column.width;
-                }
-            }
-            return (100 / totalWidth * parts) + '%';
-        }
+    @Inject()
+    batchManager: BatchManager;
 
-        getColumnStyle(column: any): object {
-            let styles: object = Object.assign(
-                {},
-                column.style,
-                {width: this.calcColumnWidth(column.width)} );
+    @Inject()
+    columnManager: ColumnManager;
 
-            return styles;
-        }
-
-        changeSelectAll() {
-            this.$grid.changeSelectAll(!this.$grid.configuration.selectAll);
-        }
-
-        changeSortDirection(column: any) {
-            this.$grid.changeSortDirection(column);
-        }
+    mounted() {
+        $(window).resize(() => {
+            this.grid.resize();
+            this.$forceUpdate();
+        });
     }
+
+    calcColumnWidth(parts: number): string {
+        let totalWidth = 0;
+        for(let column of this.columnManager.columns) {
+            if(column.display) {
+                totalWidth += column.width;
+            }
+        }
+        return (100 / totalWidth * parts) + '%';
+    }
+
+    getColumnStyle(column: any): object {
+        let styles: object = Object.assign(
+            {},
+            column.style,
+            {width: this.calcColumnWidth(column.width)} );
+
+        return styles;
+    }
+
+    changeSelectAll() {
+        this.grid.changeSelectAll(!this.grid.configuration.selectAll);
+    }
+
+    changeSortDirection(column: any) {
+        this.grid.changeSortDirection(column);
+    }
+}
 </script>

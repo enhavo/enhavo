@@ -8,13 +8,13 @@
 </template>
 
 <script lang="ts">
-    import { Vue, Component } from "vue-property-decorator";
-    import '@enhavo/app/assets/fonts/enhavo-icons.font'
-    import '@enhavo/app/assets/styles/view.scss'
+import { Vue, Options } from "vue-property-decorator";
+import '@enhavo/app/assets/fonts/enhavo-icons.font'
+import '@enhavo/app/assets/styles/view.scss'
 
-    @Component
-    export default class ListApplicationComponent extends Vue
-    {
+@Options({})
+export default class extends Vue
+{
 
-    }
+}
 </script>

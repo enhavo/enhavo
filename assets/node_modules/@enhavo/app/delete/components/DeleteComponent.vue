@@ -10,24 +10,34 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from "vue-property-decorator";
+import { Vue, Options, Inject } from "vue-property-decorator";
 import '@enhavo/app/assets/fonts/enhavo-icons.font'
 import '@enhavo/app/assets/styles/view.scss'
 import FlashMessages from "@enhavo/app/flash-message/components/FlashMessages.vue";
-@Component({
+import DeleteApp from "@enhavo/app/delete/DeleteApp";
+import Translator from "@enhavo/core/Translator";
+
+@Options({
     components: {FlashMessages}
 })
-export default class AppView extends Vue {
+export default class extends Vue
+{
+    @Inject()
+    deleteApp: DeleteApp
+
+    @Inject()
+    translator: Translator
+
     close() {
-        this.$deleteApp.close()
+        this.deleteApp.close()
     }
 
     get message() {
-        return this.$translator.trans('enhavo_app.delete.message.success')
+        return this.translator.trans('enhavo_app.delete.message.success')
     }
 
     get button() {
-        return this.$translator.trans('enhavo_app.delete.label.close')
+        return this.translator.trans('enhavo_app.delete.label.close')
     }
 }
 </script>
