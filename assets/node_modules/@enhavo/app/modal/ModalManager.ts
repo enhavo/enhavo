@@ -22,7 +22,7 @@ export default class ModalManager
         }
 
         this.componentRegistry.registerStore('modalManager', this);
-        this.componentRegistry.registerData(this.modals);
+        this.modals = this.componentRegistry.registerData(this.modals);
     }
 
     public push(data: ComponentAwareInterface | ComponentAwareType)

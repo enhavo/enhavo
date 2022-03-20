@@ -50,9 +50,9 @@ export default class Form
 
         this.tabs = this.data.tabs;
 
+        this.data = this.componentRegistry.registerData(this.data);
         this.componentRegistry.registerStore('form', this);
-        this.componentRegistry.registerData(this.data);
-        this.componentRegistry.registerData(this.tabs);
+        this.tabs = this.componentRegistry.registerData(this.tabs);
     }
 
     public load()

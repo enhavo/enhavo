@@ -6,10 +6,10 @@
 </template>
 
 <script lang="ts">
-    import {Component, Prop, Vue} from "vue-property-decorator";
+import {Component, Options, Prop, Vue} from "vue-property-decorator";
     import NumberWidget from "@enhavo/dashboard/widget/model/NumberWidget";
 
-    @Component
+    @Options({})
     export default class NumberWidgetComponent extends Vue
     {
         name: 'number-widget';

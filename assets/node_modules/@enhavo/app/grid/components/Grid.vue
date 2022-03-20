@@ -1,19 +1,25 @@
 <template>
-    <div v-bind:class="['grid', $grid.configuration.cssClass]">
+    <div v-bind:class="['grid', grid.configuration.cssClass]">
         <filter-bar></filter-bar>
-        <grid-pagination v-if="$grid.hasPagination()"></grid-pagination>
+        <grid-pagination v-if="grid.hasPagination()"></grid-pagination>
         <grid-table></grid-table>
-        <grid-batches v-if="$batchManager.hasBatches()"></grid-batches>
-        <grid-pagination v-if="$grid.hasPagination()"></grid-pagination>
+        <grid-batches v-if="batchManager.hasBatches()"></grid-batches>
+        <grid-pagination v-if="grid.hasPagination()"></grid-pagination>
     </div>
 </template>
 
 <script lang="ts">
-    import { Vue, Component } from "vue-property-decorator";
+import { Vue, Options, Inject } from "vue-property-decorator";
+import Grid from "@enhavo/app/grid/Grid";
+import BatchManager from "@enhavo/app/grid/batch/BatchManager";
 
-    @Component
-    export default class Grid extends Vue
-    {
+@Options({})
+export default class extends Vue
+{
+    @Inject()
+    grid: Grid;
 
-    }
+    @Inject()
+    batchManager: BatchManager;
+}
 </script>

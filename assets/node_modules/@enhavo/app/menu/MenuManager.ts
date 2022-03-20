@@ -33,7 +33,7 @@ export default class MenuManager
         }
 
         this.componentRegistry.registerStore('menuManager', this);
-        this.componentRegistry.registerData(this.data);
+        this.data = this.componentRegistry.registerData(this.data);
 
         let menuActiveKey = this.dataStorage.get('menu-active-key');
         if(menuActiveKey !== null) {

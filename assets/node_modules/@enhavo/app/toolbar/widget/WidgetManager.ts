@@ -35,7 +35,7 @@ export default class WidgetManager
         }
 
         this.componentRegistry.registerStore('widgetManager', this);
-        this.componentRegistry.registerData(this.primary);
-        this.componentRegistry.registerData(this.secondary);
+        this.primary = this.componentRegistry.registerData(this.primary);
+        this.secondary = this.componentRegistry.registerData(this.secondary);
     }
 }

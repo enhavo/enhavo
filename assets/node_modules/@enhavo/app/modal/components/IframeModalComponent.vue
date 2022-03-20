@@ -5,16 +5,15 @@
 </template>
 
 <script lang="ts">
-    import { Vue, Component, Prop } from "vue-property-decorator";
-    import IframeModal from "@enhavo/app/modal/model/IframeModal"
+import { Vue, Options, Prop } from "vue-property-decorator";
+import IframeModal from "@enhavo/app/modal/model/IframeModal"
 
-    @Component({})
-    export default class ModalComponent extends Vue {
-        name: string = 'iframe-modal';
-
-        @Prop()
-        modal: IframeModal;
-    }
+@Options({})
+export default class extends Vue
+{
+    @Prop()
+    modal: IframeModal;
+}
 </script>
 
 

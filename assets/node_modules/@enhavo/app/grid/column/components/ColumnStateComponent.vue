@@ -5,24 +5,22 @@
 </template>
 
 <script lang="ts">
-    import { Vue, Component, Prop } from "vue-property-decorator";
-    import StateColumn from "@enhavo/app/grid/column/model/StateColumn";
+import { Vue, Options, Prop } from "vue-property-decorator";
+import StateColumn from "@enhavo/app/grid/column/model/StateColumn";
 
-    @Component
-    export default class ColumnTextComponent extends Vue
-    {
-        name: string = 'column-state';
+@Options({})
+export default class ColumnTextComponent extends Vue
+{
+    @Prop()
+    data: any;
 
-        @Prop()
-        data: any;
+    @Prop()
+    column: StateColumn;
 
-        @Prop()
-        column: StateColumn;
-
-        getStyle() {
-            return 'color: '+this.data.color;
-        }
+    getStyle() {
+        return 'color: '+this.data.color;
     }
+}
 </script>
 
 

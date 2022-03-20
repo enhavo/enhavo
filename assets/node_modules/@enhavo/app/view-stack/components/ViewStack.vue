@@ -1,7 +1,7 @@
 <template>
     <div class="view-stack" ref="container">
         <div class="view-container" v-bind:class="{'has-viewstack-dropdown': hasMoreThanOneView}">
-            <template v-for="view in $viewStack.views">
+            <template v-for="view in viewStack.views">
                 <view-stack-view v-bind:data="view" v-if="!view.removed"></view-stack-view>
             </template>
         </div>
@@ -9,13 +9,17 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from "vue-property-decorator";
+import { Vue, Options, Inject } from "vue-property-decorator";
+import ViewStack from "@enhavo/app/view-stack/ViewStack";
 
-@Component()
-export default class ViewStack extends Vue
+@Options({})
+export default class extends Vue
 {
+    @Inject()
+    viewStack: ViewStack
+
     mounted() {
-        this.$viewStack.data.width = this.getWidth();
+        this.viewStack.data.width = this.getWidth();
     }
 
     private getWidth(): number
@@ -25,8 +29,8 @@ export default class ViewStack extends Vue
 
     get hasMoreThanOneView() {
         let count = 0;
-        for(let i = 0; i < this.$viewStack.views.length;i++) {
-            if(this.$viewStack.views[i].removed == false) {
+        for (let i = 0; i < this.viewStack.views.length;i++) {
+            if (this.viewStack.views[i].removed == false) {
                 count++;
             }
         }

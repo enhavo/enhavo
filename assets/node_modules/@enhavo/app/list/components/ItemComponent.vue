@@ -6,11 +6,10 @@
                 <i v-if="!data.expand" class="icon icon-unfold_less"></i>
             </div>
             <div class="view-table-row-columns">
-                <template v-for="column in $columnManager.columns">
+                <template v-for="column in columnManager.columns">
                     <component
                         class="view-table-col"
                         v-bind:is="column.component"
-                        v-bind:key="column.key"
                         v-bind:column="column"
                         v-bind:style="getColumnStyle(column)"
                         v-bind:data="getColumnData(column.key)"></component>
@@ -18,9 +17,17 @@
             </div>
         </div>
         <div class="view-table-list-row-children" v-if="data.expand && data.parentProperty" :class="{ 'has-children': data.children && data.children.length > 0 }">
-            <draggable group="list" v-model="data.children" v-on:change="save($event, data)" @start="data.dragging = true" @end="data.dragging = false" :class="{'dragging':data.dragging == true}">
-                <template v-for="item in data.children">
-                    <list-item v-bind:data="item" :key="item.id"></list-item>
+            <draggable
+                v-model="data.children"
+                group="list"
+                item-key="id"
+                v-on:change="save($event, null)"
+                @start="data.dragging = true"
+                @end="data.dragging = false"
+                :class="{'dragging':data.dragging == true}"
+            >
+                <template #item="{ element }">
+                    <list-item v-bind:data="element"></list-item>
                 </template>
             </draggable>
         </div>
@@ -28,53 +35,61 @@
 </template>
 
 <script lang="ts">
-    import { Vue, Component, Prop } from "vue-property-decorator";
-    import Item from "@enhavo/app/list/Item";
+import { Vue, Options, Prop, Inject } from "vue-property-decorator";
+import Item from "@enhavo/app/list/Item";
+import List from "@enhavo/app/list/List";
+import ColumnManager from "@enhavo/app/grid/column/ColumnManager";
 
-    @Component()
-    export default class ItemComponent extends Vue
+@Options({})
+export default class extends Vue
+{
+    @Prop()
+    data: Array<Item>;
+
+    @Inject()
+    list: List;
+
+    @Inject()
+    columnManager: ColumnManager;
+
+    open() {
+        this.list.open(this.data);
+    }
+
+    calcColumnWidth(parts: number): string {
+        return (100 / 12 * parts) + '%';
+    }
+
+    toggleExpand()
     {
-        @Prop()
-        data: Array<Item>;
+        this.data.expand = !this.data.expand;
+    }
 
-        open() {
-            this.$list.open(this.data);
+    getColumnStyle(column: any): object {
+        let styles: object = Object.assign(
+            {},
+            column.style,
+            {width: this.calcColumnWidth(column.width)} );
+
+        return styles;
+    }
+
+    getColumnData(column: string): object {
+        if( this.data.data.hasOwnProperty(column) ) {
+            return this.data.data[column];
         }
+        return null;
+    }
 
-        calcColumnWidth(parts: number): string {
-            return (100 / 12 * parts) + '%';
-        }
-
-        toggleExpand()
-        {
-            this.data.expand = !this.data.expand;
-        }
-
-        getColumnStyle(column: any): object {
-            let styles: object = Object.assign(
-                {},
-                column.style,
-                {width: this.calcColumnWidth(column.width)} );
-
-            return styles;
-        }
-
-        getColumnData(column: string): object {
-            if( this.data.data.hasOwnProperty(column) ) {
-                return this.data.data[column];
-            }
-            return null;
-        }
-
-        save(event, parent)
-        {
-            if(event.added) {
-                this.$list.save(parent);
-            } else if(event.moved) {
-                this.$list.save(parent);
-            }
+    save(event, parent)
+    {
+        if(event.added) {
+            this.list.save(parent);
+        } else if(event.moved) {
+            this.list.save(parent);
         }
     }
+}
 </script>
 
 

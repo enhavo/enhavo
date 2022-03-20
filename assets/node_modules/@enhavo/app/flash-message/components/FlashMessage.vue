@@ -5,14 +5,13 @@
 </template>
 
 <script lang="ts">
-    import { Vue, Component, Prop } from "vue-property-decorator";
-    import Message from "@enhavo/app/flash-message/Message";
+import { Vue, Options, Prop } from "vue-property-decorator";
+import Message from "@enhavo/app/flash-message/Message";
 
-    @Component()
-    export default class AppView extends Vue {
-        name = 'flash-message';
-
-        @Prop()
-        message: Message;
-    }
+@Options({})
+export default class extends Vue
+{
+    @Prop()
+    message: Message;
+}
 </script>

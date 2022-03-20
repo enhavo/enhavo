@@ -12,16 +12,19 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, Watch } from "vue-property-decorator";
+import { Vue, Options, Prop, Watch, Inject } from "vue-property-decorator";
 import AjaxFormModal from "@enhavo/app/modal/model/AjaxFormModal"
 import FormInitializer from "@enhavo/app/form/FormInitializer";
+import Translator from "@enhavo/core/Translator";
 
-@Component()
-export default class ModalComponent extends Vue {
-    name: string = 'ajax-form-modal';
-
+@Options({})
+export default class extends Vue
+{
     @Prop()
     modal: AjaxFormModal;
+
+    @Inject()
+    translator: Translator
 
     mounted() {
         this.modal.loadForm().then(() => {});
@@ -44,7 +47,7 @@ export default class ModalComponent extends Vue {
     }
 
     trans(text) {
-        return this.$translator.trans(text);
+        return this.translator.trans(text);
     }
 
     @Watch('modal.element')

@@ -11,34 +11,33 @@
 </template>
 
 <script lang="ts">
-    import { Vue, Component, Prop } from "vue-property-decorator";
-    import MenuItem from '@enhavo/app/menu/model/MenuItem';
+import { Vue, Options, Prop } from "vue-property-decorator";
+import MenuItem from '@enhavo/app/menu/model/MenuItem';
 
-    @Component()
-    export default class MenuItemComponent extends Vue {
-        name: string = 'menu-item';
+@Options({})
+export default class extends Vue
+{
+    @Prop()
+    data: MenuItem;
 
-        @Prop()
-        data: MenuItem;
-
-        get label(): string|boolean {
-            return (this.data && this.data.label) ? this.data.label : false;
-        }
-
-        get icon(): string {
-            return (this.data && this.data.icon) ? 'icon-' + this.data.icon : '';
-        }
-
-        get notification(): object {
-            return (this.data && this.data.notification) ? this.data.notification : false;
-        }
-
-        open(event): void
-        {
-            event.preventDefault();
-            this.data.open()
-        }
+    get label(): string|boolean {
+        return (this.data && this.data.label) ? this.data.label : false;
     }
+
+    get icon(): string {
+        return (this.data && this.data.icon) ? 'icon-' + this.data.icon : '';
+    }
+
+    get notification(): object {
+        return (this.data && this.data.notification) ? this.data.notification : false;
+    }
+
+    open(event): void
+    {
+        event.preventDefault();
+        this.data.open()
+    }
+}
 </script>
 
 

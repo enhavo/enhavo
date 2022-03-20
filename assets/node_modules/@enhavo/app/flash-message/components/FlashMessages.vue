@@ -1,12 +1,12 @@
 <template>
-    <div v-show="$flashMessenger.messages && $flashMessenger.messages.length > 0">
+    <div v-show="flashMessenger.messages && flashMessenger.messages.length > 0">
         <div class="flash-message-container">
-            <template v-for="message in $flashMessenger.messages">
+            <template v-for="message in flashMessenger.messages">
                 <flash-message v-bind:message="message"></flash-message>
             </template>
         </div>
         <div class="flash-message-placeholders">
-            <template v-for="message in $flashMessenger.messages">
+            <template v-for="message in flashMessenger.messages">
                 <flash-message v-bind:message="message"></flash-message>
             </template>
         </div>
@@ -14,11 +14,13 @@
 </template>
 
 <script lang="ts">
-    import { Vue, Component } from "vue-property-decorator";
+import { Vue, Options, Inject } from "vue-property-decorator";
+import FlashMessenger from "@enhavo/app/flash-message/FlashMessenger";
 
-    @Component()
-    export default class AppView extends Vue
-    {
-
-    }
+@Options({})
+export default class extends Vue
+{
+    @Inject()
+    flashMessenger: FlashMessenger
+}
 </script>

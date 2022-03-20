@@ -40,7 +40,7 @@ export default class MainApp
 
     init() {
         this.componentRegistry.registerStore('mainApp', this);
-        this.componentRegistry.registerData(this.data);
+        this.data = this.componentRegistry.registerData(this.data);
 
         this.widgetManager.init();
         this.menuManager.init();

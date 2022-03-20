@@ -44,7 +44,7 @@ class DependencyInjectionPlugin
     _addEntrypoints(entry) {
         let builder = builderBucket.getBuilder(this.name);
         for (let entrypoint of builder.getEntrypoints()) {
-            entry[entrypoint.getName()] = entrypoint.getPath();
+            entry[entrypoint.getName()] = { import: [entrypoint.getPath()] };
         }
     }
 }

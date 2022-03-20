@@ -33,7 +33,7 @@ export default class PreviewApp
         this.actionManager.init();
         this.view.init();
 
-        this.componentRegistry.registerData(this.data);
+        this.data = this.componentRegistry.registerData(this.data);
         this.componentRegistry.registerStore('previewApp', this);
 
         this.eventDispatcher.on('data', (event: DataEvent) => {

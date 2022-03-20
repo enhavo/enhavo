@@ -7,13 +7,12 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from "vue-property-decorator";
+import { Vue, Options, Prop } from "vue-property-decorator";
 import MenuDropdown from '@enhavo/app/menu/model/MenuDropdown';
 
-@Component()
-export default class MenuDropdownComponent extends Vue {
-    name: string = 'menu-dropdown';
-
+@Options({})
+export default class extends Vue
+{
     @Prop()
     data: MenuDropdown;
 

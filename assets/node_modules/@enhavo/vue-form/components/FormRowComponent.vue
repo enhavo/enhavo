@@ -8,10 +8,10 @@
 </template>
 
 <script lang="ts">
-import {Vue, Component, Prop} from "vue-property-decorator";
+import {Vue, Options, Prop} from "vue-property-decorator";
 import {FormData} from "@enhavo/vue-form/data/FormData"
 
-@Component({})
+@Options({})
 export default class FormRowComponent extends Vue
 {
     @Prop()

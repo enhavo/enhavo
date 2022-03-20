@@ -23,7 +23,7 @@ export default class FlashMessenger
         }, 1000);
 
         this.componentRegistry.registerStore('flashMessenger', this);
-        this.componentRegistry.registerData(this.messages);
+        this.messages = this.componentRegistry.registerData(this.messages);
     }
 
     public addMessage(message: Message)

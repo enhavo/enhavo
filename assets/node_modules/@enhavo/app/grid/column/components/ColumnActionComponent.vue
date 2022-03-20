@@ -5,27 +5,26 @@
 </template>
 
 <script lang="ts">
-    import { Vue, Component, Prop } from "vue-property-decorator";
-    import ActionColumn from "@enhavo/app/grid/column/model/ActionColumn";
-    import ActionInterface from "@enhavo/app/action/ActionInterface";
+import { Vue, Options, Prop } from "vue-property-decorator";
+import ActionColumn from "@enhavo/app/grid/column/model/ActionColumn";
+import ActionInterface from "@enhavo/app/action/ActionInterface";
 
-    @Component()
-    export default class ColumnActionComponent extends Vue {
-        name: string = 'column-action';
+@Options({})
+export default class extends Vue
+{
+    @Prop()
+    data: string;
 
-        @Prop()
-        data: string;
+    @Prop()
+    column: ActionColumn;
 
-        @Prop()
-        column: ActionColumn;
+    action: ActionInterface = null;
 
-        action: ActionInterface = null;
-
-        getAction() {
-            if(this.action == null) {
-                this.action = this.column.getAction(this.data);
-            }
-            return this.action;
+    getAction() {
+        if(this.action == null) {
+            this.action = this.column.getAction(this.data);
         }
+        return this.action;
     }
+}
 </script>

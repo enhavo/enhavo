@@ -3,40 +3,38 @@
         <template v-for="row in rows">
             <component 
                 class="view-table-col-child" 
-                v-bind:is="row.component" 
-                v-bind:key="row.key"
-                v-bind:data="getRowData(row.key)"></component>
+                :is="row.component"
+                :data="getRowData(row.key)"></component>
         </template>
     </div>
 </template>
 
 <script lang="ts">
-    import { Vue, Component, Prop } from "vue-property-decorator";
+import { Vue, Options, Prop } from "vue-property-decorator";
 
-    @Component
-    export default class ColumnSubComponent extends Vue {
-        name: string = 'column-sub';
+@Options({})
+export default class ColumnSubComponent extends Vue
+{
+    @Prop()
+    data: any;
 
-        @Prop()
-        data: any;
+    @Prop()
+    column: any;
 
-        @Prop()
-        column: any;
-
-        get rows(): object {
-            if( this.column.hasOwnProperty('rows') ) {
-                return this.column['rows'];
-            }
-            return null;
+    get rows(): object {
+        if( this.column.hasOwnProperty('rows') ) {
+            return this.column['rows'];
         }
-
-        getRowData(row: string): any {
-            if( this.data.hasOwnProperty(row) ) { // TODO check if clause
-                return this.data[row];
-            }
-            return null;
-        }
+        return null;
     }
+
+    getRowData(row: string): any {
+        if( this.data.hasOwnProperty(row) ) { // TODO check if clause
+            return this.data[row];
+        }
+        return null;
+    }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -52,9 +50,3 @@
         }
     }
 </style>
-
-
-
-
-
-

@@ -1,7 +1,7 @@
 <template>
     <div class="app-view">
         <view-view></view-view>
-        <template v-for="widget of $widgetManager.widgets">
+        <template v-for="widget of widgetManager.widgets">
             <component
                 class="widget-container"
                 :is="widget.component"
@@ -12,14 +12,20 @@
 </template>
 
 <script lang="ts">
-import {Component, Vue} from "vue-property-decorator";
+import {Inject, Options, Vue} from "vue-property-decorator";
 import '@enhavo/app/assets/fonts/enhavo-icons.font'
 import '@enhavo/app/assets/styles/view.scss';
+import DashboardApp from "@enhavo/dashboard/dashboard/DashboardApp";
+import WidgetManager from "@enhavo/dashboard/widget/WidgetManager";
 
-@Component()
+@Options({})
 export default class ApplicationComponent extends Vue
 {
+    @Inject()
+    dashboard: DashboardApp
 
+    @Inject()
+    widgetManager: WidgetManager
 }
 </script>
 

@@ -5,26 +5,26 @@
 </template>
 
 <script lang="ts">
-    import { Vue, Component, Prop } from "vue-property-decorator";
-    import IconWidget from "@enhavo/app/toolbar/widget/model/IconWidget";
+import { Vue, Options, Prop } from "vue-property-decorator";
+import IconWidget from "@enhavo/app/toolbar/widget/model/IconWidget";
 
-    @Component
-    export default class IconWidgetComponent extends Vue {
-        name: 'icon-widget';
+@Options({})
+export default class IconWidgetComponent extends Vue {
+    name: 'icon-widget';
 
-        @Prop()
-        data: IconWidget;
+    @Prop()
+    data: IconWidget;
 
-        getIcon()
-        {
-            if(this.data.icon) {
-                return 'icon icon-'+this.data.icon;
-            }
-            return ''
+    getIcon()
+    {
+        if(this.data.icon) {
+            return 'icon icon-'+this.data.icon;
         }
-
-        open() {
-            this.data.open();
-        }
+        return ''
     }
+
+    open() {
+        this.data.open();
+    }
+}
 </script>

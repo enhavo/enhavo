@@ -1,20 +1,20 @@
 <template>
     <div class="app-view">
-        <div v-bind:class="['form-view', $form.data.cssClass]">
+        <div v-bind:class="['form-view', form.data.cssClass]">
             <view-view></view-view>
             <modal-component></modal-component>
             <flash-messages></flash-messages>
             <action-bar></action-bar>
 
-            <div class="tab-header" v-if="$form.hasTabs()">
-                <template v-for="tab in $form.tabs">
+            <div class="tab-header" v-if="form.hasTabs()">
+                <template v-for="tab in form.tabs">
                     <form-tab-head v-bind:tab="tab"></form-tab-head>
                 </template>
             </div>
 
             <div class="form-container">
                 <form method="POST">
-                    <template v-for="tab in $form.tabs">
+                    <template v-for="tab in form.tabs">
                         <form-tab-container v-show="tab.active" v-bind:tab="tab"></form-tab-container>
                     </template>
                 </form>
@@ -24,18 +24,22 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from "vue-property-decorator";
+import { Vue, Options, Inject } from "vue-property-decorator";
 import '@enhavo/app/assets/fonts/enhavo-icons.font'
 import '@enhavo/app/assets/styles/base.scss'
 import '@enhavo/app/assets/styles/form.scss'
 import '@enhavo/app/assets/styles/view.scss';
+import Form from "@enhavo/app/form/Form";
 
-@Component()
-export default class AppView extends Vue
+@Options({})
+export default class extends Vue
 {
+    @Inject()
+    form: Form
+
     mounted() {
         $(document).on('change', ':input', () => {
-            this.$form.changeForm();
+            this.form.changeForm();
         });
 
         $(document).on('focus','[data-field-with-label] input[type="text"],[data-field-with-label] textarea', function() {

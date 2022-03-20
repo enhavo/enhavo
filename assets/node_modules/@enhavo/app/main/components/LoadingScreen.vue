@@ -10,10 +10,11 @@
 </template>
 
 <script lang="ts">
-    import { Vue, Component, Prop } from "vue-property-decorator";
+import { Vue, Options, Prop } from "vue-property-decorator";
 
-    @Component
-    export default class LoadingScreen extends Vue {
-        name: string = 'loading-screen';
-    }
+@Options({})
+export default class extends Vue
+{
+
+}
 </script>

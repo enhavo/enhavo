@@ -29,7 +29,7 @@ export default class DeleteApp
 
     init() {
         this.componentRegistry.registerStore('deleteApp', this);
-        this.componentRegistry.registerData(this.data);
+        this.data = this.componentRegistry.registerData(this.data);
 
         this.view.init();
         this.flashMessenger.init();

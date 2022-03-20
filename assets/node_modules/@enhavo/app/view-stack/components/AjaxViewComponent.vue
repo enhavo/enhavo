@@ -3,12 +3,12 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from "vue-property-decorator";
+import { Vue, Options, Prop } from "vue-property-decorator";
 import LoadedEvent from '../event/LoadedEvent';
 
-@Component
-export default class AjaxViewComponent extends Vue {
-    name: 'ajax-view';
+@Options({})
+export default class extends Vue
+{
     @Prop()
     data: object;
 

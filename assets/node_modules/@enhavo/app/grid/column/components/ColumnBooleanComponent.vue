@@ -6,22 +6,15 @@
 </template>
 
 <script lang="ts">
-    import { Vue, Component, Prop } from "vue-property-decorator";
+import { Vue, Options, Prop } from "vue-property-decorator";
 
-    @Component
-    export default class ColumnBooleanComponent extends Vue {
-        name: string = 'column-boolean';
+@Options({})
+export default class extends Vue
+{
+    @Prop()
+    data: string;
 
-        @Prop()
-        data: string;
-
-        @Prop()
-        column: any;
-    }
+    @Prop()
+    column: any;
+}
 </script>
-
-
-
-
-
-

@@ -45,7 +45,7 @@ export default class MediaLibrary
             }
         });
 
-        this.componentRegistry.registerData(this.data);
+        this.data = this.componentRegistry.registerData(this.data);
         this.componentRegistry.registerStore('mediaLibrary', this);
     }
 

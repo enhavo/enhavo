@@ -5,23 +5,22 @@
 </template>
 
 <script lang="ts">
-    import { Vue, Component, Prop } from "vue-property-decorator";
+import { Vue, Options, Prop } from "vue-property-decorator";
 
-    @Component()
-    export default class MenuNotificationComponent extends Vue {
-        name: string = 'menu-notification';
+@Options({})
+export default class extends Vue
+{
+    @Prop()
+    data: Object;
 
-        @Prop()
-        data: Object;
-
-        get label(): string {
-            return (this.data && this.data.label) ? this.data.label : '';
-        }
-
-        get cssClass(): string {
-            return (this.data && this.data.class) ? this.data.class : '';
-        }
+    get label(): string {
+        return (this.data && this.data.label) ? this.data.label : '';
     }
+
+    get cssClass(): string {
+        return (this.data && this.data.class) ? this.data.class : '';
+    }
+}
 </script>
 
 <style lang="scss" scoped>

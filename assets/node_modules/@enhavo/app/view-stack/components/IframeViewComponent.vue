@@ -3,15 +3,23 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from "vue-property-decorator";
+import {Vue, Options, Prop, Inject} from "vue-property-decorator";
 import IframeView from '@enhavo/app/view-stack/model/IframeView';
 import * as URI from 'urijs';
+import ViewStack from "@enhavo/app/view-stack/ViewStack";
+import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
 
-@Component
-export default class IframeViewComponent extends Vue
+@Options({})
+export default class extends Vue
 {
     @Prop()
     data: IframeView;
+
+    @Inject()
+    viewStack: ViewStack
+
+    @Inject()
+    eventDispatcher: EventDispatcher
 
     subscriber: object;
     viewId: number = null;
@@ -20,7 +28,7 @@ export default class IframeViewComponent extends Vue
     {
         this.viewId = this.data.id;
         let frame = <HTMLIFrameElement>this.$refs.frame;
-        this.$viewStack.getFrameStorage().add(this.data.id, frame);
+        this.viewStack.getFrameStorage().add(this.data.id, frame);
         this.subscriber = this.eventDispatcher.on('removed', () => {
             this.$forceUpdate();  // trigger update
         });
@@ -34,18 +42,18 @@ export default class IframeViewComponent extends Vue
          * we won't receive updates for the correct view id
          */
         if(this.viewId != this.data.id) {
-            this.$viewStack.getFrameStorage().remove(this.data.id);
+            this.viewStack.getFrameStorage().remove(this.data.id);
             this.viewId = this.data.id;
             let frame = <HTMLIFrameElement>this.$refs.frame;
             this.$refs.frame.src = this.url;
-            this.$viewStack.getFrameStorage().add(this.data.id, frame);
+            this.viewStack.getFrameStorage().add(this.data.id, frame);
         }
     }
 
     destroyed()
     {
         this.eventDispatcher.remove(this.subscriber);
-        this.$viewStack.getFrameStorage().remove(this.data.id);
+        this.viewStack.getFrameStorage().remove(this.data.id);
     }
 
     get url()

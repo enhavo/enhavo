@@ -19,13 +19,12 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from "vue-property-decorator";
+import { Vue, Options, Prop } from "vue-property-decorator";
 import MenuList from '@enhavo/app/menu/model/MenuList';
 
-@Component()
-export default class MenuListComponent extends Vue {
-    name: string = 'menu-list';
-
+@Options({})
+export default class extends Vue
+{
     @Prop()
     data: MenuList;
 

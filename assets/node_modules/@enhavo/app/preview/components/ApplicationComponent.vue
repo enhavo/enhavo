@@ -5,8 +5,8 @@
         <div v-bind:class="{'preview-view': true, 'tablet': iframeClass === 'tablet', 'mobile': iframeClass === 'mobile', 'desktop': iframeClass === 'desktop'}">
             <iframe class="iframe" name="preview" v-once></iframe>
         </div>
-        <form v-bind:action="$previewApp.data.url" method="post" target="preview">
-            <template v-for="input in $previewApp.data.inputs">
+        <form v-bind:action="previewApp.data.url" method="post" target="preview">
+            <template v-for="input in previewApp.data.inputs">
                 <input type="hidden" v-bind:name="input.name" v-bind:value="input.value" />
             </template>
         </form>
@@ -14,14 +14,18 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from "vue-property-decorator";
+import { Vue, Options, Inject } from "vue-property-decorator";
 import '@enhavo/app/assets/fonts/enhavo-icons.font'
 import '@enhavo/app/assets/styles/view.scss';
 import * as $ from "jquery";
+import PreviewApp from "@enhavo/app/preview/PreviewApp";
 
-@Component
-export default class ApplicationComponent extends Vue
+@Options({})
+export default class extends Vue
 {
+    @Inject()
+    previewApp: PreviewApp
+
     iframeClass: string = 'desktop';
 
     mounted() {

@@ -71,7 +71,7 @@ export default class Grid
         this.view.init();
 
         this.componentRegistry.registerStore('grid', this);
-        this.componentRegistry.registerData(this.configuration);
+        this.configuration = this.componentRegistry.registerData(this.configuration);
     }
 
     private initListener()

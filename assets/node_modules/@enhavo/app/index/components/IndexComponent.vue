@@ -9,12 +9,12 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from "vue-property-decorator";
+import { Vue, Options, Prop } from "vue-property-decorator";
 import '@enhavo/app/assets/fonts/enhavo-icons.font'
 import '@enhavo/app/assets/styles/view.scss'
 
-@Component()
-export default class AppView extends Vue {
+@Options({})
+export default class extends Vue {
 
 }
 </script>

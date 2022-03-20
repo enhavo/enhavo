@@ -74,7 +74,7 @@ export default class View
         this.componentRegistry.registerStore('view', this);
         this.componentRegistry.registerStore('translator', this.translator);
         this.componentRegistry.registerStore('router', this.router);
-        this.componentRegistry.registerData(this.data);
+        this.data = this.componentRegistry.registerData(this.data);
 
         window.addEventListener('click', () => {
             this.eventDispatcher.dispatch(new ClickEvent(this.getId()));
