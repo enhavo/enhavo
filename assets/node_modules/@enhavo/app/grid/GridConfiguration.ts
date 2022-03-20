@@ -22,7 +22,7 @@ export default class GridConfiguration implements BatchDataInterface
     public count: number;
     public paginate: boolean;
     public pagination: number;
-    public paginationSteps: number;
+    public paginationSteps: Array<number>;
     public selectAll: boolean = false;
     public pages: Array<number> = [];
     public cssClass: string;
