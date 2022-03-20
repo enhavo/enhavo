@@ -112,50 +112,35 @@ class ResourceController extends BaseController
 
     public function previewAction(Request $request): Response
     {
-        /** @var RequestConfiguration $configuration */
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
 
-        $resource = null;
-        if($request->query->has('id')) {
-            $request->attributes->set('id', $request->query->get('id'));
-            $resource = $this->singleResourceProvider->get($configuration, $this->repository);
-        }
-
-        $view = $this->viewFactory->create('preview', [
+        $view = $this->viewFactory->create([
+            'type' => 'preview',
+            'request_configuration' => $configuration,
             'metadata' => $this->metadata,
-            'resource' => $resource
+            'single_resource_provider' => $this->singleResourceProvider,
+            'repository' => $this->repository,
         ]);
 
-        return $this->viewHandler->handle($configuration, $view);
+        return $view->getResponse($request);
     }
 
     public function previewResourceAction(Request $request): Response
     {
-        /** @var RequestConfiguration $configuration */
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
 
-        $this->appEventDispatcher->dispatchInitEvent(ResourceEvents::INIT_PREVIEW, $configuration);
-
-        if($request->query->has('id')) {
-            $request->attributes->set('id', $request->query->get('id'));
-            $resource = $this->singleResourceProvider->get($configuration, $this->repository);
-            $this->isGrantedOr403($configuration, ResourceActions::UPDATE);
-        } else {
-            $resource = $this->newResourceFactory->create($configuration, $this->factory);
-            $this->isGrantedOr403($configuration, ResourceActions::CREATE);
-        }
-
-        $form = $this->resourceFormFactory->create($configuration, $resource);
-        $form->handleRequest($request);
-
-        $view = $this->viewFactory->create('resource_preview', [
-            'request_configuration' => $configuration,
+        $view = $this->viewFactory->create([
+            'type' => 'resource_preview',
             'metadata' => $this->metadata,
-            'resource' => $resource,
-            'form' => $form
+            'request_configuration' => $configuration,
+            'resource_form_factory' => $this->resourceFormFactory,
+            'single_resource_provider' => $this->singleResourceProvider,
+            'new_resource_factory' =>  $this->newResourceFactory,
+            'factory' =>  $this->factory,
+            'repository' =>  $this->repository,
         ]);
 
-        return $this->viewHandler->handle($configuration, $view);
+        return $view->getResponse($request);
     }
 
     /**
@@ -207,7 +192,7 @@ class ResourceController extends BaseController
             'type' => 'list_data',
             'request_configuration' => $configuration,
             'metadata' => $this->metadata,
-            'resources' => $resources
+            'resources' => $resources,
         ]);
 
         return $view->getResponse($request);

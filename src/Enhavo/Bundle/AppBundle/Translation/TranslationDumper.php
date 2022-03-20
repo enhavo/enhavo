@@ -12,14 +12,10 @@ use Symfony\Component\Translation\Loader\LoaderInterface;
 
 class TranslationDumper
 {
-    /**
-     * @var LoaderInterface[]
-     */
+    /** @var LoaderInterface[] */
     private $loaders = array();
 
-    /**
-     * @var array
-     */
+    /** @var array */
     private $translationFilesByLocale;
 
     /**
@@ -59,7 +55,7 @@ class TranslationDumper
     private function getFiles($translationDomain, $locale)
     {
         $files = [];
-        if(isset($this->translationFilesByLocale[$locale])) {
+        if (isset($this->translationFilesByLocale[$locale])) {
             foreach($this->translationFilesByLocale[$locale] as $file) {
                 $info = pathinfo($file);
                 $parts = explode('.', $info['filename']);

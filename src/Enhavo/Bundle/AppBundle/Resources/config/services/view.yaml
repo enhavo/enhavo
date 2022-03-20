@@ -94,6 +94,21 @@ services:
         tags:
             - { name: enhavo_app.view }
 
+    Enhavo\Bundle\AppBundle\View\Type\PreviewViewType:
+        arguments:
+            - '@Enhavo\Bundle\AppBundle\View\ViewUtil'
+            - '@router'
+            - '@enhavo_app.action_manager'
+            - '@request_stack'
+        tags:
+            - { name: enhavo_app.view }
+
+    Enhavo\Bundle\AppBundle\View\Type\ResourcePreviewViewType:
+        arguments:
+            - '@Enhavo\Bundle\AppBundle\View\ViewUtil'
+            - '@enhavo_app.preview.strategy_resolver'
+        tags:
+            - { name: enhavo_app.view }
 
 #    Enhavo\Bundle\AppBundle\Viewer\Viewer\IndexViewer:
 #        parent: Enhavo\Bundle\AppBundle\Viewer\Viewer\AppViewer

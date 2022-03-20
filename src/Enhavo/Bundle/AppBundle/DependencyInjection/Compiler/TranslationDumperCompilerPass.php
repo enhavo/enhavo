@@ -13,9 +13,8 @@ class TranslationDumperCompilerPass implements CompilerPassInterface
 
     public function process(ContainerBuilder $container)
     {
-        // ToDo: Find translation files
-        //$this->addLoaders($container);
-        //$this->replaceArgument($container);
+        $this->addLoaders($container);
+        $this->replaceArgument($container);
     }
 
     private function addLoaders(ContainerBuilder $container)
@@ -68,8 +67,6 @@ class TranslationDumperCompilerPass implements CompilerPassInterface
         } catch (OutOfBoundsException $e) {
             $translatorOptions = array();
         }
-
-        $translatorOptions = array_merge($translatorOptions, $translator->getArgument(3));
 
         if (isset($translatorOptions['resource_files'])) {
             $translationFiles = $translatorOptions['resource_files'];
