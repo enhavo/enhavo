@@ -151,7 +151,7 @@ class NewsletterManagerTest extends TestCase
     {
         $dependency = $this->createDependencies();
         $dependency->mailerManager->method('createMessage')->willReturn(new Message());
-        $dependency->mailerManager->method('sendMessage')->willReturn(true);
+        $dependency->mailerManager->method('sendMessage')->willReturn(1);
         $newsletterManager = $this->createInstance($dependency, ['default' => [
             'template' => 'template.html.twig',
         ]]);
@@ -181,7 +181,7 @@ class NewsletterManagerTest extends TestCase
         $dependency->mailerManager->method('createMessage')->willReturn(new Message());
         $dependency->mailerManager->method('sendMessage')->willReturnCallback(function($message) use ($messageContainer) {
             $messageContainer->message = $message;
-            return true;
+            return 1;
         });
         $newsletterManager = $this->createInstance($dependency, ['other' => [
             'template' => 'template.html.twig',
@@ -212,7 +212,7 @@ class NewsletterManagerTest extends TestCase
     {
         $dependency = $this->createDependencies();
         $dependency->mailerManager->method('createMessage')->willReturn(new Message());
-        $dependency->mailerManager->method('sendMessage')->willReturn(true);
+        $dependency->mailerManager->method('sendMessage')->willReturn(1);
         $newsletterManager = $this->createInstance($dependency, ['default' => [
             'template' => 'template.html.twig',
         ]]);
@@ -297,9 +297,6 @@ class NewsletterManagerTest extends TestCase
         $this->assertEquals('pathToOtherTemplate.twig.managed.rendered', $content);
     }
 
-    /**
-     *
-     */
     public function testWithoutTemplateKey()
     {
         $dependencies = $this->createDependencies();
@@ -338,7 +335,7 @@ class NewsletterManagerTest extends TestCase
         $dependency->mailerManager->method('createMessage')->willReturn(new Message());
         $dependency->mailerManager->method('sendMessage')->willReturnCallback(function($message) use ($messageContainer) {
             $messageContainer->message = $message;
-            return true;
+            return 1;
         });
         $newsletterManager = $this->createInstance($dependency, ['default' => [
             'template' => 'template.html.twig',
@@ -369,7 +366,7 @@ class NewsletterManagerTest extends TestCase
         $dependency->mailerManager->method('createMessage')->willReturn(new Message());
         $dependency->mailerManager->method('sendMessage')->willReturnCallback(function($message) use ($messageContainer) {
             $messageContainer->message = $message;
-            return false;
+            return 0;
         });
         $newsletterManager = $this->createInstance($dependency, ['default' => [
             'template' => 'template.html.twig',

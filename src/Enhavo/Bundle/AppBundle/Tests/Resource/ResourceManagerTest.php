@@ -33,9 +33,10 @@ class ResourceManagerTest extends TestCase
         $dependencies = $this->createDependencies();
         $dependencies->em->expects($this->exactly(1))->method('remove');
         $dependencies->em->expects($this->once())->method('flush');
-        $dependencies->eventDispatcher->expects($this->exactly(2))->method('dispatch')->willReturnCallback(function ($message, $event) {
-            $this->assertRegExp('/enhavo_app\.(pre|post)_delete/', $message);
+        $dependencies->eventDispatcher->expects($this->exactly(2))->method('dispatch')->willReturnCallback(function ($event, $message) {
+            $this->assertMatchesRegularExpression('/enhavo_app\.(pre|post)_delete/', $message);
             $this->assertInstanceOf(ResourceControllerEvent::class, $event);
+            return $event;
         });
         $manager = $this->createInstance($dependencies);
 
@@ -47,9 +48,10 @@ class ResourceManagerTest extends TestCase
         $dependencies = $this->createDependencies();
         $dependencies->em->expects($this->exactly(1))->method('persist');
         $dependencies->em->expects($this->once())->method('flush');
-        $dependencies->eventDispatcher->expects($this->exactly(2))->method('dispatch')->willReturnCallback(function ($message, $event) {
-            $this->assertRegExp('/enhavo_app\.(pre|post)_create/', $message);
+        $dependencies->eventDispatcher->expects($this->exactly(2))->method('dispatch')->willReturnCallback(function ($event, $message) {
+            $this->assertMatchesRegularExpression('/enhavo_app\.(pre|post)_create/', $message);
             $this->assertInstanceOf(ResourceControllerEvent::class, $event);
+            return $event;
         });
         $manager = $this->createInstance($dependencies);
 
@@ -60,9 +62,10 @@ class ResourceManagerTest extends TestCase
     {
         $dependencies = $this->createDependencies();
         $dependencies->em->expects($this->once())->method('flush');
-        $dependencies->eventDispatcher->expects($this->exactly(2))->method('dispatch')->willReturnCallback(function ($message, $event) {
-            $this->assertRegExp('/enhavo_app\.(pre|post)_update/', $message);
+        $dependencies->eventDispatcher->expects($this->exactly(2))->method('dispatch')->willReturnCallback(function ($event, $message) {
+            $this->assertMatchesRegularExpression('/enhavo_app\.(pre|post)_update/', $message);
             $this->assertInstanceOf(ResourceControllerEvent::class, $event);
+            return $event;
         });
         $manager = $this->createInstance($dependencies);
 

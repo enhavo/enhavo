@@ -8,6 +8,7 @@
 
 namespace Enhavo\Component\Metadata\Tests;
 
+use Enhavo\Component\Metadata\Exception\InvalidMetadataException;
 use Enhavo\Component\Metadata\Metadata;
 use Enhavo\Component\Metadata\MetadataFactory;
 use Enhavo\Component\Metadata\MetadataRepository;
@@ -155,11 +156,10 @@ class MetadataRepositoryTest extends TestCase
         $this->assertFalse($repository->hasMetadata(MetadataRepositoryDependencies::class));
     }
 
-    /**
-     * @expectedException \Enhavo\Component\Metadata\Exception\InvalidMetadataException
-     */
     public function testInvalidClass()
     {
+        $this->expectException(InvalidMetadataException::class);
+
         $dependencies = $this->createDependencies();
         $repository = $this->createInstance($dependencies);
         $repository->getMetadata(1234);

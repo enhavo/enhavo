@@ -79,11 +79,9 @@ class ActionManagerTest extends TestCase
         $this->assertEquals('view_data', $actions[1]['view']);
     }
 
-    /**
-     * @expectedException \Enhavo\Bundle\AppBundle\Exception\TypeMissingException
-     */
     public function testMissingType()
     {
+        $this->expectException(\Enhavo\Bundle\AppBundle\Exception\TypeMissingException::class);
         $dependencies = $this->createDependencies();
         $manager = $this->createInstance($dependencies);
 

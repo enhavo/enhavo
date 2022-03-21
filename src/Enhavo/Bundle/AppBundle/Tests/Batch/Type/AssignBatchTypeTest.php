@@ -14,6 +14,7 @@ use Enhavo\Bundle\AppBundle\Batch\Batch;
 use Enhavo\Bundle\AppBundle\Batch\BatchTypeInterface;
 use Enhavo\Bundle\AppBundle\Batch\Type\AssignBatchType;
 use Enhavo\Bundle\AppBundle\Batch\Type\FormBatchType;
+use Enhavo\Bundle\AppBundle\Exception\BatchExecutionException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
@@ -104,11 +105,10 @@ class AssignBatchTypeTest extends TestCase
         $this->assertTrue($assignData === $resources[1]->getName());
     }
 
-    /**
-     * @expectedException \Enhavo\Bundle\AppBundle\Exception\BatchExecutionException
-     */
     public function testInvalid()
     {
+        $this->expectException(BatchExecutionException::class);
+
         $formMock = $this->createFormMock();
         $formMock->method('isValid')->willReturn(false);
 

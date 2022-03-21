@@ -1,6 +1,7 @@
 .idea
 .settings
 .build
+.phpunit.result.cache
 /public/bundles/
 /public/build/*
 !/public/build/.gitignore

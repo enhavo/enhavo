@@ -6,7 +6,7 @@
  * Time: 14:20
  */
 
-namespace Enhavo\Component\DoctrineExtension\Tests\Extend;
+namespace Enhavo\Bundle\DoctrineExtensionBundle\Tests\EventListener;
 
 use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\ClassNameResolver;
 use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface;

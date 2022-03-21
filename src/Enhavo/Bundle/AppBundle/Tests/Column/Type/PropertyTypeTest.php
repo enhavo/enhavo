@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\AppBundle\Tests\Column\Type;
 
 
 use Enhavo\Bundle\AppBundle\Column\Type\PropertyType;
+use Enhavo\Bundle\AppBundle\Exception\PropertyNotExistsException;
 use Enhavo\Bundle\AppBundle\Tests\Mock\EntityMock;
 
 class PropertyTypeTest extends AbstractTypeTest
@@ -38,11 +39,11 @@ class PropertyTypeTest extends AbstractTypeTest
 
     /**
      * Test if you try to access an not existing property, will throw an exception
-     *
-     * @expectedException \Enhavo\Bundle\AppBundle\Exception\PropertyNotExistsException
      */
     function testPropertyAccessIfNotExists()
     {
+        $this->expectException(PropertyNotExistsException::class);
+
         $column = $this->createColumn(new PropertyType(), [
             'property' => 'property_not_exists'
         ]);

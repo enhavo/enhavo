@@ -6,7 +6,7 @@
  * Time: 14:20
  */
 
-namespace Enhavo\Component\DoctrineExtension\Tests\Extend;
+namespace Enhavo\Bundle\DoctrineExtensionBundle\Tests\EventListener;
 
 use Enhavo\Bundle\DoctrineExtensionBundle\EventListener\ExtendSubscriber;
 use Enhavo\Bundle\DoctrineExtensionBundle\Tests\EventListener\SubscriberTest;
@@ -63,7 +63,7 @@ class ExtendSubscriberTest extends SubscriberTest
 
         $this->em->flush();
 
-        $entries = $this->em->getConnection()->fetchAll('SELECT * FROM Root ORDER BY discr ASC');
+        $entries = $this->em->getConnection()->fetchAllAssociative('SELECT * FROM Root ORDER BY discr ASC');
 
         $this->assertEquals('child', $entries[0]['discr']);
         $this->assertEquals('entity', $entries[1]['discr']);
