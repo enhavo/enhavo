@@ -57,8 +57,8 @@ class MailjetStorageType extends AbstractStorageType
 
         $this->client->init($options['client_key'], $options['client_secret']);
 
-        if ($options['gpdr_delete']) {
-            $this->client->gpdrDelete($subscriber, $options['client_key'], $options['client_secret']);
+        if ($options['gdpr_delete']) {
+            $this->client->gdprDelete($subscriber, $options['client_key'], $options['client_secret']);
 
         } else {
             foreach ($groups as $group) {
@@ -116,7 +116,7 @@ class MailjetStorageType extends AbstractStorageType
     {
         $resolver->setDefaults([
             'groups' => [],
-            'gpdr_delete' => false, // https://gdpr.eu/ https://dev.mailjet.com/email/guides/contact-management/#gdpr-delete-contacts
+            'gdpr_delete' => false, // https://gdpr.eu/ https://dev.mailjet.com/email/guides/contact-management/#gdpr-delete-contacts
         ]);
         $resolver->setRequired([
             'client_key',
