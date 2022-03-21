@@ -10,15 +10,11 @@ namespace Enhavo\Bundle\NewsletterBundle\Client;
 
 use Enhavo\Bundle\NewsletterBundle\Event\StorageEvent;
 use Enhavo\Bundle\NewsletterBundle\Exception\InsertException;
-use Enhavo\Bundle\NewsletterBundle\Exception\NotFoundException;
-use Enhavo\Bundle\NewsletterBundle\Exception\RemoveException;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
-use Enhavo\Component\CleverReach\ApiManager;
 use Mailjet\Client;
 use Mailjet\Resources;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpClient\CurlHttpClient;
-use Symfony\Component\PropertyAccess\PropertyAccessor;
 
 class MailjetClient
 {
