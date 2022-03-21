@@ -17,23 +17,19 @@ services:
         tags:
             - { name: enhavo.block, alias: statistic }
 
-    enhavo_dashboard.controller.dashboard:
-        class: Enhavo\Bundle\DashboardBundle\Controller\DashboardController
+    Enhavo\Bundle\DashboardBundle\Controller\DashboardController:
         arguments:
-            - '@view.factory'
-            - '@fos_rest.view_handler'
-        public: true
+            - '@Enhavo\Component\Type\FactoryInterface[View]'
         calls:
             - [setContainer, ['@service_container']]
+        tags:
+            - { name: controller.service_arguments }
 
-    Enhavo\Bundle\DashboardBundle\Viewer\DashboardViewer:
-        public: true
+    Enhavo\Bundle\DashboardBundle\View\DashboardViewType:
         arguments:
             - '@Enhavo\Bundle\DashboardBundle\Widget\WidgetManager'
-        calls:
-            - ['setContainer', ['@service_container']]
         tags:
-            - { name: enhavo.viewer, alias: dashboard }
+            - { name: enhavo_app.view }
 
     Enhavo\Bundle\DashboardBundle\Widget\WidgetManager:
         arguments:

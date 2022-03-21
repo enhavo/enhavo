@@ -85,22 +85,22 @@ class StrategyType extends AbstractType implements StrategyTypeInterface
 
     public function preAddSubscriber(SubscriberInterface $subscriber)
     {
-        $this->eventDispatcher->dispatch(SubscriberEvent::EVENT_PRE_ADD_SUBSCRIBER, new SubscriberEvent(SubscriberEvent::EVENT_PRE_ADD_SUBSCRIBER, $subscriber));
+        $this->eventDispatcher->dispatch(new SubscriberEvent(SubscriberEvent::EVENT_PRE_ADD_SUBSCRIBER, $subscriber), SubscriberEvent::EVENT_PRE_ADD_SUBSCRIBER);
     }
 
     public function postAddSubscriber(SubscriberInterface $subscriber)
     {
-        $this->eventDispatcher->dispatch(SubscriberEvent::EVENT_POST_ADD_SUBSCRIBER, new SubscriberEvent(SubscriberEvent::EVENT_POST_ADD_SUBSCRIBER, $subscriber));
+        $this->eventDispatcher->dispatch(new SubscriberEvent(SubscriberEvent::EVENT_POST_ADD_SUBSCRIBER, $subscriber), SubscriberEvent::EVENT_POST_ADD_SUBSCRIBER);
     }
 
     public function preActivateSubscriber(SubscriberInterface $subscriber)
     {
-        $this->eventDispatcher->dispatch(SubscriberEvent::EVENT_PRE_ACTIVATE_SUBSCRIBER, new SubscriberEvent(SubscriberEvent::EVENT_PRE_ACTIVATE_SUBSCRIBER, $subscriber));
+        $this->eventDispatcher->dispatch(new SubscriberEvent(SubscriberEvent::EVENT_PRE_ACTIVATE_SUBSCRIBER, $subscriber), SubscriberEvent::EVENT_PRE_ACTIVATE_SUBSCRIBER);
     }
 
     public function postActivateSubscriber(SubscriberInterface $subscriber)
     {
-        $this->eventDispatcher->dispatch(SubscriberEvent::EVENT_POST_ACTIVATE_SUBSCRIBER, new SubscriberEvent(SubscriberEvent::EVENT_POST_ACTIVATE_SUBSCRIBER, $subscriber));
+        $this->eventDispatcher->dispatch(new SubscriberEvent(SubscriberEvent::EVENT_POST_ACTIVATE_SUBSCRIBER, $subscriber), SubscriberEvent::EVENT_POST_ACTIVATE_SUBSCRIBER);
     }
 
     public function trans($id, array $parameters = [], $domain = null, $locale = null)

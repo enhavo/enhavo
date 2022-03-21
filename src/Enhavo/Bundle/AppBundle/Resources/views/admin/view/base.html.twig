@@ -7,32 +7,32 @@
     <meta name="robots" content="noindex, nofollow">
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     {% block stylesheets %}
-        {% if stylesheets is defined %}
-            {% for stylesheet in stylesheets %}
-                {{ encore_entry_link_tags(stylesheet, null, 'enhavo') }}
+        {% if entrypoints is defined %}
+            {% for entrypoint in entrypoints %}
+                {{ encore_entry_link_tags(entrypoint, null, 'enhavo') }}
             {% endfor %}
         {% endif %}
     {% endblock %}
 </head>
 <body>
-    {% block content %}
-        <div id="app"></div>
-    {% endblock %}
-    {% if data is defined %}
-        <script id="data" type="application/json">{{ data|json_encode|raw }}</script>
+{% block content %}
+    <div id="app"></div>
+{% endblock %}
+{% if data is defined %}
+    <script id="data" type="application/json">{{ data|json_encode|raw }}</script>
+{% endif %}
+{% if routes is defined %}
+    <script id="routes" type="application/json">{{ routes|raw }}</script>
+{% endif %}
+{% if translations is defined %}
+    <script id="translations" type="application/json">{{ translations|json_encode|raw }}</script>
+{% endif %}
+{% block javascripts %}
+    {% if entrypoints is defined %}
+        {% for entrypoint in entrypoints %}
+            {{ encore_entry_script_tags(entrypoint, null, 'enhavo') }}
+        {% endfor %}
     {% endif %}
-    {% if routes is defined %}
-        <script id="routes" type="application/json">{{ routes|raw }}</script>
-    {% endif %}
-    {% if translations is defined %}
-        <script id="translations" type="application/json">{{ translations|json_encode|raw }}</script>
-    {% endif %}
-    {% block javascripts %}
-        {% if javascripts is defined %}
-            {% for javascript in javascripts %}
-                {{ encore_entry_script_tags(javascript, null, 'enhavo') }}
-            {% endfor %}
-        {% endif %}
-    {% endblock %}
+{% endblock %}
 </body>
 </html>

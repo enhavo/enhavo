@@ -8,6 +8,7 @@
 
 namespace Enhavo\Component\Metadata\Tests\Provider;
 
+use Enhavo\Component\Metadata\Exception\ProviderException;
 use Enhavo\Component\Metadata\Provider\PropertyProvider;
 use Enhavo\Component\Metadata\Extension\PropertyInterface;
 use Enhavo\Component\Metadata\Extension\PropertyTrait;
@@ -36,11 +37,10 @@ class PropertyProviderTest extends TestCase
         ], $metadata->getProperty('name')->getOptions());
     }
 
-    /**
-     * @expectedException \Enhavo\Component\Metadata\Exception\ProviderException
-     */
     public function testInvalidInterface()
     {
+        $this->expectException(ProviderException::class);
+
         $metadata = new PropertyProviderInvalidMetadata('SomeClass');
         $provider = new PropertyProvider();
         $provider->provide($metadata, []);

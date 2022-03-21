@@ -102,7 +102,7 @@ services:
 #        class: '%enhavo_shop.controller.user.class%'
 #        arguments:
 #            - '@sylius.resource_controller.request_configuration_factory'
-#            - '@view.factory'
+#            - '@Enhavo\Component\Type\FactoryInterface[View]'
 #            - '@fos_rest.view_handler'
 #        calls:
 #            - [setContainer, ['@service_container']]

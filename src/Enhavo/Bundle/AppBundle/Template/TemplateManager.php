@@ -16,26 +16,17 @@ class TemplateManager
     const PRIORITY_LOW = 10;
     const PRIORITY_HIGH = 100;
 
-    /** @var KernelInterface */
-    private $kernel;
-
-    /** @var TemplatePath[] */
-    private $paths = [];
-
-    /** @var Filesystem */
-    private $fs;
+    private KernelInterface $kernel;
+    private Filesystem $fs;
+    private string $defaultPath;
+    private WebpackBuildResolverInterface $resolver;
+    private string $themePath;
 
     /** @var string[] */
-    private $cache;
+    private array $cache;
 
-    /** @var string */
-    private $defaultPath;
-
-    /** @var WebpackBuildResolverInterface */
-    private $resolver;
-
-    /** @var string */
-    private $themePath;
+    /** @var TemplatePath[] */
+    private array $paths = [];
 
     /**
      * TemplateManager constructor.
@@ -61,7 +52,7 @@ class TemplateManager
         $this->themePath = $themePath;
 
         foreach($templatePaths as $path) {
-            $this->registerPath($path['path'], $path['priority']);
+            $this->registerPath($path['path'], $path['alias'], $path['priority']);
         }
     }
 
@@ -69,11 +60,12 @@ class TemplateManager
      * @param $path
      * @param int $priority
      */
-    public function registerPath($path, $priority = self::PRIORITY_LOW)
+    public function registerPath($path, $alias, $priority = self::PRIORITY_LOW)
     {
         $templatePath = new TemplatePath();
         $templatePath->setPriority($priority);
         $templatePath->setPath($path);
+        $templatePath->setAlias($alias);
 
         $this->paths[] = $templatePath;
 
@@ -88,12 +80,12 @@ class TemplateManager
      */
     public function getTemplate($template)
     {
-        if(isset($this->cache[$template])) {
+        if (isset($this->cache[$template])) {
             return $this->cache[$template];
         }
 
-        foreach($this->paths as $path) {
-            $templateFile = $this->rewritePath($path->getPath(), $template);
+        foreach($this->paths as $templatePath) {
+            $templateFile = $this->rewritePath($templatePath, $template);
 
             if($templateFile === null) {
                 continue;
@@ -113,25 +105,25 @@ class TemplateManager
         return $this->resolver->resolve();
     }
 
-    private function rewritePath(string $path, string $template)
+    private function rewritePath(TemplatePath $templatePath, string $template)
     {
-        if (preg_match('/^@/', $path)) {
-            $templateFile = sprintf('%s/%s', $path, $template);
+        if (preg_match('/^@/', $templatePath->getPath())) {
+            $templateFile = sprintf('%s/%s', $templatePath->getPath(), $template);
             try {
                 $this->kernel->locateResource($templateFile);
             } catch(\InvalidArgumentException $e) {
                 return null;
             }
-            return $templateFile;
-        } elseif ($path === '') {
-            $templateFile = sprintf('%s/%s', $this->defaultPath, $template);
+            return sprintf('@%s/%s', $templatePath->getAlias(), $template);
+//        } elseif ($this->isSubDir($this->themePath, $templatePath->getPath())) {
+//            $templateFile = sprintf('%s/%s', $templatePath->getPath(), $template);
+//            if ($this->fs->exists($templateFile)) {
+//                return sprintf('@theme/%s/templates/%s', basename(realpath($templatePath->getPath().'/..')), $template);
+//            }
+        } else {
+            $templateFile = sprintf('%s/%s', $templatePath->getPath(), $template);
             if ($this->fs->exists($templateFile)) {
-                return $template;
-            }
-        } elseif ($this->isSubDir($this->themePath, $path)) {
-            $templateFile = sprintf('%s/%s', $path, $template);
-            if ($this->fs->exists($templateFile)) {
-                return sprintf('@theme/%s/templates/%s', basename(realpath($path.'/..')), $template);
+                return sprintf('@%s/%s', $templatePath->getAlias(), $template);
             }
         }
 

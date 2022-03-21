@@ -2,6 +2,7 @@ enhavo_app:
     template_paths:
         enhavo_setting:
             path: '@EnhavoSettingBundle/Resources/views'
+            alias: EnhavoSetting
             priority: 10
     form_themes:
         - '@EnhavoSetting/admin/form/setting/fields.html.twig'

@@ -2,6 +2,7 @@ enhavo_app:
     template_paths:
         enhavo_template:
             path: '@EnhavoTemplateBundle/Resources/views'
+            alias: EnhavoTemplate
             priority: 10
     roles:
         enhavo_template_template_index:

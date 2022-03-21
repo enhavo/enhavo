@@ -2,6 +2,7 @@ enhavo_app:
     template_paths:
         enhavo_navigation:
             path: '@EnhavoNavigationBundle/Resources/views'
+            alias: EnhavoNavigation
             priority: 10
     form_themes:
         - '@EnhavoNavigation/admin/form/navigation/fields.html.twig'

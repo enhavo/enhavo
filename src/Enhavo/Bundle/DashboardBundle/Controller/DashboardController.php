@@ -8,13 +8,30 @@
 
 namespace Enhavo\Bundle\DashboardBundle\Controller;
 
-use Enhavo\Bundle\AppBundle\Controller\AbstractViewController;
+use Enhavo\Component\Type\Factory;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 
-class DashboardController extends AbstractViewController
+class DashboardController extends AbstractController
 {
-    public function indexAction()
+    /** @var Factory */
+    private $viewFactory;
+
+    /**
+     * DashboardController constructor.
+     * @param Factory $viewFactory
+     */
+    public function __construct(Factory $viewFactory)
     {
-        $view = $this->viewFactory->create('dashboard', []);
-        return $this->viewHandler->handle($view);
+        $this->viewFactory = $viewFactory;
+    }
+
+    public function indexAction(Request $request)
+    {
+        $view = $this->viewFactory->create([
+            'type' => 'dashboard'
+        ]);
+
+        return $view->getResponse($request);
     }
 }

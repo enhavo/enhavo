@@ -42,7 +42,7 @@ class ResourceTranslationsExtension extends AbstractTypeExtension
         return;
     }
 
-    public function getExtendedTypes(): iterable
+    public static function getExtendedTypes(): iterable
     {
         return [ResourceTranslationsType::class];
     }

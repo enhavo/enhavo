@@ -18,7 +18,7 @@
     "ext-zlib": "*",
     "enhavo/type": "dev-master",
     "league/uri": "^5.0",
-    "friendsofsymfony/jsrouting-bundle": "^2.2",
+    "friendsofsymfony/jsrouting-bundle": "^3.1",
     "sylius/resource-bundle": "1.6.*",
     "symfony/asset": "^4.4",
     "symfony/console": "^4.4",

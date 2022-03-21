@@ -148,7 +148,9 @@ enhavo_app:
     template_paths:
         enhavo_user:
             path: '@EnhavoUserBundle/Resources/views'
+            alias: EnhavoUser
             priority: 10
+
     roles:
         enhavo_user_user_index:
             role: ROLE_ENHAVO_USER_USER_INDEX

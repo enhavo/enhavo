@@ -259,7 +259,7 @@ class ChangeEmailControllerMock extends ChangeEmailController
         return $this->flashMessages;
     }
 
-    protected function addFlash(string $type, $message)
+    protected function addFlash(string $type, $message): void
     {
         $this->flashMessages[$type] = $message;
     }

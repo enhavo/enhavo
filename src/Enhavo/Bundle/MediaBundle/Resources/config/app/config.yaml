@@ -14,6 +14,7 @@ enhavo_app:
     template_paths:
         enhavo_media:
             path: '@EnhavoMediaBundle/Resources/views'
+            alias: EnhavoMedia
             priority: 10
     apps:
         - 'media/Adapter/EnhavoAdapter'

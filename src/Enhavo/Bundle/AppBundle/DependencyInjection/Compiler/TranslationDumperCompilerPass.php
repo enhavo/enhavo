@@ -68,8 +68,6 @@ class TranslationDumperCompilerPass implements CompilerPassInterface
             $translatorOptions = array();
         }
 
-        $translatorOptions = array_merge($translatorOptions, $translator->getArgument(3));
-
         if (isset($translatorOptions['resource_files'])) {
             $translationFiles = $translatorOptions['resource_files'];
         }

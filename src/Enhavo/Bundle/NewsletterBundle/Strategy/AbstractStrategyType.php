@@ -79,7 +79,7 @@ abstract class AbstractStrategyType extends AbstractType implements StrategyType
     protected function preAddSubscriber(SubscriberInterface $subscriber)
     {
         if ($this->eventDispatcher !== null) {
-            $this->eventDispatcher->dispatch(SubscriberEvent::EVENT_PRE_ADD_SUBSCRIBER, new SubscriberEvent(SubscriberEvent::EVENT_PRE_ADD_SUBSCRIBER, $subscriber));
+            $this->eventDispatcher->dispatch(new SubscriberEvent(SubscriberEvent::EVENT_PRE_ADD_SUBSCRIBER, $subscriber), SubscriberEvent::EVENT_PRE_ADD_SUBSCRIBER);
         } else {
             $this->parent->preAddSubscriber($subscriber);
         }
@@ -88,7 +88,7 @@ abstract class AbstractStrategyType extends AbstractType implements StrategyType
     protected function postAddSubscriber(SubscriberInterface $subscriber)
     {
         if ($this->eventDispatcher !== null) {
-            $this->eventDispatcher->dispatch(SubscriberEvent::EVENT_POST_ADD_SUBSCRIBER, new SubscriberEvent(SubscriberEvent::EVENT_POST_ADD_SUBSCRIBER, $subscriber));
+            $this->eventDispatcher->dispatch(new SubscriberEvent(SubscriberEvent::EVENT_POST_ADD_SUBSCRIBER, $subscriber), SubscriberEvent::EVENT_POST_ADD_SUBSCRIBER);
         } else {
             $this->parent->postAddSubscriber($subscriber);
         }
@@ -97,7 +97,7 @@ abstract class AbstractStrategyType extends AbstractType implements StrategyType
     protected function preActivateSubscriber(SubscriberInterface $subscriber)
     {
         if ($this->eventDispatcher !== null) {
-            $this->eventDispatcher->dispatch(SubscriberEvent::EVENT_PRE_ACTIVATE_SUBSCRIBER, new SubscriberEvent(SubscriberEvent::EVENT_PRE_ACTIVATE_SUBSCRIBER, $subscriber));
+            $this->eventDispatcher->dispatch(new SubscriberEvent(SubscriberEvent::EVENT_PRE_ACTIVATE_SUBSCRIBER, $subscriber), SubscriberEvent::EVENT_PRE_ACTIVATE_SUBSCRIBER);
         } else {
             $this->parent->preActivateSubscriber($subscriber);
         }
@@ -106,7 +106,7 @@ abstract class AbstractStrategyType extends AbstractType implements StrategyType
     protected function postActivateSubscriber(SubscriberInterface $subscriber)
     {
         if ($this->eventDispatcher !== null) {
-            $this->eventDispatcher->dispatch(SubscriberEvent::EVENT_POST_ACTIVATE_SUBSCRIBER, new SubscriberEvent(SubscriberEvent::EVENT_POST_ACTIVATE_SUBSCRIBER, $subscriber));
+            $this->eventDispatcher->dispatch(new SubscriberEvent(SubscriberEvent::EVENT_POST_ACTIVATE_SUBSCRIBER, $subscriber), SubscriberEvent::EVENT_POST_ACTIVATE_SUBSCRIBER);
         } else {
             $this->parent->postActivateSubscriber($subscriber);
         }

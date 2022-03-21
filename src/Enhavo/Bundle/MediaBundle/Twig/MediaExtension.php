@@ -13,7 +13,6 @@ use Enhavo\Bundle\MediaBundle\Media\UrlGeneratorInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\Routing\Generator\UrlGenerator;
-use Symfony\Component\Templating\EngineInterface;
 use Enhavo\Bundle\MediaBundle\Entity\File;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -23,30 +22,14 @@ class MediaExtension extends AbstractExtension
     use ContainerAwareTrait;
 
     /**
-     * @var EngineInterface
-     */
-    private $engine;
-
-    /**
-     * @var EntityManager
-     */
-    private $em;
-
-    /**
-     * @var UrlGeneratorInterface
-     */
-    private $generator;
-
-    /**
      * MediaExtension constructor.
      * @param $em
      * @param UrlGeneratorInterface $generator
      */
-    public function __construct($em, UrlGeneratorInterface $generator)
-    {
-        $this->em = $em;
-        $this->generator = $generator;
-    }
+    public function __construct(
+        private EntityManager $em,
+        private UrlGeneratorInterface $generator
+    ) {}
 
     public function getFunctions()
     {
@@ -61,17 +44,7 @@ class MediaExtension extends AbstractExtension
         );
     }
 
-    /**
-     * @return EngineInterface
-     */
-    public function getEngine() {
-        if($this->engine == null) {
-            $this->engine = $this->container->get('templating');
-        }
-        return $this->engine;
-    }
-
-    public function getMediaUrl(?File $file, $format = null, $referenceType = UrlGenerator::ABSOLUTE_PATH)
+    public function getMediaUrl(?File $file, $format = null, $referenceType = UrlGenerator::ABSOLUTE_PATH): string
     {
         if($file === null) {
             return '';
@@ -84,16 +57,16 @@ class MediaExtension extends AbstractExtension
         }
     }
 
-    public function getMediaFilename(?File $file)
+    public function getMediaFilename(?File $file): string
     {
-        if($file === null) {
+        if ($file === null) {
             return '';
         }
 
         return $file->getFilename();
     }
 
-    public function getMediaParameter(?File $file, $parameterName)
+    public function getMediaParameter(?File $file, $parameterName): ?string
     {
         if($file === null) {
             return '';
@@ -102,7 +75,7 @@ class MediaExtension extends AbstractExtension
         return $file->getParameter($parameterName);
     }
 
-    public function getMediaExtension(?File $file)
+    public function getMediaExtension(?File $file): string
     {
         if($file === null) {
             return '';
@@ -111,7 +84,7 @@ class MediaExtension extends AbstractExtension
         return strtolower($file->getExtension());
     }
 
-    public function isPicture(?File $file)
+    public function isPicture(?File $file): bool
     {
         if($file === null) {
             return false;
@@ -123,14 +96,14 @@ class MediaExtension extends AbstractExtension
         return false;
     }
 
-    public function renderItem($template, $form)
+    public function renderItem($template, $form): string
     {
-        return $this->container->get('templating')->render($template, [
+        return $this->container->get('twig')->render($template, [
             'form' => $form
         ]);
     }
 
-    public function getMeta($file = null)
+    public function getMeta($file = null): ?array
     {
         if ($file instanceof FileInterface) {
             $data = [

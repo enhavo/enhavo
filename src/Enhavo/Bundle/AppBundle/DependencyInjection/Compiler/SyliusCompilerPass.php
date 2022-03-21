@@ -67,11 +67,7 @@ class SyliusCompilerPass implements CompilerPassInterface
         foreach ($controllerDefinitionIds as $definitionName) {
             if($container->hasDefinition($definitionName)) {
                 $definition = $container->getDefinition($definitionName);
-                $definition->addArgument($container->getDefinition('view.factory'));
-                $definition->addArgument($container->getDefinition('enhavo.sorting_manager'));
-                $definition->addArgument($container->getDefinition(BatchManager::class));
-                $definition->addArgument($container->getDefinition('enhavo_app.factory.duplicate_resource_factory'));
-                $definition->addArgument($container->getDefinition('enhavo_app.event_dispatcher'));
+                $definition->addMethodCall('setViewFactory', [$container->getDefinition('Enhavo\Component\Type\FactoryInterface[View]')]);
             }
         }
     }

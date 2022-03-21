@@ -3,7 +3,6 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Tests\Strategy;
 
-
 use Enhavo\Bundle\AppBundle\Mailer\Message;
 use Enhavo\Bundle\NewsletterBundle\Event\SubscriberEvent;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
@@ -47,7 +46,7 @@ class StrategyNotifyTypeTest extends TestCase
         $dependencies->newsletterManager->expects($this->exactly(2))->method('createMessage')->willReturnCallback(function ($from, $senderName, $to, $subject, $template, $options) {
             $this->assertEquals('from@enhavo.com', $from);
             $this->assertEquals('enhavo', $senderName);
-            $this->assertRegExp('/(admin|to)@enhavo.com/', $to);
+            $this->assertMatchesRegularExpression('/(admin|to)@enhavo.com/', $to);
 
             if ($to === 'admin@enhavo.com') {
                 $this->assertEquals('subscriber.mail.admin.subject.trans', $subject);
@@ -61,9 +60,10 @@ class StrategyNotifyTypeTest extends TestCase
 
             return new Message();
         });
-        $dependencies->eventDispatcher->expects($this->exactly(2))->method('dispatch')->willReturnCallback(function ($key, $event) {
+        $dependencies->eventDispatcher->expects($this->exactly(2))->method('dispatch')->willReturnCallback(function ($event, $key) {
             $this->assertInstanceOf(SubscriberEvent::class, $event);
             $this->assertInstanceOf(SubscriberInterface::class, $event->getSubscriber());
+            return $event;
         });
 
         /** @var SubscriberInterface|MockObject $subscriber */

@@ -15,14 +15,15 @@ services:
             - '%enhavo_app.branding%'
             - '%enhavo_app.toolbar_widget.primary%'
             - '%enhavo_app.toolbar_widget.secondary%'
+        calls:
+            - [setContainer, ['@service_container']]
         tags:
             - { name: controller.service_arguments }
 
     Enhavo\Bundle\AppBundle\Controller\AbstractViewController:
         abstract: true
         arguments:
-            - '@view.factory'
-            - '@fos_rest.view_handler'
+            - '@Enhavo\Component\Type\FactoryInterface[View]'
         calls:
             - [setContainer, ['@service_container']]
 

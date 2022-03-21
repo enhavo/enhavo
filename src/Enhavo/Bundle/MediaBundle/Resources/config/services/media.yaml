@@ -137,8 +137,7 @@ services:
         arguments:
             - '@enhavo_media.media.image_cropper_manager'
             - '@enhavo_media.media.media_manager'
-            - '@view.factory'
-            - '@fos_rest.view_handler'
+            - '@Enhavo\Component\Type\FactoryInterface[View]'
         calls:
             - [setContainer, ['@service_container']]
 

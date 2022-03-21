@@ -37,12 +37,7 @@ class CSRFMockExtension implements FormTypeExtensionInterface
         $resolver->setDefaults(['csrf_protection' => true]);
     }
 
-    public function getExtendedType()
-    {
-        return FormType::class;
-    }
-
-    public function getExtendedTypes()
+    public static function getExtendedTypes(): iterable
     {
         return [FormType::class];
     }

@@ -25,6 +25,9 @@ class TypeCompilerPass implements CompilerPassInterface
     /** @var string */
     private $class;
 
+    /** @var string */
+    private $alias;
+
     public function __construct($namespace, $tagName, $class)
     {
         $this->namespace = $namespace;
@@ -44,6 +47,7 @@ class TypeCompilerPass implements CompilerPassInterface
             sprintf('%s[%s]', RegistryInterface::class, $this->namespace) => $registryDefinition,
             sprintf('%s[%s]', FactoryInterface::class, $this->namespace) => $factoryDefinition,
         ]);
+
 
         $taggedServices = $container->findTaggedServiceIds($this->tagName);
 

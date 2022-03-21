@@ -91,8 +91,12 @@ class SlugGeneratorTest extends TestCase
     {
         $dependencies = $this->createDependencies();
         $dependencies->em->method('createQueryBuilder')->willReturn($dependencies->queryBuilder);
-        $dependencies->query->expects($this->at(0))->method('getResult')->willReturn([0 => ['nr' => 1]]);
-        $dependencies->query->expects($this->at(1))->method('getResult')->willReturn([0 => ['nr' => 0]]);
+
+        $stack = [0, 1];
+        $dependencies->query->method('getResult')->willReturnCallback(function() use (&$stack) {
+            $value = array_pop($stack);
+            return [0 => ['nr' => $value]];
+        });
 
         $instance = $this->createInstance($dependencies);
 

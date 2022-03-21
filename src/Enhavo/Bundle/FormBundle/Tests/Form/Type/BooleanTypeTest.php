@@ -11,7 +11,7 @@ class BooleanTypeTest extends TypeTestCase
 {
     private $translator;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->translator = $this->createMock(TranslatorInterface::class);
         $this->translator->method('trans')->willReturnCallback(function($id) {

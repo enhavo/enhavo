@@ -53,9 +53,10 @@ class StrategyDoubleOptInTypeTest extends TestCase
         $dependencies->pendingManager->expects($this->once())->method('save')->willReturnCallback(function (PendingSubscriber $subscriber) {
 
         });
-        $dependencies->eventDispatcher->expects($this->exactly(2))->method('dispatch')->willReturnCallback(function ($key, $event) {
+        $dependencies->eventDispatcher->expects($this->exactly(2))->method('dispatch')->willReturnCallback(function ($event, $key) {
             $this->assertInstanceOf(SubscriberEvent::class, $event);
             $this->assertInstanceOf(SubscriberInterface::class, $event->getSubscriber());
+            return $event;
         });
         $dependencies->router->expects($this->once())->method('generate')->willReturnCallback(function ($name) {
             $this->assertEquals('__ROUTE_NAME__', $name);
@@ -110,9 +111,10 @@ class StrategyDoubleOptInTypeTest extends TestCase
             $this->assertEquals('to@enhavo.com', $email);
             $this->assertEquals('default', $subscription);
         });
-        $dependencies->eventDispatcher->expects($this->exactly(2))->method('dispatch')->willReturnCallback(function ($key, $event) {
+        $dependencies->eventDispatcher->expects($this->exactly(2))->method('dispatch')->willReturnCallback(function ($event, $key) {
             $this->assertInstanceOf(SubscriberEvent::class, $event);
             $this->assertInstanceOf(SubscriberInterface::class, $event->getSubscriber());
+            return $event;
 
         });
         $dependencies->storage->expects($this->once())->method('saveSubscriber');
@@ -201,7 +203,7 @@ class StrategyDoubleOptInTypeTest extends TestCase
         $dependencies = $this->createDependencies();
         $dependencies->pendingManager->expects($this->exactly(2))->method('findOneBy')->willReturnCallback(function ($email, $subscription) {
             $this->assertEquals('to@enhavo.com', $email);
-            $this->assertRegExp('/(default|missing)/', $subscription);
+            $this->assertMatchesRegularExpression('/(default|missing)/', $subscription);
 
             return ($subscription === 'default' ? new PendingSubscriber() : null);
         });

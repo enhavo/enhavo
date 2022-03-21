@@ -55,10 +55,8 @@ services:
     Enhavo\Bundle\UserBundle\Controller\ChangePasswordController:
         public: true
         arguments:
-            - '@enhavo_user.user.manager'
-            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
-            - '@fos_rest.view_handler'
-            - '@view.factory'
+            - '@Enhavo\Bundle\UserBundle\User\UserManager'
+            - '@Enhavo\Component\Type\FactoryInterface[View]'
             - '@translator'
         calls:
             - [ setContainer, [ '@service_container' ] ]

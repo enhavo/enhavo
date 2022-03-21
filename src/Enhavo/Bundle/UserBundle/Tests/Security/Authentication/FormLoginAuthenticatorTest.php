@@ -171,9 +171,9 @@ class FormLoginAuthenticatorTest extends TestCase
         $dependencies = $this->createDependencies();
         $dependencies->tokenManager->expects($this->once())->method('isTokenValid')->willReturn(true);
 
-
         $instance = $this->createInstance($dependencies);
         $credentials = $instance->getCredentials($dependencies->request);
+
         /** @var UserProviderInterface|MockObject $userProvider */
         $userProvider = $this->getMockBuilder(UserProviderInterface::class)->getMock();
         $userProvider->expects($this->exactly(1))->method('loadUserByUsername')->willReturn(null);
@@ -190,6 +190,7 @@ class FormLoginAuthenticatorTest extends TestCase
         $dependencies->eventDispatcher->expects($this->once())->method('dispatch')->willReturnCallback(function ($event) use ($user) {
             $this->assertInstanceOf(UserLoginEvent::class, $event);
             $this->assertEquals($user, $event->getUser());
+            return $event;
         });
 
         $instance = $this->createInstance($dependencies);

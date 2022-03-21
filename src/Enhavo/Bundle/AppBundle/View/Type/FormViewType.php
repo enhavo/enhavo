@@ -6,15 +6,16 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
+namespace Enhavo\Bundle\AppBundle\View\Type;
 
 use Enhavo\Bundle\AppBundle\Action\ActionManager;
+use Enhavo\Bundle\AppBundle\View\AbstractViewType;
 use Enhavo\Bundle\AppBundle\Viewer\AbstractActionViewer;
 use FOS\RestBundle\View\View;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class FormViewer extends AbstractActionViewer
+class FormViewType extends AbstractViewType
 {
     /**
      * @var FlashBag
@@ -134,7 +135,7 @@ class FormViewer extends AbstractActionViewer
             'translations' => true,
             'routes' => false,
             'template' => 'admin/view/form.html.twig',
-            'form_template' => 'admin/view/form_template.html.twig',
+            'form_template' => 'admin/view/form-template.html.twig',
             'resource' => null,
             'translation_domain' => null,
             'tabs' => null

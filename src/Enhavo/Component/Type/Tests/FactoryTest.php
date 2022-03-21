@@ -53,11 +53,10 @@ class FactoryTest extends TestCase
         $this->assertEquals([$rootType, $parentType], $typeContainer->parents);
     }
 
-    /**
-     * @expectedException \Enhavo\Component\Type\Exception\TypeCreateException
-     */
     public function testMissingType()
     {
+        $this->expectException(TypeCreateException::class);
+
         $dependencies =$this->createDependencies();
         $factory = $this->createInstance($dependencies);
 

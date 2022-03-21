@@ -10,45 +10,37 @@ namespace Enhavo\Bundle\AppBundle\Template;
 
 class TemplatePath
 {
-    /**
-     * @var integer
-     */
-    private $priority;
+    private int $priority;
+    private string $path;
+    private string $alias;
 
-    /**
-     * @var string
-     */
-    private $path;
-
-    /**
-     * @return int
-     */
     public function getPriority(): int
     {
         return $this->priority;
     }
 
-    /**
-     * @param int $priority
-     */
     public function setPriority(int $priority): void
     {
         $this->priority = $priority;
     }
 
-    /**
-     * @return string
-     */
     public function getPath(): string
     {
         return $this->path;
     }
 
-    /**
-     * @param string $path
-     */
     public function setPath(string $path): void
     {
         $this->path = $path;
+    }
+
+    public function getAlias(): string
+    {
+        return $this->alias;
+    }
+
+    public function setAlias(string $alias): void
+    {
+        $this->alias = $alias;
     }
 }

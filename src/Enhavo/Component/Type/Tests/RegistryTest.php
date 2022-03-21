@@ -9,6 +9,8 @@
 namespace Enhavo\Component\Type\Tests;
 
 use Enhavo\Component\Type\AbstractType;
+use Enhavo\Component\Type\Exception\TypeNotFoundException;
+use Enhavo\Component\Type\Exception\TypeNotValidException;
 use Enhavo\Component\Type\Registry;
 use Enhavo\Component\Type\TypeInterface;
 use PHPUnit\Framework\TestCase;
@@ -74,22 +76,20 @@ class RegistryTest extends TestCase
         $this->assertEquals('root', $type::getName());
     }
 
-    /**
-     * @expectedException \Enhavo\Component\Type\Exception\TypeNotFoundException
-     */
     public function testNotFound()
     {
+        $this->expectException(TypeNotFoundException::class);
+
         $dependencies = $this->createDependencies();
         $registry = $this->createInstance($dependencies);
         $registry->register(RootType::class, 'root_type_id');
         $registry->getType('type_not_exists');
     }
 
-    /**
-     * @expectedException \Enhavo\Component\Type\Exception\TypeNotValidException
-     */
     public function testCircularDetection()
     {
+        $this->expectException(TypeNotValidException::class);
+
         $dependencies = $this->createDependencies();
         $registry = $this->createInstance($dependencies);
         $registry->register(CircularTypeOne::class, CircularTypeOne::class);
@@ -97,21 +97,19 @@ class RegistryTest extends TestCase
         $registry->register(CircularTypeThree::class, CircularTypeThree::class);
     }
 
-    /**
-     * @expectedException \Enhavo\Component\Type\Exception\TypeNotValidException
-     */
     public function testSelfCircularDetection()
     {
+        $this->expectException(TypeNotValidException::class);
+
         $dependencies = $this->createDependencies();
         $registry = $this->createInstance($dependencies);
         $registry->register(SelfReference::class, SelfReference::class);
     }
 
-    /**
-     * @expectedException \Enhavo\Component\Type\Exception\TypeNotValidException
-     */
     public function testMissingInterface()
     {
+        $this->expectException(TypeNotValidException::class);
+
         $dependencies = $this->createDependencies();
         $registry = $this->createInstance($dependencies);
         $registry->register(NoInterface::class, NoInterface::class);
@@ -127,42 +125,38 @@ class RegistryTest extends TestCase
         $registry->register(IndirectClass::class, IndirectClass::class);
     }
 
-    /**
-     * @expectedException \Enhavo\Component\Type\Exception\TypeNotValidException
-     */
     public function testParentClassInterface()
     {
+        $this->expectException(TypeNotValidException::class);
+
         $dependencies = $this->createDependencies();
         $registry = $this->createInstance($dependencies);
         $registry->register(ParentNotExitsType::class, ParentNotExitsType::class);
     }
 
-    /**
-     * @expectedException \Enhavo\Component\Type\Exception\TypeNotValidException
-     */
     public function testInvalidParent()
     {
+        $this->expectException(TypeNotValidException::class);
+
         $dependencies = $this->createDependencies();
         $registry = $this->createInstance($dependencies);
         $registry->register(InvalidParentType::class, InvalidParentType::class);
     }
 
-    /**
-     * @expectedException \Enhavo\Component\Type\Exception\TypeNotValidException
-     */
     public function testDoubleClassNames()
     {
+        $this->expectException(TypeNotValidException::class);
+
         $dependencies = $this->createDependencies();
         $registry = $this->createInstance($dependencies);
         $registry->register(TestType::class, TestType::class);
         $registry->register(TestType::class, TestType::class);
     }
 
-    /**
-     * @expectedException \Enhavo\Component\Type\Exception\TypeNotValidException
-     */
     public function testDoubleNames()
     {
+        $this->expectException(TypeNotValidException::class);
+
         $dependencies = $this->createDependencies();
         $registry = $this->createInstance($dependencies);
         $registry->register(TestType::class, TestType::class);

@@ -21,11 +21,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * Class DemoController
- * @package App\Controller
- * @Route("/form")
- */
+#[Route('/form')]
 class FormController extends AbstractController
 {
     private function handleForm(FormInterface $form, Request $request, $template = 'form')
@@ -52,9 +48,7 @@ class FormController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/media", name="app_form_media")
-     */
+    #[Route('/media', name: "app_form_media")]
     public function mediaAction(Request $request)
     {
         $files = [];
@@ -66,27 +60,21 @@ class FormController extends AbstractController
         return $this->handleForm($form, $request);
     }
 
-    /**
-     * @Route("/ajax", name="app_form_ajax")
-     */
+    #[Route('/ajax', name: "app_form_ajax")]
     public function ajaxAction(Request $request)
     {
         $form = $this->createForm(TextType::class);
         return $this->handleForm($form, $request, 'ajax');
     }
 
-    /**
-     * @Route("/submit", name="app_form_submit")
-     */
+    #[Route('/submit', name: "app_form_submit")]
     public function submitAction(Request $request)
     {
         $form = $this->createForm(TextType::class);
         return $this->handleForm($form, $request, 'submit');
     }
 
-    /**
-     * @Route("/compound", name="app_demo_form")
-     */
+    #[Route('/compound', name: "app_demo_form")]
     public function compoundFormAction(Request $request)
     {
         $form = $this->createFormBuilder(null)

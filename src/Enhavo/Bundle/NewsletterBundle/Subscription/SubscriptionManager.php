@@ -79,7 +79,7 @@ class SubscriptionManager
         /** @var SubscriberInterface $subscriber */
         $subscriber = new $className();
         $event = new SubscriberEvent(SubscriberEvent::EVENT_CREATE_SUBSCRIBER, $subscriber);
-        $this->eventDispatcher->dispatch(SubscriberEvent::EVENT_CREATE_SUBSCRIBER, $event);
+        $this->eventDispatcher->dispatch($event, SubscriberEvent::EVENT_CREATE_SUBSCRIBER);
 
         return $subscriber;
     }

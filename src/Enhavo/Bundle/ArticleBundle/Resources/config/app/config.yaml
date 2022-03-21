@@ -29,6 +29,7 @@ enhavo_app:
     template_paths:
         enhavo_article:
             path: '@EnhavoArticleBundle/Resources/views'
+            alias: EnhavoArticle
             priority: 10
     roles:
         enhavo_article_article_index:

@@ -7,6 +7,6 @@
 
         <field name="key" column="`key`" />
         <field name="active" type="boolean" />
-        <field name="parameters" type="json_array" />
+        <field name="parameters" type="json" />
     </entity>
 </doctrine-mapping>

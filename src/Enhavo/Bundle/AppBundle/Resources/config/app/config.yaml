@@ -4,8 +4,6 @@ framework:
         enabled: true
     session:
         cookie_lifetime: 25920000
-    templating:
-        engines: twig
 
 doctrine:
     dbal:
@@ -31,9 +29,7 @@ jms_serializer:
 enhavo_app:
     locale: "%locale%"
     template_paths:
-        default:
-            path: ''
-            priority: 150
         enhavo_app:
             path: '@EnhavoAppBundle/Resources/views'
+            alias: 'EnhavoApp'
             priority: 10

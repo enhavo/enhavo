@@ -125,6 +125,7 @@ class UserManagerTest extends TestCase
             $this->assertInstanceOf(UserEvent::class, $event);
             $this->assertEquals(UserEvent::TYPE_CREATED, $event->getType());
             $this->assertEquals($user, $event->getUser());
+            return $user;
         });
         $dependencies->tokenGenerator->expects($this->once())->method('generateToken')->willReturn('__TOKEN__');
         $dependencies->mailerManager->expects($this->once())->method('createMessage')->willReturn($dependencies->message);
@@ -182,6 +183,7 @@ class UserManagerTest extends TestCase
             $this->assertInstanceOf(UserEvent::class, $event);
             $this->assertEquals(UserEvent::TYPE_REGISTRATION_CONFIRMED, $event->getType());
             $this->assertEquals($user, $event->getUser());
+            return $event;
         });
         $dependencies->mailerManager->expects($this->once())->method('createMessage')->willReturn($dependencies->message);
         $dependencies->mailerManager->expects($this->once())->method('sendMessage');
@@ -234,6 +236,7 @@ class UserManagerTest extends TestCase
             $this->assertInstanceOf(UserEvent::class, $event);
             $this->assertEquals(UserEvent::TYPE_PASSWORD_RESET_REQUESTED, $event->getType());
             $this->assertEquals($user, $event->getUser());
+            return $user;
         });
         $dependencies->tokenGenerator->expects($this->once())->method('generateToken')->willReturn('__TOKEN__');
         $dependencies->mailerManager->expects($this->once())->method('createMessage')->willReturn($dependencies->message);
@@ -289,6 +292,7 @@ class UserManagerTest extends TestCase
             $this->assertInstanceOf(UserEvent::class, $event);
             $this->assertEquals(UserEvent::TYPE_PASSWORD_CHANGED, $event->getType());
             $this->assertEquals($user, $event->getUser());
+            return $event;
         });
 
         $manager = $this->createInstance($dependencies);
@@ -349,6 +353,7 @@ class UserManagerTest extends TestCase
             $this->assertInstanceOf(UserEvent::class, $event);
             $this->assertEquals(UserEvent::TYPE_ACTIVATED, $event->getType());
             $this->assertEquals($user, $event->getUser());
+            return $event;
         });
         $dependencies->entityManager->expects($this->never())->method('persist');
         $dependencies->entityManager->expects($this->once())->method('flush');

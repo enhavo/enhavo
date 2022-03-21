@@ -15,8 +15,11 @@ export default class extends Vue
     @Prop()
     tab: Tab;
 
+    @Prop()
+    tabKey: number;
+
     mounted() {
-        let $tab = $('[data-tab-container]').find('[data-tab='+this.tab.key+']');
+        let $tab = $('[data-tab-container]').find('[data-tab='+this.tabKey+']');
         this.tab.error = $tab.find('[data-form-error]').length > 0;
         let element = <HTMLElement>$tab[0];
         let initializer = new FormInitializer();
