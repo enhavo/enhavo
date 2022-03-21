@@ -12,13 +12,13 @@
     }
   ],
   "require": {
-    "php": "^7.2",
+    "php": "^8.0",
     "enhavo/app-bundle": "dev-master",
     "enhavo/form-bundle": "dev-master",
     "enhavo/doctrine-extension-bundle": "dev-master"
   },
   "require-dev": {
-    "phpunit/phpunit": "^7.4"
+    "phpunit/phpunit": "^9.5"
   },
   "autoload": {
     "psr-4": { "Enhavo\\Bundle\\NavigationBundle\\": "" }
