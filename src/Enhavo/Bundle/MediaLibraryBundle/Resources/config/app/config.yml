@@ -73,12 +73,18 @@ enhavo_media:
             type: image
             width: 512
             height: 512
+        enhavoMediaLibraryTxt:
+            type: text_image
         enhavoMediaLibraryPdf:
             type: pdf_image
             method: ghostscript
         enhavoMediaLibraryVideo:
             type: video_image
         enhavoMediaLibraryThumb:
+            -
+                type: mimetype
+                format: enhavoMediaLibraryTxt
+                mimetypes: [text/plain, text/css]
             -
                 type: mimetype
                 format: enhavoMediaLibraryPdf
