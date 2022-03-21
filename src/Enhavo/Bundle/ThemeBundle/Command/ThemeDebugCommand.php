@@ -42,5 +42,6 @@ class ThemeDebugCommand extends Command
         foreach($themes as $theme) {
             $output->writeln(sprintf('Found theme "%s"', $theme->getKey()));
         }
+        return Command::SUCCESS;
     }
 }

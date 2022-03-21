@@ -69,10 +69,12 @@ class DebugBlockUseCommand extends Command
             $this->logger->error(sprintf('Unknown block named "%s". Name must be a key registered under enhavo_block.blocks.', $type));
             $this->logger->info(sprintf('Registered blocks: %s', implode(', ', array_keys($this->blockConfig))));
             $this->logger->info('');
-            return;
+            return Command::FAILURE;
         }
 
         $this->find($type, $id);
+
+        return Command::SUCCESS;
     }
 
     private function find($type, $id)

@@ -80,6 +80,8 @@ EOT
         $this->userManager->activate($user);
 
         $output->writeln(sprintf('User "%s" has been activated.', $username));
+
+        return Command::SUCCESS;
     }
 
     /**

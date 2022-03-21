@@ -96,5 +96,6 @@ EOT
         }
 
         $this->userManager->update($user);
+        return Command::SUCCESS;
     }
 }

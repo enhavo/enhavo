@@ -46,5 +46,6 @@ class SitemapDumpCommand extends Command
         $this->fs->dumpFile($fullPath, $this->sitemapGenerator->generate());
 
         $output->writeln(sprintf('Sitemap file created in "%s"', $this->path));
+        return Command::SUCCESS;
     }
 }

@@ -46,16 +46,16 @@ class ElasticInstallCommand extends Command
                 $option = $questionHelper->ask($input, $output, $question);
 
                 if (strtolower($option) === 'n') {
-                    return 0;
+                    return Command::SUCCESS;
                 } elseif (strtolower($option) === 'y') {
                     $this->download($input, $output);
-                    return 0;
+                    return Command::SUCCESS;
                 }
             }
         }
 
         $this->download($input, $output);
-        return 0;
+        return Command::SUCCESS;
     }
 
     private function download(InputInterface $input, OutputInterface $output)

@@ -132,9 +132,9 @@ class RefreshFormatCommand extends Command
         $output->writeln('<info>Refreshing finished</info>');
 
         if (count($errors)) {
-            return 1;
+            return Command::FAILURE;
         }
 
-        return 0;
+        return Command::SUCCESS;
     }
 }
