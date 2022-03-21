@@ -12,6 +12,7 @@ use Enhavo\Bundle\NewsletterBundle\Exception\NoGroupException;
 use Enhavo\Bundle\NewsletterBundle\Model\GroupAwareInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Storage\AbstractStorageType;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MailjetStorageType extends AbstractStorageType
@@ -56,11 +57,16 @@ class MailjetStorageType extends AbstractStorageType
 
         $this->client->init($options['client_key'], $options['client_secret']);
 
-        foreach ($groups as $group) {
-            if (!$this->client->exists($subscriber->getConfirmationToken(), $group)) {
-                continue;
+        if ($options['gpdr_delete']) {
+            $this->client->gpdrDelete($subscriber, $options['client_key'], $options['client_secret']);
+
+        } else {
+            foreach ($groups as $group) {
+                if (!$this->client->exists($subscriber->getConfirmationToken(), $group)) {
+                    continue;
+                }
+                $this->client->removeFromGroup($subscriber, $group);
             }
-            $this->client->removeFromGroup($subscriber, $group);
         }
     }
 
@@ -70,8 +76,13 @@ class MailjetStorageType extends AbstractStorageType
 
         $response = $this->client->getSubscriber($subscriber->getEmail()??$subscriber->getConfirmationToken());
 
-        $subscriber->setEmail($response['Email']);
-        $subscriber->setConfirmationToken($response['ID']);
+        if ($response) {
+            $subscriber->setEmail($response['Email']);
+            $subscriber->setConfirmationToken($response['ID']);
+
+        } else {
+            throw new NotFoundHttpException('No Subscriber found');
+        }
 
         return $subscriber;
 
@@ -105,6 +116,7 @@ class MailjetStorageType extends AbstractStorageType
     {
         $resolver->setDefaults([
             'groups' => [],
+            'gpdr_delete' => false, // https://gdpr.eu/ https://dev.mailjet.com/email/guides/contact-management/#gdpr-delete-contacts
         ]);
         $resolver->setRequired([
             'client_key',
@@ -124,7 +136,7 @@ class MailjetStorageType extends AbstractStorageType
             }
         }
 
-        if (count($groups) === 0) { // todo: only if group is required in mailjet api?
+        if (count($groups) === 0) {
             throw new NoGroupException('no groups given');
         }
 
