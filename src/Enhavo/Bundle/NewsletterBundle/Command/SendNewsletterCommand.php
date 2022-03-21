@@ -89,5 +89,6 @@ class SendNewsletterCommand extends Command
         $output->writeln('Delivery finished');
 
         $this->release();
+        return Command::SUCCESS;
     }
 }

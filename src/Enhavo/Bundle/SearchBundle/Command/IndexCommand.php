@@ -36,5 +36,7 @@ class IndexCommand extends Command
         $engine->initialize();
 
         $output->writeln('Initialize finished');
+
+        return Command::SUCCESS;
     }
 }

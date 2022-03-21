@@ -41,5 +41,6 @@ class WebpackBuildCommand extends Command
         if (!$process->isSuccessful()) {
             throw new ProcessFailedException($process);
         }
+        return Command::SUCCESS;
     }
 }

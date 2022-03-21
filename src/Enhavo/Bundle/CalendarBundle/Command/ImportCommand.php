@@ -40,5 +40,6 @@ class ImportCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->manager->import();
+        return Command::SUCCESS;
     }
 }

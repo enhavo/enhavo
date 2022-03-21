@@ -113,6 +113,8 @@ EOT
         $this->userManager->add($user);
 
         $output->writeln(sprintf('Created user <comment>%s</comment>', $user->getUsername()));
+
+        return Command::SUCCESS;
     }
 
     /**

@@ -50,6 +50,6 @@ class CleanUpCommand extends Command
 
         if ($isDryRun) $output->writeln('This was a dry run, no actual changes were made.');
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

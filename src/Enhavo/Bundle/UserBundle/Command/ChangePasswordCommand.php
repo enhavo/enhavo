@@ -91,6 +91,7 @@ EOT
         $this->userManager->changePassword($user);
 
         $output->writeln(sprintf('Changed password for user <comment>%s</comment>', $username));
+        return Command::SUCCESS;
     }
 
     /**

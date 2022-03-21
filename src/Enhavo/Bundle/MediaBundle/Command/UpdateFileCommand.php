@@ -74,5 +74,6 @@ class UpdateFileCommand extends Command
 
         $this->em->flush();
         $output->writeln('Files updated');
+        return Command::SUCCESS;
     }
 }

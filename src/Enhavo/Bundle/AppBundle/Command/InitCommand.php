@@ -42,5 +42,6 @@ class InitCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->manager->init($output);
+        return Command::SUCCESS;
     }
 }

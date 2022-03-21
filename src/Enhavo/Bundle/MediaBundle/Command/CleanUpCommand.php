@@ -114,7 +114,7 @@ class CleanUpCommand extends Command
         $output->writeln('Cleanup complete.');
         if ($this->isDryRun) $output->writeln('This was a dry run, no actual files were deleted.');
 
-        return 0;
+        return Command::SUCCESS;
     }
 
     /**

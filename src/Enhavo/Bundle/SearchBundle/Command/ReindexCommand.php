@@ -32,5 +32,7 @@ class ReindexCommand extends Command
         $engine->reindex();
 
         $output->writeln('Indexing finished');
+
+        return Command::SUCCESS;
     }
 }
