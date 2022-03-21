@@ -160,7 +160,7 @@ class MailjetClient
         return $subscriber !== null;
     }
 
-    public function gpdrDelete(SubscriberInterface $subscriber, string $clientKey, string $clientSecret)
+    public function gdprDelete(SubscriberInterface $subscriber, string $clientKey, string $clientSecret)
     {
         $subscriberArray = $this->getSubscriber($subscriber->getConfirmationToken());
         $client = new CurlHttpClient();
