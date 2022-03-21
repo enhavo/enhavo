@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\ThemeBundle\EventListener;
 
-use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Exception;
 use Enhavo\Bundle\AppBundle\Template\TemplateManager;
 use Enhavo\Bundle\ThemeBundle\Theme\ThemeManager;
 use Symfony\Component\Console\ConsoleEvents;
@@ -70,7 +70,7 @@ class ThemeRegisterSubscriber implements EventSubscriberInterface
             if($path !== null) {
                 $this->templateManager->registerPath($path, 200);
             }
-        } catch (DBALException $e) {
+        } catch (Exception $e) {
             // Don't throw exception here, because if the schema is not loaded or incorrect, the console should not
             // be affected, to give the user the option the fix his schema with the doctrine console commands
         }
