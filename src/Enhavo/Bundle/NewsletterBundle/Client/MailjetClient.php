@@ -17,6 +17,7 @@ use Enhavo\Component\CleverReach\ApiManager;
 use Mailjet\Client;
 use Mailjet\Resources;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpClient\CurlHttpClient;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
 
 class MailjetClient
@@ -157,5 +158,15 @@ class MailjetClient
         $subscriber = $this->getSubscriber($id);
         //ToDo: Check if subscriber is in group
         return $subscriber !== null;
+    }
+
+    public function gdprDelete(SubscriberInterface $subscriber, string $clientKey, string $clientSecret)
+    {
+        $subscriberArray = $this->getSubscriber($subscriber->getConfirmationToken());
+        $client = new CurlHttpClient();
+        $response = $client->request('DELETE', sprintf('https://api.mailjet.com/v4/contacts/%s', $subscriberArray['ID']), [
+            'auth_basic' => [$clientKey, $clientSecret]
+        ]);
+        return $response->getStatusCode() === 200;
     }
 }
