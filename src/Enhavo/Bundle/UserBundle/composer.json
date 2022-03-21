@@ -12,14 +12,14 @@
     }
   ],
   "require": {
-    "php": "^7.2",
+    "php": "^8.0",
     "enhavo/app-bundle": "dev-master",
     "enhavo/form-bundle": "dev-master",
-    "symfony/security-bundle": "^4.4",
-    "symfony/security-guard": "^4.4"
+    "symfony/security-bundle": "^5.4",
+    "symfony/security-guard": "^5.4"
   },
   "require-dev": {
-    "phpunit/phpunit": "^7.4"
+    "phpunit/phpunit": "^9.5"
   },
   "autoload": {
     "psr-4": { "Enhavo\\Bundle\\UserBundle\\": "" }
