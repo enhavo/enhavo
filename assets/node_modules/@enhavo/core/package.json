@@ -9,7 +9,7 @@
     "url": "https://github.com/enhavo/enhavo.git"
   },
   "dependencies": {
-    "@symfony/webpack-encore": "0.30.2",
+    "@symfony/webpack-encore": "^1.8.2",
     "copy-webpack-plugin": "^4.5.2",
     "glob": "^7.1.6",
     "sass": "^1.49.9",
