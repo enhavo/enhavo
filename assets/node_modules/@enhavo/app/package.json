@@ -17,6 +17,7 @@
     "axios": "^0.21.1",
     "bootstrap": "^4.3.1",
     "compass-mixins": "^0.12.10",
+    "file-loader": "^6.0.0",
     "jexl": "^2.1.1",
     "jquery": "^3.4.1",
     "lodash": "^4.17.11",
