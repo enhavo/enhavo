@@ -51,6 +51,7 @@ class TemplateManager
         $this->resolver = $resolver;
         $this->themePath = $themePath;
 
+        $this->registerPath($this->defaultPath, '', 150);
         foreach($templatePaths as $path) {
             $this->registerPath($path['path'], $path['alias'], $path['priority']);
         }
@@ -115,14 +116,12 @@ class TemplateManager
                 return null;
             }
             return sprintf('@%s/%s', $templatePath->getAlias(), $template);
-//        } elseif ($this->isSubDir($this->themePath, $templatePath->getPath())) {
-//            $templateFile = sprintf('%s/%s', $templatePath->getPath(), $template);
-//            if ($this->fs->exists($templateFile)) {
-//                return sprintf('@theme/%s/templates/%s', basename(realpath($templatePath->getPath().'/..')), $template);
-//            }
         } else {
             $templateFile = sprintf('%s/%s', $templatePath->getPath(), $template);
             if ($this->fs->exists($templateFile)) {
+                if ($templatePath->getPath() === $this->defaultPath) {
+                    return $template;
+                }
                 return sprintf('@%s/%s', $templatePath->getAlias(), $template);
             }
         }
