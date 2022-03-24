@@ -43,7 +43,7 @@ export default class StateManager
     private saveState()
     {
         let stateObject = this.createStateObject();
-        history.pushState(stateObject, "enhavo", this.generateUrl(stateObject));
+        history.pushState(JSON.stringify(stateObject), "enhavo", this.generateUrl(stateObject));
     }
 
     private generateUrl(stateObject: object): string

@@ -57,14 +57,15 @@ export default class ViewStack
         this.addLoadingListener();
         this.addExistsListener();
         this.addChangeUrlListener();
-
-        $(window).resize(() => {
-            this.arrangeManager.resize(this.data.views);
-        });
     }
 
     init() {
         this.data = this.componentRegistry.registerData(this.data);
+
+        $(window).resize(() => {
+            this.arrangeManager.resize(this.data.views);
+        });
+
         if(!this.data.views) {
             this.data.views = [];
             this.views = <ViewInterface[]>this.data.views;
