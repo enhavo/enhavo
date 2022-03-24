@@ -50,7 +50,7 @@ export default class extends Vue
         }
     }
 
-    destroyed()
+    unmounted()
     {
         this.eventDispatcher.remove(this.subscriber);
         this.viewStack.getFrameStorage().remove(this.data.id);

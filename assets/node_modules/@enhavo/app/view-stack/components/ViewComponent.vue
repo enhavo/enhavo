@@ -47,7 +47,7 @@ export default class extends Vue
         this.eventDispatcher.dispatch(new ArrangeEvent());
     }
 
-    destroyed() {
+    unmounted() {
         this.eventDispatcher.dispatch(new ArrangeEvent());
     }
 
