@@ -130,7 +130,6 @@ class CreateViewType extends AbstractViewType
 
         /** @var Form $form */
         $form = $resourceFormFactory->create($configuration, $newResource);
-        $templateData['form'] = $form->createView();
 
         if ($request->isMethod('POST')) {
             if ($form->handleRequest($request)->isValid()) {
@@ -152,6 +151,8 @@ class CreateViewType extends AbstractViewType
                 }
             }
         }
+        $viewData['messages'] = array_merge($viewData['messages'], $this->getFlashMessages());
+        $templateData['form'] = $form->createView();
     }
 
     private function createTabViewData(array $configuration, ?string $translationDomain): array

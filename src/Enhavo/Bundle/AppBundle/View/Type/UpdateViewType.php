@@ -68,7 +68,6 @@ class UpdateViewType extends AbstractViewType
 
         /** @var Form $form */
         $form = $resourceFormFactory->create($configuration, $resource);
-        $templateData['form'] = $form->createView();
         $form->handleRequest($request);
 
         $eventDispatcher = $options['event_dispatcher'];
@@ -92,6 +91,23 @@ class UpdateViewType extends AbstractViewType
                 }
             }
         }
+        $viewData['messages'] = array_merge($viewData['messages'], $this->getFlashMessages());
+        $templateData['form'] = $form->createView();
+    }
+
+    private function getFlashMessages(): array
+    {
+        $messages = [];
+        $types = ['success', 'error', 'notice', 'warning'];
+        foreach($types as $type) {
+            foreach($this->flashBag->get($type) as $message) {
+                $messages[] = [
+                    'message' => is_array($message) ? $message['message'] : $message,
+                    'type' => $type
+                ];
+            }
+        }
+        return $messages;
     }
 
     public function findResource(RequestConfiguration $configuration, $options): ?ResourceInterface
