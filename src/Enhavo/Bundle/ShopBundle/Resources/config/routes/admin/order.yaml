@@ -112,7 +112,6 @@ enhavo_shop_order_table:
                         property: cancelled
                         width: 1
 
-
 enhavo_shop_order_delete:
     options:
         expose: true

@@ -106,7 +106,7 @@ class ListViewType extends AbstractViewType
         $data['messages'] = [];
         $data['actions'] = $this->actionManager->createActionsViewData($actions);
         $data['view'] = [
-            'label' => $this->translator->trans($label, [], $viewerOptions['translation_domain'])
+            'label' => $this->translator->trans($label, [], $options['translation_domain'])
         ];
     }
 
@@ -151,8 +151,6 @@ class ListViewType extends AbstractViewType
 
     public function configureOptions(OptionsResolver $optionsResolver)
     {
-        parent::configureOptions($optionsResolver);
-
         $optionsResolver->setDefaults([
             'entrypoint' => 'enhavo/app/list',
             'actions' => [],

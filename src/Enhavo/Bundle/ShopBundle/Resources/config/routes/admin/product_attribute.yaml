@@ -24,6 +24,9 @@ sylius_product_attribute_create:
                 method: createTyped
                 arguments: $type
             redirect: sylius_product_attribute_update
+            form:
+                options:
+                    validation_groups: [ form ]
             viewer:
 
 sylius_product_attribute_create_form:
@@ -44,6 +47,9 @@ sylius_product_attribute_update:
     defaults:
         _controller: sylius.controller.product_attribute:updateAction
         _sylius:
+            form:
+                options:
+                    validation_groups: [ form ]
             viewer:
 
 sylius_product_attribute_table:

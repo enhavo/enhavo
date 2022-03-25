@@ -28,8 +28,18 @@ Sylius\Component\Addressing\Model\Address:
 
 Enhavo\Bundle\ShopBundle\Entity\Product:
     properties:
+        title:
+            - NotBlank: ~
         code:
             - NotBlank: ~
 
 Enhavo\Bundle\ShopBundle\Entity\ProductOption:
     properties:
+
+Sylius\Component\Product\Model\ProductAttribute:
+    properties:
+        code:
+            - NotBlank: { groups: [form] }
+        position:
+            - NotBlank: { groups: [form] }
+

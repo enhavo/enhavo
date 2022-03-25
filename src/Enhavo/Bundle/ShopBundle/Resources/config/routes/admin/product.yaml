@@ -24,19 +24,19 @@ sylius_product_create:
                     main:
                         label: Product
                         translation_domain: EnhavoShopBundle
-                        template: EnhavoShopBundle:admin/resource/product:product.html.twig
+                        template: admin/resource/product/product.html.twig
                     dimension:
                         label: Dimension
                         translation_domain: EnhavoShopBundle
-                        template: EnhavoShopBundle:admin/resource/product:dimension.html.twig
+                        template: admin/resource/product/dimension.html.twig
                     options:
                         label: Options
                         translation_domain: EnhavoShopBundle
-                        template: EnhavoShopBundle:admin/resource/product:options.html.twig
+                        template: admin/resource/product/options.html.twig
                     meta:
                         label: Meta
                         translation_domain: EnhavoShopBundle
-                        template: EnhavoShopBundle:admin/resource/product:meta.html.twig
+                        template: admin/resource/product/meta.html.twig
 
 sylius_product_update:
     options:
@@ -51,19 +51,19 @@ sylius_product_update:
                     main:
                         label: Product
                         translation_domain: EnhavoShopBundle
-                        template: EnhavoShopBundle:admin/resource/product:product.html.twig
+                        template: admin/resource/product/product.html.twig
                     dimension:
                         label: Dimension
                         translation_domain: EnhavoShopBundle
-                        template: EnhavoShopBundle:admin/resource/product:dimension.html.twig
+                        template: admin/resource/product/dimension.html.twig
                     options:
                         label: Options
                         translation_domain: EnhavoShopBundle
-                        template: EnhavoShopBundle:admin/resource/product:options.html.twig
+                        template: admin/resource/product/options.html.twig
                     meta:
                         label: Meta
                         translation_domain: EnhavoShopBundle
-                        template: EnhavoShopBundle:admin/resource/product:meta.html.twig
+                        template: admin/resource/product/meta.html.twig
                 actions:
                     variant:
                         icon: book

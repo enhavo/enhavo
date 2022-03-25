@@ -5,4 +5,4 @@
 {{ form_row(form.code) }}
 {{ form_row(form.stock) }}
 {{ form_row(form.stockTracked) }}
-{{ form_row(form.optionValues) }}
+{% if form.optionValues is defined %}{{ form_row(form.optionValues) }}{% endif %}

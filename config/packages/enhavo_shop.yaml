@@ -2,7 +2,7 @@ sylius_attribute:
     driver: doctrine/orm
     resources:
         product:
-        # Make sure to provide the correct Product class in the subject.
+            # Make sure to provide the correct Product class in the subject.
             subject: Enhavo\Bundle\ShopBundle\Entity\Product
             attribute:
                 classes:
