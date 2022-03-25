@@ -90,7 +90,7 @@ format
 
 **type**: `string`
 
-The date format used for the Datepicker form fields. Uses the date format of vuejs-datepicker. Default is `dd.MM.yyyy`.
+The date format used for the Datepicker form fields. Uses the date format of vue3-datepicker. Default is `dd.MM.yyyy`.
 
 .. code-block:: yaml
 

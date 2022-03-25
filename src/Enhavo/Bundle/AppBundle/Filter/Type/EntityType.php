@@ -29,7 +29,7 @@ class EntityType extends AbstractFilterType
 
     public function buildQuery(FilterQuery $query, $options, $value)
     {
-        if ($value == '') {
+        if ($value == null) {
             return;
         }
 

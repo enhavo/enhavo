@@ -54,7 +54,7 @@ class TenancyFilterType extends AbstractFilterType
     {
         $this->tenantManager->disableDoctrineFilter();
 
-        if($value == '') {
+        if($value == null) {
             return;
         }
 
