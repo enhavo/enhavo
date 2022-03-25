@@ -15,26 +15,10 @@ use Sylius\Bundle\ProductBundle\Form\Type\ProductVariantType as SyliusProductVar
 
 class ProductVariantType extends AbstractType
 {
-    /**
-     * @var string
-     */
-    protected $dataClass;
-
-    /**
-     * @var string
-     */
-    private $taxRateClass;
-
-    /**
-     * ProductVariantType constructor.
-     *
-     * @param $dataClass
-     */
-    public function __construct($dataClass, $taxRateClass)
-    {
-        $this->dataClass = $dataClass;
-        $this->taxRateClass = $taxRateClass;
-    }
+    public function __construct(
+        protected string $dataClass,
+        private string $taxRateClass
+    ) {}
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

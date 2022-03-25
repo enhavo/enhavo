@@ -48,15 +48,15 @@ sylius_product_variant_create:
                     main:
                         label: product_variant.label.variant
                         translation_domain: EnhavoShopBundle
-                        template: EnhavoShopBundle:admin/resource/product-variant:product-variant.html.twig
+                        template: admin/resource/product-variant/product-variant.html.twig
                     customize:
                         label: product_variant.label.customize
                         translation_domain: EnhavoShopBundle
-                        template: EnhavoShopBundle:admin/resource/product-variant:customize.html.twig
+                        template: admin/resource/product-variant/customize.html.twig
                     dimension:
                         label: product_variant.label.dimension
                         translation_domain: EnhavoShopBundle
-                        template: EnhavoShopBundle:admin/resource/product-variant:dimension.html.twig
+                        template: admin/resource/product-variant/dimension.html.twig
 
 sylius_product_variant_update:
     options:
@@ -74,15 +74,15 @@ sylius_product_variant_update:
                     main:
                         label: product_variant.label.variant
                         translation_domain: EnhavoShopBundle
-                        template: EnhavoShopBundle:admin/resource/product-variant:product-variant.html.twig
+                        template: admin/resource/product-variant/product-variant.html.twig
                     customize:
                         label: product_variant.label.customize
                         translation_domain: EnhavoShopBundle
-                        template: EnhavoShopBundle:admin/resource/product-variant:customize.html.twig
+                        template: admin/resource/product-variant/customize.html.twig
                     dimension:
                         label: product_variant.label.dimension
                         translation_domain: EnhavoShopBundle
-                        template: EnhavoShopBundle:admin/resource/product-variant:dimension.html.twig
+                        template: admin/resource/product-variant/dimension.html.twig
 
 sylius_product_variant_table:
     options:
