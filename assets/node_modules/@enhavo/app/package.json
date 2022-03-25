@@ -29,7 +29,7 @@
     "vue-class-component": "^8.0.0-alpha.6",
     "vue-select": "4.0.0-beta.3",
     "vuedraggable": "^4.1.0",
-    "vuejs-datepicker": "^1.6.2",
+    "vue3-datepicker": "^0.3.2",
     "webfonts-loader": "^7.2.0"
   }
 }

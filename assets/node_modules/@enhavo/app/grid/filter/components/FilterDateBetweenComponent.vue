@@ -1,13 +1,13 @@
 <template>
     <div class="view-table-filter-search">
-        <datepicker :typeable="true" :format="data.format" :language="locale" :placeholder="data.labelFrom" :monday-first="true" v-model="data.value.from" @closed="closed"></datepicker>
-        <datepicker :typeable="true" :format="data.format" :language="locale" :placeholder="data.labelTo" :monday-first="true" v-model="data.value.to" @closed="closed"></datepicker>
+        <datepicker :typeable="true" :inputFormat="data.format" :locale="locale" :placeholder="data.labelFrom" v-model="valueFrom" @update:modelValue="update"></datepicker>
+        <datepicker :typeable="true" :inputFormat="data.format" :locale="locale" :placeholder="data.labelTo" v-model="valueTo" @update:modelValue="update"></datepicker>
     </div>
 </template>
 
 <script lang="ts">
-import { Vue, Options, Prop } from "vue-property-decorator";
-import {en, de} from 'vuejs-datepicker/dist/locale'
+import {Vue, Options, Prop, Watch} from "vue-property-decorator";
+import {de, enUS} from 'date-fns/locale';
 import DateBetweenFilter from "@enhavo/app/grid/filter/model/DateBetweenFilter";
 
 @Options({})
@@ -17,11 +17,36 @@ export default class FilterTextComponent extends Vue {
     @Prop()
     data: DateBetweenFilter;
 
+    valueFrom: Date = null;
+    valueTo: Date = null;
+
+    mounted() {
+        this.valueFrom = this.toDate(this.data.value.from);
+        this.valueTo = this.toDate(this.data.value.to);
+    }
+
+    @Watch('data.value.from')
+    valueFromUpdated(newValue: string)
+    {
+        this.valueFrom = this.toDate(newValue);
+    }
+
+    @Watch('data.value.to')
+    valueFromTo(newValue: string)
+    {
+        this.valueTo = this.toDate(newValue);
+    }
+
+    update() {
+        this.data.value.from = this.formatDate(this.valueFrom);
+        this.data.value.to = this.formatDate(this.valueTo);
+    }
+
     get locale() {
         if(this.data.locale == 'de') {
-            return de
+            return de;
         }
-        return en;
+        return enUS;
     }
 
     get hasFromValue(): boolean {
@@ -50,17 +75,38 @@ export default class FilterTextComponent extends Vue {
 
     keyup(event: Event) {
         if(event.keyCode == 13) {
-            this.$emit('apply')
+            this.$emit('apply');
         }
     }
 
-    closed() {
-        // Bugfix: The datepicker value sometimes gets lost when losing focus. To fix this we save it, deliberately unfocus and restore it whenever the datepicker closes.
-        let valueFrom = this.data.value.from;
-        let valueTo = this.data.value.to;
-        $(this.$el).find('input').blur();
-        this.data.value.from = valueFrom;
-        this.data.value.to = valueTo;
+    private formatDate(date: Date): string
+    {
+        if (date === null) {
+            return null;
+        }
+        return date.getFullYear()
+            + '-'
+            + this.addLeadingZeroes(date.getMonth() + 1)
+            + '-'
+            + this.addLeadingZeroes(date.getDate())
+            + ' 00:00:00';
+    }
+
+    private addLeadingZeroes(num: number): string
+    {
+        if (num < 10) {
+            return '0' + num;
+        }
+        return '' + num;
+    }
+
+    private toDate(str: string): Date
+    {
+        if (str === null) {
+            return null;
+        } else {
+            return new Date(str);
+        }
     }
 }
 </script>

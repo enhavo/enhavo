@@ -9,12 +9,12 @@
     "webfont:generate": "node ./assets/node_modules/@enhavo/app/bin/webfont-generate.js"
   },
   "dependencies": {
-    "@symfony/webpack-encore": "^1.8.2",
     "@fullcalendar/core": "^4.2.0",
     "@fullcalendar/daygrid": "^4.2.0",
     "@fullcalendar/list": "^4.2.0",
     "@fullcalendar/timegrid": "^4.2.0",
     "@ibm/plex": "^1.2.3",
+    "@symfony/webpack-encore": "^1.8.2",
     "ansi-to-html": "^0.6.11",
     "argparse": "^2.0.1",
     "async": "^2.6.2",
@@ -57,8 +57,8 @@
     "vue-property-decorator": "v10.0.0-rc.3",
     "vue-select": "4.0.0-beta.3",
     "vue-template-compiler": "^2.5.22",
+    "vue3-datepicker": "^0.3.2",
     "vuedraggable": "^4.1.0",
-    "vuejs-datepicker": "^1.6.2",
     "webfonts-loader": "^7.2.0",
     "yaml": "^1.10.0"
   },

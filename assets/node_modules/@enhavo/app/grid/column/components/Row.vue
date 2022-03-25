@@ -25,6 +25,7 @@ import RowData from "@enhavo/app/grid/column/RowData";
 import * as $ from "jquery";
 import BatchManager from "@enhavo/app/grid/batch/BatchManager";
 import ColumnManager from "@enhavo/app/grid/column/ColumnManager";
+import Grid from "@enhavo/app/grid/Grid";
 
 @Options({})
 export default class extends Vue
@@ -37,6 +38,9 @@ export default class extends Vue
 
     @Inject()
     columnManager: ColumnManager;
+
+    @Inject()
+    grid: Grid;
 
     mounted() {
         $(window).resize(() => {

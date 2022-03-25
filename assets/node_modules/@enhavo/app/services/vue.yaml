@@ -29,7 +29,7 @@ services:
         tags:
             - { name: vue.component, component: 'v-select' }
 
-    'vuejs-datepicker':
+    'vue3-datepicker':
         chunk: 'vue'
         static: true
         tags:
