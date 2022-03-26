@@ -18,84 +18,28 @@ use Sylius\Component\Product\Model\ProductVariantInterface;
 
 class ProductVariant extends SyliusProductVariant
 {
-    /** @var boolean */
-    private $active = true;
+    private ?string $title;
+    private ?FileInterface $picture;
+    private Collection $pictures;
+    private ?int $price;
+    private ?int $reducedPrice;
+    private bool $reduced = false;
+    private ?ShippingCategoryInterface $shippingCategory;
+    private ? TaxRateInterface$taxRate;
+    private bool $shippingRequired = true;
+    private ?int $stock;
+    private bool $stockTracked = false;
+    private ?float $height;
+    private ?float $width;
+    private ?float $depth;
+    private ?float $volume;
+    private ?float $weight;
 
-    /** @var string */
-    private $title;
-
-    /** @var FileInterface */
-    private $picture;
-
-    /** @var \Doctrine\Common\Collections\Collection */
-    private $pictures;
-
-    /** @var integer */
-    private $price;
-
-    /** @var integer */
-    private $reducedPrice;
-
-    /** @var boolean */
-    private $reduced;
-
-    /** @var ShippingCategoryInterface */
-    private $shippingCategory;
-
-    /** @var TaxRateInterface */
-    private $taxRate;
-
-    /** @var boolean */
-    private $shippingRequired;
-
-    /** @var integer */
-    private $stock;
-
-    /** @var boolean */
-    private $stockTracked = false;
-
-    /** @var integer */
-    private $height;
-
-    /** @var integer */
-    private $width;
-
-    /** @var integer */
-    private $depth;
-
-    /** @var integer */
-    private $volume;
-
-    /** @var integer */
-    private $weight;
-
-    /**
-     * ProductVariant constructor.
-     */
     public function __construct()
     {
         parent::__construct();
         $this->position = 0;
         $this->pictures = new ArrayCollection();
-    }
-
-    /**
-     * @return bool
-     */
-    public function isActive(): ?bool
-    {
-        return $this->active;
-    }
-
-    /**
-     * @param bool $active
-     * @return self
-     */
-    public function setActive(?bool $active): ProductVariantInterface
-    {
-        $this->active = $active;
-
-        return $this;
     }
 
     /**
@@ -380,7 +324,9 @@ class ProductVariant extends SyliusProductVariant
      */
     public function getTax(): ?float
     {
-        return intval($this->getPrice() * $this->getProduct()->getTaxRate()->getAmount());
+        $rate = $this->getTaxRate() ? $this->getTaxRate()->getAmount() : 0;
+
+        return intval($this->getPrice() * $rate);
     }
 
     public function getUnitPriceTotal()

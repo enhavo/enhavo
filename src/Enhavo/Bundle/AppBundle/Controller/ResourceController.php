@@ -8,11 +8,9 @@
 
 namespace Enhavo\Bundle\AppBundle\Controller;
 
-use Enhavo\Bundle\AppBundle\Event\ResourceEvents;
 use Enhavo\Bundle\AppBundle\Exception\BatchExecutionException;
 use Enhavo\Component\Type\FactoryInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController as BaseController;

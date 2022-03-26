@@ -160,6 +160,7 @@ product_variant:
       generate: Varianten generieren
   form:
     label:
+      title: Titel
       active: Aktiv
       picture: Bild
       pictures: Bilder
@@ -180,13 +181,14 @@ product_variant:
       customize: Individualisierung
       inventory: Inventar
       stock: Lagerbestand
-      stock_track: Lagerbestand verfolgen?
+      stock_tracked: Lagerbestand verfolgen?
       shipping_category: Versandkategorie
       shipping_required: Versand erforderlich?
   label:
     title: Titel
     options: Optionen
     dimension: Abmessungen
+    customize: Anpassen
     meta: Meta
     create: Erstellen
     edit: Bearbeiten
