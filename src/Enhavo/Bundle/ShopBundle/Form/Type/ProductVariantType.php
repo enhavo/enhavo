@@ -22,7 +22,7 @@ class ProductVariantType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('active', BooleanType::class, array(
+        $builder->add('enabled', BooleanType::class, array(
             'label' => 'product_variant.form.label.active',
             'translation_domain' => 'EnhavoShopBundle',
         ));

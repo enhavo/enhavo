@@ -349,7 +349,8 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
 
     public function getTax()
     {
-        return intval($this->getPrice() * $this->getTaxRate()->getAmount());
+        $rate = $this->getTaxRate() ? $this->getTaxRate()->getAmount() : 0;
+        return intval($this->getPrice() * $rate);
     }
 
     public function getUnitPriceTotal()
@@ -532,5 +533,14 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
         $this->weightUnit = $weightUnit;
 
         return $this;
+    }
+
+    public function getDefaultVariant(): ?ProductVariant
+    {
+        $variants = $this->getEnabledVariants();
+        if (!$variants->isEmpty()) {
+            return $variants->get(0);
+        }
+        return null;
     }
 }

@@ -218,6 +218,7 @@ sylius_product:
                 form: Enhavo\Bundle\ShopBundle\Form\Type\ProductVariantType
                 controller: Enhavo\Bundle\ShopBundle\Controller\ProductVariantController
                 repository: Enhavo\Bundle\ShopBundle\Repository\ProductVariantRepository
+                factory: Enhavo\Bundle\ShopBundle\Factory\ProductVariantFactory
         product_association:
             classes:
                 model: Enhavo\Bundle\ShopBundle\Entity\ProductAssociation

@@ -7,31 +7,16 @@ use Enhavo\Bundle\AppBundle\Factory\Factory;
 use Sylius\Component\Product\Factory\ProductVariantFactoryInterface;
 use Sylius\Component\Product\Model\ProductInterface;
 use Sylius\Component\Product\Model\ProductVariantInterface;
-use Sylius\Component\Resource\Factory\TranslatableFactory;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Intl\Locale;
 
 class ProductVariantFactory extends Factory implements ProductVariantFactoryInterface
 {
-    /**
-     * @var EntityRepository
-     */
-    private $repository;
-
-    /**
-     * @var RequestStack
-     */
-    private $requestStack;
-
-    /**
-     * ProductVariantFactory constructor.
-     * @param EntityRepository $repository
-     */
-    public function __construct(TranslatableFactory $transFactory, RequestStack $requestStack, EntityRepository $repository, string $class)
-    {
+    public function __construct(
+        string $class,
+        private RequestStack $requestStack,
+        private EntityRepository $repository,
+    ) {
         parent::__construct($class);
-        $this->repository = $repository;
-        $this->requestStack = $requestStack;
     }
 
     /**

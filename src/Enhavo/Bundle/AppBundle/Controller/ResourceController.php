@@ -8,7 +8,6 @@
 
 namespace Enhavo\Bundle\AppBundle\Controller;
 
-use Enhavo\Bundle\AppBundle\Event\ResourceEvents;
 use Enhavo\Bundle\AppBundle\Exception\BatchExecutionException;
 use Enhavo\Component\Type\FactoryInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
