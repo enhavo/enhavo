@@ -19,60 +19,25 @@ use Sylius\Component\Resource\Metadata\MetadataInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ViewUtil
 {
-    /** @var array */
-    private $defaultParameters;
-
-    /** @var ParametersParserInterface */
-    private $parametersParser;
-
-    /** @var string */
-    private $configurationClass;
-
-    /** @var RouterInterface */
-    private $router;
-
-    /** @var RequestConfigurationFactory */
-    private $requestConfigurationFactory;
-
-    /** @var AuthorizationCheckerInterface */
-    private $authorizationChecker;
-
-    /** @var RequestStack */
-    private $requestStack;
-
-    /**
-     * ViewerUtil constructor.
-     *
-     * @param ParametersParserInterface $parametersParser
-     * @param $configurationClass
-     * @param array $defaultParameters
-     * @param RouterInterface $router
-     * @param RequestConfigurationFactory $requestConfigurationFactory
-     * @param AuthorizationCheckerInterface $authorizationChecker
-     * @param RequestStack $requestStack
-     */
     public function __construct(
-        ParametersParserInterface $parametersParser,
-        string $configurationClass,
-        array $defaultParameters,
-        RouterInterface $router,
-        RequestConfigurationFactory $requestConfigurationFactory,
-        AuthorizationCheckerInterface $authorizationChecker,
-        RequestStack $requestStack
+        private ParametersParserInterface $parametersParser,
+        private string $configurationClass,
+        private array $defaultParameters,
+        private RouterInterface $router,
+        private RequestConfigurationFactory $requestConfigurationFactory,
+        private AuthorizationCheckerInterface $authorizationChecker,
+        private RequestStack $requestStack,
+        private FlashBag $flashBag,
+        private TranslatorInterface $translator,
     ) {
-        $this->defaultParameters = $defaultParameters;
-        $this->parametersParser = $parametersParser;
-        $this->configurationClass = $configurationClass;
-        $this->router = $router;
-        $this->requestConfigurationFactory = $requestConfigurationFactory;
-        $this->authorizationChecker = $authorizationChecker;
-        $this->requestStack = $requestStack;
     }
 
     /**
@@ -235,5 +200,20 @@ class ViewUtil
                 $request->getSession()->remove('enhavo.post');
             }
         }
+    }
+
+    public function getFlashMessages()
+    {
+        $messages = [];
+        $types = ['success', 'error', 'notice', 'warning'];
+        foreach($types as $type) {
+            foreach($this->flashBag->get($type) as $message) {
+                $messages[] = [
+                    'message' => $this->translator->trans(is_array($message) ? $message['message'] : $message),
+                    'type' => $type
+                ];
+            }
+        }
+        return $messages;
     }
 }

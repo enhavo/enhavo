@@ -14,10 +14,10 @@ use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
 use Enhavo\Bundle\AppBundle\View\AbstractViewType;
 use Enhavo\Bundle\AppBundle\View\ViewData;
 use Enhavo\Bundle\AppBundle\View\ViewUtil;
-use Gedmo\Tree\RepositoryInterface;
 use Sylius\Bundle\ResourceBundle\Controller\SingleResourceProvider;
 use Sylius\Component\Resource\Metadata\MetadataInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
+use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\Component\Resource\ResourceActions;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -71,11 +71,14 @@ class UpdateViewType extends AbstractViewType
         $form->handleRequest($request);
 
         $eventDispatcher = $options['event_dispatcher'];
+        $appEventDispatcher = $options['app_event_dispatcher'];
         if (in_array($request->getMethod(), ['POST', 'PUT', 'PATCH']) && $form->isSubmitted()) {
             if ($form->isValid()) {
                 $resource = $form->getData();
+                $appEventDispatcher->dispatchPreEvent(ResourceActions::CREATE, $configuration, $resource);
                 $eventDispatcher->dispatchPreEvent(ResourceActions::UPDATE, $configuration, $resource);
                 $this->em->flush();
+                $appEventDispatcher->dispatchPostEvent(ResourceActions::CREATE, $configuration, $resource);
                 $eventDispatcher->dispatchPostEvent(ResourceActions::UPDATE, $configuration, $resource);
                 $this->flashBag->add('success', $this->translator->trans('form.message.success', [], 'EnhavoAppBundle'));
                 $route = $request->get('_route');
@@ -91,23 +94,10 @@ class UpdateViewType extends AbstractViewType
                 }
             }
         }
-        $viewData['messages'] = array_merge($viewData['messages'], $this->getFlashMessages());
+        $viewData['messages'] = array_merge($viewData['messages'], $this->util->getFlashMessages());
         $templateData['form'] = $form->createView();
-    }
 
-    private function getFlashMessages(): array
-    {
-        $messages = [];
-        $types = ['success', 'error', 'notice', 'warning'];
-        foreach($types as $type) {
-            foreach($this->flashBag->get($type) as $message) {
-                $messages[] = [
-                    'message' => is_array($message) ? $message['message'] : $message,
-                    'type' => $type
-                ];
-            }
-        }
-        return $messages;
+        return null;
     }
 
     public function findResource(RequestConfiguration $configuration, $options): ?ResourceInterface

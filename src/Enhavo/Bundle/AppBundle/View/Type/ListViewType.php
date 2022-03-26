@@ -105,9 +105,7 @@ class ListViewType extends AbstractViewType
 
         $data['messages'] = [];
         $data['actions'] = $this->actionManager->createActionsViewData($actions);
-        $data['view'] = [
-            'label' => $this->translator->trans($label, [], $options['translation_domain'])
-        ];
+        $data['label'] = $this->translator->trans($label, [], $options['translation_domain']);
     }
 
     private function addTranslationDomain(&$configuration, $translationDomain)

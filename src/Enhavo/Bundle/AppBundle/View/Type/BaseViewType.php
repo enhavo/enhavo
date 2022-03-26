@@ -35,7 +35,7 @@ class BaseViewType extends AbstractType implements ViewTypeInterface
 
     public function handleRequest($options, Request $request, ViewData $viewData, TemplateData $templateData)
     {
-
+        return null;
     }
 
     public function getResponse($options, Request $request, ViewData $viewData, TemplateData $templateData): Response

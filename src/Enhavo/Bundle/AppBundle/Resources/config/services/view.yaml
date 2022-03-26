@@ -35,6 +35,8 @@ services:
             - '@sylius.resource_controller.request_configuration_factory'
             - '@sylius.resource_controller.authorization_checker'
             - '@Symfony\Component\HttpFoundation\RequestStack'
+            - '@session.flash_bag'
+            - '@translator'
 
     Enhavo\Bundle\AppBundle\View\Type\CreateViewType:
         arguments:
@@ -89,8 +91,9 @@ services:
     Enhavo\Bundle\AppBundle\View\Type\DeleteViewType:
         arguments:
             - '@Enhavo\Bundle\AppBundle\View\ViewUtil'
-            - '@session.flash_bag'
-            - '@translator'
+            - '@router'
+            - '@doctrine.orm.entity_manager'
+            - '@sylius.resource_controller.flash_helper'
         tags:
             - { name: enhavo_app.view }
 
