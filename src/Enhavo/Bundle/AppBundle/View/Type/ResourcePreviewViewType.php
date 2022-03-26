@@ -8,6 +8,8 @@
 
 namespace Enhavo\Bundle\AppBundle\View\Type;
 
+use Enhavo\Bundle\AppBundle\Controller\AppEventDispatcher;
+use Enhavo\Bundle\AppBundle\Event\ResourceEvents;
 use Enhavo\Bundle\AppBundle\Preview\StrategyResolver;
 use Enhavo\Bundle\AppBundle\View\AbstractViewType;
 use Enhavo\Bundle\AppBundle\View\TemplateData;
@@ -52,7 +54,12 @@ class ResourcePreviewViewType extends AbstractViewType
         /** @var FactoryInterface $repository */
         $factory = $options['factory'];
 
+        /** @var AppEventDispatcher $appEventDispatcher */
+        $appEventDispatcher = $options['app_event_dispatcher'];
+
         $configuration = $this->util->getRequestConfiguration($options);
+
+        $appEventDispatcher->dispatchInitEvent(ResourceEvents::INIT_PREVIEW, $configuration);
 
         if ($request->query->has('id')) {
             $request->attributes->set('id', $request->query->get('id'));
@@ -98,6 +105,7 @@ class ResourcePreviewViewType extends AbstractViewType
             'new_resource_factory',
             'factory',
             'repository',
+            'app_event_dispatcher',
         ]);
     }
 }

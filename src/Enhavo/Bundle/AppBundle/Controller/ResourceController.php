@@ -12,7 +12,6 @@ use Enhavo\Bundle\AppBundle\Event\ResourceEvents;
 use Enhavo\Bundle\AppBundle\Exception\BatchExecutionException;
 use Enhavo\Component\Type\FactoryInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController as BaseController;
@@ -23,12 +22,23 @@ class ResourceController extends BaseController
     /** @var FactoryInterface */
     private $viewFactory;
 
+    /** @var AppEventDispatcher */
+    private $appEventDispatcher;
+
     /**
      * @param FactoryInterface $viewFactory
      */
     public function setViewFactory(FactoryInterface $viewFactory): void
     {
         $this->viewFactory = $viewFactory;
+    }
+
+    /**
+     * @param AppEventDispatcher $appEventDispatcher
+     */
+    public function setAppEventDispatcher(AppEventDispatcher $appEventDispatcher): void
+    {
+        $this->appEventDispatcher = $appEventDispatcher;
     }
 
     public function createAction(Request $request): Response
@@ -44,6 +54,7 @@ class ResourceController extends BaseController
             'factory' => $this->factory,
             'repository' => $this->repository,
             'event_dispatcher' => $this->eventDispatcher,
+            'app_event_dispatcher' => $this->appEventDispatcher,
         ]);
 
         return $view->getResponse($request);
@@ -65,7 +76,8 @@ class ResourceController extends BaseController
             'factory' => $this->factory,
             'repository' => $this->repository,
             'event_dispatcher' => $this->eventDispatcher,
-            'single_resource_provider' => $this->singleResourceProvider
+            'app_event_dispatcher' => $this->appEventDispatcher,
+            'single_resource_provider' => $this->singleResourceProvider,
         ]);
 
         return $view->getResponse($request);
@@ -138,6 +150,7 @@ class ResourceController extends BaseController
             'new_resource_factory' =>  $this->newResourceFactory,
             'factory' =>  $this->factory,
             'repository' =>  $this->repository,
+            'app_event_dispatcher' => $this->appEventDispatcher,
         ]);
 
         return $view->getResponse($request);
@@ -201,9 +214,21 @@ class ResourceController extends BaseController
     public function deleteAction(Request $request): Response
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
-        $response = parent::deleteAction($request);
 
-        return $response;
+        $view = $this->viewFactory->create([
+            'type' => 'delete',
+            'request_configuration' => $configuration,
+//            'metadata' => $this->metadata,
+//            'resource_factory' => $this->newResourceFactory,
+//            'resource_form_factory' => $this->resourceFormFactory,
+//            'factory' => $this->factory,
+            'repository' => $this->repository,
+            'event_dispatcher' => $this->eventDispatcher,
+            'app_event_dispatcher' => $this->appEventDispatcher,
+            'single_resource_provider' => $this->singleResourceProvider,
+        ]);
+
+        return $view->getResponse($request);
     }
 
     /**

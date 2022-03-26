@@ -35,7 +35,7 @@ class AppEventDispatcher
     public function dispatchPreEvent($eventName, RequestConfiguration $requestConfiguration, ResourceInterface $resource)
     {
         $eventName = $requestConfiguration->getEvent() ?: $eventName;
-        $this->eventDispatcher->dispatch(sprintf('enhavo_app.pre_%s', $eventName), new ResourceControllerEvent($resource));
+        $this->eventDispatcher->dispatch(new ResourceControllerEvent($resource), sprintf('enhavo_app.pre_%s', $eventName));
     }
 
     /**
@@ -44,11 +44,11 @@ class AppEventDispatcher
     public function dispatchPostEvent($eventName, RequestConfiguration $requestConfiguration, ResourceInterface $resource)
     {
         $eventName = $requestConfiguration->getEvent() ?: $eventName;
-        $this->eventDispatcher->dispatch(sprintf('enhavo_app.post_%s', $eventName), new ResourceControllerEvent($resource));
+        $this->eventDispatcher->dispatch(new ResourceControllerEvent($resource), sprintf('enhavo_app.post_%s', $eventName));
     }
 
     public function dispatchInitEvent($eventName, RequestConfiguration $requestConfiguration)
     {
-        $this->eventDispatcher->dispatch($eventName, new PreviewEvent($requestConfiguration->getRequest(), $requestConfiguration));
+        $this->eventDispatcher->dispatch(new PreviewEvent($requestConfiguration->getRequest(), $requestConfiguration), $eventName);
     }
 }

@@ -71,7 +71,7 @@ class CreateViewType extends AbstractViewType
         $data['actions'] = $this->actionManager->createActionsViewData($actions, $options['resource']);
         $data['actionsSecondary'] = $this->actionManager->createActionsViewData($actionsSecondary, $options['resource']);
         $data['tabs'] = $this->createTabViewData($tabs, $options['translation_domain']);
-        $data['messages'] = $this->getFlashMessages();
+        $data['messages'] = $this->util->getFlashMessages();
         $data['modals'] = [];
         $data['cssClass'] = $this->util->getViewerOption('css_class', $configuration);
     }
@@ -124,6 +124,7 @@ class CreateViewType extends AbstractViewType
         $resourceFormFactory = $options['resource_form_factory'];
         $factory = $options['factory'];
         $eventDispatcher = $options['event_dispatcher'];
+        $appEventDispatcher = $options['app_event_dispatcher'];
         $repository = $options['repository'];
 
         $newResource = $resourceFactory->create($configuration, $factory);
@@ -134,8 +135,10 @@ class CreateViewType extends AbstractViewType
         if ($request->isMethod('POST')) {
             if ($form->handleRequest($request)->isValid()) {
                 $newResource = $form->getData();
+                $appEventDispatcher->dispatchPreEvent(ResourceActions::CREATE, $configuration, $newResource);
                 $eventDispatcher->dispatchPreEvent(ResourceActions::CREATE, $configuration, $newResource);
                 $repository->add($newResource);
+                $appEventDispatcher->dispatchPostEvent(ResourceActions::CREATE, $configuration, $newResource);
                 $eventDispatcher->dispatchPostEvent(ResourceActions::CREATE, $configuration, $newResource);
                 $this->flashBag->add('success', $this->translator->trans('form.message.success', [], 'EnhavoAppBundle'));
                 $route = $configuration->getRedirectRoute(null);
@@ -151,8 +154,10 @@ class CreateViewType extends AbstractViewType
                 }
             }
         }
-        $viewData['messages'] = array_merge($viewData['messages'], $this->getFlashMessages());
+        $viewData['messages'] = array_merge($viewData['messages'], $this->util->getFlashMessages());
         $templateData['form'] = $form->createView();
+
+        return null;
     }
 
     private function createTabViewData(array $configuration, ?string $translationDomain): array
@@ -180,21 +185,6 @@ class CreateViewType extends AbstractViewType
         return $default;
     }
 
-    private function getFlashMessages(): array
-    {
-        $messages = [];
-        $types = ['success', 'error', 'notice', 'warning'];
-        foreach($types as $type) {
-            foreach($this->flashBag->get($type) as $message) {
-                $messages[] = [
-                    'message' => is_array($message) ? $message['message'] : $message,
-                    'type' => $type
-                ];
-            }
-        }
-        return $messages;
-    }
-
     public function configureOptions(OptionsResolver $optionsResolver)
     {
         $optionsResolver->setDefaults([
@@ -217,6 +207,7 @@ class CreateViewType extends AbstractViewType
             'factory' => null,
             'repository' => null,
             'event_dispatcher' => null,
+            'app_event_dispatcher' => null,
             'resource' => null,
         ]);
     }
