@@ -66,8 +66,19 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
         ]);
     }
 
-    public function loadUserByUsername($username)
+    public function loadUserByIdentifier($identifier)
     {
-        return $this->findByUsername($username);
+        $user = $this->findByUsername($identifier);
+        if ($user) {
+            return $user;
+        }
+        $user = $this->findByEmail($identifier);
+        return $user;
+    }
+
+    public function loadUserByUsername(string $username)
+    {
+        // Deprecated but still required by the interface
+        return $this->loadUserByIdentifier($username);
     }
 }
