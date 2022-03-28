@@ -43,3 +43,13 @@ services:
         parent: Enhavo\Bundle\AppBundle\Menu\Menu\ListMenu
         tags:
             - { name: enhavo.menu, alias: shop }
+
+    Enhavo\Bundle\ShopBundle\Menu\CategoryMenu:
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
+        tags:
+            - { name: enhavo.menu, alias: shop_category }
+
+    Enhavo\Bundle\ShopBundle\Menu\TagMenuType:
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
+        tags:
+            - { name: enhavo.menu, alias: shop_tag }

@@ -49,5 +49,35 @@
                 </inverse-join-columns>
             </join-table>
         </many-to-many>
+
+        <many-to-many field="categories" target-entity="Enhavo\Bundle\TaxonomyBundle\Model\TermInterface">
+            <cascade>
+                <cascade-persist/>
+                <cascade-refresh/>
+            </cascade>
+            <join-table name="shop_product_category">
+                <join-columns>
+                    <join-column name="product_id" on-delete="CASCADE" />
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="category_id" on-delete="CASCADE" />
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
+
+        <many-to-many field="tags" target-entity="Enhavo\Bundle\TaxonomyBundle\Model\TermInterface">
+            <cascade>
+                <cascade-persist/>
+                <cascade-refresh/>
+            </cascade>
+            <join-table name="shop_product_tag">
+                <join-columns>
+                    <join-column name="product_id" on-delete="CASCADE" />
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="tag_id" on-delete="CASCADE" />
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
     </entity>
 </doctrine-mapping>

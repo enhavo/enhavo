@@ -1,0 +1,113 @@
+enhavo_shop_tag_index:
+    options:
+        expose: true
+    path: /enhavo/shop/tag/index
+    methods: [GET]
+    defaults:
+        _controller: enhavo_taxonomy.controller.term:indexAction
+        _sylius:
+            viewer:
+                label: shop.label.tag
+                translation_domain: EnhavoShopBundle
+                table_route: enhavo_shop_tag_table
+                batch_route: enhavo_shop_tag_batch
+                open_route: enhavo_shop_tag_update
+                actions:
+                    create:
+                        type: create
+                        route: enhavo_shop_tag_create
+
+enhavo_shop_tag_create:
+    options:
+        expose: true
+    path:  /enhavo/shop/tag/create
+    methods: [GET,POST]
+    defaults:
+        _controller: enhavo_taxonomy.controller.term:createAction
+        _sylius:
+            redirect: enhavo_shop_tag_update
+            form: Enhavo\Bundle\ShopBundle\Form\Type\TagType
+            factory:
+                method: createNewOnTaxonomy
+                arguments:
+                    - 'shop_tag'
+
+enhavo_shop_tag_update:
+    options:
+        expose: true
+    path:  /enhavo/shop/tag/update/{id}
+    methods: [GET,POST]
+    defaults:
+        _controller: enhavo_taxonomy.controller.term:updateAction
+        _sylius:
+            form: Enhavo\Bundle\ShopBundle\Form\Type\TagType
+            serialization_groups: ['form']
+            viewer:
+                actions_secondary:
+                    delete:
+                        type: delete
+                        route: enhavo_shop_tag_delete
+
+enhavo_shop_tag_table:
+    options:
+        expose: true
+    path:  /enhavo/shop/tag/table
+    defaults:
+        _controller: enhavo_taxonomy.controller.term:tableAction
+        _sylius:
+            repository:
+                method: findByTaxonomyName
+                arguments:
+                    - 'shop_tag'
+                    - true
+            viewer:
+                translation_domain: EnhavoTaxonomyBundle
+                width: 12
+                columns:
+                    name:
+                        type: property
+                        width: 12
+                        label: term.label.name
+                        translation_domain: EnhavoTaxonomyBundle
+                        property: name
+
+enhavo_shop_tag_delete:
+    options:
+        expose: true
+    path: /enhavo/shop/tag/delete/{id}
+    methods: [POST]
+    defaults:
+        _controller: enhavo_taxonomy.controller.term:deleteAction
+        _sylius:
+            redirect: enhavo_shop_tag_index
+
+enhavo_shop_tag_batch:
+    options:
+        expose: true
+    path: /enhavo/shop/tag/batch
+    methods: [POST]
+    defaults:
+        _controller: enhavo_taxonomy.controller.term:batchAction
+        _sylius:
+            paginate: false
+            criteria:
+                id: $ids
+            batches:
+                delete:
+                    type: delete
+
+enhavo_shop_tag_auto_complete:
+    options:
+        expose: true
+    path: /enhavo/shop/tag/auto_complete
+    defaults:
+        _controller: enhavo_form.controller.auto_complete:searchAction
+        _config:
+            class: Enhavo\Bundle\TaxonomyBundle\Entity\Term
+            repository:
+                method: findByTaxonomyTerm
+                arguments:
+                    - expr:configuration.getSearchTerm()
+                    - 'shop_tag'
+                    - expr:configuration.getLimit()
+            choice_label: name

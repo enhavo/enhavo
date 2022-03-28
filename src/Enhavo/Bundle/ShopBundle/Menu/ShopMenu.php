@@ -43,6 +43,12 @@ class ShopMenu extends ListMenu
                 'taxCategory' => [
                     'type' => 'shop_tax_category'
                 ],
+                'category' => [
+                    'type' => 'shop_category'
+                ],
+                'tag' => [
+                    'type' => 'shop_tag'
+                ],
 //                'voucher' => [
 //                    'type' => 'shop_voucher'
 //                ]

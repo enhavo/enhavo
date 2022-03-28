@@ -1,5 +1,5 @@
-{{ form_row(form.width) }}
-{{ form_row(form.height) }}
-{{ form_row(form.depth) }}
-{{ form_row(form.weight) }}
-{{ form_row(form.volume) }}
+{% if form.width is defined %}{{ form_row(form.width) }}{% endif %}
+{% if form.height is defined %}{{ form_row(form.height) }}{% endif %}
+{% if form.depth is defined %}{{ form_row(form.depth) }}{% endif %}
+{% if form.weight is defined %}{{ form_row(form.weight) }}{% endif %}
+{% if form.volume is defined %}{{ form_row(form.volume) }}{% endif %}

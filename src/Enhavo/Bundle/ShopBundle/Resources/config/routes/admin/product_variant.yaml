@@ -34,8 +34,8 @@ sylius_product_variant_create:
             sortable: true
             redirect: sylius_product_variant_update
             factory:
-                method: createForProductWithId
-                arguments: $productId
+                method: createForProduct
+                arguments: [expr:notFoundOnNull(service('sylius.repository.product').find($productId))]
             viewer:
                 table_route_parameters:
                     productId: $id

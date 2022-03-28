@@ -29,6 +29,8 @@ label:
   order: Order
   sales: Sales
   shop: Shop
+  tag: Tag
+  category: Category
 
 mailer:
   confirm:

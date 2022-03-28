@@ -17,6 +17,7 @@
     "enhavo/content-bundle": "dev-master",
     "enhavo/form-bundle": "dev-master",
     "enhavo/media-bundle": "dev-master",
+    "enhavo/taxonomy-bundle": "dev-master",
     "payum/payum-bundle": "^2.3",
     "sylius/addressing-bundle": "1.10.*",
     "sylius/attribute-bundle": "1.10.*",

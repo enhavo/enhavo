@@ -1,6 +1,6 @@
-{{ form_row(form.enabled) }}
-{{ form_row(form.position) }}
-{{ form_row(form.code) }}
-{{ form_row(form.stock) }}
-{{ form_row(form.stockTracked) }}
+{% if form.enabled is defined %}{{ form_row(form.enabled) }}{% endif %}
+{% if form.position is defined %}{{ form_row(form.position) }}{% endif %}
+{% if form.code is defined %}{{ form_row(form.code) }}{% endif %}
+{% if form.stock is defined %}{{ form_row(form.stock) }}{% endif %}
+{% if form.stockTracked is defined %}{{ form_row(form.stockTracked) }}{% endif %}
 {% if form.optionValues is defined %}{{ form_row(form.optionValues) }}{% endif %}

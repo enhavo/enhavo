@@ -1,12 +1,12 @@
-{{ form_row(form.active) }}
-{{ form_row(form.title) }}
-{{ form_row(form.picture) }}
-{{ form_row(form.pictures) }}
-{{ form_row(form.code) }}
-{{ form_row(form.price) }}
-{{ form_row(form.reducedPrice) }}
-{{ form_row(form.reduced) }}
-{{ form_row(form.taxRate) }}
-{{ form_row(form.shippingCategory) }}
-{{ form_row(form.associations) }}
-{{ form_row(form.attributes) }}
+{% if form.active is defined %}{{ form_row(form.active) }}{% endif %}
+{% if form.title is defined %}{{ form_row(form.title) }}{% endif %}
+{% if form.picture is defined %}{{ form_row(form.picture) }}{% endif %}
+{% if form.pictures is defined %}{{ form_row(form.pictures) }}{% endif %}
+{% if form.code is defined %}{{ form_row(form.code) }}{% endif %}
+{% if form.price is defined %}{{ form_row(form.price) }}{% endif %}
+{% if form.reducedPrice is defined %}{{ form_row(form.reducedPrice) }}{% endif %}
+{% if form.reduced is defined %}{{ form_row(form.reduced) }}{% endif %}
+{% if form.taxRate is defined %}{{ form_row(form.taxRate) }}{% endif %}
+{% if form.shippingCategory is defined %}{{ form_row(form.shippingCategory) }}{% endif %}
+{% if form.associations is defined %}{{ form_row(form.associations) }}{% endif %}
+{% if form.attributes is defined %}{{ form_row(form.attributes) }}{% endif %}

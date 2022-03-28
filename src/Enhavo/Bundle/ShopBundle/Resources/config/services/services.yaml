@@ -23,7 +23,6 @@ services:
     Enhavo\Bundle\ShopBundle\Manager\ProductManager:
         arguments:
 
-
     Enhavo\Bundle\ShopBundle\EventListener\ProductSubscriber:
         arguments:
             - '@Enhavo\Bundle\ShopBundle\Manager\ProductManager'
@@ -36,16 +35,6 @@ services:
             - '@sylius.translation_locale_provider'
         tags:
             - { name: kernel.event_subscriber }
-
-    sylius.factory.product_variant:
-        class: '%sylius.factory.product_variant.class%'
-        arguments:
-            - '%sylius.model.product_variant.class%'
-            - '@request_stack'
-            - '@sylius.repository.product'
-
-    sylius.custom_factory.product_variant:
-        alias: sylius.factory.product_variant
 
 #    enhavo_shop.listener.doctrine_sylius_meta:
 #        class: Enhavo\Bundle\ShopBundle\EventListener\DoctrineSyliusMetaListener
