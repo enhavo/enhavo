@@ -70,7 +70,7 @@ class ResetPasswordController extends AbstractUserController
 
                 /** @var ResetPassword $data */
                 $data = $form->getData();
-                $user = $this->userRepository->findByUsername($data->getUsername());
+                $user = $this->userRepository->loadUserByIdentifier($data->getUsername());
 
                 $message = $this->translator->trans('reset_password.flash.message.success', [], 'EnhavoUserBundle');
                 $this->addFlash('success', $message);

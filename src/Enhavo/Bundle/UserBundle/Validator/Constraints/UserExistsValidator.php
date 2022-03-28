@@ -27,7 +27,7 @@ class UserExistsValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint)
     {
         if (is_string($value)) {
-            $user = $this->userRepository->findByUsername($value);
+            $user = $this->userRepository->loadUserByIdentifier($value);
             if ($user === null) {
                 $this->context->buildViolation($constraint->message)->addViolation();
             }
