@@ -44,10 +44,6 @@ class ProductVariantFactory extends Factory implements ProductVariantFactoryInte
             'id' => $productId
         ]);
 
-        /** @var ProductVariantInterface $variant */
-        $variant = $this->createNew();
-        $variant->setProduct($product);
-
-        return $variant;
+        return $this->createForProduct($product);
     }
 }
