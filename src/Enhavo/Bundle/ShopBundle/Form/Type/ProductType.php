@@ -15,6 +15,8 @@ use Enhavo\Bundle\FormBundle\Form\Type\ListType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Enhavo\Bundle\RoutingBundle\Form\Type\RouteType;
 use Enhavo\Bundle\ShopBundle\Entity\Product;
+use Enhavo\Bundle\TaxonomyBundle\Form\Type\TermAutoCompleteChoiceType;
+use Enhavo\Bundle\TaxonomyBundle\Form\Type\TermTreeChoiceType;
 use Sylius\Bundle\ProductBundle\Form\Type\ProductAttributeValueType;
 use Sylius\Bundle\ShippingBundle\Form\Type\ShippingCategoryChoiceType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -212,13 +214,19 @@ class ProductType extends AbstractType
             ]
         ]);
 
-//        $builder->add('variants', ListType::class, [
-//            'entry_type' => ProductVariantGenerationType::class,
-//            'allow_add' => false,
-//            'allow_delete' => true,
-//            'by_reference' => false,
-//        ]);
-//        $builder->addEventSubscriber($this->generateProductVariantsSubscriber);
+        $builder->add('categories', TermTreeChoiceType::class, [
+            'multiple' => true,
+            'taxonomy' => 'shop_category'
+        ]);
+
+        $builder->add('tags', TermAutoCompleteChoiceType::class, [
+            'multiple' => true,
+            'route' => 'enhavo_article_tag_auto_complete',
+            'translation_domain' => 'EnhavoArticleBundle',
+            'create_route' => 'enhavo_article_tag_create',
+            'edit_route' => 'enhavo_article_tag_update',
+            'view_key' => 'article_tags'
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

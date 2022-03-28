@@ -22,12 +22,6 @@ enhavo_shop_theme_cart_item_add:
         _controller: sylius.controller.cart_item:addAction
         _format: json
 
-enhavo_shop_theme_cart_item_remove:
-    path: /cart/{id}/remove.{_format}
-    defaults:
-        _controller: sylius.controller.cart_item:removeAction
-        _format: json
-
 enhavo_shop_theme_cart_summary:
     path: /cart/summary.{_format}
     defaults:
@@ -35,3 +29,31 @@ enhavo_shop_theme_cart_summary:
         _format: html
         _sylius:
             template: EnhavoShopBundle:Theme:Cart/summary.html.twig
+
+enhavo_shop_theme_cart_add_item:
+    path: /cart/add
+    methods: [POST]
+    defaults:
+        _controller: sylius.controller.order_item:addAction
+        _format: json
+        _sylius:
+            factory:
+                method: createForProduct
+                arguments: [expr:notFoundOnNull(service('sylius.repository.product').find($productId))]
+            form:
+                type: Sylius\Bundle\CoreBundle\Form\Type\Order\AddToCartType
+                options:
+                    product: expr:notFoundOnNull(service('sylius.repository.product').find($productId))
+            redirect:
+                route: sylius_shop_cart_summary
+                parameters: {}
+            flash: sylius.cart.add_item
+
+enhavo_shop_theme_cart_item_remove:
+    path: /cart/{id}/remove
+    methods: [DELETE]
+    defaults:
+        _controller: sylius.controller.order_item:removeAction
+        _format: json
+        _sylius:
+            flash: sylius.cart.remove_item

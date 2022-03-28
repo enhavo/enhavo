@@ -13,7 +13,7 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Taxation\Model\TaxRateInterface;
 use Sylius\Component\Product\Model\ProductInterface as SyliusProductInterface;
 
-interface ProductInterface extends ResourceInterface,SyliusProductInterface
+interface ProductInterface extends ResourceInterface, SyliusProductInterface
 {
     /**
      * @return integer

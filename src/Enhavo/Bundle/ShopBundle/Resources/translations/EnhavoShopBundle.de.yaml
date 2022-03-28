@@ -29,6 +29,8 @@ label:
   order: Bestellung
   sales: Umsatz
   shop: Shop
+  tag: Tag
+  category: Kategorie
 
 mailer:
   confirm:

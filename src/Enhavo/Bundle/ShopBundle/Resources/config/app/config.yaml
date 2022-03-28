@@ -243,6 +243,15 @@ sylius_taxation:
                 controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
                 form: Enhavo\Bundle\ShopBundle\Form\Type\TaxRateType
 
+enhavo_taxonomy:
+    taxonomies:
+        shop_category:
+            label: label.category
+            translation_domain: EnhavoShopBundle
+        shop_tag:
+            label: label.tag
+            translation_domain: EnhavoShopBundle
+
 #winzou_state_machine:
 #    sylius_payment:
 #        class: "%sylius.model.payment.class%"

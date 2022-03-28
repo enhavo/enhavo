@@ -10,11 +10,13 @@ namespace Enhavo\Bundle\ShopBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Enhavo\Bundle\ArticleBundle\Entity\Article;
 use Enhavo\Bundle\RoutingBundle\Entity\Route;
 use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
 use Enhavo\Bundle\RoutingBundle\Model\Routeable;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\ShopBundle\Model\ProductInterface;
+use Enhavo\Bundle\TaxonomyBundle\Model\TermInterface;
 use Sylius\Component\Product\Model\Product as SyliusProduct;
 use Sylius\Component\Taxation\Model\TaxRateInterface;
 use Sylius\Component\Shipping\Model\ShippingCategoryInterface;
@@ -81,6 +83,9 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
     /** @var Route */
     private $route;
 
+    private Collection $categories;
+    private Collection $tags;
+
     /**
      * Product constructor.
      */
@@ -88,6 +93,8 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
     {
         parent::__construct();
         $this->pictures = new ArrayCollection();
+        $this->categories = new ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
 
     /**
@@ -542,5 +549,74 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
             return $variants->get(0);
         }
         return null;
+    }
+
+
+    /**
+     * Add category
+     *
+     * @param TermInterface $category
+     *
+     * @return Article
+     */
+    public function addCategory(TermInterface $category)
+    {
+        $this->categories[] = $category;
+
+        return $this;
+    }
+
+    /**
+     * Remove category
+     *
+     * @param TermInterface $category
+     */
+    public function removeCategory(TermInterface $category)
+    {
+        $this->categories->removeElement($category);
+    }
+
+    /**
+     * Get categories
+     *
+     * @return Collection|TermInterface[]
+     */
+    public function getCategories()
+    {
+        return $this->categories;
+    }
+
+    /**
+     * Add tag
+     *
+     * @param TermInterface $tag
+     *
+     * @return Article
+     */
+    public function addTag(TermInterface $tag)
+    {
+        $this->tags[] = $tag;
+
+        return $this;
+    }
+
+    /**
+     * Remove tag
+     *
+     * @param TermInterface $tag
+     */
+    public function removeTag(TermInterface $tag)
+    {
+        $this->tags->removeElement($tag);
+    }
+
+    /**
+     * Get tags
+     *
+     * @return Collection|TermInterface[]
+     */
+    public function getTags()
+    {
+        return $this->tags;
     }
 }
