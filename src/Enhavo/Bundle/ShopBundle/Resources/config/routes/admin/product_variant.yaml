@@ -36,7 +36,6 @@ sylius_product_variant_create:
             factory:
                 method: createForProductWithId
                 arguments: $productId
-            form: Enhavo\Bundle\ShopBundle\Form\Type\ProductVariantType
             viewer:
                 table_route_parameters:
                     productId: $id
@@ -68,7 +67,6 @@ sylius_product_variant_update:
         _sylius:
             label: product_variant.label.edit
             translation_domain: EnhavoShopBundle
-            form: Enhavo\Bundle\ShopBundle\Form\Type\ProductVariantType
             viewer:
                 tabs:
                     main:
