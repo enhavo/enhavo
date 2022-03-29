@@ -1,6 +1,6 @@
 <?php
 
-namespace Enhavo\Bundle\ArticleBundle\Form\Type;
+namespace Enhavo\Bundle\ShopBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
