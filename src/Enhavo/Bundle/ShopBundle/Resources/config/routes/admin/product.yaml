@@ -101,7 +101,7 @@ sylius_product_table:
                         type: currency
                         currency: €
                     active:
-                        property: active
+                        property: enabled
                         width: 1
                         label: product.form.label.active
                         translation_domain: EnhavoShopBundle
