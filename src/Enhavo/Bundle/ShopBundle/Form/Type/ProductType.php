@@ -221,11 +221,11 @@ class ProductType extends AbstractType
 
         $builder->add('tags', TermAutoCompleteChoiceType::class, [
             'multiple' => true,
-            'route' => 'enhavo_article_tag_auto_complete',
-            'translation_domain' => 'EnhavoArticleBundle',
-            'create_route' => 'enhavo_article_tag_create',
-            'edit_route' => 'enhavo_article_tag_update',
-            'view_key' => 'article_tags'
+            'route' => 'enhavo_shop_tag_auto_complete',
+            'translation_domain' => 'EnhavoShopBundle',
+            'create_route' => 'enhavo_shop_tag_create',
+            'edit_route' => 'enhavo_shop_tag_update',
+            'view_key' => 'shop_tags'
         ]);
     }
 
