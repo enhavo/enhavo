@@ -185,6 +185,8 @@ enhavo_routing:
                 prefix:
                     type: prefix
                     properties: title
+                route_name:
+                    type: route_name
 
 jms_serializer:
     metadata:
