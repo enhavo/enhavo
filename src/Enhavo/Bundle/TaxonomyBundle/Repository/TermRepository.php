@@ -82,4 +82,20 @@ class TermRepository extends EntityRepository
         }
         return null;
     }
+
+    public function findOneBySlugAndTaxonomy($slug, $taxonomy)
+    {
+        $query = $this->createQueryBuilder('t');
+        $query->join('t.taxonomy', 'ta');
+        $query->andWhere('ta.name = :taxonomy');
+        $query->setParameter('taxonomy', $taxonomy);
+        $query->andWhere('t.slug = :slug');
+        $query->setParameter('slug', $slug);
+
+        $result = $query->getQuery()->getResult();
+        if ($result && count($result)) {
+            return $result[0];
+        }
+        return null;
+    }
 }

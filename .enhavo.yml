@@ -102,7 +102,7 @@ subtrees:
     TaxonomyBundle:
         url: 'git@github.com:enhavo/EnhavoTaxonomyBundle.git'
         prefix: src/Enhavo/Bundle/TaxonomyBundle
-        package: taxonomy-bundle
+        package: enhavo/taxonomy-bundle
     TemplateBundle:
         url: 'git@github.com:enhavo/EnhavoTemplateBundle.git'
         prefix: src/Enhavo/Bundle/TemplateBundle
