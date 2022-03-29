@@ -36,8 +36,6 @@ class HtmlSanitizer
 
         $config = \HTMLPurifier_Config::createDefault();
         $config->set('Cache.SerializerPath', $this->serializationPath);
-
-        $config->set('Cache.SerializerPath', $this->serializationPath);
         $config->set('Attr.AllowedFrameTargets', ['_blank', '_self']);
 
         foreach ($options as $key => $optionValue) {
