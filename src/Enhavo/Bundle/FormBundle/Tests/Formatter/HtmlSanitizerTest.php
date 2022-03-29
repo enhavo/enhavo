@@ -21,5 +21,6 @@ class HtmlSanitizerTest extends TestCase
         $this->assertEquals('<p>Test</p>', $sanitizer->sanitize('<script>Hello</script><p>Test</p>'));
         $this->assertEquals('Hello<p>Test</p>', $sanitizer->sanitize('<iframe>Hello</iframe><p>Test</p>'));
         $this->assertEquals('Test', $sanitizer->sanitize('Test'));
+        $this->assertEquals('<a href="url" target="_blank" rel="noreferrer noopener">Test</a>', $sanitizer->sanitize('<a href="url" target="_blank">Test</a>'));
     }
 }
