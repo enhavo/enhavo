@@ -29,9 +29,6 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
     /** @var string */
     private $title;
 
-    /** @var boolean */
-    private $active = true;
-
     /** @var \Doctrine\Common\Collections\Collection */
     private $pictures;
 
@@ -412,25 +409,6 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
     public function setSlug(?string $slug = null): void
     {
         $this->slug = $slug;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isActive(): ?bool
-    {
-        return $this->active;
-    }
-
-    /**
-     * @param bool $active
-     * @return self
-     */
-    public function setActive(?bool $active): ProductInterface
-    {
-        $this->active = $active;
-
-        return $this;
     }
 
     /**

@@ -65,7 +65,7 @@ class ProductType extends AbstractType
                 }
             })
         ;
-        $builder->add('active', BooleanType::class, array(
+        $builder->add('enabled', BooleanType::class, array(
             'label' => 'product.form.label.active',
             'translation_domain' => 'EnhavoShopBundle',
         ));
