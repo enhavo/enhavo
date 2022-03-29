@@ -23,62 +23,26 @@ use Sylius\Component\Shipping\Model\ShippingCategoryInterface;
 
 class Product extends SyliusProduct implements ProductInterface, Routeable
 {
-    /** @var string */
-    private $slug;
-
-    /** @var string */
-    private $title;
-
-    /** @var \Doctrine\Common\Collections\Collection */
-    private $pictures;
-
-    /** @var FileInterface */
-    private $picture;
-
-    /** @var integer */
-    private $price;
-
-    /** @var integer */
-    private $reducedPrice;
-
-    /** @var boolean */
-    private $reduced;
-
-    /** @var ShippingCategoryInterface */
-    private $shippingCategory;
-
-    /** @var TaxRateInterface */
-    private $taxRate;
-
-    /** @var string */
-    private $lengthUnit;
-
-    /** @var integer */
-    private $height;
-
-    /** @var integer */
-    private $width;
-
-    /** @var integer */
-    private $depth;
-
-    /** @var string */
-    private $volumeUnit;
-
-    /** @var integer */
-    private $volume;
-
-    /** @var string */
-    private $weightUnit;
-
-    /** @var integer */
-    private $weight;
-
-    /** @var boolean */
-    private $shippingRequired;
-
-    /** @var Route */
-    private $route;
+    private ?string $slug;
+    private ?string $title;
+    private ?string $description;
+    private Collection $pictures;
+    private ?FileInterface $picture;
+    private ?int $price;
+    private ?int $reducedPrice;
+    private ?bool $reduced=false;
+    private ?ShippingCategoryInterface $shippingCategory;
+    private ?TaxRateInterface $taxRate;
+    private ?string $lengthUnit;
+    private ?int $height;
+    private ?int $width;
+    private ?int $depth;
+    private ?string $volumeUnit;
+    private ?int $volume;
+    private ?string $weightUnit;
+    private ?int $weight;
+    private ?bool $shippingRequired;
+    private ?Route $route;
 
     private Collection $categories;
     private Collection $tags;
@@ -596,5 +560,21 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
     public function getTags()
     {
         return $this->tags;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string|null $description
+     */
+    public function setDescription(?string $description): void
+    {
+        $this->description = $description;
     }
 }

@@ -3,6 +3,8 @@
 namespace Enhavo\Bundle\ShopBundle\Form\Type;
 
 use Enhavo\Bundle\FormBundle\Form\Type\BooleanType;
+use Enhavo\Bundle\FormBundle\Form\Type\WysiwygType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Enhavo\Bundle\FormBundle\Form\Type\CurrencyType;
@@ -29,6 +31,11 @@ class ProductVariantType extends AbstractType
 
         $builder->add('title', TextType::class, array(
             'label' => 'product_variant.form.label.title',
+            'translation_domain' => 'EnhavoShopBundle',
+        ));
+
+        $builder->add('description', WysiwygType::class, array(
+            'label' => 'product_variant.form.label.description',
             'translation_domain' => 'EnhavoShopBundle',
         ));
 

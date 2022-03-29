@@ -134,6 +134,7 @@ product:
         type: Vereinigungstypen
       code: Code
       title: Titel
+      description: Beschreibung
       picture: Bild
       pictures: Bilder
       price: Preis
@@ -163,6 +164,7 @@ product_variant:
   form:
     label:
       title: Titel
+      description: Beschreibung
       active: Aktiv
       picture: Bild
       pictures: Bilder

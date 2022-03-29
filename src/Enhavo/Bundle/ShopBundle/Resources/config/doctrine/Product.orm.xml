@@ -2,6 +2,7 @@
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
     <entity name="Enhavo\Bundle\ShopBundle\Entity\Product" table="shop_product">
         <field name="title" />
+        <field name="description" type="text" nullable="true" />
         <field name="price" type="integer" nullable="true" />
         <field name="reducedPrice" type="integer" nullable="true" />
         <field name="reduced" type="boolean" nullable="true" />

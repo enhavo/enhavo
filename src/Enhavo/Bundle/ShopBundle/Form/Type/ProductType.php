@@ -12,6 +12,7 @@ namespace Enhavo\Bundle\ShopBundle\Form\Type;
 use Enhavo\Bundle\FormBundle\Form\Type\BooleanType;
 use Enhavo\Bundle\FormBundle\Form\Type\CurrencyType;
 use Enhavo\Bundle\FormBundle\Form\Type\ListType;
+use Enhavo\Bundle\FormBundle\Form\Type\WysiwygType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Enhavo\Bundle\RoutingBundle\Form\Type\RouteType;
 use Enhavo\Bundle\ShopBundle\Entity\Product;
@@ -72,6 +73,11 @@ class ProductType extends AbstractType
 
         $builder->add('title', TextType::class, array(
             'label' => 'product.form.label.title',
+            'translation_domain' => 'EnhavoShopBundle',
+        ));
+
+        $builder->add('description', WysiwygType::class, array(
+            'label' => 'product.form.label.description',
             'translation_domain' => 'EnhavoShopBundle',
         ));
 
