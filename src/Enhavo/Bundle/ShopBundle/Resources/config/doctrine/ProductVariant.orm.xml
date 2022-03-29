@@ -2,6 +2,7 @@
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
     <entity name="Enhavo\Bundle\ShopBundle\Entity\ProductVariant" table="shop_product_variant" repository-class="Enhavo\Bundle\ShopBundle\Repository\ProductVariantRepository">
         <field name="title" nullable="true" />
+        <field name="description" type="text" nullable="true" />
         <field name="price" type="integer" nullable="true" />
         <field name="reducedPrice" type="integer" nullable="true" />
         <field name="reduced" type="boolean" nullable="true" />

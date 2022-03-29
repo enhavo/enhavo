@@ -123,6 +123,7 @@ product:
       active: Active
       code: Code
       title: Title
+      description: Description
       picture: Picture
       pictures: Pictures
       price: Price
@@ -172,6 +173,7 @@ product_variant:
     label:
       active: Active
       title: Title
+      description: Description
       options: Options
       picture: Picture
       pictures: Pictures
