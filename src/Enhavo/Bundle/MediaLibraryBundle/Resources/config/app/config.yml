@@ -1,6 +1,7 @@
 enhavo_app:
     template_paths:
         enhavo_media_library:
+            alias: EnhavoMediaLibrary
             path: '@EnhavoMediaLibraryBundle/Resources/views'
             priority: 10
     apps:

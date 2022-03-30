@@ -24,7 +24,7 @@ class MediaExtension extends AbstractTypeExtension
         ]);
     }
 
-    public function getExtendedTypes()
+    public static function getExtendedTypes(): iterable
     {
         return [MediaType::class];
     }
