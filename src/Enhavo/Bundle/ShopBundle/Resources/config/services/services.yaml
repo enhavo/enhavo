@@ -23,9 +23,19 @@ services:
     Enhavo\Bundle\ShopBundle\Manager\ProductManager:
         arguments:
 
+    Enhavo\Bundle\ShopBundle\Manager\ProductVariantManager:
+        arguments:
+
     Enhavo\Bundle\ShopBundle\EventListener\ProductSubscriber:
         arguments:
             - '@Enhavo\Bundle\ShopBundle\Manager\ProductManager'
+            - '@Enhavo\Bundle\ShopBundle\Manager\ProductVariantManager'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    Enhavo\Bundle\ShopBundle\EventListener\ProductVariantSubscriber:
+        arguments:
+            - '@Enhavo\Bundle\ShopBundle\Manager\ProductVariantManager'
         tags:
             - { name: kernel.event_subscriber }
 

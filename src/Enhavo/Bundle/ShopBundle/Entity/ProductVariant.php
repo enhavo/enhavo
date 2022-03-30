@@ -18,7 +18,7 @@ use Sylius\Component\Product\Model\ProductVariantInterface;
 
 class ProductVariant extends SyliusProductVariant
 {
-    private ?string $title;
+    private ?string $title = null;
     private ?string $description;
     private ?FileInterface $picture;
     private Collection $pictures;
@@ -401,5 +401,15 @@ class ProductVariant extends SyliusProductVariant
     public function setDescription(?string $description): void
     {
         $this->description = $description;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->getTitle();
+    }
+
+    public function setName(?string $name): void
+    {
+        $this->setTitle($name);
     }
 }

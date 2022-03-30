@@ -9,22 +9,12 @@
 namespace Enhavo\Bundle\ShopBundle\Manager;
 
 use Enhavo\Bundle\AppBundle\Util\NameTransformer;
+use Enhavo\Bundle\RoutingBundle\Slugifier\Slugifier;
 
 class ProductManager
 {
-    /** @var NameTransformer */
-    private $nameTransformer;
-
-    /**
-     * ProductManager constructor.
-     */
-    public function __construct()
-    {
-        $this->nameTransformer = new NameTransformer();
-    }
-
     public function generateCode($name)
     {
-        return $this->nameTransformer->kebabCase($name);
+        return substr(md5(microtime()),rand(0,26),4) . '-' . Slugifier::slugify($name);
     }
 }
