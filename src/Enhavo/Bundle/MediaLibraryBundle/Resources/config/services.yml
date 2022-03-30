@@ -3,10 +3,9 @@ services:
         class: Enhavo\Bundle\MediaLibraryBundle\Controller\MediaLibraryController
         public: true
         arguments:
-            - '@view.factory'
-            - '@fos_rest.view_handler'
             - '@Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryManager'
-            - '@enhavo_media.repository.file'
+            - '@Enhavo\Bundle\MediaLibraryBundle\Repository\FileRepository'
+            - '@Enhavo\Component\Type\FactoryInterface[View]'
         calls:
             - [setContainer, ['@service_container']]
 
@@ -35,6 +34,14 @@ services:
             - [ setContainer, ['@service_container']]
         tags:
             - { name: enhavo.media_extension , alias: media_library }
+
+    Enhavo\Bundle\MediaLibraryBundle\View\Type\MediaLibraryViewType:
+        arguments:
+            - '@enhavo_app.action_manager'
+            - '@Enhavo\Bundle\AppBundle\View\ViewUtil'
+            - '@translator'
+        tags:
+            - { name: enhavo_app.view }
 
     Enhavo\Bundle\MediaLibraryBundle\Viewer\MediaLibraryViewer:
         public: true
