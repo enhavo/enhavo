@@ -22,9 +22,11 @@ services:
 
     Enhavo\Bundle\ShopBundle\Manager\ProductManager:
         arguments:
+            - '@doctrine.orm.entity_manager'
 
     Enhavo\Bundle\ShopBundle\Manager\ProductVariantManager:
         arguments:
+            - '@doctrine.orm.entity_manager'
 
     Enhavo\Bundle\ShopBundle\EventListener\ProductSubscriber:
         arguments:
