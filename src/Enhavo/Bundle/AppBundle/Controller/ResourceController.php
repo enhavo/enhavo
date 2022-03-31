@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Controller;
 
+use Enhavo\Bundle\AppBundle\Batch\BatchManager;
 use Enhavo\Bundle\AppBundle\Exception\BatchExecutionException;
 use Enhavo\Component\Type\FactoryInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -24,6 +25,9 @@ class ResourceController extends BaseController
     /** @var AppEventDispatcher */
     private $appEventDispatcher;
 
+    /** @var BatchManager */
+    private $batchManager;
+
     /**
      * @param FactoryInterface $viewFactory
      */
@@ -38,6 +42,14 @@ class ResourceController extends BaseController
     public function setAppEventDispatcher(AppEventDispatcher $appEventDispatcher): void
     {
         $this->appEventDispatcher = $appEventDispatcher;
+    }
+
+    /**
+     * @param BatchManager $batchManager
+     */
+    public function setBatchManager(BatchManager $batchManager): void
+    {
+        $this->batchManager = $batchManager;
     }
 
     public function createAction(Request $request): Response
@@ -197,6 +209,7 @@ class ResourceController extends BaseController
     public function listDataAction(Request $request): Response
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+        $configuration->getParameters()->set('paginate', false);
         $this->isGrantedOr403($configuration, ResourceActions::INDEX);
         $resources = $this->resourcesCollectionProvider->get($configuration, $this->repository);
 

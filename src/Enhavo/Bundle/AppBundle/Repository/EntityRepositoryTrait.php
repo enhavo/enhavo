@@ -39,7 +39,10 @@ trait EntityRepositoryTrait
     public function filter(FilterQuery $filterQuery)
     {
         $query = $this->buildFilterQuery($filterQuery);
-        return $this->getPaginator($query);
+        if ($filterQuery->isPaginated()) {
+            return $this->getPaginator($query);
+        }
+        return $query->getQuery()->getResult();
     }
 
     /**

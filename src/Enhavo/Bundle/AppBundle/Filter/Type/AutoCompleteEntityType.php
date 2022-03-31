@@ -43,7 +43,7 @@ class AutoCompleteEntityType extends AbstractFilterType
     protected function getInitialValue($options)
     {
         if ($options['initial_value'] === null) {
-            return 0;
+            return null;
         }
 
         if (!$options['initial_value_repository']) {

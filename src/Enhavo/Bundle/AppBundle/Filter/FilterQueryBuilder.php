@@ -41,11 +41,12 @@ class FilterQueryBuilder
         $filters = $requestConfiguration->getFilters();
         $criteria = $requestConfiguration->getCriteria();
         $sorting = $requestConfiguration->getSorting();
+        $paginated = $requestConfiguration->isPaginated();
 
-        return $this->buildQueryFromRequest($request, $filters, $requestConfiguration->getMetadata()->getClass('model'), $sorting, $criteria);
+        return $this->buildQueryFromRequest($request, $filters, $requestConfiguration->getMetadata()->getClass('model'), $sorting, $criteria, $paginated);
     }
 
-    public function buildQueryFromRequest(Request $request, $filters, $class, $sorting = [], $criteria = [])
+    public function buildQueryFromRequest(Request $request, $filters, $class, $sorting = [], $criteria = [], $paginated = true)
     {
         $filterQuery = $this->filterQueryFactory->create($class);
 
@@ -56,7 +57,11 @@ class FilterQueryBuilder
         }
 
         foreach($criteria as $property => $value) {
-            $filterQuery->addWhere($property, FilterQuery::OPERATOR_EQUALS, $value);
+            if (is_array($value)) {
+                $filterQuery->addWhere($property, FilterQuery::OPERATOR_IN, $value);
+            } else {
+                $filterQuery->addWhere($property, FilterQuery::OPERATOR_EQUALS, $value);
+            }
         }
 
         $filterValues = $this->getRequestFilterValues($request);
@@ -66,6 +71,7 @@ class FilterQueryBuilder
         }
 
         $filterQuery->setHydrate($request->get('hydrate', FilterQuery::HYDRATE_OBJECT));
+        $filterQuery->setPaginated($paginated);
 
         return $filterQuery;
     }

@@ -8,36 +8,48 @@
 
 namespace Enhavo\Bundle\TaxonomyBundle\Repository;
 
+use Enhavo\Bundle\AppBundle\Filter\FilterQuery;
 use Enhavo\Bundle\AppBundle\Repository\EntityRepository;
 
 class TermRepository extends EntityRepository
 {
-    public function findByTaxonomyName($name, $paginator = false)
+    public function findByTaxonomyName($name, ?FilterQuery $filterQuery = null)
     {
-        $query = $this->createQueryBuilder('t');
-        $query->join('t.taxonomy', 'ta');
+        $pagination = false;
+        if ($filterQuery) {
+            $query = $this->buildFilterQuery($filterQuery);
+            $pagination = $filterQuery->isPaginated();
+        } else {
+            $query = $this->createQueryBuilder('a');
+        }
+
+        $query->join('a.taxonomy', 'ta');
         $query->andWhere('ta.name = :name');
         $query->setParameter('name', $name);
 
-        if($paginator) {
+        if($pagination) {
             return $this->getPaginator($query);
         }
-
         return $query->getQuery()->getResult();
     }
 
-    public function findRootsByTaxonomyName($name, $paginator = false)
+    public function findRootsByTaxonomyName($name, ?FilterQuery $filterQuery = null)
     {
-        $query = $this->createQueryBuilder('t');
-        $query->join('t.taxonomy', 'ta');
+        $pagination = true;
+        if ($filterQuery) {
+            $query = $this->buildFilterQuery($filterQuery);
+            $pagination = $filterQuery->isPaginated();
+        } else {
+            $query = $this->createQueryBuilder('a');
+        }
+        $query->join('a.taxonomy', 'ta');
         $query->andWhere('ta.name = :name');
-        $query->andWhere('t.parent IS NULL');
+        $query->andWhere('a.parent IS NULL');
         $query->setParameter('name', $name);
 
-        if($paginator) {
+        if($pagination) {
             return $this->getPaginator($query);
         }
-
         return $query->getQuery()->getResult();
     }
 

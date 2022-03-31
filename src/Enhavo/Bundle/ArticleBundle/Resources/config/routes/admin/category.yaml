@@ -58,7 +58,6 @@ enhavo_article_category_data:
                 method: findRootsByTaxonomyName
                 arguments:
                     - 'article_category'
-                    - true
             viewer:
                 translation_domain: EnhavoTaxonomyBundle
                 width: 12

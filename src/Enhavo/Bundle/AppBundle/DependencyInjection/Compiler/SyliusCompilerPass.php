@@ -69,6 +69,7 @@ class SyliusCompilerPass implements CompilerPassInterface
                 $definition = $container->getDefinition($definitionName);
                 $definition->addMethodCall('setViewFactory', [$container->getDefinition('Enhavo\Component\Type\FactoryInterface[View]')]);
                 $definition->addMethodCall('setAppEventDispatcher', [$container->getDefinition('enhavo_app.event_dispatcher')]);
+                $definition->addMethodCall('setBatchManager', [$container->getDefinition('Enhavo\Bundle\AppBundle\Batch\BatchManager')]);
             }
         }
     }

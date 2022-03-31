@@ -1,6 +1,6 @@
 <template>
     <div class="table-batches">
-        <v-select :placeholder="placeholder" @input="change" :options="options" :searchable="false"></v-select>
+        <v-select :placeholder="placeholder" @update:modelValue="change" :options="options" :searchable="false"></v-select>
         <button @click="executeBatch" class="apply-button green"><i class="icon icon-check"></i></button>
     </div>
 </template>
