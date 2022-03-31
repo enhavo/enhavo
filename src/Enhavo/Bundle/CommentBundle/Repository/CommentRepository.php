@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\CommentBundle\Repository;
 
+use Enhavo\Bundle\AppBundle\Filter\FilterQuery;
 use Enhavo\Bundle\AppBundle\Repository\EntityRepository;
 use Enhavo\Bundle\CommentBundle\Model\CommentInterface;
 use Enhavo\Bundle\CommentBundle\Model\ThreadInterface;
@@ -27,14 +28,25 @@ class CommentRepository extends EntityRepository
         return $this->getPaginator($qb);
     }
 
-    public function findByThreadId($id)
+    public function findByThreadId($id, ?FilterQuery $filterQuery = null)
     {
-        $qb = $this->createQueryBuilder('c')
-            ->join('c.thread', 't')
-            ->orderBy('c.createdAt', 'DESC')
+        $pagination = true;
+        if ($filterQuery) {
+            $query = $this->buildFilterQuery($filterQuery);
+            $pagination = $filterQuery->isPaginated();
+        } else {
+            $query = $this->createQueryBuilder('a');
+        }
+
+        $query
+            ->join('a.thread', 't')
+            ->orderBy('a.createdAt', 'DESC')
             ->andWhere('t.id = :id')
             ->setParameter('id', $id);
 
-        return $this->getPaginator($qb);
+        if($pagination) {
+            return $this->getPaginator($query);
+        }
+        return $query->getQuery()->getResult();
     }
 }

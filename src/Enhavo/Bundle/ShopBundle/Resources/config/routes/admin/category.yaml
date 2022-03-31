@@ -58,7 +58,6 @@ enhavo_shop_category_data:
                 method: findRootsByTaxonomyName
                 arguments:
                     - 'shop_category'
-                    - true
             viewer:
                 translation_domain: EnhavoTaxonomyBundle
                 width: 12

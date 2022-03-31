@@ -46,22 +46,15 @@ class ResourcesResolver implements ResourcesResolverInterface
     public function getResources(SyliusRequestConfiguration $requestConfiguration, RepositoryInterface $repository)
     {
         if($requestConfiguration instanceof RequestConfiguration && $repository instanceof EntityRepositoryInterface) {
-            if($requestConfiguration->hasFilters()) {
-                $query = $this->filterQueryBuilder->buildQueryFromRequestConfiguration($requestConfiguration);
-                if (null !== $repositoryMethod = $requestConfiguration->getRepositoryMethod()) {
-                    $callable = [$repository, $repositoryMethod];
-                    $resources = call_user_func_array($callable, array_merge($requestConfiguration->getRepositoryArguments(), [$query]));
-
-                } else {
-                    $resources = $repository->filter($query);
-                }
-
-                if ($resources instanceof Pagerfanta && !$requestConfiguration->isPaginated()) {
-                    $resources->setMaxPerPage($resources->count());
-                }
-
-                return $resources;
+            $query = $this->filterQueryBuilder->buildQueryFromRequestConfiguration($requestConfiguration);
+            if (null !== $repositoryMethod = $requestConfiguration->getRepositoryMethod()) {
+                $callable = [$repository, $repositoryMethod];
+                $resources = call_user_func_array($callable, array_merge($requestConfiguration->getRepositoryArguments(), [$query]));
+            } else {
+                $resources = $repository->filter($query);
             }
+
+            return $resources;
         }
 
         if (null !== $repositoryMethod = $requestConfiguration->getRepositoryMethod()) {

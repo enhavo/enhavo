@@ -62,7 +62,6 @@
                 method: findByTaxonomyName
                 arguments:
                     - '<?= $name; ?>'
-                    - true
             viewer:
                 translationDomain: EnhavoTaxonomyBundle
                 width: 12
@@ -85,7 +84,6 @@
                 method: findRootsByTaxonomyName
                 arguments:
                     - '<?= $name; ?>'
-                    - true
             viewer:
                 translationDomain: EnhavoTaxonomyBundle
                 width: 12

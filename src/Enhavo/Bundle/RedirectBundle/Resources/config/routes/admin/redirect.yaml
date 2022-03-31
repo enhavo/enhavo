@@ -50,8 +50,8 @@ enhavo_redirect_redirect_table:
                     type: option
                     property: code
                     options:
-                        - 301
-                        - 302
+                        301: 301
+                        302: 302
                     label: form.label.code
                     translation_domain: EnhavoRedirectBundle
 

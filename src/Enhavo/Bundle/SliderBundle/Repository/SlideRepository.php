@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\SliderBundle\Repository;
 
+use Enhavo\Bundle\AppBundle\Filter\FilterQuery;
 use Enhavo\Bundle\AppBundle\Repository\EntityRepository;
 use Enhavo\Bundle\SliderBundle\Entity\Slider;
 
@@ -30,14 +31,24 @@ class SlideRepository extends EntityRepository
         return $query->getQuery()->getResult();
     }
 
-    public function findBySliderId($sliderId)
+    public function findBySliderId($sliderId, ?FilterQuery $filterQuery = null)
     {
-        $query = $this->createQueryBuilder('s')
-            ->join('s.slider', 'sl')
+        $pagination = false;
+        if ($filterQuery) {
+            $query = $this->buildFilterQuery($filterQuery);
+            $pagination = $filterQuery->isPaginated();
+        } else {
+            $query = $this->createQueryBuilder('a');
+        }
+        $query
+            ->join('a.slider', 'sl')
             ->andWhere('sl.id = :id')
             ->setParameter('id', $sliderId)
-            ->addOrderBy('s.position', 'ASC');
+            ->addOrderBy('a.position', 'ASC');
 
+        if($pagination) {
+            return $this->getPaginator($query);
+        }
         return $query->getQuery()->getResult();
     }
 }
