@@ -11,13 +11,6 @@ services:
         tags:
             - { name: form.type, alias: enhavo_file }
 
-    Enhavo\Bundle\MediaBundle\Form\Type\LibraryFileType:
-        arguments:
-            - '%enhavo_media.model.file.class%'
-            - '@enhavo_media.media.public_url_generator'
-        tags:
-            - { name: form.type }
-
     enhavo_media.form.media:
         class: Enhavo\Bundle\MediaBundle\Form\Type\MediaType
         arguments:
