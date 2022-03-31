@@ -1,4 +1,4 @@
 enhavo_app_index:
     path:  /
     defaults:
-        _controller: Enhavo\Bundle\AppBundle\Controller\MainController:indexAction
+        _controller: Enhavo\Bundle\AppBundle\Controller\MainController::indexAction

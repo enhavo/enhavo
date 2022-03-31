@@ -4,7 +4,7 @@ enhavo_user_user_index:
     path: /enhavo/user/user/index
     methods: [GET]
     defaults:
-        _controller: enhavo_user.controller.user:indexAction
+        _controller: enhavo_user.controller.user::indexAction
         _sylius:
             viewer:
                 label: user.label.user
@@ -16,7 +16,7 @@ enhavo_user_user_create:
     path: /enhavo/user/user/create
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_user.controller.user:createAction
+        _controller: enhavo_user.controller.user::createAction
         _sylius:
             redirect: enhavo_user_user_update
             form:
@@ -30,7 +30,7 @@ enhavo_user_user_update:
     path: /enhavo/user/user/update/{id}
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_user.controller.user:updateAction
+        _controller: enhavo_user.controller.user::updateAction
         _sylius:
             viewer:
 
@@ -39,7 +39,7 @@ enhavo_user_user_table:
         expose: true
     path: /enhavo/user/user/table
     defaults:
-        _controller: enhavo_user.controller.user:tableAction
+        _controller: enhavo_user.controller.user::tableAction
         _sylius:
             paginate: $pagination
             filters:
@@ -77,7 +77,7 @@ enhavo_user_user_delete:
     path: /enhavo/user/user/delete/{id}
     methods: [POST]
     defaults:
-        _controller: enhavo_user.controller.user:deleteAction
+        _controller: enhavo_user.controller.user::deleteAction
 
 enhavo_user_user_batch:
     options:
@@ -85,7 +85,7 @@ enhavo_user_user_batch:
     path: /enhavo/user/user/batch
     methods: [POST]
     defaults:
-        _controller: enhavo_user.controller.user:batchAction
+        _controller: enhavo_user.controller.user::batchAction
         _sylius:
             paginate: false
             criteria:
@@ -100,7 +100,7 @@ enhavo_user_user_auto_complete:
     path: /enhavo/user/user/auto_complete
     methods: [GET]
     defaults:
-        _controller: enhavo_form.controller.auto_complete:searchAction
+        _controller: enhavo_form.controller.auto_complete::searchAction
         _config:
             class: '%enhavo_user.model.user.class%'
             repository:

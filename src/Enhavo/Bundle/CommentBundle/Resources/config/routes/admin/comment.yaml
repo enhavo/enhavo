@@ -4,7 +4,7 @@ enhavo_comment_comment_index:
     path: /enhavo/comment/thread/{id}/comment/index
     methods: [GET]
     defaults:
-        _controller: enhavo_comment.controller.comment:listAction
+        _controller: enhavo_comment.controller.comment::listAction
         _sylius:
             viewer:
                 data_route_parameters:
@@ -22,7 +22,7 @@ enhavo_comment_comment_create:
     path: /enhavo/comment/comment/create
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_comment.controller.comment:createAction
+        _controller: enhavo_comment.controller.comment::createAction
         _sylius:
             redirect: enhavo_comment_comment_update
             factory:
@@ -36,7 +36,7 @@ enhavo_comment_comment_update:
     path: /enhavo/comment/comment/update/{id}
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_comment.controller.comment:updateAction
+        _controller: enhavo_comment.controller.comment::updateAction
         _sylius:
             viewer:
 
@@ -46,7 +46,7 @@ enhavo_comment_comment_data:
     path: /enhavo/comment/comment/data
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_comment.controller.comment:listDataAction
+        _controller: enhavo_comment.controller.comment::listDataAction
         _sylius:
             repository:
                 method: findByThreadId
@@ -74,7 +74,7 @@ enhavo_comment_comment_delete:
     path: /enhavo/comment/comment/delete/{id}
     methods: [POST]
     defaults:
-        _controller: enhavo_comment.controller.comment:deleteAction
+        _controller: enhavo_comment.controller.comment::deleteAction
         _sylius:
             redirect: enhavo_comment_comment_data # BugFix: any route to generate url, because index route need id parameter
 
@@ -85,7 +85,7 @@ enhavo_comment_comment_batch:
     path: /enhavo/comment/comment/batch
     methods: [POST]
     defaults:
-        _controller: enhavo_comment.controller.comment:batchAction
+        _controller: enhavo_comment.controller.comment::batchAction
         _sylius:
             paginate: false
             criteria:
@@ -100,7 +100,7 @@ enhavo_comment_comment_preview:
     path: /enhavo/comment/comment/preview
     methods: [GET]
     defaults:
-        _controller: enhavo_comment.controller.comment:previewAction
+        _controller: enhavo_comment.controller.comment::previewAction
         _sylius:
             viewer:
 
@@ -110,7 +110,7 @@ enhavo_comment_comment_resource_preview:
     path: /enhavo/comment/comment/resource/preview
     methods: [POST]
     defaults:
-        _controller: enhavo_comment.controller.comment:previewResourceAction
+        _controller: enhavo_comment.controller.comment::previewResourceAction
         _sylius:
             viewer:
                 strategy_options:

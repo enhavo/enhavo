@@ -4,7 +4,7 @@ enhavo_newsletter_group_index:
     path: /enhavo/newsletter/group/index
     methods: [GET]
     defaults:
-        _controller: enhavo_newsletter.controller.group:indexAction
+        _controller: enhavo_newsletter.controller.group::indexAction
         _sylius:
             viewer:
                 label: group.label.group
@@ -17,7 +17,7 @@ enhavo_newsletter_group_create:
     path: /enhavo/newsletter/group/create
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_newsletter.controller.group:createAction
+        _controller: enhavo_newsletter.controller.group::createAction
         _sylius:
             redirect: enhavo_newsletter_group_update
             viewer:
@@ -30,7 +30,7 @@ enhavo_newsletter_group_update:
     path: /enhavo/newsletter/group/update/{id}
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_newsletter.controller.group:updateAction
+        _controller: enhavo_newsletter.controller.group::updateAction
         _sylius:
             viewer:
                 label: group.label.update
@@ -42,7 +42,7 @@ enhavo_newsletter_group_table:
     path: /enhavo/newsletter/group/table
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_newsletter.controller.group:tableAction
+        _controller: enhavo_newsletter.controller.group::tableAction
         _sylius:
             sorting:
                 name: asc
@@ -70,7 +70,7 @@ enhavo_newsletter_group_delete:
     path: /enhavo/newsletter/group/delete/{id}
     methods: [POST]
     defaults:
-        _controller: enhavo_newsletter.controller.group:deleteAction
+        _controller: enhavo_newsletter.controller.group::deleteAction
 
 enhavo_newsletter_group_batch:
     options:
@@ -78,7 +78,7 @@ enhavo_newsletter_group_batch:
     path: /enhavo/newsletter/group/batch
     methods: [POST]
     defaults:
-        _controller: enhavo_newsletter.controller.group:batchAction
+        _controller: enhavo_newsletter.controller.group::batchAction
         _sylius:
             paginate: false
             criteria:
@@ -93,7 +93,7 @@ enhavo_newsletter_group_preview:
     path: /enhavo/newsletter/group/preview
     methods: [GET]
     defaults:
-        _controller: enhavo_newsletter.controller.group:previewAction
+        _controller: enhavo_newsletter.controller.group::previewAction
         _sylius:
             viewer:
 
@@ -103,7 +103,7 @@ enhavo_newsletter_group_resource_preview:
     path: /enhavo/newsletter/group/resource/preview
     methods: [POST]
     defaults:
-        _controller: enhavo_newsletter.controller.group:previewResourceAction
+        _controller: enhavo_newsletter.controller.group::previewResourceAction
         _sylius:
             viewer:
                 strategy_options:
@@ -115,7 +115,7 @@ enhavo_newsletter_group_auto_complete:
    path: /enhavo/newsletter/group/auto_complete
    methods: [GET]
    defaults:
-       _controller: enhavo_form.controller.auto_complete:searchAction
+       _controller: enhavo_form.controller.auto_complete::searchAction
        _config:
            class: '%enhavo_newsletter.model.group.class%'
            repository:

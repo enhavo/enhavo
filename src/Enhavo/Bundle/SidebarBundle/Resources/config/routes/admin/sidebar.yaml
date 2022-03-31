@@ -4,7 +4,7 @@ enhavo_sidebar_sidebar_index:
     path: /sidebar/sidebar/index
     methods: [GET]
     defaults:
-        _controller: enhavo_sidebar.controller.sidebar:indexAction
+        _controller: enhavo_sidebar.controller.sidebar::indexAction
         _sylius:
             viewer:
                 label: sidebar.label.sidebar
@@ -16,7 +16,7 @@ enhavo_sidebar_sidebar_create:
     path: /sidebar/sidebar/create
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_sidebar.controller.sidebar:createAction
+        _controller: enhavo_sidebar.controller.sidebar::createAction
         _sylius:
             redirect: enhavo_sidebar_sidebar_update
             viewer:
@@ -37,7 +37,7 @@ enhavo_sidebar_sidebar_update:
     path: /sidebar/sidebar/update/{id}
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_sidebar.controller.sidebar:updateAction
+        _controller: enhavo_sidebar.controller.sidebar::updateAction
         _sylius:
             viewer:
                 tabs:
@@ -58,7 +58,7 @@ enhavo_sidebar_sidebar_table:
     defaults:
         sorting:
             position: desc
-        _controller: enhavo_sidebar.controller.sidebar:tableAction
+        _controller: enhavo_sidebar.controller.sidebar::tableAction
         _sylius:
             filters:
                 name:
@@ -81,7 +81,7 @@ enhavo_sidebar_sidebar_delete:
     path: /sidebar/sidebar/delete/{id}
     methods: [DELETE]
     defaults:
-        _controller: enhavo_sidebar.controller.sidebar:deleteAction
+        _controller: enhavo_sidebar.controller.sidebar::deleteAction
 
 enhavo_sidebar_sidebar_batch:
     options:
@@ -89,7 +89,7 @@ enhavo_sidebar_sidebar_batch:
     path: /sidebar/sidebar/batch
     methods: [POST]
     defaults:
-        _controller: enhavo_sidebar.controller.sidebar:batchAction
+        _controller: enhavo_sidebar.controller.sidebar::batchAction
         _sylius:
             paginate: false
             criteria:

@@ -2,7 +2,7 @@ enhavo_dashboard_index:
     path:  /enhavo/dashboard
     methods: [GET]
     defaults:
-        _controller: Enhavo\Bundle\DashboardBundle\Controller\DashboardController:indexAction
+        _controller: Enhavo\Bundle\DashboardBundle\Controller\DashboardController::indexAction
         _sylius:
             viewer:
                 label: dashboard.label.dashboard

@@ -1,6 +1,6 @@
 enhavo_search_theme_submit:
     path: /search
     defaults:
-        _controller: enhavo_search.controller.search:submitAction
+        _controller: enhavo_search.controller.search::submitAction
         _config:
             template: 'theme/search/result.html.twig'

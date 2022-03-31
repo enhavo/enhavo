@@ -4,7 +4,7 @@ enhavo_newsletter_pending_subscriber_index:
     path: /enhavo/newsletter/pending-subscriber/index
     methods: [GET]
     defaults:
-        _controller: enhavo_newsletter.controller.pending_subscriber:indexAction
+        _controller: enhavo_newsletter.controller.pending_subscriber::indexAction
         _sylius:
             viewer:
                 label: subscriber.label.subscribers
@@ -22,7 +22,7 @@ enhavo_newsletter_pending_subscriber_update:
     path: /enhavo/newsletter/pending-subscriber/update/{id}
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_newsletter.controller.pending_subscriber:updateAction
+        _controller: enhavo_newsletter.controller.pending_subscriber::updateAction
         _sylius:
             viewer:
                 label: subscriber.label.update
@@ -36,7 +36,7 @@ enhavo_newsletter_pending_subscriber_table:
         expose: true
     path: /enhavo/newsletter/pending-subscriber/table
     defaults:
-        _controller: enhavo_newsletter.controller.pending_subscriber:tableAction
+        _controller: enhavo_newsletter.controller.pending_subscriber::tableAction
         _sylius:
             filters:
                 email:
@@ -71,7 +71,7 @@ enhavo_newsletter_pending_subscriber_delete:
     path: /enhavo/newsletter/pending-subscriber/delete/{id}
     methods: [POST]
     defaults:
-        _controller: enhavo_newsletter.controller.pending_subscriber:deleteAction
+        _controller: enhavo_newsletter.controller.pending_subscriber::deleteAction
 
 enhavo_newsletter_pending_subscriber_batch:
     options:
@@ -79,7 +79,7 @@ enhavo_newsletter_pending_subscriber_batch:
     path: /enhavo/newsletter/pending-subscriber/batch
     methods: [POST]
     defaults:
-        _controller: enhavo_newsletter.controller.pending_subscriber:batchAction
+        _controller: enhavo_newsletter.controller.pending_subscriber::batchAction
         _sylius:
             paginate: false
             criteria:
@@ -94,7 +94,7 @@ enhavo_newsletter_pending_subscriber_preview:
     path: /enhavo/newsletter/pending-subscriber/preview
     methods: [POST]
     defaults:
-        _controller: enhavo_newsletter.controller.pending_subscriber:previewAction
+        _controller: enhavo_newsletter.controller.pending_subscriber::previewAction
         _sylius:
             viewer:
 

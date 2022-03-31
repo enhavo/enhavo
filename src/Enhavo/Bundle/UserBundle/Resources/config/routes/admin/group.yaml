@@ -4,7 +4,7 @@ enhavo_user_group_index:
     path: /enhavo/user/group/index
     methods: [GET]
     defaults:
-        _controller: enhavo_user.controller.group:indexAction
+        _controller: enhavo_user.controller.group::indexAction
         _sylius:
             viewer:
                 label: group.label.group
@@ -16,7 +16,7 @@ enhavo_user_group_create:
     path: /enhavo/user/group/create
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_user.controller.group:createAction
+        _controller: enhavo_user.controller.group::createAction
         _sylius:
             redirect: enhavo_user_group_update
             viewer:
@@ -36,7 +36,7 @@ enhavo_user_group_update:
     path: /enhavo/user/group/update/{id}
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_user.controller.group:updateAction
+        _controller: enhavo_user.controller.group::updateAction
         _sylius:
             viewer:
                 tabs:
@@ -54,7 +54,7 @@ enhavo_user_group_table:
         expose: true
     path: /enhavo/user/group/table
     defaults:
-        _controller: enhavo_user.controller.group:tableAction
+        _controller: enhavo_user.controller.group::tableAction
         _sylius:
             filters:
                 title:
@@ -77,7 +77,7 @@ enhavo_user_group_delete:
     path: /enhavo/user/group/delete/{id}
     methods: [POST, DELETE]
     defaults:
-        _controller: enhavo_user.controller.group:deleteAction
+        _controller: enhavo_user.controller.group::deleteAction
         _format: json
 
 enhavo_user_group_batch:
@@ -86,7 +86,7 @@ enhavo_user_group_batch:
     path: /enhavo/user/group/batch
     methods: [POST]
     defaults:
-        _controller: enhavo_user.controller.group:batchAction
+        _controller: enhavo_user.controller.group::batchAction
         _sylius:
             paginate: false
             criteria:

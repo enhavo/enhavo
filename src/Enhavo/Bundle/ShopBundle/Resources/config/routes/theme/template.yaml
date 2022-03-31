@@ -1,75 +1,75 @@
 enhavo_shop_theme_template_cart_list:
     path: /shop/cart-list
     defaults:
-        _controller: EnhavoShopBundle:Template:cartList
+        _controller: Enhavo\Bundle\ShopBundle\Controller\TemplateController::cartListAction
 
 enhavo_shop_theme_template_checkout_address:
     path: /shop/addressing
     defaults:
-        _controller: EnhavoShopBundle:Template:addressing
+        _controller: Enhavo\Bundle\ShopBundle\Controller\TemplateController::addressingAction
 
 
 enhavo_shop_theme_template_checkout_shipping:
     path: /shop/shipping
     defaults:
-        _controller: EnhavoShopBundle:Template:shipping
+        _controller: Enhavo\Bundle\ShopBundle\Controller\TemplateController::shippingAction
 
 enhavo_shop_theme_template_checkout_payment:
     path: /shop/payment
     defaults:
-        _controller: EnhavoShopBundle:Template:payment
+        _controller: Enhavo\Bundle\ShopBundle\Controller\TemplateController::paymentAction
 
 enhavo_shop_theme_template_checkout_order_summary:
     path: /shop/order-summary
     defaults:
-        _controller: EnhavoShopBundle:Template:orderSummary
+        _controller: Enhavo\Bundle\ShopBundle\Controller\TemplateController::orderSummaryAction
 
 enhavo_shop_theme_template_checkout_order_finish:
     path: /shop/finish
     defaults:
-        _controller: EnhavoShopBundle:Template:finish
+        _controller: Enhavo\Bundle\ShopBundle\Controller\TemplateController::finishAction
 
 enhavo_shop_theme_template_checkout_order_login:
     path: /shop/login
     defaults:
-        _controller: EnhavoShopBundle:Template:login
+        _controller: Enhavo\Bundle\ShopBundle\Controller\TemplateController::loginAction
 
 enhavo_shop_theme_template_checkout_register:
     path: /shop/register
     defaults:
-        _controller: EnhavoShopBundle:Template:register
+        _controller: Enhavo\Bundle\ShopBundle\Controller\TemplateController::registerAction
 
 enhavo_shop_theme_template_checkout_password_reset:
     path: /shop/password-reset
     defaults:
-        _controller: EnhavoShopBundle:Template:resetPassword
+        _controller: Enhavo\Bundle\ShopBundle\Controller\TemplateController::resetPasswordAction
 
 enhavo_shop_theme_template_checkout_password_reset_success:
     path: /shop/password-reset-success
     defaults:
-        _controller: EnhavoShopBundle:Template:resetPasswordSuccess
+        _controller: Enhavo\Bundle\ShopBundle\Controller\TemplateController::resetPasswordSuccessAction
 
 enhavo_shop_theme_template_checkout_profile:
     path: /shop/profile
     defaults:
-        _controller: EnhavoShopBundle:Template:profile
+        _controller: Enhavo\Bundle\ShopBundle\Controller\TemplateController::profileAction
 
 enhavo_shop_theme_template_checkout_account:
     path: /shop/account
     defaults:
-        _controller: EnhavoShopBundle:Template:account
+        _controller: Enhavo\Bundle\ShopBundle\Controller\TemplateController::accountAction
 
 enhavo_shop_theme_template_checkout_orders:
     path: /shop/orders
     defaults:
-        _controller: EnhavoShopBundle:Template:orders
+        _controller: Enhavo\Bundle\ShopBundle\Controller\TemplateController::ordersAction
 
 enhavo_shop_theme_template_checkout_order_detail:
     path: /shop/order-detail
     defaults:
-        _controller: EnhavoShopBundle:Template:orderDetail
+        _controller: Enhavo\Bundle\ShopBundle\Controller\TemplateController::orderDetailAction
 
 enhavo_shop_theme_template_checkout_show_product:
     path: /show-product
     defaults:
-        _controller: EnhavoShopBundle:Template:showProduct
+        _controller: Enhavo\Bundle\ShopBundle\Controller\TemplateController::showProductAction

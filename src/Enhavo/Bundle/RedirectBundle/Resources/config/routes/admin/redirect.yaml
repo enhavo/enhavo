@@ -4,7 +4,7 @@ enhavo_redirect_redirect_index:
     path: /enhavo/redirect/redirect/index
     methods: [GET]
     defaults:
-        _controller: enhavo_redirect.controller.redirect:indexAction
+        _controller: enhavo_redirect.controller.redirect::indexAction
         _sylius:
             viewer:
                 label: redirect.label.redirect
@@ -16,7 +16,7 @@ enhavo_redirect_redirect_create:
     path: /enhavo/redirect/redirect/create
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_redirect.controller.redirect:createAction
+        _controller: enhavo_redirect.controller.redirect::createAction
         _sylius:
             redirect: enhavo_redirect_redirect_update
 
@@ -26,14 +26,14 @@ enhavo_redirect_redirect_update:
     path: /enhavo/redirect/redirect/update/{id}
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_redirect.controller.redirect:updateAction
+        _controller: enhavo_redirect.controller.redirect::updateAction
 
 enhavo_redirect_redirect_table:
     options:
         expose: true
     path: /enhavo/redirect/redirect/table
     defaults:
-        _controller: enhavo_redirect.controller.redirect:tableAction
+        _controller: enhavo_redirect.controller.redirect::tableAction
         _sylius:
             filters:
                 from:
@@ -80,7 +80,7 @@ enhavo_redirect_redirect_delete:
     path: /enhavo/redirect/redirect/delete/{id}
     methods: [POST]
     defaults:
-        _controller: enhavo_redirect.controller.redirect:deleteAction
+        _controller: enhavo_redirect.controller.redirect::deleteAction
 
 enhavo_redirect_redirect_batch:
     options:
@@ -88,7 +88,7 @@ enhavo_redirect_redirect_batch:
     path: /enhavo/redirect/redirect/batch
     methods: [POST]
     defaults:
-        _controller: enhavo_redirect.controller.redirect:batchAction
+        _controller: enhavo_redirect.controller.redirect::batchAction
         _sylius:
             paginate: false
             criteria:

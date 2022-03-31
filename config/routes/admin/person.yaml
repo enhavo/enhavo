@@ -4,7 +4,7 @@ app_person_index:
     path: /app/person/index
     methods: [GET]
     defaults:
-        _controller: app.controller.person:indexAction
+        _controller: app.controller.person::indexAction
         _sylius:
             viewer:
 
@@ -14,7 +14,7 @@ app_person_create:
     path: /app/person/create
     methods: [GET,POST]
     defaults:
-        _controller: app.controller.person:createAction
+        _controller: app.controller.person::createAction
         _sylius:
             redirect: app_person_update
             viewer:
@@ -25,7 +25,7 @@ app_person_update:
     path: /app/person/update/{id}
     methods: [GET,POST]
     defaults:
-        _controller: app.controller.person:updateAction
+        _controller: app.controller.person::updateAction
         _sylius:
             viewer:
 
@@ -35,7 +35,7 @@ app_person_table:
     path: /app/person/table
     methods: [GET,POST]
     defaults:
-        _controller: app.controller.person:tableAction
+        _controller: app.controller.person::tableAction
         _sylius:
             filters:
                 age:
@@ -72,7 +72,7 @@ app_person_delete:
     path: /app/person/delete/{id}
     methods: [POST]
     defaults:
-        _controller: app.controller.person:deleteAction
+        _controller: app.controller.person::deleteAction
 
 app_person_batch:
     options:
@@ -80,7 +80,7 @@ app_person_batch:
     path: /app/person/batch
     methods: [POST]
     defaults:
-        _controller: app.controller.person:batchAction
+        _controller: app.controller.person::batchAction
         _sylius:
             paginate: false
             criteria:
@@ -95,7 +95,7 @@ app_person_preview:
     path: /app/person/preview
     methods: [GET]
     defaults:
-        _controller: app.controller.person:previewAction
+        _controller: app.controller.person::previewAction
         _sylius:
             viewer:
 
@@ -105,7 +105,7 @@ app_person_resource_preview:
     path: /app/person/resource/preview
     methods: [POST]
     defaults:
-        _controller: app.controller.person:previewResourceAction
+        _controller: app.controller.person::previewResourceAction
         _sylius:
             viewer:
                 strategy_options:

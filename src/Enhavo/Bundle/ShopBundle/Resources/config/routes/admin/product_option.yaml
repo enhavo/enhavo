@@ -4,7 +4,7 @@ sylius_product_option_index:
     path: /enhavo/shop/product/option/index
     methods: [GET]
     defaults:
-        _controller: sylius.controller.product_option:listAction
+        _controller: sylius.controller.product_option::listAction
         _sylius:
             form: enhavo_shop_product_option
             viewer:
@@ -23,7 +23,7 @@ sylius_product_option_create:
     path: /enhavo/shop/product/option/create
     methods: [GET,POST]
     defaults:
-        _controller: sylius.controller.product_option:createAction
+        _controller: sylius.controller.product_option::createAction
         _sylius:
             sortable: true
             redirect: sylius_product_option_update
@@ -47,7 +47,7 @@ sylius_product_option_update:
     path: /enhavo/shop/product/option/update/{id}
     methods: [GET,POST]
     defaults:
-        _controller: sylius.controller.product_option:updateAction
+        _controller: sylius.controller.product_option::updateAction
         _sylius:
             sortable: true
             viewer:
@@ -70,7 +70,7 @@ sylius_product_option_data:
         expose: true
     path: /enhavo/shop/product/option/list/data
     defaults:
-        _controller: sylius.controller.product_option:listDataAction
+        _controller: sylius.controller.product_option::listDataAction
         _sylius:
             sortable: true
             sorting:
@@ -98,7 +98,7 @@ sylius_product_option_delete:
     path: /enhavo/shop/product/option/delete/{id}
     methods: [POST]
     defaults:
-        _controller: sylius.controller.product_option:deleteAction
+        _controller: sylius.controller.product_option::deleteAction
 
 sylius_product_option_batch:
     options:
@@ -106,7 +106,7 @@ sylius_product_option_batch:
     path: /enhavo/shop/product/option/batch
     methods: [POST]
     defaults:
-        _controller: sylius.controller.product_option:batchAction
+        _controller: sylius.controller.product_option::batchAction
         _sylius:
             paginate: false
             criteria:
@@ -121,6 +121,6 @@ sylius_product_option_preview:
     path: /enhavo/shop/product/option/preview
     methods: [POST]
     defaults:
-        _controller: enhavo_shop.controller.product_option:previewAction
+        _controller: enhavo_shop.controller.product_option::previewAction
         _sylius:
             viewer:

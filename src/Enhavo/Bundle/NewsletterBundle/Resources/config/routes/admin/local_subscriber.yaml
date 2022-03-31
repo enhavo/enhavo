@@ -4,7 +4,7 @@ enhavo_newsletter_local_subscriber_index:
     path: /enhavo/newsletter/local-subscriber/index
     methods: [GET]
     defaults:
-        _controller: enhavo_newsletter.controller.local_subscriber:indexAction
+        _controller: enhavo_newsletter.controller.local_subscriber::indexAction
         _sylius:
             viewer:
                 label: subscriber.label.subscribers
@@ -24,7 +24,7 @@ enhavo_newsletter_local_subscriber_create:
     path: /enhavo/newsletter/local-subscriber/create
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_newsletter.controller.local_subscriber:createAction
+        _controller: enhavo_newsletter.controller.local_subscriber::createAction
         _sylius:
             redirect: enhavo_newsletter_local_subscriber_update
             factory:
@@ -40,7 +40,7 @@ enhavo_newsletter_local_subscriber_update:
     path: /enhavo/newsletter/local-subscriber/update/{id}
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_newsletter.controller.local_subscriber:updateAction
+        _controller: enhavo_newsletter.controller.local_subscriber::updateAction
         _sylius:
             viewer:
                 label: subscriber.label.update
@@ -51,7 +51,7 @@ enhavo_newsletter_local_subscriber_table:
         expose: true
     path: /enhavo/newsletter/local-subscriber/table
     defaults:
-        _controller: enhavo_newsletter.controller.local_subscriber:tableAction
+        _controller: enhavo_newsletter.controller.local_subscriber::tableAction
         _sylius:
             filters:
                 email:
@@ -78,7 +78,7 @@ enhavo_newsletter_local_subscriber_delete:
     path: /enhavo/newsletter/local-subscriber/delete/{id}
     methods: [POST]
     defaults:
-        _controller: enhavo_newsletter.controller.local_subscriber:deleteAction
+        _controller: enhavo_newsletter.controller.local_subscriber::deleteAction
 
 enhavo_newsletter_local_subscriber_batch:
     options:
@@ -86,7 +86,7 @@ enhavo_newsletter_local_subscriber_batch:
     path: /enhavo/newsletter/local-subscriber/batch
     methods: [POST]
     defaults:
-        _controller: enhavo_newsletter.controller.local_subscriber:batchAction
+        _controller: enhavo_newsletter.controller.local_subscriber::batchAction
         _sylius:
             paginate: false
             criteria:
@@ -101,6 +101,6 @@ enhavo_newsletter_local_subscriber_preview:
     path: /enhavo/newsletter/local-subscriber/preview
     methods: [POST]
     defaults:
-        _controller: enhavo_newsletter.controller.local_subscriber:previewAction
+        _controller: enhavo_newsletter.controller.local_subscriber::previewAction
         _sylius:
             viewer:

@@ -4,7 +4,7 @@ enhavo_shop_voucher_index:
     path: /enhavo/shop/voucher/index
     methods: [GET]
     defaults:
-        _controller: enhavo_shop.controller.voucher:indexAction
+        _controller: enhavo_shop.controller.voucher::indexAction
         _sylius:
             viewer:
                 title: voucher.label.voucher
@@ -16,7 +16,7 @@ enhavo_shop_voucher_create:
     path: /enhavo/shop/voucher/create
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_shop.controller.voucher:createAction
+        _controller: enhavo_shop.controller.voucher::createAction
         _sylius:
             redirect: enhavo_shop_voucher_update
             viewer:
@@ -28,7 +28,7 @@ enhavo_shop_voucher_update:
     path: /enhavo/shop/voucher/update/{id}
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_shop.controller.voucher:updateAction
+        _controller: enhavo_shop.controller.voucher::updateAction
         _sylius:
             viewer:
                 translation_domain: EnhavoShopBundle
@@ -38,7 +38,7 @@ enhavo_shop_voucher_table:
         expose: true
     path: /enhavo/shop/voucher/table
     defaults:
-        _controller: enhavo_shop.controller.voucher:tableAction
+        _controller: enhavo_shop.controller.voucher::tableAction
         _sylius:
             viewer:
                 translation_domain: EnhavoShopBundle
@@ -66,7 +66,7 @@ enhavo_shop_voucher_delete:
     path: /enhavo/shop/voucher/delete/{id}
     methods: [POST]
     defaults:
-        _controller: enhavo_shop.controller.voucher:deleteAction
+        _controller: enhavo_shop.controller.voucher::deleteAction
 
 enhavo_shop_voucher_batch:
     options:
@@ -74,7 +74,7 @@ enhavo_shop_voucher_batch:
     path: /enhavo/shop/voucher/batch
     methods: [POST]
     defaults:
-        _controller: enhavo_shop.controller.voucher:batchAction
+        _controller: enhavo_shop.controller.voucher::batchAction
         _sylius:
             paginate: false
             criteria:

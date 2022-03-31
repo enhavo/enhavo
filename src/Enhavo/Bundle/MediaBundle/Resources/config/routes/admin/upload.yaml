@@ -1,12 +1,12 @@
 enhavo_media_upload:
     path:  /file/add
     defaults:
-        _controller: enhavo_media.controller.upload:uploadAction
+        _controller: enhavo_media.controller.upload::uploadAction
 
 enhavo_media_replace:
     path:  /file/replace/{token}
     methods: [POST]
     defaults:
-        _controller: enhavo_media.controller.upload:replaceAction
+        _controller: enhavo_media.controller.upload::replaceAction
     options:
         expose: true

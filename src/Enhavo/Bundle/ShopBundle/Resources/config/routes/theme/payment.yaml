@@ -1,9 +1,9 @@
 enhavo_shop_theme_payment_after:
     path: /payment/after
     defaults:
-        _controller: enhavo_shop.controller.payment:afterAction
+        _controller: enhavo_shop.controller.payment::afterAction
 
 enhavo_shop_theme_payment_purchase:
     path: /payment/purchase/{token}
     defaults:
-        _controller: enhavo_shop.controller.payment:purchaseAction
+        _controller: enhavo_shop.controller.payment::purchaseAction

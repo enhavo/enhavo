@@ -1,11 +1,11 @@
 enhavo_shop_theme_promotion_redeem_coupon:
     path: /promotion/redeem/coupon
     defaults:
-        _controller: EnhavoShopBundle:Promotion:redeemCoupon
+        _controller: Enhavo\Bundle\ShopBundle\Controller\PromotionController::redeemCouponAction
         _methods: [POST]
 
 enhavo_shop_theme_promotion_cancel_coupon:
     path: /promotion/cancel/coupon
     defaults:
-        _controller: EnhavoShopBundle:Promotion:cancelCoupon
+        _controller: Enhavo\Bundle\ShopBundle\Controller\PromotionController::cancelCouponAction
         _methods: [POST]

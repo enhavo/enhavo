@@ -4,7 +4,7 @@ enhavo_media_library_index:
     options:
         expose: true
     defaults:
-        _controller: enhavo_media.controller.library:indexAction
+        _controller: enhavo_media.controller.library::indexAction
         _sylius:
             viewer:
                 type: media_library
@@ -17,7 +17,7 @@ enhavo_media_library_upload:
     options:
         expose: true
     defaults:
-        _controller: enhavo_media.controller.library:uploadAction
+        _controller: enhavo_media.controller.library::uploadAction
 
 enhavo_media_library_list:
     path:  /media/library/list
@@ -25,7 +25,7 @@ enhavo_media_library_list:
     options:
         expose: true
     defaults:
-        _controller: enhavo_media.controller.file:tableAction
+        _controller: enhavo_media.controller.file::tableAction
         _sylius:
             permission: ROLE_ENHAVO_MEDIA_LIBRARY_INDEX
             criteria:
@@ -54,7 +54,7 @@ enhavo_media_library_update:
     path: /media/library/update/{id}
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_media.controller.file:updateAction
+        _controller: enhavo_media.controller.file::updateAction
         _sylius:
             form: Enhavo\Bundle\MediaBundle\Form\Type\LibraryFileType
             permission: ROLE_ENHAVO_MEDIA_LIBRARY_UPDATE
@@ -74,7 +74,7 @@ enhavo_media_library_delete:
     path: /media/library/delete/{id}
     methods: [POST]
     defaults:
-        _controller: enhavo_media.controller.file:deleteAction
+        _controller: enhavo_media.controller.file::deleteAction
         _sylius:
             redirect:
                 route: enhavo_media_library_list

@@ -59,6 +59,8 @@ services:
     Enhavo\Bundle\ContentBundle\Controller\SitemapController:
         arguments:
             - '@enhavo_content.sitemap.generator'
+        calls:
+            - [setContainer, ['@service_container']]
         tags:
             - { name: controller.service_arguments }
 

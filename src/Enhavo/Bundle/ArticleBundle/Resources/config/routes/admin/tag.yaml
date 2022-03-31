@@ -4,7 +4,7 @@ enhavo_article_tag_index:
     path: /enhavo/article/tag/index
     methods: [GET]
     defaults:
-        _controller: enhavo_taxonomy.controller.term:indexAction
+        _controller: enhavo_taxonomy.controller.term::indexAction
         _sylius:
             viewer:
                 label: article.label.tag
@@ -23,7 +23,7 @@ enhavo_article_tag_create:
     path:  /enhavo/article/tag/create
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_taxonomy.controller.term:createAction
+        _controller: enhavo_taxonomy.controller.term::createAction
         _sylius:
             redirect: enhavo_article_tag_update
             form: Enhavo\Bundle\ArticleBundle\Form\Type\TagType
@@ -38,7 +38,7 @@ enhavo_article_tag_update:
     path:  /enhavo/article/tag/update/{id}
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_taxonomy.controller.term:updateAction
+        _controller: enhavo_taxonomy.controller.term::updateAction
         _sylius:
             form: Enhavo\Bundle\ArticleBundle\Form\Type\TagType
             serialization_groups: ['form']
@@ -53,7 +53,7 @@ enhavo_article_tag_table:
         expose: true
     path:  /enhavo/article/tag/table
     defaults:
-        _controller: enhavo_taxonomy.controller.term:tableAction
+        _controller: enhavo_taxonomy.controller.term::tableAction
         _sylius:
             repository:
                 method: findByTaxonomyName
@@ -77,7 +77,7 @@ enhavo_article_tag_delete:
     path: /enhavo/article/tag/delete/{id}
     methods: [POST]
     defaults:
-        _controller: enhavo_taxonomy.controller.term:deleteAction
+        _controller: enhavo_taxonomy.controller.term::deleteAction
         _sylius:
             redirect: enhavo_article_tag_index
 
@@ -87,7 +87,7 @@ enhavo_article_tag_batch:
     path: /enhavo/article/tag/batch
     methods: [POST]
     defaults:
-        _controller: enhavo_taxonomy.controller.term:batchAction
+        _controller: enhavo_taxonomy.controller.term::batchAction
         _sylius:
             paginate: false
             criteria:
@@ -101,7 +101,7 @@ enhavo_article_tag_auto_complete:
         expose: true
     path: /enhavo/article/tag/auto_complete
     defaults:
-        _controller: enhavo_form.controller.auto_complete:searchAction
+        _controller: enhavo_form.controller.auto_complete::searchAction
         _config:
             class: Enhavo\Bundle\TaxonomyBundle\Entity\Term
             repository:

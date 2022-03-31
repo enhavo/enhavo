@@ -4,7 +4,7 @@ sylius_product_index:
     path: /enhavo/shop/product/index
     methods: [GET]
     defaults:
-        _controller: sylius.controller.product:indexAction
+        _controller: sylius.controller.product::indexAction
         _sylius:
             viewer:
                 label: product.label.product
@@ -16,7 +16,7 @@ sylius_product_create:
     path: /enhavo/shop/product/create
     methods: [GET,POST]
     defaults:
-        _controller: sylius.controller.product:createAction
+        _controller: sylius.controller.product::createAction
         _sylius:
             redirect: sylius_product_update
             viewer:
@@ -48,7 +48,7 @@ sylius_product_update:
     path: /enhavo/shop/product/update/{id}
     methods: [GET,POST]
     defaults:
-        _controller: sylius.controller.product:updateAction
+        _controller: sylius.controller.product::updateAction
         _sylius:
             viewer:
                 tabs:
@@ -83,7 +83,7 @@ sylius_product_table:
     path: /enhavo/shop/product/table
     methods: [GET,POST]
     defaults:
-        _controller: sylius.controller.product:tableAction
+        _controller: sylius.controller.product::tableAction
         _sylius:
             viewer:
                 columns:
@@ -120,7 +120,7 @@ sylius_product_delete:
     path: /enhavo/shop/product/delete/{id}
     methods: [POST]
     defaults:
-        _controller: sylius.controller.product:deleteAction
+        _controller: sylius.controller.product::deleteAction
 
 sylius_product_batch:
     options:
@@ -128,7 +128,7 @@ sylius_product_batch:
     path: /enhavo/shop/product/batch
     methods: [POST]
     defaults:
-        _controller: sylius.controller.product:batchAction
+        _controller: sylius.controller.product::batchAction
         _sylius:
             paginate: false
             criteria:
@@ -143,7 +143,7 @@ sylius_product_preview:
     path: /enhavo/shop/product/preview
     methods: [GET]
     defaults:
-        _controller: sylius.controller.product:previewAction
+        _controller: sylius.controller.product::previewAction
         _sylius:
             viewer:
 
@@ -153,7 +153,7 @@ sylius_product_resource_preview:
     path: /enhavo/shop/product/resource/preview
     methods: [POST]
     defaults:
-        _controller: sylius.controller.product:previewResourceAction
+        _controller: sylius.controller.product::previewResourceAction
         _sylius:
             viewer:
                 strategy_options:
@@ -165,7 +165,7 @@ sylius_product_auto_complete:
    path: /enhavo/shop/product/{id}/auto_complete
    methods: [GET]
    defaults:
-       _controller: enhavo_form.controller.auto_complete:searchAction
+       _controller: enhavo_form.controller.auto_complete::searchAction
        _config:
            class: Enhavo\Bundle\ShopBundle\Entity\Product
            repository:
@@ -179,6 +179,6 @@ sylius_product_auto_complete:
 sylius_product_variant_generate:
     path: /enhavo/shop/product/{id}/variants/generate
     defaults:
-        _controller: sylius.controller.product:updateAction
+        _controller: sylius.controller.product::updateAction
         _sylius:
             form: Enhavo\Bundle\ShopBundle\Form\Type\ProductGenerateVariantsType

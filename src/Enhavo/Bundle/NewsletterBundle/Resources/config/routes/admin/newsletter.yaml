@@ -4,7 +4,7 @@ enhavo_newsletter_newsletter_index:
     path: /enhavo/newsletter/newsletter/index
     methods: [GET]
     defaults:
-        _controller: enhavo_newsletter.controller.newsletter:indexAction
+        _controller: enhavo_newsletter.controller.newsletter::indexAction
         _sylius:
             viewer:
                 label: newsletter.label.newsletter
@@ -16,7 +16,7 @@ enhavo_newsletter_newsletter_create:
     path: /enhavo/newsletter/newsletter/create
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_newsletter.controller.newsletter:createAction
+        _controller: enhavo_newsletter.controller.newsletter::createAction
         _sylius:
             redirect: enhavo_newsletter_newsletter_update
             viewer:
@@ -47,7 +47,7 @@ enhavo_newsletter_newsletter_update:
     path: /enhavo/newsletter/newsletter/update/{id}
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_newsletter.controller.newsletter:updateAction
+        _controller: enhavo_newsletter.controller.newsletter::updateAction
         _sylius:
             serialization_groups: ['form']
             viewer:
@@ -85,7 +85,7 @@ enhavo_newsletter_newsletter_table:
         expose: true
     path: /enhavo/newsletter/newsletter/table
     defaults:
-        _controller: enhavo_newsletter.controller.newsletter:tableAction
+        _controller: enhavo_newsletter.controller.newsletter::tableAction
         _sylius:
             sorting:
                 createdAt: desc
@@ -136,14 +136,14 @@ enhavo_newsletter_newsletter_delete:
     path: /enhavo/newsletter/newsletter/delete/{id}
     methods: [POST]
     defaults:
-        _controller: enhavo_newsletter.controller.newsletter:deleteAction
+        _controller: enhavo_newsletter.controller.newsletter::deleteAction
 
 enhavo_newsletter_newsletter_duplicate:
     options:
         expose: true
     path: /enhavo/newsletter/newsletter/duplicate/{id}
     defaults:
-        _controller: enhavo_newsletter.controller.newsletter:duplicateAction
+        _controller: enhavo_newsletter.controller.newsletter::duplicateAction
         _sylius:
             redirect: enhavo_newsletter_newsletter_update
 
@@ -153,7 +153,7 @@ enhavo_newsletter_newsletter_batch:
     path: /enhavo/newsletter/newsletter/batch
     methods: [POST]
     defaults:
-        _controller: enhavo_newsletter.controller.newsletter:batchAction
+        _controller: enhavo_newsletter.controller.newsletter::batchAction
         _sylius:
             paginate: false
             criteria:
@@ -172,7 +172,7 @@ enhavo_newsletter_newsletter_preview:
     path: /enhavo/newsletter/newsletter/preview
     methods: [GET]
     defaults:
-        _controller: enhavo_newsletter.controller.newsletter:previewAction
+        _controller: enhavo_newsletter.controller.newsletter::previewAction
         _sylius:
             viewer:
 
@@ -182,7 +182,7 @@ enhavo_newsletter_newsletter_resource_preview:
     path: /enhavo/newsletter/newsletter/resource/preview
     methods: [POST]
     defaults:
-        _controller: enhavo_newsletter.controller.newsletter:previewResourceAction
+        _controller: enhavo_newsletter.controller.newsletter::previewResourceAction
         _sylius:
             viewer:
                 strategy_options:
@@ -194,7 +194,7 @@ enhavo_newsletter_newsletter_send:
     path: /enhavo/newsletter/newsletter/{id}/send
 #    methods: [POST]
     defaults:
-        _controller: enhavo_newsletter.controller.newsletter:sendAction
+        _controller: enhavo_newsletter.controller.newsletter::sendAction
 
 enhavo_newsletter_newsletter_test:
     options:
@@ -202,7 +202,7 @@ enhavo_newsletter_newsletter_test:
     path: /enhavo/newsletter/newsletter/test
 #    methods: [POST]
     defaults:
-        _controller: enhavo_newsletter.controller.newsletter:testAction
+        _controller: enhavo_newsletter.controller.newsletter::testAction
 
 enhavo_newsletter_newsletter_test_form:
     options:

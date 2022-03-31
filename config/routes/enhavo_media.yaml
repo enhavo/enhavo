@@ -9,4 +9,4 @@ enhavo_media_theme:
 enhavo_media_theme_upload:
     path: /file/add
     defaults:
-        _controller: enhavo_media.controller.upload:uploadAction
+        _controller: enhavo_media.controller.upload::uploadAction

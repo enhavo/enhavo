@@ -1,34 +1,34 @@
 enhavo_shop_theme_checkout:
     path: /checkout/
     defaults:
-        _controller: enhavo_shop.controller.checkout:checkoutAction
+        _controller: enhavo_shop.controller.checkout::checkoutAction
 
 enhavo_shop_theme_checkout_addressing:
     path: /checkout/addressing
     defaults:
-        _controller: enhavo_shop.controller.checkout:addressingAction
+        _controller: enhavo_shop.controller.checkout::addressingAction
 
 enhavo_shop_theme_checkout_payment:
     path: /checkout/payment
     defaults:
-        _controller: enhavo_shop.controller.checkout:paymentAction
+        _controller: enhavo_shop.controller.checkout::paymentAction
 
 enhavo_shop_theme_checkout_confirm:
     path: /checkout/confirm
     defaults:
-        _controller: enhavo_shop.controller.checkout:confirmAction
+        _controller: enhavo_shop.controller.checkout::confirmAction
 
 enhavo_shop_theme_checkout_finish:
     path: /checkout/{token}/finish
     defaults:
-        _controller: enhavo_shop.controller.checkout:finishAction
+        _controller: enhavo_shop.controller.checkout::finishAction
 
 enhavo_shop_theme_checkout_login:
     path: /checkout/login
     defaults:
-        _controller: enhavo_shop.controller.checkout:loginAction
+        _controller: enhavo_shop.controller.checkout::loginAction
 
 enhavo_shop_theme_checkout_empty:
     path: /checkout/empty
     defaults:
-        _controller: enhavo_shop.controller.checkout:emptyAction
+        _controller: enhavo_shop.controller.checkout::emptyAction
