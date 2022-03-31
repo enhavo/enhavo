@@ -2,35 +2,51 @@
 
 namespace Enhavo\Bundle\MediaLibraryBundle\Controller;
 
-use Enhavo\Bundle\AppBundle\Controller\AbstractViewController;
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
-use Enhavo\Bundle\AppBundle\Viewer\ViewFactory;
 use Enhavo\Bundle\MediaBundle\Media\UrlGeneratorInterface;
 use Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryManager;
 use Enhavo\Bundle\MediaLibraryBundle\Repository\FileRepository;
 use Enhavo\Bundle\MediaLibraryBundle\Viewer\MediaLibraryViewer;
 use Enhavo\Component\Type\FactoryInterface;
-use FOS\RestBundle\View\ViewHandlerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class MediaLibraryController extends AbstractController
+
+class MediaLibraryController extends ResourceController
 {
-    private MediaLibraryManager $mediaLibraryManager;
-    private FileRepository $fileRepository;
     private FactoryInterface $viewFactory;
 
     /**
-     * @param MediaLibraryManager $mediaLibraryManager
-     * @param FileRepository $fileRepository
+     * @return MediaLibraryManager
+     */
+    public function getMediaLibraryManager(): MediaLibraryManager
+    {
+        return $this->container->get('Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryManager');
+    }
+
+    /**
+     * @return FileRepository
+     */
+    public function getFileRepository(): FileRepository
+    {
+        return $this->container->get('enhavo_media.repository.file');
+    }
+
+
+    /**
+     * @return FactoryInterface
+     */
+    public function getViewFactory(): FactoryInterface
+    {
+        return $this->viewFactory;
+    }
+
+    /**
      * @param FactoryInterface $viewFactory
      */
-    public function __construct(MediaLibraryManager $mediaLibraryManager, FileRepository $fileRepository, FactoryInterface $viewFactory)
+    public function setViewFactory(FactoryInterface $viewFactory): void
     {
-        $this->mediaLibraryManager = $mediaLibraryManager;
-        $this->fileRepository = $fileRepository;
         $this->viewFactory = $viewFactory;
     }
 
@@ -40,9 +56,13 @@ class MediaLibraryController extends AbstractController
      */
     public function indexAction(Request $request): Response
     {
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+
         /** @var  $view */
-        $view = $this->viewFactory->create([
+        $view = $this->getViewFactory()->create([
             'type' => 'media_library',
+            'request_configuration' => $configuration,
+            'metadata' => $this->metadata,
         ]);
         return $view->getResponse($request);
     }
@@ -53,10 +73,14 @@ class MediaLibraryController extends AbstractController
      */
     public function selectAction(Request $request): Response
     {
-        $view = $this->viewFactory->create([
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+
+        $view = $this->getViewFactory()->create([
             'type' => 'media_library',
             'multiple' => $request->get('multiple', false),
             'mode' => MediaLibraryViewer::MODE_SELECT,
+            'request_configuration' => $configuration,
+            'metadata' => $this->metadata,
         ]);
         return $view->getResponse($request);
     }
@@ -108,7 +132,7 @@ class MediaLibraryController extends AbstractController
     public function addAction(Request $request): JsonResponse
     {
         $id = $request->get('id');
-        $file = $this->fileRepository->find($id);
+        $file = $this->getFileRepository()->find($id);
 
         return new JsonResponse([
             'id' => $file->getId(),
@@ -124,7 +148,7 @@ class MediaLibraryController extends AbstractController
 
     private function createTagList(): array
     {
-        $terms = $this->mediaLibraryManager->getTags();
+        $terms = $this->getMediaLibraryManager()->getTags();
         $tags = [];
         foreach ($terms as $term) {
             $tags[] = [
@@ -138,7 +162,7 @@ class MediaLibraryController extends AbstractController
 
     private function createContentTypeList(): array
     {
-        $terms = $this->mediaLibraryManager->getContentTypes();
+        $terms = $this->getMediaLibraryManager()->getContentTypes();
         $contentTypes = [];
         foreach ($terms as $term) {
             $contentTypes[] = [
@@ -151,7 +175,7 @@ class MediaLibraryController extends AbstractController
 
     private function createFileList($contentType, $tag): array
     {
-        $files = $this->mediaLibraryManager->getFiles($contentType, $tag);
+        $files = $this->getMediaLibraryManager()->getFiles($contentType, $tag);
         $items = [];
         /** @var UrlGeneratorInterface $urlGenerator */
         $urlGenerator = $this->get('enhavo_media.media.public_url_generator');
@@ -165,4 +189,5 @@ class MediaLibraryController extends AbstractController
 
         return $items;
     }
+
 }

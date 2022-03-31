@@ -35,20 +35,20 @@ class MediaLibraryViewType extends AbstractViewType
 
     public function createViewData($options, ViewData $data)
     {
-//        $requestConfiguration = $this->util->getRequestConfiguration($options);
-//
-//        $this->util->isGrantedOr403($requestConfiguration, ResourceActions::INDEX);
-//
-//        $label = $this->util->mergeConfig([
-//            $options['label'],
-//            $this->util->getViewerOption('label', $requestConfiguration)
-//        ]);
-//
-//        $actions = $this->util->mergeConfigArray([
-//            $this->createActions($options),
-//            $options['actions'],
-//            $this->util->getViewerOption('actions', $requestConfiguration)
-//        ]);
+        $requestConfiguration = $this->util->getRequestConfiguration($options);
+
+        $this->util->isGrantedOr403($requestConfiguration, ResourceActions::INDEX);
+
+        $label = $this->util->mergeConfig([
+            $options['label'],
+            $this->util->getViewerOption('label', $requestConfiguration)
+        ]);
+
+        $actions = $this->util->mergeConfigArray([
+            $this->createActions($options),
+            $options['actions'],
+            $this->util->getViewerOption('actions', $requestConfiguration)
+        ]);
 
         $data->set('items', $options['items']);
         $data->set('data', $options['data']);
@@ -58,8 +58,8 @@ class MediaLibraryViewType extends AbstractViewType
         $options['data']['tags'] = $options['tags'];
         $data->set('data', $options['data']);
         $data->set('messages', []);
-//        $data->set('actions', $this->actionManager->createActionsViewData($actions));
-//        $data->set('label', $this->translator->trans($label, [], $options['translation_domain']));
+        $data->set('actions', $this->actionManager->createActionsViewData($actions));
+        $data->set('label', $this->translator->trans($label, [], $options['translation_domain']));
         $data->set('modals', []);
     }
 
@@ -74,37 +74,11 @@ class MediaLibraryViewType extends AbstractViewType
             'data' => [],
             'routes' => true,
             'mode' => self::MODE_EDIT,
+            'request_configuration' => null,
+            'request' => null,
+            'metadata' => null,
+            'actions' => [],
         ]);
-    }
-
-    private function addTranslationDomain(&$configuration, $translationDomain)
-    {
-        foreach($configuration as &$config) {
-            if(!isset($config['translation_domain']) && $translationDomain) {
-                $config['translation_domain'] = $translationDomain;
-            }
-        }
-    }
-
-    private function getTableRoute($options): string
-    {
-        /** @var MetadataInterface $metadata */
-        $metadata = $options['metadata'];
-        return sprintf('%s_%s_table', $metadata->getApplicationName(), $this->util->getUnderscoreName($metadata));
-    }
-
-    private function getBatchRoute($options): string
-    {
-        /** @var MetadataInterface $metadata */
-        $metadata = $options['metadata'];
-        return sprintf('%s_%s_batch', $metadata->getApplicationName(), $this->util->getUnderscoreName($metadata));
-    }
-
-    private function getOpenRoute($options): string
-    {
-        /** @var MetadataInterface $metadata */
-        $metadata = $options['metadata'];
-        return sprintf('%s_%s_update', $metadata->getApplicationName(), $this->util->getUnderscoreName($metadata));
     }
 
     private function createActions($options): array
@@ -112,38 +86,31 @@ class MediaLibraryViewType extends AbstractViewType
         /** @var MetadataInterface $metadata */
         $metadata = $options['metadata'];
 
-        $default = [
-            'create' => [
-                'type' => 'create',
-                'route' => sprintf('%s_%s_create', $metadata->getApplicationName(), $this->util->getUnderscoreName($metadata)),
-                'permission' => $this->util->getRoleNameByResourceName($metadata->getApplicationName(), $this->util->getUnderscoreName($metadata), 'create')
-            ]
-        ];
-
-
         if ($this->isModeEdit($options)) {
-            $default = [
+            $actions = [
                 'upload' => [
                     'type' => 'event',
                     'event' => 'upload',
                     'icon' => 'cloud_upload',
                     'label' => 'media_library.label.upload',
                     'translation_domain' => 'EnhavoMediaLibraryBundle',
+                    'permission' => $this->util->getRoleNameByResourceName($metadata->getApplicationName(), $this->util->getUnderscoreName($metadata), 'create'),
                 ],
             ];
 
         } else if ($this->isModeSelect($options)) {
-            $default = [
+            $actions = [
                 'add' => [
                     'type' => 'event',
                     'event' => 'add',
                     'icon' => 'check',
                     'translation_domain' => 'EnhavoMediaLibraryBundle',
-                    'label' => 'media_library.label.confirm_selection'
+                    'label' => 'media_library.label.confirm_selection',
+                    'permission' => $this->util->getRoleNameByResourceName($metadata->getApplicationName(), $this->util->getUnderscoreName($metadata), 'select'),
                 ]
             ];
         }
-        return $default;
+        return $actions;
     }
 
     private function isModeEdit(array $options): bool

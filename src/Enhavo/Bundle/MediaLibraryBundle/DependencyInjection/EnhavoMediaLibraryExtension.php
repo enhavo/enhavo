@@ -2,10 +2,10 @@
 
 namespace Enhavo\Bundle\MediaLibraryBundle\DependencyInjection;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Sylius\Bundle\ResourceBundle\DependencyInjection\Extension\AbstractResourceExtension;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\Yaml\Yaml;
 
@@ -14,7 +14,7 @@ use Symfony\Component\Yaml\Yaml;
  *
  * @link http://symfony.com/doc/current/cookbook/bundles/extension.html
  */
-class EnhavoMediaLibraryExtension extends Extension implements PrependExtensionInterface
+class EnhavoMediaLibraryExtension extends AbstractResourceExtension implements PrependExtensionInterface
 {
     /**
      * {@inheritdoc}
@@ -23,6 +23,7 @@ class EnhavoMediaLibraryExtension extends Extension implements PrependExtensionI
     {
         $config = $this->processConfiguration(new Configuration(), $configs);
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $this->registerResources('enhavo_media_library', $config['driver'], $config['resources'], $container);
         $container->setParameter('enhavo_media_library.content_type', $config['content_type']);
         $loader->load('services.yml');
     }
