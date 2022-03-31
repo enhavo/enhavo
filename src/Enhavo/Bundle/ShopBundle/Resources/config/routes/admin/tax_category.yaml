@@ -4,7 +4,7 @@ sylius_tax_category_index:
     path: /enhavo/shop/tax/category/index
     methods: [GET]
     defaults:
-        _controller: sylius.controller.tax_category:indexAction
+        _controller: sylius.controller.tax_category::indexAction
         _sylius:
             viewer:
 
@@ -14,7 +14,7 @@ sylius_tax_category_create:
     path: /enhavo/shop/tax/category/create
     methods: [GET,POST]
     defaults:
-        _controller: sylius.controller.tax_category:createAction
+        _controller: sylius.controller.tax_category::createAction
         _sylius:
             redirect: sylius_tax_category_update
             viewer:
@@ -25,7 +25,7 @@ sylius_tax_category_update:
     path: /enhavo/shop/tax/category/update/{id}
     methods: [GET,POST]
     defaults:
-        _controller: sylius.controller.tax_category:updateAction
+        _controller: sylius.controller.tax_category::updateAction
         _sylius:
             viewer:
 
@@ -35,7 +35,7 @@ sylius_tax_category_table:
     path: /enhavo/shop/tax/category/table
     methods: [GET,POST]
     defaults:
-        _controller: sylius.controller.tax_category:tableAction
+        _controller: sylius.controller.tax_category::tableAction
         _sylius:
             viewer:
                 columns:
@@ -66,7 +66,7 @@ sylius_tax_category_delete:
     path: /enhavo/shop/tax/category/delete/{id}
     methods: [POST]
     defaults:
-        _controller: sylius.controller.tax_category:deleteAction
+        _controller: sylius.controller.tax_category::deleteAction
 
 sylius_tax_category_batch:
     options:
@@ -74,7 +74,7 @@ sylius_tax_category_batch:
     path: /enhavo/shop/tax/category/batch
     methods: [POST]
     defaults:
-        _controller: sylius.controller.tax_category:batchAction
+        _controller: sylius.controller.tax_category::batchAction
         _sylius:
             paginate: false
             criteria:
@@ -89,7 +89,7 @@ sylius_tax_category_preview:
     path: /enhavo/shop/tax/category/preview
     methods: [GET]
     defaults:
-        _controller: sylius.controller.tax_category:previewAction
+        _controller: sylius.controller.tax_category::previewAction
         _sylius:
             viewer:
 
@@ -99,7 +99,7 @@ sylius_tax_category_resource_preview:
     path: /enhavo/shop/tax/category/resource/preview
     methods: [POST]
     defaults:
-        _controller: sylius.controller.tax_category:previewResourceAction
+        _controller: sylius.controller.tax_category::previewResourceAction
         _sylius:
             viewer:
                 strategy_options:

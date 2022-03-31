@@ -1,4 +1,4 @@
 enhavo_shop_theme_product_list:
     path: /product/
     defaults:
-        _controller: sylius.controller.product:listAction
+        _controller: sylius.controller.product::listAction

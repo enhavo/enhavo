@@ -4,7 +4,7 @@ enhavo_shop_category_index:
     path: /enhavo/shop/category/index
     methods: [GET]
     defaults:
-        _controller: enhavo_taxonomy.controller.term:listAction
+        _controller: enhavo_taxonomy.controller.term::listAction
         _sylius:
             viewer:
                 label: shop.label.category
@@ -23,7 +23,7 @@ enhavo_shop_category_create:
     path:  /enhavo/shop/category/create
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_taxonomy.controller.term:createAction
+        _controller: enhavo_taxonomy.controller.term::createAction
         _sylius:
             redirect: enhavo_shop_category_update
             form: 'Enhavo\Bundle\ShopBundle\Form\Type\CategoryType'
@@ -38,7 +38,7 @@ enhavo_shop_category_update:
     path:  /enhavo/shop/category/update/{id}
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_taxonomy.controller.term:updateAction
+        _controller: enhavo_taxonomy.controller.term::updateAction
         _sylius:
             form: 'Enhavo\Bundle\ShopBundle\Form\Type\CategoryType'
             viewer:
@@ -52,7 +52,7 @@ enhavo_shop_category_data:
         expose: true
     path:  /enhavo/shop/category/table
     defaults:
-        _controller: enhavo_taxonomy.controller.term:listDataAction
+        _controller: enhavo_taxonomy.controller.term::listDataAction
         _sylius:
             repository:
                 method: findRootsByTaxonomyName
@@ -78,7 +78,7 @@ enhavo_shop_category_delete:
     path: /enhavo/shop/category/delete/{id}
     methods: [POST]
     defaults:
-        _controller: enhavo_taxonomy.controller.term:deleteAction
+        _controller: enhavo_taxonomy.controller.term::deleteAction
         _sylius:
             redirect: enhavo_shop_category_index
 
@@ -88,7 +88,7 @@ enhavo_shop_category_batch:
     path: /enhavo/shop/category/batch
     methods: [POST]
     defaults:
-        _controller: enhavo_taxonomy.controller.term:batchAction
+        _controller: enhavo_taxonomy.controller.term::batchAction
         _sylius:
             paginate: false
             criteria:
@@ -102,7 +102,7 @@ enhavo_shop_category_auto_complete:
         expose: true
     path: /enhavo/shop/category/auto_complete
     defaults:
-        _controller: enhavo_form.controller.auto_complete:searchAction
+        _controller: enhavo_form.controller.auto_complete::searchAction
         _config:
             class: Enhavo\Bundle\TaxonomyBundle\Entity\Term
             repository:

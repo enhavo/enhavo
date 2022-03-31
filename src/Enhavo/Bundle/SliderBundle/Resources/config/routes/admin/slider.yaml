@@ -4,7 +4,7 @@ enhavo_slider_slider_index:
     path: /enhavo/slider/slider/index
     methods: [GET]
     defaults:
-        _controller: enhavo_slider.controller.slider:indexAction
+        _controller: enhavo_slider.controller.slider::indexAction
         _sylius:
             viewer:
                 label: slider.label.slider
@@ -17,7 +17,7 @@ enhavo_slider_slider_create:
     path: /enhavo/slider/slider/create
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_slider.controller.slider:createAction
+        _controller: enhavo_slider.controller.slider::createAction
         _sylius:
             redirect: enhavo_slider_slider_update
             viewer:
@@ -28,7 +28,7 @@ enhavo_slider_slider_update:
     path: /enhavo/slider/slider/update/{id}
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_slider.controller.slider:updateAction
+        _controller: enhavo_slider.controller.slider::updateAction
         _sylius:
             viewer:
 
@@ -38,7 +38,7 @@ enhavo_slider_slider_table:
     path: /enhavo/slider/slider/table
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_slider.controller.slider:tableAction
+        _controller: enhavo_slider.controller.slider::tableAction
         _sylius:
             paginate: false
             viewer:
@@ -64,7 +64,7 @@ enhavo_slider_slider_delete:
     path: /enhavo/slider/slider/delete/{id}
     methods: [POST]
     defaults:
-        _controller: enhavo_slider.controller.slider:deleteAction
+        _controller: enhavo_slider.controller.slider::deleteAction
 
 enhavo_slider_slider_preview:
     options:
@@ -72,7 +72,7 @@ enhavo_slider_slider_preview:
     path: /enhavo/slider/slider/preview
     methods: [GET]
     defaults:
-        _controller: enhavo_slider.controller.slider:previewAction
+        _controller: enhavo_slider.controller.slider::previewAction
         _sylius:
             viewer:
 
@@ -82,7 +82,7 @@ enhavo_slider_slider_resource_preview:
     path: /enhavo/slider/slider/resource/preview
     methods: [POST]
     defaults:
-        _controller: enhavo_slider.controller.slider:previewResourceAction
+        _controller: enhavo_slider.controller.slider::previewResourceAction
         _sylius:
             viewer:
                 strategy_options:

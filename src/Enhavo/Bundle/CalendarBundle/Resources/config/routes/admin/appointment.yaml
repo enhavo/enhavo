@@ -4,7 +4,7 @@ enhavo_calendar_appointment_index:
     path: /enhavo/calendar/appointment/index
     methods: [GET]
     defaults:
-        _controller: enhavo_calendar.controller.appointment:indexAction
+        _controller: enhavo_calendar.controller.appointment::indexAction
         _sylius:
             viewer:
                 label: label.calendar
@@ -16,7 +16,7 @@ enhavo_calendar_appointment_create:
     path: /enhavo/calendar/appointment/create
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_calendar.controller.appointment:createAction
+        _controller: enhavo_calendar.controller.appointment::createAction
         _sylius:
             redirect: enhavo_calendar_appointment_update
             viewer:
@@ -49,7 +49,7 @@ enhavo_calendar_appointment_update:
     path: /enhavo/calendar/appointment/update/{id}
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_calendar.controller.appointment:updateAction
+        _controller: enhavo_calendar.controller.appointment::updateAction
         _sylius:
             viewer:
                 tabs:
@@ -80,7 +80,7 @@ enhavo_calendar_appointment_table:
         expose: true
     path: /enhavo/calendar/appointment/table
     defaults:
-        _controller: enhavo_calendar.controller.appointment:tableAction
+        _controller: enhavo_calendar.controller.appointment::tableAction
         _sylius:
             filters:
                 title:
@@ -108,7 +108,7 @@ enhavo_calendar_appointment_delete:
     path: /enhavo/calendar/appointment/delete/{id}
     methods: [POST]
     defaults:
-        _controller: enhavo_calendar.controller.appointment:deleteAction
+        _controller: enhavo_calendar.controller.appointment::deleteAction
 
 enhavo_calendar_appointment_batch:
     options:
@@ -116,7 +116,7 @@ enhavo_calendar_appointment_batch:
     path: /enhavo/calendar/appointment/batch
     methods: [POST]
     defaults:
-        _controller: enhavo_calendar.controller.appointment:batchAction
+        _controller: enhavo_calendar.controller.appointment::batchAction
         _sylius:
             paginate: false
             criteria:
@@ -131,4 +131,4 @@ enhavo_calendar_appointment_preview:
     path: /enhavo/calendar/appointment/preview
     methods: [POST]
     defaults:
-        _controller: enhavo_calendar.controller.appointment:previewAction
+        _controller: enhavo_calendar.controller.appointment::previewAction

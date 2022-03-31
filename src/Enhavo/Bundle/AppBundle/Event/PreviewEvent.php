@@ -8,8 +8,8 @@
 
 namespace Enhavo\Bundle\AppBundle\Event;
 
-use Enhavo\Bundle\AppBundle\Controller\RequestConfigurationInterface;
-use Symfony\Component\EventDispatcher\Event;
+use Sylius\Bundle\ResourceBundle\Controller\RequestConfiguration;
+use Symfony\Contracts\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
 
 class PreviewEvent extends Event
@@ -20,7 +20,7 @@ class PreviewEvent extends Event
     private $request;
 
     /**
-     * @var RequestConfigurationInterface
+     * @var RequestConfiguration
      */
     private $requestConfiguration;
 
@@ -31,7 +31,7 @@ class PreviewEvent extends Event
     }
 
     /**
-     * @return RequestConfigurationInterface
+     * @return RequestConfiguration
      */
     public function getRequestConfiguration()
     {
@@ -39,7 +39,7 @@ class PreviewEvent extends Event
     }
 
     /**
-     * @param RequestConfigurationInterface $requestConfiguration
+     * @param RequestConfiguration $requestConfiguration
      */
     public function setRequestConfiguration($requestConfiguration)
     {

@@ -4,7 +4,7 @@ sylius_tax_rate_index:
     path: /enhavo/shop/tax/rate/index
     methods: [GET]
     defaults:
-        _controller: sylius.controller.tax_rate:indexAction
+        _controller: sylius.controller.tax_rate::indexAction
         _sylius:
             viewer:
 
@@ -14,7 +14,7 @@ sylius_tax_rate_create:
     path: /enhavo/shop/tax/rate/create
     methods: [GET,POST]
     defaults:
-        _controller: sylius.controller.tax_rate:createAction
+        _controller: sylius.controller.tax_rate::createAction
         _sylius:
             redirect: sylius_tax_rate_update
             viewer:
@@ -25,7 +25,7 @@ sylius_tax_rate_update:
     path: /enhavo/shop/tax/rate/update/{id}
     methods: [GET,POST]
     defaults:
-        _controller: sylius.controller.tax_rate:updateAction
+        _controller: sylius.controller.tax_rate::updateAction
         _sylius:
             viewer:
 
@@ -35,7 +35,7 @@ sylius_tax_rate_table:
     path: /enhavo/shop/tax/rate/table
     methods: [GET,POST]
     defaults:
-        _controller: sylius.controller.tax_rate:tableAction
+        _controller: sylius.controller.tax_rate::tableAction
         _sylius:
             viewer:
                 columns:
@@ -76,7 +76,7 @@ sylius_tax_rate_delete:
     path: /enhavo/shop/tax/rate/delete/{id}
     methods: [POST]
     defaults:
-        _controller: sylius.controller.tax_rate:deleteAction
+        _controller: sylius.controller.tax_rate::deleteAction
 
 sylius_tax_rate_batch:
     options:
@@ -84,7 +84,7 @@ sylius_tax_rate_batch:
     path: /enhavo/shop/tax/rate/batch
     methods: [POST]
     defaults:
-        _controller: sylius.controller.tax_rate:batchAction
+        _controller: sylius.controller.tax_rate::batchAction
         _sylius:
             paginate: false
             criteria:
@@ -99,7 +99,7 @@ sylius_tax_rate_preview:
     path: /enhavo/shop/tax/rate/preview
     methods: [GET]
     defaults:
-        _controller: sylius.controller.tax_rate:previewAction
+        _controller: sylius.controller.tax_rate::previewAction
         _sylius:
             viewer:
 
@@ -109,7 +109,7 @@ sylius_tax_rate_resource_preview:
     path: /enhavo/shop/tax/rate/resource/preview
     methods: [POST]
     defaults:
-        _controller: sylius.controller.tax_rate:previewResourceAction
+        _controller: sylius.controller.tax_rate::previewResourceAction
         _sylius:
             viewer:
                 strategy_options:

@@ -4,7 +4,7 @@ enhavo_template_template_index:
     path: /enhavo/template/template/index
     methods: [GET]
     defaults:
-        _controller: enhavo_template.controller.template:indexAction
+        _controller: enhavo_template.controller.template::indexAction
         _sylius:
             viewer:
                 label: template.label.template
@@ -23,7 +23,7 @@ enhavo_template_template_create:
     path: /enhavo/template/template/create
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_template.controller.template:createAction
+        _controller: enhavo_template.controller.template::createAction
         _sylius:
             redirect: enhavo_template_template_update
             viewer:
@@ -44,7 +44,7 @@ enhavo_template_template_update:
     path: /enhavo/template/template/update/{id}
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_template.controller.template:updateAction
+        _controller: enhavo_template.controller.template::updateAction
         _sylius:
             viewer:
                 tabs:
@@ -65,7 +65,7 @@ enhavo_template_template_table:
     defaults:
         sorting:
             position: desc
-        _controller: enhavo_template.controller.template:tableAction
+        _controller: enhavo_template.controller.template::tableAction
         _sylius:
             filters:
                 name:
@@ -89,7 +89,7 @@ enhavo_template_template_delete:
     path: /enhavo/template/template/delete/{id}
     methods: [DELETE]
     defaults:
-        _controller: enhavo_template.controller.template:deleteAction
+        _controller: enhavo_template.controller.template::deleteAction
 
 enhavo_template_template_batch:
     options:
@@ -97,7 +97,7 @@ enhavo_template_template_batch:
     path: /enhavo/template/template/batch
     methods: [POST]
     defaults:
-        _controller: enhavo_template.controller.template:batchAction
+        _controller: enhavo_template.controller.template::batchAction
         _sylius:
             paginate: false
             criteria:

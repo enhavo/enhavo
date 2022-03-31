@@ -4,4 +4,4 @@ enhavo_media_image_cropper_index:
         expose: true
     methods: [GET, POST]
     defaults:
-        _controller: enhavo_media.controller.image_cropper:indexAction
+        _controller: enhavo_media.controller.image_cropper::indexAction

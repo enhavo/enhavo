@@ -4,7 +4,7 @@ enhavo_slider_slide_index:
     path: /enhavo/slider/slide/index
     methods: [GET]
     defaults:
-        _controller: enhavo_slider.controller.slide:listAction
+        _controller: enhavo_slider.controller.slide::listAction
         _sylius:
             viewer:
                 label: slide.label.slide
@@ -24,7 +24,7 @@ enhavo_slider_slide_create:
     path: /enhavo/slider/slide/create
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_slider.controller.slide:createAction
+        _controller: enhavo_slider.controller.slide::createAction
         _sylius:
             redirect: enhavo_slider_slide_update
             factory:
@@ -38,7 +38,7 @@ enhavo_slider_slide_update:
     path: /enhavo/slider/slide/update/{id}
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_slider.controller.slide:updateAction
+        _controller: enhavo_slider.controller.slide::updateAction
         _sylius:
             viewer:
 
@@ -47,7 +47,7 @@ enhavo_slider_slide_data:
         expose: true
     path: /enhavo/slider/slide/data
     defaults:
-        _controller: enhavo_slider.controller.slide:listDataAction
+        _controller: enhavo_slider.controller.slide::listDataAction
         _sylius:
             sortable: true
             repository:
@@ -74,7 +74,7 @@ enhavo_slider_slide_delete:
     path: /enhavo/slider/slide/delete/{id}
     methods: [POST]
     defaults:
-        _controller: enhavo_slider.controller.slide:deleteAction
+        _controller: enhavo_slider.controller.slide::deleteAction
 
 enhavo_slider_slide_batch:
     options:
@@ -82,7 +82,7 @@ enhavo_slider_slide_batch:
     path: /enhavo/slider/slide/batch
     methods: [POST]
     defaults:
-        _controller: enhavo_slider.controller.slide:batchAction
+        _controller: enhavo_slider.controller.slide::batchAction
         _sylius:
             paginate: false
             criteria:

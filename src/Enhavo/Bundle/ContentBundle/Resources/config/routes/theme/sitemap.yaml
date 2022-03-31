@@ -1,4 +1,4 @@
 enhavo_content_sitemap:
     path:     /sitemap.xml
     defaults:
-        _controller: EnhavoContentBundle:Sitemap:show
+        _controller: Enhavo\Bundle\ContentBundle\Controller\SitemapController::showAction

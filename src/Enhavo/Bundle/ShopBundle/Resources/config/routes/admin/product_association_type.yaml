@@ -4,7 +4,7 @@ sylius_product_association_type_index:
     path: /enhavo/shop/product/association/type/index
     methods: [GET]
     defaults:
-        _controller: sylius.controller.product_association_type:indexAction
+        _controller: sylius.controller.product_association_type::indexAction
         _sylius:
             viewer:
 
@@ -14,7 +14,7 @@ sylius_product_association_type_create:
     path: /enhavo/shop/product/association/type/create
     methods: [GET,POST]
     defaults:
-        _controller: sylius.controller.product_association_type:createAction
+        _controller: sylius.controller.product_association_type::createAction
         _sylius:
             redirect: sylius_product_association_type_update
             viewer:
@@ -25,7 +25,7 @@ sylius_product_association_type_update:
     path: /enhavo/shop/product/association/type/update/{id}
     methods: [GET,POST]
     defaults:
-        _controller: sylius.controller.product_association_type:updateAction
+        _controller: sylius.controller.product_association_type::updateAction
         _sylius:
             viewer:
 
@@ -35,7 +35,7 @@ sylius_product_association_type_table:
     path: /enhavo/shop/product/association/type/table
     methods: [GET,POST]
     defaults:
-        _controller: sylius.controller.product_association_type:tableAction
+        _controller: sylius.controller.product_association_type::tableAction
         _sylius:
             viewer:
                 columns:
@@ -61,7 +61,7 @@ sylius_product_association_type_delete:
     path: /enhavo/shop/product/association/type/delete/{id}
     methods: [POST]
     defaults:
-        _controller: sylius.controller.product_association_type:deleteAction
+        _controller: sylius.controller.product_association_type::deleteAction
 
 sylius_product_association_type_batch:
     options:
@@ -69,7 +69,7 @@ sylius_product_association_type_batch:
     path: /enhavo/shop/product/association/type/batch
     methods: [POST]
     defaults:
-        _controller: sylius.controller.product_association_type:batchAction
+        _controller: sylius.controller.product_association_type::batchAction
         _sylius:
             paginate: false
             criteria:
@@ -84,7 +84,7 @@ sylius_product_association_type_preview:
     path: /enhavo/shop/product/association/type/preview
     methods: [GET]
     defaults:
-        _controller: sylius.controller.product_association_type:previewAction
+        _controller: sylius.controller.product_association_type::previewAction
         _sylius:
             viewer:
 
@@ -94,7 +94,7 @@ sylius_product_association_type_resource_preview:
     path: /enhavo/shop/product/association/type/resource/preview
     methods: [POST]
     defaults:
-        _controller: sylius.controller.product_associations:previewResourceAction
+        _controller: sylius.controller.product_associations::previewResourceAction
         _sylius:
             viewer:
                 strategy_options:

@@ -4,7 +4,7 @@ enhavo_shop_order_index:
     path: /enhavo/shop/order/index
     methods: [GET]
     defaults:
-        _controller: sylius.controller.order:indexAction
+        _controller: sylius.controller.order::indexAction
         _sylius:
             viewer:
                 title: order.label.order
@@ -28,7 +28,7 @@ enhavo_shop_order_update:
     path: /enhavo/shop/order/update/{id}
     methods: [GET,POST]
     defaults:
-        _controller: sylius.controller.order:updateAction
+        _controller: sylius.controller.order::updateAction
         _sylius:
             form: enhavo_shop_order
             viewer:
@@ -60,7 +60,7 @@ enhavo_shop_order_table:
     path: /enhavo/shop/order/table
     defaults:
         page: 1
-        _controller: sylius.controller.order:tableAction
+        _controller: sylius.controller.order::tableAction
         _sylius:
             filters:
                 number:
@@ -118,7 +118,7 @@ enhavo_shop_order_delete:
     path: /enhavo/shop/order/delete/{id}
     methods: [POST]
     defaults:
-        _controller: sylius.controller.order:deleteAction
+        _controller: sylius.controller.order::deleteAction
 
 enhavo_shop_order_batch:
     options:
@@ -126,7 +126,7 @@ enhavo_shop_order_batch:
     path: /enhavo/shop/order/batch
     methods: [POST]
     defaults:
-        _controller: sylius.controller.order:batchAction
+        _controller: sylius.controller.order::batchAction
         _sylius:
             paginate: false
             criteria:
@@ -141,7 +141,7 @@ enhavo_shop_order_billing:
     path: /enhavo/shop/order/{id}/billing.pdf
     methods: [GET]
     defaults:
-        _controller: sylius.controller.order:billingAction
+        _controller: sylius.controller.order::billingAction
         _sylius:
             form: enhavo_shop_order
 
@@ -151,6 +151,6 @@ enhavo_shop_order_packing_slip:
     path: /enhavo/shop/order/{id}/packing-slip.pdf
     methods: [GET]
     defaults:
-        _controller: sylius.controller.order:packingSlipAction
+        _controller: sylius.controller.order::packingSlipAction
         _sylius:
             form: enhavo_shop_order

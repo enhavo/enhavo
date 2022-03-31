@@ -4,7 +4,7 @@ enhavo_theme_theme_index:
     path: /enhavo/theme/theme/index
     methods: [GET]
     defaults:
-        _controller: enhavo_theme.controller.theme:indexAction
+        _controller: enhavo_theme.controller.theme::indexAction
         _sylius:
             viewer:
                 label: theme.label.theme
@@ -23,7 +23,7 @@ enhavo_theme_theme_update:
     path: /enhavo/theme/theme/update/{id}
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_theme.controller.theme:updateAction
+        _controller: enhavo_theme.controller.theme::updateAction
         _sylius:
             viewer:
                 actions:
@@ -45,7 +45,7 @@ enhavo_theme_theme_table:
     path: /enhavo/theme/theme/table
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_theme.controller.theme:tableAction
+        _controller: enhavo_theme.controller.theme::tableAction
         _sylius:
             viewer:
                 columns:
@@ -66,7 +66,7 @@ enhavo_theme_theme_delete:
     path: /enhavo/theme/theme/delete/{id}
     methods: [POST]
     defaults:
-        _controller: enhavo_theme.controller.theme:deleteAction
+        _controller: enhavo_theme.controller.theme::deleteAction
 
 enhavo_theme_theme_preview:
     options:
@@ -74,7 +74,7 @@ enhavo_theme_theme_preview:
     path: /enhavo/theme/theme/preview
     methods: [GET]
     defaults:
-        _controller: enhavo_theme.controller.theme:previewAction
+        _controller: enhavo_theme.controller.theme::previewAction
         _sylius:
             viewer:
 
@@ -84,7 +84,7 @@ enhavo_theme_theme_resource_preview:
     path: /enhavo/theme/theme/resource/preview
     methods: [POST]
     defaults:
-        _controller: enhavo_theme.controller.theme:previewResourceAction
+        _controller: enhavo_theme.controller.theme::previewResourceAction
         _sylius:
             viewer:
                 strategy_options:
@@ -95,4 +95,4 @@ enhavo_theme_theme_build:
         expose: true
     path: /enhavo/theme/theme/build
     defaults:
-        _controller: Enhavo\Bundle\ThemeBundle\Controller\ThemeController:buildAction
+        _controller: Enhavo\Bundle\ThemeBundle\Controller\ThemeController::buildAction

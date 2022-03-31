@@ -2,7 +2,7 @@ enhavo_page_page_index:
     path: /enhavo/page/page/index
     methods: [GET]
     defaults:
-        _controller: enhavo_page.controller.page:listAction
+        _controller: enhavo_page.controller.page::listAction
         _sylius:
             viewer:
                 label: page.label.page
@@ -14,7 +14,7 @@ enhavo_page_page_create:
     options:
         expose: true
     defaults:
-        _controller: enhavo_page.controller.page:createAction
+        _controller: enhavo_page.controller.page::createAction
         _sylius:
             redirect: enhavo_page_page_update
             viewer:
@@ -44,7 +44,7 @@ enhavo_page_page_update:
     path: /enhavo/page/page/update/{id}
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_page.controller.page:updateAction
+        _controller: enhavo_page.controller.page::updateAction
         _sylius:
             viewer:
                 tabs:
@@ -75,7 +75,7 @@ enhavo_page_page_data:
         expose: true
     path: /enhavo/page/page/data
     defaults:
-        _controller: enhavo_page.controller.page:listDataAction
+        _controller: enhavo_page.controller.page::listDataAction
         _sylius:
             sortable: true
             criteria:
@@ -100,14 +100,14 @@ enhavo_page_page_delete:
     path: /enhavo/page/page/delete/{id}
     methods: [POST]
     defaults:
-        _controller: enhavo_page.controller.page:deleteAction
+        _controller: enhavo_page.controller.page::deleteAction
 
 enhavo_page_page_duplicate:
     options:
         expose: true
     path: /enhavo/page/page/duplicate/{id}
     defaults:
-        _controller: enhavo_page.controller.page:duplicateAction
+        _controller: enhavo_page.controller.page::duplicateAction
         _sylius:
             redirect: enhavo_page_page_update
 
@@ -117,7 +117,7 @@ enhavo_page_page_batch:
     path: /enhavo/page/page/batch
     methods: [POST]
     defaults:
-        _controller: enhavo_page.controller.page:batchAction
+        _controller: enhavo_page.controller.page::batchAction
         _sylius:
             paginate: false
             criteria:
@@ -133,7 +133,7 @@ enhavo_page_page_preview:
         expose: true
     path: /enhavo/page/page/preview
     defaults:
-        _controller: enhavo_page.controller.page:previewAction
+        _controller: enhavo_page.controller.page::previewAction
         _sylius:
             viewer:
 
@@ -142,7 +142,7 @@ enhavo_page_page_resource_preview:
         expose: true
     path: /enhavo/page/page/preview/resource
     defaults:
-        _controller: enhavo_page.controller.page:previewResourceAction
+        _controller: enhavo_page.controller.page::previewResourceAction
         _sylius:
             viewer:
                 strategy_options:

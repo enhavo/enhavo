@@ -4,7 +4,7 @@ enhavo_setting_setting_index:
     path: /enhavo/setting/setting/index
     methods: [GET]
     defaults:
-        _controller: enhavo_setting.controller.setting:indexAction
+        _controller: enhavo_setting.controller.setting::indexAction
         _sylius:
             viewer:
                 title: label.setting
@@ -22,7 +22,7 @@ enhavo_setting_setting_edit:
         expose: true
     path: /enhavo/setting/setting/edit
     defaults:
-        _controller: enhavo_setting.controller.setting:editAction
+        _controller: enhavo_setting.controller.setting::editAction
 
 enhavo_setting_setting_update:
     options:
@@ -30,7 +30,7 @@ enhavo_setting_setting_update:
     path: /enhavo/setting/setting/update/{id}
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_setting.controller.setting:updateAction
+        _controller: enhavo_setting.controller.setting::updateAction
         _sylius:
             viewer:
                 actions_secondary:
@@ -50,7 +50,7 @@ enhavo_setting_setting_table:
     path: /enhavo/setting/setting/table
     defaults:
         page: 1
-        _controller: enhavo_setting.controller.setting:tableAction
+        _controller: enhavo_setting.controller.setting::tableAction
         _sylius:
             criteria:
                 group: $group

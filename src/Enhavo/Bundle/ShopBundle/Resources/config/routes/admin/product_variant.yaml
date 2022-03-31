@@ -4,7 +4,7 @@ sylius_product_variant_index:
     path: /enhavo/shop/product/{productId}/variant/index
     methods: [GET]
     defaults:
-        _controller: sylius.controller.product_variant:indexAction
+        _controller: sylius.controller.product_variant::indexAction
         _sylius:
             form: sylius_product_variant
             viewer:
@@ -27,7 +27,7 @@ sylius_product_variant_create:
     path: /enhavo/shop/product/{productId}/variant/create
     methods: [GET,POST]
     defaults:
-        _controller: sylius.controller.product_variant:createAction
+        _controller: sylius.controller.product_variant::createAction
         _sylius:
             label: product_variant.label.create
             translation_domain: EnhavoShopBundle
@@ -63,7 +63,7 @@ sylius_product_variant_update:
     path: /enhavo/shop/product/variant/update/{id}
     methods: [GET,POST]
     defaults:
-        _controller: sylius.controller.product_variant:updateAction
+        _controller: sylius.controller.product_variant::updateAction
         _sylius:
             label: product_variant.label.edit
             translation_domain: EnhavoShopBundle
@@ -88,7 +88,7 @@ sylius_product_variant_table:
     path: /enhavo/shop/product/{productId}/variant/table
     defaults:
         page: 1
-        _controller: sylius.controller.product_variant:tableAction
+        _controller: sylius.controller.product_variant::tableAction
         _sylius:
             sortable: true
             sorting:
@@ -138,7 +138,7 @@ sylius_product_variant_delete:
     path: /enhavo/shop/product/variant/delete/{id}
     methods: [POST]
     defaults:
-        _controller: sylius.controller.product_variant:deleteAction
+        _controller: sylius.controller.product_variant::deleteAction
 
 sylius_product_variant_batch:
     options:
@@ -146,7 +146,7 @@ sylius_product_variant_batch:
     path: /enhavo/shop/product/variant/batch
     methods: [POST]
     defaults:
-        _controller: sylius.controller.product_variant:batchAction
+        _controller: sylius.controller.product_variant::batchAction
         _sylius:
             paginate: false
             criteria:

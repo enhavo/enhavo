@@ -4,7 +4,7 @@ enhavo_navigation_navigation_index:
     path: /enhavo/navigation/navigation/index
     methods: [GET]
     defaults:
-        _controller: enhavo_navigation.controller.navigation:indexAction
+        _controller: enhavo_navigation.controller.navigation::indexAction
         _sylius:
             viewer:
                 label: navigation.label.navigation
@@ -16,7 +16,7 @@ enhavo_navigation_navigation_create:
     path: /enhavo/navigation/navigation/create
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_navigation.controller.navigation:createAction
+        _controller: enhavo_navigation.controller.navigation::createAction
         _sylius:
             redirect: enhavo_navigation_navigation_update
             viewer:
@@ -37,7 +37,7 @@ enhavo_navigation_navigation_update:
     path: /enhavo/navigation/navigation/update/{id}
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_navigation.controller.navigation:updateAction
+        _controller: enhavo_navigation.controller.navigation::updateAction
         _sylius:
             viewer:
                 tabs:
@@ -56,7 +56,7 @@ enhavo_navigation_navigation_table:
         expose: true
     path: /enhavo/navigation/navigation/table
     defaults:
-        _controller: enhavo_navigation.controller.navigation:tableAction
+        _controller: enhavo_navigation.controller.navigation::tableAction
         _sylius:
             viewer:
                 translation_domain: EnhavoNavigationBundle
@@ -73,4 +73,4 @@ enhavo_navigation_navigation_delete:
     path: /enhavo/navigation/navigation/delete/{id}
     methods: [POST]
     defaults:
-        _controller: enhavo_navigation.controller.navigation:deleteAction
+        _controller: enhavo_navigation.controller.navigation::deleteAction
