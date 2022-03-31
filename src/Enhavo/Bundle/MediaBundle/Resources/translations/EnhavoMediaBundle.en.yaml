@@ -1,13 +1,3 @@
-library:
-  label:
-    upload: 'Upload'
-  role:
-    label:
-      index: 'Media library show'
-      update: 'Media library file update'
-      create: 'Media library file create'
-      delete: 'Media library file delete'
-
 file:
   label:
     file: "File"
@@ -15,7 +5,6 @@ file:
 media:
   label:
     drop_hint: "Drag files from your file explorer onto this area."
-    library: "Media Library"
   form:
     label:
       title: "Title"
