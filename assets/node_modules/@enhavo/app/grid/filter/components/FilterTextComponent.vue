@@ -1,6 +1,7 @@
 <template>
     <div class="view-table-filter-search">
-        <input @keyup="keyup" type="text" v-model="data.value" :placeholder="data.label" :class="['filter-form-field', {'has-value': hasValue}]">
+        <span class="label">{{ data.label }}</span>
+        <input @keyup="keyup" type="text" v-model="data.value" :class="['filter-form-field', {'has-value': hasValue}]">
     </div>
 </template>
 

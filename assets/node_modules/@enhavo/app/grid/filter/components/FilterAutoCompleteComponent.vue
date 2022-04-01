@@ -1,5 +1,6 @@
 <template>
     <div class="view-table-filter-search">
+        <span class="label">{{ data.label }}</span>
         <v-select :options="data.choices" @search="fetchOptions" :placeholder="data.label" v-model="data.selected" @update:modelValue="change"></v-select>
     </div>
 </template>

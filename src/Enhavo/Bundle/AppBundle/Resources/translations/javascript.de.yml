@@ -27,6 +27,7 @@ enhavo_app:
     grid:
         label:
             entry_per_page: 'Ergebnisse pro Seite'
+            filter: 'Filter'
     list:
         message:
             save: 'Erfolgreich gespeichert'
