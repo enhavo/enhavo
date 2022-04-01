@@ -30,6 +30,7 @@ class Configuration implements ConfigurationInterface
                     ->arrayPrototype()
                         ->children()
                             ->scalarNode('label')->end()
+                            ->scalarNode('icon')->end()
                             ->variableNode('mime_types')->end()
                         ->end()
                     ->end()

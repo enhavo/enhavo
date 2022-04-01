@@ -44,6 +44,14 @@ class MediaLibraryManager
         return $contentTypes;
     }
 
+    public function getContentTypeIcon(string $key) {
+        if (isset($this->contentTypes[$key]) && isset($this->contentTypes[$key]['icon'])) {
+            return $this->contentTypes[$key]['icon'];
+        }
+
+        return '';
+    }
+
     public function matchContentType(FileInterface $file): ?string
     {
         $mimeType = $file->getMimeType();

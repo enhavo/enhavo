@@ -211,6 +211,7 @@ class FileController extends ResourceController
             $items[] = [
                 'id' => $file->getId(),
                 'previewImageUrl' => $urlGenerator->generateFormat($file, 'enhavoMediaLibraryThumb'),
+                'icon' => $this->getMediaLibraryManager()->getContentTypeIcon($file->getContentType()),
                 'label' => $file->getFilename(),
             ];
         }
