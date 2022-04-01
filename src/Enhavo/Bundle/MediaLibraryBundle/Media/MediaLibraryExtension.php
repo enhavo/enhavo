@@ -13,12 +13,12 @@ class MediaLibraryExtension extends AbstractType implements ExtensionInterface
 
     public function renderExtension($options)
     {
-        return $this->renderTemplate($this->getTemplate('admin/resource/media-library/extension.html.twig'));
+        return $this->renderTemplate($this->getTemplate('admin/resource/file/extension.html.twig'));
     }
 
     public function renderButton($options)
     {
-        return $this->renderTemplate($this->getTemplate('admin/resource/media-library/button.html.twig'), []);
+        return $this->renderTemplate($this->getTemplate('admin/resource/file/button.html.twig'), []);
     }
 
     public function getType()

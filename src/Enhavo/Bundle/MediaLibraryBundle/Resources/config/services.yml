@@ -25,15 +25,6 @@ services:
         tags:
             - { name: enhavo_app.view }
 
-    Enhavo\Bundle\MediaLibraryBundle\Viewer\MediaLibraryViewer:
-        public: true
-        arguments:
-            - '@enhavo_app.action_manager'
-        calls:
-            - [ 'setContainer', [ '@service_container' ] ]
-        tags:
-            - { name: enhavo.viewer, alias: media_library }
-
     Enhavo\Bundle\MediaLibraryBundle\Menu\MediaLibraryRootMenuType:
         parent: Enhavo\Bundle\AppBundle\Menu\Menu\ListMenu
         tags:
@@ -55,9 +46,9 @@ services:
         tags:
             - { name: form.type }
 
-    enhavo_media_library.factory.media_library:
+    enhavo_media_library.factory.file:
         class: Enhavo\Bundle\MediaLibraryBundle\Factory\FileFactory
         public: true
         arguments:
-            - '%enhavo_media_library.model.media_library.class%'
+            - '%enhavo_media_library.model.file.class%'
             - '@enhavo_media.provider'

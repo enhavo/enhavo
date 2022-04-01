@@ -22,7 +22,7 @@ class MediaLibraryMenu extends BaseMenu
             'icon' => 'image',
             'label' => 'media_library.label.library',
             'translation_domain' => 'EnhavoMediaLibraryBundle',
-            'route' => 'enhavo_media_library_index',
+            'route' => 'enhavo_media_library_file_index',
             'role' => 'ROLE_ENHAVO_MEDIA_LIBRARY_INDEX',
         ]);
     }

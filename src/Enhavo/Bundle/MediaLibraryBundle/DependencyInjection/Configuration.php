@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\MediaLibraryBundle\DependencyInjection;
 
-use Enhavo\Bundle\MediaLibraryBundle\Controller\MediaLibraryController;
+use Enhavo\Bundle\MediaLibraryBundle\Controller\FileController;
 use Enhavo\Bundle\MediaLibraryBundle\Entity\File;
 use Enhavo\Bundle\MediaLibraryBundle\Factory\FileFactory;
 use Enhavo\Bundle\MediaLibraryBundle\Form\Type\FileType;
@@ -42,18 +42,17 @@ class Configuration implements ConfigurationInterface
             ->end()
 
             ->children()
-
                 ->arrayNode('resources')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->arrayNode('media_library')
+                        ->arrayNode('file')
                             ->addDefaultsIfNotSet()
                             ->children()
                                 ->arrayNode('classes')
                                     ->addDefaultsIfNotSet()
                                     ->children()
                                         ->scalarNode('model')->defaultValue(File::class)->end()
-                                        ->scalarNode('controller')->defaultValue(MediaLibraryController::class)->end()
+                                        ->scalarNode('controller')->defaultValue(FileController::class)->end()
                                         ->scalarNode('repository')->defaultValue(FileRepository::class)->end()
                                         ->scalarNode('factory')->defaultValue(FileFactory::class)->end()
                                         ->scalarNode('form')->defaultValue(FileType::class)->cannotBeEmpty()->end()
