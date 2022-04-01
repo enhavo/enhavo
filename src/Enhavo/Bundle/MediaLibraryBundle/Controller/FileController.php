@@ -96,10 +96,10 @@ class FileController extends ResourceController
      */
     public function filesAction(Request $request): JsonResponse
     {
-        $items = $this->createFileList($request->get('content_type'), $request->get('tag'));
+        $files = $this->createFileList($request->get('content_type'), $request->get('tag'), $request->get('search'));
 
         return new JsonResponse([
-            'items' => $items
+            'files' => $files
         ]);
     }
 
@@ -201,9 +201,9 @@ class FileController extends ResourceController
         return $contentTypes;
     }
 
-    private function createFileList($contentType, $tag): array
+    private function createFileList($contentType, $tag, $searchString): array
     {
-        $files = $this->getMediaLibraryManager()->getFiles($contentType, $tag);
+        $files = $this->getMediaLibraryManager()->getFiles($contentType, $tag, $searchString);
         $items = [];
         /** @var UrlGeneratorInterface $urlGenerator */
         $urlGenerator = $this->get('enhavo_media.media.public_url_generator');

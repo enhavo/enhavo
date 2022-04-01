@@ -68,8 +68,8 @@ class MediaLibraryManager
         return null;
     }
 
-    public function getFiles($contentType, $tag)
+    public function getFiles($contentType, $tag, $searchString)
     {
-        return $this->fileRepository->findByContentTypeAndTags($contentType, $tag?[$tag]:[]);
+        return $this->fileRepository->findByContentTypeAndTags($contentType, $tag?[$tag]:[], $searchString);
     }
 }

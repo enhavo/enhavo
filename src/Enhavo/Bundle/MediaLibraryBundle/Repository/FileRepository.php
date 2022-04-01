@@ -9,7 +9,7 @@ namespace Enhavo\Bundle\MediaLibraryBundle\Repository;
 class FileRepository extends \Enhavo\Bundle\MediaBundle\Repository\FileRepository
 {
 
-    public function findByContentTypeAndTags($contentType = null, $tags = [], $pagination = true, $limit = 10)
+    public function findByContentTypeAndTags($contentType = null, $tags = [], $searchString = null, $pagination = true, $limit = 10)
     {
         $query = $this->createQueryBuilder('a');
         $query->distinct(true);
@@ -23,6 +23,11 @@ class FileRepository extends \Enhavo\Bundle\MediaBundle\Repository\FileRepositor
             $query->innerJoin('a.tags', 't');
             $query->andWhere('t.id IN (:tags)');
             $query->setParameter('tags', $tags);
+        }
+
+        if ($searchString) {
+            $query->andWhere('a.filename LIKE :search');
+            $query->setParameter('search', sprintf('%%%s%%', $searchString));
         }
 
         if ($pagination) {
