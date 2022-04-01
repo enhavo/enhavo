@@ -43,7 +43,6 @@ enhavo_media_library_tags:
             permission: ROLE_ENHAVO_MEDIA_LIBRARY_TAGS
             viewer:
 
-
 enhavo_media_library_content_types:
     options:
         expose: true
@@ -73,7 +72,7 @@ enhavo_media_library_create:
     path: /enhavo/media-library/create
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_media.controller.file:createAction
+        _controller: enhavo_media_library.controller.media_library:createAction
         _sylius:
             redirect: enhavo_media_library_update
             viewer:
@@ -88,8 +87,8 @@ enhavo_media_library_upload:
     methods: [POST]
     options:
         expose: true
-    controller: Enhavo\Bundle\MediaLibraryBundle\Controller\UploadController::uploadAction
-
+    defaults:
+        _controller: enhavo_media_library.controller.media_library:uploadAction
 
 enhavo_media_library_update:
     options:
@@ -97,7 +96,7 @@ enhavo_media_library_update:
     path: /enhavo/media-library/update/{id}
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_media.controller.file:updateAction
+        _controller: enhavo_media_library.controller.media_library:updateAction
         _sylius:
             redirect: enhavo_media_library_update
             viewer:

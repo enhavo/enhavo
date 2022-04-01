@@ -33,7 +33,8 @@ class PDFImageFilter extends AbstractFilter
         if ($setting->getSetting('method') === self::FILTER_SETTING_GHOSTSCRIPT) {
             $temporaryFileName = tempnam('/tmp', 'pdfImage');
 
-            $process = new Process('gs -dSAFER -dBATCH -sDEVICE=jpeg -dTextAlphaBits=4 -dGraphicsAlphaBits=4 -r72 -sOutputFile=' . $temporaryFileName . ' ' . $content->getFilePath());
+            $command = explode(' ', 'gs -dSAFER -dBATCH -sDEVICE=jpeg -dTextAlphaBits=4 -dGraphicsAlphaBits=4 -r72 -sOutputFile=' . $temporaryFileName . ' ' . $content->getFilePath());
+            $process = new Process($command);
             $process->run();
 
             if (!$process->isSuccessful()) {

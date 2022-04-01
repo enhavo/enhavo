@@ -3,11 +3,18 @@
 namespace Enhavo\Bundle\MediaLibraryBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
+use Enhavo\Bundle\MediaBundle\Controller\FileControllerTrait;
+use Enhavo\Bundle\MediaBundle\Exception\StorageException;
+use Enhavo\Bundle\MediaBundle\Media\MediaManager;
 use Enhavo\Bundle\MediaBundle\Media\UrlGeneratorInterface;
+use Enhavo\Bundle\MediaLibraryBundle\Entity\File;
+use Enhavo\Bundle\MediaLibraryBundle\Factory\FileFactory;
 use Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryManager;
 use Enhavo\Bundle\MediaLibraryBundle\Repository\FileRepository;
 use Enhavo\Bundle\MediaLibraryBundle\Viewer\MediaLibraryViewer;
 use Enhavo\Component\Type\FactoryInterface;
+use Symfony\Component\HttpFoundation\File\Exception\UploadException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,32 +22,50 @@ use Symfony\Component\HttpFoundation\Response;
 
 class MediaLibraryController extends ResourceController
 {
+    use FileControllerTrait;
     private FactoryInterface $viewFactory;
 
     /**
      * @return MediaLibraryManager
      */
-    public function getMediaLibraryManager(): MediaLibraryManager
+    private function getMediaLibraryManager(): MediaLibraryManager
     {
         return $this->container->get('Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryManager');
     }
 
     /**
+     * @return MediaManager
+     */
+    private function getMediaManager(): MediaManager
+    {
+        return $this->container->get('enhavo_media.media.media_manager');
+    }
+
+    /**
      * @return FileRepository
      */
-    public function getFileRepository(): FileRepository
+    private function getFileRepository(): FileRepository
     {
         return $this->container->get('enhavo_media.repository.file');
     }
 
+    /**
+     * @return FileFactory
+     */
+    private function getFileFactory(): FileFactory
+    {
+        return $this->container->get('enhavo_media_library.factory.media_library');
+    }
 
     /**
      * @return FactoryInterface
      */
-    public function getViewFactory(): FactoryInterface
+    private function getViewFactory(): FactoryInterface
     {
         return $this->viewFactory;
     }
+
+
 
     /**
      * @param FactoryInterface $viewFactory
@@ -143,6 +168,36 @@ class MediaLibraryController extends ResourceController
     public function notify(Request $request)
     {
         return new JsonResponse();
+    }
+
+
+    public function uploadAction(Request $request): JsonResponse
+    {
+        $storedFiles = [];
+        foreach($request->files as $file) {
+            $uploadedFiles = is_array($file) ? $file : [$file];
+            foreach ($uploadedFiles as $uploadedFile) {
+                try {
+                    /** @var $uploadedFile UploadedFile */
+                    if ($uploadedFile->getError() != UPLOAD_ERR_OK) {
+                        throw new UploadException('Error in file upload');
+                    }
+                    /** @var File $file */
+                    $file = $this->getFileFactory()->createFromUploadedFile($uploadedFile);
+                    $file->setGarbage(true);
+                    $file->setContentType($this->getMediaLibraryManager()->matchContentType($file));
+                    $this->getMediaManager()->saveFile($file);
+                    $storedFiles[] = $file;
+
+                } catch(StorageException $exception) {
+                    foreach($storedFiles as $file) {
+                        $this->getMediaManager()->deleteFile($file);
+                    }
+                }
+            }
+        }
+
+        return $this->getFileResponse($storedFiles);
     }
 
 
