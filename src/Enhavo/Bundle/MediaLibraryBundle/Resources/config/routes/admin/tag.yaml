@@ -4,7 +4,7 @@ enhavo_media_library_tag_index:
     path: /enhavo/media-library/tag/index
     methods: [GET]
     defaults:
-        _controller: enhavo_taxonomy.controller.term:indexAction
+        _controller: enhavo_taxonomy.controller.term::indexAction
         _sylius:
             viewer:
                 label: media_library.label.tag
@@ -38,7 +38,7 @@ enhavo_media_library_tag_update:
     path:  /enhavo/media-library/tag/update/{id}
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_taxonomy.controller.term:updateAction
+        _controller: enhavo_taxonomy.controller.term::updateAction
         _sylius:
             form: Enhavo\Bundle\MediaLibraryBundle\Form\Type\TagType
             serialization_groups: ['form']
@@ -53,13 +53,12 @@ enhavo_media_library_tag_table:
         expose: true
     path:  /enhavo/media-library/tag/table
     defaults:
-        _controller: enhavo_taxonomy.controller.term:tableAction
+        _controller: enhavo_taxonomy.controller.term::tableAction
         _sylius:
             repository:
                 method: findByTaxonomyName
                 arguments:
                     - 'media_library_tag'
-                    - true
             viewer:
                 translation_domain: EnhavoTaxonomyBundle
                 width: 12
@@ -87,7 +86,7 @@ enhavo_media_library_tag_batch:
     path: /enhavo/media-library/tag/batch
     methods: [POST]
     defaults:
-        _controller: enhavo_taxonomy.controller.term:batchAction
+        _controller: enhavo_taxonomy.controller.term::batchAction
         _sylius:
             paginate: false
             criteria:
@@ -101,7 +100,7 @@ enhavo_media_library_tag_auto_complete:
         expose: true
     path: /enhavo/media-library/tag/auto_complete
     defaults:
-        _controller: enhavo_form.controller.auto_complete:searchAction
+        _controller: enhavo_form.controller.auto_complete::searchAction
         _config:
             class: Enhavo\Bundle\TaxonomyBundle\Entity\Term
             repository:
