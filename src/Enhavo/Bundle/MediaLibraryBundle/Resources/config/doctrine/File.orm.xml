@@ -15,7 +15,7 @@
                     <join-column name="file_id" on-delete="CASCADE" />
                 </join-columns>
                 <inverse-join-columns>
-                    <join-column name="category_id" on-delete="CASCADE" />
+                    <join-column name="term_id" on-delete="CASCADE" />
                 </inverse-join-columns>
             </join-table>
         </many-to-many>

@@ -18,7 +18,7 @@ enhavo_media_library_file_select:
     defaults:
         _controller: enhavo_media_library.controller.file:selectAction
         _sylius:
-            permission: ROLE_ENHAVO_MEDIA_LIBRARY_SELECT
+            permission: ROLE_ENHAVO_MEDIA_LIBRARY_FILE_SELECT
             viewer:
 
 enhavo_media_library_file_files:
@@ -29,7 +29,7 @@ enhavo_media_library_file_files:
     defaults:
         _controller: enhavo_media_library.controller.file:filesAction
         _sylius:
-            permission: ROLE_ENHAVO_MEDIA_LIBRARY_LIST
+            permission: ROLE_ENHAVO_MEDIA_LIBRARY_FILE_FILES
             viewer:
 
 enhavo_media_library_file_tags:
@@ -40,7 +40,7 @@ enhavo_media_library_file_tags:
     defaults:
         _controller: enhavo_media_library.controller.file:tagsAction
         _sylius:
-            permission: ROLE_ENHAVO_MEDIA_LIBRARY_TAGS
+            permission: ROLE_ENHAVO_MEDIA_LIBRARY_FILE_TAGS
             viewer:
 
 enhavo_media_library_file_content_types:
@@ -51,7 +51,7 @@ enhavo_media_library_file_content_types:
     defaults:
         _controller: enhavo_media_library.controller.file:contentTypesAction
         _sylius:
-            permission: ROLE_ENHAVO_MEDIA_LIBRARY_CONTENT_TYPES
+            permission: ROLE_ENHAVO_MEDIA_LIBRARY_FILE_CONTENT_TYPES
             viewer:
 
 enhavo_media_library_file_add:
@@ -62,7 +62,7 @@ enhavo_media_library_file_add:
     methods: [GET]
     defaults:
         _sylius:
-            permission: ROLE_ENHAVO_MEDIA_LIBRARY_ADD
+            permission: ROLE_ENHAVO_MEDIA_LIBRARY_FILE_ADD
             viewer:
 
 enhavo_media_library_file_create:
