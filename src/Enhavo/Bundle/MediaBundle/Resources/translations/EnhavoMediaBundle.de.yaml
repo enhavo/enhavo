@@ -1,13 +1,3 @@
-library:
-  label:
-    upload: 'Upload'
-  role:
-    label:
-      index: 'Mediathek anzeigen'
-      update: 'Mediathek Datei bearbeiten'
-      create: 'Mediathek Datei erstellen'
-      delete: 'Mediathek Datei löschen'
-
 file:
   label:
     file: "Datei"
@@ -15,7 +5,6 @@ file:
 media:
   label:
     drop_hint: "Ziehen Sie Dateien aus Ihrem Datei-Explorer / Finder auf diese Fläche."
-    library: "Mediathek"
   form:
     label:
       title: "Titel"
