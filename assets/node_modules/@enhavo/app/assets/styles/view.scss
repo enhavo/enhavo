@@ -49,7 +49,9 @@
   .v-select {display:inline-block;flex:1 0 auto;
     &.vs--single {
       &.vs--open {
-        .vs__selected {position:static;}
+        .vs__selected {overflow:hidden;white-space:nowrap;text-overflow:ellipsis;max-width:100%;top:2px;opacity:0.15;
+          + .vs__search {width:auto;}
+        }
         .vs__dropdown-toggle {border-bottom-left-radius:0;border-bottom-right-radius:0;}
       }
       .vs__actions {padding:0;}
