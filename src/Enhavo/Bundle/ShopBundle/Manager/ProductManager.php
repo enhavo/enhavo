@@ -42,9 +42,8 @@ class ProductManager
 
         $variants = $product->getVariants();
         foreach ($variants as $variant) {
-            if ($variant instanceof ProductVariant && empty($variant->getCode())) {
-                $title = empty($variant->getTitle()) ? $product->getTitle() : $variant->getTitle();
-                $variant->setCode($this->generateVariantCode($title, $variant->getOptionValues()));
+            if ($variant instanceof ProductVariant && $variant->getCode() === null) {
+                $this->updateProductVariant($variant);
             }
         }
     }
@@ -80,6 +79,6 @@ class ProductManager
         $resource = $this->em->getRepository($dataClass)->findBy([
             'code' => $code
         ]);
-        return empty($resource);
+        return $resource === null;
     }
 }
