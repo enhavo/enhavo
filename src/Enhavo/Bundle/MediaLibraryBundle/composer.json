@@ -15,7 +15,7 @@
     "php": ">=8.0",
     "enhavo/app-bundle": "*",
     "enhavo/media-bundle": "*",
-    "symfony/mime": "^5.4.*"
+    "enhavo/taxonomy-bundle": "*"
   },
   "autoload": {
     "psr-4": { "Enhavo\\Bundle\\MediaLibraryBundle\\": "" }
