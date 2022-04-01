@@ -111,7 +111,7 @@ enhavo_media_library_file_delete:
     path: /enhavo/media-library/file/delete
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_media_library.controller.file:createAction
+        _controller: enhavo_media_library.controller.file:deleteAction
         _sylius:
             redirect: enhavo_media_library_file_update
             viewer:

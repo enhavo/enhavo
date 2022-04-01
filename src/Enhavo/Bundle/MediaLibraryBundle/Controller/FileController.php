@@ -12,6 +12,7 @@ use Enhavo\Bundle\MediaLibraryBundle\Factory\FileFactory;
 use Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryManager;
 use Enhavo\Bundle\MediaLibraryBundle\Repository\FileRepository;
 use Enhavo\Bundle\MediaLibraryBundle\View\Type\MediaLibraryViewType;
+use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\File\Exception\UploadException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -96,10 +97,15 @@ class FileController extends ResourceController
      */
     public function filesAction(Request $request): JsonResponse
     {
-        $files = $this->createFileList($request->get('content_type'), $request->get('tag'), $request->get('search'));
+        $page = $request->get('page', 1);
+        $pagination = $this->getMediaLibraryManager()->getFiles($request->get('content_type'), $request->get('tag'), $request->get('search'), $page);
+        $files = $this->createFileList($pagination);
+        $pages = range(1, $pagination->getNbPages(), 1);
 
         return new JsonResponse([
-            'files' => $files
+            'files' => $files,
+            'page' => $page,
+            'pages' => $pages,
         ]);
     }
 
@@ -201,9 +207,8 @@ class FileController extends ResourceController
         return $contentTypes;
     }
 
-    private function createFileList($contentType, $tag, $searchString): array
+    private function createFileList(Pagerfanta $files): array
     {
-        $files = $this->getMediaLibraryManager()->getFiles($contentType, $tag, $searchString);
         $items = [];
         /** @var UrlGeneratorInterface $urlGenerator */
         $urlGenerator = $this->get('enhavo_media.media.public_url_generator');

@@ -6,10 +6,11 @@
 
 namespace Enhavo\Bundle\MediaLibraryBundle\Repository;
 
+use Pagerfanta\Pagerfanta;
+
 class FileRepository extends \Enhavo\Bundle\MediaBundle\Repository\FileRepository
 {
-
-    public function findByContentTypeAndTags($contentType = null, $tags = [], $searchString = null, $pagination = true, $limit = 10)
+    public function findByContentTypeAndTags($contentType = null, $tags = [], $searchString = null, $page = 1, $limit = 6): Pagerfanta
     {
         $query = $this->createQueryBuilder('a');
         $query->distinct(true);
@@ -30,14 +31,10 @@ class FileRepository extends \Enhavo\Bundle\MediaBundle\Repository\FileRepositor
             $query->setParameter('search', sprintf('%%%s%%', $searchString));
         }
 
-        if ($pagination) {
-            $paginator = $this->getPaginator($query);
-            $paginator->setMaxPerPage($limit);
-            return $paginator;
+        $paginator = $this->getPaginator($query);
+        $paginator->setMaxPerPage($limit);
+        $paginator->setCurrentPage($page);
 
-        } else {
-            $query->setMaxResults($limit);
-            return $query->getQuery()->getResult();
-        }
+        return $paginator;
     }
 }
