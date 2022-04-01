@@ -11,6 +11,9 @@ namespace Enhavo\Bundle\ShopBundle\Manager;
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\RoutingBundle\Slugifier\Slugifier;
 use Enhavo\Bundle\ShopBundle\Entity\Product;
+use Enhavo\Bundle\ShopBundle\Entity\ProductOption;
+use Enhavo\Bundle\ShopBundle\Entity\ProductVariant;
+use Enhavo\Bundle\ShopBundle\Model\ProductInterface;
 
 class ProductManager
 {
@@ -25,18 +28,58 @@ class ProductManager
         $this->em = $em;
     }
 
-    public function generateCode($name)
+    public function updateProductVariant(ProductVariant $product)
+    {
+        $title = empty($product->getTitle()) ? $product->getProduct()->getTitle() : $product->getTitle();
+        $product->setCode($this->generateVariantCode($title, $product->getOptionValues()));
+    }
+
+    public function updateProduct(ProductInterface $product)
+    {
+        if (empty($product->getCode())) {
+            $product->setCode($this->generateProductCode($product->getTitle()));
+        }
+
+        $variants = $product->getVariants();
+        foreach ($variants as $variant) {
+            if ($variant instanceof ProductVariant && empty($variant->getCode())) {
+                $title = empty($variant->getTitle()) ? $product->getTitle() : $variant->getTitle();
+                $variant->setCode($this->generateVariantCode($title, $variant->getOptionValues()));
+            }
+        }
+    }
+
+    public function generateProductCode($name)
     {
         do {
              $code = substr(md5(microtime()),rand(0,26),4) . '-' . Slugifier::slugify($name);
-        } while (!$this->isUnique($code));
+        } while (!$this->isUnique($code, Product::class));
         return $code;
     }
 
-    private function isUnique($code) {
-        $products = $this->em->getRepository(Product::class)->findBy([
+    public function generateVariantCode($name, $options): string
+    {
+        $optionString = [];
+        /** @var ProductOption $option */
+        foreach ($options as $option) {
+            $optionString[] = $option->getCode();
+        }
+
+        do {
+            if (empty($optionString)) {
+                $code = substr(md5(microtime()),rand(0,26),4) . '-' . Slugifier::slugify($name);
+            } else {
+                $code = substr(md5(microtime()),rand(0,26),4) . '-' . Slugifier::slugify($name) .  '-' . implode('-', $optionString);
+            }
+        } while (!$this->isUnique($code, ProductVariant::class));
+        return $code;
+    }
+
+    private function isUnique($code, $dataClass): bool
+    {
+        $resource = $this->em->getRepository($dataClass)->findBy([
             'code' => $code
         ]);
-        return empty($products);
+        return empty($resource);
     }
 }

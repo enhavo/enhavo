@@ -20,12 +20,10 @@ class ProductSubscriber implements EventSubscriberInterface
 {
 
     private ProductManager $productManager;
-    private ProductVariantManager $productVariantManager;
 
-    public function __construct(ProductManager $productManager, ProductVariantManager $productVariantManager)
+    public function __construct(ProductManager $productManager)
     {
         $this->productManager = $productManager;
-        $this->productVariantManager = $productVariantManager;
     }
 
     /**
@@ -34,30 +32,16 @@ class ProductSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            'sylius.product.pre_create' => 'onPreCreate',
-            'sylius.product.pre_update' => 'onPreUpdate',
+            'sylius.product.pre_create' => 'onPreSave',
+            'sylius.product.pre_update' => 'onPreSave',
         ];
     }
 
-    public function onPreCreate(GenericEvent $event)
-    {
-        $subject = $event->getSubject();
-        if ($subject instanceof Product && $subject->getCode() === null) {
-            $subject->setCode($this->productManager->generateCode($subject->getTitle()));
-        }
-    }
-
-    public function onPreUpdate(GenericEvent $event)
+    public function onPreSave(GenericEvent $event)
     {
         $subject = $event->getSubject();
         if ($subject instanceof Product) {
-            $variants = $subject->getVariants();
-            foreach ($variants as $variant) {
-                if ($variant instanceof ProductVariant && $variant->getCode() === null) {
-                    $title = empty($variant->getTitle()) ? $subject->getTitle() : $variant->getTitle();
-                    $variant->setCode($this->productVariantManager->generateCode($title, $variant->getOptionValues()));
-                }
-            }
+            $this->productManager->updateProduct($subject);
         }
     }
 }

@@ -9,17 +9,17 @@
 namespace Enhavo\Bundle\ShopBundle\EventListener;
 
 use Enhavo\Bundle\ShopBundle\Entity\ProductVariant;
-use Enhavo\Bundle\ShopBundle\Manager\ProductVariantManager;
+use Enhavo\Bundle\ShopBundle\Manager\ProductManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 
 class ProductVariantSubscriber implements EventSubscriberInterface
 {
-    private ProductVariantManager $productVariantManager;
+    private ProductManager $productManager;
 
-    public function __construct(ProductVariantManager $productVariantManager)
+    public function __construct(ProductManager $productManager)
     {
-        $this->productVariantManager = $productVariantManager;
+        $this->productManager = $productManager;
     }
 
     /**
@@ -37,8 +37,7 @@ class ProductVariantSubscriber implements EventSubscriberInterface
     {
         $subject = $event->getSubject();
         if ($subject instanceof ProductVariant && $subject->getCode() === null) {
-            $title = empty($subject->getTitle()) ? $subject->getProduct()->getTitle() : $subject->getTitle();
-            $subject->setCode($this->productVariantManager->generateCode($title, $subject->getOptionValues()));
+            $this->productManager->updateProductVariant($subject);
         }
     }
 }

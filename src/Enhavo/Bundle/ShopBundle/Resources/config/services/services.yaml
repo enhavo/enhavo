@@ -24,20 +24,15 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
 
-    Enhavo\Bundle\ShopBundle\Manager\ProductVariantManager:
-        arguments:
-            - '@doctrine.orm.entity_manager'
-
     Enhavo\Bundle\ShopBundle\EventListener\ProductSubscriber:
         arguments:
             - '@Enhavo\Bundle\ShopBundle\Manager\ProductManager'
-            - '@Enhavo\Bundle\ShopBundle\Manager\ProductVariantManager'
         tags:
             - { name: kernel.event_subscriber }
 
     Enhavo\Bundle\ShopBundle\EventListener\ProductVariantSubscriber:
         arguments:
-            - '@Enhavo\Bundle\ShopBundle\Manager\ProductVariantManager'
+            - '@Enhavo\Bundle\ShopBundle\Manager\ProductManager'
         tags:
             - { name: kernel.event_subscriber }
 
