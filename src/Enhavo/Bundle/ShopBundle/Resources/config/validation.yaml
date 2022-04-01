@@ -30,8 +30,6 @@ Enhavo\Bundle\ShopBundle\Entity\Product:
     properties:
         title:
             - NotBlank: ~
-        code:
-            - NotBlank: ~
 
 Enhavo\Bundle\ShopBundle\Entity\ProductOption:
     properties:

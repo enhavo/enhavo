@@ -18,10 +18,9 @@
 namespace Enhavo\Bundle\ShopBundle\Form\Type;
 
 use Enhavo\Bundle\FormBundle\Form\Type\ListType;
-//use Sylius\Bundle\ProductBundle\Form\Type\ProductVariantGenerationType;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Enhavo\Bundle\ShopBundle\Form\Type\ProductVariantGenerationType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProductGenerateVariantsType extends AbstractResourceType
 {
@@ -48,6 +47,13 @@ class ProductGenerateVariantsType extends AbstractResourceType
                 'sortable' => true,
                 'sortable_property' => 'position'
             ]);
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults(array(
+            'validation_groups' => ['product-variant']
+        ));
     }
 
     public function getParent()

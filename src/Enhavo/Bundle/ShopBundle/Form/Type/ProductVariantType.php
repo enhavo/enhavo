@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Sylius\Bundle\ProductBundle\Form\Type\ProductVariantType as SyliusProductVariantType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProductVariantType extends AbstractType
 {
@@ -124,6 +125,15 @@ class ProductVariantType extends AbstractType
         ));
 
         $builder->add('position', IntegerType::class);
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        parent::configureOptions($resolver);
+
+        $resolver->setDefaults(array(
+            'validation_groups' => ['product-variant']
+        ));
     }
 
     public function getParent()

@@ -97,6 +97,9 @@ class ProductType extends AbstractType
         $builder->add('code', TextType::class, array(
             'label' => 'product.form.label.code',
             'translation_domain' => 'EnhavoShopBundle',
+            'attr' => array(
+                'readonly' => true,
+            ),
         ));
 
         $builder->add('price', CurrencyType::class, array(
@@ -190,7 +193,7 @@ class ProductType extends AbstractType
 
         $builder->add('options', EntityType::class, array(
             'class' => $this->optionClass,
-            'choice_label' => 'code',
+            'choice_label' => 'translation.name',
             'label' => 'product.label.options',
             'multiple' => true,
             'translation_domain' => 'EnhavoShopBundle',

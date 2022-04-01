@@ -22,8 +22,15 @@ services:
 
     Enhavo\Bundle\ShopBundle\Manager\ProductManager:
         arguments:
+            - '@doctrine.orm.entity_manager'
 
     Enhavo\Bundle\ShopBundle\EventListener\ProductSubscriber:
+        arguments:
+            - '@Enhavo\Bundle\ShopBundle\Manager\ProductManager'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    Enhavo\Bundle\ShopBundle\EventListener\ProductVariantSubscriber:
         arguments:
             - '@Enhavo\Bundle\ShopBundle\Manager\ProductManager'
         tags:
