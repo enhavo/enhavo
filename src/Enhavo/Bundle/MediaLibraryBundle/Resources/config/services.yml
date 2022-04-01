@@ -1,14 +1,4 @@
 services:
-
-    Enhavo\Bundle\MediaLibraryBundle\Controller\UploadController:
-        arguments:
-            - '@Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryManager'
-            - '@enhavo_media.factory.file'
-            - '@enhavo_media.media.media_manager'
-            - '@enhavo_media.factory.format'
-        tags:
-            - { name: controller.service_arguments }
-
     Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryManager:
         public: true
         arguments:
