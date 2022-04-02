@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\MediaLibraryBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
+use Enhavo\Bundle\AppBundle\Filter\FilterQuery;
 use Enhavo\Bundle\MediaBundle\Controller\FileControllerTrait;
 use Enhavo\Bundle\MediaBundle\Exception\StorageException;
 use Enhavo\Bundle\MediaBundle\Media\MediaManager;
@@ -97,15 +98,25 @@ class FileController extends ResourceController
      */
     public function filesAction(Request $request): JsonResponse
     {
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+        $resources = $this->resourcesCollectionProvider->get($configuration, $this->repository);
+
+        $columns = [
+            ['property' => 'filename', 'label' => 'Name'],
+            ['property' => 'extension', 'label' => 'Suffix'],
+            ['property' => 'contentType', 'label' => 'Type'],
+            ['property' => 'createdAt', 'label' => 'Date'],
+        ];
+
         $page = $request->get('page', 1);
-        $pagination = $this->getMediaLibraryManager()->getFiles($request->get('content_type'), $request->get('tag'), $request->get('search'), $page);
-        $files = $this->createFileList($pagination);
-        $pages = range(1, $pagination->getNbPages(), 1);
+        $files = $this->createFileList($resources);
+        $pages = range(1, $resources->getNbPages(), 1);
 
         return new JsonResponse([
             'files' => $files,
             'page' => $page,
             'pages' => $pages,
+            'columns' => $columns,
         ]);
     }
 

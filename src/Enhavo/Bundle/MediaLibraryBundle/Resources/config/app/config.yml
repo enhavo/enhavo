@@ -48,8 +48,7 @@ enhavo_media_library:
                 - application/rtc
                 - application/rtf
                 - ^application/ms.+
-                - ^application/vnd\.oasis\.opendocument\..+
-                - ^vnd\.openxmlformats-officedocument\..+
+                - ^application/vnd.+
         text:
             label: 'Text'
             icon: 'icon-file_text'
