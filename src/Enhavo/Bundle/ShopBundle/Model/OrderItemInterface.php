@@ -6,11 +6,7 @@ use Sylius\Component\Order\Model\OrderItemInterface as SyliusOrderItemInterface;
 
 interface OrderItemInterface extends SyliusOrderItemInterface
 {
-    /**
-     * @param ProductInterface $product
-     *
-     */
-    public function setProduct($product);
+    public function setProduct(ProductAccessInterface $product);
 
     /**
      * @param string $name

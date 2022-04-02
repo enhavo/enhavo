@@ -2,37 +2,24 @@
 
 namespace Enhavo\Bundle\ShopBundle\Entity;
 
+use Enhavo\Bundle\ShopBundle\Model\ProductAccessInterface;
 use Sylius\Component\Order\Model\OrderItem as SyliusOrderItem;
 use Enhavo\Bundle\ShopBundle\Model\AdjustmentInterface;
 use Sylius\Component\Order\Model\OrderItemInterface as SyliusOrderItemInterface;
 use Enhavo\Bundle\ShopBundle\Model\OrderItemInterface;
-use Enhavo\Bundle\ShopBundle\Model\ProductInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
 class OrderItem extends SyliusOrderItem implements OrderItemInterface
 {
-    /**
-     * @var Product
-     */
-    private $product;
+    private ?ProductAccessInterface $product;
+    private ?string $name;
 
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @return ProductInterface
-     */
-    public function getProduct()
+    public function getProduct(): ?ProductAccessInterface
     {
         return $this->product;
     }
 
-    /**
-     * @param ProductInterface $product
-     */
-    public function setProduct($product)
+    public function setProduct(?ProductAccessInterface $product)
     {
         $this->product = $product;
     }

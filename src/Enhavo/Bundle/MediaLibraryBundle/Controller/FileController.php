@@ -65,7 +65,7 @@ class FileController extends ResourceController
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
 
         /** @var  $view */
-        $view = $this->getViewFactory()->create([
+        $view = $this->viewFactory->create([
             'type' => 'media_library',
             'request_configuration' => $configuration,
             'metadata' => $this->metadata,
@@ -81,7 +81,7 @@ class FileController extends ResourceController
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
 
-        $view = $this->getViewFactory()->create([
+        $view = $this->viewFactory->create([
             'type' => 'media_library',
             'multiple' => $request->get('multiple', false),
             'mode' => MediaLibraryViewType::MODE_SELECT,

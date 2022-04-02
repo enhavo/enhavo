@@ -51,7 +51,7 @@ class EnhavoShopExtension extends AbstractResourceExtension implements PrependEx
             'services/block.yaml',
             'services/services.yaml',
             'services/promotion.yaml',
-//            'services/order.yaml',
+            'services/order.yaml',
         );
         foreach ($configFiles as $configFile) {
             $loader->load($configFile);

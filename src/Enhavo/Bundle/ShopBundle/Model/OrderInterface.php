@@ -10,9 +10,6 @@ use Sylius\Component\Promotion\Model\PromotionCoupon;
 use Sylius\Component\Promotion\Model\PromotionCouponInterface;
 use Sylius\Component\Promotion\Model\PromotionSubjectInterface;
 
-
-
-
 /**
  * OrderInterface.php
  *

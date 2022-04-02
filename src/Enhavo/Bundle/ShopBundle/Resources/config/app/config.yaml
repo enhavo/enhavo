@@ -11,9 +11,12 @@ sylius_order:
                 controller: Enhavo\Bundle\ShopBundle\Controller\OrderController
                 repository: Enhavo\Bundle\ShopBundle\Repository\OrderRepository
                 form: Enhavo\Bundle\ShopBundle\Form\Type\OrderType
+                factory: Enhavo\Bundle\ShopBundle\Factory\OrderFactory
         order_item:
             classes:
                 model: Enhavo\Bundle\ShopBundle\Entity\OrderItem
+                controller: Enhavo\Bundle\ShopBundle\Controller\OrderItemController
+                factory: Enhavo\Bundle\ShopBundle\Factory\OrderItemFactory
 
 sylius_shipping:
     resources:
@@ -82,6 +85,7 @@ doctrine:
     orm:
         resolve_target_entities:
             Enhavo\Bundle\ShopBundle\Model\ProductInterface: Enhavo\Bundle\ShopBundle\Entity\Product
+            Enhavo\Bundle\ShopBundle\Model\ProductVariantInterface: Enhavo\Bundle\ShopBundle\Entity\ProductVariant
             Enhavo\Bundle\ShopBundle\Model\OrderInterface: Enhavo\Bundle\ShopBundle\Entity\Order
             Sylius\Component\Addressing\Model\AddressInterface: Sylius\Component\Addressing\Model\Address
             Sylius\Component\Promotion\Model\PromotionCouponInterface: Sylius\Component\Promotion\Model\PromotionCoupon
@@ -210,6 +214,7 @@ sylius_product:
             classes:
                 model: Enhavo\Bundle\ShopBundle\Entity\ProductOption
                 form: Enhavo\Bundle\ShopBundle\Form\Type\ProductOptionType
+                controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
         product_option_value:
             classes:
                 model: Enhavo\Bundle\ShopBundle\Entity\ProductOptionValue
