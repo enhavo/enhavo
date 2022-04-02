@@ -11,6 +11,7 @@ namespace Enhavo\Bundle\AppBundle\Controller;
 use Enhavo\Bundle\AppBundle\Batch\BatchManager;
 use Enhavo\Bundle\AppBundle\Exception\BatchExecutionException;
 use Enhavo\Component\Type\FactoryInterface;
+use Sylius\Bundle\ResourceBundle\Controller\ControllerTrait;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,46 +20,7 @@ use Sylius\Component\Resource\ResourceActions;
 
 class ResourceController extends BaseController
 {
-    /** @var FactoryInterface */
-    private $viewFactory;
-
-    /** @var AppEventDispatcher */
-    private $appEventDispatcher;
-
-    /** @var BatchManager */
-    private $batchManager;
-
-    /**
-     * @param FactoryInterface $viewFactory
-     */
-    public function setViewFactory(FactoryInterface $viewFactory): void
-    {
-        $this->viewFactory = $viewFactory;
-    }
-
-    /**
-     * @return FactoryInterface
-     */
-    protected function getViewFactory(): FactoryInterface
-    {
-        return $this->viewFactory;
-    }
-
-    /**
-     * @param AppEventDispatcher $appEventDispatcher
-     */
-    public function setAppEventDispatcher(AppEventDispatcher $appEventDispatcher): void
-    {
-        $this->appEventDispatcher = $appEventDispatcher;
-    }
-
-    /**
-     * @param BatchManager $batchManager
-     */
-    public function setBatchManager(BatchManager $batchManager): void
-    {
-        $this->batchManager = $batchManager;
-    }
+    use ResourceControllerTrait;
 
     public function createAction(Request $request): Response
     {

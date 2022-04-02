@@ -12,5 +12,11 @@ use Sylius\Component\Order\Model\AdjustmentInterface as SyliusAdjustmentInterfac
 
 interface AdjustmentInterface extends SyliusAdjustmentInterface
 {
-    const TAX_PROMOTION_ADJUSTMENT = 'tax_promotion';
+    public const ORDER_ITEM_PROMOTION_ADJUSTMENT = 'order_item_promotion';
+    public const ORDER_PROMOTION_ADJUSTMENT = 'order_promotion';
+    public const ORDER_SHIPPING_PROMOTION_ADJUSTMENT = 'order_shipping_promotion';
+    public const ORDER_UNIT_PROMOTION_ADJUSTMENT = 'order_unit_promotion';
+    public const SHIPPING_ADJUSTMENT = 'shipping';
+    public const TAX_ADJUSTMENT = 'tax';
+    public const TAX_PROMOTION_ADJUSTMENT = 'tax_promotion';
 }

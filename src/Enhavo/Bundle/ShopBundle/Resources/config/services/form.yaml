@@ -45,6 +45,13 @@ services:
         tags:
             - { name: form.type }
 
+    Enhavo\Bundle\ShopBundle\Form\Type\AddToCartType:
+        arguments:
+            - Sylius\Bundle\OrderBundle\Controller\AddToCartCommand
+            - []
+        tags:
+            - { name: form.type }
+
     Enhavo\Bundle\ShopBundle\Form\Extension\ResourceTranslationsExtension:
         arguments:
             - '@sylius.translation_locale_provider'

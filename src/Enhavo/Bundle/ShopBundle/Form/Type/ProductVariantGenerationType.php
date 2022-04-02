@@ -53,7 +53,7 @@ class ProductVariantGenerationType extends AbstractResourceType
         $builder->addEventSubscriber(new BuildProductVariantFormSubscriber($builder->getFormFactory(), true));
     }
 
-    /**
+    /**x
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver): void

@@ -12,7 +12,6 @@ class EnhavoShopBundle extends Bundle
     public function build(ContainerBuilder $container)
     {
         parent::build($container);
-        $container->addCompilerPass(new SyliusCompilerPass());
         $container->addCompilerPass(new ConfigCompilerPass());
     }
 }

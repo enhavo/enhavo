@@ -16,36 +16,30 @@ enhavo_shop_theme_cart_clear:
         _controller: sylius.controller.cart::clearAction
         _format: json
 
-enhavo_shop_theme_cart_item_add:
-    path: /cart/add.{_format}
-    defaults:
-        _controller: sylius.controller.cart_item::addAction
-        _format: json
-
 enhavo_shop_theme_cart_summary:
-    path: /cart/summary.{_format}
+    path: /cart/summary
     defaults:
-        _controller: sylius.controller.cart::summaryAction
+        _controller: sylius.controller.order::summaryAction
         _format: html
         _sylius:
             template: EnhavoShopBundle:Theme:Cart/summary.html.twig
 
 enhavo_shop_theme_cart_add_item:
-    path: /cart/add
-    methods: [POST]
+    path: /cart/add/{productVariantId}
+#    methods: [POST]
     defaults:
         _controller: sylius.controller.order_item::addAction
         _format: json
         _sylius:
             factory:
-                method: createForProduct
-                arguments: [expr:notFoundOnNull(service('sylius.repository.product').find($productId))]
+                method: createWithProductVariant
+                arguments: [expr:notFoundOnNull(service('sylius.repository.product_variant').find($productVariantId))]
             form:
-                type: Sylius\Bundle\CoreBundle\Form\Type\Order\AddToCartType
+                type: Enhavo\Bundle\ShopBundle\Form\Type\AddToCartType
                 options:
-                    product: expr:notFoundOnNull(service('sylius.repository.product').find($productId))
+                    product: expr:notFoundOnNull(service('sylius.repository.product_variant').find($productVariantId))
             redirect:
-                route: sylius_shop_cart_summary
+                route: enhavo_shop_theme_cart_summary
                 parameters: {}
             flash: sylius.cart.add_item
 
