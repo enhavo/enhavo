@@ -1,7 +1,11 @@
 <template>
-    <div class="view-table-filter-search">
-        <datepicker :typeable="true" :inputFormat="data.format" :locale="locale" :placeholder="data.labelFrom" v-model="valueFrom" @update:modelValue="update"></datepicker>
-        <datepicker :typeable="true" :inputFormat="data.format" :locale="locale" :placeholder="data.labelTo" v-model="valueTo" @update:modelValue="update"></datepicker>
+    <div class="view-table-filter-search wide">
+        <span class="label">{{ data.label }}</span>
+        <div class="multi-input-container">
+            <datepicker :typeable="true" :inputFormat="data.format" :locale="locale" :placeholder="data.labelFrom" v-model="valueFrom" @update:modelValue="update"></datepicker>
+            <div class="separator">-</div>
+            <datepicker :typeable="true" :inputFormat="data.format" :locale="locale" :placeholder="data.labelTo" v-model="valueTo" @update:modelValue="update"></datepicker>
+        </div>
     </div>
 </template>
 

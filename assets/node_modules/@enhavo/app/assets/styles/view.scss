@@ -56,11 +56,11 @@
       }
       .vs__actions {padding:0;}
       .vs__search {margin:0;border:0;padding:0;line-height:28px;cursor:pointer;width:auto;max-width:187px;@include placeholder {color:$grey3;}}
-      .vs__selected {margin:0;padding:0;border:0;border-radius:0;line-height:26px;display:inline-block;
+      .vs__selected {margin:0;padding:0;border:0;border-radius:0;line-height:28px;display:inline;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;
         + .vs__search {width:20px;}
       }
-      .vs__selected-options {padding:0;display:inline-block;}
-      .vs__dropdown-toggle {cursor:pointer;border-radius:10px;border:1px solid $grey5;background:$grey1;color:$grey3;padding:4px 9px 4px 14px;}
+      .vs__selected-options {padding:0;display:flex;flex-wrap:nowrap;min-width:0;}
+      .vs__dropdown-toggle {cursor:pointer;border-radius:10px;border:1px solid $grey5;background:$grey1;color:$grey3;padding:4px 9px 4px 14px;flex-wrap:nowrap;}
       .vs__open-indicator {fill:$grey3;}
       .vs__dropdown-menu {border:1px solid $grey5;color:$grey3;background:$grey1;border-bottom-right-radius:10px;border-bottom-left-radius:10px;box-shadow:none;
         .vs__dropdown-option {color:#000;padding:4px 10px;margin:0 1px;

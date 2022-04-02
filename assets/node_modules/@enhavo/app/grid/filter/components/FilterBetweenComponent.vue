@@ -1,7 +1,11 @@
 <template>
-    <div class="view-table-filter-search">
-        <input @keyup="keyup" type="text" v-model="data.value.from" :placeholder="data.labelFrom" :class="['filter-form-field', {'has-value': hasFromValue}]">
-        <input @keyup="keyup" type="text" v-model="data.value.to" :placeholder="data.labelTo" :class="['filter-form-field', {'has-value': hasToValue}]">
+    <div class="view-table-filter-search wide">
+        <span class="label">{{ data.label }}</span>
+        <div class="multi-input-container">
+            <input @keyup="keyup" type="text" v-model="data.value.from" :placeholder="data.labelFrom" :class="['filter-form-field', {'has-value': hasFromValue}]">
+            <div class="separator">-</div>
+            <input @keyup="keyup" type="text" v-model="data.value.to" :placeholder="data.labelTo" :class="['filter-form-field', {'has-value': hasToValue}]">
+        </div>
     </div>
 </template>
 

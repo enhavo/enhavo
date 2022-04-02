@@ -1,13 +1,45 @@
-.filter-bar {display:flex;align-items:baseline;margin-bottom:40px;flex-wrap:wrap;
-  .apply-button {@extend %iconButton;}
-  .reset-button {@extend %iconButton;margin-left:10px;}
-  .view-table-filter {margin-right:20px;margin-bottom:10px;
-    + &:last-child {margin-right:0;}
+.filter-bar {display:flex;margin-bottom:40px;flex-wrap:wrap;
+  .filter-buttons { width: 100%; text-align: right;
+    .apply-button {@extend %iconButton;}
+    .reset-button {@extend %iconButton;margin-left:10px;}
+  }
+  .view-table-filter { padding: 0 10px 10px 10px; width: 25%;
+    &.wide { width: 50%; }
+    &.filter-headline { width: 100%; padding-left: 0; font-weight: 600; font-size: 0.875rem; line-height: 1.1em; }
+    .label { display: block; font-size:0.85rem;line-height:1.1em;margin-bottom:1px; }
     input[type="text"] {@extend %textfield;
       &.has-value {border-color:$color1;}
     }
-    .checkbox-container {@extend %checkboxContainer;}
+    .v-select { flex: none; width: 100%;
+      .vs__selected {  }
+    }
+    .checkbox-container {@extend %checkboxContainer; margin-top: 10px; }
+    .multi-input-container { width: 100%; display: flex;
+      div { flex: 1 1 100%;
+        &.separator { flex: 0 0 auto; padding: 6px 8px; }
+      }
+    }
   }
 }
 
 .grid {padding:50px 30px;}
+
+@media screen and (max-width:1200px) {
+  .filter-bar {
+    .view-table-filter { width: 50%;
+      &.wide { width: 100%; }
+    }
+  }
+}
+@media screen and (max-width:768px) {
+  .filter-bar {
+    .view-table-filter { width: 100%;
+      .multi-input-container { flex-wrap: wrap;
+        div { flex: 0 0 100%; padding-top: 8px;
+          &:first-child { padding-top: 0; }
+          &.separator { display: none; }
+        }
+      }
+    }
+  }
+}
