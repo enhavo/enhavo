@@ -37,6 +37,14 @@ class ResourceController extends BaseController
     }
 
     /**
+     * @return FactoryInterface
+     */
+    protected function getViewFactory(): FactoryInterface
+    {
+        return $this->viewFactory;
+    }
+
+    /**
      * @param AppEventDispatcher $appEventDispatcher
      */
     public function setAppEventDispatcher(AppEventDispatcher $appEventDispatcher): void

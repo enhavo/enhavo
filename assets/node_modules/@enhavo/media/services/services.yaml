@@ -2,9 +2,6 @@ entrypoints:
     'enhavo/media/image-cropper':
         path: '../entrypoint/image-cropper.ts'
         build: enhavo
-    'enhavo/media/media-library':
-        path: '../entrypoint/media-library.ts'
-        build: enhavo
 services:
     '@enhavo/media/loader/MediaLoader':
         chunk: 'form'
@@ -13,34 +10,6 @@ services:
             - '@enhavo/core/Router'
         tags:
             - 'enhavo_app.form'
-
-    '@enhavo/media/media-library/MediaLibraryApp':
-        chunk: 'media'
-        arguments:
-            - '@enhavo/app/view/View'
-            - '@enhavo/app/action/ActionManager'
-            - '@enhavo/media/media-library/MediaLibrary'
-            - '@enhavo/app/flash-message/FlashMessenger'
-
-    '@enhavo/media/media-library/MediaLibrary':
-        chunk: 'media'
-        arguments:
-            - 'param:data.media'
-            - '@enhavo/core/Router'
-            - '@enhavo/app/view-stack/EventDispatcher'
-            - '@enhavo/app/view/View'
-            - '@enhavo/core/Translator'
-            - '@enhavo/app/vue/VueRegistry'
-
-    '@enhavo/media/media-library/components/ApplicationComponent.vue':
-        chunk: 'media'
-        static: true
-
-    '@enhavo/media/media-library/components/MediaLibraryComponent.vue':
-        chunk: 'media'
-        static: true
-        tags:
-            - { name: vue.component, component: 'media-library' }
 
     '@enhavo/media/image-cropper/ImageCropperApp':
         chunk: 'image-cropper'

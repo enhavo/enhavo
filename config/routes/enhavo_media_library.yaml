@@ -1,0 +1,3 @@
+enhavo_media_library_admin:
+    resource: "@EnhavoMediaLibraryBundle/Resources/config/routes/admin/*"
+    prefix: /admin

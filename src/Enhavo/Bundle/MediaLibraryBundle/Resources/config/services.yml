@@ -1,0 +1,54 @@
+services:
+    Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryManager:
+        public: true
+        arguments:
+            - '%enhavo_media_library.content_type%'
+            - '@enhavo_media.repository.file'
+            - '@enhavo_taxonomy.repository.term'
+
+    Enhavo\Bundle\MediaLibraryBundle\Form\Extension\MediaExtension:
+        tags:
+            - { name: form.type_extension, extended_type: Enhavo\Bundle\MediaBundle\Form\Type\MediaType }
+
+    Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryExtension:
+        public: true
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
+        tags:
+            - { name: enhavo.media_extension , alias: media_library }
+
+    Enhavo\Bundle\MediaLibraryBundle\View\Type\MediaLibraryViewType:
+        arguments:
+            - '@enhavo_app.action_manager'
+            - '@Enhavo\Bundle\AppBundle\View\ViewUtil'
+            - '@translator'
+        tags:
+            - { name: enhavo_app.view }
+
+    Enhavo\Bundle\MediaLibraryBundle\Menu\MediaLibraryRootMenuType:
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\ListMenu
+        tags:
+            - { name: enhavo.menu, alias: media_library }
+
+    Enhavo\Bundle\MediaLibraryBundle\Menu\MediaLibraryMenu:
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
+        tags:
+            - { name: enhavo.menu, alias: media_library_library }
+
+    Enhavo\Bundle\MediaLibraryBundle\Menu\TagMenuType:
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
+        tags:
+            - { name: enhavo.menu, alias: media_library_tag }
+
+    Enhavo\Bundle\MediaLibraryBundle\Form\Type\FileType:
+        arguments:
+            - '@Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryManager'
+        tags:
+            - { name: form.type }
+
+    enhavo_media_library.factory.file:
+        class: Enhavo\Bundle\MediaLibraryBundle\Factory\FileFactory
+        public: true
+        arguments:
+            - '%enhavo_media_library.model.file.class%'
+            - '@enhavo_media.provider'

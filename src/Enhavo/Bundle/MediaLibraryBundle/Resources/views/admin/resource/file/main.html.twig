@@ -1,0 +1,12 @@
+{{ form_row(form.filename) }}
+{{ form_row(form.contentType) }}
+{{ form_row(form.tags) }}
+{% if form.vars.value and form.vars.value.id is not null %}
+    <br/><br/>
+    <div class="row">
+        <div class="col-md-push-2 col-md-9">
+            <img src="{{ media_url(form.vars.value, 'enhavoMediaLibraryThumb') }}" />
+        </div>
+    </div>
+{% endif %}
+{{ form_row(form._token) }}

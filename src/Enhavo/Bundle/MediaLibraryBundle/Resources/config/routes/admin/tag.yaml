@@ -1,0 +1,112 @@
+enhavo_media_library_tag_index:
+    options:
+        expose: true
+    path: /enhavo/media-library/tag/index
+    methods: [GET]
+    defaults:
+        _controller: enhavo_taxonomy.controller.term::indexAction
+        _sylius:
+            viewer:
+                label: media_library.label.tag
+                translation_domain: EnhavoMediaLibraryBundle
+                table_route: enhavo_media_library_tag_table
+                batch_route: enhavo_media_library_tag_batch
+                open_route: enhavo_media_library_tag_update
+                actions:
+                    create:
+                        type: create
+                        route: enhavo_media_library_tag_create
+
+enhavo_media_library_tag_create:
+    options:
+        expose: true
+    path:  /enhavo/media-library/tag/create
+    methods: [GET,POST]
+    defaults:
+        _controller: enhavo_taxonomy.controller.term:createAction
+        _sylius:
+            redirect: enhavo_media_library_tag_update
+            form: Enhavo\Bundle\MediaLibraryBundle\Form\Type\TagType
+            factory:
+                method: createNewOnTaxonomy
+                arguments:
+                    - 'media_library_tag'
+
+enhavo_media_library_tag_update:
+    options:
+        expose: true
+    path:  /enhavo/media-library/tag/update/{id}
+    methods: [GET,POST]
+    defaults:
+        _controller: enhavo_taxonomy.controller.term::updateAction
+        _sylius:
+            form: Enhavo\Bundle\MediaLibraryBundle\Form\Type\TagType
+            serialization_groups: ['form']
+            viewer:
+                actions_secondary:
+                    delete:
+                        type: delete
+                        route: enhavo_media_library_tag_delete
+
+enhavo_media_library_tag_table:
+    options:
+        expose: true
+    path:  /enhavo/media-library/tag/table
+    defaults:
+        _controller: enhavo_taxonomy.controller.term::tableAction
+        _sylius:
+            repository:
+                method: findByTaxonomyName
+                arguments:
+                    - 'media_library_tag'
+            viewer:
+                translation_domain: EnhavoTaxonomyBundle
+                width: 12
+                columns:
+                    name:
+                        type: property
+                        width: 12
+                        label: term.label.name
+                        translation_domain: EnhavoTaxonomyBundle
+                        property: name
+
+enhavo_media_library_tag_delete:
+    options:
+        expose: true
+    path: /enhavo/media-library/tag/delete/{id}
+    methods: [POST]
+    defaults:
+        _controller: enhavo_taxonomy.controller.term:deleteAction
+        _sylius:
+            redirect: enhavo_media_library_tag_index
+
+enhavo_media_library_tag_batch:
+    options:
+        expose: true
+    path: /enhavo/media-library/tag/batch
+    methods: [POST]
+    defaults:
+        _controller: enhavo_taxonomy.controller.term::batchAction
+        _sylius:
+            paginate: false
+            criteria:
+                id: $ids
+            batches:
+                delete:
+                    type: delete
+
+enhavo_media_library_tag_auto_complete:
+    options:
+        expose: true
+    path: /enhavo/media-library/tag/auto_complete
+    defaults:
+        _controller: enhavo_form.controller.auto_complete::searchAction
+        _config:
+            class: Enhavo\Bundle\TaxonomyBundle\Entity\Term
+            repository:
+                method: findByTaxonomyTerm
+                arguments:
+                    - expr:configuration.getSearchTerm()
+                    - 'media_library_tag'
+                    - expr:configuration.getLimit()
+            choice_label: name

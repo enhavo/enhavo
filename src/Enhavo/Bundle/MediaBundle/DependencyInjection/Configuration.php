@@ -4,6 +4,10 @@ namespace Enhavo\Bundle\MediaBundle\DependencyInjection;
 
 use Enhavo\Bundle\MediaBundle\Cache\NoCache;
 use Enhavo\Bundle\MediaBundle\Controller\FileController;
+use Enhavo\Bundle\MediaBundle\Entity\File;
+use Enhavo\Bundle\MediaBundle\Factory\FileFactory;
+use Enhavo\Bundle\MediaBundle\Form\Type\FileType;
+use Enhavo\Bundle\MediaBundle\Repository\FileRepository;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -22,6 +26,9 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder('enhavo_media');
         $rootNode = $treeBuilder->getRootNode();
         $rootNode
+            ->children()
+                ->scalarNode('enable_delete_unreferenced')->defaultValue(true)->end()
+            ->end()
             ->children()
                 ->arrayNode('formats')
                     ->useAttributeAsKey('name')
@@ -103,11 +110,11 @@ class Configuration implements ConfigurationInterface
                                 ->arrayNode('classes')
                                     ->addDefaultsIfNotSet()
                                     ->children()
-                                        ->scalarNode('model')->defaultValue('Enhavo\Bundle\MediaBundle\Entity\File')->end()
+                                        ->scalarNode('model')->defaultValue(File::class)->end()
                                         ->scalarNode('controller')->defaultValue(FileController::class)->end()
-                                        ->scalarNode('repository')->defaultValue('Enhavo\Bundle\MediaBundle\Repository\FileRepository')->end()
-                                        ->scalarNode('factory')->defaultValue('Enhavo\Bundle\MediaBundle\Factory\FileFactory')->end()
-                                        ->scalarNode('form')->defaultValue('Enhavo\Bundle\MediaBundle\Factory\FileType')->cannotBeEmpty()->end()
+                                        ->scalarNode('repository')->defaultValue(FileRepository::class)->end()
+                                        ->scalarNode('factory')->defaultValue(FileFactory::class)->end()
+                                        ->scalarNode('form')->defaultValue(FileType::class)->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
                             ->end()

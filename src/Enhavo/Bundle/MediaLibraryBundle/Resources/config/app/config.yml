@@ -1,0 +1,123 @@
+enhavo_app:
+    template_paths:
+        enhavo_media_library:
+            alias: EnhavoMediaLibrary
+            path: '@EnhavoMediaLibraryBundle/Resources/views'
+            priority: 10
+    apps:
+        - 'media/Extension/MediaLibrary'
+    roles:
+        enhavo_media_library_index:
+            role: ROLE_ENHAVO_MEDIA_LIBRARY_INDEX
+            label: library.role.label.index
+            translation_domain: EnhavoMediaBundle
+        enhavo_media_library_create:
+            role: ROLE_ENHAVO_MEDIA_LIBRARY_CREATE
+            label: library.role.label.create
+            translation_domain: EnhavoMediaBundle
+        enhavo_media_library_update:
+            role: ROLE_ENHAVO_MEDIA_LIBRARY_UPDATE
+            label: library.role.label.update
+            translation_domain: EnhavoMediaBundle
+        enhavo_media_library_delete:
+            role: ROLE_ENHAVO_MEDIA_LIBRARY_DELETE
+            label: library.role.label.delete
+            translation_domain: EnhavoMediaBundle
+
+enhavo_media_library:
+    content_type:
+        audio:
+            label: 'Audio'
+            icon: 'icon-file_audio'
+            mime_types:
+                - ^audio/.+
+        archive:
+            label: 'Archive'
+            icon: 'icon-archive'
+            mime_types:
+                - application/gzip
+                - application/zip
+                - application/x-tar
+                - application/x-gtar
+        document:
+            label: 'Document'
+            icon: 'icon-file_document'
+            mime_types:
+                - application/pdf
+                - application/postscript
+                - application/rtc
+                - application/rtf
+                - ^application/ms.+
+                - ^application/vnd\.oasis\.opendocument\..+
+                - ^vnd\.openxmlformats-officedocument\..+
+        text:
+            label: 'Text'
+            icon: 'icon-file_text'
+            mime_types:
+                - ^text/.+
+        image:
+            label: 'Image'
+            icon: 'icon-image'
+            mime_types:
+                - ^image/.+
+        video:
+            label: 'Video'
+            icon: 'icon-file_video'
+            mime_types:
+                - ^video/.+
+
+enhavo_media:
+    resources:
+        file:
+            classes:
+                model: Enhavo\Bundle\MediaLibraryBundle\Entity\File
+                repository: Enhavo\Bundle\MediaLibraryBundle\Repository\FileRepository
+                factory: Enhavo\Bundle\MediaLibraryBundle\Factory\FileFactory
+                form: Enhavo\Bundle\MediaLibraryBundle\Form\Type\FileType
+
+    formats:
+        enhavoMediaLibraryImage:
+            type: image
+            width: 512
+            height: 512
+        enhavoMediaLibraryTxt:
+            type: text_image
+        enhavoMediaLibraryPdf:
+            type: pdf_image
+            method: ghostscript
+        enhavoMediaLibraryVideo:
+            type: video_image
+        enhavoMediaLibraryThumb:
+            -
+                type: mimetype
+                format: enhavoMediaLibraryTxt
+                mimetypes: [text/plain, text/css]
+            -
+                type: mimetype
+                format: enhavoMediaLibraryPdf
+                mimetypes: [application/pdf]
+            -
+                type: mimetype
+                format: enhavoMediaLibraryImage
+                mimetypes: [image/jpg, image/png, image/jpeg, image/bmp]
+            -
+                type: mimetype
+                format: enhavoMediaLibraryVideo
+                mimetypes: [video/mp4]
+
+enhavo_taxonomy:
+    taxonomies:
+        media_library_tag:
+            label: media_library.label.tag
+            translation_domain: EnhavoMediaLibraryBundle
+
+enhavo_doctrine_extension:
+    metadata:
+        Enhavo\Bundle\MediaLibraryBundle\Entity\File:
+            extends: Enhavo\Bundle\MediaBundle\Entity\File
+            discrName: 'extension'
+
+doctrine:
+    orm:
+        resolve_target_entities:
+            Enhavo\Bundle\MediaBundle\Model\FileInterface: Enhavo\Bundle\MediaLibraryBundle\Entity\File

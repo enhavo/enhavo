@@ -1,0 +1,214 @@
+<template>
+    <div class="app-view">
+        <view-view></view-view>
+        <flash-messages></flash-messages>
+        <action-bar></action-bar>
+        <input v-show="false" v-once ref="upload" multiple type="file">
+        <div class="media-library-overlay" data-media-library-overlay>
+            <div class="close-media-library-overlay button-icon icon-cross" data-media-library-close></div>
+            <div class="inner-content" data-scroll-container>
+                <div class="tag-list">
+                    <div class="headline"><i class="icon icon-filter_list"></i>
+                        {{ translator.trans('enhavo_media_library.tags') }}
+                    </div>
+                    <tag-list
+                        :tags="mediaLibrary.data.tags"
+                    ></tag-list>
+
+                    <div class="headline"><i class="icon icon-filter_list"></i>
+                        {{ translator.trans('enhavo_media_library.content_types') }}
+                    </div>
+                    <content-type-list
+                        :content-types="mediaLibrary.data.contentTypes"
+                    ></content-type-list>
+                </div>
+
+                <div class="result-search">
+                    <div class="search">
+                        <input ref="searchInput" v-model="mediaLibrary.data.searchString" type="text" data-media-library-search />
+                        <span class="media-library-search-reset" @click="clearSearch()"><i class="icon icon-close"></i></span>
+                        <span class="media-library-search-submit" @click="search()"><i class="icon icon-search"></i></span>
+                    </div>
+                    <div v-if="!mediaLibrary.data.loading">
+                        <ul ref="itemList" class="images" data-media-library-result>
+                            <file
+                                v-for="file of mediaLibrary.data.files"
+                                v-bind:key="file.id"
+                                :file="file"
+                            ></file>
+                        </ul>
+                        <div v-if="mediaLibrary.data.pages.length>0" class="media-library-pagination">
+                            <ul>
+                                <li v-for="page in mediaLibrary.data.pages" @click="onClickPage(page)" :class="{'active':page==mediaLibrary.data.activePage}">
+                                    {{ page }}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div v-else class="lds-ellipsis">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script lang="ts">
+import * as $ from 'jquery';
+import {Inject, Options, Vue, Watch} from "vue-property-decorator";
+import '@enhavo/app/assets/styles/view.scss';
+import Translator from "@enhavo/core/Translator";
+import Router from "@enhavo/core/Router";
+import {File} from "@enhavo/media-library/Data";
+import MediaLibrary from "@enhavo/media-library/MediaLibrary";
+
+@Options({})
+export default class extends Vue {
+    @Inject()
+    translator: Translator;
+
+    @Inject()
+    mediaLibrary: MediaLibrary;
+
+    @Inject()
+    router: Router;
+
+    @Watch('searchString')
+    onChangeSearchString(val: string) {
+        this.getMediaLibrary().data.searchString = val;
+    }
+
+    getAddLabel() {
+        if (this.getMediaLibrary().data.multiple) {
+            return "media_library.add_selecteded";
+        } else {
+            return "media_library.add_selected";
+        }
+    }
+
+    search() {
+        this.getMediaLibrary().search();
+    }
+
+    clearSearch() {
+        this.getMediaLibrary().clearSearch()
+
+    }
+
+    created() {
+        window.addEventListener('keydown', (e) => {
+            if (e.key == 'Enter') {
+                let isSearchFocus = $(this.$refs.searchInput).is(':focus');
+                if (isSearchFocus) {
+                    this.search();
+                }
+            }
+        });
+    }
+
+    mounted() {
+        let element = this.$refs.upload;
+
+        $(document).on('upload', function () {
+            $(element).trigger('click');
+        });
+
+        $(element).fileupload({
+            replaceFileInput: false,
+            dataType: 'json',
+            paramName: 'files',
+            done: (event, data) => {
+                this.getMediaLibrary().refresh();
+                // this.open()
+                console.log(data);
+            },
+            fail: (event, data) => {
+                this.getMediaLibrary().fail('Upload failed');
+                console.log(data);
+            },
+            add: (event, data) => {
+                data.url = this.getRouter().generate('enhavo_media_library_file_upload', {});
+                data.submit();
+                this.getMediaLibrary().loading();
+                console.log(data);
+            },
+            progressall: (event, data) => {
+                let progress = data.loaded / data.total * 100;
+                if (progress >= 100) {
+                    this.getMediaLibrary().setProgress(0);
+                } else {
+                    this.getMediaLibrary().setProgress(progress);
+                }
+                console.log(data);
+            },
+            dropZone: this.$refs.itemList,
+            pasteZone: null
+        });
+
+        $(document).bind('dragover', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            this.getMediaLibrary().showDropZone();
+        });
+
+        $(this.$refs.mediaLibrary).bind('dragover', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            this.getMediaLibrary().showDropZone();
+            this.getMediaLibrary().showDropZoneActive();
+        });
+
+        $(document).bind('dragleave', (e) => {
+            if ($(document).find('.app-view').length > 0 && $(document).find('.app-view').find(e.target).length > 0) return;
+            e.preventDefault();
+            e.stopPropagation();
+            this.getMediaLibrary().hideDropZone();
+        });
+
+        $(this.$refs.mediaLibrary).bind('dragleave', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            this.getMediaLibrary().hideDropZoneActive();
+        });
+
+        $(document).bind('drop', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            this.getMediaLibrary().hideDropZone();
+            this.getMediaLibrary().hideDropZoneActive();
+        });
+    }
+
+    onClickPage(page: number) {
+        this.getMediaLibrary().setActivePage(page);
+    }
+
+    open(item: File) {
+        this.getMediaLibrary().open(item)
+    }
+
+    getMediaLibrary(): MediaLibrary {
+        return this.mediaLibrary;
+    }
+
+    getRouter() {
+        return this.router;
+    }
+
+    getType(extension) {
+        if (extension == 'png' || extension == 'jpg' || extension == 'jpeg' || extension == 'gif') {
+            return 'image';
+        }
+
+        if (extension == 'pdf') {
+            return 'document';
+        }
+
+        return 'file';
+    }
+}
+</script>
