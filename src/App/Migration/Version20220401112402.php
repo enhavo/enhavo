@@ -27,10 +27,7 @@ final class Version20220401112402 extends AbstractMigration
         $this->addSql('ALTER TABLE media_library_file_tag ADD CONSTRAINT FK_40C0103BE2C35FC FOREIGN KEY (term_id) REFERENCES taxonomy_term (id) ON DELETE CASCADE');
         $this->addSql('CREATE INDEX IDX_40C0103BE2C35FC ON media_library_file_tag (term_id)');
         $this->addSql('ALTER TABLE media_library_file_tag ADD PRIMARY KEY (file_id, term_id)');
-        $this->addSql('ALTER TABLE shop_product_pictures DROP INDEX UNIQ_659142E64584665A, ADD INDEX IDX_659142E64584665A (product_id)');
-        $this->addSql('ALTER TABLE shop_product_pictures DROP INDEX UNIQ_659142E6EE45BDBF, ADD INDEX IDX_659142E6EE45BDBF (picture_id)');
-        $this->addSql('ALTER TABLE shop_product_variant_pictures DROP INDEX UNIQ_D6AFF9EA80EF684, ADD INDEX IDX_D6AFF9EA80EF684 (product_variant_id)');
-        $this->addSql('ALTER TABLE shop_product_variant_pictures DROP INDEX UNIQ_D6AFF9EEE45BDBF, ADD INDEX IDX_D6AFF9EEE45BDBF (picture_id)');
+
     }
 
     public function down(Schema $schema): void
@@ -43,9 +40,5 @@ final class Version20220401112402 extends AbstractMigration
         $this->addSql('ALTER TABLE media_library_file_tag ADD CONSTRAINT FK_40C0103B12469DE2 FOREIGN KEY (category_id) REFERENCES taxonomy_term (id) ON UPDATE NO ACTION ON DELETE CASCADE');
         $this->addSql('CREATE INDEX IDX_40C0103B12469DE2 ON media_library_file_tag (category_id)');
         $this->addSql('ALTER TABLE media_library_file_tag ADD PRIMARY KEY (file_id, category_id)');
-        $this->addSql('ALTER TABLE shop_product_pictures DROP INDEX IDX_659142E64584665A, ADD UNIQUE INDEX UNIQ_659142E64584665A (product_id)');
-        $this->addSql('ALTER TABLE shop_product_pictures DROP INDEX IDX_659142E6EE45BDBF, ADD UNIQUE INDEX UNIQ_659142E6EE45BDBF (picture_id)');
-        $this->addSql('ALTER TABLE shop_product_variant_pictures DROP INDEX IDX_D6AFF9EA80EF684, ADD UNIQUE INDEX UNIQ_D6AFF9EA80EF684 (product_variant_id)');
-        $this->addSql('ALTER TABLE shop_product_variant_pictures DROP INDEX IDX_D6AFF9EEE45BDBF, ADD UNIQUE INDEX UNIQ_D6AFF9EEE45BDBF (picture_id)');
     }
 }
