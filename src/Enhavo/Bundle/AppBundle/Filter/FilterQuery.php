@@ -326,10 +326,10 @@ class FilterQuery
     private function getParameter($where, $number)
     {
         $value = $where['value'];
-        if(FilterQuery::OPERATOR_EQUALS && $value === null) {
+        if($where['operator'] === FilterQuery::OPERATOR_EQUALS && $value === null) {
             return 'null';
         }
-        if(FilterQuery::OPERATOR_IN) {
+        if($where['operator'] === FilterQuery::OPERATOR_IN) {
             return '(:' . $this->getParameterName($number) . ')';
         }
         return ':' . $this->getParameterName($number);
