@@ -6,8 +6,9 @@ use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\ShopBundle\Entity\Voucher;
 use Enhavo\Bundle\ShopBundle\Factory\VoucherFactory;
 use Enhavo\Bundle\ShopBundle\Form\Type\VoucherType;
+use Enhavo\Bundle\ShopBundle\Model\ProductVariantProxy;
 use Enhavo\Bundle\ShopBundle\Repository\VoucherRepository;
-use Enhavo\Bundle\AppBundle\Factory\Factory;
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -25,11 +26,19 @@ class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder('enhavo_shop');
         $rootNode = $treeBuilder->getRootNode();
-        $rootNode
-            ->children()
-                ->scalarNode('driver')->defaultValue('doctrine/orm')->end()
-            ->end()
-            
+
+        $this->addMailerSection($rootNode);
+        $this->addDocumentSection($rootNode);
+        $this->addPaymentSection($rootNode);
+        $this->addResourcesSection($rootNode);
+        $this->addProductSection($rootNode);
+
+        return $treeBuilder;
+    }
+
+    private function addMailerSection(ArrayNodeDefinition $node)
+    {
+        $node
             ->children()
                 ->arrayNode('mailer')
                     ->addDefaultsIfNotSet()
@@ -72,7 +81,12 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end()
+        ;
+    }
 
+    private function addDocumentSection(ArrayNodeDefinition $node)
+    {
+        $node
             ->children()
                 ->arrayNode('document')
                     ->addDefaultsIfNotSet()
@@ -94,7 +108,12 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end()
+        ;
+    }
 
+    private function addPaymentSection(ArrayNodeDefinition $node)
+    {
+        $node
             ->children()
                 ->arrayNode('payment')
                     ->addDefaultsIfNotSet()
@@ -109,7 +128,15 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end()
+        ;
+    }
 
+    private function addResourcesSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->scalarNode('driver')->defaultValue('doctrine/orm')->end()
+            ->end()
             ->children()
                 ->arrayNode('resources')
                     ->addDefaultsIfNotSet()
@@ -134,7 +161,19 @@ class Configuration implements ConfigurationInterface
                 ->end()
             ->end()
         ;
+    }
 
-        return $treeBuilder;
+    private function addProductSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('product')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('proxy_class')->defaultValue(ProductVariantProxy::class)->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
     }
 }

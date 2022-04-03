@@ -15,7 +15,7 @@ trait ProductAccessTrait
     private Collection $pictures;
     private ?int $price;
     private ?int $reducedPrice;
-    private bool $reduced = false;
+    private ?bool $reduced = false;
     private ?ShippingCategoryInterface $shippingCategory;
     private ?TaxRateInterface $taxRate;
     private bool $shippingRequired = true;

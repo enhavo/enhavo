@@ -44,6 +44,8 @@ class EnhavoShopExtension extends AbstractResourceExtension implements PrependEx
         $container->setParameter('enhavo_shop.payment.paypal.logo', $config['payment']['paypal']['logo']);
         $container->setParameter('enhavo_shop.payment.paypal.branding', $config['payment']['paypal']['branding']);
 
+        $container->setParameter('enhavo_shop.product.proxy_class', $config['product']['proxy_class']);
+
         $configFiles = array(
             'services/locale.yaml',
             'services/menu.yaml',

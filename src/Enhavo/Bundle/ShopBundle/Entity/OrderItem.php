@@ -3,6 +3,8 @@
 namespace Enhavo\Bundle\ShopBundle\Entity;
 
 use Enhavo\Bundle\ShopBundle\Model\ProductAccessInterface;
+use Enhavo\Bundle\ShopBundle\Model\ProductVariantInterface;
+use Enhavo\Bundle\ShopBundle\Model\ProductVariantProxyInterface;
 use Sylius\Component\Order\Model\OrderItem as SyliusOrderItem;
 use Enhavo\Bundle\ShopBundle\Model\AdjustmentInterface;
 use Sylius\Component\Order\Model\OrderItemInterface as SyliusOrderItemInterface;
@@ -26,10 +28,20 @@ class OrderItem extends SyliusOrderItem implements OrderItemInterface
 
     public function equals(SyliusOrderItemInterface $item): bool
     {
-        /** @var $item OrderItem */
-        if($this->product instanceof ResourceInterface) {
+        if (!$item instanceof OrderItemInterface) {
+            return parent::equals($item);
+        }
+
+        if ($this->product instanceof ProductVariantProxyInterface) {
+            if ($item->getProduct() instanceof ProductVariantProxyInterface) {
+                return $this->product->getProductVariant() === $item->getProduct()->getProductVariant();
+            } elseif ($item instanceof ProductVariantInterface) {
+                return $this->product->getProductVariant() === $item->getProduct();
+            }
+        } elseif ($this->product instanceof ResourceInterface) {
             return $this->product === $item->getProduct() || $this->product->getId() == $item->getProduct()->getId();
         }
+
         return false;
     }
 

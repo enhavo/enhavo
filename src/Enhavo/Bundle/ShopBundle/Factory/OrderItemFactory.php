@@ -8,11 +8,19 @@ use Sylius\Component\Product\Model\ProductVariantInterface;
 
 class OrderItemFactory extends Factory
 {
+    public function __construct(
+        string $className,
+        private ProductVariantProxyFactory $productVariantProxyFactory,
+    ) {
+        parent::__construct($className);
+    }
+
     public function createWithProductVariant(ProductVariantInterface $productVariant): OrderItemInterface
     {
         /** @var OrderItemInterface $item */
         $item = $this->createNew();
-        $item->setProduct($productVariant);
+        $item->setProduct($this->productVariantProxyFactory->createNew($productVariant));
+//        $item->setProduct($productVariant);
         return $item;
     }
 }
