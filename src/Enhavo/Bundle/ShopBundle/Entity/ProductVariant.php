@@ -9,13 +9,13 @@
 namespace Enhavo\Bundle\ShopBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Enhavo\Bundle\ShopBundle\Model\ProductAccessInterface;
 use Enhavo\Bundle\ShopBundle\Model\ProductAccessTrait;
+use Enhavo\Bundle\ShopBundle\Model\ProductVariantInterface;
 use Enhavo\Bundle\ShopBundle\Model\StockAccessInterface;
 use Sylius\Component\Product\Model\ProductVariant as SyliusProductVariant;
 
 
-class ProductVariant extends SyliusProductVariant implements ProductAccessInterface, StockAccessInterface
+class ProductVariant extends SyliusProductVariant implements ProductVariantInterface, StockAccessInterface
 {
     use ProductAccessTrait;
 

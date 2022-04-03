@@ -14,6 +14,7 @@ use Enhavo\Bundle\ShopBundle\Entity\Product;
 use Enhavo\Bundle\ShopBundle\Entity\ProductOption;
 use Enhavo\Bundle\ShopBundle\Entity\ProductVariant;
 use Enhavo\Bundle\ShopBundle\Model\ProductInterface;
+use Enhavo\Bundle\ShopBundle\Model\ProductVariantProxy;
 
 class ProductManager
 {

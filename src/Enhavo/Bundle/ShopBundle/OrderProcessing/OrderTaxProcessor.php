@@ -42,6 +42,19 @@ class OrderTaxProcessor implements ProcessorInterface, ItemProcessorInterface
         foreach($items as $orderItem) {
             $this->processItem($orderItem);
         }
+
+//        /** @var AdjustmentInterface $adjustment */
+//        $adjustment = $this->adjustmentFactory->createNew();
+//        $adjustment->setType('tax');
+//        $adjustment->setAmount($orderItem->getProduct()->getTax());
+//        $taxRate = $orderItem->getProduct()->getTaxRate();
+//        $taxClass = get_class($taxRate);
+//        if($taxRate instanceof Proxy) {
+//            $taxClass = get_parent_class($taxRate);
+//        }
+//        $adjustment->setOriginType($taxClass);
+//        $adjustment->setOriginId($taxRate->getId());
+//        $unit->addAdjustment($adjustment);
     }
 
     public function processItem(OrderItemInterface $orderItem)
