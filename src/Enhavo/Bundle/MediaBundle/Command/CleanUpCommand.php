@@ -204,10 +204,12 @@ class CleanUpCommand extends Command
     {
         foreach($references as $reference) {
             $reference->bindValue('fileId', $fileId);
-            $reference->execute();
-            $result = $reference->fetchAll();
-            if ($result && count($result) > 0 && isset($result[0]['nr']) && $result[0]['nr'] > 0) {
-                return true;
+            $result = $reference->executeQuery();
+            if ($result && $result->rowCount() > 0) {
+                $row = $result->fetchAllAssociative();
+                if (isset($row[0]['nr']) && $row[0]['nr'] > 0) {
+                    return true;
+                }
             }
         }
         return false;
