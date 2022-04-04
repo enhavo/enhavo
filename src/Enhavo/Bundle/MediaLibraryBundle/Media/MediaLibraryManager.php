@@ -6,11 +6,9 @@
 
 namespace Enhavo\Bundle\MediaLibraryBundle\Media;
 
-use Enhavo\Bundle\AppBundle\Filter\FilterQuery;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\MediaLibraryBundle\Repository\FileRepository;
 use Enhavo\Bundle\TaxonomyBundle\Repository\TermRepository;
-use Pagerfanta\Pagerfanta;
 
 class MediaLibraryManager
 {
