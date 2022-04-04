@@ -1,4 +1,7 @@
 media_library:
+    form_extension:
+        button:
+            label: 'Open Library'
     label:
         media_library: Mediathek
         library: 'Dateien'
