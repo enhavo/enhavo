@@ -222,12 +222,16 @@ class FileController extends ResourceController
         $items = [];
         /** @var UrlGeneratorInterface $urlGenerator */
         $urlGenerator = $this->get('enhavo_media.media.public_url_generator');
+        /** @var File $file */
         foreach ($files as $file) {
             $items[] = [
                 'id' => $file->getId(),
                 'previewImageUrl' => $urlGenerator->generateFormat($file, 'enhavoMediaLibraryThumb'),
                 'icon' => $this->getMediaLibraryManager()->getContentTypeIcon($file->getContentType()),
                 'label' => $file->getFilename(),
+                'suffix' => $file->getExtension(),
+                'type' => $file->getContentType(),
+                'date' => $file->getCreatedAt() ?? $file->getCreatedAt()->format('Y-m-d'),
             ];
         }
 
