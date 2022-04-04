@@ -24,12 +24,11 @@
             </cascade>
         </one-to-one>
 
-        <one-to-one field="picture" target-entity="Enhavo\Bundle\MediaBundle\Model\FileInterface" orphan-removal="true">
+        <many-to-one field="picture" target-entity="Enhavo\Bundle\MediaBundle\Model\FileInterface">
             <cascade>
                 <cascade-persist />
-                <cascade-remove />
                 <cascade-refresh />
             </cascade>
-        </one-to-one>
+        </many-to-one>
     </entity>
 </doctrine-mapping>

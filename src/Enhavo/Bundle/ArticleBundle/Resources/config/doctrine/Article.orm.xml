@@ -3,13 +3,12 @@
     <entity name="Enhavo\Bundle\ArticleBundle\Entity\Article" table="article_article" repository-class="Enhavo\Bundle\ArticleBundle\Repository\ArticleRepository">
         <field name="teaser" column="teaser" type="text" nullable="true" />
 
-        <one-to-one field="picture" target-entity="Enhavo\Bundle\MediaBundle\Model\FileInterface" orphan-removal="true">
+        <many-to-one field="picture" target-entity="Enhavo\Bundle\MediaBundle\Model\FileInterface">
             <cascade>
                 <cascade-persist />
-                <cascade-remove />
                 <cascade-refresh />
             </cascade>
-        </one-to-one>
+        </many-to-one>
 
         <one-to-one field="content" target-entity="Enhavo\Bundle\BlockBundle\Model\NodeInterface">
             <cascade>

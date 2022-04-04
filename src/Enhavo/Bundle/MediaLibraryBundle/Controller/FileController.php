@@ -3,7 +3,6 @@
 namespace Enhavo\Bundle\MediaLibraryBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
-use Enhavo\Bundle\AppBundle\Filter\FilterQuery;
 use Enhavo\Bundle\MediaBundle\Controller\FileControllerTrait;
 use Enhavo\Bundle\MediaBundle\Exception\StorageException;
 use Enhavo\Bundle\MediaBundle\Media\MediaManager;
@@ -175,7 +174,7 @@ class FileController extends ResourceController
                     }
                     /** @var File $file */
                     $file = $this->getFileFactory()->createFromUploadedFile($uploadedFile);
-                    $file->setGarbage(true);
+                    $file->setGarbage(false);
                     $file->setContentType($this->getMediaLibraryManager()->matchContentType($file));
                     $this->getMediaManager()->saveFile($file);
                     $storedFiles[] = $file;

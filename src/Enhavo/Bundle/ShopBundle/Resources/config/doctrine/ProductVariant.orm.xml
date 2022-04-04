@@ -29,7 +29,6 @@
         <many-to-many field="pictures" target-entity="Enhavo\Bundle\MediaBundle\Model\FileInterface">
             <cascade>
                 <cascade-persist />
-                <cascade-remove />
                 <cascade-refresh />
             </cascade>
             <join-table name="shop_product_variant_pictures">

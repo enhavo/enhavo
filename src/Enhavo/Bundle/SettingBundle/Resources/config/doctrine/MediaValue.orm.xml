@@ -14,18 +14,16 @@
             <join-column on-delete="CASCADE" />
         </many-to-one>
 
-        <one-to-one field="file" target-entity="Enhavo\Bundle\MediaBundle\Model\FileInterface" orphan-removal="true">
+        <many-to-one field="file" target-entity="Enhavo\Bundle\MediaBundle\Model\FileInterface">
             <cascade>
                 <cascade-persist />
-                <cascade-remove />
                 <cascade-refresh />
             </cascade>
-        </one-to-one>
+        </many-to-one>
 
         <many-to-many field="files" target-entity="Enhavo\Bundle\MediaBundle\Model\FileInterface">
             <cascade>
                 <cascade-persist />
-                <cascade-remove />
                 <cascade-refresh />
             </cascade>
             <join-table name="setting_media_value_files">
