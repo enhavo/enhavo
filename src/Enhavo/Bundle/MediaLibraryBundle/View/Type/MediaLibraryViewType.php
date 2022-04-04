@@ -100,9 +100,9 @@ class MediaLibraryViewType extends AbstractViewType
 
         } else if ($this->isModeSelect($options)) {
             $actions = [
-                'confirm' => [
+                'add' => [
                     'type' => 'event',
-                    'event' => 'confirm',
+                    'event' => 'add',
                     'icon' => 'check',
                     'translation_domain' => 'EnhavoMediaLibraryBundle',
                     'label' => 'media_library.label.confirm_selection',
