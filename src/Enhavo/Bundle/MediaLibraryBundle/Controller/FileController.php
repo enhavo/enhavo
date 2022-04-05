@@ -231,7 +231,7 @@ class FileController extends ResourceController
                 'label' => $file->getFilename(),
                 'suffix' => $file->getExtension(),
                 'type' => $file->getContentType(),
-                'date' => $file->getCreatedAt() ?? $file->getCreatedAt()->format('Y-m-d'),
+                'date' => $file->getCreatedAt() ? $file->getCreatedAt()->format('Y-m-d') : '',
             ];
         }
 
