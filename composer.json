@@ -38,6 +38,7 @@
     "league/uri": "^6.4",
     "mailchimp/marketing": "^3.0",
     "mailjet/mailjet-apiv3-php": "^1.5",
+    "pagerfanta/pagerfanta": "^3.6",
     "payum/offline": "^1.5",
     "payum/payum-bundle": "^2.3",
     "php-http/guzzle6-adapter": "^1|^2",
