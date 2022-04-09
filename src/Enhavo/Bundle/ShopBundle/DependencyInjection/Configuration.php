@@ -4,6 +4,7 @@ namespace Enhavo\Bundle\ShopBundle\DependencyInjection;
 
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\ShopBundle\Entity\Voucher;
+use Enhavo\Bundle\ShopBundle\Factory\ProductVariantProxyFactory;
 use Enhavo\Bundle\ShopBundle\Factory\VoucherFactory;
 use Enhavo\Bundle\ShopBundle\Form\Type\VoucherType;
 use Enhavo\Bundle\ShopBundle\Model\ProductVariantProxy;
@@ -174,7 +175,7 @@ class Configuration implements ConfigurationInterface
                         ->addDefaultsIfNotSet()
                         ->children()
                             ->scalarNode('model')->defaultValue(ProductVariantProxy::class)->end()
-                            ->scalarNode('factory')->defaultValue(VoucherFactory::class)->end()
+                            ->scalarNode('factory')->defaultValue(ProductVariantProxyFactory::class)->end()
                         ->end()
                     ->end()
                 ->end()
