@@ -1,8 +1,13 @@
 <?php
 /**
- * FormViewer.php
+ * @author blutze-media
+ * @since 2022-04-09
+ */
+
+/**
+ * UpdateViewer.php
  *
- * @since 22/04/19
+ * @since 29/05/15
  * @author gseidel
  */
 
@@ -10,50 +15,83 @@ namespace Enhavo\Bundle\AppBundle\View\Type;
 
 use Enhavo\Bundle\AppBundle\Action\ActionManager;
 use Enhavo\Bundle\AppBundle\View\AbstractViewType;
-use Enhavo\Bundle\AppBundle\Viewer\AbstractActionViewer;
-use FOS\RestBundle\View\View;
+use Enhavo\Bundle\AppBundle\View\TemplateData;
+use Enhavo\Bundle\AppBundle\View\ViewData;
+use Enhavo\Bundle\AppBundle\View\ViewUtil;
+use Sylius\Component\Resource\ResourceActions;
+use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class FormViewType extends AbstractViewType
 {
-    /**
-     * @var FlashBag
-     */
-    private $flashBag;
+    public function __construct(
+        private array                  $formThemes,
+        private ActionManager          $actionManager,
+        private FlashBag               $flashBag,
+        private ViewUtil               $util,
+        private TranslatorInterface    $translator
+    ) {}
 
-    /**
-     * @var array
-     */
-    private $formThemes;
-
-    /**
-     * FormViewer constructor.
-     * @param ActionManager $actionManager
-     * @param FlashBag $flashBag
-     * @param array $formThemes
-     */
-    public function __construct(ActionManager $actionManager, FlashBag $flashBag, array $formThemes)
-    {
-        parent::__construct($actionManager);
-        $this->flashBag = $flashBag;
-        $this->formThemes = $formThemes;
-    }
-
-    public function getType()
+    public static function getName(): ?string
     {
         return 'form';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function createView($options = []): View
+    public static function getParentType(): ?string
     {
-        $view = parent::createView($options);
-        $templateVars = $view->getTemplateData();
+        return AppViewType::class;
+    }
 
-        if($options['tabs'] == null) {
+    public function handleRequest($options, Request $request, ViewData $viewData, ViewData $templateData)
+    {
+        $this->util->updateRequest();
+        $configuration = $this->util->getRequestConfiguration($options);
+        $this->util->isGrantedOr403($configuration, ResourceActions::UPDATE);
+
+        $resource = $options['resource'];
+        /** @var Form $form */
+        $form = $options['form'];
+        $form->handleRequest($request);
+
+        if (in_array($request->getMethod(), ['POST', 'PUT', 'PATCH']) && $form->isSubmitted()) {
+            if ($form->isValid()) {
+                $resource = $form->getData();
+                $options['manager']->update($resource);
+                $this->flashBag->add('success', $this->translator->trans($options['success_message'], [], $options['translation_domain']));
+
+            } else {
+                $this->flashBag->add('error', $this->translator->trans($options['error_message'], [], $options['translation_domain']));
+                foreach ($form->getErrors() as $error) {
+                    $this->flashBag->add('error', $error->getMessage());
+                }
+            }
+        }
+        $viewData['resource'] = $resource;
+        $viewData['messages'] = array_merge($viewData['messages'], $this->util->getFlashMessages());
+        $templateData['form'] = $form->createView();
+
+        return null;
+    }
+
+    public function createViewData($options, ViewData $data)
+    {
+        $actionsSecondary = $this->util->mergeConfigArray([
+            $this->createActionsSecondary()
+        ]);
+
+        $data['actionsSecondary'] = $this->actionManager->createActionsViewData($actionsSecondary, $options['resource']);
+
+        $data['messages'] = [];
+        $data['form_themes'] = $options['form_themes'];
+    }
+
+    public function createTemplateData($options, ViewData $viewData, TemplateData $templateData)
+    {
+        $templateData->set('form_themes', $viewData['form_themes']);
+        if ($options['tabs'] == null) {
             $tabs = [
                 'main' => [
                     'label' => '',
@@ -63,83 +101,35 @@ class FormViewType extends AbstractViewType
         } else {
             $tabs = $options['tabs'];
         }
-
-        $templateVars['tabs'] = $tabs;
-        $templateVars['data']['tabs'] = $this->createTabViewData($tabs, $options['translation_domain']);
-
-        $templateVars['data']['messages'] = $this->getFlashMessages();
-        $templateVars['data']['modals'] = [];
-
-        if($options['resource']) {
-            $templateVars['data']['resource'] = [
-                'id' => $options['resource']->getId()
-            ];
-        }
-
-        $templateVars['form'] = $options['form']->createView();
-        $templateVars['form_themes'] = $this->formThemes;
-
-        $view->setTemplateData($templateVars);
-        return $view;
+        $templateData->set('tabs', $tabs);
     }
 
-    protected function createActions($options)
+    private function createActionsSecondary(): array
     {
-        $default = [
+        return [
             'save' => [
                 'type' => 'save',
-            ],
+            ]
         ];
-
-        return $default;
-    }
-
-    private function createTabViewData($configuration, $translationDomain)
-    {
-        $data = [];
-        foreach($configuration as $key => $tab) {
-            $tabData = [];
-            $tabData['label'] = $this->container->get('translator')->trans($tab['label'], [], isset($tab['translation_domain']) ? $tab['translation_domain'] : $translationDomain);
-            $tabData['key'] = $key;
-            $tabData['fullWidth'] = isset($tabData['full_width']) && $tabData['full_width'] ? true : false;
-            $data[] = $tabData;
-        }
-        return $data;
-    }
-
-    private function getFlashMessages()
-    {
-        $messages = [];
-        $types = ['success', 'error', 'notice', 'warning'];
-        foreach($types as $type) {
-            foreach($this->flashBag->get($type) as $message) {
-                $messages[] = [
-                    'message' => is_array($message) ? $message['message'] : $message,
-                    'type' => $type
-                ];
-            }
-        }
-        return $messages;
     }
 
     public function configureOptions(OptionsResolver $optionsResolver)
     {
-        parent::configureOptions($optionsResolver);
+        $optionsResolver->setRequired(['manager']);
+
         $optionsResolver->setDefaults([
-            'javascripts' => [
-                'enhavo/app/form'
-            ],
-            'stylesheets' => [
-                'enhavo/app/form'
-            ],
-            'translations' => true,
-            'routes' => false,
-            'template' => 'admin/view/form.html.twig',
+            'entrypoint' => 'enhavo/app/form',
+            'form' => null,
+            'form_themes' =>$this->formThemes,
             'form_template' => 'admin/view/form-template.html.twig',
-            'resource' => null,
-            'translation_domain' => null,
-            'tabs' => null
+            'tabs' => null,
+            'request' => null,
+            'request_configuration' => null,
+            'resource' => [],
+            'label' => 'label.edit',
+            'success_message' => 'success',
+            'error_message' => 'error',
+            'translation_domain' => 'EnhavoAppBundle'
         ]);
-        $optionsResolver->setRequired(['form']);
     }
 }

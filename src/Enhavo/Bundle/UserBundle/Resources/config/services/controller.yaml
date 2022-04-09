@@ -56,6 +56,7 @@ services:
         public: true
         arguments:
             - '@Enhavo\Bundle\UserBundle\User\UserManager'
+            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
             - '@Enhavo\Component\Type\FactoryInterface[View]'
             - '@translator'
         calls:

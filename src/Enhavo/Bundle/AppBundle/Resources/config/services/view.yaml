@@ -69,6 +69,16 @@ services:
         tags:
             - { name: enhavo_app.view }
 
+    Enhavo\Bundle\AppBundle\View\Type\FormViewType:
+        arguments:
+            - '%enhavo_app.form_themes%'
+            - '@enhavo_app.action_manager'
+            - '@session.flash_bag'
+            - '@Enhavo\Bundle\AppBundle\View\ViewUtil'
+            - '@translator'
+        tags:
+            - { name: enhavo_app.view }
+
     Enhavo\Bundle\AppBundle\View\Type\ListViewType:
         arguments:
             - '@Enhavo\Bundle\AppBundle\View\ViewUtil'
