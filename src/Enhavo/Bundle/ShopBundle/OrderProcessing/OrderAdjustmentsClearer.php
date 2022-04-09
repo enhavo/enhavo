@@ -6,7 +6,7 @@ use Enhavo\Bundle\ShopBundle\Model\AdjustmentInterface;
 use Sylius\Component\Order\Model\OrderInterface;
 use Sylius\Component\Order\Processor\OrderProcessorInterface;
 
-final class OrderAdjustmentsClearer implements OrderProcessorInterface
+class OrderAdjustmentsClearer implements OrderProcessorInterface
 {
     private array $adjustmentsToRemove;
 

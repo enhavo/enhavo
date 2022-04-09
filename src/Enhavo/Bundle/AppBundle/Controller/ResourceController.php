@@ -8,10 +8,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Controller;
 
-use Enhavo\Bundle\AppBundle\Batch\BatchManager;
 use Enhavo\Bundle\AppBundle\Exception\BatchExecutionException;
-use Enhavo\Component\Type\FactoryInterface;
-use Sylius\Bundle\ResourceBundle\Controller\ControllerTrait;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

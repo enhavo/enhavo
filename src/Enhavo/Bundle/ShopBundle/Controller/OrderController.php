@@ -9,14 +9,27 @@
 namespace Enhavo\Bundle\ShopBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
-use Enhavo\Bundle\AppBundle\Controller\ResourceController;
+use Enhavo\Bundle\AppBundle\Controller\ResourceControllerTrait;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Sylius\Bundle\OrderBundle\Controller\OrderController as SyliusOrderController;
 
-class OrderController extends ResourceController
+class OrderController extends SyliusOrderController
 {
+    use ResourceControllerTrait;
+
+    public function summaryAction(Request $request): Response
+    {
+        $view = $this->viewFactory->create([
+            'type' => 'shop_cart_summary'
+        ]);
+
+        return $view->getResponse($request);
+    }
+
+
     public function listOrderAction(Request $request)
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
@@ -119,7 +132,7 @@ class OrderController extends ResourceController
     {
         /** @var OrderInterface $order */
         $order = $this->singleResourceProvider->get($configuration, $this->repository);
-        
+
         if($order === null) {
             throw $this->createNotFoundException();
         }

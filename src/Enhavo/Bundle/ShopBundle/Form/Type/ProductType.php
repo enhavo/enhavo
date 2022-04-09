@@ -32,28 +32,15 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ProductType extends AbstractType
 {
-    /** @var string */
-    private $dataClass;
-
-    /** @var string */
-    private $taxRateClass;
-
-    /** @var string */
-    private $optionClass;
-
     /** @var int */
     private $productId;
 
-    /** @var EventSubscriberInterface */
-    private $generateProductVariantsSubscriber;
-
-    public function __construct($dataClass, $taxRateClass, $optionClass, $generateProductVariants)
-    {
-        $this->dataClass = $dataClass;
-        $this->taxRateClass = $taxRateClass;
-        $this->optionClass = $optionClass;
-        $this->generateProductVariantsSubscriber = $generateProductVariants;
-    }
+    public function __construct(
+        private string $dataClass,
+        private string $taxCategoryClass,
+        private string $optionClass,
+        private EventSubscriberInterface $generateProductVariants
+    ) {}
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -184,11 +171,12 @@ class ProductType extends AbstractType
 
         $builder->add('route', RouteType::class);
 
-        $builder->add('taxRate', EntityType::class, array(
-            'class' => $this->taxRateClass,
+        $builder->add('taxCategory', EntityType::class, array(
+            'class' => $this->taxCategoryClass,
             'choice_label' => 'name',
-            'label' => 'product.form.label.taxRate',
+            'label' => 'product.form.label.taxCategory',
             'translation_domain' => 'EnhavoShopBundle',
+            'placeholder' => '---',
         ));
 
         $builder->add('options', EntityType::class, array(

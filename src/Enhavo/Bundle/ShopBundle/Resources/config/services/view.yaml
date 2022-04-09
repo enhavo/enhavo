@@ -1,0 +1,12 @@
+services:
+    Enhavo\Bundle\ShopBundle\View\CartSummaryViewType:
+        arguments:
+            - '@Enhavo\Bundle\AppBundle\Resource\ResourceManager'
+            - '@sylius.resource_controller.form_factory'
+            - '@sylius.resource_controller.request_configuration_factory'
+            - '@request_stack'
+            - '@sylius.context.cart'
+            - '@serializer'
+            - '@Enhavo\Bundle\VueFormBundle\Form\VueForm'
+        tags:
+            - { name: enhavo_app.view }

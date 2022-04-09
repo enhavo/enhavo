@@ -8,14 +8,14 @@ use Doctrine\ORM\Event\PostFlushEventArgs;
 use Doctrine\ORM\Event\PreFlushEventArgs;
 use Doctrine\ORM\Events;
 use Enhavo\Bundle\ShopBundle\Entity\OrderItem;
-use Enhavo\Bundle\ShopBundle\Factory\ProductVariantProxyFactory;
+use Enhavo\Bundle\ShopBundle\Factory\ProductVariantProxyFactoryInterface;
 use Enhavo\Bundle\ShopBundle\Model\ProductVariantInterface;
 use Enhavo\Bundle\ShopBundle\Model\ProductVariantProxyInterface;
 
 class ProductVariantProxyReplaceSubscriber implements EventSubscriber
 {
     public function __construct(
-        private ProductVariantProxyFactory $factory
+        private ProductVariantProxyFactoryInterface $factory
     ) {}
 
     public function getSubscribedEvents()

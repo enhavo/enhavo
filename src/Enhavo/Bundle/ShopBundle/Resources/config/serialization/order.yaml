@@ -1,0 +1,14 @@
+Sylius\Component\Order\Model\Order:
+    attributes:
+        items:
+            groups: ['cart']
+
+Enhavo\Bundle\ShopBundle\Entity\Order:
+    attributes:
+        total:
+            groups: ['cart']
+
+Enhavo\Bundle\ShopBundle\Entity\OrderItem:
+    attributes:
+        total:
+            groups: ['cart']

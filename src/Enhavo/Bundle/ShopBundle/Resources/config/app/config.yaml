@@ -97,11 +97,14 @@ doctrine:
             Sylius\Component\Product\Model\ProductAssociationInterface: Enhavo\Bundle\ShopBundle\Entity\ProductAssociation
             Sylius\Component\Product\Model\ProductOptionValueInterface: Enhavo\Bundle\ShopBundle\Entity\ProductOptionValue
 
-#enhavo_doctrine_extension:
-#    metadata:
-#        Enhavo\Bundle\ShopBundle\Entity\ProductOptionValue:
-#            extends: Sylius\Component\Product\Model\ProductOptionValue
-#            discrName: 'enhavo'
+enhavo_doctrine_extension:
+    metadata:
+        Enhavo\Bundle\ShopBundle\Entity\Payment:
+            extends: Sylius\Component\Payment\Model\Payment
+            discrName: 'enhavo'
+        Enhavo\Bundle\ShopBundle\Entity\Shipment:
+            extends: Sylius\Component\Shipment\Model\Shipment
+            discrName: 'enhavo'
 
 enhavo_app:
     form_themes:
@@ -191,13 +194,6 @@ enhavo_routing:
                     properties: title
                 route_name:
                     type: route_name
-
-jms_serializer:
-    metadata:
-        directories:
-            EnhavoShopBundle:
-                namespace_prefix: "Enhavo\\Bundle\\ShopBundle"
-                path: "@EnhavoShopBundle/Resources/config/serializer"
 
 sylius_inventory:
     resources:

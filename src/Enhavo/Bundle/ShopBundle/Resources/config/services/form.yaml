@@ -6,7 +6,7 @@ services:
     Enhavo\Bundle\ShopBundle\Form\Type\ProductType:
         arguments:
             - '%sylius.model.product.class%'
-            - '%sylius.model.tax_rate.class%'
+            - '%sylius.model.tax_category.class%'
             - '%sylius.model.product_option.class%'
             - '@sylius.form.event_subscriber.product_variant_generator'
         tags:
