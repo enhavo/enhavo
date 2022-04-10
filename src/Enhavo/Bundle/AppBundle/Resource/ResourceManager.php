@@ -6,7 +6,7 @@ namespace Enhavo\Bundle\AppBundle\Resource;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
 use Sylius\Component\Resource\Metadata\MetadataInterface;
-use Sylius\Component\Resource\Metadata\Registry;
+use Sylius\Component\Resource\Metadata\RegistryInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\Component\Resource\ResourceActions;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
@@ -19,7 +19,7 @@ class ResourceManager
     public function __construct(
         private EventDispatcherInterface $eventDispatcher,
         private EntityManagerInterface $em,
-        private Registry $metadataRegistry,
+        private RegistryInterface $metadataRegistry,
     ) {}
 
     public function create($resource)
