@@ -3,13 +3,12 @@
 
 namespace Enhavo\Bundle\AppBundle\Tests\Resource;
 
-
 use Doctrine\ORM\EntityManagerInterface;
-use Enhavo\Bundle\AppBundle\Batch\Type\DeleteBatchType;
 use Enhavo\Bundle\AppBundle\Resource\ResourceManager;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
+use Sylius\Component\Resource\Metadata\RegistryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ResourceManagerTest extends TestCase
@@ -19,12 +18,13 @@ class ResourceManagerTest extends TestCase
         $dependencies = new ResourceManagerTestDependencies();
         $dependencies->eventDispatcher = $this->getMockBuilder(EventDispatcherInterface::class)->getMock();
         $dependencies->em = $this->getMockBuilder(EntityManagerInterface::class)->getMock();
+        $dependencies->registry = $this->getMockBuilder(RegistryInterface::class)->getMock();
         return $dependencies;
     }
 
     private function createInstance(ResourceManagerTestDependencies $dependencies)
     {
-        $type = new ResourceManager($dependencies->eventDispatcher, $dependencies->em);
+        $type = new ResourceManager($dependencies->eventDispatcher, $dependencies->em, $dependencies->registry);
         return $type;
     }
 
@@ -75,8 +75,7 @@ class ResourceManagerTest extends TestCase
 
 class ResourceManagerTestDependencies
 {
-    /** @var EventDispatcherInterface|MockObject */
-    public $eventDispatcher;
-    /** @var EntityManagerInterface|MockObject */
-    public $em;
+    public EventDispatcherInterface|MockObject $eventDispatcher;
+    public EntityManagerInterface|MockObject $em;
+    public RegistryInterface|MockObject $registry;
 }

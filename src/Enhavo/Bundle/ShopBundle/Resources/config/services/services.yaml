@@ -45,19 +45,19 @@ services:
 
     Enhavo\Bundle\ShopBundle\EventListener\ProductVariantProxyReplaceSubscriber:
         arguments:
-            - '@Enhavo\Bundle\ShopBundle\Factory\ProductVariantProxyFactory'
+            - '@Enhavo\Bundle\ShopBundle\Factory\ProductVariantProxyFactoryInterface'
         tags:
             - { name: doctrine.event_subscriber }
 
     Enhavo\Bundle\ShopBundle\Factory\ProductVariantProxyFactory:
         arguments:
-            - '%enhavo_shop.product.proxy_class%'
+            - '%enhavo_shop.product.variant_proxy.model%'
 
     sylius.factory.order_item:
         class: '%sylius.factory.order_item.class%'
         arguments:
             - '%sylius.model.order_item.class%'
-            - '@Enhavo\Bundle\ShopBundle\Factory\ProductVariantProxyFactory'
+            - '@Enhavo\Bundle\ShopBundle\Factory\ProductVariantProxyFactoryInterface'
 
 
 #    enhavo_shop.listener.doctrine_sylius_meta:

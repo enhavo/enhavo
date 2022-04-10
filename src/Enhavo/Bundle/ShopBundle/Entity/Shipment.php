@@ -14,24 +14,14 @@ use Sylius\Component\Shipping\Model\Shipment as SyliusShipment;
 
 class Shipment extends SyliusShipment implements ShipmentInterface
 {
-    /**
-     * @var OrderInterface
-     */
-    private $order;
+    private ?OrderInterface $order;
 
-    /**
-     * @return OrderInterface
-     */
-    public function getOrder()
+    public function getOrder(): ?OrderInterface
     {
         return $this->order;
     }
 
-    /**
-     * @param OrderInterface $order
-     * @return void
-     */
-    public function setOrder(OrderInterface $order)
+    public function setOrder(?OrderInterface $order)
     {
         $this->order = $order;
     }

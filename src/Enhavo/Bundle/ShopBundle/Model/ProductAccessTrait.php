@@ -5,7 +5,7 @@ namespace Enhavo\Bundle\ShopBundle\Model;
 use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Sylius\Component\Shipping\Model\ShippingCategoryInterface;
-use Sylius\Component\Taxation\Model\TaxRateInterface;
+use Sylius\Component\Taxation\Model\TaxCategoryInterface;
 
 trait ProductAccessTrait
 {
@@ -17,7 +17,7 @@ trait ProductAccessTrait
     private ?int $reducedPrice;
     private ?bool $reduced = false;
     private ?ShippingCategoryInterface $shippingCategory;
-    private ?TaxRateInterface $taxRate;
+    private ?TaxCategoryInterface $taxCategory;
     private bool $shippingRequired = true;
     private ?float $height;
     private ?float $width;
@@ -105,14 +105,14 @@ trait ProductAccessTrait
         $this->shippingCategory = $shippingCategory;
     }
 
-    public function getTaxRate(): ?TaxRateInterface
+    public function getTaxCategory(): ?TaxCategoryInterface
     {
-        return $this->taxRate;
+        return $this->taxCategory;
     }
 
-    public function setTaxRate(?TaxRateInterface $taxRate): void
+    public function setTaxCategory(?TaxCategoryInterface $taxCategory): void
     {
-        $this->taxRate = $taxRate;
+        $this->taxCategory = $taxCategory;
     }
 
     public function isShippingRequired(): bool

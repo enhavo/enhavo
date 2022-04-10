@@ -1,5 +1,0 @@
-Enhavo\Bundle\ShopBundle\Entity\Order:
-  exclusion_policy: ALL
-  properties:
-      token:
-          exclude: true

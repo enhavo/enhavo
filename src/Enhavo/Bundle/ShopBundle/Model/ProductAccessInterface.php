@@ -5,9 +5,10 @@ namespace Enhavo\Bundle\ShopBundle\Model;
 use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Sylius\Component\Shipping\Model\ShippingCategoryInterface;
+use Sylius\Component\Taxation\Model\TaxableInterface;
 use Sylius\Component\Taxation\Model\TaxRateInterface;
 
-interface ProductAccessInterface
+interface ProductAccessInterface extends TaxableInterface
 {
     public function getTitle(): ?string;
     public function getDescription(): ?string;
@@ -17,7 +18,6 @@ interface ProductAccessInterface
     public function getReducedPrice(): ?int;
     public function isReduced(): bool;
     public function getShippingCategory(): ?ShippingCategoryInterface;
-    public function getTaxRate(): ?TaxRateInterface;
     public function isShippingRequired(): bool;
     public function getHeight(): ?float;
     public function getWidth(): ?float;
