@@ -58,7 +58,8 @@ class SecurityController extends AbstractUserController
             ? $this->tokenManager->getToken('authenticate')->getValue()
             : null;
 
-        $response = $this->render($this->getTemplate($configuration->getTemplate()), [
+        $template = $this->getTemplate($configuration->getTemplate());
+        $response = $this->render($template, [
             'last_username' => $lastUsername,
             'error' => $error,
             'redirect_uri' => $request->query->get('redirect'),

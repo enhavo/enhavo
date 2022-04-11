@@ -55,15 +55,11 @@ class ChangePasswordController extends AbstractUserController
             }
         }
 
-        $view = $this->viewFactory->create([
-            'type' => 'form',
-            'resource' => $user,
-            'manager' => $this->userManager,
-            'form' => $form,
-            'template' => $this->getTemplate($configuration->getTemplate()),
-            'request' => $request,
-        ]);
+        $template = $this->getTemplate($configuration->getTemplate());
 
-        return $view->getResponse($request);
+        return $this->render($template, [
+            'form' => $form->createView(),
+            'resource' => $user,
+        ]);
     }
 }
