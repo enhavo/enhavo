@@ -80,10 +80,11 @@ class FileController extends ResourceController
     public function selectAction(Request $request): Response
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+        $multiple = intval($request->get('multiple', 0));
 
         $view = $this->viewFactory->create([
             'type' => 'media_library',
-            'multiple' => $request->get('multiple', false),
+            'multiple' => $multiple,
             'mode' => MediaLibraryViewType::MODE_SELECT,
             'request_configuration' => $configuration,
             'metadata' => $this->metadata,
