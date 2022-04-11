@@ -13,9 +13,37 @@ services:
         tags:
             - { name: sylius.order_processor, priority: 60 }
 
-#
-#
-#
+    Enhavo\Bundle\ShopBundle\OrderProcessing\OrderPricesCalculator:
+        arguments:
+            - '@Enhavo\Bundle\ShopBundle\Manager\PricingManager'
+        tags:
+            - { name: sylius.order_processor, priority: 60 }
+
+    Enhavo\Bundle\ShopBundle\OrderProcessing\OrderTaxProcessor:
+        arguments:
+            - '@Enhavo\Bundle\ShopBundle\Manager\TaxationManager'
+        tags:
+            - { name: sylius.order_processor, priority: 60 }
+
+    Enhavo\Bundle\ShopBundle\Manager\TaxationManager:
+
+    Enhavo\Bundle\ShopBundle\Manager\PricingManager:
+
+    Enhavo\Bundle\ShopBundle\Pricing\DefaultPriceCalculator:
+        arguments:
+            - '@sylius.tax_calculator'
+            - '@sylius.tax_rate_resolver'
+        tags:
+            - { name: enhavo_shop.price_calculator, priority: 10 }
+
+    Enhavo\Bundle\ShopBundle\Taxation\Applicator\OrderItemsTaxesApplicator:
+        arguments:
+            - '@sylius.tax_calculator'
+            - '@sylius.factory.adjustment'
+            - '@sylius.tax_rate_resolver'
+        tags:
+            - { name: enhavo_shop.order_taxes_applicator, priority: 10 }
+
 #    enhavo.order_processing.shipment_processor:
 #        class: Enhavo\Bundle\ShopBundle\OrderProcessing\OrderShipmentProcessor
 #        arguments:

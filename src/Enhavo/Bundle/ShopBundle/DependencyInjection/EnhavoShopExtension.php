@@ -44,7 +44,8 @@ class EnhavoShopExtension extends AbstractResourceExtension implements PrependEx
         $container->setParameter('enhavo_shop.payment.paypal.logo', $config['payment']['paypal']['logo']);
         $container->setParameter('enhavo_shop.payment.paypal.branding', $config['payment']['paypal']['branding']);
 
-        $container->setParameter('enhavo_shop.product.proxy_class', $config['product']['proxy_class']);
+        $container->setParameter('enhavo_shop.product.variant_proxy.model', $config['product']['variant_proxy']['model']);
+        $container->setParameter('enhavo_shop.product.variant_proxy.factory', $config['product']['variant_proxy']['factory']);
 
         $configFiles = array(
             'services/locale.yaml',
@@ -54,6 +55,7 @@ class EnhavoShopExtension extends AbstractResourceExtension implements PrependEx
             'services/services.yaml',
             'services/promotion.yaml',
             'services/order.yaml',
+            'services/view.yaml',
         );
         foreach ($configFiles as $configFile) {
             $loader->load($configFile);

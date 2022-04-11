@@ -15,6 +15,13 @@ services:
         tags:
             - { name: enhavo_app.view }
 
+    Enhavo\Bundle\AppBundle\View\Type\ApiViewType:
+        arguments:
+            - '@twig'
+            - '@Enhavo\Bundle\AppBundle\Template\TemplateManager'
+        tags:
+            - { name: enhavo_app.view }
+
     Enhavo\Bundle\AppBundle\View\Type\IndexViewType:
         arguments:
             - '@enhavo_app.action_manager'

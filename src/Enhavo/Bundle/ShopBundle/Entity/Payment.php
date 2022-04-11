@@ -8,17 +8,20 @@
 
 namespace Enhavo\Bundle\ShopBundle\Entity;
 
-use Payum\Core\Model\Payment as BasePayment;
+use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
+use Sylius\Component\Payment\Model\Payment as SyliusPayment;
 
-class Payment extends BasePayment
+class Payment extends SyliusPayment
 {
-    private $id;
+    private ?OrderInterface $order;
 
-    /**
-     * @return mixed
-     */
-    public function getId()
+    public function getOrder(): ?OrderInterface
     {
-        return $this->id;
+        return $this->order;
+    }
+
+    public function setOrder(?OrderInterface $order): void
+    {
+        $this->order = $order;
     }
 }

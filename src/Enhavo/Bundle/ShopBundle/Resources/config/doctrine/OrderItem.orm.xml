@@ -3,6 +3,6 @@
     <entity name="Enhavo\Bundle\ShopBundle\Entity\OrderItem" table="shop_order_item">
         <field name="name" nullable="true" />
 
-        <many-to-one field="product" target-entity="Enhavo\Bundle\ShopBundle\Model\ProductVariantInterface" />
+        <many-to-one field="product" target-entity="Sylius\Component\Product\Model\ProductVariantInterface" />
     </entity>
 </doctrine-mapping>
