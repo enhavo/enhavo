@@ -10,7 +10,7 @@ class OrderItemFactory extends Factory
 {
     public function __construct(
         string $className,
-        private ProductVariantProxyFactory $productVariantProxyFactory,
+        private ProductVariantProxyFactoryInterface $productVariantProxyFactory,
     ) {
         parent::__construct($className);
     }
@@ -20,7 +20,6 @@ class OrderItemFactory extends Factory
         /** @var OrderItemInterface $item */
         $item = $this->createNew();
         $item->setProduct($this->productVariantProxyFactory->createNew($productVariant));
-//        $item->setProduct($productVariant);
         return $item;
     }
 }

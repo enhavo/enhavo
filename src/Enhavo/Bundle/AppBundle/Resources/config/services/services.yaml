@@ -94,3 +94,4 @@ services:
         arguments:
             - '@event_dispatcher'
             - '@doctrine.orm.entity_manager'
+            - '@sylius.resource_registry'

@@ -80,28 +80,33 @@ sylius_payment:
     gateways:
         offline: Offline
         paypal_express_checkout: Paypal Express Checkout
+    resources:
+        payment:
+            classes:
+                controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
+                model: Enhavo\Bundle\ShopBundle\Entity\Payment
 
 doctrine:
     orm:
         resolve_target_entities:
-            Enhavo\Bundle\ShopBundle\Model\ProductInterface: Enhavo\Bundle\ShopBundle\Entity\Product
-            Enhavo\Bundle\ShopBundle\Model\ProductVariantInterface: Enhavo\Bundle\ShopBundle\Entity\ProductVariant
-            Enhavo\Bundle\ShopBundle\Model\OrderInterface: Enhavo\Bundle\ShopBundle\Entity\Order
+            Sylius\Component\Order\Model\OrderInterface: Enhavo\Bundle\ShopBundle\Entity\Order
             Sylius\Component\Addressing\Model\AddressInterface: Sylius\Component\Addressing\Model\Address
             Sylius\Component\Promotion\Model\PromotionCouponInterface: Sylius\Component\Promotion\Model\PromotionCoupon
-            Sylius\Component\Payment\Model\PaymentInterface: Sylius\Component\Payment\Model\Payment
+            Sylius\Component\Payment\Model\PaymentInterface: Enhavo\Bundle\ShopBundle\Entity\Payment
             Sylius\Component\Shipping\Model\ShipmentInterface: Enhavo\Bundle\ShopBundle\Entity\Shipment
             Sylius\Component\Taxation\Model\TaxRateInterface: Sylius\Component\Taxation\Model\TaxRate
             Sylius\Component\Promotion\Model\PromotionInterface: Enhavo\Bundle\ShopBundle\Entity\Promotion
             Sylius\Component\Product\Model\ProductOptionInterface: Sylius\Component\Product\Model\ProductOption
             Sylius\Component\Product\Model\ProductAssociationInterface: Enhavo\Bundle\ShopBundle\Entity\ProductAssociation
             Sylius\Component\Product\Model\ProductOptionValueInterface: Enhavo\Bundle\ShopBundle\Entity\ProductOptionValue
+            Sylius\Component\Product\Model\ProductInterface: Enhavo\Bundle\ShopBundle\Entity\Product
+            Sylius\Component\Product\Model\ProductVariantInterface: Enhavo\Bundle\ShopBundle\Entity\ProductVariant
 
-#enhavo_doctrine_extension:
-#    metadata:
-#        Enhavo\Bundle\ShopBundle\Entity\ProductOptionValue:
-#            extends: Sylius\Component\Product\Model\ProductOptionValue
-#            discrName: 'enhavo'
+enhavo_doctrine_extension:
+    metadata:
+        Enhavo\Bundle\ShopBundle\Entity\Shipment:
+            extends: Sylius\Component\Shipment\Model\Shipment
+            discrName: 'enhavo'
 
 enhavo_app:
     form_themes:
@@ -191,13 +196,6 @@ enhavo_routing:
                     properties: title
                 route_name:
                     type: route_name
-
-jms_serializer:
-    metadata:
-        directories:
-            EnhavoShopBundle:
-                namespace_prefix: "Enhavo\\Bundle\\ShopBundle"
-                path: "@EnhavoShopBundle/Resources/config/serializer"
 
 sylius_inventory:
     resources:

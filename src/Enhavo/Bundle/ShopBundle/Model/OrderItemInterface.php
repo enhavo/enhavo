@@ -8,48 +8,21 @@ interface OrderItemInterface extends SyliusOrderItemInterface
 {
     public function setProduct(ProductAccessInterface $product);
 
-    /**
-     * @param string $name
-     *
-     */
-    public function setName($name);
+    public function getProduct(): ?ProductAccessInterface;
 
-    /**
-     * @return  string $name
-     *
-     */
-    public function getName();
+    public function setName(?string $name): void;
 
-    /**
-     * @return ProductInterface
-     */
-    public function getProduct();
+    public function getName(): ?string;
 
-    /**
-     * Return the total amount of all taxes including the units
-     *
-     * @return integer
-     */
-    public function getTaxTotal();
+    public function setConfiguration(array $configuration);
 
-    /**
-     * Returns the total amount of a single unit including taxes and promotion
-     *
-     * @return integer
-     */
-    public function getUnitTotal();
+    public function getConfiguration(): array;
 
-    /**
-     * Returns the amount of tax for a single unit
-     *
-     * @return integer
-     */
-    public function getUnitTax();
+    public function getTaxTotal(): int;
 
-    /**
-     * Returns the summary amount of all unit prices
-     *
-     * @return integer
-     */
-    public function getUnitPriceTotal();
+    public function getUnitTotal(): int;
+
+    public function getUnitTax(): int;
+
+    public function getUnitPriceTotal(): int;
 }

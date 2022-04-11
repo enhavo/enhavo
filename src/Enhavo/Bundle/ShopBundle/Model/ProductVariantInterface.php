@@ -12,6 +12,7 @@ use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Shipping\Model\ShippingCategoryInterface;
+use Sylius\Component\Taxation\Model\TaxCategoryInterface;
 use Sylius\Component\Taxation\Model\TaxRateInterface;
 use Sylius\Component\Product\Model\ProductVariantInterface as SyliusProductVariantInterface;
 
@@ -26,7 +27,7 @@ interface ProductVariantInterface extends ResourceInterface, SyliusProductVarian
     public function setReduced(bool $reduced): void;
     public function setShippingCategory(?ShippingCategoryInterface $shippingCategory): void;
     public function setShippingRequired(bool $shippingRequired): void;
-    public function setTaxRate(?TaxRateInterface $taxRate): void;
+    public function setTaxCategory(?TaxCategoryInterface $taxRate): void;
     public function setHeight(?float $height): void;
     public function setWidth(?float $width): void;
     public function setDepth(?float $depth): void;

@@ -22,433 +22,183 @@ use Sylius\Component\Promotion\Model\PromotionCouponInterface;
 
 class Order extends SyliusOrder implements OrderInterface
 {
-    /**
-     * @var string
-     */
-    private $checkoutState;
+    private string $paymentState;
+    private string $shippingState;
+    private ?PromotionCouponInterface $promotionCoupon;
+    private ?AddressInterface $shippingAddress;
+    private ?AddressInterface $billingAddress;
+    private ?string $email;
+    private ?UserInterface $user;
+    private ?string $token;
+    private ?bool $trackingMail = false;
 
-    /**
-     * @var string
-     */
-    private $paymentState;
+    /** @var Collection|PaymentInterface[] */
+    private $payments;
 
-    /**
-     * @var string
-     */
-    private $shippingState;
+    /** @var Collection|ShipmentInterface[] */
+    private $shipments;
 
-    /**
-     * @var PromotionCouponInterface
-     */
-    private $promotionCoupon;
-
-    /**
-     * @var AddressInterface
-     */
-    private $shippingAddress;
-
-    /**
-     * @var AddressInterface
-     */
-    private $billingAddress;
-
-    /**
-     * @var boolean
-     */
-    private $differentBillingAddress;
-
-    /**
-     * @var \DateTime
-     */
-    private $orderedAt;
-
-    /**
-     * @var PaymentInterface
-     */
-    private $payment;
-
-    /**
-     * @var ShipmentInterface
-     */
-    private $shipment;
-
-    /**
-     * @var Collection
-     */
+    /** @var Collection */
     private $promotions;
-
-    /**
-     * @var string
-     */
-    private $email;
-
-    /**
-     * @var UserInterface
-     */
-    private $user;
-
-    /**
-     * @var string
-     */
-    private $token;
-
-    /**
-     * @var boolean
-     */
-    private $trackingMail;
-
-    /**
-     * @var string
-     */
-    private $notice;
 
     public function __construct()
     {
         parent::__construct();
         $this->promotions = new ArrayCollection();
+        $this->payments = new ArrayCollection();
+        $this->shipments = new ArrayCollection();
     }
 
-    /**
-     * Set checkoutState
-     *
-     * @param string $checkoutState
-     *
-     * @return Order
-     */
-    public function setCheckoutState($checkoutState)
-    {
-        $this->checkoutState = $checkoutState;
-
-        return $this;
-    }
-
-    /**
-     * Get checkoutState
-     *
-     * @return string
-     */
-    public function getCheckoutState()
-    {
-        return $this->checkoutState;
-    }
-
-    /**
-     * Set paymentState
-     *
-     * @param string $paymentState
-     *
-     * @return Order
-     */
-    public function setPaymentState($paymentState)
+    public function setPaymentState(?string $paymentState): void
     {
         $this->paymentState = $paymentState;
-
-        return $this;
     }
 
-    /**
-     * Get paymentState
-     *
-     * @return string
-     */
-    public function getPaymentState()
+    public function getPaymentState(): ?string
     {
         return $this->paymentState;
     }
 
-    /**
-     * Set shippingState
-     *
-     * @param string $shippingState
-     *
-     * @return Order
-     */
-    public function setShippingState($shippingState)
+    public function setShippingState(?string $shippingState): void
     {
         $this->shippingState = $shippingState;
-
-        return $this;
     }
 
-    /**
-     * Get shippingState
-     *
-     * @return string
-     */
-    public function getShippingState()
+    public function getShippingState(): ?string
     {
         return $this->shippingState;
     }
 
-    /**
-     * Set promotionCoupon
-     *
-     * @param PromotionCouponInterface $promotionCoupon
-     *
-     * @return Order
-     */
     public function setPromotionCoupon(?PromotionCouponInterface $promotionCoupon = null)
     {
         $this->promotionCoupon = $promotionCoupon;
-
-        return $this;
     }
 
-    /**
-     * Get promotionCoupon
-     *
-     * @return PromotionCouponInterface
-     */
     public function getPromotionCoupon(): ?PromotionCouponInterface
     {
         return $this->promotionCoupon;
     }
 
-    /**
-     * Set shippingAddress
-     *
-     * @param AddressInterface $shippingAddress
-     *
-     * @return Order
-     */
-    public function setShippingAddress(AddressInterface $shippingAddress = null)
+    public function setShippingAddress(AddressInterface $shippingAddress = null): void
     {
         $this->shippingAddress = $shippingAddress;
-
-        return $this;
     }
 
-    /**
-     * Get shippingAddress
-     *
-     * @return AddressInterface
-     */
-    public function getShippingAddress()
+    public function getShippingAddress(): ?AddressInterface
     {
         return $this->shippingAddress;
     }
 
-    /**
-     * Set billingAddress
-     *
-     * @param AddressInterface $billingAddress
-     *
-     * @return Order
-     */
     public function setBillingAddress(AddressInterface $billingAddress = null)
     {
         $this->billingAddress = $billingAddress;
-
-        return $this;
     }
 
-    /**
-     * Get billingAddress
-     *
-     * @return \Sylius\Component\Addressing\Model\AddressInterface
-     */
-    public function getBillingAddress()
+    public function getBillingAddress(): ?AddressInterface
     {
         return $this->billingAddress;
     }
 
-    /**
-     * Set differentBillingAddress
-     *
-     * @param boolean $differentBillingAddress
-     * @return Order
-     */
     public function setDifferentBillingAddress($differentBillingAddress)
     {
         $this->differentBillingAddress = $differentBillingAddress;
-
-        return $this;
     }
 
-    /**
-     * Get differentBillingAddress
-     *
-     * @return boolean 
-     */
     public function getDifferentBillingAddress()
     {
         return $this->differentBillingAddress;
     }
 
-    /**
-     * @return bool
-     */
     public function isDifferentBillingAddress()
     {
         return !!$this->getDifferentBillingAddress();
     }
 
-    /**
-     * Set orderedAt
-     *
-     * @param \DateTime $orderedAt
-     * @return Order
-     */
-    public function setOrderedAt($orderedAt)
-    {
-        $this->orderedAt = $orderedAt;
-
-        return $this;
-    }
-
-    /**
-     * Get orderedAt
-     *
-     * @return \DateTime 
-     */
-    public function getOrderedAt()
-    {
-        return $this->orderedAt;
-    }
-
-    /**
-     * Set payment
-     *
-     * @param PaymentInterface $payment
-     * @return Order
-     */
-    public function setPayment(PaymentInterface $payment = null)
-    {
-        $this->payment = $payment;
-
-        return $this;
-    }
-
-    /**
-     * Get payment
-     *
-     * @return PaymentInterface
-     */
-    public function getPayment()
-    {
-        return $this->payment;
-    }
-
-    /**
-     * Set shipment
-     *
-     * @param ShipmentInterface $shipment
-     * @return Order
-     */
-    public function setShipment(ShipmentInterface $shipment = null)
-    {
-        $shipment->setOrder($this);
-        $this->shipment = $shipment;
-
-        return $this;
-    }
-
-    /**
-     * Get shipment
-     *
-     * @return ShipmentInterface
-     */
-    public function getShipment()
-    {
-        return $this->shipment;
-    }
-
-    /**
-     * Add promotions
-     *
-     * @param PromotionInterface $promotions
-     * @return Order
-     */
     public function addPromotion(PromotionInterface $promotions): void
     {
         $this->promotions[] = $promotions;
     }
 
-    /**
-     * Remove promotions
-     *
-     * @param PromotionInterface $promotions
-     */
     public function removePromotion(PromotionInterface $promotions): void
     {
         $this->promotions->removeElement($promotions);
     }
 
-    /**
-     * Get promotions
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
     public function getPromotions(): Collection
     {
         return $this->promotions;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getPromotionSubjectTotal(): int
     {
         return $this->getItemsTotal();
     }
 
-    /**
-     * @inheritdoc
-     */
     public function hasPromotion(PromotionInterface $promotion): bool
     {
        return $this->promotions->contains($promotion);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getPromotionSubjectCount()
     {
         return $this->getTotalQuantity();
     }
 
-    /**
-     * Set email
-     *
-     * @param string $email
-     * @return Order
-     */
-    public function setEmail($email)
+    public function addPayment(PaymentInterface $payment)
     {
-        $this->email = $email;
+        $this->payments->add($payment);
+        $payment->setOrder($this);
+    }
 
-        return $this;
+    public function removePayment(PaymentInterface $payment)
+    {
+        $this->payments->removeElement($payment);
+        $payment->setOrder(null);
     }
 
     /**
-     * Get email
-     *
-     * @return string 
+     * @return Collection|array<PaymentInterface>
      */
-    public function getEmail()
+    public function getPayments(): Collection|array
+    {
+        return $this->payments;
+    }
+
+    public function addShipment(ShipmentInterface $shipment)
+    {
+        $this->shipments->add($shipment);
+        $shipment->setOrder($this);
+    }
+
+    public function removeShipment(ShipmentInterface $shipment)
+    {
+        $this->shipments->removeElement($shipment);
+        $shipment->setOrder(null);
+    }
+
+    /**
+     * @return Collection|array<ShipmentInterface>
+     */
+    public function getShipments(): Collection|array
+    {
+        return $this->shipments;
+    }
+
+    public function setEmail(?string $email)
+    {
+        $this->email = $email;
+    }
+
+    public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    /**
-     * Set user
-     *
-     * @param UserInterface $user
-     * @return Order
-     */
     public function setUser(UserInterface $user = null)
     {
         $this->user = $user;
-
-        return $this;
     }
 
-    /**
-     * Get user
-     *
-     * @return UserInterface
-     */
     public function getUser()
     {
         return $this->user;
@@ -546,7 +296,7 @@ class Order extends SyliusOrder implements OrderInterface
         foreach($taxes as $adjustment) {
             $total += $adjustment->getAmount();
         }
-        
+
         return $total;
     }
 

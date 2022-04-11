@@ -81,7 +81,8 @@
     "symfony/web-link": "^5.4",
     "symfony/webpack-encore-bundle": "^1.5",
     "symfony/yaml": "^5.4",
-    "tecnickcom/tcpdf": "^6.2"
+    "tecnickcom/tcpdf": "^6.2",
+    "laminas/laminas-stdlib": "^3.2"
   },
   "require-dev": {
     "dbrekelmans/bdi": "^0.3.0",

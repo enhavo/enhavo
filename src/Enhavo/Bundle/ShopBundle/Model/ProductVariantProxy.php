@@ -5,6 +5,7 @@ namespace Enhavo\Bundle\ShopBundle\Model;
 use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Sylius\Component\Shipping\Model\ShippingCategoryInterface;
+use Sylius\Component\Taxation\Model\TaxCategoryInterface;
 use Sylius\Component\Taxation\Model\TaxRateInterface;
 
 class ProductVariantProxy implements ProductVariantProxyInterface
@@ -65,9 +66,9 @@ class ProductVariantProxy implements ProductVariantProxyInterface
         return $this->productVariant->getPrice() ?? $this->product->getPrice();
     }
 
-    public function getTaxRate(): ?TaxRateInterface
+    public function getTaxCategory(): ?TaxCategoryInterface
     {
-        return $this->productVariant->getTaxRate() ?? $this->product->getTaxRate();
+        return $this->productVariant->getTaxCategory() ?? $this->product->getTaxCategory();
     }
 
     public function isShippingRequired(): bool

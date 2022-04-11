@@ -15,6 +15,7 @@ class OrderItem extends SyliusOrderItem implements OrderItemInterface
 {
     private ?ProductAccessInterface $product;
     private ?string $name;
+    private array $configuration = [];
 
     public function getProduct(): ?ProductAccessInterface
     {
@@ -24,6 +25,16 @@ class OrderItem extends SyliusOrderItem implements OrderItemInterface
     public function setProduct(?ProductAccessInterface $product)
     {
         $this->product = $product;
+    }
+
+    public function getConfiguration(): array
+    {
+        return $this->configuration;
+    }
+
+    public function setConfiguration(array $configuration): void
+    {
+        $this->configuration = $configuration;
     }
 
     public function equals(SyliusOrderItemInterface $item): bool
@@ -48,7 +59,7 @@ class OrderItem extends SyliusOrderItem implements OrderItemInterface
     /**
      * {@inheritdoc}
      */
-    public function getUnitPriceTotal()
+    public function getUnitPriceTotal(): int
     {
         return $this->unitPrice * $this->quantity;
     }
@@ -56,7 +67,7 @@ class OrderItem extends SyliusOrderItem implements OrderItemInterface
     /**
      * {@inheritdoc}
      */
-    public function getTaxTotal()
+    public function getTaxTotal(): int
     {
         $total = 0;
         foreach($this->getUnits() as $unit) {
@@ -77,7 +88,7 @@ class OrderItem extends SyliusOrderItem implements OrderItemInterface
     /**
      * {@inheritdoc}
      */
-    public function getUnitTotal()
+    public function getUnitTotal(): int
     {
         return $this->getUnitPrice() + $this->getUnitTax() + $this->getUnitDiscount();
     }
@@ -85,7 +96,7 @@ class OrderItem extends SyliusOrderItem implements OrderItemInterface
     /**
      * {@inheritdoc}
      */
-    public function getUnitTax()
+    public function getUnitTax(): int
     {
         $total = 0;
         $unit = $this->getUnits()->first();
@@ -120,7 +131,7 @@ class OrderItem extends SyliusOrderItem implements OrderItemInterface
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -128,7 +139,7 @@ class OrderItem extends SyliusOrderItem implements OrderItemInterface
     /**
      * @param string $name
      */
-    public function setName($name)
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
