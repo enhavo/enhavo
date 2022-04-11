@@ -77,7 +77,7 @@ class ProductManager
 
     private function isUnique($code, $dataClass): bool
     {
-        $resource = $this->em->getRepository($dataClass)->findBy([
+        $resource = $this->em->getRepository($dataClass)->findOneBy([
             'code' => $code
         ]);
         return $resource === null;
