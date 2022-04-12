@@ -2,7 +2,10 @@
 
 namespace Enhavo\Bundle\MediaLibraryBundle\Controller;
 
+use Enhavo\Bundle\AppBundle\Column\ColumnManager;
+use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
+use Enhavo\Bundle\AppBundle\View\ViewUtil;
 use Enhavo\Bundle\MediaBundle\Controller\FileControllerTrait;
 use Enhavo\Bundle\MediaBundle\Exception\StorageException;
 use Enhavo\Bundle\MediaBundle\Media\MediaManager;
@@ -56,6 +59,16 @@ class FileController extends ResourceController
         return $this->container->get('enhavo_media_library.factory.file');
     }
 
+    private function getColumnManager(): ColumnManager
+    {
+        return $this->container->get('enhavo_app.column_manager');
+    }
+
+    private function getViewUtil(): ViewUtil
+    {
+        return $this->container->get('Enhavo\Bundle\AppBundle\View\ViewUtil');
+    }
+
     /**
      * @param Request $request
      * @return Response
@@ -98,26 +111,17 @@ class FileController extends ResourceController
      */
     public function filesAction(Request $request): JsonResponse
     {
+        /** @var RequestConfiguration $configuration */
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
-        $resources = $this->resourcesCollectionProvider->get($configuration, $this->repository);
-
-        $columns = [
-            ['property' => 'filename', 'label' => 'Name'],
-            ['property' => 'extension', 'label' => 'Suffix'],
-            ['property' => 'contentType', 'label' => 'Type'],
-            ['property' => 'createdAt', 'label' => 'Date'],
-        ];
 
         $page = $request->get('page', 1);
-        $files = $this->createFileList($resources);
-        $pages = range(1, $resources->getNbPages(), 1);
-
-        return new JsonResponse([
-            'files' => $files,
+        $view = $this->viewFactory->create([
+            'type'=> 'media_files',
             'page' => $page,
-            'pages' => $pages,
-            'columns' => $columns,
+            'request_configuration' => $configuration,
         ]);
+
+        return $view->getResponse($request);
     }
 
     /**
@@ -218,25 +222,5 @@ class FileController extends ResourceController
         return $contentTypes;
     }
 
-    private function createFileList(Pagerfanta $files): array
-    {
-        $items = [];
-        /** @var UrlGeneratorInterface $urlGenerator */
-        $urlGenerator = $this->get('enhavo_media.media.public_url_generator');
-        /** @var File $file */
-        foreach ($files as $file) {
-            $items[] = [
-                'id' => $file->getId(),
-                'previewImageUrl' => $urlGenerator->generateFormat($file, 'enhavoMediaLibraryThumb'),
-                'icon' => $this->getMediaLibraryManager()->getContentTypeIcon($file->getContentType()),
-                'label' => $file->getFilename(),
-                'suffix' => $file->getExtension(),
-                'type' => $file->getContentType(),
-                'date' => $file->getCreatedAt() ? $file->getCreatedAt()->format('Y-m-d') : '',
-            ];
-        }
-
-        return $items;
-    }
 
 }
