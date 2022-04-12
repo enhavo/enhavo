@@ -8,12 +8,11 @@
         <field name="float" column="`float`" type="boolean" nullable="true" />
         <field name="layout" type="integer" nullable="true" />
 
-        <one-to-one field="file" target-entity="Enhavo\Bundle\MediaBundle\Model\FileInterface">
+        <many-to-one field="file" target-entity="Enhavo\Bundle\MediaBundle\Model\FileInterface">
             <cascade>
                 <cascade-persist />
-                <cascade-remove />
                 <cascade-refresh />
             </cascade>
-        </one-to-one>
+        </many-to-one>
     </entity>
 </doctrine-mapping>

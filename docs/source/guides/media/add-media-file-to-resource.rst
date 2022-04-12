@@ -22,11 +22,10 @@ files if our resource gets deleted.
 
 .. code-block:: yaml
 
-    oneToOne:
+    manyToOne:
         file:
-            cascade: ['persist', 'refresh', 'remove']
+            cascade: ['persist', 'refresh']
             targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
-            orphanRemoval: true
 
 We also have to add the member variable as well as getter/setter to our Entity class, of course.
 

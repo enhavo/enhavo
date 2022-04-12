@@ -44,13 +44,17 @@ export default class MediaLibraryLoader extends AbstractLoader {
     }
 
     private addItem(mediaType: MediaType, meta: MediaItemMeta) {
+
+        if (mediaType !== this.currentType) {
+            return;
+        }
+
         if (!mediaType.getConfig().multiple) {
             mediaType.getRow().clearItems();
         }
 
         let item = mediaType.getRow().createItem(meta);
         item.updateThumb();
-
         mediaType.getRow().setOrder();
     }
 

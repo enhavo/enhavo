@@ -4,7 +4,6 @@ namespace Enhavo\Bundle\MediaLibraryBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\TaxonomyBundle\Model\TermInterface;
 
 class File extends \Enhavo\Bundle\MediaBundle\Entity\File

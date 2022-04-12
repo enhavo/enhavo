@@ -10,7 +10,7 @@ use Pagerfanta\Pagerfanta;
 
 class FileRepository extends \Enhavo\Bundle\MediaBundle\Repository\FileRepository
 {
-    public function findByContentTypeAndTags($contentType = null, $tags = [], $searchString = null, $page = 1, $limit = 6): Pagerfanta
+    public function findByContentTypeAndTags($contentType = null, $tags = [], $searchString = null, $page = 1, $limit = 12): Pagerfanta
     {
         $query = $this->createQueryBuilder('a');
         $query->distinct(true);

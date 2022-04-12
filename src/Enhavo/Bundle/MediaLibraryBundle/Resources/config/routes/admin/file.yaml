@@ -25,11 +25,31 @@ enhavo_media_library_file_files:
     options:
         expose: true
     path: /enhavo/media-library/file/files
-    methods: [GET]
+    methods: [GET,POST]
     defaults:
         _controller: enhavo_media_library.controller.file:filesAction
         _sylius:
             permission: ROLE_ENHAVO_MEDIA_LIBRARY_FILE_FILES
+            sorting:
+                filename: asc
+            limit: 12
+            filters:
+                filename:
+                    type: text
+                    property: filename
+                    label: Name
+                    translation_domain: EnhavoMediaLibraryBundle
+                contentType:
+                    type: text
+                    property: contentType
+                    label: Type
+                    translation_domain: EnhavoMediaLibraryBundle
+                tags:
+                    type: entity
+                    property: tags
+                    label: Tags
+                    repository: enhavo_taxonomy.repository.term
+                    translation_domain: EnhavoMediaLibraryBundle
             viewer:
 
 enhavo_media_library_file_tags:
@@ -108,7 +128,7 @@ enhavo_media_library_file_update:
 enhavo_media_library_file_delete:
     options:
         expose: true
-    path: /enhavo/media-library/file/delete
+    path: /enhavo/media-library/file/delete/{id}
     methods: [GET,POST]
     defaults:
         _controller: enhavo_media_library.controller.file:deleteAction

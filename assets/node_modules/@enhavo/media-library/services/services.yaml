@@ -21,7 +21,6 @@ services:
             - '@enhavo/app/flash-message/FlashMessenger'
             - '@enhavo/media-library/MediaLibrary'
 
-
     '@enhavo/media-library/MediaLibrary':
         chunk: 'media-library'
         arguments:
@@ -38,11 +37,30 @@ services:
         static: true
 
 
-    '@enhavo/media-library/components/File.vue':
+    '@enhavo/media-library/components/ListView.vue':
         chunk: 'vue'
         static: true
         tags:
-            - { name: vue.component, component: 'file' }
+            - { name: vue.component, component: 'list-view' }
+
+
+    '@enhavo/media-library/components/ThumbnailView.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'thumbnail-view' }
+
+    '@enhavo/media-library/components/ThumbnailFile.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'file-thumbnail' }
+
+    '@enhavo/media-library/components/ListFile.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'file-list' }
 
     '@enhavo/media-library/components/TagList.vue':
         chunk: 'vue'
@@ -66,3 +84,10 @@ services:
         static: true
         tags:
             - { name: vue.component, component: 'content-type' }
+
+
+    '@enhavo/media-library/components/Pagination.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'pagination' }

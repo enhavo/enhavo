@@ -1,8 +1,11 @@
 export default class Data
 {
+    view: string = 'thumbnail';
     activeTag: Tag = null;
     activeContentType: ContentType = null;
-    activePage: number = 1;
+    page: number = 1;
+    limit: number = 12;
+    sortColumn: Column = null;
     searchString: string = '';
     files: File[] = [];
     loading: boolean = false;
@@ -15,6 +18,7 @@ export default class Data
     progress: number = 0;
     dropZone: boolean = false;
     dropZoneActive: boolean = false;
+    columns: Column[] = [];
 }
 
 export class File
@@ -22,8 +26,11 @@ export class File
     id: number;
     previewImageUrl: string;
     label: string;
-    selected: boolean = false;
+    suffix: string;
+    type: string;
     icon: string = null;
+    date: string;
+    selected: boolean = false;
 }
 
 export class ContentType
@@ -37,4 +44,10 @@ export class Tag {
     id: string;
     label: string;
     selected: boolean;
+}
+
+export class Column {
+    property: string;
+    label: string;
+    direction: string = 'asc';
 }

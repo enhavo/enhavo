@@ -1,6 +1,6 @@
 import axios, {CancelTokenSource} from "axios";
 import * as _ from "lodash";
-import Data, {ContentType, File, Tag} from "@enhavo/media-library/Data";
+import Data, {Column, ContentType, File, Tag} from "@enhavo/media-library/Data";
 import UpdatedEvent from "@enhavo/app/view-stack/event/UpdatedEvent";
 import * as async from "async";
 import Message from "@enhavo/app/flash-message/Message";
@@ -11,7 +11,8 @@ import Router from "@enhavo/core/Router";
 import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
 import ViewInterface from "@enhavo/app/view-stack/ViewInterface";
 import Translator from "@enhavo/core/Translator";
-import {fill} from "lodash";
+import CloseEvent from "@enhavo/app/view-stack/event/CloseEvent";
+import LoadingEvent from "@enhavo/app/view-stack/event/LoadingEvent";
 
 export default class MediaLibrary {
     public data: Data;
@@ -44,6 +45,10 @@ export default class MediaLibrary {
         this.getTags();
         this.getContentTypes();
         this.getFiles();
+
+        this.eventDispatcher.on('loading', (event: LoadingEvent) => {
+            this.getFiles();
+        });
     }
 
     private add() {
@@ -68,6 +73,7 @@ export default class MediaLibrary {
                 this.flashMessenger.addMessage(new Message(Message.ERROR, 'media.library.add.error'));
             } else {
                 this.flashMessenger.addMessage(new Message(Message.SUCCESS, 'media.library.add.success'));
+                this.eventDispatcher.dispatch(new CloseEvent(this.view.getId())); // todo: could be a setting
             }
             this.view.loaded();
             this.data.selectedFiles = [];
@@ -194,8 +200,18 @@ export default class MediaLibrary {
         this.setActivePage(1);
     }
 
-    public update() {
-        // todo: load tags and reselect?
+    public isSortedColumn(column: Column) {
+        return this.data.sortColumn && this.data.sortColumn.property == column.property;
+    }
+
+    public setSortColumn(column: Column) {
+        if (this.isSortedColumn(column)) {
+            column.direction = this.data.sortColumn.direction == 'asc' ? 'desc' : 'asc';
+        } else {
+            column.direction = 'asc';
+        }
+        this.data.sortColumn = column;
+
         this.getFiles();
     }
 
@@ -209,46 +225,65 @@ export default class MediaLibrary {
     }
 
     public setActivePage(page: number) {
-        this.data.activePage = page;
+        this.data.page = page;
 
         this.getFiles();
     }
 
     private getFiles() {
         this.loading();
-        let url = this.router.generate('enhavo_media_library_file_files');
+        let url = this.router.generate('enhavo_media_library_file_files', {
+            page: this.data.page,
+            limit: this.data.limit,
+        });
 
         if (this.source != null) {
             this.source.cancel();
         }
         this.source = axios.CancelToken.source();
         axios
-            .get(url, {
-                params: {
-                    content_type: this.data.activeContentType ? this.data.activeContentType.key : null,
-                    tag: this.data.activeTag ? this.data.activeTag.id : null,
-                    search: this.data.searchString,
-                    page: this.data.activePage,
-                },
+            .post(url, {
+                filters: [
+                    {name: 'contentType', value: this.data.activeContentType ? this.data.activeContentType.key : null},
+                    {name: 'tags', value: this.data.activeTag ? [this.data.activeTag.id] : null},
+                    {name: 'filename', value: this.data.searchString}
+                ],
+                sorting: this.data.sortColumn ? [
+                    {property: this.data.sortColumn.property, direction: this.data.sortColumn.direction}
+                ] : null
+            }, {
                 cancelToken: this.source.token
             })
             .then(response => {
                 this.source = null;
 
-                let files = [];
+                this.data.files = [];
                 let filesData = response.data.files;
                 for (let fileData of filesData) {
                     let file = new File();
                     file.id = fileData.id;
                     file.label = fileData.label;
+                    file.suffix = fileData.suffix;
+                    file.date = fileData.date;
+                    file.type = fileData.type;
                     file.icon = fileData.icon;
                     file.previewImageUrl = fileData.previewImageUrl;
-                    files.push(file);
+                    this.data.files.push(file);
                 }
-                this.data.files = files;
-                this.data.pages = response.data.pages;
-                this.data.activePage = response.data.page
 
+                this.data.pages = response.data.pages;
+                this.data.columns = [];
+                for (let columnData of response.data.columns) {
+                    let column = new Column();
+                    column.property = columnData.property;
+                    column.label = columnData.label;
+                    this.data.columns.push(column);
+                }
+                this.data.page = response.data.page;
+
+                if (!this.data.sortColumn) {
+                    this.data.sortColumn = this.data.columns[0];
+                }
                 this.checkFileSelection();
                 this.loaded();
             });
@@ -288,7 +323,7 @@ export default class MediaLibrary {
                 let contentTypes = [];
                 let contentTypesData = response.data.content_types;
                 for (let contentTypeData of contentTypesData) {
-                    let contentType  = new ContentType();
+                    let contentType = new ContentType();
                     contentType.key = contentTypeData.key;
                     contentType.label = contentTypeData.label;
                     contentTypes.push(contentType);
@@ -296,6 +331,10 @@ export default class MediaLibrary {
                 this.data.contentTypes = contentTypes;
                 this.loaded();
             });
+    }
+
+    public hasPagination() {
+        return this.data.pages.length>1;
     }
 
     public search() {
@@ -330,5 +369,17 @@ export default class MediaLibrary {
         if (this.data.dropZoneActive) {
             this.data.dropZoneActive = false;
         }
+    }
+
+    public getSortDirection() {
+        return this.data.sortColumn ? this.data.sortColumn.direction : 'asc';
+    }
+
+    public setView(type: string) {
+        this.data.view = type;
+    }
+
+    public getView() {
+        return this.data.view;
     }
 }

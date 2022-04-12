@@ -107,9 +107,18 @@ class MediaLibraryViewType extends AbstractViewType
                     'translation_domain' => 'EnhavoMediaLibraryBundle',
                     'label' => 'media_library.label.confirm_selection',
                     'permission' => $this->util->getRoleNameByResourceName($metadata->getApplicationName(), $this->util->getUnderscoreName($metadata), 'select'),
-                ]
+                ],
+                'upload' => [
+                    'type' => 'event',
+                    'event' => 'upload',
+                    'icon' => 'cloud_upload',
+                    'label' => 'media_library.label.upload',
+                    'translation_domain' => 'EnhavoMediaLibraryBundle',
+                    'permission' => $this->util->getRoleNameByResourceName($metadata->getApplicationName(), $this->util->getUnderscoreName($metadata), 'create'),
+                ],
             ];
         }
+
         return $actions;
     }
 

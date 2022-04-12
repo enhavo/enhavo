@@ -25,58 +25,19 @@ use Symfony\Component\Finder\Finder;
 class CleanUpCommand extends Command
 {
     /**
-     * @var Filesystem
-     */
-    private $fs;
-
-    /**
-     * @var string
-     */
-    private $mediaPath;
-
-    /**
-     * @var MediaManager
-     */
-    private $mediaManager;
-
-    /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
-
-    /**
-     * @var FileRepository
-     */
-    private $fileRepository;
-
-    /**
-     * @var FormatRepository
-     */
-    private $formatRepository;
-
-    /**
      * @var bool
      */
-    private $isDryRun;
+    private $isDryRun = false;
 
-    /**
-     * CleanUpCommand constructor.
-     * @param Filesystem $fs
-     * @param string $mediaPath
-     * @param MediaManager $mediaManager
-     * @param EntityManagerInterface $entityManager
-     * @param FileRepository $fileRepository
-     * @param FormatRepository $formatRepository
-     */
-    public function __construct(Filesystem $fs, string $mediaPath, MediaManager $mediaManager, EntityManagerInterface $entityManager, FileRepository $fileRepository, FormatRepository $formatRepository)
-    {
-        $this->fs = $fs;
-        $this->mediaPath = $mediaPath;
-        $this->mediaManager = $mediaManager;
-        $this->entityManager = $entityManager;
-        $this->fileRepository = $fileRepository;
-        $this->formatRepository = $formatRepository;
-        $this->isDryRun = false;
+    public function __construct(
+        private Filesystem $fs,
+        private string $mediaPath,
+        private MediaManager $mediaManager,
+        private EntityManagerInterface $entityManager,
+        private FileRepository $fileRepository,
+        private FormatRepository $formatRepository,
+        private bool $enableDeleteUnreferenced,
+    ) {
         parent::__construct();
     }
 
@@ -103,8 +64,13 @@ class CleanUpCommand extends Command
         if ($output->isVerbose()) $output->writeln('');
 
         if ($output->isVerbose()) $output->writeln('Deleting unreferenced file database entries...');
-        $deleted = $this->deleteUnreferencedDatabaseEntries($output);
-        if ($output->isVerbose()) $output->writeln('done, ' . $deleted . ' database entries deleted.');
+        if ($this->enableDeleteUnreferenced) {
+            $deleted = $this->deleteUnreferencedDatabaseEntries($output);
+            if ($output->isVerbose()) $output->writeln('done, ' . $deleted . ' database entries deleted.');
+
+        } else {
+            if ($output->isVerbose()) $output->writeln('skipped, enable_delete_unreferenced is disabled.');
+        }
 
         if ($output->isVerbose()) $output->writeln('Deleting files in media directory without database entry...');
         $deleted = $this->deleteFilesWithoutDatabaseEntry($output);
@@ -130,9 +96,7 @@ class CleanUpCommand extends Command
         $numDeleted = 0;
 
         foreach($files as $file) {
-            if ($file->isLibrary()) { // todo: ask for delete unreferenced
-                continue;
-            }
+
             try {
                 $isReferenced = $this->isReferenced($file->getId(), $references);
             } catch (\Exception $exception) {
@@ -240,10 +204,12 @@ class CleanUpCommand extends Command
     {
         foreach($references as $reference) {
             $reference->bindValue('fileId', $fileId);
-            $reference->execute();
-            $result = $reference->fetchAll();
-            if ($result && count($result) > 0 && isset($result[0]['nr']) && $result[0]['nr'] > 0) {
-                return true;
+            $result = $reference->executeQuery();
+            if ($result && $result->rowCount() > 0) {
+                $row = $result->fetchAllAssociative();
+                if (isset($row[0]['nr']) && $row[0]['nr'] > 0) {
+                    return true;
+                }
             }
         }
         return false;

@@ -30,19 +30,14 @@
                         <span class="media-library-search-submit" @click="search()"><i class="icon icon-search"></i></span>
                     </div>
                     <div v-if="!mediaLibrary.data.loading">
-                        <ul ref="itemList" class="images" data-media-library-result>
-                            <file
-                                v-for="file of mediaLibrary.data.files"
-                                v-bind:key="file.id"
-                                :file="file"
-                            ></file>
-                        </ul>
-                        <div v-if="mediaLibrary.data.pages.length>0" class="media-library-pagination">
-                            <ul>
-                                <li v-for="page in mediaLibrary.data.pages" @click="onClickPage(page)" :class="{'active':page==mediaLibrary.data.activePage}">
-                                    {{ page }}
-                                </li>
-                            </ul>
+                        <div class="media-library-view-switch">
+                            <i class="icon icon-account_box" :class="mediaLibrary.getView() == 'thumbnail' && 'active'" @click="setView('thumbnail')"></i>
+                            <i class="icon icon-format_list_bulleted" :class="mediaLibrary.getView() == 'list' && 'active'" @click="setView('list')"></i>
+                        </div>
+                        <list-view v-if="mediaLibrary.data.view==='list'"></list-view>
+                        <thumbnail-view v-else></thumbnail-view>
+                        <div v-if="mediaLibrary.data.dropZoneActive" class="media-library-overlay">
+                            Drop something here
                         </div>
                     </div>
                     <div v-else class="lds-ellipsis">
@@ -63,8 +58,11 @@ import {Inject, Options, Vue, Watch} from "vue-property-decorator";
 import '@enhavo/app/assets/styles/view.scss';
 import Translator from "@enhavo/core/Translator";
 import Router from "@enhavo/core/Router";
-import {File} from "@enhavo/media-library/Data";
+import {Column, File} from "@enhavo/media-library/Data";
 import MediaLibrary from "@enhavo/media-library/MediaLibrary";
+import ListView from "@enhavo/media-library/components/ListView.vue";
+import ThumbnailView from "@enhavo/media-library/components/ThumbnailView.vue";
+import Pagination from "@enhavo/app/grid/components/Pagination.vue";
 
 @Options({})
 export default class extends Vue {
@@ -88,6 +86,10 @@ export default class extends Vue {
         } else {
             return "media_library.add_selected";
         }
+    }
+
+    setView(type: string) {
+        this.mediaLibrary.setView(type);
     }
 
     search() {
@@ -123,18 +125,14 @@ export default class extends Vue {
             paramName: 'files',
             done: (event, data) => {
                 this.getMediaLibrary().refresh();
-                // this.open()
-                console.log(data);
             },
             fail: (event, data) => {
                 this.getMediaLibrary().fail('Upload failed');
-                console.log(data);
             },
             add: (event, data) => {
                 data.url = this.getRouter().generate('enhavo_media_library_file_upload', {});
                 data.submit();
                 this.getMediaLibrary().loading();
-                console.log(data);
             },
             progressall: (event, data) => {
                 let progress = data.loaded / data.total * 100;
@@ -143,7 +141,6 @@ export default class extends Vue {
                 } else {
                     this.getMediaLibrary().setProgress(progress);
                 }
-                console.log(data);
             },
             dropZone: this.$refs.itemList,
             pasteZone: null
@@ -185,6 +182,10 @@ export default class extends Vue {
 
     onClickPage(page: number) {
         this.getMediaLibrary().setActivePage(page);
+    }
+
+    onSort(column: Column) {
+        this.getMediaLibrary().setSortColumn(column);
     }
 
     open(item: File) {

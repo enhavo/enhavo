@@ -4,12 +4,11 @@
         <field name="title" length="255" nullable="true" />
         <field name="caption" length="255" nullable="true" />
 
-        <one-to-one field="file" target-entity="Enhavo\Bundle\MediaBundle\Model\FileInterface">
+        <many-to-one field="file" target-entity="Enhavo\Bundle\MediaBundle\Model\FileInterface">
             <cascade>
                 <cascade-persist />
-                <cascade-remove />
                 <cascade-refresh />
             </cascade>
-        </one-to-one>
+        </many-to-one>
     </entity>
 </doctrine-mapping>

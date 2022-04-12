@@ -25,6 +25,15 @@ services:
         tags:
             - { name: enhavo_app.view }
 
+    Enhavo\Bundle\MediaLibraryBundle\View\Type\FilesViewType:
+        arguments:
+            - '@Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryManager'
+            - '@sylius.resource_controller.resources_collection_provider'
+            - '@enhavo_media.repository.file'
+            - '@enhavo_media.media.private_url_generator'
+        tags:
+            - { name: enhavo_app.view }
+
     Enhavo\Bundle\MediaLibraryBundle\Menu\MediaLibraryRootMenuType:
         parent: Enhavo\Bundle\AppBundle\Menu\Menu\ListMenu
         tags:

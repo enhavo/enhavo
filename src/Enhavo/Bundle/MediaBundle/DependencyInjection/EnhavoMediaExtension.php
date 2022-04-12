@@ -35,6 +35,7 @@ class EnhavoMediaExtension extends AbstractResourceExtension implements PrependE
         $container->setParameter('enhavo_media.cache_control.class', $config['cache_control']['class']);
         $container->setParameter('enhavo_media.streaming.disabled', $config['streaming']['disabled']);
         $container->setParameter('enhavo_media.streaming.threshold', $config['streaming']['threshold']);
+        $container->setParameter('enhavo_media.enable_delete_unreferenced', $config['enable_delete_unreferenced']);
 
         $configFiles = array(
             'services/command.yaml',

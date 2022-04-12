@@ -7,7 +7,6 @@
         <many-to-many field="files" target-entity="Enhavo\Bundle\MediaBundle\Model\FileInterface">
             <cascade>
                 <cascade-persist />
-                <cascade-remove />
                 <cascade-refresh />
             </cascade>
             <join-table name="block_gallery_block_file">

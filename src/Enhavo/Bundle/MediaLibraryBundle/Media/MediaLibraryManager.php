@@ -9,7 +9,6 @@ namespace Enhavo\Bundle\MediaLibraryBundle\Media;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\MediaLibraryBundle\Repository\FileRepository;
 use Enhavo\Bundle\TaxonomyBundle\Repository\TermRepository;
-use Pagerfanta\Pagerfanta;
 
 class MediaLibraryManager
 {
@@ -45,8 +44,8 @@ class MediaLibraryManager
         return $contentTypes;
     }
 
-    public function getContentTypeIcon(string $key) {
-        if (isset($this->contentTypes[$key]) && isset($this->contentTypes[$key]['icon'])) {
+    public function getContentTypeIcon(?string $key) {
+        if ($key && isset($this->contentTypes[$key]) && isset($this->contentTypes[$key]['icon'])) {
             return $this->contentTypes[$key]['icon'];
         }
 
@@ -69,8 +68,4 @@ class MediaLibraryManager
         return null;
     }
 
-    public function getFiles($contentType, $tag, $searchString, $page): Pagerfanta
-    {
-        return $this->fileRepository->findByContentTypeAndTags($contentType, $tag?[$tag]:[], $searchString, $page);
-    }
 }
