@@ -128,7 +128,7 @@ enhavo_media_library_file_update:
 enhavo_media_library_file_delete:
     options:
         expose: true
-    path: /enhavo/media-library/file/delete
+    path: /enhavo/media-library/file/delete/{id}
     methods: [GET,POST]
     defaults:
         _controller: enhavo_media_library.controller.file:deleteAction
