@@ -76,6 +76,10 @@ services:
         tags:
             - { name: enhavo_app.view }
 
+    Enhavo\Bundle\AppBundle\View\Type\FormViewType:
+        tags:
+            - { name: enhavo_app.view }
+
     Enhavo\Bundle\AppBundle\View\Type\ListViewType:
         arguments:
             - '@Enhavo\Bundle\AppBundle\View\ViewUtil'

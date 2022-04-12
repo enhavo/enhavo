@@ -8,38 +8,28 @@
 
 namespace Enhavo\Bundle\UserBundle\Controller;
 
-use Enhavo\Bundle\AppBundle\Viewer\ViewFactory;
 use Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Enhavo\Bundle\UserBundle\User\UserManager;
-use FOS\RestBundle\View\ViewHandler;
+use Enhavo\Component\Type\FactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ChangePasswordController extends AbstractUserController
 {
-    /** @var ViewHandler*/
-    private $viewHandler;
-
-    /** @var ViewFactory */
-    private $viewFactory;
-
-    /** @var TranslatorInterface */
-    private $translator;
+    private FactoryInterface $viewFactory;
+    private TranslatorInterface $translator;
 
     /**
-     * ChangePasswordController constructor.
      * @param UserManager $userManager
      * @param ConfigurationProvider $provider
-     * @param ViewHandler $viewHandler
-     * @param ViewFactory $viewFactory
+     * @param FactoryInterface $viewFactory
      * @param TranslatorInterface $translator
      */
-    public function __construct(UserManager $userManager, ConfigurationProvider $provider, ViewHandler $viewHandler, ViewFactory $viewFactory, TranslatorInterface $translator)
+    public function __construct(UserManager $userManager, ConfigurationProvider $provider, FactoryInterface $viewFactory, TranslatorInterface $translator)
     {
         parent::__construct($userManager, $provider);
 
-        $this->viewHandler = $viewHandler;
         $this->viewFactory = $viewFactory;
         $this->translator = $translator;
     }
@@ -65,12 +55,11 @@ class ChangePasswordController extends AbstractUserController
             }
         }
 
-        $view = $this->viewFactory->create('form', [
-            'resource' => $user,
-            'form' => $form,
-            'template' => $configuration->getTemplate()
-        ]);
+        $template = $this->getTemplate($configuration->getTemplate());
 
-        return $this->viewHandler->handle($view);
+        return $this->render($template, [
+            'form' => $form->createView(),
+            'resource' => $user,
+        ]);
     }
 }

@@ -53,6 +53,7 @@ user:
         id: 'ID'
         user: 'Benutzer'
         email: 'Email'
+
 reset_password:
     label:
         login: 'Zur Anmeldung'
@@ -87,14 +88,9 @@ change_email:
     mail:
         subject: 'E-Mail Addresse geändert'
         text: |
-            Hallo %username%!
+            Hallo!
 
-            Ihre E-Mail Address wurde von %old_email% zu %new_email% geändert.
-            Bitte benutzen Sie künftig %username% als Benutzername.
-            Falls sie keine Nachricht an %new_email% erhalten, melden Sie sich bitte auf der Seite an und ändern die E-Mail Adresse erneut!
-
-            Grüße,
-            das Team.
+            um ihre E-Mail zu ändern, klicken sie bitte folgenden Link:
 
 confirmation:
     form:
@@ -112,6 +108,7 @@ confirmation:
 
             Mit besten Grüßen,
             das Team.
+
 security:
     login:
         username: 'Benutzername'
@@ -119,7 +116,12 @@ security:
         password: 'Passwort'
         remember_me: 'An mich erinnern'
         submit: 'Anmelden'
+
 change_password:
+    label:
+        edit: 'Passwort ändern'
+    form:
+        submit: 'Speichern'
     message:
         success: 'Passwort erfolgreich geändert'
         error: 'Fehler beim speichern'
