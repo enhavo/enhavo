@@ -6,5 +6,5 @@
 
 {% block main %}
     <h1>{{ product.title }}</h1>
-    {{ widget_render('shop_product_configurator', { product: product }) }}
+    {{ widget('shop_product_configurator', { product: product }) }}
 {% endblock %}
