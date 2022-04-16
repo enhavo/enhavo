@@ -12,11 +12,11 @@
     <h1>Confirm</h1>
 
     <div>
-        {{ widget_render('shop_coupon_redeem', {order: order}) }}
+        {{ widget('shop_coupon_redeem', {order: order}) }}
     </div>
 
     <div>
-        {{ widget_render('shop_cart_summary', {immutable: true, cart: order}) }}
+        {{ widget('shop_cart_summary', {immutable: true, cart: order}) }}
     </div>
 
     <div>
