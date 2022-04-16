@@ -67,10 +67,22 @@ class EnhavoShopExtension extends AbstractResourceExtension implements PrependEx
      */
     public function prepend(ContainerBuilder $container)
     {
-        $configs = Yaml::parse(file_get_contents(__DIR__.'/../Resources/config/app/config.yaml'));
-        foreach($configs as $name => $config) {
-            if (is_array($config)) {
-                $container->prependExtensionConfig($name, $config);
+        $files = [
+            __DIR__.'/../Resources/config/app/config.yaml',
+            __DIR__.'/../Resources/config/app/state_machine/sylius_order.yml',
+            __DIR__.'/../Resources/config/app/state_machine/sylius_order_checkout.yml',
+            __DIR__.'/../Resources/config/app/state_machine/sylius_order_payment.yml',
+            __DIR__.'/../Resources/config/app/state_machine/sylius_order_shipping.yml',
+            __DIR__.'/../Resources/config/app/state_machine/sylius_payment.yml',
+            __DIR__.'/../Resources/config/app/state_machine/sylius_shipment.yml',
+        ];
+
+        foreach ($files as $file) {
+            $configs = Yaml::parse(file_get_contents($file));
+            foreach ($configs as $name => $config) {
+                if (is_array($config)) {
+                    $container->prependExtensionConfig($name, $config);
+                }
             }
         }
     }

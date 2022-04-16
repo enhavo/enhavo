@@ -58,33 +58,18 @@ services:
         arguments:
             - '%sylius.model.order_item.class%'
             - '@Enhavo\Bundle\ShopBundle\Factory\ProductVariantProxyFactoryInterface'
-
+            -
+    Enhavo\Bundle\ShopBundle\Column\AddressType:
+        public: true
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.column, alias: 'shop_address' }
 
 #    enhavo_shop.listener.doctrine_sylius_meta:
 #        class: Enhavo\Bundle\ShopBundle\EventListener\DoctrineSyliusMetaListener
 #        tags:
 #            - { name: doctrine.event_subscriber, connection: default }
-#
-#    Enhavo\Bundle\ShopBundle\Table\Widget\AddressWidget:
-#        public: true
-#        calls:
-#            - [setContainer, ['@service_container']]
-#        tags:
-#            - { name: enhavo.column, alias: shop_address }
-#
-#    Enhavo\Bundle\ShopBundle\Table\Widget\ProductVariantWidget:
-#        public: true
-#        calls:
-#            - [setContainer, ['@service_container']]
-#        tags:
-#            - { name: enhavo.column, alias: shop_product_variant }
-#
-#    Enhavo\Bundle\ShopBundle\Table\Widget\OrderStateWidget:
-#        public: true
-#        calls:
-#            - [setContainer, ['@service_container']]
-#        tags:
-#            - { name: enhavo.column, alias: order_state }
 #
 #    enhavo_shop.locale.country_resolver:
 #        class: Enhavo\Bundle\ShopBundle\Locale\CountryResolver

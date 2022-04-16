@@ -73,6 +73,8 @@ services:
             - '@translator'
             - '@serializer'
             - '@doctrine.orm.entity_manager'
+            - '@sylius.resource_controller.request_configuration_factory'
+            - '@Enhavo\Bundle\AppBundle\Resource\ResourceManager'
         tags:
             - { name: enhavo_app.view }
 

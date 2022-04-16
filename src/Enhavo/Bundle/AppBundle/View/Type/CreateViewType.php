@@ -128,6 +128,7 @@ class CreateViewType extends AbstractViewType
         $repository = $options['repository'];
 
         $newResource = $resourceFactory->create($configuration, $factory);
+        $templateData['resource'] = $newResource;
 
         /** @var Form $form */
         $form = $resourceFormFactory->create($configuration, $newResource);

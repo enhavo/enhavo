@@ -81,6 +81,8 @@ order:
     shipped: Versendet
     cancelled: Storniert
     shippingMethod: Versandart
+    shippingState: Versand
+    paymentState: Zahlung
 
   action:
     transfer: In den Warenkorb

@@ -6,6 +6,7 @@
         <field name="email" nullable="true" />
         <field name="token" nullable="true" />
         <field name="trackingMail" type="boolean" nullable="true" />
+        <field name="checkoutState" type="string" nullable="false" />
 
         <one-to-many field="shipments" target-entity="Sylius\Component\Shipping\Model\ShipmentInterface" mapped-by="order">
             <cascade>
