@@ -8,19 +8,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class OrderConfirmType extends AbstractType
 {
-    /**
-     * @var string
-     */
-    private $dataClass;
+    public function __construct(
+        private string $dataClass
+    ) {}
 
-    public function __construct($dataClass)
-    {
-        $this->dataClass = $dataClass;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
@@ -33,9 +24,6 @@ class OrderConfirmType extends AbstractType
         ));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix()
     {
         return 'enhavo_shop_order_confirm';

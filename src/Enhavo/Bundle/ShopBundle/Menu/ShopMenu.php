@@ -22,9 +22,9 @@ class ShopMenu extends ListMenu
             'label' => 'label.shop',
             'translation_domain' => 'EnhavoShopBundle',
             'children' => [
-//                'order' => [
-//                    'type' => 'shop_order'
-//                ],
+                'order' => [
+                    'type' => 'shop_order'
+                ],
                 'product' => [
                     'type' => 'shop_product'
                 ],

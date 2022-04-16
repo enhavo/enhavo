@@ -1,13 +1,5 @@
 {% trans_default_domain 'EnhavoShopBundle' %}
 <span class="form-headline">{{ 'order.label.shippingAddress'|trans }}</span>
 {{ form_widget(form.shippingAddress) }}
-{{ form_row(form.differentBillingAddress, {
-    attr: {
-        'data-different-billing-address': ''
-    }
-}) }}
-
-<div data-billing-address {% if not data.differentBillingAddress %}style="display: none"{% endif %}>
-    <span class="form-headline">{{ 'order.label.billingAddress'|trans }}</span>
-    {{ form_widget(form.billingAddress) }}
-</div>
+<span class="form-headline">{{ 'order.label.billingAddress'|trans }}</span>
+{{ form_widget(form.billingAddress) }}

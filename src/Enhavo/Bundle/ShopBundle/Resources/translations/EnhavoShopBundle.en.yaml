@@ -81,6 +81,8 @@ order:
     shipped: Shipped
     cancelled: Cancelled
     shippingMethod: Shipping type
+    shippingState: Shipment
+    paymentState: Payment
 
   action:
     transfer: Transfer to cart

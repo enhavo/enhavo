@@ -11,9 +11,12 @@ namespace Enhavo\Bundle\AppBundle\View\Type;
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Action\ActionManager;
 use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
+use Enhavo\Bundle\AppBundle\Resource\ResourceManager;
 use Enhavo\Bundle\AppBundle\View\AbstractViewType;
+use Enhavo\Bundle\AppBundle\View\TemplateData;
 use Enhavo\Bundle\AppBundle\View\ViewData;
 use Enhavo\Bundle\AppBundle\View\ViewUtil;
+use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactoryInterface;
 use Sylius\Bundle\ResourceBundle\Controller\SingleResourceProvider;
 use Sylius\Component\Resource\Metadata\MetadataInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
@@ -41,6 +44,8 @@ class UpdateViewType extends AbstractViewType
         private TranslatorInterface $translator,
         private NormalizerInterface $normalizer,
         private EntityManagerInterface $em,
+        private RequestConfigurationFactoryInterface $requestConfigurationFactory,
+        private ResourceManager $resourceManager,
     ) {}
 
     public static function getName(): ?string
@@ -150,6 +155,11 @@ class UpdateViewType extends AbstractViewType
         }
     }
 
+    public function createTemplateData($options, ViewData $viewData, TemplateData $templateData)
+    {
+        $templateData['resource'] = $options['resource'];
+    }
+
     private function createActionsSecondary($options, $requestConfiguration, $resource)
     {
         /** @var MetadataInterface $metadata */
@@ -190,10 +200,11 @@ class UpdateViewType extends AbstractViewType
 
     public function configureOptions(OptionsResolver $optionsResolver)
     {
+
         $optionsResolver->setDefaults([
             'form_delete' => null,
             'form_delete_parameters' => [],
-            'label' => 'label.edit'
+            'label' => 'label.edit',
         ]);
 
         $optionsResolver->setRequired('single_resource_provider');
@@ -206,6 +217,11 @@ class UpdateViewType extends AbstractViewType
             }
 
             return $value;
+        });
+
+        $optionsResolver->setNormalizer('template', function(Options $options, $value) {
+            $configuration = $this->util->getRequestConfiguration($options);
+            return $configuration->getTemplate($value);
         });
     }
 }

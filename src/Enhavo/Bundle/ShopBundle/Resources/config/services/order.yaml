@@ -44,6 +44,18 @@ services:
         tags:
             - { name: enhavo_shop.order_taxes_applicator, priority: 10 }
 
+    Enhavo\Bundle\ShopBundle\Action\BillingActionType:
+        parent: Enhavo\Bundle\AppBundle\Action\Type\DownloadActionType
+        public: true
+        tags:
+            - { name: enhavo.action, alias: 'shop_billing' }
+
+    Enhavo\Bundle\ShopBundle\Action\PackingSlipActionType:
+        parent: Enhavo\Bundle\AppBundle\Action\Type\DownloadActionType
+        public: true
+        tags:
+            - { name: enhavo.action, alias: 'shop_packing_slip' }
+
 #    enhavo.order_processing.shipment_processor:
 #        class: Enhavo\Bundle\ShopBundle\OrderProcessing\OrderShipmentProcessor
 #        arguments:

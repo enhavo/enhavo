@@ -21,7 +21,7 @@ class OrderMenu extends BaseMenu
             'icon' => 'shopping_cart',
             'label' => 'label.order',
             'translation_domain' => 'EnhavoShopBundle',
-            'route' => 'enhavo_shop_order_index',
+            'route' => 'sylius_order_index',
             'role' => 'ROLE_ENHAVO_SHOP_ORDER_INDEX',
         ]);
     }

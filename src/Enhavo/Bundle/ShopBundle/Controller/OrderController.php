@@ -29,7 +29,6 @@ class OrderController extends SyliusOrderController
         return $view->getResponse($request);
     }
 
-
     public function listOrderAction(Request $request)
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);

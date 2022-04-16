@@ -1,34 +1,126 @@
-enhavo_shop_theme_checkout:
-    path: /checkout/
-    defaults:
-        _controller: enhavo_shop.controller.checkout::checkoutAction
+#enhavo_shop_theme_checkout:
+#    path: /checkout/
+#    defaults:
+#        _controller: enhavo_shop.controller.checkout::checkoutAction
+#
+#enhavo_shop_theme_checkout_addressing:
+#    path: /checkout/addressing
+#    defaults:
+#        _controller: enhavo_shop.controller.checkout::addressingAction
+#
+#enhavo_shop_theme_checkout_payment:
+#    path: /checkout/payment
+#    defaults:
+#        _controller: enhavo_shop.controller.checkout::paymentAction
+#
+#enhavo_shop_theme_checkout_confirm:
+#    path: /checkout/confirm
+#    defaults:
+#        _controller: enhavo_shop.controller.checkout::confirmAction
+#
+#enhavo_shop_theme_checkout_finish:
+#    path: /checkout/{token}/finish
+#    defaults:
+#        _controller: enhavo_shop.controller.checkout::finishAction
+#
+#enhavo_shop_theme_checkout_login:
+#    path: /checkout/login
+#    defaults:
+#        _controller: enhavo_shop.controller.checkout::loginAction
+#
+#enhavo_shop_theme_checkout_empty:
+#    path: /checkout/empty
+#    defaults:
+#        _controller: enhavo_shop.controller.checkout::emptyAction
 
-enhavo_shop_theme_checkout_addressing:
-    path: /checkout/addressing
-    defaults:
-        _controller: enhavo_shop.controller.checkout::addressingAction
+# This file is a part of the Sylius package.
+# (c) Paweł Jędrzejewski
+#
+#sylius_shop_checkout_start:
+#    path: /checkout
+#    methods: [GET]
+#    defaults:
+#        _controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController:redirectAction
+#        route: sylius_shop_checkout_address
 
-enhavo_shop_theme_checkout_payment:
-    path: /checkout/payment
+sylius_shop_checkout_address:
+    path: /checkout/address
+    methods: [GET, PUT]
     defaults:
-        _controller: enhavo_shop.controller.checkout::paymentAction
+        _controller: sylius.controller.order:updateAction
+        _sylius:
+            event: address
+            flash: false
+            template: "@SyliusShop/Checkout/address.html.twig"
+            form:
+                type: Sylius\Bundle\CoreBundle\Form\Type\Checkout\AddressType
+                options:
+                    customer: expr:service('sylius.context.customer').getCustomer()
+            repository:
+                method: findCartForAddressing
+                arguments:
+                    - "expr:service('sylius.context.cart').getCart().getId()"
+            state_machine:
+                graph: sylius_order_checkout
+                transition: address
 
-enhavo_shop_theme_checkout_confirm:
-    path: /checkout/confirm
+sylius_shop_checkout_select_shipping:
+    path: /checkout/select-shipping
+    methods: [GET, PUT]
     defaults:
-        _controller: enhavo_shop.controller.checkout::confirmAction
+        _controller: sylius.controller.order:updateAction
+        _sylius:
+            event: select_shipping
+            flash: false
+            template: "@SyliusShop/Checkout/selectShipping.html.twig"
+            form: Sylius\Bundle\CoreBundle\Form\Type\Checkout\SelectShippingType
+            repository:
+                method: findCartForSelectingShipping
+                arguments:
+                    - "expr:service('sylius.context.cart').getCart().getId()"
+            state_machine:
+                graph: sylius_order_checkout
+                transition: select_shipping
 
-enhavo_shop_theme_checkout_finish:
-    path: /checkout/{token}/finish
+sylius_shop_checkout_select_payment:
+    path: /checkout/select-payment
+    methods: [GET, PUT]
     defaults:
-        _controller: enhavo_shop.controller.checkout::finishAction
+        _controller: sylius.controller.order:updateAction
+        _sylius:
+            event: payment
+            flash: false
+            template: "@SyliusShop/Checkout/selectPayment.html.twig"
+            form: Sylius\Bundle\CoreBundle\Form\Type\Checkout\SelectPaymentType
+            repository:
+                method: findCartForSelectingPayment
+                arguments:
+                    - "expr:service('sylius.context.cart').getCart().getId()"
+            state_machine:
+                graph: sylius_order_checkout
+                transition: select_payment
 
-enhavo_shop_theme_checkout_login:
-    path: /checkout/login
+sylius_shop_checkout_complete:
+    path: /checkout
+    methods: [GET, POST]
     defaults:
-        _controller: enhavo_shop.controller.checkout::loginAction
-
-enhavo_shop_theme_checkout_empty:
-    path: /checkout/empty
-    defaults:
-        _controller: enhavo_shop.controller.checkout::emptyAction
+        _controller: sylius.controller.order:updateAction
+        _sylius:
+            event: complete
+            flash: false
+            template: "theme/page/checkout.html.twig"
+            repository:
+                method: findCartById
+                arguments:
+                    - "expr:service('sylius.context.cart').getCart().getId()"
+            state_machine:
+                graph: sylius_order_checkout
+                transition: complete
+            redirect:
+                route: sylius_shop_order_pay
+                parameters:
+                    tokenValue: resource.tokenValue
+            form:
+                type: Enhavo\Bundle\ShopBundle\Form\Type\OrderConfirmType
+                options:
+                    validation_groups: 'sylius_checkout_complete'

@@ -1,15 +1,15 @@
 Enhavo\Bundle\ShopBundle\Entity\Order:
-    properties:
-        promotionCoupon:
-            - NotNull: { groups: [redeem] }
-        payment:
-            - NotNull: { groups: [payment, confirm] }
-
-    constraints:
-        - Enhavo\Bundle\ShopBundle\Validator\Constraints\OrderAddressing:
-            groups: [shipping]
-        - Enhavo\Bundle\ShopBundle\Validator\Constraints\OrderPayment:
-            groups: [payment]
+#    properties:
+#        promotionCoupon:
+#            - NotNull: { groups: [redeem] }
+#        payment:
+#            - NotNull: { groups: [payment, confirm] }
+#
+#    constraints:
+#        - Enhavo\Bundle\ShopBundle\Validator\Constraints\OrderAddressing:
+#            groups: [shipping]
+#        - Enhavo\Bundle\ShopBundle\Validator\Constraints\OrderPayment:
+#            groups: [payment]
 
 Sylius\Component\Addressing\Model\Address:
     properties:

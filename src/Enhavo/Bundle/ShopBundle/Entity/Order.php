@@ -10,6 +10,9 @@ namespace Enhavo\Bundle\ShopBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Enhavo\Bundle\ShopBundle\State\OrderCheckoutStates;
+use Enhavo\Bundle\ShopBundle\State\OrderPaymentStates;
+use Enhavo\Bundle\ShopBundle\State\OrderShippingStates;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Enhavo\Bundle\ShopBundle\Model\ShipmentInterface;
@@ -22,13 +25,16 @@ use Sylius\Component\Promotion\Model\PromotionCouponInterface;
 
 class Order extends SyliusOrder implements OrderInterface
 {
-    private string $paymentState;
-    private string $shippingState;
-    private ?PromotionCouponInterface $promotionCoupon;
-    private ?AddressInterface $shippingAddress;
-    private ?AddressInterface $billingAddress;
+    private string $paymentState = OrderPaymentStates::STATE_CART;
+    private string $shippingState = OrderShippingStates::STATE_CART;
+    private string $checkoutState = OrderCheckoutStates::STATE_CART;
+
+    private ?PromotionCouponInterface $promotionCoupon= null;
+    private ?AddressInterface $shippingAddress = null;
+    private ?AddressInterface $billingAddress = null;
+    private ?UserInterface $user = null;
+
     private ?string $email;
-    private ?UserInterface $user;
     private ?string $token;
     private ?bool $trackingMail = false;
 
@@ -364,5 +370,15 @@ class Order extends SyliusOrder implements OrderInterface
     public function setNotice($notice)
     {
         $this->notice = $notice;
+    }
+
+    public function getCheckoutState(): string
+    {
+        return $this->checkoutState;
+    }
+
+    public function setCheckoutState(string $checkoutState): void
+    {
+        $this->checkoutState = $checkoutState;
     }
 }

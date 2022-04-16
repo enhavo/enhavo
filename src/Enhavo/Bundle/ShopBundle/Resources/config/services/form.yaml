@@ -58,6 +58,12 @@ services:
         tags:
             - { name: form.type_extension, extended_type: Sylius\Bundle\ResourceBundle\Form\Type\ResourceTranslationsType }
 
+    Enhavo\Bundle\ShopBundle\Form\Type\OrderConfirmType:
+        arguments:
+            - '%sylius.model.order.class%'
+        tags:
+            - { name: form.type }
+
 #    Enhavo\Bundle\ShopBundle\Form\Type\OrderAddressType:
 #        arguments:
 #            - '%sylius.model.order.class%'
@@ -107,11 +113,6 @@ services:
 #        tags:
 #            - { name: form.type }
 #
-#    Enhavo\Bundle\ShopBundle\Form\Type\OrderConfirmType:
-#        arguments:
-#            - '%sylius.model.order.class%'
-#        tags:
-#            - { name: form.type }
 #
 #    Enhavo\Bundle\ShopBundle\Form\Type\OrderPromotionCouponType:
 #        arguments:

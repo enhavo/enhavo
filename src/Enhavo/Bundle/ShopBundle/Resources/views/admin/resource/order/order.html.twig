@@ -6,7 +6,7 @@
     <hr />
     <div class="row">
         <div class="col-sm-7">
-            {% if data.items|length %}
+            {% if resource.items|length %}
                 <div class="itemlist-head">
                     <div class="row">
                         <div class="col-xs-2"></div>
@@ -16,7 +16,7 @@
                     </div>
                 </div>
                 <ul class="itemlist">
-                {% for item in data.items %}
+                {% for item in resource.items %}
                     <li>
                         <div class="row">
                             <div class="col-xs-2">
@@ -60,66 +60,65 @@
                 </div>
                 <div class="col-xs-4">
                     <div class="order-sum">
-                        <div>{{'order.label.unitPrice'|trans }}: {{ data.unitPriceTotal|currency }}</div>
+                        <div>{{'order.label.unitPrice'|trans }}: {{ resource.unitPriceTotal|currency }}</div>
                         <div>
-                            {% if data.shippingTotal > 0 %}
-                                {{ 'order.label.shipping'|trans }}: {{ data.shippingTotal|currency }}
+                            {% if resource.shippingTotal > 0 %}
+                                {{ 'order.label.shipping'|trans }}: {{ resource.shippingTotal|currency }}
                             {% else %}
                                 {{ 'order.label.freeShipping'|trans }}
                             {% endif %}
                         </div>
-                        {% if data.discountTotal != 0 %}
-                            <div>{{ 'order.label.discount'|trans }}: {{ data.discountTotal|currency }}</div>
+                        {% if resource.discountTotal != 0 %}
+                            <div>{{ 'order.label.discount'|trans }}: {{ resource.discountTotal|currency }}</div>
                         {% endif %}
                         <div>
-                            {{ 'order.label.salesTax'|trans }}.: {{ data.taxTotal|currency }}
+                            {{ 'order.label.salesTax'|trans }}.: {{ resource.taxTotal|currency }}
                         </div>
-                        <div class="total">{{ 'order.label.sum'|trans }}: {{ data.total|currency }}</div>
+                        <div class="total">{{ 'order.label.sum'|trans }}: {{ resource.total|currency }}</div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-sm-5">
-            <div><strong>{{ 'order.label.billingNumber'|trans }}:</strong> {{ data.number }}</div>
-            <div><strong>{{ 'order.label.orderedAt'|trans }}:</strong> {{ data.orderedAt|date }}</div>
-            <div><strong>{{ 'order.label.eMail'|trans }}:</strong> {{ data.customerEmail }}</div>
-            <div><strong>{{ 'order.label.paymentMethod'|trans }}:</strong> {{ data.payment.method.name }}</div>
-            <div><strong>{{ 'order.label.shippingMethod'|trans }}:</strong> {{ data.shipment.method.name }}</div>
-
+            <div><strong>{{ 'order.label.billingNumber'|trans }}:</strong> {{ resource.number }}</div>
+            <div><strong>{{ 'order.label.orderedAt'|trans }}:</strong> {{ resource.checkoutCompletedAt|date }}</div>
+            <div><strong>{{ 'order.label.eMail'|trans }}:</strong> {{ resource.customerEmail }}</div>
+            <div><strong>{{ 'order.label.paymentMethod'|trans }}:</strong> </div>
+            <div><strong>{{ 'order.label.shippingMethod'|trans }}:</strong> </div>
             <div class="address">
-                <div>
-                    <strong>
-                        {% if not data.differentBillingAddress %}
-                            {{ 'order.label.shippingAndBillingAddress'|trans }}
-                        {% else %}
-                            {{ 'order.label.shippingAddress'|trans }}
+
+                {% if resource.shippingAddress %}
+                    <div>
+                        <div><strong>{{ 'order.label.shippingAddress'|trans }}</strong></div>
+                        <div>{{ resource.shippingAddress.firstName }} {{ resource.shippingAddress.lastName }}</div>
+                        {% if resource.shippingAddress.company %}
+                            <div>{{ resource.shippingAddress.company }}</div>
                         {% endif %}
-                    </strong>
-                </div>
-                <div>{{ data.shippingAddress.firstName }} {{ data.shippingAddress.lastName }}</div>
-                {% if data.shippingAddress.company %}
-                    <div>{{ data.shippingAddress.company }}</div>
+                        <div>{{ resource.shippingAddress.street }}</div>
+                        <div>{{ resource.shippingAddress.postCode }} {{ resource.shippingAddress.city }}</div>
+                        <div>{{ 'order.label.country'|trans }}: {{ resource.shippingAddress.countryCode|sylius_country_name }}</div>
+                        {% if resource.shippingAddress.phoneNumber %}
+                            <div>{{ 'order.label.phone'|trans }}: {{ resource.shippingAddress.phoneNumber }}</div>
+                        {% endif %}
+                    </div>
                 {% endif %}
-                <div>{{ data.shippingAddress.street }}</div>
-                <div>{{ data.shippingAddress.postCode }} {{ data.shippingAddress.city }}</div>
-                <div>{{ 'order.label.country'|trans }}: {{ data.shippingAddress.countryCode|country }}</div>
-                {% if data.shippingAddress.phoneNumber %}
-                    <div>{{ 'order.label.phone'|trans }}: {{ data.shippingAddress.phoneNumber }}</div>
+
+                {% if resource.billingAddress %}
+                    <div>
+                        <div><strong>{{ 'order.label.billingAddress'|trans }}</strong></div>
+                        <div>{{ resource.billingAddress.firstName }} {{ resource.billingAddress.lastName }}</div>
+                        {% if resource.billingAddress.company %}
+                            <div>{{ resource.billingAddress.company }}</div>
+                        {% endif %}
+                        <div>{{ resource.billingAddress.street }}</div>
+                        <div>{{ resource.billingAddress.postCode }} {{ resource.billingAddress.city }}</div>
+                        <div>{{ 'order.label.country'|trans }}: {{ resource.billingAddress.countryCode|sylius_country_name }}</div>
+                        {% if resource.billingAddress.phoneNumber %}
+                            <div>{{ 'order.label.phone'|trans }}: {{ resource.billingAddress.phoneNumber }}</div>
+                        {% endif %}
+                    </div>
                 {% endif %}
-                {% if data.differentBillingAddress %}
-                    <br />
-                    <div><strong>{{ 'order.label.billingAddress'|trans }}</strong></div>
-                    <div>{{ data.billingAddress.firstName }} {{ data.billingAddress.lastName }}</div>
-                    {% if data.billingAddress.company %}
-                        <div>{{ data.billingAddress.company }}</div>
-                    {% endif %}
-                    <div>{{ data.billingAddress.street }}</div>
-                    <div>{{ data.billingAddress.postCode }} {{ data.billingAddress.city }}</div>
-                    <div>{{ 'order.label.country'|trans }}: {{ data.billingAddress.countryCode|country }}</div>
-                    {% if data.billingAddress.phoneNumber %}
-                        <div>{{ 'order.label.phone'|trans }}: {{ data.shippingAddress.phoneNumber }}</div>
-                    {% endif %}
-                {% endif %}
+
             </div>
         </div>
     </div>

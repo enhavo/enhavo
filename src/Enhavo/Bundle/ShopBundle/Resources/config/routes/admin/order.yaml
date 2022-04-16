@@ -1,4 +1,4 @@
-enhavo_shop_order_index:
+sylius_order_index:
     options:
         expose: true
     path: /enhavo/shop/order/index
@@ -7,22 +7,14 @@ enhavo_shop_order_index:
         _controller: sylius.controller.order::indexAction
         _sylius:
             viewer:
-                title: order.label.order
-#                stylesheets:
-#                    - '@EnhavoShopBundle/Resources/public/css/order.css'
+                label: order.label.order
                 translation_domain: EnhavoShopBundle
-                app: shop/OrderApp
-                blocks:
-                    table:
-                        type: table
-                        table_route: enhavo_shop_order_table
-                        open_route: enhavo_shop_order_update
                 actions:
                     create:
                         route: ~
                         hidden: true
 
-enhavo_shop_order_update:
+sylius_order_update:
     options:
         expose: true
     path: /enhavo/shop/order/update/{id}
@@ -30,31 +22,29 @@ enhavo_shop_order_update:
     defaults:
         _controller: sylius.controller.order::updateAction
         _sylius:
-            form: enhavo_shop_order
             viewer:
-                form:
-                    action: enhavo_shop_order_update
-                    delete: enhavo_shop_order_delete
                 tabs:
                     main:
                         label: order.label.order
                         translation_domain: EnhavoShopBundle
-                        template: EnhavoShopBundle:Admin:Order/Tab/order.html.twig
+                        template: admin/resource/order/order.html.twig
                     address:
                         label: order.label.address
                         translation_domain: EnhavoShopBundle
-                        template: EnhavoShopBundle:Admin:Order/Tab/address.html.twig
+                        template: admin/resource/order/address.html.twig
                     payment:
                         label: order.label.payment
                         translation_domain: EnhavoShopBundle
-                        template: EnhavoShopBundle:Admin:Order/Tab/payment.html.twig
-                buttons:
+                        template: admin/resource/order/payment.html.twig
+                actions:
+                    save:
+                        type: save
                     billing:
                         type: shop_billing
                     packingSlip:
                         type: shop_packing_slip
 
-enhavo_shop_order_table:
+sylius_order_table:
     options:
         expose: true
     path: /enhavo/shop/order/table
@@ -69,7 +59,7 @@ enhavo_shop_order_table:
                     label: order.label.number
                     translation_domain: EnhavoShopBundle
             sorting:
-                orderedAt: desc
+                checkoutCompletedAt: desc
             criteria:
                 checkoutState: completed
             viewer:
@@ -81,38 +71,33 @@ enhavo_shop_order_table:
                         label: order.label.number
                         property: number
                         width: 2
+                        sortable: true
                     date:
                         type: datetime
                         label: order.label.ordered_at
-                        property: orderedAt
+                        property: checkoutCompletedAt
                         width: 2
-                    name:
+                        sortable: true
+                    address:
                         type: shop_address
-                        label: order.label.name
+                        label: order.label.address
                         property: shippingAddress
                         width: 4
-                    payed:
-                        type: order_state
-                        label: order.label.payed
-                        property: payed
-                        width: 1
-                    packed:
-                        type: order_state
-                        label: order.label.packed
-                        property: packed
-                        width: 1
-                    shipped:
-                        type: order_state
-                        label: order.label.shipped
-                        property: shipped
-                        width: 1
-                    cancelled:
-                        type: order_state
-                        label: order.label.cancelled
-                        property: cancelled
-                        width: 1
+                    shipping_state:
+                        type: state
+                        label: order.label.shippingState
+                        property: shippingState
+                        width: 2
+                        sortable: true
+                    payment_state:
+                        type: state
+                        label: order.label.paymentState
+                        property: paymentState
+                        width: 2
+                        sortable: true
 
-enhavo_shop_order_delete:
+
+sylius_order_delete:
     options:
         expose: true
     path: /enhavo/shop/order/delete/{id}
@@ -120,7 +105,7 @@ enhavo_shop_order_delete:
     defaults:
         _controller: sylius.controller.order::deleteAction
 
-enhavo_shop_order_batch:
+sylius_order_batch:
     options:
         expose: true
     path: /enhavo/shop/order/batch
@@ -135,7 +120,7 @@ enhavo_shop_order_batch:
                 delete:
                     type: delete
 
-enhavo_shop_order_billing:
+sylius_order_billing:
     options:
         expose: true
     path: /enhavo/shop/order/{id}/billing.pdf
@@ -145,7 +130,7 @@ enhavo_shop_order_billing:
         _sylius:
             form: enhavo_shop_order
 
-enhavo_shop_order_packing_slip:
+sylius_order_packing_slip:
     options:
         expose: true
     path: /enhavo/shop/order/{id}/packing-slip.pdf
