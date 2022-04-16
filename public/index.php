@@ -1,7 +1,7 @@
 <?php
 
-use Enhavo\Kernel;
-use Enhavo\CacheKernel;
+use App\Kernel;
+use App\CacheKernel;
 use Symfony\Component\ErrorHandler\Debug;
 use Symfony\Component\HttpFoundation\Request;
 
