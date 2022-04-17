@@ -33,7 +33,42 @@ jobs:
                     restore-keys: ${{ runner.os }}-composer-
 
             -   name: Validate composer.json
-                run: composer validate --strict
+                run: |
+                    composer validate --strict
+                    composer validate --strict src/Enhavo/Bundle/ShopBundle/composer.json
+                    composer validate --strict src/Enhavo/Bundle/AppBundle/composer.json
+                    composer validate --strict src/Enhavo/Bundle/ArticleBundle/composer.json
+                    composer validate --strict src/Enhavo/Bundle/BlockBundle/composer.json
+                    composer validate --strict src/Enhavo/Bundle/CalendarBundle/composer.json
+                    composer validate --strict src/Enhavo/Bundle/CommentBundle/composer.json
+                    composer validate --strict src/Enhavo/Bundle/ContactBundle/composer.json
+                    composer validate --strict src/Enhavo/Bundle/ContentBundle/composer.json
+                    composer validate --strict src/Enhavo/Bundle/DashboardBundle/composer.json
+                    composer validate --strict src/Enhavo/Bundle/DoctrineExtensionBundle/composer.json
+                    composer validate --strict src/Enhavo/Bundle/FormBundle/composer.json
+                    composer validate --strict src/Enhavo/Bundle/MediaBundle/composer.json
+                    composer validate --strict src/Enhavo/Bundle/MediaLibraryBundle/composer.json
+                    composer validate --strict src/Enhavo/Bundle/MultiTenancyBundle/composer.json
+                    composer validate --strict src/Enhavo/Bundle/NavigationBundle/composer.json
+                    composer validate --strict src/Enhavo/Bundle/NewsletterBundle/composer.json
+                    composer validate --strict src/Enhavo/Bundle/PageBundle/composer.json
+                    composer validate --strict src/Enhavo/Bundle/PaymentBundle/composer.json
+                    composer validate --strict src/Enhavo/Bundle/RedirectBundle/composer.json
+                    composer validate --strict src/Enhavo/Bundle/RoutingBundle/composer.json
+                    composer validate --strict src/Enhavo/Bundle/SearchBundle/composer.json
+                    composer validate --strict src/Enhavo/Bundle/SettingBundle/composer.json
+                    composer validate --strict src/Enhavo/Bundle/ShopBundle/composer.json
+                    composer validate --strict src/Enhavo/Bundle/SidebarBundle/composer.json
+                    composer validate --strict src/Enhavo/Bundle/SliderBundle/composer.json
+                    composer validate --strict src/Enhavo/Bundle/TaxonomyBundle/composer.json
+                    composer validate --strict src/Enhavo/Bundle/TemplateBundle/composer.json
+                    composer validate --strict src/Enhavo/Bundle/ThemeBundle/composer.json
+                    composer validate --strict src/Enhavo/Bundle/TranslationBundle/composer.json
+                    composer validate --strict src/Enhavo/Bundle/UserBundle/composer.json
+                    composer validate --strict src/Enhavo/Bundle/VueFormBundle/composer.json
+                    composer validate --strict src/Enhavo/Component/CleverReach/composer.json
+                    composer validate --strict src/Enhavo/Component/Metadata/composer.json
+                    composer validate --strict src/Enhavo/Component/Type/composer.json
 
             -   name: Install dependencies
                 run: composer install --prefer-dist
