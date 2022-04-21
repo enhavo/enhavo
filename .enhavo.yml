@@ -172,6 +172,10 @@ subtrees:
         url: 'git@github.com:enhavo/media-assets'
         prefix: 'assets/node_modules/@enhavo/media'
         package: '@enhavo/media'
+    media-library-assets:
+        url: 'git@github.com:enhavo/media-library-assets'
+        prefix: 'assets/node_modules/@enhavo/media-library'
+        package: '@enhavo/media-library'
     newsletter-assets:
         url: 'git@github.com:enhavo/newsletter-assets'
         prefix: 'assets/node_modules/@enhavo/newsletter'
