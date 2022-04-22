@@ -28,7 +28,7 @@
 {% endblock %}
 
 {% block form_row %}
-    {% spaceless %}
+    {% apply spaceless %}
         <div class="form-row {% if not valid %}has-error{% endif %}" data-form-row {% if not valid %}data-form-error{% endif %}>
             <div class="label-help-container">
                 <div class="label">{{ form_label(form) }}</div>
@@ -51,7 +51,7 @@
             </div>
             {{ form_errors(form) }}
         </div>
-    {% endspaceless %}
+    {% endapply %}
 {% endblock %}
 
 {% block text_widget %}
@@ -99,27 +99,27 @@
 {% endblock %}
 
 {% macro input(sortable, border, allow_delete, block_name, name, form_widget) %}
+    {% apply spaceless %}
     <li class="listElement" data-list-item>
         {% if sortable or allow_delete %}
-            {% spaceless %}
-                <ul class="buttons-container" data-list-item-buttons>
-                    {% if sortable %}
-                        <li class="button button-down" data-list-item-down><i class="icon icon-arrow_downward"></i></li>
-                        <li class="button button-up" data-list-item-up><i class="icon icon-arrow_upward"></i></li>
-                    {% endif %}
-                    {% if allow_delete %}
-                        <li class="button button-delete" data-list-item-delete>
-                            <i class="icon icon-close"></i>
-                        </li>
-                    {% endif %}
-                </ul>
-            {% endspaceless %}
+            <ul class="buttons-container" data-list-item-buttons>
+                {% if sortable %}
+                    <li class="button button-down" data-list-item-down><i class="icon icon-arrow_downward"></i></li>
+                    <li class="button button-up" data-list-item-up><i class="icon icon-arrow_upward"></i></li>
+                {% endif %}
+                {% if allow_delete %}
+                    <li class="button button-delete" data-list-item-delete>
+                        <i class="icon icon-close"></i>
+                    </li>
+                {% endif %}
+            </ul>
         {% endif %}
         {% if block_name or name %}
             <div class="block-name">{% if block_name %}{{ block_name|nl2br }}{% else %}{{ name|nl2br }}{% endif %}</div>
         {% endif %}
         {{ form_widget|raw }}
     </li>
+    {% endapply %}
 {% endmacro %}
 
 {% block enhavo_message_widget %}
@@ -225,7 +225,7 @@
 
 {% block html_tag_widget %}
     <div class="html-tag-widget" {{ block('attributes') }}>
-        {% spaceless %}
+        {% apply spaceless %}
             <div class="flex-container">
                 <div class="html-tag-widget-text">
                     {{ form_widget(form.text) }}
@@ -241,7 +241,7 @@
                     </div>
                 {% endif %}
             </div>
-        {% endspaceless %}
+        {% endapply %}
     </div>
 {% endblock %}
 

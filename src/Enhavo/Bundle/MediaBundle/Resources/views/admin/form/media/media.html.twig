@@ -1,5 +1,5 @@
 {% block enhavo_media_widget %}
-    {% spaceless %}
+    {% apply spaceless %}
         {% trans_default_domain 'EnhavoAppBundle' %}
         <div class="media-type" data-media-type="{{ mediaConfig|json_encode }}">
             <script type="text/template" data-media-item-template>
@@ -33,5 +33,5 @@
             </div>
             <input id="{{ id }}" name="files" type="file" class="upload-input" data-file-upload data-url="{{ path(route) }}" multiple {{ block('widget_attributes') }}>
         </div>
-    {% endspaceless %}
+    {% endapply %}
 {% endblock %}
