@@ -32,7 +32,7 @@ export default class extends Vue {
     }
 
     isActivePage(page: number) {
-        return this.mediaLibrary.data.page == page;
+        return this.mediaLibrary.getActivePage() == page;
     }
 }
 </script>
