@@ -94,9 +94,8 @@ export default class MediaType extends FormType
     private initUploadButton()
     {
         let self = this;
-        this.$element.find('[data-file-upload-button]').click(function (event) {
+        this.$element.find('[data-file-upload-button]').on('click', (event: JQuery.ClickEvent) => {
             event.stopPropagation();
-            event.preventDefault();
             self.$element.find('[data-file-upload]').trigger('click');
         });
     }

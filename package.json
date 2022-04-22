@@ -70,7 +70,7 @@
     "@types/cropperjs": "^1.1.1",
     "@types/icheck": "^0.8.29",
     "@types/jexl": "^2.1.0",
-    "@types/jquery": "^2.0.45",
+    "@types/jquery": "^3.4.1",
     "@types/jquery.fileupload": "^5.40.36",
     "@types/jqueryui": "^1.11.36",
     "@types/lodash": "^4.14.120",
