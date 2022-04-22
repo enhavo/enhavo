@@ -26,7 +26,7 @@
                         :class="{'dragging': list.data.dragging}"
                     >
                         <template #item="{ element }">
-                            <div class="list-group-item" :class="{ 'not-draggable': !enabled }">
+                            <div class="list-group-item">
                                 <list-item v-bind:data="element"></list-item>
                             </div>
                         </template>
