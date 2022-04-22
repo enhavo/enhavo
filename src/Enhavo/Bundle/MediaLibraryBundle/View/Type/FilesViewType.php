@@ -45,6 +45,7 @@ class FilesViewType extends AbstractViewType
 
         $templateData['files'] = $files;
         $templateData['pages'] = $pages;
+        $templateData['page'] = $options['page'];
         $templateData['columns'] = $options['columns'];
     }
 

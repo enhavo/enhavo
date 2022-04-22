@@ -226,8 +226,11 @@ export default class MediaLibrary {
 
     public setActivePage(page: number) {
         this.data.page = page;
-
         this.getFiles();
+    }
+
+    public getActivePage() {
+        return this.data.page;
     }
 
     private getFiles() {
