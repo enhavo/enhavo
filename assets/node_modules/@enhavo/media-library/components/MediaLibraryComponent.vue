@@ -60,9 +60,7 @@ import Translator from "@enhavo/core/Translator";
 import Router from "@enhavo/core/Router";
 import {Column, File} from "@enhavo/media-library/Data";
 import MediaLibrary from "@enhavo/media-library/MediaLibrary";
-import ListView from "@enhavo/media-library/components/ListView.vue";
-import ThumbnailView from "@enhavo/media-library/components/ThumbnailView.vue";
-import Pagination from "@enhavo/app/grid/components/Pagination.vue";
+import "blueimp-file-upload/js/jquery.fileupload";
 
 @Options({})
 export default class extends Vue {
