@@ -65,7 +65,7 @@ export default class MediaLibraryLoader extends AbstractLoader {
         let elements = this.findElements(mediaType.getElement(), '[data-file-media-library]');
 
         for (let element of elements) {
-            $(element).click((event) => {
+            $(element).on('click', (event: JQuery.ClickEvent) => {
                 event.preventDefault();
                 this.view.open(url, 'media_library');
                 this.currentType = mediaType;

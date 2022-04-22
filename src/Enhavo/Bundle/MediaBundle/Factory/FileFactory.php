@@ -28,6 +28,15 @@ class FileFactory extends Factory
         $this->provider = $provider;
     }
 
+    public function createNew()
+    {
+        /** @var FileInterface $file */
+        $file = parent::createNew();
+        $file->setCreatedAt(new \DateTime());
+
+        return $file;
+    }
+
     public function createTemp()
     {
         /** @var FileInterface $file */
