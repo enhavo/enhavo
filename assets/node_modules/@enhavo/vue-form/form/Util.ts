@@ -28,14 +28,6 @@ export class Util
 
     static serializeForm(form: HTMLFormElement)
     {
-        let formData = new FormData(form);
-        let obj = {};
-
-        let keys = Array.from(formData.keys());
-        for (let key of keys) {
-            obj[key] = formData.get(key);
-        }
-
-        return obj;
+        return new FormData(form);
     }
 }
