@@ -1,6 +1,6 @@
 compiler_pass:
     vue:
-        path: '../compiler-pass/vue.js'
+        path: '../../compiler-pass/vue.js'
         service: '@enhavo/app/vue/VueRegistry'
 
 services:

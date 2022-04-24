@@ -1,4 +1,0 @@
-imports:
-    -
-        path: '@enhavo/dashboard/services/*'
-

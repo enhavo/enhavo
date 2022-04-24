@@ -62,6 +62,11 @@ class AppThemePackage
             }
         });
 
+        config.module.rules.push({
+            test: /\.di.(yaml|yml|json)$/,
+            use: require.resolve('@enhavo/dependency-injection/service-loader'),
+        });
+
         config.resolve.alias['jquery'] = path.join(projectDir, 'node_modules/jquery/src/jquery');
         config.resolve.alias['jquery-ui/ui/widget'] = path.join(projectDir, 'node_modules/blueimp-file-upload/js/vendor/jquery.ui.widget.js');
         return config;

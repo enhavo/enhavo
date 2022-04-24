@@ -8,12 +8,17 @@ EnhavoEncore.add(
     [ new AppThemePackage({  themePath: __dirname }), new ThemePackage(ThemeLoader)],
     Encore => {
         Encore
-            .addEntry('base', './base')
-            .addEntry('form', './form')
+            .addEntry('base', './entrypoints/base')
+            .addEntry('form', './entrypoints/form')
             .enableVueLoader()
 
     },
-    config => {}
+    config => {
+        // Enable watch in enhavo assets/node_modules/@enhavo
+        config.watchOptions = {
+            ignored: /node_modules([\\]+|\/)+(?!@enhavo)/
+        }
+    }
 );
 
 module.exports = EnhavoEncore.export();

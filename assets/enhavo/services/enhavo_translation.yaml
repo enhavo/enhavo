@@ -1,3 +1,0 @@
-imports:
-    -
-        path: '@enhavo/translation/services/*'

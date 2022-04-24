@@ -1,0 +1,12 @@
+services:
+    '@enhavo/shop/controllers/ProductController':
+        chunk: shop
+        static: true
+        tags:
+            - { name: stimulus.controller, controller: 'product' }
+
+    '@enhavo/shop/manager/ProductManager':
+        import: ProductManager
+
+    '@enhavo/shop/manager/CartManager':
+        import: CartManager

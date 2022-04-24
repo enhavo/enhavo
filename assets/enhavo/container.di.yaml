@@ -1,3 +1,12 @@
 imports:
-    -
-        path: './services/*'
+    - path: '@enhavo/app/services/enhavo/*'
+    - path: '@enhavo/dashboard/services/enhavo/*'
+    - path: '@enhavo/form/services/enhavo/*'
+    - path: '@enhavo/media/services/enhavo/*'
+    - path: '@enhavo/multi-tenancy/services/enhavo/*'
+    - path: '@enhavo/newsletter/services/enhavo/*'
+    - path: '@enhavo/shop/services/enhavo/*'
+    - path: '@enhavo/translation/services/enhavo/*'
+    - path: '@enhavo/user/services/enhavo/*'
+
+services:
