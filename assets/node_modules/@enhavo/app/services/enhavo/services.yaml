@@ -1,44 +1,43 @@
+imports:
+    - path: '../*'
+
 compiler_pass:
     action:
-        path: '../compiler-pass/registry.js'
+        path: '../../compiler-pass/registry.js'
         service: '@enhavo/app/action/ActionRegistry'
         tag: 'enhavo_app.action'
     batch:
-        path: '../compiler-pass/registry.js'
+        path: '../../compiler-pass/registry.js'
         service: '@enhavo/app/grid/batch/BatchRegistry'
         tag: 'enhavo_app.batch'
     column:
-        path: '../compiler-pass/registry.js'
+        path: '../../compiler-pass/registry.js'
         service: '@enhavo/app/grid/column/ColumnRegistry'
         tag: 'enhavo_app.column'
     filter:
-        path: '../compiler-pass/registry.js'
+        path: '../../compiler-pass/registry.js'
         service: '@enhavo/app/grid/filter/FilterRegistry'
         tag: 'enhavo_app.filter'
     form:
-        path: '../compiler-pass/registry.js'
+        path: '../../compiler-pass/registry.js'
         service: '@enhavo/app/form/FormRegistry'
         tag: 'enhavo_app.form'
     menu:
-        path: '../compiler-pass/registry.js'
+        path: '../../compiler-pass/registry.js'
         service: '@enhavo/app/menu/MenuRegistry'
         tag: 'enhavo_app.menu'
     modal:
-        path: '../compiler-pass/registry.js'
+        path: '../../compiler-pass/registry.js'
         service: '@enhavo/app/modal/ModalRegistry'
         tag: 'enhavo_app.modal'
     view:
-        path: '../compiler-pass/registry.js'
+        path: '../../compiler-pass/registry.js'
         service: '@enhavo/app/view-stack/ViewRegistry'
         tag: 'enhavo_app.view'
     toolbar_widget:
-        path: '../compiler-pass/registry.js'
+        path: '../../compiler-pass/registry.js'
         service: '@enhavo/app/toolbar/widget/WidgetRegistry'
         tag: 'enhavo_app.toolbar'
-    stimulus:
-        path: '../compiler-pass/stimulus-register.js'
-        service: '@hotwired/stimulus/Application'
-        tag: 'stimulus.controller'
 
 services:
     '@enhavo/core/Router':

@@ -1,0 +1,6 @@
+services:
+    '@enhavo/app/controllers/ApplicationController':
+        chunk: main
+        static: true
+        tags:
+            - { name: stimulus.controller, controller: 'application' }

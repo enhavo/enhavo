@@ -1,11 +1,11 @@
+compiler_pass:
+    stimulus:
+        path: '../compiler-pass/stimulus-register.js'
+        service: '@hotwired/stimulus/Application'
+        tag: 'stimulus.controller'
+
 services:
     '@hotwired/stimulus/Application':
         chunk: 'stimulus'
         from: '@hotwired/stimulus'
         import: Application
-
-    '@enhavo/app/controllers/ApplicationController':
-        chunk: main
-        static: true
-        tags:
-            - { name: stimulus.controller, controller: 'application' }
