@@ -14,9 +14,7 @@ EnhavoEncore.add(
     config => {
         // Enable watch in enhavo assets/node_modules/@enhavo
         config.watchOptions = {
-            // ignored: [
-            //     /node_modules([\\]+|\/)+(?!@enhavo)/,
-            // ]
+            ignored: /node_modules([\\]+|\/)+(?!@enhavo)/
         }
     }
 );

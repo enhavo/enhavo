@@ -167,12 +167,6 @@ class ImageCropperViewer extends AbstractActionViewer
     {
         parent::configureOptions($optionsResolver);
         $optionsResolver->setDefaults([
-            'javascripts' => [
-                'enhavo/media/image-cropper'
-            ],
-            'stylesheets' => [
-                'enhavo/media/image-cropper'
-            ],
             'template' => 'admin/view/image-cropper.html.twig',
             'label' => 'media.image_cropper.label.image_cropper',
             'translation_domain' => 'EnhavoMediaBundle',

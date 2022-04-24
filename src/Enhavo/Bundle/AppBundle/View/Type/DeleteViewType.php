@@ -135,7 +135,8 @@ class DeleteViewType extends AbstractViewType
     public function configureOptions(OptionsResolver $optionsResolver)
     {
         $optionsResolver->setDefaults([
-            'entrypoint' => 'enhavo/app/delete',
+            'application' => '@enhavo/app/delete/DeleteApp',
+            'component' => '@enhavo/app/delete/components/DeleteComponent.vue',
             'request_configuration' => null,
             'event_dispatcher' => null,
             'app_event_dispatcher' => null,

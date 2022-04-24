@@ -14,7 +14,7 @@ class FormPackage
 
     initEncore(Encore)
     {
-
+        Encore.addEntry('enhavo/editor', './assets/enhavo/entrypoints/editor.ts');
     }
 
     initWebpackConfig(config)

@@ -1,9 +1,8 @@
-entrypoints:
-    'enhavo/user/login':
-        path: '../entrypoint/login.ts'
-        build: enhavo
-
 services:
     '@enhavo/user/login/LoginApp':
         arguments:
             - '@enhavo/app/view/View'
+
+    '@enhavo/user/components/Login.vue':
+        chunk: 'user'
+        static: true

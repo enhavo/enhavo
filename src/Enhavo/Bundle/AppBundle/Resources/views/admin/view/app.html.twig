@@ -16,7 +16,11 @@
 </head>
 <body>
 {% block content %}
-    <div id="app"></div>
+    <div id="app"
+         data-controller="{% block controller %}{{ controller }}{% endblock %}"
+         data-application-application-value="{% block application %}{{ application }}{% endblock %}"
+         data-application-component-value="{% block component %}{{ component }}{% endblock %}"
+    ></div>
 {% endblock %}
 {% if data is defined %}
     <script id="data" type="application/json">{{ data|json_encode|raw }}</script>

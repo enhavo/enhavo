@@ -13,6 +13,13 @@
             {% endfor %}
         {% endif %}
     {% endblock %}
+    {% block javascripts %}
+        {% if entrypoints is defined %}
+            {% for entrypoint in entrypoints %}
+                {{ encore_entry_script_tags(entrypoint, null, 'enhavo') }}
+            {% endfor %}
+        {% endif %}
+    {% endblock %}
 </head>
 <body>
 {% block content %}
@@ -27,12 +34,5 @@
 {% if translations is defined %}
     <script id="translations" type="application/json">{{ translations|json_encode|raw }}</script>
 {% endif %}
-{% block javascripts %}
-    {% if entrypoints is defined %}
-        {% for entrypoint in entrypoints %}
-            {{ encore_entry_script_tags(entrypoint, null, 'enhavo') }}
-        {% endfor %}
-    {% endif %}
-{% endblock %}
 </body>
 </html>

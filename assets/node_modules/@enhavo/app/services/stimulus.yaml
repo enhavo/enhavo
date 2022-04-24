@@ -1,0 +1,11 @@
+services:
+    '@hotwired/stimulus/Application':
+        chunk: 'stimulus'
+        from: '@hotwired/stimulus'
+        import: Application
+
+    '@enhavo/app/controllers/ApplicationController':
+        chunk: main
+        static: true
+        tags:
+            - { name: stimulus.controller, controller: 'application' }

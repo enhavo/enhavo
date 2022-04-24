@@ -9,6 +9,7 @@
 namespace Enhavo\Component\Type;
 
 
+use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 abstract class AbstractContainerType
@@ -44,6 +45,11 @@ abstract class AbstractContainerType
         }
         $this->type->configureOptions($resolver);
 
-        $this->options = $resolver->resolve($options);
+        try {
+            $this->options = $resolver->resolve($options);
+        } catch (MissingOptionsException $exception) {
+            throw new MissingOptionsException(sprintf('%s: %s', get_class($type), $exception->getMessage()), $exception->getCode(), $exception);
+        }
+
     }
 }

@@ -150,7 +150,8 @@ class ListViewType extends AbstractViewType
     public function configureOptions(OptionsResolver $optionsResolver)
     {
         $optionsResolver->setDefaults([
-            'entrypoint' => 'enhavo/app/list',
+            'application' => '@enhavo/app/list/ListApp',
+            'component' => '@enhavo/app/list/components/ListApplicationComponent.vue',
             'actions' => [],
             'data_route' => null,
             'data_route_parameters' => null,

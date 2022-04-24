@@ -1,2 +1,2 @@
-import container from 'service-loader!./container.js'
-export default container;
+import Loader from '@enhavo/dependency-injection/loader/Loader'
+module.exports = Loader;

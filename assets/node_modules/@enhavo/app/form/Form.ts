@@ -45,7 +45,7 @@ export default class Form
         }
 
         for (let i in this.data.tabs) {
-            _.extend(this.data.tabs[i], new Tab);
+            this.data.tabs[i] = _.assign(new Tab, this.data.tabs[i]);
         }
 
         this.tabs = this.data.tabs;

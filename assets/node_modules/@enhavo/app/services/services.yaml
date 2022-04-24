@@ -1,26 +1,3 @@
-entrypoints:
-    'enhavo/app/delete':
-        path: '../entrypoint/delete'
-        build: enhavo
-    'enhavo/app/form':
-        path: '../entrypoint/form'
-        build: enhavo
-    'enhavo/app/index':
-        path: '../entrypoint/index'
-        build: enhavo
-    'enhavo/app/list':
-        path: '../entrypoint/list'
-        build: enhavo
-    'enhavo/app/main':
-        path: '../entrypoint/main'
-        build: enhavo
-    'enhavo/app/preview':
-        path: '../entrypoint/preview'
-        build: enhavo
-    'enhavo/app/view':
-        path: '../entrypoint/view'
-        build: enhavo
-
 compiler_pass:
     action:
         path: '../compiler-pass/registry.js'
@@ -58,6 +35,10 @@ compiler_pass:
         path: '../compiler-pass/registry.js'
         service: '@enhavo/app/toolbar/widget/WidgetRegistry'
         tag: 'enhavo_app.toolbar'
+    stimulus:
+        path: '../compiler-pass/stimulus-register.js'
+        service: '@hotwired/stimulus/Application'
+        tag: 'stimulus.controller'
 
 services:
     '@enhavo/core/Router':

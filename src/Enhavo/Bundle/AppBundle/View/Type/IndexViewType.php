@@ -139,7 +139,8 @@ class IndexViewType extends AbstractViewType
     public function configureOptions(OptionsResolver $optionsResolver)
     {
         $optionsResolver->setDefaults([
-            'entrypoint' => 'enhavo/app/index',
+            'application' => '@enhavo/app/index/IndexApp',
+            'component' => '@enhavo/app/index/components/IndexComponent.vue',
             'request_configuration' => null,
             'metadata' => null,
             'actions' => [],

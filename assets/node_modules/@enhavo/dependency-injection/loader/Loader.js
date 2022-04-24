@@ -2,7 +2,6 @@ const ContainerBuilder = require('@enhavo/dependency-injection/container/Contain
 const Definition = require('@enhavo/dependency-injection/container/Definition');
 const Call = require('@enhavo/dependency-injection/container/Call');
 const Argument = require('@enhavo/dependency-injection/container/Argument');
-const Entrypoint = require('@enhavo/dependency-injection/container/Entrypoint');
 const CompilerPass = require('@enhavo/dependency-injection/container/CompilerPass');
 const Tag = require('@enhavo/dependency-injection/container/Tag');
 const FileLoadException = require('@enhavo/dependency-injection/exception/FileLoadException');
@@ -40,15 +39,11 @@ class Loader
 
         this._loadImports(data, builder, cwd, options);
 
-        if(options.loadDefinition) {
+        if (options.loadDefinition) {
             this._addDefinitions(data, builder, cwd);
         }
 
-        if(options.loadEntrypoint) {
-            this._addEntrypoints(data, builder, cwd);
-        }
-
-        if(options.loadCompilerPasses) {
+        if (options.loadCompilerPasses) {
             this._addCompilerPass(data, builder, cwd);
         }
 
@@ -62,7 +57,7 @@ class Loader
                 continue;
             }
             let extension = path.extname(file);
-            if (extension === '.yaml') {
+            if (extension === '.yaml' || extension === '.yml') {
                 let content = fs.readFileSync(file)+'';
                 try {
                     this.load(content, 'yaml', builder, path.dirname(file), options);
@@ -76,6 +71,10 @@ class Loader
         return this;
     }
 
+    getLoadedFiles() {
+        return this.loadedFiles;
+    }
+
     _normalizeData(content, format)
     {
         if(typeof content === 'object') {
@@ -85,6 +84,7 @@ class Loader
         } else if(format === 'json') {
             return JSON.parse(content);
         }
+
         throw 'format not supported';
     }
 
@@ -249,29 +249,6 @@ class Loader
      * @param {ContainerBuilder} builder
      * @param {string} cwd
      */
-    _addEntrypoints(data, builder, cwd) {
-        if (data && data.entrypoints) {
-            for (let name in data.entrypoints) {
-                if (!data.entrypoints.hasOwnProperty(name)) {
-                    break;
-                }
-
-                let entrypointConfig = data.entrypoints[name];
-                if(entrypointConfig === null) {
-                    entrypointConfig = {};
-                }
-
-                let entrypoint = new Entrypoint(name, this._buildFilepath(entrypointConfig.path, cwd));
-                builder.addEntrypoint(entrypoint);
-            }
-        }
-    }
-
-    /**
-     * @param {object} data
-     * @param {ContainerBuilder} builder
-     * @param {string} cwd
-     */
     _addCompilerPass(data, builder, cwd) {
         if (data && data.compiler_pass) {
             for (let name in data.compiler_pass) {
@@ -296,7 +273,6 @@ class Configuration
     constructor() {
         this.loadImports = true;
         this.loadDefinition = true;
-        this.loadEntrypoint = true;
         this.loadCompilerPasses = true;
     }
 }

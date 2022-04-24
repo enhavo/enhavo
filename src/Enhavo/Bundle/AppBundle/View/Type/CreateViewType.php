@@ -190,7 +190,8 @@ class CreateViewType extends AbstractViewType
     {
         $optionsResolver->setDefaults([
             'tabs' => [],
-            'entrypoint' => 'enhavo/app/form',
+            'application' => '@enhavo/app/form/FormApp',
+            'component' => '@enhavo/app/form/components/FormComponent.vue',
             'actions' => [],
             'actions_secondary' => [],
             'form' => null,

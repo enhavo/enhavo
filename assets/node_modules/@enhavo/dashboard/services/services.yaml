@@ -1,8 +1,3 @@
-entrypoints:
-    'enhavo/dashboard/dashboard':
-        path: '../entrypoint/dashboard'
-        build: enhavo
-
 compiler_pass:
     dashboard_widget:
         path: '@enhavo/app/compiler-pass/registry.js'

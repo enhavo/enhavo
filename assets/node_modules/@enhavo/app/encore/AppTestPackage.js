@@ -1,7 +1,6 @@
 const EncoreUtil = require('@enhavo/core/EncoreUtil');
 const path = require('path');
 const _ = require('lodash');
-const DependencyInjectionPlugin = require('@enhavo/dependency-injection/webpack/DependencyInjectionPlugin');
 
 class AppTestPackage
 {
@@ -25,8 +24,6 @@ class AppTestPackage
             .enableTypeScriptLoader()
             .enableVersioning(false)
             .cleanupOutputBeforeBuild()
-            .addPlugin(new DependencyInjectionPlugin(path.resolve(EncoreUtil.getProjectDir(), './assets/node_modules/@enhavo/**/tests/fixtures/services/*')))
-
     }
 
     initWebpackConfig(config)

@@ -6,7 +6,7 @@ export default abstract class AbstractFactory
     createFromData(data: object): ColumnInterface
     {
         let column = this.createNew();
-        column = _.extend(data, column);
+        column = _.extend(column, data);
         return column;
     }
 
