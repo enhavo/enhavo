@@ -37,11 +37,6 @@ class ListDataViewType extends AbstractViewType
         return 'list_data';
     }
 
-    public static function getParentType(): ?string
-    {
-        return AppViewType::class;
-    }
-
     public function handleRequest($options, Request $request, ViewData $viewData, TemplateData $templateData)
     {
         $request->query->set('limit', 1000000); // never show pagination
@@ -76,14 +71,18 @@ class ListDataViewType extends AbstractViewType
         ]);
 
         $token = $this->tokenManager->getToken('list_data');
-        $templateData['token'] = $token->getValue();
-        $templateData['resources'] = $this->columnManager->createResourcesViewData($columns, $options['resources'], $childrenProperty, $positionProperty);
+        $data['token'] = $token->getValue();
+        $data['resources'] = $this->columnManager->createResourcesViewData($columns, $options['resources'], $childrenProperty, $positionProperty);
+    }
+
+    public function getResponse($options, Request $request, ViewData $viewData, TemplateData $templateData): Response
+    {
+        return new JsonResponse($viewData->normalize());
     }
 
     public function configureOptions(OptionsResolver $optionsResolver)
     {
         $optionsResolver->setDefaults([
-            'template' => 'admin/view/data.html.twig',
             'columns' => [],
             'children_property' => null,
             'position_property' => null,

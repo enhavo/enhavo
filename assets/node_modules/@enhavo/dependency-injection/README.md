@@ -8,8 +8,8 @@ The enhavo CMS is a open source PHP project on top of the fullstack Symfony fram
 # Dependency Injection
 
 Dependency injection for webpack. How does it work? First, you have to define all your services and their dependencies in a ``yaml`` or ``json`` format.
-During the webpack compile time the ``DependencyInjecitonPlugin`` will create a container class. This container class
-can be imported in your entrypoint and you can retrieve your service with all its dependencies. This project is heavily inspired by the symfony dependency injection.
+During the webpack compile time the service loader will create a container class. This container class
+can be loaded in your entrypoint and you can retrieve your service with all its dependencies. This project is heavily inspired by the symfony dependency injection.
 If you like it, please leave a github star.
 
 ### Install
@@ -21,19 +21,18 @@ $ yarn add @enhavo/dependency-injection
 $ npm install @enhavo/dependency-injection
 ```
 
-Create a `json` or `yaml` file for your service definitions. For example create ``service.yaml`` in your root directory.
+Create a `json` or `yaml` file for your service definitions. For example create ``container.di.yaml`` in your root directory.
 
-Add the ``DependencyInjectionPlugin`` to your webpack config.
+Add the service loader to your webpack config.
 
 ```js
 // webpack.config.js
-
-const DependencyInjectionPlugin = require('@enhavo/dependency-injection/webpack/DependencyInjectionPlugin');
-
 module.exports = {
-    plugins: [
-        new DependencyInjectionPlugin('./service.yaml'), // define your path to the configuration file(s)
-    ],
+    module: {
+        rules: [
+            { test: /\.di.(yaml|yml|json)$/, use: require.resolve('@enhavo/dependency-injection/service-loader') },
+        ],
+    },
 };
 ```
 
@@ -68,7 +67,7 @@ Inside an entrypoint you can load the service via the dependency injection conta
 ```js
 // my_entrypoint.js
 
-import Container from "@enhavo/dependency-injection"
+import Container from "./container.di.yaml"
 
 (async () => {
     let myService = await Container.get('MyService');
@@ -156,18 +155,6 @@ services:
         # This service will be initialized if container.init() ist called
         init: false
 
-```
-
-### Entrypoint
-
-Define a entrypoint via service configuration
-
-```yaml
-# service.yaml
-
-entrypoints:
-    'mypackage/entrypoint':
-        path: '../entry/entrypoint'
 ```
 
 ### Parameters

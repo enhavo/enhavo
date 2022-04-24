@@ -104,7 +104,8 @@ class PreviewViewType extends AbstractViewType
     public function configureOptions(OptionsResolver $optionsResolver)
     {
         $optionsResolver->setDefaults([
-            'entrypoint' => 'enhavo/app/preview',
+            'application' => '@enhavo/app/preview/PreviewApp',
+            'component' => '@enhavo/app/preview/components/ApplicationComponent.vue',
             'translation_domain' => 'EnhavoAppBundle',
             'label' => 'label.preview',
             'resource' => null,

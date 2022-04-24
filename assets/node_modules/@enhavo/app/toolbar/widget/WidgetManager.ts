@@ -21,13 +21,11 @@ export default class WidgetManager
 
     init() {
         for (let i in this.primary) {
-            let action = this.registry.getFactory(this.primary[i].component).createFromData(this.primary[i]);
-            this.primary[i] = _.extend(this.primary[i], action);
+            this.primary[i] = this.registry.getFactory(this.primary[i].component).createFromData(this.primary[i]);
         }
 
         for (let i in this.secondary) {
-            let action = this.registry.getFactory(this.secondary[i].component).createFromData(this.secondary[i]);
-            this.secondary[i] = _.extend(this.secondary[i], action);
+            this.secondary[i] = this.registry.getFactory(this.secondary[i].component).createFromData(this.secondary[i]);
         }
 
         for (let component of this.registry.getComponents()) {

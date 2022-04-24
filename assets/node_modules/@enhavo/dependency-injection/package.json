@@ -4,7 +4,7 @@
   "types": "index.ts",
   "version": "0.8.0",
   "homepage": "https://www.enhavo.com",
-  "main": "index.js",
+  "main": "service-loader.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/enhavo/enhavo.git"

@@ -3,17 +3,21 @@
   "license": "MIT",
   "scripts": {
     "routes:dump": "bin/console fos:js-routing:dump --format=json --target=public/js/fos_js_routes.json",
-    "di": "node ./assets/node_modules/@enhavo/dependency-injection/bin/dependency-injection.js \"./assets/services/enhavo/*\"",
+    "di": "node ./assets/node_modules/@enhavo/dependency-injection/bin/dependency-injection.js",
     "dev": "encore dev",
     "watch": "encore dev --watch",
     "webfont:generate": "node ./assets/node_modules/@enhavo/app/bin/webfont-generate.js"
   },
   "dependencies": {
+    "@babel/runtime": "^7.17.9",
+    "@babel/plugin-transform-runtime": "^7.17.0",
     "@fullcalendar/core": "^4.2.0",
     "@fullcalendar/daygrid": "^4.2.0",
     "@fullcalendar/list": "^4.2.0",
     "@fullcalendar/timegrid": "^4.2.0",
+    "@hotwired/stimulus": "^3.0.1",
     "@ibm/plex": "^1.2.3",
+    "@symfony/stimulus-bridge": "^3.0.0",
     "@symfony/webpack-encore": "^1.8.2",
     "ansi-to-html": "^0.6.11",
     "argparse": "^2.0.1",

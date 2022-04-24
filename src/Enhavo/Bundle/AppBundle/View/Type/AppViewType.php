@@ -86,6 +86,13 @@ class AppViewType extends AbstractViewType
         ];
     }
 
+    public function createTemplateData($options, ViewData $viewData, ViewData $templateData)
+    {
+        $templateData['controller'] = $options['controller'];
+        $templateData['application'] = $options['application'];
+        $templateData['component'] = $options['component'];
+    }
+
     public function getResponse($options, Request $request, ViewData $viewData, TemplateData $templateData): Response
     {
         $parameters = [
@@ -116,8 +123,11 @@ class AppViewType extends AbstractViewType
         $optionsResolver->setDefaults([
             'label' => '',
             'translation_domain' => null,
-            'entrypoint' => null,
+            'entrypoint' => 'enhavo/application',
+            'controller' => 'application',
             'template' => 'admin/view/app.html.twig'
         ]);
+
+        $optionsResolver->setRequired(['application', 'component']);
     }
 }

@@ -1,7 +1,3 @@
-entrypoints:
-    'enhavo/media/image-cropper':
-        path: '../entrypoint/image-cropper.ts'
-        build: enhavo
 services:
     '@enhavo/media/loader/MediaLoader':
         chunk: 'form'

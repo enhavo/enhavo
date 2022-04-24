@@ -19,8 +19,7 @@ export default class ColumnManager
 
     init() {
         for (let i in this.columns) {
-            let filter = this.registry.getFactory(this.columns[i].component).createFromData(this.columns[i]);
-            _.extend(this.columns[i], filter);
+            this.columns[i] = this.registry.getFactory(this.columns[i].component).createFromData(this.columns[i]);
         }
 
         for (let component of this.registry.getComponents()) {

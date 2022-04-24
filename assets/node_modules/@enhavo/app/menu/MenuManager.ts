@@ -25,12 +25,14 @@ export default class MenuManager
     init(): void {
         for (let i in this.data.items) {
             let item = this.registry.getFactory(this.data.items[i].component).createFromData(this.data.items[i]);
-            _.extend(this.data.items[i], item);
+            this.data.items[i] = item;
         }
 
         for (let component of this.registry.getComponents()) {
             this.componentRegistry.registerComponent(component.name, component.component)
         }
+
+        console.log(this.data);
 
         this.componentRegistry.registerStore('menuManager', this);
         this.data = this.componentRegistry.registerData(this.data);

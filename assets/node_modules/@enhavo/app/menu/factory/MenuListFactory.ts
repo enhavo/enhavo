@@ -17,11 +17,10 @@ export default class MenuListFactory extends AbstractFactory
 
     createFromData(data: object): MenuList
     {
-        let menu = this.createNew();
-        menu = _.extend(data, menu);
+        let menu = <MenuList>super.createFromData(data)
         for(let i in menu.items) {
-            let item = this.menuRegistry.getFactory(menu.items[i].component).createFromData(menu.items[i]);
-            item.setParent(menu);
+            menu.items[i] = this.menuRegistry.getFactory(menu.items[i].component).createFromData(menu.items[i]);
+            menu.items[i].setParent(menu);
         }
         return menu;
     }

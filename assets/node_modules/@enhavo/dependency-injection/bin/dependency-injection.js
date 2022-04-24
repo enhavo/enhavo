@@ -2,7 +2,7 @@
 const Loader = require('@enhavo/dependency-injection/loader/Loader');
 const Compiler = require('@enhavo/dependency-injection/compiler/Compiler');
 const Validator = require('@enhavo/dependency-injection/validation/Validator');
-const builderBucket = require('@enhavo/dependency-injection/builder-bucket');
+const ContainerBuilder = require('@enhavo/dependency-injection/container/ContainerBuilder');
 const process = require('process');
 const path = require('path');
 const fs = require('fs');
@@ -10,35 +10,29 @@ const fs = require('fs');
 class CommandLineInterface
 {
     constructor() {
-        this.servicePath = path.resolve(process.cwd(), process.argv[2]);
         this.command = process.argv[3];
         this.loader = new Loader;
     }
 
     execute() {
-        if(this.command === undefined || this.command === 'list') {
-            this._list();
+        if(this.command === 'list') {
+            this._list(process.argv[4]);
         } else if(this.command === 'compile') {
-            this._compile(process.argv[4]);
+            this._compile(process.argv[4], process.argv[5]);
         } else {
-            this._write('Command "'+this.command+'" not exist.');
+            this._write('Command "'+this.command+'" not exist. Try list or compile');
         }
     }
 
-    _list() {
-        let builder = builderBucket.createBuilder(null);
+    _list(containerPath) {
+        let builder = new ContainerBuilder;
 
-        this.loader.loadFile(this.servicePath, builder);
+        this.loader.loadFile(containerPath, builder);
         (new Validator).validate(builder);
 
         this._write('\u001b[42mLoaded files:\u001b[49m');
         for (let file of builder.getFiles()) {
             this._write(' - '+file);
-        }
-
-        this._write('\u001b[42mEntrypoints:\u001b[49m');
-        for (let entrypoint of builder.getEntrypoints()) {
-            this._write(' - '+ entrypoint.getName());
         }
 
         this._write('\u001b[42mCompiler Passes:\u001b[49m');
@@ -52,9 +46,9 @@ class CommandLineInterface
         }
     }
 
-    _compile(filePath) {
-        let builder = builderBucket.createBuilder(null);
-        this.loader.loadFile(this.servicePath, builder);
+    _compile(containerPath, filePath) {
+        let builder = new ContainerBuilder;
+        this.loader.loadFile(containerPath, builder);
         builder.prepare();
         (new Validator).validate(builder);
         let content = (new Compiler).compile(builder);

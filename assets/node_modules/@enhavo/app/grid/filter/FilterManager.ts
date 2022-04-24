@@ -21,8 +21,7 @@ export default class FilterManager
     public init()
     {
         for (let i in this.filters) {
-            let filter = this.registry.getFactory(this.filters[i].component).createFromData(this.filters[i]);
-            _.extend(this.filters[i], filter);
+            this.filters[i] = this.registry.getFactory(this.filters[i].component).createFromData(this.filters[i]);
         }
 
         this.filters = this.componentRegistry.registerData(this.filters);

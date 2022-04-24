@@ -61,6 +61,7 @@ import Router from "@enhavo/core/Router";
 import {Column, File} from "@enhavo/media-library/Data";
 import MediaLibrary from "@enhavo/media-library/MediaLibrary";
 import "blueimp-file-upload/js/jquery.fileupload";
+import '@enhavo/media-library/assets/styles.scss';
 
 @Options({})
 export default class extends Vue {

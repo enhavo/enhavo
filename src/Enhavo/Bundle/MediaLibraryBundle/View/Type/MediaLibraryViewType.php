@@ -66,7 +66,8 @@ class MediaLibraryViewType extends AbstractViewType
     public function configureOptions(OptionsResolver $optionsResolver)
     {
         $optionsResolver->setDefaults([
-            'entrypoint' => 'enhavo/media-library/index',
+            'application' => '@enhavo/media-library/MediaLibraryApp',
+            'component' => '@enhavo/media-library/components/MediaLibraryComponent.vue',
             'items' => null,
             'tags' => [],
             'content_types' => [],

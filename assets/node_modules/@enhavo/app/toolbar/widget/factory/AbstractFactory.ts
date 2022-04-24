@@ -6,7 +6,7 @@ export default abstract class AbstractFactory
     createFromData(data: object): WidgetInterface
     {
         let Widget = this.createNew();
-        Widget = _.extend(data, Widget);
+        Widget = _.extend(Widget, data);
         return Widget;
     }
 

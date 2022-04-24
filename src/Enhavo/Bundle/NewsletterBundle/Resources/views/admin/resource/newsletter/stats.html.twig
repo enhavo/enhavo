@@ -1,5 +1,9 @@
 {% extends template('admin/view/app.html.twig') %}
 
 {% block content %}
-    <div id="app"></div>
+    <div id="app"
+         data-controller="application"
+         data-application-application-value="@enhavo/newsletter/stats/StatsApp"
+         data-application-component-value="@enhavo/newsletter/stats/components/IndexComponent.vue"
+    ></div>
 {% endblock %}

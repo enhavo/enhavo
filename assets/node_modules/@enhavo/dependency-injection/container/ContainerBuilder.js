@@ -1,6 +1,5 @@
 const Definition = require("@enhavo/dependency-injection/container/Definition");
 const CompilerPass = require("@enhavo/dependency-injection/container/CompilerPass");
-const Entrypoint = require("@enhavo/dependency-injection/container/Entrypoint");
 const Map = require("@enhavo/dependency-injection/container/Map");
 const fs = require("fs");
 
@@ -9,8 +8,6 @@ class ContainerBuilder
     constructor() {
         /** @type {Map<Definition>} */
         this.definitions = new Map();
-        /** @type {Map<Entrypoint>} */
-        this.entrypoints = new Map();
         /** @type {Map<CompilerPass>} */
         this.compilerPasses = new Map();
 
@@ -83,17 +80,6 @@ class ContainerBuilder
     }
 
     /**
-     * @param {Entrypoint} entrypoint
-     */
-    addEntrypoint(entrypoint) {
-        this.entrypoints.add(entrypoint.getName(), entrypoint);
-    }
-
-    getEntrypoints() {
-        return this.entrypoints.getValues();
-    }
-
-    /**
      * @param {CompilerPass} compilerPass
      */
     addCompilerPass(compilerPass) {
@@ -123,7 +109,6 @@ class ContainerBuilder
 
     reset() {
         this.definitions = new Map();
-        this.entrypoints = new Map();
         this.compilerPasses = new Map();
         this.files = [];
     }

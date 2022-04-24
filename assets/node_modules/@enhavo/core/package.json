@@ -9,6 +9,8 @@
     "url": "https://github.com/enhavo/enhavo.git"
   },
   "dependencies": {
+    "@babel/runtime": "^7.17.9",
+    "@babel/plugin-transform-runtime": "^7.17.0",
     "@symfony/webpack-encore": "^1.8.2",
     "copy-webpack-plugin": "^4.5.2",
     "glob": "^7.1.6",

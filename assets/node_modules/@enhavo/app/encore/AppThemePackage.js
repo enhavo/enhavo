@@ -1,7 +1,6 @@
 const EncoreUtil = require('@enhavo/core/EncoreUtil');
 const _ = require('lodash');
 const path = require('path');
-const DependencyInjectionPlugin = require('@enhavo/dependency-injection/webpack/DependencyInjectionPlugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 class AppThemePackage
@@ -31,10 +30,6 @@ class AppThemePackage
             from: this.config.themePath+'/images',
             to: 'images/[path][name].[ext]'
         });
-
-        Encore.addPlugin(new DependencyInjectionPlugin(
-            path.resolve(EncoreUtil.getProjectDir(), './assets/services/theme/*'), 'theme'
-        ));
     }
 
     initWebpackConfig(config)

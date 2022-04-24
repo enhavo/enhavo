@@ -24,7 +24,7 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('wysiwyg')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->scalarNode('editor_entrypoint')->defaultValue('enhavo/form/editor')->end()
+                        ->scalarNode('editor_entrypoint')->defaultValue('enhavo/editor')->end()
                         ->scalarNode('editor_entrypoint_build')->defaultValue('enhavo')->end()
                     ->end()
                 ->end()

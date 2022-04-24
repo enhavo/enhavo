@@ -6,7 +6,7 @@ export default abstract class AbstractFactory
     createFromData(data: object): ActionInterface
     {
         let action = this.createNew();
-        action = _.extend(data, action);
+        action = _.extend(action, data);
         return action;
     }
 

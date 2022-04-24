@@ -1,7 +1,6 @@
 const EncoreUtil = require('@enhavo/core/EncoreUtil');
 const fs = require('fs');
 const _ = require('lodash');
-const DependencyInjectionPlugin = require('@enhavo/dependency-injection/webpack/DependencyInjectionPlugin');
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const Webpack = require('webpack');
@@ -19,12 +18,8 @@ class AppPackage
 
     initEncore(Encore)
     {
-        // Because we need at least one entrypoint to pass the validation check, we add some empty dummy entrypoint
-        // Other entrypoint are loaded via the dependency injection
-        let dummyEntrypoint = './'+path.relative(EncoreUtil.getProjectDir(), path.resolve( __dirname, '../entrypoint/dummy.ts'));
-
         Encore
-            .addEntry('enhavo/app/dummy', dummyEntrypoint)
+            .addEntry('enhavo/application', './assets/enhavo/entrypoints/application.ts')
             .enableSingleRuntimeChunk()
             .enableSourceMaps(!Encore.isProduction())
             .splitEntryChunks()
@@ -33,9 +28,6 @@ class AppPackage
             .enableSassLoader()
             .enableTypeScriptLoader()
             .enableVersioning(Encore.isProduction())
-            .addPlugin(new DependencyInjectionPlugin(
-                path.resolve(EncoreUtil.getProjectDir(), './assets/services/enhavo/*')
-            ))
             .addPlugin(new Webpack.DefinePlugin({
                 __VUE_OPTIONS_API__: true,
                 __VUE_PROD_DEVTOOLS__: true
@@ -84,6 +76,11 @@ class AppPackage
                     }
                 });
             }
+        });
+
+        config.module.rules.push({
+            test: /\.di.(yaml|yml|json)$/,
+            use: require.resolve('@enhavo/dependency-injection/service-loader'),
         });
 
         config.resolve.alias['jquery'] = path.join(projectDir, 'node_modules/jquery/src/jquery');

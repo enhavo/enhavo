@@ -3,6 +3,11 @@
 {% trans_default_domain 'EnhavoUserBundle' %}
 
 {% block content %}
+    <div id="app"
+         data-controller="application"
+         data-application-application-value="@enhavo/user/login/LoginApp"
+         data-application-component-value="@enhavo/user/components/Login.vue"
+    ></div>
     <div class="bundle-user-login">
         <div class="background"{% if branding_background_image() %} style="background-image: url({{ asset(branding_background_image()) }})"{% endif %}></div>
         <div class="login-box">
