@@ -1,3 +1,9 @@
 imports:
     - path: '@enhavo/app/services/theme/*'
     - path: '@enhavo/shop/services/theme/*'
+
+compiler_pass:
+    stimulus_controller:
+        path: '@enhavo/app/compiler-pass/stimulus-controller-register.js'
+        dir: './controllers'
+        priority: 90

@@ -261,7 +261,8 @@ class Loader
                     compilerPassConfig = {};
                 }
 
-                let compilerPass = new CompilerPass(name, this._buildFilepath(compilerPassConfig.path, cwd), compilerPassConfig);
+                let priority = typeof compilerPassConfig.priority !== 'undefined' ?  compilerPassConfig.priority : 100;
+                let compilerPass = new CompilerPass(name, this._buildFilepath(compilerPassConfig.path, cwd), cwd, priority, compilerPassConfig);
                 builder.addCompilerPass(compilerPass);
             }
         }

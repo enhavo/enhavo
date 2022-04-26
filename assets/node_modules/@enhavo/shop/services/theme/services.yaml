@@ -3,7 +3,7 @@ services:
         chunk: shop
         static: true
         tags:
-            - { name: stimulus.controller, controller: 'product' }
+            - { name: stimulus.controller, key: 'product' }
 
     '@enhavo/shop/manager/ProductManager':
         import: ProductManager

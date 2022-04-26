@@ -109,8 +109,9 @@ export default class List
 
     private createItemsData(resources: any): Item[]
     {
-        for(let resource of resources) {
-            _.extend(resource, new Item);
+        for(let i in resources) {
+            resources[i] = _.assign(new Item, resources[i]);
+            let resource = resources[i];
             if(resource.children) {
                 this.createItemsData(resource.children);
             }
