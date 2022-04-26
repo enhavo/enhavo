@@ -8,7 +8,7 @@ EnhavoEncore.add(
     [ new AppThemePackage({  themePath: __dirname }), new ThemePackage(ThemeLoader)],
     Encore => {
         Encore
-            .addEntry('base', './base')
+            .addEntry('base', './entrypoints/base')
 
     },
     config => {}
