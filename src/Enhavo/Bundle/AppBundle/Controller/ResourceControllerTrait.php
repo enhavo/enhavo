@@ -207,6 +207,7 @@ trait ResourceControllerTrait
             'request_configuration' => $configuration,
             'metadata' => $this->metadata,
             'resources' => $resources,
+            'repository' => $this->repository,
         ]);
 
         return $view->getResponse($request);

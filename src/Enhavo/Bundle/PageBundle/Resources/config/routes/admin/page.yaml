@@ -78,12 +78,15 @@ enhavo_page_page_data:
         _controller: enhavo_page.controller.page::listDataAction
         _sylius:
             sortable: true
+            sorting:
+                position: asc
             criteria:
                 parent: null
             viewer:
                 translation_domain: EnhavoPageBundle
                 children_property: children
                 parent_property: parent
+                position_property: position
                 columns:
                     public:
                         type: boolean
