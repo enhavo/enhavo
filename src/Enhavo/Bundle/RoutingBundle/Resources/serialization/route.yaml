@@ -1,0 +1,4 @@
+Enhavo\Bundle\RoutingBundle\Entity\Route:
+    attributes:
+        staticPrefix:
+            groups: [ 'route' ]

@@ -21,7 +21,7 @@ services:
     Enhavo\Bundle\ShopBundle\Form\Type\ProductVariantType:
         arguments:
             - '%sylius.model.product_variant.class%'
-            - '%sylius.model.tax_rate.class%'
+            - '%sylius.model.tax_category.class%'
         tags:
             - { name: form.type }
 

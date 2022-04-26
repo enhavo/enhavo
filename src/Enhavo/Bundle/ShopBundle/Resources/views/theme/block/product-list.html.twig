@@ -1,41 +1,7 @@
 <div class="container">
     <div class="product-list">
-        {% for i in 0..4 %}
-            <div class="product-item">
-                <a href="">
-                    <span class="product-image">
-                        <img src="" alt="">
-                    </span>
-                    <span class="product-content">
-                        <span class="product-vendor">Handels GmbH</span>
-                        <span class="product-title">Testprodukt langer Name und Beschreibung</span>
-                        <span class="product-teaser">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et</span>
-                    </span>
-                </a>
-                <div class="product-meta">
-                    <div class="product-price">
-                        <div class="price"><span class="default-price">950,27 €</span> <span class="reduced-price">600,50 €</span></div>
-                        <div class="unit">(9,00 / Kg)</div>
-                    </div>
-                    <div class="product-in-stock not-in-stock">Lieferbar</div>
-                </div>
-                <div class="product-config">
-                    <div class="product-amount">
-                        <div class="select" data-select-amount>
-                            <select>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                                <option data-more>+</option>
-                            </select>
-                            <input type="text" data-more-amount>
-                        </div>
-                    </div>
-                    <a href="" class="btn add-to-cart">Add to cart</a>
-                </div>
-            </div>
+        {% for product in products %}
+            {{ component('product_tile', {product: product}) }}
         {% endfor %}
     </div>
 </div>

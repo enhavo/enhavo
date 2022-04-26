@@ -14,7 +14,6 @@ use Enhavo\Bundle\ShopBundle\Model\ProductVariantInterface;
 use Enhavo\Bundle\ShopBundle\Model\StockAccessInterface;
 use Sylius\Component\Product\Model\ProductVariant as SyliusProductVariant;
 
-
 class ProductVariant extends SyliusProductVariant implements ProductVariantInterface, StockAccessInterface
 {
     use ProductAccessTrait;

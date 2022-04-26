@@ -19,6 +19,11 @@ class ProductVariantProxy implements ProductVariantProxyInterface
         $this->product = $productVariant->getProduct();
     }
 
+    public function getId(): int
+    {
+        return $this->productVariant->getId();
+    }
+
     public function getProductVariant(): ProductVariantInterface
     {
         return $this->productVariant;

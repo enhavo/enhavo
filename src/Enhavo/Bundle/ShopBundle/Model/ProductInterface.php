@@ -33,4 +33,5 @@ interface ProductInterface extends ResourceInterface, SyliusProductInterface, Pr
     public function setDepth(?float $depth): void;
     public function setVolume(?float $volume): void;
     public function setWeight(?float $weight): void;
+    public function getDefaultVariant();
 }

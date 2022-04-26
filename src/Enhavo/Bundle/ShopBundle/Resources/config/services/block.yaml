@@ -1,7 +1,8 @@
 services:
     Enhavo\Bundle\ShopBundle\Block\ProductListBlockType:
-        public: true
-        calls:
-            - [setContainer, ['@service_container']]
+        arguments:
+            - '@sylius.repository.product'
+            - '@Enhavo\Bundle\ShopBundle\Manager\ProductManager'
+            - '@request_stack'
         tags:
-            - { name: enhavo.block, alias: shop_product_list }
+            - { name: enhavo_block.block }
