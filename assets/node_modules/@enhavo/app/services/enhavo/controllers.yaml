@@ -3,4 +3,4 @@ services:
         chunk: main
         static: true
         tags:
-            - { name: stimulus.controller, controller: 'application' }
+            - { name: stimulus.controller, key: 'application' }

@@ -3,7 +3,7 @@ imports:
 
 compiler_pass:
     action:
-        path: '../../compiler-pass/registry.js'
+        path: '@enhavo/app/compiler-pass/registry.js'
         service: '@enhavo/app/action/ActionRegistry'
         tag: 'enhavo_app.action'
     batch:

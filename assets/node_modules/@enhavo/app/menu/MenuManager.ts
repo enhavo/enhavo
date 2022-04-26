@@ -32,8 +32,6 @@ export default class MenuManager
             this.componentRegistry.registerComponent(component.name, component.component)
         }
 
-        console.log(this.data);
-
         this.componentRegistry.registerStore('menuManager', this);
         this.data = this.componentRegistry.registerData(this.data);
 

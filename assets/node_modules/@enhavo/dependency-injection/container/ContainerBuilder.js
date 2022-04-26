@@ -87,20 +87,25 @@ class ContainerBuilder
     }
 
     /**
-     * @return {CompilerPass}
+     * @return {Array<CompilerPass>}
      */
     getCompilerPasses() {
         return this.compilerPasses.getValues();
     }
 
     prepare() {
-        for (let compilerPass of this.getCompilerPasses()) {
+
+        let compilers = this.getCompilerPasses().sort((a, b) => {
+            return a.priority - b.priority;
+        });
+
+        for (let compilerPass of compilers) {
             let content = fs.readFileSync(compilerPass.path)+'';
             try {
                 let m = new module.constructor();
                 m.paths = module.paths;
                 m._compile(content, compilerPass.path);
-                m.exports(this, compilerPass.getOptions());
+                m.exports(this, compilerPass.getOptions(), compilerPass.getContext());
             } catch (e) {
                 throw 'Error occured while using compiler pass "'+compilerPass.path+'" with error: ' + e;
             }

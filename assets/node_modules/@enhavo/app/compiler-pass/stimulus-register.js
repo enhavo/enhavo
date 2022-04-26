@@ -11,7 +11,7 @@ module.exports = function(builder) {
     let definitions = builder.getDefinitionsByTagName('stimulus.controller');
     for (let definition of definitions) {
         registry.addCall(new Call('register', [
-            new Argument(definition.getTag('stimulus.controller').getParameter('controller'), 'string'),
+            new Argument(definition.getTag('stimulus.controller').getParameter('key'), 'string'),
             new Argument(definition.getName())
         ]));
     }
