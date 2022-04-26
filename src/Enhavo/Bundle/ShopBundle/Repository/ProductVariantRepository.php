@@ -14,8 +14,9 @@ use Enhavo\Bundle\ContentBundle\Repository\ContentRepository;
 use Sylius\Component\Product\Model\ProductInterface;
 use Sylius\Component\Product\Model\ProductVariantInterface;
 use Sylius\Component\Product\Repository\ProductVariantRepositoryInterface;
+use Sylius\Bundle\ProductBundle\Doctrine\ORM\ProductVariantRepository as SyliusProductVariantRepository;
 
-class ProductVariantRepository extends ContentRepository implements ProductVariantRepositoryInterface
+class ProductVariantRepository extends SyliusProductVariantRepository implements ProductVariantRepositoryInterface
 {
     /**
      * @param string $locale

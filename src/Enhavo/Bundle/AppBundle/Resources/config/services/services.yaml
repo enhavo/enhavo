@@ -95,3 +95,9 @@ services:
             - '@event_dispatcher'
             - '@doctrine.orm.entity_manager'
             - '@sylius.resource_registry'
+
+    Enhavo\Bundle\AppBundle\EventListener\ComponentSubscriber:
+        arguments:
+            - '@enhavo_app.template.manager'
+        tags:
+            - { name: kernel.event_subscriber }

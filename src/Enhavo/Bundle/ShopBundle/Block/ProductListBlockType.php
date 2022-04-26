@@ -8,19 +8,28 @@ use Enhavo\Bundle\ShopBundle\Entity\ProductListBlock;
 use Enhavo\Bundle\ShopBundle\Factory\ProductListBlockFactory;
 use Enhavo\Bundle\ShopBundle\Form\Type\ProductListBlockType as ProductListBlockFormType;
 use Enhavo\Bundle\BlockBundle\Block\AbstractBlockType;
+use Enhavo\Bundle\ShopBundle\Manager\ProductManager;
+use Enhavo\Bundle\ShopBundle\Repository\ProductRepository;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProductListBlockType extends AbstractBlockType
 {
+    public function __construct(
+        private ProductRepository $productRepository,
+        private ProductManager $productManager,
+        private RequestStack $requestStack,
+    )
+    {}
+
     public function createViewData(BlockInterface $block, ViewData $viewData, $resource, array $options)
     {
-        $viewData['products'] = $this->container->get('sylius.repository.product')->findAll();
+        $products = $this->productRepository->findAll();
+        $viewData['products'] = $products;
     }
 
     public function configureOptions(OptionsResolver $optionsResolver)
     {
-        parent::configureOptions($optionsResolver);
-
         $optionsResolver->setDefaults([
             'model' => ProductListBlock::class,
             'parent' => ProductListBlock::class,
@@ -34,7 +43,7 @@ class ProductListBlockType extends AbstractBlockType
         ]);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'shop_product_list';
     }

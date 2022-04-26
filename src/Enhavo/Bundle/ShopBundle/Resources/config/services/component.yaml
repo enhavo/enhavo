@@ -1,0 +1,6 @@
+services:
+    Enhavo\Bundle\ShopBundle\Component\ProductTileComponent:
+        arguments:
+            - '@Enhavo\Bundle\ShopBundle\Manager\ProductManager'
+        tags:
+            - { name: twig.component, key: product_tile, template: 'theme/component/shop/product-tile.html.twig' }

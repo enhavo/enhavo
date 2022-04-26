@@ -1,0 +1,83 @@
+Enhavo\Bundle\ShopBundle\Entity\Product:
+    attributes:
+        id:
+            groups: ['product']
+        title:
+            groups: ['product']
+        description:
+            groups: ['product']
+        variants:
+            groups: ['product']
+        options:
+            groups: ['product']
+        picture:
+            groups: ['product']
+        pictures:
+            groups: ['product']
+        categories:
+            groups: ['product']
+        route:
+            groups: ['product']
+
+Enhavo\Bundle\ShopBundle\Model\ProductVariantProxy:
+    attributes:
+        id:
+            groups: ['product', 'cart']
+        title:
+            groups: ['product', 'cart']
+        picture:
+            groups: ['product', 'cart']
+        description:
+            groups: ['product', 'cart']
+        price:
+            groups: ['product', 'cart']
+
+
+Enhavo\Bundle\ShopBundle\Entity\ProductVariant:
+    attributes:
+        id:
+            groups: ['product']
+        title:
+            groups: ['product']
+        description:
+            groups: ['product']
+        optionValues:
+            groups: ['product']
+        picture:
+            groups: ['product']
+        pictures:
+            groups: ['product']
+
+Enhavo\Bundle\ShopBundle\Entity\ProductOption:
+    attributes:
+        id:
+            groups: ['product']
+        translations:
+            groups: ['product', 'cart']
+        values:
+            groups: ['product']
+
+Sylius\Component\Product\Model\ProductOptionTranslation:
+    attributes:
+        id:
+            groups: ['product']
+        name:
+            groups: ['product', 'cart']
+        locale:
+            groups: ['product']
+
+Enhavo\Bundle\ShopBundle\Entity\ProductOptionValue:
+    attributes:
+        id:
+            groups: ['product']
+        translations:
+            groups: ['product', 'cart']
+
+Sylius\Component\Product\Model\ProductOptionValueTranslation:
+    attributes:
+        id:
+            groups: ['product']
+        value:
+            groups: ['product']
+        locale:
+            groups: ['product']

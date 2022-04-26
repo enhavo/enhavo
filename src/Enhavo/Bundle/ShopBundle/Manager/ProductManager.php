@@ -13,21 +13,17 @@ use Enhavo\Bundle\RoutingBundle\Slugifier\Slugifier;
 use Enhavo\Bundle\ShopBundle\Entity\Product;
 use Enhavo\Bundle\ShopBundle\Entity\ProductOption;
 use Enhavo\Bundle\ShopBundle\Entity\ProductVariant;
+use Enhavo\Bundle\ShopBundle\Factory\ProductVariantProxyFactory;
+use Enhavo\Bundle\ShopBundle\Model\ProductAccessInterface;
 use Enhavo\Bundle\ShopBundle\Model\ProductInterface;
-use Enhavo\Bundle\ShopBundle\Model\ProductVariantProxy;
 
 class ProductManager
 {
-    private EntityManagerInterface $em;
-
-    /**
-     * ProductManager constructor.
-     * @param EntityManagerInterface $em
-     */
-    public function __construct(EntityManagerInterface $em)
-    {
-        $this->em = $em;
-    }
+    public function __construct(
+        private EntityManagerInterface $em,
+        private ProductVariantProxyFactory $proxyFactory,
+    )
+    {}
 
     public function updateProductVariant(ProductVariant $product)
     {
@@ -81,5 +77,13 @@ class ProductManager
             'code' => $code
         ]);
         return $resource === null;
+    }
+
+    public function getDefaultVariantProxy(ProductInterface $product): ?ProductAccessInterface
+    {
+        if ($product->getDefaultVariant()) {
+            return $this->proxyFactory->createNew($product->getDefaultVariant());
+        }
+        return null;
     }
 }

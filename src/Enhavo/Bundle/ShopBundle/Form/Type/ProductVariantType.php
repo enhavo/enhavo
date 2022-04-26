@@ -19,7 +19,7 @@ class ProductVariantType extends AbstractType
 {
     public function __construct(
         protected string $dataClass,
-        private string $taxRateClass
+        private string $taxCategoryClass,
     ) {}
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -117,11 +117,12 @@ class ProductVariantType extends AbstractType
             'translation_domain' => 'EnhavoShopBundle',
         ));
 
-        $builder->add('taxRate', EntityType::class, array(
-            'class' => $this->taxRateClass,
+        $builder->add('taxCategory', EntityType::class, array(
+            'class' => $this->taxCategoryClass,
             'choice_label' => 'name',
-            'label' => 'product_variant.form.label.taxRate',
+            'label' => 'product.form.label.taxCategory',
             'translation_domain' => 'EnhavoShopBundle',
+            'placeholder' => '---',
         ));
 
         $builder->add('position', IntegerType::class);

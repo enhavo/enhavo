@@ -5,10 +5,26 @@ Sylius\Component\Order\Model\Order:
 
 Enhavo\Bundle\ShopBundle\Entity\Order:
     attributes:
+        items:
+            groups: ['cart']
+        totalQuantity:
+            groups: ['cart']
         total:
             groups: ['cart']
 
 Enhavo\Bundle\ShopBundle\Entity\OrderItem:
     attributes:
+        id:
+            groups: ['cart']
+        name:
+            groups: ['cart']
+        product:
+            groups: ['cart']
+        quantity:
+            groups: ['cart']
+        unitPrice:
+            groups: ['cart']
+        unitPriceTotal:
+            groups: ['cart']
         total:
             groups: ['cart']

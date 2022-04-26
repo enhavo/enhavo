@@ -1,0 +1,10 @@
+Enhavo\Bundle\TaxonomyBundle\Entity\Term:
+    attributes:
+        id:
+            groups: ['term']
+        name:
+            groups: ['term']
+        slug:
+            groups: ['term']
+        parent:
+            groups: ['term']

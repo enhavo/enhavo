@@ -3,6 +3,7 @@ import {Product} from "@enhavo/shop/model/Product";
 import {ProductManager} from "@enhavo/shop/manager/ProductManager";
 import {ContainerInterface} from "@enhavo/dependency-injection/container/ContainerInterface";
 import {CartManager} from "@enhavo/shop/manager/CartManager";
+import {ProductVariant} from "@enhavo/shop/model/ProductVariant";
 
 declare module '@hotwired/stimulus' {
     export class Application extends Application {
@@ -19,9 +20,11 @@ export default class extends Controller
     cartManager: CartManager
 
     protected productValue: Product;
+    protected productVariantValue: ProductVariant;
 
     static values = {
-        product: Object
+        product: Object,
+        productVariant: Object,
     }
 
     async initialize()
@@ -30,13 +33,8 @@ export default class extends Controller
         this.cartManager = await this.application.container.get('@enhavo/shop/manager/CartManager');
     }
 
-    connect()
-    {
-        console.log(this.productValue);
-    }
-
     public addToCart()
     {
-        this.cartManager.addToCart(this.productValue)
+        this.cartManager.addToCart(this.productVariantValue)
     }
 }

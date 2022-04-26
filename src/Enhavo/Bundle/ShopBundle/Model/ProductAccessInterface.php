@@ -10,6 +10,7 @@ use Sylius\Component\Taxation\Model\TaxRateInterface;
 
 interface ProductAccessInterface extends TaxableInterface
 {
+    public function getId();
     public function getTitle(): ?string;
     public function getDescription(): ?string;
     public function getPicture(): ?FileInterface;
