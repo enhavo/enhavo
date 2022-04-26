@@ -34,6 +34,11 @@ class Page extends Content implements PageInterface
     private $children;
 
     /**
+     * @var ?int
+     */
+    private $position;
+
+    /**
      * Page constructor.
      */
     public function __construct()
@@ -66,7 +71,7 @@ class Page extends Content implements PageInterface
     {
         return $this->content;
     }
-    
+
     /**
      * Set code
      *
@@ -83,7 +88,7 @@ class Page extends Content implements PageInterface
     /**
      * Get code
      *
-     * @return string 
+     * @return string
      */
     public function getCode()
     {
@@ -173,4 +178,22 @@ class Page extends Content implements PageInterface
         }
         return $descendants;
     }
+
+    /**
+     * @return int|null
+     */
+    public function getPosition(): ?int
+    {
+        return $this->position;
+    }
+
+    /**
+     * @param int|null $position
+     */
+    public function setPosition(?int $position): void
+    {
+        $this->position = $position;
+    }
+
+
 }
