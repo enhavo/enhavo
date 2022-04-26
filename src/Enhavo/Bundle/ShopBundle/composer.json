@@ -31,7 +31,6 @@
     "sylius/promotion-bundle": "1.10.*",
     "sylius/shipping-bundle": "1.10.*",
     "sylius/taxation-bundle": "1.10.*",
-    "sylius/product": "1.10.*",
     "sylius/addressing": "1.10.*",
     "sylius/attribute":"1.10.*",
     "sylius/currency": "1.10.*",
