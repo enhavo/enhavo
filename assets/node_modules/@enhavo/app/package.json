@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@enhavo/core": "https://github.com/enhavo/core-assets.git",
+    "@hotwired/stimulus": "^3.0.1",
     "@ibm/plex": "^1.2.3",
     "ansi-to-html": "^0.6.11",
     "async": "^2.6.2",
