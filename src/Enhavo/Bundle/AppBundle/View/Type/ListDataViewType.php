@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManager;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -27,7 +28,6 @@ class ListDataViewType extends AbstractViewType
     public function __construct(
         private ViewUtil $util,
         private ColumnManager $columnManager,
-        private TranslatorInterface $translator,
         private SortingManager $sortingManager,
         private CsrfTokenManager $tokenManager
     ) {}
@@ -46,7 +46,7 @@ class ListDataViewType extends AbstractViewType
             if ($configuration->isCsrfProtectionEnabled() && !$this->isCsrfTokenValid('list_data', $request->get('_csrf_token'))) {
                 throw new HttpException(Response::HTTP_FORBIDDEN, 'Invalid csrf token.');
             }
-            $this->sortingManger->handleSort($request, $configuration, $this->repository);
+            $this->sortingManager->handleSort($request, $configuration, $options['repository']);
             return new JsonResponse();
         }
     }
@@ -89,6 +89,12 @@ class ListDataViewType extends AbstractViewType
             'resources' => null,
             'request_configuration' => null,
             'metadata' => null,
+            'repository' => null,
         ]);
+    }
+
+    protected function isCsrfTokenValid(string $id, ?string $token): bool
+    {
+        return $this->tokenManager->isTokenValid(new CsrfToken($id, $token));
     }
 }
