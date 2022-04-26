@@ -95,7 +95,6 @@ services:
         arguments:
             - '@Enhavo\Bundle\AppBundle\View\ViewUtil'
             - '@enhavo_app.column_manager'
-            - '@translator'
             - '@enhavo.sorting_manager'
             - '@security.csrf.token_manager'
         tags:
