@@ -3,6 +3,7 @@ imports:
     - path: '@enhavo/dashboard/services/enhavo/*'
     - path: '@enhavo/form/services/enhavo/*'
     - path: '@enhavo/media/services/enhavo/*'
+    - path: '@enhavo/media-library/services/enhavo/*'
     - path: '@enhavo/multi-tenancy/services/enhavo/*'
     - path: '@enhavo/newsletter/services/enhavo/*'
     - path: '@enhavo/shop/services/enhavo/*'
