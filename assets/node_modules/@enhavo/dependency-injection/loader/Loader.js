@@ -141,6 +141,9 @@ class Loader
 
         while (part.indexOf('*') === -1) {
             part = parts[index++];
+            if (!part) {
+                break;
+            }
             cutPath = path.substr(0, path.indexOf(part));
         }
 
