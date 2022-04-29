@@ -8,16 +8,15 @@
 
 namespace Enhavo\Bundle\ContentBundle\EventListener;
 
-use Enhavo\Bundle\ContentBundle\Content\Publishable;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Enhavo\Bundle\ContentBundle\Entity\Content;
 use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class PublishSubscriber implements EventSubscriberInterface
+class UpdatedSubscriber implements EventSubscriberInterface
 {
     public static function getSubscribedEvents()
     {
         return array(
-            'enhavo_app.pre_create' => 'preSave',
             'enhavo_app.pre_update' => 'preSave'
         );
     }
@@ -26,10 +25,8 @@ class PublishSubscriber implements EventSubscriberInterface
     {
         $resource = $event->getSubject();
 
-        if ($resource instanceof Publishable) {
-            if ($resource->isPublic() && $resource->getPublicationDate() === null) {
-                $resource->setPublicationDate(new \DateTime());
-            }
+        if ($resource instanceof Content) {
+            $resource->setUpdated(new \DateTime());
         }
     }
 }
