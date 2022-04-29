@@ -12,7 +12,6 @@ import ClearEvent from "@enhavo/app/view-stack/event/ClearEvent";
 import ClearedEvent from "@enhavo/app/view-stack/event/ClearedEvent";
 import ArrangeManager from "@enhavo/app/view-stack/ArrangeManager";
 import LoadingEvent from "@enhavo/app/view-stack/event/LoadingEvent";
-import * as _ from 'lodash';
 import * as async from 'async';
 import SaveStateEvent from "@enhavo/app/view-stack/event/SaveStateEvent";
 import ChangeUrlEvent from "@enhavo/app/view-stack/event/ChangeUrlEvent";
@@ -75,7 +74,7 @@ export default class ViewStack
                 if(view.id > this.nextId) {
                     this.nextId = view.id + 1;
                 }
-                this.data.views[i] = _.extend(this.data.views[i], view);
+                this.data.views[i] = view;
             }
 
             this.views = <ViewInterface[]>this.data.views;
