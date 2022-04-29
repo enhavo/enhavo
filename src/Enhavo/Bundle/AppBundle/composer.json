@@ -19,7 +19,7 @@
     "enhavo/type": "dev-master",
     "league/uri": "^6.4",
     "friendsofsymfony/jsrouting-bundle": "^3.1",
-    "sylius/resource-bundle": "1.8.*",
+    "sylius/resource-bundle": "~1.8.4",
     "symfony/asset": "^5.4",
     "symfony/console": "^5.4",
     "symfony/expression-language": "^5.4",
