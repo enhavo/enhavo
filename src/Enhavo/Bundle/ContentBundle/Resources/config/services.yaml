@@ -56,6 +56,10 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
+    Enhavo\Bundle\ContentBundle\EventListener\UpdatedSubscriber:
+        tags:
+            - { name: kernel.event_subscriber }
+
     Enhavo\Bundle\ContentBundle\Controller\SitemapController:
         arguments:
             - '@enhavo_content.sitemap.generator'

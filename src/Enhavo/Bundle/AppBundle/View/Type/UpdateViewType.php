@@ -80,10 +80,10 @@ class UpdateViewType extends AbstractViewType
         if (in_array($request->getMethod(), ['POST', 'PUT', 'PATCH']) && $form->isSubmitted()) {
             if ($form->isValid()) {
                 $resource = $form->getData();
-                $appEventDispatcher->dispatchPreEvent(ResourceActions::CREATE, $configuration, $resource);
+                $appEventDispatcher->dispatchPreEvent(ResourceActions::UPDATE, $configuration, $resource);
                 $eventDispatcher->dispatchPreEvent(ResourceActions::UPDATE, $configuration, $resource);
                 $this->em->flush();
-                $appEventDispatcher->dispatchPostEvent(ResourceActions::CREATE, $configuration, $resource);
+                $appEventDispatcher->dispatchPostEvent(ResourceActions::UPDATE, $configuration, $resource);
                 $eventDispatcher->dispatchPostEvent(ResourceActions::UPDATE, $configuration, $resource);
                 $this->flashBag->add('success', $this->translator->trans('form.message.success', [], 'EnhavoAppBundle'));
                 $route = $request->get('_route');

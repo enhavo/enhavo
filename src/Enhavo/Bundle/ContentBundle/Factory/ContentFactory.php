@@ -7,6 +7,19 @@ use Enhavo\Bundle\AppBundle\Factory\Factory;
 class ContentFactory extends Factory
 {
     /**
+     * @return Content
+     */
+    public function createNew(): Content
+    {
+        /** @var Content $resource */
+        $resource = parent::createNew();
+        $resource->setCreated(new \DateTime());
+        $resource->setUpdated(new \DateTime());
+
+        return $resource;
+    }
+
+    /**
      * @param Content|null $originalResource
      * @return Content
      */
