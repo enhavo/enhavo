@@ -18,7 +18,7 @@ enhavo_media_library_file_select:
     defaults:
         _controller: enhavo_media_library.controller.file:selectAction
         _sylius:
-            permission: ROLE_ENHAVO_MEDIA_LIBRARY_FILE_SELECT
+            permission: ROLE_ENHAVO_MEDIA_LIBRARY_INDEX
             viewer:
 
 enhavo_media_library_file_files:
@@ -29,7 +29,7 @@ enhavo_media_library_file_files:
     defaults:
         _controller: enhavo_media_library.controller.file:filesAction
         _sylius:
-            permission: ROLE_ENHAVO_MEDIA_LIBRARY_FILE_FILES
+            permission: ROLE_ENHAVO_MEDIA_LIBRARY_FILE_INDEX
             sorting:
                 filename: asc
             limit: 12
@@ -60,7 +60,7 @@ enhavo_media_library_file_tags:
     defaults:
         _controller: enhavo_media_library.controller.file:tagsAction
         _sylius:
-            permission: ROLE_ENHAVO_MEDIA_LIBRARY_FILE_TAGS
+            permission: ROLE_ENHAVO_MEDIA_LIBRARY_FILE_INDEX
             viewer:
 
 enhavo_media_library_file_content_types:

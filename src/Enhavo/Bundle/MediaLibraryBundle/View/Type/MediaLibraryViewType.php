@@ -107,7 +107,7 @@ class MediaLibraryViewType extends AbstractViewType
                     'icon' => 'check',
                     'translation_domain' => 'EnhavoMediaLibraryBundle',
                     'label' => 'media_library.label.confirm_selection',
-                    'permission' => $this->util->getRoleNameByResourceName($metadata->getApplicationName(), $this->util->getUnderscoreName($metadata), 'select'),
+                    'permission' => $this->util->getRoleNameByResourceName($metadata->getApplicationName(), $this->util->getUnderscoreName($metadata), 'update'),
                 ],
                 'upload' => [
                     'type' => 'event',
