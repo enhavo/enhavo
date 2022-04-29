@@ -1,17 +1,13 @@
 import ViewFactoryInterface from "../ViewFactoryInterface";
 import View from "../model/View";
+import * as _ from 'lodash';
 
 export default class ViewFactory implements ViewFactoryInterface
 {
     createFromData(data: object): View
     {
         let view = this.createNew();
-        let object = <View>data;
-        view.id = object.id;
-        view.label = object.label;
-        view.component = object.component;
-        view.storage = object.storage;
-        return view;
+        return _.assign(view, data);
     }
 
     createNew(): View {
