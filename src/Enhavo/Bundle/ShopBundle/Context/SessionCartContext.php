@@ -8,6 +8,7 @@ use Sylius\Component\Order\Context\CartContextInterface;
 use Sylius\Component\Order\Model\OrderInterface;
 use Sylius\Component\Order\Repository\OrderRepositoryInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class SessionCartContext implements CartContextInterface
 {
@@ -17,6 +18,7 @@ class SessionCartContext implements CartContextInterface
         private OrderRepositoryInterface $orderRepository,
         private OrderFactory $factory,
         private EntityManagerInterface $em,
+        private TokenStorageInterface $tokenStorage,
     ) { }
 
     public function getCart(): OrderInterface
@@ -37,6 +39,12 @@ class SessionCartContext implements CartContextInterface
     private function createCart(): \Enhavo\Bundle\ShopBundle\Model\OrderInterface
     {
         $cart = $this->factory->createNewCart();
+
+        $user = $this->tokenStorage->getToken()?->getUser();
+        if ($user !== null) {
+            $cart->setUser($user);
+        }
+
         $this->em->persist($cart);
         $this->em->flush();
 

@@ -16,7 +16,7 @@ use Sylius\Component\Promotion\Model\PromotionSubjectInterface;
  * @since 15/08/16
  * @author gseidel
  */
-interface OrderInterface extends SyliusOrderInterface, PromotionSubjectInterface
+interface OrderInterface extends SyliusOrderInterface, PromotionSubjectInterface, AddressSubjectInterface
 {
     public function setPaymentState(?string $paymentState): void;
     public function getPaymentState(): ?string;
@@ -24,11 +24,6 @@ interface OrderInterface extends SyliusOrderInterface, PromotionSubjectInterface
     public function getShippingState();
     public function setPromotionCoupon(PromotionCouponInterface $promotionCoupon = null);
     public function getPromotionCoupon();
-    public function setShippingAddress(AddressInterface $shippingAddress = null);
-    public function getShippingAddress();
-    public function setBillingAddress(AddressInterface $billingAddress = null);
-    public function getBillingAddress();
-    public function isDifferentBillingAddress();
     public function addPayment(PaymentInterface $payment);
     public function removePayment(PaymentInterface $payment);
     public function getPayments(): Collection|array;
@@ -52,6 +47,4 @@ interface OrderInterface extends SyliusOrderInterface, PromotionSubjectInterface
     public function setTrackingMail($trackingMail);
     public function isFreeShipping();
     public function getUnitTaxTotal();
-    public function setDifferentBillingAddress($differentBillingAddress);
-    public function getDifferentBillingAddress();
 }

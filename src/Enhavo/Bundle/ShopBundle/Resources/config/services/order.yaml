@@ -6,6 +6,7 @@ services:
             - '@sylius.repository.order'
             - '@sylius.factory.order'
             - '@doctrine.orm.entity_manager'
+            - '@security.token_storage'
         tags:
             - { name: sylius.context.cart, priority: -777 }
 
