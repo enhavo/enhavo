@@ -16,7 +16,6 @@ use Enhavo\Bundle\ShopBundle\State\OrderShippingStates;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Enhavo\Bundle\ShopBundle\Model\ShipmentInterface;
-use Sylius\Component\Addressing\Model\AddressInterface;
 use Enhavo\Bundle\ShopBundle\Model\AdjustmentInterface;
 use Sylius\Component\Payment\Model\PaymentInterface;
 use Sylius\Component\Promotion\Model\PromotionInterface;
@@ -25,13 +24,13 @@ use Sylius\Component\Promotion\Model\PromotionCouponInterface;
 
 class Order extends SyliusOrder implements OrderInterface
 {
+    use AddressSubjectTrait;
+
     private string $paymentState = OrderPaymentStates::STATE_CART;
     private string $shippingState = OrderShippingStates::STATE_CART;
     private string $checkoutState = OrderCheckoutStates::STATE_CART;
 
     private ?PromotionCouponInterface $promotionCoupon= null;
-    private ?AddressInterface $shippingAddress = null;
-    private ?AddressInterface $billingAddress = null;
     private ?UserInterface $user = null;
 
     private ?string $email;
@@ -83,41 +82,6 @@ class Order extends SyliusOrder implements OrderInterface
     public function getPromotionCoupon(): ?PromotionCouponInterface
     {
         return $this->promotionCoupon;
-    }
-
-    public function setShippingAddress(AddressInterface $shippingAddress = null): void
-    {
-        $this->shippingAddress = $shippingAddress;
-    }
-
-    public function getShippingAddress(): ?AddressInterface
-    {
-        return $this->shippingAddress;
-    }
-
-    public function setBillingAddress(AddressInterface $billingAddress = null)
-    {
-        $this->billingAddress = $billingAddress;
-    }
-
-    public function getBillingAddress(): ?AddressInterface
-    {
-        return $this->billingAddress;
-    }
-
-    public function setDifferentBillingAddress($differentBillingAddress)
-    {
-        $this->differentBillingAddress = $differentBillingAddress;
-    }
-
-    public function getDifferentBillingAddress()
-    {
-        return $this->differentBillingAddress;
-    }
-
-    public function isDifferentBillingAddress()
-    {
-        return !!$this->getDifferentBillingAddress();
     }
 
     public function addPromotion(PromotionInterface $promotions): void
