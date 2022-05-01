@@ -9,7 +9,7 @@
 namespace Enhavo\Bundle\AppBundle\Behat\Context;
 
 use Behat\Gherkin\Node\TableNode;
-use Behat\Symfony2Extension\Context\KernelAwareContext;
+use Enhavo\Bundle\AppBundle\Behat\Context\KernelAwareContext;
 use Doctrine\DBAL\ParameterType;
 
 class DoctrineContext implements KernelAwareContext

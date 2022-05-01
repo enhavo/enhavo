@@ -14,23 +14,7 @@ class EmailContext extends KernelContext
     public function getSymfonyProfile()
     {
         $driver = $this->getSession()->getDriver();
-        if (!$driver instanceof KernelDriver) {
-            throw new UnsupportedDriverActionException(
-                'You need to tag the scenario with '.
-                '"@mink:symfony2". Using the profiler is not '.
-                'supported by %s', $driver
-            );
-        }
-
         $profile = $driver->getClient()->getProfile();
-        if (false === $profile) {
-            throw new \RuntimeException(
-                'The profiler is disabled. Activate it by setting '.
-                'framework.profiler.only_exceptions to false in '.
-                'your config'
-            );
-        }
-
         return $profile;
     }
 

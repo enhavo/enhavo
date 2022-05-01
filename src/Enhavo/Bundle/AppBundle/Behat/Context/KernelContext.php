@@ -3,7 +3,7 @@
 namespace Enhavo\Bundle\AppBundle\Behat\Context;
 
 use Behat\Behat\Context\Context;
-use Behat\Symfony2Extension\Context\KernelAwareContext;
+use Enhavo\Bundle\AppBundle\Behat\Context\KernelAwareContext;
 
 /**
  * DefaultContext.php

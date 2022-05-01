@@ -4,6 +4,7 @@
 namespace Enhavo\Bundle\NewsletterBundle\Newsletter;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Enhavo\Bundle\AppBundle\Mailer\Attachment;
 use Enhavo\Bundle\AppBundle\Mailer\MailerManager;
 use Enhavo\Bundle\AppBundle\Mailer\Message;
 use Enhavo\Bundle\AppBundle\Template\TemplateManager;
@@ -141,11 +142,10 @@ class NewsletterManager
                 break;
             }
             if (!$receiver->isSent()) {
-                if ($this->sendNewsletter($receiver)) {
-                    $receiver->setSentAt(new \DateTime());
-                    $this->em->flush();
-                    $mailsSent++;
-                }
+                $this->sendNewsletter($receiver);
+                $receiver->setSentAt(new \DateTime());
+                $this->em->flush();
+                $mailsSent++;
             }
         }
 
@@ -179,30 +179,25 @@ class NewsletterManager
             $this->addAttachmentsToMessage($receiver->getNewsletter()->getAttachments(), $message);
         }
 
-        return $this->sendMessage($message);
+        $this->sendMessage($message);
     }
 
-    public function sendTest(NewsletterInterface $newsletter, ?string $email = null): bool
+    public function sendTest(NewsletterInterface $newsletter, ?string $email = null): void
     {
         $receivers = $this->provider->getTestReceivers($newsletter);
 
-        $return = true;
         foreach ($receivers as $receiver) {
             $receiver->setNewsletter($newsletter);
             $receiver->setEmail($email);
-            $success = $this->sendNewsletter($receiver);
-            if (!$success) {
-                $return = false;
-            }
+            $this->sendNewsletter($receiver);
         }
-        return $return;
     }
 
     private function addAttachmentsToMessage($files, Message $message)
     {
         /** @var FileInterface $file */
         foreach ($files as $file) {
-            $message->addAttachment($file);
+            $message->addAttachment(new Attachment($file));
         }
     }
 
@@ -247,7 +242,7 @@ class NewsletterManager
 
     public function sendMessage(Message $message)
     {
-        return $this->mailerManager->sendMessage($message);
+        $this->mailerManager->sendMessage($message);
     }
 
     public function getTemplate(?string $key): string

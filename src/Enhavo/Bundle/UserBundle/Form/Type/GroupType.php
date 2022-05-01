@@ -16,22 +16,12 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class GroupType extends AbstractResourceType
 {
-    /**
-     * @var RolesProvider
-     */
-    private $rolesProvider;
-
-    /**
-     * GroupType constructor.
-     *
-     * @param string $dataClass
-     * @param array $validationGroups
-     * @param RolesProvider $rolesProvider
-     */
-    public function __construct(string $dataClass, array $validationGroups = [], RolesProvider $rolesProvider)
-    {
+    public function __construct(
+        string $dataClass,
+        array $validationGroups,
+        private RolesProvider $rolesProvider
+    ) {
         parent::__construct($dataClass, $validationGroups);
-        $this->rolesProvider = $rolesProvider;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void

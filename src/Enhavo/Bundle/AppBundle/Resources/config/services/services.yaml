@@ -83,7 +83,7 @@ services:
     Enhavo\Bundle\AppBundle\Mailer\MailerManager:
         public: true
         arguments:
-            - '@swiftmailer.mailer'
+            - '@mailer.mailer'
             - '@enhavo_app.template.manager'
             - '@twig'
             - '%enhavo_app.mailer.defaults%'

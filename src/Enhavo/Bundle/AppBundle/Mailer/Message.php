@@ -136,22 +136,6 @@ class Message
     }
 
     /**
-     * @return array
-     */
-    public function getAttachments(): array
-    {
-        return $this->attachments;
-    }
-
-    /**
-     * @param array $attachments
-     */
-    public function setAttachments(array $attachments): void
-    {
-        $this->attachments = $attachments;
-    }
-
-    /**
      * @return string
      */
     public function getContentType(): string
@@ -201,22 +185,24 @@ class Message
         }
     }
 
-    /**
-     * @param mixed $attachment
-     */
-    public function addAttachment($attachment)
+    public function addAttachment(Attachment $attachment)
     {
         $this->attachments[] = $attachment;
     }
 
-    /**
-     * @param mixed $attachment
-     */
-    public function removeAttachment($attachment)
+    public function removeAttachment(Attachment $attachment)
     {
         if (false !== $key = array_search($attachment, $this->attachments, true)) {
             array_splice($this->attachments, $key, 1);
         }
+    }
+
+    /**
+     * @return array<Attachment>
+     */
+    public function getAttachments(): array
+    {
+        return $this->attachments;
     }
 
     /**

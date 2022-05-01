@@ -151,7 +151,7 @@ class NewsletterManagerTest extends TestCase
     {
         $dependency = $this->createDependencies();
         $dependency->mailerManager->method('createMessage')->willReturn(new Message());
-        $dependency->mailerManager->method('sendMessage')->willReturn(1);
+        $dependency->mailerManager->method('sendMessage');
         $newsletterManager = $this->createInstance($dependency, ['default' => [
             'template' => 'template.html.twig',
         ]]);
@@ -181,7 +181,6 @@ class NewsletterManagerTest extends TestCase
         $dependency->mailerManager->method('createMessage')->willReturn(new Message());
         $dependency->mailerManager->method('sendMessage')->willReturnCallback(function($message) use ($messageContainer) {
             $messageContainer->message = $message;
-            return 1;
         });
         $newsletterManager = $this->createInstance($dependency, ['other' => [
             'template' => 'template.html.twig',
@@ -205,14 +204,14 @@ class NewsletterManagerTest extends TestCase
         $this->assertCount(1, $messageContainer->message->getAttachments());
         /** @var File $attachment */
         $attachment = $messageContainer->message->getAttachments()[0];
-        $this->assertEquals('attachmentContent', $attachment->getContent()->getContent());
+        $this->assertEquals('attachmentContent', $attachment->getFile()->getContent()->getContent());
     }
 
     public function testFinishSending()
     {
         $dependency = $this->createDependencies();
         $dependency->mailerManager->method('createMessage')->willReturn(new Message());
-        $dependency->mailerManager->method('sendMessage')->willReturn(1);
+        $dependency->mailerManager->method('sendMessage');
         $newsletterManager = $this->createInstance($dependency, ['default' => [
             'template' => 'template.html.twig',
         ]]);
@@ -342,7 +341,7 @@ class NewsletterManagerTest extends TestCase
         ]]);
 
         $newsletter = $this->createDummyNewsletter();
-        $this->assertTrue($newsletterManager->sendTest($newsletter, 'peter@pan.de'));
+        $newsletterManager->sendTest($newsletter, 'peter@pan.de');
 
         $this->assertEquals('template.html.twig', $messageContainer->message->getTemplate());
         $this->assertEquals('from@enhavo.com', $messageContainer->message->getFrom());
@@ -373,7 +372,7 @@ class NewsletterManagerTest extends TestCase
         ]]);
 
         $newsletter = $this->createDummyNewsletter();
-        $this->assertFalse($newsletterManager->sendTest($newsletter, 'peter@pan.de'));
+        $newsletterManager->sendTest($newsletter, 'peter@pan.de');
 
         $this->assertEquals('template.html.twig', $messageContainer->message->getTemplate());
         $this->assertEquals('from@enhavo.com', $messageContainer->message->getFrom());
