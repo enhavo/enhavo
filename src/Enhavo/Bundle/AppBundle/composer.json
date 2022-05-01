@@ -28,7 +28,6 @@
     "symfony/monolog-bundle": "^3.1",
     "symfony/orm-pack": "^1.0",
     "doctrine/orm": "^2.7",
-    "pagerfanta/pagerfanta": "^3.6",
     "symfony/property-info": "^5.4",
     "symfony/security-bundle": "^5.4",
     "symfony/serializer-pack": "^1.0",
