@@ -1,9 +1,5 @@
 default:
     extensions:
-        Behat\Symfony2Extension:
-            kernel:
-                class: Enhavo\Kernel
-                bootstrap: config/bootstrap.test.php
         Enhavo\Bundle\AppBundle\Behat\Extension\PantherExtension:
             env:
                 PANTHER_APP_ENV: "test"

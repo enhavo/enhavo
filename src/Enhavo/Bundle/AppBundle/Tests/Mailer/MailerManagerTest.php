@@ -3,11 +3,14 @@
 namespace Enhavo\Bundle\AppBundle\Tests\Mailer;
 
 use Enhavo\Bundle\AppBundle\Exception\MailNotFoundException;
+use Enhavo\Bundle\AppBundle\Mailer\Attachment;
 use Enhavo\Bundle\AppBundle\Mailer\MailerManager;
 use Enhavo\Bundle\AppBundle\Mailer\Message;
 use Enhavo\Bundle\AppBundle\Template\TemplateManager;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
@@ -23,7 +26,7 @@ class MailerManagerTest extends TestCase
         $dependencies->environment = new Environment(new FilesystemLoader([
             'Fixtures/Mail/MailManager',
         ], __DIR__ . '/../'));
-        $dependencies->mailer = $this->getMockBuilder(\Swift_Mailer::class)->disableOriginalConstructor()->getMock();
+        $dependencies->mailer = $this->getMockBuilder(MailerInterface::class)->disableOriginalConstructor()->getMock();
         $dependencies->mailsConfig = [];
         $dependencies->defaultConfig = [
             'from' => 'from@enhavo.com',
@@ -49,7 +52,7 @@ class MailerManagerTest extends TestCase
     public function testSendMailMultipart()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->mailer->method('send')->willReturn(1);
+        $dependencies->mailer->method('send');
 
         $dependencies->defaultConfig = [
             'from' => '{{ resource.from }}',
@@ -70,28 +73,27 @@ class MailerManagerTest extends TestCase
 
         $manager = $this->createInstance($dependencies);
 
-        $dependencies->mailer->expects($this->once())->method('send')->willReturnCallback(function (\Swift_Message $message) {
-            $this->assertEquals('__subject__', $message->getSubject());
-            $this->assertEquals([
-                'from@enhavo.com' => '__name__'
-            ], $message->getFrom());
-            $this->assertEquals([
-                'to@enhavo.com' => null
-            ], $message->getTo());
-            $this->assertEquals('__text__', $message->getBody());
-            $this->assertEquals(Message::CONTENT_TYPE_PLAIN, $message->getBodyContentType());
+        $dependencies->mailer->expects($this->once())->method('send')->willReturnCallback(function (Email $email) {
+            $this->assertEquals('__subject__', $email->getSubject());
 
+            $this->assertEquals('from@enhavo.com', $email->getFrom()[0]->getAddress());
+            $this->assertEquals('__name__', $email->getFrom()[0]->getName());
+
+            $this->assertEquals('to@enhavo.com', $email->getTo()[0]->getAddress());
+            $this->assertEquals('', $email->getTo()[0]->getName());
+
+            $this->assertEquals('__text__', $email->getTextBody());
         });
 
         $manager->sendMail('default', $this->createDefaultResource(), [
-            __DIR__ . '/../Fixtures/Mail/MailManager/dummy-attachment.txt'
+            new Attachment(__DIR__ . '/../Fixtures/Mail/MailManager/dummy-attachment.txt')
         ]);
     }
 
     public function testSendMailSimple()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->mailer->method('send')->willReturn(1);
+        $dependencies->mailer->method('send');
 
         $dependencies->mailsConfig = [
             'default' => [
@@ -106,10 +108,8 @@ class MailerManagerTest extends TestCase
 
         $manager = $this->createInstance($dependencies);
 
-        $dependencies->mailer->expects($this->once())->method('send')->willReturnCallback(function (\Swift_Message $message) {
-            $this->assertEquals('__text__', $message->getBody());
-            $this->assertEquals(Message::CONTENT_TYPE_PLAIN, $message->getBodyContentType());
-
+        $dependencies->mailer->expects($this->once())->method('send')->willReturnCallback(function (Email $email) {
+            $this->assertEquals('__text__', $email->getHtmlBody());
         });
 
         $manager->sendMail('default', $this->createDefaultResource());
@@ -144,7 +144,7 @@ class MailerManagerTestDependencies
     public $templateManager;
     /** @var Environment|MockObject */
     public $environment;
-    /** @var \Swift_Mailer|MockObject */
+    /** @var MailerInterface|MockObject */
     public $mailer;
     /** @var array */
     public $defaultConfig;

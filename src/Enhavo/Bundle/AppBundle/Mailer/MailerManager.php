@@ -3,59 +3,34 @@
 
 namespace Enhavo\Bundle\AppBundle\Mailer;
 
+use Enhavo\Bundle\AppBundle\Exception\MailAttachmentException;
 use Enhavo\Bundle\AppBundle\Exception\MailNotFoundException;
 use Enhavo\Bundle\AppBundle\Template\TemplateManager;
-use Enhavo\Bundle\MediaBundle\Model\FileInterface;
-use Swift_Mailer;
-use Swift_Message;
-use Swift_Attachment;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Mime\Address;
+use Symfony\Component\Mime\Email;
 use Twig\Environment;
 
 class MailerManager
 {
-    /** @var Swift_Mailer */
-    private $mailer;
+    private Defaults $defaults;
 
-    /** @var TemplateManager */
-    private $templateManager;
-
-    /** @var Environment */
-    private $environment;
-
-    /** @var Defaults */
-    private $defaults;
-
-    /** @var array */
-    private $mailsConfig;
-
-    /** @var string */
-    private $model;
-
-    /**
-     * MailerManager constructor.
-     * @param Swift_Mailer $mailer
-     * @param TemplateManager $templateManager
-     * @param Environment $environment
-     * @param array $defaultConfig
-     * @param array $mailsConfig
-     * @param string $model
-     */
-    public function __construct(Swift_Mailer $mailer, TemplateManager $templateManager, Environment $environment, array $defaultConfig, array $mailsConfig, string $model)
-    {
-        $this->mailer = $mailer;
-        $this->templateManager = $templateManager;
-        $this->environment = $environment;
+    public function __construct(
+        private MailerInterface $mailer,
+        private TemplateManager $templateManager,
+        private Environment $environment,
+        array $defaultConfig,
+        private array $mailsConfig,
+        private string $model,
+    ) {
         $this->defaults = new Defaults($defaultConfig['from'], $defaultConfig['name'], $defaultConfig['to']);
-        $this->mailsConfig = $mailsConfig;
-        $this->model = $model;
     }
 
-
-    public function sendMail(string $key, $resource, array $attachments = []): int
+    public function sendMail(string $key, $resource, array $attachments = []): void
     {
         $message = $this->createMail($key, $resource, $attachments);
-        return $this->sendMessage($message);
+        $this->sendMessage($message);
     }
 
     public function createMail(string $key, $resource, array $attachments = []): Message
@@ -75,7 +50,11 @@ class MailerManager
         $message->setContext([
             'resource' => $resource,
         ]);
-        $message->setAttachments($attachments);
+
+        foreach ($attachments as $attachment) {
+            $message->addAttachment($attachment);
+        }
+
         $message->setContentType($this->mailsConfig[$key]['content_type']);
 
         return $message;
@@ -86,55 +65,58 @@ class MailerManager
         return new $this->model;
     }
 
-    public function sendMessage(Message $message): int
+    public function sendMessage(Message $message): void
     {
-        $swiftMessage = $this->convert($message);
-        return $this->send($swiftMessage);
+        $email = $this->convert($message);
+        $this->send($email);
     }
 
-    public function convert(Message $message): Swift_Message
+    public function convert(Message $message): Email
     {
-        $swiftMessage = new Swift_Message();
-        $swiftMessage->setSubject($this->renderString($message->getSubject(), $message->getContext()))
-            ->setFrom(
+        $email = new Email();
+        $email->subject($this->renderString($message->getSubject(), $message->getContext()))
+            ->from(new Address(
                 $this->renderString($message->getFrom(), $message->getContext()),
-                $this->renderString($message->getSenderName(), $message->getContext())
-            )
-            ->setTo($this->renderString($message->getTo(), $message->getContext()))
+                $this->renderString($message->getSenderName(), $message->getContext()),
+            ))
+            ->to(new Address($this->renderString($message->getTo(), $message->getContext())))
         ;
 
         if ($message->getContent() === null) {
             $template = $this->environment->load($this->templateManager->getTemplate($message->getTemplate()));
 
             if ($message->getContentType() === Message::CONTENT_TYPE_MIXED) {
-                $swiftMessage->setBody($template->renderBlock('text_plain', $message->getContext()), Message::CONTENT_TYPE_PLAIN);
-                $swiftMessage->addPart($template->renderBlock('text_html', $message->getContext()), Message::CONTENT_TYPE_HTML);
+                $email->html($template->renderBlock('text_html', $message->getContext()));
+                $email->text($template->renderBlock('text_plain', $message->getContext()));
             } else {
-                $swiftMessage->setBody($template->render($message->getContext()), $message->getContentType());
+                $email->html($template->render($message->getContext()));
             }
         } else {
-            $swiftMessage->setBody($message->getContent(), $message->getContentType());
+            $email->html($message->getContent());
         }
 
-        foreach ($message->getAttachments() as $attachment) {
-            if ($attachment instanceof FileInterface) {
-                $swiftMessage->attach(
-                    Swift_Attachment::fromPath($attachment->getContent()->getFilePath())
-                        ->setFilename($attachment->getFilename())
-                );
-            } else if ($attachment instanceof File) {
-                $swiftMessage->attach(Swift_Attachment::fromPath($attachment->getRealPath()));
+        foreach ($message->getAttachments() as $attachment)
+        {
+            $file = $attachment->getFile();
+
+            // MediaBundle is maybe not installed
+            if (is_subclass_of($file, 'Enhavo\Bundle\MediaBundle\Model\FileInterface')) {
+                $email->attachFromPath($file->getContent()->getFilePath());
+            } else if ($file instanceof File) {
+                $email->attachFromPath($file->getRealPath());
+            } else if (is_string($file)) {
+                $email->attachFromPath($file);
             } else {
-                $swiftMessage->attach(Swift_Attachment::fromPath($attachment));
+                throw new MailAttachmentException(sprintf('Attachment file type not supported. Give "%s"', is_object($file) ? get_class($file) : gettype($file)));
             }
         }
 
-        return $swiftMessage;
+        return $email;
     }
 
-    public function send(Swift_Message $message): int
+    public function send(Email $message): void
     {
-        return $this->mailer->send($message);
+        $this->mailer->send($message);
     }
 
     private function renderString(string $string, array $context)
