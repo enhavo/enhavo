@@ -14,7 +14,7 @@ build:
             services:
             environment:
                 php:
-                    version: "7.2"
+                    version: "8.0"
             tests:
                 override:
                     - command: ./bin/phpunit --coverage-clover build/coverage.xml
