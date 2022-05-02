@@ -7,7 +7,7 @@ enhavo_media_library_file_index:
     defaults:
         _controller: enhavo_media_library.controller.file:indexAction
         _sylius:
-            limit: 48
+            limit: 12
 
 enhavo_media_library_file_select:
     options:
@@ -17,7 +17,7 @@ enhavo_media_library_file_select:
     defaults:
         _controller: enhavo_media_library.controller.file:selectAction
         _sylius:
-            limit: 49
+            limit: 12
 
 enhavo_media_library_file_files:
     options:
@@ -27,7 +27,6 @@ enhavo_media_library_file_files:
     defaults:
         _controller: enhavo_media_library.controller.file:filesAction
         _sylius:
-            limit: 50
             sorting:
                 filename: asc
             filters:

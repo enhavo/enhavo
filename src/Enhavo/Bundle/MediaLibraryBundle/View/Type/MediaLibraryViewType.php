@@ -70,7 +70,7 @@ class MediaLibraryViewType extends AbstractViewType
             'component' => '@enhavo/media-library/components/MediaLibraryComponent.vue',
             'items' => null,
             'tags' => [],
-            'limit' => 50,
+            'limit' => null,
             'content_types' => [],
             'multiple' => true,
             'data' => [],
