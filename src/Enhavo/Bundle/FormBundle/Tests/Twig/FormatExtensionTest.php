@@ -11,6 +11,10 @@ class HtmlSanitizerTest extends TestCase
     public function testFormatHeadline()
     {
         $sanitizer = $this->getMockBuilder(HtmlSanitizer::class)->disableOriginalConstructor()->getMock();
+        $sanitizer->method('sanitize')->willReturnCallback(function ($value) {
+            return $value;
+        });
+
         $extension = new FormatExtension($sanitizer);
 
         $this->assertEquals(
