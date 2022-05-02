@@ -9,13 +9,13 @@ use Enhavo\Bundle\AppBundle\View\ViewUtil;
 use Enhavo\Bundle\MediaBundle\Controller\FileControllerTrait;
 use Enhavo\Bundle\MediaBundle\Exception\StorageException;
 use Enhavo\Bundle\MediaBundle\Media\MediaManager;
-use Enhavo\Bundle\MediaBundle\Media\UrlGeneratorInterface;
 use Enhavo\Bundle\MediaLibraryBundle\Entity\File;
 use Enhavo\Bundle\MediaLibraryBundle\Factory\FileFactory;
 use Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryManager;
 use Enhavo\Bundle\MediaLibraryBundle\Repository\FileRepository;
 use Enhavo\Bundle\MediaLibraryBundle\View\Type\MediaLibraryViewType;
-use Pagerfanta\Pagerfanta;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Symfony\Component\HttpFoundation\File\Exception\UploadException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -29,6 +29,8 @@ class FileController extends ResourceController
 
     /**
      * @return MediaLibraryManager
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
     private function getMediaLibraryManager(): MediaLibraryManager
     {
@@ -37,6 +39,8 @@ class FileController extends ResourceController
 
     /**
      * @return MediaManager
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
     private function getMediaManager(): MediaManager
     {
@@ -45,6 +49,8 @@ class FileController extends ResourceController
 
     /**
      * @return FileRepository
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
     private function getFileRepository(): FileRepository
     {
@@ -53,17 +59,29 @@ class FileController extends ResourceController
 
     /**
      * @return FileFactory
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
     private function getFileFactory(): FileFactory
     {
         return $this->container->get('enhavo_media_library.factory.file');
     }
 
+    /**
+     * @return ColumnManager
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
     private function getColumnManager(): ColumnManager
     {
         return $this->container->get('enhavo_app.column_manager');
     }
 
+    /**
+     * @return ViewUtil
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
     private function getViewUtil(): ViewUtil
     {
         return $this->container->get('Enhavo\Bundle\AppBundle\View\ViewUtil');
@@ -80,6 +98,7 @@ class FileController extends ResourceController
         /** @var  $view */
         $view = $this->viewFactory->create([
             'type' => 'media_library',
+            'limit' => $configuration->getLimit(),
             'request_configuration' => $configuration,
             'metadata' => $this->metadata,
         ]);
@@ -97,6 +116,7 @@ class FileController extends ResourceController
 
         $view = $this->viewFactory->create([
             'type' => 'media_library',
+            'limit' => $configuration->getLimit(),
             'multiple' => $multiple,
             'mode' => MediaLibraryViewType::MODE_SELECT,
             'request_configuration' => $configuration,

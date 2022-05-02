@@ -25,7 +25,7 @@ export default class MediaLibrary {
     private readonly translator: Translator;
 
     public constructor(data: any, eventDispatcher: EventDispatcher, view: View, flashMessenger: FlashMessenger, router: Router, componentRegistry: ComponentRegistryInterface, translator: Translator) {
-        this.data = _.extend(data.data, new Data());
+        this.data = _.extend(new Data(), data.data);
         this.flashMessenger = flashMessenger;
         this.eventDispatcher = eventDispatcher;
         this.view = view;
@@ -229,8 +229,12 @@ export default class MediaLibrary {
         this.getFiles();
     }
 
-    public getActivePage() {
-        return this.data.page;
+    public getPages() {
+        return this.data.pages;
+    }
+
+    public getActivePage(): number {
+        return parseInt(this.data.page);
     }
 
     private getFiles() {

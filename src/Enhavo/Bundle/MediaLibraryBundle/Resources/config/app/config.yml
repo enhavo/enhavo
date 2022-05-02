@@ -8,19 +8,19 @@ enhavo_app:
         - 'media/Extension/MediaLibrary'
     roles:
         enhavo_media_library_index:
-            role: ROLE_ENHAVO_MEDIA_LIBRARY_INDEX
+            role: ROLE_ENHAVO_MEDIA_LIBRARY_FILE_INDEX
             label: library.role.label.index
             translation_domain: EnhavoMediaBundle
         enhavo_media_library_create:
-            role: ROLE_ENHAVO_MEDIA_LIBRARY_CREATE
+            role: ROLE_ENHAVO_MEDIA_LIBRARY_FILE_CREATE
             label: library.role.label.create
             translation_domain: EnhavoMediaBundle
         enhavo_media_library_update:
-            role: ROLE_ENHAVO_MEDIA_LIBRARY_UPDATE
+            role: ROLE_ENHAVO_MEDIA_LIBRARY_FILE_UPDATE
             label: library.role.label.update
             translation_domain: EnhavoMediaBundle
         enhavo_media_library_delete:
-            role: ROLE_ENHAVO_MEDIA_LIBRARY_DELETE
+            role: ROLE_ENHAVO_MEDIA_LIBRARY_FILE_DELETE
             label: library.role.label.delete
             translation_domain: EnhavoMediaBundle
 

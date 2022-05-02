@@ -7,8 +7,7 @@ enhavo_media_library_file_index:
     defaults:
         _controller: enhavo_media_library.controller.file:indexAction
         _sylius:
-            permission: ROLE_ENHAVO_MEDIA_LIBRARY_INDEX
-            viewer:
+            limit: 12
 
 enhavo_media_library_file_select:
     options:
@@ -18,8 +17,7 @@ enhavo_media_library_file_select:
     defaults:
         _controller: enhavo_media_library.controller.file:selectAction
         _sylius:
-            permission: ROLE_ENHAVO_MEDIA_LIBRARY_FILE_SELECT
-            viewer:
+            limit: 12
 
 enhavo_media_library_file_files:
     options:
@@ -29,10 +27,8 @@ enhavo_media_library_file_files:
     defaults:
         _controller: enhavo_media_library.controller.file:filesAction
         _sylius:
-            permission: ROLE_ENHAVO_MEDIA_LIBRARY_FILE_FILES
             sorting:
                 filename: asc
-            limit: 12
             filters:
                 filename:
                     type: text
@@ -60,7 +56,6 @@ enhavo_media_library_file_tags:
     defaults:
         _controller: enhavo_media_library.controller.file:tagsAction
         _sylius:
-            permission: ROLE_ENHAVO_MEDIA_LIBRARY_FILE_TAGS
             viewer:
 
 enhavo_media_library_file_content_types:
@@ -71,7 +66,6 @@ enhavo_media_library_file_content_types:
     defaults:
         _controller: enhavo_media_library.controller.file:contentTypesAction
         _sylius:
-            permission: ROLE_ENHAVO_MEDIA_LIBRARY_FILE_CONTENT_TYPES
             viewer:
 
 enhavo_media_library_file_add:
@@ -82,7 +76,6 @@ enhavo_media_library_file_add:
     methods: [GET]
     defaults:
         _sylius:
-            permission: ROLE_ENHAVO_MEDIA_LIBRARY_FILE_ADD
             viewer:
 
 enhavo_media_library_file_create:

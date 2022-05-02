@@ -51,11 +51,11 @@ class MediaLibraryViewType extends AbstractViewType
         ]);
 
         $data->set('items', $options['items']);
-        $data->set('data', $options['data']);
         $options['data']['content_types'] = $options['content_types'];
         $options['data']['multiple'] = $options['multiple'];
         $options['data']['mode'] = $options['mode'];
         $options['data']['tags'] = $options['tags'];
+        $options['data']['limit'] = $options['limit'];
         $data->set('data', $options['data']);
         $data->set('messages', []);
         $data->set('actions', $this->actionManager->createActionsViewData($actions));
@@ -70,6 +70,7 @@ class MediaLibraryViewType extends AbstractViewType
             'component' => '@enhavo/media-library/components/MediaLibraryComponent.vue',
             'items' => null,
             'tags' => [],
+            'limit' => null,
             'content_types' => [],
             'multiple' => true,
             'data' => [],
@@ -107,7 +108,7 @@ class MediaLibraryViewType extends AbstractViewType
                     'icon' => 'check',
                     'translation_domain' => 'EnhavoMediaLibraryBundle',
                     'label' => 'media_library.label.confirm_selection',
-                    'permission' => $this->util->getRoleNameByResourceName($metadata->getApplicationName(), $this->util->getUnderscoreName($metadata), 'select'),
+                    'permission' => $this->util->getRoleNameByResourceName($metadata->getApplicationName(), $this->util->getUnderscoreName($metadata), 'update'),
                 ],
                 'upload' => [
                     'type' => 'event',
