@@ -78,12 +78,14 @@ class FormatExtension extends AbstractExtension
 
         $pattern = '/^<([a-zA-Z0-9-]+)>/';
         if(preg_match($pattern, $value)) {
-            return preg_replace_callback($pattern, function($matches) use ($attribute) {
+            $content = preg_replace_callback($pattern, function($matches) use ($attribute) {
                 return sprintf('<%s%s>', $matches[1], $attribute);
             }, $value);
         } else {
-            return sprintf('<div%s>%s</div>', $attribute, $value);
+            $content = sprintf('<div%s>%s</div>', $attribute, $value);
         }
+
+        return $this->sanitizer->sanitize($content);
     }
 
     public function sanitizeHtml($value, $options = [])

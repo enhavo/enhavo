@@ -12,7 +12,7 @@
             <div class="row">
                 <div class="col-xs-12">
                     <h1>{{ result.title }}</h1>
-                    {{ result.text|raw }}
+                    {{ result.text|html_sanitize }}
                     <a href="{{ router(result.subject) }}">{{ result.title }}</a>
                 </div>
             </div>

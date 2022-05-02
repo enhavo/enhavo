@@ -8,7 +8,7 @@
                 {% endif %}
                 <span class="container hero-container">
                     <span class="hero-caption" href="">
-                        <p class="slide-text">{{ slide.text|raw }}</p>
+                        <p class="slide-text">{{ slide.text|html_sanitize }}</p>
                         <h1 class="slide-title">{{ slide.title }}</h1>
                     </span>
                 </span>
