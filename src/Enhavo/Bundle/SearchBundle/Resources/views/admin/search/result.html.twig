@@ -5,8 +5,8 @@
             <div data-id={{ item.resource.id }} {% if is_granted('WORKFLOW_UPDATE', item.resource) %}data-update-route="{{ item.resource|updateRoute }}"{% endif %} class="entry-row">
                 <div class="row">
                     <div class="col-xs-9">
-                        <h1> {{ item.resource.title|raw }} </h1>
-                        {{ item.highlightedText|raw }}
+                        <h1> {{ item.resource.title|html_sanitize }} </h1>
+                        {{ item.highlightedText|html_sanitize }}
                     </div>
                 </div>
             </div>
