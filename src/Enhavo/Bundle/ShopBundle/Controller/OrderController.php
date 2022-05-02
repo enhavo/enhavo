@@ -147,6 +147,12 @@ class OrderController extends SyliusOrderController
         return $order;
     }
 
+    public function checkoutAction()
+    {
+
+    }
+
+
     private function getOrderProvider()
     {
         return $this->get('enhavo_shop.order.order_provider');

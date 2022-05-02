@@ -8,85 +8,91 @@
 
 namespace Enhavo\Bundle\ShopBundle\Form\Type;
 
-use Enhavo\Bundle\ShopBundle\Order\OrderAddressProvider;
+use Enhavo\Bundle\FormBundle\Form\Type\BooleanType;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
-use Symfony\Component\Form\AbstractType;
+use Sylius\Bundle\AddressingBundle\Form\Type\AddressType;
+use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
+use Sylius\Component\Addressing\Comparator\AddressComparatorInterface;
+use Sylius\Component\Addressing\Model\AddressInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Webmozart\Assert\Assert;
 
-class OrderAddressType extends AbstractType
+class OrderAddressType extends AbstractResourceType
 {
-    /**
-     * @var string
-     */
-    private $dataClass;
-
-    /**
-     * @var OrderAddressProvider
-     */
-    private $orderAddressProvider;
-
-    public function __construct($dataClass, OrderAddressProvider $orderAddressProvider)
-    {
-        $this->dataClass = $dataClass;
-        $this->orderAddressProvider = $orderAddressProvider;
-     }
+    public function __construct(
+        string $dataClass,
+        array $validationGroups,
+        private ?AddressComparatorInterface $addressComparator,
+    ) {
+        parent::__construct($dataClass, $validationGroups);
+    }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $orderAddressProvider = $this->orderAddressProvider;
-
         $builder
-            ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
-                $data = $event->getData();
-
-                if (!array_key_exists('differentBillingAddress', $data) || false === $data['differentBillingAddress']) {
-                    $data['billingAddress'] = $data['shippingAddress'];
-                    $event->setData($data);
-                }
-            })
-            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-                $data = $event->getData();
+            ->addEventListener(FormEvents::PRE_SET_DATA, static function (FormEvent $event): void {
                 $form = $event->getForm();
 
-                if($data instanceof OrderInterface) {
-                    $user = $data->getUser();
-                    if($user === null) {
-                        $form->add('email', 'email');
-                    }
+                Assert::isInstanceOf($event->getData(), OrderInterface::class);
+
+                /** @var OrderInterface $order */
+                $order = $event->getData();
+
+                $form->add('billingAddress', AddressType::class);
+
+                if ($order->isShippable()) {
+                    $form
+                        ->add('shippingAddress', AddressType::class)
+                        ->add('sameAddress', BooleanType::class, [
+                            'mapped' => false,
+                            'required' => false,
+                            'label' => 'sylius.form.checkout.addressing.different_billing_address',
+                        ])
+                    ;
                 }
             })
-            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($orderAddressProvider) {
-                $data = $event->getData();
-                if($data instanceof OrderInterface) {
-                    $orderAddressProvider->provide($data);
-                }
+            ->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event): void {
+                $form = $event->getForm();
+
+                Assert::isInstanceOf($event->getData(), OrderInterface::class);
+
+                /** @var OrderInterface $order */
+                $order = $event->getData();
+                $sameAddress = $this->areAddressesSame($order->getBillingAddress(), $order->getShippingAddress());
+
+                $form->get('sameAddress')->setData($sameAddress);
             })
-            ->add('shippingAddress', 'sylius_address', [
-                'shippable' => true,
-                'validation_groups' => ['shipping']
-            ])
-            ->add('billingAddress', 'sylius_address')
-            ->add('differentBillingAddress', 'checkbox', [
-                'required' => false,
-                'label' => 'checkout.addressing.form.label.different_billing_address',
-                'translation_domain' => 'EnhavoShopBundle',
-                'attr' => [
-                    'data-checkout-addressing-different-billing-address' => ''
-                ]
-            ]);
+            ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event): void {
+                $orderData = $event->getData();
+
+                $sameAddress = $orderData['sameAddress'] ?? false;
+
+                if (isset($orderData['billingAddress']) && $sameAddress) {
+                    $orderData['billingAddress'] = $orderData['shippingAddress'];
+                }
+
+                $event->setData($orderData);
+            })
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    private function areAddressesSame(?AddressInterface $firstAddress, ?AddressInterface $secondAddress): bool
     {
-        $resolver->setDefaults(array(
-            'data_class' => $this->dataClass,
-            'customer' => null,
-            'validation_groups' => ['shipping']
-        ));
+        if (null === $firstAddress || null === $secondAddress) {
+            return false;
+        }
+
+        return $this->addressComparator->equal($firstAddress, $secondAddress);
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        parent::configureOptions($resolver);
+
+        $resolver->setDefaults([]);
     }
 
     public function getBlockPrefix()

@@ -68,7 +68,7 @@ class ProductVariantProxy implements ProductVariantProxyInterface
 
     public function getShippingCategory(): ?ShippingCategoryInterface
     {
-        return $this->productVariant->getPrice() ?? $this->product->getPrice();
+        return $this->productVariant->getShippingCategory() ?? $this->product->getShippingCategory();
     }
 
     public function getTaxCategory(): ?TaxCategoryInterface

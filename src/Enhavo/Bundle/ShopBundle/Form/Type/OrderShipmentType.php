@@ -2,41 +2,20 @@
 
 namespace Enhavo\Bundle\ShopBundle\Form\Type;
 
-use Symfony\Component\Form\AbstractType;
+use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class OrderShipmentType extends AbstractType
+class OrderShipmentType extends AbstractResourceType
 {
-    /**
-     * @var string
-     */
-    private $dataClass;
-
-    public function __construct($dataClass)
-    {
-        $this->dataClass = $dataClass;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('shipment', 'enhavo_shop_shipment');
+        $builder->add('shipments', CollectionType::class, [
+            'entry_type' => ShipmentType::class,
+            'label' => false,
+        ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(array(
-            'data_class' => $this->dataClass,
-            'validation_groups' => ['shipment']
-        ));
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix()
     {
         return 'enhavo_shop_order_shipment';

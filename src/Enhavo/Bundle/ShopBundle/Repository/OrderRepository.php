@@ -48,6 +48,4 @@ class OrderRepository extends SyliusOrderRepository implements EntityRepositoryI
             'token' => $token
         ]);
     }
-
-
 }

@@ -19,7 +19,9 @@ class OrderItemFactory extends Factory
     {
         /** @var OrderItemInterface $item */
         $item = $this->createNew();
-        $item->setProduct($this->productVariantProxyFactory->createNew($productVariant));
+        $productVariantProxy = $this->productVariantProxyFactory->createNew($productVariant);
+        $item->setProduct($productVariantProxy);
+        $item->setName(sprintf('%s, %s', $productVariant->getProduct()->getName(), $productVariantProxy->getTitle()));
         return $item;
     }
 }

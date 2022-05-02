@@ -1,6 +1,6 @@
 enhavo_shop_theme_cart_item_add:
-    path: /cart/add/{productVariantId}
-#    methods: [POST]
+    path: /cart/add/{productVariantId}.{_format}
+    methods: [POST]
     defaults:
         _controller: sylius.controller.order_item::addAction
         _format: json
@@ -14,7 +14,8 @@ enhavo_shop_theme_cart_item_add:
                     product: expr:notFoundOnNull(service('sylius.repository.product_variant').find($productVariantId))
             redirect:
                 route: enhavo_shop_theme_cart_summary
-                parameters: {}
+                parameters:
+                    _format: $_format
             flash: sylius.cart.add_item
 
 enhavo_shop_theme_cart_item_remove:

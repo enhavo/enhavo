@@ -64,13 +64,27 @@ services:
         tags:
             - { name: form.type }
 
-#    Enhavo\Bundle\ShopBundle\Form\Type\OrderAddressType:
-#        arguments:
-#            - '%sylius.model.order.class%'
-#            - '@enhavo_shop.order.order_address_provider'
-#        tags:
-#            - { name: form.type }
-#
+    Enhavo\Bundle\ShopBundle\Form\Type\OrderAddressType:
+        arguments:
+            - '%sylius.model.order.class%'
+            - ['shipping']
+            - '@sylius.address_comparator'
+        tags:
+            - { name: form.type }
+
+    Enhavo\Bundle\ShopBundle\Form\Type\OrderShipmentType:
+        arguments:
+            - '%sylius.model.order.class%'
+            - ['shipment']
+        tags:
+            - { name: form.type }
+
+    Enhavo\Bundle\ShopBundle\Form\Type\ShipmentType:
+        arguments:
+            - '%sylius.model.shipment.class%'
+        tags:
+            - { name: form.type }
+
 #    Enhavo\Bundle\ShopBundle\Form\Type\OrderType:
 #        arguments:
 #            - '%sylius.model.order.class%'
@@ -91,25 +105,12 @@ services:
 #        tags:
 #            - { name: form.type }
 #
-#    Enhavo\Bundle\ShopBundle\Form\Type\OrderShipmentType:
-#        arguments:
-#            - '%sylius.model.order.class%'
-#        tags:
-#            - { name: form.type }
 #
 #    enhavo_shop_payment:
 #        class: '%enhavo_shop_payment.class%'
 #        arguments:
 #            - '%sylius.model.payment.class%'
 #            - '%sylius.model.payment_method.class%'
-#        tags:
-#            - { name: form.type }
-#
-#    enhavo_shop_shipment:
-#        class: '%enhavo_shop_shipment.class%'
-#        arguments:
-#            - '%sylius.model.shipment.class%'
-#            - '%sylius.model.shipping_method.class%'
 #        tags:
 #            - { name: form.type }
 #
@@ -120,7 +121,6 @@ services:
 #        tags:
 #            - { name: form.type }
 #
-
 #
 #    Enhavo\Bundle\ShopBundle\Form\Type\ProductVariantCreateType:
 #        arguments:

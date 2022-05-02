@@ -1,0 +1,10 @@
+{% extends template('theme/base.html.twig') %}
+
+{% block main %}
+    <h1>Select Shipping</h1>
+    <div>
+        <form action="{{ path('sylius_shop_checkout_select_shipping') }}" method="POST" novalidate>
+            <button type="submit">Senden</button>
+        </form>
+    </div>
+{% endblock %}

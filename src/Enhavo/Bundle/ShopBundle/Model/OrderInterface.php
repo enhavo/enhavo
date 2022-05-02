@@ -47,4 +47,5 @@ interface OrderInterface extends SyliusOrderInterface, PromotionSubjectInterface
     public function setTrackingMail($trackingMail);
     public function isFreeShipping();
     public function getUnitTaxTotal();
+    public function isShippable();
 }

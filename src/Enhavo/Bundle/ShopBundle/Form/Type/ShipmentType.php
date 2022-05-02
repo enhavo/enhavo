@@ -8,52 +8,28 @@
 
 namespace Enhavo\Bundle\ShopBundle\Form\Type;
 
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\AbstractType;
+use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
+use Sylius\Bundle\ShippingBundle\Form\Type\ShippingMethodChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 
-class ShipmentType extends AbstractType
+class ShipmentType extends AbstractResourceType
 {
-    /**
-     * @var string
-     */
-    private $dataClass;
-
-    /**
-     * @var string
-     */
-    private $shipmentClass;
-
-    /**
-     * ShipmentType constructor.
-     *
-     * @param $dataClass
-     * @param $shipmentClass
-     */
-    public function __construct($dataClass, $shipmentClass)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->dataClass = $dataClass;
-        $this->shipmentClass = $shipmentClass;
-    }
-
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        parent::buildForm($builder, $options);
-
         $builder
-            ->add('method', EntityType::class, [
-                'class' => $this->shipmentClass,
-                'expanded' => true
-            ])
-        ;
-    }
+            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+                $form = $event->getForm();
+                $shipment = $event->getData();
 
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(array(
-            'data_class' => $this->dataClass
-        ));
+                $form->add('method', ShippingMethodChoiceType::class, [
+                    'required' => true,
+                    'label' => 'sylius.form.checkout.shipping_method',
+                    'subject' => $shipment,
+                    'expanded' => true,
+                ]);
+            });
     }
 
     public function getBlockPrefix()
