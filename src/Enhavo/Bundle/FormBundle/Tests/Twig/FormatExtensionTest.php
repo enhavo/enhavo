@@ -11,7 +11,7 @@ class HtmlSanitizerTest extends TestCase
     public function testFormatHeadline()
     {
         $sanitizer = $this->getMockBuilder(HtmlSanitizer::class)->disableOriginalConstructor()->getMock();
-        $sanitizer->method('sanitize')->willReturnCallback(function ($value) {
+        $sanitizer->expects($this->atLeast(1))->method('sanitize')->willReturnCallback(function ($value) {
             return $value;
         });
 
