@@ -22,7 +22,7 @@ enhavo_shop_theme_cart_summary:
         _controller: sylius.controller.order::summaryAction
         _format: html
         _sylius:
-            template: EnhavoShopBundle:Theme:Cart/summary.html.twig
+            template: theme/shop/cart/summary.html.twig
             form:
                 type: Enhavo\Bundle\ShopBundle\Form\Type\CartType
 

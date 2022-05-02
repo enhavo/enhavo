@@ -3,4 +3,10 @@ services:
         arguments:
             - '@Enhavo\Bundle\ShopBundle\Manager\ProductManager'
         tags:
-            - { name: twig.component, key: product_tile, template: 'theme/component/shop/product-tile.html.twig' }
+            - { name: twig.component, key: shop_product_tile, template: 'theme/component/shop/product-tile.html.twig' }
+
+    Enhavo\Bundle\ShopBundle\Component\CartSummaryComponent:
+        arguments:
+            - '@sylius.context.cart'
+        tags:
+            - { name: twig.component, key: shop_cart_summary, template: 'theme/component/shop/cart-summary.html.twig' }

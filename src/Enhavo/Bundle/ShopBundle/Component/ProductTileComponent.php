@@ -10,7 +10,7 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 use Symfony\UX\TwigComponent\Attribute\ExposeInTemplate;
 use Symfony\UX\TwigComponent\Attribute\PreMount;
 
-#[AsTwigComponent('product_tile', template: 'theme/component/shop/product-tile.html.twig')]
+#[AsTwigComponent('shop_product_tile', template: 'theme/component/shop/product-tile.html.twig')]
 class ProductTileComponent
 {
     #[ExposeInTemplate]

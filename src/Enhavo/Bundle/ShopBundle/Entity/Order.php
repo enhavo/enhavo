@@ -36,6 +36,7 @@ class Order extends SyliusOrder implements OrderInterface
     private ?string $email;
     private ?string $token;
     private ?bool $trackingMail = false;
+    private ?bool $shippable = true;
 
     /** @var Collection|PaymentInterface[] */
     private $payments;
@@ -344,5 +345,15 @@ class Order extends SyliusOrder implements OrderInterface
     public function setCheckoutState(string $checkoutState): void
     {
         $this->checkoutState = $checkoutState;
+    }
+
+    public function isShippable()
+    {
+        return $this->shippable;
+    }
+
+    public function setShippable($value)
+    {
+        $this->shippable = $value;
     }
 }

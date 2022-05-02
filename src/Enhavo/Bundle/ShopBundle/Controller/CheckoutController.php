@@ -20,15 +20,9 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Sylius\Component\Order\Context\CartContext;
 
 class CheckoutController extends AppController
 {
-    protected function getCartProvider()
-    {
-        return $this->get('sylius.cart_provider');
-    }
-
     /**
      * @return OrderInterface
      */
