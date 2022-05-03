@@ -24,6 +24,18 @@ voucher:
         amount: Betrag
         availableAmount: Verfügbar
 
+country:
+    label:
+        country: Land
+        code: Code
+        name: Name
+
+address:
+    label:
+        billingAddress: Rechnungsaddresse
+        shippingAddress: Lieferaddresse
+        sameAddress: Gleich Rechnungsaddresse
+
 label:
   product: Produkt
   order: Bestellung

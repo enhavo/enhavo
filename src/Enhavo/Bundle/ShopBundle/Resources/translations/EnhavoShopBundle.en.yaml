@@ -24,6 +24,18 @@ voucher:
         amount: Amount
         availableAmount: Available amount
 
+country:
+    label:
+        country: Country
+        code: Code
+        name: Name
+
+address:
+    label:
+        billingAddress: Billing Address
+        shippingAddress: Shipping Address
+        sameAddress: Same as billing address
+
 label:
   product: Product
   order: Order
