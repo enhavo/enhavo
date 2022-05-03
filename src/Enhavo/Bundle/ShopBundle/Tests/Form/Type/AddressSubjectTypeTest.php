@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\ShopBundle\Tests\Form\Type;
 
+use Enhavo\Bundle\FormBundle\Form\Extension\ConditionTypeExtension;
 use Enhavo\Bundle\FormBundle\Form\Type\BooleanType;
 use Enhavo\Bundle\ShopBundle\Entity\AddressSubjectTrait;
 use Enhavo\Bundle\ShopBundle\Form\Type\AddressSubjectType;
@@ -22,8 +23,13 @@ class AddressSubjectTypeTest extends TypeTestCase
 {
     protected function getExtensions()
     {
+        $translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
+        $translator->method('trans')->willReturnCallback(function($value) {
+            return $value;
+        });
+
         $addressComparator = new AddressComparator();
-        $addressSubjectType = new AddressSubjectType($addressComparator);
+        $addressSubjectType = new AddressSubjectType($addressComparator, $translator);
 
         $eventSubscriber = new SubscriberMock();
         $addressType = new AddressType(Address::class, [], $eventSubscriber);
@@ -34,10 +40,6 @@ class AddressSubjectTypeTest extends TypeTestCase
         $countryChoiceType = new CountryChoiceType($repository);
         $countryCodeChoiceType = new CountryCodeChoiceType($repository);
 
-        $translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
-        $translator->method('trans')->willReturnCallback(function($value) {
-            return $value;
-        });
         $booleanType = new BooleanType($translator);
 
         return array(
@@ -48,6 +50,14 @@ class AddressSubjectTypeTest extends TypeTestCase
             new PreloadedExtension(array($booleanType), array()),
         );
     }
+
+    protected function getTypeExtensions()
+    {
+        return [
+            new ConditionTypeExtension()
+        ];
+    }
+
 
     public function testSubmitWithAllData()
     {
