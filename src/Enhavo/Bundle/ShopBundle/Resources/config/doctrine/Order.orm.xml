@@ -5,7 +5,6 @@
         <field name="shippingState" nullable="true" />
         <field name="email" nullable="true" />
         <field name="token" nullable="true" />
-        <field name="sameAddress" type="boolean" nullable="true" />
         <field name="trackingMail" type="boolean" nullable="true" />
         <field name="checkoutState" nullable="false" />
 

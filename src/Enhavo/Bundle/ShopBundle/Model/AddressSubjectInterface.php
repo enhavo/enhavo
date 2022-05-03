@@ -13,8 +13,4 @@ interface AddressSubjectInterface
     public function setBillingAddress(?AddressInterface $billingAddress): void;
 
     public function getBillingAddress(): ?AddressInterface;
-
-    public function isSameAddress(): bool;
-
-    public function setSameAddress(?bool $value): void;
 }

@@ -27,7 +27,10 @@ sylius_shipping:
 sylius_money: ~
 
 sylius_addressing:
-    driver: doctrine/orm
+    resources:
+        country:
+            classes:
+                controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
 
 sylius_promotion:
     driver: doctrine/orm

@@ -64,11 +64,10 @@ services:
         tags:
             - { name: form.type }
 
-    Enhavo\Bundle\ShopBundle\Form\Type\OrderAddressType:
+    Enhavo\Bundle\ShopBundle\Form\Type\AddressSubjectType:
         arguments:
-            - '%sylius.model.order.class%'
-            - ['shipping']
             - '@sylius.address_comparator'
+            - '@translator'
         tags:
             - { name: form.type }
 
