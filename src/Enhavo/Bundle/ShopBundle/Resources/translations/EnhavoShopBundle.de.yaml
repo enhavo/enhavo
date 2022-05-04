@@ -36,6 +36,14 @@ address:
         shippingAddress: Lieferaddresse
         sameAddress: Gleich Rechnungsaddresse
 
+shipping_method:
+    label:
+        shipping_method: Versand Methode
+
+payment_method:
+    label:
+        payment_method: Bezahl Methode
+
 label:
   product: Produkt
   order: Bestellung

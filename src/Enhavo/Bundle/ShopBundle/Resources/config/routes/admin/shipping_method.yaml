@@ -1,0 +1,64 @@
+sylius_shipping_method_index:
+    options:
+        expose: true
+    path: /enhavo/shop/shipping_method/index
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.shipping_method::indexAction
+        _sylius:
+            viewer:
+
+sylius_shipping_method_create:
+    options:
+        expose: true
+    path: /enhavo/shop/shipping_method/create
+    methods: [GET,POST]
+    defaults:
+        _controller: sylius.controller.shipping_method::createAction
+        _sylius:
+            redirect: sylius_shipping_method_update
+            viewer:
+
+sylius_shipping_method_update:
+    options:
+        expose: true
+    path: /enhavo/shop/shipping_method/update/{id}
+    methods: [GET,POST]
+    defaults:
+        _controller: sylius.controller.shipping_method::updateAction
+        _sylius:
+            viewer:
+
+sylius_shipping_method_table:
+    options:
+        expose: true
+    path: /enhavo/shop/shipping_method/table
+    defaults:
+        page: 1
+        _controller: sylius.controller.shipping_method::tableAction
+        _sylius:
+            viewer:
+                columns: []
+
+sylius_shipping_method_delete:
+    options:
+        expose: true
+    path: /enhavo/shop/shipping_method/delete/{id}
+    methods: [POST]
+    defaults:
+        _controller: sylius.controller.shipping_method::deleteAction
+
+sylius_shipping_method_batch:
+    options:
+        expose: true
+    path: /enhavo/shop/shipping_method/batch
+    methods: [POST]
+    defaults:
+        _controller: sylius.controller.shipping_method::batchAction
+        _sylius:
+            paginate: false
+            criteria:
+                id: $ids
+            batches:
+                delete:
+                    type: delete
