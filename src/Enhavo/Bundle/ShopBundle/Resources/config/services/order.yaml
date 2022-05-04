@@ -14,6 +14,13 @@ services:
         tags:
             - { name: sylius.order_processor, priority: 60 }
 
+    Enhavo\Bundle\ShopBundle\OrderProcessing\OrderAddressAssigner:
+        arguments:
+            - '@enhavo_shop.order_manager'
+        tags:
+            - { name: sylius.order_processor, priority: 60 }
+
+
     Enhavo\Bundle\ShopBundle\OrderProcessing\OrderPricesCalculator:
         arguments:
             - '@Enhavo\Bundle\ShopBundle\Manager\PricingManager'
@@ -29,6 +36,13 @@ services:
     Enhavo\Bundle\ShopBundle\Manager\TaxationManager:
 
     Enhavo\Bundle\ShopBundle\Manager\PricingManager:
+
+    Enhavo\Bundle\ShopBundle\Manager\OrderManager:
+        arguments:
+            - '@Enhavo\Bundle\ShopBundle\Address\AddressProviderInterface'
+
+    enhavo_shop.order_manager:
+        alias: Enhavo\Bundle\ShopBundle\Manager\OrderManager
 
     Enhavo\Bundle\ShopBundle\Pricing\DefaultPriceCalculator:
         arguments:

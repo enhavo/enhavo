@@ -13,7 +13,7 @@ use Enhavo\Bundle\ShopBundle\Manager\CouponManager;
 use Enhavo\Bundle\ShopBundle\Manager\VoucherManager;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Enhavo\Bundle\ShopBundle\Model\ProcessorInterface;
-use Enhavo\Bundle\ShopBundle\Order\OrderAddressProvider;
+use Enhavo\Bundle\ShopBundle\Order\UserAddressProvider;
 use Enhavo\Bundle\ShopBundle\Order\OrderNumberGeneratorInterface;
 use Sylius\Component\Payment\Model\PaymentInterface;
 use Sylius\Component\Shipping\Model\ShipmentInterface;
@@ -42,7 +42,7 @@ class OrderConfirmProcessor implements ProcessorInterface
     protected $numberGenerator;
 
     /**
-     * @var OrderAddressProvider
+     * @var UserAddressProvider
      */
     protected $orderAddressProvider;
 
@@ -52,12 +52,12 @@ class OrderConfirmProcessor implements ProcessorInterface
     protected $couponManager;
 
     public function __construct(
-        CartProviderInterface $cartProvider,
-        MailerInterface $confirmMailer,
-        MailerInterface $notificationMailer,
+        CartProviderInterface         $cartProvider,
+        MailerInterface               $confirmMailer,
+        MailerInterface               $notificationMailer,
         OrderNumberGeneratorInterface $numberGenerator,
-        OrderAddressProvider $orderAddressProvider,
-        CouponManager $couponManager
+        UserAddressProvider           $orderAddressProvider,
+        CouponManager                 $couponManager
     )
     {
         $this->cartProvider = $cartProvider;

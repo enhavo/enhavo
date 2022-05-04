@@ -58,3 +58,13 @@ services:
         parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
             - { name: enhavo.menu, alias: shop_country }
+
+    Enhavo\Bundle\ShopBundle\Menu\ShippingMethodMenu:
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
+        tags:
+            - { name: enhavo.menu, alias: shop_shipping_method }
+
+    Enhavo\Bundle\ShopBundle\Menu\PaymentMethodMenu:
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
+        tags:
+            - { name: enhavo.menu, alias: shop_payment_method }

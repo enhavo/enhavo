@@ -36,6 +36,14 @@ address:
         shippingAddress: Shipping Address
         sameAddress: Same as billing address
 
+shipping_method:
+    label:
+        shipping_method: Shipping method
+
+payment_method:
+    label:
+        payment_method: Payment method
+
 label:
   product: Product
   order: Order

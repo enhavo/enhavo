@@ -67,6 +67,15 @@ services:
         tags:
             - { name: enhavo.column, alias: 'shop_address' }
 
+    Enhavo\Bundle\ShopBundle\Address\AddressProviderInterface:
+        alias: Enhavo\Bundle\ShopBundle\Address\UserAddressProvider
+
+    Enhavo\Bundle\ShopBundle\Address\UserAddressProvider:
+        arguments:
+            - '@security.token_storage'
+            - '@doctrine.orm.entity_manager'
+            - '@sylius.factory.address'
+
 #    enhavo_shop.listener.doctrine_sylius_meta:
 #        class: Enhavo\Bundle\ShopBundle\EventListener\DoctrineSyliusMetaListener
 #        tags:

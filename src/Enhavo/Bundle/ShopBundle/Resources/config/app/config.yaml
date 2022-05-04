@@ -23,6 +23,9 @@ sylius_shipping:
         shipment:
             classes:
                 model: Enhavo\Bundle\ShopBundle\Entity\Shipment
+        shipping_method:
+            classes:
+                controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
 
 sylius_money: ~
 
@@ -31,6 +34,9 @@ sylius_addressing:
         country:
             classes:
                 controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
+        address:
+            classes:
+                factory: Enhavo\Bundle\ShopBundle\Factory\AddressFactory
 
 sylius_promotion:
     driver: doctrine/orm
@@ -88,6 +94,9 @@ sylius_payment:
             classes:
                 controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
                 model: Enhavo\Bundle\ShopBundle\Entity\Payment
+        payment_method:
+            classes:
+                controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
 
 doctrine:
     orm:
