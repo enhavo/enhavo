@@ -9,6 +9,7 @@
                 <cascade-persist />
                 <cascade-refresh />
             </cascade>
+            <join-column on-delete="SET NULL" />
         </many-to-one>
     </entity>
 </doctrine-mapping>

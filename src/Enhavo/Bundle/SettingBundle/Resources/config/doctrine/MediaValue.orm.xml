@@ -19,6 +19,7 @@
                 <cascade-persist />
                 <cascade-refresh />
             </cascade>
+            <join-column on-delete="SET NULL" />
         </many-to-one>
 
         <many-to-many field="files" target-entity="Enhavo\Bundle\MediaBundle\Model\FileInterface">

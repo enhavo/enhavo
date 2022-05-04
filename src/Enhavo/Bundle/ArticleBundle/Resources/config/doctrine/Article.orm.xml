@@ -8,6 +8,7 @@
                 <cascade-persist />
                 <cascade-refresh />
             </cascade>
+            <join-column on-delete="SET NULL" />
         </many-to-one>
 
         <one-to-one field="content" target-entity="Enhavo\Bundle\BlockBundle\Model\NodeInterface">
