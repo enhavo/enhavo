@@ -183,10 +183,6 @@ export default class extends Vue {
         this.getMediaLibrary().setActivePage(page);
     }
 
-    onSort(column: Column) {
-        this.getMediaLibrary().setSortColumn(column);
-    }
-
     open(item: File) {
         this.getMediaLibrary().open(item)
     }

@@ -289,7 +289,18 @@ export default class MediaLibrary {
                 this.data.page = response.data.page;
 
                 if (!this.data.sortColumn) {
-                    this.data.sortColumn = this.data.columns[0];
+                    if (response.data.sorting) {
+                        for (const [key, value] of Object.entries(response.data.sorting)) {
+                            let column = this.data.columns.find(column => column.property === key);
+                            if (column) {
+                                column.direction = value;
+                                this.data.sortColumn = column;
+                                break;
+                            }
+                        }
+                    } else {
+                        this.data.sortColumn = this.data.columns[0];
+                    }
                 }
                 this.checkFileSelection();
                 this.loaded();

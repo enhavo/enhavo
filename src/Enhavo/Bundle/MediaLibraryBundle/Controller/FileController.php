@@ -138,6 +138,7 @@ class FileController extends ResourceController
         $view = $this->viewFactory->create([
             'type'=> 'media_files',
             'page' => $page,
+            'sorting' => $configuration->getSorting(),
             'request_configuration' => $configuration,
         ]);
 
