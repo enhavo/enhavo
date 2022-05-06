@@ -28,7 +28,7 @@ enhavo_media_library_file_files:
         _controller: enhavo_media_library.controller.file:filesAction
         _sylius:
             sorting:
-                filename: asc
+                createdAt: desc
             filters:
                 filename:
                     type: text

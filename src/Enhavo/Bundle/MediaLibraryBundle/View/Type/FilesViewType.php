@@ -47,6 +47,7 @@ class FilesViewType extends AbstractViewType
         $templateData['pages'] = $pages;
         $templateData['page'] = $options['page'];
         $templateData['columns'] = $options['columns'];
+        $templateData['sorting'] = $options['sorting'];
     }
 
     public function getResponse($options, Request $request, ViewData $viewData, TemplateData $templateData): Response
@@ -56,6 +57,7 @@ class FilesViewType extends AbstractViewType
             'page' => $templateData['page'],
             'pages' => $templateData['pages'],
             'columns' => $templateData['columns'],
+            'sorting' => $templateData['sorting'],
         ]);
     }
 
@@ -67,6 +69,9 @@ class FilesViewType extends AbstractViewType
         $resolver->setDefaults([
             'page' => 1,
             'pages' => 1,
+            'sorting' => [
+                'createdAt' => 'desc',
+            ],
             'columns' => [
                 ['property' => 'filename', 'label' => 'Name'],
                 ['property' => 'extension', 'label' => 'Suffix'],
