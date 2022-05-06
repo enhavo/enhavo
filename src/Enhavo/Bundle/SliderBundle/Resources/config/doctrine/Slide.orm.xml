@@ -18,6 +18,7 @@
                 <cascade-persist />
                 <cascade-refresh />
             </cascade>
+            <join-column on-delete="SET NULL" />
         </many-to-one>
 
         <many-to-one field="slider" target-entity="Enhavo\Bundle\SliderBundle\Model\SliderInterface" inversed-by="slides">
