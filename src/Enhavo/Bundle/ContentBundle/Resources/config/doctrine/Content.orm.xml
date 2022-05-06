@@ -27,6 +27,7 @@
                 <cascade-persist />
                 <cascade-refresh />
             </cascade>
+            <join-column on-delete="SET NULL" />
         </many-to-one>
 
         <many-to-one field="route" target-entity="Enhavo\Bundle\RoutingBundle\Model\RouteInterface">
