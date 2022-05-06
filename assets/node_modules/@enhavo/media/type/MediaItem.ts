@@ -112,9 +112,12 @@ export default class MediaItem
 
     updateThumb()
     {
+        let mediaThumb = this.$element.find('[data-media-thumb]');
+        let mediaThumbIcon = this.$element.find('[data-media-thumb-icon]');
+
         // reset
-        this.$element.find('[data-media-thumb]').css('background-image', 'none');
-        this.$element.find('[data-media-thumb-icon]').removeClass().addClass('icon');
+        mediaThumb.css('background-image', 'none');
+        mediaThumbIcon.removeClass().addClass('icon');
 
         // set icon/image
         switch (this.meta.mimeType) {
@@ -122,7 +125,7 @@ export default class MediaItem
             case 'image/jpg':
             case 'image/jpeg':
             case 'image/gif':
-                this.$element.find('[data-media-thumb]').css('background-image', 'url('+this.getThumbUrl()+')');
+                mediaThumb.css('background-image', 'url('+this.getThumbUrl()+')');
                 break;
             case 'video/mpeg':
             case 'video/mp4':
@@ -130,7 +133,7 @@ export default class MediaItem
             case 'video/vnd.vivo':
             case 'video/x-msvideo':
             case 'video/x-sgi-movie':
-                this.$element.find('[data-media-thumb-icon]').addClass('icon-file_video');
+                mediaThumbIcon.addClass('icon-file_video');
                 break;
             case 'audio/basic':
             case 'audio/echospeech':
@@ -144,7 +147,7 @@ export default class MediaItem
             case 'audio/x-pn-realaudio-plugin':
             case 'audio/x-qt-stream:':
             case 'audio/x-wav':
-                this.$element.find('[data-media-thumb-icon]').addClass('icon-file_audio');
+                mediaThumbIcon.addClass('icon-file_audio');
                 break;
             case 'text/plain':
             case 'application/postscript':
@@ -152,18 +155,18 @@ export default class MediaItem
             case 'application/msword':
             case 'application/vnd.oasis.opendocument.text':
             case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
-                this.$element.find('[data-media-thumb-icon]').addClass('icon-file_text');
+                mediaThumbIcon.addClass('icon-file_text');
                 break;
             case 'application/pdf':
-                this.$element.find('[data-media-thumb-icon]').addClass('icon-file_pdf');
+                mediaThumbIcon.addClass('icon-file_pdf');
                 break;
             case 'application/msexcel':
             case 'application/vnd.oasis.opendocument.spreadsheet':
             case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-                this.$element.find('[data-media-thumb-icon]').addClass('icon-file_xls');
+                mediaThumbIcon.addClass('icon-file_xls');
                 break;
             case 'application/mspowerpoint':
-                this.$element.find('[data-media-thumb-icon]').addClass('icon-file_ppt');
+                mediaThumbIcon.addClass('icon-file_ppt');
                 break;
             case 'text/css':
             case 'text/html':
@@ -177,10 +180,10 @@ export default class MediaItem
             case 'application/x-javascript':
             case 'application/x-latex':
             case 'application/x-php':
-                this.$element.find('[data-media-thumb-icon]').addClass('icon-file_code');
+                mediaThumbIcon.addClass('icon-file_code');
                 break;
             default:
-                this.$element.find('[data-media-thumb-icon]').addClass('icon-file_document');
+                mediaThumbIcon.addClass('icon-file_document');
         }
     }
 

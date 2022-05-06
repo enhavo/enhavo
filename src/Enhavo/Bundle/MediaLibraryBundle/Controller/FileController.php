@@ -175,6 +175,8 @@ class FileController extends ResourceController
     /**
      * @param Request $request
      * @return JsonResponse
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
     public function addAction(Request $request): JsonResponse
     {
@@ -184,6 +186,8 @@ class FileController extends ResourceController
         return new JsonResponse([
             'id' => $file->getId(),
             'filename' => $file->getFilename(),
+            'mimeType' => $file->getMimeType(),
+            'token' => $file->getToken(),
         ]);
     }
 
