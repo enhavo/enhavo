@@ -13,8 +13,15 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class TranslatorMock implements TranslatorInterface
 {
+    public $postFix = '';
+
     public function trans(string $id, array $parameters = [], string $domain = null, string $locale = null)
     {
-        return $id;
+        return $id . $this->postFix;
+    }
+
+    public function setPostFix(string $postFix): void
+    {
+        $this->postFix = $postFix;
     }
 }
