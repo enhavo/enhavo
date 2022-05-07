@@ -52,7 +52,7 @@ label:
   tag: Tag
   category: Kategorie
 
-mailer:
+mail:
   confirm:
     subject: Bestellung
   tracking:
@@ -101,29 +101,37 @@ order:
     shipped: Versendet
     cancelled: Storniert
     shippingMethod: Versandart
+    state: Status
     shippingState: Versand
     paymentState: Zahlung
-
   action:
     transfer: In den Warenkorb
     purchase: Bezahlen
-
+    cancel: Abbrechen
+    paid: Bezahlt
+    refund: Erstatten
+    ship: Versenden
+  shippingState:
+    ready: Versandbereit
+    partially_shipped: Teilweise versendet
+    shipped: Versendet
+    cancelled: Abgebrochen
+  paymentState:
+    awaiting_payment: Warte auf Zahlung
+    cancelled: Abgebrochen
+    paid: Gezahlt
+    partially_paid: Teilweise gezahlt
+    partially_refunded: Teilweise Retoure
+    refunded: Erstattet
+  state:
+    new: Neu
+    cancelled: Abgebrochen
+    fulfilled: Abschlossen
   form:
     label:
-      state:
-        label: Status
-        cancelled: Storniert
-        confirmed: Bestellt
-        returned: Retoure
-      payment:
-        label: Bezahlung
-        completed: Bezahlt
-        pending: Offen
-      shipping:
-        label: Versand
-        pending: Offen
-        ready: Versandfertig
-        shipped: Versendet
+      state: Status
+      payment: Bezahlung
+      shipping: Versand
 
 order_item:
   form:

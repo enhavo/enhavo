@@ -26,13 +26,6 @@ class EnhavoShopExtension extends AbstractResourceExtension implements PrependEx
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $this->registerResources('enhavo_shop', $config['driver'], $config['resources'], $container);
 
-        $container->setParameter('enhavo_shop.mailer.confirm', $config['mailer']['confirm']);
-        $container->setParameter('enhavo_shop.mailer.confirm.service', $config['mailer']['confirm']['service']);
-        $container->setParameter('enhavo_shop.mailer.tracking', $config['mailer']['tracking']);
-        $container->setParameter('enhavo_shop.mailer.tracking.service', $config['mailer']['tracking']['service']);
-        $container->setParameter('enhavo_shop.mailer.notification', $config['mailer']['notification']);
-        $container->setParameter('enhavo_shop.mailer.notification.service', $config['mailer']['notification']['service']);
-
         $container->setParameter('enhavo_shop.document.billing', $config['document']['billing']); //Todo: Can be removed in next version
         $container->setParameter('enhavo_shop.document.billing.generator', $config['document']['billing']['generator']);
         $container->setParameter('enhavo_shop.document.billing.options', isset($config['document']['billing']['options']) ? $config['document']['billing']['options'] : []);
@@ -70,12 +63,12 @@ class EnhavoShopExtension extends AbstractResourceExtension implements PrependEx
     {
         $files = [
             __DIR__.'/../Resources/config/app/config.yaml',
-            __DIR__.'/../Resources/config/app/state_machine/sylius_order.yml',
-            __DIR__.'/../Resources/config/app/state_machine/sylius_order_checkout.yml',
-            __DIR__.'/../Resources/config/app/state_machine/sylius_order_payment.yml',
-            __DIR__.'/../Resources/config/app/state_machine/sylius_order_shipping.yml',
-            __DIR__.'/../Resources/config/app/state_machine/sylius_payment.yml',
-            __DIR__.'/../Resources/config/app/state_machine/sylius_shipment.yml',
+            __DIR__.'/../Resources/config/app/state_machine/enhavo_order.yml',
+            __DIR__.'/../Resources/config/app/state_machine/enhavo_order_checkout.yml',
+            __DIR__.'/../Resources/config/app/state_machine/enhavo_order_payment.yml',
+            __DIR__.'/../Resources/config/app/state_machine/enhavo_order_shipping.yml',
+            __DIR__.'/../Resources/config/app/state_machine/enhavo_payment.yml',
+            __DIR__.'/../Resources/config/app/state_machine/enhavo_shipment.yml',
         ];
 
         foreach ($files as $file) {

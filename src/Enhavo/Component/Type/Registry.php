@@ -138,7 +138,7 @@ class Registry implements RegistryInterface
             $entry->setService($this->createService($entry));
         }
 
-        return $entry->getService();
+        return clone $entry->getService();
     }
 
     private function createService(RegistryEntry $entry): TypeInterface

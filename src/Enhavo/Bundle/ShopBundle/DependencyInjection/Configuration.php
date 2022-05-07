@@ -28,61 +28,12 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder('enhavo_shop');
         $rootNode = $treeBuilder->getRootNode();
 
-        $this->addMailerSection($rootNode);
         $this->addDocumentSection($rootNode);
         $this->addPaymentSection($rootNode);
         $this->addResourcesSection($rootNode);
         $this->addProductSection($rootNode);
 
         return $treeBuilder;
-    }
-
-    private function addMailerSection(ArrayNodeDefinition $node)
-    {
-        $node
-            ->children()
-                ->arrayNode('mailer')
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->arrayNode('confirm')
-                            ->addDefaultsIfNotSet()
-                            ->children()
-                                ->scalarNode('service')->defaultValue('enhavo_shop.mailer.confirm_mailer_default')->end()
-                                ->scalarNode('template')->defaultValue('EnhavoShopBundle:Mailer:confirm.html.twig')->end()
-                                ->scalarNode('subject')->defaultValue('mailer.confirm.subject')->end()
-                                ->scalarNode('translationDomain')->defaultValue('EnhavoShopBundle')->end()
-                                ->scalarNode('from')->defaultValue('no-reply@enhavo.com')->end()
-                                ->scalarNode('sender_name')->defaultValue('enhavo')->end()
-                            ->end()
-                        ->end()
-                        ->arrayNode('tracking')
-                            ->addDefaultsIfNotSet()
-                            ->children()
-                                ->scalarNode('service')->defaultValue('enhavo_shop.mailer.tracking_mailer_default')->end()
-                                ->scalarNode('template')->defaultValue('EnhavoShopBundle:Mailer:tracking.html.twig')->end()
-                                ->scalarNode('subject')->defaultValue('mailer.tracking.subject')->end()
-                                ->scalarNode('translationDomain')->defaultValue('EnhavoShopBundle')->end()
-                                ->scalarNode('from')->defaultValue('no-reply@enhavo.com')->end()
-                                ->scalarNode('sender_name')->defaultValue('enhavo')->end()
-                            ->end()
-                        ->end()
-                        ->arrayNode('notification')
-                            ->addDefaultsIfNotSet()
-                            ->children()
-                                ->booleanNode('notify')->defaultValue(false)->end()
-                                ->scalarNode('service')->defaultValue('enhavo_shop.mailer.notification_mailer_default')->end()
-                                ->scalarNode('template')->defaultValue('EnhavoShopBundle:Mailer:notification.html.twig')->end()
-                                ->scalarNode('subject')->defaultValue('mailer.notification.subject')->end()
-                                ->scalarNode('translationDomain')->defaultValue('EnhavoShopBundle')->end()
-                                ->scalarNode('from')->defaultValue('no-reply@enhavo.com')->end()
-                                ->scalarNode('to')->defaultValue('no-reply@enhavo.com')->end()
-                                ->scalarNode('sender_name')->defaultValue('enhavo')->end()
-                            ->end()
-                        ->end()
-                    ->end()
-                ->end()
-            ->end()
-        ;
     }
 
     private function addDocumentSection(ArrayNodeDefinition $node)

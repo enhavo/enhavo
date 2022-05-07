@@ -1,8 +1,12 @@
 {% trans_default_domain 'EnhavoShopBundle' %}
 <div class="order-order">
-    {{ form_row(form.state) }}
-    {{ form_row(form.paymentState) }}
-    {{ form_row(form.shippingState) }}
+
+    <div class="row">
+        <div class="col-sm-4">{{ 'order.label.state'|trans([], 'EnhavoShopBundle') }}: {{ ('order.state.' ~ resource.state)|trans([], 'EnhavoShopBundle') }}</div>
+        <div class="col-sm-4">{{ 'order.label.paymentState'|trans([], 'EnhavoShopBundle') }}: {{ ('order.paymentState.' ~ resource.paymentState)|trans([], 'EnhavoShopBundle') }}</div>
+        <div class="col-sm-4">{{ 'order.label.shippingState'|trans([], 'EnhavoShopBundle') }}: {{ ('order.shippingState.' ~ resource.shippingState)|trans([], 'EnhavoShopBundle') }}</div>
+    </div>
+
     <hr />
     <div class="row">
         <div class="col-sm-7">

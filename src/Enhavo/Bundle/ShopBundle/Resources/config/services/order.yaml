@@ -40,8 +40,11 @@ services:
     Enhavo\Bundle\ShopBundle\Manager\OrderManager:
         arguments:
             - '@Enhavo\Bundle\ShopBundle\Address\AddressProviderInterface'
+            - '@enhavo_app.util.secure_url_token_generator'
+            - '@Enhavo\Bundle\AppBundle\Mailer\MailerManager'
 
     enhavo_shop.order_manager:
+        public: true
         alias: Enhavo\Bundle\ShopBundle\Manager\OrderManager
 
     Enhavo\Bundle\ShopBundle\Pricing\DefaultPriceCalculator:
@@ -70,6 +73,38 @@ services:
         public: true
         tags:
             - { name: enhavo.action, alias: 'shop_packing_slip' }
+
+    Enhavo\Bundle\ShopBundle\Action\CancelActionType:
+        parent: Enhavo\Bundle\AppBundle\Action\Type\TransitionActionType
+        public: true
+        tags:
+            - { name: enhavo.action, alias: 'shop_order_cancel' }
+
+    Enhavo\Bundle\ShopBundle\Action\PaidActionType:
+        parent: Enhavo\Bundle\AppBundle\Action\Type\TransitionActionType
+        public: true
+        tags:
+            - { name: enhavo.action, alias: 'shop_order_paid' }
+
+    Enhavo\Bundle\ShopBundle\Action\RefundActionType:
+        parent: Enhavo\Bundle\AppBundle\Action\Type\TransitionActionType
+        public: true
+        tags:
+            - { name: enhavo.action, alias: 'shop_order_refund' }
+
+    Enhavo\Bundle\ShopBundle\Action\ShipActionType:
+        parent: Enhavo\Bundle\AppBundle\Action\Type\TransitionActionType
+        public: true
+        tags:
+            - { name: enhavo.action, alias: 'shop_order_ship' }
+
+    enhavo.state_resolver.order:
+        public: true
+        alias: Enhavo\Bundle\ShopBundle\StateResolver\OrderStateResolver
+
+    Enhavo\Bundle\ShopBundle\StateResolver\OrderStateResolver:
+        arguments:
+            - '@sm.factory'
 
 #    enhavo.order_processing.shipment_processor:
 #        class: Enhavo\Bundle\ShopBundle\OrderProcessing\OrderShipmentProcessor
@@ -311,8 +346,6 @@ services:
 #        tags:
 #          - { name: jms_serializer.event_subscriber }
 #
-#    enhavo.order.state_resolver:
-#        class: Enhavo\Bundle\ShopBundle\Order\OrderStateResolver
 #
 #    enhavo_shop.chart.order_chart_provicer:
 #        class: Enhavo\Bundle\ShopBundle\Chart\OrderChartProvider

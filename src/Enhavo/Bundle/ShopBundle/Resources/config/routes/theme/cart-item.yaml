@@ -16,7 +16,6 @@ enhavo_shop_theme_cart_item_add:
                 route: enhavo_shop_theme_cart_summary
                 parameters:
                     _format: $_format
-            flash: sylius.cart.add_item
 
 enhavo_shop_theme_cart_item_remove:
     path: /cart/{id}/remove

@@ -1,8 +1,8 @@
 winzou_state_machine:
-    sylius_payment:
+    enhavo_payment:
         class: "%sylius.model.payment.class%"
         property_path: state
-        graph: sylius_payment
+        graph: enhavo_payment
         state_machine_class: "%sylius.state_machine.class%"
         states:
             cart: ~
@@ -37,11 +37,11 @@ winzou_state_machine:
                 to: refunded
         callbacks:
             after:
-                sylius_process_order:
-                    on: ["fail", "cancel"]
-                    do: ["@sylius.order_processing.order_payment_processor.after_checkout", "process"]
-                    args: ["object.getOrder()"]
-                sylius_resolve_state:
-                    on: ["complete", "process", "refund", "authorize"]
-                    do: ["@sylius.state_resolver.order_payment", "resolve"]
-                    args: ["object.getOrder()"]
+#                sylius_process_order:
+#                    on: ["fail", "cancel"]
+#                    do: ["@sylius.order_processing.order_payment_processor.after_checkout", "process"]
+#                    args: ["object.getOrder()"]
+#                sylius_resolve_state:
+#                    on: ["complete", "process", "refund", "authorize"]
+#                    do: ["@sylius.state_resolver.order_payment", "resolve"]
+#                    args: ["object.getOrder()"]

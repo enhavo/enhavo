@@ -10,6 +10,7 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
 class MailerManager
@@ -23,6 +24,7 @@ class MailerManager
         array $defaultConfig,
         private array $mailsConfig,
         private string $model,
+        private TranslatorInterface $translator,
     ) {
         $this->defaults = new Defaults($defaultConfig['from'], $defaultConfig['name'], $defaultConfig['to']);
     }
@@ -41,11 +43,14 @@ class MailerManager
 
         $message = $this->createMessage();
 
-        $message->setFrom($this->mailsConfig[$key]['from'] ?? $this->defaults->getMailFrom());
         $message->setTo($this->mailsConfig[$key]['to'] ?? $this->defaults->getMailTo());
-        $message->setSenderName($this->mailsConfig[$key]['name'] ?? $this->defaults->getMailSenderName());
 
-        $message->setSubject($this->mailsConfig[$key]['subject']);
+        $message->setFrom($this->mailsConfig[$key]['from'] ?? $this->defaults->getMailFrom());
+        $senderName = $this->mailsConfig[$key]['name'] ?? $this->defaults->getMailSenderName();
+        $message->setSenderName($this->translator->trans($senderName, [], $this->mailsConfig[$key]['translation_domain']));
+
+        $message->setSubject($this->translator->trans($this->mailsConfig[$key]['subject'], [], $this->mailsConfig[$key]['translation_domain']));
+
         $message->setTemplate($this->mailsConfig[$key]['template']);
         $message->setContext([
             'resource' => $resource,

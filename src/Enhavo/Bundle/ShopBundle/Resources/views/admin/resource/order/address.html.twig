@@ -1,5 +1,10 @@
 {% trans_default_domain 'EnhavoShopBundle' %}
-<span class="form-headline">{{ 'order.label.shippingAddress'|trans }}</span>
-{{ form_widget(form.shippingAddress) }}
-<span class="form-headline">{{ 'order.label.billingAddress'|trans }}</span>
-{{ form_widget(form.billingAddress) }}
+
+{% if form.address.billingAddress %}
+    {{ form_row(form.address.billingAddress) }}
+{% endif %}
+
+{% if form.address.shippingAddress %}
+    {% if form.address.sameAddress %}{{ form_row(form.address.sameAddress) }}{% endif %}
+    {{ form_row(form.address.shippingAddress) }}
+{% endif %}
