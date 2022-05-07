@@ -72,7 +72,6 @@ class AppViewType extends AbstractViewType
         $this->templateManager = $templateManager;
     }
 
-
     public function getType()
     {
         return 'app';

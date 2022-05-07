@@ -53,6 +53,11 @@ services:
             - '@Enhavo\Bundle\AppBundle\View\ViewUtil'
             - '@router'
             - '@translator'
+            - '@Enhavo\Bundle\AppBundle\Resource\ResourceManager'
+            - '@Enhavo\Bundle\AppBundle\Grid\GridManager'
+            - '@sylius.resource_controller.form_factory'
+            - '@serializer'
+            - '@sylius.resource_controller.new_resource_factory'
         tags:
             - { name: enhavo_app.view }
 
@@ -71,10 +76,11 @@ services:
             - '@Enhavo\Bundle\AppBundle\View\ViewUtil'
             - '@router'
             - '@translator'
-            - '@serializer'
-            - '@doctrine.orm.entity_manager'
-            - '@sylius.resource_controller.request_configuration_factory'
             - '@Enhavo\Bundle\AppBundle\Resource\ResourceManager'
+            - '@Enhavo\Bundle\AppBundle\Grid\GridManager'
+            - '@sylius.resource_controller.form_factory'
+            - '@serializer'
+            - '@sylius.resource_controller.single_resource_provider'
         tags:
             - { name: enhavo_app.view }
 

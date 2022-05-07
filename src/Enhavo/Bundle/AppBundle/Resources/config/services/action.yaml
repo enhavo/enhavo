@@ -100,6 +100,12 @@ services:
         tags:
             - { name: enhavo.action, alias: update }
 
+    Enhavo\Bundle\AppBundle\Action\Type\TransitionActionType:
+        parent: Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType
+        public: true
+        tags:
+            - { name: enhavo.action, alias: transition }
+
     Enhavo\Bundle\AppBundle\Action\Type\ModalActionType:
         parent: Enhavo\Bundle\AppBundle\Action\AbstractActionType
         public: true

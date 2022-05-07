@@ -40,7 +40,6 @@ trait ResourceControllerTrait
         $this->batchManager = $batchManager;
     }
 
-
     public function createAction(Request $request): Response
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
@@ -48,21 +47,11 @@ trait ResourceControllerTrait
         $view = $this->viewFactory->create([
             'type' => 'create',
             'request_configuration' => $configuration,
-            'metadata' => $this->metadata,
-            'resource_factory' => $this->newResourceFactory,
-            'resource_form_factory' => $this->resourceFormFactory,
-            'factory' => $this->factory,
-            'repository' => $this->repository,
-            'event_dispatcher' => $this->eventDispatcher,
-            'app_event_dispatcher' => $this->appEventDispatcher,
         ]);
 
         return $view->getResponse($request);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateAction(Request $request): Response
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
@@ -70,14 +59,6 @@ trait ResourceControllerTrait
         $view = $this->viewFactory->create([
             'type' => 'update',
             'request_configuration' => $configuration,
-            'metadata' => $this->metadata,
-            'resource_factory' => $this->newResourceFactory,
-            'resource_form_factory' => $this->resourceFormFactory,
-            'factory' => $this->factory,
-            'repository' => $this->repository,
-            'event_dispatcher' => $this->eventDispatcher,
-            'app_event_dispatcher' => $this->appEventDispatcher,
-            'single_resource_provider' => $this->singleResourceProvider,
         ]);
 
         return $view->getResponse($request);

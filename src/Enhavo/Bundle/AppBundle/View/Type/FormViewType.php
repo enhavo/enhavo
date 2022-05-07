@@ -17,7 +17,6 @@ use Enhavo\Bundle\AppBundle\View\AbstractViewType;
 
 class FormViewType extends AbstractViewType
 {
-
     public static function getName(): ?string
     {
         return 'form';
@@ -27,5 +26,4 @@ class FormViewType extends AbstractViewType
     {
         return UpdateViewType::class;
     }
-
 }

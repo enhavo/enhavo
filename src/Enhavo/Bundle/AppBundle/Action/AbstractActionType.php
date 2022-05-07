@@ -32,7 +32,12 @@ abstract class AbstractActionType implements ActionTypeInterface
 
     public function isHidden(array $options, $resource = null)
     {
-        if (preg_match('/^exp:/', $options['hidden'])) {
+        if ($options['hidden'] === false && $options['condition']) {
+            $hidden = !$this->actionLanguageExpression->evaluate($options['condition'], [
+                'resource' => $resource,
+                'action' => $this
+            ]);
+        } else if (preg_match('/^exp:/', $options['hidden'])) {
             $hidden = $this->actionLanguageExpression->evaluate(substr($options['hidden'], 4), [
                 'resource' => $resource,
                 'action' => $this
@@ -55,7 +60,8 @@ abstract class AbstractActionType implements ActionTypeInterface
             'translation_domain' => null,
             'label' => null,
             'permission' => null,
-            'hidden' => false
+            'hidden' => false,
+            'condition' => null
         ]);
 
         $resolver->setRequired([

@@ -8,162 +8,92 @@
 
 namespace Enhavo\Bundle\AppBundle\View\Type;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Action\ActionManager;
-use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
+use Enhavo\Bundle\AppBundle\Grid\GridManager;
 use Enhavo\Bundle\AppBundle\Resource\ResourceManager;
-use Enhavo\Bundle\AppBundle\View\AbstractViewType;
-use Enhavo\Bundle\AppBundle\View\TemplateData;
-use Enhavo\Bundle\AppBundle\View\ViewData;
+use Enhavo\Bundle\AppBundle\View\AbstractResourceFormType;
 use Enhavo\Bundle\AppBundle\View\ViewUtil;
-use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactoryInterface;
-use Sylius\Bundle\ResourceBundle\Controller\SingleResourceProvider;
-use Sylius\Component\Resource\Metadata\MetadataInterface;
+use Sylius\Bundle\ResourceBundle\Controller\ResourceFormFactoryInterface;
+use Sylius\Bundle\ResourceBundle\Controller\SingleResourceProviderInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\Component\Resource\ResourceActions;
-use Symfony\Component\Form\Form;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class UpdateViewType extends AbstractViewType
+class UpdateViewType extends AbstractResourceFormType
 {
     public function __construct(
-        private array $formThemes,
-        private ActionManager $actionManager,
-        private FlashBag $flashBag,
+        array $formThemes,
+        ActionManager $actionManager,
+        FlashBag $flashBag,
         private ViewUtil $util,
-        private RouterInterface $router,
-        private TranslatorInterface $translator,
-        private NormalizerInterface $normalizer,
-        private EntityManagerInterface $em,
-        private RequestConfigurationFactoryInterface $requestConfigurationFactory,
+        RouterInterface $router,
+        TranslatorInterface $translator,
         private ResourceManager $resourceManager,
-    ) {}
+        GridManager $gridManager,
+        ResourceFormFactoryInterface $resourceFormFactory,
+        NormalizerInterface $normalizer,
+        private SingleResourceProviderInterface $singleResourceProvider,
+    ) {
+        parent::__construct($formThemes, $actionManager, $flashBag, $util, $router, $translator, $resourceManager, $gridManager, $resourceFormFactory, $normalizer);
+    }
 
     public static function getName(): ?string
     {
         return 'update';
     }
 
-    public static function getParentType(): ?string
+    public function createResource($options) : ResourceInterface
     {
-        return CreateViewType::class;
-    }
-
-    public function handleRequest($options, Request $request, ViewData $viewData, ViewData $templateData)
-    {
-        $this->util->updateRequest();
-        $configuration = $this->util->getRequestConfiguration($options);
+        $metadata = $this->getMetadata($options);
+        $configuration = $this->getRequestConfiguration($options);
         $this->util->isGrantedOr403($configuration, ResourceActions::UPDATE);
-
-        $resource = $options['resource'];
-        if ($resource === null) {
-            throw new NotFoundHttpException(sprintf('The "%s" has not been found', $configuration->getMetadata()->getHumanizedName()));
-        }
-
-        $resourceFormFactory = $options['resource_form_factory'];
-
-        /** @var Form $form */
-        $form = $resourceFormFactory->create($configuration, $resource);
-        $form->handleRequest($request);
-
-        $eventDispatcher = $options['event_dispatcher'];
-        $appEventDispatcher = $options['app_event_dispatcher'];
-        if (in_array($request->getMethod(), ['POST', 'PUT', 'PATCH']) && $form->isSubmitted()) {
-            if ($form->isValid()) {
-                $resource = $form->getData();
-                $appEventDispatcher->dispatchPreEvent(ResourceActions::UPDATE, $configuration, $resource);
-                $eventDispatcher->dispatchPreEvent(ResourceActions::UPDATE, $configuration, $resource);
-                $this->em->flush();
-                $appEventDispatcher->dispatchPostEvent(ResourceActions::UPDATE, $configuration, $resource);
-                $eventDispatcher->dispatchPostEvent(ResourceActions::UPDATE, $configuration, $resource);
-                $this->flashBag->add('success', $this->translator->trans('form.message.success', [], 'EnhavoAppBundle'));
-                $route = $request->get('_route');
-                return new RedirectResponse($this->router->generate($route, [
-                    'id' => $resource->getId(),
-                    'tab' => $request->get('tab'),
-                    'view_id' => $request->get('view_id')
-                ]));
-            } else {
-                $this->flashBag->add('error', $this->translator->trans('form.message.error', [], 'EnhavoAppBundle'));
-                foreach($form->getErrors() as $error) {
-                    $this->flashBag->add('error', $error->getMessage());
-                }
-            }
-        }
-        $viewData['messages'] = array_merge($viewData['messages'], $this->util->getFlashMessages());
-        $templateData['form'] = $form->createView();
-
-        return null;
+        $repository = $this->resourceManager->getRepository($metadata->getApplicationName(), $metadata->getName());
+        return $this->singleResourceProvider->get($configuration, $repository);
     }
 
-    public function findResource(RequestConfiguration $configuration, $options): ?ResourceInterface
+    protected function save($options)
     {
-        /** @var SingleResourceProvider $singleResourceProvider */
-        $singleResourceProvider = $options['single_resource_provider'];
+        $configuration = $this->getRequestConfiguration($options);
 
-        /** @var RepositoryInterface $repository */
-        $repository = $options['repository'];
-
-        if (null === $resource = $singleResourceProvider->get($configuration, $repository)) {
-            return null;
-        }
-
-        return $resource;
-    }
-
-    public function createViewData($options, ViewData $data)
-    {
-        /** @var MetadataInterface $metadata */
-        $metadata = $options['metadata'];
-        /** @var ResourceInterface $resource */
-        $resource = $options['resource'];
-
-        $configuration = $this->util->getRequestConfiguration($options);
-
-        $data['form_action'] = $this->util->mergeConfig([
-            sprintf('%s_%s_update', $metadata->getApplicationName(), $this->util->getUnderscoreName($metadata)),
-            $options['form_action'],
-            $this->util->getViewerOption('form.action', $configuration)
+        $this->resourceManager->update($this->resource, [
+            'event_name' => $configuration->getEvent() ?? ResourceActions::UPDATE,
+            'application_name' =>  $configuration->getMetadata()->getApplicationName(),
+            'entity_name' =>  $configuration->getMetadata()->getName(),
+            'transition' => $configuration->getStateMachineTransition(),
+            'graph' => $configuration->getStateMachineGraph(),
         ]);
-
-        $data['form_action_parameters'] = $this->util->mergeConfigArray([
-            [ 'id' => $resource->getId() ],
-            $options['form_action_parameters'],
-            $this->util->getViewerOption('form.action_parameters', $configuration)
-        ]);
-
-        $actionsSecondary = $this->util->mergeConfigArray([
-            $this->createActionsSecondary($options, $configuration, $resource),
-            $options['actions_secondary'],
-            $this->util->getViewerOption('actions_secondary', $configuration)
-        ]);
-
-        $data['actionsSecondary'] = $this->actionManager->createActionsViewData($actionsSecondary, $options['resource']);
-
-        $resourceData = $this->getResourceData($configuration, $options);
-        if ($resourceData) {
-            $data['resource'] = $resourceData;
-        }
     }
 
-    public function createTemplateData($options, ViewData $viewData, TemplateData $templateData)
+    public function configureOptions(OptionsResolver $optionsResolver)
     {
-        $templateData['resource'] = $options['resource'];
+        parent::configureOptions($optionsResolver);
+
+        $optionsResolver->setDefaults([
+            'form_delete' => null,
+            'form_delete_parameters' => [],
+            'label' => 'label.edit',
+        ]);
     }
 
-    private function createActionsSecondary($options, $requestConfiguration, $resource)
+    protected function getFormAction($options): string
     {
-        /** @var MetadataInterface $metadata */
-        $metadata = $options['metadata'];
+        $metadata = $this->getMetadata($options);
+        return sprintf('%s_%s_create', $metadata->getApplicationName(), $this->util->getUnderscoreName($metadata));
+    }
+
+    protected function getFormActionParameters($option): array
+    {
+        return ['id' => $this->resource->getId()];
+    }
+
+    protected function createSecondaryActions($options): array
+    {
+        $metadata = $this->getMetadata($options);
+        $requestConfiguration = $this->getRequestConfiguration($options);
 
         $formDelete = $this->util->mergeConfig([
             sprintf('%s_%s_delete', $metadata->getApplicationName(), $this->util->getUnderscoreName($metadata)),
@@ -176,7 +106,7 @@ class UpdateViewType extends AbstractViewType
             $this->util->getViewerOption('form.delete_parameters', $requestConfiguration)
         ]);
 
-        $default = [
+        return [
             'delete' => [
                 'type' => 'delete',
                 'route' => $formDelete,
@@ -184,44 +114,10 @@ class UpdateViewType extends AbstractViewType
                 'permission' => $this->util->getRoleNameByResourceName($metadata->getApplicationName(), $this->util->getUnderscoreName($metadata), 'delete')
             ]
         ];
-
-        return $default;
     }
 
-    private function getResourceData(RequestConfiguration $requestConfiguration, array $options)
+    protected function getRedirectRoute($options): ?string
     {
-        $resourceData = null;
-        $serializationGroups = $requestConfiguration->getSerializationGroups();
-        if($serializationGroups && $options['resource']) {
-            $resourceData = $this->normalizer->normalize($options['resource'], null, ['groups' => $serializationGroups]);
-        }
-        return $resourceData;
-    }
-
-    public function configureOptions(OptionsResolver $optionsResolver)
-    {
-
-        $optionsResolver->setDefaults([
-            'form_delete' => null,
-            'form_delete_parameters' => [],
-            'label' => 'label.edit',
-        ]);
-
-        $optionsResolver->setRequired('single_resource_provider');
-
-        $optionsResolver->setNormalizer('resource', function(Options $options, $value) {
-            $configuration = $this->util->getRequestConfiguration($options);
-
-            if ($value === null) {
-                return $this->findResource($configuration, $options);
-            }
-
-            return $value;
-        });
-
-        $optionsResolver->setNormalizer('template', function(Options $options, $value) {
-            $configuration = $this->util->getRequestConfiguration($options);
-            return $configuration->getTemplate($value);
-        });
+        return null;
     }
 }
