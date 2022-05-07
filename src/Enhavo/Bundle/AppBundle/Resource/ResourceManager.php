@@ -157,7 +157,7 @@ class ResourceManager
         }
 
         if ($typeName === null) {
-            throw new ResourceException(sprintf('Unable to guess application and entity name for class "%s". The class name was never configured as resource'));
+            throw new ResourceException(sprintf('Unable to guess application and entity name for class "%s". The class name was never configured as resource', get_class($resource)));
         }
 
         $typeNameParts = explode('.', $typeName);
