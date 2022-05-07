@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\ShopBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Enhavo\Bundle\ShopBundle\Model\AddressSubjectInterface;
 use Enhavo\Bundle\ShopBundle\State\OrderCheckoutStates;
 use Enhavo\Bundle\ShopBundle\State\OrderPaymentStates;
 use Enhavo\Bundle\ShopBundle\State\OrderShippingStates;
@@ -355,5 +356,10 @@ class Order extends SyliusOrder implements OrderInterface
     public function setShippable($value)
     {
         $this->shippable = $value;
+    }
+
+    public function getAddress(): AddressSubjectInterface
+    {
+        return $this;
     }
 }

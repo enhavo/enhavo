@@ -22,6 +22,9 @@ sylius_order_update:
     defaults:
         _controller: sylius.controller.order::updateAction
         _sylius:
+            state_machine:
+                graph: $graph
+                transition: $transition
             viewer:
                 tabs:
                     main:
@@ -39,10 +42,21 @@ sylius_order_update:
                 actions:
                     save:
                         type: save
+                    ship:
+                        type: shop_order_ship
+                    paid:
+                        type: shop_order_paid
+                    refund:
+                        type: shop_order_refund
                     billing:
                         type: shop_billing
                     packingSlip:
                         type: shop_packing_slip
+                actions_secondary:
+                    cancel:
+                        type: shop_order_cancel
+                    delete:
+                        type: delete
 
 sylius_order_table:
     options:
@@ -70,32 +84,88 @@ sylius_order_table:
                         type: text
                         label: order.label.number
                         property: number
-                        width: 2
+                        width: 1
                         sortable: true
                     date:
                         type: datetime
                         label: order.label.ordered_at
                         property: checkoutCompletedAt
-                        width: 2
+                        width: 1
                         sortable: true
                     address:
                         type: shop_address
                         label: order.label.address
                         property: shippingAddress
-                        width: 4
+                        width: 3
+                    state:
+                        type: state
+                        label: order.label.state
+                        property: state
+                        width: 2
+                        sortable: true
+                        states:
+                            new:
+                                label: order.state.new
+                                translation_domain: EnhavoShopBundle
+                                color: orange
+                            cancelled:
+                                label: order.state.cancelled
+                                translation_domain: EnhavoShopBundle
+                                color: red
+                            fulfilled:
+                                label: order.state.fulfilled
+                                translation_domain: EnhavoShopBundle
+                                color: green
                     shipping_state:
                         type: state
                         label: order.label.shippingState
                         property: shippingState
                         width: 2
                         sortable: true
+                        states:
+                            ready:
+                                label: order.shippingState.ready
+                                translation_domain: EnhavoShopBundle
+                                color: orange
+                            cancelled:
+                                label: order.shippingState.cancelled
+                                translation_domain: EnhavoShopBundle
+                                color: red
+                            partially_shipped:
+                                label: order.shippingState.partially_shipped
+                                translation_domain: EnhavoShopBundle
+                                color: orange
+                            shipped:
+                                label: order.shippingState.shipped
+                                translation_domain: EnhavoShopBundle
+                                color: green
                     payment_state:
                         type: state
                         label: order.label.paymentState
                         property: paymentState
                         width: 2
                         sortable: true
-
+                        states:
+                            awaiting_payment:
+                                label: order.paymentState.awaiting_payment
+                                translation_domain: EnhavoShopBundle
+                                color: orange
+                            cancelled:
+                                label: order.paymentState.cancelled
+                                translation_domain: EnhavoShopBundle
+                                color: red
+                            partially_paid:
+                                label: order.paymentState.partially_paid
+                                translation_domain: EnhavoShopBundle
+                                color: orange
+                            paid:
+                                label: order.paymentState.paid
+                                translation_domain: EnhavoShopBundle
+                                color: green
+                            refunded:
+                                label: order.paymentState.refunded
+                                translation_domain: EnhavoShopBundle
+                                color: green
 
 sylius_order_delete:
     options:

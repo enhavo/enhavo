@@ -1,7 +1,11 @@
-{% trans_default_domain translationDomain %}
-
-<p>Hello {{ order.billingAddress.firstName }} {{ order.billingAddress.lastName }}</p>
-
+{% block text_html %}
+<p>Hello {{ resource.billingAddress.firstName }} {{ resource.billingAddress.lastName }}</p>
 <p>Your order has been shipped.</p>
-
 <p>Your enhavo Team</p>
+{% endblock %}
+
+{% block text_plain %}
+Hello {{ resource.billingAddress.firstName }} {{ resource.billingAddress.lastName }}
+Your order has been shipped.
+Your enhavo Team
+{% endblock %}

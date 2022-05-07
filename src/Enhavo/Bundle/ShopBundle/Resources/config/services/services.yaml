@@ -76,6 +76,7 @@ services:
             - '@doctrine.orm.entity_manager'
             - '@sylius.factory.address'
 
+
 #    enhavo_shop.listener.doctrine_sylius_meta:
 #        class: Enhavo\Bundle\ShopBundle\EventListener\DoctrineSyliusMetaListener
 #        tags:
@@ -89,19 +90,7 @@ services:
 #    enhavo.token_generator:
 #        class: Sylius\Component\User\Security\Generator\TokenGenerator
 
-#    Enhavo\Bundle\ShopBundle\Button\BillingButton:
-#        public: true
-#        calls:
-#            - [setContainer, ['@service_container']]
-#        tags:
-#            - { name: enhavo.button, alias: shop_billing }
-#
-#    Enhavo\Bundle\ShopBundle\Button\PackingSlipButton:
-#        public: true
-#        calls:
-#            - [setContainer, ['@service_container']]
-#        tags:
-#            - { name: enhavo.button, alias: shop_packing_slip }
+
 
 #    enhavo_shop.document.manager:
 #        class: Enhavo\Bundle\ShopBundle\Document\DocumentManager

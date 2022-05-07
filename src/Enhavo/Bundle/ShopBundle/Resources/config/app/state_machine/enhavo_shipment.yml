@@ -1,8 +1,8 @@
 winzou_state_machine:
-    sylius_shipment:
+    enhavo_shipment:
         class: "%sylius.model.shipment.class%"
         property_path: state
-        graph: sylius_shipment
+        graph: enhavo_shipment
         state_machine_class: "%sylius.state_machine.class%"
         states:
             cart: ~
@@ -21,12 +21,12 @@ winzou_state_machine:
                 to: cancelled
         callbacks:
             before:
-                sylius_assign_date:
-                    on: "ship"
-                    do: ["@sylius.shipping_date_assigner", "assign"]
-                    args: ["object"]
+#                sylius_assign_date:
+#                    on: "ship"
+#                    do: ["@sylius.shipping_date_assigner", "assign"]
+#                    args: ["object"]
             after:
-                sylius_resolve_state:
-                    on: ["ship"]
-                    do: ["@sylius.state_resolver.order_shipping", "resolve"]
-                    args: ["object.getOrder()"]
+#                sylius_resolve_state:
+#                    on: ["ship"]
+#                    do: ["@sylius.state_resolver.order_shipping", "resolve"]
+#                    args: ["object.getOrder()"]

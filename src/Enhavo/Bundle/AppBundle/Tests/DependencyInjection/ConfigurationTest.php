@@ -61,6 +61,7 @@ class ConfigurationTest extends TestCase
                         'to' => 'default_to',
                         'subject' => 'default_subject',
                         'template' => 'default_template',
+                        'translation_domain' => null,
                     ]
                 ]
             ]
@@ -75,6 +76,7 @@ class ConfigurationTest extends TestCase
                         'to' => 'other_to',
                         'subject' => 'other_subject',
                         'template' => 'other_template',
+                        'translation_domain' => 'other_domain',
                     ]
                 ]
             ]
@@ -90,7 +92,8 @@ class ConfigurationTest extends TestCase
                 'to' => 'default_to',
                 'subject' => 'default_subject',
                 'template' => 'default_template',
-                'content_type' => 'text/plain'
+                'content_type' => 'text/plain',
+                'translation_domain' => null,
             ],
             'other' => [
                 'from' => 'other_from',
@@ -98,7 +101,8 @@ class ConfigurationTest extends TestCase
                 'to' => 'other_to',
                 'subject' => 'other_subject',
                 'template' => 'other_template',
-                'content_type' => 'text/plain'
+                'content_type' => 'text/plain',
+                'translation_domain' => 'other_domain',
             ]
         ], $config['mailer']['mails']);
     }

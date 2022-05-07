@@ -7,10 +7,12 @@ use Enhavo\Bundle\AppBundle\Mailer\Attachment;
 use Enhavo\Bundle\AppBundle\Mailer\MailerManager;
 use Enhavo\Bundle\AppBundle\Mailer\Message;
 use Enhavo\Bundle\AppBundle\Template\TemplateManager;
+use Enhavo\Bundle\AppBundle\Tests\Mock\TranslatorMock;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
@@ -28,6 +30,7 @@ class MailerManagerTest extends TestCase
         ], __DIR__ . '/../'));
         $dependencies->mailer = $this->getMockBuilder(MailerInterface::class)->disableOriginalConstructor()->getMock();
         $dependencies->mailsConfig = [];
+        $dependencies->translator = new TranslatorMock();
         $dependencies->defaultConfig = [
             'from' => 'from@enhavo.com',
             'name' => 'enhavo',
@@ -45,7 +48,8 @@ class MailerManagerTest extends TestCase
             $dependencies->environment,
             $dependencies->defaultConfig,
             $dependencies->mailsConfig,
-            $dependencies->model
+            $dependencies->model,
+            $dependencies->translator,
         );
     }
 
@@ -68,6 +72,7 @@ class MailerManagerTest extends TestCase
                 'subject' => '{{ resource.subject }}',
                 'template' => 'multipart-mail.html.twig',
                 'content_type' => Message::CONTENT_TYPE_MIXED,
+                'translation_domain' => null,
             ]
         ];
 
@@ -94,6 +99,7 @@ class MailerManagerTest extends TestCase
     {
         $dependencies = $this->createDependencies();
         $dependencies->mailer->method('send');
+        $dependencies->translator->setPostFix('trans');
 
         $dependencies->mailsConfig = [
             'default' => [
@@ -103,6 +109,7 @@ class MailerManagerTest extends TestCase
                 'subject' => '{{ resource.subject }}',
                 'template' => 'simple-mail.html.twig',
                 'content_type' => Message::CONTENT_TYPE_PLAIN,
+                'translation_domain' => null,
             ]
         ];
 
@@ -110,6 +117,7 @@ class MailerManagerTest extends TestCase
 
         $dependencies->mailer->expects($this->once())->method('send')->willReturnCallback(function (Email $email) {
             $this->assertEquals('__text__', $email->getHtmlBody());
+            $this->assertEquals('__subject__trans', $email->getSubject());
         });
 
         $manager->sendMail('default', $this->createDefaultResource());
@@ -123,7 +131,8 @@ class MailerManagerTest extends TestCase
             'subject' => '__subject__',
             'resource' => '__RESOURCE__',
             'from' => 'from@enhavo.com',
-            'to' => 'to@enhavo.com'
+            'to' => 'to@enhavo.com',
+            'translation_domain' => null,
         ];
     }
 
@@ -140,16 +149,11 @@ class MailerManagerTest extends TestCase
 
 class MailerManagerTestDependencies
 {
-    /** @var TemplateManager|MockObject */
-    public $templateManager;
-    /** @var Environment|MockObject */
-    public $environment;
-    /** @var MailerInterface|MockObject */
-    public $mailer;
-    /** @var array */
-    public $defaultConfig;
-    /** @var array */
-    public $mailsConfig;
-    /** @var string */
-    public $model;
+    public TemplateManager|MockObject $templateManager;
+    public Environment|MockObject $environment;
+    public MailerInterface|MockObject $mailer;
+    public array $defaultConfig = [];
+    public array $mailsConfig = [];
+    public string $model;
+    public TranslatorInterface|TranslatorMock $translator;
 }

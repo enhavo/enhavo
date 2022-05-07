@@ -180,18 +180,34 @@ enhavo_app:
             label: voucher.role.label.delete
             translation_domain: EnhavoShopBundle
 
-enhavo_shop:
     mailer:
-        confirm:
-            from: '%env(string:MAILER_FROM)%'
-            sender_name: '%env(string:MAILER_NAME)%'
-        tracking:
-            from: '%env(string:MAILER_FROM)%'
-            sender_name: '%env(string:MAILER_NAME)%'
-        notification:
-            from: '%env(string:MAILER_FROM)%'
-            sender_name: '%env(string:MAILER_NAME)%'
-            to: '%env(string:MAILER_TO)%'
+        mails:
+            shop_confirm:
+                from: '%env(string:MAILER_FROM)%'
+                name: '%env(string:MAILER_NAME)%'
+                to: '{{ resource.customerEmail }}'
+                subject: 'mail.confirm.subject'
+                translation_domain: EnhavoShopBundle
+                template: 'mail/shop/confirm.html.twig'
+                content_type: 'multipart/mixed'
+
+            shop_notification:
+                from: '%env(string:MAILER_FROM)%'
+                name: '%env(string:MAILER_NAME)%'
+                to: '%env(string:MAILER_TO)%'
+                subject: 'mail.notification.subject'
+                translation_domain: EnhavoShopBundle
+                template: 'mail/shop/notification.html.twig'
+                content_type: 'multipart/mixed'
+
+            shop_tracking:
+                from: '%env(string:MAILER_FROM)%'
+                name: '%env(string:MAILER_NAME)%'
+                to: '{{ resource.customerEmail }}'
+                subject: 'mail.tracking.subject'
+                translation_domain: EnhavoShopBundle
+                template: 'mail/shop/tracking.html.twig'
+                content_type: 'multipart/mixed'
 
 enhavo_routing:
     classes:

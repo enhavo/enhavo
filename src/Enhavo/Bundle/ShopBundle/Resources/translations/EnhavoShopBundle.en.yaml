@@ -52,7 +52,7 @@ label:
   tag: Tag
   category: Category
 
-mailer:
+mail:
   confirm:
     subject: Order
   tracking:
@@ -101,29 +101,37 @@ order:
     shipped: Shipped
     cancelled: Cancelled
     shippingMethod: Shipping type
+    state: State
     shippingState: Shipment
     paymentState: Payment
-
   action:
     transfer: Transfer to cart
     purchase: Pay
-
+    cancel: cancel
+    paid: Paid
+    refund: Refund
+    ship: Ship
+  shippingState:
+    ready: Ready
+    partially_shipped: Partially shipped
+    shipped: Shipped
+    cancelled: Abgebrochen
+  paymentState:
+    awaiting_payment: Awaiting payment
+    cancelled: Cancelled
+    paid: Paid
+    partially_paid: Partially paid
+    partially_refunded: Partially refunded
+    refunded: Refunded
+  state:
+    new: New
+    cancelled: Cancelled
+    fulfilled: Fulfilled
   form:
     label:
-      state:
-        label: State
-        cancelled: Cancelled
-        confirmed: Confirmed
-        returned: Returned
-      payment:
-        label: Payment
-        completed: Completed
-        pending: Pending
-      shipping:
-        label: Shipping
-        pending: Pending
-        ready: Ready
-        shipped: Shipped
+      state: State
+      payment: Payment
+      shipping: Shipping
 
 order_item:
   form:
