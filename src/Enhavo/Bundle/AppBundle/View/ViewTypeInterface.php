@@ -15,11 +15,17 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 interface ViewTypeInterface extends TypeInterface
 {
+    public function init($options);
+
     public function createViewData($options, ViewData $viewData);
 
     public function createTemplateData($options, ViewData $viewData, TemplateData $templateData);
 
     public function handleRequest($options, Request $request, ViewData $viewData, TemplateData $templateData);
+
+    public function finishViewData($options, ViewData $data);
+
+    public function finishTemplateData($options, ViewData $viewData, TemplateData $templateData);
 
     public function getResponse($options, Request $request, ViewData $viewData, TemplateData $templateData): Response;
 

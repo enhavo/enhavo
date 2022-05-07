@@ -23,12 +23,27 @@ class BaseViewType extends AbstractType implements ViewTypeInterface
         return 'base';
     }
 
+    public function init($options)
+    {
+
+    }
+
     public function createViewData($options, ViewData $viewData)
     {
 
     }
 
     public function createTemplateData($options, ViewData $viewData, TemplateData $templateData)
+    {
+
+    }
+
+    public function finishViewData($options, ViewData $data)
+    {
+
+    }
+
+    public function finishTemplateData($options, ViewData $viewData, TemplateData $templateData)
     {
 
     }

@@ -13,12 +13,27 @@ abstract class AbstractViewType extends AbstractType implements ViewTypeInterfac
     /** @var $parent self */
     protected $parent;
 
+    public function init($options)
+    {
+
+    }
+
     public function createViewData($options, ViewData $data)
     {
 
     }
 
     public function createTemplateData($options, ViewData $viewData, TemplateData $templateData)
+    {
+
+    }
+
+    public function finishViewData($options, ViewData $viewData)
+    {
+
+    }
+
+    public function finishTemplateData($options, ViewData $viewData, TemplateData $templateData)
     {
 
     }
