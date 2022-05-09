@@ -30,6 +30,7 @@ interface OrderInterface extends SyliusOrderInterface, PromotionSubjectInterface
     public function addShipment(ShipmentInterface $shipment);
     public function removeShipment(ShipmentInterface $shipment);
     public function getShipments(): Collection|array;
+    public function hasShipments(): bool;
     public function getUser();
     public function setUser(UserInterface $user = null);
     public function getEmail();
@@ -48,4 +49,6 @@ interface OrderInterface extends SyliusOrderInterface, PromotionSubjectInterface
     public function isFreeShipping();
     public function getUnitTaxTotal();
     public function isShippable();
+    public function getItemUnits();
+
 }

@@ -5,9 +5,9 @@ namespace Enhavo\Bundle\ShopBundle\View;
 use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
 use Enhavo\Bundle\AppBundle\Resource\ResourceManager;
 use Enhavo\Bundle\AppBundle\View\AbstractViewType;
+use Enhavo\Bundle\AppBundle\View\ResourceMetadataHelperTrait;
 use Enhavo\Bundle\AppBundle\View\Type\ApiViewType;
 use Enhavo\Bundle\AppBundle\View\ViewData;
-use Enhavo\Bundle\ShopBundle\Manager\ProductManager;
 use Enhavo\Bundle\VueFormBundle\Form\VueForm;
 use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactoryInterface;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceFormFactoryInterface;
@@ -18,6 +18,8 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class CartSummaryViewType extends AbstractViewType
 {
+    use ResourceMetadataHelperTrait;
+
     public function __construct(
         private ResourceManager $resourceManager,
         private ResourceFormFactoryInterface $resourceFormFactory,
@@ -61,7 +63,9 @@ class CartSummaryViewType extends AbstractViewType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'template' => 'theme/shop/cart/summary.html.twig'
+            'template' => 'theme/shop/cart/summary.html.twig',
         ]);
+
+        $resolver->setRequired('request_configuration');
     }
 }

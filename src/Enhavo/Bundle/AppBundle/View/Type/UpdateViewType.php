@@ -18,6 +18,7 @@ use Sylius\Bundle\ResourceBundle\Controller\SingleResourceProviderInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\ResourceActions;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
@@ -52,7 +53,11 @@ class UpdateViewType extends AbstractResourceFormType
         $configuration = $this->getRequestConfiguration($options);
         $this->util->isGrantedOr403($configuration, ResourceActions::UPDATE);
         $repository = $this->resourceManager->getRepository($metadata->getApplicationName(), $metadata->getName());
-        return $this->singleResourceProvider->get($configuration, $repository);
+        $resource = $this->singleResourceProvider->get($configuration, $repository);
+        if ($resource === null) {
+            throw new NotFoundHttpException();
+        }
+        return $resource;
     }
 
     protected function save($options)

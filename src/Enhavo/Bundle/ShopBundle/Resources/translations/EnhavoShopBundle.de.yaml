@@ -47,10 +47,12 @@ payment_method:
 label:
   product: Produkt
   order: Bestellung
-  sales: Umsatz
+  sales: Verkauf
   shop: Shop
   tag: Tag
   category: Kategorie
+  configuration: Kategorie
+  catalog: Katalog
 
 mail:
   confirm:

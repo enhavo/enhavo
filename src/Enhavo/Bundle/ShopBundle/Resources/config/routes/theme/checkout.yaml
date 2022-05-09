@@ -7,46 +7,50 @@ sylius_shop_checkout_start:
 
 sylius_shop_checkout_address:
     path: /checkout/address
-    methods: [GET, PUT]
+    methods: [GET, POST]
     defaults:
-        _controller: sylius.controller.order:updateAction
+        _controller: sylius.controller.order:checkoutAction
         _sylius:
             event: address
             flash: false
             template: "theme/shop/checkout/address.html.twig"
+            redirect: sylius_shop_checkout_select_shipping
             form:
-                type: Enhavo\Bundle\ShopBundle\Form\Type\OrderAddressType
+                type: Enhavo\Bundle\ShopBundle\Form\Type\Checkout\AddressType
+                options:
+                    validation_groups: ['checkout_address']
             repository:
                 method: find
                 arguments:
                     - "expr:service('sylius.context.cart').getCart().getId()"
             state_machine:
-                graph: sylius_order_checkout
+                graph: enhavo_order_checkout
                 transition: address
 
 sylius_shop_checkout_select_shipping:
     path: /checkout/select-shipping
-    methods: [GET, PUT]
+    methods: [GET, POST]
     defaults:
-        _controller: sylius.controller.order:updateAction
+        _controller: sylius.controller.order:checkoutAction
         _sylius:
             event: select_shipping
             flash: false
             template: "theme/shop/checkout/select-shipping.html.twig"
-            form: Enhavo\Bundle\ShopBundle\Form\Type\OrderShipmentType
+            redirect: sylius_shop_checkout_select_payment
+            form: Enhavo\Bundle\ShopBundle\Form\Type\Checkout\SelectShippingType
             repository:
                 method: find
                 arguments:
                     - "expr:service('sylius.context.cart').getCart().getId()"
             state_machine:
-                graph: sylius_order_checkout
+                graph: enhavo_order_checkout
                 transition: select_shipping
 
 sylius_shop_checkout_select_payment:
     path: /checkout/select-payment
-    methods: [GET, PUT]
+    methods: [GET, POST]
     defaults:
-        _controller: sylius.controller.order:updateAction
+        _controller: sylius.controller.order:checkoutAction
         _sylius:
             event: payment
             flash: false

@@ -33,6 +33,14 @@ services:
         tags:
             - { name: sylius.order_processor, priority: 60 }
 
+    Enhavo\Bundle\ShopBundle\OrderProcessing\OrderShipmentProcessor:
+        arguments:
+            - '@sylius.shipping_method_resolver.default'
+            - '@sylius.factory.shipment'
+            - '@sylius.shipping_methods_resolver'
+        tags:
+            - { name: sylius.order_processor, priority: 40 }
+
     Enhavo\Bundle\ShopBundle\Manager\TaxationManager:
 
     Enhavo\Bundle\ShopBundle\Manager\PricingManager:

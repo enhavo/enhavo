@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="Enhavo\Bundle\ShopBundle\Entity\ShippingMethod" table="shop_shipping_method">
+        <field name="name" />
+        <many-to-one field="taxCategory" target-entity="Sylius\Component\Taxation\Model\TaxCategoryInterface">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+            <join-column on-delete="SET NULL" />
+        </many-to-one>
+    </entity>
+</doctrine-mapping>

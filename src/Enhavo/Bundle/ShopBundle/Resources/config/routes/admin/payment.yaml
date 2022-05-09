@@ -1,0 +1,64 @@
+sylius_payment_index:
+    options:
+        expose: true
+    path: /enhavo/shop/payment/index
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.payment::indexAction
+        _sylius:
+            viewer:
+
+sylius_payment_create:
+    options:
+        expose: true
+    path: /enhavo/shop/payment/create
+    methods: [GET,POST]
+    defaults:
+        _controller: sylius.controller.payment::createAction
+        _sylius:
+            redirect: sylius_payment_update
+            viewer:
+
+sylius_payment_update:
+    options:
+        expose: true
+    path: /enhavo/shop/payment/update/{id}
+    methods: [GET,POST]
+    defaults:
+        _controller: sylius.controller.payment::updateAction
+        _sylius:
+            viewer:
+
+sylius_payment_table:
+    options:
+        expose: true
+    path: /enhavo/shop/payment/table
+    defaults:
+        page: 1
+        _controller: sylius.controller.payment::tableAction
+        _sylius:
+            viewer:
+                columns: []
+
+sylius_payment_delete:
+    options:
+        expose: true
+    path: /enhavo/shop/payment/delete/{id}
+    methods: [POST]
+    defaults:
+        _controller: sylius.controller.payment::deleteAction
+
+sylius_payment_batch:
+    options:
+        expose: true
+    path: /enhavo/shop/payment/batch
+    methods: [POST]
+    defaults:
+        _controller: sylius.controller.payment::batchAction
+        _sylius:
+            paginate: false
+            criteria:
+                id: $ids
+            batches:
+                delete:
+                    type: delete

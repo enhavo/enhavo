@@ -12,14 +12,7 @@ use Sylius\Component\Shipping\Model\ShipmentInterface as SyliusShipmentInterface
 
 interface ShipmentInterface extends SyliusShipmentInterface
 {
-    /**
-     * @return OrderInterface
-     */
-    public function getOrder();
+    public function getOrder(): ?OrderInterface;
 
-    /**
-     * @param OrderInterface $order
-     * @return mixed
-     */
-    public function setOrder(OrderInterface $order);
+    public function setOrder(?OrderInterface $order);
 }

@@ -38,7 +38,11 @@ sylius_shipping_method_table:
         _controller: sylius.controller.shipping_method::tableAction
         _sylius:
             viewer:
-                columns: []
+                columns:
+                    name:
+                        property: name
+                        type: property
+                        label: Name
 
 sylius_shipping_method_delete:
     options:

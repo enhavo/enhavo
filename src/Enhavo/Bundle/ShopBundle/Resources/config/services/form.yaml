@@ -58,6 +58,14 @@ services:
         tags:
             - { name: form.type_extension, extended_type: Sylius\Bundle\ResourceBundle\Form\Type\ResourceTranslationsType }
 
+    Enhavo\Bundle\ShopBundle\Form\Extension\FlatRateConfigurationExtension:
+        tags:
+            - { name: form.type_extension, extended_type: Sylius\Bundle\ShippingBundle\Form\Type\Calculator\FlatRateConfigurationType }
+
+    Enhavo\Bundle\ShopBundle\Form\Extension\PerUnitRateConfigurationExtension:
+        tags:
+            - { name: form.type_extension, extended_type: Sylius\Bundle\ShippingBundle\Form\Type\Calculator\PerUnitRateConfigurationType }
+
     Enhavo\Bundle\ShopBundle\Form\Type\OrderConfirmType:
         arguments:
             - '%sylius.model.order.class%'
@@ -78,7 +86,7 @@ services:
         tags:
             - { name: form.type }
 
-    Enhavo\Bundle\ShopBundle\Form\Type\ShipmentType:
+    Enhavo\Bundle\ShopBundle\Form\Type\Checkout\ShipmentType:
         arguments:
             - '%sylius.model.shipment.class%'
         tags:

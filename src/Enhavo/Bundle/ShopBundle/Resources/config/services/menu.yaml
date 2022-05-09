@@ -1,4 +1,19 @@
 services:
+    Enhavo\Bundle\ShopBundle\Menu\CatalogMenu:
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\ListMenu
+        tags:
+            - { name: enhavo.menu, alias: shop_catalog }
+
+    Enhavo\Bundle\ShopBundle\Menu\ConfigurationMenu:
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\ListMenu
+        tags:
+            - { name: enhavo.menu, alias: shop_configuration }
+
+    Enhavo\Bundle\ShopBundle\Menu\SalesMenu:
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\ListMenu
+        tags:
+            - { name: enhavo.menu, alias: shop_sales }
+
     Enhavo\Bundle\ShopBundle\Menu\ProductMenu:
         parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
@@ -39,11 +54,6 @@ services:
         tags:
             - { name: enhavo.menu, alias: shop_voucher }
 
-    Enhavo\Bundle\ShopBundle\Menu\ShopMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\ListMenu
-        tags:
-            - { name: enhavo.menu, alias: shop }
-
     Enhavo\Bundle\ShopBundle\Menu\CategoryMenu:
         parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
@@ -68,3 +78,13 @@ services:
         parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
             - { name: enhavo.menu, alias: shop_payment_method }
+
+    Enhavo\Bundle\ShopBundle\Menu\PaymentMenu:
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
+        tags:
+            - { name: enhavo.menu, alias: shop_payment }
+
+    Enhavo\Bundle\ShopBundle\Menu\ShipmentMenu:
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
+        tags:
+            - { name: enhavo.menu, alias: shop_shipment }

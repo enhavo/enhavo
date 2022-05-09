@@ -16,6 +16,7 @@ class OrderItem extends SyliusOrderItem implements OrderItemInterface
     private ?ProductAccessInterface $product;
     private ?string $name;
     private array $configuration = [];
+    private bool $shippable = true;
 
     public function getProduct(): ?ProductAccessInterface
     {
@@ -142,5 +143,15 @@ class OrderItem extends SyliusOrderItem implements OrderItemInterface
     public function setName(?string $name): void
     {
         $this->name = $name;
+    }
+
+    public function isShippable(): bool
+    {
+        return $this->shippable;
+    }
+
+    public function setShippable(bool $shippable): void
+    {
+        $this->shippable = $shippable;
     }
 }
