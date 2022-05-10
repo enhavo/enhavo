@@ -8,7 +8,7 @@ use Doctrine\ORM\Proxy\Proxy;
 use Enhavo\Bundle\AppBundle\Exception\ResourceException;
 use Enhavo\Bundle\AppBundle\Exception\ResourceStopException;
 use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
-use SM\Factory\FactoryInterface;
+use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Metadata\MetadataInterface;
 use Sylius\Component\Resource\Metadata\RegistryInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
@@ -26,7 +26,7 @@ class ResourceManager
         private EntityManagerInterface $em,
         private RegistryInterface $metadataRegistry,
         private array $syliusResources,
-        private FactoryInterface $stateMachineFactory
+        private \SM\Factory\FactoryInterface $stateMachineFactory
     ) {}
 
     public function create($resource, $configuration = [])
