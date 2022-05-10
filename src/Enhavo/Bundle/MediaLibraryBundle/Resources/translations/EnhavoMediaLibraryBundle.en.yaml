@@ -14,8 +14,15 @@ media_library:
         label:
             create_tag: 'Create tag'
     role:
-        label:
-            index: 'Media-Library list'
-            create: 'Media-Library create'
-            update: 'Media-Library update'
-            delete: 'Media-Library delete'
+        file:
+            label:
+                index: 'Media-Library-File list'
+                create: 'Media-Library-File create'
+                update: 'Media-Library-File update'
+                delete: 'Media-Library-File delete'
+        tag:
+            label:
+                index: 'Media-Library-Tag list'
+                create: 'Media-Library-Tag create'
+                update: 'Media-Library-Tag update'
+                delete: 'Media-Library-Tag delete'
