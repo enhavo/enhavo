@@ -1,0 +1,26 @@
+{% extends '@EnhavoForm/admin/form/form/fields.html.twig' %}
+
+{% block choice_widget_expanded %}
+    {% if list %}<div class="choice-list">{% endif %}
+    <div class="choice-input-container" {{ block('widget_container_attributes') }}>
+        <table>
+            <tr>
+                {% set prefix = '' %}
+                {% for child in form %}
+                    {% set nuPrefix = child.vars.label|split(' ')[0] %}
+                    {% if prefix == '' or prefix != nuPrefix %}
+                        </tr><tr>
+                    {% endif %}
+                    {% set prefix = nuPrefix %}
+                    <td>
+                        <span class="choice-input-with-label">
+                            {{- form_widget(child) -}}
+                            {{- form_label(child) -}}
+                        </span>
+                    </td>
+                {% endfor %}
+            </tr>
+        </table>
+    </div>
+    {% if list %}</div>{% endif %}
+{% endblock %}
