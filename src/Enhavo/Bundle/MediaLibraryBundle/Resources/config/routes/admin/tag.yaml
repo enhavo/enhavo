@@ -6,6 +6,7 @@ enhavo_media_library_tag_index:
     defaults:
         _controller: enhavo_taxonomy.controller.term::indexAction
         _sylius:
+            permission: ROLE_ENHAVO_MEDIA_LIBRARY_TAG_INDEX
             viewer:
                 label: media_library.label.tag
                 translation_domain: EnhavoMediaLibraryBundle
@@ -25,6 +26,7 @@ enhavo_media_library_tag_create:
     defaults:
         _controller: enhavo_taxonomy.controller.term:createAction
         _sylius:
+            permission: ROLE_ENHAVO_MEDIA_LIBRARY_TAG_CREATE
             redirect: enhavo_media_library_tag_update
             form: Enhavo\Bundle\MediaLibraryBundle\Form\Type\TagType
             factory:
@@ -40,6 +42,7 @@ enhavo_media_library_tag_update:
     defaults:
         _controller: enhavo_taxonomy.controller.term::updateAction
         _sylius:
+            permission: ROLE_ENHAVO_MEDIA_LIBRARY_TAG_UPDATE
             form: Enhavo\Bundle\MediaLibraryBundle\Form\Type\TagType
             serialization_groups: ['form']
             viewer:
@@ -55,6 +58,7 @@ enhavo_media_library_tag_table:
     defaults:
         _controller: enhavo_taxonomy.controller.term::tableAction
         _sylius:
+            permission: ROLE_ENHAVO_MEDIA_LIBRARY_TAG_INDEX
             repository:
                 method: findByTaxonomyName
                 arguments:
@@ -78,6 +82,7 @@ enhavo_media_library_tag_delete:
     defaults:
         _controller: enhavo_taxonomy.controller.term:deleteAction
         _sylius:
+            permission: ROLE_ENHAVO_MEDIA_LIBRARY_TAG_DELETE
             redirect: enhavo_media_library_tag_index
 
 enhavo_media_library_tag_batch:

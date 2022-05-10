@@ -7,21 +7,37 @@ enhavo_app:
     apps:
         - 'media/Extension/MediaLibrary'
     roles:
-        enhavo_media_library_index:
+        enhavo_media_library_file_index:
             role: ROLE_ENHAVO_MEDIA_LIBRARY_FILE_INDEX
-            label: media_library.role.label.index
+            label: media_library.role.file.label.index
             translation_domain: EnhavoMediaLibraryBundle
-        enhavo_media_library_create:
+        enhavo_media_library_file_create:
             role: ROLE_ENHAVO_MEDIA_LIBRARY_FILE_CREATE
-            label: media_library.role.label.create
+            label: media_library.role.file.label.create
             translation_domain: EnhavoMediaLibraryBundle
-        enhavo_media_library_update:
+        enhavo_media_library_file_update:
             role: ROLE_ENHAVO_MEDIA_LIBRARY_FILE_UPDATE
-            label: media_library.role.label.update
+            label: media_library.role.file.label.update
             translation_domain: EnhavoMediaLibraryBundle
-        enhavo_media_library_delete:
+        enhavo_media_library_file_delete:
             role: ROLE_ENHAVO_MEDIA_LIBRARY_FILE_DELETE
-            label: media_library.role.label.delete
+            label: media_library.role.file.label.delete
+            translation_domain: EnhavoMediaLibraryBundle
+        enhavo_media_library_tag_index:
+            role: ROLE_ENHAVO_MEDIA_LIBRARY_TAG_INDEX
+            label: media_library.role.tag.label.index
+            translation_domain: EnhavoMediaLibraryBundle
+        enhavo_media_library_tag_create:
+            role: ROLE_ENHAVO_MEDIA_LIBRARY_TAG_CREATE
+            label: media_library.role.tag.label.create
+            translation_domain: EnhavoMediaLibraryBundle
+        enhavo_media_library_tag_update:
+            role: ROLE_ENHAVO_MEDIA_LIBRARY_TAG_UPDATE
+            label: media_library.role.tag.label.update
+            translation_domain: EnhavoMediaLibraryBundle
+        enhavo_media_library_tag_delete:
+            role: ROLE_ENHAVO_MEDIA_LIBRARY_TAG_DELETE
+            label: media_library.role.tag.label.delete
             translation_domain: EnhavoMediaLibraryBundle
 
 enhavo_media_library:
