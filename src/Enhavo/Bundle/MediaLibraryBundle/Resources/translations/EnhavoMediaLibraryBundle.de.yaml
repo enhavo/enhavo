@@ -13,3 +13,9 @@ media_library:
     form:
         label:
             create_tag: 'Tag erstellen'
+    role:
+        label:
+            index: 'Media-Library list'
+            create: 'Media-Library create'
+            update: 'Media-Library update'
+            delete: 'Media-Library delete'
