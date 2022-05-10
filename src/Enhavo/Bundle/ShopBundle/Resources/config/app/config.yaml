@@ -106,6 +106,9 @@ sylius_payment:
         payment_method:
             classes:
                 controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
+                model: Enhavo\Bundle\ShopBundle\Entity\PaymentMethod
+                form: Enhavo\Bundle\ShopBundle\Form\Type\Payment\PaymentMethodType
+                factory: Enhavo\Bundle\ShopBundle\Factory\PaymentMethodFactory
 
 doctrine:
     orm:
@@ -114,6 +117,7 @@ doctrine:
             Sylius\Component\Addressing\Model\AddressInterface: Sylius\Component\Addressing\Model\Address
             Sylius\Component\Promotion\Model\PromotionCouponInterface: Sylius\Component\Promotion\Model\PromotionCoupon
             Sylius\Component\Payment\Model\PaymentInterface: Enhavo\Bundle\ShopBundle\Entity\Payment
+            Sylius\Component\Payment\Model\PaymentMethodInterface: Enhavo\Bundle\ShopBundle\Entity\PaymentMethod
             Sylius\Component\Shipping\Model\ShipmentInterface: Enhavo\Bundle\ShopBundle\Entity\Shipment
             Sylius\Component\Shipping\Model\ShipmentUnitInterface: Enhavo\Bundle\ShopBundle\Entity\OrderItemUnit
             Sylius\Component\Taxation\Model\TaxRateInterface: Sylius\Component\Taxation\Model\TaxRate
@@ -297,3 +301,15 @@ enhavo_taxonomy:
         shop_tag:
             label: label.tag
             translation_domain: EnhavoShopBundle
+
+enhavo_shop:
+    payment:
+        methods:
+            paypal:
+                label: PayPal
+                form: Enhavo\Bundle\ShopBundle\Form\Type\GatewayConfig\PayPalType
+                gateway_factory: paypal
+            stripe_credit_card:
+                label: Stripe Credit Card
+                form: Enhavo\Bundle\ShopBundle\Form\Type\GatewayConfig\StripeCreditCardType
+                gateway_factory: stripe

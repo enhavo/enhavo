@@ -39,6 +39,7 @@ class Order extends SyliusOrder implements OrderInterface
     private ?string $token;
     private ?bool $trackingMail = false;
     private ?bool $shippable = true;
+    private ?string $currencyCode = null;
 
     /** @var Collection|PaymentInterface[] */
     private $payments;
@@ -48,6 +49,8 @@ class Order extends SyliusOrder implements OrderInterface
 
     /** @var Collection */
     private $promotions;
+
+
 
     public function __construct()
     {
@@ -382,5 +385,28 @@ class Order extends SyliusOrder implements OrderInterface
         }
 
         return $units;
+    }
+
+    public function getLastPayment(?string $state = null): ?PaymentInterface
+    {
+        if ($this->payments->isEmpty()) {
+            return null;
+        }
+
+        $payment = $this->payments->filter(function (PaymentInterface $payment) use ($state): bool {
+            return null === $state || $payment->getState() === $state;
+        })->last();
+
+        return $payment !== false ? $payment : null;
+    }
+
+    public function getCurrencyCode(): ?string
+    {
+        return $this->currencyCode;
+    }
+
+    public function setCurrencyCode(?string $currencyCode): void
+    {
+        $this->currencyCode = $currencyCode;
     }
 }

@@ -12,7 +12,7 @@ class FlatRateConfigurationExtension extends AbstractTypeExtension
     {
         return [FlatRateConfigurationType::class,];
     }
-    
+
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

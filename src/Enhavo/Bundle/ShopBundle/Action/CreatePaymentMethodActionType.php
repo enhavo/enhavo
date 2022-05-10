@@ -3,9 +3,10 @@
 namespace Enhavo\Bundle\ShopBundle\Action;
 
 use Enhavo\Bundle\AppBundle\Action\AbstractActionType;
+use Enhavo\Bundle\AppBundle\Action\Type\TransitionActionType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CreateAttributeAction extends AbstractActionType
+class CreatePaymentMethodActionType extends AbstractActionType
 {
     public function createViewData(array $options, $resource = null)
     {
@@ -16,8 +17,9 @@ class CreateAttributeAction extends AbstractActionType
     public function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);
+
         $resolver->setDefaults([
-            'component' => 'create-attribute-action',
+            'component' => 'create-payment-method-action',
             'icon' => 'add_circle_outline',
             'label' => 'label.create',
             'translation_domain' => 'EnhavoAppBundle',
@@ -29,6 +31,6 @@ class CreateAttributeAction extends AbstractActionType
 
     public function getType()
     {
-        return 'shop_create_attribute';
+        return 'shop_create_payment_method';
     }
 }

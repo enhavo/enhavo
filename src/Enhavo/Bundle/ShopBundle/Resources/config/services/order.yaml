@@ -41,6 +41,12 @@ services:
         tags:
             - { name: sylius.order_processor, priority: 40 }
 
+    Enhavo\Bundle\ShopBundle\OrderProcessing\OrderPaymentProcessor:
+        arguments:
+            - '@Enhavo\Bundle\ShopBundle\Payment\Provider\OrderPaymentProvider'
+        tags:
+            - { name: sylius.order_processor, priority: 0 }
+
     Enhavo\Bundle\ShopBundle\Manager\TaxationManager:
 
     Enhavo\Bundle\ShopBundle\Manager\PricingManager:

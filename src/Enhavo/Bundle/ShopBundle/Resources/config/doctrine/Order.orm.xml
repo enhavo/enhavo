@@ -7,6 +7,7 @@
         <field name="token" nullable="true" />
         <field name="trackingMail" type="boolean" nullable="true" />
         <field name="checkoutState" nullable="false" />
+        <field name="currencyCode" nullable="true" />
 
         <one-to-many field="shipments" target-entity="Sylius\Component\Shipping\Model\ShipmentInterface" mapped-by="order">
             <cascade>

@@ -92,6 +92,25 @@ services:
         tags:
             - { name: form.type }
 
+    Enhavo\Bundle\ShopBundle\Form\Type\Checkout\PaymentType:
+        arguments:
+            - '%sylius.model.payment.class%'
+        tags:
+            - { name: form.type }
+
+    Enhavo\Bundle\ShopBundle\Form\Type\Payment\PaymentMethodCreateType:
+        arguments:
+            - '@Enhavo\Bundle\ShopBundle\Payment\Provider\PaymentMethodTypeProvider'
+            - '@translator'
+        tags:
+            - { name: form.type }
+
+    Enhavo\Bundle\ShopBundle\Form\Type\Payment\PaymentMethodType:
+        arguments:
+            - '@Enhavo\Bundle\ShopBundle\Payment\Provider\PaymentMethodTypeProvider'
+        tags:
+            - { name: form.type }
+
 #    Enhavo\Bundle\ShopBundle\Form\Type\OrderType:
 #        arguments:
 #            - '%sylius.model.order.class%'

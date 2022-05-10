@@ -54,14 +54,15 @@ sylius_shop_checkout_select_payment:
         _sylius:
             event: payment
             flash: false
-            template: "@SyliusShop/Checkout/selectPayment.html.twig"
-            form: Sylius\Bundle\CoreBundle\Form\Type\Checkout\SelectPaymentType
+            template: "theme/shop/checkout/select-payment.html.twig"
+            redirect: sylius_shop_checkout_complete
+            form: Enhavo\Bundle\ShopBundle\Form\Type\Checkout\SelectPaymentType
             repository:
-                method: findCartForSelectingPayment
+                method: find
                 arguments:
                     - "expr:service('sylius.context.cart').getCart().getId()"
             state_machine:
-                graph: sylius_order_checkout
+                graph: enhavo_order_checkout
                 transition: select_payment
 
 sylius_shop_checkout_complete:

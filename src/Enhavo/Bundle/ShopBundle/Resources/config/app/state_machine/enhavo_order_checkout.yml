@@ -33,6 +33,10 @@ winzou_state_machine:
                 to: completed
         callbacks:
             after:
+                assign_checkout_completed_at:
+                    on: ["complete"]
+                    do: [ "@enhavo_shop.order_manager", "assignCheckoutCompletedAt" ]
+                    args: [ "object" ]
 #                sylius_process_cart:
 #                    on: ["select_shipping", "address", "select_payment", "skip_shipping", "skip_payment"]
 #                    do: ["@sylius.order_processing.order_processor", "process"]
