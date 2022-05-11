@@ -1,12 +1,12 @@
 <?php
 
-namespace Enhavo\Bundle\ShopBundle\Form\Type;
+namespace Enhavo\Bundle\ShopBundle\Form\Type\Checkout;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class OrderConfirmType extends AbstractType
+class ConfirmType extends AbstractType
 {
     public function __construct(
         private string $dataClass

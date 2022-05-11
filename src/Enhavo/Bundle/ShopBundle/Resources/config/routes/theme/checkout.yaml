@@ -37,7 +37,10 @@ sylius_shop_checkout_select_shipping:
             flash: false
             template: "theme/shop/checkout/select-shipping.html.twig"
             redirect: sylius_shop_checkout_select_payment
-            form: Enhavo\Bundle\ShopBundle\Form\Type\Checkout\SelectShippingType
+            form:
+                type: Enhavo\Bundle\ShopBundle\Form\Type\Checkout\SelectShippingType
+                options:
+                    validation_groups: [ 'checkout_shipping' ]
             repository:
                 method: find
                 arguments:
@@ -55,8 +58,11 @@ sylius_shop_checkout_select_payment:
             event: payment
             flash: false
             template: "theme/shop/checkout/select-payment.html.twig"
-            redirect: sylius_shop_checkout_complete
-            form: Enhavo\Bundle\ShopBundle\Form\Type\Checkout\SelectPaymentType
+            redirect: sylius_shop_checkout_confirm
+            form:
+                type: Enhavo\Bundle\ShopBundle\Form\Type\Checkout\SelectPaymentType
+                options:
+                    validation_groups: [ 'checkout_payment' ]
             repository:
                 method: find
                 arguments:
@@ -65,7 +71,7 @@ sylius_shop_checkout_select_payment:
                 graph: enhavo_order_checkout
                 transition: select_payment
 
-sylius_shop_checkout_complete:
+sylius_shop_checkout_confirm:
     path: /checkout/confirm
     methods: [GET, POST]
     defaults:
@@ -73,19 +79,22 @@ sylius_shop_checkout_complete:
         _sylius:
             event: complete
             flash: false
-            template: "theme/shop/checkout/checkout.html.twig"
+            template: "theme/shop/checkout/confirm.html.twig"
             repository:
                 method: findCartById
                 arguments:
                     - "expr:service('sylius.context.cart').getCart().getId()"
             state_machine:
-                graph: sylius_order_checkout
+                graph: enhavo_order_checkout
                 transition: complete
             redirect:
                 route: sylius_shop_order_pay
                 parameters:
-                    tokenValue: resource.tokenValue
+                    tokenValue: resource.token
             form:
-                type: Enhavo\Bundle\ShopBundle\Form\Type\OrderConfirmType
+                type: Enhavo\Bundle\ShopBundle\Form\Type\Checkout\ConfirmType
                 options:
-                    validation_groups: 'sylius_checkout_complete'
+                    validation_groups:
+                        - 'checkout_address'
+                        - 'checkout_shipping'
+                        - 'checkout_payment'
