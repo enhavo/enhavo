@@ -38,6 +38,13 @@ class RedirectManager
             $redirect->setRoute($route);
         }
         $route->setStaticPrefix($redirect->getFrom());
+
+        if ($route->getName() === null) {
+            $route->setName($this->getRandomName());
+        }
+
+        $route->setPosition(-1);
+
         $this->routeManager->update($redirect);
     }
 
@@ -47,5 +54,10 @@ class RedirectManager
         $uri = Http::createFromString($from);
         $from = $uri->withScheme('')->withHost('');
         $redirect->setFrom($from);
+    }
+
+    protected function getRandomName()
+    {
+        return 'r' . uniqid();
     }
 }
