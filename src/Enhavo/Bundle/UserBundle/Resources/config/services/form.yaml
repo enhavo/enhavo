@@ -33,6 +33,11 @@ services:
         arguments:
             - '%enhavo_user.model.group.class%'
             - [default]
+
+    Enhavo\Bundle\UserBundle\Form\Type\PermissionType:
+        tags:
+            - { name: form.type, alias: 'enhavo_user_permission' }
+        arguments:
             - '@security.roles.provider'
 
     Enhavo\Bundle\UserBundle\Form\Type\UserAutoCompleteEntityType:

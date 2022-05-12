@@ -1,0 +1,21 @@
+
+{% block enhavo_user_permission_widget %}
+    {% if list %}<div class="choice-list">{% endif %}
+    <div class="choice-input-container" {{ block('widget_container_attributes') }}>
+        <table>
+            {% for group in form.vars.groups %}
+                <tr>
+                    {% for index,item in group %}
+                        <td>
+                            <span class="choice-input-with-label">
+                                {{- form_widget(form.children[index]) -}}
+                                {{- form_label(form.children[index]) -}}
+                            </span>
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% if list %}</div>{% endif %}
+{% endblock %}
