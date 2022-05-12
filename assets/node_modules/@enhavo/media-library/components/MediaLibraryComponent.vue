@@ -1,12 +1,12 @@
 <template>
     <div class="app-view">
-        <view-view></view-view>
+<!--        <view-view></view-view>-->
         <flash-messages></flash-messages>
         <action-bar></action-bar>
         <input v-show="false" v-once ref="upload" multiple type="file">
         <div class="media-library-overlay" data-media-library-overlay>
-            <div class="close-media-library-overlay button-icon icon-cross" data-media-library-close></div>
             <div class="inner-content" data-scroll-container>
+                <div class="media-library-progress" style="width: 0%;" v-bind:style="{'width': styleProgress()}"></div>
                 <div class="tag-list">
                     <div class="headline"><i class="icon icon-filter_list"></i>
                         {{ translator.trans('enhavo_media_library.tags') }}
@@ -22,7 +22,6 @@
                         :content-types="mediaLibrary.data.contentTypes"
                     ></content-type-list>
                 </div>
-
                 <div class="result-search">
                     <div class="search">
                         <input ref="searchInput" v-model="mediaLibrary.data.searchString" type="text" data-media-library-search />
@@ -47,6 +46,7 @@
                         <div></div>
                     </div>
                 </div>
+                <br clear="all">
             </div>
         </div>
     </div>
@@ -77,6 +77,10 @@ export default class extends Vue {
     @Watch('searchString')
     onChangeSearchString(val: string) {
         this.getMediaLibrary().data.searchString = val;
+    }
+
+    styleProgress() {
+        return this.mediaLibrary.data.progress + '%';
     }
 
     getAddLabel() {
@@ -123,23 +127,29 @@ export default class extends Vue {
             dataType: 'json',
             paramName: 'files',
             done: (event, data) => {
-                this.getMediaLibrary().refresh();
+                console.log(data.response().result);
+                if (data.response().result.length === 0) {
+                    this.getMediaLibrary().fail(this.translator.trans('enhavo_media_library.upload.fail.message'));
+                    this.getMediaLibrary().loaded();
+                } else {
+                    this.getMediaLibrary().refresh();
+                }
+                this.getMediaLibrary().setProgress(0);
             },
             fail: (event, data) => {
-                this.getMediaLibrary().fail('Upload failed');
+                this.getMediaLibrary().fail(this.translator.trans('enhavo_media_library.upload.fail.message'));
+                this.getMediaLibrary().setProgress(0);
+                this.getMediaLibrary().loaded();
             },
             add: (event, data) => {
                 data.url = this.getRouter().generate('enhavo_media_library_file_upload', {});
                 data.submit();
                 this.getMediaLibrary().loading();
+                this.getMediaLibrary().setProgress(0);
             },
             progressall: (event, data) => {
                 let progress = data.loaded / data.total * 100;
-                if (progress >= 100) {
-                    this.getMediaLibrary().setProgress(0);
-                } else {
-                    this.getMediaLibrary().setProgress(progress);
-                }
+                this.getMediaLibrary().setProgress(progress);
             },
             dropZone: this.$refs.itemList,
             pasteZone: null
