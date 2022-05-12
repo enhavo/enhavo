@@ -14,7 +14,7 @@
         </ul>
     </div>
     <pagination v-if="mediaLibrary.hasPagination()"></pagination>
-    <ul ref="itemList" class="images">
+    <ul ref="itemList" class="images scroll-container">
         <file-thumbnail
             v-for="file of mediaLibrary.data.files"
             :file="file"

@@ -16,10 +16,12 @@
             </div>
 
         </div>
-        <file-list
-            v-for="file of mediaLibrary.data.files"
-            :file="file"
-        ></file-list>
+        <div class="scroll-container">
+            <file-list
+                v-for="file of mediaLibrary.data.files"
+                :file="file"
+            ></file-list>
+        </div>
     </div>
     <pagination v-if="mediaLibrary.hasPagination()"></pagination>
 </template>
