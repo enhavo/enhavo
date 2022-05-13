@@ -11,7 +11,7 @@ namespace Enhavo\Bundle\ShopBundle\Menu;
 use Enhavo\Bundle\AppBundle\Menu\Menu\ListMenu;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ShopMenu extends ListMenu
+class CatalogMenu extends ListMenu
 {
     public function configureOptions(OptionsResolver $resolver)
     {
@@ -19,12 +19,9 @@ class ShopMenu extends ListMenu
 
         $resolver->setDefaults([
             'icon' => 'store',
-            'label' => 'label.shop',
+            'label' => 'label.catalog',
             'translation_domain' => 'EnhavoShopBundle',
             'children' => [
-                'order' => [
-                    'type' => 'shop_order'
-                ],
                 'product' => [
                     'type' => 'shop_product'
                 ],
@@ -37,27 +34,18 @@ class ShopMenu extends ListMenu
                 'productAssociation' => [
                     'type' => 'shop_product_association_type'
                 ],
-                'taxRate' => [
-                    'type' => 'shop_tax_rate'
-                ],
-                'taxCategory' => [
-                    'type' => 'shop_tax_category'
-                ],
                 'category' => [
                     'type' => 'shop_category'
                 ],
                 'tag' => [
                     'type' => 'shop_tag'
                 ],
-//                'voucher' => [
-//                    'type' => 'shop_voucher'
-//                ]
             ]
         ]);
     }
 
     public function getType()
     {
-        return 'shop';
+        return 'shop_catalog';
     }
 }

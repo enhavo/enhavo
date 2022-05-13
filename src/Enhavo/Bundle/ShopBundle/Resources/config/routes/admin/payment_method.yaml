@@ -7,17 +7,34 @@ sylius_payment_method_index:
         _controller: sylius.controller.payment_method::indexAction
         _sylius:
             viewer:
+                actions:
+                    create:
+                        type: shop_create_payment_method
+                        route: sylius_payment_method_create
 
 sylius_payment_method_create:
     options:
         expose: true
-    path: /enhavo/shop/payment_method/create
+    path: /enhavo/shop/payment_method/{type}/create
     methods: [GET,POST]
     defaults:
         _controller: sylius.controller.payment_method::createAction
         _sylius:
             redirect: sylius_payment_method_update
+            factory:
+                method: createWithGatewayType
+                arguments: [$type]
             viewer:
+
+sylius_payment_method_create_form:
+    options:
+        expose: true
+    path: /enhavo/shop/payment_method/create/form
+    methods: [GET,POST]
+    controller: enhavo_app.controller.modal:formAction
+    defaults:
+        _config:
+            form: Enhavo\Bundle\ShopBundle\Form\Type\Payment\PaymentMethodCreateType
 
 sylius_payment_method_update:
     options:
@@ -38,7 +55,12 @@ sylius_payment_method_table:
         _controller: sylius.controller.payment_method::tableAction
         _sylius:
             viewer:
-                columns: []
+                columns:
+                    gatewayName:
+                        type: property
+                        label: Name
+                        property: gatewayName
+                        sortable: true
 
 sylius_payment_method_delete:
     options:

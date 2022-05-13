@@ -1,0 +1,8 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="Enhavo\Bundle\ShopBundle\Entity\PaymentMethod" table="shop_payment_method">
+        <field name="gatewayName" />
+        <field name="gatewayType" />
+        <field name="factoryName" />
+        <field name="config" type="json" />
+    </entity>
+</doctrine-mapping>

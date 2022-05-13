@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\ShopBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Enhavo\Bundle\ShopBundle\Model\ShipmentInterface;
 use Sylius\Component\Shipping\Model\Shipment as SyliusShipment;

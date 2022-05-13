@@ -14,11 +14,17 @@ services:
         tags:
             - { name: enhavo.action, alias: shop_generate_variant }
 
-    Enhavo\Bundle\ShopBundle\Action\CreateAttributeAction:
+    Enhavo\Bundle\ShopBundle\Action\CreateAttributeActionType:
         parent: Enhavo\Bundle\AppBundle\Action\AbstractActionType
         public: true
         tags:
             - { name: enhavo.action, alias: shop_create_attribute }
+
+    Enhavo\Bundle\ShopBundle\Action\CreatePaymentMethodActionType:
+        parent: Enhavo\Bundle\AppBundle\Action\AbstractActionType
+        public: true
+        tags:
+            - { name: enhavo.action, alias: shop_create_payment_method }
 
     Enhavo\Bundle\ShopBundle\Manager\ProductManager:
         arguments:
@@ -76,6 +82,26 @@ services:
             - '@doctrine.orm.entity_manager'
             - '@sylius.factory.address'
 
+    Enhavo\Bundle\ShopBundle\Payment\Resolver\DefaultPaymentMethodResolver:
+        arguments:
+            - '@sylius.repository.payment_method'
+
+    Enhavo\Bundle\ShopBundle\Payment\Provider\OrderPaymentProvider:
+        arguments:
+            - '@Enhavo\Bundle\ShopBundle\Payment\Resolver\DefaultPaymentMethodResolver'
+            - '@sylius.factory.payment'
+            - '@sm.factory'
+
+    Enhavo\Bundle\ShopBundle\Payment\Provider\PaymentMethodTypeProvider:
+        arguments:
+            - '%enhavo_shop.payment.methods%'
+
+    sylius.factory.payment_method:
+        class: '%sylius.factory.payment_method.class%'
+        public: true
+        arguments:
+            - '%sylius.model.payment_method.class%'
+            - '@Enhavo\Bundle\ShopBundle\Payment\Provider\PaymentMethodTypeProvider'
 
 #    enhavo_shop.listener.doctrine_sylius_meta:
 #        class: Enhavo\Bundle\ShopBundle\EventListener\DoctrineSyliusMetaListener

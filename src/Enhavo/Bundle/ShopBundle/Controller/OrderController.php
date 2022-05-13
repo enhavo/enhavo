@@ -22,8 +22,11 @@ class OrderController extends SyliusOrderController
 
     public function summaryAction(Request $request): Response
     {
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+
         $view = $this->viewFactory->create([
-            'type' => 'shop_cart_summary'
+            'type' => 'shop_cart_summary',
+            'request_configuration' => $configuration
         ]);
 
         return $view->getResponse($request);
@@ -110,6 +113,7 @@ class OrderController extends SyliusOrderController
         $response->setContent($documentManager->generateBilling($order));
         return $response;
     }
+
     public function packingSlipAction(Request $request)
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
@@ -147,11 +151,17 @@ class OrderController extends SyliusOrderController
         return $order;
     }
 
-    public function checkoutAction()
+    public function checkoutAction(Request $request)
     {
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
 
+        $view = $this->viewFactory->create([
+            'type' => 'shop_checkout',
+            'request_configuration' => $configuration,
+        ]);
+
+        return $view->getResponse($request);
     }
-
 
     private function getOrderProvider()
     {

@@ -1,26 +1,10 @@
 {% extends template('theme/base.html.twig') %}
 
-{% block javascripts %}
-    {{ parent() }}
-    <script src="{{ asset('bundles/enhavoshop/js/Shop.js') }}"></script>
-{% endblock %}
-
 {% block main %}
-
     {% trans_default_domain 'EnhavoShopBundle' %}
-
     <h1>Confirm</h1>
-
     <div>
-        {{ widget('shop_coupon_redeem', {order: order}) }}
-    </div>
-
-    <div>
-        {{ widget('shop_cart_summary', {immutable: true, cart: order}) }}
-    </div>
-
-    <div>
-        <form action="{{ path('enhavo_shop_theme_checkout_confirm') }}" method="POST" data-checkout-form>
+        <form action="{{ path('sylius_shop_checkout_confirm') }}" method="POST" data-checkout-form>
             {{ form_errors(form) }}
             {{ form_row(form._token) }}
             <button type="submit">Confirm</button>

@@ -17,15 +17,24 @@ sylius_order:
                 model: Enhavo\Bundle\ShopBundle\Entity\OrderItem
                 controller: Enhavo\Bundle\ShopBundle\Controller\OrderItemController
                 factory: Enhavo\Bundle\ShopBundle\Factory\OrderItemFactory
+        order_item_unit:
+            classes:
+                model: Enhavo\Bundle\ShopBundle\Entity\OrderItemUnit
 
 sylius_shipping:
     resources:
         shipment:
             classes:
                 model: Enhavo\Bundle\ShopBundle\Entity\Shipment
+                controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
         shipping_method:
             classes:
                 controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
+                model: Enhavo\Bundle\ShopBundle\Entity\ShippingMethod
+                form: Enhavo\Bundle\ShopBundle\Form\Type\Shipping\ShippingMethodType
+        shipment_unit:
+            classes:
+                model: Enhavo\Bundle\ShopBundle\Entity\OrderItemUnit
 
 sylius_money: ~
 
@@ -97,6 +106,9 @@ sylius_payment:
         payment_method:
             classes:
                 controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
+                model: Enhavo\Bundle\ShopBundle\Entity\PaymentMethod
+                form: Enhavo\Bundle\ShopBundle\Form\Type\Payment\PaymentMethodType
+                factory: Enhavo\Bundle\ShopBundle\Factory\PaymentMethodFactory
 
 doctrine:
     orm:
@@ -105,7 +117,9 @@ doctrine:
             Sylius\Component\Addressing\Model\AddressInterface: Sylius\Component\Addressing\Model\Address
             Sylius\Component\Promotion\Model\PromotionCouponInterface: Sylius\Component\Promotion\Model\PromotionCoupon
             Sylius\Component\Payment\Model\PaymentInterface: Enhavo\Bundle\ShopBundle\Entity\Payment
+            Sylius\Component\Payment\Model\PaymentMethodInterface: Enhavo\Bundle\ShopBundle\Entity\PaymentMethod
             Sylius\Component\Shipping\Model\ShipmentInterface: Enhavo\Bundle\ShopBundle\Entity\Shipment
+            Sylius\Component\Shipping\Model\ShipmentUnitInterface: Enhavo\Bundle\ShopBundle\Entity\OrderItemUnit
             Sylius\Component\Taxation\Model\TaxRateInterface: Sylius\Component\Taxation\Model\TaxRate
             Sylius\Component\Promotion\Model\PromotionInterface: Enhavo\Bundle\ShopBundle\Entity\Promotion
             Sylius\Component\Product\Model\ProductOptionInterface: Sylius\Component\Product\Model\ProductOption
@@ -118,6 +132,9 @@ enhavo_doctrine_extension:
     metadata:
         Enhavo\Bundle\ShopBundle\Entity\Shipment:
             extends: Sylius\Component\Shipment\Model\Shipment
+            discrName: 'enhavo'
+        Enhavo\Bundle\ShopBundle\Entity\ShipmentMethod:
+            extends: Sylius\Component\Shipment\Model\ShipmentMethod
             discrName: 'enhavo'
 
 enhavo_app:
@@ -284,3 +301,15 @@ enhavo_taxonomy:
         shop_tag:
             label: label.tag
             translation_domain: EnhavoShopBundle
+
+enhavo_shop:
+    payment:
+        methods:
+            paypal:
+                label: PayPal
+                form: Enhavo\Bundle\ShopBundle\Form\Type\GatewayConfig\PayPalType
+                gateway_factory: paypal
+            stripe_credit_card:
+                label: Stripe Credit Card
+                form: Enhavo\Bundle\ShopBundle\Form\Type\GatewayConfig\StripeCreditCardType
+                gateway_factory: stripe

@@ -34,8 +34,7 @@ class EnhavoShopExtension extends AbstractResourceExtension implements PrependEx
         $container->setParameter('enhavo_shop.document.packing_slip.generator', $config['document']['packing_slip']['generator']);
         $container->setParameter('enhavo_shop.document.packing_slip.options', isset($config['document']['packing_slip']['options']) ? $config['document']['packing_slip']['options'] : []);
 
-        $container->setParameter('enhavo_shop.payment.paypal.logo', $config['payment']['paypal']['logo']);
-        $container->setParameter('enhavo_shop.payment.paypal.branding', $config['payment']['paypal']['branding']);
+        $container->setParameter('enhavo_shop.payment.methods', $config['payment']['methods']);
 
         $container->setParameter('enhavo_shop.product.variant_proxy.model', $config['product']['variant_proxy']['model']);
         $container->setParameter('enhavo_shop.product.variant_proxy.factory', $config['product']['variant_proxy']['factory']);

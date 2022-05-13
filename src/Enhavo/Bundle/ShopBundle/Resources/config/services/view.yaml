@@ -10,3 +10,12 @@ services:
             - '@Enhavo\Bundle\VueFormBundle\Form\VueForm'
         tags:
             - { name: enhavo_app.view }
+
+    Enhavo\Bundle\ShopBundle\View\CheckoutViewType:
+        arguments:
+            - '@sylius.context.cart'
+            - '@sylius.resource_controller.form_factory'
+            - '@Enhavo\Bundle\AppBundle\Resource\ResourceManager'
+            - '@router'
+        tags:
+            - { name: enhavo_app.view }

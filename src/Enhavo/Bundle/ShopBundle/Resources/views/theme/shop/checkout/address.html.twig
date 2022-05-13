@@ -10,7 +10,7 @@
             {% endif %}
             {{ form_widget(form.billingAddress) }}
             {{ form_row(form.sameAddress) }}
-            <div {% if not resource.sameAddress %}style="display: none"{% endif %}>
+            <div>
                 {{ form_widget(form.shippingAddress) }}
             </div>
             {{ form_row(form._token) }}

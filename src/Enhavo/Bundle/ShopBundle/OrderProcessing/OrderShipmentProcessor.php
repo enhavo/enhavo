@@ -9,134 +9,93 @@
 namespace Enhavo\Bundle\ShopBundle\OrderProcessing;
 
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
-use Enhavo\Bundle\ShopBundle\Model\ProcessorInterface;
-use Enhavo\Bundle\ShopBundle\Shipping\ShippingTaxCalculatorInterface;
+use Sylius\Component\Order\Model\OrderInterface as BaseOrderInterface;
+use Sylius\Component\Order\Processor\OrderProcessorInterface;
 use Sylius\Component\Shipping\Exception\UnresolvedDefaultShippingMethodException;
 use Enhavo\Bundle\ShopBundle\Model\ShipmentInterface;
-use Sylius\Component\Order\Model\AdjustmentInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Shipping\Resolver\DefaultShippingMethodResolverInterface;
-use Sylius\Component\Shipping\Calculator\DelegatingCalculatorInterface;
+use Sylius\Component\Shipping\Resolver\ShippingMethodsResolverInterface;
+use Webmozart\Assert\Assert;
 
-class OrderShipmentProcessor implements ProcessorInterface
+class OrderShipmentProcessor implements OrderProcessorInterface
 {
-    /**
-     * @var DefaultShippingMethodResolverInterface
-     */
-    protected $defaultShippingMethodResolver;
-
-    /**
-     * @var FactoryInterface
-     */
-    protected $shipmentFactory;
-
-    /**
-     * @var DelegatingCalculatorInterface
-     */
-    protected $shippingCalculator;
-
-    /**
-     * @var FactoryInterface
-     */
-    protected $adjustmentFactory;
-
-    /**
-     * @var ShippingTaxCalculatorInterface
-     */
-    protected $shippingTaxCalculator;
-
-    /**
-     * OrderShipmentProcessor constructor.
-     * @param DefaultShippingMethodResolverInterface $defaultShippingMethodResolver
-     * @param FactoryInterface $shipmentFactory
-     * @param DelegatingCalculatorInterface $shippingCalculator
-     * @param ShippingTaxCalculatorInterface $shippingTaxCalculator
-     * @param FactoryInterface $adjustmentFactory
-     */
     public function __construct(
-        DefaultShippingMethodResolverInterface $defaultShippingMethodResolver,
-        FactoryInterface $shipmentFactory,
-        DelegatingCalculatorInterface $shippingCalculator,
-        ShippingTaxCalculatorInterface $shippingTaxCalculator,
-        FactoryInterface $adjustmentFactory
-    ) {
-        $this->defaultShippingMethodResolver = $defaultShippingMethodResolver;
-        $this->shipmentFactory = $shipmentFactory;
-        $this->shippingCalculator = $shippingCalculator;
-        $this->adjustmentFactory = $adjustmentFactory;
-        $this->shippingTaxCalculator = $shippingTaxCalculator;
-    }
+        private DefaultShippingMethodResolverInterface $defaultShippingMethodResolver,
+        private FactoryInterface $shipmentFactory,
+        private ShippingMethodsResolverInterface $shippingMethodsResolver,
+    ) {}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function process(OrderInterface $order)
+    public function process(BaseOrderInterface $order): void
     {
-        $shipment = $this->getOrderShipment($order);
-        $this->calculate($shipment, $order);
-    }
+        /** @var OrderInterface $order */
+        Assert::isInstanceOf($order, OrderInterface::class);
 
-    /**
-     * @param OrderInterface $order
-     *
-     * @throws UnresolvedDefaultShippingMethodException
-     * @return ShipmentInterface
-     */
-    private function getOrderShipment(OrderInterface $order)
-    {
-        if ($order->getShipment()) {
-            return $order->getShipment();
+        if ($order->isEmpty() || !$order->isShippable()) {
+            $order->removeShipments();
+            return;
         }
 
+        if ($order->hasShipments()) {
+            $this->recalculateExistingShipmentWithProperMethod($order);
+            return;
+        }
+
+        $this->createNewOrderShipment($order);
+    }
+
+    private function createNewOrderShipment(OrderInterface $order): void
+    {
         /** @var ShipmentInterface $shipment */
         $shipment = $this->shipmentFactory->createNew();
-        $order->setShipment($shipment);
-        $shipment->setMethod($this->defaultShippingMethodResolver->getDefaultShippingMethod($shipment));
+        $shipment->setOrder($order);
 
-        return $shipment;
-    }
+        try {
+            $this->processShipmentUnits($order, $shipment);
 
-    private function calculate(ShipmentInterface $shipment, OrderInterface $order)
-    {
-        $amount = $this->shippingCalculator->calculate($shipment);
-        $adjustment = $this->getShippingAdjustment($order);
-        $adjustment->setAmount($amount);
+            $shipment->setMethod($this->defaultShippingMethodResolver->getDefaultShippingMethod($shipment));
 
-        $amount = $this->shippingTaxCalculator->calculate($order);
-        $adjustment = $this->getShippingTaxAdjustment($order);
-        $adjustment->setAmount($amount);
-    }
-
-    private function getShippingAdjustment(OrderInterface $order)
-    {
-        /** @var AdjustmentInterface $adjustment */
-        foreach($order->getAdjustments() as $adjustment) {
-            if($adjustment->getType() === \Sylius\Component\Core\Model\AdjustmentInterface::SHIPPING_ADJUSTMENT) {
-                return $adjustment;
+            $order->addShipment($shipment);
+        } catch (UnresolvedDefaultShippingMethodException $exception) {
+            foreach ($shipment->getUnits() as $unit) {
+                $shipment->removeUnit($unit);
             }
         }
-
-        $adjustment = $this->adjustmentFactory->createNew();
-        $adjustment->setType(\Sylius\Component\Core\Model\AdjustmentInterface::SHIPPING_ADJUSTMENT);
-        $order->addAdjustment($adjustment);
-        return $adjustment;
     }
 
-    private function getShippingTaxAdjustment(OrderInterface $order)
+    private function processShipmentUnits(BaseOrderInterface $order, ShipmentInterface $shipment): void
     {
-        /** @var AdjustmentInterface $adjustment */
-        foreach($order->getAdjustments() as $adjustment) {
-            if($adjustment->getType() === \Sylius\Component\Core\Model\AdjustmentInterface::TAX_ADJUSTMENT) {
-                if($adjustment->getOriginType() === ShipmentInterface::class) {
-                    return $adjustment;
-                }
-            }
+        foreach ($shipment->getUnits() as $unit) {
+            $shipment->removeUnit($unit);
         }
 
-        $adjustment = $this->adjustmentFactory->createNew();
-        $adjustment->setType(\Sylius\Component\Core\Model\AdjustmentInterface::TAX_ADJUSTMENT);
-        $adjustment->setOriginType(ShipmentInterface::class);
-        $order->addAdjustment($adjustment);
-        return $adjustment;
+        /** @var OrderInterface $order */
+        Assert::isInstanceOf($order, OrderInterface::class);
+
+        foreach ($order->getItemUnits() as $itemUnit) {
+            if (null === $itemUnit->getShipment()) {
+                $shipment->addUnit($itemUnit);
+            }
+        }
+    }
+
+    private function recalculateExistingShipmentWithProperMethod(OrderInterface $order): void
+    {
+        /** @var ShipmentInterface $shipment */
+        $shipment = $order->getShipments()->first();
+
+        $this->processShipmentUnits($order, $shipment);
+
+        if (null === $this->shippingMethodsResolver) {
+            return;
+        }
+
+        if (!in_array($shipment->getMethod(), $this->shippingMethodsResolver->getSupportedMethods($shipment), true)) {
+            try {
+                $shipment->setMethod($this->defaultShippingMethodResolver->getDefaultShippingMethod($shipment));
+            } catch (UnresolvedDefaultShippingMethodException $exception) {
+                return;
+            }
+        }
     }
 }

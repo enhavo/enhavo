@@ -34,6 +34,11 @@ class OrderManager
         $order->setShippingState(OrderShippingStates::STATE_READY);
     }
 
+    public function assignCheckoutCompletedAt(OrderInterface $order)
+    {
+        $order->setCheckoutCompletedAt(new \DateTime());
+    }
+
     public function assignCheckoutPaymentState(OrderInterface $order)
     {
         $order->setPaymentState(OrderPaymentStates::STATE_AWAITING_PAYMENT);

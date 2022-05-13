@@ -11,6 +11,7 @@ namespace Enhavo\Bundle\ShopBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\ShopBundle\Model\AddressSubjectInterface;
+use Enhavo\Bundle\ShopBundle\Model\OrderItemInterface;
 use Enhavo\Bundle\ShopBundle\State\OrderCheckoutStates;
 use Enhavo\Bundle\ShopBundle\State\OrderPaymentStates;
 use Enhavo\Bundle\ShopBundle\State\OrderShippingStates;
@@ -38,6 +39,7 @@ class Order extends SyliusOrder implements OrderInterface
     private ?string $token;
     private ?bool $trackingMail = false;
     private ?bool $shippable = true;
+    private ?string $currencyCode = null;
 
     /** @var Collection|PaymentInterface[] */
     private $payments;
@@ -47,6 +49,8 @@ class Order extends SyliusOrder implements OrderInterface
 
     /** @var Collection */
     private $promotions;
+
+
 
     public function __construct()
     {
@@ -140,6 +144,11 @@ class Order extends SyliusOrder implements OrderInterface
     {
         $this->shipments->add($shipment);
         $shipment->setOrder($this);
+    }
+
+    public function hasShipments(): bool
+    {
+        return $this->shipments->count() > 0;
     }
 
     public function removeShipment(ShipmentInterface $shipment)
@@ -361,5 +370,43 @@ class Order extends SyliusOrder implements OrderInterface
     public function getAddress(): AddressSubjectInterface
     {
         return $this;
+    }
+
+    public function getItemUnits(): Collection
+    {
+        /** @var ArrayCollection<int, OrderItemInterface> $units */
+        $units = new ArrayCollection();
+
+        /** @var OrderItem $item */
+        foreach ($this->getItems() as $item) {
+            foreach ($item->getUnits() as $unit) {
+                $units->add($unit);
+            }
+        }
+
+        return $units;
+    }
+
+    public function getLastPayment(?string $state = null): ?PaymentInterface
+    {
+        if ($this->payments->isEmpty()) {
+            return null;
+        }
+
+        $payment = $this->payments->filter(function (PaymentInterface $payment) use ($state): bool {
+            return null === $state || $payment->getState() === $state;
+        })->last();
+
+        return $payment !== false ? $payment : null;
+    }
+
+    public function getCurrencyCode(): ?string
+    {
+        return $this->currencyCode;
+    }
+
+    public function setCurrencyCode(?string $currencyCode): void
+    {
+        $this->currencyCode = $currencyCode;
     }
 }

@@ -51,6 +51,8 @@ label:
   shop: Shop
   tag: Tag
   category: Category
+  configuration: Configuration
+  catalog: Catalog
 
 mail:
   confirm:

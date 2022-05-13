@@ -1,10 +1,17 @@
 Enhavo\Bundle\ShopBundle\Entity\Order:
-#    properties:
+    properties:
+        billingAddress:
+            - Valid:
+                  groups: [checkout_address]
+        shippingAddress:
+            - Valid:
+                  groups: [checkout_address]
+
 #        promotionCoupon:
 #            - NotNull: { groups: [redeem] }
 #        payment:
 #            - NotNull: { groups: [payment, confirm] }
-#
+
 #    constraints:
 #        - Enhavo\Bundle\ShopBundle\Validator\Constraints\OrderAddressing:
 #            groups: [shipping]
@@ -14,17 +21,17 @@ Enhavo\Bundle\ShopBundle\Entity\Order:
 Sylius\Component\Addressing\Model\Address:
     properties:
         firstName:
-            - NotBlank: { groups: [shipping] }
+            - NotBlank: { groups: [shipping, checkout_address] }
         lastName:
-            - NotBlank: { groups: [shipping] }
+            - NotBlank: { groups: [shipping, checkout_address] }
         street:
-            - NotBlank: { groups: [shipping] }
+            - NotBlank: { groups: [shipping, checkout_address] }
         city:
-            - NotBlank: { groups: [shipping] }
+            - NotBlank: { groups: [shipping, checkout_address] }
         postcode:
-            - NotBlank: { groups: [shipping] }
+            - NotBlank: { groups: [shipping, checkout_address] }
         countryCode:
-            - NotBlank: { groups: [shipping] }
+            - NotBlank: { groups: [shipping, checkout_address] }
 
 Enhavo\Bundle\ShopBundle\Entity\Product:
     properties:
