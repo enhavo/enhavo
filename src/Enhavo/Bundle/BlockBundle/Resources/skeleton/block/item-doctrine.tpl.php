@@ -46,6 +46,7 @@
             targetEntity: <?= $relation->getTargetEntity() ?>
 
             inversedBy: <?= $relation->getInversedBy() ?>
+
             joinColumn:
                 onDelete: SET NULL
 
@@ -72,5 +73,3 @@
                         onDelete: cascade
 
 <?php endforeach; ?>
-
-    lifecycleCallbacks: {  }
