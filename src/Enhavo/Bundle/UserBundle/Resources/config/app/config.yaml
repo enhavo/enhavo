@@ -205,3 +205,6 @@ enhavo_app:
                         label: label.open_homepage
                         translation_domain: EnhavoAppBundle
                         target: _blank
+
+    form_themes:
+        - '@EnhavoUser/admin/form/fields.html.twig'
