@@ -42,12 +42,9 @@ class PermissionType extends AbstractType
 
             if (!isset($groups[$prefix]) && $lastPrefix != $prefix) {
                 $lastPrefix = $prefix;
-                $groups[$lastPrefix] = [
-                    $index => $choice,
-                ];
-            } else {
-                $groups[$lastPrefix][$index] = $choice;
+                $groups[$lastPrefix] = [];
             }
+            $groups[$lastPrefix][] = $index;
         }
         $view->vars['groups'] = $groups;
     }

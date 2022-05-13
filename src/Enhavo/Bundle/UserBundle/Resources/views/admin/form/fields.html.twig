@@ -5,7 +5,7 @@
         <table>
             {% for group in form.vars.groups %}
                 <tr>
-                    {% for index,item in group %}
+                    {% for index in group %}
                         <td>
                             <span class="choice-input-with-label">
                                 {{- form_widget(form.children[index]) -}}
