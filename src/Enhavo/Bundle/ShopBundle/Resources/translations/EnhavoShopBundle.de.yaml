@@ -8,6 +8,7 @@ checkout:
       label:
         paypal: Paypal
         debit: Lastschrift
+
 promotion:
   coupon:
     form:
@@ -39,10 +40,6 @@ address:
 shipping_method:
     label:
         shipping_method: Versand Methode
-
-payment_method:
-    label:
-        payment_method: Bezahl Methode
 
 label:
   product: Produkt

@@ -88,9 +88,9 @@ sylius_shop_checkout_confirm:
                 graph: enhavo_order_checkout
                 transition: complete
             redirect:
-                route: sylius_shop_order_pay
+                route: enhavo_shop_theme_payment_purchase
                 parameters:
-                    tokenValue: resource.token
+                    token: resource.token
             form:
                 type: Enhavo\Bundle\ShopBundle\Form\Type\Checkout\ConfirmType
                 options:

@@ -8,14 +8,19 @@
 
 namespace Enhavo\Bundle\ShopBundle\Controller;
 
+use Enhavo\Bundle\ShopBundle\Entity\PaymentMethod;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
+use Payum\Core\Model\GatewayConfigInterface;
 use Payum\Core\Registry\RegistryInterface;
 use Payum\Core\Security\HttpRequestVerifierInterface;
+use Payum\Core\Security\TokenInterface;
 use Sylius\Component\Payment\Model\Payment;
 use Payum\Core\Security\GenericTokenFactoryInterface;
+use Sylius\Component\Payment\Model\PaymentInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
-class PaymentController extends AppController
+class PaymentController extends AbstractController
 {
     public function purchaseAction(Request $request)
     {
@@ -34,18 +39,11 @@ class PaymentController extends AppController
             throw $this->createNotFoundException();
         }
 
-        $this->get('enhavo.order_processing.purchase_processor')->process($order);
-        $this->getDoctrine()->getManager()->flush();
+        $payment = $order->getLastPayment(Payment::STATE_CART);
 
-        $payment = $order->getPayment();
+        $payumToken = $this->provideTokenBasedOnPayment($payment, 'enhavo_shop_theme_payment_after');
 
-        $captureToken = $this->getTokenFactory()->createCaptureToken(
-            $payment->getMethod()->getGateway(),
-            $payment,
-            'enhavo_shop_theme_payment_after'
-        );
-
-        return $this->redirect($captureToken->getTargetUrl());
+        return $this->redirect($payumToken->getTargetUrl());
     }
 
     public function afterAction(Request $request)
@@ -66,7 +64,7 @@ class PaymentController extends AppController
         $orderStateResolver->resolvePaymentState($order);
 
         $this->getDoctrine()->getManager()->flush();
-        
+
         return $this->render($configuration->getTemplate('EnhavoShopBundle:Theme/Payment:after.html.twig'), [
             'order' => $order,
             'status' => $status
@@ -102,5 +100,36 @@ class PaymentController extends AppController
         $orderRepository = $this->get('sylius.repository.order');
         /** @var OrderInterface $order */
         return $orderRepository->findByPaymentId($payment->getId());
+    }
+
+    private function provideTokenBasedOnPayment(PaymentInterface $payment, $route, $parameters = []): TokenInterface
+    {
+        /** @var PaymentMethod $paymentMethod */
+        $paymentMethod = $payment->getMethod();
+
+        /** @var GatewayConfigInterface $gatewayConfig */
+        $gatewayConfig = $paymentMethod;
+
+        if (isset($gatewayConfig->getConfig()['use_authorize']) && true === (bool) $gatewayConfig->getConfig()['use_authorize']) {
+            $token = $this->getTokenFactory()->createAuthorizeToken(
+                $gatewayConfig->getGatewayName(),
+                $payment,
+                $route
+                ?? null,
+                $parameters
+                ?? []
+            );
+        } else {
+            $token = $this->getTokenFactory()->createCaptureToken(
+                $gatewayConfig->getGatewayName(),
+                $payment,
+                $route
+                ?? null,
+                $parameters
+                ?? []
+            );
+        }
+
+        return $token;
     }
 }

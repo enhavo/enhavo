@@ -1,0 +1,7 @@
+enhavo_payment_admin:
+    resource: "@EnhavoPaymentBundle/Resources/config/routes/admin/*"
+    prefix: /admin
+
+payum:
+    resource: "@PayumBundle/Resources/config/routing/all.xml"
+    prefix: /payum

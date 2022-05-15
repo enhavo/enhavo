@@ -26,7 +26,7 @@ class SalesMenu extends ListMenu
                     'type' => 'shop_order'
                 ],
                 'payment' => [
-                    'type' => 'shop_payment'
+                    'type' => 'payment_payment'
                 ],
                 'shipment' => [
                     'type' => 'shop_shipment'

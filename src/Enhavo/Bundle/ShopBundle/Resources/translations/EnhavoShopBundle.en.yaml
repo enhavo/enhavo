@@ -40,10 +40,6 @@ shipping_method:
     label:
         shipping_method: Shipping method
 
-payment_method:
-    label:
-        payment_method: Payment method
-
 label:
   product: Product
   order: Order

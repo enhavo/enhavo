@@ -1,0 +1,5 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="Enhavo\Bundle\PaymentBundle\Entity\PaymentSecurityToken" table="payment_payment_security_token">
+
+    </entity>
+</doctrine-mapping>

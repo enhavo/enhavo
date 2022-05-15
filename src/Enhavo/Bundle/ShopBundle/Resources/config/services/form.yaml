@@ -1,7 +1,3 @@
-parameters:
-    enhavo_shop_shipment.class: Enhavo\Bundle\ShopBundle\Form\Type\ShipmentType
-    enhavo_shop_payment.class: Enhavo\Bundle\ShopBundle\Form\Type\PaymentType
-
 services:
     Enhavo\Bundle\ShopBundle\Form\Type\ProductType:
         arguments:
@@ -98,18 +94,6 @@ services:
         tags:
             - { name: form.type }
 
-    Enhavo\Bundle\ShopBundle\Form\Type\Payment\PaymentMethodCreateType:
-        arguments:
-            - '@Enhavo\Bundle\ShopBundle\Payment\Provider\PaymentMethodTypeProvider'
-            - '@translator'
-        tags:
-            - { name: form.type }
-
-    Enhavo\Bundle\ShopBundle\Form\Type\Payment\PaymentMethodType:
-        arguments:
-            - '@Enhavo\Bundle\ShopBundle\Payment\Provider\PaymentMethodTypeProvider'
-        tags:
-            - { name: form.type }
 
 #    Enhavo\Bundle\ShopBundle\Form\Type\OrderType:
 #        arguments:

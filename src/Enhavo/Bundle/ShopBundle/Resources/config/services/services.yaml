@@ -1,6 +1,3 @@
-parameters:
-    enhavo_shop.controller.user.class: Enhavo\Bundle\ShopBundle\Controller\UserController
-
 services:
     Enhavo\Bundle\ShopBundle\Action\VariantActionType:
         parent: Enhavo\Bundle\AppBundle\Action\Type\OpenActionType
@@ -19,12 +16,6 @@ services:
         public: true
         tags:
             - { name: enhavo.action, alias: shop_create_attribute }
-
-    Enhavo\Bundle\ShopBundle\Action\CreatePaymentMethodActionType:
-        parent: Enhavo\Bundle\AppBundle\Action\AbstractActionType
-        public: true
-        tags:
-            - { name: enhavo.action, alias: shop_create_payment_method }
 
     Enhavo\Bundle\ShopBundle\Manager\ProductManager:
         arguments:
@@ -82,26 +73,20 @@ services:
             - '@doctrine.orm.entity_manager'
             - '@sylius.factory.address'
 
-    Enhavo\Bundle\ShopBundle\Payment\Resolver\DefaultPaymentMethodResolver:
-        arguments:
-            - '@sylius.repository.payment_method'
-
     Enhavo\Bundle\ShopBundle\Payment\Provider\OrderPaymentProvider:
         arguments:
-            - '@Enhavo\Bundle\ShopBundle\Payment\Resolver\DefaultPaymentMethodResolver'
+            - '@Enhavo\Bundle\PaymentBundle\Resolver\DefaultPaymentMethodResolver'
             - '@sylius.factory.payment'
             - '@sm.factory'
 
-    Enhavo\Bundle\ShopBundle\Payment\Provider\PaymentMethodTypeProvider:
-        arguments:
-            - '%enhavo_shop.payment.methods%'
-
-    sylius.factory.payment_method:
-        class: '%sylius.factory.payment_method.class%'
+    enhavo_shop.controller.payment:
+        class: Enhavo\Bundle\ShopBundle\Controller\PaymentController
         public: true
-        arguments:
-            - '%sylius.model.payment_method.class%'
-            - '@Enhavo\Bundle\ShopBundle\Payment\Provider\PaymentMethodTypeProvider'
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: controller.service_arguments }
+
 
 #    enhavo_shop.listener.doctrine_sylius_meta:
 #        class: Enhavo\Bundle\ShopBundle\EventListener\DoctrineSyliusMetaListener
@@ -115,9 +100,6 @@ services:
 #
 #    enhavo.token_generator:
 #        class: Sylius\Component\User\Security\Generator\TokenGenerator
-
-
-
 #    enhavo_shop.document.manager:
 #        class: Enhavo\Bundle\ShopBundle\Document\DocumentManager
 #        calls:

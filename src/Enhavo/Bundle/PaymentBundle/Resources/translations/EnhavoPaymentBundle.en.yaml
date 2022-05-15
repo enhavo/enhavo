@@ -1,0 +1,7 @@
+payment_method:
+    label:
+        payment_method: Payment method
+
+payment:
+    label:
+        payment: Payment

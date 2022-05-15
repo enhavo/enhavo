@@ -1,0 +1,50 @@
+payum:
+    security:
+        token_storage:
+            Enhavo\Bundle\PaymentBundle\Entity\PaymentSecurityToken: { doctrine: orm }
+
+    storages:
+        Sylius\Component\Payment\Model\Payment: { doctrine: orm }
+
+    dynamic_gateways:
+        config_storage:
+            Enhavo\Bundle\PaymentBundle\Entity\GatewayConfig: { doctrine: orm }
+
+    gateways:
+        offline:
+            factory: offline
+
+sylius_payment:
+    gateways:
+        offline: Offline
+        paypal_express_checkout: Paypal Express Checkout
+    resources:
+        payment:
+            classes:
+                controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
+                form: Enhavo\Bundle\PaymentBundle\Form\Type\PaymentType
+                factory: Enhavo\Bundle\PaymentBundle\Factory\PaymentFactory
+        payment_method:
+            classes:
+                controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
+                model: Enhavo\Bundle\PaymentBundle\Entity\PaymentMethod
+                form: Enhavo\Bundle\PaymentBundle\Form\Type\PaymentMethodType
+                factory: Enhavo\Bundle\PaymentBundle\Factory\PaymentMethodFactory
+
+doctrine:
+    orm:
+        resolve_target_entities:
+            Sylius\Component\Payment\Model\PaymentMethodInterface: Enhavo\Bundle\PaymentBundle\Entity\PaymentMethod
+
+enhavo_payment:
+    currencies: [EUR]
+    payment:
+        methods:
+            paypal:
+                label: PayPal
+                form: Enhavo\Bundle\PaymentBundle\Form\Type\Gateway\PaypalGatewayConfigurationType
+                gateway_factory: paypal
+            stripe_credit_card:
+                label: Stripe Credit Card
+                form: Enhavo\Bundle\PaymentBundle\Form\Type\Gateway\StripeGatewayConfigurationType
+                gateway_factory: stripe

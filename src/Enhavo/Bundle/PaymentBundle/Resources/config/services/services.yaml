@@ -1,0 +1,74 @@
+services:
+    Enhavo\Bundle\PaymentBundle\Action\CreatePaymentMethodActionType:
+        parent: Enhavo\Bundle\AppBundle\Action\AbstractActionType
+        public: true
+        tags:
+            - { name: enhavo.action, alias: payment_create_payment_method }
+
+    Enhavo\Bundle\PaymentBundle\Form\Type\PaymentMethodCreateType:
+        arguments:
+            - '@Enhavo\Bundle\PaymentBundle\Provider\PaymentMethodTypeProvider'
+            - '@translator'
+        tags:
+            - { name: form.type }
+
+    Enhavo\Bundle\PaymentBundle\Form\Type\PaymentMethodType:
+        arguments:
+            - '@Enhavo\Bundle\PaymentBundle\Provider\PaymentMethodTypeProvider'
+        tags:
+            - { name: form.type }
+
+    Enhavo\Bundle\PaymentBundle\Form\Type\CurrencyChoiceType:
+        arguments:
+            - '%enhavo_payment.currencies%'
+        tags:
+            - { name: form.type }
+
+    Enhavo\Bundle\PaymentBundle\Menu\PaymentMethodMenu:
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
+        tags:
+            - { name: enhavo.menu, alias: payment_payment_method }
+
+    Enhavo\Bundle\PaymentBundle\Menu\PaymentMenu:
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
+        tags:
+            - { name: enhavo.menu, alias: payment_payment }
+
+    Enhavo\Bundle\PaymentBundle\Resolver\DefaultPaymentMethodResolver:
+        arguments:
+            - '@sylius.repository.payment_method'
+
+    Enhavo\Bundle\PaymentBundle\Provider\PaymentMethodTypeProvider:
+        arguments:
+            - '%enhavo_payment.payment.methods%'
+
+    sylius.form.payment:
+        class: '%sylius.form.payment.class%'
+        arguments:
+            - '%sylius.model.payment.class%'
+        tags:
+            - { name: form.type }
+
+    sylius.factory.payment_method:
+        class: '%sylius.factory.payment_method.class%'
+        public: true
+        arguments:
+            - '%sylius.model.payment_method.class%'
+            - '@Enhavo\Bundle\PaymentBundle\Provider\PaymentMethodTypeProvider'
+            - '@enhavo_payment.factory.gateway_config'
+
+    enhavo_payment.form.gateway_config:
+        class: '%enhavo_payment.form.gateway_config.class%'
+        arguments:
+            - '%enhavo_payment.model.gateway_config.class%'
+            - []
+            - '@Enhavo\Bundle\PaymentBundle\Provider\PaymentMethodTypeProvider'
+        tags:
+            - { name: form.type }
+
+    sylius.factory.payment:
+        class: '%sylius.factory.payment.class%'
+        public: true
+        arguments:
+            - '%sylius.model.payment.class%'
+            - '@enhavo_app.util.secure_url_token_generator'

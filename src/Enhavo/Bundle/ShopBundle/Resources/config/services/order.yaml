@@ -245,14 +245,6 @@ services:
 #        calls:
 #            - [setContainer, ['@service_container']]
 #
-#    enhavo_shop.controller.payment:
-#        class: Enhavo\Bundle\ShopBundle\Controller\PaymentController
-#        public: true
-#        arguments:
-#            - '@sylius.resource_controller.request_configuration_factory'
-#            - '@Enhavo\Component\Type\FactoryInterface[View]'
-#        calls:
-#            - [setContainer, ['@service_container']]
 #
 #    enhavo_shop.order.order_address_provider:
 #        class: Enhavo\Bundle\ShopBundle\Order\OrderAddressProvider

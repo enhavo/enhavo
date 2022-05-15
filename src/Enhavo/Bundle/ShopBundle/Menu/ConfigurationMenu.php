@@ -32,7 +32,7 @@ class ConfigurationMenu extends ListMenu
                     'type' => 'shop_shipping_method'
                 ],
                 'paymentMethod' => [
-                    'type' => 'shop_payment_method'
+                    'type' => 'payment_payment_method'
                 ],
                 'country' => [
                     'type' => 'shop_country'

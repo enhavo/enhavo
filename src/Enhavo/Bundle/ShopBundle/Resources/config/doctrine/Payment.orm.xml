@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
-    <entity name="Enhavo\Bundle\ShopBundle\Entity\Payment" table="shop_payment">
+    <entity name="Enhavo\Bundle\ShopBundle\Entity\Payment">
         <many-to-one field="order" target-entity="Sylius\Component\Order\Model\OrderInterface" inversed-by="payments">
             <cascade>
                 <cascade-persist/>

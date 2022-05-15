@@ -9,5 +9,6 @@ imports:
     - path: '@enhavo/shop/services/enhavo/*'
     - path: '@enhavo/translation/services/enhavo/*'
     - path: '@enhavo/user/services/enhavo/*'
+    - path: '@enhavo/payment/services/enhavo/*'
 
 services:
