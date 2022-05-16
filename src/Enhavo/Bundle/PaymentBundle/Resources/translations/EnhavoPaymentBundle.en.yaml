@@ -5,9 +5,21 @@ payment_method:
 payment:
     label:
         payment: Payment
+        state: State
+        amount: Amount
+        created_at: Created at
     action:
         complete: Complete
         cancel: Cancel
         reset: Reset
         refresh_state: Refresh
         pay: Pay
+    state:
+        new: New
+        processing: Processing
+        authorized: Authorized
+        completed: Completed
+        failed: Failed
+        cancelled: Cancelled
+        refunded: Refunded
+        unknown: Unknown

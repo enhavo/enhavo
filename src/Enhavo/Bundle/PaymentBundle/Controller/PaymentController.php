@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\PaymentBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
+use Enhavo\Bundle\AppBundle\View\View;
 use Enhavo\Bundle\PaymentBundle\Entity\Payment;
 use Enhavo\Bundle\PaymentBundle\Entity\PaymentMethod;
 use Enhavo\Bundle\PaymentBundle\Model\PaymentInterface;
@@ -12,7 +13,6 @@ use Payum\Core\Request\GetHumanStatus;
 use Payum\Core\Request\Sync;
 use Payum\Core\Security\GenericTokenFactoryInterface;
 use Payum\Core\Security\HttpRequestVerifierInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -95,9 +95,17 @@ class PaymentController extends ResourceController
         ]);
     }
 
-    public function finishAction(Request $request): Response
+    public function doneAction(Request $request): Response
     {
-        return new JsonResponse('finish');
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+
+        /** @var View $view */
+        $view = $this->viewFactory->create([
+            'type' => 'payment_done',
+            'request_configuration' => $configuration
+        ]);
+
+        return $view->getResponse($request);
     }
 
     private function getPayment(Request $request): PaymentInterface

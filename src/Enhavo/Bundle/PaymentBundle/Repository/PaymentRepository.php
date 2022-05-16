@@ -2,7 +2,10 @@
 
 namespace Enhavo\Bundle\PaymentBundle\Repository;
 
+
+use Enhavo\Bundle\AppBundle\Filter\FilterQuery;
 use Enhavo\Bundle\AppBundle\Repository\EntityRepository;
+use Enhavo\Bundle\PaymentBundle\Model\PaymentInterface;
 
 class PaymentRepository extends EntityRepository
 {
@@ -18,5 +21,12 @@ class PaymentRepository extends EntityRepository
         }
 
         return null;
+    }
+
+    public function findWithoutCartState(FilterQuery $filter)
+    {
+        $filter->addWhere('state', FilterQuery::OPERATOR_NOT, PaymentInterface::STATE_CART);
+        $filter->addOrderBy('createdAt', FilterQuery::ORDER_DESC);
+        return $this->filter($filter);
     }
 }

@@ -25,9 +25,15 @@ class PayPalConvertAction implements ActionInterface
         $details['PAYMENTREQUEST_0_CURRENCYCODE'] = $payment->getCurrencyCode();
         $details['PAYMENTREQUEST_0_AMT'] = $this->formatPrice($payment->getAmount());
 
-        $this->execute($enhance = new Enhance($details));
+        try {
+            $this->execute($enhance = new Enhance($details));
+        } catch (RequestNotSupportedException $e) {
+            $request->setResult($details);
+            return;
+        }
 
         $request->setResult($enhance->getDetails());
+
     }
 
     private function formatPrice(int $price): float

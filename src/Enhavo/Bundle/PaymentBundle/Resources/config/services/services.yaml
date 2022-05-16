@@ -125,3 +125,15 @@ services:
     Enhavo\Bundle\PaymentBundle\Resolver\PaymentStateResolver:
         arguments:
             - '@Enhavo\Bundle\AppBundle\Resource\ResourceManager'
+
+    Enhavo\Bundle\PaymentBundle\View\PaymentDoneViewType:
+        arguments:
+            - '@sylius.repository.payment'
+            - '@enhavo_payment.resolver.payment_subject'
+        tags:
+            - { name: enhavo_app.view }
+
+    Enhavo\Bundle\PaymentBundle\Resolver\PaymentSubjectResolver:
+
+    enhavo_payment.resolver.payment_subject:
+        alias: Enhavo\Bundle\PaymentBundle\Resolver\PaymentSubjectResolver

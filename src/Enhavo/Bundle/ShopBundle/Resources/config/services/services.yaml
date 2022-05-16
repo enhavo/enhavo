@@ -82,11 +82,15 @@ services:
     enhavo_shop.controller.payment:
         class: Enhavo\Bundle\ShopBundle\Controller\PaymentController
         public: true
+        arguments:
+            - '@sylius.repository.order'
+            - '@Enhavo\Bundle\AppBundle\Resource\ResourceManager'
         calls:
             - [setContainer, ['@service_container']]
         tags:
             - { name: controller.service_arguments }
 
+    Enhavo\Bundle\ShopBundle\Payment\Resolver\PaymentSubjectOrderResolver:
 
 #    enhavo_shop.listener.doctrine_sylius_meta:
 #        class: Enhavo\Bundle\ShopBundle\EventListener\DoctrineSyliusMetaListener

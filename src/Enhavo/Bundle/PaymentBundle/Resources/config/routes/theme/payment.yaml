@@ -1,9 +1,59 @@
-sylius_payment_theme_pay:
+sylius_payment_theme_authorize:
     options:
         expose: true
-    path: /payment/pay/{token}
+    path: /payment/authorize/{tokenValue}
     methods: [GET]
     defaults:
-        _controller: sylius.controller.payment::payAction
+        _controller: sylius.controller.payment::authorizeAction
         _sylius:
-            viewer:
+            redirect:
+                route: sylius_payment_after_authorize
+                parameters:
+                    tokenValue: $tokenValue
+
+sylius_payment_theme_after_authorize:
+    options:
+        expose: true
+    path: /payment/after/authorize/{tokenValue}
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.payment::afterAction
+        _sylius:
+            redirect:
+                route: sylius_payment_capture
+                parameters:
+                    tokenValue: $tokenValue
+
+sylius_payment_theme_capture:
+    options:
+        expose: true
+    path: /payment/payment/capture/{tokenValue}
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.payment::captureAction
+        _sylius:
+            redirect:
+                route: sylius_payment_after_capture
+                parameters:
+                    tokenValue: $tokenValue
+
+sylius_payment_theme_after_capture:
+    options:
+        expose: true
+    path: /payment/after/capture/{tokenValue}
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.payment::afterAction
+        _sylius:
+            redirect:
+                route: sylius_payment_theme_done
+                parameters:
+                    tokenValue: $tokenValue
+
+sylius_payment_theme_done:
+    options:
+        expose: true
+    path: /payment/after/done/{tokenValue}
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.payment::doneAction

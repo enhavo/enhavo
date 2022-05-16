@@ -5,9 +5,21 @@ payment_method:
 payment:
     label:
         payment: Bezahlung
+        state: Status
+        amount: Betrag
+        created_at: Erstellt am
     action:
         complete: Abgeschlossen
         cancel: Abbrechen
         reset: Zurücksetzen
         refresh_state: Aktualisieren
         pay: Bezahlen
+    state:
+        new: Neu
+        processing: Bearbeitung
+        authorized: Autorisiert
+        completed: Abgeschlossen
+        failed: Fehlgeschlagen
+        cancelled: Abgebrochen
+        refunded: Erstattet
+        unknown: Unbekannt
