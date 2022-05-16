@@ -44,6 +44,7 @@ class EnhavoPaymentExtension extends AbstractResourceExtension implements Prepen
     {
         $files = [
             __DIR__.'/../Resources/config/app/config.yaml',
+            __DIR__.'/../Resources/config/app/state_machine/enhavo_payment.yaml',
         ];
 
         foreach ($files as $file) {

@@ -1,7 +1,7 @@
 sylius_payment_method_index:
     options:
         expose: true
-    path: /enhavo/shop/payment_method/index
+    path: /enhavo/payment/payment_method/index
     methods: [GET]
     defaults:
         _controller: sylius.controller.payment_method::indexAction
@@ -15,7 +15,7 @@ sylius_payment_method_index:
 sylius_payment_method_create:
     options:
         expose: true
-    path: /enhavo/shop/payment_method/{type}/create
+    path: /enhavo/payment/payment_method/{type}/create
     methods: [GET,POST]
     defaults:
         _controller: sylius.controller.payment_method::createAction
@@ -29,7 +29,7 @@ sylius_payment_method_create:
 sylius_payment_method_create_form:
     options:
         expose: true
-    path: /enhavo/shop/payment_method/create/form
+    path: /enhavo/payment/payment_method/create/form
     methods: [GET,POST]
     controller: enhavo_app.controller.modal:formAction
     defaults:
@@ -39,7 +39,7 @@ sylius_payment_method_create_form:
 sylius_payment_method_update:
     options:
         expose: true
-    path: /enhavo/shop/payment_method/update/{id}
+    path: /enhavo/payment/payment_method/update/{id}
     methods: [GET,POST]
     defaults:
         _controller: sylius.controller.payment_method::updateAction
@@ -49,7 +49,7 @@ sylius_payment_method_update:
 sylius_payment_method_table:
     options:
         expose: true
-    path: /enhavo/shop/payment_method/table
+    path: /enhavo/payment/payment_method/table
     defaults:
         page: 1
         _controller: sylius.controller.payment_method::tableAction
@@ -65,7 +65,7 @@ sylius_payment_method_table:
 sylius_payment_method_delete:
     options:
         expose: true
-    path: /enhavo/shop/payment_method/delete/{id}
+    path: /enhavo/payment/payment_method/delete/{id}
     methods: [POST]
     defaults:
         _controller: sylius.controller.payment_method::deleteAction
@@ -73,7 +73,7 @@ sylius_payment_method_delete:
 sylius_payment_method_batch:
     options:
         expose: true
-    path: /enhavo/shop/payment_method/batch
+    path: /enhavo/payment/payment_method/batch
     methods: [POST]
     defaults:
         _controller: sylius.controller.payment_method::batchAction

@@ -4,7 +4,7 @@ payum:
             Enhavo\Bundle\PaymentBundle\Entity\PaymentSecurityToken: { doctrine: orm }
 
     storages:
-        Sylius\Component\Payment\Model\Payment: { doctrine: orm }
+        Enhavo\Bundle\PaymentBundle\Entity\Payment: { doctrine: orm }
 
     dynamic_gateways:
         config_storage:
@@ -21,7 +21,7 @@ sylius_payment:
     resources:
         payment:
             classes:
-                controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
+                controller:  Enhavo\Bundle\PaymentBundle\Controller\PaymentController
                 form: Enhavo\Bundle\PaymentBundle\Form\Type\PaymentType
                 factory: Enhavo\Bundle\PaymentBundle\Factory\PaymentFactory
         payment_method:

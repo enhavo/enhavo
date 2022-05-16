@@ -72,3 +72,56 @@ services:
         arguments:
             - '%sylius.model.payment.class%'
             - '@enhavo_app.util.secure_url_token_generator'
+
+    Enhavo\Bundle\PaymentBundle\Action\CompleteActionType:
+        parent: Enhavo\Bundle\AppBundle\Action\Type\TransitionActionType
+        public: true
+        tags:
+            - { name: enhavo.action, alias: 'payment_complete' }
+
+    Enhavo\Bundle\PaymentBundle\Action\PayActionType:
+        parent: Enhavo\Bundle\AppBundle\Action\Type\OpenActionType
+        public: true
+        tags:
+            - { name: enhavo.action, alias: 'payment_pay' }
+
+    Enhavo\Bundle\PaymentBundle\Action\RefreshStateActionType:
+        parent: Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType
+        public: true
+        arguments:
+            - '@request_stack'
+        tags:
+            - { name: enhavo.action, alias: 'payment_refresh_state' }
+
+    Enhavo\Bundle\PaymentBundle\Action\ResetActionType:
+        parent: Enhavo\Bundle\AppBundle\Action\Type\TransitionActionType
+        public: true
+        tags:
+            - { name: enhavo.action, alias: 'payment_reset' }
+
+    Enhavo\Bundle\PaymentBundle\Action\CancelActionType:
+        parent: Enhavo\Bundle\AppBundle\Action\Type\TransitionActionType
+        public: true
+        tags:
+            - { name: enhavo.action, alias: 'payment_cancel' }
+
+    Enhavo\Bundle\PaymentBundle\EventListener\PaymentSubscriber:
+        tags:
+            - { name: kernel.event_subscriber }
+
+    enhavo_payment.manager.payment:
+        alias: Enhavo\Bundle\PaymentBundle\Manager\PaymentManager
+        public: true
+
+    Enhavo\Bundle\PaymentBundle\Manager\PaymentManager:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@payum'
+
+    enhavo_payment.resolver.payment_state_resolver:
+        public: true
+        alias: 'Enhavo\Bundle\PaymentBundle\Resolver\PaymentStateResolver'
+
+    Enhavo\Bundle\PaymentBundle\Resolver\PaymentStateResolver:
+        arguments:
+            - '@Enhavo\Bundle\AppBundle\Resource\ResourceManager'

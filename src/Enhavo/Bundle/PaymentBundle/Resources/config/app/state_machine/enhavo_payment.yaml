@@ -27,7 +27,7 @@ winzou_state_machine:
                 from: [new, processing, authorized]
                 to: completed
             fail:
-                from: [new, processing]
+                from: [new, processing, authorized]
                 to: failed
             cancel:
                 from: [new, processing, authorized]
@@ -35,7 +35,15 @@ winzou_state_machine:
             refund:
                 from: [completed]
                 to: refunded
+            reset:
+                from: [new, processing, authorized, fail]
+                to: new
         callbacks:
+            before:
+                complete:
+                    on: [ "complete" ]
+                    do: [ "@enhavo_payment.manager.payment", "complete" ]
+                    args: [ "object" ]
             after:
 #                sylius_process_order:
 #                    on: ["fail", "cancel"]
@@ -45,3 +53,8 @@ winzou_state_machine:
 #                    on: ["complete", "process", "refund", "authorize"]
 #                    do: ["@sylius.state_resolver.order_payment", "resolve"]
 #                    args: ["object.getOrder()"]
+                reset:
+                    on: ["reset"]
+                    do: ["@enhavo_payment.manager.payment", "reset"]
+                    args: ["object"]
+

@@ -1,7 +1,7 @@
 sylius_payment_index:
     options:
         expose: true
-    path: /enhavo/shop/payment/index
+    path: /enhavo/payment/payment/index
     methods: [GET]
     defaults:
         _controller: sylius.controller.payment::indexAction
@@ -11,7 +11,7 @@ sylius_payment_index:
 sylius_payment_create:
     options:
         expose: true
-    path: /enhavo/shop/payment/create
+    path: /enhavo/payment/payment/create
     methods: [GET,POST]
     defaults:
         _controller: sylius.controller.payment::createAction
@@ -22,28 +22,56 @@ sylius_payment_create:
 sylius_payment_update:
     options:
         expose: true
-    path: /enhavo/shop/payment/update/{id}
+    path: /enhavo/payment/payment/update/{id}
     methods: [GET,POST]
     defaults:
         _controller: sylius.controller.payment::updateAction
         _sylius:
+            state_machine:
+                graph: $graph
+                transition: $transition
             viewer:
+                actions:
+                    refresh_state:
+                        type: payment_refresh_state
+                    complete:
+                        type: payment_complete
+                    pay:
+                        type: payment_pay
+                    cancel:
+                        type: payment_cancel
+                    reset:
+                        type: payment_reset
 
 sylius_payment_table:
     options:
         expose: true
-    path: /enhavo/shop/payment/table
+    path: /enhavo/payment/payment/table
     defaults:
         page: 1
         _controller: sylius.controller.payment::tableAction
         _sylius:
+            sorting:
+                createdAt: desc
             viewer:
-                columns: []
+                columns:
+                    amount:
+                        type: currency
+                        label: amount
+                        property: amount
+                    state:
+                        type: property
+                        label: state
+                        property: state
+                    created_at:
+                        type: date
+                        label: date
+                        property: createdAt
 
 sylius_payment_delete:
     options:
         expose: true
-    path: /enhavo/shop/payment/delete/{id}
+    path: /enhavo/payment/payment/delete/{id}
     methods: [POST]
     defaults:
         _controller: sylius.controller.payment::deleteAction
@@ -51,7 +79,7 @@ sylius_payment_delete:
 sylius_payment_batch:
     options:
         expose: true
-    path: /enhavo/shop/payment/batch
+    path: /enhavo/payment/payment/batch
     methods: [POST]
     defaults:
         _controller: sylius.controller.payment::batchAction
@@ -62,3 +90,69 @@ sylius_payment_batch:
             batches:
                 delete:
                     type: delete
+
+sylius_payment_authorize:
+    options:
+        expose: true
+    path: /enhavo/payment/payment/authorize/{tokenValue}
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.payment::authorizeAction
+        _sylius:
+            redirect:
+                route: sylius_payment_after_authorize
+                parameters:
+                    tokenValue: $tokenValue
+
+sylius_payment_after_authorize:
+    options:
+        expose: true
+    path: /enhavo/payment/payment/after/authorize/{tokenValue}
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.payment::afterAction
+        _sylius:
+            redirect:
+                route: sylius_payment_capture
+                parameters:
+                    tokenValue: $tokenValue
+
+sylius_payment_capture:
+    options:
+        expose: true
+    path: /enhavo/payment/payment/capture/{tokenValue}
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.payment::captureAction
+        _sylius:
+            redirect:
+                route: sylius_payment_after_capture
+                parameters:
+                    tokenValue: $tokenValue
+
+sylius_payment_after_capture:
+    options:
+        expose: true
+    path: /enhavo/payment/payment/after/capture/{tokenValue}
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.payment::afterAction
+        _sylius:
+            redirect:
+                route: sylius_payment_finish
+
+sylius_payment_finish:
+    options:
+        expose: true
+    path: /enhavo/payment/payment/finish
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.payment::finishAction
+
+sylius_payment_refresh_state:
+    options:
+        expose: true
+    path: /enhavo/payment/payment/refresh-state/{id}
+    methods: [POST]
+    defaults:
+        _controller: sylius.controller.payment::refreshStateAction

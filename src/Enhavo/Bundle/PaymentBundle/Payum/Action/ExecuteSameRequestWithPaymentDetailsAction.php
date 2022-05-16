@@ -2,14 +2,19 @@
 
 namespace Enhavo\Bundle\PaymentBundle\Payum\Action;
 
-use Payum\Core\Action\GatewayAwareAction;
+use Payum\Core\Action\ActionInterface;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\Exception\RequestNotSupportedException;
+use Payum\Core\GatewayAwareInterface;
+use Payum\Core\GatewayAwareTrait;
+use Payum\Core\Request\Convert;
 use Payum\Core\Request\Generic;
 use Sylius\Component\Payment\Model\PaymentInterface;
 
-final class ExecuteSameRequestWithPaymentDetailsAction extends GatewayAwareAction
+class ExecuteSameRequestWithPaymentDetailsAction implements GatewayAwareInterface, ActionInterface
 {
+    use GatewayAwareTrait;
+
     /**
      * @param Generic $request
      */
@@ -19,11 +24,13 @@ final class ExecuteSameRequestWithPaymentDetailsAction extends GatewayAwareActio
 
         /** @var PaymentInterface $payment */
         $payment = $request->getModel();
-        $details = ArrayObject::ensureArrayObject($payment->getDetails());
+
+        $this->gateway->execute($convert = new Convert($payment, 'array'));
+
+        $details = ArrayObject::ensureArrayObject($convert->getResult());
 
         try {
             $request->setModel($details);
-
             $this->gateway->execute($request);
         } finally {
             $payment->setDetails((array) $details);

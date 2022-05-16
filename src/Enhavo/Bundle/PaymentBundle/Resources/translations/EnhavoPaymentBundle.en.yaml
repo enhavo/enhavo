@@ -5,3 +5,9 @@ payment_method:
 payment:
     label:
         payment: Payment
+    action:
+        complete: Complete
+        cancel: Cancel
+        reset: Reset
+        refresh_state: Refresh
+        pay: Pay

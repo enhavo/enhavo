@@ -4,9 +4,8 @@ namespace Enhavo\Bundle\AppBundle\Action\Type;
 
 use Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType;
 use Enhavo\Bundle\AppBundle\Action\ActionTypeInterface;
+use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Routing\RouterInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class ExportModalActionType
@@ -29,6 +28,15 @@ class OpenActionType extends AbstractUrlActionType implements ActionTypeInterfac
         return $data;
     }
 
+    protected function getUrl(array $options, $resource = null)
+    {
+        if ($options['url']) {
+            return $options['url'];
+        }
+
+        return parent::getUrl($options, $resource);
+    }
+
     /**
      * @param OptionsResolver $resolver
      */
@@ -41,8 +49,17 @@ class OpenActionType extends AbstractUrlActionType implements ActionTypeInterfac
             'label' => 'label.open',
             'icon' => 'arrow_forward',
             'target' => '_self',
-            'view_key' => null
+            'view_key' => null,
+            'url' => null,
+            'route' => null
         ]);
+
+        $resolver->setNormalizer('route', function($options, $value) {
+            if ($options['url'] === null && $value === null) {
+                throw new InvalidOptionsException('Need to configure "route" or "url" option');
+            }
+            return $value;
+        });
     }
 
     /**

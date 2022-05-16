@@ -1,0 +1,10 @@
+services:
+    Enhavo\Bundle\PaymentBundle\Payum\Action\Convert\PayPalConvertAction:
+        public: true
+        tags:
+            - { name: payum.action, factory: paypal_express_checkout }
+
+    Enhavo\Bundle\PaymentBundle\Payum\Action\ExecuteSameRequestWithPaymentDetailsAction:
+        public: true
+        tags:
+            - { name: payum.action, all: true }

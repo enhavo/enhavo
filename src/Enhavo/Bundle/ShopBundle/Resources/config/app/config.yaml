@@ -3,6 +3,10 @@ cmf_routing:
         controllers_by_class:
             Enhavo\Bundle\ShopBundle\Entity\Product: sylius.controller.product:showResourceAction
 
+payum:
+    storages:
+        Enhavo\Bundle\ShopBundle\Entity\Payment: { doctrine: orm }
+
 sylius_order:
     resources:
         order:

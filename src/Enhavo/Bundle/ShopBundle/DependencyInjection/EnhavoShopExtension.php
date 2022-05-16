@@ -64,7 +64,6 @@ class EnhavoShopExtension extends AbstractResourceExtension implements PrependEx
             __DIR__.'/../Resources/config/app/state_machine/enhavo_order_checkout.yml',
             __DIR__.'/../Resources/config/app/state_machine/enhavo_order_payment.yml',
             __DIR__.'/../Resources/config/app/state_machine/enhavo_order_shipping.yml',
-            __DIR__.'/../Resources/config/app/state_machine/enhavo_payment.yml',
             __DIR__.'/../Resources/config/app/state_machine/enhavo_shipment.yml',
         ];
 

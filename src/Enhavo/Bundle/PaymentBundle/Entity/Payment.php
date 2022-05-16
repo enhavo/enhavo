@@ -2,9 +2,10 @@
 
 namespace Enhavo\Bundle\PaymentBundle\Entity;
 
+use Enhavo\Bundle\PaymentBundle\Model\PaymentInterface;
 use Sylius\Component\Payment\Model\Payment as BasePayment;
 
-class Payment extends BasePayment
+class Payment extends BasePayment implements PaymentInterface
 {
     private ?string $token;
 

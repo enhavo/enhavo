@@ -67,6 +67,11 @@ class ResourceManager
         $this->dispatchPost($resource, $configuration);
     }
 
+    public function canApplyTransition($resource, $graph, $transition): bool
+    {
+        return $this->stateMachineFactory->get($resource, $graph)->can($transition);
+    }
+
     public function delete($resource, $configuration = [])
     {
         $resolver = $this->createOptionResolver([

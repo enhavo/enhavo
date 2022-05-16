@@ -1,0 +1,9 @@
+sylius_payment_theme_pay:
+    options:
+        expose: true
+    path: /payment/pay/{token}
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.payment::payAction
+        _sylius:
+            viewer:

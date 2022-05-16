@@ -5,3 +5,9 @@ payment_method:
 payment:
     label:
         payment: Bezahlung
+    action:
+        complete: Abgeschlossen
+        cancel: Abbrechen
+        reset: Zurücksetzen
+        refresh_state: Aktualisieren
+        pay: Bezahlen
