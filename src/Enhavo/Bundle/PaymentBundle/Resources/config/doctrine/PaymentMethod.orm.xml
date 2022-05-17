@@ -1,0 +1,11 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="Enhavo\Bundle\PaymentBundle\Entity\PaymentMethod" table="payment_payment_method">
+        <many-to-one field="gatewayConfig" target-entity="Enhavo\Bundle\PaymentBundle\Entity\GatewayConfig">
+            <cascade><cascade-all/></cascade>
+            <join-column name="gateway_config_id" referenced-column-name="id" nullable="true" on-delete="SET NULL" />
+        </many-to-one>
+        <field name="name" nullable="true"></field>
+        <field name="description" type="text" nullable="true"></field>
+        <field name="instructions" type="text" nullable="true"></field>
+    </entity>
+</doctrine-mapping>

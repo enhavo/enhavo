@@ -9,9 +9,9 @@
 namespace Enhavo\Bundle\ShopBundle\Entity;
 
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
-use Sylius\Component\Payment\Model\Payment as SyliusPayment;
+use Enhavo\Bundle\PaymentBundle\Entity\Payment as EnhavoPayment;
 
-class Payment extends SyliusPayment
+class Payment extends EnhavoPayment
 {
     private ?OrderInterface $order;
 

@@ -54,7 +54,7 @@ class CreateViewType extends AbstractResourceFormType
         $configuration = $this->getRequestConfiguration($options);
 
         $this->resourceManager->create($this->resource, [
-            'event_name' => $configuration->getEvent() ?? ResourceActions::UPDATE,
+            'event_name' => $configuration->getEvent() ?? ResourceActions::CREATE,
             'application_name' =>  $configuration->getMetadata()->getApplicationName(),
             'entity_name' =>  $configuration->getMetadata()->getName()
         ]);

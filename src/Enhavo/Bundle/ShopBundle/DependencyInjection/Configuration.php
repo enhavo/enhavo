@@ -29,7 +29,6 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->getRootNode();
 
         $this->addDocumentSection($rootNode);
-        $this->addPaymentSection($rootNode);
         $this->addResourcesSection($rootNode);
         $this->addProductSection($rootNode);
 
@@ -55,31 +54,6 @@ class Configuration implements ConfigurationInterface
                             ->children()
                                 ->scalarNode('generator')->defaultValue('enhavo_shop.document.packing_slip_generator')->end()
                                 ->variableNode('options')->end()
-                            ->end()
-                        ->end()
-                    ->end()
-                ->end()
-            ->end()
-        ;
-    }
-
-    private function addPaymentSection(ArrayNodeDefinition $node)
-    {
-        $node
-            ->children()
-                ->arrayNode('payment')
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->arrayNode('methods')
-                            ->useAttributeAsKey('key')
-                            ->prototype('array')
-                                ->children()
-                                    ->scalarNode('form')->isRequired()->end()
-                                    ->scalarNode('gateway_factory')->isRequired()->end()
-                                    ->scalarNode('label')->isRequired()->end()
-                                    ->scalarNode('translation_domain')->defaultValue(null)->end()
-                                    ->scalarNode('enabled')->defaultValue(true)->end()
-                                ->end()
                             ->end()
                         ->end()
                     ->end()

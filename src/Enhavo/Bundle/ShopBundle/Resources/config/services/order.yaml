@@ -120,6 +120,12 @@ services:
         arguments:
             - '@sm.factory'
 
+    Enhavo\Bundle\ShopBundle\EventListener\OrderSubscriber:
+        arguments:
+            - '@router'
+        tags:
+            - { name: kernel.event_subscriber }
+
 #    enhavo.order_processing.shipment_processor:
 #        class: Enhavo\Bundle\ShopBundle\OrderProcessing\OrderShipmentProcessor
 #        arguments:
@@ -193,12 +199,6 @@ services:
 #        tags:
 #            - { name: kernel.event_subscriber }
 #
-#    enhavo_shop.listener.order_subscriber:
-#        class: Enhavo\Bundle\ShopBundle\EventListener\OrderSubscriber
-#        arguments:
-#            - '@enhavo.order_processing.tracking_processor'
-#        tags:
-#            - { name: kernel.event_subscriber }
 #
 #    enhavo_shop.listener.user_subscriber:
 #        class: Enhavo\Bundle\ShopBundle\EventListener\UserSubscriber
@@ -245,14 +245,6 @@ services:
 #        calls:
 #            - [setContainer, ['@service_container']]
 #
-#    enhavo_shop.controller.payment:
-#        class: Enhavo\Bundle\ShopBundle\Controller\PaymentController
-#        public: true
-#        arguments:
-#            - '@sylius.resource_controller.request_configuration_factory'
-#            - '@Enhavo\Component\Type\FactoryInterface[View]'
-#        calls:
-#            - [setContainer, ['@service_container']]
 #
 #    enhavo_shop.order.order_address_provider:
 #        class: Enhavo\Bundle\ShopBundle\Order\OrderAddressProvider

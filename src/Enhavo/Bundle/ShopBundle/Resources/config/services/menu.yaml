@@ -74,16 +74,6 @@ services:
         tags:
             - { name: enhavo.menu, alias: shop_shipping_method }
 
-    Enhavo\Bundle\ShopBundle\Menu\PaymentMethodMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
-        tags:
-            - { name: enhavo.menu, alias: shop_payment_method }
-
-    Enhavo\Bundle\ShopBundle\Menu\PaymentMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
-        tags:
-            - { name: enhavo.menu, alias: shop_payment }
-
     Enhavo\Bundle\ShopBundle\Menu\ShipmentMenu:
         parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:

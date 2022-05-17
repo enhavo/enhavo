@@ -3,6 +3,10 @@ cmf_routing:
         controllers_by_class:
             Enhavo\Bundle\ShopBundle\Entity\Product: sylius.controller.product:showResourceAction
 
+payum:
+    storages:
+        Enhavo\Bundle\ShopBundle\Entity\Payment: { doctrine: orm }
+
 sylius_order:
     resources:
         order:
@@ -58,58 +62,11 @@ sylius_promotion:
             classes:
                 model: Enhavo\Bundle\ShopBundle\Entity\Promotion
 
-payum:
-    security:
-        token_storage:
-            Enhavo\Bundle\ShopBundle\Entity\PaymentToken: { doctrine: orm }
-
-    storages:
-        Enhavo\Bundle\ShopBundle\Entity\Payment: { doctrine: orm }
-
-    gateways:
-        offline:
-            factory: offline
-
-#    storages:
-#        "%sylius.model.order.class%": { doctrine: orm }
-#        "%sylius.model.payment.class%": { doctrine: orm }
-#
-#    security:
-#        token_storage:
-#            Sylius\Bundle\PayumBundle\Model\PaymentSecurityToken: { doctrine: orm }
-#
-#    dynamic_gateways:
-#        config_storage:
-#            Sylius\Bundle\PayumBundle\Model\GatewayConfig: { doctrine: orm }
-#
-#    gateways_v2:
-#        paypal_express_checkout:
-#            factory: paypal_express_checkout_nvp
-#            username: "%paypal.express_checkout.username%"
-#            password: "%paypal.express_checkout.password%"
-#            signature: "%paypal.express_checkout.signature%"
-#            sandbox: "%paypal.express_checkout.sandbox%"
-#
-#    gateways:
-#        offline:
-#            offline: ~
-
 sylius_payment:
-    gateways:
-        offline: Offline
-        paypal_express_checkout: Paypal Express Checkout
     resources:
         payment:
             classes:
-                controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
                 model: Enhavo\Bundle\ShopBundle\Entity\Payment
-        payment_method:
-            classes:
-                controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
-                model: Enhavo\Bundle\ShopBundle\Entity\PaymentMethod
-                form: Enhavo\Bundle\ShopBundle\Form\Type\Payment\PaymentMethodType
-                factory: Enhavo\Bundle\ShopBundle\Factory\PaymentMethodFactory
-
 doctrine:
     orm:
         resolve_target_entities:
@@ -135,6 +92,9 @@ enhavo_doctrine_extension:
             discrName: 'enhavo'
         Enhavo\Bundle\ShopBundle\Entity\ShipmentMethod:
             extends: Sylius\Component\Shipment\Model\ShipmentMethod
+            discrName: 'enhavo'
+        Enhavo\Bundle\ShopBundle\Entity\Payment:
+            extends: Enhavo\Bundle\PaymentBundle\Entity\Payment
             discrName: 'enhavo'
 
 enhavo_app:
@@ -301,15 +261,3 @@ enhavo_taxonomy:
         shop_tag:
             label: label.tag
             translation_domain: EnhavoShopBundle
-
-enhavo_shop:
-    payment:
-        methods:
-            paypal:
-                label: PayPal
-                form: Enhavo\Bundle\ShopBundle\Form\Type\GatewayConfig\PayPalType
-                gateway_factory: paypal
-            stripe_credit_card:
-                label: Stripe Credit Card
-                form: Enhavo\Bundle\ShopBundle\Form\Type\GatewayConfig\StripeCreditCardType
-                gateway_factory: stripe

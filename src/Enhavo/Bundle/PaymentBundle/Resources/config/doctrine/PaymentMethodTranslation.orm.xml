@@ -1,0 +1,5 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="Enhavo\Bundle\PaymentBundle\Entity\PaymentMethodTranslation" table="payment_payment_method_translation">
+
+    </entity>
+</doctrine-mapping>

@@ -40,8 +40,13 @@ class ApiViewType extends AbstractViewType
 
     public function createTemplateData($options, ViewData $viewData, TemplateData $templateData)
     {
-        $configuration = $this->getRequestConfiguration($options);
-        $template = $configuration->getTemplate($options['template']);
+        if (isset($options['request_configuration'])) {
+            $configuration = $this->getRequestConfiguration($options);
+            $template = $configuration->getTemplate($options['template']);
+        } else {
+            $template = $options['template'];
+        }
+
         $templateData->setTemplate($template);
     }
 

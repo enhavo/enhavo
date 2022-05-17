@@ -10,7 +10,7 @@ class FlatRateConfigurationExtension extends AbstractTypeExtension
 {
     public static function getExtendedTypes(): iterable
     {
-        return [FlatRateConfigurationType::class,];
+        return [FlatRateConfigurationType::class];
     }
 
     public function configureOptions(OptionsResolver $resolver)

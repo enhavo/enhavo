@@ -1,0 +1,7 @@
+enhavo_payment_admin:
+    resource: "@EnhavoPaymentBundle/Resources/config/routes/admin/*"
+    prefix: /admin
+
+enhavo_payment_theme:
+    resource: "@EnhavoPaymentBundle/Resources/config/routes/theme/*"
+    prefix: /

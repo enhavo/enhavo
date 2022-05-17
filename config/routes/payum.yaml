@@ -1,0 +1,3 @@
+payum:
+    resource: "@PayumBundle/Resources/config/routing/all.xml"
+    prefix: /payum
