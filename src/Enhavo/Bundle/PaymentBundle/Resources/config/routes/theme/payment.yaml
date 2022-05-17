@@ -7,7 +7,7 @@ sylius_payment_theme_authorize:
         _controller: sylius.controller.payment::authorizeAction
         _sylius:
             redirect:
-                route: sylius_payment_after_authorize
+                route: sylius_payment_theme_after_authorize
                 parameters:
                     tokenValue: $tokenValue
 
@@ -20,7 +20,7 @@ sylius_payment_theme_after_authorize:
         _controller: sylius.controller.payment::afterAction
         _sylius:
             redirect:
-                route: sylius_payment_capture
+                route: sylius_payment_theme_capture
                 parameters:
                     tokenValue: $tokenValue
 
@@ -33,7 +33,7 @@ sylius_payment_theme_capture:
         _controller: sylius.controller.payment::captureAction
         _sylius:
             redirect:
-                route: sylius_payment_after_capture
+                route: sylius_payment_theme_after_capture
                 parameters:
                     tokenValue: $tokenValue
 

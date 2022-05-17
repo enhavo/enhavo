@@ -1,47 +1,35 @@
 <?php
-/**
- * OrderSubscriber.php
- *
- * @since 29/09/16
- * @author gseidel
- */
 
 namespace Enhavo\Bundle\ShopBundle\EventListener;
 
-use Enhavo\Bundle\AppBundle\Event\ResourceEvents;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
-use Enhavo\Bundle\ShopBundle\Model\ProcessorInterface;
 use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Routing\RouterInterface;
 
 class OrderSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var ProcessorInterface
-     */
-    private $trackingProcessor;
-
-    /**
-     * OrderSubscriber constructor.
-     *
-     * @param ProcessorInterface $trackingProcessor
-     */
-    public function __construct(ProcessorInterface $trackingProcessor)
-    {
-        $this->trackingProcessor = $trackingProcessor;
-    }
+    public function __construct(
+        private RouterInterface $router
+    )
+    {}
 
     public static function getSubscribedEvents()
     {
         return [
-            ResourceEvents::PRE_UPDATE => 'update',
+            'sylius.order.post_complete' => 'complete',
         ];
     }
 
-    public function update(ResourceControllerEvent $event)
+    public function complete(ResourceControllerEvent $event)
     {
-        if($event->getSubject() instanceof OrderInterface) {
-            $this->trackingProcessor->process($event->getSubject());
+        $order = $event->getSubject();
+        if($order instanceof OrderInterface) {
+            $event->stop('Redirect');
+            $event->setResponse(new RedirectResponse($this->router->generate('enhavo_shop_theme_payment_purchase', [
+                'token' => $order->getToken()
+            ])));
         }
     }
 }

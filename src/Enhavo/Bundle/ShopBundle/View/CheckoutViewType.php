@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\ShopBundle\View;
 
+use Enhavo\Bundle\AppBundle\Exception\ResourceStopException;
 use Enhavo\Bundle\AppBundle\Resource\ResourceManager;
 use Enhavo\Bundle\AppBundle\View\AbstractViewType;
 use Enhavo\Bundle\AppBundle\View\ResourceMetadataHelperTrait;
@@ -11,6 +12,7 @@ use Enhavo\Bundle\AppBundle\View\ViewData;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceFormFactory;
 use Sylius\Component\Order\Context\CartContextInterface;
+use Sylius\Component\Resource\ResourceActions;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -54,12 +56,18 @@ class CheckoutViewType extends AbstractViewType
 
         if ($request->isMethod('POST')) {
             if ($form->handleRequest($request)->isValid()) {
-                $this->resourceManager->update($this->resource, [
-                    'application_name' => $metadata->getApplicationName(),
-                    'entity_name' => $metadata->getName(),
-                    'transition' => $configuration->getStateMachineTransition(),
-                    'graph' => $configuration->getStateMachineGraph(),
-                ]);
+                try {
+                    $this->resourceManager->update($this->resource, [
+                        'event_name' => $configuration->getEvent() ?? ResourceActions::UPDATE,
+                        'application_name' => $metadata->getApplicationName(),
+                        'entity_name' => $metadata->getName(),
+                        'transition' => $configuration->getStateMachineTransition(),
+                        'graph' => $configuration->getStateMachineGraph(),
+                    ]);
+                } catch (ResourceStopException $e) {
+                    return $e->getResponse();
+                }
+
                 if ($configuration->getRedirectRoute(null)) {
                     return new RedirectResponse($this->router->generate($configuration->getRedirectRoute(null), $configuration->getRedirectParameters()));
                 }

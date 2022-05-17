@@ -35,8 +35,8 @@ class Order extends SyliusOrder implements OrderInterface
     private ?PromotionCouponInterface $promotionCoupon= null;
     private ?UserInterface $user = null;
 
-    private ?string $email;
-    private ?string $token;
+    private ?string $email = null;
+    private ?string $token = null;
     private ?bool $trackingMail = false;
     private ?bool $shippable = true;
     private ?string $currencyCode = null;

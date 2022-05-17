@@ -16,7 +16,7 @@ payum:
 
 enhavo_app:
     template_paths:
-        enhavo_shop:
+        enhavo_payment:
             path: '@EnhavoPaymentBundle/Resources/views'
             alias: EnhavoPayment
             priority: 10
