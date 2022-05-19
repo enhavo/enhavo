@@ -13,7 +13,6 @@ use Enhavo\Bundle\MediaBundle\Media\MediaManager;
 use Enhavo\Bundle\MediaLibraryBundle\Entity\File;
 use Enhavo\Bundle\MediaLibraryBundle\Factory\FileFactory;
 use Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryManager;
-use Enhavo\Bundle\MediaLibraryBundle\Model\FileValidationHelper;
 use Enhavo\Bundle\MediaLibraryBundle\Repository\FileRepository;
 use Enhavo\Bundle\MediaLibraryBundle\View\Type\MediaLibraryViewType;
 use Psr\Container\ContainerExceptionInterface;
