@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\ShopBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Resource\ResourceManager;
+use Enhavo\Bundle\AppBundle\Template\TemplateManager;
 use Enhavo\Bundle\PaymentBundle\Model\PaymentInterface;
 use Enhavo\Bundle\ShopBundle\Entity\PaymentMethod;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
@@ -21,10 +22,41 @@ class PaymentController extends AbstractController
     public function __construct(
         private RepositoryInterface $orderRepository,
         private ResourceManager $resourceManager,
+        private TemplateManager $templateManager,
     )
     {}
 
     public function purchaseAction(Request $request)
+    {
+        $order = $this->getOrder($request);
+        return $this->render($this->templateManager->getTemplate('theme/shop/payment/purchase.html.twig'), [
+            'order' => $order
+        ]);
+    }
+
+    public function doPurchaseAction(Request $request)
+    {
+        $order = $this->getOrder($request);
+
+        /** @var PaymentInterface $payment */
+        $payment = $order->getLastPayment();
+
+        if ($payment === null) {
+            return $this->redirectToRoute('sylius_payment_theme_done', [
+                'tokenValue' => $payment->getToken()
+            ]);
+        }
+
+        if ($payment->getState() === PaymentInterface::STATE_CART) {
+            $this->resourceManager->update($payment, 'create', 'enhavo_payment');
+        }
+
+        return $this->redirectToRoute('sylius_payment_theme_authorize', [
+            'tokenValue' => $payment->getToken()
+        ]);
+    }
+
+    private function getOrder(Request $request): OrderInterface
     {
         $token = $request->get('token');
         if(empty($token)) {
@@ -40,24 +72,6 @@ class PaymentController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        /** @var PaymentInterface $payment */
-        $payment = $order->getLastPayment();
-
-        if ($payment === null) {
-            return $this->redirectToRoute('sylius_payment_theme_done', [
-                'tokenValue' => $payment->getToken()
-            ]);
-        }
-
-        if ($payment->getState() === PaymentInterface::STATE_CART) {
-            $this->resourceManager->update($payment, [
-                'transition' => 'create',
-                'graph' => 'enhavo_payment'
-            ]);
-        }
-
-        return $this->redirectToRoute('sylius_payment_theme_authorize', [
-            'tokenValue' => $payment->getToken()
-        ]);
+        return $order;
     }
 }

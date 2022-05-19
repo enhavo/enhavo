@@ -149,6 +149,11 @@ abstract class AbstractResourceFormType extends AbstractViewType
             }
         }
 
+        $response = $this->initialize($options);
+        if ($response) {
+            return $response;
+        }
+
         $viewData['messages'] = array_merge($viewData['messages'], $this->util->getFlashMessages());
         $templateData['form'] = $form->createView();
 
@@ -207,6 +212,7 @@ abstract class AbstractResourceFormType extends AbstractViewType
     }
 
     abstract protected function save($options);
+    abstract protected function initialize($options);
     abstract protected function createResource($options): ResourceInterface;
 
     abstract protected function getFormAction($options): string;

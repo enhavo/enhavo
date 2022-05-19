@@ -9,6 +9,7 @@ use Enhavo\Bundle\AppBundle\View\TemplateData;
 use Enhavo\Bundle\AppBundle\View\Type\ApiViewType;
 use Enhavo\Bundle\AppBundle\View\ViewData;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
+use Sylius\Bundle\ResourceBundle\Controller\EventDispatcherInterface;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceFormFactory;
 use Sylius\Component\Order\Context\CartContextInterface;
 use Sylius\Component\Resource\ResourceActions;
@@ -17,7 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class CheckoutViewType extends AbstractViewType
 {
@@ -52,7 +52,6 @@ class CheckoutViewType extends AbstractViewType
     public function handleRequest($options, Request $request, ViewData $viewData, TemplateData $templateData)
     {
         $configuration = $this->getRequestConfiguration($options);
-        $metadata = $this->getMetadata($options);
 
         $form = $this->resourceFormFactory->create($configuration, $this->resource);
 
@@ -82,6 +81,14 @@ class CheckoutViewType extends AbstractViewType
                 }
                 return new RedirectResponse($request->get('_route'));
             }
+        }
+
+        $event = $this->eventDispatcher->dispatchInitializeEvent(ResourceActions::UPDATE, $configuration, $this->resource);
+        if ($event->isStopped()) {
+            if ($event->getResponse()) {
+                return $event->getResponse();
+            }
+            throw new HttpException($event->getErrorCode(), $event->getMessage());
         }
 
         $templateData['form'] = $form->createView();

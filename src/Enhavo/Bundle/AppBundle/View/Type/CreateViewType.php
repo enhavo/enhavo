@@ -75,6 +75,19 @@ class CreateViewType extends AbstractResourceFormType
         }
     }
 
+    protected function initialize($options)
+    {
+        $configuration = $this->getRequestConfiguration($options);
+
+        $event = $this->eventDispatcher->dispatchInitializeEvent(ResourceActions::CREATE, $configuration, $this->resource);
+        if ($event->isStopped()) {
+            if ($event->getResponse()) {
+                return $event->getResponse();
+            }
+            throw new HttpException($event->getErrorCode(), $event->getMessage());
+        }
+    }
+
     protected function getFormAction($options): string
     {
         $metadata = $this->getMetadata($options);

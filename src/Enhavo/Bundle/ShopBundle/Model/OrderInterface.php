@@ -52,4 +52,5 @@ interface OrderInterface extends SyliusOrderInterface, PromotionSubjectInterface
     public function getItemUnits();
     public function getCurrencyCode(): ?string;
     public function setCurrencyCode(?string $currencyCode): void;
+    public function getCheckoutState(): string;
 }
