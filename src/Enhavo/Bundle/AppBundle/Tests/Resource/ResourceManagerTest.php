@@ -5,10 +5,11 @@ namespace Enhavo\Bundle\AppBundle\Tests\Resource;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Event\ResourceEvent;
-use Enhavo\Bundle\AppBundle\Exception\ResourceException;
+use Enhavo\Bundle\AppBundle\Event\ResourceEvents;
 use Enhavo\Bundle\AppBundle\Resource\ResourceManager;
 use Enhavo\Bundle\AppBundle\Tests\Mock\ContainerMock;
 use Enhavo\Bundle\AppBundle\Tests\Mock\EntityMock;
+use Enhavo\Bundle\AppBundle\Tests\Mock\EntityRepositoryMock;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use SM\Factory\FactoryInterface;
@@ -27,13 +28,13 @@ class ResourceManagerTest extends TestCase
         $dependencies->registry = $this->getMockBuilder(RegistryInterface::class)->getMock();
         $dependencies->stateMachineFactory = $this->getMockBuilder(FactoryInterface::class)->getMock();
         $dependencies->container = new ContainerMock();
-        $dependencies->repository = $this->getMockBuilder(RepositoryInterface::class)->getMock();
+        $dependencies->repository = new EntityRepositoryMock();
         return $dependencies;
     }
 
     private function createInstance(ResourceManagerTestDependencies $dependencies)
     {
-        $manager = new ResourceManager($dependencies->eventDispatcher, $dependencies->em, $dependencies->registry, $dependencies->syliusResources, $dependencies->stateMachineFactory);
+        $manager = new ResourceManager($dependencies->eventDispatcher, $dependencies->em, $dependencies->registry, $dependencies->stateMachineFactory);
         $manager->setContainer($dependencies->container);
         return $manager;
     }
@@ -41,10 +42,8 @@ class ResourceManagerTest extends TestCase
     public function testDeleteEvents()
     {
         $expectedEvents = [
-            'enhavo_app.pre_delete',
-            'app.mock.pre_delete',
-            'app.mock.post_delete',
-            'enhavo_app.post_delete',
+            ResourceEvents::PRE_DELETE,
+            ResourceEvents::POST_DELETE,
         ];
 
         $dependencies = $this->createDependencies();
@@ -58,19 +57,14 @@ class ResourceManagerTest extends TestCase
         });
         $manager = $this->createInstance($dependencies);
 
-        $manager->delete(new EntityMock(), [
-            'application_name' => 'app',
-            'entity_name' => 'mock',
-        ]);
+        $manager->delete(new EntityMock());
     }
 
     public function testCreateEvents()
     {
         $expectedEvents = [
-            'enhavo_app.pre_create',
-            'app.mock.pre_create',
-            'app.mock.post_create',
-            'enhavo_app.post_create',
+            ResourceEvents::PRE_CREATE,
+            ResourceEvents::POST_CREATE,
         ];
 
         $dependencies = $this->createDependencies();
@@ -79,23 +73,22 @@ class ResourceManagerTest extends TestCase
             $this->assertEquals($expectedEventName, $eventName);
             return $event;
         });
-        $dependencies->container->set('app.repository.mock', $dependencies->repository);
-        $dependencies->repository->expects($this->once())->method('add');
-        $manager = $this->createInstance($dependencies);
+        $dependencies->em->method('getRepository')->willReturn($dependencies->repository);
+        $called = false;
+        $dependencies->repository->add = function () use (&$called){
+            $called = true;
+        };
 
-        $manager->create(new EntityMock(), [
-            'application_name' => 'app',
-            'entity_name' => 'mock',
-        ]);
+        $manager = $this->createInstance($dependencies);
+        $manager->create(new EntityMock());
+        $this->assertTrue($called);
     }
 
     public function testUpdateEvents()
     {
         $expectedEvents = [
-            'enhavo_app.pre_update',
-            'app.mock.pre_update',
-            'app.mock.post_update',
-            'enhavo_app.post_update',
+            ResourceEvents::PRE_UPDATE,
+            ResourceEvents::POST_UPDATE,
         ];
 
         $dependencies = $this->createDependencies();
@@ -108,57 +101,6 @@ class ResourceManagerTest extends TestCase
         });
         $manager = $this->createInstance($dependencies);
 
-        $manager->update(new EntityMock(), [
-            'application_name' => 'app',
-            'entity_name' => 'mock',
-        ]);
-    }
-
-    public function testGuessNotFound()
-    {
-        $dependencies = $this->createDependencies();
-        $manager = $this->createInstance($dependencies);
-
-        $this->expectException(ResourceException::class);
-        $manager->update(new EntityMock());
-    }
-
-    public function testGuessTwice()
-    {
-        $dependencies = $this->createDependencies();
-        $dependencies->syliusResources = [
-            'app.mock' => [
-                'classes' => [
-                    'model' => EntityMock::class
-                ]
-            ],
-            'other.mock' => [
-                'classes' => [
-                    'model' => EntityMock::class
-                ]
-            ]
-        ];
-
-        $manager = $this->createInstance($dependencies);
-
-        $this->expectException(ResourceException::class);
-        $manager->update(new EntityMock());
-    }
-
-    public function testGuessResource()
-    {
-        $dependencies = $this->createDependencies();
-        $dependencies->syliusResources = [
-            'app.mock' => [
-                'classes' => [
-                    'model' => EntityMock::class
-                ]
-            ]
-        ];
-
-        $manager = $this->createInstance($dependencies);
-        $dependencies->em->expects($this->once())->method('flush');
-
         $manager->update(new EntityMock());
     }
 }
@@ -168,9 +110,7 @@ class ResourceManagerTestDependencies
     public EventDispatcherInterface|MockObject $eventDispatcher;
     public EntityManagerInterface|MockObject $em;
     public RegistryInterface|MockObject $registry;
-    public array $syliusResources = [];
     public FactoryInterface|MockObject $stateMachineFactory;
     public ContainerInterface|MockObject $container;
     public RepositoryInterface|MockObject $repository;
 }
-
