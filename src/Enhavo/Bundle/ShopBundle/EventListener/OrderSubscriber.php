@@ -2,8 +2,8 @@
 
 namespace Enhavo\Bundle\ShopBundle\EventListener;
 
+use Enhavo\Bundle\AppBundle\Event\ResourceEvent;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
-use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\RouterInterface;
@@ -22,7 +22,7 @@ class OrderSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function complete(ResourceControllerEvent $event)
+    public function complete(ResourceEvent $event)
     {
         $order = $event->getSubject();
         if($order instanceof OrderInterface) {

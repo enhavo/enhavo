@@ -8,13 +8,12 @@
 
 namespace Enhavo\Bundle\CommentBundle\EventListener;
 
+use Enhavo\Bundle\AppBundle\Event\ResourceEvent;
+use Enhavo\Bundle\AppBundle\Event\ResourceEvents;
 use Enhavo\Bundle\CommentBundle\Comment\PublishStrategyInterface;
-use Enhavo\Bundle\CommentBundle\Event\PostCreateCommentEvent;
 use Enhavo\Bundle\CommentBundle\Event\PostPublishCommentEvent;
-use Enhavo\Bundle\CommentBundle\Event\PreCreateCommentEvent;
 use Enhavo\Bundle\CommentBundle\Event\PrePublishCommentEvent;
 use Enhavo\Bundle\CommentBundle\Model\CommentInterface;
-use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -53,39 +52,53 @@ class PublishStrategySubscriber  implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            PreCreateCommentEvent::class => 'preCreate',
-            PostCreateCommentEvent::class => 'postCreate',
-            'enhavo_comment.comment.pre_update' => 'onPreSave',
-            'enhavo_comment.comment.pre_create' => 'onPreSave',
-            'enhavo_comment.comment.post_update' => 'onPostSave',
-            'enhavo_comment.comment.post_create' => 'onPostSave',
+            ResourceEvents::PRE_CREATE => 'preCreate',
+            ResourceEvents::POST_CREATE => 'postCreate',
+            ResourceEvents::PRE_UPDATE => 'onPreSave',
+            ResourceEvents::POST_UPDATE => 'onPreSave',
         ];
     }
 
-    public function preCreate(PreCreateCommentEvent $event)
+    public function preCreate(ResourceEvent $event)
     {
-        $this->publishStrategy->preCreate($event->getComment(), $this->options);
+        if ($event->getSubject() instanceof CommentInterface) {
+            $this->publishStrategy->preCreate($event->getSubject(), $this->options);
+        }
+
+        $this->onPreSave($event);
     }
 
-    public function postCreate(PostCreateCommentEvent $event)
+    public function postCreate(ResourceEvent $event)
     {
-        $this->publishStrategy->postCreate($event->getComment(), $this->options);
+        if ($event->getSubject() instanceof CommentInterface) {
+            $this->publishStrategy->postCreate($event->getSubject(), $this->options);
+        }
+
+        $this->onPostSave($event);
     }
 
-    public function onPreSave(ResourceControllerEvent $event)
+    public function preUpdate(ResourceEvent $event)
     {
-        /** @var CommentInterface $comment */
+        $this->onPreSave($event);
+    }
+
+    public function postUpdate(ResourceEvent $event)
+    {
+        $this->onPostSave($event);
+    }
+
+    public function onPreSave(ResourceEvent $event)
+    {
         $comment = $event->getSubject();
-        if($comment->isStateChanged() && $comment->getState() == CommentInterface::STATE_PUBLISH) {
+        if($comment instanceof CommentInterface && $comment->isStateChanged() && $comment->getState() == CommentInterface::STATE_PUBLISH) {
             $this->eventDispatcher->dispatch(new PrePublishCommentEvent($comment));
         }
     }
 
-    public function onPostSave(ResourceControllerEvent $event)
+    public function onPostSave(ResourceEvent $event)
     {
-        /** @var CommentInterface $comment */
         $comment = $event->getSubject();
-        if($comment->isStateChanged() && $comment->getState() == CommentInterface::STATE_PUBLISH) {
+        if($comment instanceof CommentInterface && $comment->isStateChanged() && $comment->getState() == CommentInterface::STATE_PUBLISH) {
             $this->eventDispatcher->dispatch(new PostPublishCommentEvent($comment));
         }
     }

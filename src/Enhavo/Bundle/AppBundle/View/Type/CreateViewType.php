@@ -7,12 +7,14 @@ use Enhavo\Bundle\AppBundle\Grid\GridManager;
 use Enhavo\Bundle\AppBundle\Resource\ResourceManager;
 use Enhavo\Bundle\AppBundle\View\AbstractResourceFormType;
 use Enhavo\Bundle\AppBundle\View\ViewUtil;
+use Sylius\Bundle\ResourceBundle\Controller\EventDispatcherInterface;
 use Sylius\Bundle\ResourceBundle\Controller\NewResourceFactoryInterface;
 use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactoryInterface;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceFormFactoryInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\ResourceActions;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -30,9 +32,10 @@ class CreateViewType extends AbstractResourceFormType
         GridManager $gridManager,
         ResourceFormFactoryInterface $resourceFormFactory,
         NormalizerInterface $normalizer,
+        EventDispatcherInterface $eventDispatcher,
         private NewResourceFactoryInterface $newResourceFactory,
     ) {
-        parent::__construct($formThemes, $actionManager, $flashBag, $util, $router, $translator, $resourceManager, $gridManager, $resourceFormFactory, $normalizer);
+        parent::__construct($formThemes, $actionManager, $flashBag, $util, $router, $translator, $resourceManager, $gridManager, $resourceFormFactory, $normalizer, $eventDispatcher);
     }
 
     public static function getName(): ?string
@@ -53,11 +56,23 @@ class CreateViewType extends AbstractResourceFormType
     {
         $configuration = $this->getRequestConfiguration($options);
 
-        $this->resourceManager->create($this->resource, [
-            'event_name' => $configuration->getEvent() ?? ResourceActions::CREATE,
-            'application_name' =>  $configuration->getMetadata()->getApplicationName(),
-            'entity_name' =>  $configuration->getMetadata()->getName()
-        ]);
+        $event = $this->eventDispatcher->dispatchPreEvent(ResourceActions::CREATE, $configuration, $this->resource);
+        if ($event->isStopped()) {
+            if ($event->getResponse()) {
+                return $event->getResponse();
+            }
+            throw new HttpException($event->getErrorCode(), $event->getMessage());
+        }
+
+        $this->resourceManager->create($this->resource, $configuration->getStateMachineTransition(), $configuration->getStateMachineGraph());
+
+        $event = $this->eventDispatcher->dispatchPostEvent(ResourceActions::CREATE, $configuration, $this->resource);
+        if ($event->isStopped()) {
+            if ($event->getResponse()) {
+                return $event->getResponse();
+            }
+            throw new HttpException($event->getErrorCode(), $event->getMessage());
+        }
     }
 
     protected function getFormAction($options): string

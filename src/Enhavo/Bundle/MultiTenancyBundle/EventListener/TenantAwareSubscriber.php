@@ -8,10 +8,11 @@
 
 namespace Enhavo\Bundle\MultiTenancyBundle\EventListener;
 
+use Enhavo\Bundle\AppBundle\Event\ResourceEvent;
+use Enhavo\Bundle\AppBundle\Event\ResourceEvents;
 use Enhavo\Bundle\MultiTenancyBundle\Model\TenantAwareInterface;
 use Enhavo\Bundle\MultiTenancyBundle\Tenant\TenantManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
 
 class TenantAwareSubscriber implements EventSubscriberInterface
 {
@@ -26,11 +27,11 @@ class TenantAwareSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            'enhavo_app.pre_create' => ['preCreate', 10]    // Needs to run before RoutingBundle AutoGenerators
+            ResourceEvents::PRE_CREATE => ['preCreate', 10]    // Needs to run before RoutingBundle AutoGenerators
         );
     }
 
-    public function preCreate(ResourceControllerEvent $event)
+    public function preCreate(ResourceEvent $event)
     {
         $resource = $event->getSubject();
         if($resource instanceof TenantAwareInterface) {

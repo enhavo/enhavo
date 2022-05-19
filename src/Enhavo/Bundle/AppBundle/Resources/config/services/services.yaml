@@ -9,11 +9,6 @@ services:
             - '%enhavo_app.roles%'
             - '@translator'
 
-    enhavo_app.event_dispatcher:
-        class: Enhavo\Bundle\AppBundle\Controller\AppEventDispatcher
-        arguments:
-            - '@event_dispatcher'
-
     security.authentication.voter.super_admin:
         class: Enhavo\Bundle\AppBundle\Security\Authentication\Voter\SuperAdminVoter
         tags:
@@ -91,12 +86,14 @@ services:
             - '%enhavo_app.mailer.model%'
             - '@translator'
 
+    enhavo_app.manager.resource:
+        alias: Enhavo\Bundle\AppBundle\Resource\ResourceManager
+
     Enhavo\Bundle\AppBundle\Resource\ResourceManager:
         arguments:
             - '@event_dispatcher'
             - '@doctrine.orm.entity_manager'
             - '@sylius.resource_registry'
-            - '%sylius.resources%'
             - '@sm.factory'
         calls:
             - [setContainer, ['@service_container']]

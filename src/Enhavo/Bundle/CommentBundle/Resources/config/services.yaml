@@ -41,6 +41,7 @@ services:
             - '%enhavo_comment.submit_form.form%'
             - '@enhavo_comment.factory.comment'
             - '@event_dispatcher'
+            - '@enhavo_app.manager.resource'
 
     Enhavo\Bundle\CommentBundle\EventListener\PublishStrategySubscriber:
         arguments:

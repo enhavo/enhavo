@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\SearchBundle\EventListener;
 
-use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
+use Enhavo\Bundle\AppBundle\Event\ResourceEvent;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 /*
@@ -12,10 +12,7 @@ class SaveListener
 {
     use ContainerAwareTrait;
 
-    /**
-     * @param ResourceControllerEvent $event
-     */
-    public function onSave(ResourceControllerEvent $event)
+    public function onSave(ResourceEvent $event)
     {
         if($this->container->getParameter('enhavo_search.search.indexing')) {
             //get the right index engine

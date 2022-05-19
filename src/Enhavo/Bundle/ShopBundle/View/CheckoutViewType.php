@@ -2,7 +2,6 @@
 
 namespace Enhavo\Bundle\ShopBundle\View;
 
-use Enhavo\Bundle\AppBundle\Exception\ResourceStopException;
 use Enhavo\Bundle\AppBundle\Resource\ResourceManager;
 use Enhavo\Bundle\AppBundle\View\AbstractViewType;
 use Enhavo\Bundle\AppBundle\View\ResourceMetadataHelperTrait;
@@ -15,8 +14,10 @@ use Sylius\Component\Order\Context\CartContextInterface;
 use Sylius\Component\Resource\ResourceActions;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class CheckoutViewType extends AbstractViewType
 {
@@ -29,6 +30,7 @@ class CheckoutViewType extends AbstractViewType
         private ResourceFormFactory $resourceFormFactory,
         private ResourceManager $resourceManager,
         private RouterInterface $router,
+        private EventDispatcherInterface $eventDispatcher,
     )
     {}
 
@@ -56,16 +58,23 @@ class CheckoutViewType extends AbstractViewType
 
         if ($request->isMethod('POST')) {
             if ($form->handleRequest($request)->isValid()) {
-                try {
-                    $this->resourceManager->update($this->resource, [
-                        'event_name' => $configuration->getEvent() ?? ResourceActions::UPDATE,
-                        'application_name' => $metadata->getApplicationName(),
-                        'entity_name' => $metadata->getName(),
-                        'transition' => $configuration->getStateMachineTransition(),
-                        'graph' => $configuration->getStateMachineGraph(),
-                    ]);
-                } catch (ResourceStopException $e) {
-                    return $e->getResponse();
+
+                $event = $this->eventDispatcher->dispatchPreEvent(ResourceActions::UPDATE, $configuration, $this->resource);
+                if ($event->isStopped()) {
+                    if ($event->getResponse()) {
+                        return $event->getResponse();
+                    }
+                    throw new HttpException($event->getErrorCode(), $event->getMessage());
+                }
+
+                $this->resourceManager->update($this->resource, $configuration->getStateMachineTransition(), $configuration->getStateMachineGraph());
+
+                $event = $this->eventDispatcher->dispatchPostEvent(ResourceActions::UPDATE, $configuration, $this->resource);
+                if ($event->isStopped()) {
+                    if ($event->getResponse()) {
+                        return $event->getResponse();
+                    }
+                    throw new HttpException($event->getErrorCode(), $event->getMessage());
                 }
 
                 if ($configuration->getRedirectRoute(null)) {

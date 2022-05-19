@@ -17,5 +17,6 @@ services:
             - '@sylius.resource_controller.form_factory'
             - '@Enhavo\Bundle\AppBundle\Resource\ResourceManager'
             - '@router'
+            - '@sylius.resource_controller.event_dispatcher'
         tags:
             - { name: enhavo_app.view }

@@ -7,7 +7,9 @@ use Enhavo\Bundle\AppBundle\Grid\Grid;
 use Enhavo\Bundle\AppBundle\Grid\GridManager;
 use Enhavo\Bundle\AppBundle\Resource\ResourceManager;
 use Enhavo\Bundle\AppBundle\View\Type\AppViewType;
+use Sylius\Bundle\ResourceBundle\Controller\EventDispatcherInterface;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceFormFactory;
+
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,6 +41,7 @@ abstract class AbstractResourceFormType extends AbstractViewType
         private GridManager $gridManager,
         private ResourceFormFactory $resourceFormFactory,
         private NormalizerInterface $normalizer,
+        protected EventDispatcherInterface $eventDispatcher,
     ) {}
 
     public static function getParentType(): ?string
@@ -126,7 +129,10 @@ abstract class AbstractResourceFormType extends AbstractViewType
             if ($form->handleRequest($request)->isValid()) {
                 $this->resource = $form->getData();
 
-                $this->save($options);
+                $response = $this->save($options);
+                if ($response) {
+                    return $response;
+                }
 
                 $this->flashBag->add('success', $this->translator->trans('form.message.success', [], 'EnhavoAppBundle'));
                 $route = $this->getRedirectRoute($options) ?? $request->get('_route');

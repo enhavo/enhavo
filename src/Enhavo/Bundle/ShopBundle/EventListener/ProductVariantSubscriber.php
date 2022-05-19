@@ -8,10 +8,11 @@
 
 namespace Enhavo\Bundle\ShopBundle\EventListener;
 
+use Enhavo\Bundle\AppBundle\Event\ResourceEvent;
+use Enhavo\Bundle\AppBundle\Event\ResourceEvents;
 use Enhavo\Bundle\ShopBundle\Entity\ProductVariant;
 use Enhavo\Bundle\ShopBundle\Manager\ProductManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\EventDispatcher\GenericEvent;
 
 class ProductVariantSubscriber implements EventSubscriberInterface
 {
@@ -28,12 +29,12 @@ class ProductVariantSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            'sylius.product_variant.pre_create' => 'onPreSave',
-            'sylius.product_variant.pre_update' => 'onPreSave',
+            ResourceEvents::PRE_CREATE => 'onPreSave',
+            ResourceEvents::PRE_UPDATE => 'onPreSave',
         ];
     }
 
-    public function onPreSave(GenericEvent $event)
+    public function onPreSave(ResourceEvent $event)
     {
         $subject = $event->getSubject();
         if ($subject instanceof ProductVariant && $subject->getCode() === null) {

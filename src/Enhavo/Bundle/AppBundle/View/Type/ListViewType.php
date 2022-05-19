@@ -11,15 +11,20 @@ namespace Enhavo\Bundle\AppBundle\View\Type;
 use Enhavo\Bundle\AppBundle\Action\ActionManager;
 use Enhavo\Bundle\AppBundle\Column\ColumnManager;
 use Enhavo\Bundle\AppBundle\View\AbstractViewType;
+use Enhavo\Bundle\AppBundle\View\ResourceMetadataHelperTrait;
+use Enhavo\Bundle\AppBundle\View\TemplateData;
 use Enhavo\Bundle\AppBundle\View\ViewData;
 use Enhavo\Bundle\AppBundle\View\ViewUtil;
 use Enhavo\Bundle\AppBundle\Viewer\ViewerUtil;
-use Sylius\Component\Resource\Metadata\MetadataInterface;
+use Sylius\Component\Resource\ResourceActions;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ListViewType extends AbstractViewType
 {
+    use ResourceMetadataHelperTrait;
+
     public function __construct(
         private ViewUtil $util,
         private ActionManager $actionManager,
@@ -37,9 +42,15 @@ class ListViewType extends AbstractViewType
         return AppViewType::class;
     }
 
+    public function handleRequest($options, Request $request, ViewData $viewData, TemplateData $templateData)
+    {
+        $configuration = $this->getRequestConfiguration($options);
+        $this->util->isGrantedOr403($configuration, ResourceActions::INDEX);
+    }
+
     public function createViewData($options, ViewData $data)
     {
-        $configuration = $this->util->getRequestConfiguration($options);
+        $configuration = $this->getRequestConfiguration($options);
 
         $label = $this->util->mergeConfig([
             $options['label'],
@@ -110,7 +121,7 @@ class ListViewType extends AbstractViewType
 
     private function addTranslationDomain(&$configuration, $translationDomain)
     {
-        foreach($configuration as &$config) {
+        foreach ($configuration as &$config) {
             if(!isset($config['translation_domain']) && $translationDomain) {
                 $config['translation_domain'] = $translationDomain;
             }
@@ -119,32 +130,27 @@ class ListViewType extends AbstractViewType
 
     private function getDataRoute($options)
     {
-        /** @var MetadataInterface $metadata */
-        $metadata = $options['metadata'];
+        $metadata = $this->getMetadata($options);
         return sprintf('%s_%s_data', $metadata->getApplicationName(), $this->util->getUnderscoreName($metadata));
     }
 
     private function getopenRoute($options)
     {
-        /** @var MetadataInterface $metadata */
-        $metadata = $options['metadata'];
+        $metadata = $this->getMetadata($options);
         return sprintf('%s_%s_update', $metadata->getApplicationName(), $this->util->getUnderscoreName($metadata));
     }
 
     private function createActions($options)
     {
-        /** @var MetadataInterface $metadata */
-        $metadata = $options['metadata'];
+        $metadata = $this->getMetadata($options);
 
-        $default = [
+        return [
             'create' => [
                 'type' => 'create',
                 'route' => sprintf('%s_%s_create', $metadata->getApplicationName(), $this->util->getUnderscoreName($metadata)),
                 'permission' => $this->util->getRoleNameByResourceName($metadata->getApplicationName(), $this->util->getUnderscoreName($metadata), 'create')
             ]
         ];
-
-        return $default;
     }
 
     public function configureOptions(OptionsResolver $optionsResolver)
@@ -159,8 +165,8 @@ class ListViewType extends AbstractViewType
             'open_route_parameters' => null,
             'translation_domain' => 'EnhavoAppBundle',
             'label' => 'label.index',
-            'metadata' => null,
-            'request_configuration' => null,
         ]);
+
+        $optionsResolver->setRequired('request_configuration');
     }
 }
