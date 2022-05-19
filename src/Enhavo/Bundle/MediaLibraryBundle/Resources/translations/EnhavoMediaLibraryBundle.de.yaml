@@ -1,4 +1,9 @@
 media_library:
+    upload:
+        error:
+            message: 'Error in file upload'
+            size: 'The file is too large'
+            disk: "Can't write to disk"
     form_extension:
         button:
             label: 'Open Library'

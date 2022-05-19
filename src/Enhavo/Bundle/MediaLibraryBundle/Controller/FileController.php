@@ -6,21 +6,25 @@ use Enhavo\Bundle\AppBundle\Column\ColumnManager;
 use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\AppBundle\View\ViewUtil;
+use Enhavo\Bundle\FormBundle\Error\FormErrorResolver;
 use Enhavo\Bundle\MediaBundle\Controller\FileControllerTrait;
 use Enhavo\Bundle\MediaBundle\Exception\StorageException;
 use Enhavo\Bundle\MediaBundle\Media\MediaManager;
 use Enhavo\Bundle\MediaLibraryBundle\Entity\File;
 use Enhavo\Bundle\MediaLibraryBundle\Factory\FileFactory;
 use Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryManager;
+use Enhavo\Bundle\MediaLibraryBundle\Model\FileValidationHelper;
 use Enhavo\Bundle\MediaLibraryBundle\Repository\FileRepository;
 use Enhavo\Bundle\MediaLibraryBundle\View\Type\MediaLibraryViewType;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
-use Symfony\Component\HttpFoundation\File\Exception\UploadException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\ConstraintViolation;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 
 class FileController extends ResourceController
@@ -85,6 +89,36 @@ class FileController extends ResourceController
     private function getViewUtil(): ViewUtil
     {
         return $this->container->get('Enhavo\Bundle\AppBundle\View\ViewUtil');
+    }
+
+    /**
+     * @return FormErrorResolver
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    private function getFormErrorResolver(): FormErrorResolver
+    {
+        return $this->container->get('Enhavo\Bundle\FormBundle\Error\FormErrorResolver');
+    }
+
+    /**
+     * @return ValidatorInterface
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    private function getValidator(): ValidatorInterface
+    {
+        return $this->container->get('validator');
+    }
+
+    /**
+     * @return TranslatorInterface
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    private function getTranslator(): TranslatorInterface
+    {
+        return $this->container->get('translator');
     }
 
     /**
@@ -196,16 +230,22 @@ class FileController extends ResourceController
         $storedFiles = [];
         foreach($request->files as $file) {
             $uploadedFiles = is_array($file) ? $file : [$file];
+            /** @var $uploadedFile UploadedFile */
             foreach ($uploadedFiles as $uploadedFile) {
                 try {
-                    /** @var $uploadedFile UploadedFile */
-                    if ($uploadedFile->getError() != UPLOAD_ERR_OK) {
-                        throw new UploadException('Error in file upload');
+                    $errors = $this->getErrors($uploadedFile);
+                    if (!count($errors)) {
+                        /** @var File $file */
+                        $file = $this->getFileFactory()->createFromUploadedFile($uploadedFile);
+                        $file->setGarbage(false);
+                        $file->setContentType($this->getMediaLibraryManager()->matchContentType($file));
                     }
-                    /** @var File $file */
-                    $file = $this->getFileFactory()->createFromUploadedFile($uploadedFile);
-                    $file->setGarbage(false);
-                    $file->setContentType($this->getMediaLibraryManager()->matchContentType($file));
+                    if (count($errors)) {
+                        return new JsonResponse([
+                            'success' => false,
+                            'errors' => $errors,
+                        ]);
+                    }
                     $this->getMediaManager()->saveFile($file);
                     $storedFiles[] = $file;
 
@@ -218,6 +258,34 @@ class FileController extends ResourceController
         }
 
         return $this->getFileResponse($storedFiles);
+    }
+
+    private function getErrors(UploadedFile $uploadedFile): array
+    {
+        $result = [];
+
+        $errors = $this->getValidator()->validate(new FileValidationHelper($uploadedFile));
+        /** @var ConstraintViolation $error */
+        foreach ($errors as $error) {
+            $result[] = $error->getMessage();
+        }
+
+        if (!count($result)) {
+            if ($uploadedFile->getError() != UPLOAD_ERR_OK) {
+                $error = $this->trans('media_library.upload.error.message');
+            }
+            switch ($uploadedFile->getError()) {
+                case UPLOAD_ERR_INI_SIZE:
+                case UPLOAD_ERR_FORM_SIZE:
+                    $result[] = sprintf('%s. %s.', $error, $this->trans('media_library.upload.error.size'));
+                    break;
+                case UPLOAD_ERR_CANT_WRITE:
+                    $result[] = sprintf('%s. %s.', $error, $this->trans('media_library.upload.error.disk'));
+                    break;
+            }
+        }
+
+        return $result;
     }
 
     private function createTagList(): array
@@ -247,5 +315,8 @@ class FileController extends ResourceController
         return $contentTypes;
     }
 
-
+    private function trans(string $key): string
+    {
+        return $this->getTranslator()->trans($key, [], 'EnhavoMediaLibraryBundle');
+    }
 }
