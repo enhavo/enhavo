@@ -264,25 +264,10 @@ class FileController extends ResourceController
     {
         $result = [];
 
-        $errors = $this->getValidator()->validate(new FileValidationHelper($uploadedFile));
+        $errors = $this->getValidator()->validate($uploadedFile);
         /** @var ConstraintViolation $error */
         foreach ($errors as $error) {
             $result[] = $error->getMessage();
-        }
-
-        if (!count($result)) {
-            if ($uploadedFile->getError() != UPLOAD_ERR_OK) {
-                $error = $this->trans('media_library.upload.error.message');
-            }
-            switch ($uploadedFile->getError()) {
-                case UPLOAD_ERR_INI_SIZE:
-                case UPLOAD_ERR_FORM_SIZE:
-                    $result[] = sprintf('%s. %s.', $error, $this->trans('media_library.upload.error.size'));
-                    break;
-                case UPLOAD_ERR_CANT_WRITE:
-                    $result[] = sprintf('%s. %s.', $error, $this->trans('media_library.upload.error.disk'));
-                    break;
-            }
         }
 
         return $result;
