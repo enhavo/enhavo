@@ -22,6 +22,12 @@ services:
             - '@doctrine.orm.entity_manager'
             - '@Enhavo\Bundle\ShopBundle\Factory\ProductVariantProxyFactory'
 
+    Enhavo\Bundle\ShopBundle\EventListener\CheckoutSubscriber:
+        arguments:
+            - '@router'
+        tags:
+            - { name: kernel.event_subscriber }
+
     Enhavo\Bundle\ShopBundle\EventListener\ProductSubscriber:
         arguments:
             - '@Enhavo\Bundle\ShopBundle\Manager\ProductManager'
@@ -85,6 +91,7 @@ services:
         arguments:
             - '@sylius.repository.order'
             - '@Enhavo\Bundle\AppBundle\Resource\ResourceManager'
+            - '@enhavo_app.template.manager'
         calls:
             - [setContainer, ['@service_container']]
         tags:

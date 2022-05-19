@@ -86,6 +86,19 @@ class UpdateViewType extends AbstractResourceFormType
         }
     }
 
+    protected function initialize($options)
+    {
+        $configuration = $this->getRequestConfiguration($options);
+
+        $event = $this->eventDispatcher->dispatchInitializeEvent(ResourceActions::UPDATE, $configuration, $this->resource);
+        if ($event->isStopped()) {
+            if ($event->getResponse()) {
+                return $event->getResponse();
+            }
+            throw new HttpException($event->getErrorCode(), $event->getMessage());
+        }
+    }
+
     public function configureOptions(OptionsResolver $optionsResolver)
     {
         parent::configureOptions($optionsResolver);

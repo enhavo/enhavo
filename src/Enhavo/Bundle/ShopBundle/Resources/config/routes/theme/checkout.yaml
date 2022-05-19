@@ -14,7 +14,6 @@ sylius_shop_checkout_address:
             event: address
             flash: false
             template: "theme/shop/checkout/address.html.twig"
-            redirect: sylius_shop_checkout_select_shipping
             form:
                 type: Enhavo\Bundle\ShopBundle\Form\Type\Checkout\AddressType
                 options:
@@ -36,7 +35,6 @@ sylius_shop_checkout_select_shipping:
             event: select_shipping
             flash: false
             template: "theme/shop/checkout/select-shipping.html.twig"
-            redirect: sylius_shop_checkout_select_payment
             form:
                 type: Enhavo\Bundle\ShopBundle\Form\Type\Checkout\SelectShippingType
                 options:
@@ -55,10 +53,9 @@ sylius_shop_checkout_select_payment:
     defaults:
         _controller: sylius.controller.order:checkoutAction
         _sylius:
-            event: payment
+            event: select_payment
             flash: false
             template: "theme/shop/checkout/select-payment.html.twig"
-            redirect: sylius_shop_checkout_confirm
             form:
                 type: Enhavo\Bundle\ShopBundle\Form\Type\Checkout\SelectPaymentType
                 options:
