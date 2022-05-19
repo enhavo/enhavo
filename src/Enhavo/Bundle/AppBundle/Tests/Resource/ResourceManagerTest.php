@@ -4,6 +4,7 @@
 namespace Enhavo\Bundle\AppBundle\Tests\Resource;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Enhavo\Bundle\AppBundle\Event\ResourceEvent;
 use Enhavo\Bundle\AppBundle\Exception\ResourceException;
 use Enhavo\Bundle\AppBundle\Resource\ResourceManager;
 use Enhavo\Bundle\AppBundle\Tests\Mock\ContainerMock;
@@ -11,7 +12,6 @@ use Enhavo\Bundle\AppBundle\Tests\Mock\EntityMock;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use SM\Factory\FactoryInterface;
-use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
 use Sylius\Component\Resource\Metadata\RegistryInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -53,7 +53,7 @@ class ResourceManagerTest extends TestCase
         $dependencies->eventDispatcher->method('dispatch')->willReturnCallback(function ($event, $eventName) use (&$expectedEvents) {
             $expectedEventName = array_shift($expectedEvents);
             $this->assertEquals($expectedEventName, $eventName);
-            $this->assertInstanceOf(ResourceControllerEvent::class, $event);
+            $this->assertInstanceOf(ResourceEvent::class, $event);
             return $event;
         });
         $manager = $this->createInstance($dependencies);
@@ -103,7 +103,7 @@ class ResourceManagerTest extends TestCase
         $dependencies->eventDispatcher->method('dispatch')->willReturnCallback(function ($event, $eventName) use (&$expectedEvents) {
             $expectedEventName = array_shift($expectedEvents);
             $this->assertEquals($expectedEventName, $eventName);
-            $this->assertInstanceOf(ResourceControllerEvent::class, $event);
+            $this->assertInstanceOf(ResourceEvent::class, $event);
             return $event;
         });
         $manager = $this->createInstance($dependencies);

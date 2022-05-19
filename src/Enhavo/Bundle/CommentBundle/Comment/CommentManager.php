@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\CommentBundle\Comment;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Enhavo\Bundle\AppBundle\Resource\ResourceManager;
 use Enhavo\Bundle\CommentBundle\Event\PostCreateCommentEvent;
 use Enhavo\Bundle\CommentBundle\Event\PostPublishCommentEvent;
 use Enhavo\Bundle\CommentBundle\Event\PreCreateCommentEvent;
@@ -29,60 +30,15 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CommentManager
 {
-    /**
-     * @var FactoryInterface
-     */
-    private $threadFactory;
-
-    /**
-     * @var EntityManagerInterface
-     */
-    private $em;
-
-    /**
-     * @var FormFactoryInterface
-     */
-    private $formFactory;
-
-    /**
-     * @var string
-     */
-    private $submitForm;
-
-    /**
-     * @var FactoryInterface
-     */
-    private $commentFactory;
-
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $eventDispatcher;
-
-    /**
-     * CommentManager constructor.
-     * @param FactoryInterface $threadFactory
-     * @param EntityManagerInterface $em
-     * @param FormFactoryInterface $formFactory
-     * @param string $submitForm
-     * @param FactoryInterface $commentFactory
-     * @param EventDispatcherInterface $eventDispatcher
-     */
     public function __construct(
-        FactoryInterface $threadFactory,
-        EntityManagerInterface $em,
-        FormFactoryInterface $formFactory,
-        string $submitForm,
-        FactoryInterface $commentFactory,
-        EventDispatcherInterface $eventDispatcher
-    ) {
-        $this->threadFactory = $threadFactory;
-        $this->em = $em;
-        $this->formFactory = $formFactory;
-        $this->submitForm = $submitForm;
-        $this->commentFactory = $commentFactory;
-        $this->eventDispatcher = $eventDispatcher;
-    }
+        private FactoryInterface $threadFactory,
+        private EntityManagerInterface $em,
+        private FormFactoryInterface $formFactory,
+        private string $submitForm,
+        private FactoryInterface $commentFactory,
+        private EventDispatcherInterface $eventDispatcher,
+        private ResourceManager $resourceManager,
+    ) {}
 
     /**
      * @param CommentSubjectInterface $subject
@@ -108,15 +64,9 @@ class CommentManager
         return $form;
     }
 
-    /**
-     * @param CommentInterface $comment
-     */
     public function saveComment(CommentInterface $comment)
     {
-        $this->eventDispatcher->dispatch(new PreCreateCommentEvent($comment));
-        $this->em->persist($comment);
-        $this->em->flush();
-        $this->eventDispatcher->dispatch(new PostCreateCommentEvent($comment));
+        $this->resourceManager->save($comment);
     }
 
     /**

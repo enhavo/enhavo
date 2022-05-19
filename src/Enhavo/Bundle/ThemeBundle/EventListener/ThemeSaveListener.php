@@ -8,9 +8,9 @@
 
 namespace Enhavo\Bundle\ThemeBundle\EventListener;
 
+use Enhavo\Bundle\AppBundle\Event\ResourceEvent;
 use Enhavo\Bundle\AppBundle\Repository\EntityRepository;
 use Enhavo\Bundle\ThemeBundle\Model\Entity\Theme;
-use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
 
 class ThemeSaveListener
 {
@@ -35,10 +35,7 @@ class ThemeSaveListener
         $this->enable = $enable;
     }
 
-    /**
-     * @param ResourceControllerEvent $event
-     */
-    public function onSave(ResourceControllerEvent $event)
+    public function onSave(ResourceEvent $event)
     {
         if(!$this->enable) {
             return;

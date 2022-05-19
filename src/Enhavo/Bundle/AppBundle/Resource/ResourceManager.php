@@ -4,19 +4,20 @@
 namespace Enhavo\Bundle\AppBundle\Resource;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Proxy\Proxy;
-use Enhavo\Bundle\AppBundle\Exception\ResourceException;
-use Enhavo\Bundle\AppBundle\Exception\ResourceStopException;
-use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
+use Enhavo\Bundle\AppBundle\Event\ResourcePostCreateEvent;
+use Enhavo\Bundle\AppBundle\Event\ResourcePostDeleteEvent;
+use Enhavo\Bundle\AppBundle\Event\ResourcePostUpdateEvent;
+use Enhavo\Bundle\AppBundle\Event\ResourcePreCreateEvent;
+use Enhavo\Bundle\AppBundle\Event\ResourcePreDeleteEvent;
+use Enhavo\Bundle\AppBundle\Event\ResourcePreUpdateEvent;
 use SM\Factory\FactoryInterface as SMFactoryInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Metadata\MetadataInterface;
 use Sylius\Component\Resource\Metadata\RegistryInterface;
+use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
-use Sylius\Component\Resource\ResourceActions;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ResourceManager
 {
@@ -26,66 +27,62 @@ class ResourceManager
         private EventDispatcherInterface $eventDispatcher,
         private EntityManagerInterface $em,
         private RegistryInterface $metadataRegistry,
-        private array $syliusResources,
         private SMFactoryInterface $stateMachineFactory
     ) {}
 
-    public function create($resource, $configuration = [])
+    public function save(ResourceInterface $resource, ?string $transition = null, ?string $graph = null)
     {
-        $resolver = $this->createOptionResolver([
-            'event_name' => ResourceActions::CREATE
-        ]);
-        $configuration = $resolver->resolve($configuration);
-        $this->guessApplicationAndEntityNameIfNotExists($resource, $configuration);
-
-        $this->dispatchPre($resource, $configuration);
-
-        $repository = $this->getRepository($configuration['application_name'], $configuration['entity_name']);
-        $repository->add($resource);
-
-        $this->dispatchPost($resource, $configuration);
+        if ($resource->getId() === null) {
+            $this->create($resource, $transition, $graph);
+        } else {
+            $this->update($resource, $transition, $graph);
+        }
     }
 
-    public function update($resource, $configuration = [])
+    public function create(ResourceInterface $resource, ?string $transition = null, ?string $graph = null)
     {
-        $resolver = $this->createOptionResolver([
-            'event_name' => ResourceActions::UPDATE,
-            'transition' => null,
-            'graph' => null
-        ]);
-        $configuration = $resolver->resolve($configuration);
-        $this->guessApplicationAndEntityNameIfNotExists($resource, $configuration);
+        $this->dispatch(new ResourcePreCreateEvent($resource), 'pre_create');
 
-        $this->dispatchPre($resource, $configuration);
-
-        if ($configuration['graph'] && $configuration['transition']) {
-            $this->stateMachineFactory->get($resource, $configuration['graph'])->apply($configuration['transition']);
+        if ($transition && $graph) {
+            $this->stateMachineFactory->get($resource, $graph)->apply($transition);
         }
 
-        $this->em->flush();
+        $repository = $this->em->getRepository(get_class($resource));
+        if ($repository instanceof RepositoryInterface) {
+            $repository->add($resource);
+        } else {
+            $this->em->persist($resource);
+            $this->em->flush();
+        }
 
-        $this->dispatchPost($resource, $configuration);
+        $this->dispatch(new ResourcePostCreateEvent($resource), 'post_create');
     }
 
-    public function canApplyTransition($resource, $graph, $transition): bool
+    public function update(ResourceInterface $resource, ?string $transition = null, ?string $graph = null)
+    {
+        $this->dispatch(new ResourcePreUpdateEvent($resource), 'pre_update');
+
+        if ($transition && $graph) {
+            $this->stateMachineFactory->get($resource, $graph)->apply($transition);
+        }
+        $this->em->flush();
+
+        $this->dispatch(new ResourcePostUpdateEvent($resource), 'post_update');
+    }
+
+    public function canApplyTransition(ResourceInterface $resource, ?string $transition = null, ?string $graph = null): bool
     {
         return $this->stateMachineFactory->get($resource, $graph)->can($transition);
     }
 
-    public function delete($resource, $configuration = [])
+    public function delete(ResourceInterface $resource)
     {
-        $resolver = $this->createOptionResolver([
-            'event_name' => ResourceActions::DELETE
-        ]);
-        $configuration = $resolver->resolve($configuration);
-        $this->guessApplicationAndEntityNameIfNotExists($resource, $configuration);
-
-        $this->dispatchPre($resource, $configuration);
+        $this->dispatch(new ResourcePreDeleteEvent($resource), 'pre_delete');
 
         $this->em->remove($resource);
         $this->em->flush();
 
-        $this->dispatchPost($resource, $configuration);
+        $this->dispatch(new ResourcePostDeleteEvent($resource), 'post_delete');
     }
 
     public function getRepository($applicationName, $entityName): RepositoryInterface
@@ -103,72 +100,8 @@ class ResourceManager
         return $this->metadataRegistry->get(sprintf('%s.%s', $applicationName, $entityName));
     }
 
-    private function dispatch($resource, $eventName)
+    private function dispatch($event, $eventName)
     {
-        $event = new ResourceControllerEvent($resource);
-        $this->eventDispatcher->dispatch($event, $eventName);
-        if ($event->isStopped()) {
-            $exception = new ResourceStopException('Operation on resource was stopped');
-            $exception->setEvent($event);
-            $exception->setResponse($event->getResponse());
-            throw $exception;
-        }
-        return $event;
-    }
-
-    private function dispatchPre($resource, $configuration)
-    {
-        $this->dispatch($resource, sprintf('enhavo_app.pre_%s', $configuration['event_name']));
-        $this->dispatch($resource, sprintf('%s.%s.pre_%s', $configuration['application_name'], $configuration['entity_name'], $configuration['event_name']));
-    }
-
-    private function dispatchPost($resource, $configuration)
-    {
-        $this->dispatch($resource, sprintf('%s.%s.post_%s', $configuration['application_name'], $configuration['entity_name'], $configuration['event_name']));
-        $this->dispatch($resource, sprintf('enhavo_app.post_%s', $configuration['event_name']));
-    }
-
-    private function createOptionResolver($defaults): OptionsResolver
-    {
-        $defaults = array_merge([
-            'application_name' => null,
-            'entity_name' => null,
-            'event_name' => null
-        ], $defaults);
-
-        $optionResolver = new OptionsResolver();
-        $optionResolver->setDefaults($defaults);
-        return $optionResolver;
-    }
-
-    private function guessApplicationAndEntityNameIfNotExists($resource, &$configuration): void
-    {
-        if ($configuration['application_name'] && $configuration['entity_name']) {
-            return;
-        }
-
-        $className = get_class($resource);
-        if ($resource instanceof Proxy) {
-            $className = get_parent_class($resource);
-        }
-
-        $typeName = null;
-        foreach($this->syliusResources as $type => $resource) {
-            if($resource['classes']['model'] == $className) {
-                if ($typeName !== null) {
-                    throw new ResourceException(sprintf('Unable to guess application and entity name for class "%s". It was configured at least twice in "%s", and "%s". Please add configuration application_name and entity_name manually', $className, $typeName, $type));
-                }
-                $typeName = $type;
-            }
-        }
-
-        if ($typeName === null) {
-            throw new ResourceException(sprintf('Unable to guess application and entity name for class "%s". The class name was never configured as resource', get_class($resource)));
-        }
-
-        $typeNameParts = explode('.', $typeName);
-
-        $configuration['application_name'] = $typeNameParts[0];
-        $configuration['entity_name'] = $typeNameParts[1];
+        $this->eventDispatcher->dispatch($event, sprintf('enhavo_app.%s', $eventName));
     }
 }

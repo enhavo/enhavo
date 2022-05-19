@@ -13,11 +13,13 @@ use Enhavo\Bundle\AppBundle\Grid\GridManager;
 use Enhavo\Bundle\AppBundle\Resource\ResourceManager;
 use Enhavo\Bundle\AppBundle\View\AbstractResourceFormType;
 use Enhavo\Bundle\AppBundle\View\ViewUtil;
+use Sylius\Bundle\ResourceBundle\Controller\EventDispatcherInterface;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceFormFactoryInterface;
 use Sylius\Bundle\ResourceBundle\Controller\SingleResourceProviderInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\ResourceActions;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
@@ -37,9 +39,10 @@ class UpdateViewType extends AbstractResourceFormType
         GridManager $gridManager,
         ResourceFormFactoryInterface $resourceFormFactory,
         NormalizerInterface $normalizer,
+        EventDispatcherInterface $eventDispatcher,
         private SingleResourceProviderInterface $singleResourceProvider,
     ) {
-        parent::__construct($formThemes, $actionManager, $flashBag, $util, $router, $translator, $resourceManager, $gridManager, $resourceFormFactory, $normalizer);
+        parent::__construct($formThemes, $actionManager, $flashBag, $util, $router, $translator, $resourceManager, $gridManager, $resourceFormFactory, $normalizer, $eventDispatcher);
     }
 
     public static function getName(): ?string
@@ -64,13 +67,23 @@ class UpdateViewType extends AbstractResourceFormType
     {
         $configuration = $this->getRequestConfiguration($options);
 
-        $this->resourceManager->update($this->resource, [
-            'event_name' => $configuration->getEvent() ?? ResourceActions::UPDATE,
-            'application_name' =>  $configuration->getMetadata()->getApplicationName(),
-            'entity_name' =>  $configuration->getMetadata()->getName(),
-            'transition' => $configuration->getStateMachineTransition(),
-            'graph' => $configuration->getStateMachineGraph(),
-        ]);
+        $event = $this->eventDispatcher->dispatchPreEvent(ResourceActions::UPDATE, $configuration, $this->resource);
+        if ($event->isStopped()) {
+            if ($event->getResponse()) {
+                return $event->getResponse();
+            }
+            throw new HttpException($event->getErrorCode(), $event->getMessage());
+        }
+
+        $this->resourceManager->update($this->resource, $configuration->getStateMachineTransition(), $configuration->getStateMachineGraph());
+
+        $event = $this->eventDispatcher->dispatchPostEvent(ResourceActions::UPDATE, $configuration, $this->resource);
+        if ($event->isStopped()) {
+            if ($event->getResponse()) {
+                return $event->getResponse();
+            }
+            throw new HttpException($event->getErrorCode(), $event->getMessage());
+        }
     }
 
     public function configureOptions(OptionsResolver $optionsResolver)

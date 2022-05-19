@@ -13,15 +13,17 @@ use Enhavo\Bundle\AppBundle\Batch\BatchManager;
 use Enhavo\Bundle\AppBundle\Filter\FilterManager;
 use Enhavo\Bundle\AppBundle\Column\ColumnManager;
 use Enhavo\Bundle\AppBundle\View\AbstractViewType;
+use Enhavo\Bundle\AppBundle\View\ResourceMetadataHelperTrait;
 use Enhavo\Bundle\AppBundle\View\ViewData;
 use Enhavo\Bundle\AppBundle\View\ViewUtil;
-use Sylius\Component\Resource\Metadata\MetadataInterface;
 use Sylius\Component\Resource\ResourceActions;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class IndexViewType extends AbstractViewType
 {
+    use ResourceMetadataHelperTrait;
+
     public function __construct(
         private ActionManager $actionManager,
         private BatchManager $batchManager,
@@ -43,7 +45,7 @@ class IndexViewType extends AbstractViewType
 
     public function createViewData($options, ViewData $data)
     {
-        $requestConfiguration = $this->util->getRequestConfiguration($options);
+        $requestConfiguration = $this->getRequestConfiguration($options);
 
         $this->util->isGrantedOr403($requestConfiguration, ResourceActions::INDEX);
 
@@ -113,6 +115,7 @@ class IndexViewType extends AbstractViewType
         $grid = [
             'tableRoute' => $tableRoute,
             'tableRouteParameters' => $tableRouteParameters,
+            'tableRouteParameters' => $tableRouteParameters,
             'batchRoute' => $batchRoute,
             'batchRouteParameters' => $batchRouteParameters,
             'openRoute' => $openRoute,
@@ -142,7 +145,6 @@ class IndexViewType extends AbstractViewType
             'application' => '@enhavo/app/index/IndexApp',
             'component' => '@enhavo/app/index/components/IndexComponent.vue',
             'request_configuration' => null,
-            'metadata' => null,
             'actions' => [],
             'table_route' => null,
             'table_route_parameters' => null,
@@ -166,39 +168,33 @@ class IndexViewType extends AbstractViewType
 
     private function getTableRoute($options): string
     {
-        /** @var MetadataInterface $metadata */
-        $metadata = $options['metadata'];
+        $metadata = $this->getMetadata($options);
         return sprintf('%s_%s_table', $metadata->getApplicationName(), $this->util->getUnderscoreName($metadata));
     }
 
     private function getBatchRoute($options): string
     {
-        /** @var MetadataInterface $metadata */
-        $metadata = $options['metadata'];
+        $metadata = $this->getMetadata($options);
         return sprintf('%s_%s_batch', $metadata->getApplicationName(), $this->util->getUnderscoreName($metadata));
     }
 
     private function getOpenRoute($options): string
     {
-        /** @var MetadataInterface $metadata */
-        $metadata = $options['metadata'];
+        $metadata = $this->getMetadata($options);
         return sprintf('%s_%s_update', $metadata->getApplicationName(), $this->util->getUnderscoreName($metadata));
     }
 
     private function createActions($options): array
     {
-        /** @var MetadataInterface $metadata */
-        $metadata = $options['metadata'];
+        $metadata = $this->getMetadata($options);
 
-        $default = [
+        return [
             'create' => [
                 'type' => 'create',
                 'route' => sprintf('%s_%s_create', $metadata->getApplicationName(), $this->util->getUnderscoreName($metadata)),
                 'permission' => $this->util->getRoleNameByResourceName($metadata->getApplicationName(), $this->util->getUnderscoreName($metadata), 'create')
             ]
         ];
-
-        return $default;
     }
 
     private function addFilterAction($actions)

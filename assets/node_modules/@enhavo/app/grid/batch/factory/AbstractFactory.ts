@@ -7,7 +7,7 @@ export default abstract class AbstractFactory implements BatchFactoryInterface
     createFromData(data: object): BatchInterface
     {
         let batch = this.createNew();
-        batch = _.extend(data, batch);
+        batch = _.extend(batch, data);
         return batch;
     }
 

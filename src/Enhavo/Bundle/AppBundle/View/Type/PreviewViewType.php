@@ -9,10 +9,13 @@
 namespace Enhavo\Bundle\AppBundle\View\Type;
 
 use Enhavo\Bundle\AppBundle\Action\ActionManager;
+use Enhavo\Bundle\AppBundle\Resource\ResourceManager;
 use Enhavo\Bundle\AppBundle\View\AbstractViewType;
+use Enhavo\Bundle\AppBundle\View\ResourceMetadataHelperTrait;
 use Enhavo\Bundle\AppBundle\View\ViewData;
 use Enhavo\Bundle\AppBundle\View\ViewUtil;
 use Sylius\Bundle\ResourceBundle\Controller\SingleResourceProvider;
+use Sylius\Bundle\ResourceBundle\Controller\SingleResourceProviderInterface;
 use Sylius\Component\Resource\Metadata\Metadata;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
@@ -22,11 +25,15 @@ use Symfony\Component\Routing\RouterInterface;
 
 class PreviewViewType extends AbstractViewType
 {
+    use ResourceMetadataHelperTrait;
+
     public function __construct(
         private ViewUtil $util,
         private RouterInterface $router,
         private ActionManager $actionManager,
-        private RequestStack $requestStack
+        private RequestStack $requestStack,
+        private ResourceManager $resourceManager,
+        private SingleResourceProviderInterface $singleResourceProvider,
     ) {}
 
     public static function getName(): string|null
@@ -41,19 +48,17 @@ class PreviewViewType extends AbstractViewType
 
     public function createViewData($options, ViewData $data)
     {
-        /** @var SingleResourceProvider $singleResourceProvider */
-        $singleResourceProvider = $options['single_resource_provider'];
+        $metadata = $this->getMetadata($options);
+        $configuration = $this->getRequestConfiguration($options);
 
-        /** @var RepositoryInterface $repository */
-        $repository = $options['repository'];
+        $repository = $this->resourceManager->getRepository($metadata->getApplicationName(), $metadata->getName());
 
-        $configuration = $this->util->getRequestConfiguration($options);
 
         $request = $this->requestStack->getMainRequest();
         $resource = null;
         if ($request->query->has('id')) {
             $request->attributes->set('id', $request->query->get('id'));
-            $resource = $singleResourceProvider->get($configuration, $repository);
+            $resource = $this->singleResourceProvider->get($configuration, $repository);
         }
 
         $parameters = [];
@@ -68,8 +73,7 @@ class PreviewViewType extends AbstractViewType
 
     private function getResourcePreviewUrl($options)
     {
-        /** @var Metadata $metadata */
-        $metadata = $options['metadata'];
+        $metadata = $this->getMetadata($options);
         $name = $metadata->getHumanizedName();
         $name = str_replace(' ', '_', $name);
         return sprintf('%s_%s_resource_preview', $metadata->getApplicationName(), $name);
@@ -77,7 +81,7 @@ class PreviewViewType extends AbstractViewType
 
     private function createActions()
     {
-        $default = [
+        return [
             'desktop' => [
                 'type' => 'event',
                 'label' => 'Desktop',
@@ -97,8 +101,6 @@ class PreviewViewType extends AbstractViewType
                 'event' => 'tablet'
             ],
         ];
-
-        return $default;
     }
 
     public function configureOptions(OptionsResolver $optionsResolver)
@@ -113,11 +115,6 @@ class PreviewViewType extends AbstractViewType
             'routes' => true,
         ]);
 
-        $optionsResolver->setRequired([
-            'metadata',
-            'request_configuration',
-            'single_resource_provider',
-            'repository'
-        ]);
+        $optionsResolver->setRequired('request_configuration');
     }
 }

@@ -1,15 +1,9 @@
 <?php
-/**
- * TableViewer.php
- *
- * @since 29/05/15
- * @author gseidel
- */
 
 namespace Enhavo\Bundle\AppBundle\View\Type;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Enhavo\Bundle\AppBundle\Controller\AppEventDispatcher;
+use Enhavo\Bundle\AppBundle\Controller\DuplicateResourceFactoryInterface;
 use Enhavo\Bundle\AppBundle\Resource\ResourceManager;
 use Enhavo\Bundle\AppBundle\View\AbstractViewType;
 use Enhavo\Bundle\AppBundle\View\ResourceMetadataHelperTrait;
@@ -17,17 +11,19 @@ use Enhavo\Bundle\AppBundle\View\TemplateData;
 use Enhavo\Bundle\AppBundle\View\ViewData;
 use Enhavo\Bundle\AppBundle\View\ViewUtil;
 use Sylius\Bundle\ResourceBundle\Controller\EventDispatcherInterface;
-use Sylius\Bundle\ResourceBundle\Controller\FlashHelperInterface;
 use Sylius\Bundle\ResourceBundle\Controller\SingleResourceProviderInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\ResourceActions;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
-class DeleteViewType extends AbstractViewType
+class DuplicateViewType extends AbstractViewType
 {
     use ResourceMetadataHelperTrait;
 
@@ -37,27 +33,24 @@ class DeleteViewType extends AbstractViewType
         private ViewUtil $util,
         private RouterInterface $router,
         private EntityManagerInterface $em,
-        private FlashHelperInterface $flashHelper,
+        private FlashBag $flashBag,
+        private TranslatorInterface $translator,
         private ResourceManager $resourceManager,
         private SingleResourceProviderInterface $singleResourceProvider,
         private EventDispatcherInterface $eventDispatcher,
+        private DuplicateResourceFactoryInterface $duplicateResourceFactory,
     ) {}
 
     public static function getName(): ?string
     {
-        return 'delete';
-    }
-
-    public static function getParentType(): ?string
-    {
-        return AppViewType::class;
+        return 'duplicate';
     }
 
     public function init($options)
     {
         $metadata = $this->getMetadata($options);
         $configuration = $this->getRequestConfiguration($options);
-        $this->util->isGrantedOr403($configuration, ResourceActions::UPDATE);
+        $this->util->isGrantedOr403($configuration, ResourceActions::CREATE);
         $repository = $this->resourceManager->getRepository($metadata->getApplicationName(), $metadata->getName());
         $resource = $this->singleResourceProvider->get($configuration, $repository);
         if ($resource === null) {
@@ -69,6 +62,10 @@ class DeleteViewType extends AbstractViewType
     public function handleRequest($options, Request $request, ViewData $viewData, TemplateData $templateData)
     {
         $configuration = $this->getRequestConfiguration($options);
+        $metadata = $this->getMetadata($options);
+
+        $factory = $this->resourceManager->getFactory($metadata->getApplicationName(), $metadata->getName());
+        $newResource = $this->duplicateResourceFactory->duplicate($configuration, $factory, $this->resource);
 
         $event = $this->eventDispatcher->dispatchPreEvent(ResourceActions::DELETE, $configuration, $this->resource);
         if ($event->isStopped()) {
@@ -78,7 +75,7 @@ class DeleteViewType extends AbstractViewType
             throw new HttpException($event->getErrorCode(), $event->getMessage());
         }
 
-        $this->resourceManager->delete($this->resource);
+        $this->resourceManager->create($newResource);
 
         $event = $this->eventDispatcher->dispatchPostEvent(ResourceActions::DELETE, $configuration, $this->resource);
         if ($event->isStopped()) {
@@ -88,26 +85,19 @@ class DeleteViewType extends AbstractViewType
             throw new HttpException($event->getErrorCode(), $event->getMessage());
         }
 
-        $this->flashHelper->addFlashFromEvent($configuration, $event);
-    }
+        $this->flashBag->add('success', $this->translator->trans('form.message.success', [], 'EnhavoAppBundle'));
 
-    public function createViewData($options, ViewData $data)
-    {
-        $data['messages'] = $this->util->getFlashMessages();
-    }
+        $route = $configuration->getRedirectRoute(null);
 
-    public function createTemplateData($options, ViewData $viewData, TemplateData $templateData)
-    {
-        $templateData['resource'] = $this->resource;
+        return new RedirectResponse($this->router->generate($route, [
+            'id' => $newResource->getId(),
+            'tab' => $request->get('tab'),
+            'view_id' => $request->get('view_id')
+        ]));
     }
 
     public function configureOptions(OptionsResolver $optionsResolver)
     {
-        $optionsResolver->setDefaults([
-            'application' => '@enhavo/app/delete/DeleteApp',
-            'component' => '@enhavo/app/delete/components/DeleteComponent.vue',
-        ]);
-
         $optionsResolver->setRequired('request_configuration');
     }
 }

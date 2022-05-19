@@ -8,8 +8,9 @@
 
 namespace Enhavo\Bundle\ContentBundle\EventListener;
 
+use Enhavo\Bundle\AppBundle\Event\ResourceEvent;
+use Enhavo\Bundle\AppBundle\Event\ResourceEvents;
 use Enhavo\Bundle\ContentBundle\Entity\Content;
-use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class UpdatedSubscriber implements EventSubscriberInterface
@@ -17,11 +18,12 @@ class UpdatedSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            'enhavo_app.pre_update' => 'preSave'
+            ResourceEvents::PRE_CREATE => 'preSave',
+            ResourceEvents::PRE_UPDATE => 'preSave'
         );
     }
 
-    public function preSave(ResourceControllerEvent $event)
+    public function preSave(ResourceEvent $event)
     {
         $resource = $event->getSubject();
 
