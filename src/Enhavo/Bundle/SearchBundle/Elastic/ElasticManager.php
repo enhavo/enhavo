@@ -31,16 +31,18 @@ class ElasticManager
         }
         $url = sprintf("https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-%s.tar.gz", $version);
         $content = file_get_contents($url, false, $context);
-        $file = tempnam("/tmp", "elasticsearch");
+        $tempname = tempnam("/tmp", "elasticsearch");
+        $file = $tempname.'.tar.gz';
         file_put_contents($file, $content);
 
-        $phar = new PharData($file);
+        $phar = new \PharData($file);
         $phar->decompress();
 
-        $phar = new PharData($file.'.tar');
+        $phar = new \PharData($tempname.'.tar');
         $phar->extractTo($this->projectDir);
-        
-        $this->fs->rename(sprintf('%s/elasticsearch-%s', $this->projectDir, $version), $targetDir);
+
+        $versionParts = explode('-', $version);
+        $this->fs->rename(sprintf('%s/elasticsearch-%s', $this->projectDir, $versionParts[0]), $targetDir);
         $this->fs->chmod(sprintf('%s/bin/elasticsearch', $targetDir), 0755);
     }
 
