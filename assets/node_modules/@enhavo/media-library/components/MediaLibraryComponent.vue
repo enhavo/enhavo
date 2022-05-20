@@ -127,22 +127,30 @@ export default class extends Vue {
             dataType: 'json',
             paramName: 'files',
             done: (event, data) => {
-                console.log(data.response().result);
-                if (data.response().result.length === 0) {
-                    this.getMediaLibrary().fail(this.translator.trans('enhavo_media_library.upload.fail.message'));
+                if (false === data.response().result.success) {
+                    data.response().result.errors.forEach((error) => {
+                        this.getMediaLibrary().showError(error);
+                    });
+
                     this.getMediaLibrary().loaded();
+
+                } else if (data.response().result.length === 0) {
+                    this.getMediaLibrary().showError(this.translator.trans('enhavo_media_library.upload.fail.message'));
+                    this.getMediaLibrary().loaded();
+
                 } else {
                     this.getMediaLibrary().refresh();
                 }
+
                 this.getMediaLibrary().setProgress(0);
             },
             fail: (event, data) => {
-                this.getMediaLibrary().fail(this.translator.trans('enhavo_media_library.upload.fail.message'));
+                this.getMediaLibrary().showError(this.translator.trans('enhavo_media_library.upload.fail.message'));
                 this.getMediaLibrary().setProgress(0);
                 this.getMediaLibrary().loaded();
             },
             add: (event, data) => {
-                data.url = this.getRouter().generate('enhavo_media_library_file_upload', {});
+                data.url = this.getRouter().generate('enhavo_media_upload', {});
                 data.submit();
                 this.getMediaLibrary().loading();
                 this.getMediaLibrary().setProgress(0);

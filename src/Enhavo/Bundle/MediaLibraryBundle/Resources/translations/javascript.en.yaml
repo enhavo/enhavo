@@ -3,4 +3,4 @@ enhavo_media_library:
     content_types: 'Content Types'
     upload:
         fail:
-            message: 'Upload failed. Maybe the file is too big.'
+            message: 'Upload failed. Maybe the file is too large.'

@@ -2,6 +2,8 @@ enhavo_media_upload:
     path:  /file/add
     defaults:
         _controller: enhavo_media.controller.upload::uploadAction
+    options:
+        expose: true
 
 enhavo_media_replace:
     path:  /file/replace/{token}

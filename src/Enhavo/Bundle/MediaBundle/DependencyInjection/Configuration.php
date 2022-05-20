@@ -30,6 +30,9 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('enable_delete_unreferenced')->defaultValue(true)->end()
             ->end()
             ->children()
+                ->scalarNode('upload_validation_groups')->defaultValue(['file_upload'])->end()
+            ->end()
+            ->children()
                 ->arrayNode('formats')
                     ->useAttributeAsKey('name')
                     ->prototype('variable')->end()
@@ -73,7 +76,6 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end()
-
             ->children()
                 ->arrayNode('cache_control')
                     ->addDefaultsIfNotSet()

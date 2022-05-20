@@ -36,6 +36,7 @@ class EnhavoMediaExtension extends AbstractResourceExtension implements PrependE
         $container->setParameter('enhavo_media.streaming.disabled', $config['streaming']['disabled']);
         $container->setParameter('enhavo_media.streaming.threshold', $config['streaming']['threshold']);
         $container->setParameter('enhavo_media.enable_delete_unreferenced', $config['enable_delete_unreferenced']);
+        $container->setParameter('enhavo_media.upload_validation_groups', $config['upload_validation_groups']);
 
         $configFiles = array(
             'services/command.yaml',

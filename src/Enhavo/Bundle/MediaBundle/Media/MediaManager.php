@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\MediaBundle\Media;
 
 use Doctrine\ORM\EntityManagerInterface;
 
+use Enhavo\Bundle\AppBundle\Resource\ResourceManager;
 use Enhavo\Bundle\DoctrineExtensionBundle\Util\AssociationFinder;
 use Enhavo\Bundle\MediaBundle\Entity\Format;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
@@ -20,60 +21,14 @@ use Enhavo\Bundle\MediaBundle\Storage\StorageInterface;
 
 class MediaManager
 {
-    /**
-     * @var StorageInterface
-     */
-    private $storage;
-
-    /**
-     * @var FormatManager
-     */
-    private $formatManager;
-
-    /**
-     * @var FileRepository
-     */
-    private $fileRepository;
-
-    /**
-     * @var EntityManagerInterface
-     */
-    private $em;
-
-    /**
-     * @var ProviderInterface
-     */
-    private $provider;
-
-    /**
-     * @var AssociationFinder
-     */
-    private $associationFinder;
-
-    /**
-     * MediaManager constructor.
-     *
-     * @param FormatManager $formatManager
-     * @param StorageInterface $storage
-     * @param FileRepository $fileRepository
-     * @param EntityManagerInterface $em
-     * @param ProviderInterface $provider
-     * @param AssociationFinder $associationFinder
-     */
     public function __construct(
-        FormatManager $formatManager,
-        StorageInterface $storage,
-        FileRepository $fileRepository,
-        EntityManagerInterface $em,
-        ProviderInterface $provider,
-        AssociationFinder $associationFinder
+        private StorageInterface $storage,
+        private FormatManager $formatManager,
+        private FileRepository $fileRepository,
+        private ProviderInterface $provider,
+        private AssociationFinder $associationFinder,
+        private ResourceManager $resourceManager,
     ) {
-        $this->formatManager = $formatManager;
-        $this->storage = $storage;
-        $this->fileRepository = $fileRepository;
-        $this->em = $em;
-        $this->provider = $provider;
-        $this->associationFinder = $associationFinder;
     }
 
     /**
@@ -130,8 +85,7 @@ class MediaManager
     {
         $this->storage->deleteFile($file);
         $this->formatManager->deleteFormats($file);
-        $this->em->remove($file);
-        $this->em->flush();
+        $this->resourceManager->delete($file);
     }
 
     /**
@@ -141,9 +95,7 @@ class MediaManager
      */
     public function saveFile(FileInterface $file)
     {
-        $this->em->persist($file);
-        $this->em->flush();
-
+        $this->resourceManager->save($file);
         $this->storage->saveFile($file);
     }
 

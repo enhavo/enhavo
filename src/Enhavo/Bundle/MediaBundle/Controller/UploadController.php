@@ -16,53 +16,48 @@ use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\UploadException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\Validator\ConstraintViolation;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class UploadController extends AbstractController
 {
     use FileControllerTrait;
 
-    /**
-     * @var FileFactory
-     */
-    private $fileFactory;
-
-    /**
-     * @var MediaManager
-     */
-    private $mediaManager;
-
-    /**
-     * @var FormatFactory
-     */
-    private $formatFactory;
-
     public function __construct(
-        FileFactory $fileFactory,
-        FormatFactory $formatFactory,
-        MediaManager $mediaManager)
+        private FileFactory $fileFactory,
+        private FormatFactory $formatFactory,
+        private MediaManager $mediaManager,
+        private ValidatorInterface $validator,
+        private array $validationGroups,
+    )
     {
-        $this->fileFactory = $fileFactory;
-        $this->formatFactory = $formatFactory;
-        $this->mediaManager = $mediaManager;
     }
 
-    public function uploadAction(Request $request)
+    public function uploadAction(Request $request): JsonResponse
     {
         $storedFiles = [];
         foreach($request->files as $file) {
             $uploadedFiles = is_array($file) ? $file : [$file];
+            /** @var $uploadedFile UploadedFile */
             foreach ($uploadedFiles as $uploadedFile) {
                 try {
-                    /** @var $uploadedFile UploadedFile */
-                    if ($uploadedFile->getError() != UPLOAD_ERR_OK) {
-                        throw new UploadException('Error in file upload');
+                    $errors = $this->getErrors($uploadedFile);
+                    if (!count($errors)) {
+                        $file = $this->fileFactory->createFromUploadedFile($uploadedFile);
+                        $file->setGarbage(false);
                     }
-                    $file = $this->fileFactory->createFromUploadedFile($uploadedFile);
-                    $file->setGarbage(true);
+                    if (count($errors)) {
+                        return new JsonResponse([
+                            'success' => false,
+                            'errors' => $errors,
+                        ]);
+                    }
                     $this->mediaManager->saveFile($file);
                     $storedFiles[] = $file;
+
                 } catch(StorageException $exception) {
                     foreach($storedFiles as $file) {
                         $this->mediaManager->deleteFile($file);
@@ -141,5 +136,19 @@ class UploadController extends AbstractController
         }
 
         return $uploadedFile;
+    }
+
+
+    private function getErrors(UploadedFile $uploadedFile): array
+    {
+        $result = [];
+
+        $errors = $this->validator->validate($uploadedFile, null, $this->validationGroups);
+        /** @var ConstraintViolation $error */
+        foreach ($errors as $error) {
+            $result[] = $error->getMessage();
+        }
+
+        return $result;
     }
 }

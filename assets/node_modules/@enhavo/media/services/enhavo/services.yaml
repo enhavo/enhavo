@@ -4,6 +4,8 @@ services:
         arguments:
             - '@enhavo/app/view/View'
             - '@enhavo/core/Router'
+            - '@enhavo/app/flash-message/FlashMessenger'
+            - '@enhavo/core/Translator'
         tags:
             - 'enhavo_app.form'
 

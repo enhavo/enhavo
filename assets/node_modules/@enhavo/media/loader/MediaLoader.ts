@@ -10,6 +10,8 @@ import DownloadExtension from "@enhavo/media/extension/DownloadExtension";
 import View from "@enhavo/app/view/View";
 import Router from "@enhavo/core/Router";
 import FormRegistry from "@enhavo/app/form/FormRegistry";
+import FlashMessenger from "@enhavo/app/flash-message/FlashMessenger";
+import Translator from "@enhavo/core/Translator";
 
 export default class MediaLoader extends AbstractLoader
 {
@@ -17,11 +19,15 @@ export default class MediaLoader extends AbstractLoader
 
     private readonly view: View;
     private readonly router: Router;
+    private readonly flashMessenger: FlashMessenger;
+    private readonly translator: Translator;
 
-    constructor(view: View, router: Router) {
+    constructor(view: View, router: Router, flashMessenger: FlashMessenger, translator: Translator) {
         super();
         this.view = view;
         this.router = router;
+        this.flashMessenger = flashMessenger;
+        this.translator = translator;
 
         this.bindDragAndDrop();
         this.initImageCropper();
@@ -32,7 +38,7 @@ export default class MediaLoader extends AbstractLoader
     {
         let elements = this.findElements(element, '[data-media-type]');
         for(element of elements) {
-            let type = new MediaType(element);
+            let type = new MediaType(element, this.flashMessenger, this.translator);
             MediaType.mediaTypes.push(type);
             FormRegistry.registerType(type);
         }

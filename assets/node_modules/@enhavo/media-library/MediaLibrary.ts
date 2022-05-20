@@ -215,7 +215,7 @@ export default class MediaLibrary {
         this.getFiles();
     }
 
-    public fail(message: string) {
+    public showError(message: string) {
         this.flashMessenger.addMessage(new Message(Message.ERROR, message));
     }
 
