@@ -172,6 +172,20 @@ class Term implements TermInterface, ResourceInterface
     }
 
     /**
+     * @return Term[]
+     */
+    public function getParents(): array
+    {
+        $parents = [];
+        $parent = $this->getParent();
+        while ($parent !== null) {
+            $parents[] = $parent;
+            $parent = $parent->getParent();
+        }
+        return $parents;
+    }
+
+    /**
      * @param TermInterface $parent
      */
     public function setParent(TermInterface $parent): void

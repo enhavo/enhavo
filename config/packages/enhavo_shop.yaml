@@ -1,3 +1,6 @@
+imports:
+    - { resource: '@EnhavoShopBundle/Resources/config/app/search.yaml' }
+
 sylius_attribute:
     driver: doctrine/orm
     resources:

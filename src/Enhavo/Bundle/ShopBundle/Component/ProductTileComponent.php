@@ -5,6 +5,8 @@ namespace Enhavo\Bundle\ShopBundle\Component;
 use Enhavo\Bundle\ShopBundle\Manager\ProductManager;
 use Enhavo\Bundle\ShopBundle\Model\ProductAccessInterface;
 use Enhavo\Bundle\ShopBundle\Model\ProductInterface;
+use Enhavo\Bundle\ShopBundle\Model\ProductVariantInterface;
+use Enhavo\Bundle\ShopBundle\Model\ProductVariantProxyInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 use Symfony\UX\TwigComponent\Attribute\ExposeInTemplate;
@@ -14,7 +16,7 @@ use Symfony\UX\TwigComponent\Attribute\PreMount;
 class ProductTileComponent
 {
     #[ExposeInTemplate]
-    public ProductInterface $product;
+    public $product;
 
     #[ExposeInTemplate]
     public ProductAccessInterface $productVariant;
@@ -29,10 +31,16 @@ class ProductTileComponent
     {
         $resolver = new OptionsResolver();
         $resolver->setRequired('product');
-        $resolver->setAllowedTypes('product', ProductInterface::class);
+        $resolver->setAllowedTypes('product', [ProductInterface::class, ProductVariantInterface::class, ProductVariantProxyInterface::class]);
         $data = $resolver->resolve($data);
 
-        $this->productVariant = $this->productManager->getDefaultVariantProxy($data['product']);
+        if ($data['product'] instanceof ProductInterface) {
+            $this->productVariant = $this->productManager->getDefaultVariantProxy($data['product']);
+        } elseif ($data['product'] instanceof ProductVariantInterface) {
+            $this->productVariant = $this->productManager->getVariantProxy($data['product']);
+        } else {
+            $this->productVariant = $data['product'];
+        }
 
         return $data;
     }

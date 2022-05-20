@@ -45,7 +45,7 @@ class ResourcesResolver implements ResourcesResolverInterface
      */
     public function getResources(SyliusRequestConfiguration $requestConfiguration, RepositoryInterface $repository)
     {
-        if($requestConfiguration instanceof RequestConfiguration && $repository instanceof EntityRepositoryInterface) {
+        if ($requestConfiguration instanceof RequestConfiguration && $repository instanceof EntityRepositoryInterface) {
             $query = $this->filterQueryBuilder->buildQueryFromRequestConfiguration($requestConfiguration);
             if (null !== $repositoryMethod = $requestConfiguration->getRepositoryMethod()) {
                 $callable = [$repository, $repositoryMethod];

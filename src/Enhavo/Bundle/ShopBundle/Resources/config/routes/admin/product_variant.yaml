@@ -117,6 +117,18 @@ sylius_product_variant_table:
                         translation_domain: EnhavoShopBundle
                         property: name
                         width: 4
+                    default:
+                        type: boolean
+                        label: product_variant.form.label.default
+                        translation_domain: EnhavoShopBundle
+                        property: default
+                        width: 2
+                    index:
+                        type: boolean
+                        label: product_variant.form.label.index
+                        translation_domain: EnhavoShopBundle
+                        property: index
+                        width: 2
                     stock:
                         type: text
                         label: product_variant.form.label.stock

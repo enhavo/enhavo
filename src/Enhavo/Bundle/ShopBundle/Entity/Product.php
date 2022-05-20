@@ -132,8 +132,10 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
     public function getDefaultVariant(): ?ProductVariant
     {
         $variants = $this->getEnabledVariants();
-        if (!$variants->isEmpty()) {
-            return $variants->get(0);
+        foreach ($variants as $variant) {
+            if ($variant->isDefault()) {
+                return $variant;
+            }
         }
         return null;
     }
@@ -197,8 +199,6 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
     }
 
     /**
-     * Get tags
-     *
      * @return Collection|TermInterface[]
      */
     public function getTags()

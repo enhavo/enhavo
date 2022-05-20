@@ -1,11 +1,32 @@
 enhavo_search:
     metadata:
-        Enhavo\Bundle\ShopBundle\Entity\Product:
+        Enhavo\Bundle\ShopBundle\Entity\ProductVariant:
             properties:
                 title:
                     type: text
                     weight: 20
+                shortTitle:
+                    type: text
+                    weight: 20
+                description:
+                    type: text
+                    weight: 5
             filter:
                 price:
-                    type: property
+                    type: product_variant_property
                     property: price
+                index:
+                    type: property
+                    property: index
+                default:
+                    type: property
+                    property: default
+                group:
+                    type: property
+                    property: product.id
+                enabled:
+                    type: product_variant_enabled
+                attributes:
+                    type: product_variant_attributes
+                categories:
+                    type: product_variant_categories

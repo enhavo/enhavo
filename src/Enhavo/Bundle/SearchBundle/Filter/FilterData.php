@@ -46,15 +46,24 @@ class FilterData
 
         $result = [];
         /** @var Filter $filter */
-        foreach($metadata->getFilters() as $filter) {
+        foreach ($metadata->getFilters() as $filter) {
             /** @var DataProviderInterface $dataProvider */
             $dataProvider = $this->collector->getType($filter->getType());
             $optionResolver = new OptionsResolver();
             $dataProvider->configureOptions($optionResolver);
             $options = $optionResolver->resolve($filter->getOptions());
             $data = $dataProvider->getData($resource, $options);
-            $data->setKey($filter->getKey());
-            $result[] = $data;
+            if (is_array($data)) {
+                foreach ($data as $dataItem) {
+                    if ($dataItem->getKey() === null) {
+                        throw new \InvalidArgumentException('If array is given a key must be provided');
+                    }
+                    $result[] = $dataItem;
+                }
+            } elseif ($data->getKey() === null) {
+                $data->setKey($filter->getKey());
+                $result[] = $data;
+            }
         }
         return $result;
     }

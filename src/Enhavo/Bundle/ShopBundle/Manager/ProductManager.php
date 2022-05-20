@@ -10,25 +10,41 @@ namespace Enhavo\Bundle\ShopBundle\Manager;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\RoutingBundle\Slugifier\Slugifier;
+use Enhavo\Bundle\SearchBundle\Engine\EngineInterface;
 use Enhavo\Bundle\ShopBundle\Entity\Product;
 use Enhavo\Bundle\ShopBundle\Entity\ProductOption;
 use Enhavo\Bundle\ShopBundle\Entity\ProductVariant;
 use Enhavo\Bundle\ShopBundle\Factory\ProductVariantProxyFactory;
 use Enhavo\Bundle\ShopBundle\Model\ProductAccessInterface;
 use Enhavo\Bundle\ShopBundle\Model\ProductInterface;
+use Enhavo\Bundle\ShopBundle\Model\ProductVariantInterface;
+use Enhavo\Bundle\ShopBundle\Model\ProductVariantProxyInterface;
 
 class ProductManager
 {
     public function __construct(
         private EntityManagerInterface $em,
         private ProductVariantProxyFactory $proxyFactory,
+        private EngineInterface $engine,
     )
     {}
 
-    public function updateProductVariant(ProductVariant $product)
+    public function updateProductVariant(ProductVariant $productVariant)
     {
-        $title = empty($product->getTitle()) ? $product->getProduct()->getTitle() : $product->getTitle();
-        $product->setCode($this->generateVariantCode($title, $product->getOptionValues()));
+        if ($productVariant->getCode() === null) {
+            $title = empty($productVariant->getTitle()) ? $productVariant->getProduct()->getTitle() : $productVariant->getTitle();
+            $productVariant->setCode($this->generateVariantCode($title, $productVariant->getOptionValues()));
+        }
+
+        if ($productVariant->getDefault()) {
+            foreach ($productVariant->getProduct()->getVariants() as $variant) {
+                if ($variant !== $productVariant) {
+                    $variant->setDefault(false);
+                }
+            }
+        }
+
+        $this->engine->index($productVariant);
     }
 
     public function updateProduct(ProductInterface $product)
@@ -39,7 +55,7 @@ class ProductManager
 
         $variants = $product->getVariants();
         foreach ($variants as $variant) {
-            if ($variant instanceof ProductVariant && $variant->getCode() === null) {
+            if ($variant instanceof ProductVariant) {
                 $this->updateProductVariant($variant);
             }
         }
@@ -85,5 +101,19 @@ class ProductManager
             return $this->proxyFactory->createNew($product->getDefaultVariant());
         }
         return null;
+    }
+
+    public function getVariantProxies(iterable $productVariants): array
+    {
+        $proxies = [];
+        foreach ($productVariants as $productVariant) {
+            $proxies[] = $this->getVariantProxy($productVariant);
+        }
+        return $proxies;
+    }
+
+    public function getVariantProxy(ProductVariantInterface $productVariant): ProductVariantProxyInterface
+    {
+        return $this->proxyFactory->createNew($productVariant);
     }
 }

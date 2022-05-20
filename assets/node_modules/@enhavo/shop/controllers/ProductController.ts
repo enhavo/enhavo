@@ -19,7 +19,6 @@ export default class extends Controller
     productManager: ProductManager
     cartManager: CartManager
 
-    protected productValue: Product;
     protected productVariantValue: ProductVariant;
 
     static values = {

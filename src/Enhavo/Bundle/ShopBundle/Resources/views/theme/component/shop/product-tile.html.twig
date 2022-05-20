@@ -1,24 +1,23 @@
 <div class="product-item"
      data-controller="product"
-     data-product-product-value="{{ product|serialize('json', {groups: ['product', 'route']}) }}"
      data-product-product-variant-value="{{ productVariant|serialize('json', {groups: ['product', 'route']}) }}"
 >
-    <a href="{{ router(product) }}">
+    <a href="{{ router(productVariant) }}">
         <span class="product-image">
             <img src="" alt="">
         </span>
         <span class="product-content">
-            <span class="product-title">{{ product.title }}</span>
-            <span class="product-teaser">{{ product.description }}</span>
+            <span class="product-title">{{ productVariant.title }}</span>
+            <span class="product-teaser">{{ productVariant.description }}</span>
         </span>
     </a>
     <div class="product-meta">
         <div class="product-price">
             <div class="price">
                 {% if product.isReduced %}
-                    <span class="default-price">{{ product.price }}</span> <span class="reduced-price">{{ product.reducedPrice }}</span>
+                    <span class="default-price">{{ productVariant.price }}</span> <span class="reduced-price">{{ productVariant.reducedPrice }}</span>
                 {% else %}
-                    <span class="default-price">{{ product.price }}</span>
+                    <span class="default-price">{{ productVariant.price }}</span>
                 {% endif %}
             </div>
             <div class="unit">(9,00 / Kg)</div>

@@ -29,15 +29,17 @@ class ElasticManager
         if ($this->fs->exists($targetDir)) {
             $this->fs->remove($targetDir);
         }
-        $url = sprintf("https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-%s.zip", $version);
+        $url = sprintf("https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-%s.tar.gz", $version);
         $content = file_get_contents($url, false, $context);
         $file = tempnam("/tmp", "elasticsearch");
         file_put_contents($file, $content);
-        $zip = new \ZipArchive;
-        if ($zip->open($file) === true) {
-            $zip->extractTo($this->projectDir);
-            $zip->close();
-        }
+
+        $phar = new PharData($file);
+        $phar->decompress();
+
+        $phar = new PharData($file.'.tar');
+        $phar->extractTo($this->projectDir);
+        
         $this->fs->rename(sprintf('%s/elasticsearch-%s', $this->projectDir, $version), $targetDir);
         $this->fs->chmod(sprintf('%s/bin/elasticsearch', $targetDir), 0755);
     }

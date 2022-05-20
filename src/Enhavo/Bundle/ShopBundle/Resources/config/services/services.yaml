@@ -21,6 +21,7 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@Enhavo\Bundle\ShopBundle\Factory\ProductVariantProxyFactory'
+            - '@enhavo_search.search.engine'
 
     Enhavo\Bundle\ShopBundle\EventListener\CheckoutSubscriber:
         arguments:
@@ -98,6 +99,47 @@ services:
             - { name: controller.service_arguments }
 
     Enhavo\Bundle\ShopBundle\Payment\Resolver\PaymentSubjectOrderResolver:
+
+    Enhavo\Bundle\ShopBundle\Controller\SearchController:
+        arguments:
+            - '@enhavo_search.result.result_converter'
+            - '@enhavo_search.search.engine'
+            - '@enhavo_app.template.manager'
+            - '@Enhavo\Bundle\ShopBundle\Manager\ProductManager'
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: controller.service_arguments }
+
+    Enhavo\Bundle\ShopBundle\Search\Filter\ProductVariantAttributesDataProvider:
+        public: true
+        calls:
+            - [ 'setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo_search.filter_provider, alias: 'product_variant_attributes' }
+
+    Enhavo\Bundle\ShopBundle\Search\Filter\ProductVariantCategoriesDataProvider:
+        public: true
+        calls:
+            - [ 'setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo_search.filter_provider, alias: 'product_variant_categories' }
+
+    Enhavo\Bundle\ShopBundle\Search\Filter\ProductVariantEnabledDataProvider:
+        public: true
+        calls:
+            - [ 'setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo_search.filter_provider, alias: 'product_variant_enabled' }
+
+    Enhavo\Bundle\ShopBundle\Search\Filter\ProductVariantPropertyDataProvider:
+        public: true
+        arguments:
+            - '@Enhavo\Bundle\ShopBundle\Manager\ProductManager'
+        calls:
+            - [ 'setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo_search.filter_provider, alias: 'product_variant_property' }
 
 #    enhavo_shop.listener.doctrine_sylius_meta:
 #        class: Enhavo\Bundle\ShopBundle\EventListener\DoctrineSyliusMetaListener

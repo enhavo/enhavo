@@ -39,12 +39,10 @@ class ProductVariantProxy implements ProductVariantProxyInterface
         return $this->productVariant->getDescription() ?? $this->product->getDescription();
     }
 
-
     public function getPicture(): ?FileInterface
     {
         return $this->productVariant->getPicture() ?? $this->product->getPicture();
     }
-
 
     public function getPictures(): Collection
     {
@@ -53,7 +51,7 @@ class ProductVariantProxy implements ProductVariantProxyInterface
 
     public function getPrice(): ?int
     {
-        return $this->productVariant->getPrice() ?? $this->product->getPrice();
+        return $this->productVariant->getPrice() ? $this->productVariant->getPrice() : $this->product->getPrice();
     }
 
     public function getReducedPrice(): ?int
