@@ -162,7 +162,7 @@ class ElasticSearchEngine implements EngineInterface
 
         if($filter->getTerm()) {
             for($i = 1; $i <= 100; $i++) {
-                $query->addShould(new Query\Match(sprintf('indexData.value.%s', $i), $filter->getTerm()));
+                $query->addShould(new Query\MatchQuery(sprintf('indexData.value.%s', $i), $filter->getTerm()));
             }
             $query->setMinimumShouldMatch(1);
         }

@@ -29,6 +29,16 @@ class ProductVariantType extends AbstractType
             'translation_domain' => 'EnhavoShopBundle',
         ));
 
+        $builder->add('default', BooleanType::class, array(
+            'label' => 'product_variant.form.label.default',
+            'translation_domain' => 'EnhavoShopBundle',
+        ));
+
+        $builder->add('index', BooleanType::class, array(
+            'label' => 'product_variant.form.label.index',
+            'translation_domain' => 'EnhavoShopBundle',
+        ));
+
         $builder->add('title', TextType::class, array(
             'label' => 'product_variant.form.label.title',
             'translation_domain' => 'EnhavoShopBundle',

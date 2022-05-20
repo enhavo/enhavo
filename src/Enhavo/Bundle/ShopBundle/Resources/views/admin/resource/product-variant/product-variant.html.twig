@@ -1,4 +1,6 @@
 {% if form.enabled is defined %}{{ form_row(form.enabled) }}{% endif %}
+{% if form.index is defined %}{{ form_row(form.index) }}{% endif %}
+{% if form.default is defined %}{{ form_row(form.default) }}{% endif %}
 {% if form.position is defined %}{{ form_row(form.position) }}{% endif %}
 {% if form.code is defined %}{{ form_row(form.code) }}{% endif %}
 {% if form.stock is defined %}{{ form_row(form.stock) }}{% endif %}

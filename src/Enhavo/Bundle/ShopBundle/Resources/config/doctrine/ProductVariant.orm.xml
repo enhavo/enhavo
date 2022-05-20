@@ -2,6 +2,7 @@
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
     <entity name="Enhavo\Bundle\ShopBundle\Entity\ProductVariant" table="shop_product_variant" repository-class="Enhavo\Bundle\ShopBundle\Repository\ProductVariantRepository">
         <field name="title" nullable="true" />
+        <field name="shortTitle" nullable="true" />
         <field name="description" type="text" nullable="true" />
         <field name="price" type="integer" nullable="true" />
         <field name="reducedPrice" type="integer" nullable="true" />
@@ -14,6 +15,8 @@
         <field name="shippingCategory" type="integer" nullable="true" />
         <field name="stock" type="integer" nullable="true" />
         <field name="stockTracked" type="boolean" nullable="true" />
+        <field name="default" type="boolean" nullable="true" column="`default`" />
+        <field name="index" type="boolean" nullable="true" column="`index`" />
 
         <many-to-one field="picture" target-entity="Enhavo\Bundle\MediaBundle\Model\FileInterface">
             <join-column on-delete="SET NULL" />

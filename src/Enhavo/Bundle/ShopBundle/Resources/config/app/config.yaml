@@ -194,13 +194,28 @@ enhavo_routing:
                     type: routable
                 admin:
                     type: id
-                    route: enhavo_shop_product_update
+                    route: sylius_product_update
             generators:
                 prefix:
                     type: prefix
                     properties: title
                 route_name:
                     type: route_name
+
+        Enhavo\Bundle\ShopBundle\Entity\ProductVariant:
+            router:
+                default:
+                    type: routable
+                    property: product.route
+                admin:
+                    type: id
+                    route: sylius_product_variant_update
+
+        Enhavo\Bundle\ShopBundle\Model\ProductVariantProxy:
+            router:
+                default:
+                    type: routable
+                    property: productVariant.product.route
 
 sylius_inventory:
     resources:

@@ -37,6 +37,11 @@ class Router
     public function generate($resource , $parameters = [], $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH, $type = 'default')
     {
         $metadata = $this->metadataRepository->getMetadata($resource);
+
+        if ($metadata === null) {
+            throw new \InvalidArgumentException(sprintf('Can\'t find routing metadata to generate url for class "%s".', get_class($resource)));
+        }
+
         /** @var Metadata $metadata */
         foreach($metadata->getRouter() as $router) {
             if($router->getName() == $type) {

@@ -20,6 +20,9 @@ class ProductVariant extends SyliusProductVariant implements ProductVariantInter
 
     private ?int $stock;
     private bool $stockTracked = false;
+    private ?bool $default;
+    private ?string $shortTitle = '';
+    private bool $index = false;
 
     public function __construct()
     {
@@ -56,5 +59,35 @@ class ProductVariant extends SyliusProductVariant implements ProductVariantInter
     public function setStockTracked(bool $stockTracked): void
     {
         $this->stockTracked = $stockTracked;
+    }
+
+    public function getDefault(): ?bool
+    {
+        return $this->default;
+    }
+
+    public function setDefault(?bool $default): void
+    {
+        $this->default = $default;
+    }
+
+    public function getShortTitle(): ?string
+    {
+        return $this->shortTitle;
+    }
+
+    public function setShortTitle(?string $shortTitle): void
+    {
+        $this->shortTitle = $shortTitle;
+    }
+
+    public function isIndex(): bool
+    {
+        return $this->index;
+    }
+
+    public function setIndex(bool $index): void
+    {
+        $this->index = $index;
     }
 }

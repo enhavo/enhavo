@@ -1,0 +1,4 @@
+enhavo_shop_theme_search_result:
+    path: /product/search
+    defaults:
+        _controller: Enhavo\Bundle\ShopBundle\Controller\SearchController::resultAction

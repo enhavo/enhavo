@@ -1,0 +1,16 @@
+{% extends template('theme/base.html.twig') %}
+
+{% block main %}
+    <form action="{{ path('enhavo_shop_theme_search_result') }}" data-search-form>
+        <input type="text" name="q" value="{{ term }}" placeholder="Search for product"/>
+        <button type="submit"><i class="icon-search"></i></button>
+    </form>
+
+    {% for result in results %}
+        <div>
+            {{ component('shop_product_tile', {
+                product: result
+            }) }}
+        </div>
+    {% endfor %}
+{% endblock %}

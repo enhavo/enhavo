@@ -37,7 +37,7 @@ class ProductVariantSubscriber implements EventSubscriberInterface
     public function onPreSave(ResourceEvent $event)
     {
         $subject = $event->getSubject();
-        if ($subject instanceof ProductVariant && $subject->getCode() === null) {
+        if ($subject instanceof ProductVariant) {
             $this->productManager->updateProductVariant($subject);
         }
     }

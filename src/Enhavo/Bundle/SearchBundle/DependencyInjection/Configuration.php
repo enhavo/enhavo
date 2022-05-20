@@ -48,7 +48,7 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->scalarNode('host')->defaultValue('localhost')->end()
                         ->scalarNode('port')->defaultValue(9200)->end()
-                        ->scalarNode('version')->defaultValue('6.0.0')->end()
+                        ->scalarNode('version')->defaultValue('7.0.0-darwin-x86_64')->end()
                     ->end()
                 ->end()
                 ->arrayNode('metadata')

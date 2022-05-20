@@ -10,12 +10,16 @@ namespace Enhavo\Bundle\ShopBundle\Repository;
 
 use Doctrine\ORM\QueryBuilder;
 use Enhavo\Bundle\AppBundle\Filter\FilterQuery;
+use Enhavo\Bundle\AppBundle\Repository\EntityRepositoryInterface;
+use Enhavo\Bundle\AppBundle\Repository\EntityRepositoryTrait;
 use Sylius\Component\Product\Model\ProductInterface;
 use Sylius\Component\Product\Model\ProductVariantInterface;
 use Sylius\Bundle\ProductBundle\Doctrine\ORM\ProductVariantRepository as SyliusProductVariantRepository;
 
-class ProductVariantRepository extends SyliusProductVariantRepository
+class ProductVariantRepository extends SyliusProductVariantRepository implements EntityRepositoryInterface
 {
+    use EntityRepositoryTrait;
+
     /**
      * @param string $locale
      * @param $productId

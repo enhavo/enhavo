@@ -5,4 +5,4 @@ enhavo_search:
         classes:
             - Enhavo\Bundle\PageBundle\Entity\Page
             - Enhavo\Bundle\ArticleBundle\Entity\Article
-            - Enhavo\Bundle\ShopBundle\Entity\Product
+            - Enhavo\Bundle\ShopBundle\Entity\ProductVariant
