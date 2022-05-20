@@ -1,3 +1,0 @@
-Symfony\Component\HttpFoundation\File\UploadedFile:
-    constraints:
-        - Enhavo\Bundle\MediaLibraryBundle\Validator\Constraints\File:

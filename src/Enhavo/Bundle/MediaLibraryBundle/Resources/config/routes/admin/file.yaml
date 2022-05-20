@@ -94,14 +94,6 @@ enhavo_media_library_file_create:
                         translation_domain: EnhavoMediaLibraryBundle
                         template: 'admin/resource/file/main.html.twig'
 
-enhavo_media_library_file_upload:
-    path:  /enhavo/media-library/file/upload
-    methods: [POST]
-    options:
-        expose: true
-    defaults:
-        _controller: enhavo_media_library.controller.file:uploadAction
-
 enhavo_media_library_file_update:
     options:
         expose: true

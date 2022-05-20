@@ -2,27 +2,17 @@
 
 namespace Enhavo\Bundle\MediaLibraryBundle\Controller;
 
-use Enhavo\Bundle\AppBundle\Column\ColumnManager;
 use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
-use Enhavo\Bundle\AppBundle\View\ViewUtil;
-use Enhavo\Bundle\FormBundle\Error\FormErrorResolver;
 use Enhavo\Bundle\MediaBundle\Controller\FileControllerTrait;
-use Enhavo\Bundle\MediaBundle\Exception\StorageException;
-use Enhavo\Bundle\MediaBundle\Media\MediaManager;
-use Enhavo\Bundle\MediaLibraryBundle\Entity\File;
-use Enhavo\Bundle\MediaLibraryBundle\Factory\FileFactory;
 use Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryManager;
 use Enhavo\Bundle\MediaLibraryBundle\Repository\FileRepository;
 use Enhavo\Bundle\MediaLibraryBundle\View\Type\MediaLibraryViewType;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Validator\ConstraintViolation;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 
@@ -41,16 +31,6 @@ class FileController extends ResourceController
     }
 
     /**
-     * @return MediaManager
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     */
-    private function getMediaManager(): MediaManager
-    {
-        return $this->container->get('enhavo_media.media.media_manager');
-    }
-
-    /**
      * @return FileRepository
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
@@ -58,56 +38,6 @@ class FileController extends ResourceController
     private function getFileRepository(): FileRepository
     {
         return $this->container->get('enhavo_media.repository.file');
-    }
-
-    /**
-     * @return FileFactory
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     */
-    private function getFileFactory(): FileFactory
-    {
-        return $this->container->get('enhavo_media_library.factory.file');
-    }
-
-    /**
-     * @return ColumnManager
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     */
-    private function getColumnManager(): ColumnManager
-    {
-        return $this->container->get('enhavo_app.column_manager');
-    }
-
-    /**
-     * @return ViewUtil
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     */
-    private function getViewUtil(): ViewUtil
-    {
-        return $this->container->get('Enhavo\Bundle\AppBundle\View\ViewUtil');
-    }
-
-    /**
-     * @return FormErrorResolver
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     */
-    private function getFormErrorResolver(): FormErrorResolver
-    {
-        return $this->container->get('Enhavo\Bundle\FormBundle\Error\FormErrorResolver');
-    }
-
-    /**
-     * @return ValidatorInterface
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     */
-    private function getValidator(): ValidatorInterface
-    {
-        return $this->container->get('validator');
     }
 
     /**
@@ -222,54 +152,6 @@ class FileController extends ResourceController
             'mimeType' => $file->getMimeType(),
             'token' => $file->getToken(),
         ]);
-    }
-
-    public function uploadAction(Request $request): JsonResponse
-    {
-        $storedFiles = [];
-        foreach($request->files as $file) {
-            $uploadedFiles = is_array($file) ? $file : [$file];
-            /** @var $uploadedFile UploadedFile */
-            foreach ($uploadedFiles as $uploadedFile) {
-                try {
-                    $errors = $this->getErrors($uploadedFile);
-                    if (!count($errors)) {
-                        /** @var File $file */
-                        $file = $this->getFileFactory()->createFromUploadedFile($uploadedFile);
-                        $file->setGarbage(false);
-                        $file->setContentType($this->getMediaLibraryManager()->matchContentType($file));
-                    }
-                    if (count($errors)) {
-                        return new JsonResponse([
-                            'success' => false,
-                            'errors' => $errors,
-                        ]);
-                    }
-                    $this->getMediaManager()->saveFile($file);
-                    $storedFiles[] = $file;
-
-                } catch(StorageException $exception) {
-                    foreach($storedFiles as $file) {
-                        $this->getMediaManager()->deleteFile($file);
-                    }
-                }
-            }
-        }
-
-        return $this->getFileResponse($storedFiles);
-    }
-
-    private function getErrors(UploadedFile $uploadedFile): array
-    {
-        $result = [];
-
-        $errors = $this->getValidator()->validate($uploadedFile);
-        /** @var ConstraintViolation $error */
-        foreach ($errors as $error) {
-            $result[] = $error->getMessage();
-        }
-
-        return $result;
     }
 
     private function createTagList(): array
