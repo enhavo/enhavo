@@ -1,6 +1,6 @@
 <?php
 
-namespace Enhavo\Bundle\MediaLibraryBundle\Validator\Constraints;
+namespace Enhavo\Bundle\MediaBundle\Validator\Constraints;
 
 /**
  * @Annotation

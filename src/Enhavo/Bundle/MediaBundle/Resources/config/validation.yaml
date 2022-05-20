@@ -1,0 +1,5 @@
+Symfony\Component\HttpFoundation\File\UploadedFile:
+    constraints:
+        - Enhavo\Bundle\MediaBundle\Validator\Constraints\File:
+              groups:
+                  - file_upload

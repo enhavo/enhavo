@@ -34,12 +34,12 @@ services:
         public: true
         class: Enhavo\Bundle\MediaBundle\Media\MediaManager
         arguments:
-            - '@enhavo_media.media.format_manager'
             - '@enhavo_media.storage'
+            - '@enhavo_media.media.format_manager'
             - '@enhavo_media.repository.file'
-            - '@doctrine.orm.entity_manager'
             - '@enhavo_media.provider'
             - '@Enhavo\Bundle\DoctrineExtensionBundle\Util\AssociationFinder'
+            - '@Enhavo\Bundle\AppBundle\Resource\ResourceManager'
 
     enhavo_media.media.format_manager:
         class: Enhavo\Bundle\MediaBundle\Media\FormatManager
@@ -121,6 +121,8 @@ services:
             - '@enhavo_media.factory.file'
             - '@enhavo_media.factory.format'
             - '@enhavo_media.media.media_manager'
+            - '@validator'
+            - '%enhavo_media.upload_validation_groups%'
         calls:
             - [setContainer, ['@service_container']]
 
