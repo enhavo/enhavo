@@ -2,4 +2,4 @@ enhavo_media:
     cropping: 'Cropping'
     upload:
         fail:
-            message: 'Upload failed. Maybe the file is too big.'
+            message: 'Upload failed. Maybe the file is too large.'
