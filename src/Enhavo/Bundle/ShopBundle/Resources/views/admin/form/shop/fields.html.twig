@@ -20,3 +20,10 @@
         </div>
     {% endfor %}
 {% endblock %}
+
+{% block enhavo_product_attribute_value_widget %}
+    <div class="row">
+        <div class="col-md-6">{{ form_row(form.attribute) }}</div>
+        <div class="col-md-6">{% if form.value is defined %}{{ form_row(form.value) }}{% endif %}</div>
+    </div>
+{% endblock %}

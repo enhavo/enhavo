@@ -61,7 +61,7 @@ class ProductVariant extends SyliusProductVariant implements ProductVariantInter
         $this->stockTracked = $stockTracked;
     }
 
-    public function getDefault(): ?bool
+    public function isDefault(): ?bool
     {
         return $this->default;
     }

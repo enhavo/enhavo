@@ -41,10 +41,8 @@ Enhavo\Bundle\ShopBundle\Entity\Product:
 Enhavo\Bundle\ShopBundle\Entity\ProductOption:
     properties:
 
-Sylius\Component\Product\Model\ProductAttribute:
-    properties:
-        code:
-            - NotBlank: { groups: [form] }
-        position:
-            - NotBlank: { groups: [form] }
 
+Enhavo\Bundle\ShopBundle\Entity\ProductAssociationType:
+    properties:
+        name:
+            - NotBlank: { groups: [product_association] }

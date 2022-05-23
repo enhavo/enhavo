@@ -28,6 +28,11 @@ sylius_product_attribute_create:
                 options:
                     validation_groups: [ form ]
             viewer:
+                tabs:
+                    main:
+                        label: Product
+                        translation_domain: EnhavoShopBundle
+                        template: admin/resource/product-attribute/main.html.twig
 
 sylius_product_attribute_create_form:
     options:
@@ -51,6 +56,11 @@ sylius_product_attribute_update:
                 options:
                     validation_groups: [ form ]
             viewer:
+                tabs:
+                    main:
+                        label: Product
+                        translation_domain: EnhavoShopBundle
+                        template: admin/resource/product-attribute/main.html.twig
 
 sylius_product_attribute_table:
     options:
@@ -62,21 +72,18 @@ sylius_product_attribute_table:
         _sylius:
             viewer:
                 columns:
-                    id:
-                        property: id
-                        width: 1
-                        label: ID
-                        type: property
-                    code:
-                        property: code
-                        width: 3
-                        label: Code
+                    name:
+                        property: name
                         type: text
+                        label: product_attribute.label.name
+                        translation_domain: EnhavoShopBundle
+                        width: 3
                     type:
                         property: type
-                        width: 3
-                        label: Type
                         type: text
+                        label: product_attribute.label.type
+                        translation_domain: EnhavoShopBundle
+                        width: 3
 
 sylius_product_attribute_delete:
     options:

@@ -237,6 +237,7 @@ product_attribute:
   label:
     name: 'Name'
     storage_type: Storage type
+    type: Type
     position: Position
     variant: Variant
     customize: Customize

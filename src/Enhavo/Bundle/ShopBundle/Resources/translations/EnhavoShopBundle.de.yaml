@@ -243,6 +243,7 @@ product_attribute:
       name: 'Name'
       storage_type: Speichertyp
       position: Position
+      type: Typ
 
 tax:
   label:
