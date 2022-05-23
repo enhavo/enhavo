@@ -192,6 +192,10 @@ subtrees:
         url: 'git@github.com:enhavo/slider-assets'
         prefix: 'assets/node_modules/@enhavo/slider'
         package: '@enhavo/slider'
+    payment-assets:
+        url: 'git@github.com:enhavo/payment-assets'
+        prefix: 'assets/node_modules/@enhavo/payment'
+        package: '@enhavo/payment'
     theme-assets:
         url: 'git@github.com:enhavo/theme-assets'
         prefix: 'assets/node_modules/@enhavo/theme'
