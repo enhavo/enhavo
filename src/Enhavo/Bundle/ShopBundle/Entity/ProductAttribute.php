@@ -12,4 +12,15 @@ use Sylius\Component\Product\Model\ProductAttribute as SyliusProductAttribute;
 
 class ProductAttribute extends SyliusProductAttribute
 {
+    private ?string $name;
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(?string $name): void
+    {
+        $this->name = $name;
+    }
 }

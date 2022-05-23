@@ -18,7 +18,6 @@ use Enhavo\Bundle\RoutingBundle\Form\Type\RouteType;
 use Enhavo\Bundle\ShopBundle\Entity\Product;
 use Enhavo\Bundle\TaxonomyBundle\Form\Type\TermAutoCompleteChoiceType;
 use Enhavo\Bundle\TaxonomyBundle\Form\Type\TermTreeChoiceType;
-use Sylius\Bundle\ProductBundle\Form\Type\ProductAttributeValueType;
 use Sylius\Bundle\ShippingBundle\Form\Type\ShippingCategoryChoiceType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -197,6 +196,7 @@ class ProductType extends AbstractType
             'label' => 'product.form.label.attributes',
             'translation_domain' => 'EnhavoShopBundle'
         ]);
+
         $builder->add('associations', ListType::class, [
             'entry_type' => ProductAssociationType::class,
             'required' => false,

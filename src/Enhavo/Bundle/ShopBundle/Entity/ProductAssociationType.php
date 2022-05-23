@@ -19,5 +19,13 @@ use Sylius\Component\Product\Model\ProductAssociationType as SyliusProductAssoci
 
 class ProductAssociationType extends SyliusProductAssociationType
 {
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
 
+    public function setName(?string $name): void
+    {
+        $this->name = $name;
+    }
 }

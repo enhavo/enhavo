@@ -12,17 +12,15 @@ use Enhavo\Bundle\AppBundle\Event\ResourceEvent;
 use Enhavo\Bundle\AppBundle\Event\ResourceEvents;
 use Enhavo\Bundle\ShopBundle\Entity\ProductOption;
 use Enhavo\Bundle\ShopBundle\Manager\ProductManager;
+use Sylius\Component\Product\Model\ProductAssociationTypeInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class ProductOptionSubscriber implements EventSubscriberInterface
+class ProductAssociationTypeSubscriber implements EventSubscriberInterface
 {
     public function __construct(
         private ProductManager $productManager,
     ) {}
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents()
     {
         return [
@@ -34,8 +32,8 @@ class ProductOptionSubscriber implements EventSubscriberInterface
     public function onPreSave(ResourceEvent $event)
     {
         $subject = $event->getSubject();
-        if ($subject instanceof ProductOption) {
-            $this->productManager->updateOption($subject);
+        if ($subject instanceof ProductAssociationTypeInterface) {
+            $this->productManager->updateAssociationType($subject);
         }
     }
 }

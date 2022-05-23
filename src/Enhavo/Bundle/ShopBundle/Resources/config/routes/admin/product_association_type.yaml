@@ -17,7 +17,11 @@ sylius_product_association_type_create:
         _controller: sylius.controller.product_association_type::createAction
         _sylius:
             redirect: sylius_product_association_type_update
+            form:
+                options:
+                    validation_groups: [ product_association ]
             viewer:
+
 
 sylius_product_association_type_update:
     options:
@@ -27,6 +31,9 @@ sylius_product_association_type_update:
     defaults:
         _controller: sylius.controller.product_association_type::updateAction
         _sylius:
+            form:
+                options:
+                    validation_groups: [ product_association ]
             viewer:
 
 sylius_product_association_type_table:
@@ -39,20 +46,17 @@ sylius_product_association_type_table:
         _sylius:
             viewer:
                 columns:
-                    id:
-                        property: id
-                        width: 1
-                        label: ID
-                        type: property
                     name:
                         property: name
                         width: 5
-                        label: Name
+                        label: product.label.name
+                        translation_domain: EnhavoShopBundle
                         type: property
                     code:
                         property: code
                         width: 6
-                        label: Code
+                        label: product.label.code
+                        translation_domain: EnhavoShopBundle
                         type: property
                     
 sylius_product_association_type_delete:

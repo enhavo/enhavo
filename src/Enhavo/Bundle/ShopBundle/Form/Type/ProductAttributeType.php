@@ -19,14 +19,13 @@ class ProductAttributeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('position', IntegerType::class, [
-                'label' =>  'product_attribute.label.position',
+            ->add('name', TextType::class, [
+                'label' =>  'product_attribute.label.name',
                 'translation_domain' => 'EnhavoShopBundle',
             ])
-            ->add('storage_type', TextType::class, [
-                 'label' =>  'product_attribute.label.storage_type',
-                 'translation_domain' => 'EnhavoShopBundle',
-            ])
+            ->remove('translatable')
+            ->remove('translations')
+            ->remove('position')
         ;
     }
 

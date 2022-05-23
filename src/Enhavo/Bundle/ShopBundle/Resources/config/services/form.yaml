@@ -35,6 +35,10 @@ services:
         tags:
             - { name: form.type }
 
+    Enhavo\Bundle\ShopBundle\Form\Type\ProductAttributeValueType:
+        tags:
+            - { name: form.type }
+
     Enhavo\Bundle\ShopBundle\Form\Type\ProductVariantGenerationType:
         arguments:
             - '%sylius.model.product_variant.class%'

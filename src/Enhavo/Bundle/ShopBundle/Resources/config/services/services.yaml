@@ -22,6 +22,7 @@ services:
             - '@doctrine.orm.entity_manager'
             - '@Enhavo\Bundle\ShopBundle\Factory\ProductVariantProxyFactory'
             - '@enhavo_search.search.engine'
+            - '@sylius.translation_locale_provider'
 
     Enhavo\Bundle\ShopBundle\EventListener\CheckoutSubscriber:
         arguments:
@@ -44,7 +45,18 @@ services:
     Enhavo\Bundle\ShopBundle\EventListener\ProductOptionSubscriber:
         arguments:
             - '@Enhavo\Bundle\ShopBundle\Manager\ProductManager'
-            - '@sylius.translation_locale_provider'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    Enhavo\Bundle\ShopBundle\EventListener\ProductAttributeSubscriber:
+        arguments:
+            - '@Enhavo\Bundle\ShopBundle\Manager\ProductManager'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    Enhavo\Bundle\ShopBundle\EventListener\ProductAssociationTypeSubscriber:
+        arguments:
+            - '@Enhavo\Bundle\ShopBundle\Manager\ProductManager'
         tags:
             - { name: kernel.event_subscriber }
 

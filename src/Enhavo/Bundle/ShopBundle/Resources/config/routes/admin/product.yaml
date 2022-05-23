@@ -33,6 +33,10 @@ sylius_product_create:
                         label: Options
                         translation_domain: EnhavoShopBundle
                         template: admin/resource/product/options.html.twig
+                    attributes:
+                        label: Attributes
+                        translation_domain: EnhavoShopBundle
+                        template: admin/resource/product/attributes.html.twig
                     taxonomy:
                         label: Taxonomie
                         translation_domain: EnhavoShopBundle
@@ -64,6 +68,10 @@ sylius_product_update:
                         label: Options
                         translation_domain: EnhavoShopBundle
                         template: admin/resource/product/options.html.twig
+                    attributes:
+                        label: Attributes
+                        translation_domain: EnhavoShopBundle
+                        template: admin/resource/product/attributes.html.twig
                     taxonomy:
                         label: Taxonomie
                         translation_domain: EnhavoShopBundle
