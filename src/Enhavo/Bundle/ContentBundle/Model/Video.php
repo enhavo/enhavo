@@ -22,6 +22,9 @@ class Video
     /** @var string */
     private $embedUrl;
 
+    /** @var string */
+    private $shortUrl;
+
     /**
      * @param string $provider
      * @param string $title
@@ -30,7 +33,15 @@ class Video
      * @param string $videoUrl
      * @param string $embedUrl
      */
-    public function __construct(string $provider, string $title, string $description, string $thumbnail, string $videoUrl, string $embedUrl)
+    public function __construct(
+        string $provider,
+        string $title,
+        string $description,
+        string $thumbnail,
+        string $videoUrl,
+        string $embedUrl,
+        string $shortUrl,
+    )
     {
         $this->provider = $provider;
         $this->title = $title;
@@ -38,6 +49,7 @@ class Video
         $this->thumbnail = $thumbnail;
         $this->videoUrl = $videoUrl;
         $this->embedUrl = $embedUrl;
+        $this->shortUrl = $shortUrl;
     }
 
     /**
@@ -87,4 +99,13 @@ class Video
     {
         return $this->embedUrl;
     }
+
+    /**
+     * @return string
+     */
+    public function getShortUrl(): string
+    {
+        return $this->shortUrl;
+    }
+
 }

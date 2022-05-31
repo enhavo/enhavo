@@ -35,8 +35,9 @@ class YoutubeProvider implements ProviderInterface
                 '',
                 '',
                 sprintf('https://i.ytimg.com/vi/%s/%s.jpg', $videoId, $this->imageType),
-                sprintf("http://www.youtube.com/watch?v=%s", $videoId),
-                sprintf("http://www.youtube.com/embed/%s", $videoId)
+                sprintf('https://www.youtube.com/watch?v=%s', $videoId),
+                sprintf('https://www.youtube.com/embed/%s', $videoId),
+                sprintf('https://youtu.be/%s', $videoId),
             );
         }
 
@@ -47,21 +48,22 @@ class YoutubeProvider implements ProviderInterface
             $hash->items[0]->snippet->title,
             str_replace(array("", "<br/>", "<br />"), NULL, $hash->items[0]->snippet->description),
             sprintf('https://i.ytimg.com/vi/%s/%s.jpg', $hash->items[0]->id, $this->imageType),
-            sprintf("http://www.youtube.com/watch?v=%s", $hash->items[0]->id),
-            sprintf("http://www.youtube.com/embed/%s", $hash->items[0]->id)
+            sprintf('https://www.youtube.com/watch?v=%s', $hash->items[0]->id),
+            sprintf('https://www.youtube.com/embed/%s', $hash->items[0]->id),
+            sprintf('https://https://youtu.be/%s', $hash->items[0]->id),
         );
     }
 
     private function getVideoId($url)
     {
-        preg_match("/v=([^&#]*)/", parse_url($url, PHP_URL_QUERY), $videoId);
-        return $videoId[1];
+        preg_match("/(v=|youtu.be\/)([^&#]*)/", $url, $videoId);
+        return count($videoId) > 2 ? $videoId[2] : null;
     }
 
     public function isSupported(string $url): bool
     {
-        $host = explode('.', str_replace('www.', '', strtolower(parse_url($url, PHP_URL_HOST))))[0];
+        $host = strtolower(parse_url($url, PHP_URL_HOST));
 
-        return $host === 'youtube';
+        return preg_match('/^(www\.)?(youtube.com|youtu.be)$/', $host);
     }
 }

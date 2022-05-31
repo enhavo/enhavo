@@ -11,19 +11,34 @@ class YoutubeProviderTest extends TestCase
     {
         $provider = new YoutubeProvider();
 
-        $this->assertTrue($provider->isSupported('https://www.youtube.com/watch?v=SomeKey'));
+        $this->assertTrue($provider->isSupported('https://www.youtube.com/watch?v=S0meK3y'));
+        $this->assertTrue($provider->isSupported('https://www.youtu.be/S0meK3y'));
         $this->assertFalse($provider->isSupported('youtube'));
     }
 
-    public function testCreateWithoutApiKey()
+    public function testCreateFromLongUrlWithoutApiKey()
     {
         $provider = new YoutubeProvider();
 
-        $video = $provider->create('https://www.youtube.com/watch?v=SomeKey');
+        $video = $provider->create('https://www.youtube.com/watch?v=S0meK3y');
 
-        $this->assertEquals('http://www.youtube.com/embed/SomeKey', $video->getEmbedUrl());
-        $this->assertEquals('http://www.youtube.com/watch?v=SomeKey', $video->getVideoUrl());
-        $this->assertEquals('https://i.ytimg.com/vi/SomeKey/maxresdefault.jpg', $video->getThumbnail());
+        $this->assertEquals('https://www.youtube.com/embed/S0meK3y', $video->getEmbedUrl());
+        $this->assertEquals('https://www.youtube.com/watch?v=S0meK3y', $video->getVideoUrl());
+        $this->assertEquals('https://i.ytimg.com/vi/S0meK3y/maxresdefault.jpg', $video->getThumbnail());
+        $this->assertEquals('https://youtu.be/S0meK3y', $video->getShortUrl());
+        $this->assertEquals(YoutubeProvider::PROVIDER_NAME, $video->getProvider());
+    }
+
+    public function testCreateFromShortUrlWithoutApiKey()
+    {
+        $provider = new YoutubeProvider();
+
+        $video = $provider->create('https://youtu.be/S0meK3y');
+
+        $this->assertEquals('https://www.youtube.com/embed/S0meK3y', $video->getEmbedUrl());
+        $this->assertEquals('https://www.youtube.com/watch?v=S0meK3y', $video->getVideoUrl());
+        $this->assertEquals('https://i.ytimg.com/vi/S0meK3y/maxresdefault.jpg', $video->getThumbnail());
+        $this->assertEquals('https://youtu.be/S0meK3y', $video->getShortUrl());
         $this->assertEquals(YoutubeProvider::PROVIDER_NAME, $video->getProvider());
     }
 }
