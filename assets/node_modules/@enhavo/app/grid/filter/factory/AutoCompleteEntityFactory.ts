@@ -5,9 +5,7 @@ export default class AutoCompleteEntityFactory extends AbstractFactory
 {
     createFromData(data: object): AutoCompleteEntityFilter
     {
-        let filter = this.createNew();
-        let object = <AutoCompleteEntityFilter>data;
-        filter.component = object.component;
+        let filter = <AutoCompleteEntityFilter>super.createFromData(data);
         filter.selected = data.initialValue;
         return filter;
     }

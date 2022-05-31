@@ -6,8 +6,7 @@ export default abstract class AbstractFactory
     createFromData(data: object): FilterInterface
     {
         let filter = this.createNew();
-        filter = <FilterInterface>_.extend(filter, data);
-        return filter;
+        return _.assign(filter, data);
     }
 
     abstract createNew(): FilterInterface;
