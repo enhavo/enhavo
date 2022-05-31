@@ -10,16 +10,10 @@ class YoutubeProvider implements ProviderInterface
     const IMAGE_TYPE_HQ = 'hqdefault';
     const IMAGE_TYPE_MAX_RESOLUTION = 'maxresdefault';
 
-    /** @var ?string */
-    private $apiKey;
+    private ?string $apiKey;
+    private ?string $imageType;
 
-    /** @var string */
-    private $imageType;
-
-    /**
-     * @param string $apiKey
-     */
-    public function __construct(?string $apiKey = null, $imageType = self::IMAGE_TYPE_MAX_RESOLUTION)
+    public function __construct(?string $apiKey = null, string $imageType = self::IMAGE_TYPE_MAX_RESOLUTION)
     {
         $this->apiKey = $apiKey;
         $this->imageType = $imageType;
