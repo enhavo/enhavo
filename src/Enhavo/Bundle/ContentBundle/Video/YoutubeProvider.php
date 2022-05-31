@@ -56,7 +56,7 @@ class YoutubeProvider implements ProviderInterface
 
     private function getVideoId($url)
     {
-        preg_match("/(v=|youtu.be\/)([^&#]*)/", $url, $videoId);
+        preg_match("/(v=|youtu\.be\/)([^&#]*)/", $url, $videoId);
         return count($videoId) > 2 ? $videoId[2] : null;
     }
 
@@ -64,6 +64,6 @@ class YoutubeProvider implements ProviderInterface
     {
         $host = strtolower(parse_url($url, PHP_URL_HOST));
 
-        return preg_match('/^(www\.)?(youtube.com|youtu.be)$/', $host);
+        return preg_match('/^(www\.)?(youtube\.com|youtu\.be)$/', $host);
     }
 }
