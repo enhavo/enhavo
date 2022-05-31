@@ -31,7 +31,6 @@ class YoutubeProvider implements ProviderInterface
                 sprintf('https://i.ytimg.com/vi/%s/%s.jpg', $videoId, $this->imageType),
                 sprintf('https://www.youtube.com/watch?v=%s', $videoId),
                 sprintf('https://www.youtube.com/embed/%s', $videoId),
-                sprintf('https://youtu.be/%s', $videoId),
             );
         }
 
@@ -44,7 +43,6 @@ class YoutubeProvider implements ProviderInterface
             sprintf('https://i.ytimg.com/vi/%s/%s.jpg', $hash->items[0]->id, $this->imageType),
             sprintf('https://www.youtube.com/watch?v=%s', $hash->items[0]->id),
             sprintf('https://www.youtube.com/embed/%s', $hash->items[0]->id),
-            sprintf('https://https://youtu.be/%s', $hash->items[0]->id),
         );
     }
 

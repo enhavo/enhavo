@@ -22,9 +22,6 @@ class Video
     /** @var string */
     private $embedUrl;
 
-    /** @var string */
-    private $shortUrl;
-
     /**
      * @param string $provider
      * @param string $title
@@ -40,7 +37,6 @@ class Video
         string $thumbnail,
         string $videoUrl,
         string $embedUrl,
-        string $shortUrl,
     )
     {
         $this->provider = $provider;
@@ -49,7 +45,6 @@ class Video
         $this->thumbnail = $thumbnail;
         $this->videoUrl = $videoUrl;
         $this->embedUrl = $embedUrl;
-        $this->shortUrl = $shortUrl;
     }
 
     /**
@@ -98,14 +93,6 @@ class Video
     public function getEmbedUrl(): string
     {
         return $this->embedUrl;
-    }
-
-    /**
-     * @return string
-     */
-    public function getShortUrl(): string
-    {
-        return $this->shortUrl;
     }
 
 }

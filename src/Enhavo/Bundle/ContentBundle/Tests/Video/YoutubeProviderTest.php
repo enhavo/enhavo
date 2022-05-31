@@ -25,7 +25,6 @@ class YoutubeProviderTest extends TestCase
         $this->assertEquals('https://www.youtube.com/embed/S0meK3y', $video->getEmbedUrl());
         $this->assertEquals('https://www.youtube.com/watch?v=S0meK3y', $video->getVideoUrl());
         $this->assertEquals('https://i.ytimg.com/vi/S0meK3y/maxresdefault.jpg', $video->getThumbnail());
-        $this->assertEquals('https://youtu.be/S0meK3y', $video->getShortUrl());
         $this->assertEquals(YoutubeProvider::PROVIDER_NAME, $video->getProvider());
     }
 
@@ -38,7 +37,6 @@ class YoutubeProviderTest extends TestCase
         $this->assertEquals('https://www.youtube.com/embed/S0meK3y', $video->getEmbedUrl());
         $this->assertEquals('https://www.youtube.com/watch?v=S0meK3y', $video->getVideoUrl());
         $this->assertEquals('https://i.ytimg.com/vi/S0meK3y/maxresdefault.jpg', $video->getThumbnail());
-        $this->assertEquals('https://youtu.be/S0meK3y', $video->getShortUrl());
         $this->assertEquals(YoutubeProvider::PROVIDER_NAME, $video->getProvider());
     }
 }
