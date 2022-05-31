@@ -10,16 +10,10 @@ class YoutubeProvider implements ProviderInterface
     const IMAGE_TYPE_HQ = 'hqdefault';
     const IMAGE_TYPE_MAX_RESOLUTION = 'maxresdefault';
 
-    /** @var ?string */
-    private $apiKey;
+    private ?string $apiKey;
+    private ?string $imageType;
 
-    /** @var string */
-    private $imageType;
-
-    /**
-     * @param string $apiKey
-     */
-    public function __construct(?string $apiKey = null, $imageType = self::IMAGE_TYPE_MAX_RESOLUTION)
+    public function __construct(?string $apiKey = null, string $imageType = self::IMAGE_TYPE_MAX_RESOLUTION)
     {
         $this->apiKey = $apiKey;
         $this->imageType = $imageType;
@@ -35,8 +29,8 @@ class YoutubeProvider implements ProviderInterface
                 '',
                 '',
                 sprintf('https://i.ytimg.com/vi/%s/%s.jpg', $videoId, $this->imageType),
-                sprintf("http://www.youtube.com/watch?v=%s", $videoId),
-                sprintf("http://www.youtube.com/embed/%s", $videoId)
+                sprintf('https://www.youtube.com/watch?v=%s', $videoId),
+                sprintf('https://www.youtube.com/embed/%s', $videoId),
             );
         }
 
@@ -47,21 +41,21 @@ class YoutubeProvider implements ProviderInterface
             $hash->items[0]->snippet->title,
             str_replace(array("", "<br/>", "<br />"), NULL, $hash->items[0]->snippet->description),
             sprintf('https://i.ytimg.com/vi/%s/%s.jpg', $hash->items[0]->id, $this->imageType),
-            sprintf("http://www.youtube.com/watch?v=%s", $hash->items[0]->id),
-            sprintf("http://www.youtube.com/embed/%s", $hash->items[0]->id)
+            sprintf('https://www.youtube.com/watch?v=%s', $hash->items[0]->id),
+            sprintf('https://www.youtube.com/embed/%s', $hash->items[0]->id),
         );
     }
 
     private function getVideoId($url)
     {
-        preg_match("/v=([^&#]*)/", parse_url($url, PHP_URL_QUERY), $videoId);
-        return $videoId[1];
+        preg_match("/(v=|youtu\.be\/)([^&#]*)/", $url, $videoId);
+        return count($videoId) > 2 ? $videoId[2] : null;
     }
 
     public function isSupported(string $url): bool
     {
-        $host = explode('.', str_replace('www.', '', strtolower(parse_url($url, PHP_URL_HOST))))[0];
+        $host = strtolower(parse_url($url, PHP_URL_HOST));
 
-        return $host === 'youtube';
+        return preg_match('/^(www\.)?(youtube\.com|youtu\.be)$/', $host);
     }
 }

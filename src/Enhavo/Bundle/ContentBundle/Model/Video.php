@@ -30,7 +30,14 @@ class Video
      * @param string $videoUrl
      * @param string $embedUrl
      */
-    public function __construct(string $provider, string $title, string $description, string $thumbnail, string $videoUrl, string $embedUrl)
+    public function __construct(
+        string $provider,
+        string $title,
+        string $description,
+        string $thumbnail,
+        string $videoUrl,
+        string $embedUrl,
+    )
     {
         $this->provider = $provider;
         $this->title = $title;
@@ -87,4 +94,5 @@ class Video
     {
         return $this->embedUrl;
     }
+
 }
