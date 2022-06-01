@@ -9,13 +9,9 @@ use <?= $item; ?>;
 
 class <?= $class->getName(); ?> extends AbstractBlock
 {
-
 <?php foreach ($class->getProperties() as $property): ?>
-    /** @var <?= $property->getNullable() .$property->getType() ?> */
-    private $<?= $property->getName(); ?> = <?= $property->getDefault(); ?>;
-
+    private <?= $property->getNullable() .$property->getType() ; ?> $<?= $property->getName(); ?> = <?= $property->getDefault(); ?>;
 <?php endforeach; ?>
-
 <?php foreach ($class->getFunctions() as $function): ?>
 
     <?= $function->getVisibility(); ?> function <?= $function->getName(); ?>(<?= $function->getArgumentString(); ?>)<?= $function->getReturnsString(); ?>

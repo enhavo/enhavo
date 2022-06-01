@@ -1,6 +1,7 @@
 <?= $class->getNamespace() ?>\<?= $class->getName() ?>:
     type: entity
-    table: <?= $yaml->getTableName(); ?><?= "\n"; ?>
+    table: <?= $yaml->getTableName(); ?>
+
 
     fields:
 <?php foreach($yaml->getFields() as $field): ?>
