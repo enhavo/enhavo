@@ -5,9 +5,8 @@ export default class EntityFactory extends AbstractFactory
 {
     createFromData(data: object): EntityFilter
     {
-        let filter = this.createNew();
-        let object = <EntityFilter>data;
-        filter.component = object.component;
+        let filter = <EntityFilter>super.createFromData(data);
+
         if (data.value !== null && data.hasOwnProperty('choices')) {
             for(let choice: object of data.choices) {
                 if (choice.hasOwnProperty('code') && choice.code == data.value) {
