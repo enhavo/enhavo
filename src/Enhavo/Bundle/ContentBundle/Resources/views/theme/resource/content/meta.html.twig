@@ -3,6 +3,6 @@
 {% block og_url %}{{ router(resource) }}{% endblock %}
 {% block og_title %}{% if resource.openGraphTitle %}{{ resource.openGraphTitle }}{% else %}{{ block('page_title') }}{% endif %}{% endblock %}
 {% block og_description %}{% if resource.openGraphDescription %}{{ resource.openGraphDescription }}{% else %}{{ block('meta_description') }}{% endif %}{% endblock %}
-{% block og_image %}{% if resource.openGraphImage %}{{ media_url(resource.openGraphTitle) }}{% endif %}{% endblock %}
+{% block og_image %}{% if resource.openGraphImage %}{{ media_url(resource.openGraphImage) }}{% endif %}{% endblock %}
 {% block robots %}{% if resource.noIndex %}noindex{% else %}index{% endif %},{% if resource.noFollow %}nofollow{% else %}follow{% endif %}{% endblock %}
 {% block page_title %}{% if resource.pageTitle %}{{ resource.pageTitle }}{% else %}{{ resource.title }}{% endif %}{% endblock %}
