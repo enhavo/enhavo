@@ -8,20 +8,11 @@ namespace Enhavo\Bundle\BlockBundle\Maker\Generator;
 
 class FormType
 {
-    /** @var string */
-    private $blockPrefix;
-
-    /** @var array */
-    private $properties;
-
-    /**
-     * @param string $blockPrefix
-     * @param array $properties
-     */
-    public function __construct(string $blockPrefix, array $properties)
+    public function __construct(
+        private string $blockPrefix,
+        private array  $properties
+    )
     {
-        $this->blockPrefix = $blockPrefix;
-        $this->properties = $properties;
     }
 
     /**

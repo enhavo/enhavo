@@ -12,6 +12,7 @@ use Enhavo\Bundle\BlockBundle\Entity\AbstractBlock;
 use Enhavo\Bundle\BlockBundle\Maker\Generator\DoctrineOrmYaml;
 use Enhavo\Bundle\BlockBundle\Maker\Generator\FormType;
 use Enhavo\Bundle\BlockBundle\Maker\Generator\PhpClass;
+use Exception;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
@@ -20,61 +21,22 @@ use Symfony\Component\Yaml\Yaml;
 
 class BlockDefinition
 {
-    /**
-     * @var array
-     */
-    private $config;
+    private BundleInterface $namespace;
+    private string $name;
+    private NameTransformer $nameTransformer;
+    private ?BundleInterface $bundle = null;
+    private array $subDirectories;
+    private string $path;
 
     /**
-     * @var MakerUtil
+     * @throws Exception
      */
-    private $util;
-
-    /**
-     * @var BundleInterface
-     */
-    private $namespace;
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var NameTransformer
-     */
-    private $nameTransformer;
-
-    /**
-     * @var BundleInterface
-     */
-    private $bundle;
-
-    /**
-     * @var KernelInterface
-     */
-    private $kernel;
-
-    /** @var Filesystem */
-    private $filesystem;
-
-    /**
-     * @var string
-     */
-    private $subDirectories;
-
-    /**
-     * @var string
-     */
-    private $path;
-
-    /**
-     * @param MakerUtil $util
-     * @param KernelInterface $kernel
-     * @param Filesystem $filesystem
-     * @param array $config
-     */
-    public function __construct(MakerUtil $util, KernelInterface $kernel, Filesystem $filesystem, array $config)
+    public function __construct(
+        private MakerUtil       $util,
+        private KernelInterface $kernel,
+        private Filesystem      $filesystem,
+        private array           $config,
+    )
     {
         foreach ($config as $key => $value) {
             $this->name = $key;
@@ -82,12 +44,9 @@ class BlockDefinition
             break;
         }
 
-        $this->util = $util;
-        $this->kernel = $kernel;
-        $this->filesystem = $filesystem;
         $this->nameTransformer = new NameTransformer();
 
-        if (preg_match('/Bundle$/', $this->getNamespace())) {
+        if (str_ends_with($this->getNamespace(), 'Bundle')) {
             $this->bundle = $this->kernel->getBundle($this->getNamespace());
             $this->setNamespace($this->bundle->getNamespace());
         }
@@ -101,13 +60,13 @@ class BlockDefinition
 
     }
 
-    private function loadTemplates()
+    private function loadTemplates(): void
     {
         foreach ($this->getProperties() as $key => $property) {
             if (isset($property['template'])) {
                 $path = $this->getTemplatePath($property['template']);
                 if ($path === null) {
-                    throw new \Exception(sprintf('Cant find template "%s"', $property['template']));
+                    throw new Exception(sprintf('Cant find template "%s"', $property['template']));
                 }
                 $config = Yaml::parseFile($path);
                 $this->config['properties'][$key] = $this->deepMerge($config, $this->config['properties'][$key]);
@@ -132,93 +91,93 @@ class BlockDefinition
         return $property;
     }
 
-    public function getDoctrineORMFilePath()
+    public function getDoctrineORMFilePath(): string
     {
-        $subDirectory = $this->subDirectories ? implode('.', $this->subDirectories).'.' : '';
+        $subDirectory = $this->subDirectories ? implode('.', $this->subDirectories) . '.' : '';
         $filename = sprintf('%s%s.orm.yml', $subDirectory, $this->nameTransformer->camelCase($this->name));
 
-        if($this->bundle) {
-            return sprintf( 'src/%s/Resources/config/doctrine/%s', $this->path, $filename);
+        if ($this->bundle) {
+            return sprintf('src/%s/Resources/config/doctrine/%s', $this->path, $filename);
         } else {
             return sprintf('%s/config/doctrine/%s', $this->util->getProjectPath(), $filename);
         }
     }
 
-    public function getEntityFilePath()
+    public function getEntityFilePath(): string
     {
-        $subDirectory = $this->subDirectories ? implode('/', $this->subDirectories).'/' : '';
+        $subDirectory = $this->subDirectories ? implode('/', $this->subDirectories) . '/' : '';
         $filename = sprintf('%s%s.php', $subDirectory, $this->nameTransformer->camelCase($this->name));
 
-        if($this->bundle) {
-            return sprintf( 'src/%s/Entity/%s', $this->path, $filename);
+        if ($this->bundle) {
+            return sprintf('src/%s/Entity/%s', $this->path, $filename);
         } else {
             return sprintf('%s/src/Entity/%s', $this->util->getProjectPath(), $filename);
         }
     }
 
-    public function getEntityNamespace()
+    public function getEntityNamespace(): string
     {
-        $subDirectory = $this->subDirectories ? '\\'.implode('\\', $this->subDirectories) : '';
-        return sprintf( '%s\\Entity%s', $this->getNamespace(), $subDirectory);
+        $subDirectory = $this->subDirectories ? '\\' . implode('\\', $this->subDirectories) : '';
+        return sprintf('%s\\Entity%s', $this->getNamespace(), $subDirectory);
     }
 
-    public function getFormTypeFilePath()
+    public function getFormTypeFilePath(): string
     {
-        $subDirectory = $this->subDirectories ? implode('/', $this->subDirectories).'/' : '';
+        $subDirectory = $this->subDirectories ? implode('/', $this->subDirectories) . '/' : '';
         $filename = sprintf('%s%sType.php', $subDirectory, $this->nameTransformer->camelCase($this->name));
 
-        if($this->bundle) {
-            return sprintf( 'src/%s/Form/Type/%s', $this->path, $filename);
+        if ($this->bundle) {
+            return sprintf('src/%s/Form/Type/%s', $this->path, $filename);
         } else {
             return sprintf('%s/src/Form/Type/%s', $this->util->getProjectPath(), $filename);
         }
     }
 
-    public function getTemplateFilePath()
+    public function getTemplateFilePath(): string
     {
-        if($this->bundle) {
-            return sprintf( 'src/%s/Resources/views/%s', $this->path, $this->getTemplateFileName());
+        if ($this->bundle) {
+            return sprintf('src/%s/Resources/views/%s', $this->path, $this->getTemplateFileName());
         } else {
             return sprintf('%s/templates/%s', $this->util->getProjectPath(), $this->getTemplateFileName());
         }
     }
 
-    public function getTemplateFileName()
+    public function getTemplateFileName(): string
     {
         return sprintf('theme/block/%s.html.twig', str_replace('-block', '', $this->getKebabName()));
     }
 
-    public function getFactoryFilePath()
+    public function getFactoryFilePath(): string
     {
-        $subDirectory = $this->subDirectories ? implode('/', $this->subDirectories).'/' : '';
+        $subDirectory = $this->subDirectories ? implode('/', $this->subDirectories) . '/' : '';
         $filename = sprintf('%s%sFactory.php', $subDirectory, $this->nameTransformer->camelCase($this->name));
 
-        if($this->bundle) {
-            return sprintf( 'src/%s/Factory/%s', $this->path, $filename);
+        if ($this->bundle) {
+            return sprintf('src/%s/Factory/%s', $this->path, $filename);
         } else {
             return sprintf('%s/src/Factory/%s', $this->util->getProjectPath(), $filename);
         }
     }
 
-    public function getTypeFilePath()
+    public function getTypeFilePath(): string
     {
-        if($this->bundle) {
-            return sprintf( 'src/%s/Block/%sType.php', $this->path, $this->name);
+        if ($this->bundle) {
+            return sprintf('src/%s/Block/%sType.php', $this->path, $this->name);
         } else {
             return sprintf('%s/src/Block/%sType.php', $this->util->getProjectPath(), $this->name);
         }
     }
 
-    public function getFactoryNamespace()
+    public function getFactoryNamespace(): string
     {
-        $subDirectory = $this->subDirectories ? '\\'.implode('\\', $this->subDirectories) : '';
-        return sprintf( '%s\\Factory%s', $this->getNamespace(), $subDirectory);
+        $subDirectory = $this->subDirectories ? '\\' . implode('\\', $this->subDirectories) : '';
+        return sprintf('%s\\Factory%s', $this->getNamespace(), $subDirectory);
     }
 
-    public function getFormNamespace()
+    public function getFormNamespace(): string
     {
-        $subDirectory = $this->subDirectories ? '\\'.implode('\\', $this->subDirectories) : '';
-        return sprintf( '%s\\Form\\Type%s', $this->getNamespace(), $subDirectory);
+        $subDirectory = $this->subDirectories ? '\\' . implode('\\', $this->subDirectories) : '';
+        return sprintf('%s\\Form\\Type%s', $this->getNamespace(), $subDirectory);
     }
 
     public function getName(): string
@@ -253,7 +212,7 @@ class BlockDefinition
 
     public function getTranslationDomain(): ?string
     {
-        if($this->bundle) {
+        if ($this->bundle) {
             return $this->bundle->getName();
         }
         return null;
@@ -261,7 +220,7 @@ class BlockDefinition
 
     public function getApplicationName(): string
     {
-        if($this->bundle) {
+        if ($this->bundle) {
             $bundleName = $this->util->getBundleNameWithoutPostfix($this->bundle->getName());
             return $this->nameTransformer->snakeCase($bundleName);
         } else {
@@ -279,6 +238,9 @@ class BlockDefinition
         return $class;
     }
 
+    /**
+     * @throws Exception
+     */
     public function getClasses(): array
     {
         $definitions = [];
@@ -360,7 +322,7 @@ class BlockDefinition
     /**
      * @param mixed $use
      */
-    public function addUse($use)
+    public function addUse(mixed $use): void
     {
         if (!isset($this->config['use'])) {
             $this->config['use'] = [];
@@ -377,7 +339,7 @@ class BlockDefinition
     /**
      * @param mixed $use
      */
-    public function addFormUse($use)
+    public function addFormUse(mixed $use): void
     {
         if (!isset($this->config['form']['use'])) {
             $this->config['form']['use'] = [];
@@ -392,7 +354,7 @@ class BlockDefinition
     }
 
 
-    private function getUse()
+    private function getUse(): array
     {
         if (isset($this->config['use'])) {
             return array_unique($this->config['use']) ?? [];
@@ -400,7 +362,7 @@ class BlockDefinition
         return [];
     }
 
-    private function getFormUse()
+    private function getFormUse(): array
     {
         return array_unique($this->config['form']['use'] ?? []);
     }

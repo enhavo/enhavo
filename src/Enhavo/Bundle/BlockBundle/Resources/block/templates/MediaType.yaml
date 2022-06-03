@@ -4,8 +4,8 @@ type_options:
         - Enhavo\Bundle\MediaBundle\Model\FileInterface
 nullable: true
 relation:
-    type: oneToOne
-    target_entity: Enhavo\Bundle\MediaBundle\Model\FileInterface
+    type: ManyToOne
+    target_entity: FileInterface::class
 form:
     use:
         - Enhavo\Bundle\MediaBundle\Form\Type\MediaType

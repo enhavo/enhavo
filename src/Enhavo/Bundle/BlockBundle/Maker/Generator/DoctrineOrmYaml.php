@@ -6,22 +6,15 @@
 
 namespace Enhavo\Bundle\BlockBundle\Maker\Generator;
 
+use JetBrains\PhpStorm\ArrayShape;
+
 class DoctrineOrmYaml
 {
-    /** @var string */
-    private $tableName;
-
-    /** @var array */
-    private $fields;
-
-    /**
-     * @param string $tableName
-     * @param array $fields
-     */
-    public function __construct(string $tableName, array $fields)
+    public function __construct(
+        private string $tableName,
+        private array $fields,
+    )
     {
-        $this->tableName = $tableName;
-        $this->fields = $fields;
     }
 
     public function getFields(): array
@@ -49,14 +42,43 @@ class DoctrineOrmYaml
         return $properties;
     }
 
+    public function getAttributeType($key): string
+    {
+        $relation = $this->getRelation($key);
+
+        if ($relation) {
+            return $relation->getType();
+        }
+
+        return 'Column';
+    }
+
+    public function getAttributeOptions($key): array
+    {
+        $field = $this->getField($key);
+        $relation = $this->getRelation($key);
+
+        if ($relation) {
+            $result = [];
+
+        } else {
+            $result = [
+                'type' => sprintf("'%s'", $field->getType()),
+                'nullable' => $field->getNullableString(),
+            ];
+        }
+
+        return $result;
+    }
+
     public function getField($key): DoctrineOrmField
     {
         return new DoctrineOrmField($key, $this->fields[$key]);
     }
 
-    public function getRelation($key): DoctrineOrmRelation
+    public function getRelation($key): ?DoctrineOrmRelation
     {
-        return new DoctrineOrmRelation($key, $this->fields[$key]['relation']);
+        return isset($this->fields[$key]['relation']) ? new DoctrineOrmRelation($key, $this->fields[$key]['relation']) : null;
     }
 
     /**

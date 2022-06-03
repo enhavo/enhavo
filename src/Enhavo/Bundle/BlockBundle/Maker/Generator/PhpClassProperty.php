@@ -13,25 +13,12 @@ namespace Enhavo\Bundle\BlockBundle\Maker\Generator;
 
 class PhpClassProperty
 {
-    /** @var string */
-    private $name;
-
-    /** @var string */
-    private $visibility = 'private';
-
-    /** @var array */
-    private $config;
-
-    /**
-     * @param string $name
-     * @param string $visibility
-     * @param array $config
-     */
-    public function __construct(string $name, string $visibility, array $config)
+    public function __construct(
+        private string $name,
+        private string $visibility,
+        private array  $config,
+    )
     {
-        $this->name = $name;
-        $this->visibility = $visibility;
-        $this->config = $config;
     }
 
     public function getInitializer(): ?string

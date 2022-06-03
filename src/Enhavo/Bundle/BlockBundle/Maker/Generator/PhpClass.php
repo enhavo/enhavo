@@ -8,38 +8,17 @@ namespace Enhavo\Bundle\BlockBundle\Maker\Generator;
 
 class PhpClass
 {
-    /** @var string */
-    private $namespace;
-
-    /** @var string */
-    private $name;
-
-    /** @var string */
-    private $extends;
-
-    /** @var array */
-    private $use;
-
-    /** @var array */
-    private $properties;
-
     /** @var array|PhpFunction[] */
-    private $functions;
+    private array $functions;
 
-    /**
-     * @param string $namespace
-     * @param string $name
-     * @param string $extends
-     * @param array $use
-     * @param array $properties
-     */
-    public function __construct(string $namespace, string $name, string $extends, array $use, array $properties)
+    public function __construct(
+        private string $namespace,
+        private string $name,
+        private string $extends,
+        private array  $use,
+        private array  $properties,
+    )
     {
-        $this->namespace = $namespace;
-        $this->name = $name;
-        $this->extends = $extends;
-        $this->use = $use;
-        $this->properties = $properties;
         $this->functions = [];
     }
 
@@ -66,7 +45,7 @@ class PhpClass
         return $this->functions;
     }
 
-    public function generateGettersSetters()
+    public function generateGettersSetters(): void
     {
         foreach ($this->properties as $key => $config) {
             $this->functions[] = $this->generateGetter($key);
@@ -74,7 +53,7 @@ class PhpClass
         }
     }
 
-    public function generateAddersRemovers()
+    public function generateAddersRemovers(): void
     {
         foreach ($this->properties as $key => $config) {
             $classProperty = $this->getProperty($key);

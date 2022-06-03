@@ -8,35 +8,14 @@ namespace Enhavo\Bundle\BlockBundle\Maker\Generator;
 
 class PhpFunction
 {
-    /** @var string */
-    private $name;
-
-    /** @var string */
-    private $visibility = 'public';
-
-    /** @var array */
-    private $args;
-
-    /** @var array */
-    private $body;
-
-    /** @var ?string  */
-    private $returns;
-
-    /**
-     * @param string $name
-     * @param string $visibility
-     * @param array $args
-     * @param array $body
-     * @param ?string $returns
-     */
-    public function __construct(string $name, string $visibility, array $args, array $body, ?string $returns)
+    public function __construct(
+        private string  $name,
+        private string  $visibility,
+        private array   $args,
+        private array   $body,
+        private ?string $returns,
+    )
     {
-        $this->name = $name;
-        $this->visibility = $visibility;
-        $this->args = $args;
-        $this->body = $body;
-        $this->returns = $returns;
     }
 
     /**

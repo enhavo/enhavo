@@ -75,7 +75,7 @@ class DoctrineOrmRelation
 
         foreach ($array as $key => $item) {
             if (is_array($item)) {
-                $lines[] = $this->arrayToString($item, $indentation+4);
+                $lines[] = $this->arrayToString($item, $indentation + 4);
             } else {
                 $lines[] = sprintf("%s%s: %s", str_repeat(' ', $indentation), $key, $item);
             }

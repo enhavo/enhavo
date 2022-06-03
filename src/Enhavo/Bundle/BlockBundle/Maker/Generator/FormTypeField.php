@@ -13,20 +13,11 @@ namespace Enhavo\Bundle\BlockBundle\Maker\Generator;
 
 class FormTypeField
 {
-    /** @var string */
-    private $name;
-
-    /** @var array */
-    private $config;
-
-    /**
-     * @param string $name
-     * @param array $config
-     */
-    public function __construct(string $name, array $config)
+    public function __construct(
+        private string $name,
+        private array  $config,
+    )
     {
-        $this->name = $name;
-        $this->config = $config;
     }
 
     public function getClass(): string
@@ -56,14 +47,14 @@ class FormTypeField
 
         foreach ($array as $key => $item) {
             if (is_array($item)) {
-                $subArray = $this->arrayToString($item, $indentation+4);
+                $subArray = $this->arrayToString($item, $indentation + 4);
                 $lines[] = sprintf("%s'%s' => %s,", str_repeat(' ', $indentation), $key, $subArray);
             } else {
                 $lines[] = sprintf("%s'%s' => %s,", str_repeat(' ', $indentation), $key, $item);
             }
         }
 
-        $lines[] = sprintf('%s]', str_repeat(' ', $indentation-4));
+        $lines[] = sprintf('%s]', str_repeat(' ', $indentation - 4));
 
         return implode("\n", $lines);
     }

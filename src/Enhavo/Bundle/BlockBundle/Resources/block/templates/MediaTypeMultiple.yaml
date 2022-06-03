@@ -7,8 +7,8 @@ type_options:
     entry_class: FileInterface
     constructor: ArrayCollection
 relation:
-    type: manyToMany
-    target_entity: Enhavo\Bundle\MediaBundle\Model\FileInterface
+    type: ManyToMany
+    target_entity: FileInterface::class
     order_by:
         order: asc
 form:

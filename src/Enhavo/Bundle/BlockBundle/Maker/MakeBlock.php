@@ -4,6 +4,7 @@ namespace Enhavo\Bundle\BlockBundle\Maker;
 
 use Enhavo\Bundle\AppBundle\Maker\MakerUtil;
 use Enhavo\Bundle\AppBundle\Util\NameTransformer;
+use Exception;
 use Symfony\Bundle\MakerBundle\ConsoleStyle;
 use Symfony\Bundle\MakerBundle\DependencyBuilder;
 use Symfony\Bundle\MakerBundle\Generator;
@@ -19,43 +20,22 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Yaml\Yaml;
 use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 class MakeBlock extends AbstractMaker
 {
-    /**
-     * @var KernelInterface
-     */
-    private $kernel;
+    private NameTransformer $nameTransformer;
+    private bool $overwriteExisting = false;
 
-    /**
-     * @var MakerUtil
-     */
-    private $util;
-
-    /**
-     * @var Environment
-     */
-    private $twigEnvironment;
-
-    /**
-     * @var Filesystem
-     */
-    private $fileSystem;
-
-    /**
-     * @var NameTransformer
-     */
-    private $nameTransformer;
-
-    /** @var bool */
-    private $overwriteExisting = false;
-
-    public function __construct(KernelInterface $kernel, MakerUtil $util, Environment $twigEnvironment, Filesystem $fileSystem)
+    public function __construct(
+        private KernelInterface $kernel,
+        private MakerUtil $util,
+        private Environment $twigEnvironment,
+        private Filesystem $fileSystem,
+    )
     {
-        $this->kernel = $kernel;
-        $this->util = $util;
-        $this->twigEnvironment = $twigEnvironment;
-        $this->fileSystem = $fileSystem;
         $this->nameTransformer = new NameTransformer();
     }
 
@@ -69,8 +49,7 @@ class MakeBlock extends AbstractMaker
         $command
             ->setDescription('Creates a new block from YAML or CLI')
             ->addOption('path', 'p', InputOption::VALUE_OPTIONAL, 'Path containing block definition yaml file(s)')
-            ->addOption('overwrite', 'o', null, 'Set true to overwrite existing files')
-        ;
+            ->addOption('overwrite', 'o', null, 'Set true to overwrite existing files');
     }
 
     public function configureDependencies(DependencyBuilder $dependencies)
@@ -78,6 +57,9 @@ class MakeBlock extends AbstractMaker
 
     }
 
+    /**
+     * @throws Exception
+     */
     private function generateFromYamlFile($file, ConsoleStyle $io, Generator $generator)
     {
         $config = Yaml::parseFile($file);
@@ -85,7 +67,6 @@ class MakeBlock extends AbstractMaker
 
         $this->generateBlockItemFiles($generator, $blockDefinition);
         $this->generateBlockEntityFile($generator, $blockDefinition);
-        $this->generateBlockDoctrineOrmFile($generator, $blockDefinition);
         $this->generateBlockFactoryFile($generator, $blockDefinition);
         $this->generateBlockFormTypeFile($generator, $blockDefinition);
         $this->generateTemplateFile($generator, $blockDefinition);
@@ -97,6 +78,9 @@ class MakeBlock extends AbstractMaker
         $this->writeConfigMessage($blockDefinition, $io);
     }
 
+    /**
+     * @throws Exception
+     */
     private function generateFromPath($path, ConsoleStyle $io, Generator $generator)
     {
         $finder = new Finder();
@@ -124,21 +108,23 @@ class MakeBlock extends AbstractMaker
                 ->addArgument(
                     'type',
                     InputArgument::REQUIRED
-                )
-            ;
+                );
 
             $helper = $command->getHelper('question');
 
             $input->setArgument('namespace', $helper->ask($input, $io, new Question("What is the name of the bundle or namespace? (Press return for 'App')\n", 'App')));
             do {
                 $name = $helper->ask($input, $io, new Question("What is the name the block should have (Including 'Block' postfix; Directories allowed, e.g. 'MyDir/AcmeBlock')?\n"));
-            } while(!$name);
+            } while (!$name);
 
             $input->setArgument('name', $name);
             $input->setArgument('type', $helper->ask($input, $io, new Question("Create block type? [no/yes] (Press return for 'no'\n", 'no')));
         }
     }
 
+    /**
+     * @throws Exception
+     */
     public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator)
     {
         $path = $input->getOption('path');
@@ -160,6 +146,9 @@ class MakeBlock extends AbstractMaker
         $generator->writeChanges();
     }
 
+    /**
+     * @throws Exception
+     */
     private function generateFromInputArguments(InputInterface $input, ConsoleStyle $io, Generator $generator)
     {
         $namespace = $input->getArgument('namespace');
@@ -173,7 +162,6 @@ class MakeBlock extends AbstractMaker
             ]
         ]);
 
-        $this->generateBlockDoctrineOrmFile($generator, $block);
         $this->generateBlockEntityFile($generator, $block);
         $this->generateBlockFormTypeFile($generator, $block);
         $this->generateBlockFactoryFile($generator, $block);
@@ -186,37 +174,6 @@ class MakeBlock extends AbstractMaker
         $this->writeConfigMessage($block, $io);
     }
 
-    private function generateBlockDoctrineOrmFile(Generator $generator, BlockDefinition $blockDefinition)
-    {
-        $filePath = $blockDefinition->getDoctrineORMFilePath();
-        $this->checkExists($filePath);
-
-        $generator->generateFile(
-            $filePath,
-            $this->getTemplatePath('block/doctrine.tpl.php'), [
-                'definition' => $blockDefinition,
-                'class' => $blockDefinition->createEntityPhpClass(),
-                'yaml' => $blockDefinition->createDoctrineOrmYaml(),
-            ]
-        );
-    }
-
-
-    private function generateBlockItemDoctrineOrmFile(Generator $generator, BlockDefinition $blockDefinition)
-    {
-        $filePath = $blockDefinition->getDoctrineORMFilePath();
-        $this->checkExists($filePath);
-
-        $generator->generateFile(
-            $filePath,
-            $this->getTemplatePath('block/item-doctrine.tpl.php'), [
-                'definition' => $blockDefinition,
-                'class' => $blockDefinition->createEntityPhpClass(),
-                'yaml' => $blockDefinition->createDoctrineOrmYaml(),
-            ]
-        );
-    }
-
     private function generateBlockEntityFile(Generator $generator, BlockDefinition $blockDefinition)
     {
         $filePath = $blockDefinition->getEntityFilePath();
@@ -227,6 +184,7 @@ class MakeBlock extends AbstractMaker
             $this->getTemplatePath('block/entity.tpl.php'), [
                 'definition' => $blockDefinition,
                 'class' => $blockDefinition->createEntityPhpClass(),
+                'orm' => $blockDefinition->createDoctrineOrmYaml(),
             ]
         );
     }
@@ -245,13 +203,15 @@ class MakeBlock extends AbstractMaker
         );
     }
 
+    /**
+     * @throws Exception
+     */
     private function generateBlockItemFiles(Generator $generator, BlockDefinition $blockDefinition)
     {
         $classes = $blockDefinition->getClasses();
         foreach ($classes as $class) {
             $this->generateItemEntityFile($generator, $class);
             $this->generateBlockFormTypeFile($generator, $class);
-            $this->generateBlockItemDoctrineOrmFile($generator, $class);
         }
     }
 
@@ -309,7 +269,12 @@ class MakeBlock extends AbstractMaker
         );
     }
 
-    private function generateEnhavoConfigCode(BlockDefinition $block)
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
+    private function generateEnhavoConfigCode(BlockDefinition $block): string
     {
         return $this->twigEnvironment->render('@EnhavoBlock/maker/block/enhavo_config_entry.yml.twig', [
             'definition' => $block,
@@ -317,6 +282,11 @@ class MakeBlock extends AbstractMaker
         ]);
     }
 
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
     private function generateServiceCode(BlockDefinition $block): string
     {
         return $this->twigEnvironment->render('@EnhavoBlock/maker/block/block_service.yml.twig', [
@@ -331,6 +301,11 @@ class MakeBlock extends AbstractMaker
         return sprintf('%s/../Resources/skeleton/%s', __DIR__, $name);
     }
 
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
     private function writeConfigMessage(BlockDefinition $blockDefinition, ConsoleStyle $io)
     {
         $io->writeln('');
@@ -345,7 +320,7 @@ class MakeBlock extends AbstractMaker
         $io->writeln('');
     }
 
-    private function checkExists($filePath, $noOverwrite = false)
+    private function checkExists($filePath, $noOverwrite = false): bool
     {
         if ($this->fileSystem->exists($filePath)) {
             if (!$noOverwrite && $this->overwriteExisting) {

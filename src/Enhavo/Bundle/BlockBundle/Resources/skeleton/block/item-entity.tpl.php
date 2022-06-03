@@ -9,6 +9,9 @@ use <?= $item; ?>;
 class <?= $class->getName(); ?>
 
 {
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private ?int $id;
 <?php foreach ($class->getProperties() as $property): ?>
     private <?= $property->getNullable() .$property->getType() ?> $<?= $property->getName(); ?> = <?= $property->getDefault(); ?>;

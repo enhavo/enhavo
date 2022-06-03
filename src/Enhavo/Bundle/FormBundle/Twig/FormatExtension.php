@@ -34,7 +34,7 @@ class FormatExtension extends AbstractExtension
     public function getFunctions()
     {
         return array(
-            new TwigFunction('currency', array($this, 'getCurrency'), array('is_safe' => array('html')))
+            new TwigFunction('currency', array($this, 'formatCurrency'), array('is_safe' => array('html')))
         );
     }
 
