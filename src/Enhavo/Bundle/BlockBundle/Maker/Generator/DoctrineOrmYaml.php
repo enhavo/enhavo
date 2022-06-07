@@ -61,7 +61,7 @@ class DoctrineOrmYaml
 
         } else {
             $result = [
-                'type' => sprintf("'%s'", $field->getType()),
+                'type' => sprintf("Types::%s", strtoupper($field->getType())),
                 'nullable' => $field->getNullableString(),
             ];
         }

@@ -1,11 +1,6 @@
 <?php
 /**
  * @author blutze-media
- * @since 2021-09-23
- */
-
-/**
- * @author blutze-media
  * @since 2021-09-22
  */
 
@@ -13,11 +8,8 @@ namespace Enhavo\Bundle\BlockBundle\Maker\Generator;
 
 class DoctrineOrmRelation
 {
-    /** @var string */
-    private $name;
-
-    /** @var array */
-    private $config;
+    private string $name;
+    private array $config;
 
     /**
      * @param string $name
@@ -44,14 +36,14 @@ class DoctrineOrmRelation
         return $this->config['mapped_by'] ?? 'null';
     }
 
-    public function getOrderBy(): ?array
+    public function getOrderBy(): array
     {
-        return $this->config['order_by'] ?? null;
+        return $this->config['order_by'] ?? [];
     }
 
-    public function getTargetEntity(): ?string
+    public function getTargetEntity(): string
     {
-        return $this->config['target_entity'] ?? null;
+        return $this->config['target_entity'] ?? 'null';
     }
 
     public function getName(): string
@@ -61,7 +53,7 @@ class DoctrineOrmRelation
 
     public function getOrderByString(): string
     {
-        return $this->arrayToString($this->getOrderBy(), 12);
+        return $this->arrayToString($this->getOrderBy(), 8);
     }
 
     private function arrayToString(?array $array, int $indentation = 0): string
