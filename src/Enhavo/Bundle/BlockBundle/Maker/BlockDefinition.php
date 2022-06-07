@@ -71,12 +71,12 @@ class BlockDefinition
                 $config = Yaml::parseFile($path);
                 $this->config['properties'][$key] = $this->deepMerge($config, $this->config['properties'][$key]);
                 unset($this->config['properties'][$key]['template']);
-
-                $classUse = $this->extractFromProperty($key, ['type_options', 'use']);
-                $this->addUse($classUse);
-                $formUse = $this->extractFromProperty($key, ['form', 'use']);
-                $this->addFormUse($formUse);
             }
+
+            $classUse = $this->extractFromProperty($key, ['type_options', 'use']);
+            $this->addUse($classUse);
+            $formUse = $this->extractFromProperty($key, ['form', 'use']);
+            $this->addFormUse($formUse);
         }
     }
 

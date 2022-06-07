@@ -199,6 +199,7 @@ class MakeBlock extends AbstractMaker
             $this->getTemplatePath('block/item-entity.tpl.php'), [
                 'definition' => $blockDefinition,
                 'class' => $blockDefinition->createEntityPhpClass(),
+                'orm' => $blockDefinition->createDoctrineOrmYaml(),
             ]
         );
     }

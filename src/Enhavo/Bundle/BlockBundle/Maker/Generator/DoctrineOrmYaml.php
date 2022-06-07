@@ -6,8 +6,6 @@
 
 namespace Enhavo\Bundle\BlockBundle\Maker\Generator;
 
-use JetBrains\PhpStorm\ArrayShape;
-
 class DoctrineOrmYaml
 {
     public function __construct(

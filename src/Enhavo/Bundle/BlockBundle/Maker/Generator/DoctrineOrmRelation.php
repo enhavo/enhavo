@@ -34,14 +34,14 @@ class DoctrineOrmRelation
         return $this->config['type'] ?? null;
     }
 
-    public function getInversedBy(): ?string
+    public function getInversedBy(): string
     {
-        return $this->config['inversed_by'] ?? null;
+        return $this->config['inversed_by'] ?? 'null';
     }
 
-    public function getMappedBy(): ?string
+    public function getMappedBy(): string
     {
-        return $this->config['mapped_by'] ?? null;
+        return $this->config['mapped_by'] ?? 'null';
     }
 
     public function getOrderBy(): ?array
@@ -61,25 +61,26 @@ class DoctrineOrmRelation
 
     public function getOrderByString(): string
     {
-        return $this->arrayToString($this->getOrderBy(), 16);
+        return $this->arrayToString($this->getOrderBy(), 12);
     }
 
-    private function arrayToString(?array $array, int $indentation = 8): string
+    private function arrayToString(?array $array, int $indentation = 0): string
     {
         if (null === $array) {
             return 'null';
         }
 
         $lines = [];
-        $lines[] = '';
+        $lines[] = '[';
 
         foreach ($array as $key => $item) {
             if (is_array($item)) {
                 $lines[] = $this->arrayToString($item, $indentation + 4);
             } else {
-                $lines[] = sprintf("%s%s: %s", str_repeat(' ', $indentation), $key, $item);
+                $lines[] = sprintf("%s'%s' => '%s', ", str_repeat(' ', $indentation), $key, $item);
             }
         }
+        $lines[] = sprintf('%s%s', str_repeat(' ', $indentation - 4), ']');
 
         return implode("\n", $lines);
     }
