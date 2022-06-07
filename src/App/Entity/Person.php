@@ -10,6 +10,7 @@ namespace App\Entity;
 
 use App\Repository\PersonRepository;
 use DateTime;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\TaxonomyBundle\Entity\Term;
@@ -32,19 +33,19 @@ class Person implements ResourceInterface
      */
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: Types::INTEGER)]
     private ?int $id;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?DateTime $birthday;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    #[ORM\Column(type: 'string', nullable: true)]
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $name;
 
     /**
