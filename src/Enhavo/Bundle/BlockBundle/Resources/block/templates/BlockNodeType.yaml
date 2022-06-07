@@ -8,8 +8,8 @@ type_options:
             - [setType, NodeInterface::TYPE_ROOT]
             - [setProperty, "'content'"]
 relation:
-    type: oneToOne
-    target_entity: Enhavo\Bundle\BlockBundle\Model\NodeInterface
+    type: OneToOne
+    target_entity: NodeInterface::class
 form:
     use:
         - Enhavo\Bundle\BlockBundle\Form\Type\BlockNodeType

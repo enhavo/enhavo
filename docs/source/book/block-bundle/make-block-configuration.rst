@@ -42,7 +42,7 @@ Make Block Configruation
               type_options:
                   entry_class: MyBlockItem # means that adder/remover is generated
               relation: # defines the doctrine relation
-                  target_entity: App\Entity\Block\MyBlockItem # target entity for the relation (entry_class but including namespace)
+                  target_entity: MyBlockItem::class # target entity for the relation (entry_class but including namespace)
                   mapped_by: myBlock # orm relation and also creates setMyBlock($this/null) in adder/remover
               form: # settings for the BlockFormType
                   options: # form type options
@@ -56,8 +56,8 @@ Make Block Configruation
                       type: MyBlock
                       nullable: true
                       relation:
-                          type: manyToOne
-                          target_entity: App\Entity\Block\MyBlock
+                          type: ManyToOne
+                          target_entity: MyBlock::class
                           inversed_by: children
                   position:
                       template: PositionType

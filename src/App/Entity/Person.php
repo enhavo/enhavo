@@ -8,10 +8,13 @@
 
 namespace App\Entity;
 
+use App\Repository\PersonRepository;
+use DateTime;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\TaxonomyBundle\Entity\Term;
 use Sylius\Component\Resource\Model\ResourceInterface;
-use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class Person
@@ -19,60 +22,70 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="App\Repository\PersonRepository")
  * @ORM\Table(name="app_person")
  */
+#[ORM\Entity(repositoryClass: PersonRepository::class)]
+#[ORM\Table(name: 'app_person')]
 class Person implements ResourceInterface
 {
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @var null|integer
      */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $id;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @var \DateTime|null
      */
-    private $birthday;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?DateTime $birthday;
 
     /**
      * @ORM\Column(type="string", nullable=true)
-     * @var string|null
      */
-    private $name;
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    private ?string $name;
 
     /**
      * @ORM\ManyToOne (targetEntity="Enhavo\Bundle\TaxonomyBundle\Entity\Term", cascade={"persist", "remove", "refresh"})
-     * @var Term|null
      */
-    private $occupation;
+    #[ORM\ManyToOne(
+        targetEntity: Term::class,
+        cascade: ['persist', 'remove', 'refresh']
+    )]
+    private ?Term $occupation;
 
     /**
      * @ORM\ManyToOne (targetEntity="Enhavo\Bundle\MediaBundle\Model\FileInterface", cascade={"persist", "remove", "refresh"})
-     * @var FileInterface|null
      */
-    private $picture;
+    #[ORM\ManyToOne(
+        targetEntity: FileInterface::class,
+        cascade: ['persist', 'remove', 'refresh']
+    )]
+    private ?FileInterface $picture;
 
     /**
-     * @return integer
+     * @return int|null
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
     /**
-     * @return \DateTime|null
+     * @return DateTime|null
      */
-    public function getBirthday(): ?\DateTime
+    public function getBirthday(): ?DateTime
     {
         return $this->birthday;
     }
 
     /**
-     * @param \DateTime|null $birthday
+     * @param DateTime|null $birthday
      */
-    public function setBirthday(?\DateTime $birthday): void
+    public function setBirthday(?DateTime $birthday): void
     {
         $this->birthday = $birthday;
     }

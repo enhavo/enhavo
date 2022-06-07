@@ -2,7 +2,7 @@ type: Collection
 type_options:
     constructor: ArrayCollection
 relation:
-    type: oneToMany
+    type: OneToMany
     order_by:
         position: asc
 use:
