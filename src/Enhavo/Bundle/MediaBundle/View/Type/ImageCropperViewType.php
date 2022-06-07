@@ -6,81 +6,70 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\MediaBundle\Viewer;
+namespace Enhavo\Bundle\MediaBundle\View\Type;
 
 use Enhavo\Bundle\AppBundle\Action\ActionManager;
-use Enhavo\Bundle\AppBundle\Viewer\AbstractActionViewer;
+use Enhavo\Bundle\AppBundle\View\AbstractViewType;
+use Enhavo\Bundle\AppBundle\View\ResourceMetadataHelperTrait;
+use Enhavo\Bundle\AppBundle\View\TemplateData;
+use Enhavo\Bundle\AppBundle\View\Type\AppViewType;
+use Enhavo\Bundle\AppBundle\View\ViewData;
+use Enhavo\Bundle\AppBundle\View\ViewUtil;
 use Enhavo\Bundle\MediaBundle\Entity\Format;
 use Enhavo\Bundle\MediaBundle\Media\ImageCropperManager;
 use Enhavo\Bundle\MediaBundle\Media\MediaManager;
 use Enhavo\Bundle\MediaBundle\Media\UrlGeneratorInterface;
-use FOS\RestBundle\View\View;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Sylius\Component\Resource\ResourceActions;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ImageCropperViewer extends AbstractActionViewer
+class ImageCropperViewType extends AbstractViewType
 {
-    use ContainerAwareTrait;
+    use ResourceMetadataHelperTrait;
 
-    /**
-     * @var FlashBag
-     */
-    private $flashBag;
-
-    /**
-     * @var ImageCropperManager
-     */
-    private $imageCropperManager;
-
-    /**
-     * @var MediaManager
-     */
-    private $mediaManager;
-
-    /**
-     * @var UrlGeneratorInterface
-     */
-    private $urlGenerator;
-
-    /**
-     * ImageCropperViewer constructor.
-     * @param ActionManager $actionManager
-     * @param FlashBag $flashBag
-     * @param ImageCropperManager $imageCropperManager
-     * @param MediaManager $mediaManager
-     * @param UrlGeneratorInterface $urlGenerator
-     */
     public function __construct(
-        ActionManager $actionManager,
-        FlashBag $flashBag,
-        ImageCropperManager $imageCropperManager,
-        MediaManager $mediaManager,
-        UrlGeneratorInterface $urlGenerator
+        private ViewUtil $util,
+        private ActionManager $actionManager,
+        private FlashBag $flashBag,
+        private ImageCropperManager $imageCropperManager,
+        private MediaManager $mediaManager,
+        private UrlGeneratorInterface $urlGenerator
     ) {
-        parent::__construct($actionManager);
-        $this->flashBag = $flashBag;
-        $this->imageCropperManager = $imageCropperManager;
-        $this->mediaManager = $mediaManager;
-        $this->urlGenerator = $urlGenerator;
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'image_cropper';
+    }
+
+    public static function getParentType(): ?string
+    {
+        return AppViewType::class;
+    }
+
+    public function handleRequest($options, Request $request, ViewData $viewData, TemplateData $templateData)
+    {
+        $configuration = $this->getRequestConfiguration($options);
+        $this->util->isGrantedOr403($configuration, ResourceActions::UPDATE);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function createView($options = []): View
+    public function createViewData($options, ViewData $data)
     {
-        $view = parent::createView($options);
-        $templateVars = $view->getTemplateData();
-        $templateVars['data']['format'] = $this->createFormatData($options['format']);
-        $templateVars['data']['messages'] = $this->getFlashMessages();
-        $view->setTemplateData($templateVars);
-        return $view;
+        $configuration = $this->getRequestConfiguration($options);
+
+        $actions = $this->util->mergeConfigArray([
+            $this->createActions($options),
+            $options['actions'],
+            $this->util->getViewerOption('actions', $configuration)
+        ]);
+
+        $data['format'] = $this->createFormatData($options['format']);
+        $data['messages'] = $this->getFlashMessages();
+        $data['actions'] = $this->actionManager->createActionsViewData($actions);
     }
 
     private function getFlashMessages()
@@ -167,12 +156,16 @@ class ImageCropperViewer extends AbstractActionViewer
     {
         parent::configureOptions($optionsResolver);
         $optionsResolver->setDefaults([
+            'application' => '@enhavo/media/image-cropper/ImageCropperApp',
+            'component' => '@enhavo/media/image-cropper/components/ImageCropperComponent.vue',
             'template' => 'admin/view/image-cropper.html.twig',
+            'actions' => [],
             'label' => 'media.image_cropper.label.image_cropper',
             'translation_domain' => 'EnhavoMediaBundle',
             'translations' => true,
             'routes' => true,
         ]);
+        $optionsResolver->setRequired('request_configuration');
         $optionsResolver->setRequired('format');
     }
 }
