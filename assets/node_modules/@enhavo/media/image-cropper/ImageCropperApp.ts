@@ -22,7 +22,7 @@ export default class ImageCropperApp
 
     constructor(data: FormatData, eventDispatcher: EventDispatcher, view: View, actionManager: ActionManager, flashMessenger: FlashMessenger, componentRegistry: ComponentRegistryInterface)
     {
-        this.data  = _.extend(data, new FormatData);
+        this.data = _.assign(new FormatData(), data);
         this.eventDispatcher = eventDispatcher;
         this.view = view;
         this.actionManager = actionManager;
