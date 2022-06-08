@@ -51,13 +51,9 @@ class <?= $class->getName(); ?> extends AbstractBlock
         onDelete: 'cascade',
     )]
 <?php } ?>
-<?php if ($relation) {
-    foreach ($relation->getOrderBy() as $field => $direction) { ?>
+<?php if ($relation) { ?>
     #[ORM\OrderBy(<?= $relation->getOrderByString() ?>)]
-<?php
-    }
-}
-?>
+<?php } ?>
     private <?= $property->getNullable() .$property->getType() ; ?> $<?= $property->getName(); ?><?php if ($property->getDefault() !== 'null'): ?> = <?= $property->getDefault(); ?><?php endif; ?>;
 
 <?php } ?>
