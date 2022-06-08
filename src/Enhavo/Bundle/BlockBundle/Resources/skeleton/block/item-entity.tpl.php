@@ -56,13 +56,9 @@ class <?= $class->getName(); ?>
         onDelete: 'cascade',
     )]
 <?php } ?>
-<?php if ($relation) {
-    foreach ($relation->getOrderBy() as $field => $direction) { ?>
-    #[ORM\OrderBy(value: '<?= sprintf('%s %s', $field, $direction) ?>')]
-<?php
-    }
-}
-?>
+<?php if ($relation) { ?>
+    #[ORM\OrderBy(<?= $relation->getOrderByString() ?>)]
+<?php } ?>
     private <?= $property->getNullable() .$property->getType() ; ?> $<?= $property->getName(); ?><?php if ($property->getDefault() !== 'null'): ?> = <?= $property->getDefault(); ?><?php endif; ?>;
 
 <?php } ?>
