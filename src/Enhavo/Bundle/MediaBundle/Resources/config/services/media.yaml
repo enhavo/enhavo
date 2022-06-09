@@ -122,7 +122,7 @@ services:
             - '@enhavo_media.factory.format'
             - '@enhavo_media.media.media_manager'
             - '@validator'
-            - '%enhavo_media.upload_validation_groups%'
+            - '%enhavo_media.upload_validation.groups%'
         calls:
             - [setContainer, ['@service_container']]
 
@@ -176,3 +176,8 @@ services:
 
     Enhavo\Bundle\MediaBundle\Cache\NoCache:
 
+    Enhavo\Bundle\MediaBundle\Validator\Constraints\ClamAvValidator:
+        arguments:
+            - '%enhavo_media.upload_validation.clamav%'
+        tags:
+            - { name: validator.constraint_validator }
