@@ -31,7 +31,7 @@ class ClamAvValidator extends ConstraintValidator
 
         if ($exitCode !== ClamAv::RESULT_OK) {
             $this->context->buildViolation($constraint->message)
-                ->setParameter('{{reason}}', $constraint->getResultText($exitCode))
+                ->setParameter('{{reason}}', ClamAv::RESULT_CODES[$exitCode])
                 ->addViolation();
         }
     }

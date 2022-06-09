@@ -25,11 +25,6 @@ class ClamAv extends Constraint
     public string $message = "The file did not pass the virus scanner: {{reason}}";
     public string $clamAvPath = "clamscan";
 
-    public function getResultText(int $exitCode): ?string
-    {
-        return self::RESULT_CODES[$exitCode] ?? null;
-    }
-
     public function getTargets()
     {
         return self::CLASS_CONSTRAINT;
