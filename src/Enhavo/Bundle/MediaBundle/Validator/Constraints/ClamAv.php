@@ -17,17 +17,17 @@ class ClamAv extends Constraint
     const RESULT_SOME_ERROR = 2;
 
     const RESULT_CODES = [
-        'No virus found' => self::RESULT_OK,
-        'Virus(es) found' => self::RESULT_VIRUS_FOUND,
-        'Some error(s) occured' => self::RESULT_SOME_ERROR,
+        self::RESULT_OK => 'No virus found',
+        self::RESULT_VIRUS_FOUND => 'Virus(es) found',
+        self::RESULT_SOME_ERROR => 'Some error(s) occured',
     ];
 
     public string $message = "The file did not pass the virus scanner: {{reason}}";
     public string $clamAvPath = "clamscan";
 
-    public function getResultText(int $exitCode): string|int|bool
+    public function getResultText(int $exitCode): ?string
     {
-        return array_search($exitCode, self::RESULT_CODES);
+        return self::RESULT_CODES[$exitCode] ?? null;
     }
 
     public function getTargets()
