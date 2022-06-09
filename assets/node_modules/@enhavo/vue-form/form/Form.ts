@@ -45,7 +45,7 @@ export class Form extends RootFormData
         return axios({
             method: <Method>this.element.method,
             url: this.element.action,
-            data: qs.stringify(this.serializeForm()),
+            data: this.serializeForm(),
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
                 'X-Requested-With': 'XMLHttpRequest'
