@@ -25,6 +25,10 @@ class ClamAvValidator extends ConstraintValidator
         $process = new Process(explode(' ', $command));
         $exitCode = $process->run();
 
+        if ($exitCode > ClamAv::RESULT_SOME_ERROR) {
+            throw new ProcessFailedException($process);
+        }
+
         if ($exitCode !== ClamAv::RESULT_OK) {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('{{reason}}', $constraint->getResultText($exitCode))
