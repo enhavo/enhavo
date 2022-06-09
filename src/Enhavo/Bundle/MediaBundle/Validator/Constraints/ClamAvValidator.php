@@ -14,6 +14,16 @@ use Symfony\Component\Validator\ConstraintValidator;
  */
 class ClamAvValidator extends ConstraintValidator
 {
+    const RESULT_OK = 0;
+    const RESULT_VIRUS_FOUND = 1;
+    const RESULT_SOME_ERROR = 2;
+
+    const RESULT_CODES = [
+        self::RESULT_OK => 'No virus found',
+        self::RESULT_VIRUS_FOUND => 'Virus(es) found',
+        self::RESULT_SOME_ERROR => 'Some error(s) occured',
+    ];
+
     public function validate($value, Constraint $constraint)
     {
         if (!$constraint instanceof ClamAv) {
@@ -25,13 +35,13 @@ class ClamAvValidator extends ConstraintValidator
         $process = new Process(explode(' ', $command));
         $exitCode = $process->run();
 
-        if ($exitCode > ClamAv::RESULT_SOME_ERROR) {
+        if ($exitCode > self::RESULT_SOME_ERROR) {
             throw new ProcessFailedException($process);
         }
 
-        if ($exitCode !== ClamAv::RESULT_OK) {
+        if ($exitCode !== self::RESULT_OK) {
             $this->context->buildViolation($constraint->message)
-                ->setParameter('{{reason}}', ClamAv::RESULT_CODES[$exitCode])
+                ->setParameter('{{reason}}', self::RESULT_CODES[$exitCode])
                 ->addViolation();
         }
     }
