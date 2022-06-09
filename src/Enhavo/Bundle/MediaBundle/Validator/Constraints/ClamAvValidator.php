@@ -24,6 +24,12 @@ class ClamAvValidator extends ConstraintValidator
         self::RESULT_SOME_ERROR => 'Some error(s) occured',
     ];
 
+    public function __construct(
+        public array $config,
+    )
+    {
+    }
+
     public function validate($value, Constraint $constraint)
     {
         if (!$constraint instanceof ClamAv) {
@@ -31,7 +37,7 @@ class ClamAvValidator extends ConstraintValidator
         }
 
         $path = $value instanceof FileObject ? $value->getPathname() : (string) $value;
-        $command = sprintf('%s %s', $constraint->clamAvPath, $path);
+        $command = sprintf('%s %s', $constraint->clamscanPath ?? $this->config['clamscan_path'], $path);
         $process = new Process(explode(' ', $command));
         $exitCode = $process->run();
 
