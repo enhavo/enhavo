@@ -28,6 +28,7 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('enable_delete_unreferenced')->defaultValue(true)->end()
+                ->scalarNode('enable_garbage_collection')->defaultValue(true)->end()
             ->end()
             ->children()
                 ->arrayNode('upload_validation')

@@ -32,6 +32,7 @@ class UploadController extends AbstractController
         private MediaManager $mediaManager,
         private ValidatorInterface $validator,
         private array $validationGroups,
+        private bool $enableGarbageCollection,
     )
     {
     }
@@ -47,7 +48,11 @@ class UploadController extends AbstractController
                     $errors = $this->getErrors($uploadedFile);
                     if (!count($errors)) {
                         $file = $this->fileFactory->createFromUploadedFile($uploadedFile);
-                        $file->setGarbage(false);
+                        if ($this->enableGarbageCollection) {
+                            $file->setGarbage(true);
+                        } else {
+                            $file->setGarbage(false);
+                        }
                     }
                     if (count($errors)) {
                         return new JsonResponse([

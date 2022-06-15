@@ -120,6 +120,8 @@ enhavo_media:
                 format: enhavoMediaLibraryVideo
                 mimetypes: [video/mp4]
 
+    enable_garbage_collection: false
+
 enhavo_taxonomy:
     taxonomies:
         media_library_tag:
