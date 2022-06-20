@@ -28,6 +28,8 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 import CloseEvent from  '@enhavo/app/ViewStack/Event/CloseEvent';
 import ArrangeEvent from  '@enhavo/app/ViewStack/Event/ArrangeEvent';
 import ViewInterface from "@enhavo/app/ViewStack/ViewInterface";
+import MinimizeEvent from "@enhavo/app/ViewStack/Event/MinimizeEvent";
+import MaximizeEvent from "@enhavo/app/ViewStack/Event/MaximizeEvent";
 
 @Component()
 export default class ViewComponent extends Vue
@@ -53,14 +55,12 @@ export default class ViewComponent extends Vue
     }
 
     minimize() {
-        this.data.minimize = true;
-        this.data.customMinimized = true;
+        this.eventDispatcher.dispatch(new MinimizeEvent(this.data.id, true));
         this.eventDispatcher.dispatch(new ArrangeEvent());
     }
 
     maximize() {
-        this.data.minimize = false;
-        this.data.customMinimized = true;
+        this.eventDispatcher.dispatch(new MaximizeEvent(this.data.id, true));
         this.eventDispatcher.dispatch(new ArrangeEvent());
     }
 
