@@ -30,6 +30,8 @@ import ArrangeEvent from '@enhavo/app/view-stack/event/ArrangeEvent';
 import ViewInterface from "@enhavo/app/view-stack/ViewInterface";
 import StateManager from "@enhavo/app/state/StateManager";
 import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
+import MinimizeEvent from "@enhavo/app/view-stack/event/MinimizeEvent";
+import MaximizeEvent from "@enhavo/app/view-stack/event/MaximizeEvent";
 
 @Options({})
 export default class extends Vue
@@ -61,14 +63,12 @@ export default class extends Vue
     }
 
     minimize() {
-        this.data.minimize = true;
-        this.data.customMinimized = true;
+        this.eventDispatcher.dispatch(new MinimizeEvent(this.data.id, true));
         this.eventDispatcher.dispatch(new ArrangeEvent());
     }
 
     maximize() {
-        this.data.minimize = false;
-        this.data.customMinimized = true;
+        this.eventDispatcher.dispatch(new MaximizeEvent(this.data.id, true));
         this.eventDispatcher.dispatch(new ArrangeEvent());
     }
 
