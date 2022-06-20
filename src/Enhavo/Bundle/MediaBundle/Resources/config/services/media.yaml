@@ -84,6 +84,7 @@ services:
     Enhavo\Bundle\MediaBundle\EventListener\LifecycleListener:
         arguments:
             - '@enhavo_media.media.media_manager'
+            - '%enhavo_media.enable_garbage_collection%'
         tags:
             - { name: kernel.event_listener, event: enhavo_app.post_create, method: collectGarbage }
             - { name: kernel.event_listener, event: enhavo_app.post_update, method: collectGarbage }
@@ -123,6 +124,7 @@ services:
             - '@enhavo_media.media.media_manager'
             - '@validator'
             - '%enhavo_media.upload_validation.groups%'
+            - '%enhavo_media.enable_garbage_collection%'
         calls:
             - [setContainer, ['@service_container']]
 
