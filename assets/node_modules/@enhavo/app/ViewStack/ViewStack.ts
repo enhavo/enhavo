@@ -12,6 +12,8 @@ import ClearEvent from "@enhavo/app/ViewStack/Event/ClearEvent";
 import ClearedEvent from "@enhavo/app/ViewStack/Event/ClearedEvent";
 import ArrangeManager from "@enhavo/app/ViewStack/ArrangeManager";
 import LoadingEvent from "@enhavo/app/ViewStack/Event/LoadingEvent";
+import MinimizeEvent from "@enhavo/app/ViewStack/Event/MinimizeEvent";
+import MaximizeEvent from "@enhavo/app/ViewStack/Event/MaximizeEvent";
 import * as _ from 'lodash';
 import * as async from 'async';
 import SaveStateEvent from "@enhavo/app/ViewStack/Event/SaveStateEvent";
@@ -57,6 +59,8 @@ export default class ViewStack
         this.addLoadingListener();
         this.addExistsListener();
         this.addChangeUrlListener();
+        this.addMinimizeListener();
+        this.addMaximizeListener();
 
         $(window).resize(() => {
             this.arrangeManager.resize(this.data.views);
@@ -223,6 +227,36 @@ export default class ViewStack
         });
     }
 
+    private addMinimizeListener()
+    {
+        this.dispatcher.on('minimize', (event: MinimizeEvent) => {
+            let view = this.get(event.id);
+            if(view) {
+                view.minimize = true;
+                if (event.setCustomMinimized) {
+                    view.customMinimized = true;
+                }
+            }
+
+            event.resolve();
+        });
+    }
+
+    private addMaximizeListener()
+    {
+        this.dispatcher.on('maximize', (event: MaximizeEvent) => {
+            let view = this.get(event.id);
+            if(view) {
+                view.minimize = false;
+                if (event.setCustomMinimized) {
+                    view.customMinimized = true;
+                }
+            }
+
+            event.resolve();
+        });
+    }
+
     private remove(view: ViewInterface)
     {
         /**
@@ -248,7 +282,7 @@ export default class ViewStack
         this.nextId++;
         return id;
     }
-    
+
     get(id: number)
     {
         for(let view of this.getViews()) {
