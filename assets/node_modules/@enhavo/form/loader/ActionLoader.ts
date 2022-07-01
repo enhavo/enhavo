@@ -3,7 +3,7 @@ import ActionRegistry from "@enhavo/app/action/ActionRegistry";
 import * as _ from 'lodash';
 import ActionInterface from "@enhavo/app/action/ActionInterface";
 
-export default class CheckboxLoader extends AbstractLoader
+export default class ActionLoader extends AbstractLoader
 {
     private registry: ActionRegistry;
 
@@ -19,7 +19,7 @@ export default class CheckboxLoader extends AbstractLoader
         for (let element of elements) {
             let $element = $(element);
             let action: ActionInterface = $element.data('action-button');
-            _.extend(action, this.registry.getFactory(action.component).createFromData(action));
+            action = _.assign(this.registry.getFactory(action.component).createFromData(action), action);
 
             $element.on('click', (e) => {
                 e.preventDefault();
