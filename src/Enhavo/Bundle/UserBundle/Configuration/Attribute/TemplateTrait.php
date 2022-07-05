@@ -4,7 +4,7 @@ namespace Enhavo\Bundle\UserBundle\Configuration\Attribute;
 
 trait TemplateTrait
 {
-    private ?string $template;
+    private ?string $template = null;
 
     public function getTemplate(): ?string
     {

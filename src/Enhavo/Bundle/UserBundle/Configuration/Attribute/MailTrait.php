@@ -5,12 +5,12 @@ namespace Enhavo\Bundle\UserBundle\Configuration\Attribute;
 trait MailTrait
 {
     private bool $mailEnabled = true;
-    private ?string $mailSubject;
-    private ?string $mailFrom;
-    private ?string $mailSenderName;
-    private ?string $mailContext;
-    private ?string $mailTemplate;
-    private ?string $mailContentType;
+    private ?string $mailSubject = null;
+    private ?string $mailFrom = null;
+    private ?string $mailSenderName = null;
+    private ?string $mailContext = null;
+    private ?string $mailTemplate = null;
+    private ?string $mailContentType = null;
 
     public function isMailEnabled(): bool
     {

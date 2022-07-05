@@ -4,8 +4,8 @@ namespace Enhavo\Bundle\UserBundle\Configuration\Attribute;
 
 trait FormTrait
 {
-    protected ?string $formClass;
-    protected ?array $formOptions;
+    protected ?string $formClass = null;
+    protected ?array $formOptions = null;
 
     public function getFormClass(): ?string
     {

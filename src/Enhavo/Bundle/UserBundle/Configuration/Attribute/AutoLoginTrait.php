@@ -4,7 +4,7 @@ namespace Enhavo\Bundle\UserBundle\Configuration\Attribute;
 
 trait AutoLoginTrait
 {
-    private ?bool $autoLogin;
+    private ?bool $autoLogin = null;
 
     public function isAutoLogin(): ?bool
     {

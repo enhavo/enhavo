@@ -4,7 +4,7 @@ namespace Enhavo\Bundle\UserBundle\Configuration\Attribute;
 
 trait ConfirmationRouteTrait
 {
-    private ?string $confirmationRoute;
+    private ?string $confirmationRoute = null;
 
     public function getConfirmationRoute(): ?string
     {

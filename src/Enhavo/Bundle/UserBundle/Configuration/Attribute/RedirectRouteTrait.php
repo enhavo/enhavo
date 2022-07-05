@@ -4,7 +4,7 @@ namespace Enhavo\Bundle\UserBundle\Configuration\Attribute;
 
 trait RedirectRouteTrait
 {
-    private ?string $redirectRoute;
+    private ?string $redirectRoute = null;
 
     public function getRedirectRoute(): ?string
     {

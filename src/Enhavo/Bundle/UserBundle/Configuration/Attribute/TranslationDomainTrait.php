@@ -4,7 +4,7 @@ namespace Enhavo\Bundle\UserBundle\Configuration\Attribute;
 
 trait TranslationDomainTrait
 {
-    private ?string $translationDomain;
+    private ?string $translationDomain = null;
 
     public function getTranslationDomain(): ?string
     {
