@@ -66,7 +66,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
         ]);
     }
 
-    public function loadUserByIdentifier($identifier)
+    public function loadUserByIdentifier($identifier): ?UserInterface
     {
         $user = $this->findByUsername($identifier);
         if ($user) {
@@ -76,7 +76,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
         return $user;
     }
 
-    public function loadUserByUsername(string $username)
+    public function loadUserByUsername(string $username): UserInterface
     {
         // Deprecated but still required by the interface
         return $this->loadUserByIdentifier($username);

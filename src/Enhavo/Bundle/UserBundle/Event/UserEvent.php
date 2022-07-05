@@ -14,37 +14,18 @@ class UserEvent extends Event
     public const TYPE_EMAIl_CHANGED = 'enhavo_user.user.email_changed';
     public const TYPE_PASSWORD_RESET_REQUESTED = 'enhavo_user.user.password_reset_requested';
 
-    /** @var string */
-    protected $type;
-
-    /**
-     * @var UserInterface
-     */
-    protected $user;
-
-    /**
-     * UserEvent constructor.
-     * @param string $type
-     * @param UserInterface $user
-     */
-    public function __construct(string $type, UserInterface $user)
+    public function __construct(
+        protected string $type,
+        protected UserInterface $user,
+    )
     {
-        $this->type = $type;
-        $this->user = $user;
     }
 
-
-    /**
-     * @return UserInterface
-     */
-    public function getUser()
+    public function getUser(): UserInterface
     {
         return $this->user;
     }
 
-    /**
-     * @return string
-     */
     public function getType(): string
     {
         return $this->type;

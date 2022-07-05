@@ -7,24 +7,13 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class UserLoginEvent extends Event
 {
-    /**
-     * @var UserInterface
-     */
-    protected $user;
-
-    /**
-     * UserLoginEvent constructor.
-     * @param UserInterface $user
-     */
-    public function __construct(UserInterface $user)
+    public function __construct(
+        protected UserInterface $user,
+    )
     {
-        $this->user = $user;
     }
 
-    /**
-     * @return UserInterface
-     */
-    public function getUser()
+    public function getUser(): UserInterface
     {
         return $this->user;
     }

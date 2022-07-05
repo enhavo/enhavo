@@ -326,6 +326,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('template')->isRequired()->cannotBeEmpty()->end()
                         ->scalarNode('redirect_route')->defaultValue(null)->end()
                         ->scalarNode('route')->isRequired()->cannotBeEmpty()->end()
+                        ->scalarNode('max_login_attempts')->defaultValue(0)->end()
                     ->end()
                 ->end()
             ->end()
