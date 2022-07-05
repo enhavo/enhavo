@@ -25,7 +25,6 @@ use Enhavo\Bundle\UserBundle\User\UserManager;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -37,7 +36,6 @@ use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
-use Symfony\Component\Security\Http\RememberMe\RememberMeServicesInterface;
 use Symfony\Component\Security\Http\Session\SessionAuthenticationStrategyInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -62,7 +60,6 @@ class UserManagerTest extends TestCase
         return new UserManager(
             $dependencies->entityManager,
             $dependencies->mailerManager,
-            $dependencies->userRepository,
             $dependencies->getUserMapper($mapping),
             $dependencies->tokenGenerator,
             $dependencies->translator,
@@ -73,7 +70,6 @@ class UserManagerTest extends TestCase
             $dependencies->requestStack,
             $dependencies->sessionStrategy,
             $dependencies->userChecker,
-            $dependencies->rememberMeService,
             $dependencies->defaultFirewall
         );
     }
@@ -386,11 +382,6 @@ class UserManagerTest extends TestCase
 
         $manager->login($user, null);
 
-        $dependencies->rememberMeService = $this->getMockBuilder(RememberMeServicesInterface::class)->getMock();
-        $dependencies->rememberMeService->expects($this->once())->method('loginSuccess')->willReturnCallback(function ($request, $response, $token) {
-            $this->assertInstanceOf(Request::class, $request);
-            $this->assertInstanceOf(Response::class, $response);
-        });
         $manager = $this->createInstance($dependencies, []);
 
         $manager->login($user, new Response());
@@ -488,9 +479,6 @@ class UserManagerTestDependencies
 
     /** @var UserCheckerInterface|MockObject */
     public $userChecker;
-
-    /** @var RememberMeServicesInterface|MockObject */
-    public $rememberMeService;
 
     /** @var string */
     public $defaultFirewall;

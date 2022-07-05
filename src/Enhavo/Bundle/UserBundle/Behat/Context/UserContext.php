@@ -4,9 +4,9 @@ namespace Enhavo\Bundle\UserBundle\Behat\Context;
 
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\TableNode;
-use Enhavo\Bundle\AppBundle\Behat\Context\KernelAwareContext;
 use Enhavo\Bundle\AppBundle\Behat\Context\ClientAwareContext;
 use Enhavo\Bundle\AppBundle\Behat\Context\ClientAwareTrait;
+use Enhavo\Bundle\AppBundle\Behat\Context\KernelAwareContext;
 use Enhavo\Bundle\AppBundle\Behat\Context\ManagerAwareTrait;
 use Enhavo\Bundle\UserBundle\Behat\Exception\UserLoginException;
 use Enhavo\Bundle\UserBundle\Model\Group;

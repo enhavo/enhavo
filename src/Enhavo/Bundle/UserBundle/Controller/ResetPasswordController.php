@@ -5,7 +5,6 @@ namespace Enhavo\Bundle\UserBundle\Controller;
 use Enhavo\Bundle\FormBundle\Error\FormErrorResolver;
 use Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider;
 use Enhavo\Bundle\UserBundle\Form\Data\ResetPassword;
-use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Enhavo\Bundle\UserBundle\Repository\UserRepository;
 use Enhavo\Bundle\UserBundle\User\UserManager;
 use Sylius\Component\Resource\Factory\FactoryInterface;

@@ -7,7 +7,6 @@
 namespace Enhavo\Bundle\UserBundle\Tests\Security;
 
 
-use Enhavo\Bundle\UserBundle\Exception\UserNotSupportedException;
 use Enhavo\Bundle\UserBundle\Model\User;
 use Enhavo\Bundle\UserBundle\Security\UserChecker;
 use PHPUnit\Framework\TestCase;
