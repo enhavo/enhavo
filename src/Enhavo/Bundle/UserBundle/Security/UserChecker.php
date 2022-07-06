@@ -6,7 +6,6 @@
 
 namespace Enhavo\Bundle\UserBundle\Security;
 
-use Enhavo\Bundle\UserBundle\Exception\UserNotSupportedException;
 use Enhavo\Bundle\UserBundle\Model\UserInterface as EnhavoUserInterface;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;

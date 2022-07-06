@@ -6,17 +6,17 @@ use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\EventDispatcher\Event;
 
-class UserLoginEvent extends Event
+class UserLoginFailureEvent extends Event
 {
-    private ?Response $response = null;
+    protected ?Response $response = null;
 
     public function __construct(
-        protected UserInterface $user,
+        protected ?UserInterface $user,
     )
     {
     }
 
-    public function getUser(): UserInterface
+    public function getUser(): ?UserInterface
     {
         return $this->user;
     }
@@ -30,5 +30,4 @@ class UserLoginEvent extends Event
     {
         $this->response = $response;
     }
-
 }

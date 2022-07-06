@@ -19,124 +19,44 @@ use Enhavo\Bundle\UserBundle\Configuration\Registration\RegistrationRegisterConf
 use Enhavo\Bundle\UserBundle\Configuration\ResetPassword\ResetPasswordRequestConfiguration;
 use Enhavo\Bundle\UserBundle\Configuration\Verification\VerificationRequestConfiguration;
 use Enhavo\Bundle\UserBundle\Event\UserEvent;
+use Enhavo\Bundle\UserBundle\Exception\MaxFailedLoginAttemptsException;
 use Enhavo\Bundle\UserBundle\Mapper\UserMapperInterface;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
+use Exception;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
-use Symfony\Component\Security\Http\RememberMe\RememberMeServicesInterface;
 use Symfony\Component\Security\Http\Session\SessionAuthenticationStrategyInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class UserManager
 {
-    /** @var EntityManagerInterface */
-    protected $em;
-
-    /** @var MailerManager */
-    protected $mailerManager;
-
-    /** @var RepositoryInterface */
-    private $userRepository;
-
-    /** @var UserMapperInterface */
-    private $userMapper;
-
-    /** @var TokenGeneratorInterface */
-    private $tokenGenerator;
-
-    /** @var TranslatorInterface */
-    private $translator;
-
-    /** @var EncoderFactoryInterface */
-    private $encoderFactory;
-
-    /** @var RouterInterface */
-    protected $router;
-
-    /** @var EventDispatcherInterface */
-    private $eventDispatcher;
-
-    /** @var TokenStorageInterface */
-    private $tokenStorage;
-
-    /** @var RequestStack */
-    private $requestStack;
-
-    /** @var SessionAuthenticationStrategyInterface */
-    private $sessionStrategy;
-
-    /** @var UserCheckerInterface */
-    private $userChecker;
-
-    /** @var RememberMeServicesInterface|null */
-    private $rememberMeService;
-
-    /** @var array */
-    private $defaultFirewall;
-
-    /**
-     * UserManager constructor.
-     * @param EntityManagerInterface $entityManager
-     * @param MailerManager $mailerManager
-     * @param RepositoryInterface $userRepository
-     * @param UserMapperInterface $userMapper
-     * @param TokenGeneratorInterface $tokenGenerator
-     * @param TranslatorInterface $translator
-     * @param FormFactoryInterface $formFactory
-     * @param EncoderFactoryInterface $encoderFactory
-     * @param RouterInterface $router
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param TokenStorageInterface $tokenStorage
-     * @param RequestStack $requestStack
-     * @param SessionAuthenticationStrategyInterface $sessionStrategy
-     * @param UserCheckerInterface $userChecker
-     * @param RememberMeServicesInterface|null $rememberMeService
-     * @param string $defaultFirewall
-     */
     public function __construct(
-        EntityManagerInterface $entityManager,
-        MailerManager $mailerManager,
-        RepositoryInterface $userRepository,
-        UserMapperInterface $userMapper,
-        TokenGeneratorInterface $tokenGenerator,
-        TranslatorInterface $translator,
-        EncoderFactoryInterface $encoderFactory,
-        RouterInterface $router,
-        EventDispatcherInterface $eventDispatcher,
-        TokenStorageInterface $tokenStorage,
-        RequestStack $requestStack,
-        SessionAuthenticationStrategyInterface $sessionStrategy,
-        UserCheckerInterface $userChecker,
-        ?RememberMeServicesInterface $rememberMeService,
-        string $defaultFirewall
+        protected EntityManagerInterface $em,
+        protected MailerManager $mailerManager,
+        private UserMapperInterface $userMapper,
+        private TokenGeneratorInterface $tokenGenerator,
+        private TranslatorInterface $translator,
+        private EncoderFactoryInterface $encoderFactory,
+        protected RouterInterface $router,
+        private EventDispatcherInterface $eventDispatcher,
+        private TokenStorageInterface $tokenStorage,
+        private RequestStack $requestStack,
+        private SessionAuthenticationStrategyInterface $sessionStrategy,
+        private UserCheckerInterface $userChecker,
+        private string $defaultFirewall,
     ) {
-        $this->em = $entityManager;
-        $this->mailerManager = $mailerManager;
-        $this->userRepository = $userRepository;
-        $this->userMapper = $userMapper;
-        $this->tokenGenerator = $tokenGenerator;
-        $this->translator = $translator;
-        $this->encoderFactory = $encoderFactory;
-        $this->router = $router;
-        $this->eventDispatcher = $eventDispatcher;
-        $this->tokenStorage = $tokenStorage;
-        $this->requestStack = $requestStack;
-        $this->sessionStrategy = $sessionStrategy;
-        $this->userChecker = $userChecker;
-        $this->rememberMeService = $rememberMeService;
-        $this->defaultFirewall = $defaultFirewall;
+
     }
 
-    public function add(UserInterface $user)
+    public function add(UserInterface $user): void
     {
         $this->em->persist($user);
         $this->update($user);
@@ -144,7 +64,7 @@ class UserManager
         $this->eventDispatcher->dispatch($event);
     }
 
-    public function update(UserInterface $user, $flush = true)
+    public function update(UserInterface $user, $flush = true): void
     {
         $this->updateUsername($user);
         $this->updatePassword($user);
@@ -154,23 +74,23 @@ class UserManager
         }
     }
 
-    public function updatePassword(UserInterface $user)
+    public function updatePassword(UserInterface $user): void
     {
         $this->hashPassword($user);
     }
 
-    public function updateUsername(UserInterface $user)
+    public function updateUsername(UserInterface $user): void
     {
         $this->userMapper->setUsername($user);
     }
 
-    private function enable(UserInterface $user)
+    private function enable(UserInterface $user): void
     {
         $user->setEnabled(true);
         $user->setConfirmationToken(null);
     }
 
-    public function verify(UserInterface $user, $flush = true)
+    public function verify(UserInterface $user, $flush = true): void
     {
         $user->setVerified(true);
         $user->setConfirmationToken(null);
@@ -180,7 +100,7 @@ class UserManager
         }
     }
 
-    public function changePassword(UserInterface $user)
+    public function changePassword(UserInterface $user): void
     {
         $user->setConfirmationToken(null);
         $this->update($user);
@@ -188,12 +108,12 @@ class UserManager
         $this->eventDispatcher->dispatch($event);
     }
 
-    public function mapValues(UserInterface $user, array $values)
+    public function mapValues(UserInterface $user, array $values): void
     {
         $this->userMapper->mapValues($user, $values);
     }
 
-    public function login(UserInterface $user, ?Response $response = null, ?string $firewallName = null)
+    public function login(UserInterface $user, ?Response $response = null, ?string $firewallName = null): void
     {
         $this->userChecker->checkPreAuth($user);
 
@@ -201,23 +121,21 @@ class UserManager
         $request = $this->requestStack->getCurrentRequest();
         if (null !== $request) {
             $this->sessionStrategy->onAuthentication($request, $token);
-            if (null !== $response && null !== $this->rememberMeService) {
-                $this->rememberMeService->loginSuccess($request, $response, $token);
-            }
         }
         $this->tokenStorage->setToken($token);
     }
 
-    public function logout()
+    public function logout(): void
     {
         $request = $this->requestStack->getCurrentRequest();
-        if (null !== $request) {
-            $request->getSession()->invalidate();
-        }
+        $request?->getSession()->invalidate();
         $this->tokenStorage->setToken(null);
     }
 
-    private function hashPassword(UserInterface $user)
+    /**
+     * @throws Exception
+     */
+    private function hashPassword(UserInterface $user): void
     {
         $plainPassword = $user->getPlainPassword();
         if (0 === strlen($plainPassword)) {
@@ -235,7 +153,7 @@ class UserManager
         $user->eraseCredentials();
     }
 
-    public function register(UserInterface $user, RegistrationRegisterConfiguration $configuration)
+    public function register(UserInterface $user, RegistrationRegisterConfiguration $configuration): void
     {
         $user->setConfirmationToken($this->tokenGenerator->generateToken());
 
@@ -249,20 +167,20 @@ class UserManager
         }
     }
 
-    private function sendRegistrationConfirmMail(UserInterface $user, RegistrationRegisterConfiguration $configuration)
+    private function sendRegistrationConfirmMail(UserInterface $user, RegistrationRegisterConfiguration $configuration): void
     {
         $message = $this->createUserMessage($user, $configuration);
         $message->setContext([
             'user' => $user,
             'confirmation_url' => $this->router->generate($configuration->getConfirmationRoute(), [
                 'token' => $user->getConfirmationToken()
-            ], RouterInterface::ABSOLUTE_URL),
+            ], UrlGeneratorInterface::ABSOLUTE_URL),
             'configuration' => $configuration
         ]);
         $this->mailerManager->sendMessage($message);
     }
 
-    public function activate(UserInterface $user)
+    public function activate(UserInterface $user): void
     {
         $this->enable($user);
         $this->update($user);
@@ -270,7 +188,7 @@ class UserManager
         $this->eventDispatcher->dispatch($event);
     }
 
-    public function confirm(UserInterface $user, RegistrationConfirmConfiguration $configuration)
+    public function confirm(UserInterface $user, RegistrationConfirmConfiguration $configuration): void
     {
         $this->verify($user, false);
         if ($configuration->isAutoEnabled()) {
@@ -286,7 +204,7 @@ class UserManager
         }
     }
 
-    private function sendConfirmationMail(UserInterface $user, RegistrationConfirmConfiguration $configuration)
+    private function sendConfirmationMail(UserInterface $user, RegistrationConfirmConfiguration $configuration): void
     {
         $message = $this->createUserMessage($user, $configuration);
         $message->setContext([
@@ -296,7 +214,10 @@ class UserManager
         $this->mailerManager->sendMessage($message);
     }
 
-    public function resetPassword(UserInterface $user, ResetPasswordRequestConfiguration $configuration)
+    /**
+     * @throws Exception
+     */
+    public function resetPassword(UserInterface $user, ResetPasswordRequestConfiguration $configuration): void
     {
         $user->setConfirmationToken($this->tokenGenerator->generateToken());
         $this->update($user);
@@ -308,19 +229,19 @@ class UserManager
         }
     }
 
-    private function sendResetPasswordMail(UserInterface $user, ResetPasswordRequestConfiguration $configuration)
+    private function sendResetPasswordMail(UserInterface $user, ResetPasswordRequestConfiguration $configuration): void
     {
         $message = $this->createUserMessage($user, $configuration);
         $message->setContext([
             'user' => $user,
             'confirmation_url' => $this->router->generate($configuration->getConfirmationRoute(), [
                 'token' => $user->getConfirmationToken()
-            ], RouterInterface::ABSOLUTE_URL)
+            ], UrlGeneratorInterface::ABSOLUTE_URL)
         ]);
         $this->mailerManager->sendMessage($message);
     }
 
-    public function requestChangeEmail(UserInterface $user, ChangeEmailRequestConfiguration $configuration)
+    public function requestChangeEmail(UserInterface $user, ChangeEmailRequestConfiguration $configuration): void
     {
         $user->setConfirmationToken($this->tokenGenerator->generateToken());
         $this->update($user);
@@ -330,20 +251,20 @@ class UserManager
         }
     }
 
-    public function sendChangeEmailRequest(UserInterface $user, ChangeEmailRequestConfiguration $configuration)
+    public function sendChangeEmailRequest(UserInterface $user, ChangeEmailRequestConfiguration $configuration): void
     {
         $message = $this->createUserMessage($user, $configuration);
         $message->setContext([
             'user' => $user,
             'confirmation_url' => $this->router->generate($configuration->getConfirmationRoute(), [
                 'token' => $user->getConfirmationToken()
-            ], RouterInterface::ABSOLUTE_URL),
+            ], UrlGeneratorInterface::ABSOLUTE_URL),
             'configuration' => $configuration
         ]);
         $this->mailerManager->sendMessage($message);
     }
 
-    public function changeEmail(UserInterface $user, $newEmail, ChangeEmailConfirmConfiguration $configuration)
+    public function changeEmail(UserInterface $user, $newEmail, ChangeEmailConfirmConfiguration $configuration): void
     {
         $user->setEmail($newEmail);
         $user->setVerified(false);
@@ -357,20 +278,20 @@ class UserManager
         }
     }
 
-    public function sendChangeEmailConfirmMail(UserInterface $user, ChangeEmailConfirmConfiguration $configuration)
+    public function sendChangeEmailConfirmMail(UserInterface $user, ChangeEmailConfirmConfiguration $configuration): void
     {
         $message = $this->createUserMessage($user, $configuration);
         $message->setContext([
             'user' => $user,
             'confirmation_url' => $this->router->generate($configuration->getConfirmationRoute(), [
                 'token' => $user->getConfirmationToken()
-            ], RouterInterface::ABSOLUTE_URL),
+            ], UrlGeneratorInterface::ABSOLUTE_URL),
             'configuration' => $configuration
         ]);
         $this->mailerManager->sendMessage($message);
     }
 
-    public function delete(UserInterface $user, DeleteConfirmConfiguration $configuration)
+    public function delete(UserInterface $user, DeleteConfirmConfiguration $configuration): void
     {
         $this->em->remove($user);
         $this->em->flush();
@@ -380,7 +301,7 @@ class UserManager
         }
     }
 
-    private function sendDeleteMail(UserInterface $user, DeleteConfirmConfiguration $configuration)
+    private function sendDeleteMail(UserInterface $user, DeleteConfirmConfiguration $configuration): void
     {
         $message = $this->createUserMessage($user, $configuration);
         $message->setContext([
@@ -390,7 +311,7 @@ class UserManager
         $this->mailerManager->sendMessage($message);
     }
 
-    public function requestVerification(UserInterface $user, VerificationRequestConfiguration $configuration)
+    public function requestVerification(UserInterface $user, VerificationRequestConfiguration $configuration): void
     {
         if ($user->isVerified()) {
             return;
@@ -404,14 +325,14 @@ class UserManager
         }
     }
 
-    private function sendVerificationMail(UserInterface $user, VerificationRequestConfiguration $configuration)
+    private function sendVerificationMail(UserInterface $user, VerificationRequestConfiguration $configuration): void
     {
         $message = $this->createUserMessage($user, $configuration);
         $message->setContext([
             'user' => $user,
             'confirmation_url' => $this->router->generate($configuration->getConfirmationRoute(), [
                 'token' => $user->getConfirmationToken()
-            ], RouterInterface::ABSOLUTE_URL),
+            ], UrlGeneratorInterface::ABSOLUTE_URL),
             'configuration' => $configuration
         ]);
         $this->mailerManager->sendMessage($message);
@@ -426,6 +347,7 @@ class UserManager
         $message->setFrom($configuration->getMailFrom() ?? $this->mailerManager->getDefaults()->getMailFrom());
         $message->setSenderName($this->translator->trans($configuration->getMailSenderName() ?? $this->mailerManager->getDefaults()->getMailSenderName(), [], $configuration->getTranslationDomain()));
         $message->setContentType($configuration->getMailContentType() ?? Message::CONTENT_TYPE_PLAIN);
+
         return $message;
     }
 }

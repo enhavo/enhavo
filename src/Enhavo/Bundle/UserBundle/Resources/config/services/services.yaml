@@ -3,7 +3,6 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@Enhavo\Bundle\AppBundle\Mailer\MailerManager'
-            - '@enhavo_user.repository.user'
             - '@Enhavo\Bundle\UserBundle\Mapper\UserMapper'
             - '@enhavo_app.util.secure_url_token_generator'
             - '@translator'
@@ -14,12 +13,20 @@ services:
             - '@request_stack'
             - '@security.authentication.session_strategy.main'
             - '@security.user_checker.main'
-            - ~
             - '%enhavo_user.default_firewall%'
+
+    Enhavo\Bundle\UserBundle\EventListener\UserAuthenticationSubscriber:
+        arguments:
+            - '@Enhavo\Bundle\UserBundle\User\UserManager'
+            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
+            - '@request_stack'
+            - '@router'
+        tags:
+            - { name: kernel.event_subscriber }
 
     Enhavo\Bundle\UserBundle\EventListener\SaveUserSubscriber:
         arguments:
-            - '@enhavo_user.user.manager'
+            - '@Enhavo\Bundle\UserBundle\User\UserManager'
         tags:
             - { name: kernel.event_subscriber }
 
@@ -48,6 +55,7 @@ services:
     Enhavo\Bundle\UserBundle\Security\Authentication\FormLoginAuthenticator:
         arguments:
             - '@enhavo_user.user.manager'
+            - '@enhavo_user.repository.user'
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
             - '@router'
             - '@security.csrf.token_manager'

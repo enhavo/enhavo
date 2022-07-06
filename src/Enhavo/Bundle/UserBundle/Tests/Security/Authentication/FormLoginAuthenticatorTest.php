@@ -13,6 +13,7 @@ use Enhavo\Bundle\UserBundle\Event\UserLoginEvent;
 use Enhavo\Bundle\UserBundle\Mapper\UserMapper;
 use Enhavo\Bundle\UserBundle\Model\User;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
+use Enhavo\Bundle\UserBundle\Repository\UserRepository;
 use Enhavo\Bundle\UserBundle\Security\Authentication\FormLoginAuthenticator;
 use Enhavo\Bundle\UserBundle\Tests\Mocks\UserMock;
 use Enhavo\Bundle\UserBundle\User\UserManager;
@@ -49,6 +50,7 @@ class FormLoginAuthenticatorTest extends TestCase
 
         return new FormLoginAuthenticator(
             $dependencies->userManager,
+            $dependencies->userRepository,
             $dependencies->configurationProvider,
             $dependencies->urlGenerator,
             $dependencies->tokenManager,
@@ -71,6 +73,7 @@ class FormLoginAuthenticatorTest extends TestCase
         $dependencies->tokenManager = $this->getMockBuilder(CsrfTokenManagerInterface::class)->getMock();
         $dependencies->passwordEncoder = $this->getMockBuilder(UserPasswordEncoderInterface::class)->getMock();
         $dependencies->eventDispatcher = $this->getMockBuilder(EventDispatcherInterface::class)->getMock();
+        $dependencies->userRepository = $this->getMockBuilder(UserRepository::class)->disableOriginalConstructor()->getMock();
 
         $dependencies->request = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();
         $dependencies->request->attributes = new ParameterBag();
@@ -212,6 +215,7 @@ class FormLoginAuthenticatorTest extends TestCase
             $configuration->setRoute('config.login.route');
             return $configuration;
         });
+        $dependencies->request->expects($this->once())->method('get')->willReturn('failed@enhavo.com');
 
         $instance = $this->createInstance($dependencies);
 
@@ -295,6 +299,9 @@ class FormLoginAuthenticatorTestDependencies
 
     /** @var Session */
     public $session;
+
+    /** @var UserRepository|MockObject */
+    public $userRepository;
 
     public function getUserMapper($mappings)
     {

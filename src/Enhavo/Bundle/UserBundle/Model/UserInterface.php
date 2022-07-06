@@ -17,31 +17,31 @@ interface UserInterface extends BaseUserInterface
     const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
     const ROLE_ADMIN = 'ROLE_ADMIN';
 
-    public function setUsername($username);
+    public function setUsername(?string $username);
 
-    public function setSalt($salt);
+    public function setSalt(?string $salt);
 
     public function getEmail();
 
-    public function setEmail($email);
+    public function setEmail(?string $email);
 
     public function getPlainPassword();
 
-    public function setPlainPassword($password);
+    public function setPlainPassword(?string $password);
 
-    public function setPassword($password);
+    public function setPassword(?string $password);
 
     public function isSuperAdmin();
 
-    public function setEnabled($boolean);
+    public function setEnabled(bool $enabled);
 
     public function isEnabled(): bool;
 
-    public function setSuperAdmin($boolean);
+    public function setSuperAdmin(bool $superAdmin);
 
     public function getConfirmationToken();
 
-    public function setConfirmationToken($confirmationToken);
+    public function setConfirmationToken(?string $confirmationToken);
 
     public function setPasswordRequestedAt(\DateTime $date = null);
 
@@ -49,15 +49,27 @@ interface UserInterface extends BaseUserInterface
 
     public function setLastLogin(\DateTime $time = null);
 
-    public function hasRole($role);
+    public function hasRole(?string $role);
 
     public function setRoles(array $roles);
 
-    public function addRole($role);
+    public function addRole(?string $role);
 
-    public function removeRole($role);
+    public function removeRole(?string $role);
 
     public function isVerified(): bool;
 
     public function setVerified(bool $verified): void;
+
+    public function getFailedLoginAttempts(): int;
+
+    public function setFailedLoginAttempts(int $failedLoginAttempts): void;
+
+    public function setLastFailedLoginAttempt(?\DateTime $lastFailedLoginAttempt): void;
+
+    public function getLastFailedLoginAttempt(): ?\DateTime;
+
+    public function getPasswordUpdatedAt(): ?\DateTime;
+
+    public function setPasswordUpdatedAt(?\DateTime $passwordUpdatedAt): void;
 }
