@@ -82,12 +82,12 @@ class UserAuthenticationSubscriber implements EventSubscriberInterface
         if ($user) {
             $configKey = $this->getConfigKey();
             $configuration = $this->configurationProvider->getLoginConfiguration($configKey);
-            if ($configuration->getMaxLoginAttempts() > 0) {
+            if ($configuration->getMaxFailedLoginAttempts() > 0) {
 
                 $user->setFailedLoginAttempts(1 + $user->getFailedLoginAttempts());
                 $user->setLastFailedLoginAttempt(new \DateTime());
 
-                if ($user->getFailedLoginAttempts() > $configuration->getMaxLoginAttempts()) {
+                if ($user->getFailedLoginAttempts() > $configuration->getMaxFailedLoginAttempts()) {
                     // todo: this can be handled by LoginFailureResetHandler
                     $user->setPlainPassword(random_bytes(12));
                     $user->setFailedLoginAttempts(0);

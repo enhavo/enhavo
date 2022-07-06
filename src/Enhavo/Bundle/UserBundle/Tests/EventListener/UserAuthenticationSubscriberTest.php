@@ -134,7 +134,7 @@ class UserAuthenticationSubscriberTest extends TestCase
         $dependencies = $this->createDependencies();
         $dependencies->configurationProvider->method('getLoginConfiguration')->willReturnCallback(function () {
             $configuration = new LoginConfiguration();
-            $configuration->setMaxLoginAttempts(2);
+            $configuration->setMaxFailedLoginAttempts(2);
             return $configuration;
         });
         $dependencies->configurationProvider->method('getResetPasswordRequestConfiguration')->willReturnCallback(function() {
