@@ -24,12 +24,19 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use function Clue\StreamFilter\fun;
 
 class UserAuthenticationSubscriberTest extends TestCase
 {
     private function createDependencies(): UserAuthenticationSubscriberTestDependencies
     {
         $dependencies = new UserAuthenticationSubscriberTestDependencies();
+        $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
+        $dependencies->translator->method('trans')->willReturnCallback(function ($id, $opts, $domain) {
+            $this->assertEquals('EnhavoUserBundle', $domain);
+            return sprintf('%s.%s', $id, $domain);
+        });
         $dependencies->userManager = $this->getMockBuilder(UserManager::class)->disableOriginalConstructor()->getMock();
         $dependencies->configurationProvider = $this->getMockBuilder(ConfigurationProvider::class)->disableOriginalConstructor()->getMock();
         $dependencies->requestStack = $this->getMockBuilder(RequestStack::class)->disableOriginalConstructor()->getMock();
@@ -55,7 +62,8 @@ class UserAuthenticationSubscriberTest extends TestCase
             $dependencies->userManager,
             $dependencies->configurationProvider,
             $dependencies->requestStack,
-            $dependencies->router
+            $dependencies->router,
+            $dependencies->translator,
         );
     }
 
@@ -70,6 +78,9 @@ class UserAuthenticationSubscriberTest extends TestCase
         ], $events);
     }
 
+    /**
+     * @throws \Exception
+     */
     public function testOnLogin()
     {
         $dependencies = $this->createDependencies();
@@ -86,6 +97,36 @@ class UserAuthenticationSubscriberTest extends TestCase
         });
 
         $subscriber->onLogin($event);
+
+        $user->setPlainPassword('__PW__');
+        $user->setPasswordUpdatedAt((new \DateTime())->modify('-2 minute'));
+        $dependencies->configurationProvider->expects($this->once())->method('getLoginConfiguration')->willReturnCallback(function ($configKey) {
+            $config = new LoginConfiguration();
+            $config->setPasswordMaxAge('1 minute');
+
+            return $config;
+        });
+        $dependencies->configurationProvider->expects($this->once())->method('getResetPasswordRequestConfiguration')->willReturnCallback(function ($configKey) {
+            $config = new ResetPasswordRequestConfiguration();
+            $config->setRedirectRoute('config.redirect.route');
+
+            return $config;
+        });
+
+        $dependencies->userManager->expects($this->once())->method('logout');
+        $dependencies->userManager->expects($this->once())->method('resetPassword')->willReturnCallback(function (UserInterface $user) {
+            $this->assertNotEquals('__PW__', $user->getPlainPassword());
+            $this->assertNotNull($user->getLastLogin());
+            $this->assertEquals(0, $user->getFailedLoginAttempts());
+            $this->assertNull($user->getlastFailedLoginAttempt());
+        });
+        $dependencies->router->expects($this->once())->method('generate')->willReturnCallback(function ($route) {
+            return $route . '.routed';
+        });
+
+        $subscriber->onLogin($event);
+
+        $this->assertEquals('config.redirect.route.routed', $event->getResponse()->getTargetUrl());
     }
 
     public function testOnLoginFailure()
@@ -144,4 +185,7 @@ class UserAuthenticationSubscriberTestDependencies
 
     /** @var Request|MockObject */
     public $request;
+
+    /** @var TranslatorInterface|MockObject */
+    public $translator;
 }

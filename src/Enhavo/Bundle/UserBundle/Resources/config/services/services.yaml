@@ -21,6 +21,7 @@ services:
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
             - '@request_stack'
             - '@router'
+            - '@translator'
         tags:
             - { name: kernel.event_subscriber }
 

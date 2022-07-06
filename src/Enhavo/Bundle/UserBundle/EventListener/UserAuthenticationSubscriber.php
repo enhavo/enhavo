@@ -9,13 +9,13 @@ use Enhavo\Bundle\UserBundle\Event\UserLoginFailureEvent;
 use Enhavo\Bundle\UserBundle\Model\User;
 use Enhavo\Bundle\UserBundle\User\UserManager;
 use Exception;
-use JetBrains\PhpStorm\ArrayShape;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class UserAuthenticationSubscriber implements EventSubscriberInterface
 {
@@ -24,6 +24,7 @@ class UserAuthenticationSubscriber implements EventSubscriberInterface
         private ConfigurationProvider $configurationProvider,
         private RequestStack          $requestStack,
         private RouterInterface       $router,
+        private TranslatorInterface   $translator,
     )
     {
     }
@@ -128,7 +129,7 @@ class UserAuthenticationSubscriber implements EventSubscriberInterface
 
     private function addError(Session $session, string $message)
     {
-        $session->getFlashBag()->add('error', $message);
+        $session->getFlashBag()->add('error', $this->translator->trans($message, [], 'EnhavoUserBundle'));
     }
 
     private function generateUrl(string $route, array $options = []): string
