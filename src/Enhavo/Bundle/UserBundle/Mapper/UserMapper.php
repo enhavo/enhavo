@@ -16,24 +16,20 @@ class UserMapper implements UserMapperInterface
     const REGISTER_PROPERTIES = 'register_properties';
     const CREDENTIAL_PROPERTIES = 'credential_properties';
 
-    /** @var array */
-    private $config;
-
-    /**
-     * UserMapper constructor.
-     * @param array $config
-     */
-    public function __construct(array $config)
+    public function __construct(
+        private array $config,
+    )
     {
-        $this->config = $config;
     }
-
 
     public function getCredentialProperties(): array
     {
         return $this->config[self::CREDENTIAL_PROPERTIES];
     }
 
+    /**
+     * @throws PropertyNotExistsException
+     */
     public function setUsername(UserInterface $user, ?array $credentials = null)
     {
         if ($credentials === null) {
@@ -58,6 +54,9 @@ class UserMapper implements UserMapperInterface
         return $values;
     }
 
+    /**
+     * @throws PropertyNotExistsException
+     */
     public function getUsername(array $credentials): string
     {
         $properties = $this->getCredentialProperties();
@@ -78,19 +77,22 @@ class UserMapper implements UserMapperInterface
         return $this->config[self::REGISTER_PROPERTIES];
     }
 
-    private function hasProperty($property)
+    private function hasProperty($property): bool
     {
-        $register = false !== array_search($property, $this->config[self::REGISTER_PROPERTIES]);
-        $credential = false !== array_search($property, $this->config[self::CREDENTIAL_PROPERTIES]);
+        $register = in_array($property, $this->config[self::REGISTER_PROPERTIES]);
+        $credential = in_array($property, $this->config[self::CREDENTIAL_PROPERTIES]);
         return $register || $credential;
     }
 
-    public function mapValues(UserInterface $user, array $values)
+    /**
+     * @throws PropertyNotExistsException
+     */
+    public function mapValues(UserInterface $user, array $properties)
     {
         $propertyAccessor = new PropertyAccessor();
-        foreach ($values as $property => $value) {
+        foreach ($properties as $property => $value) {
             if ($this->hasProperty($property) && $propertyAccessor->isWritable($user, $property)) {
-                $value = $values[$property];
+                $value = $properties[$property];
                 $propertyAccessor->setValue($user, $property, $value);
             } else {
                 throw new PropertyNotExistsException(sprintf('Error while setting property "%s"', $property));
