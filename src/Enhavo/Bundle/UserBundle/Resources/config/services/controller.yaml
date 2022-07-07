@@ -18,7 +18,6 @@ services:
             - '@enhavo_user.user.manager'
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
             - '@enhavo_user.repository.user'
-            - '@enhavo_user.factory.user'
             - '@translator'
             - '@Enhavo\Bundle\FormBundle\Error\FormErrorResolver'
         calls:
