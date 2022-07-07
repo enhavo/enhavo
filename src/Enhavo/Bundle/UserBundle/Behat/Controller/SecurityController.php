@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\UserBundle\Behat\Controller;
 
 use Doctrine\ORM\EntityRepository;
+use Enhavo\Bundle\UserBundle\Configuration\Login\LoginConfiguration;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Enhavo\Bundle\UserBundle\User\UserManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -41,7 +42,7 @@ class SecurityController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function loginAction(Request $request)
+    public function loginAction(Request $request): Response
     {
         $username = $request->get('username');
 
@@ -52,7 +53,7 @@ class SecurityController extends AbstractController
 
 
         $response = new Response('Ok');
-        $this->userManager->login($user, $response);
+        $this->userManager->login($user, new LoginConfiguration());
         return $response;
     }
 }

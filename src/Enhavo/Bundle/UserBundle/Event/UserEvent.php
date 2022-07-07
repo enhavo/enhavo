@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\UserBundle\Event;
 
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\EventDispatcher\Event;
 
 class UserEvent extends Event
@@ -13,6 +14,10 @@ class UserEvent extends Event
     public const TYPE_PASSWORD_CHANGED = 'enhavo_user.user.password_changed';
     public const TYPE_EMAIl_CHANGED = 'enhavo_user.user.email_changed';
     public const TYPE_PASSWORD_RESET_REQUESTED = 'enhavo_user.user.password_reset_requested';
+    public const TYPE_LOGIN_SUCCESS = 'enhavo_user.user.login_success';
+    public const TYPE_LOGIN_FAILED = 'enhavo_user.user.login_failed';
+
+    private ?Response $response = null;
 
     public function __construct(
         protected string $type,
@@ -31,5 +36,13 @@ class UserEvent extends Event
         return $this->type;
     }
 
+    public function getResponse(): ?Response
+    {
+        return $this->response;
+    }
 
+    public function setResponse(?Response $response): void
+    {
+        $this->response = $response;
+    }
 }

@@ -4,6 +4,7 @@ namespace Enhavo\Bundle\UserBundle\Controller;
 
 use Enhavo\Bundle\FormBundle\Error\FormErrorResolver;
 use Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider;
+use Enhavo\Bundle\UserBundle\Exception\ConfigurationException;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Enhavo\Bundle\UserBundle\Repository\UserRepository;
 use Enhavo\Bundle\UserBundle\User\UserManager;
@@ -11,23 +12,18 @@ use Sylius\Component\Resource\Factory\FactoryInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Class RegistrationController
  * @package Enhavo\Bundle\UserBundle\Controller
- *
  */
 class RegistrationController extends AbstractUserController
 {
-    /** @var UserRepository */
-    private $userRepository;
-
-    /** @var FactoryInterface */
-    private $userFactory;
-
-    /** @var FormErrorResolver */
-    private $errorResolver;
+    private UserRepository $userRepository;
+    private FactoryInterface $userFactory;
+    private FormErrorResolver $errorResolver;
 
     /**
      * RegistrationController constructor.
@@ -46,7 +42,10 @@ class RegistrationController extends AbstractUserController
         $this->errorResolver = $errorResolver;
     }
 
-    public function registerAction(Request $request)
+    /**
+     * @throws ConfigurationException
+     */
+    public function registerAction(Request $request): RedirectResponse|JsonResponse|Response
     {
         $configKey = $this->getConfigKey($request);
         $configuration = $this->provider->getRegistrationRegisterConfiguration($configKey);
@@ -66,7 +65,7 @@ class RegistrationController extends AbstractUserController
                 $this->userManager->register($user, $configuration);
 
                 if ($configuration->isAutoLogin()) {
-                    $this->userManager->login($user);
+                    $this->userManager->login($user, $this->provider->getLoginConfiguration($configKey));
                 }
 
                 $url = $this->generateUrl($configuration->getRedirectRoute());
@@ -107,7 +106,10 @@ class RegistrationController extends AbstractUserController
         return $response;
     }
 
-    public function checkAction(Request $request)
+    /**
+     * @throws ConfigurationException
+     */
+    public function checkAction(Request $request): Response
     {
         $configKey = $this->getConfigKey($request);
         $configuration = $this->provider->getRegistrationCheckConfiguration($configKey);
@@ -115,7 +117,10 @@ class RegistrationController extends AbstractUserController
         return $this->render($this->getTemplate($configuration->getTemplate()));
     }
 
-    public function confirmAction(Request $request, $token)
+    /**
+     * @throws ConfigurationException
+     */
+    public function confirmAction(Request $request, $token): RedirectResponse
     {
         $configKey = $this->getConfigKey($request);
         $configuration = $this->provider->getRegistrationConfirmConfiguration($configKey);
@@ -128,7 +133,7 @@ class RegistrationController extends AbstractUserController
 
         $this->userManager->confirm($user, $configuration);
         if ($configuration->isAutoLogin()) {
-            $this->userManager->login($user);
+            $this->userManager->login($user, $this->provider->getLoginConfiguration($configKey));
         }
 
         $url = $this->generateUrl($configuration->getRedirectRoute());
@@ -136,7 +141,10 @@ class RegistrationController extends AbstractUserController
         return new RedirectResponse($url);
     }
 
-    public function finishAction(Request $request)
+    /**
+     * @throws ConfigurationException
+     */
+    public function finishAction(Request $request): Response
     {
         $configKey = $this->getConfigKey($request);
         $configuration = $this->provider->getRegistrationFinishConfiguration($configKey);

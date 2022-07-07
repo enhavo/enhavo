@@ -12,7 +12,6 @@ services:
             - '@security.token_storage'
             - '@request_stack'
             - '@security.authentication.session_strategy.main'
-            - '@security.user_checker.main'
             - '%enhavo_user.default_firewall%'
 
     Enhavo\Bundle\UserBundle\EventListener\UserAuthenticationSubscriber:
@@ -65,7 +64,11 @@ services:
             - '@event_dispatcher'
             - '%enhavo_user.model.user.class%'
 
-    Enhavo\Bundle\UserBundle\Security\UserChecker: ~
+    Enhavo\Bundle\UserBundle\Security\UserChecker:
+        arguments:
+            - '@Enhavo\Bundle\UserBundle\User\UserManager'
+            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
+            - '@request_stack'
 
     Enhavo\Bundle\UserBundle\Mapper\UserMapper:
         arguments:

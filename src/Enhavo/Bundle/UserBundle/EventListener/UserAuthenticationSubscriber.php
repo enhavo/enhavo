@@ -4,9 +4,8 @@ namespace Enhavo\Bundle\UserBundle\EventListener;
 
 use Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider;
 use Enhavo\Bundle\UserBundle\Event\UserEvent;
-use Enhavo\Bundle\UserBundle\Event\UserLoginEvent;
-use Enhavo\Bundle\UserBundle\Event\UserLoginFailureEvent;
-use Enhavo\Bundle\UserBundle\Model\User;
+use Enhavo\Bundle\UserBundle\Exception\PasswordExpiredException;
+use Enhavo\Bundle\UserBundle\Exception\TooManyLoginAttemptsException;
 use Enhavo\Bundle\UserBundle\User\UserManager;
 use Exception;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -15,6 +14,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Core\Exception\BadCredentialsException;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class UserAuthenticationSubscriber implements EventSubscriberInterface
@@ -33,93 +34,89 @@ class UserAuthenticationSubscriber implements EventSubscriberInterface
     {
         return [
             UserEvent::class => 'onUserEvent',
-            UserLoginEvent::class => 'onLogin',
-            UserLoginFailureEvent::class => 'onLoginFailure',
         ];
     }
 
     /**
      * @throws Exception
      */
-    public function onLogin(UserLoginEvent $event): void
+    public function onUserEvent(UserEvent $event)
     {
-        $user = $event->getUser();
-        $configKey = $this->getConfigKey();
-        $configuration = $this->configurationProvider->getLoginConfiguration($configKey);
-        $updated = $user->getPasswordUpdatedAt();
+        if ($event->getType() === UserEvent::TYPE_PASSWORD_CHANGED) {
+            $this->onPasswordChanged($event);
 
-        $user->setLastLogin(new \DateTime());
-        $user->setFailedLoginAttempts(0);
-        $user->setLastFailedLoginAttempt(null);
+        } else if ($event->getType() === UserEvent::TYPE_LOGIN_SUCCESS) {
+            $this->onLogin($event);
 
-        if ($configuration->getPasswordMaxAge() &&
-            (!$updated || $updated->modify(sprintf('+%s', $configuration->getPasswordMaxAge())) < new \DateTime())
-        ) {
-            // todo: This can be handled by PasswordMaxAgeResetHandler
-            $this->userManager->logout();
-
-            $user->setPlainPassword(random_bytes(12));
-
-            $configuration = $this->configurationProvider->getResetPasswordRequestConfiguration($configKey);
-            $this->userManager->resetPassword($user, $configuration);
-            $url = $this->generateUrl($configuration->getRedirectRoute());
-
-            $this->addError($this->getRequest()->getSession(), 'login.error.password_expired');
-            $event->setResponse(new RedirectResponse($url));
-
-        } else {
-            $this->userManager->update($user);
+        } else if ($event->getType() === UserEvent::TYPE_LOGIN_FAILED) {
+            $this->onLoginFailure($event);
         }
     }
 
     /**
      * @throws Exception
      */
-    public function onLoginFailure(UserLoginFailureEvent $event): void
+    private function onLogin(UserEvent $event): void
     {
         $user = $event->getUser();
 
-        if ($user) {
-            $configKey = $this->getConfigKey();
-            $configuration = $this->configurationProvider->getLoginConfiguration($configKey);
-            if ($configuration->getMaxFailedLoginAttempts() > 0) {
-
-                $user->setFailedLoginAttempts(1 + $user->getFailedLoginAttempts());
-                $user->setLastFailedLoginAttempt(new \DateTime());
-
-                if ($user->getFailedLoginAttempts() > $configuration->getMaxFailedLoginAttempts()) {
-                    // todo: this can be handled by LoginFailureResetHandler
-                    $user->setPlainPassword(random_bytes(12));
-                    $user->setFailedLoginAttempts(0);
-                    $user->setLastFailedLoginAttempt(null);
-
-                    $resetConfiguration = $this->configurationProvider->getResetPasswordRequestConfiguration($configKey);
-                    $this->userManager->resetPassword($user, $resetConfiguration);
-
-                    $this->addError($this->getRequest()->getSession(), 'login.error.max_failed_attempts');
-                    $url = $this->generateUrl($resetConfiguration->getRedirectRoute());
-                    $event->setResponse(new RedirectResponse($url));
-
-                } else {
-                    $this->userManager->update($user);
-                }
-            }
-        }
+        $user->setLastLogin(new \DateTime());
+        $user->setFailedLoginAttempts(0);
+        $user->setLastFailedLoginAttempt(null);
+        $this->userManager->update($user);
     }
 
-    public function onUserEvent(UserEvent $event)
+    /**
+     * @throws Exception
+     */
+    private function onLoginFailure(UserEvent $event): void
     {
-        if ($event->getType() === UserEvent::TYPE_PASSWORD_CHANGED) {
-            /** @var User $user */
-            $user = $event->getUser();
-            $user->setPasswordUpdatedAt(new \DateTime());
+        $user = $event->getUser();
+        $configKey = $this->getConfigKey();
+        $exception = $this->getRequest()->getSession()->get(Security::AUTHENTICATION_ERROR);
+
+        if ($exception instanceof BadCredentialsException) {
+            $user->setFailedLoginAttempts(1 + $user->getFailedLoginAttempts());
+            $user->setLastFailedLoginAttempt(new \DateTime());
             $this->userManager->update($user);
+
+        } else if ($exception instanceof PasswordExpiredException) {
+            $resetConfiguration = $this->configurationProvider->getResetPasswordRequestConfiguration($configKey);
+
+            if (null === $user->getConfirmationToken()) {
+                $this->userManager->resetPassword($user, $resetConfiguration);
+            }
+
+            $url = $this->generateUrl($resetConfiguration->getRedirectRoute());
+
+            $this->addError($this->getRequest()->getSession(), 'login.error.password_expired');
+            $event->setResponse(new RedirectResponse($url));
+
+        } else if ($exception instanceof TooManyLoginAttemptsException) {
+            $resetConfiguration = $this->configurationProvider->getResetPasswordRequestConfiguration($configKey);
+
+            if (null === $user->getConfirmationToken()) {
+                $this->userManager->resetPassword($user, $resetConfiguration);
+            }
+
+            $this->addError($this->getRequest()->getSession(), 'login.error.max_failed_attempts');
+            $url = $this->generateUrl($resetConfiguration->getRedirectRoute());
+            $event->setResponse(new RedirectResponse($url));
+
         }
+
+    }
+
+    private function onPasswordChanged(UserEvent $event)
+    {
+        $user = $event->getUser();
+        $user->setPasswordUpdatedAt(new \DateTime());
+        $this->userManager->update($user);
     }
 
     private function getRequest(): Request
     {
-        return $this->requestStack->getMainRequest();
+        return $this->requestStack->getCurrentRequest();
     }
 
     private function getConfigKey()

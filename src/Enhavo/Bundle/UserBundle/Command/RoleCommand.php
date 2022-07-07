@@ -85,7 +85,7 @@ EOT
         $remove = $input->getOption('remove');
 
         $username = $this->userMapper->getUsername($credentials);
-        $user = $this->userRepository->loadUserByUsername($username);
+        $user = $this->userRepository->loadUserByIdentifier($username);
 
         if ($remove) {
             $user->removeRole($role);

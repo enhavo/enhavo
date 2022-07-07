@@ -8,8 +8,7 @@ namespace Enhavo\Bundle\UserBundle\Security\Authentication;
 
 
 use Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider;
-use Enhavo\Bundle\UserBundle\Event\UserLoginEvent;
-use Enhavo\Bundle\UserBundle\Event\UserLoginFailureEvent;
+use Enhavo\Bundle\UserBundle\Event\UserEvent;
 use Enhavo\Bundle\UserBundle\Exception\ConfigurationException;
 use Enhavo\Bundle\UserBundle\Mapper\UserMapperInterface;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
@@ -93,6 +92,7 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator implements P
         }
 
         $username = $this->userMapper->getUsername($credentials);
+        /** @var UserInterface $user */
         $user = $userProvider->loadUserByUsername($username);
 
         if (!$user) {
@@ -137,26 +137,31 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator implements P
             $request->getSession()->set(Security::AUTHENTICATION_ERROR, $exception);
         }
 
-        $event = $this->dispatchFailure($request->get('_email'));
+        $user = $this->userRepository->findByEmail(strtolower($request->get('_email')));
+        if ($user) {
+            $event = $this->dispatchFailure($user);
+            if ($event->getResponse()) {
+                return $event->getResponse();
+            }
+        }
 
         $this->updateLoginRoute($this->getConfigKey($request));
-        return $event->getResponse() ?? new RedirectResponse($this->getLoginUrl());
+        return new RedirectResponse($this->getLoginUrl());
     }
 
-    private function dispatchSuccess(TokenInterface $token): UserLoginEvent
+    private function dispatchSuccess(TokenInterface $token): UserEvent
     {
         /** @var UserInterface $user */
         $user = $token->getUser();
-        $event = new UserLoginEvent($user);
+        $event = new UserEvent(UserEvent::TYPE_LOGIN_SUCCESS, $user);
         $this->eventDispatcher->dispatch($event);
 
         return $event;
     }
 
-    private function dispatchFailure(string $email): UserLoginFailureEvent
+    private function dispatchFailure(UserInterface $user): UserEvent
     {
-        $user = $this->userRepository->findByEmail($email);
-        $event = new UserLoginFailureEvent($user);
+        $event = new UserEvent(UserEvent::TYPE_LOGIN_FAILED, $user);
         $this->eventDispatcher->dispatch($event);
 
         return $event;

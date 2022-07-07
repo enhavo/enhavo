@@ -9,7 +9,7 @@ namespace Enhavo\Bundle\UserBundle\Tests\Security\Authentication;
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider;
 use Enhavo\Bundle\UserBundle\Configuration\Login\LoginConfiguration;
-use Enhavo\Bundle\UserBundle\Event\UserLoginEvent;
+use Enhavo\Bundle\UserBundle\Event\UserEvent;
 use Enhavo\Bundle\UserBundle\Mapper\UserMapper;
 use Enhavo\Bundle\UserBundle\Model\User;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
@@ -133,7 +133,6 @@ class FormLoginAuthenticatorTest extends TestCase
         $dependencies = $this->createDependencies();
         $dependencies->tokenManager->expects($this->once())->method('isTokenValid')->willReturn(true);
 
-
         $instance = $this->createInstance($dependencies);
         $credentials = $instance->getCredentials($dependencies->request);
         /** @var UserProviderInterface|MockObject $userProvider */
@@ -191,7 +190,7 @@ class FormLoginAuthenticatorTest extends TestCase
         $dependencies = $this->createDependencies();
 
         $dependencies->eventDispatcher->expects($this->once())->method('dispatch')->willReturnCallback(function ($event) use ($user) {
-            $this->assertInstanceOf(UserLoginEvent::class, $event);
+            $this->assertInstanceOf(UserEvent::class, $event);
             $this->assertEquals($user, $event->getUser());
             return $event;
         });
