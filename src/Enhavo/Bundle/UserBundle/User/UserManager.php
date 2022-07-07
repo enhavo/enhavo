@@ -13,18 +13,14 @@ use Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface;
 use Enhavo\Bundle\UserBundle\Configuration\ChangeEmail\ChangeEmailConfirmConfiguration;
 use Enhavo\Bundle\UserBundle\Configuration\ChangeEmail\ChangeEmailRequestConfiguration;
 use Enhavo\Bundle\UserBundle\Configuration\Delete\DeleteConfirmConfiguration;
-use Enhavo\Bundle\UserBundle\Configuration\Login\LoginConfiguration;
 use Enhavo\Bundle\UserBundle\Configuration\MailConfigurationInterface;
 use Enhavo\Bundle\UserBundle\Configuration\Registration\RegistrationConfirmConfiguration;
 use Enhavo\Bundle\UserBundle\Configuration\Registration\RegistrationRegisterConfiguration;
 use Enhavo\Bundle\UserBundle\Configuration\ResetPassword\ResetPasswordRequestConfiguration;
 use Enhavo\Bundle\UserBundle\Configuration\Verification\VerificationRequestConfiguration;
 use Enhavo\Bundle\UserBundle\Event\UserEvent;
-use Enhavo\Bundle\UserBundle\Exception\PasswordExpiredException;
-use Enhavo\Bundle\UserBundle\Exception\TooManyLoginAttemptsException;
 use Enhavo\Bundle\UserBundle\Mapper\UserMapperInterface;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
-use Enhavo\Bundle\UserBundle\Model\UserInterface as EnhavoUserInterface;
 use Exception;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -34,7 +30,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
-use Symfony\Component\Security\Core\Exception\BadCredentialsException;
+use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Http\Session\SessionAuthenticationStrategyInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -42,17 +38,18 @@ class UserManager
 {
     public function __construct(
         protected EntityManagerInterface $em,
-        protected MailerManager $mailerManager,
-        private UserMapperInterface $userMapper,
-        private TokenGeneratorInterface $tokenGenerator,
-        private TranslatorInterface $translator,
-        private EncoderFactoryInterface $encoderFactory,
-        protected RouterInterface $router,
-        private EventDispatcherInterface $eventDispatcher,
-        private TokenStorageInterface $tokenStorage,
-        private RequestStack $requestStack,
+        protected MailerManager                        $mailerManager,
+        private UserMapperInterface                    $userMapper,
+        private TokenGeneratorInterface                $tokenGenerator,
+        private TranslatorInterface                    $translator,
+        private EncoderFactoryInterface                $encoderFactory,
+        protected RouterInterface                      $router,
+        private EventDispatcherInterface               $eventDispatcher,
+        private TokenStorageInterface                  $tokenStorage,
+        private RequestStack                           $requestStack,
         private SessionAuthenticationStrategyInterface $sessionStrategy,
-        private string $defaultFirewall,
+        private UserCheckerInterface                   $userChecker,
+        private string                                 $defaultFirewall,
     ) {
 
     }
@@ -117,53 +114,9 @@ class UserManager
         $this->userMapper->mapValues($user, $values);
     }
 
-    public function isPasswordExpired(UserInterface $user, LoginConfiguration $configuration): bool
+    public function login(UserInterface $user, ?string $firewallName = null): void
     {
-        $updated = $user->getPasswordUpdatedAt();
-
-        if ($configuration->getPasswordMaxAge() &&
-            (!$updated || $updated->modify(sprintf('+%s', $configuration->getPasswordMaxAge())) < new \DateTime())
-        ) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public function hasTooManyLoginAttempts(UserInterface $user, LoginConfiguration $configuration): bool
-    {
-        if ($configuration->getMaxFailedLoginAttempts() > 0) {
-            if ($user->getFailedLoginAttempts() > $configuration->getMaxFailedLoginAttempts()) {
-                // todo: this can be handled by LoginMaxFailedAt
-
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-
-    public function checkPreAuth(\Symfony\Component\Security\Core\User\UserInterface $user, LoginConfiguration $configuration): void
-    {
-        if (!$user instanceof EnhavoUserInterface) {
-            return;
-        }
-
-        if (false === $user->isEnabled()) {
-            throw new BadCredentialsException('User account not activated');
-
-        } else if (true === $this->isPasswordExpired($user, $configuration)) {
-            throw new PasswordExpiredException('Password expired');
-
-        } else if (true === $this->hasTooManyLoginAttempts($user, $configuration)) {
-            throw new TooManyLoginAttemptsException('Too many login attempts');
-        }
-    }
-
-    public function login(UserInterface $user, LoginConfiguration $configuration, ?string $firewallName = null): void
-    {
-        $this->checkPreAuth($user, $configuration);
+        $this->userChecker->checkPreAuth($user);
 
         $token = new UsernamePasswordToken($user, null, $firewallName ?? $this->defaultFirewall, $user->getRoles());
         $request = $this->requestStack->getCurrentRequest();

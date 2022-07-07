@@ -65,7 +65,7 @@ class RegistrationController extends AbstractUserController
                 $this->userManager->register($user, $configuration);
 
                 if ($configuration->isAutoLogin()) {
-                    $this->userManager->login($user, $this->provider->getLoginConfiguration($configKey));
+                    $this->userManager->login($user);
                 }
 
                 $url = $this->generateUrl($configuration->getRedirectRoute());
@@ -133,7 +133,7 @@ class RegistrationController extends AbstractUserController
 
         $this->userManager->confirm($user, $configuration);
         if ($configuration->isAutoLogin()) {
-            $this->userManager->login($user, $this->provider->getLoginConfiguration($configKey));
+            $this->userManager->login($user);
         }
 
         $url = $this->generateUrl($configuration->getRedirectRoute());

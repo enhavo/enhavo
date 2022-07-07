@@ -35,6 +35,7 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
+use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Http\Session\SessionAuthenticationStrategyInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -68,6 +69,7 @@ class UserManagerTest extends TestCase
             $dependencies->tokenStorage,
             $dependencies->requestStack,
             $dependencies->sessionStrategy,
+            $dependencies->userChecker,
             $dependencies->defaultFirewall
         );
     }
@@ -84,6 +86,7 @@ class UserManagerTest extends TestCase
         $dependencies->translator->method('trans')->willReturnCallback(function ($message) {
             return $message .'.translated';
         });
+        $dependencies->userChecker = $this->getMockBuilder(UserCheckerInterface::class)->getMock();
         $dependencies->form = $this->getMockBuilder(FormInterface::class)->getMock();
         $dependencies->encoderFactory = $this->getMockBuilder(EncoderFactoryInterface::class)->getMock();
         $dependencies->encoder = $this->getMockBuilder(PasswordEncoderInterface::class)->getMock();
@@ -378,7 +381,7 @@ class UserManagerTest extends TestCase
         $dependencies->requestStack->expects($this->once())->method('getCurrentRequest')->willReturn($request);
         $manager = $this->createInstance($dependencies, []);
 
-        $manager->login($user, new LoginConfiguration());
+        $manager->login($user);
     }
 
 
@@ -429,6 +432,9 @@ class UserManagerTest extends TestCase
 
 class UserManagerTestDependencies
 {
+    /** @var UserCheckerInterface|MockObject */
+    public $userChecker;
+
     /** @var EntityManagerInterface|MockObject */
     public $entityManager;
 

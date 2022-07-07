@@ -150,7 +150,7 @@ class ResetPasswordController extends AbstractUserController
             if ($form->isValid()) {
                 $this->userManager->changePassword($user);
                 if ($configuration->isAutoLogin()) {
-                    $this->userManager->login($user, $this->provider->getLoginConfiguration($configKey));
+                    $this->userManager->login($user);
                 }
 
                 $url = $this->generateUrl($configuration->getRedirectRoute());

@@ -4,6 +4,7 @@ namespace Enhavo\Bundle\UserBundle\Event;
 
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Contracts\EventDispatcher\Event;
 
 class UserEvent extends Event
@@ -16,8 +17,10 @@ class UserEvent extends Event
     public const TYPE_PASSWORD_RESET_REQUESTED = 'enhavo_user.user.password_reset_requested';
     public const TYPE_LOGIN_SUCCESS = 'enhavo_user.user.login_success';
     public const TYPE_LOGIN_FAILED = 'enhavo_user.user.login_failed';
+    public const TYPE_PRE_AUTH = 'enhavo_user.user.pre_auth';
 
     private ?Response $response = null;
+    private ?AuthenticationException $exception = null;
 
     public function __construct(
         protected string $type,
@@ -44,5 +47,15 @@ class UserEvent extends Event
     public function setResponse(?Response $response): void
     {
         $this->response = $response;
+    }
+
+    public function getException(): ?AuthenticationException
+    {
+        return $this->exception;
+    }
+
+    public function setException(?AuthenticationException $exception): void
+    {
+        $this->exception = $exception;
     }
 }

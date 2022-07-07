@@ -12,17 +12,8 @@ services:
             - '@security.token_storage'
             - '@request_stack'
             - '@security.authentication.session_strategy.main'
+            - '@security.user_checker.main'
             - '%enhavo_user.default_firewall%'
-
-    Enhavo\Bundle\UserBundle\EventListener\UserAuthenticationSubscriber:
-        arguments:
-            - '@Enhavo\Bundle\UserBundle\User\UserManager'
-            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
-            - '@request_stack'
-            - '@router'
-            - '@translator'
-        tags:
-            - { name: kernel.event_subscriber }
 
     Enhavo\Bundle\UserBundle\EventListener\SaveUserSubscriber:
         arguments:
@@ -66,9 +57,7 @@ services:
 
     Enhavo\Bundle\UserBundle\Security\UserChecker:
         arguments:
-            - '@Enhavo\Bundle\UserBundle\User\UserManager'
-            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
-            - '@request_stack'
+            - '@event_dispatcher'
 
     Enhavo\Bundle\UserBundle\Mapper\UserMapper:
         arguments:

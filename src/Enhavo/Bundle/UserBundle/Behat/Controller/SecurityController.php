@@ -53,7 +53,7 @@ class SecurityController extends AbstractController
 
 
         $response = new Response('Ok');
-        $this->userManager->login($user, new LoginConfiguration());
+        $this->userManager->login($user);
         return $response;
     }
 }

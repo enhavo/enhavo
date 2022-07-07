@@ -22,6 +22,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Exception\AccountStatusException;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
@@ -118,9 +119,12 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator implements P
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey): ?Response
     {
-        $event = $this->dispatchSuccess($token);
+        /** @var UserInterface $user */
+        $user = $token->getUser();
         $session = $request->getSession();
         $targetPath = $request->get('_target_path') ?? $this->getTargetPath($session, $providerKey);
+        $event = $this->dispatchSuccess($user);
+
         if ($targetPath) {
             return $event->getResponse() ?? new RedirectResponse($targetPath);
         }
@@ -137,9 +141,12 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator implements P
             $request->getSession()->set(Security::AUTHENTICATION_ERROR, $exception);
         }
 
-        $user = $this->userRepository->findByEmail(strtolower($request->get('_email')));
+        $user = ($exception instanceof AccountStatusException ?
+            $exception->getUser() : $this->userRepository->findByEmail(strtolower($request->get('_email'))) // is _email always the right key?
+        );
         if ($user) {
-            $event = $this->dispatchFailure($user);
+            $event = $this->dispatchFailure($user, $exception);
+
             if ($event->getResponse()) {
                 return $event->getResponse();
             }
@@ -149,19 +156,18 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator implements P
         return new RedirectResponse($this->getLoginUrl());
     }
 
-    private function dispatchSuccess(TokenInterface $token): UserEvent
+    private function dispatchSuccess(UserInterface $user): UserEvent
     {
-        /** @var UserInterface $user */
-        $user = $token->getUser();
         $event = new UserEvent(UserEvent::TYPE_LOGIN_SUCCESS, $user);
         $this->eventDispatcher->dispatch($event);
 
         return $event;
     }
 
-    private function dispatchFailure(UserInterface $user): UserEvent
+    private function dispatchFailure(UserInterface $user, AuthenticationException $exception): UserEvent
     {
         $event = new UserEvent(UserEvent::TYPE_LOGIN_FAILED, $user);
+        $event->setException($exception);
         $this->eventDispatcher->dispatch($event);
 
         return $event;
