@@ -165,6 +165,14 @@ class Order extends SyliusOrder implements OrderInterface
         return $this->shipments;
     }
 
+    public function removeShipments()
+    {
+        $shipments = $this->getShipments();
+        foreach ($shipments as $shipment) {
+            $this->removeShipment($shipment);
+        }
+    }
+
     public function setEmail(?string $email)
     {
         $this->email = $email;
