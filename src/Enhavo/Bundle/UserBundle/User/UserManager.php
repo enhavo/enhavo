@@ -77,6 +77,15 @@ class UserManager
         $this->hashPassword($user);
     }
 
+    public function updateLoggedIn(UserInterface $user, $flush = true): void
+    {
+        $user->setLastLogin(new \DateTime());
+
+        if ($flush) {
+            $this->em->flush();
+        }
+    }
+
     public function updateUsername(UserInterface $user): void
     {
         $this->userMapper->setUsername($user);
@@ -117,6 +126,8 @@ class UserManager
     public function login(UserInterface $user, ?string $firewallName = null): void
     {
         $this->userChecker->checkPreAuth($user);
+
+        $this->updateLoggedIn($user);
 
         $token = new UsernamePasswordToken($user, null, $firewallName ?? $this->defaultFirewall, $user->getRoles());
         $request = $this->requestStack->getCurrentRequest();

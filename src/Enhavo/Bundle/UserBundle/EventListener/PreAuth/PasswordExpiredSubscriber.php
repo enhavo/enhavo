@@ -11,12 +11,14 @@ use Enhavo\Bundle\UserBundle\Event\UserEvent;
 use Enhavo\Bundle\UserBundle\Exception\PasswordExpiredException;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 
-abstract class PasswordExpiredSubscriber extends AbstractPreAuthSubscriber
+class PasswordExpiredSubscriber extends AbstractPreAuthSubscriber
 {
-    public function checkPreAuth(UserEvent $event): void
+    public function onPreAuth(UserEvent $event): void
     {
         if (true === $this->isPasswordExpired($event->getUser(), $this->getLoginConfiguration())) {
-            $event->setException(new PasswordExpiredException('Password expired'));
+            $exception = new PasswordExpiredException('Password expired');
+            $exception->setUser($event->getUser());
+            $event->setException($exception);
         }
     }
 

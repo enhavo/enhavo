@@ -9,12 +9,14 @@ namespace Enhavo\Bundle\UserBundle\EventListener\PreAuth;
 use Enhavo\Bundle\UserBundle\Event\UserEvent;
 use Enhavo\Bundle\UserBundle\Exception\NotEnabledException;
 
-abstract class NotEnabledSubscriber extends AbstractPreAuthSubscriber
+class NotEnabledSubscriber extends AbstractPreAuthSubscriber
 {
-    public function checkPreAuth(UserEvent $event): void
+    public function onPreAuth(UserEvent $event): void
     {
         if (false === $event->getUser()->isEnabled()) {
-            $event->setException(new NotEnabledException('Not enabled'));
+            $exception = new NotEnabledException('Not enabled');
+            $exception->setUser($event->getUser());
+            $event->setException($exception);
         }
     }
 

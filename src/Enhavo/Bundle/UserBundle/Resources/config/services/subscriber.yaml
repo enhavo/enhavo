@@ -1,35 +1,52 @@
 services:
     Enhavo\Bundle\UserBundle\EventListener\Authentication\AbstractFailureSubscriber:
+        abstract: true
         calls:
             - [setUserManager, ['@Enhavo\Bundle\UserBundle\User\UserManager']]
             - [setConfigurationProvider, ['@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider']]
             - [setRequestStack, ['@request_stack']]
             - [setRouter, ['@router']]
             - [setTranslator, ['@translator']]
-        tags:
-            - { name: kernel.event_subscriber }
 
     Enhavo\Bundle\UserBundle\EventListener\Authentication\BadCredentialSubscriber:
         parent: Enhavo\Bundle\UserBundle\EventListener\Authentication\AbstractFailureSubscriber
-
-    Enhavo\Bundle\UserBundle\EventListener\Authentication\PasswordExpiredSubscriber:
-        parent: Enhavo\Bundle\UserBundle\EventListener\Authentication\AbstractFailureSubscriber
-
-    Enhavo\Bundle\UserBundle\EventListener\Authentication\TooManyAttemptsSubscriber:
-        parent: Enhavo\Bundle\UserBundle\EventListener\Authentication\AbstractFailureSubscriber
-
-    Enhavo\Bundle\UserBundle\EventListener\PreAuth\AbstractPreAuthSubscriber:
-        calls:
-            - [setConfigurationProvider, ['@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider']]
-            - [setRequestStack, ['@request_stack']]
         tags:
             - { name: kernel.event_subscriber }
 
+    Enhavo\Bundle\UserBundle\EventListener\Authentication\PasswordExpiredSubscriber:
+        parent: Enhavo\Bundle\UserBundle\EventListener\Authentication\AbstractFailureSubscriber
+        tags:
+            - { name: kernel.event_subscriber }
+
+    Enhavo\Bundle\UserBundle\EventListener\Authentication\TooManyAttemptsSubscriber:
+        parent: Enhavo\Bundle\UserBundle\EventListener\Authentication\AbstractFailureSubscriber
+        tags:
+            - { name: kernel.event_subscriber }
+
+    Enhavo\Bundle\UserBundle\EventListener\PreAuth\AbstractPreAuthSubscriber:
+        abstract: true
+        calls:
+            - [setUserManager, ['@Enhavo\Bundle\UserBundle\User\UserManager']]
+            - [setConfigurationProvider, ['@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider']]
+            - [setRequestStack, ['@request_stack']]
+
     Enhavo\Bundle\UserBundle\EventListener\PreAuth\NotEnabledSubscriber:
         parent: Enhavo\Bundle\UserBundle\EventListener\PreAuth\AbstractPreAuthSubscriber
+        tags:
+            - { name: kernel.event_subscriber }
 
     Enhavo\Bundle\UserBundle\EventListener\PreAuth\PasswordExpiredSubscriber:
         parent: Enhavo\Bundle\UserBundle\EventListener\PreAuth\AbstractPreAuthSubscriber
+        tags:
+            - { name: kernel.event_subscriber }
 
     Enhavo\Bundle\UserBundle\EventListener\PreAuth\TooManyLoginAttemptsSubscriber:
         parent: Enhavo\Bundle\UserBundle\EventListener\PreAuth\AbstractPreAuthSubscriber
+        tags:
+            - { name: kernel.event_subscriber }
+
+    Enhavo\Bundle\UserBundle\EventListener\LastLoginSubscriber:
+        arguments:
+            - '@Enhavo\Bundle\UserBundle\User\UserManager'
+        tags:
+            - { name: kernel.event_subscriber }

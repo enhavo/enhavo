@@ -11,19 +11,22 @@ use Enhavo\Bundle\UserBundle\Event\UserEvent;
 use Enhavo\Bundle\UserBundle\Exception\TooManyLoginAttemptsException;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 
-abstract class TooManyLoginAttemptsSubscriber extends AbstractPreAuthSubscriber
+class TooManyLoginAttemptsSubscriber extends AbstractPreAuthSubscriber
 {
-
-    public function checkPreAuth(UserEvent $event): void
+    public function onPreAuth(UserEvent $event): void
     {
         if (true === $this->hasTooManyLoginAttempts($event->getUser(), $this->getLoginConfiguration())) {
-            $event->setException(new TooManyLoginAttemptsException('Too many login attempts'));
+            $exception = new TooManyLoginAttemptsException('Too many login attempts');
+            $exception->setUser($event->getUser());
+            $event->setException($exception);
         }
     }
 
     public function hasTooManyLoginAttempts(UserInterface $user, LoginConfiguration $configuration): bool
     {
-        if ($configuration->getMaxFailedLoginAttempts() > 0 && $user->getFailedLoginAttempts() > $configuration->getMaxFailedLoginAttempts()) {
+        if ($configuration->getMaxFailedLoginAttempts()
+            && $user->getFailedLoginAttempts() > $configuration->getMaxFailedLoginAttempts()
+        ) {
             return true;
         }
 
