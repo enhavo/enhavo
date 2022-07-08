@@ -41,7 +41,7 @@ class Configuration implements ConfigurationInterface
                             ->addDefaultsIfNotSet()
                             ->children()
                                 ->scalarNode('api_key')->defaultValue(null)->end()
-                                ->scalarNode('image_type')->defaultValue(YoutubeProvider::IMAGE_TYPE_MAX_RESOLUTION)->end()
+                                ->scalarNode('image_type')->defaultValue(YoutubeProvider::IMAGE_TYPE_MAX)->end()
                             ->end()
                         ->end()
                         ->arrayNode('vimeo')
