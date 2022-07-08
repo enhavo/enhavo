@@ -18,7 +18,7 @@ class YoutubeProviderTest extends TestCase
 
     public function testCreateFromLongUrlWithoutApiKey()
     {
-        $provider = new YoutubeProvider();
+        $provider = new YoutubeProvider(null, YoutubeProvider::IMAGE_TYPE_MAX, false);
 
         $video = $provider->create('https://www.youtube.com/watch?v=S0meK3y');
 
@@ -30,7 +30,7 @@ class YoutubeProviderTest extends TestCase
 
     public function testCreateFromShortUrlWithoutApiKey()
     {
-        $provider = new YoutubeProvider();
+        $provider = new YoutubeProvider(null, YoutubeProvider::IMAGE_TYPE_MAX, false);
 
         $video = $provider->create('https://youtu.be/S0meK3y');
 
