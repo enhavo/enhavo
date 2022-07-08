@@ -19,13 +19,17 @@ class YoutubeProvider implements ProviderInterface
     /** @var string */
     private $imageType;
 
+    /** @var bool */
+    private $checkThumbnailUrl;
+
     /**
      * @param string $apiKey
      */
-    public function __construct(?string $apiKey = null, $imageType = self::IMAGE_TYPE_MAX)
+    public function __construct(?string $apiKey = null, $imageType = self::IMAGE_TYPE_MAX, $checkThumbnailUrl = true)
     {
         $this->apiKey = $apiKey;
         $this->imageType = $imageType;
+        $this->checkThumbnailUrl = $checkThumbnailUrl;
     }
 
     public function create(string $url): Video
@@ -63,6 +67,10 @@ class YoutubeProvider implements ProviderInterface
 
     private function getThumbnailUrl($id, $preferredType)
     {
+        if (!$this->checkThumbnailUrl) {
+            return sprintf('https://i.ytimg.com/vi/%s/%s.jpg', $id, $preferredType);
+        }
+
         $types = [self::IMAGE_TYPE_MQ, self::IMAGE_TYPE_SQ, self::IMAGE_TYPE_HQ, self::IMAGE_TYPE_MAX];
         $key = array_search($preferredType, $types);
         unset($types[$key]);
@@ -79,7 +87,7 @@ class YoutubeProvider implements ProviderInterface
             }
         }
 
-        throw new VideoException('Can\' t resolve thmbnail image for youtube video with id: "%s"', $id);
+        throw new VideoException(sprintf('Can\' t resolve thmbnail image for youtube video with id: "%s"', $id));
     }
 
     private function checkUrl($url): bool
