@@ -10,22 +10,24 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity()]
 #[ORM\Table(name: '<?= $orm->getTableName() ?>')]
-class <?= $class->getName(); ?>
+class <?= $class->getName(); ?><?php if ($class->getImplements()): ?> implements <?= $class->getImplements(); ?><?php endif; ?>
 
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
-    private ?int $id;
-
 <?php foreach ($class->getProperties() as $property) { ?>
+<?php $ormField = $orm->getField($property->getName()); ?>
+<?php if ($ormField->isPrimaryKey()) { ?>
+    #[Orm\Id]
+<?php } ?>
+<?php if ($ormField->getGeneratedValueType()) { ?>
+    #[ORM\GeneratedValue(strategy: '<?= $ormField->getGeneratedValueType(); ?>')]
+<?php } ?>
 <?php $attributeType = $orm->getAttributeType($property->getName()); ?>
     #[ORM\<?= $attributeType ?>(
 <?php foreach ($orm->getAttributeOptions($property->getName()) as $key => $value) { ?>
         <?= $key ?>: <?= $value ?>,
 <?php } ?>
 <?php $relation = $orm->getRelation($property->getName()); ?>
-<?php if ($attributeType === 'OneToOne') { ?>
+    <?php if ($attributeType === 'OneToOne') { ?>
         targetEntity: <?= $relation->getTargetEntity() ?>,
         cascade: [ 'persist', 'refresh', 'remove' ],
 <?php } else if ($attributeType === 'OneToMany') { ?>

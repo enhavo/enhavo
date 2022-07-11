@@ -212,10 +212,7 @@ class BlockDefinition
 
     public function getTranslationDomain(): ?string
     {
-        if ($this->bundle) {
-            return $this->bundle->getName();
-        }
-        return null;
+        return $this->bundle?->getName();
     }
 
     public function getApplicationName(): string
@@ -230,7 +227,7 @@ class BlockDefinition
 
     public function createEntityPhpClass(): PhpClass
     {
-        $class = new PhpClass($this->getEntityNamespace(), $this->getName(), AbstractBlock::class, $this->getUse(), $this->getProperties());
+        $class = new PhpClass($this->getEntityNamespace(), $this->getName(), $this->getImplements(), $this->getUse(), $this->getProperties());
         $class->generateConstructor();
         $class->generateGettersSetters();
         $class->generateAddersRemovers();
@@ -263,9 +260,14 @@ class BlockDefinition
         return $this->getConfig('label') ?? $this->getCamelName();
     }
 
+    public function getImplements(): ?string
+    {
+        return $this->getConfig('implements', null);
+    }
+
     public function createFormTypePhpClass(): PhpClass
     {
-        return new PhpClass($this->getFormNamespace(), $this->getFormTypeName(), AbstractType::class, $this->getFormUse(), []);
+        return new PhpClass($this->getFormNamespace(), $this->getFormTypeName(), null, $this->getFormUse(), []);
     }
 
     public function createDoctrineOrmYaml(): DoctrineOrmYaml
