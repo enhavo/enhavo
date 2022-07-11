@@ -27,7 +27,7 @@ class <?= $class->getName(); ?><?php if ($class->getImplements()): ?> implements
         <?= $key ?>: <?= $value ?>,
 <?php } ?>
 <?php $relation = $orm->getRelation($property->getName()); ?>
-    <?php if ($attributeType === 'OneToOne') { ?>
+<?php if ($attributeType === 'OneToOne') { ?>
         targetEntity: <?= $relation->getTargetEntity() ?>,
         cascade: [ 'persist', 'refresh', 'remove' ],
 <?php } else if ($attributeType === 'OneToMany') { ?>
