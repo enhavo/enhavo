@@ -7,12 +7,19 @@
 namespace Enhavo\Bundle\UserBundle\EventListener;
 
 use Enhavo\Bundle\UserBundle\Event\UserEvent;
+use Enhavo\Bundle\UserBundle\User\UserManager;
 use Exception;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 
 class BadCredentialSubscriber implements EventSubscriberInterface
 {
+    public function __construct(
+        private UserManager $userManager,
+    )
+    {
+    }
+
     public static function getSubscribedEvents(): array
     {
         return [
