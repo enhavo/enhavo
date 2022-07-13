@@ -1,18 +1,25 @@
 <?php
 /**
  * @author blutze-media
- * @since 2022-07-07
+ * @since 2022-07-13
  */
 
-namespace Enhavo\Bundle\UserBundle\EventListener\Authentication;
+namespace Enhavo\Bundle\UserBundle\EventListener;
 
 use Enhavo\Bundle\UserBundle\Event\UserEvent;
 use Exception;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
-use Symfony\Component\Security\Core\Security;
 
-class BadCredentialSubscriber extends AbstractFailureSubscriber
+class BadCredentialSubscriber implements EventSubscriberInterface
 {
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            UserEvent::class => 'onUserEvent',
+        ];
+    }
+
     /**
      * @throws Exception
      */
