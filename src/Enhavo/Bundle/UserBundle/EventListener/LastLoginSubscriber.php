@@ -15,11 +15,11 @@ class LastLoginSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            UserEvent::class => 'onLogin',
+            UserEvent::class => 'onUserEvent',
         ];
     }
 
-    public function onLogin(UserEvent $event)
+    public function onUserEvent(UserEvent $event)
     {
         if ($event->getType() === UserEvent::TYPE_LOGIN_SUCCESS) {
             $this->userManager->updateLoggedIn($event->getUser());
