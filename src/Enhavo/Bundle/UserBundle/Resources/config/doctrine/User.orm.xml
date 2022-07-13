@@ -15,7 +15,10 @@
         <field name="salt" length="255" nullable="true" />
         <field name="confirmationToken" length="255" nullable="true" unique="true" />
         <field name="passwordRequestedAt" type="datetime" nullable="true" />
+        <field name="passwordUpdatedAt" type="datetime" nullable="true" />
+        <field name="lastFailedLoginAttempt" type="datetime" nullable="true" />
         <field name="lastLogin" type="datetime" nullable="true" />
+        <field name="failedLoginAttempts" type="integer" nullable="true" />
         <field name="roles" type="array" nullable="true" />
 
         <many-to-many field="groups" target-entity="Enhavo\Bundle\UserBundle\Model\GroupInterface" inversed-by="users">

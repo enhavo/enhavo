@@ -4,14 +4,15 @@ namespace Enhavo\Bundle\UserBundle\Controller;
 
 use Enhavo\Bundle\FormBundle\Error\FormErrorResolver;
 use Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider;
+use Enhavo\Bundle\UserBundle\Exception\ConfigurationException;
 use Enhavo\Bundle\UserBundle\Form\Data\ResetPassword;
-use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Enhavo\Bundle\UserBundle\Repository\UserRepository;
 use Enhavo\Bundle\UserBundle\User\UserManager;
-use Sylius\Component\Resource\Factory\FactoryInterface;
+use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -21,38 +22,32 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class ResetPasswordController extends AbstractUserController
 {
-    /** @var UserRepository */
-    private $userRepository;
-
-    /** @var FactoryInterface */
-    private $userFactory;
-
-    /** @var TranslatorInterface */
-    private $translator;
-
-    /** @var FormErrorResolver */
-    private $errorResolver;
+    private UserRepository $userRepository;
+    private TranslatorInterface $translator;
+    private FormErrorResolver $errorResolver;
 
     /**
      * ResetPasswordController constructor.
      * @param UserManager $userManager
      * @param ConfigurationProvider $provider
      * @param UserRepository $userRepository
-     * @param FactoryInterface $userFactory
      * @param TranslatorInterface $translator
      * @param FormErrorResolver $errorResolver
      */
-    public function __construct(UserManager $userManager, ConfigurationProvider $provider, UserRepository $userRepository, FactoryInterface $userFactory, TranslatorInterface $translator, FormErrorResolver $errorResolver)
+    public function __construct(UserManager $userManager, ConfigurationProvider $provider, UserRepository $userRepository, TranslatorInterface $translator, FormErrorResolver $errorResolver)
     {
         parent::__construct($userManager, $provider);
 
         $this->userRepository = $userRepository;
-        $this->userFactory = $userFactory;
         $this->translator = $translator;
         $this->errorResolver = $errorResolver;
     }
 
-    public function requestAction(Request $request)
+    /**
+     * @throws ConfigurationException
+     * @throws Exception
+     */
+    public function requestAction(Request $request): RedirectResponse|JsonResponse|Response
     {
         $configKey = $this->getConfigKey($request);
         $configuration = $this->provider->getResetPasswordRequestConfiguration($configKey);
@@ -64,7 +59,6 @@ class ResetPasswordController extends AbstractUserController
         $form->handleRequest($request);
 
         $valid = true;
-        $message = null;
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
 
@@ -123,7 +117,10 @@ class ResetPasswordController extends AbstractUserController
         return $response;
     }
 
-    public function checkAction(Request $request)
+    /**
+     * @throws ConfigurationException
+     */
+    public function checkAction(Request $request): Response
     {
         $configKey = $this->getConfigKey($request);
         $configuration = $this->provider->getResetPasswordCheckConfiguration($configKey);
@@ -131,7 +128,10 @@ class ResetPasswordController extends AbstractUserController
         return $this->render($this->getTemplate($configuration->getTemplate()));
     }
 
-    public function confirmAction(Request $request, $token)
+    /**
+     * @throws ConfigurationException
+     */
+    public function confirmAction(Request $request, $token): RedirectResponse|JsonResponse|Response
     {
         $configKey = $this->getConfigKey($request);
         $configuration = $this->provider->getResetPasswordConfirmConfiguration($configKey);
@@ -200,7 +200,10 @@ class ResetPasswordController extends AbstractUserController
         return $response;
     }
 
-    public function finishAction(Request $request)
+    /**
+     * @throws ConfigurationException
+     */
+    public function finishAction(Request $request): Response
     {
         $configKey = $this->getConfigKey($request);
         $configuration = $this->provider->getResetPasswordFinishConfiguration($configKey);

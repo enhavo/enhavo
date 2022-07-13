@@ -13,7 +13,6 @@ use Enhavo\Bundle\UserBundle\Controller\ProfileController;
 use Enhavo\Bundle\UserBundle\Model\User;
 use Enhavo\Bundle\UserBundle\User\UserManager;
 use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\ParameterBag;

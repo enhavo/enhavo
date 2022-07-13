@@ -1,6 +1,8 @@
 login:
     error:
         credentials: 'Bad credentials'
+        password_expired: 'Your password expired. Please check your inbox and reset your password with the provided link.'
+        max_failed_attempts: 'Too many failed login attempts. Please check your inbox and reset your password with the provided link.'
 group:
     edit:
         submit: 'Update group'

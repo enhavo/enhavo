@@ -14,7 +14,6 @@ use Enhavo\Bundle\UserBundle\Model\User;
 use Enhavo\Bundle\UserBundle\Repository\UserRepository;
 use Enhavo\Bundle\UserBundle\User\UserManager;
 use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -34,7 +33,6 @@ class ResetPasswordControllerTest //extends TestCase
             $dependencies->userManager,
             $dependencies->userRepository,
             $dependencies->templateManager,
-            $dependencies->userFactory,
             $dependencies->translator,
             $dependencies->errorResolver
         );
@@ -49,7 +47,6 @@ class ResetPasswordControllerTest //extends TestCase
         $dependencies->templateManager->method('getTemplate')->willReturnCallback(function ($template) {
             return $template .'.managed';
         });
-        $dependencies->userFactory = $this->getMockBuilder(FactoryInterface::class)->getMock();
         $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
         $dependencies->translator->method('trans')->willReturnCallback(function ($message, $b, $c, $d) {
             return $message .'.translated';
@@ -82,7 +79,6 @@ class ResetPasswordControllerTest //extends TestCase
     public function testRequest()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->userFactory->method('createNew')->willReturn(new User());
         $dependencies->userManager->method('getTemplate')->willReturn('request.html.twig');
         $dependencies->userManager->method('getStylesheets')->willReturn([]);
         $dependencies->userManager->method('getJavascripts')->willReturn([]);
@@ -134,7 +130,6 @@ class ResetPasswordControllerTest //extends TestCase
     {
         $dependencies = $this->createDependencies();
         $dependencies->request->method('isXmlHttpRequest')->willReturn(true);
-        $dependencies->userFactory->method('createNew')->willReturn(new User());
         $dependencies->userManager->method('getTemplate')->willReturn('request.html.twig');
         $dependencies->userManager->method('getStylesheets')->willReturn([]);
         $dependencies->userManager->method('getJavascripts')->willReturn([]);
@@ -332,9 +327,6 @@ class ResetPasswordControllerTestDependencies
 
     /** @var TemplateManager|MockObject */
     public $templateManager;
-
-    /** @var FactoryInterface|MockObject */
-    public $userFactory;
 
     /** @var TranslatorInterface|MockObject */
     public $translator;

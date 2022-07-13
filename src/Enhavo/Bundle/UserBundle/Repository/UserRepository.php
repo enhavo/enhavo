@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\UserBundle\Repository;
 
 use Enhavo\Bundle\AppBundle\Repository\EntityRepository;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
+use Pagerfanta\Pagerfanta;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 
 /**
@@ -18,7 +19,7 @@ use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
  */
 class UserRepository extends EntityRepository implements UserLoaderInterface
 {
-    public function findByTerm($term)
+    public function findByTerm($term): ?Pagerfanta
     {
         $query = $this->createQueryBuilder('t')
             ->where('t.username LIKE :term')
@@ -28,15 +29,9 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
             ->setParameter('term', sprintf('%s%%', $term))
             ->orderBy('t.username');
 
-        $paginator = $this->getPaginator($query);
-        return $paginator;
+        return $this->getPaginator($query);
     }
 
-
-    /**
-     * @param $token
-     * @return UserInterface|object|null
-     */
     public function findByConfirmationToken($token): ?UserInterface
     {
         return $this->findOneBy([
@@ -44,10 +39,6 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
         ]);
     }
 
-    /**
-     * @param $username
-     * @return UserInterface|object|null
-     */
     public function findByUsername($username): ?UserInterface
     {
         return $this->findOneBy([
@@ -55,10 +46,6 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
         ]);
     }
 
-    /**
-     * @param $email
-     * @return UserInterface|object|null
-     */
     public function findByEmail($email): ?UserInterface
     {
         return $this->findOneBy([
@@ -66,17 +53,17 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
         ]);
     }
 
-    public function loadUserByIdentifier($identifier)
+    public function loadUserByIdentifier($identifier): ?UserInterface
     {
         $user = $this->findByUsername($identifier);
         if ($user) {
             return $user;
         }
-        $user = $this->findByEmail($identifier);
-        return $user;
+
+        return $this->findByEmail($identifier);
     }
 
-    public function loadUserByUsername(string $username)
+    public function loadUserByUsername(string $username): UserInterface
     {
         // Deprecated but still required by the interface
         return $this->loadUserByIdentifier($username);

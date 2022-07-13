@@ -8,21 +8,25 @@ namespace Enhavo\Bundle\UserBundle\Security\Authentication;
 
 
 use Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider;
-use Enhavo\Bundle\UserBundle\Event\UserLoginEvent;
+use Enhavo\Bundle\UserBundle\Event\UserEvent;
 use Enhavo\Bundle\UserBundle\Exception\ConfigurationException;
 use Enhavo\Bundle\UserBundle\Mapper\UserMapperInterface;
+use Enhavo\Bundle\UserBundle\Model\UserInterface;
+use Enhavo\Bundle\UserBundle\Repository\UserRepository;
 use Enhavo\Bundle\UserBundle\User\UserManager;
+use Exception;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Exception\AccountStatusException;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
@@ -34,58 +38,23 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator implements P
 {
     use TargetPathTrait;
 
-    /** @var UserManager */
-    private $userManager;
+    private ?string $loginRoute = null;
 
-    /** @var UrlGeneratorInterface  */
-    private $urlGenerator;
-
-    /** @var CsrfTokenManagerInterface  */
-    private $csrfTokenManager;
-
-    /** @var UserPasswordEncoderInterface  */
-    private $passwordEncoder;
-
-    /** @var UserMapperInterface */
-    private $userMapper;
-
-    /** @var EventDispatcherInterface */
-    private $eventDispatcher;
-
-    /** @var string */
-    private $className;
-
-    /** @var string */
-    private $loginRoute;
-
-    /** @var ConfigurationProvider  */
-    private $configurationProvider;
-
-    /**
-     * FormLoginAuthenticator constructor.
-     * @param UserManager $userManager
-     * @param ConfigurationProvider $configurationProvider
-     * @param UrlGeneratorInterface $urlGenerator
-     * @param CsrfTokenManagerInterface $csrfTokenManager
-     * @param UserPasswordEncoderInterface $passwordEncoder
-     * @param UserMapperInterface $userMapper
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param string $className
-     */
-    public function __construct(UserManager $userManager, ConfigurationProvider $configurationProvider, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder, UserMapperInterface $userMapper, EventDispatcherInterface $eventDispatcher, string $className)
+    public function __construct(
+        private UserManager $userManager,
+        private UserRepository $userRepository,
+        private ConfigurationProvider $configurationProvider,
+        private UrlGeneratorInterface $urlGenerator,
+        private CsrfTokenManagerInterface $csrfTokenManager,
+        private UserPasswordEncoderInterface $passwordEncoder,
+        private UserMapperInterface $userMapper,
+        private EventDispatcherInterface $eventDispatcher,
+        string $className)
     {
-        $this->userManager = $userManager;
-        $this->urlGenerator = $urlGenerator;
-        $this->csrfTokenManager = $csrfTokenManager;
-        $this->passwordEncoder = $passwordEncoder;
-        $this->userMapper = $userMapper;
-        $this->eventDispatcher = $eventDispatcher;
-        $this->className = $className;
-        $this->configurationProvider = $configurationProvider;
     }
 
 
-    public function supports(Request $request)
+    public function supports(Request $request): bool
     {
         $configKey = $this->getConfigKey($request);
         $this->updateLoginRoute($configKey);
@@ -95,7 +64,7 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator implements P
         return $isRoute && $isPost;
     }
 
-    public function getCredentials(Request $request)
+    public function getCredentials(Request $request): array
     {
         $properties = $this->userMapper->getCredentialProperties();
 
@@ -116,7 +85,7 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator implements P
         return $credentials;
     }
 
-    public function getUser($credentials, UserProviderInterface $userProvider)
+    public function getUser($credentials, UserProviderInterface $userProvider): ?UserInterface
     {
         $token = new CsrfToken('authenticate', $credentials['csrf_token']);
         if (!$this->csrfTokenManager->isTokenValid($token)) {
@@ -124,6 +93,7 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator implements P
         }
 
         $username = $this->userMapper->getUsername($credentials);
+        /** @var UserInterface $user */
         $user = $userProvider->loadUserByUsername($username);
 
         if (!$user) {
@@ -134,7 +104,7 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator implements P
         return $user;
     }
 
-    public function checkCredentials($credentials, UserInterface $user)
+    public function checkCredentials($credentials, \Symfony\Component\Security\Core\User\UserInterface $user): bool
     {
         return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
     }
@@ -147,37 +117,63 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator implements P
         return $credentials['password'];
     }
 
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey): ?Response
     {
-        $this->dispatch($token);
+        /** @var UserInterface $user */
+        $user = $token->getUser();
         $session = $request->getSession();
         $targetPath = $request->get('_target_path') ?? $this->getTargetPath($session, $providerKey);
+        $event = $this->dispatchSuccess($user);
+
         if ($targetPath) {
-            return new RedirectResponse($targetPath);
+            return $event->getResponse() ?? new RedirectResponse($targetPath);
         }
+
+        return $event->getResponse();
     }
 
-    public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
+    /**
+     * @throws Exception
+     */
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
     {
         if ($request->hasSession()) {
             $request->getSession()->set(Security::AUTHENTICATION_ERROR, $exception);
         }
 
-        $configKey = $this->getConfigKey($request);
-        $this->updateLoginRoute($configKey);
-        $url = $this->getLoginUrl();
+        $user = ($exception instanceof AccountStatusException ?
+            $exception->getUser() : $this->userRepository->findByEmail(strtolower($request->get('_email'))) // is _email always the right key?
+        );
+        if ($user) {
+            $event = $this->dispatchFailure($user, $exception);
 
-        return new RedirectResponse($url);
+            if ($event->getResponse()) {
+                return $event->getResponse();
+            }
+        }
+
+        $this->updateLoginRoute($this->getConfigKey($request));
+        return new RedirectResponse($this->getLoginUrl());
     }
 
-    private function dispatch(TokenInterface $token)
+    private function dispatchSuccess(UserInterface $user): UserEvent
     {
-        /** @var \Enhavo\Bundle\UserBundle\Model\UserInterface $user */
-        $user = $token->getUser();
-        $this->eventDispatcher->dispatch(new UserLoginEvent($user));
+        $event = new UserEvent(UserEvent::TYPE_LOGIN_SUCCESS, $user);
+        $this->eventDispatcher->dispatch($event);
+
+        return $event;
     }
 
-    public function start(Request $request, AuthenticationException $authException = null)
+    private function dispatchFailure(UserInterface $user, AuthenticationException $exception): UserEvent
+    {
+        $event = new UserEvent(UserEvent::TYPE_LOGIN_FAILED, $user);
+        $event->setException($exception);
+        $this->eventDispatcher->dispatch($event);
+
+        return $event;
+    }
+
+    public function start(Request $request, AuthenticationException $authException = null): RedirectResponse
     {
         $configKey = $this->getConfigKey($request);
         $this->updateLoginRoute($configKey);
@@ -197,14 +193,13 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator implements P
         }
     }
 
-    protected function getLoginUrl()
+    protected function getLoginUrl(): string
     {
         return $this->urlGenerator->generate($this->loginRoute);
     }
 
     protected function getConfigKey(Request $request)
     {
-        $key = $request->attributes->get('_config');
-        return $key;
+        return $request->attributes->get('_config');
     }
 }

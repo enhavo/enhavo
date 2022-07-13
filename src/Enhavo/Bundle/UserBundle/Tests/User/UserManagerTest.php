@@ -13,6 +13,7 @@ use Enhavo\Bundle\AppBundle\Mailer\MailerManager;
 use Enhavo\Bundle\AppBundle\Mailer\Message;
 use Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface;
 use Enhavo\Bundle\UserBundle\Configuration\ChangeEmail\ChangeEmailConfirmConfiguration;
+use Enhavo\Bundle\UserBundle\Configuration\Login\LoginConfiguration;
 use Enhavo\Bundle\UserBundle\Configuration\Registration\RegistrationConfirmConfiguration;
 use Enhavo\Bundle\UserBundle\Configuration\Registration\RegistrationRegisterConfiguration;
 use Enhavo\Bundle\UserBundle\Configuration\ResetPassword\ResetPasswordRequestConfiguration;
@@ -25,11 +26,9 @@ use Enhavo\Bundle\UserBundle\User\UserManager;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -37,7 +36,6 @@ use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
-use Symfony\Component\Security\Http\RememberMe\RememberMeServicesInterface;
 use Symfony\Component\Security\Http\Session\SessionAuthenticationStrategyInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -62,7 +60,6 @@ class UserManagerTest extends TestCase
         return new UserManager(
             $dependencies->entityManager,
             $dependencies->mailerManager,
-            $dependencies->userRepository,
             $dependencies->getUserMapper($mapping),
             $dependencies->tokenGenerator,
             $dependencies->translator,
@@ -73,7 +70,6 @@ class UserManagerTest extends TestCase
             $dependencies->requestStack,
             $dependencies->sessionStrategy,
             $dependencies->userChecker,
-            $dependencies->rememberMeService,
             $dependencies->defaultFirewall
         );
     }
@@ -90,6 +86,7 @@ class UserManagerTest extends TestCase
         $dependencies->translator->method('trans')->willReturnCallback(function ($message) {
             return $message .'.translated';
         });
+        $dependencies->userChecker = $this->getMockBuilder(UserCheckerInterface::class)->getMock();
         $dependencies->form = $this->getMockBuilder(FormInterface::class)->getMock();
         $dependencies->encoderFactory = $this->getMockBuilder(EncoderFactoryInterface::class)->getMock();
         $dependencies->encoder = $this->getMockBuilder(PasswordEncoderInterface::class)->getMock();
@@ -106,7 +103,6 @@ class UserManagerTest extends TestCase
         $dependencies->tokenStorage = $this->getMockBuilder(TokenStorageInterface::class)->getMock();
         $dependencies->requestStack = $this->getMockBuilder(RequestStack::class)->disableOriginalConstructor()->getMock();
         $dependencies->sessionStrategy = $this->getMockBuilder(SessionAuthenticationStrategyInterface::class)->getMock();
-        $dependencies->userChecker = $this->getMockBuilder(UserCheckerInterface::class)->getMock();
         $dependencies->defaultFirewall = 'main';
 
         return $dependencies;
@@ -373,27 +369,19 @@ class UserManagerTest extends TestCase
         $user->addRole(UserInterface::ROLE_DEFAULT);
         $user->setCustomerId('1337');
         $user->setEmail('activate@enhavo.com');
+        $user->setEnabled(true);
 
         $request = new Request();
 
         $dependencies = $this->createDependencies();
-        $dependencies->tokenStorage->expects($this->exactly(2))->method('setToken')->willReturnCallback(function ($token) {
+        $dependencies->tokenStorage->expects($this->once())->method('setToken')->willReturnCallback(function ($token) {
             $this->assertInstanceOf(UsernamePasswordToken::class, $token);
         });
-        $dependencies->sessionStrategy->expects($this->exactly(2))->method('onAuthentication');
-        $dependencies->requestStack->expects($this->exactly(2))->method('getCurrentRequest')->willReturn($request);
+        $dependencies->sessionStrategy->expects($this->once())->method('onAuthentication');
+        $dependencies->requestStack->expects($this->once())->method('getCurrentRequest')->willReturn($request);
         $manager = $this->createInstance($dependencies, []);
 
-        $manager->login($user, null);
-
-        $dependencies->rememberMeService = $this->getMockBuilder(RememberMeServicesInterface::class)->getMock();
-        $dependencies->rememberMeService->expects($this->once())->method('loginSuccess')->willReturnCallback(function ($request, $response, $token) {
-            $this->assertInstanceOf(Request::class, $request);
-            $this->assertInstanceOf(Response::class, $response);
-        });
-        $manager = $this->createInstance($dependencies, []);
-
-        $manager->login($user, new Response());
+        $manager->login($user);
     }
 
 
@@ -444,6 +432,9 @@ class UserManagerTest extends TestCase
 
 class UserManagerTestDependencies
 {
+    /** @var UserCheckerInterface|MockObject */
+    public $userChecker;
+
     /** @var EntityManagerInterface|MockObject */
     public $entityManager;
 
@@ -485,12 +476,6 @@ class UserManagerTestDependencies
 
     /** @var SessionAuthenticationStrategyInterface|MockObject */
     public $sessionStrategy;
-
-    /** @var UserCheckerInterface|MockObject */
-    public $userChecker;
-
-    /** @var RememberMeServicesInterface|MockObject */
-    public $rememberMeService;
 
     /** @var string */
     public $defaultFirewall;

@@ -4,31 +4,19 @@ namespace Enhavo\Bundle\UserBundle\Configuration\Attribute;
 
 trait FormTrait
 {
-    /** @var ?string */
-    protected $formClass;
+    protected ?string $formClass = null;
+    protected ?array $formOptions = null;
 
-    /** @var ?array */
-    protected $formOptions;
-
-    /**
-     * @return string|null
-     */
     public function getFormClass(): ?string
     {
         return $this->formClass;
     }
 
-    /**
-     * @param string|null $formClass
-     */
     public function setFormClass(?string $formClass): void
     {
         $this->formClass = $formClass;
     }
 
-    /**
-     * @return array|null
-     */
     public function getFormOptions(array $options = null): ?array
     {
         if (is_array($options)) {
@@ -38,9 +26,6 @@ trait FormTrait
         return $this->formOptions;
     }
 
-    /**
-     * @param array|null $formOptions
-     */
     public function setFormOptions(?array $formOptions): void
     {
         $this->formOptions = $formOptions;

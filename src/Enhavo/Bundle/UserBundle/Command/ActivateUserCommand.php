@@ -75,7 +75,7 @@ EOT
         }
 
         $username = $this->userMapper->getUsername($credentials);
-        $user = $this->userRepository->loadUserByUsername($username);
+        $user = $this->userRepository->loadUserByIdentifier($username);
 
         $this->userManager->activate($user);
 

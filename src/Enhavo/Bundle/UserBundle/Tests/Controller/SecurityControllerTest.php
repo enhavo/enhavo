@@ -11,7 +11,6 @@ use Enhavo\Bundle\AppBundle\Template\TemplateManager;
 use Enhavo\Bundle\UserBundle\Controller\SecurityController;
 use Enhavo\Bundle\UserBundle\User\UserManager;
 use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;

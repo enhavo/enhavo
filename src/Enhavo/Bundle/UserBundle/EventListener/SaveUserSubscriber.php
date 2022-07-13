@@ -14,7 +14,7 @@ class SaveUserSubscriber implements EventSubscriberInterface
         private UserManager $userManager
     ) {}
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             ResourceEvents::PRE_CREATE => ['onSave', 1],

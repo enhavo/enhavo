@@ -7,49 +7,61 @@
 namespace Enhavo\Bundle\UserBundle\Tests\Security;
 
 
-use Enhavo\Bundle\UserBundle\Exception\UserNotSupportedException;
-use Enhavo\Bundle\UserBundle\Model\User;
+use Enhavo\Bundle\UserBundle\Event\UserEvent;
 use Enhavo\Bundle\UserBundle\Security\UserChecker;
+use Enhavo\Bundle\UserBundle\Tests\Mocks\UserMock;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Security\Core\Exception\BadCredentialsException;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 class UserCheckerTest extends TestCase
 {
-    public function testCheckPreAuthEnabled()
+    private function createDependencies(): UserCheckerTestDependencies
     {
-        $user = new User();
-        $user->setEnabled(true);
-        $checker = new UserChecker();
+        $dependencies = new UserCheckerTestDependencies();
+        $dependencies->eventDispatcher = $this->getMockBuilder(EventDispatcherInterface::class)->getMock();
 
-        $this->assertNull($checker->checkPreAuth($user));
+        return $dependencies;
     }
 
-    public function testCheckPreAuthDisabled()
+    private function createInstance(UserCheckerTestDependencies $dependencies): UserChecker
     {
-        $user = new User();
-        $user->setEnabled(false);
-        $checker = new UserChecker();
+        return new UserChecker(
+            $dependencies->eventDispatcher
+        );
+    }
 
-        $this->expectException(BadCredentialsException::class);
+    public function testPreAuth()
+    {
+        $dependencies = $this->createDependencies();
+        $checker = $this->createInstance($dependencies);
+        $user = new UserMock();
+        $dependencies->eventDispatcher->expects($this->once())->method('dispatch')->willReturnCallback(function ($event) {
+            $this->assertInstanceOf(UserEvent::class, $event);
+
+            return $event;
+        });
         $checker->checkPreAuth($user);
     }
 
-    public function testCheckPostAuthEnabled()
+    public function testPreAuthError()
     {
-        $user = new User();
-        $user->setEnabled(true);
-        $checker = new UserChecker();
+        $dependencies = $this->createDependencies();
+        $checker = $this->createInstance($dependencies);
+        $user = new UserMock();
+        $dependencies->eventDispatcher->expects($this->once())->method('dispatch')->willReturnCallback(function (UserEvent $event) {
+            $event->setException(new AuthenticationException('__TEST__'));
 
-        $this->assertNull($checker->checkPostAuth($user));
+            return $event;
+        });
+        $this->expectException(AuthenticationException::class);
+        $checker->checkPreAuth($user);
     }
+}
 
-    public function testCheckPostAuthDisabled()
-    {
-        $user = new User();
-        $user->setEnabled(false);
-        $checker = new UserChecker();
-
-        $this->expectException(BadCredentialsException::class);
-        $checker->checkPostAuth($user);
-    }
+class UserCheckerTestDependencies
+{
+    /** @var EventDispatcherInterface|MockObject */
+    public $eventDispatcher;
 }

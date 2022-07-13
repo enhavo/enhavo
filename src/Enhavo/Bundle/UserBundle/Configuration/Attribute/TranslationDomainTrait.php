@@ -4,20 +4,13 @@ namespace Enhavo\Bundle\UserBundle\Configuration\Attribute;
 
 trait TranslationDomainTrait
 {
-    /** @var ?string */
-    private $translationDomain;
+    private ?string $translationDomain = null;
 
-    /**
-     * @return string|null
-     */
     public function getTranslationDomain(): ?string
     {
         return $this->translationDomain;
     }
 
-    /**
-     * @param string|null $translationDomain
-     */
     public function setTranslationDomain(?string $translationDomain): void
     {
         $this->translationDomain = $translationDomain;

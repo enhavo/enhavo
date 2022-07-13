@@ -15,7 +15,6 @@ use Enhavo\Bundle\UserBundle\User\UserManager;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandler;
 use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;

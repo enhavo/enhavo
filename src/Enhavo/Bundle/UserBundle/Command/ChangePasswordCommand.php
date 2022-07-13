@@ -86,7 +86,7 @@ EOT
         $password = $input->getArgument('password');
 
         $username = $this->userMapper->getUsername($credentials);
-        $user = $this->userRepository->loadUserByUsername($username);
+        $user = $this->userRepository->loadUserByIdentifier($username);
         $user->setPlainPassword($password);
         $this->userManager->changePassword($user);
 
