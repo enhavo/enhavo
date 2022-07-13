@@ -14,7 +14,7 @@ class PhpClass
     public function __construct(
         private string $namespace,
         private string $name,
-        private string $extends,
+        private ?string $implements,
         private array  $use,
         private array  $properties,
     )
@@ -48,8 +48,14 @@ class PhpClass
     public function generateGettersSetters(): void
     {
         foreach ($this->properties as $key => $config) {
-            $this->functions[] = $this->generateGetter($key);
-            $this->functions[] = $this->generateSetter($key);
+            $getter = $this->generateGetter($key);
+            if ($getter) {
+                $this->functions[] = $getter;
+            }
+            $setter = $this->generateSetter($key);
+            if ($setter) {
+                $this->functions[] = $setter;
+            }
         }
     }
 
@@ -80,39 +86,47 @@ class PhpClass
 
     }
 
-    public function generateGetter($key): PhpFunction
+    public function generateGetter($key): ?PhpFunction
     {
         $classProperty = $this->getProperty($key);
-        $nullable = $classProperty->getNullable();
-        $name = sprintf('get%s', ucfirst($key));
-        $returns = sprintf('%s%s', $nullable, $classProperty->getType());
-        $body = [sprintf('return $this->%s;', $key)];
-        return new PhpFunction($name, 'public', [], $body, $returns);
-    }
-
-    public function generateSetter($key): PhpFunction
-    {
-        $classProperty = $this->getProperty($key);
-        $nullable = $classProperty->getNullable();
-        $name = sprintf('set%s', ucfirst($classProperty->getName()));
-        $args = [
-            sprintf('%s%s', $nullable, $classProperty->getType()) => $classProperty->getName(),
-        ];
-        $body = [sprintf('$this->%s = $%s;', $classProperty->getName(), $classProperty->getName())];
-
-        if ($classProperty->getTypeOption('setter')) {
-            $setterOptions = $classProperty->getTypeOption('setter');
-            $calls = $setterOptions['calls'] ?? null;
-            if ($calls) {
-                $body[] = sprintf('if ($%s) {', $classProperty->getName());
-                foreach ($calls as $call) {
-                    $body[] = sprintf('%s$%s->%s(%s);', str_repeat(' ', 4), $classProperty->getName(), array_shift($call), implode(', ', $call));
-                }
-                $body[] = '}';
-            }
+        if ($classProperty->getAllowGetter()) {
+            $nullable = $classProperty->getNullable();
+            $name = sprintf('get%s', ucfirst($key));
+            $returns = sprintf('%s%s', $nullable, $classProperty->getType());
+            $body = [sprintf('return $this->%s;', $key)];
+            return new PhpFunction($name, 'public', [], $body, $returns);
         }
 
-        return new PhpFunction($name, 'public', $args, $body, 'void');
+        return null;
+    }
+
+    public function generateSetter($key): ?PhpFunction
+    {
+        $classProperty = $this->getProperty($key);
+        if ($classProperty->getAllowSetter()) {
+            $nullable = $classProperty->getNullable();
+            $name = sprintf('set%s', ucfirst($classProperty->getName()));
+            $args = [
+                sprintf('%s%s', $nullable, $classProperty->getType()) => $classProperty->getName(),
+            ];
+            $body = [sprintf('$this->%s = $%s;', $classProperty->getName(), $classProperty->getName())];
+
+            if ($classProperty->getTypeOption('setter')) {
+                $setterOptions = $classProperty->getTypeOption('setter');
+                $calls = $setterOptions['calls'] ?? null;
+                if ($calls) {
+                    $body[] = sprintf('if ($%s) {', $classProperty->getName());
+                    foreach ($calls as $call) {
+                        $body[] = sprintf('%s$%s->%s(%s);', str_repeat(' ', 4), $classProperty->getName(), array_shift($call), implode(', ', $call));
+                    }
+                    $body[] = '}';
+                }
+            }
+
+            return new PhpFunction($name, 'public', $args, $body, 'void');
+        }
+
+        return null;
     }
 
 
@@ -154,35 +168,23 @@ class PhpClass
         return new PhpFunction($name, 'public', $args, $body, null);
     }
 
-    /**
-     * @return array
-     */
     public function getUse(): array
     {
         return $this->use;
     }
 
-    /**
-     * @return string
-     */
     public function getNamespace(): string
     {
         return $this->namespace;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
-    public function getExtends(): string
+    public function getImplements(): ?string
     {
-        return $this->extends;
+        return $this->implements;
     }
 }

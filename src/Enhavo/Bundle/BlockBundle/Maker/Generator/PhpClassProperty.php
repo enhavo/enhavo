@@ -32,6 +32,16 @@ class PhpClassProperty
             ? '?' : '';
     }
 
+    public function getAllowGetter(): bool
+    {
+        return !isset($this->config['allow_getter']) || $this->config['allow_getter'];
+    }
+
+    public function getAllowSetter(): bool
+    {
+        return !isset($this->config['allow_setter']) || $this->config['allow_setter'];
+    }
+
     /**
      * @return string
      */

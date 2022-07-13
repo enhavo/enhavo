@@ -35,6 +35,16 @@ class DoctrineOrmField
         return $this->config['orm_type'] ?? $this->config['type'] ?? null;
     }
 
+    public function getGeneratedValueType(): ?string
+    {
+        return isset($this->config['orm_generated_value_type']) ? strtoupper($this->config['orm_generated_value_type']) : null;
+    }
+
+    public function isPrimaryKey(): bool
+    {
+        return $this->config['orm_primary_key'] ?? false;
+    }
+
     public function getName(): string
     {
         return $this->name;

@@ -10,15 +10,17 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity()]
 #[ORM\Table(name: '<?= $orm->getTableName() ?>')]
-class <?= $class->getName(); ?>
+class <?= $class->getName(); ?><?php if ($class->getImplements()): ?> implements <?= $class->getImplements(); ?><?php endif; ?>
 
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
-    private ?int $id;
-
 <?php foreach ($class->getProperties() as $property) { ?>
+<?php $ormField = $orm->getField($property->getName()); ?>
+<?php if ($ormField->isPrimaryKey()) { ?>
+    #[Orm\Id]
+<?php } ?>
+<?php if ($ormField->getGeneratedValueType()) { ?>
+    #[ORM\GeneratedValue(strategy: '<?= $ormField->getGeneratedValueType(); ?>')]
+<?php } ?>
 <?php $attributeType = $orm->getAttributeType($property->getName()); ?>
     #[ORM\<?= $attributeType ?>(
 <?php foreach ($orm->getAttributeOptions($property->getName()) as $key => $value) { ?>
@@ -59,10 +61,16 @@ class <?= $class->getName(); ?>
 <?php if ($relation) { ?>
     #[ORM\OrderBy(<?= $relation->getOrderByString() ?>)]
 <?php } ?>
-    private <?= $property->getNullable() .$property->getType() ; ?> $<?= $property->getName(); ?><?php if ($property->getDefault() !== 'null'): ?> = <?= $property->getDefault(); ?><?php endif; ?>;
+<?php if ($property->getNullable() || $property->getDefault() !== 'null') { ?>
+    private <?= $property->getNullable() .$property->getType() ; ?> $<?= $property->getName(); ?> = <?= $property->getDefault(); ?>;
+<?php } else { ?>
+    private <?= $property->getNullable() .$property->getType() ; ?> $<?= $property->getName(); ?>;
+<?php } ?>
+
 
 <?php } ?>
 <?php foreach ($class->getFunctions() as $function) { ?>
+
     <?= $function->getVisibility(); ?> function <?= $function->getName(); ?>(<?= $function->getArgumentString(); ?>)<?= $function->getReturnsString(); ?>
 
     {
