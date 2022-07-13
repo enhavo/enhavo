@@ -54,24 +54,25 @@ export default class ArrangeManager
     {
         this.setMinimized(views);
 
-        if(views.length == 1) {
-            if(!views[0].minimize) {
+        if (views.length === 0) {
+            return;
+        }
+
+        if(!views[0].minimize) {
+            if (views.length === 1) {
                 views[0].width = '100%';
-            }
-        } else if(views.length == 2) {
-            if(!views[0].minimize) {
-                if(views[1].minimize) {
-                    views[0].width = '100%';
-                } else {
-                    views[0].width = '30%';
+            } else {
+                let otherViewMaximized = false;
+                for(let index = 1; index < views.length; index++) {
+                    if (!views[index].minimize) {
+                        otherViewMaximized = true;
+                        break;
+                    }
                 }
-            }
-        } else if(views.length == 3) {
-            if(!views[0].minimize) {
-                if(views[1].minimize && views[2].minimize) {
-                    views[0].width = '100%';
-                } else {
+                if (otherViewMaximized) {
                     views[0].width = '30%';
+                } else {
+                    views[0].width = '100%';
                 }
             }
         }
@@ -79,19 +80,25 @@ export default class ArrangeManager
 
     private setMinimized(views: ViewInterface[])
     {
-        if(views.length == 1) {
-            if(!views[0].customMinimized) {
-                views[0].minimize = false;
-            }
-        } else if(views.length == 2) {
+        if (views.length === 0) {
+            return;
+        }
 
-            if(!views[0].customMinimized) {
-                views[0].minimize = false;
+        // If any view is customMinimized, no automatic minimizing
+        for(let view of views) {
+            if (view.customMinimized) {
+                return;
             }
+        }
 
-        } else if(views.length == 3) {
-            if(!views[0].customMinimized) {
-                views[0].minimize = true;
+        // Last two maximized, all others minimized
+        let numMaximized = 2;
+        for(let index = views.length - 1; index >= 0; index--) {
+            if (numMaximized > 0) {
+                views[index].minimize = false;
+                numMaximized--;
+            } else {
+                views[index].minimize = true;
             }
         }
     }
