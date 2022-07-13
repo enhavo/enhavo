@@ -61,7 +61,12 @@ class <?= $class->getName(); ?><?php if ($class->getImplements()): ?> implements
 <?php if ($relation) { ?>
     #[ORM\OrderBy(<?= $relation->getOrderByString() ?>)]
 <?php } ?>
+<?php if ($property->getNullable() || $property->getDefault() !== 'null') { ?>
     private <?= $property->getNullable() .$property->getType() ; ?> $<?= $property->getName(); ?> = <?= $property->getDefault(); ?>;
+<?php } else { ?>
+    private <?= $property->getNullable() .$property->getType() ; ?> $<?= $property->getName(); ?>;
+<?php } ?>
+
 
 <?php } ?>
 <?php foreach ($class->getFunctions() as $function) { ?>
