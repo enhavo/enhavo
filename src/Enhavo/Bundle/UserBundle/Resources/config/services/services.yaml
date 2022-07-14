@@ -21,12 +21,13 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
-    Enhavo\Bundle\UserBundle\Security\EntryPoint\FormAuthenticationEntryPoint:
-        decoration_priority: 1
-        decoration_on_invalid: exception
-        decoration_inner_name: security.authentication.form_entry_point.admin.inner
-        decorates: security.authentication.form_entry_point.admin
-        arguments: ['@security.authentication.form_entry_point.admin.inner']
+# Disable service to be compatible to the new authentication manager
+#    Enhavo\Bundle\UserBundle\Security\EntryPoint\FormAuthenticationEntryPoint:
+#        decoration_priority: 1
+#        decoration_on_invalid: exception
+#        decoration_inner_name: security.authentication.form_entry_point.inner
+#        decorates: security.authentication.form_entry_point
+#        arguments: ['@security.authentication.form_entry_point.inner']
 
     Enhavo\Bundle\UserBundle\Security\Authentication\Voter\GroupRoleVoter:
         public: false
