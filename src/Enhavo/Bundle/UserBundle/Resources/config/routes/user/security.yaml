@@ -13,6 +13,8 @@ enhavo_user_theme_security_login_check:
     path: /login/check
     methods: [POST]
     controller: Enhavo\Bundle\UserBundle\Controller\SecurityController::checkAction
+    defaults:
+        _config: theme
 
 enhavo_user_theme_security_logout:
     options:
@@ -20,3 +22,5 @@ enhavo_user_theme_security_logout:
     path: /logout
     methods: [GET, POST]
     controller: Enhavo\Bundle\UserBundle\Controller\SecurityController::logoutAction
+    defaults:
+        _config: theme
