@@ -4,6 +4,7 @@ namespace Enhavo\Bundle\ShopBundle\Context;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\ShopBundle\Factory\OrderFactory;
+use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Sylius\Component\Order\Context\CartContextInterface;
 use Sylius\Component\Order\Model\OrderInterface;
 use Sylius\Component\Order\Repository\OrderRepositoryInterface;
@@ -41,7 +42,7 @@ class SessionCartContext implements CartContextInterface
         $cart = $this->factory->createNewCart();
 
         $user = $this->tokenStorage->getToken()?->getUser();
-        if ($user !== null) {
+        if ($user instanceof UserInterface) {
             $cart->setUser($user);
         }
 

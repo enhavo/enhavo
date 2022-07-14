@@ -159,7 +159,7 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator implements P
     private function dispatchSuccess(UserInterface $user): UserEvent
     {
         $event = new UserEvent(UserEvent::TYPE_LOGIN_SUCCESS, $user);
-        $this->eventDispatcher->dispatch($event);
+        $this->eventDispatcher->dispatch($event, UserEvent::TYPE_LOGIN_SUCCESS);
 
         return $event;
     }

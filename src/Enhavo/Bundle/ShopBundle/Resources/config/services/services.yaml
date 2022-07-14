@@ -38,6 +38,12 @@ services:
 
     Enhavo\Bundle\ShopBundle\EventListener\ProductVariantSubscriber:
         arguments:
+            - '@enhavo_shop.order.cart_merger'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    Enhavo\Bundle\ShopBundle\EventListener\UserSubscriber:
+        arguments:
             - '@Enhavo\Bundle\ShopBundle\Manager\ProductManager'
         tags:
             - { name: kernel.event_subscriber }
@@ -123,6 +129,16 @@ services:
         tags:
             - { name: controller.service_arguments }
 
+    Enhavo\Bundle\ShopBundle\Controller\VoucherController:
+        arguments:
+            - '@Enhavo\Bundle\ShopBundle\Manager\VoucherManager'
+            - '@sylius.context.cart'
+            - '@serializer'
+        calls:
+            - [ 'setContainer', ['@service_container']]
+        tags:
+            - { name: controller.service_arguments }
+
     Enhavo\Bundle\ShopBundle\Search\Filter\ProductVariantAttributesDataProvider:
         public: true
         calls:
@@ -152,6 +168,51 @@ services:
             - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo_search.filter_provider, alias: 'product_variant_property' }
+
+    Enhavo\Bundle\ShopBundle\Form\Type\VoucherType:
+        arguments:
+            - '%enhavo_shop.model.voucher.class%'
+        tags:
+            - { name: form.type }
+
+    enhavo_shop.factory.voucher:
+        public: true
+        alias: Enhavo\Bundle\ShopBundle\Factory\VoucherFactory
+
+    Enhavo\Bundle\ShopBundle\Factory\VoucherFactory:
+        arguments:
+            - '%enhavo_shop.model.voucher.class%'
+            - '@Enhavo\Bundle\ShopBundle\Manager\VoucherManager'
+
+    enhavo_shop.voucher_manager:
+        public: true
+        alias: Enhavo\Bundle\ShopBundle\Manager\VoucherManager
+
+    Enhavo\Bundle\ShopBundle\Manager\VoucherManager:
+        arguments:
+            - '@enhavo_shop.repository.voucher'
+            - '@validator'
+            - '@sylius.context.cart'
+            - '@sylius.order_processing.order_processor'
+            - '@doctrine.orm.entity_manager'
+            - '@translator'
+            - '@enhavo_shop.factory.voucher_redemption'
+
+    enhavo_shop.order.cart_merger:
+        alias: Enhavo\Bundle\ShopBundle\Order\DefaultCartMerger
+
+    Enhavo\Bundle\ShopBundle\Order\DefaultCartMerger:
+        arguments:
+            - '@Enhavo\Bundle\ShopBundle\Context\SessionCartContext'
+            - '@Enhavo\Bundle\ShopBundle\Context\UserCartContext'
+            - '@doctrine.orm.entity_manager'
+
+    Enhavo\Bundle\ShopBundle\Context\UserCartContext:
+        arguments:
+            - '@security.token_storage'
+            - '@sylius.repository.order'
+        tags:
+            - { name: sylius.context.cart, priority: -600 }
 
 #    enhavo_shop.listener.doctrine_sylius_meta:
 #        class: Enhavo\Bundle\ShopBundle\EventListener\DoctrineSyliusMetaListener
@@ -191,11 +252,6 @@ services:
 #        class: '%enhavo_shop.factory.voucher.class%'
 #        arguments:
 #            - '%enhavo_shop.model.voucher.class%'
-#        calls:
-#            - [setContainer, ['@service_container']]
-#
-#    enhavo_shop.manager.voucher_manager:
-#        class: Enhavo\Bundle\ShopBundle\Manager\VoucherManager
 #        calls:
 #            - [setContainer, ['@service_container']]
 #

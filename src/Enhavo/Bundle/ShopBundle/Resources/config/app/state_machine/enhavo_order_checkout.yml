@@ -32,6 +32,11 @@ winzou_state_machine:
                 from: [payment_selected, payment_skipped]
                 to: completed
         callbacks:
+            before:
+                redeem_voucher:
+                    on: [ "complete" ]
+                    do: [ "@enhavo_shop.voucher_manager", "redeem" ]
+                    args: [ "object" ]
             after:
                 assign_checkout_completed_at:
                     on: ["complete"]

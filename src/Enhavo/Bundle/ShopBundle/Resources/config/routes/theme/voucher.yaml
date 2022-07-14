@@ -1,0 +1,9 @@
+enhavo_shop_theme_voucher_add:
+    path: /shop/voucher/add
+    defaults:
+        _controller: Enhavo\Bundle\ShopBundle\Controller\VoucherController::addAction
+
+enhavo_shop_theme_voucher_remove:
+    path: /shop/voucher/remove
+    defaults:
+        _controller: Enhavo\Bundle\ShopBundle\Controller\VoucherController::removeAction

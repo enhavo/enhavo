@@ -1,0 +1,11 @@
+{% if form.code is defined %}{{ form_row(form.code) }}{% endif %}
+{% if form.amount is defined %}{{ form_row(form.amount) }}{% endif %}
+{% if form.expiredAt is defined %}{{ form_row(form.expiredAt) }}{% endif %}
+{% if form.enabled is defined %}{{ form_row(form.enabled) }}{% endif %}
+{% if form.partialRedeemable is defined %}{{ form_row(form.partialRedeemable) }}{% endif %}
+
+<div class="row m5">
+    {% for redemption in resource.redemptions %}
+
+    {% endfor %}
+</div>

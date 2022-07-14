@@ -46,3 +46,19 @@ Enhavo\Bundle\ShopBundle\Entity\ProductAssociationType:
     properties:
         name:
             - NotBlank: { groups: [product_association] }
+
+Enhavo\Bundle\ShopBundle\Entity\ProductVariant:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+              fields: [title, product]
+              errorPath: title
+              groups: [product-variant]
+              ignoreNull: false
+
+Enhavo\Bundle\ShopBundle\Entity\Voucher:
+    properties:
+        amount:
+            - Positive: ~
+
+
+

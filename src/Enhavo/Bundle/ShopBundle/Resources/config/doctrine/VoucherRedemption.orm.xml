@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping">
+    <entity name="Enhavo\Bundle\ShopBundle\Entity\VoucherRedemption" table="shop_voucher_redemption" repository-class="Enhavo\Bundle\ShopBundle\Repository\VoucherRedemptionRepository">
+        <id name="id" type="integer" column="id">
+            <generator />
+        </id>
+
+        <field name="amount" type="integer" nullable="true" />
+
+        <many-to-one field="voucher" target-entity="Enhavo\Bundle\ShopBundle\Model\VoucherInterface"></many-to-one>
+        <many-to-one field="order" target-entity="Sylius\Component\Order\Model\OrderInterface"></many-to-one>
+    </entity>
+</doctrine-mapping>

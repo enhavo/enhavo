@@ -8,39 +8,29 @@
 
 namespace Enhavo\Bundle\ShopBundle\EventListener;
 
-use Enhavo\Bundle\ShopBundle\Cart\UserCartMerger;
+use Enhavo\Bundle\ShopBundle\Cart\CartMergerInterface;
+use Enhavo\Bundle\UserBundle\Event\UserEvent;
 use Enhavo\Bundle\UserBundle\Event\UserEvents;
-use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\EventDispatcher\GenericEvent;
 
 class UserSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var UserCartMerger
-     */
-    private $userCartMerger;
+    public function __construct(
+        private CartMergerInterface $cartMerger,
+    )
+    {}
 
-    public function __construct(UserCartMerger $userCartMerger)
-    {
-        $this->userCartMerger = $userCartMerger;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents()
     {
         return [
-            UserEvents::LOGIN => 'login',
+            UserEvent::class => 'onUserEvent',
         ];
     }
 
-    public function login(GenericEvent $event)
+    public function onUserEvent(UserEvent $event)
     {
-        $user = $event->getSubject();
-        if($user instanceof UserInterface) {
-            $this->userCartMerger->merge($user);
+        if ($event->getType() === UserEvent::TYPE_LOGIN_SUCCESS) {
+            $this->cartMerger->updateLoggedIn($event->getUser());
         }
     }
 }

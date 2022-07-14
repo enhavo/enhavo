@@ -20,6 +20,7 @@ use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Enhavo\Bundle\ShopBundle\Model\ShipmentInterface;
 use Enhavo\Bundle\ShopBundle\Model\AdjustmentInterface;
 use Sylius\Component\Payment\Model\PaymentInterface;
+use Sylius\Component\Promotion\Model\PromotionCouponInterface as BaseCouponInterface;
 use Sylius\Component\Promotion\Model\PromotionInterface;
 use Sylius\Component\Order\Model\Order as SyliusOrder;
 use Sylius\Component\Promotion\Model\PromotionCouponInterface;
@@ -50,7 +51,8 @@ class Order extends SyliusOrder implements OrderInterface
     /** @var Collection */
     private $promotions;
 
-
+    /** @var Collection */
+    private $vouchers;
 
     public function __construct()
     {
@@ -58,6 +60,7 @@ class Order extends SyliusOrder implements OrderInterface
         $this->promotions = new ArrayCollection();
         $this->payments = new ArrayCollection();
         $this->shipments = new ArrayCollection();
+        $this->vouchers = new ArrayCollection();
     }
 
     public function setPaymentState(?string $paymentState): void
@@ -103,6 +106,21 @@ class Order extends SyliusOrder implements OrderInterface
     public function getPromotions(): Collection
     {
         return $this->promotions;
+    }
+
+    public function getVouchers(): Collection
+    {
+        return $this->vouchers;
+    }
+
+    public function addVoucher($voucher)
+    {
+        $this->vouchers->add($voucher);
+    }
+
+    public function removeVoucher($voucher)
+    {
+        $this->vouchers->removeElement($voucher);
     }
 
     public function getPromotionSubjectTotal(): int
@@ -337,22 +355,6 @@ class Order extends SyliusOrder implements OrderInterface
     public function isPayed()
     {
         return $this->paymentState === PaymentInterface::STATE_COMPLETED;
-    }
-
-    /**
-     * @return string
-     */
-    public function getNotice()
-    {
-        return $this->notice;
-    }
-
-    /**
-     * @param string $notice
-     */
-    public function setNotice($notice)
-    {
-        $this->notice = $notice;
     }
 
     public function getCheckoutState(): string

@@ -56,5 +56,19 @@
                 </inverse-join-columns>
             </join-table>
         </many-to-many>
+
+        <many-to-many field="vouchers" target-entity="Enhavo\Bundle\ShopBundle\Model\VoucherInterface" >
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+            <join-table name="shop_order_voucher">
+                <join-columns>
+                    <join-column name="order_id" referenced-column-name="id" />
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="voucher_id" referenced-column-name="id" />
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
     </entity>
 </doctrine-mapping>

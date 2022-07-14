@@ -1,3 +1,4 @@
+{% if form.title is defined %}{{ form_row(form.title) }}{% endif %}
 {% if form.enabled is defined %}{{ form_row(form.enabled) }}{% endif %}
 {% if form.index is defined %}{{ form_row(form.index) }}{% endif %}
 {% if form.default is defined %}{{ form_row(form.default) }}{% endif %}

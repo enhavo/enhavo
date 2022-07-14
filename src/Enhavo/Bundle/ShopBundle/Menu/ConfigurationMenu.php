@@ -37,9 +37,9 @@ class ConfigurationMenu extends ListMenu
                 'country' => [
                     'type' => 'shop_country'
                 ],
-                //                'voucher' => [
-                //                    'type' => 'shop_voucher'
-                //                ]
+                'voucher' => [
+                    'type' => 'shop_voucher'
+                ]
             ]
         ]);
     }

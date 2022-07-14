@@ -84,6 +84,7 @@ doctrine:
             Sylius\Component\Product\Model\ProductOptionValueInterface: Enhavo\Bundle\ShopBundle\Entity\ProductOptionValue
             Sylius\Component\Product\Model\ProductInterface: Enhavo\Bundle\ShopBundle\Entity\Product
             Sylius\Component\Product\Model\ProductVariantInterface: Enhavo\Bundle\ShopBundle\Entity\ProductVariant
+            Enhavo\Bundle\ShopBundle\Model\VoucherInterface: Enhavo\Bundle\ShopBundle\Entity\Voucher
 
 enhavo_doctrine_extension:
     metadata:
