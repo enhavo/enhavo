@@ -8,7 +8,7 @@
 
         <field name="amount" type="integer" nullable="true" />
 
-        <many-to-one field="voucher" target-entity="Enhavo\Bundle\ShopBundle\Model\VoucherInterface"></many-to-one>
+        <many-to-one field="voucher" target-entity="Enhavo\Bundle\ShopBundle\Model\VoucherInterface" inversed-by="redemptions"></many-to-one>
         <many-to-one field="order" target-entity="Sylius\Component\Order\Model\OrderInterface"></many-to-one>
     </entity>
 </doctrine-mapping>
