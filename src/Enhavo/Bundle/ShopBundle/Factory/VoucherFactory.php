@@ -1,49 +1,26 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 30.10.18
- * Time: 02:39
- */
 
 namespace Enhavo\Bundle\ShopBundle\Factory;
 
+use Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface;
 use Enhavo\Bundle\ShopBundle\Entity\Voucher;
-use Sylius\Component\Promotion\Model\PromotionCouponInterface;
 use Enhavo\Bundle\AppBundle\Factory\Factory;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Enhavo\Bundle\ShopBundle\Manager\VoucherManager;
 
 class VoucherFactory extends Factory
 {
-    use ContainerAwareTrait;
+    public function __construct(
+        string $className,
+        private VoucherManager $voucherManager
+    ) {
+        parent::__construct($className);
+    }
 
     public function createNew()
     {
         /** @var Voucher $new */
         $new = parent::createNew();
-        $new->setCoupon($this->createCoupon());
-        $new->setCode($this->generateCode());
+        $new->setCode($this->voucherManager->generateCode());
         return $new;
-    }
-
-    private function generateCode()
-    {
-        return $this->container->get('enhavo_shop.manager.voucher_manager')->createCode();
-    }
-
-    private function createCoupon()
-    {
-        /** @var PromotionCouponInterface $coupon */
-        $coupon = $this->container->get('sylius.factory.promotion_coupon')->createNew();
-        $promotion = $this->container->get('sylius.repository.promotion')->findOneBy([
-            'code' => 'voucher'
-        ]);
-
-        if($promotion === null) {
-            throw new \InvalidArgumentException(sprintf('No promotion with code "voucher" exists. Can\' create voucher'));
-        }
-
-        $coupon->setPromotion($promotion);
-        return $coupon;
     }
 }

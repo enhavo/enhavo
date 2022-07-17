@@ -27,6 +27,13 @@ services:
         tags:
             - { name: sylius.order_processor, priority: 60 }
 
+    Enhavo\Bundle\ShopBundle\OrderProcessing\OrderVoucherProcessor:
+        arguments:
+            - '@sylius.factory.adjustment'
+            - '@Enhavo\Bundle\ShopBundle\Manager\VoucherManager'
+        tags:
+            - { name: sylius.order_processor, priority: 10 }
+
     Enhavo\Bundle\ShopBundle\OrderProcessing\OrderTaxProcessor:
         arguments:
             - '@Enhavo\Bundle\ShopBundle\Manager\TaxationManager'

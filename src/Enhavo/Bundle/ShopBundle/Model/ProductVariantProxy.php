@@ -8,10 +8,13 @@ use Sylius\Component\Shipping\Model\ShippingCategoryInterface;
 use Sylius\Component\Taxation\Model\TaxCategoryInterface;
 use Sylius\Component\Taxation\Model\TaxRateInterface;
 
-class ProductVariantProxy implements ProductVariantProxyInterface
+class ProductVariantProxy implements ProductVariantProxyInterface, PriceAccessInterface
 {
     protected ProductInterface $product;
     protected ProductVariantInterface $productVariant;
+
+    protected ?int $grossPrice = null;
+    protected ?int $netPrice = null;
 
     public function __construct(ProductVariantInterface $productVariant)
     {
@@ -102,5 +105,30 @@ class ProductVariantProxy implements ProductVariantProxyInterface
     public function getWeight(): ?float
     {
         return $this->productVariant->getWeight() ?? $this->product->getWeight();
+    }
+
+    public function getGrossPrice(): ?int
+    {
+        return $this->grossPrice;
+    }
+
+    public function setGrossPrice(?int $grossPrice): void
+    {
+        $this->grossPrice = $grossPrice;
+    }
+
+    public function getNetPrice(): ?int
+    {
+        return $this->netPrice;
+    }
+
+    public function setNetPrice(?int $netPrice): void
+    {
+        $this->netPrice = $netPrice;
+    }
+
+    public function getTaxPrice(): ?int
+    {
+        return $this->getGrossPrice() - $this->getNetPrice();
     }
 }

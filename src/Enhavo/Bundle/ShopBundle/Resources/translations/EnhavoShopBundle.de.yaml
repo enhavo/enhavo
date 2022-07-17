@@ -24,7 +24,12 @@ voucher:
         code: Code
         amount: Betrag
         availableAmount: Verfügbar
-
+        expiredAt: Ablaufdatum
+        enabled: Aktiviert
+        partialRedeemable: Teilweise einlösbar
+    message:
+        already_applied: Der Gutschein wird bereits verwendet
+        amount_exceeded: Der Wert des Gutscheins ist höher als der Warenkorbwert
 country:
     label:
         country: Land
@@ -42,13 +47,14 @@ shipping_method:
         shipping_method: Versand Methode
 
 label:
+  shipment: Versand
   product: Produkt
   order: Bestellung
   sales: Verkauf
   shop: Shop
   tag: Tag
   category: Kategorie
-  configuration: Kategorie
+  configuration: Einstellungen
   catalog: Katalog
 
 mail:
@@ -71,7 +77,7 @@ order:
     ordered_at: Aufgegben am
     name: Name
     order: Bestellung
-    items: Posten
+    items: Poste
     address: Adresse
     payment: Bezahlung
     billing: Rechnung
@@ -160,7 +166,9 @@ product:
     label:
       active: Aktiv
       product_association:
-        type: Vereinigungstypen
+      type: Vereinigungstypen
+      taxCategory: Steuer Kategorie
+      shippingRequired: Versand notwendig
       code: Code
       title: Titel
       description: Beschreibung
@@ -193,6 +201,8 @@ product_variant:
   form:
     label:
       title: Titel
+      index: Indexiert
+      default: Standard
       description: Beschreibung
       active: Aktiv
       picture: Bild

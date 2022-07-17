@@ -6,20 +6,24 @@ use Enhavo\Bundle\ShopBundle\Exception\ConfigurationException;
 use Enhavo\Bundle\ShopBundle\Factory\ProductVariantProxyFactoryInterface;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
 
 class ConfigCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        $this->createProductVariantProxyFactoryInterface($container);
+        $this->createProductVariantProxyAliases($container);
     }
 
-    public function createProductVariantProxyFactoryInterface(ContainerBuilder $container)
+    public function createProductVariantProxyAliases(ContainerBuilder $container)
     {
-        $factoryService = $container->getParameter('enhavo_shop.product.variant_proxy.factory');
-        if (!$container->hasDefinition($factoryService)) {
-            throw ConfigurationException::productVariantProxyFactory($factoryService);
+        $proxyFactoryId = $container->getParameter('enhavo_shop.product.variant_proxy.factory');
+
+        if (!$container->hasDefinition($proxyFactoryId)) {
+            throw ConfigurationException::productVariantProxyFactory($proxyFactoryId);
         }
-        $container->setAlias(ProductVariantProxyFactoryInterface::class, $factoryService);
+
+        $container->setAlias('enhavo_shop.product.variant_proxy.factory', $proxyFactoryId);
+        $container->setAlias(ProductVariantProxyFactoryInterface::class, $proxyFactoryId);
     }
 }

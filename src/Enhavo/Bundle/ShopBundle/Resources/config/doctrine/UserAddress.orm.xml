@@ -2,7 +2,7 @@
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
     <entity name="Enhavo\Bundle\ShopBundle\Entity\UserAddress" table="shop_user_address">
         <id name="id" type="integer" column="id">
-            <generator />
+            <generator/>
         </id>
 
         <many-to-one field="shippingAddress" target-entity="Sylius\Component\Addressing\Model\AddressInterface">

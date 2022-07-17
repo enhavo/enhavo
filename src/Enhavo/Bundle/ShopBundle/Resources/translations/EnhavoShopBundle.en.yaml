@@ -23,7 +23,12 @@ voucher:
         code: Code
         amount: Amount
         availableAmount: Available amount
-
+        expiredAt: Expired at
+        enabled: Enabled
+        partialRedeemable: Partial redeemable
+    message:
+        already_applied: The voucher already applied
+        amount_exceeded: The value of the voucher is higher then the cart
 country:
     label:
         country: Country
@@ -41,6 +46,7 @@ shipping_method:
         shipping_method: Shipping method
 
 label:
+  shipment: Shipment
   product: Product
   order: Order
   sales: Sales
@@ -67,6 +73,8 @@ order:
       delete: 'Order delete'
   label:
     number: Ordernumber
+    index: Index
+    default: Standard
     ordered_at: Ordered At
     name: Name
     order: Order
@@ -147,7 +155,9 @@ product:
   form:
     label:
       product_association:
-       type: Association type
+      type: Association type
+      taxCategory: Tax Category
+      shippingRequired: Versand notwendig
       active: Active
       code: Code
       title: Title

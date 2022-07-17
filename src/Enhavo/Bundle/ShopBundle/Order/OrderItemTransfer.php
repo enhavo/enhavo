@@ -19,7 +19,7 @@ use Sylius\Component\Order\SyliusCartEvents;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
-class CartTransfer
+class OrderItemTransfer
 {
     use ContainerAwareTrait;
 

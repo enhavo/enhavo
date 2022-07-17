@@ -8,7 +8,7 @@ use Laminas\Stdlib\PriorityQueue;
 
 class PricingManager
 {
-    /** @var PriorityQueue<PriceCalculatorInterface> */
+    /** @var PriorityQueue<PriceCalculatorInterface>|PriceCalculatorInterface[] */
     private PriorityQueue $calculators;
 
     public function __construct()
@@ -26,6 +26,15 @@ class PricingManager
         foreach ($this->calculators as $calculator) {
             if ($calculator->isSupported($product)) {
                 return $calculator->calculate($product, $configuration);
+            }
+        }
+    }
+
+    public function calculateTax(ProductAccessInterface $product, array $configuration = [])
+    {
+        foreach ($this->calculators as $calculator) {
+            if ($calculator->isSupported($product)) {
+                return $calculator->calculateTax($product, $configuration);
             }
         }
     }

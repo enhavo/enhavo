@@ -18,9 +18,9 @@ class ProductVariant extends SyliusProductVariant implements ProductVariantInter
 {
     use ProductAccessTrait;
 
-    private ?int $stock;
+    private ?int $stock = null;
     private bool $stockTracked = false;
-    private ?bool $default;
+    private ?bool $default = null;
     private ?string $shortTitle = '';
     private bool $index = false;
 
@@ -86,7 +86,7 @@ class ProductVariant extends SyliusProductVariant implements ProductVariantInter
         return $this->index;
     }
 
-    public function setIndex(bool $index): void
+    public function setIndex(?bool $index): void
     {
         $this->index = $index;
     }

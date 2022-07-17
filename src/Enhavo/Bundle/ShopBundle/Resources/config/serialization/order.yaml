@@ -3,13 +3,28 @@ Sylius\Component\Order\Model\Order:
         items:
             groups: ['cart']
 
+Enhavo\Bundle\ShopBundle\Entity\Voucher:
+    attributes:
+        id:
+            groups: [ 'cart' ]
+        code:
+            groups: ['cart']
+
 Enhavo\Bundle\ShopBundle\Entity\Order:
     attributes:
+        vouchers:
+            groups: ['cart']
         items:
             groups: ['cart']
         totalQuantity:
             groups: ['cart']
         total:
+            groups: ['cart']
+        itemsTaxTotal:
+            groups: ['cart']
+        itemsNetTotal:
+            groups: ['cart']
+        voucherAmountTotal:
             groups: ['cart']
 
 Enhavo\Bundle\ShopBundle\Entity\OrderItem:

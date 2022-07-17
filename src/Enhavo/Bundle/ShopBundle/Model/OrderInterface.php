@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\ShopBundle\Model;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Sylius\Component\Addressing\Model\AddressInterface;
@@ -53,4 +54,8 @@ interface OrderInterface extends SyliusOrderInterface, PromotionSubjectInterface
     public function getCurrencyCode(): ?string;
     public function setCurrencyCode(?string $currencyCode): void;
     public function getCheckoutState(): string;
+    /** @return Collection|VoucherInterface[] */
+    public function getVouchers(): Collection;
+    public function addVoucher($voucher);
+    public function removeVoucher($voucher);
 }

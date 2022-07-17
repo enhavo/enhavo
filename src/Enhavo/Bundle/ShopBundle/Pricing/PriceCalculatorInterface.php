@@ -8,5 +8,7 @@ interface PriceCalculatorInterface
 {
     public function calculate(ProductAccessInterface $product, array $configuration = []): int;
 
+    public function calculateTax(ProductAccessInterface $product, array $configuration = []): int;
+
     public function isSupported(ProductAccessInterface $product): bool;
 }

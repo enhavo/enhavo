@@ -31,6 +31,9 @@ class SalesMenu extends ListMenu
                 'shipment' => [
                     'type' => 'shop_shipment'
                 ],
+                'voucher' => [
+                    'type' => 'shop_voucher'
+                ]
             ]
         ]);
     }

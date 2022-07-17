@@ -3,9 +3,12 @@
 namespace Enhavo\Bundle\ShopBundle\DependencyInjection;
 
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
+use Enhavo\Bundle\AppBundle\Repository\EntityRepository;
 use Enhavo\Bundle\ShopBundle\Entity\Voucher;
+use Enhavo\Bundle\ShopBundle\Entity\VoucherRedemption;
 use Enhavo\Bundle\ShopBundle\Factory\ProductVariantProxyFactory;
 use Enhavo\Bundle\ShopBundle\Factory\VoucherFactory;
+use Enhavo\Bundle\ShopBundle\Factory\VoucherRedemptionFactory;
 use Enhavo\Bundle\ShopBundle\Form\Type\VoucherType;
 use Enhavo\Bundle\ShopBundle\Model\ProductVariantProxy;
 use Enhavo\Bundle\ShopBundle\Repository\VoucherRepository;
@@ -84,6 +87,21 @@ class Configuration implements ConfigurationInterface
                                         ->scalarNode('repository')->defaultValue(VoucherRepository::class)->end()
                                         ->scalarNode('factory')->defaultValue(VoucherFactory::class)->end()
                                         ->scalarNode('form')->defaultValue(VoucherType::class)->cannotBeEmpty()->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('voucher_redemption')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->variableNode('options')->end()
+                                ->arrayNode('classes')
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode('model')->defaultValue(VoucherRedemption::class)->end()
+                                        ->scalarNode('controller')->defaultValue(ResourceController::class)->end()
+                                        ->scalarNode('repository')->defaultValue(EntityRepository::class)->end()
+                                        ->scalarNode('factory')->defaultValue(VoucherRedemptionFactory::class)->end()
                                     ->end()
                                 ->end()
                             ->end()
