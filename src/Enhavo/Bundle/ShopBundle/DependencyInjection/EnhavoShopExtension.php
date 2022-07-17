@@ -2,6 +2,8 @@
 
 namespace Enhavo\Bundle\ShopBundle\DependencyInjection;
 
+use Enhavo\Bundle\ShopBundle\DependencyInjection\Compiler\ProductVariantProxyEnhancerPass;
+use Enhavo\Bundle\ShopBundle\Product\ProductVariantProxyEnhancerInterface;
 use Sylius\Bundle\ResourceBundle\DependencyInjection\Extension\AbstractResourceExtension;
 use Sylius\Component\Resource\Factory;
 use Symfony\Component\Config\FileLocator;
@@ -22,6 +24,10 @@ class EnhavoShopExtension extends AbstractResourceExtension implements PrependEx
      */
     public function load(array $config, ContainerBuilder $container)
     {
+        $container
+            ->registerForAutoconfiguration(ProductVariantProxyEnhancerInterface::class)
+            ->addTag(ProductVariantProxyEnhancerPass::TAG);
+
         $config = $this->processConfiguration(new Configuration(), $config);
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $this->registerResources('enhavo_shop', $config['driver'], $config['resources'], $container);

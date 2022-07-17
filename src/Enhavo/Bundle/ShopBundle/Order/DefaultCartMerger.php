@@ -2,14 +2,17 @@
 
 namespace Enhavo\Bundle\ShopBundle\Order;
 
+use Enhavo\Bundle\ShopBundle\Context\SessionCartContext;
+use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Sylius\Component\Cart\Context\CartContext;
 use Sylius\Component\Cart\Provider\CartProviderInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\Order\Context\CartContextInterface;
+use Sylius\Component\Order\Context\CartNotFoundException;
 
 /**
- * Class UserCartMerger
+ * Class DefaultCartMerger
  *
  * If user has a current cart with items, after login the current cart will be used and saved to user
  * If user has a current cart no items, after login a saved cart will be used now as current cart
@@ -17,7 +20,7 @@ use Sylius\Component\Order\Context\CartContextInterface;
 class DefaultCartMerger implements CartMergerInterface
 {
     public function __construct(
-        private CartContextInterface $sessionCartContext,
+        private SessionCartContext $sessionCartContext,
         private CartContextInterface $userCartContext,
         private EntityManagerInterface $em
     )
@@ -25,17 +28,24 @@ class DefaultCartMerger implements CartMergerInterface
 
     public function merge(UserInterface $user)
     {
-        $cart = $this->sessionCartContext->getCart();
+        /** @var OrderInterface $sessionCart */
+        $sessionCart = $this->sessionCartContext->getCart();
 
-        if(!$cart->isEmpty()) {
-            $this->userCartProvider->setCart($cart);
-        } else {
-            $userCart = $this->userCartProvider->getCart();
-            if($userCart !== null && !$userCart->isEmpty()) {
-                $this->cartContext->setCurrentCartIdentifier($userCart);
-            }
+        $userCart = null;
+        try {
+            $userCart = $this->userCartContext->getCart();
+        } catch (CartNotFoundException $e) {
+            // do nothing
         }
 
-        $this->em->flush();
+        if ($sessionCart->isEmpty() && ($userCart === null || $userCart->isEmpty())) {
+            $sessionCart->setUser($user);
+            $this->sessionCartContext->clear();
+            $this->em->flush();
+        } else if (!$sessionCart->isEmpty()) {
+            $sessionCart->setUser($user);
+            $this->sessionCartContext->clear();
+            $this->em->flush();
+        }
     }
 }

@@ -17,10 +17,14 @@ services:
         tags:
             - { name: enhavo.action, alias: shop_create_attribute }
 
+    enhavo_shop.product_manager:
+        public: true
+        alias: Enhavo\Bundle\ShopBundle\Manager\ProductManager
+
     Enhavo\Bundle\ShopBundle\Manager\ProductManager:
         arguments:
             - '@doctrine.orm.entity_manager'
-            - '@Enhavo\Bundle\ShopBundle\Factory\ProductVariantProxyFactory'
+            - '@enhavo_shop.product.variant_proxy.factory'
             - '@enhavo_search.search.engine'
             - '@sylius.translation_locale_provider'
 
@@ -32,37 +36,37 @@ services:
 
     Enhavo\Bundle\ShopBundle\EventListener\ProductSubscriber:
         arguments:
-            - '@Enhavo\Bundle\ShopBundle\Manager\ProductManager'
+            - '@enhavo_shop.product_manager'
         tags:
             - { name: kernel.event_subscriber }
 
     Enhavo\Bundle\ShopBundle\EventListener\ProductVariantSubscriber:
         arguments:
-            - '@enhavo_shop.order.cart_merger'
+            - '@enhavo_shop.product_manager'
         tags:
             - { name: kernel.event_subscriber }
 
     Enhavo\Bundle\ShopBundle\EventListener\UserSubscriber:
         arguments:
-            - '@Enhavo\Bundle\ShopBundle\Manager\ProductManager'
+            - '@enhavo_shop.order.cart_merger'
         tags:
             - { name: kernel.event_subscriber }
 
     Enhavo\Bundle\ShopBundle\EventListener\ProductOptionSubscriber:
         arguments:
-            - '@Enhavo\Bundle\ShopBundle\Manager\ProductManager'
+            - '@enhavo_shop.product_manager'
         tags:
             - { name: kernel.event_subscriber }
 
     Enhavo\Bundle\ShopBundle\EventListener\ProductAttributeSubscriber:
         arguments:
-            - '@Enhavo\Bundle\ShopBundle\Manager\ProductManager'
+            - '@enhavo_shop.product_manager'
         tags:
             - { name: kernel.event_subscriber }
 
     Enhavo\Bundle\ShopBundle\EventListener\ProductAssociationTypeSubscriber:
         arguments:
-            - '@Enhavo\Bundle\ShopBundle\Manager\ProductManager'
+            - '@enhavo_shop.product_manager'
         tags:
             - { name: kernel.event_subscriber }
 
@@ -123,7 +127,7 @@ services:
             - '@enhavo_search.result.result_converter'
             - '@enhavo_search.search.engine'
             - '@enhavo_app.template.manager'
-            - '@Enhavo\Bundle\ShopBundle\Manager\ProductManager'
+            - '@enhavo_shop.product_manager'
         calls:
             - [setContainer, ['@service_container']]
         tags:
@@ -163,7 +167,7 @@ services:
     Enhavo\Bundle\ShopBundle\Search\Filter\ProductVariantPropertyDataProvider:
         public: true
         arguments:
-            - '@Enhavo\Bundle\ShopBundle\Manager\ProductManager'
+            - '@enhavo_shop.product_manager'
         calls:
             - [ 'setContainer', ['@service_container']]
         tags:
@@ -213,6 +217,12 @@ services:
             - '@sylius.repository.order'
         tags:
             - { name: sylius.context.cart, priority: -600 }
+
+    Enhavo\Bundle\ShopBundle\Product\PriceEnhancer:
+        arguments:
+            - '@Enhavo\Bundle\ShopBundle\Manager\PricingManager'
+        tags:
+            - { name: 'enhavo_shop.product_variant_proxy_enhancer' }
 
 #    enhavo_shop.listener.doctrine_sylius_meta:
 #        class: Enhavo\Bundle\ShopBundle\EventListener\DoctrineSyliusMetaListener

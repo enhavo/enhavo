@@ -81,7 +81,7 @@ class VoucherManager
     public function validate(VoucherInterface $voucher, OrderInterface $order)
     {
         $messages = [];
-        $errors = $this->validator->validate($voucher);
+        $errors = $this->validator->validate($voucher, null, ['redeem']);
         if (count($errors)) {
             /** @var ConstraintViolationInterface $error */
             foreach($errors as $error) {

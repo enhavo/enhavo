@@ -15,12 +15,12 @@ use Sylius\Component\Order\Context\CartContextInterface;
 use Sylius\Component\Order\Context\CartNotFoundException;
 use Sylius\Component\Order\Model\OrderInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class UserCartContext implements CartContextInterface
 {
     public function __construct(
-        private TokenStorage $tokenStorage,
+        private TokenStorageInterface $tokenStorage,
         private RepositoryInterface $orderRepository,
     )
     {}
@@ -28,6 +28,10 @@ class UserCartContext implements CartContextInterface
     public function getCart(): OrderInterface
     {
         $user = $this->getUser();
+        if ($user === null) {
+            throw new CartNotFoundException();
+        }
+
         $carts = $this->orderRepository->findBy([
             'user' => $user,
             'state' => 'cart'
@@ -43,6 +47,10 @@ class UserCartContext implements CartContextInterface
 
     private function getUser(): ?UserInterface
     {
-        return $this->tokenStorage->getToken()?->getUser();
+        $user = $this->tokenStorage->getToken()?->getUser();
+        if ($user instanceof UserInterface) {
+            return $user;
+        }
+        return null;
     }
 }

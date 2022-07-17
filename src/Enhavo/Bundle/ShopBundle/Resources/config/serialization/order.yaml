@@ -20,6 +20,12 @@ Enhavo\Bundle\ShopBundle\Entity\Order:
             groups: ['cart']
         total:
             groups: ['cart']
+        itemsTaxTotal:
+            groups: ['cart']
+        itemsNetTotal:
+            groups: ['cart']
+        voucherAmountTotal:
+            groups: ['cart']
 
 Enhavo\Bundle\ShopBundle\Entity\OrderItem:
     attributes:

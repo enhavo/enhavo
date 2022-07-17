@@ -31,7 +31,12 @@ Enhavo\Bundle\ShopBundle\Model\ProductVariantProxy:
             groups: ['product', 'cart']
         price:
             groups: ['product', 'cart']
-
+        netPrice:
+            groups: ['product', 'cart']
+        grossPrice:
+            groups: ['product', 'cart']
+        taxPrice:
+            groups: ['product', 'cart']
 
 Enhavo\Bundle\ShopBundle\Entity\ProductVariant:
     attributes:

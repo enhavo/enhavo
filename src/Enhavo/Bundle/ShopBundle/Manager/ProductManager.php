@@ -13,11 +13,14 @@ use Enhavo\Bundle\RoutingBundle\Slugifier\Slugifier;
 use Enhavo\Bundle\SearchBundle\Engine\EngineInterface;
 use Enhavo\Bundle\ShopBundle\Entity\ProductOption;
 use Enhavo\Bundle\ShopBundle\Entity\ProductVariant;
-use Enhavo\Bundle\ShopBundle\Factory\ProductVariantProxyFactory;
+use Enhavo\Bundle\ShopBundle\Factory\ProductVariantProxyFactoryInterface;
 use Enhavo\Bundle\ShopBundle\Model\ProductAccessInterface;
 use Enhavo\Bundle\ShopBundle\Model\ProductInterface;
 use Enhavo\Bundle\ShopBundle\Model\ProductVariantInterface;
 use Enhavo\Bundle\ShopBundle\Model\ProductVariantProxyInterface;
+use Enhavo\Bundle\ShopBundle\Pricing\PriceCalculatorInterface;
+use Enhavo\Bundle\ShopBundle\Product\ProductVariantProxyEnhancerInterface;
+use Laminas\Stdlib\PriorityQueue;
 use Sylius\Component\Product\Model\ProductAssociationTypeInterface;
 use Sylius\Component\Product\Model\ProductAttributeInterface;
 use Sylius\Component\Product\Model\ProductOptionInterface;
@@ -25,9 +28,12 @@ use Sylius\Component\Resource\Translation\Provider\TranslationLocaleProviderInte
 
 class ProductManager
 {
+    /** @var PriorityQueue<PriceCalculatorInterface>|PriceCalculatorInterface[] */
+    private PriorityQueue $calculators;
+
     public function __construct(
         private EntityManagerInterface $em,
-        private ProductVariantProxyFactory $proxyFactory,
+        private ProductVariantProxyFactoryInterface $proxyFactory,
         private EngineInterface $engine,
         private TranslationLocaleProviderInterface $translationLocaleProvider,
     )

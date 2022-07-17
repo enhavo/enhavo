@@ -46,6 +46,7 @@ shipping_method:
         shipping_method: Shipping method
 
 label:
+  shipment: Shipment
   product: Product
   order: Order
   sales: Sales

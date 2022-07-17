@@ -37,6 +37,11 @@ class SessionCartContext implements CartContextInterface
         return $cart;
     }
 
+    public function clear()
+    {
+        $this->session->set($this->sessionKeyName, null);
+    }
+
     private function createCart(): \Enhavo\Bundle\ShopBundle\Model\OrderInterface
     {
         $cart = $this->factory->createNewCart();

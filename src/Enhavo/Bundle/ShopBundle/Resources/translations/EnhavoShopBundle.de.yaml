@@ -47,13 +47,14 @@ shipping_method:
         shipping_method: Versand Methode
 
 label:
+  shipment: Versand
   product: Produkt
   order: Bestellung
   sales: Verkauf
   shop: Shop
   tag: Tag
   category: Kategorie
-  configuration: Kategorie
+  configuration: Einstellungen
   catalog: Katalog
 
 mail:

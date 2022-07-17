@@ -419,4 +419,33 @@ class Order extends SyliusOrder implements OrderInterface
     {
         $this->currencyCode = $currencyCode;
     }
+
+    public function getItemsTaxTotal()
+    {
+        $tax = 0;
+        foreach ($this->items as $item) {
+            $adjustments = $item->getAdjustmentsRecursively(AdjustmentInterface::TAX_ADJUSTMENT);
+            foreach ($adjustments as $adjustment) {
+                $tax += $adjustment->getAmount();
+            }
+        }
+        return $tax;
+    }
+
+    public function getVoucherAmountTotal()
+    {
+        $amount = 0;
+
+        $adjustments = $this->getAdjustmentsRecursively(AdjustmentInterface::VOUCHER_ADJUSTMENT);
+        foreach ($adjustments as $adjustment) {
+            $amount += $adjustment->getAmount();
+        }
+
+        return $amount;
+    }
+
+    public function getItemsNetTotal()
+    {
+        return $this->getItemsTotal() - $this->getItemsTaxTotal();
+    }
 }
