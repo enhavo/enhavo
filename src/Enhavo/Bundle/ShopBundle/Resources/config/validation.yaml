@@ -60,5 +60,8 @@ Enhavo\Bundle\ShopBundle\Entity\Voucher:
         amount:
             - Positive: ~
 
-
-
+Enhavo\Bundle\ShopBundle\Entity\ShippingMethod:
+    properties:
+        name:
+            - NotBlank:
+                  groups: ['create','update']
