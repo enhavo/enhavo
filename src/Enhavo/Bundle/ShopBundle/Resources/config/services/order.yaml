@@ -34,6 +34,13 @@ services:
         tags:
             - { name: sylius.order_processor, priority: 10 }
 
+    Enhavo\Bundle\ShopBundle\OrderProcessing\ShippingChargesProcessor:
+        arguments:
+            - '@sylius.factory.adjustment'
+            - '@Enhavo\Bundle\ShopBundle\Shipping\DelegatingCalculator'
+        tags:
+            - { name: sylius.order_processor, priority: 30 }
+
     Enhavo\Bundle\ShopBundle\OrderProcessing\OrderTaxProcessor:
         arguments:
             - '@Enhavo\Bundle\ShopBundle\Manager\TaxationManager'

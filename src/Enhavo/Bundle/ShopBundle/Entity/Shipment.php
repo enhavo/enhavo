@@ -8,9 +8,9 @@
 
 namespace Enhavo\Bundle\ShopBundle\Entity;
 
-use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Enhavo\Bundle\ShopBundle\Model\ShipmentInterface;
+use Sylius\Component\Core\Model\AdjustmentInterface;
 use Sylius\Component\Shipping\Model\Shipment as SyliusShipment;
 
 class Shipment extends SyliusShipment implements ShipmentInterface
