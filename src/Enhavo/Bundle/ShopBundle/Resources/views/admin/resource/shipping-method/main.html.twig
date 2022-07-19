@@ -1,0 +1,9 @@
+{% if form.name is defined %}{{ form_row(form.name) }}{% endif %}
+{% if form.enabled is defined %}{{ form_row(form.enabled) }}{% endif %}
+{% if form.category is defined %}{{ form_row(form.category) }}{% endif %}
+{% if form.categoryRequirement is defined %}{{ form_row(form.categoryRequirement) }}{% endif %}
+{% if form.rules is defined %}{{ form_row(form.rules) }}{% endif %}
+{% if form.calculator is defined %}{{ form_row(form.calculator) }}{% endif %}
+{% if form.taxCategory is defined %}{{ form_row(form.taxCategory) }}{% endif %}
+{% if form.code is defined %}{{ form_row(form.code) }}{% endif %}
+{% if form.configuration is defined %}{{ form_row(form.configuration) }}{% endif %}

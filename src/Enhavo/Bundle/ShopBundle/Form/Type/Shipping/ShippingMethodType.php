@@ -15,6 +15,7 @@ class ShippingMethodType extends AbstractType
     {
         $builder->remove('translations');
         $builder->remove('enabled');
+        $builder->remove('position');
 
         $builder->add('name', TextType::class);
         $builder->add('enabled', BooleanType::class);

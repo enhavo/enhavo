@@ -2,10 +2,11 @@
 
 namespace Enhavo\Bundle\ShopBundle\Entity;
 
+use Enhavo\Bundle\ShopBundle\Model\ShippingMethodInterface;
 use Sylius\Component\Shipping\Model\ShippingMethod as BaseShippingMethod;
 use Sylius\Component\Taxation\Model\TaxCategoryInterface;
 
-class ShippingMethod extends BaseShippingMethod
+class ShippingMethod extends BaseShippingMethod implements ShippingMethodInterface
 {
     protected ?TaxCategoryInterface $taxCategory;
     protected ?string $name;

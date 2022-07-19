@@ -17,7 +17,13 @@ sylius_shipping_method_create:
         _controller: sylius.controller.shipping_method::createAction
         _sylius:
             redirect: sylius_shipping_method_update
+            form:
+                options:
+                    validation_groups: [ 'create' ]
             viewer:
+                tabs:
+                    main:
+                        template: admin/resource/shipping-method/main.html.twig
 
 sylius_shipping_method_update:
     options:
@@ -27,7 +33,13 @@ sylius_shipping_method_update:
     defaults:
         _controller: sylius.controller.shipping_method::updateAction
         _sylius:
+            form:
+                options:
+                    validation_groups: [ 'update' ]
             viewer:
+                tabs:
+                    main:
+                        template: admin/resource/shipping-method/main.html.twig
 
 sylius_shipping_method_table:
     options:

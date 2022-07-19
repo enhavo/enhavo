@@ -28,6 +28,14 @@ services:
             - '@enhavo_search.search.engine'
             - '@sylius.translation_locale_provider'
 
+    enhavo_shop.shipping_manager:
+        public: true
+        alias: Enhavo\Bundle\ShopBundle\Manager\ShippingManager
+
+    Enhavo\Bundle\ShopBundle\Manager\ShippingManager:
+        arguments:
+
+
     Enhavo\Bundle\ShopBundle\EventListener\CheckoutSubscriber:
         arguments:
             - '@router'
@@ -43,6 +51,12 @@ services:
     Enhavo\Bundle\ShopBundle\EventListener\ProductVariantSubscriber:
         arguments:
             - '@enhavo_shop.product_manager'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    Enhavo\Bundle\ShopBundle\EventListener\ShippingMethodSubscriber:
+        arguments:
+            - '@enhavo_shop.shipping_manager'
         tags:
             - { name: kernel.event_subscriber }
 
@@ -223,6 +237,12 @@ services:
             - '@Enhavo\Bundle\ShopBundle\Manager\PricingManager'
         tags:
             - { name: 'enhavo_shop.product_variant_proxy_enhancer' }
+
+    Enhavo\Bundle\ShopBundle\Shipping\DelegatingCalculator:
+        arguments:
+            - '@sylius.registry.shipping_calculator'
+            - '@sylius.tax_rate_resolver'
+            - '@sylius.tax_calculator'
 
 #    enhavo_shop.listener.doctrine_sylius_meta:
 #        class: Enhavo\Bundle\ShopBundle\EventListener\DoctrineSyliusMetaListener

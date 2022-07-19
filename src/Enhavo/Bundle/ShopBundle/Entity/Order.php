@@ -304,6 +304,11 @@ class Order extends SyliusOrder implements OrderInterface
             $total += $adjustment->getAmount();
         }
 
+        $taxes = $this->getAdjustments(AdjustmentInterface::TAX_SHIPPING_ADJUSTMENT);
+        foreach($taxes as $adjustment) {
+            $total += $adjustment->getAmount();
+        }
+
         return $total;
     }
 
