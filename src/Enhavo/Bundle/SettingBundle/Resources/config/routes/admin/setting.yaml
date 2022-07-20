@@ -42,7 +42,7 @@ enhavo_setting_setting_update:
                     main:
                         label: setting.label.setting
                         translation_domain: EnhavoSettingBundle
-                        template: EnhavoSettingBundle:admin/resource/setting:main.html.twig
+                        template: admin/resource/setting/main.html.twig
 
 enhavo_setting_setting_table:
     options:
