@@ -34,6 +34,10 @@ class DefaultPriceCalculator implements PriceCalculatorInterface
     {
         /** ProductVariantProxyInterface $product */
         $taxRate = $this->taxRateResolver->resolve($product);
+        if ($taxRate === null) {
+            return 0;
+        }
+
         $configuration = $this->configure($configuration);
         $price = $this->getPrice($product, $configuration);
 

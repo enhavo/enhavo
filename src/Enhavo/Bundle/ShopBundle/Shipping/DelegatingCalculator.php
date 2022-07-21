@@ -40,6 +40,9 @@ class DelegatingCalculator implements DelegatingCalculatorInterface
         $method = $this->getMethod($subject);
         $shippingCalculator = $this->registry->get($method->getCalculator());
         $taxRate = $this->taxRateResolver->resolve($method);
+        if ($taxRate === null) {
+            return 0;
+        }
         $price = $shippingCalculator->calculate($subject, $method->getConfiguration());
 
         return $this->taxCalculator->calculate($price, $taxRate);

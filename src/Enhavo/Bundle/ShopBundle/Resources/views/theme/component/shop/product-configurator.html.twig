@@ -1,0 +1,33 @@
+<div data-controller="product"
+     data-product-product-variant-value="{{ productVariant|serialize('json', {groups: ['product', 'route']}) }}"
+>
+    <div class="product-meta">
+        <div class="product-price">
+            <div class="price">
+                {% if product.isReduced %}
+                    <span class="default-price">{{ productVariant.price }}</span> <span class="reduced-price">{{ productVariant.reducedPrice }}</span>
+                {% else %}
+                    <span class="default-price">{{ productVariant.price }}</span>
+                {% endif %}
+            </div>
+            <div class="unit">(9,00 / Kg)</div>
+        </div>
+        <div class="product-in-stock not-in-stock">Lieferbar</div>
+    </div>
+    <div class="product-config">
+        <div class="product-amount">
+            <div class="select" data-shop-select-amount>
+                <select>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option data-shop-amount-more>+</option>
+                </select>
+                <input type="text" data-more-amount>
+            </div>
+        </div>
+        <a href="#" class="btn add-to-cart" data-action="click->product#addToCart">Add to cart</a>
+    </div>
+</div>
