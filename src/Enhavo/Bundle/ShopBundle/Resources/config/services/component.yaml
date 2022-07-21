@@ -10,3 +10,9 @@ services:
             - '@sylius.context.cart'
         tags:
             - { name: twig.component, key: shop_cart_summary, template: 'theme/component/shop/cart-summary.html.twig' }
+
+    Enhavo\Bundle\ShopBundle\Component\ProductConfiguratorComponent:
+        arguments:
+            - '@enhavo_shop.product_manager'
+        tags:
+            - { name: twig.component, key: shop_product_configurator, template: 'theme/component/shop/product-configurator.html.twig' }
