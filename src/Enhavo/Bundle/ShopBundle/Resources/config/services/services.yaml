@@ -244,6 +244,28 @@ services:
             - '@sylius.tax_rate_resolver'
             - '@sylius.tax_calculator'
 
+    enhavo_shop.document_manager:
+        alias: Enhavo\Bundle\ShopBundle\Manager\DocumentManager
+        public: true
+
+    Enhavo\Bundle\ShopBundle\Manager\DocumentManager:
+
+    Enhavo\Bundle\ShopBundle\Document\Generator\BillGenerator:
+        arguments:
+            - '@enhavo_media.factory.file'
+            - '@Enhavo\Bundle\FormBundle\Formatter\CurrencyFormatter'
+            - '%enhavo_shop.document.bill.background_image%'
+        tags:
+            - { name: enhavo_shop.document_generator, alias: 'bill' }
+
+    Enhavo\Bundle\ShopBundle\Document\Generator\PackingSlipGenerator:
+        arguments:
+            - '@enhavo_media.factory.file'
+            - '@Enhavo\Bundle\FormBundle\Formatter\CurrencyFormatter'
+            - '%enhavo_shop.document.packing_slip.background_image%'
+        tags:
+            - { name: enhavo_shop.document_generator, alias: 'packing_slip' }
+
 #    enhavo_shop.listener.doctrine_sylius_meta:
 #        class: Enhavo\Bundle\ShopBundle\EventListener\DoctrineSyliusMetaListener
 #        tags:
@@ -256,10 +278,6 @@ services:
 #
 #    enhavo.token_generator:
 #        class: Sylius\Component\User\Security\Generator\TokenGenerator
-#    enhavo_shop.document.manager:
-#        class: Enhavo\Bundle\ShopBundle\Document\DocumentManager
-#        calls:
-#            - [setContainer, ['@service_container']]
 #
 #    sylius.invoice_number_generator:
 #        class: Enhavo\Bundle\ShopBundle\Document\InvoiceNumberGenerator

@@ -32,13 +32,8 @@ class EnhavoShopExtension extends AbstractResourceExtension implements PrependEx
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $this->registerResources('enhavo_shop', $config['driver'], $config['resources'], $container);
 
-        $container->setParameter('enhavo_shop.document.billing', $config['document']['billing']); //Todo: Can be removed in next version
-        $container->setParameter('enhavo_shop.document.billing.generator', $config['document']['billing']['generator']);
-        $container->setParameter('enhavo_shop.document.billing.options', isset($config['document']['billing']['options']) ? $config['document']['billing']['options'] : []);
-
-        $container->setParameter('enhavo_shop.document.packing_slip', $config['document']['packing_slip']); //Todo: Can be removed in next version
-        $container->setParameter('enhavo_shop.document.packing_slip.generator', $config['document']['packing_slip']['generator']);
-        $container->setParameter('enhavo_shop.document.packing_slip.options', isset($config['document']['packing_slip']['options']) ? $config['document']['packing_slip']['options'] : []);
+        $container->setParameter('enhavo_shop.document.bill.background_image', $config['document']['bill']['background_image']);
+        $container->setParameter('enhavo_shop.document.packing_slip.background_image', $config['document']['packing_slip']['background_image']);
 
         $container->setParameter('enhavo_shop.product.variant_proxy.model', $config['product']['variant_proxy']['model']);
         $container->setParameter('enhavo_shop.product.variant_proxy.factory', $config['product']['variant_proxy']['factory']);

@@ -6,28 +6,29 @@
  * Time: 15:39
  */
 
-namespace Enhavo\Bundle\ShopBundle\Document;
+namespace Enhavo\Bundle\ShopBundle\Document\Generator;
 
+use Enhavo\Bundle\FormBundle\Formatter\CurrencyFormatter;
+use Enhavo\Bundle\MediaBundle\Factory\FileFactory;
+use Enhavo\Bundle\ShopBundle\Document\AbstractPDFGenerator;
+use Enhavo\Bundle\ShopBundle\Document\PDF;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Enhavo\Bundle\ShopBundle\Entity\OrderItem;
-use Enhavo\Bundle\ShopBundle\Model\ProductInterface;
 use Symfony\Component\Intl\Countries;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class PackingSlipGenerator implements GeneratorInterface
+class PackingSlipGenerator extends AbstractPDFGenerator
 {
-    protected $container;
-
-    public function __construct(ContainerInterface $container)
+    public function __construct(
+        FileFactory $fileFactory,
+        private CurrencyFormatter $currencyFormatter,
+        private ?string $backgroundImage,
+    )
     {
-        $this->container = $container;
+        parent::__construct($fileFactory);
     }
 
-    public function generate(OrderInterface $order, $options = [])
+    public function generatePDF(PDF $pdf, OrderInterface $order, $options = [])
     {
-        $currencyFormatter = $this->container->get('enhavo_app.formatter.currency_formatter');
-
-        $pdf = new BaseDocument();
         $pdf->SetTitle("Lieferschein");
 
         /**
@@ -146,11 +147,8 @@ class PackingSlipGenerator implements GeneratorInterface
                 if(!isset($items[$i-1])) break;
                 $orderedArticle = $items[$i-1];
 
-                /**  @var ProductInterface $product */
-                $product = $orderedArticle->getProduct();
-
-                $itemSum = $currencyFormatter->getCurrency($orderedArticle->getUnitTotal());
-                $itemNet = $currencyFormatter->getCurrency($orderedArticle->getUnitPrice());
+                $itemSum = $this->currencyFormatter->getCurrency($orderedArticle->getUnitTotal());
+                $itemNet = $this->currencyFormatter->getCurrency($orderedArticle->getUnitPrice());
 
                 $pdf->Ln();
                 $pdf->SetAbsX($marginLeft);
@@ -163,11 +161,12 @@ class PackingSlipGenerator implements GeneratorInterface
                     $cellBorderLast = "B";
                 }
                 // missing packing unit in name for merchants
-                $pdf->Cell(64,0,$product->getName(),$cellBorder);
+                $pdf->Cell(64,0,$orderedArticle->getName(),$cellBorder);
 
                 $pdf->Cell(15,0,$orderedArticle->getQuantity(),$cellBorder);
                 $pdf->Cell(40,0,$itemNet,$cellBorder);
-                $pdf->Cell(25,0,($product->getTaxRate()->getAmount()*100)."%",$cellBorder);
+                //$pdf->Cell(25,0,($product->getTaxRate()->getAmount()*100)."%",$cellBorder);
+                $pdf->Cell(25,0,"%",$cellBorder);
                 $pdf->Cell(33,0,$itemSum,$cellBorderLast);
             }
 
@@ -189,11 +188,9 @@ class PackingSlipGenerator implements GeneratorInterface
         $pdf->SetCellPadding(0);
         $pdf->setCellMargins("","","",0.5);
         $pdf->SetFontSize($stdSize);
-
-        return $pdf->Output(null, 'S');
     }
 
-    public function generateName(OrderInterface $order, $options = [])
+    protected function getFileName(OrderInterface $order, $options = [])
     {
         return sprintf('packing-slip-%s.pdf', $order->getNumber());
     }

@@ -6,38 +6,38 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\ShopBundle\Document;
+namespace Enhavo\Bundle\ShopBundle\Document\Generator;
 
+use Enhavo\Bundle\FormBundle\Formatter\CurrencyFormatter;
+use Enhavo\Bundle\MediaBundle\Factory\FileFactory;
+use Enhavo\Bundle\ShopBundle\Document\AbstractPDFGenerator;
+use Enhavo\Bundle\ShopBundle\Document\PDF;
 use Enhavo\Bundle\ShopBundle\Model\AdjustmentInterface;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Enhavo\Bundle\ShopBundle\Entity\OrderItem;
-use Enhavo\Bundle\ShopBundle\Model\ProductInterface;
 use Sylius\Component\Taxation\Model\TaxRate;
 use Symfony\Component\Intl\Countries;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class BillingGenerator implements GeneratorInterface
+class BillGenerator extends AbstractPDFGenerator
 {
-    protected $container;
-
-    public function __construct(ContainerInterface $container)
+    public function __construct(
+        FileFactory $fileFactory,
+        private CurrencyFormatter $currencyFormatter,
+        private ?string $backgroundImage,
+    )
     {
-        $this->container = $container;
+        parent::__construct($fileFactory);
     }
-    
-    public function generate(OrderInterface $order, $options = [])
+
+    public function generatePDF(PDF $pdf, OrderInterface $order, $options = [])
     {
-        if(!array_key_exists('enable_tax_19', $options)) {
-            $options['enable_tax_19'] = true;
+        if (!array_key_exists('enable_tax_19', $options)) {
+            $options['enable_tax_19'] = false;
         }
 
-        if(!array_key_exists('enable_tax_7', $options)) {
-            $options['enable_tax_7'] = true;
+        if (!array_key_exists('enable_tax_7', $options)) {
+            $options['enable_tax_7'] = false;
         }
-
-        $currencyFormatter = $this->container->get('enhavo_app.formatter.currency_formatter');
-
-        $pdf = new BaseDocument();
 
         /**
          * @var OrderItem[] $items
@@ -81,7 +81,7 @@ class BillingGenerator implements GeneratorInterface
             $stdFont = "pdfahelvetica";
             $stdFontBold = "pdfahelveticab";
 
-            if($order->getState() == OrderInterface::STATE_CANCELLED) {
+            if ($order->getState() == OrderInterface::STATE_CANCELLED) {
                 $subject = "Stornierung zu Rechnung " . $order->getNumber();
             } else {
                 $subject = "Rechnung";
@@ -93,7 +93,7 @@ class BillingGenerator implements GeneratorInterface
 
             $pdf->SetAutoPageBreak(false, 0);
 
-            if(isset($options['backgroundImage'])) {
+            if (isset($options['backgroundImage'])) {
                 $backgroundImagePath = $this->container->get('kernel')->locateResource($options['backgroundImage']);
                 $pdf->Image($backgroundImagePath,0,0,210,297,'','','T',true);
             }
@@ -143,7 +143,8 @@ class BillingGenerator implements GeneratorInterface
             }
 
             $pdf->MultiCell($metaDataWidth,0,$order->getCreatedAt()->format('d.m.Y'),0,"L",false,1,$metaDataValueMarginLeft);
-            $pdf->MultiCell($metaDataWidth,0,$order->getPayment()->getMethod()->getName(),0,"L",false,1,$metaDataValueMarginLeft);
+            //$pdf->MultiCell($metaDataWidth,0,$order->getPayment()->getMethod()->getName(),0,"L",false,1,$metaDataValueMarginLeft);
+            $pdf->MultiCell($metaDataWidth,0, '',0,"L",false,1,$metaDataValueMarginLeft);
 
 
             // item table header
@@ -163,17 +164,14 @@ class BillingGenerator implements GeneratorInterface
 
             $start = ($pageNumber-1)*$itemsPerPage+1;
             $end = $itemsPerPage*$pageNumber;
-            for($i = $start; $i <= $end; $i++) {
+            for ($i = $start; $i <= $end; $i++) {
                 if(!isset($items[$i-1])) {
                     break;
                 }
                 $orderedArticle = $items[$i-1];
 
-                /** @var ProductInterface $product */
-                $product = $orderedArticle->getProduct();
-
-                $itemSum = $currencyFormatter->getCurrency($orderedArticle->getUnitTotal());
-                $itemNet = $currencyFormatter->getCurrency($orderedArticle->getUnitPrice());
+                $itemSum = $this->currencyFormatter->getCurrency($orderedArticle->getUnitTotal());
+                $itemNet = $this->currencyFormatter->getCurrency($orderedArticle->getUnitPrice());
 
                 $pdf->Ln();
                 $pdf->SetAbsX($marginLeft);
@@ -187,12 +185,13 @@ class BillingGenerator implements GeneratorInterface
                 }
 
                 // missing packing unit in name for merchants
-                $pdf->Cell(64,0,$product->getName(),$cellBorder);
+                $pdf->Cell(64,0,$orderedArticle->getName(),$cellBorder);
 
                 $pdf->Cell(15,0,$orderedArticle->getQuantity(),$cellBorder);
                 $pdf->Cell(40,0,$itemNet,$cellBorder);
-                $pdf->Cell(25,0, ($product->getTaxRate()->getAmount()*100)."%",$cellBorder);
-                $pdf->Cell(33,0,$itemSum,$cellBorderLast);
+                //$pdf->Cell(25,0, ($product->getTaxRate()->getAmount()*100)."%",$cellBorder);
+                $pdf->Cell(25,0, "%", $cellBorder);
+                $pdf->Cell(33,0,$itemSum, $cellBorderLast);
             }
 
             if($totalPageNumber > 1 && $pageNumber < $totalPageNumber) {
@@ -232,10 +231,10 @@ class BillingGenerator implements GeneratorInterface
         $pdf->SetFontSize($sumSize);
         $pdf->MultiCell($sumWidth,0,"Rechnungsbetrag:",0,"R",false,1,$sumMarginLeft);
 
-        $shippingNetSum = $currencyFormatter->getCurrency($order->getShippingTotal());
-        $netSum = $currencyFormatter->getCurrency($order->getUnitTotal());
+        $shippingNetSum = $this->currencyFormatter->getCurrency($order->getShippingTotal());
+        $netSum = $this->currencyFormatter->getCurrency($order->getUnitTotal());
         // not available in order?
-        $totalSum = $currencyFormatter->getCurrency($order->getTotal());
+        $totalSum = $this->currencyFormatter->getCurrency($order->getTotal());
 
         $pdf->SetFont($stdFont);
         $pdf->SetFontSize($stdSize);
@@ -243,26 +242,26 @@ class BillingGenerator implements GeneratorInterface
         $pdf->MultiCell($sumValueWidth,0,$netSum,0,"L",false,1,$sumValueMarginLeft);
         $pdf->MultiCell($sumValueWidth,0,$shippingNetSum,0,"L",false,1,$sumValueMarginLeft);
 
+
+
         if(isset($options['enable_tax_19']) && $options['enable_tax_19']) {
-            $taxValue = $currencyFormatter->getCurrency($this->getTaxByCode($order, '19', true));
+            $taxValue = $this->currencyFormatter->getCurrency($this->getTaxByCode($order, '19', true));
             $pdf->MultiCell($sumValueWidth, 0, $taxValue, 0, "L", false, 1, $sumValueMarginLeft);
         }
 
         if(isset($options['enable_tax_7']) && $options['enable_tax_7']) {
-            $taxValue = $currencyFormatter->getCurrency($this->getTaxByCode($order, '7', true));
+            $taxValue = $this->currencyFormatter->getCurrency($this->getTaxByCode($order, '7', true));
             $pdf->MultiCell($sumValueWidth, 0, $taxValue, 0, "L", false, 1, $sumValueMarginLeft);
         }
 
         if($order->getDiscountTotal() != 0) {
-            $taxValue = $currencyFormatter->getCurrency($order->getDiscountTotal());
+            $taxValue = $this->currencyFormatter->getCurrency($order->getDiscountTotal());
             $pdf->MultiCell($sumValueWidth, 0, $taxValue, 0, "L", false, 1, $sumValueMarginLeft);
         }
 
         $pdf->SetFont($stdFontBold);
         $pdf->SetFontSize($sumSize);
         $pdf->MultiCell($sumValueWidth,0,$totalSum,0,"L",false,1,$sumValueMarginLeft);
-
-        return $pdf->Output(null, 'S');
     }
 
     public function getTaxByCode(OrderInterface $order, $code)
@@ -281,7 +280,7 @@ class BillingGenerator implements GeneratorInterface
         return $amount;
     }
 
-    public function generateName(OrderInterface $order, $options = [])
+    protected function getFileName(OrderInterface $order, $options = [])
     {
         return sprintf('billing-%s.pdf', $order->getNumber());
     }

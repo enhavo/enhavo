@@ -82,6 +82,9 @@ services:
         tags:
             - { name: enhavo_shop.price_calculator, priority: 10 }
 
+    Enhavo\Bundle\ShopBundle\Pricing\PriceCalculatorInterface:
+        alias: Enhavo\Bundle\ShopBundle\Pricing\DefaultPriceCalculator
+
     Enhavo\Bundle\ShopBundle\Taxation\Applicator\OrderItemsTaxesApplicator:
         arguments:
             - '@sylius.tax_calculator'

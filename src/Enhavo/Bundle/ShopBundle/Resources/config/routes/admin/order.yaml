@@ -193,19 +193,17 @@ sylius_order_batch:
 sylius_order_billing:
     options:
         expose: true
-    path: /enhavo/shop/order/{id}/billing.pdf
-    methods: [GET]
+    path: /enhavo/shop/order/{id}/billing
     defaults:
-        _controller: sylius.controller.order::billingAction
-        _sylius:
-            form: enhavo_shop_order
+        _controller: sylius.controller.order::documentAction
+        _config:
+            name: bill
 
 sylius_order_packing_slip:
     options:
         expose: true
-    path: /enhavo/shop/order/{id}/packing-slip.pdf
-    methods: [GET]
+    path: /enhavo/shop/order/{id}/packing-slip
     defaults:
-        _controller: sylius.controller.order::packingSlipAction
-        _sylius:
-            form: enhavo_shop_order
+        _controller: sylius.controller.order::documentAction
+        _config:
+            name: packing_slip

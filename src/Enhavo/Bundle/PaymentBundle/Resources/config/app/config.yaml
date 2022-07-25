@@ -28,7 +28,7 @@ sylius_payment:
     resources:
         payment:
             classes:
-                controller:  Enhavo\Bundle\PaymentBundle\Controller\PaymentController
+                controller: Enhavo\Bundle\PaymentBundle\Controller\PaymentController
                 form: Enhavo\Bundle\PaymentBundle\Form\Type\PaymentType
                 factory: Enhavo\Bundle\PaymentBundle\Factory\PaymentFactory
                 repository: Enhavo\Bundle\PaymentBundle\Repository\PaymentRepository

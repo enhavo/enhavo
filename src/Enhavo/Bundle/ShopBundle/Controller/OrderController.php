@@ -10,6 +10,8 @@ namespace Enhavo\Bundle\ShopBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
 use Enhavo\Bundle\AppBundle\Controller\ResourceControllerTrait;
+use Enhavo\Bundle\ShopBundle\Exception\DocumentGeneratorException;
+use Enhavo\Bundle\ShopBundle\Manager\DocumentManager;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -86,49 +88,58 @@ class OrderController extends SyliusOrderController
         return $this->redirectToRoute($route);
     }
 
-    public function billingAction(Request $request)
+    public function documentAction(Request $request)
     {
+        $config = $this->createDocumentConfiguration($request);
+
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
-        $formDataArray = array();
+
         $order = $this->singleResourceProvider->get($configuration, $this->repository);
 
-        $form = $this->resourceFormFactory->create($configuration, $order);
-
-        if(key_exists($form->getName(), $formDataArray)){
-            $form->submit($formDataArray[$form->getName()]);
-            if(!$form->isValid()){
-                return new JsonResponse($this->getErrors($form), 400);
+        if ($config->isMutable()) {
+            $formDataArray = [];
+            $form = $this->resourceFormFactory->create($configuration, $order);
+            if (key_exists($form->getName(), $formDataArray)) {
+                $form->submit($formDataArray[$form->getName()]);
+                if (!$form->isValid()){
+                    return new JsonResponse($this->getErrors($form), 400);
+                }
             }
         }
 
-        $documentManager = $this->get('enhavo_shop.document.manager');
-        $response = new Response();
+        $documentManager = $this->getDocumentManager();
+        $file = $documentManager->generateDocument($config->getName(), $order, $config->getOptions());
 
-        $response->headers->set('Content-Type', 'application/octet-stream');
+        $response = new Response();
+        $response->setContent($file->getContent()->getContent());
+        $response->headers->set('Content-Type', $file->getMimeType());
         $response->headers->set(
             'Content-Disposition',
-            sprintf('attachment; filename="%s"', $documentManager->generateBillingName($order))
+            sprintf('attachment; filename="%s"', $file->getFilename())
         );
 
-        $response->setContent($documentManager->generateBilling($order));
         return $response;
     }
 
-    public function packingSlipAction(Request $request)
+    private function createDocumentConfiguration(Request $request): DocumentConfiguration
     {
-        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
-        $order = $this->singleResourceProvider->get($configuration, $this->repository);
-        $documentManager = $this->get('enhavo_shop.document.manager');
-        $response = new Response();
+        $config = $request->attributes->get('_config');
 
-        $response->headers->set('Content-Type', 'application/octet-stream');
-        $response->headers->set(
-            'Content-Disposition',
-            sprintf('attachment; filename="%s"', $documentManager->generatePackingSlipName($order))
-        );
+        if (!isset($config['name'])) {
+            throw new DocumentGeneratorException('No name was found in route config. Expected under _config.name');
+        }
 
-        $response->setContent($documentManager->generatePackingSlip($order));
-        return $response;
+        $mutable = false;
+        if (isset($config['mutable'])) {
+            $mutable = $config['mutable'];
+        }
+
+        $options = [];
+        if (isset($config['options'])) {
+            $options = $config['options'];
+        }
+
+        return new DocumentConfiguration($config['name'], $options, $mutable);
     }
 
     private function getOrder(RequestConfiguration $configuration)
@@ -176,5 +187,10 @@ class OrderController extends SyliusOrderController
     private function getCart()
     {
         return $this->get('sylius.cart_provider')->getCart();
+    }
+
+    private function getDocumentManager(): DocumentManager
+    {
+        return $this->get('enhavo_shop.document_manager');
     }
 }

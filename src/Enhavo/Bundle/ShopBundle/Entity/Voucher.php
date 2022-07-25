@@ -4,7 +4,9 @@ namespace Enhavo\Bundle\ShopBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Enhavo\Bundle\ShopBundle\Model\VoucherInterface;
+use Enhavo\Bundle\ShopBundle\Model\VoucherRedemptionInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
 class Voucher implements ResourceInterface, VoucherInterface
@@ -112,9 +114,22 @@ class Voucher implements ResourceInterface, VoucherInterface
         $this->expiredAt = $expiredAt;
     }
 
-    public function getRedemptions(): ArrayCollection|Collection
+    /**
+     * @return VoucherRedemptionInterface[]|Collection
+     */
+    public function getRedemptions(): Collection
     {
         return $this->redemptions;
+    }
+
+    public function getRedemption(OrderInterface $order): ?VoucherRedemptionInterface
+    {
+        foreach ($this->getRedemptions() as $redemption) {
+            if ($redemption->getOrder() === $order) {
+                return $redemption;
+            }
+        }
+        return null;
     }
 
     public function addRedemption($redemption)

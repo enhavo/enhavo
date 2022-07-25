@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\ShopBundle;
 
 use Enhavo\Bundle\ShopBundle\DependencyInjection\Compiler\ConfigCompilerPass;
+use Enhavo\Bundle\ShopBundle\DependencyInjection\Compiler\DocumentGeneratorPass;
 use Enhavo\Bundle\ShopBundle\DependencyInjection\Compiler\OrderTaxesApplicatorRegisterPass;
 use Enhavo\Bundle\ShopBundle\DependencyInjection\Compiler\PriceCalculatorRegisterPass;
 use Enhavo\Bundle\ShopBundle\DependencyInjection\Compiler\ProductVariantProxyEnhancerPass;
@@ -19,5 +20,6 @@ class EnhavoShopBundle extends Bundle
         $container->addCompilerPass(new OrderTaxesApplicatorRegisterPass());
         $container->addCompilerPass(new ProductVariantProxyEnhancerPass());
         $container->addCompilerPass(new ShippingCalculatorPass());
+        $container->addCompilerPass(new DocumentGeneratorPass());
     }
 }

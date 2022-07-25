@@ -8,23 +8,13 @@
 
 namespace Enhavo\Bundle\ShopBundle\Document;
 
+use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 interface GeneratorInterface
 {
-    /**
-     * @param OrderInterface $order
-     * @param array $options
-     *
-     * @return string
-     */
-    public function generate(OrderInterface $order, $options = []);
+    public function generate(OrderInterface $order, $options = []): FileInterface;
 
-    /**
-     * @param OrderInterface $order
-     * @param array $options
-     * 
-     * @return string
-     */
-    public function generateName(OrderInterface $order, $options = []);
+    public function configureOptions(OptionsResolver $optionsResolver);
 }

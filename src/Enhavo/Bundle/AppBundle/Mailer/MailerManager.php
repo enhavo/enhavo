@@ -106,7 +106,7 @@ class MailerManager
 
             // MediaBundle is maybe not installed
             if (is_subclass_of($file, 'Enhavo\Bundle\MediaBundle\Model\FileInterface')) {
-                $email->attachFromPath($file->getContent()->getFilePath());
+                $email->attachFromPath($file->getContent()->getFilePath(), $attachment->getName() ?? $file->getFilename(), $attachment->getMimetype() ?? $file->getMimetype());
             } else if ($file instanceof File) {
                 $email->attachFromPath($file->getRealPath());
             } else if (is_string($file)) {
