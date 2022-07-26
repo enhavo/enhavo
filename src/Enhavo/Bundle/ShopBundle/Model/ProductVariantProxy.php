@@ -34,7 +34,15 @@ class ProductVariantProxy implements ProductVariantProxyInterface, PriceAccessIn
 
     public function getTitle(): ?string
     {
-        return $this->productVariant->getTitle() ?? $this->product->getTitle();
+        return $this->productVariant->getTitle();
+    }
+
+    public function getFullTitle(): ?string
+    {
+        if ($this->productVariant->getTitle()) {
+            return sprintf('%s %s', $this->product->getTitle(), $this->productVariant->getTitle());
+        }
+        return $this->product->getTitle();
     }
 
     public function getDescription(): ?string
