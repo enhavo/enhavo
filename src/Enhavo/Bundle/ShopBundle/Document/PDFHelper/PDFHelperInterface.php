@@ -2,9 +2,9 @@
 
 namespace Enhavo\Bundle\ShopBundle\Document\PDFHelper;
 
-use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
+use Enhavo\Bundle\ShopBundle\Document\PDF;
 
 interface PDFHelperInterface
 {
-    public function handle(PDF $pdf, OrderInterface $order, $options = []);
+    public function render(PDF $pdf, $options = []);
 }

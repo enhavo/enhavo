@@ -255,6 +255,8 @@ services:
             - '@enhavo_media.factory.file'
             - '@Enhavo\Bundle\FormBundle\Formatter\CurrencyFormatter'
             - '%enhavo_shop.document.bill.background_image%'
+            - '@kernel'
+            - '@translator'
         tags:
             - { name: enhavo_shop.document_generator, alias: 'bill' }
 

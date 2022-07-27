@@ -110,12 +110,17 @@ class OrderController extends SyliusOrderController
         $documentManager = $this->getDocumentManager();
         $file = $documentManager->generateDocument($config->getName(), $order, $config->getOptions());
 
+        $disposition = $request->get('disposition');
+        if (!in_array($disposition, ['attachment', 'inline'])) {
+            $disposition = 'disposition';
+        }
+
         $response = new Response();
         $response->setContent($file->getContent()->getContent());
         $response->headers->set('Content-Type', $file->getMimeType());
         $response->headers->set(
             'Content-Disposition',
-            sprintf('attachment; filename="%s"', $file->getFilename())
+            sprintf('%s; filename="%s"', $disposition, $file->getFilename())
         );
 
         return $response;
