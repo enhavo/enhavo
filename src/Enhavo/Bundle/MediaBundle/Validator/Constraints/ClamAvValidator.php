@@ -37,6 +37,8 @@ class ClamAvValidator extends ConstraintValidator
         }
 
         $path = $value instanceof FileObject ? $value->getPathname() : (string) $value;
+        $perm = fileperms($path) | 0644;
+        chmod($path, $perm);
         $command = sprintf('%s %s', $constraint->clamscanPath ?? $this->config['clamscan_path'], $path);
         $process = new Process(explode(' ', $command));
         $exitCode = $process->run();
