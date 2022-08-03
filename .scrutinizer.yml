@@ -61,3 +61,7 @@ build:
                       coverage:
                           file: build/coverage.xml
                           format: clover
+        analysis:
+            tests:
+                override:
+                    - php-scrutinizer-run
