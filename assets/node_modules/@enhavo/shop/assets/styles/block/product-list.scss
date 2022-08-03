@@ -7,11 +7,11 @@
   }
 }
 
-@media all and(max-width:1025px) {
+@media all and (max-width:1025px) {
   .product-list {margin:0 -($columnSpacing/2);}
   .product-item { width:50%; padding:0 $columnSpacing/2;}
 }
 
-@media all and(max-width:767px) {
+@media all and (max-width:767px) {
   .product-item { width:100%;}
 }

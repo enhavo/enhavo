@@ -15,7 +15,7 @@
   .product-status {padding-top:$blockSpacing/2;}
 }
 
-@media all and(max-width:1150px) {
+@media all and (max-width:1150px) {
   .page-product {
     .column-2 {
       &.offset-1 { margin-left:0;}
@@ -23,7 +23,7 @@
   }
 }
 
-@media all and(max-width:767px) {
+@media all and (max-width:767px) {
   .page-product {
     .column-1 { order:2;}
     .column-2 { order:1; padding-bottom:$columnSpacing;}
