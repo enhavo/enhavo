@@ -282,3 +282,9 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: 'enhavo_route.strategy', alias: 'product_variant' }
+
+    Enhavo\Bundle\ShopBundle\Validator\Constraints\OrderAddressingValidator:
+        arguments:
+            - '@validator'
+        tags:
+            - { name: 'validator.constraint_validator', alias: 'order_addressing' }
