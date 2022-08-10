@@ -21,9 +21,6 @@ use Sylius\Component\Product\Model\Product as SyliusProduct;
 
 class Product extends SyliusProduct implements ProductInterface, Routeable
 {
-    private ?string $lengthUnit;
-    private ?string $volumeUnit;
-    private ?string $weightUnit;
     use ProductAccessTrait;
 
     private ?Route $route;
@@ -69,64 +66,6 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
     public function setName(?string $name): void
     {
         $this->setTitle($name);
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getLengthUnit(): ?string
-    {
-        return $this->lengthUnit;
-    }
-
-    /**
-     * @param string $lengthUnit
-     * @return self
-     */
-    public function setLengthUnit(?string $lengthUnit): ProductInterface
-    {
-        $this->lengthUnit = $lengthUnit;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getVolumeUnit(): ?string
-    {
-        return $this->volumeUnit;
-    }
-
-    /**
-     * @param string $volumeUnit
-     * @return self
-     */
-    public function setVolumeUnit(?string $volumeUnit): ProductInterface
-    {
-        $this->volumeUnit = $volumeUnit;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getWeightUnit(): ?string
-    {
-        return $this->weightUnit;
-    }
-
-    /**
-     * @param string $weightUnit
-     * @return self
-     */
-    public function setWeightUnit(?string $weightUnit): ProductInterface
-    {
-        $this->weightUnit = $weightUnit;
-
-        return $this;
     }
 
     public function getDefaultVariant(): ?ProductVariant

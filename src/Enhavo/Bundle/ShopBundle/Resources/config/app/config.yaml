@@ -206,8 +206,7 @@ enhavo_routing:
         Enhavo\Bundle\ShopBundle\Entity\ProductVariant:
             router:
                 default:
-                    type: routable
-                    property: product.route
+                    type: product_variant
                 admin:
                     type: id
                     route: sylius_product_variant_update
@@ -215,8 +214,7 @@ enhavo_routing:
         Enhavo\Bundle\ShopBundle\Model\ProductVariantProxy:
             router:
                 default:
-                    type: routable
-                    property: productVariant.product.route
+                    type: product_variant
 
 sylius_inventory:
     resources:

@@ -219,11 +219,6 @@ product_variant:
       reducedPrice: Reduced price
       reduced: Reduced?
       shippingCategory: Shipping category
-      width: Width
-      height: Height
-      depth: Depth
-      weight: Weight
-      volume: Volume
       taxRate: Tax rate
       code: Code
       name: Name
@@ -232,6 +227,12 @@ product_variant:
       stock_tracked: Stock tracked?
       shipping_category: Shipping category
       shipping_required: Shipping required?
+      overrideDescription: Override description?
+      overridePictures: Override pictures?
+      overridePrice: Override price?
+      overrideTaxCategory: Override tax category?
+      overrideShipping: Override shipping?
+      overrideDimensions: Override dimensions?
 
 product_attribute:
   action:

@@ -268,44 +268,17 @@ services:
         tags:
             - { name: enhavo_shop.document_generator, alias: 'packing_slip' }
 
-#    enhavo_shop.listener.doctrine_sylius_meta:
-#        class: Enhavo\Bundle\ShopBundle\EventListener\DoctrineSyliusMetaListener
-#        tags:
-#            - { name: doctrine.event_subscriber, connection: default }
-#
-#    enhavo_shop.locale.country_resolver:
-#        class: Enhavo\Bundle\ShopBundle\Locale\CountryResolver
-#        arguments:
-#            - '@sylius.repository.country'
-#
-#    enhavo.token_generator:
-#        class: Sylius\Component\User\Security\Generator\TokenGenerator
-#
-#    sylius.invoice_number_generator:
-#        class: Enhavo\Bundle\ShopBundle\Document\InvoiceNumberGenerator
-#
-#    enhavo_shop.twig.country:
-#        class: Enhavo\Bundle\ShopBundle\Twig\Country
-#        tags:
-#            - { name: twig.extension }
-#
-#    enhavo_shop.controller.user:
-#        class: '%enhavo_shop.controller.user.class%'
-#        arguments:
-#            - '@sylius.resource_controller.request_configuration_factory'
-#            - '@Enhavo\Component\Type\FactoryInterface[View]'
-#            - '@fos_rest.view_handler'
-#        calls:
-#            - [setContainer, ['@service_container']]
-#
-#    enhavo_shop.factory.voucher:
-#        class: '%enhavo_shop.factory.voucher.class%'
-#        arguments:
-#            - '%enhavo_shop.model.voucher.class%'
-#        calls:
-#            - [setContainer, ['@service_container']]
-#
-#    enhavo_shop.manager.coupon:
-#        class: Enhavo\Bundle\ShopBundle\Manager\CouponManager
-#        calls:
-#            - [setContainer, ['@service_container']]
+    Enhavo\Bundle\ShopBundle\Product\ProductVariantResolverInterface:
+        alias: enhavo_shop.product_variant_resolver
+
+    enhavo_shop.product_variant_resolver:
+        alias: Enhavo\Bundle\ShopBundle\Product\SlugProductVariantResolver
+
+    Enhavo\Bundle\ShopBundle\Product\SlugProductVariantResolver:
+
+    Enhavo\Bundle\ShopBundle\Routing\ProductVariantStrategy:
+        public: true
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: 'enhavo_route.strategy', alias: 'product_variant' }

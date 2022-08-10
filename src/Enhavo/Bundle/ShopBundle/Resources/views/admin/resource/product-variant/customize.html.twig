@@ -1,9 +1,14 @@
+{% if form.overrideDescription is defined %}{{ form_row(form.overrideDescription) }}{% endif %}
 {% if form.description is defined %}{{ form_row(form.description) }}{% endif %}
+{% if form.overridePictures is defined %}{{ form_row(form.overridePictures) }}{% endif %}
 {% if form.picture is defined %}{{ form_row(form.picture) }}{% endif %}
 {% if form.pictures is defined %}{{ form_row(form.pictures) }}{% endif %}
+{% if form.overridePrice is defined %}{{ form_row(form.overridePrice) }}{% endif %}
 {% if form.price is defined %}{{ form_row(form.price) }}{% endif %}
 {% if form.reducedPrice is defined %}{{ form_row(form.reducedPrice) }}{% endif %}
 {% if form.reduced is defined %}{{ form_row(form.reduced) }}{% endif %}
+{% if form.overrideTaxCategory is defined %}{{ form_row(form.overrideTaxCategory) }}{% endif %}
 {% if form.taxCategory is defined %}{{ form_row(form.taxCategory) }}{% endif %}
+{% if form.overrideShipping is defined %}{{ form_row(form.overrideShipping) }}{% endif %}
 {% if form.shippingCategory is defined %}{{ form_row(form.shippingCategory) }}{% endif %}
 {% if form.shippingRequired is defined %}{{ form_row(form.shippingRequired) }}{% endif %}

@@ -25,3 +25,8 @@ form:
     openGraphTitle: 'Open Graph Titel'
     openGraphDescription: 'Open Graph Beschreibung'
     openGraphImage: 'Open Graph Bild'
+    slug: Slug
+
+content:
+  label:
+    meta: Meta

@@ -19,10 +19,13 @@ trait ProductAccessTrait
     private ?ShippingCategoryInterface $shippingCategory;
     private ?TaxCategoryInterface $taxCategory;
     private bool $shippingRequired = true;
+    private ?string $lengthUnit;
     private ?float $height;
     private ?float $width;
     private ?float $depth;
+    private ?string $volumeUnit;
     private ?float $volume;
+    private ?string $weightUnit;
     private ?float $weight;
 
     public function getTitle(): ?string
@@ -173,5 +176,35 @@ trait ProductAccessTrait
     public function setWeight(?float $weight): void
     {
         $this->weight = $weight;
+    }
+
+    public function getLengthUnit(): ?string
+    {
+        return $this->lengthUnit;
+    }
+
+    public function setLengthUnit(?string $lengthUnit): void
+    {
+        $this->lengthUnit = $lengthUnit;
+    }
+
+    public function getVolumeUnit(): ?string
+    {
+        return $this->volumeUnit;
+    }
+
+    public function setVolumeUnit(?string $volumeUnit): void
+    {
+        $this->volumeUnit = $volumeUnit;
+    }
+
+    public function getWeightUnit(): ?string
+    {
+        return $this->weightUnit;
+    }
+
+    public function setWeightUnit(?string $weightUnit): void
+    {
+        $this->weightUnit = $weightUnit;
     }
 }

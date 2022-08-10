@@ -56,6 +56,10 @@ sylius_product_variant_create:
                         label: product_variant.label.dimension
                         translation_domain: EnhavoShopBundle
                         template: admin/resource/product-variant/dimension.html.twig
+                    meta:
+                        label: content.label.meta
+                        translation_domain: EnhavoContentBundle
+                        template: admin/resource/content/meta.html.twig
 
 sylius_product_variant_update:
     options:
@@ -81,6 +85,10 @@ sylius_product_variant_update:
                         label: product_variant.label.dimension
                         translation_domain: EnhavoShopBundle
                         template: admin/resource/product-variant/dimension.html.twig
+                    meta:
+                        label: content.label.meta
+                        translation_domain: EnhavoContentBundle
+                        template: admin/resource/content/meta.html.twig
 
 sylius_product_variant_table:
     options:

@@ -46,6 +46,14 @@ class ProductManager
             $productVariant->setCode($this->generateVariantCode($title, $productVariant->getOptionValues()));
         }
 
+        if ($productVariant->getPosition() === null) {
+            $productVariant->setPosition(0);
+        }
+
+        if (empty($productVariant->getSlug())) {
+            $productVariant->setSlug($this->generateSlug($productVariant->getName()));
+        }
+
         if ($productVariant->isDefault()) {
             foreach ($productVariant->getProduct()->getVariants() as $variant) {
                 if ($variant !== $productVariant) {
@@ -113,6 +121,11 @@ class ProductManager
             }
         } while (!$this->isUnique($code, ProductVariant::class));
         return $code;
+    }
+
+    protected function generateSlug($value): string
+    {
+        return Slugifier::slugify($value);
     }
 
     private function isUnique($code, $dataClass): bool
