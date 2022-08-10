@@ -33,7 +33,7 @@ class DeleteBatchType extends AbstractBatchType
     /**
      * @inheritdoc
      */
-    public function execute(array $options, array $resources, ResourceInterface $resource = null): ?Response
+    public function execute(array $options, array $resources, ?ResourceInterface $resource = null): ?Response
     {
         foreach($resources as $resource) {
             $this->resourceManager->delete($resource);
@@ -45,7 +45,7 @@ class DeleteBatchType extends AbstractBatchType
     /**
      * @inheritdoc
      */
-    public function createViewData(array $options, ViewData $data, ResourceInterface $resource = null)
+    public function createViewData(array $options, ViewData $data, ?ResourceInterface $resource = null)
     {
         $data['route'] = $options['route'];
         $data['routeParameters'] = $options['route_parameters'];

@@ -22,7 +22,7 @@ class Batch extends AbstractContainerType
     /** @var BatchTypeInterface[] */
     protected $parents;
 
-    public function createViewData(ResourceInterface $resource = null)
+    public function createViewData(?ResourceInterface $resource = null)
     {
         $data = new ViewData();
         foreach ($this->parents as $parent) {
@@ -50,11 +50,11 @@ class Batch extends AbstractContainerType
 
     /**
      * @param $resources
-     * @param ResourceInterface $resource
+     * @param ResourceInterface|null $resource
      * @return Response|null
      * @throws BatchExecutionException
      */
-    public function execute($resources, ResourceInterface $resource = null): ?Response
+    public function execute($resources, ?ResourceInterface $resource = null): ?Response
     {
         return $this->type->execute($this->options, $resources, $resource);
     }

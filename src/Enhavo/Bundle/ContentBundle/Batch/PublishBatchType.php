@@ -34,7 +34,7 @@ class PublishBatchType extends AbstractBatchType
      * @param Publishable[] $resources
      * @return Response|null
      */
-    public function execute(array $options, array $resources, ResourceInterface $resource = null): ?Response
+    public function execute(array $options, array $resources, ?ResourceInterface $resource = null): ?Response
     {
         foreach($resources as $resource) {
             $resource->setPublic(true);

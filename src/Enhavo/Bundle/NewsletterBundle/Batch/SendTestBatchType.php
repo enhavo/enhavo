@@ -47,7 +47,7 @@ class SendTestBatchType extends AbstractBatchType
     /**
      * @inheritdoc
      */
-    public function execute(array $options, array $resources, ResourceInterface $resource = null): ?Response
+    public function execute(array $options, array $resources, ?ResourceInterface $resource = null): ?Response
     {
         $form = $this->formFactory->create(NewsletterEmailType::class);
         $form->handleRequest($this->requestStack->getMasterRequest());

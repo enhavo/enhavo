@@ -30,7 +30,7 @@ class SendBatchType extends AbstractBatchType
      * @return Response|null
      * @throws SendException
      */
-    public function execute(array $options, array $resources, ResourceInterface $resource = null): ?Response
+    public function execute(array $options, array $resources, ?ResourceInterface $resource = null): ?Response
     {
         foreach($resources as $resource) {
             $this->newsletterManager->prepare($resource);

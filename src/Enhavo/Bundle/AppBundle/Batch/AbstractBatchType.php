@@ -16,12 +16,12 @@ abstract class AbstractBatchType extends AbstractType implements BatchTypeInterf
     /**
      * @inheritdoc
      */
-    public function execute(array $options, array $resources, ResourceInterface $resource = null): ?Response
+    public function execute(array $options, array $resources, ?ResourceInterface $resource = null): ?Response
     {
         return $this->parent->execute($options, $resources);
     }
 
-    public function createViewData(array $options, ViewData $data, ResourceInterface $resource = null)
+    public function createViewData(array $options, ViewData $data, ?ResourceInterface $resource = null)
     {
 
     }

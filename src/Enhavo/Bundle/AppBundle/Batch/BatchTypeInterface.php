@@ -19,19 +19,19 @@ interface BatchTypeInterface extends TypeInterface
     /**
      * @param $options array
      * @param ResourceInterface[] $resources
-     * @param $resource
+     * @param ResourceInterface|null $resource
      * @return Response|null
      * @throws BatchExecutionException
      */
-    public function execute(array $options, array $resources, ResourceInterface $resource = null): ?Response;
+    public function execute(array $options, array $resources, ?ResourceInterface $resource = null): ?Response;
 
     /**
      * @param $options array
      * @param ViewData $data
-     * @param ResourceInterface $resource
+     * @param ResourceInterface|null $resource
      * @return array
      */
-    public function createViewData(array $options, ViewData $data, ResourceInterface $resource = null);
+    public function createViewData(array $options, ViewData $data, ?ResourceInterface $resource = null);
 
     /**
      * @param array $options
