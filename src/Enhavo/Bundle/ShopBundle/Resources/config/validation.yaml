@@ -6,6 +6,10 @@ Enhavo\Bundle\ShopBundle\Entity\Order:
         shippingAddress:
             - Valid:
                   groups: [checkout_address]
+    constraints:
+        - Enhavo\Bundle\ShopBundle\Validator\Constraints\OrderAddressing:
+            groups: [checkout_address]
+
 
 #        promotionCoupon:
 #            - NotNull: { groups: [redeem] }
