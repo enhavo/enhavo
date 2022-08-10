@@ -36,6 +36,7 @@ class RoutableStrategy extends AbstractStrategy
         }
 
         try {
+            $parameters = array_merge($options['route_parameters'], $parameters);
             return $this->getRouter()->generate($route->getName(), $parameters, $referenceType);
         } catch (RouteNotFoundException $e) {
             if($options['error']) {
@@ -56,6 +57,7 @@ class RoutableStrategy extends AbstractStrategy
         $optionsResolver->setDefaults([
             'property' => 'route',
             'error' => true,
+            'route_parameters' => [],
         ]);
     }
 }

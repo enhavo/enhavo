@@ -5,9 +5,6 @@ enhavo_search:
                 title:
                     type: text
                     weight: 20
-                shortTitle:
-                    type: text
-                    weight: 20
                 description:
                     type: text
                     weight: 5

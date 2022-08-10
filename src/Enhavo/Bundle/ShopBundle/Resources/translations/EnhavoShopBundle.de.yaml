@@ -211,11 +211,6 @@ product_variant:
       reducedPrice: Reduzierter Preis
       reduced: Reduziert?
       shippingCategory: Versandkategorie
-      width: Breite
-      height: Höhe
-      depth: Tiefe
-      weight: Gewicht
-      volume: Volumen
       taxRate: Umsatzsteuer
       associations: Assoziationen
       code: Code
@@ -227,6 +222,12 @@ product_variant:
       stock_tracked: Lagerbestand verfolgen?
       shipping_category: Versandkategorie
       shipping_required: Versand erforderlich?
+      overrideDescription: Beschreibung überschreiben?
+      overridePictures: Bilder überschreiben?
+      overridePrice: Preis überschreiben?
+      overrideTaxCategory: Steuer Kategorie überschreiben?
+      overrideShipping: Versand überschreiben?
+      overrideDimensions: Abmessungen überschreiben?
   label:
     title: Titel
     options: Optionen

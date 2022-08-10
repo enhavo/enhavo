@@ -20,9 +20,15 @@ class ProductVariant extends SyliusProductVariant implements ProductVariantInter
 
     private ?int $stock = null;
     private bool $stockTracked = false;
-    private ?bool $default = null;
-    private ?string $shortTitle = '';
+    private ?bool $default = false;
     private bool $index = false;
+    private ?string $slug = null;
+    private bool $overrideDescription = false;
+    private bool $overridePictures = false;
+    private bool $overridePrice = false;
+    private bool $overrideShipping = false;
+    private bool $overrideTaxCategory = false;
+    private bool $overrideDimensions = false;
 
     public function __construct()
     {
@@ -71,16 +77,6 @@ class ProductVariant extends SyliusProductVariant implements ProductVariantInter
         $this->default = $default;
     }
 
-    public function getShortTitle(): ?string
-    {
-        return $this->shortTitle;
-    }
-
-    public function setShortTitle(?string $shortTitle): void
-    {
-        $this->shortTitle = $shortTitle;
-    }
-
     public function isIndex(): bool
     {
         return $this->index;
@@ -89,5 +85,75 @@ class ProductVariant extends SyliusProductVariant implements ProductVariantInter
     public function setIndex(?bool $index): void
     {
         $this->index = $index;
+    }
+
+    public function isOverridePrice(): bool
+    {
+        return $this->overridePrice;
+    }
+
+    public function setOverridePrice(bool $overridePrice): void
+    {
+        $this->overridePrice = $overridePrice;
+    }
+
+    public function isOverrideDescription(): bool
+    {
+        return $this->overrideDescription;
+    }
+
+    public function setOverrideDescription(bool $overrideDescription): void
+    {
+        $this->overrideDescription = $overrideDescription;
+    }
+
+    public function isOverrideTaxCategory(): bool
+    {
+        return $this->overrideTaxCategory;
+    }
+
+    public function setOverrideTaxCategory(bool $overrideTaxCategory): void
+    {
+        $this->overrideTaxCategory = $overrideTaxCategory;
+    }
+
+    public function isOverrideDimensions(): bool
+    {
+        return $this->overrideDimensions;
+    }
+
+    public function setOverrideDimensions(bool $overrideDimensions): void
+    {
+        $this->overrideDimensions = $overrideDimensions;
+    }
+
+    public function isOverridePictures(): bool
+    {
+        return $this->overridePictures;
+    }
+
+    public function setOverridePictures(bool $overridePictures): void
+    {
+        $this->overridePictures = $overridePictures;
+    }
+
+    public function isOverrideShipping(): bool
+    {
+        return $this->overrideShipping;
+    }
+
+    public function setOverrideShipping(bool $overrideShipping): void
+    {
+        $this->overrideShipping = $overrideShipping;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(?string $slug): void
+    {
+        $this->slug = $slug;
     }
 }

@@ -25,4 +25,7 @@ interface ProductAccessInterface extends TaxableInterface
     public function getDepth(): ?float;
     public function getVolume(): ?float;
     public function getWeight(): ?float;
+    public function getVolumeUnit(): ?string;
+    public function getWeightUnit(): ?string;
+    public function getLengthUnit(): ?string;
 }

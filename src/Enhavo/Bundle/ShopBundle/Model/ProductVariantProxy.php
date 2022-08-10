@@ -47,72 +47,87 @@ class ProductVariantProxy implements ProductVariantProxyInterface, PriceAccessIn
 
     public function getDescription(): ?string
     {
-        return $this->productVariant->getDescription() ?? $this->product->getDescription();
+        return $this->productVariant->isOverrideDescription() ? $this->productVariant->getDescripion() : $this->product->getDescription();
     }
 
     public function getPicture(): ?FileInterface
     {
-        return $this->productVariant->getPicture() ?? $this->product->getPicture();
+        return $this->productVariant->isOverridePictures() ? $this->productVariant->getPicture() : $this->product->getPicture();
     }
 
     public function getPictures(): Collection
     {
-        return $this->productVariant->getPictures() ?? $this->product->getPictures();
+        return $this->productVariant->isOverridePictures() ? $this->productVariant->getPictures() : $this->product->getPictures();
     }
 
     public function getPrice(): ?int
     {
-        return $this->productVariant->getPrice() ? $this->productVariant->getPrice() : $this->product->getPrice();
+        return $this->productVariant->isOverridePrice() ? $this->productVariant->getPrice() : $this->product->getPrice();
     }
 
     public function getReducedPrice(): ?int
     {
-        return $this->productVariant->getPrice() ?? $this->product->getPrice();
+        return $this->productVariant->isOverridePrice() ? $this->productVariant->getReducedPrice() : $this->product->getReducedPrice();
     }
 
     public function isReduced(): bool
     {
-        return $this->productVariant->getPrice() ?? $this->product->getPrice();
+        return $this->productVariant->isOverridePrice() ? $this->productVariant->isReduced() : $this->product->isReduced();
     }
 
     public function getShippingCategory(): ?ShippingCategoryInterface
     {
-        return $this->productVariant->getShippingCategory() ?? $this->product->getShippingCategory();
-    }
-
-    public function getTaxCategory(): ?TaxCategoryInterface
-    {
-        return $this->productVariant->getTaxCategory() ?? $this->product->getTaxCategory();
+        return $this->productVariant->isOverrideShipping() ? $this->productVariant->getShippingCategory() : $this->product->getShippingCategory();
     }
 
     public function isShippingRequired(): bool
     {
-        return $this->productVariant->isShippingRequired() ?? $this->product->isShippingRequired();
+        return $this->productVariant->isOverrideShipping() ? $this->productVariant->isShippingRequired() : $this->product->isShippingRequired();
+    }
+
+    public function getTaxCategory(): ?TaxCategoryInterface
+    {
+        return $this->productVariant->isOverrideTaxCategory() ? $this->productVariant->getTaxCategory() : $this->product->getTaxCategory();
     }
 
     public function getHeight(): ?float
     {
-        return $this->productVariant->getHeight() ?? $this->product->getHeight();
+        return $this->productVariant->isOverrideDimensions() ? $this->productVariant->getHeight() : $this->product->getHeight();
     }
 
     public function getWidth(): ?float
     {
-        return $this->productVariant->getWidth() ?? $this->product->getWidth();
+        return $this->productVariant->isOverrideDimensions() ? $this->productVariant->getWidth() : $this->product->getWidth();
     }
 
     public function getDepth(): ?float
     {
-        return $this->productVariant->getDepth() ?? $this->product->getDepth();
+        return $this->productVariant->isOverrideDimensions() ? $this->productVariant->getDepth() : $this->product->getDepth();
     }
 
     public function getVolume(): ?float
     {
-        return $this->productVariant->getVolume() ?? $this->product->getVolume();
+        return $this->productVariant->isOverrideDimensions() ? $this->productVariant->getVolume() : $this->product->getVolume();
     }
 
     public function getWeight(): ?float
     {
-        return $this->productVariant->getWeight() ?? $this->product->getWeight();
+        return $this->productVariant->isOverrideDimensions() ? $this->productVariant->getWeight() : $this->product->getWeight();
+    }
+
+    public function getLengthUnit(): ?string
+    {
+        return $this->productVariant->isOverrideDimensions() ? $this->productVariant->getLengthUnit() : $this->product->getLengthUnit();
+    }
+
+    public function getWeightUnit(): ?string
+    {
+        return $this->productVariant->isOverrideDimensions() ? $this->productVariant->getWeightUnit() : $this->product->getWeightUnit();
+    }
+
+    public function getVolumeUnit(): ?string
+    {
+        return $this->productVariant->isOverrideDimensions() ? $this->productVariant->getVolumeUnit() : $this->product->getVolumeUnit();
     }
 
     public function getGrossPrice(): ?int
@@ -138,5 +153,10 @@ class ProductVariantProxy implements ProductVariantProxyInterface, PriceAccessIn
     public function getTaxPrice(): ?int
     {
         return $this->getGrossPrice() - $this->getNetPrice();
+    }
+
+    public function getSlug()
+    {
+        return $this->productVariant->getSlug();
     }
 }
