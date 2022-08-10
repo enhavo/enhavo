@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\AppBundle\Batch;
 
 use Enhavo\Component\Type\FactoryInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class BatchManager
@@ -91,9 +92,10 @@ class BatchManager
     /**
      * @param Batch $batch
      * @param $resources
+     * @return Response|null
      */
-    public function executeBatch(Batch $batch, $resources)
+    public function executeBatch(Batch $batch, $resources): ?Response
     {
-        $batch->execute($resources);
+        return $batch->execute($resources);
     }
 }

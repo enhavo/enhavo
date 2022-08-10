@@ -12,6 +12,7 @@ use Enhavo\Bundle\AppBundle\Exception\BatchExecutionException;
 use Enhavo\Bundle\AppBundle\View\ViewData;
 use Enhavo\Component\Type\AbstractContainerType;
 use Sylius\Component\Resource\Model\ResourceInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 class Batch extends AbstractContainerType
 {
@@ -50,10 +51,11 @@ class Batch extends AbstractContainerType
     /**
      * @param $resources
      * @param ResourceInterface $resource
+     * @return Response|null
      * @throws BatchExecutionException
      */
-    public function execute($resources, ResourceInterface $resource = null)
+    public function execute($resources, ResourceInterface $resource = null): ?Response
     {
-        $this->type->execute($this->options, $resources, $resource);
+        return $this->type->execute($this->options, $resources, $resource);
     }
 }

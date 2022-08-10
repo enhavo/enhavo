@@ -11,6 +11,7 @@ use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -46,7 +47,7 @@ class SendTestBatchType extends AbstractBatchType
     /**
      * @inheritdoc
      */
-    public function execute(array $options, array $resources, ResourceInterface $resource = null)
+    public function execute(array $options, array $resources, ResourceInterface $resource = null): ?Response
     {
         $form = $this->formFactory->create(NewsletterEmailType::class);
         $form->handleRequest($this->requestStack->getMasterRequest());
@@ -60,6 +61,7 @@ class SendTestBatchType extends AbstractBatchType
         foreach($resources as $resource) {
             $this->newsletterManager->sendTest($resource, $data['email']);
         }
+        return null;
     }
 
     public function configureOptions(OptionsResolver $resolver)

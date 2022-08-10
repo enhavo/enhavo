@@ -47,7 +47,10 @@ class BatchViewType extends AbstractViewType
         }
 
         try {
-            $this->batchManager->executeBatch($batch, $resources);
+            $response = $this->batchManager->executeBatch($batch, $resources);
+            if ($response !== null) {
+                return $response;
+            }
         } catch (BatchExecutionException $e) {
             return new JsonResponse($e->getMessage(), 400);
         }

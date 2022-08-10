@@ -12,6 +12,7 @@ use Enhavo\Bundle\AppBundle\Exception\BatchExecutionException;
 use Enhavo\Bundle\AppBundle\View\ViewData;
 use Enhavo\Component\Type\TypeInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 interface BatchTypeInterface extends TypeInterface
 {
@@ -19,10 +20,10 @@ interface BatchTypeInterface extends TypeInterface
      * @param $options array
      * @param ResourceInterface[] $resources
      * @param $resource
-     * @return void
+     * @return Response|null
      * @throws BatchExecutionException
      */
-    public function execute(array $options, array $resources, ResourceInterface $resource = null);
+    public function execute(array $options, array $resources, ResourceInterface $resource = null): ?Response;
 
     /**
      * @param $options array
