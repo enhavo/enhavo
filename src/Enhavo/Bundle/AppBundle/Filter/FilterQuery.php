@@ -86,6 +86,7 @@ class FilterQuery
         $this->queryBuilder = new QueryBuilder($em);
         $this->queryBuilder->select($this->getAlias());
         $this->queryBuilder->from($class, $this->getAlias());
+        $this->queryBuilder->addGroupBy($this->alias . '.id');
     }
 
     public function addOrderBy($property, $order, $joinProperty = null)
