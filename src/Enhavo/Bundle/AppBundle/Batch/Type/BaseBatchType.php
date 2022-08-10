@@ -31,7 +31,7 @@ class BaseBatchType extends AbstractBatchType
     /**
      * @inheritdoc
      */
-    public function createViewData(array $options, ViewData $data, ResourceInterface $resource = null)
+    public function createViewData(array $options, ViewData $data, ?ResourceInterface $resource = null)
     {
         $data->set('label', $this->getLabel($options));
         $data->set('confirmMessage', $this->getConfirmMessage($options));

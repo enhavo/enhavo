@@ -9,6 +9,7 @@ use Enhavo\Bundle\AppBundle\View\ViewData;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -55,7 +56,7 @@ class AssignBatchType extends AbstractBatchType
     /**
      * @inheritdoc
      */
-    public function execute(array $options, array $resources, ResourceInterface $resource = null)
+    public function execute(array $options, array $resources, ?ResourceInterface $resource = null): ?Response
     {
         $request = $this->requestStack->getMasterRequest();
         $form = $this->formFactory->create($options['form']);
@@ -77,12 +78,14 @@ class AssignBatchType extends AbstractBatchType
         }
 
         $this->em->flush();
+
+        return null;
     }
 
     /**
      * @inheritdoc
      */
-    public function createViewData(array $options, ViewData $data, ResourceInterface $resource = null)
+    public function createViewData(array $options, ViewData $data, ?ResourceInterface $resource = null)
     {
         $data['route'] = $options['route'];
         $data['routeParameters'] = $options['route_parameters'];
