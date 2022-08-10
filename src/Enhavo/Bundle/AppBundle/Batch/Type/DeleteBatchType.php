@@ -6,6 +6,7 @@ use Enhavo\Bundle\AppBundle\Batch\AbstractBatchType;
 use Enhavo\Bundle\AppBundle\Resource\ResourceManager;
 use Enhavo\Bundle\AppBundle\View\ViewData;
 use Sylius\Component\Resource\Model\ResourceInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -32,17 +33,19 @@ class DeleteBatchType extends AbstractBatchType
     /**
      * @inheritdoc
      */
-    public function execute(array $options, array $resources, ResourceInterface $resource = null)
+    public function execute(array $options, array $resources, ?ResourceInterface $resource = null): ?Response
     {
         foreach($resources as $resource) {
             $this->resourceManager->delete($resource);
         }
+
+        return null;
     }
 
     /**
      * @inheritdoc
      */
-    public function createViewData(array $options, ViewData $data, ResourceInterface $resource = null)
+    public function createViewData(array $options, ViewData $data, ?ResourceInterface $resource = null)
     {
         $data['route'] = $options['route'];
         $data['routeParameters'] = $options['route_parameters'];
