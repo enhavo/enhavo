@@ -6,6 +6,7 @@ use Enhavo\Bundle\AppBundle\Batch\Type\BaseBatchType;
 use Enhavo\Bundle\AppBundle\View\ViewData;
 use Enhavo\Component\Type\AbstractType;
 use Sylius\Component\Resource\Model\ResourceInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 abstract class AbstractBatchType extends AbstractType implements BatchTypeInterface
 {
@@ -15,12 +16,12 @@ abstract class AbstractBatchType extends AbstractType implements BatchTypeInterf
     /**
      * @inheritdoc
      */
-    public function execute(array $options, array $resources, ResourceInterface $resource = null)
+    public function execute(array $options, array $resources, ?ResourceInterface $resource = null): ?Response
     {
-        $this->parent->execute($options, $resources);
+        return $this->parent->execute($options, $resources);
     }
 
-    public function createViewData(array $options, ViewData $data, ResourceInterface $resource = null)
+    public function createViewData(array $options, ViewData $data, ?ResourceInterface $resource = null)
     {
 
     }

@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Batch\AbstractBatchType;
 use Enhavo\Bundle\ContentBundle\Content\Publishable;
 use Sylius\Component\Resource\Model\ResourceInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -31,13 +32,16 @@ class PublishBatchType extends AbstractBatchType
     /**
      * @param array $options
      * @param Publishable[] $resources
+     * @param ResourceInterface|null $resource
+     * @return Response|null
      */
-    public function execute(array $options, array $resources, ResourceInterface $resource = null)
+    public function execute(array $options, array $resources, ?ResourceInterface $resource = null): ?Response
     {
         foreach($resources as $resource) {
             $resource->setPublic(true);
         }
         $this->em->flush();
+        return null;
     }
 
     public function configureOptions(OptionsResolver $resolver)
