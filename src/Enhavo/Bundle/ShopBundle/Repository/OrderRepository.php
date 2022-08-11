@@ -12,6 +12,7 @@ use Enhavo\Bundle\AppBundle\Repository\EntityRepositoryInterface;
 use Enhavo\Bundle\AppBundle\Repository\EntityRepositoryTrait;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Enhavo\Bundle\ShopBundle\State\OrderCheckoutStates;
+use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Sylius\Bundle\OrderBundle\Doctrine\ORM\OrderRepository as SyliusOrderRepository;
 
 class OrderRepository extends SyliusOrderRepository implements EntityRepositoryInterface
@@ -45,6 +46,31 @@ class OrderRepository extends SyliusOrderRepository implements EntityRepositoryI
     {
         return $this->findOneBy([
             'token' => $token
+        ]);
+    }
+
+    public function findLastOrder(UserInterface $user): ?OrderInterface
+    {
+        $orders = $this->findBy([
+            'user' => $user,
+            'checkoutState' => OrderCheckoutStates::STATE_COMPLETED
+        ], [
+            'updatedAt' => 'DESC'
+        ], 1);
+
+        if(count($orders)) {
+            return $orders[0];
+        }
+        return null;
+    }
+
+    public function findByUser(UserInterface $user)
+    {
+        return $this->findBy([
+            'user' => $user,
+            'checkoutState' => OrderCheckoutStates::STATE_COMPLETED
+        ], [
+            'updatedAt' => 'DESC'
         ]);
     }
 }

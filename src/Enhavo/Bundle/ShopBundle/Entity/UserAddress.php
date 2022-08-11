@@ -5,8 +5,9 @@ namespace Enhavo\Bundle\ShopBundle\Entity;
 use Enhavo\Bundle\ShopBundle\Model\AddressSubjectInterface;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Sylius\Component\Addressing\Model\AddressInterface;
+use Sylius\Component\Resource\Model\ResourceInterface;
 
-class UserAddress implements AddressSubjectInterface
+class UserAddress implements AddressSubjectInterface, ResourceInterface
 {
     private ?int $id;
 

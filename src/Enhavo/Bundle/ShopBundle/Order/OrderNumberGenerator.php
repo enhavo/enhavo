@@ -12,24 +12,23 @@ use Enhavo\Bundle\ShopBundle\Repository\OrderRepository;
 
 class OrderNumberGenerator implements OrderNumberGeneratorInterface
 {
-    protected $repository;
-
-    public function __construct(OrderRepository $repository)
+    public function __construct(
+        private OrderRepository $repository)
     {
-        $this->repository = $repository;
     }
 
     public function generate()
     {
         $order = $this->repository->findLastNumber();
 
-        if(count($order)) {
+        if (count($order)) {
             $number = $order[0]->getNumber();
             if($number !== null) {
                 $number++;
                 return $number;
             }
         }
+
         return 1;
     }
 }

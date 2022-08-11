@@ -1,22 +1,21 @@
+enhavo_shop_theme_order_user_address:
+    path: /address
+    defaults:
+        _controller: Enhavo\Bundle\ShopBundle\Controller\UserController::addressAction
+
 enhavo_shop_theme_user_order_list:
     path: /order/list
     defaults:
-        _controller: sylius.controller.order::listOrderAction
+        _controller: Enhavo\Bundle\ShopBundle\Controller\UserController::listOrderAction
 
 enhavo_shop_theme_user_order_detail:
-    path: /order/{id}/detail
+    path: /order/{number}/detail
     defaults:
-        _controller: sylius.controller.order::detailOrderAction
+        _controller: Enhavo\Bundle\ShopBundle\Controller\UserController::showOrderAction
 
 enhavo_shop_theme_user_order_transfer:
-    path: /order/{id}/transfer
+    path: /order/{number}/transfer
     methods: [POST]
     defaults:
-        _controller: sylius.controller.order::transferOrderAction
-        _sylius:
-            redirect: 'enhavo_shop_theme_cart_summary'
+        _controller: Enhavo\Bundle\ShopBundle\Controller\UserController::transferOrderAction
 
-enhavo_shop_theme_order_user_address:
-    path: /order/address
-    defaults:
-        _controller: enhavo_shop.controller.user::addressAction

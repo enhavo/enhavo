@@ -21,11 +21,11 @@ class OrderManager
     public function assignAddress(OrderInterface $order)
     {
         if ($order->getBillingAddress() === null) {
-            $order->setBillingAddress($this->addressProvider->getBillingAddress());
+            $order->setBillingAddress($this->addressProvider->getAddress()->getBillingAddress());
         }
 
         if ($order->getShippingAddress() === null) {
-            $order->setShippingAddress($this->addressProvider->getShippingAddress());
+            $order->setShippingAddress($this->addressProvider->getAddress()->getShippingAddress());
         }
     }
 

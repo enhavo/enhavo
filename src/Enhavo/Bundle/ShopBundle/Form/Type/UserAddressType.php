@@ -8,50 +8,13 @@
 
 namespace Enhavo\Bundle\ShopBundle\Form\Type;
 
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
+use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 
-class UserAddressType extends AbstractType
+class UserAddressType extends AbstractResourceType
 {
-    /**
-     * @var string
-     */
-    private $dataClass;
-
-    public function __construct($dataClass)
+    public function getParent()
     {
-        $this->dataClass = $dataClass;
-    }
-
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
-            $data = $event->getData();
-            if (!array_key_exists('differentBillingAddress', $data) || false === $data['differentBillingAddress'] || 'false' == $data['differentBillingAddress']) {
-                $data['billingAddress'] = $data['shippingAddress'];
-                $event->setData($data);
-            }
-        });
-        $builder->add('billingAddress', 'sylius_address');
-        $builder->add('shippingAddress', 'sylius_address');
-        $builder->add('differentBillingAddress', 'checkbox', [
-            'required' => false,
-            'label' => 'checkout.addressing.form.label.different_billing_address',
-            'translation_domain' => 'EnhavoShopBundle',
-            'attr' => [
-                'data-checkout-addressing-different-billing-address' => ''
-            ]
-        ]);
-    }
-
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(array(
-            'data_class' => $this->dataClass
-        ));
+        return AddressSubjectType::class;
     }
 
     public function getBlockPrefix()

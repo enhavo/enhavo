@@ -102,6 +102,10 @@ class OrderItem extends SyliusOrderItem implements OrderItemInterface
         $total = 0;
         $unit = $this->getUnits()->first();
 
+        if ($unit === false) {
+            return $total;
+        }
+
         $adjustments = $unit->getAdjustments(AdjustmentInterface::TAX_ADJUSTMENT);
         /** @var AdjustmentInterface $adjustment */
         foreach($adjustments as $adjustment) {

@@ -2,10 +2,9 @@
 
 namespace Enhavo\Bundle\ShopBundle\Address;
 
-use Sylius\Component\Addressing\Model\AddressInterface;
+use Enhavo\Bundle\ShopBundle\Model\AddressSubjectInterface;
 
 interface AddressProviderInterface
 {
-    public function getBillingAddress(): ?AddressInterface;
-    public function getShippingAddress(): ?AddressInterface;
+    public function getAddress(): ?AddressSubjectInterface;
 }

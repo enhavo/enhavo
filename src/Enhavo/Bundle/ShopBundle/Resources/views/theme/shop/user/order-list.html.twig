@@ -3,7 +3,7 @@
 {% block main %}
     {% for order in orders %}
         <div>
-            <a href="{{ path('enhavo_shop_theme_user_order_detail', {id: order.id}) }}">{{ order.id }}</a>
+            <a href="{{ path('enhavo_shop_theme_user_order_detail', {number: order.number}) }}">{{ order.number }}</a>
         </div>
     {% endfor %}
 {% endblock %}

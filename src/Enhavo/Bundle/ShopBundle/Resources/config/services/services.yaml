@@ -114,7 +114,7 @@ services:
         arguments:
             - '@security.token_storage'
             - '@doctrine.orm.entity_manager'
-            - '@sylius.factory.address'
+            - '@enhavo_shop.factory.user_factory'
 
     Enhavo\Bundle\ShopBundle\Payment\Provider\OrderPaymentProvider:
         arguments:
@@ -152,6 +152,18 @@ services:
             - '@Enhavo\Bundle\ShopBundle\Manager\VoucherManager'
             - '@sylius.context.cart'
             - '@serializer'
+        calls:
+            - [ 'setContainer', ['@service_container']]
+        tags:
+            - { name: controller.service_arguments }
+
+    Enhavo\Bundle\ShopBundle\Controller\UserController:
+        arguments:
+            - '@Enhavo\Bundle\ShopBundle\Address\AddressProviderInterface'
+            - '@doctrine.orm.entity_manager'
+            - '@sylius.repository.order'
+            - '@Enhavo\Bundle\ShopBundle\Order\OrderItemTransfer'
+            - '@sylius.context.cart'
         calls:
             - [ 'setContainer', ['@service_container']]
         tags:
@@ -288,3 +300,17 @@ services:
             - '@validator'
         tags:
             - { name: 'validator.constraint_validator', alias: 'order_addressing' }
+
+    enhavo_shop.factory.user_factory:
+        class:  Enhavo\Bundle\ShopBundle\Factory\UserAddressFactory
+        arguments:
+            - '%enhavo_shop.model.user_address.class%'
+            - '@sylius.factory.address'
+
+    Enhavo\Bundle\ShopBundle\Order\OrderItemTransfer:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@sylius.order_modifier'
+            - '@sylius.factory.add_to_cart_command'
+            - '@sylius.order_item_quantity_modifier'
+            - '@sylius.factory.order_item'

@@ -97,3 +97,9 @@ services:
             - '%sylius.model.payment.class%'
         tags:
             - { name: form.type }
+
+    Enhavo\Bundle\ShopBundle\Form\Type\UserAddressType:
+        arguments:
+            - '%enhavo_shop.model.user_address.class%'
+        tags:
+            - { name: form.type }
