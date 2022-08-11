@@ -34,30 +34,6 @@ class OrderController extends SyliusOrderController
         return $view->getResponse($request);
     }
 
-    public function listOrderAction(Request $request)
-    {
-        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
-        $template = $configuration->getTemplate('EnhavoShopBundle:Theme:Order/list.html.twig');
-
-        $orders = $this->getOrderProvider()->getOrders($this->getUser());
-
-        return $this->render($template, [
-            'orders' => $orders
-        ]);
-    }
-
-    public function detailOrderAction(Request $request)
-    {
-        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
-
-        $template = $configuration->getTemplate('EnhavoShopBundle:Theme:Order/detail.html.twig');
-        $order = $this->getOrder($configuration);
-
-        return $this->render($template, [
-            'order' => $order
-        ]);
-    }
-
     public function showAction(Request $request): Response
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
@@ -71,24 +47,13 @@ class OrderController extends SyliusOrderController
             throw $this->createNotFoundException();
         }
 
-        $template = $configuration->getTemplate('EnhavoShopBundle:Theme:Order/show.html.twig');
+        $template = $configuration->getTemplate('theme/shop/order/show.html.twig');
         return $this->render($template, [
             'order' => $order
         ]);
     }
 
-    public function transferOrderAction(Request $request)
-    {
-        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
-
-        $order = $this->getOrder($configuration);
-        $this->getCartTransfer()->transfer($order, $this->getCart());
-
-        $route = $configuration->getRedirectRoute('enhavo_shop_theme_cart_summary');
-        return $this->redirectToRoute($route);
-    }
-
-    public function documentAction(Request $request)
+    public function documentAction(Request $request): Response
     {
         $config = $this->createDocumentConfiguration($request);
 
@@ -145,26 +110,6 @@ class OrderController extends SyliusOrderController
         }
 
         return new DocumentConfiguration($config['name'], $options, $mutable);
-    }
-
-    private function getOrder(RequestConfiguration $configuration)
-    {
-        /** @var OrderInterface $order */
-        $order = $this->singleResourceProvider->get($configuration, $this->repository);
-
-        if($order === null) {
-            throw $this->createNotFoundException();
-        }
-
-        if($order->getState() === 'cart') {
-            throw $this->createNotFoundException();
-        }
-
-        if($order->getUser() !== $this->getUser()) {
-            throw $this->createAccessDeniedException();
-        }
-
-        return $order;
     }
 
     public function checkoutAction(Request $request)
