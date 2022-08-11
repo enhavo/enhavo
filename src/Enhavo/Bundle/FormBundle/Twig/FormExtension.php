@@ -38,7 +38,7 @@ class FormExtension extends AbstractExtension
             new TwigFunction('form_is_submitted', [$this, 'isSubmitted']),
             new TwigFunction('form_is_successful', [$this, 'isSuccessful']),
             new TwigFunction('form_custom_name', [$this, 'getCustomName']),
-            new TwigFunction('form_attr', [$this, 'getAttributes']),
+            new TwigFunction('form_attr', [$this, 'getAttributes'], ['is_safe' => array('html')]),
         ];
     }
 
@@ -112,7 +112,7 @@ class FormExtension extends AbstractExtension
     {
         $return = '';
         foreach ($data->vars['attr'] as $key => $value) {
-            $return .= $key . '="' . $value . '" ';
+            $return .= htmlentities($key) . '="' . htmlentities($value) . '" ';
         }
         return trim($return);
     }
