@@ -50,6 +50,15 @@ checks:
 
 build:
     nodes:
+        tests:
+            services:
+            environment:
+                php:
+                    version: "8.0"
+            tests:
+                override:
+                    - command: ./bin/phpunit
+
         coverage:
             services:
             environment:
@@ -61,6 +70,7 @@ build:
                       coverage:
                           file: build/coverage.xml
                           format: clover
+
         analysis:
             tests:
                 override:
