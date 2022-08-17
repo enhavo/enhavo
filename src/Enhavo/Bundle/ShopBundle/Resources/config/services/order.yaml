@@ -70,6 +70,8 @@ services:
             - '@Enhavo\Bundle\ShopBundle\Address\AddressProviderInterface'
             - '@enhavo_app.util.secure_url_token_generator'
             - '@Enhavo\Bundle\AppBundle\Mailer\MailerManager'
+            - '@sylius.order_processing.order_processor'
+            - '@doctrine.orm.entity_manager'
 
     enhavo_shop.order_manager:
         public: true
