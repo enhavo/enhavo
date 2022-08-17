@@ -2,12 +2,15 @@
 
 namespace Enhavo\Bundle\ShopBundle\Manager;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Mailer\MailerManager;
 use Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface;
 use Enhavo\Bundle\ShopBundle\Address\AddressProviderInterface;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
+use Enhavo\Bundle\ShopBundle\State\OrderCheckoutStates;
 use Enhavo\Bundle\ShopBundle\State\OrderPaymentStates;
 use Enhavo\Bundle\ShopBundle\State\OrderShippingStates;
+use Sylius\Component\Order\Processor\OrderProcessorInterface;
 
 class OrderManager
 {
@@ -15,6 +18,8 @@ class OrderManager
         private AddressProviderInterface $addressProvider,
         private TokenGeneratorInterface $tokenGenerator,
         private MailerManager $mailerManager,
+        private OrderProcessorInterface $orderProcessor,
+        private EntityManagerInterface $entityManager,
     )
     {}
 
@@ -59,5 +64,16 @@ class OrderManager
     public function sendNotificationMail(OrderInterface $order)
     {
         $this->mailerManager->sendMail('shop_notification', $order);
+    }
+
+    public function clearCart(OrderInterface $order)
+    {
+        if ($order->getCheckoutState() === OrderCheckoutStates::STATE_COMPLETED) {
+            throw new \InvalidArgumentException('Order is already completed');
+        }
+
+        $order->clearItems();
+        $this->orderProcessor->process($order);
+        $this->em->flush();
     }
 }
