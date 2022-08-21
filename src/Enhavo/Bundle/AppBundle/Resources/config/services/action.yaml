@@ -88,6 +88,12 @@ services:
         tags:
             - { name: enhavo.action, alias: event }
 
+    Enhavo\Bundle\AppBundle\Action\Type\FormActionType:
+        parent: Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType
+        public: true
+        tags:
+            - { name: enhavo.action, alias: form }
+
     Enhavo\Bundle\AppBundle\Action\Type\FilterActionType:
         parent: Enhavo\Bundle\AppBundle\Action\AbstractActionType
         public: true

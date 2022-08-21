@@ -7,6 +7,17 @@ app_person_index:
         _controller: app.controller.person::indexAction
         _sylius:
             viewer:
+                actions:
+                    export:
+                        type: form
+                        icon: file_download
+                        label: Export
+                        route: app_person_modal_export_form
+                        open_route: app_person_modal_export
+                        open_type: download
+                        open_route_mapping:
+                            from: "person_export[from]"
+                            to: "person_export[to]"
 
 app_person_create:
     options:
@@ -111,3 +122,17 @@ app_person_resource_preview:
                 strategy_options:
                     service: enhavo_article.controller.article:showResourceAction
 
+app_person_modal_export_form:
+    options:
+        expose: true
+    path: /app/person/modal/export/form
+    controller: enhavo_app.controller.modal:formAction
+    defaults:
+        _config:
+            form: App\Form\Type\PersonExportType
+
+app_person_modal_export:
+    options:
+        expose: true
+    path: /app/person/modal/export/{from}/{to}
+    controller: App\Controller\PersonController::exportAction
