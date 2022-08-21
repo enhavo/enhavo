@@ -3,11 +3,13 @@ import axios from "axios";
 import * as _ from "lodash";
 import ModalManager from "@enhavo/app/modal/ModalManager";
 import Router from "@enhavo/core/Router";
+import {AxiosResponseHandler} from "@enhavo/app/util/AxiosResponseHandler";
 
 export default class AjaxFormModal extends AbstractModal
 {
     public route: string;
     public routeParameters: object;
+    public url: string;
     public actionRoute: string;
     public actionRouteParameters: object;
     public actionUrl: string;
@@ -30,7 +32,7 @@ export default class AjaxFormModal extends AbstractModal
 
     async loadForm(): Promise<void>
     {
-        let url = this.router.generate(this.route, this.routeParameters);
+        let url = this.getUrl();
 
         this.loading = true;
 
@@ -44,6 +46,11 @@ export default class AjaxFormModal extends AbstractModal
                 reject();
             });
         });
+    }
+
+    private getUrl(): string
+    {
+        return this.url ? this.url : this.router.generate(this.route, this.routeParameters);
     }
 
     async submit(): Promise<boolean>
@@ -60,11 +67,14 @@ export default class AjaxFormModal extends AbstractModal
     {
         this.loading = true;
         return new Promise((resolve, reject) => {
-            if(this.data) {
+            if (this.data) {
                 data = _.extend(data, this.data);
             }
 
-            axios.post(this.getActionUrl(), this.buildQuery(data)).then((responseData) => {
+            axios.post(this.getActionUrl(), this.buildQuery(data), {
+                headers: {'Content-Type': 'multipart/form-data' },
+                responseType: 'arraybuffer'
+            }).then((responseData) => {
                 this.receiveForm(responseData, resolve, reject)
             }).catch((error) => {
                 this.receiveForm(error.response, resolve, reject)
@@ -79,11 +89,12 @@ export default class AjaxFormModal extends AbstractModal
                 .then((value) => {
                     resolve(value);
                 })
-                .catch(() => {
+                .catch((error) => {
+                    console.error(error)
                     reject();
                 });
         } else {
-            let html = responseData.data.trim();
+            let html = AxiosResponseHandler.getBody(responseData).trim();
             this.element = <HTMLElement>$.parseHTML(html)[0];
             resolve();
         }
@@ -92,15 +103,15 @@ export default class AjaxFormModal extends AbstractModal
 
     private getActionUrl()
     {
-        if(this.actionUrl) {
+        if (this.actionUrl) {
             return this.actionUrl;
         }
 
-        if(this.actionRoute) {
+        if (this.actionRoute) {
             return this.router.generate(this.actionRoute, this.actionRouteParameters);
         }
 
-        return this.router.generate(this.route, this.routeParameters);
+        return this.getUrl();
     }
 
     private buildQuery(obj: object, prefix: string = ''): string

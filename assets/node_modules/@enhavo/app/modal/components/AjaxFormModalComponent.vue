@@ -32,11 +32,11 @@ export default class extends Vue
 
     save() {
         this.modal.submit().then((close: boolean) => {
-            if(close) {
+            if (close) {
                 this.modal.close();
             }
         }).catch((close: boolean) => {
-            if(close) {
+            if (close) {
                 this.modal.close();
             }
         });
@@ -46,7 +46,7 @@ export default class extends Vue
         this.modal.close();
     }
 
-    trans(text) {
+    trans(text: string) {
         return this.translator.trans(text);
     }
 

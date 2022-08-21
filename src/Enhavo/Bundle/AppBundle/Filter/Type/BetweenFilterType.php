@@ -59,8 +59,8 @@ class BetweenFilterType extends AbstractFilterType
 
     public function buildQuery(FilterQuery $query, $options, $value)
     {
-        $fromValue = $value['from'];
-        $toValue = $value['to'];
+        $fromValue = isset($value['from']) ?? $value['from'];
+        $toValue = isset($value['to']) ?? $value['to'];
 
         if(!empty($fromValue) && empty($toValue)) {
             $this->buildFromQuery($query, $options, $fromValue);

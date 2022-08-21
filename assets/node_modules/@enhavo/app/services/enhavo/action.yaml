@@ -136,6 +136,16 @@ services:
         tags:
             - 'enhavo_app.action'
 
+    action.form:
+        chunk: 'action'
+        from: '@enhavo/core/RegistryEntry'
+        arguments:
+            - 'string:form-action'
+            - '@enhavo/app/action/components/ActionComponent.vue'
+            - '@enhavo/app/action/factory/FormActionFactory'
+        tags:
+            - 'enhavo_app.action'
+
     '@enhavo/app/action/factory/CloseActionFactory':
         chunk: 'action'
         arguments:
@@ -176,6 +186,14 @@ services:
         chunk: 'action'
         arguments:
             - '@enhavo/app/modal/ModalManager'
+
+    '@enhavo/app/action/factory/FormActionFactory':
+        chunk: 'action'
+        arguments:
+            - '@enhavo/app/view/View'
+            - '@enhavo/core/Router'
+            - '@enhavo/app/modal/ModalManager'
+            - '@enhavo/core/Translator'
 
     '@enhavo/app/action/factory/OpenActionFactory':
         chunk: 'action'
