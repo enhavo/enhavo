@@ -44,10 +44,10 @@ class FileFactory extends Factory
 
         $file->setMimeType('application/octet-stream');
         $file->setExtension(null);
-        $file->setFilename(tempnam(sys_get_temp_dir(), 'Content'));
 
         $content = new Content('');
         $file->setContent($content);
+        $file->setFilename(basename($content->getFilePath()));
 
         $this->provider->updateFile($file);
         return $file;

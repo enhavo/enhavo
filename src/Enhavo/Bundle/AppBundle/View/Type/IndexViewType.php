@@ -112,13 +112,18 @@ class IndexViewType extends AbstractViewType
             $this->addTranslationDomain($columnData, $viewerOptions['translation_domain']);
         }
 
+        $openClickable = $this->util->mergeConfig([
+            $options['open_clickable'],
+            $this->util->getViewerOption('open_clickable', $requestConfiguration)
+        ]);
+
         $grid = [
             'tableRoute' => $tableRoute,
-            'tableRouteParameters' => $tableRouteParameters,
             'tableRouteParameters' => $tableRouteParameters,
             'batchRoute' => $batchRoute,
             'batchRouteParameters' => $batchRouteParameters,
             'openRoute' => $openRoute,
+            'openClickable' => $openClickable,
             'openRouteParameters' => $openRouteParameters,
             'page' => $request->get('page', 1),
             'batches' => $this->batchManager->createBatchesViewData($batchData),
@@ -151,6 +156,7 @@ class IndexViewType extends AbstractViewType
             'batch_route' => null,
             'batch_route_parameters' => null,
             'open_route' => null,
+            'open_clickable' => true,
             'open_route_parameters' => null,
             'label' => 'label.index',
             'translation_domain' => 'EnhavoAppBundle'

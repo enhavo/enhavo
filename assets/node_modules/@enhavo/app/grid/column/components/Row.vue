@@ -1,5 +1,5 @@
 <template>
-    <div :class="{'view-table-row': true, 'active': data.active, 'selected': data.selected}" @click="open()">
+    <div :class="{'view-table-row': true, 'active': data.active, 'selected': data.selected, 'clickable': grid.isRowClickable()}" @click="open()">
         <div class="checkbox-container" v-if="batchManager.hasBatches()">
             <input type="checkbox" v-on:change="changeSelect" v-on:click.stop :checked="data.selected" />
             <span></span>
@@ -54,7 +54,9 @@ export default class extends Vue
     }
 
     open() {
-        this.grid.open(this.data);
+        if (this.grid.isRowClickable()) {
+            this.grid.open(this.data);
+        }
     }
 
     calcColumnWidth(parts: number): string {

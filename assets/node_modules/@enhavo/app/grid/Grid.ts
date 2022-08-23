@@ -6,7 +6,6 @@ import Router from "@enhavo/core/Router";
 import GridConfiguration from "@enhavo/app/grid/GridConfiguration";
 import axios, {CancelTokenSource} from 'axios';
 import * as _ from "lodash";
-import * as $ from "jquery";
 import BatchManager from "@enhavo/app/grid/batch/BatchManager";
 import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
 import View from "@enhavo/app/view/View";
@@ -261,6 +260,11 @@ export default class Grid
             })
     }
 
+    public isRowClickable()
+    {
+        return this.configuration.openClickable;
+    }
+
     public open(row: RowData)
     {
         let parameters: any = {};
@@ -451,7 +455,7 @@ export default class Grid
                 }).catch(() => {
                     callback(true);
                 });
-            }], (err) => {
+            }], (err: any) => {
                 if(err) {
                     reject();
                 } else {

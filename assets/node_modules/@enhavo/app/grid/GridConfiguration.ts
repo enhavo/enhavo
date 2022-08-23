@@ -9,6 +9,7 @@ export default class GridConfiguration implements BatchDataInterface
     public tableRoute: string;
     public tableRouteParameters: object;
     public openRoute: string;
+    public openClickable: boolean;
     public openRouteParameters: object;
     public rows: Array<RowData> = [];
     public selectedIds: Array<number> = [];
