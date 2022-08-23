@@ -27,9 +27,10 @@
     }
   }
 
-  .view-table-row {display:flex;align-items:center;padding:0 10px;cursor:pointer;@include transition(all 300ms);border-bottom:1px solid $grey5;
+  .view-table-row {display:flex;align-items:center;padding:0 10px;@include transition(all 300ms);border-bottom:1px solid $grey5;
     &:hover {background:$grey1;}
     &.has-children {border-left:1px solid $grey5;}
+    &.clickable {cursor:pointer;}
     .view-table-row-columns {display:flex;flex:1 1 auto;min-width:0;text-overflow: ellipsis;padding:10px 15px 10px 20px;}
     &.active {background:$grey1;
       &.selected {background:$grey1;}

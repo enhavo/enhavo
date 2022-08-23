@@ -25,7 +25,6 @@ class FormActionType extends AbstractUrlActionType
             'open_route_parameters' => [],
             'open_route_mapping' => [],
             'open_type' => self::TYPE_OPEN,
-
         ]);
 
         $resolver->setRequired(['route', 'label']);

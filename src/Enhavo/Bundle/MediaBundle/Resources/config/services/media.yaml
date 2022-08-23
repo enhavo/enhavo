@@ -32,7 +32,10 @@ services:
 
     enhavo_media.media.media_manager:
         public: true
-        class: Enhavo\Bundle\MediaBundle\Media\MediaManager
+        alias: Enhavo\Bundle\MediaBundle\Media\MediaManager
+
+    Enhavo\Bundle\MediaBundle\Media\MediaManager:
+        public: true
         arguments:
             - '@enhavo_media.storage'
             - '@enhavo_media.media.format_manager'
@@ -104,7 +107,9 @@ services:
             - { name: enhavo.column, alias: media }
 
     enhavo_media.factory.file:
-        class: Enhavo\Bundle\MediaBundle\Factory\FileFactory
+        alias: Enhavo\Bundle\MediaBundle\Factory\FileFactory
+
+    Enhavo\Bundle\MediaBundle\Factory\FileFactory:
         public: true
         arguments:
             - '%enhavo_media.model.file.class%'

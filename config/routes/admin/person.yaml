@@ -7,6 +7,7 @@ app_person_index:
         _controller: app.controller.person::indexAction
         _sylius:
             viewer:
+                open_clickable: false
                 actions:
                     export:
                         type: form

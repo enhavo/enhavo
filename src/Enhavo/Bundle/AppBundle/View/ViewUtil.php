@@ -125,7 +125,7 @@ class ViewUtil
     {
         $data = null;
         foreach($configs as $config) {
-            if($config != null) {
+            if ($config !== null) {
                 $data = $config;
             }
         }
