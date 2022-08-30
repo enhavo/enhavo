@@ -4,9 +4,11 @@ namespace Enhavo\Bundle\ContentBundle\Video;
 
 use Enhavo\Bundle\ContentBundle\Exception\VideoException;
 use Enhavo\Bundle\ContentBundle\Model\Video;
+use function League\Uri\parse;
 
 class YoutubeProvider implements ProviderInterface
 {
+    const REGEX = '/(?:http:|https:)*?\/\/(?:www\.|)(?:youtube\.com|m\.youtube\.com|youtu\.|youtube-nocookie\.com).*(?:v=|v%3D|v\/|(?:a|p)\/(?:a|u)\/\d.*\/|watch\?|vi(?:=|\/)|\/embed\/|\/shorts\/|oembed\?|be\/|e\/)([^&?%#\/\n]*)/';
     const PROVIDER_NAME = 'youtube';
     const IMAGE_TYPE_MQ = 'mqdefault';
     const IMAGE_TYPE_HQ = 'hqdefault';
@@ -61,8 +63,11 @@ class YoutubeProvider implements ProviderInterface
 
     private function getVideoId($url)
     {
-        preg_match("/(v=|youtu\.be\/)([^&#]*)/", $url, $videoId);
-        return count($videoId) > 2 ? $videoId[2] : null;
+        $result = preg_match(self::REGEX, $url, $matches);
+        if ($result) {
+            return $matches[1];
+        }
+        return null;
     }
 
     private function getThumbnailUrl($id, $preferredType)
@@ -87,7 +92,7 @@ class YoutubeProvider implements ProviderInterface
             }
         }
 
-        throw new VideoException(sprintf('Can\' t resolve thmbnail image for youtube video with id: "%s"', $id));
+        throw new VideoException(sprintf('Can\' t resolve thumbnail image for youtube video with id: "%s"', $id));
     }
 
     private function checkUrl($url): bool
@@ -98,8 +103,6 @@ class YoutubeProvider implements ProviderInterface
 
     public function isSupported(string $url): bool
     {
-        $host = strtolower(parse_url($url, PHP_URL_HOST));
-
-        return preg_match('/^(www\.)?(youtube\.com|youtu\.be)$/', $host);
+        return preg_match(self::REGEX, $url) > 0;
     }
 }
