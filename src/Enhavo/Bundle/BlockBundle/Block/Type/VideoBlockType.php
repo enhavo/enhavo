@@ -52,7 +52,15 @@ class VideoBlockType extends AbstractBlockType
         $videoFactory = $this->container->get('Enhavo\Bundle\ContentBundle\Factory\VideoFactory');
 
         /** @var $block VideoBlock */
-        $viewData['video'] = $videoFactory->create($block->getUrl());
+        try {
+            $viewData['video'] = $videoFactory->create($block->getUrl());
+        } catch (\Exception $e) {
+            if (get_class($e) === 'Enhavo\Bundle\ContentBundle\Exception\VideoException') {
+                $viewData['video'] = null;
+            } else {
+                throw $e;
+            }
+        }
     }
 
     public static function getName(): ?string
