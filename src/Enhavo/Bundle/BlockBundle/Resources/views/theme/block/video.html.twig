@@ -4,7 +4,9 @@
             {{ block.title|headline('title') }}
         {% endif %}
         <div class="video-container">
-            <iframe src="{{ video.embedUrl }}"></iframe>
+            {% if video %}
+                <iframe src="{{ video.embedUrl }}"></iframe>
+            {% endif %}
         </div>
     </div>
 </article>
