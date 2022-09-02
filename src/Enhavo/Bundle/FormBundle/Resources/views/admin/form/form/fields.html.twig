@@ -151,7 +151,7 @@
 {% endblock %}
 
 {% block enhavo_auto_complete_entity_widget %}
-    <div data-auto-complete-entity="{{ auto_complete_data|json_encode|e }}">
+    <div data-auto-complete-entity="{{ auto_complete_data|json_encode|e }}" {{ block('attributes') }}>
         {% set valueString = '' %}
         {% if multiple %}
             {% set valueValues = [] %}
