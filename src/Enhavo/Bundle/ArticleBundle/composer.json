@@ -13,14 +13,14 @@
   ],
   "require": {
     "php": "^8.0",
-    "enhavo/app-bundle": "dev-master",
-    "enhavo/content-bundle": "dev-master",
-    "enhavo/taxonomy-bundle": "dev-master",
-    "enhavo/block-bundle": "dev-master",
-    "enhavo/form-bundle": "dev-master",
-    "enhavo/media-bundle": "dev-master",
-    "enhavo/template-bundle": "dev-master",
-    "enhavo/comment-bundle": "dev-master"
+    "enhavo/app-bundle": "^0.11",
+    "enhavo/content-bundle": "^0.11",
+    "enhavo/taxonomy-bundle": "^0.11",
+    "enhavo/block-bundle": "^0.11",
+    "enhavo/form-bundle": "^0.11",
+    "enhavo/media-bundle": "^0.11",
+    "enhavo/template-bundle": "^0.11",
+    "enhavo/comment-bundle": "^0.11"
   },
   "require-dev": {
     "phpunit/phpunit": "^9.5"

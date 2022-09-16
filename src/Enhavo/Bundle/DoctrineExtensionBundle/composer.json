@@ -13,7 +13,7 @@
   ],
   "require": {
     "php": "^8.0",
-    "enhavo/metadata": "dev-master"
+    "enhavo/metadata": "^0.11"
   },
   "require-dev": {
     "phpunit/phpunit": "^9.5"

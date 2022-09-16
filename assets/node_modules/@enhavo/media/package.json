@@ -9,7 +9,7 @@
     "url": "https://github.com/enhavo/enhavo.git"
   },
   "dependencies": {
-    "@enhavo/app": "https://github.com/enhavo/app-assets.git",
+    "@enhavo/app": "^0.11",
     "async": "^2.6.2",
     "axios": "^0.21.1",
     "blueimp-file-upload": "^9.22.1",

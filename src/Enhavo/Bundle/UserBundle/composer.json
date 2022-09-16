@@ -13,8 +13,8 @@
   ],
   "require": {
     "php": "^8.0",
-    "enhavo/app-bundle": "dev-master",
-    "enhavo/form-bundle": "dev-master",
+    "enhavo/app-bundle": "^0.11",
+    "enhavo/form-bundle": "^0.11",
     "symfony/security-bundle": "^5.4",
     "symfony/security-guard": "^5.4"
   },

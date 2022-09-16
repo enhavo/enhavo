@@ -9,7 +9,7 @@
     "url": "https://github.com/enhavo/enhavo.git"
   },
   "dependencies": {
-    "@enhavo/core": "https://github.com/enhavo/core-assets.git",
+    "@enhavo/core": "^0.11",
     "@hotwired/stimulus": "^3.0.1",
     "@ibm/plex": "^1.2.3",
     "ansi-to-html": "^0.6.11",
