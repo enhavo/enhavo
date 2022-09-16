@@ -5,3 +5,4 @@ UserBundle
     :maxdepth: 1
 
     installation
+    configuration
