@@ -1,6 +1,8 @@
 enhavo_user:
     config:
         theme:
+            firewall: main
+
             registration_register:
                 template: theme/security/registration/register.html.twig
                 redirect_route: enhavo_user_theme_registration_check
@@ -104,6 +106,8 @@ enhavo_user:
                 template: theme/security/verification/confirm.html.twig
 
         admin:
+            firewall: admin
+
             reset_password_request:
                 template: admin/security/reset-password/request.html.twig
                 mail:

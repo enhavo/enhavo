@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\UserBundle\DependencyInjection;
 
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
+use Enhavo\Bundle\UserBundle\Configuration\RequestConfigKeyProvider;
 use Enhavo\Bundle\UserBundle\Factory\UserFactory;
 use Enhavo\Bundle\UserBundle\Form\Type\ChangeEmailConfirmType;
 use Enhavo\Bundle\UserBundle\Form\Type\ChangeEmailRequestType;
@@ -105,6 +106,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('default_firewall')->defaultValue('main')->end()
                 ->scalarNode('user_manager')->defaultValue(UserManager::class)->end()
+                ->scalarNode('config_key_provider')->defaultValue(RequestConfigKeyProvider::class)->end()
             ->end()
         ;
     }
@@ -136,6 +138,7 @@ class Configuration implements ConfigurationInterface
 
         ;
 
+        $this->addConfigGeneralSection($prototype);
         $this->addConfigRegistrationSection($prototype);
         $this->addConfigProfileSection($prototype);
         $this->addConfigResetPasswordSection($prototype);
@@ -144,6 +147,15 @@ class Configuration implements ConfigurationInterface
         $this->addConfigChangePasswordSection($prototype);
         $this->addConfigDeleteSection($prototype);
         $this->addConfigVerificationSection($prototype);
+    }
+
+    private function addConfigGeneralSection(NodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->scalarNode('firewall')->defaultValue(null)->end()
+            ->end()
+        ;
     }
 
     private function addConfigRegistrationSection(NodeDefinition $node)

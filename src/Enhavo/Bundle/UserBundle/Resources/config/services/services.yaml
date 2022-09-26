@@ -21,28 +21,30 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
-# Disable service to be compatible to the new authentication manager
-#    Enhavo\Bundle\UserBundle\Security\EntryPoint\FormAuthenticationEntryPoint:
-#        decoration_priority: 1
-#        decoration_on_invalid: exception
-#        decoration_inner_name: security.authentication.form_entry_point.inner
-#        decorates: security.authentication.form_entry_point
-#        arguments: ['@security.authentication.form_entry_point.inner']
+    Enhavo\Bundle\UserBundle\Configuration\RequestConfigKeyProvider:
+        arguments:
+            - '@request_stack'
+
+    Enhavo\Bundle\UserBundle\Configuration\FirewallConfigKeyProvider:
+        arguments:
+            - '@security.firewall.map'
+            - '@request_stack'
+            - '%enhavo_user.config%'
+
+    Enhavo\Bundle\UserBundle\Configuration\ChainConfigKeyProvider:
+        calls:
+            - [addConfigKeyProvider, ['@Enhavo\Bundle\UserBundle\Configuration\RequestConfigKeyProvider', 5]]
+            - [addConfigKeyProvider, ['@Enhavo\Bundle\UserBundle\Configuration\FirewallConfigKeyProvider' , 20]]
+
+    Enhavo\Bundle\UserBundle\Security\EntryPoint\FormAuthenticationEntryPoint:
+        arguments:
+            - '@router'
+            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
 
     Enhavo\Bundle\UserBundle\Security\Authentication\Voter\GroupRoleVoter:
         public: false
         tags:
             - { name: security.voter }
-
-    Enhavo\Bundle\UserBundle\Widget\LoginWidgetType:
-        public: true
-        arguments:
-            - '@request_stack'
-            - '@security.csrf.token_manager'
-        calls:
-            - [setContainer, ['@service_container']]
-        tags:
-            - { name: enhavo.widget, alias: login }
 
     Enhavo\Bundle\UserBundle\Security\Authentication\FormLoginAuthenticator:
         arguments:
@@ -50,8 +52,6 @@ services:
             - '@enhavo_user.repository.user'
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
             - '@router'
-            - '@security.csrf.token_manager'
-            - '@security.user_password_encoder.generic'
             - '@Enhavo\Bundle\UserBundle\Mapper\UserMapper'
             - '@event_dispatcher'
             - '%enhavo_user.model.user.class%'
@@ -67,6 +67,7 @@ services:
     Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider:
         arguments:
             - '%enhavo_user.config%'
+            - '@Enhavo\Bundle\UserBundle\Configuration\ChainConfigKeyProvider'
 
     Enhavo\Bundle\UserBundle\Validator\Constraints\UserExistsValidator:
         arguments:
@@ -93,3 +94,15 @@ services:
             - '@router'
         tags:
             - { name: twig.extension }
+
+    Enhavo\Bundle\UserBundle\Component\LoginComponent:
+        arguments:
+            - '@request_stack'
+            - '@security.csrf.token_manager'
+        tags:
+            - { name: twig.component, key: user_login,  template: 'theme/component/user/login.html.twig' }
+
+    Enhavo\Bundle\UserBundle\Security\Authentication\AuthenticationError:
+        arguments:
+            - '@security.authentication_utils'
+            - '@translator'

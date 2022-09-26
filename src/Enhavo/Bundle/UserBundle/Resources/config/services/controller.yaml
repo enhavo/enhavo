@@ -46,6 +46,8 @@ services:
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
             - '@security.csrf.token_manager'
             - '@translator'
+            - '@security.authentication_utils'
+            - '@Enhavo\Bundle\UserBundle\Security\Authentication\AuthenticationError'
         calls:
             - [ setContainer, [ '@service_container' ] ]
         tags:

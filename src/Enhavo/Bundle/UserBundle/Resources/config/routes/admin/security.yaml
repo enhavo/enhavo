@@ -7,13 +7,6 @@ enhavo_user_security_login:
     defaults:
         _config: admin
 
-enhavo_user_security_login_check:
-    options:
-        expose: true
-    path: /login/check
-    methods: [POST]
-    controller: Enhavo\Bundle\UserBundle\Controller\SecurityController::checkAction
-
 enhavo_user_security_logout:
     options:
         expose: true

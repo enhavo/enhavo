@@ -2,17 +2,15 @@
 
 namespace Enhavo\Bundle\UserBundle\Exception;
 
-use Symfony\Component\HttpFoundation\Request;
-
 class ConfigurationException extends \Exception
 {
-    public static function configurationNotFound($key, $section)
+    public static function configurationNotFound($key)
     {
-        return new self(sprintf('Can not find configuration in section "%s" for key "%s". Maybe you forgot to configure this section', $section, $key));
+        return new self(sprintf('Can not find a configuration with key "%s"', $key));
     }
 
-    public static function configKeyNotFound(Request $request)
+    public static function configKeyNotFound()
     {
-        return new self(sprintf('Can not find a valid key in _config attribute in route "%s". The key must be set, to fetch the configuration', $request->attributes->get('_route')));
+        return new self('Can not find any valid key for this request. Add firewall configuratuion or config the route with a config key "_config"');
     }
 }

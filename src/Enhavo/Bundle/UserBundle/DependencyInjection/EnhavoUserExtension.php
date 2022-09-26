@@ -26,6 +26,7 @@ class EnhavoUserExtension extends AbstractResourceExtension implements PrependEx
         $this->registerResources('enhavo_user', $config['driver'], $config['resources'], $container);
 
         $container->setParameter('enhavo_user.user_manager', $config['user_manager']);
+        $container->setParameter('enhavo_user.config_key_provider', $config['config_key_provider']);
         $container->setParameter('enhavo_user.default_firewall', $config['default_firewall']);
         $container->setParameter('enhavo_user.config', $config['config']);
         $container->setParameter('enhavo_user.mapper', $config['mapper']);
