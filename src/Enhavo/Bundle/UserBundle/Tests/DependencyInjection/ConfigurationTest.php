@@ -29,7 +29,7 @@ class ConfigurationTest extends TestCase
         ]);
 
         $this->assertTrue(isset($config['config']['theme']));
-        $this->assertCount(0, $config['config']['theme']);
+        $this->assertNull($config['config']['theme']['firewall']);
     }
 
     public function testMissingRegistrationRegisterConfig()
@@ -71,6 +71,5 @@ class ConfigurationTest extends TestCase
         ]);
 
         $this->assertEquals('theme/security/registration/register.html.twig', $config['config']['theme']['registration_register']['template']);
-        $this->assertCount(1, $config['config']['theme']);
     }
 }

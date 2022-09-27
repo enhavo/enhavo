@@ -37,8 +37,9 @@ class UserCheckerTest extends TestCase
         $dependencies = $this->createDependencies();
         $checker = $this->createInstance($dependencies);
         $user = new UserMock();
-        $dependencies->eventDispatcher->expects($this->once())->method('dispatch')->willReturnCallback(function ($event) {
+        $dependencies->eventDispatcher->expects($this->once())->method('dispatch')->willReturnCallback(function ($event, $name) {
             $this->assertInstanceOf(UserEvent::class, $event);
+            $this->assertEquals(UserEvent::PRE_AUTH, $name);
 
             return $event;
         });
@@ -57,6 +58,20 @@ class UserCheckerTest extends TestCase
         });
         $this->expectException(AuthenticationException::class);
         $checker->checkPreAuth($user);
+    }
+
+    public function testPostAuth()
+    {
+        $dependencies = $this->createDependencies();
+        $checker = $this->createInstance($dependencies);
+        $user = new UserMock();
+        $dependencies->eventDispatcher->expects($this->once())->method('dispatch')->willReturnCallback(function ($event, $name) {
+            $this->assertInstanceOf(UserEvent::class, $event);
+            $this->assertEquals(UserEvent::POST_AUTH, $name);
+
+            return $event;
+        });
+        $checker->checkPostAuth($user);
     }
 }
 

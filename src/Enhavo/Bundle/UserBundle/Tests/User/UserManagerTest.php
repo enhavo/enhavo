@@ -116,10 +116,10 @@ class UserManagerTest extends TestCase
         $user->setPlainPassword('password');
 
         $dependencies = $this->createDependencies();
-        $dependencies->eventDispatcher->expects($this->once())->method('dispatch')->willReturnCallback(function ($event) use ($user) {
+        $dependencies->eventDispatcher->expects($this->once())->method('dispatch')->willReturnCallback(function ($event, $name) use ($user) {
             /** @var UserEvent $event */
             $this->assertInstanceOf(UserEvent::class, $event);
-            $this->assertEquals(UserEvent::CREATED, $event->getType());
+            $this->assertEquals(UserEvent::CREATED, $name);
             $this->assertEquals($user, $event->getUser());
             return $user;
         });
@@ -174,10 +174,10 @@ class UserManagerTest extends TestCase
         $user->setEnabled(false);
 
         $dependencies = $this->createDependencies();
-        $dependencies->eventDispatcher->expects($this->once())->method('dispatch')->willReturnCallback(function ($event) use ($user) {
+        $dependencies->eventDispatcher->expects($this->once())->method('dispatch')->willReturnCallback(function ($event, $name) use ($user) {
             /** @var UserEvent $event */
             $this->assertInstanceOf(UserEvent::class, $event);
-            $this->assertEquals(UserEvent::REGISTRATION_CONFIRMED, $event->getType());
+            $this->assertEquals(UserEvent::REGISTRATION_CONFIRMED, $name);
             $this->assertEquals($user, $event->getUser());
             return $event;
         });
@@ -227,10 +227,10 @@ class UserManagerTest extends TestCase
         $user->setPlainPassword('password');
 
         $dependencies = $this->createDependencies();
-        $dependencies->eventDispatcher->expects($this->once())->method('dispatch')->willReturnCallback(function ($event) use ($user) {
+        $dependencies->eventDispatcher->expects($this->once())->method('dispatch')->willReturnCallback(function ($event, $name) use ($user) {
             /** @var UserEvent $event */
             $this->assertInstanceOf(UserEvent::class, $event);
-            $this->assertEquals(UserEvent::PASSWORD_RESET_REQUESTED, $event->getType());
+            $this->assertEquals(UserEvent::PASSWORD_RESET_REQUESTED, $name);
             $this->assertEquals($user, $event->getUser());
             return $user;
         });
@@ -283,10 +283,10 @@ class UserManagerTest extends TestCase
         $user->setPlainPassword('password');
 
         $dependencies = $this->createDependencies();
-        $dependencies->eventDispatcher->expects($this->once())->method('dispatch')->willReturnCallback(function ($event) use ($user) {
+        $dependencies->eventDispatcher->expects($this->once())->method('dispatch')->willReturnCallback(function ($event, $name) use ($user) {
             /** @var UserEvent $event */
             $this->assertInstanceOf(UserEvent::class, $event);
-            $this->assertEquals(UserEvent::PASSWORD_CHANGED, $event->getType());
+            $this->assertEquals(UserEvent::PASSWORD_CHANGED, $name);
             $this->assertEquals($user, $event->getUser());
             return $event;
         });
@@ -344,10 +344,10 @@ class UserManagerTest extends TestCase
         $user->setPlainPassword('');
 
         $dependencies = $this->createDependencies();
-        $dependencies->eventDispatcher->expects($this->once())->method('dispatch')->willReturnCallback(function ($event) use ($user) {
+        $dependencies->eventDispatcher->expects($this->once())->method('dispatch')->willReturnCallback(function ($event, $name) use ($user) {
             /** @var UserEvent $event */
             $this->assertInstanceOf(UserEvent::class, $event);
-            $this->assertEquals(UserEvent::ACTIVATED, $event->getType());
+            $this->assertEquals(UserEvent::ACTIVATED, $name);
             $this->assertEquals($user, $event->getUser());
             return $event;
         });
