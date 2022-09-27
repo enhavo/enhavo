@@ -80,7 +80,6 @@ enhavo_user:
                 template: theme/security/login.html.twig
                 redirect_route: enhavo_user_theme_user_profile
                 route: enhavo_user_theme_security_login
-                verification_required: true
 
             change_password:
                 template: theme/security/change-password/change.html.twig
