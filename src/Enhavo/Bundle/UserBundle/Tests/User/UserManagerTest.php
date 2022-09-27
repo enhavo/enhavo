@@ -19,6 +19,7 @@ use Enhavo\Bundle\UserBundle\Configuration\Registration\RegistrationRegisterConf
 use Enhavo\Bundle\UserBundle\Configuration\ResetPassword\ResetPasswordRequestConfiguration;
 use Enhavo\Bundle\UserBundle\Event\UserEvent;
 use Enhavo\Bundle\UserBundle\Mapper\UserMapper;
+use Enhavo\Bundle\UserBundle\Model\User;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Enhavo\Bundle\UserBundle\Repository\UserRepository;
 use Enhavo\Bundle\UserBundle\Tests\Mocks\UserMock;
@@ -394,10 +395,12 @@ class UserManagerTest extends TestCase
         $manager = $this->createInstance($dependencies, []);
 
         $user = new UserMock();
+        $user->setCustomerId('123');
+        $user->setEmail('test@test.com');
         $user->setPlainPassword('nosalt');
         $user->setSalt('notnull');
 
-        $manager->updatePassword($user);
+        $manager->update($user);
 
         $this->assertNull($user->getPlainPassword());
         $this->assertNull($user->getSalt());
