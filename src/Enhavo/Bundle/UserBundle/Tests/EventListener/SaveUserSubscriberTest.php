@@ -50,8 +50,7 @@ class SaveUserSubscriberTest extends TestCase
         $event = new ResourceEvent($user);
 
         $subscriber = $this->createInstance($dependencies);
-        $dependencies->userManager->expects($this->once())->method('updatePassword');
-        $dependencies->userManager->expects($this->once())->method('updateUsername');
+        $dependencies->userManager->expects($this->once())->method('update');
 
         $subscriber->onSave($event);
     }

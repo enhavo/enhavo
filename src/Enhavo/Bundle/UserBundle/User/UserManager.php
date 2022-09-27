@@ -72,7 +72,7 @@ class UserManager
         }
     }
 
-    public function updatePassword(UserInterface $user): void
+    private function updatePassword(UserInterface $user): void
     {
         $this->hashPassword($user);
     }
@@ -86,7 +86,7 @@ class UserManager
         }
     }
 
-    public function updateUsername(UserInterface $user): void
+    private function updateUsername(UserInterface $user): void
     {
         $this->userMapper->setUsername($user);
     }
