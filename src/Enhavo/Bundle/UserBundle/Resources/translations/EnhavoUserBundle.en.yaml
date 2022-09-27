@@ -3,6 +3,8 @@ login:
         credentials: 'Bad credentials'
         password_expired: 'Your password expired. Please check your inbox and reset your password with the provided link.'
         max_failed_attempts: 'Too many failed login attempts. Please check your inbox and reset your password with the provided link.'
+        disabled: 'The user is disabled.'
+        verification_required: 'You must verify your email first. Please check your inbox and use the provided  verify link.'
 group:
     edit:
         submit: 'Update group'
@@ -161,3 +163,14 @@ profile:
     update:
         success: 'Profile updated successfully'
         error: 'Update failed'
+
+verification:
+    mail:
+        subject: Verify your Email
+        text:  |
+            Hello %username%!
+
+            Please click on the following link to to verify your email address %confirmation_url%
+
+            Regards,
+            the Team.

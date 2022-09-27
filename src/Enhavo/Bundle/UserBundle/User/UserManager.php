@@ -38,18 +38,18 @@ class UserManager
 {
     public function __construct(
         protected EntityManagerInterface $em,
-        protected MailerManager                        $mailerManager,
-        private UserMapperInterface                    $userMapper,
-        private TokenGeneratorInterface                $tokenGenerator,
-        private TranslatorInterface                    $translator,
-        private EncoderFactoryInterface                $encoderFactory,
-        protected RouterInterface                      $router,
-        private EventDispatcherInterface               $eventDispatcher,
-        private TokenStorageInterface                  $tokenStorage,
-        private RequestStack                           $requestStack,
+        protected MailerManager $mailerManager,
+        private UserMapperInterface $userMapper,
+        private TokenGeneratorInterface $tokenGenerator,
+        private TranslatorInterface $translator,
+        private EncoderFactoryInterface $encoderFactory,
+        protected RouterInterface $router,
+        private EventDispatcherInterface $eventDispatcher,
+        private TokenStorageInterface $tokenStorage,
+        private RequestStack $requestStack,
         private SessionAuthenticationStrategyInterface $sessionStrategy,
-        private UserCheckerInterface                   $userChecker,
-        private string                                 $defaultFirewall,
+        private UserCheckerInterface $userChecker,
+        private string $defaultFirewall,
     ) {
 
     }
@@ -58,8 +58,8 @@ class UserManager
     {
         $this->em->persist($user);
         $this->update($user);
-        $event = new UserEvent(UserEvent::TYPE_CREATED, $user);
-        $this->eventDispatcher->dispatch($event);
+        $event = new UserEvent($user);
+        $this->eventDispatcher->dispatch($event, UserEvent::CREATED);
     }
 
     public function update(UserInterface $user, $flush = true): void
@@ -114,8 +114,8 @@ class UserManager
         $user->setPasswordUpdatedAt(new \DateTime());
         $user->setConfirmationToken(null);
         $this->update($user);
-        $event = new UserEvent(UserEvent::TYPE_PASSWORD_CHANGED, $user);
-        $this->eventDispatcher->dispatch($event);
+        $event = new UserEvent($user);
+        $this->eventDispatcher->dispatch($event, UserEvent::PASSWORD_CHANGED);
     }
 
     public function mapValues(UserInterface $user, array $values): void
@@ -144,9 +144,6 @@ class UserManager
         $this->tokenStorage->setToken(null);
     }
 
-    /**
-     * @throws Exception
-     */
     private function hashPassword(UserInterface $user): void
     {
         $plainPassword = $user->getPlainPassword();
@@ -196,8 +193,8 @@ class UserManager
     {
         $this->enable($user);
         $this->update($user);
-        $event = new UserEvent(UserEvent::TYPE_ACTIVATED, $user);
-        $this->eventDispatcher->dispatch($event);
+        $event = new UserEvent($user);
+        $this->eventDispatcher->dispatch($event, UserEvent::ACTIVATED);
     }
 
     public function confirm(UserInterface $user, RegistrationConfirmConfiguration $configuration): void
@@ -208,8 +205,8 @@ class UserManager
         }
 
         $this->update($user);
-        $event = new UserEvent(UserEvent::TYPE_REGISTRATION_CONFIRMED, $user);
-        $this->eventDispatcher->dispatch($event);
+        $event = new UserEvent($user);
+        $this->eventDispatcher->dispatch($event, UserEvent::REGISTRATION_CONFIRMED);
 
         if ($configuration->isMailEnabled()) {
             $this->sendConfirmationMail($user, $configuration);
@@ -226,15 +223,12 @@ class UserManager
         $this->mailerManager->sendMessage($message);
     }
 
-    /**
-     * @throws Exception
-     */
     public function resetPassword(UserInterface $user, ResetPasswordRequestConfiguration $configuration): void
     {
         $user->setConfirmationToken($this->tokenGenerator->generateToken());
         $this->update($user);
-        $event = new UserEvent(UserEvent::TYPE_PASSWORD_RESET_REQUESTED, $user);
-        $this->eventDispatcher->dispatch($event);
+        $event = new UserEvent($user);
+        $this->eventDispatcher->dispatch($event, UserEvent::PASSWORD_RESET_REQUESTED);
 
         if ($configuration->isMailEnabled()) {
             $this->sendResetPasswordMail($user, $configuration);
@@ -282,8 +276,8 @@ class UserManager
         $user->setVerified(false);
         $user->setConfirmationToken($this->tokenGenerator->generateToken());
         $this->update($user);
-        $event = new UserEvent(UserEvent::TYPE_EMAIl_CHANGED, $user);
-        $this->eventDispatcher->dispatch($event);
+        $event = new UserEvent($user);
+        $this->eventDispatcher->dispatch($event, UserEvent::EMAIl_CHANGED);
 
         if ($configuration->isMailEnabled()) {
             $this->sendChangeEmailConfirmMail($user, $configuration);

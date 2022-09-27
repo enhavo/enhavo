@@ -8,7 +8,6 @@ namespace Enhavo\Bundle\UserBundle\EventListener;
 
 use Enhavo\Bundle\UserBundle\Event\UserEvent;
 use Enhavo\Bundle\UserBundle\Exception\NotEnabledException;
-use Exception;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class NotEnabledSubscriber implements EventSubscriberInterface
@@ -16,21 +15,16 @@ class NotEnabledSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            UserEvent::class => 'onUserEvent',
+            UserEvent::POST_AUTH => 'onPostAuth',
         ];
     }
 
-    /**
-     * @throws Exception
-     */
-    public function onUserEvent(UserEvent $userEvent): void
+    public function onPostAuth(UserEvent $userEvent): void
     {
-        if ($userEvent->getType() === UserEvent::TYPE_PRE_AUTH) {
-            if (false === $userEvent->getUser()->isEnabled()) {
-                $exception = new NotEnabledException('Not enabled');
-                $exception->setUser($userEvent->getUser());
-                $userEvent->setException($exception);
-            }
+        if (!$userEvent->getUser()->isEnabled()) {
+            $exception = new NotEnabledException('Not enabled');
+            $exception->setUser($userEvent->getUser());
+            $userEvent->setException($exception);
         }
     }
 }

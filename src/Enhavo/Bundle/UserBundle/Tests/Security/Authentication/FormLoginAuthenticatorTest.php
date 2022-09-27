@@ -32,6 +32,9 @@ use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationExc
 use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+use Symfony\Component\Security\Http\Authenticator\Passport\Badge\CsrfTokenBadge;
+use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
+use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
 
 class FormLoginAuthenticatorTest extends TestCase
 {
@@ -53,11 +56,9 @@ class FormLoginAuthenticatorTest extends TestCase
             $dependencies->userRepository,
             $dependencies->configurationProvider,
             $dependencies->urlGenerator,
-            $dependencies->tokenManager,
-            $dependencies->passwordEncoder,
             $dependencies->getUserMapper($mappings),
             $dependencies->eventDispatcher,
-            $className
+            $className,
         );
     }
 
@@ -70,8 +71,6 @@ class FormLoginAuthenticatorTest extends TestCase
         $dependencies->urlGenerator->method('generate')->willReturnCallback(function ($route) {
             return $route .'.generated';
         });
-        $dependencies->tokenManager = $this->getMockBuilder(CsrfTokenManagerInterface::class)->getMock();
-        $dependencies->passwordEncoder = $this->getMockBuilder(UserPasswordEncoderInterface::class)->getMock();
         $dependencies->eventDispatcher = $this->getMockBuilder(EventDispatcherInterface::class)->getMock();
         $dependencies->userRepository = $this->getMockBuilder(UserRepository::class)->disableOriginalConstructor()->getMock();
 
@@ -95,8 +94,9 @@ class FormLoginAuthenticatorTest extends TestCase
     public function testSupports()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->request->attributes->set('_config', 'config');
-        $dependencies->request->method('isMethod')->willReturn(true);
+        $dependencies->request->method('isMethod')->willReturnCallback(function($method) {
+            return $method === 'POST';
+        });
         $dependencies->request->attributes->set('_route', 'config.login.route');
 
         $dependencies->configurationProvider->method('getLoginConfiguration')->willReturnCallback(function() {
@@ -116,8 +116,9 @@ class FormLoginAuthenticatorTest extends TestCase
     public function testSupportsGet()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->request->attributes->set('_config', 'config');
-        $dependencies->request->method('isMethod')->willReturn(false);
+        $dependencies->request->method('isMethod')->willReturn(function($method) {
+            return $method === 'GET';
+        });
 
         $dependencies->request->attributes->set('_route', 'config.login.route');
         $instance = $this->createInstance($dependencies);
@@ -128,60 +129,24 @@ class FormLoginAuthenticatorTest extends TestCase
         $this->assertFalse($instance->supports($dependencies->request));
     }
 
-    public function testGetCredentialsAndUser()
+    public function testBadgeData()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->tokenManager->expects($this->once())->method('isTokenValid')->willReturn(true);
-
         $instance = $this->createInstance($dependencies);
-        $credentials = $instance->getCredentials($dependencies->request);
-        /** @var UserProviderInterface|MockObject $userProvider */
-        $userProvider = $this->getMockBuilder(UserProviderInterface::class)->getMock();
-        $userProvider->expects($this->exactly(1))->method('loadUserByUsername')->willReturnCallback(function ($username) {
-            $this->assertEquals('1337.user@enhavo.com', $username);
+        $passport = $instance->authenticate($dependencies->request);
 
-            $user = new User();
-            $user->setUsername($username);
-            return $user;
-        });
+        /** @var UserBadge $userBadge */
+        $userBadge = $passport->getBadge(UserBadge::class);
+        $this->assertEquals('1337.user@enhavo.com', $userBadge->getUserIdentifier());
 
-        $this->assertEquals([
-            'csrf_token'=>'__CSRF__',
-            'customerId'=>'1337',
-            'email'=>'user@enhavo.com',
-            'password'=>'__PW__',
-        ], $credentials);
+        /** @var PasswordCredentials $passwordCredentials */
+        $passwordCredentials = $passport->getBadge(PasswordCredentials::class);
+        $this->assertEquals('__PW__', $passwordCredentials->getPassword());
 
-        $user = $instance->getUser($credentials, $userProvider);
-        $this->assertInstanceOf(UserInterface::class, $user);
-    }
-
-    public function testGetUserInvalidToken()
-    {
-        $dependencies = $this->createDependencies();
-        $dependencies->tokenManager->expects($this->once())->method('isTokenValid')->willReturn(false);
-
-        $instance = $this->createInstance($dependencies);
-        $credentials = $instance->getCredentials($dependencies->request);
-
-        $this->expectException(InvalidCsrfTokenException::class);
-        $instance->getUser($credentials, $this->getMockBuilder(UserProviderInterface::class)->getMock());
-    }
-
-    public function testGetUserNotFound()
-    {
-        $dependencies = $this->createDependencies();
-        $dependencies->tokenManager->expects($this->once())->method('isTokenValid')->willReturn(true);
-
-        $instance = $this->createInstance($dependencies);
-        $credentials = $instance->getCredentials($dependencies->request);
-
-        /** @var UserProviderInterface|MockObject $userProvider */
-        $userProvider = $this->getMockBuilder(UserProviderInterface::class)->getMock();
-        $userProvider->expects($this->exactly(1))->method('loadUserByUsername')->willReturn(null);
-
-        $this->expectException(CustomUserMessageAuthenticationException::class);
-        $instance->getUser($credentials, $userProvider);
+        /** @var CsrfTokenBadge $csrfTokenBadge */
+        $csrfTokenBadge = $passport->getBadge(CsrfTokenBadge::class);
+        $this->assertEquals('__CSRF__', $csrfTokenBadge->getCsrfToken());
+        $this->assertEquals('authenticate', $csrfTokenBadge->getCsrfTokenId());
     }
 
     public function testAuthenticationSuccess()
@@ -189,13 +154,15 @@ class FormLoginAuthenticatorTest extends TestCase
         $user = new UserMock();
         $dependencies = $this->createDependencies();
 
-        $dependencies->eventDispatcher->expects($this->once())->method('dispatch')->willReturnCallback(function ($event) use ($user) {
+        $dependencies->eventDispatcher->expects($this->once())->method('dispatch')->willReturnCallback(function ($event, $name) use ($user) {
             $this->assertInstanceOf(UserEvent::class, $event);
             $this->assertEquals($user, $event->getUser());
+            $this->assertEquals(UserEvent::LOGIN_SUCCESS, $name);
             return $event;
         });
 
         $instance = $this->createInstance($dependencies);
+
         /** @var TokenInterface|MockObject $token */
         $token = $this->getMockBuilder(TokenInterface::class)->getMock();
         $token->expects($this->once())->method('getUser')->willReturn($user);
@@ -209,64 +176,32 @@ class FormLoginAuthenticatorTest extends TestCase
     public function testAuthenticationFailure()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->configurationProvider->method('getLoginConfiguration')->willReturnCallback(function() {
-            $configuration = new LoginConfiguration();
-            $configuration->setRoute('config.login.route');
-            return $configuration;
+        $dependencies->userRepository->method('loadUserByIdentifier')->willReturnCallback(function($name) {
+            if ($name === '1337.user@enhavo.com') {
+                $user = new UserMock();
+                $user->setUsername($name);
+                return $user;
+            }
+            return null;
         });
-        $dependencies->request->expects($this->once())->method('get')->willReturn('failed@enhavo.com');
+        $dependencies->eventDispatcher->expects($this->once())->method('dispatch')->willReturnCallback(function ($event, $name) {
+            $this->assertInstanceOf(UserEvent::class, $event);
+            $this->assertEquals(UserEvent::LOGIN_FAILURE, $name);
+            $this->assertEquals('1337.user@enhavo.com', $event->getUser()->getUsername());
+            return $event;
+        });
+        $dependencies->configurationProvider->method('getLoginConfiguration')->willReturnCallback(function($name) {
+            $loginConfiguration = new LoginConfiguration();
+            $loginConfiguration->setRoute('login_route');
+            return $loginConfiguration;
+        });
 
         $instance = $this->createInstance($dependencies);
 
         $response = $instance->onAuthenticationFailure($dependencies->request, new AuthenticationException());
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
-        $this->assertEquals('config.login.route.generated', $response->getTargetUrl());
-    }
-
-    public function testStart()
-    {
-        $dependencies = $this->createDependencies();
-        $dependencies->configurationProvider->method('getLoginConfiguration')->willReturnCallback(function() {
-            $configuration = new LoginConfiguration();
-            $configuration->setRoute('config.login.route');
-            return $configuration;
-        });
-
-        $instance = $this->createInstance($dependencies);
-
-        $response = $instance->start($dependencies->request, new AuthenticationException());
-
-        $this->assertInstanceOf(RedirectResponse::class, $response);
-        $this->assertEquals('config.login.route.generated', $response->getTargetUrl());
-    }
-
-    public function testGetPassword()
-    {
-        $dependencies = $this->createDependencies();
-        $instance = $this->createInstance($dependencies);
-
-        $this->assertEquals('__PW__', $instance->getPassword([
-            'password' => '__PW__',
-            'bassword' => '__BW__'
-        ]));
-    }
-
-    public function testCheckCredentials()
-    {
-        $dependencies = $this->createDependencies();
-        $dependencies->passwordEncoder->expects($this->once())->method('isPasswordValid')->willReturnCallback(function ($user, $pw) {
-            $this->assertEquals('__PW__', $pw);
-
-            return true;
-        });
-
-        $instance = $this->createInstance($dependencies);
-
-        $user = new UserMock();
-        $this->assertTrue($instance->checkCredentials([
-            'password' => '__PW__',
-        ], $user));
+        $this->assertEquals('login_route.generated', $response->getTargetUrl());
     }
 }
 
@@ -278,17 +213,8 @@ class FormLoginAuthenticatorTestDependencies
     /** @var ConfigurationProvider|MockObject */
     public $configurationProvider;
 
-    /** @var EntityManagerInterface|MockObject */
-    public $entityManager;
-
     /** @var UrlGeneratorInterface|MockObject */
     public $urlGenerator;
-
-    /** @var CsrfTokenManagerInterface|MockObject */
-    public $tokenManager;
-
-    /** @var UserPasswordEncoderInterface|MockObject */
-    public $passwordEncoder;
 
     /** @var EventDispatcherInterface|MockObject */
     public $eventDispatcher;

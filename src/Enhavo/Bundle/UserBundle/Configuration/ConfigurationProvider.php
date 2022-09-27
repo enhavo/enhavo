@@ -26,26 +26,29 @@ use Symfony\Component\PropertyAccess\PropertyAccessor;
 
 class ConfigurationProvider
 {
-    /** @var array */
-    private $config;
+    private array $config;
+    private PropertyAccessor $propertyAccessor;
+    private ConfigKeyProviderInterface $configKeyProvider;
 
-    /** @var PropertyAccessor */
-    private $propertyAccessor;
-
-    /**
-     * ConfigurationProvider constructor.
-     * @param $config
-     */
-    public function __construct($config)
+    public function __construct(array $config, ConfigKeyProviderInterface $configKeyProvider)
     {
         $this->config = $config;
         $this->propertyAccessor = new PropertyAccessor();
+        $this->configKeyProvider = $configKeyProvider;
     }
 
     private function getConfig($key, $section)
     {
-        if (!isset($this->config[$key][$section])) {
-            throw ConfigurationException::configurationNotFound($key, $section);
+        if (!is_string($key)) {
+            $key = $this->configKeyProvider->getConfigKey();
+        }
+
+        if ($key === null) {
+            throw ConfigurationException::configKeyNotFound();
+        }
+
+        if (!isset($this->config[$key])) {
+            throw ConfigurationException::configurationNotFound($key);
         }
 
         return $this->config[$key][$section];
@@ -69,7 +72,7 @@ class ConfigurationProvider
         }
     }
 
-    public function getRegistrationRegisterConfiguration($key): RegistrationRegisterConfiguration
+    public function getRegistrationRegisterConfiguration(?string $key = null): RegistrationRegisterConfiguration
     {
         $configuration = new RegistrationRegisterConfiguration;
         $config = $this->getConfig($key, 'registration_register');
@@ -77,7 +80,7 @@ class ConfigurationProvider
         return $configuration;
     }
 
-    public function getRegistrationCheckConfiguration($key): RegistrationCheckConfiguration
+    public function getRegistrationCheckConfiguration(?string $key = null): RegistrationCheckConfiguration
     {
         $configuration = new RegistrationCheckConfiguration;
         $config = $this->getConfig($key, 'registration_check');
@@ -85,7 +88,7 @@ class ConfigurationProvider
         return $configuration;
     }
 
-    public function getRegistrationConfirmConfiguration($key): RegistrationConfirmConfiguration
+    public function getRegistrationConfirmConfiguration(?string $key = null): RegistrationConfirmConfiguration
     {
         $configuration = new RegistrationConfirmConfiguration;
         $config = $this->getConfig($key, 'registration_confirm');
@@ -93,7 +96,7 @@ class ConfigurationProvider
         return $configuration;
     }
 
-    public function getRegistrationFinishConfiguration($key): RegistrationFinishConfiguration
+    public function getRegistrationFinishConfiguration(?string $key = null): RegistrationFinishConfiguration
     {
         $configuration = new RegistrationFinishConfiguration;
         $config = $this->getConfig($key, 'registration_finish');
@@ -101,7 +104,7 @@ class ConfigurationProvider
         return $configuration;
     }
 
-    public function getProfileConfiguration($key): ProfileConfiguration
+    public function getProfileConfiguration(?string $key = null): ProfileConfiguration
     {
         $configuration = new ProfileConfiguration;
         $config = $this->getConfig($key, 'profile');
@@ -109,7 +112,7 @@ class ConfigurationProvider
         return $configuration;
     }
 
-    public function getResetPasswordRequestConfiguration($key): ResetPasswordRequestConfiguration
+    public function getResetPasswordRequestConfiguration(?string $key = null): ResetPasswordRequestConfiguration
     {
         $configuration = new ResetPasswordRequestConfiguration;
         $config = $this->getConfig($key, 'reset_password_request');
@@ -117,7 +120,7 @@ class ConfigurationProvider
         return $configuration;
     }
 
-    public function getResetPasswordCheckConfiguration($key): ResetPasswordCheckConfiguration
+    public function getResetPasswordCheckConfiguration(?string $key = null): ResetPasswordCheckConfiguration
     {
         $configuration = new ResetPasswordCheckConfiguration;
         $config = $this->getConfig($key, 'reset_password_check');
@@ -125,7 +128,7 @@ class ConfigurationProvider
         return $configuration;
     }
 
-    public function getResetPasswordConfirmConfiguration($key): ResetPasswordConfirmConfiguration
+    public function getResetPasswordConfirmConfiguration(?string $key = null): ResetPasswordConfirmConfiguration
     {
         $configuration = new ResetPasswordConfirmConfiguration;
         $config = $this->getConfig($key, 'reset_password_confirm');
@@ -133,7 +136,7 @@ class ConfigurationProvider
         return $configuration;
     }
 
-    public function getResetPasswordFinishConfiguration($key): ResetPasswordFinishConfiguration
+    public function getResetPasswordFinishConfiguration(?string $key = null): ResetPasswordFinishConfiguration
     {
         $configuration = new ResetPasswordFinishConfiguration;
         $config = $this->getConfig($key, 'reset_password_finish');
@@ -141,7 +144,7 @@ class ConfigurationProvider
         return $configuration;
     }
 
-    public function getChangeEmailRequestConfiguration($key): ChangeEmailRequestConfiguration
+    public function getChangeEmailRequestConfiguration(?string $key = null): ChangeEmailRequestConfiguration
     {
         $configuration = new ChangeEmailRequestConfiguration;
         $config = $this->getConfig($key, 'change_email_request');
@@ -149,7 +152,7 @@ class ConfigurationProvider
         return $configuration;
     }
 
-    public function getChangeEmailCheckConfiguration($key): ChangeEmailCheckConfiguration
+    public function getChangeEmailCheckConfiguration(?string $key = null): ChangeEmailCheckConfiguration
     {
         $configuration = new ChangeEmailCheckConfiguration;
         $config = $this->getConfig($key, 'change_email_check');
@@ -157,7 +160,7 @@ class ConfigurationProvider
         return $configuration;
     }
 
-    public function getChangeEmailConfirmConfiguration($key): ChangeEmailConfirmConfiguration
+    public function getChangeEmailConfirmConfiguration(?string $key = null): ChangeEmailConfirmConfiguration
     {
         $configuration = new ChangeEmailConfirmConfiguration;
         $config = $this->getConfig($key, 'change_email_confirm');
@@ -165,7 +168,7 @@ class ConfigurationProvider
         return $configuration;
     }
 
-    public function getChangeEmailFinishConfiguration($key): ChangeEmailFinishConfiguration
+    public function getChangeEmailFinishConfiguration(?string $key = null): ChangeEmailFinishConfiguration
     {
         $configuration = new ChangeEmailFinishConfiguration;
         $config = $this->getConfig($key, 'change_email_finish');
@@ -173,7 +176,7 @@ class ConfigurationProvider
         return $configuration;
     }
 
-    public function getLoginConfiguration($key): LoginConfiguration
+    public function getLoginConfiguration(?string $key = null): LoginConfiguration
     {
         $configuration = new LoginConfiguration;
         $config = $this->getConfig($key, 'login');
@@ -181,7 +184,7 @@ class ConfigurationProvider
         return $configuration;
     }
 
-    public function getChangePasswordConfiguration($key): ChangePasswordConfiguration
+    public function getChangePasswordConfiguration(?string $key = null): ChangePasswordConfiguration
     {
         $configuration = new ChangePasswordConfiguration;
         $config = $this->getConfig($key, 'change_password');
@@ -189,7 +192,7 @@ class ConfigurationProvider
         return $configuration;
     }
 
-    public function getDeleteConfirmConfiguration($key): DeleteConfirmConfiguration
+    public function getDeleteConfirmConfiguration(?string $key = null): DeleteConfirmConfiguration
     {
         $configuration = new DeleteConfirmConfiguration;
         $config = $this->getConfig($key, 'delete_confirm');
@@ -197,7 +200,7 @@ class ConfigurationProvider
         return $configuration;
     }
 
-    public function getDeleteFinishConfiguration($key): DeleteFinishConfiguration
+    public function getDeleteFinishConfiguration(?string $key = null): DeleteFinishConfiguration
     {
         $configuration = new DeleteFinishConfiguration;
         $config = $this->getConfig($key, 'delete_finish');
@@ -205,7 +208,7 @@ class ConfigurationProvider
         return $configuration;
     }
 
-    public function getVerificationRequestConfiguration($key): VerificationRequestConfiguration
+    public function getVerificationRequestConfiguration(?string $key = null): VerificationRequestConfiguration
     {
         $configuration = new VerificationRequestConfiguration;
         $config = $this->getConfig($key, 'verification_request');
@@ -213,7 +216,7 @@ class ConfigurationProvider
         return $configuration;
     }
 
-    public function getVerificationConfirmConfiguration($key): VerificationConfirmConfiguration
+    public function getVerificationConfirmConfiguration(?string $key = null): VerificationConfirmConfiguration
     {
         $configuration = new VerificationConfirmConfiguration;
         $config = $this->getConfig($key, 'verification_confirm');

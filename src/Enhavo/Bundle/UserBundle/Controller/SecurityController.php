@@ -7,55 +7,40 @@
 namespace Enhavo\Bundle\UserBundle\Controller;
 
 use Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider;
+use Enhavo\Bundle\UserBundle\Security\Authentication\AuthenticationError;
 use Enhavo\Bundle\UserBundle\User\UserManager;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SecurityController extends AbstractUserController
 {
-    /** @var CsrfTokenManagerInterface */
-    private $tokenManager;
-
-    /** @var TranslatorInterface */
-    private $translator;
-
-    /**
-     * SecurityController constructor.
-     * @param UserManager $userManager
-     * @param ConfigurationProvider $configurationProvider
-     * @param CsrfTokenManagerInterface $tokenManager
-     * @param TranslatorInterface $translator
-     */
-    public function __construct(UserManager $userManager, ConfigurationProvider $configurationProvider, CsrfTokenManagerInterface $tokenManager, TranslatorInterface $translator)
-    {
+    public function __construct(
+        UserManager $userManager,
+        ConfigurationProvider $configurationProvider,
+        private CsrfTokenManagerInterface $tokenManager,
+        private TranslatorInterface $translator,
+        private AuthenticationUtils $authenticationUtils,
+        private AuthenticationError $authenticationError,
+    ) {
         parent::__construct($userManager, $configurationProvider);
-
-        $this->tokenManager = $tokenManager;
-        $this->translator = $translator;
     }
 
-    public function loginAction(Request $request, AuthenticationUtils $authenticationUtils)
+    public function loginAction(Request $request): Response
     {
-        $configKey = $this->getConfigKey($request);
-        $configuration = $this->provider->getLoginConfiguration($configKey);
+        $configuration = $this->provider->getLoginConfiguration();
 
         if ($this->isGranted('ROLE_USER')) {
             $url = $this->generateUrl($configuration->getRedirectRoute());
             return new RedirectResponse($url);
         }
 
-        $error = $authenticationUtils->getLastAuthenticationError();
-        if ($error) {
-            $this->addFlash('error', $this->translator->trans('login.error.credentials', [], 'EnhavoUserBundle'));
-        }
-        // last username entered by the user
-        $lastUsername = $authenticationUtils->getLastUsername();
-        $csrfToken = $this->tokenManager
-            ? $this->tokenManager->getToken('authenticate')->getValue()
-            : null;
+        $error = $this->authenticationError->getError();
+        $lastUsername = $this->authenticationUtils->getLastUsername(); // last username entered by the user
+        $csrfToken = $this->tokenManager?->getToken('authenticate')->getValue();
 
         $template = $this->getTemplate($configuration->getTemplate());
         $response = $this->render($template, [
@@ -77,11 +62,6 @@ class SecurityController extends AbstractUserController
         }
 
         return $response;
-    }
-
-    public function checkAction()
-    {
-        throw new \LogicException('You must configure the check path to be handled by the firewall using form_login in your security firewall configuration.');
     }
 
     public function logoutAction()

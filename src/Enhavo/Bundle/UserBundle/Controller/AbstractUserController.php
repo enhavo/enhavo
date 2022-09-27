@@ -45,15 +45,4 @@ class AbstractUserController extends AbstractController
         }
         return $messages;
     }
-
-    protected function getConfigKey(Request $request)
-    {
-        $key = $request->attributes->get('_config', null);
-
-        if (!is_string($key)) {
-            throw ConfigurationException::configKeyNotFound($request);
-        }
-
-        return $key;
-    }
 }

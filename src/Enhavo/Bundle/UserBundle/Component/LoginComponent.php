@@ -1,88 +1,77 @@
 <?php
 
-/**
- * LoginWidgetType.php
- *
- * @since 23/09/16
- * @author gseidel
- */
+namespace Enhavo\Bundle\UserBundle\Component;
 
-namespace Enhavo\Bundle\UserBundle\Widget;
-
-use Enhavo\Bundle\AppBundle\Widget\AbstractWidgetType;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
+use Symfony\UX\TwigComponent\Attribute\ExposeInTemplate;
+use Symfony\UX\TwigComponent\Attribute\PreMount;
 
-class LoginWidgetType extends AbstractWidgetType
+#[AsTwigComponent('user_login', template: 'theme/component/user/login.html.twig')]
+class LoginComponent
 {
-    /** @var RequestStack */
-    private $requestStack;
+    #[ExposeInTemplate(name: 'csrf_token')]
+    public ?string $csrfToken = null;
 
-    /** @var CsrfTokenManagerInterface */
-    private $tokenManager;
+    #[ExposeInTemplate(name: 'last_username')]
+    public ?string $lastUsername = null;
 
-    /**
-     * LoginWidgetType constructor.
-     * @param RequestStack $requestStack
-     * @param CsrfTokenManagerInterface $tokenManager
-     */
-    public function __construct(RequestStack $requestStack, CsrfTokenManagerInterface $tokenManager)
-    {
-        $this->requestStack = $requestStack;
-        $this->tokenManager = $tokenManager;
+    #[ExposeInTemplate]
+    public ?string $error = null;
+
+    #[ExposeInTemplate(name: 'failure_path')]
+    public ?string $failurePath = null;
+
+    public function __construct(
+        private RequestStack $requestStack,
+        private CsrfTokenManagerInterface $tokenManager
+    ) {
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getType()
+    #[PreMount]
+    public function preMount(array $data): array
     {
-        return 'login';
+        $resolver = new OptionsResolver();
+        $resolver->setDefaults([
+            'config' => 'theme',
+            'csrf_token' => null,
+            'last_username' => null,
+            'error' => null,
+            'failure_path' => null,
+        ]);
+        return $this->createViewData($resolver->resolve($data));
     }
 
-    public function createViewData(array $options, $resource = null)
+    private function createViewData(array $options)
     {
-        if($options['csrf_token']) {
+        if ($options['csrf_token']) {
             $token = $options['csrf_token'];
         } else {
             $token = $this->getCsrfToken();
         }
 
-        if($options['last_username']) {
+        if ($options['last_username']) {
             $lastUsername = $options['last_username'];
         } else {
             $lastUsername = $this->getLastUserName();
         }
 
-        if($options['error']) {
+        if ($options['error']) {
             $error = $options['error'];
         } else {
             $error = $this->getError();
         }
 
         return [
-            'csrf_token' => $token,
-            'last_username' => $lastUsername,
+            'csrfToken' => $token,
+            'lastUsername' => $lastUsername,
             'error' => $error,
-            'failurePath' => $options['failurePath']
+            'failurePath' => $options['failure_path']
         ];
-    }
-
-    public function configureOptions(OptionsResolver $optionsResolver)
-    {
-        parent::configureOptions($optionsResolver);
-
-        $optionsResolver->setDefaults([
-            'config' => 'theme',
-            'template' => 'theme/widget/login.html.twig',
-            'csrf_token' => null,
-            'last_username' => null,
-            'error' => null,
-            'failurePath' => null,
-        ]);
     }
 
     private function getCsrfToken()
@@ -92,7 +81,7 @@ class LoginWidgetType extends AbstractWidgetType
 
     private function getError()
     {
-        $request = $this->requestStack->getMasterRequest();
+        $request = $this->requestStack->getMainRequest();
         $session = $request->getSession();
         $authErrorKey = Security::AUTHENTICATION_ERROR;
 
@@ -113,7 +102,7 @@ class LoginWidgetType extends AbstractWidgetType
 
     private function getLastUserName()
     {
-        $request = $this->requestStack->getMasterRequest();
+        $request = $this->requestStack->getMainRequest();
         $session = $request->getSession();
         return (null === $session) ? '' : $session->get(Security::LAST_USERNAME);
     }
