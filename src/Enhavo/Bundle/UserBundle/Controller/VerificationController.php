@@ -6,6 +6,7 @@ use Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Enhavo\Bundle\UserBundle\Repository\UserRepository;
 use Enhavo\Bundle\UserBundle\User\UserManager;
+use Enhavo\Bundle\UserBundle\Exception\TokenInvalidException;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -60,7 +61,7 @@ class VerificationController extends AbstractUserController
         $user = $this->userRepository->findByConfirmationToken($token);
 
         if ($user === null) {
-            throw $this->createNotFoundException();
+            throw new TokenInvalidException();
         }
 
         $this->userManager->verify($user);

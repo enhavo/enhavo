@@ -163,3 +163,14 @@ profile:
     update:
         success: 'Profile updated successfully'
         error: 'Update failed'
+
+verification:
+    mail:
+        subject: Verify your Email
+        text:  |
+            Hello %username%!
+
+            Please click on the following link to to verify your email address %confirmation_url%
+
+            Regards,
+            the Team.

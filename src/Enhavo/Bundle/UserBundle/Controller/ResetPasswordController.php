@@ -5,6 +5,7 @@ namespace Enhavo\Bundle\UserBundle\Controller;
 use Enhavo\Bundle\FormBundle\Error\FormErrorResolver;
 use Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider;
 use Enhavo\Bundle\UserBundle\Exception\ConfigurationException;
+use Enhavo\Bundle\UserBundle\Exception\TokenInvalidException;
 use Enhavo\Bundle\UserBundle\Form\Data\ResetPassword;
 use Enhavo\Bundle\UserBundle\Repository\UserRepository;
 use Enhavo\Bundle\UserBundle\User\UserManager;
@@ -13,7 +14,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -136,7 +136,7 @@ class ResetPasswordController extends AbstractUserController
         $user = $this->userRepository->findByConfirmationToken($token);
 
         if (null === $user) {
-            throw new NotFoundHttpException(sprintf('A user with confirmation token "%s" does not exist', $token));
+            throw new TokenInvalidException(sprintf('A user with confirmation token "%s" does not exist', $token));
         }
 
         $form = $this->createForm($configuration->getFormClass(), $user, $configuration->getFormOptions());
