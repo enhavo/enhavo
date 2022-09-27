@@ -1,17 +1,8 @@
 services:
-    Enhavo\Bundle\UserBundle\EventListener\BadCredentialSubscriber:
-        arguments:
-            - '@Enhavo\Bundle\UserBundle\User\UserManager'
-        tags:
-            - { name: kernel.event_subscriber }
-
     Enhavo\Bundle\UserBundle\EventListener\PasswordExpiredSubscriber:
         arguments:
             - '@Enhavo\Bundle\UserBundle\User\UserManager'
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
-            - '@request_stack'
-            - '@router'
-            - '@translator'
         tags:
             - { name: kernel.event_subscriber }
 
@@ -23,9 +14,13 @@ services:
         arguments:
             - '@Enhavo\Bundle\UserBundle\User\UserManager'
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
-            - '@request_stack'
-            - '@router'
-            - '@translator'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    Enhavo\Bundle\UserBundle\EventListener\VerificationRequiredListenerSubscriber:
+        arguments:
+            - '@Enhavo\Bundle\UserBundle\User\UserManager'
+            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
         tags:
             - { name: kernel.event_subscriber }
 

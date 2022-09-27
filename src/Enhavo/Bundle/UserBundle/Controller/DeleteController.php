@@ -41,8 +41,7 @@ class DeleteController extends AbstractUserController
 
     public function confirmAction(Request $request)
     {
-        $configKey = $this->getConfigKey($request);
-        $configuration = $this->provider->getDeleteConfirmConfiguration($configKey);
+        $configuration = $this->provider->getDeleteConfirmConfiguration();
 
         /** @var UserInterface $user */
         $user = $this->getUser();
@@ -115,8 +114,7 @@ class DeleteController extends AbstractUserController
 
     public function finishAction(Request $request)
     {
-        $configKey = $this->getConfigKey($request);
-        $configuration = $this->provider->getDeleteFinishConfiguration($configKey);
+        $configuration = $this->provider->getDeleteFinishConfiguration();
 
         return $this->render($this->getTemplate($configuration->getTemplate()));
     }

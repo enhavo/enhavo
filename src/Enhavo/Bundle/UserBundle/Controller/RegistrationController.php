@@ -47,8 +47,7 @@ class RegistrationController extends AbstractUserController
      */
     public function registerAction(Request $request): RedirectResponse|JsonResponse|Response
     {
-        $configKey = $this->getConfigKey($request);
-        $configuration = $this->provider->getRegistrationRegisterConfiguration($configKey);
+        $configuration = $this->provider->getRegistrationRegisterConfiguration();
 
         /** @var UserInterface $user */
         $user = $this->userFactory->createNew();
@@ -111,8 +110,7 @@ class RegistrationController extends AbstractUserController
      */
     public function checkAction(Request $request): Response
     {
-        $configKey = $this->getConfigKey($request);
-        $configuration = $this->provider->getRegistrationCheckConfiguration($configKey);
+        $configuration = $this->provider->getRegistrationCheckConfiguration();
 
         return $this->render($this->getTemplate($configuration->getTemplate()));
     }
@@ -122,8 +120,7 @@ class RegistrationController extends AbstractUserController
      */
     public function confirmAction(Request $request, $token): RedirectResponse
     {
-        $configKey = $this->getConfigKey($request);
-        $configuration = $this->provider->getRegistrationConfirmConfiguration($configKey);
+        $configuration = $this->provider->getRegistrationConfirmConfiguration();
 
         $user = $this->userRepository->findByConfirmationToken($token);
 
@@ -146,8 +143,7 @@ class RegistrationController extends AbstractUserController
      */
     public function finishAction(Request $request): Response
     {
-        $configKey = $this->getConfigKey($request);
-        $configuration = $this->provider->getRegistrationFinishConfiguration($configKey);
+        $configuration = $this->provider->getRegistrationFinishConfiguration();
 
         return $this->render($this->getTemplate($configuration->getTemplate()));
     }

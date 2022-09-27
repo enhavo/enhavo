@@ -2,17 +2,25 @@
 
 namespace Enhavo\Bundle\UserBundle\Security\Authentication;
 
-use Symfony\Component\Security\Core\Exception\BadCredentialsException;
+use Laminas\Stdlib\PriorityQueue;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class AuthenticationError
 {
+    private PriorityQueue $errorMessages;
+
     public function __construct(
         private AuthenticationUtils $authenticationUtils,
         private TranslatorInterface $translator,
     )
     {
+        $this->errorMessages = new PriorityQueue();
+    }
+
+    public function addErrorMessage(ErrorMessageInterface $errorMessage, int $priority = 10)
+    {
+        $this->errorMessages->insert($errorMessage, $priority);
     }
 
     public function getError(): ?string
@@ -22,10 +30,13 @@ class AuthenticationError
             return null;
         }
 
-        if ($error instanceof BadCredentialsException) {
-            $this->translator->trans('login.error.credential', [], 'EnhavoUserBundle');
+        /** @var ErrorMessageInterface $errorMessage */
+        foreach ($this->errorMessages as $errorMessage) {
+            if ($errorMessage->supports($error)) {
+                return $errorMessage->getMessage();
+            }
         }
 
-        return $this->translator->trans('login.error.credential', [], 'EnhavoUserBundle');
+        return $this->translator->trans('login.error.general', [], 'EnhavoUserBundle');
     }
 }

@@ -36,8 +36,7 @@ class ChangePasswordController extends AbstractUserController
 
     public function changeAction(Request $request)
     {
-        $configKey = $this->getConfigKey($request);
-        $configuration = $this->provider->getChangePasswordConfiguration($configKey);
+        $configuration = $this->provider->getChangePasswordConfiguration();
 
         $user = $this->getUser();
         if (!is_object($user) || !$user instanceof UserInterface) {

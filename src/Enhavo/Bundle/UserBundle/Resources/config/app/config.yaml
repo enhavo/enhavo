@@ -188,6 +188,7 @@ enhavo_app:
             role: ROLE_ENHAVO_USER_GROUP_DELETE
             label: group.role.label.delete
             translation_domain: EnhavoUserBundle
+
     toolbar_widget:
         secondary:
             user_menu:

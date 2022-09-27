@@ -54,8 +54,7 @@ class ChangeEmailController extends AbstractUserController
 
     public function requestAction(Request $request)
     {
-        $configKey = $this->getConfigKey($request);
-        $configuration = $this->provider->getChangeEmailRequestConfiguration($configKey);
+        $configuration = $this->provider->getChangeEmailRequestConfiguration();
 
         /** @var UserInterface $user */
         $user = $this->getUser();
@@ -124,16 +123,14 @@ class ChangeEmailController extends AbstractUserController
 
     public function checkAction(Request $request)
     {
-        $configKey = $this->getConfigKey($request);
-        $configuration = $this->provider->getChangeEmailCheckConfiguration($configKey);
+        $configuration = $this->provider->getChangeEmailCheckConfiguration();
 
         return $this->render($this->getTemplate($configuration->getTemplate()));
     }
 
     public function confirmAction(Request $request, $token)
     {
-        $configKey = $this->getConfigKey($request);
-        $configuration = $this->provider->getChangeEmailConfirmConfiguration($configKey);
+        $configuration = $this->provider->getChangeEmailConfirmConfiguration();
 
         $user = $this->userRepository->findByConfirmationToken($token);
 
@@ -202,8 +199,7 @@ class ChangeEmailController extends AbstractUserController
 
     public function finishAction(Request $request)
     {
-        $configKey = $this->getConfigKey($request);
-        $configuration = $this->provider->getChangeEmailFinishConfiguration($configKey);
+        $configuration = $this->provider->getChangeEmailFinishConfiguration();
 
         return $this->render($this->getTemplate($configuration->getTemplate()));
     }

@@ -49,8 +49,7 @@ class ResetPasswordController extends AbstractUserController
      */
     public function requestAction(Request $request): RedirectResponse|JsonResponse|Response
     {
-        $configKey = $this->getConfigKey($request);
-        $configuration = $this->provider->getResetPasswordRequestConfiguration($configKey);
+        $configuration = $this->provider->getResetPasswordRequestConfiguration();
 
         $form = $this->createForm($configuration->getFormClass(), null, $configuration->getFormOptions([
             'validation_groups' => ['exists', 'reset-password']
@@ -122,8 +121,7 @@ class ResetPasswordController extends AbstractUserController
      */
     public function checkAction(Request $request): Response
     {
-        $configKey = $this->getConfigKey($request);
-        $configuration = $this->provider->getResetPasswordCheckConfiguration($configKey);
+        $configuration = $this->provider->getResetPasswordCheckConfiguration();
 
         return $this->render($this->getTemplate($configuration->getTemplate()));
     }
@@ -133,8 +131,7 @@ class ResetPasswordController extends AbstractUserController
      */
     public function confirmAction(Request $request, $token): RedirectResponse|JsonResponse|Response
     {
-        $configKey = $this->getConfigKey($request);
-        $configuration = $this->provider->getResetPasswordConfirmConfiguration($configKey);
+        $configuration = $this->provider->getResetPasswordConfirmConfiguration();
 
         $user = $this->userRepository->findByConfirmationToken($token);
 
@@ -205,8 +202,7 @@ class ResetPasswordController extends AbstractUserController
      */
     public function finishAction(Request $request): Response
     {
-        $configKey = $this->getConfigKey($request);
-        $configuration = $this->provider->getResetPasswordFinishConfiguration($configKey);
+        $configuration = $this->provider->getResetPasswordFinishConfiguration();
 
         return $this->render($this->getTemplate($configuration->getTemplate()));
     }

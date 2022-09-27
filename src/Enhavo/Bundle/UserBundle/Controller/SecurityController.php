@@ -31,8 +31,7 @@ class SecurityController extends AbstractUserController
 
     public function loginAction(Request $request): Response
     {
-        $configKey = $this->getConfigKey($request);
-        $configuration = $this->provider->getLoginConfiguration($configKey);
+        $configuration = $this->provider->getLoginConfiguration();
 
         if ($this->isGranted('ROLE_USER')) {
             $url = $this->generateUrl($configuration->getRedirectRoute());

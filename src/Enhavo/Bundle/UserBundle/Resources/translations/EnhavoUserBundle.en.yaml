@@ -3,6 +3,8 @@ login:
         credentials: 'Bad credentials'
         password_expired: 'Your password expired. Please check your inbox and reset your password with the provided link.'
         max_failed_attempts: 'Too many failed login attempts. Please check your inbox and reset your password with the provided link.'
+        disabled: 'The user is disabled.'
+        verification_required: 'You must verify your email first. Please check your inbox and use the provided  verify link.'
 group:
     edit:
         submit: 'Update group'

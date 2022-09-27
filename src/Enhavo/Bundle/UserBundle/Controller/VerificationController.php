@@ -31,8 +31,7 @@ class VerificationController extends AbstractUserController
 
     public function requestAction(Request $request, $csrfToken)
     {
-        $configKey = $this->getConfigKey($request);
-        $configuration = $this->provider->getVerificationRequestConfiguration($configKey);
+        $configuration = $this->provider->getVerificationRequestConfiguration();
 
         /** @var UserInterface $user */
         $user = $this->getUser();
@@ -56,8 +55,7 @@ class VerificationController extends AbstractUserController
 
     public function confirmAction(Request $request, $token)
     {
-        $configKey = $this->getConfigKey($request);
-        $configuration = $this->provider->getVerificationConfirmConfiguration($configKey);
+        $configuration = $this->provider->getVerificationConfirmConfiguration();
 
         $user = $this->userRepository->findByConfirmationToken($token);
 

@@ -20,7 +20,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Exception\AccountStatusException;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
@@ -100,6 +99,8 @@ class FormLoginAuthenticator extends AbstractAuthenticator
         $targetPath = $request->get('_target_path') ?? $this->getTargetPath($session, $firewallName);
         $event = $this->dispatchSuccess($user);
 
+        $this->removeTargetPath($session, $firewallName);
+
         if ($targetPath) {
             return $event->getResponse() ?? new RedirectResponse($targetPath);
         }
@@ -113,9 +114,13 @@ class FormLoginAuthenticator extends AbstractAuthenticator
             $request->getSession()->set(Security::AUTHENTICATION_ERROR, $exception);
         }
 
-        $user = ($exception instanceof AccountStatusException ?
-            $exception->getUser() : $this->userRepository->findByEmail(strtolower($request->get('_email'))) // is _email always the right key?
-        );
+        $user = $exception->getToken()?->getUser();
+
+        if ($user === null) {
+            $credentials = $this->getCredentials($request);
+            $user = $this->userRepository->loadUserByIdentifier($credentials['username']);
+        }
+
         if ($user) {
             $event = $this->dispatchFailure($user, $exception);
 
@@ -129,25 +134,24 @@ class FormLoginAuthenticator extends AbstractAuthenticator
 
     private function dispatchSuccess(UserInterface $user): UserEvent
     {
-        $event = new UserEvent(UserEvent::TYPE_LOGIN_SUCCESS, $user);
-        $this->eventDispatcher->dispatch($event, UserEvent::TYPE_LOGIN_SUCCESS);
+        $event = new UserEvent($user);
+        $this->eventDispatcher->dispatch($event, UserEvent::LOGIN_SUCCESS);
 
         return $event;
     }
 
     private function dispatchFailure(UserInterface $user, AuthenticationException $exception): UserEvent
     {
-        $event = new UserEvent(UserEvent::TYPE_LOGIN_FAILED, $user);
+        $event = new UserEvent($user);
         $event->setException($exception);
-        $this->eventDispatcher->dispatch($event);
+        $this->eventDispatcher->dispatch($event, UserEvent::LOGIN_FAILURE);
 
         return $event;
     }
 
     private function getLoginUrl(): string
     {
-        $configKey = $this->configKeyProvider->getConfigKey();
-        $loginRoute = $this->configurationProvider->getLoginConfiguration($configKey)->getRoute();
+        $loginRoute = $this->configurationProvider->getLoginConfiguration()->getRoute();
         return $this->urlGenerator->generate($loginRoute);
     }
 }
