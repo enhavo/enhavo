@@ -30,11 +30,11 @@ class VerificationRequiredListenerSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            UserEvent::PRE_AUTH => 'onPreAuth',
+            UserEvent::POST_AUTH => 'onPostAuth',
         ];
     }
 
-    public function onPreAuth(UserEvent $event): void
+    public function onPostAuth(UserEvent $event): void
     {
         if ($this->isVerificationRequired($event->getUser())) {
             $exception = new VerificationRequiredException('Verification required');

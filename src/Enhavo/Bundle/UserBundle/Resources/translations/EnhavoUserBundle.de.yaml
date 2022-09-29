@@ -4,7 +4,7 @@ login:
         password_expired: 'Ihr Passwort ist abgelaufen. Bitte überprüfen Sie ihre Email setzen ihr Passwort neu.'
         max_failed_attempts: 'Zu viele Loginversuche. Bitte überprüfen Sie ihre Email und setzen ihr Passwort neu.'
         disabled: 'Der Benutzer ist nicht aktiviert.'
-        verification_required: 'Sie müssen ihre Email verifizieren bevor Soe sich einloggen können. Bitte überprüfen Sie ihre Email'
+        verification_required: 'Sie müssen ihre Email verifizieren bevor Sie sich einloggen können. Bitte überprüfen Sie ihre Email'
 group:
     edit:
         submit: 'Gruppe aktualisieren'
@@ -163,3 +163,14 @@ profile:
     update:
         success: 'Profil wurde erfolgreich aktualisiert'
         error: 'Fehler bei der Aktualisierung des Profils'
+
+verification:
+    mail:
+        subject: Verifizierung der Email
+        text:  |
+            Hallo %username%!
+
+            Bitte klicke auf den folgenden Link um deine E-Mail zu verifizieren %confirmation_url%
+
+            Viele Grüße,
+            Dein Team.
