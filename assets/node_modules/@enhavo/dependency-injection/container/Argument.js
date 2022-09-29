@@ -4,20 +4,22 @@ const TYPE_NULL = 'null';
 const TYPE_SERVICE = 'service';
 const TYPE_STRING = 'string';
 const TYPE_NUMBER = 'number';
+const TYPE_BOOLEAN = 'boolean';
 const TYPE_PARAM = 'param';
 const TYPE_CONTAINER = 'container';
 
 class Argument
 {
-    constructor(expression, type = null) {
-        if(expression === null && (type === null || type === TYPE_NULL)) {
+    constructor(expression, type = null)
+    {
+        if((expression === null) && (type === null || type === TYPE_NULL)) {
             this.value = null;
             this.type = TYPE_NULL;
             return;
         }
 
-        if (typeof expression !== 'string') {
-            throw new ContainerException('Argument expression should be type of string "'+(typeof expression)+'" given.');
+        if (typeof expression === 'object') {
+            throw new ContainerException('Argument expression should be type of object "'+(typeof expression)+'" given.');
         }
 
         if (type !== null) {
@@ -51,7 +53,7 @@ class Argument
         if(parts.length === 1) {
             return TYPE_SERVICE;
         } else if(parts.length === 2)  {
-            let types = [TYPE_SERVICE, TYPE_STRING, TYPE_NUMBER, TYPE_PARAM, TYPE_CONTAINER];
+            let types = [TYPE_SERVICE, TYPE_STRING, TYPE_NUMBER, TYPE_PARAM, TYPE_CONTAINER, TYPE_BOOLEAN];
             if(!types.includes(parts[0])) {
                 throw new ContainerException('Argument expression type not valid. Should be one of ['+types.join(',')+'] but got "'+parts[0]+'"');
             }

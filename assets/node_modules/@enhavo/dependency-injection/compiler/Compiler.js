@@ -191,6 +191,8 @@ class Compiler
             return `await this._getService("`+argument.getValue()+`").instance`;
         } else if (argument.getType() === 'string') {
             return `"`+argument.getValue()+`"`;
+        } else if (argument.getType() === 'boolean') {
+            return argument.getValue() ? 'true' : 'false';
         } else if (argument.getType() === 'number') {
             return `parseInt("`+argument.getValue()+`")`;
         } else if (argument.getType() === 'param') {
