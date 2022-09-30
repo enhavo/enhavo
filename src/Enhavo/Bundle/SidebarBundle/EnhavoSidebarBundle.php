@@ -8,7 +8,6 @@
 
 namespace Enhavo\Bundle\SidebarBundle;
 
-use Enhavo\Bundle\ShopBundle\DependencyInjection\Compiler\ConfigCompilerPass;
 use Enhavo\Bundle\ShopBundle\DependencyInjection\Compiler\SyliusCompilerPass;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

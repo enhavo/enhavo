@@ -6,7 +6,6 @@ use Enhavo\Bundle\ShopBundle\Exception\ConfigurationException;
 use Enhavo\Bundle\ShopBundle\Factory\ProductVariantProxyFactoryInterface;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Definition;
 
 class ConfigCompilerPass implements CompilerPassInterface
 {

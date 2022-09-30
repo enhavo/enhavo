@@ -9,9 +9,13 @@ use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\LocaleResolverCompilerP
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\SecurityCompilerPass;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\SyliusCompilerPass;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\TranslationDumperCompilerPass;
+use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\ViewFactoryCompilerPass;
 use Enhavo\Bundle\AppBundle\Type\TypeCompilerPass;
 use Enhavo\Bundle\AppBundle\View\View;
+use Enhavo\Bundle\AppBundle\View\ViewFactoryAwareInterface;
 use Enhavo\Bundle\AppBundle\View\ViewFactoryInterface;
+use Enhavo\Bundle\AppBundle\View\ViewTypeInterface;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -86,5 +90,12 @@ class EnhavoAppBundle extends Bundle
         $container->addCompilerPass(
             new LocaleResolverCompilerPass()
         );
+
+        $container->registerForAutoconfiguration(ViewTypeInterface::class)
+            ->addTag('enhavo_app.view')
+        ;
+
+        $container->registerForAutoconfiguration(ViewFactoryAwareInterface::class)
+            ->addMethodCall('setViewFactory', [new Reference('Enhavo\Component\Type\FactoryInterface[View]')]);
     }
 }
