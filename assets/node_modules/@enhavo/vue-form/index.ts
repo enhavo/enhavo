@@ -27,7 +27,6 @@ class Plugin implements PluginObject<Config>
 {
     install(Vue: typeof _Vue, options?: Config): void
     {
-        Vue.component('form-widget', FormWidgetComponent);
         Vue.component('form-choice', FormChoiceComponent);
         Vue.component('form-choice-expanded', FormChoiceExpandedComponent);
         Vue.component('form-choice-collapsed', FormChoiceCollapsedComponent);
