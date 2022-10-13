@@ -17,7 +17,8 @@
     "sha1": "^1.1.1",
     "glob": "^7.1.6",
     "yaml": "^1.10.0",
-    "loader-utils": "^2.0.0"
+    "loader-utils": "^2.0.0",
+    "commander": "^9.4.0"
   },
   "devDependencies": {
     "acorn": "^7.3.1"

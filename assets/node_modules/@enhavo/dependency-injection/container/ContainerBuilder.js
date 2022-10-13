@@ -96,7 +96,7 @@ class ContainerBuilder
     prepare() {
 
         let compilers = this.getCompilerPasses().sort((a, b) => {
-            return a.priority - b.priority;
+            return b.priority - a.priority;
         });
 
         for (let compilerPass of compilers) {

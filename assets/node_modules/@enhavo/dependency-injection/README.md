@@ -49,10 +49,10 @@ module.exports = () => {
 
 ```
 
-Now you can edit the ``service.yaml`` and add the ``MyService`` module.
+Now you can create a container definition file e.g. ``container.di.yaml`` and add the ``MyService`` module.
 
 ```yaml
-# service.yaml
+# container.di.yaml
 
 services:
     MyService:
@@ -79,7 +79,7 @@ import Container from "./container.di.yaml"
 You can import further files through import statements
 
 ```yaml
-# service.yaml
+# container.di.yaml
 
 imports:
     -
@@ -120,7 +120,7 @@ services:
 Because the services are loaded dynamically. You can apply the [webpack magic options](https://webpack.js.org/api/module-methods/#magic-comments)
 
 ```yaml
-# service.yaml
+# container.di.yaml
 
 services:
     MyService:
@@ -154,6 +154,10 @@ services:
         ignore: ~
         # This service will be initialized if container.init() ist called
         init: false
+        # Set a service, which will be called to create the service (arguments, static, import and from will be ignored)
+        factory: 'MyServiceFactory'
+        # If factory set, you can define the method which should be called. If no method set then the function will be called directly
+        factoryMethod: 'create'
 
 ```
 
@@ -168,6 +172,15 @@ tbc.
 ### Multiple containers
 
 tbc.
+
+### Debugging
+
+You can use the `di` cli tools.
+```
+$ yarn di inspect <pathToContainerFile>
+$ yarn di compile <pathToContainerFile> <outputFile>
+```
+
 
 ### Contributing
 
