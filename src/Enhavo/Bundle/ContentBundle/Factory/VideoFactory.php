@@ -24,9 +24,11 @@ class VideoFactory
      */
     public function create($url): Video
     {
-        foreach ($this->providers as $provider) {
-            if ($url && $provider->isSupported($url)) {
-                return $provider->create($url);
+        if ($url) {
+            foreach ($this->providers as $provider) {
+                if ($provider->isSupported($url)) {
+                    return $provider->create($url);
+                }
             }
         }
 
