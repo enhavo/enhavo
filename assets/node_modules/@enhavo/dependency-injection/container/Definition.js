@@ -27,6 +27,8 @@ class Definition
         this.exports = null;
         this.ignore = null;
         this.init = false;
+        this.factory = null;
+        this.factoryMethod = null;
     }
 
     getName() {
@@ -227,6 +229,22 @@ class Definition
             }
         }
         return depends;
+    }
+
+    setFactory(factory) {
+        this.factory = factory;
+    }
+
+    getFactory() {
+        return this.factory;
+    }
+
+    setFactoryMethod(method) {
+        this.factoryMethod = method;
+    }
+
+    getFactoryMethod() {
+        return this.factoryMethod;
     }
 }
 

@@ -38,9 +38,18 @@ export class Container
         return this._findService(name).instance;
     }
 
+    _hasMethod(methodName, context) {
+        return typeof context[methodName] === 'function';
+    }
+
     async _load(name) {
         let service = this._getService(name);
         if(service.state === 'created') {
+            if (!this._hasMethod('load_' + this._hashes[name], this)) {
+                service.state = 'loaded';
+                return;
+            }
+
             service.module = await this._call('load_' + this._hashes[name], this);
             service.state = 'loaded';
 
@@ -60,14 +69,18 @@ export class Container
         let service = this._getService(name);
         if(service.state === 'loaded') {
             this._resolveStack.push(service);
-            let dependencies = await this._call('get_dependencies_' + this._hashes[name], this);
-            for (let dependency of dependencies) {
-                await this._instantiate(dependency);
+            if (this._hasMethod('get_dependencies_' + this._hashes[name], this)) {
+                let dependencies = await this._call('get_dependencies_' + this._hashes[name], this);
+                for (let dependency of dependencies) {
+                    await this._instantiate(dependency);
+                }
             }
 
-            let callDependencies = await this._call('get_call_dependencies_' + this._hashes[name], this);
-            for (let dependency of callDependencies) {
-                this._resolveCallStack.push(dependency);
+            if (this._hasMethod('get_call_dependencies_' + this._hashes[name], this)) {
+                let callDependencies = await this._call('get_call_dependencies_' + this._hashes[name], this);
+                for (let dependency of callDependencies) {
+                    this._resolveCallStack.push(dependency);
+                }
             }
 
             service.instance = await this._call('instantiate_' + this._hashes[service.name], this);
@@ -85,7 +98,9 @@ export class Container
     async _call_calls() {
         while(this._resolveStack.length > 0) {
             let service = this._resolveStack.pop();
-            await this._call('call_' + this._hashes[service.name], this, [service.instance]);
+            if (this._hasMethod('call_' + this._hashes[service.name], this)) {
+                await this._call('call_' + this._hashes[service.name], this, [service.instance]);
+            }
             service.state = 'ready';
         }
     }

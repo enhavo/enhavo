@@ -43,15 +43,38 @@ class Compiler
      */
     _generateServiceFunctions(builder) {
         let content = '';
-        for(let definition of builder.getDefinitions()) {
+        for (let definition of builder.getDefinitions()) {
             content += `// <-- `+definition.getName()+`(`+definition.getHash()+`)\n`;
-            content += this._generateLoad(definition)+`\n`;
-            content += this._generateGetDependencies(definition)+`\n`;
-            content += this._generateGetCallDependencies(definition)+`\n`;
-            content += this._generateInstantiate(definition)+`\n`;
-            content += this._generateCall(definition);
+            if (definition.factory) {
+                content += this._generateFactoryInstantiate(definition)+`\n`;
+            } else {
+                content += this._generateLoad(definition)+`\n`;
+                content += this._generateGetDependencies(definition)+`\n`;
+                content += this._generateGetCallDependencies(definition)+`\n`;
+                content += this._generateInstantiate(definition)+`\n`;
+                content += this._generateCall(definition);
+            }
             content += `// `+definition.getName()+`(`+definition.getHash()+`) --/>\n\n`;
         }
+        return content;
+    }
+
+    /**
+     * @param {Definition} definition
+     * @returns {string}
+     */
+    _generateFactoryInstantiate(definition) {
+        let content = '';
+        content += `async instantiate_`+definition.getHash()+`() {\n`;
+        content += `let instance = await this.get('`+definition.getFactory()+`');\n`;
+
+        if (definition.getFactoryMethod()) {
+            content += `return instance.`+definition.getFactoryMethod()+`();\n`;
+        } else {
+            content += `return instance();\n`;
+        }
+
+        content += `}\n`;
         return content;
     }
 
