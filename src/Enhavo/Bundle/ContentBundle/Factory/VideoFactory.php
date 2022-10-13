@@ -19,11 +19,16 @@ class VideoFactory
         $this->providers[] = $provider;
     }
 
+    /**
+     * @throws VideoException
+     */
     public function create($url): Video
     {
-        foreach ($this->providers as $provider) {
-            if ($provider->isSupported($url)) {
-                return $provider->create($url);
+        if ($url) {
+            foreach ($this->providers as $provider) {
+                if ($provider->isSupported($url)) {
+                    return $provider->create($url);
+                }
             }
         }
 
