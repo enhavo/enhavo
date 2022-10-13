@@ -1,9 +1,24 @@
 imports:
     - path: '@enhavo/app/services/theme/*'
     - path: '@enhavo/shop/services/theme/*'
+    - path: '@enhavo/form/services/theme/*'
 
 compiler_pass:
     stimulus_controller:
         path: '@enhavo/app/compiler-pass/stimulus-controller-register.js'
         dir: './controllers'
-        priority: 90
+        priority: 110
+    vue_factory:
+        path: '@enhavo/app/compiler-pass/vue-factory.js'
+        priority: 50
+    vue_components:
+        path: '@enhavo/app/compiler-pass/vue-components.js'
+        dir: './components'
+        priority: 40
+services:
+    DIFactoryTest:
+        from: './factory/DIFactoryTest'
+
+    DIService:
+        factory: DIFactoryTest
+        factoryMethod: 'create'

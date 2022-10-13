@@ -5,33 +5,20 @@ namespace Enhavo\Bundle\VueFormBundle\Form\VueType;
 use Enhavo\Bundle\VueFormBundle\Form\VueData;
 use Enhavo\Bundle\VueFormBundle\Form\VueTypeInterface;
 use Symfony\Component\Form\ChoiceList\View\ChoiceView;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ChoiceVueType implements VueTypeInterface
 {
-    /** @var TranslatorInterface */
-    private $translator;
-
-    /**
-     * ChoiceVueType constructor.
-     * @param TranslatorInterface $translator
-     */
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(
+        private TranslatorInterface $translator
+    )
     {
-        $this->translator = $translator;
     }
 
-    public function getComponent(): ?string
+    public static function supports(FormView $formView): bool
     {
-        return 'form-choice';
-    }
-
-    public static function getBlocks(): array
-    {
-        return ['choice' => 1];
+        return in_array('choice', $formView->vars['block_prefixes']);
     }
 
     public function buildView(FormView $view, VueData $data)
@@ -43,6 +30,7 @@ class ChoiceVueType implements VueTypeInterface
         $data['placeholderInChoices'] = $view->vars['placeholder_in_choices'];
         $data['preferredChoices'] = $view->vars['preferred_choices'];
         $data['separator'] = $view->vars['separator'];
+        $data['component'] = 'form-choice';
     }
 
     private function getChoices($choices, FormView $view)

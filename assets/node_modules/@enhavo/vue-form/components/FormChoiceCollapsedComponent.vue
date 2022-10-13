@@ -14,7 +14,7 @@ import * as _ from "lodash";
 import {ChoiceFormData} from "@enhavo/vue-form/data/ChoiceFormData";
 
 @Options({})
-export default class FormForm extends Vue
+export default class extends Vue
 {
     @Prop()
     form: ChoiceFormData

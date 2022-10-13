@@ -26,6 +26,7 @@
     "blueimp-file-upload": "^9.22.1",
     "bootstrap": "^4.3.1",
     "chart.js": "^2.4.0",
+    "commander": "^9.4.0",
     "compass-mixins": "^0.12.10",
     "copy-webpack-plugin": "^4.5.2",
     "cropperjs": "~1.2.2",

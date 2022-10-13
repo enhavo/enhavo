@@ -8,18 +8,13 @@ use Symfony\Component\Form\FormView;
 
 class SubmitVueType implements VueTypeInterface
 {
-    public function getComponent(): ?string
+    public static function supports(FormView $formView): bool
     {
-        return 'form-submit';
-    }
-
-    public static function getBlocks(): array
-    {
-        return ['submit' => 1];
+        return in_array('submit', $formView->vars['block_prefixes']);
     }
 
     public function buildView(FormView $view, VueData $data)
     {
-
+        $data['component'] = 'form-submit';
     }
 }

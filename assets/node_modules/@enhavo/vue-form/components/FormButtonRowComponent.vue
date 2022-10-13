@@ -1,5 +1,5 @@
 <template>
-    <div v-if="shouldRender()">
+    <div>
         <form-widget :form="form"></form-widget>
     </div>
 </template>
@@ -13,17 +13,5 @@ export default class FormRowComponent extends Vue
 {
     @Prop()
     form: FormData
-
-    render: boolean;
-
-    shouldRender()
-    {
-        if (!this.form.rendered) {
-            this.form.rendered = true;
-            this.render = true;
-        }
-
-        return this.render;
-    }
 }
 </script>

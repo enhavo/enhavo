@@ -1,0 +1,12 @@
+services:
+    '@enhavo/form/components/FormListComponent':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'form-list' }
+
+    '@enhavo/form/components/FormListItemComponent':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'form-list-item' }

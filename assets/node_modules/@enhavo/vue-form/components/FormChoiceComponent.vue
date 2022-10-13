@@ -7,7 +7,7 @@ import {Vue, Options, Prop} from "vue-property-decorator";
 import {ChoiceFormData} from "@enhavo/vue-form/data/ChoiceFormData";
 
 @Options({})
-export default class FormChoiceComponent extends Vue
+export default class extends Vue
 {
     @Prop()
     form: ChoiceFormData

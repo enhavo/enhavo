@@ -9,29 +9,21 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class BaseVueType implements VueTypeInterface
 {
-    /** @var TranslatorInterface */
-    private $translator;
-
-    /**
-     * FormVueType constructor.
-     * @param TranslatorInterface $translator
-     */
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(
+        private TranslatorInterface $translator,
+    )
     {
-        $this->translator = $translator;
     }
 
-    public function getComponent(): ?string
+    public static function supports(FormView $formView): bool
     {
-        return null;
-    }
+        if (in_array('button', $formView->vars['block_prefixes'])) {
+            return true;
+        } else if (in_array('form', $formView->vars['block_prefixes'])) {
+            return true;
+        }
 
-    public static function getBlocks(): array
-    {
-        return [
-            'button' => 1,
-            'form' => 1
-        ];
+        return false;
     }
 
     public function buildView(FormView $view, VueData $data)

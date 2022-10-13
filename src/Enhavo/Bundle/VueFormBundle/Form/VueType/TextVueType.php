@@ -8,18 +8,13 @@ use Symfony\Component\Form\FormView;
 
 class TextVueType implements VueTypeInterface
 {
-    public function getComponent(): ?string
+    public static function supports(FormView $formView): bool
     {
-        return 'form-simple';
-    }
-
-    public static function getBlocks(): array
-    {
-        return ['text' => 1];
+        return in_array('text', $formView->vars['block_prefixes']);
     }
 
     public function buildView(FormView $view, VueData $data)
     {
-
+        $data['component'] = 'form-simple';
     }
 }

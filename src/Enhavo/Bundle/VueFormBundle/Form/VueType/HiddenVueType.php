@@ -8,18 +8,13 @@ use Symfony\Component\Form\FormView;
 
 class HiddenVueType implements VueTypeInterface
 {
-    public function getComponent(): ?string
+    public static function supports(FormView $formView): bool
     {
-        return 'form-hidden';
-    }
-
-    public static function getBlocks(): array
-    {
-        return ['hidden' => 1];
+        return in_array('hidden', $formView->vars['block_prefixes']);
     }
 
     public function buildView(FormView $view, VueData $data)
     {
-        $data['rowComponent'] = 'form-hidden-row';
+        $data['rowComponent'] = 'form-hidden';
     }
 }

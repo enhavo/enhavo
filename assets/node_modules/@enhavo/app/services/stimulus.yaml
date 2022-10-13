@@ -3,6 +3,7 @@ compiler_pass:
         path: '../compiler-pass/stimulus-register.js'
         service: '@hotwired/stimulus/Application'
         tag: 'stimulus.controller'
+        priority: 100
 
 services:
     '@hotwired/stimulus/Application':

@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Form\Type\Form\ItemsType;
+use Enhavo\Bundle\FormBundle\Form\Type\ListType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Enhavo\Bundle\VueFormBundle\Form\VueForm;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -84,6 +86,20 @@ class FormController extends AbstractController
             ])
             ->add('button', SubmitType::class, [
                 'label' => 'save'
+            ])
+            ->setMethod('POST')
+            ->getForm();
+
+        return $this->handleForm($form, $request);
+    }
+
+    #[Route('/list', name: "app_form_list")]
+    public function listAction(Request $request)
+    {
+        $form = $this->createFormBuilder(null)
+            ->add('items', ListType::class, [
+                'entry_type' => ItemsType::class,
+                'sortable' => true,
             ])
             ->setMethod('POST')
             ->getForm();
