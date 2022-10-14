@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\VueFormBundle\Form;
 
 use Enhavo\Bundle\VueFormBundle\Exception\VueTypeException;
+use Laminas\Stdlib\PriorityQueue;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\Form\FormView;
 
@@ -10,16 +11,15 @@ class VueForm
 {
     use ContainerAwareTrait;
 
-    /** @var array */
-    private $map = [];
+    private PriorityQueue $classes;
+    private bool $locked = false;
 
-    /** @var array */
-    private $types = [];
+    public function __construct()
+    {
+        $this->classes = new PriorityQueue();
+    }
 
-    /** @var bool */
-    private $locked = false;
-
-    public function register($class)
+    public function registerType(string $class, $priority = 100)
     {
         if ($this->locked) {
             throw VueTypeException::locked();
@@ -29,37 +29,12 @@ class VueForm
             throw VueTypeException::invalidInterface($class);
         }
 
-        $types = $class::getBlocks();
-
-        foreach ($types as $key => $value) {
-            if (is_string($key)) {
-                $this->addToMap($key, $value, $class);
-            } else {
-                $this->addToMap($value, 100, $class);
-            }
-        }
+        $this->classes->insert($class, $priority);
     }
 
     private function lock()
     {
         $this->locked = true;
-        foreach ($this->map as &$types) {
-            usort($types, function ($one, $two) {
-                return $two['priority'] - $one['priority'];
-            });
-        }
-    }
-
-    private function addToMap($formType, $priority, $vueType)
-    {
-        if (!array_key_exists($formType, $this->map)) {
-            $this->map[$formType] = [];
-        }
-
-        $this->map[$formType][] = [
-            'vueType' => $vueType,
-            'priority' => $priority
-        ];
     }
 
     public function createData(FormView $formView)
@@ -68,58 +43,60 @@ class VueForm
             $this->lock();
         }
 
-        $data = $this->normalize($formView);
+        $vueData = [];
+
+        $data = $this->normalize($formView, $vueData);
         $data['root'] = true;
         $data['method'] = $formView->vars['method'] ?? null;
         $data['action'] = $formView->vars['action'] ?? null;
-        return $data;
-    }
 
-    private function normalize(FormView $formView)
-    {
-        $array = $this->buildData($formView);
-        $array['children'] = [];
-        $array['root'] = false;
+        $this->finishView($vueData);
 
-        foreach ($formView->children as $key => $child) {
-            $array['children'][$key] = $this->normalize($child);
-        }
-
+        $array = $data->toArray();
         return $array;
     }
 
-    private function buildData(FormView $formView)
+    private function finishView($vueData)
     {
-        $blockPrefixes = $formView->vars['block_prefixes'];
-
-        $vueData = new VueData();
-
-        foreach ($blockPrefixes as $block) {
-            if (array_key_exists($block, $this->map)) {
-                foreach ($this->map[$block] as $entry) {
-                    $vueType = $this->getVueType($entry['vueType']);
-                    $vueType->buildView($formView, $vueData);
-                    if ($vueType->getComponent() !== null) {
-                        $vueData['component'] = $vueType->getComponent();
-                    }
+        /** @var VueData $data */
+        foreach ($vueData as $data) {
+            foreach ($this->classes as $class) {
+                if ($class::supports($data->getFormView())) {
+                    /** @var VueTypeInterface $type */
+                    $type = $this->container->get($class);
+                    $type->finishView($data->getFormView(), $data);
                 }
             }
         }
-
-        if (isset($formView->vars['component'])) {
-            $vueData['component'] = $formView->vars['component'];
-        }
-
-        return $vueData->toArray();
     }
 
-    private function getVueType($class): VueTypeInterface
+    private function normalize(FormView $formView, array &$vueData): VueData
     {
-        if (!array_key_exists($class, $this->types)) {
-            $this->types[$class] = $this->container->get($class);
+        $data = $this->buildData($formView);
+        $data['root'] = false;
+
+        foreach ($formView->children as $key => $child) {
+            $data->addChild($key, $this->normalize($child, $vueData));
         }
 
-        return $this->types[$class];
+        $vueData[] = $data;
+        return $data;
+    }
+
+    private function buildData(FormView $formView): VueData
+    {
+        $data = new VueData([], $formView);
+
+        foreach ($this->classes as $class) {
+            if ($class::supports($formView)) {
+                /** @var VueTypeInterface $type */
+                $type = $this->container->get($class);
+
+                $type->buildView($formView, $data);
+            }
+        }
+
+        return $data;
     }
 
     public function submit(array $data)

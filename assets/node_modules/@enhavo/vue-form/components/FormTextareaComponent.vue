@@ -17,7 +17,7 @@ import {FormData} from "@enhavo/vue-form/data/FormData"
 import {Util} from "@enhavo/vue-form/form/Util";
 
 @Options({})
-export default class FormTextareaComponent extends Vue
+export default class extends Vue
 {
     @Prop()
     form: FormData

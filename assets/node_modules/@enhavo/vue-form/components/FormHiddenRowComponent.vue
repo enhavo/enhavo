@@ -1,5 +1,5 @@
 <template>
-    <div v-if="shouldRender()">
+    <div>
         <form-widget :form="form"></form-widget>
     </div>
 </template>
@@ -9,21 +9,9 @@ import {Vue, Options, Prop} from "vue-property-decorator";
 import {FormData} from "@enhavo/vue-form/data/FormData"
 
 @Options({})
-export default class FormRowComponent extends Vue
+export default class extends Vue
 {
     @Prop()
     form: FormData
-
-    render: boolean;
-
-    shouldRender()
-    {
-        if (!this.form.rendered) {
-            this.form.rendered = true;
-            this.render = true;
-        }
-
-        return this.render;
-    }
 }
 </script>

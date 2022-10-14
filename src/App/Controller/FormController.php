@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Form\Type\Form\ItemsType;
+use Enhavo\Bundle\FormBundle\Form\Type\ListType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Enhavo\Bundle\VueFormBundle\Form\VueForm;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,22 +24,21 @@ class FormController extends AbstractController
     {
         $formView = $form->createView();
         $vueForm = $this->container->get(VueForm::class);
-        $vueData = $vueForm->createData($form->createView());
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($request->isXmlHttpRequest()) {
-                return new JsonResponse(['form' => $vueData, 'data' => $form->getData()], $form->isValid() ? 201 : 400);
+                return new JsonResponse(['form' => $vueForm->createData($form->createView()), 'data' => $form->getData()], $form->isValid() ? 201 : 400);
             }
         }
 
         if ($request->isXmlHttpRequest()) {
-            return new JsonResponse(['form' => $vueData]);
+            return new JsonResponse(['form' => $vueForm->createData($form->createView())]);
         }
 
         return $this->render(sprintf('theme/form/%s.html.twig', $template), [
             'form' => $formView,
-            'vue' => $vueData,
+            'vue' => $vueForm->createData($form->createView()),
             'data' => $form->getData()
         ]);
     }
@@ -81,6 +82,23 @@ class FormController extends AbstractController
                     'foo' => 'foo',
                     'bar' => 'bar',
                 ]
+            ])
+            ->add('button', SubmitType::class, [
+                'label' => 'save'
+            ])
+            ->setMethod('POST')
+            ->getForm();
+
+        return $this->handleForm($form, $request);
+    }
+
+    #[Route('/list', name: "app_form_list")]
+    public function listAction(Request $request)
+    {
+        $form = $this->createFormBuilder(null)
+            ->add('items', ListType::class, [
+                'entry_type' => ItemsType::class,
+                'sortable' => true,
             ])
             ->add('button', SubmitType::class, [
                 'label' => 'save'

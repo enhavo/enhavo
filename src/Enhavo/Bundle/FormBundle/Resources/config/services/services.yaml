@@ -28,3 +28,13 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.column, alias: currency }
+
+    Enhavo\Bundle\FormBundle\Form\VueType\ListVueType:
+        arguments:
+            - '@Enhavo\Bundle\VueFormBundle\Form\VueForm'
+        tags:
+            - 'vue.type'
+
+    Enhavo\Bundle\FormBundle\Form\VueType\PositionVueType:
+        tags:
+            - 'vue.type'

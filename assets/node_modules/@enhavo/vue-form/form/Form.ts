@@ -3,7 +3,6 @@ import {FormData} from "@enhavo/vue-form/data/FormData";
 import * as _ from "lodash";
 import {Util} from "@enhavo/vue-form/form/Util";
 import axios, {AxiosPromise,Method} from "axios";
-import * as qs from "qs";
 import {Theme} from "@enhavo/vue-form/form/Theme";
 
 export class Form extends RootFormData

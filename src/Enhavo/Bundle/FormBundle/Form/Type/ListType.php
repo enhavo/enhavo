@@ -38,7 +38,7 @@ class ListType extends AbstractType
         // reorder if origin was array
         $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use (&$data){
             $item = $event->getData();
-            if(is_array($data) && is_array($item)) {
+            if((is_array($data) || $data === null) && is_array($item)) {
                 $itemKeys = array_keys($item);
                 $copyValues = array_values($item);
                 sort($itemKeys);
@@ -54,7 +54,7 @@ class ListType extends AbstractType
         // reindex data, so array starts with index 0
         $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) use (&$data){
             $items = $event->getData();
-            if(is_array($data) && is_array($items)) {
+            if((is_array($data) || $data === null) && is_array($items)) {
                 $result = [];
                 $i = 0;
                 foreach($items as $item) {

@@ -6,9 +6,9 @@ use Symfony\Component\Form\FormView;
 
 interface VueTypeInterface
 {
-    public function getComponent(): ?string;
-
-    public static function getBlocks(): array;
+    public static function supports(FormView $formView): bool;
 
     public function buildView(FormView $view, VueData $data);
+
+    public function finishView(FormView $view, VueData $data);
 }

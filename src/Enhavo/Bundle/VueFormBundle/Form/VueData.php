@@ -8,16 +8,17 @@
 
 namespace Enhavo\Bundle\VueFormBundle\Form;
 
+use Symfony\Component\Form\FormView;
+
 class VueData implements \IteratorAggregate, \Countable, \ArrayAccess
 {
-    /**
-     * Parameter storage.
-     */
-    protected $data;
-
-    public function __construct(array $data = [])
+    public function __construct(
+        protected array $data = [],
+        protected ?FormView $formView = null,
+        protected array $children = []
+    )
     {
-        $this->data = $data;
+
     }
 
     /**
@@ -140,13 +141,48 @@ class VueData implements \IteratorAggregate, \Countable, \ArrayAccess
     {
         return isset($this->data[$offset]) ? $this->data[$offset] : null;
     }
-    
+
     public function toArray()
     {
         $array = [];
         foreach($this->data as $key => $value) {
             $array[$key] = $value;
         }
+
+        $array['children'] = [];
+        foreach ($this->getChildren() as $key => $child) {
+            $array['children'][$key] = $child->toArray();
+        }
         return $array;
+    }
+
+    public function getFormView(): ?FormView
+    {
+        return $this->formView;
+    }
+
+    public function setFormView(?FormView $formView): void
+    {
+        $this->formView = $formView;
+    }
+
+    public function getChildren(): array
+    {
+        return $this->children;
+    }
+
+    public function setChildren(array $children): void
+    {
+        $this->children = $children;
+    }
+
+    public function addChild($key, VueData $data)
+    {
+        $this->children[$key] = $data;
+    }
+
+    public function removeChild($key)
+    {
+        unset($this->children[$key]);
     }
 }

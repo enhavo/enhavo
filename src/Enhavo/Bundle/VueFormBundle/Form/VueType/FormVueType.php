@@ -2,33 +2,22 @@
 
 namespace Enhavo\Bundle\VueFormBundle\Form\VueType;
 
+use Enhavo\Bundle\VueFormBundle\Form\AbstractVueType;
 use Enhavo\Bundle\VueFormBundle\Form\VueData;
-use Enhavo\Bundle\VueFormBundle\Form\VueTypeInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class FormVueType implements VueTypeInterface
+class FormVueType extends AbstractVueType
 {
-    /** @var TranslatorInterface */
-    private $translator;
-
-    /**
-     * FormVueType constructor.
-     * @param TranslatorInterface $translator
-     */
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(
+        private TranslatorInterface $translator
+    )
     {
-        $this->translator = $translator;
     }
 
-    public function getComponent(): ?string
+    public static function supports(FormView $formView): bool
     {
-        return null;
-    }
-
-    public static function getBlocks(): array
-    {
-        return ['form' => 1];
+        return in_array('form', $formView->vars['block_prefixes']);
     }
 
     public function buildView(FormView $view, VueData $data)
@@ -44,6 +33,7 @@ class FormVueType implements VueTypeInterface
         $data['helpAttr'] = $view->vars['help_attr'];
         $data['helpHtml'] = $view->vars['help_html'];
         $data['rowComponent'] = 'form-row';
+        $data['component'] = null;
 
         $errors = [];
         foreach ($view->vars['errors'] as $error) {

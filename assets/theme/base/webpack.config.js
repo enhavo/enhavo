@@ -9,7 +9,6 @@ EnhavoEncore.add(
     Encore => {
         Encore
             .addEntry('base', './entrypoints/base')
-            .addEntry('form', './entrypoints/form')
             .enableVueLoader()
 
     },

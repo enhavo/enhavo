@@ -13,7 +13,7 @@ import {ChoiceFormData} from "@enhavo/vue-form/data/ChoiceFormData";
 import {Util} from "@enhavo/vue-form/form/Util";
 
 @Options({})
-export default class FormChoiceExpandedComponent extends Vue
+export default class extends Vue
 {
     @Prop()
     form: ChoiceFormData

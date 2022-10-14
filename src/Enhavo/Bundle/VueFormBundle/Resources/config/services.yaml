@@ -10,42 +10,42 @@ services:
 
     Enhavo\Bundle\VueFormBundle\Form\VueType\ButtonVueType:
         tags:
-            - 'vue.type'
+            - { name: 'vue.type', priority: 10 }
 
     Enhavo\Bundle\VueFormBundle\Form\VueType\BaseVueType:
         arguments:
             - '@translator'
         tags:
-            - 'vue.type'
+            - { name: 'vue.type', priority: 1 }
 
     Enhavo\Bundle\VueFormBundle\Form\VueType\FormVueType:
         arguments:
             - '@translator'
         tags:
-            - 'vue.type'
+            - { name: 'vue.type', priority: 200 }
 
     Enhavo\Bundle\VueFormBundle\Form\VueType\RadioVueType:
         tags:
-            - 'vue.type'
+            - { name: 'vue.type', priority: 200 }
 
     Enhavo\Bundle\VueFormBundle\Form\VueType\CheckboxVueType:
         tags:
-            - 'vue.type'
+            - { name: 'vue.type', priority: 110 }
 
     Enhavo\Bundle\VueFormBundle\Form\VueType\TextVueType:
         tags:
-            - 'vue.type'
+            - { name: 'vue.type', priority: 110 }
 
     Enhavo\Bundle\VueFormBundle\Form\VueType\HiddenVueType:
         tags:
-            - 'vue.type'
+            - { name: 'vue.type', priority: 110 }
 
     Enhavo\Bundle\VueFormBundle\Form\VueType\TextareaVueType:
         tags:
-            - 'vue.type'
+            - { name: 'vue.type', priority: 110 }
 
     Enhavo\Bundle\VueFormBundle\Form\VueType\ChoiceVueType:
         arguments:
             - '@translator'
         tags:
-            - 'vue.type'
+            - { name: 'vue.type', priority: 110 }

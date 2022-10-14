@@ -2,29 +2,31 @@
 
 namespace Enhavo\Bundle\VueFormBundle\DependencyInjection\Compiler;
 
-use Enhavo\Bundle\VueFormBundle\Form\Extension\VueTypeExtension;
 use Enhavo\Bundle\VueFormBundle\Form\VueForm;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class VueTypeCompilerPass implements CompilerPassInterface
 {
-    /**
-     * @inheritdoc
-     */
+    const TAG = 'vue.type';
+
     public function process(ContainerBuilder $container)
     {
-        $extension = $container->getDefinition(VueForm::class);
+        $targetService = $container->getDefinition(VueForm::class);
+        $definitions = $container->findTaggedServiceIds(self::TAG);
 
-        $taggedServices = $container->findTaggedServiceIds('vue.type');
+        foreach ($definitions as $id => $values) {
+            $priority = 100;
+            foreach ($values as $valueItem) {
+                if (isset($valueItem['priority'])) {
+                    $priority = $valueItem['priority'];
+                    break;
+                }
+            }
 
-        foreach ($taggedServices as $id => $tagAttributes) {
-            $tagServiceDefinition = $container->getDefinition($id);
-            $tagServiceDefinition->setPublic(true);
-            $extension->addMethodCall(
-                'register',
-                array($tagServiceDefinition->getClass() ? $tagServiceDefinition->getClass(): $id)
-            );
+            $definition = $container->getDefinition($id);
+            $definition->setPublic(true);
+            $targetService->addMethodCall('registerType', [$definition->getClass(), $priority]);
         }
     }
 }
