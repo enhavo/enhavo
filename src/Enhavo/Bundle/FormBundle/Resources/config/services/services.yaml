@@ -35,3 +35,6 @@ services:
         tags:
             - 'vue.type'
 
+    Enhavo\Bundle\FormBundle\Form\VueType\PositionVueType:
+        tags:
+            - 'vue.type'

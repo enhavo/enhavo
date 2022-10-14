@@ -2,12 +2,12 @@
 
 namespace Enhavo\Bundle\FormBundle\Form\VueType;
 
+use Enhavo\Bundle\VueFormBundle\Form\AbstractVueType;
 use Enhavo\Bundle\VueFormBundle\Form\VueData;
 use Enhavo\Bundle\VueFormBundle\Form\VueForm;
-use Enhavo\Bundle\VueFormBundle\Form\VueTypeInterface;
 use Symfony\Component\Form\FormView;
 
-class ListVueType implements VueTypeInterface
+class ListVueType extends AbstractVueType
 {
     public function __construct(
         private VueForm $vueForm
@@ -24,7 +24,6 @@ class ListVueType implements VueTypeInterface
     {
         $data['border'] = $view->vars['border'];
         $data['sortable'] = $view->vars['sortable'];
-        $data['sortableProperty'] = $view->vars['sortable_property'];
         $data['allowDelete'] = $view->vars['allow_delete'];
         $data['allowAdd'] = $view->vars['allow_add'];
         $data['blockName'] = $view->vars['block_name'];
@@ -33,5 +32,10 @@ class ListVueType implements VueTypeInterface
         $data['index'] = $view->vars['index'];
 
         $data['component'] = 'form-list';
+    }
+
+    public function finishView(FormView $view, VueData $data)
+    {
+
     }
 }

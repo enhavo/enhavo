@@ -2,13 +2,13 @@
 
 namespace Enhavo\Bundle\VueFormBundle\Form\VueType;
 
+use Enhavo\Bundle\VueFormBundle\Form\AbstractVueType;
 use Enhavo\Bundle\VueFormBundle\Form\VueData;
-use Enhavo\Bundle\VueFormBundle\Form\VueTypeInterface;
 use Symfony\Component\Form\ChoiceList\View\ChoiceView;
 use Symfony\Component\Form\FormView;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class ChoiceVueType implements VueTypeInterface
+class ChoiceVueType extends AbstractVueType
 {
     public function __construct(
         private TranslatorInterface $translator

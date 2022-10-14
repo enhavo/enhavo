@@ -9,4 +9,6 @@ interface VueTypeInterface
     public static function supports(FormView $formView): bool;
 
     public function buildView(FormView $view, VueData $data);
+
+    public function finishView(FormView $view, VueData $data);
 }

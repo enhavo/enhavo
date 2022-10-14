@@ -43,40 +43,60 @@ class VueForm
             $this->lock();
         }
 
-        $data = $this->normalize($formView);
+        $vueData = [];
+
+        $data = $this->normalize($formView, $vueData);
         $data['root'] = true;
         $data['method'] = $formView->vars['method'] ?? null;
         $data['action'] = $formView->vars['action'] ?? null;
-        return $data;
-    }
 
-    private function normalize(FormView $formView): array
-    {
-        $array = $this->buildData($formView);
-        $array['children'] = [];
-        $array['root'] = false;
+        $this->finishView($vueData);
 
-        foreach ($formView->children as $key => $child) {
-            $array['children'][$key] = $this->normalize($child);
-        }
-
+        $array = $data->toArray();
         return $array;
     }
 
-    private function buildData(FormView $formView): array
+    private function finishView($vueData)
     {
-        $vueData = new VueData();
+        /** @var VueData $data */
+        foreach ($vueData as $data) {
+            foreach ($this->classes as $class) {
+                if ($class::supports($data->getFormView())) {
+                    /** @var VueTypeInterface $type */
+                    $type = $this->container->get($class);
+                    $type->finishView($data->getFormView(), $data);
+                }
+            }
+        }
+    }
+
+    private function normalize(FormView $formView, array &$vueData): VueData
+    {
+        $data = $this->buildData($formView);
+        $data['root'] = false;
+
+        foreach ($formView->children as $key => $child) {
+            $data->addChild($key, $this->normalize($child, $vueData));
+        }
+
+        $vueData[] = $data;
+        return $data;
+    }
+
+    private function buildData(FormView $formView): VueData
+    {
+        $data = new VueData([], $formView);
 
         foreach ($this->classes as $class) {
             if ($class::supports($formView)) {
                 /** @var VueTypeInterface $type */
                 $type = $this->container->get($class);
 
-                $type->buildView($formView, $vueData);
+                $type->buildView($formView, $data);
             }
         }
 
-        return $vueData->toArray();
+        return $data;
     }
 
     public function submit(array $data)

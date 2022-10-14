@@ -24,22 +24,21 @@ class FormController extends AbstractController
     {
         $formView = $form->createView();
         $vueForm = $this->container->get(VueForm::class);
-        $vueData = $vueForm->createData($form->createView());
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($request->isXmlHttpRequest()) {
-                return new JsonResponse(['form' => $vueData, 'data' => $form->getData()], $form->isValid() ? 201 : 400);
+                return new JsonResponse(['form' => $vueForm->createData($form->createView()), 'data' => $form->getData()], $form->isValid() ? 201 : 400);
             }
         }
 
         if ($request->isXmlHttpRequest()) {
-            return new JsonResponse(['form' => $vueData]);
+            return new JsonResponse(['form' => $vueForm->createData($form->createView())]);
         }
 
         return $this->render(sprintf('theme/form/%s.html.twig', $template), [
             'form' => $formView,
-            'vue' => $vueData,
+            'vue' => $vueForm->createData($form->createView()),
             'data' => $form->getData()
         ]);
     }
@@ -100,6 +99,9 @@ class FormController extends AbstractController
             ->add('items', ListType::class, [
                 'entry_type' => ItemsType::class,
                 'sortable' => true,
+            ])
+            ->add('button', SubmitType::class, [
+                'label' => 'save'
             ])
             ->setMethod('POST')
             ->getForm();
