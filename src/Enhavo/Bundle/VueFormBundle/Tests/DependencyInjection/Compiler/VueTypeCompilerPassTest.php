@@ -37,9 +37,10 @@ class VueTypeCompilerPassTest extends TestCase
         $calls = $extension->getMethodCalls();
 
         $this->assertCount(1, $calls);
-        $this->assertEquals('register', $calls[0][0]);
+        $this->assertEquals('registerType', $calls[0][0]);
 
-        $this->assertCount(1, $calls[0][1]);
+        $this->assertCount(2, $calls[0][1]);
         $this->assertEquals('TypeOne', $calls[0][1][0]);
+        $this->assertEquals(100, $calls[0][1][1]);
     }
 }
