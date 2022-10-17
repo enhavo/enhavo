@@ -48,8 +48,8 @@ class CommandLineInterface
         const loader = new Loader;
 
         loader.loadFile(containerPath, builder);
-        (new Validator).validate(builder);
         builder.prepare();
+        (new Validator).validate(builder);
 
         if (!name && !tag) {
             this._write('\u001b[42mLoaded files:\u001b[49m');

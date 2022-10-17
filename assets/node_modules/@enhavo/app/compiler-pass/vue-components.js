@@ -8,12 +8,12 @@ const walk = function(dir) {
     let results = [];
     let list = fs.readdirSync(dir);
     list.forEach(function (file) {
-        if (file.endsWith('.vue')) {
-            file = dir + '/' + file;
-            var stat = fs.statSync(file);
-            if (stat && stat.isDirectory()) {
-                results = results.concat(walk(file));
-            } else {
+        file = dir + '/' + file;
+        var stat = fs.statSync(file);
+        if (stat && stat.isDirectory()) {
+            results = results.concat(walk(file));
+        } else {
+            if (file.endsWith('.vue')) {
                 results.push(file);
             }
         }
@@ -49,13 +49,14 @@ module.exports = function(builder, options, context)
     let registry = builder.getDefinition('@enhavo/app/vue/VueFactory');
 
     for (let file of files) {
-        let definition = new Definition(file.buildPath);
+        let componentName = componentNameFromPath(file.fullPath);
+        let definition = new Definition('vue-component.'+componentName);
         definition.setStatic(true);
         definition.setFrom('./'+file.buildPath);
         builder.addDefinition(definition);
 
         registry.addCall(new Call('registerComponent', [
-            new Argument(componentNameFromPath(file.fullPath), 'string'),
+            new Argument(componentName, 'string'),
             new Argument(definition.getName()),
         ]));
     }
