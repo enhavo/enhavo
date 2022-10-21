@@ -43,6 +43,7 @@ The book give you an overview about all components and bundles and how they work
     theme-bundle/index
     translation-bundle/index
     user-bundle/index
+    vue-form-bundle/index
 
 .. rubric:: Component
 
