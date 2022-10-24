@@ -6,7 +6,7 @@
     <body>
         {% block body %}
             {% block form %}{% endblock %}
-            <div data-controller="vue_form" data-vue_form-form-value="{{ vue|json_encode|e }}">
+            <div data-controller="vue_form" data-vue_form-form-value="{{ vue|json_encode|e }}" data-vue_form-theme-value="{{ theme|e }}">
                 {% block app %}
                     <form-form :form="form"></form-form>
                 {% endblock %}

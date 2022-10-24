@@ -1,18 +1,24 @@
 <template>
-    <li class="listElement">
-        <ul class="buttons-container" v-if="sortable || deletable">
-            <li v-if="sortable" class="button button-down" @click="$emit('down', form)">
-                <i class="icon icon-arrow_downward">down</i>
-            </li>
-            <li v-if="sortable" class="button button-up" @click="$emit('up', form)">
-                <i class="icon icon-arrow_upward">up</i>
-            </li>
-            <li  v-if="deletable" class="button button-delete" @click="$emit('delete', form)">
-                <i class="icon icon-close">x</i>
-            </li>
+    <li class="form-list-item">
+        <ul class="form-list-item-buttons-row" v-if="sortable || deletable">
+            <slot name="buttons">
+                <slot name="down-button">
+                    <li v-if="sortable" class="form-list-item-buttons-button" @click="$emit('down', form)"><i class="icon icon-arrow_downward">down</i></li>
+                </slot>
+
+                <slot name="up-button">
+                    <li v-if="sortable" class="form-list-item-buttons-button" @click="$emit('up', form)"><i class="icon icon-arrow_upward">up</i></li>
+                </slot>
+
+                <slot name="delete-button">
+                    <li  v-if="deletable" class="form-list-item-buttons-button" @click="$emit('delete', form)"><i class="icon icon-close">x</i></li>
+                </slot>
+            </slot>
         </ul>
-        <div class="block-name">{{ blockName }}</div>
-        <form-widget :form="form" />
+        <slot>
+            <div class="form-list-item-label" v-if="blockName">{{ blockName }}</div>
+            <form-widget :form="form" />
+        </slot>
     </li>
 </template>
 

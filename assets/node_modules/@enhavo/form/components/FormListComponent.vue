@@ -1,20 +1,33 @@
 <template>
-    <div data-list class="list-type">
-        <ul>
-            <form-list-item
-                v-for="child of form.children"
-                :form="child"
-                :deletable="form.allowDelete"
-                :sortable="form.sortable"
-                @delete="deleteItem"
-                @up="moveItemUp"
-                @down="moveItemDown">
-            </form-list-item>
-        </ul>
+    <div class="form-list" ref="element">
+        <slot name="list">
+            <ul>
+                <component :is="form.itemComponent"
+                       v-for="child of form.children"
+                       :form="child"
+                       :deletable="form.allowDelete"
+                       :sortable="form.sortable"
+                       @delete="deleteItem"
+                       @up="moveItemUp"
+                       @down="moveItemDown">
+                    <template v-slot>
+                        <slot name="item"></slot>
+                    </template>
+                    <template v-slot:buttons><slot name="item-buttons"></slot></template>
+                    <template v-slot:down-button><slot name="item-down-button"></slot></template>
+                    <template v-slot:up-button><slot name="item-up-button"></slot></template>
+                    <template v-slot:delete-button><slot name="item-delete-button"></slot></template>
+                </component>
+            </ul>
+        </slot>
 
-        <div class="list-add-button-row" v-if="form.allowAdd" @click.prevent="addItem">
-            <div class="list-add-button"><i class="icon icon-add_box">+</i></div>
-        </div>
+        <slot name="button-row">
+            <div class="form-list-button-row" v-if="form.allowAdd">
+                <slot name="buttons">
+                    <div class="form-list-button" @click.prevent="addItem"><i class="icon icon-add_box">+</i></div>
+                </slot>
+            </div>
+        </slot>
     </div>
 </template>
 
@@ -22,6 +35,7 @@
 import {Vue, Options, Prop} from "vue-property-decorator";
 import {Form} from "@enhavo/vue-form/form/Form";
 import ListItem from "@enhavo/form/type/ListItem";
+import {Util} from "@enhavo/vue-form/form/Util";
 
 @Options({})
 export default class extends Vue
@@ -29,7 +43,17 @@ export default class extends Vue
     @Prop()
     form: FormListData;
 
-    private created()
+    updated()
+    {
+        Util.updateAttributes(<HTMLElement>this.$refs.element, this.form.attr);
+    }
+
+    mounted()
+    {
+        Util.updateAttributes(<HTMLElement>this.$refs.element, this.form.attr);
+    }
+
+    created()
     {
         /**
          * If the data we get is not an array, we have to convert it into an array to take care of the order
@@ -39,9 +63,23 @@ export default class extends Vue
         }
     }
 
-    private deleteItem(child: Form)
+    private deleteItem(child: FormData)
     {
-        this.form.children.splice(this.form.children.indexOf(child), 1);
+        let shouldDelete = true;
+        if (this.form.onDelete) {
+            let shouldDelete = this.form.onDelete(child);
+            if (typeof shouldDelete === 'object' && typeof shouldDelete.then === 'function') {
+                shouldDelete.then((deleteFlag: boolean) => {
+                    if (deleteFlag) {
+                        this.form.children.splice(this.form.children.indexOf(child), 1);
+                    }
+                })
+            }
+        }
+
+        if (shouldDelete) {
+            this.form.children.splice(this.form.children.indexOf(child), 1);
+        }
     }
 
     private addItem()
@@ -126,6 +164,8 @@ class FormListData extends Form
     public prototype: Form;
     public prototypeName: string;
     public index: number;
+    public itemComponent: string;
+    public onDelete: (form: FormData) => boolean|Promise<boolean>;
 }
 
 </script>
