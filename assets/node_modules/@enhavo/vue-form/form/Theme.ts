@@ -2,17 +2,11 @@ import {FormData} from "@enhavo/vue-form/data/FormData";
 
 export class Theme
 {
-    private components: object = {};
-    private callbacks: Array<(form: FormData) => void> = [];
+    private visitors: Array<ThemeVisitorInterface> = [];
 
-    component(name: string, component: any)
+    addVisitor(visitor: ThemeVisitorInterface)
     {
-        this.components[name] = component;
-    }
-
-    forEach(callback: (form: FormData) => void)
-    {
-        this.callbacks.push(callback);
+        this.visitors.push(visitor);
     }
 
     apply(form: FormData)
@@ -25,18 +19,111 @@ export class Theme
         }
     }
 
+    merge(theme: Theme)
+    {
+        for (let visitor of theme.visitors) {
+            this.addVisitor(visitor);
+        }
+    }
+
     private updateComponent(form: FormData)
     {
-        if (this.components.hasOwnProperty(form.component)) {
-            form.component = this.components[form.component];
+        let applicableVisitors = [];
+        for (let visitor of this.visitors) {
+            if (visitor.supports(form)) {
+                applicableVisitors.push(visitor);
+            }
         }
 
-        if (this.components.hasOwnProperty(form.rowComponent)) {
-            form.rowComponent = this.components[form.rowComponent];
+        for (let applicableVisitor of applicableVisitors) {
+            applicableVisitor.apply(form);
+        }
+    }
+}
+
+export interface ThemeVisitorInterface
+{
+    supports(form: FormData): boolean;
+    apply(form: FormData): void;
+    getPriority(): number;
+}
+
+export class ThemeVisitor implements ThemeVisitorInterface
+{
+    constructor(
+        private supportCallback: (form: FormData) => boolean = null,
+        private applyCallback: (form: FormData) => void = null,
+        private priority: number = 100,
+    ) {
+    }
+
+    supports(form: FormData): boolean
+    {
+        return this.supportCallback(form);
+    }
+
+    setSupportCallback(supportCallback: (form: FormData) => boolean): void
+    {
+        this.supportCallback = supportCallback;
+    }
+
+    apply(form: FormData): void
+    {
+        return this.applyCallback(form);
+    }
+
+    setApplyCallback(applyCallback: (form: FormData) => void): void
+    {
+        this.applyCallback = applyCallback;
+    }
+
+    getPriority(): number
+    {
+        return this.priority;
+    }
+
+    setPriority(priority: number): void
+    {
+        this.priority = priority;
+    }
+}
+
+export class ThemeComponentVisitor implements ThemeVisitorInterface
+{
+    constructor(
+        private fromComponent: string|Array<string>,
+        private toComponent: string,
+        private priority: number = 100,
+    ) {
+    }
+
+    supports(form: FormData): boolean
+    {
+        if (typeof this.fromComponent === 'string') {
+            return form.component == this.fromComponent;
+        } else if (Array.isArray(this.fromComponent)) {
+            for (let fromComponent of this.fromComponent) {
+                if (form.component == fromComponent) {
+                    return true;
+                }
+            }
         }
 
-        for (let callback of this.callbacks) {
-            callback(form);
-        }
+        return false;
+    }
+
+    apply(form: FormData): void
+    {
+        form.component = this.toComponent;
+    }
+
+    getPriority(): number
+    {
+        return this.priority;
+    }
+
+    setPriority(priority: number): void
+    {
+        this.priority = priority;
     }
 }
