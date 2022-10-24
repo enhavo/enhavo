@@ -1,5 +1,6 @@
 export class FormData
 {
+    parent: FormData;
     children: object|any;
     value: string;
     name: string;
@@ -17,4 +18,19 @@ export class FormData
     attr: object;
     root: boolean;
     rendered: boolean;
+
+    public get(name: string): FormData
+    {
+        let propertyChain = name.split('.');
+
+        let searchElement: FormData = this;
+        for (let property of propertyChain) {
+            if (searchElement.children.hasOwnProperty(property)) {
+                searchElement = searchElement.children[property];
+            } else {
+                return null;
+            }
+        }
+        return searchElement;
+    }
 }

@@ -26,3 +26,4 @@ Guides
     view-stack/index
     form/index
     icon/index
+    vue-form/index

@@ -146,3 +146,10 @@ The VueForm plugin provide components similar to the twig function from Symfony.
       <!-- like {{ form_help(form.property) }} in twig -->
       <form-help :form="form.children.property" />
   </template>
+
+
+
+Further Reading
+---------------
+
+-  :doc:`/guides/vue-form/how-to-customize-form`
