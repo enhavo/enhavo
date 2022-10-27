@@ -129,6 +129,11 @@ class FormLoginAuthenticator extends AbstractAuthenticator
             }
         }
 
+        $failurePath = $request->get('_failure_path');
+        if ($failurePath) {
+            return new RedirectResponse($failurePath);
+        }
+
         return new RedirectResponse($this->getLoginUrl());
     }
 
