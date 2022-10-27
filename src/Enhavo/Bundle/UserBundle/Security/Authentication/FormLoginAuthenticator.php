@@ -163,6 +163,11 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator implements P
             $request->getSession()->set(Security::AUTHENTICATION_ERROR, $exception);
         }
 
+        $failurePath = $request->get('_failure_path');
+        if ($failurePath) {
+            return new RedirectResponse($failurePath);
+        }
+        
         $configKey = $this->getConfigKey($request);
         $this->updateLoginRoute($configKey);
         $url = $this->getLoginUrl();
