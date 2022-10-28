@@ -4,10 +4,10 @@ import FormChoiceExpandedComponent from '@enhavo/vue-form/components/FormChoiceE
 import FormChoiceCollapsedComponent from '@enhavo/vue-form/components/FormChoiceCollapsedComponent.vue';
 import FormChoiceOptionComponent from '@enhavo/vue-form/components/FormChoiceOptionComponent.vue';
 import FormChoiceOptgroupComponent from '@enhavo/vue-form/components/FormChoiceOptgroupComponent.vue';
+import FormCompoundWidgetComponent from '@enhavo/vue-form/components/FormCompoundWidgetComponent.vue';
 import FormErrorsComponent from '@enhavo/vue-form/components/FormErrorsComponent.vue';
 import FormFormComponent from '@enhavo/vue-form/components/FormFormComponent.vue';
 import FormHelpComponent from '@enhavo/vue-form/components/FormHelpComponent.vue';
-import FormHiddenComponent from '@enhavo/vue-form/components/FormHiddenComponent.vue';
 import FormLabelComponent from '@enhavo/vue-form/components/FormLabelComponent.vue';
 import FormRestComponent from '@enhavo/vue-form/components/FormRestComponent.vue';
 import FormRowComponent from '@enhavo/vue-form/components/FormRowComponent.vue';
@@ -32,13 +32,13 @@ class Plugin implements PluginObject<Config>
         Vue.component('form-choice-collapsed', FormChoiceCollapsedComponent);
         Vue.component('form-choice-option', FormChoiceOptionComponent);
         Vue.component('form-choice-optgroup', FormChoiceOptgroupComponent);
+        Vue.component('form-compound-widget', FormCompoundWidgetComponent);
         Vue.component('form-errors', FormErrorsComponent);
         Vue.component('form-row', FormRowComponent)
         Vue.component('form-rows', FormRowsComponent)
         Vue.component('form-form', FormFormComponent);
         Vue.component('form-help', FormHelpComponent);
         Vue.component('form-simple', FormSimpleComponent);
-        Vue.component('form-hidden', FormHiddenComponent);
         Vue.component('form-label', FormLabelComponent);
         Vue.component('form-rest', FormRestComponent);
         Vue.component('form-text', FormTextComponent);

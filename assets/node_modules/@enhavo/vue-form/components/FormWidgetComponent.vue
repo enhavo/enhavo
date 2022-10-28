@@ -1,5 +1,6 @@
 <template>
-    <component :is="getComponent()" :form="form" />
+    <form-compound-widget v-if="form.compound" :form="form" />
+    <component v-if="!form.compound" :is="getComponent()" :form="form" />
 </template>
 
 <script lang="ts">
@@ -18,7 +19,7 @@ export default class extends Vue
             return this.form.component;
         }
 
-        return 'form-rows';
+        return 'form-simple';
     }
 }
 </script>

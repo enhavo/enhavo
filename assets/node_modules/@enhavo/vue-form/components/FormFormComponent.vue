@@ -1,9 +1,9 @@
 <template>
-    <form :method="getMethod()" :action="getAction()" :name="getName()" ref="element">
+    <form :name="getName()" :method="getMethod()" :action="getAction()" ref="element">
         <slot name="form-before"></slot>
+        <input v-if="getDifferentMethod()" type="hidden" name="_method" :value="getDifferentMethod()" />
         <slot>
-            <component :is="child.rowComponent" v-if="form.compound" v-for="child in form.children" :form="child" :key="child.name"></component>
-            <component :is="form.rowComponent" v-if="!form.compound" :form="form"></component>
+            <form-widget :form="form"></form-widget>
         </slot>
         <slot name="form-after"></slot>
     </form>
@@ -22,9 +22,23 @@ export default class extends Vue
     getMethod()
     {
         if (typeof this.form.method === 'string') {
-            return this.form.method.toLowerCase()
+            let method = this.form.method.toLowerCase();
+            if (['get', 'post'].indexOf(method) >= 0) {
+                return method;
+            }
         }
-        return false;
+        return null;
+    }
+
+    getDifferentMethod()
+    {
+        if (typeof this.form.method === 'string') {
+            let method = this.form.method.toLowerCase();
+            if (['get', 'post'].indexOf(method) == -1) {
+                return method;
+            }
+        }
+        return null;
     }
 
     getAction()
@@ -32,7 +46,7 @@ export default class extends Vue
         if (typeof this.form.action === 'string') {
             return this.form.action;
         }
-        return false;
+        return null;
     }
 
     getName()
@@ -40,7 +54,7 @@ export default class extends Vue
         if (typeof this.form.name === 'string') {
             return this.form.name;
         }
-        return false;
+        return null;
     }
 
     updated()

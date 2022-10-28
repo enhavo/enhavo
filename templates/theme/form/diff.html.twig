@@ -1,0 +1,26 @@
+<html>
+<head>
+    {% block head %}{% endblock %}
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+{% block body %}
+    {% block form %}{% endblock %}
+    Check if vue form and twig form has same output: <span id="output"></span>
+    <hr>
+    <div data-controller="vue_form" data-vue_form-form-value="{{ vue|json_encode|e }}" id="one">
+        {% block app %}
+            <form-form :form="form"></form-form>
+        {% endblock %}
+    </div>
+    <hr>
+    <div id="two">
+        {{ form(form) }}
+    </div>
+    <hr>
+{% endblock %}
+{% block javascripts %}
+    {{ encore_entry_script_tags('base', null, webpack_build()) }}
+{% endblock %}
+</body>
+</html>

@@ -16,6 +16,7 @@ class HiddenVueType extends AbstractVueType
     public function buildView(FormView $view, VueData $data)
     {
         $data['rowComponent'] = 'form-hidden-row';
-        $data['component'] = 'form-hidden';
+        $data['component'] = 'form-simple';
+        $data['type'] = 'hidden';
     }
 }

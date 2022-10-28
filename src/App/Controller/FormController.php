@@ -36,9 +36,11 @@ class FormController extends AbstractController
             return new JsonResponse(['form' => $vueForm->createData($form->createView())]);
         }
 
+        $formView = $form->createView();
+
         return $this->render(sprintf('theme/form/%s.html.twig', $template), [
             'form' => $formView,
-            'vue' => $vueForm->createData($form->createView()),
+            'vue' => $vueForm->createData($formView),
             'data' => $form->getData(),
             'theme' => $theme
         ]);
@@ -125,5 +127,21 @@ class FormController extends AbstractController
             ->getForm();
 
         return $this->handleForm($form, $request, theme: true);
+    }
+
+    #[Route('/diff', name: "app_form_diff")]
+    public function diffAction(Request $request)
+    {
+        $form = $this->createFormBuilder(null)
+            ->add('text', TextType::class, [
+                'label' => 'My text'
+            ])
+//            ->add('button', SubmitType::class, [
+//                'label' => 'save'
+//            ])
+            ->setMethod('POST')
+            ->getForm();
+
+        return $this->handleForm($form, $request, 'diff');
     }
 }

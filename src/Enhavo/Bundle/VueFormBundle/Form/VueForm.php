@@ -47,8 +47,8 @@ class VueForm
 
         $data = $this->normalize($formView, $vueData);
         $data['root'] = true;
-        $data['method'] = $formView->vars['method'] ?? null;
-        $data['action'] = $formView->vars['action'] ?? null;
+        $data['method'] = !empty($formView->vars['method']) ? $formView->vars['method'] : null;
+        $data['action'] = !empty($formView->vars['action']) ? $formView->vars['action'] : null;
 
         $this->finishView($vueData);
 
