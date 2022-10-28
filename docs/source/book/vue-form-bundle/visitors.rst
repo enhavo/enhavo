@@ -1,0 +1,37 @@
+Visitors
+========
+
+Before vue is loading the form data, you are able to make changes to the form data. To do so, you can add a ``FormVisitor``
+object. A visitor implements ``FormVisitorInterface``, that require a support and apply function.
+In the support function you have to return a boolean if the apply function should be used for this form child.
+Inside the apply function you can make changes on the child e.g. add an attribute or change the component.
+
+You can add the visitor to the ``FormFactory``, so every time the form will be created, the visitor is applied to the form data.
+
+.. code-block:: typescript
+
+  import {createApp, reactive} from "vue";
+  import {FormFactory} from "@enhavo/vue-form/form/FormFactory";
+  import {FormVisitor} from "@enhavo/vue-form/form/FormVisitor";
+  import {FormData} from "@enhavo/vue-form/data/FormData";
+
+  let formFactory = new FormFactory();
+
+  formFactory.addVisitor(new FormVisitor(
+      (form: FormData) => {
+          return form.component == 'form-choice' && !form.expanded;
+      },
+      (form: FormData) => {
+          form.attr.class = 'my-class'
+      },
+  );
+
+  let data = {}; // get data somewhere
+  let form = formFactory.create(data.form);
+
+
+Further Reading
+---------------
+
+-  :doc:`/guides/vue-form/how-to-customize-form`
+

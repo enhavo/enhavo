@@ -6,4 +6,5 @@ VueFormBundle
 
     installation
     how-it-works
+    visitors
     configuration
