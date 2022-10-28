@@ -5,6 +5,7 @@ import {reactive} from "vue";
 import {FormFactory} from "@enhavo/vue-form/form/FormFactory";
 import {FormComponentVisitor} from "@enhavo/vue-form/form/FormVisitor";
 import {Theme} from "@enhavo/vue-form/form/Theme";
+import {HTMLDiff} from "../util/HTMLDiff";
 
 export default class extends Controller
 {
@@ -32,6 +33,10 @@ export default class extends Controller
 
         app.use(vueForm);
         app.mount(this.element);
+
+        window.setTimeout(() => {
+            this.diff();
+        }, 500);
     }
 
     private getTheme()
@@ -42,5 +47,19 @@ export default class extends Controller
             return theme;
         }
         return null;
+    }
+
+    private diff()
+    {
+        let one = document.getElementById('one').childNodes[0];
+        let two = document.getElementById('two').childNodes[1];
+        let output = document.getElementById('output');
+
+        console.log(one);
+        console.log(two);
+
+        if (one && two && output) {
+            output.innerText = HTMLDiff.isEqual(one, two) ? 'Success' : 'Failure'
+        }
     }
 }

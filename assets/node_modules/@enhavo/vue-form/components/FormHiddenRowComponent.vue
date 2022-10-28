@@ -1,7 +1,5 @@
 <template>
-    <div>
-        <form-widget :form="form"></form-widget>
-    </div>
+    <form-widget :form="form"></form-widget>
 </template>
 
 <script lang="ts">
