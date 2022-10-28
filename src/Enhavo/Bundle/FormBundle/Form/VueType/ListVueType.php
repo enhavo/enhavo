@@ -31,7 +31,11 @@ class ListVueType extends AbstractVueType
         $data['prototypeName'] = $view->vars['prototype_name'];
         $data['index'] = $view->vars['index'];
 
+
         $data['component'] = 'form-list';
+
+        $data['itemComponent'] = 'form-list-item';
+        $data['onDelete'] = null;
     }
 
     public function finishView(FormView $view, VueData $data)

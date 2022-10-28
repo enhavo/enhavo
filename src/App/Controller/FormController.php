@@ -20,7 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/form')]
 class FormController extends AbstractController
 {
-    private function handleForm(FormInterface $form, Request $request, $template = 'form')
+    private function handleForm(FormInterface $form, Request $request, $template = 'form', $theme = false)
     {
         $formView = $form->createView();
         $vueForm = $this->container->get(VueForm::class);
@@ -39,7 +39,8 @@ class FormController extends AbstractController
         return $this->render(sprintf('theme/form/%s.html.twig', $template), [
             'form' => $formView,
             'vue' => $vueForm->createData($form->createView()),
-            'data' => $form->getData()
+            'data' => $form->getData(),
+            'theme' => $theme
         ]);
     }
 
@@ -107,5 +108,22 @@ class FormController extends AbstractController
             ->getForm();
 
         return $this->handleForm($form, $request);
+    }
+
+    #[Route('/list-custom', name: "app_form_list_custom")]
+    public function listCustomAction(Request $request)
+    {
+        $form = $this->createFormBuilder(null)
+            ->add('items', ListType::class, [
+                'entry_type' => ItemsType::class,
+                'sortable' => true,
+            ])
+            ->add('button', SubmitType::class, [
+                'label' => 'save'
+            ])
+            ->setMethod('POST')
+            ->getForm();
+
+        return $this->handleForm($form, $request, theme: true);
     }
 }

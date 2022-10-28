@@ -1,3 +1,2 @@
 imports:
-    - path: '../*'
-
+    - path: '../stimulus.yaml'

@@ -33,8 +33,9 @@ Register configuration
 
     registration_confirm:
         template: 'theme/security/registration/confirm.html.twig'
-        mail_template: 'mail/security/confirmation.html.twig'
-        mail_subject: 'confirmation.mail.subject'
+        mail:
+            template: 'mail/security/confirmation.html.twig'
+            subject: 'confirmation.mail.subject'
         translation_domain: 'EnhavoUserBundle'
         redirect_route: 'enhavo_user_theme_registration_finish'
 

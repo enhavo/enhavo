@@ -103,14 +103,16 @@ On the client side we can use the output from our controller to render the view 
   // entrypoint
 
   import {createApp, reactive} from "vue";
-  import {Form} from "@enhavo/vue-form/form/Form";
+  import {FormFactory} from "@enhavo/vue-form/form/FormFactory";
   import VueForm from "@enhavo/vue-form/index";
   import ApplicationComponent from "./component/Application";
+
+  let formFactory = new FormFactory();
 
   fetch('path/to/controller/action')
     .then((response) => response.json())
     .then((data) => {
-      let form = Form.create(data.form);
+      let form = formFactory.create(data.form);
 
       const app = createApp(ApplicationComponent, {
           form: reactive(form)
@@ -153,3 +155,4 @@ Further Reading
 ---------------
 
 -  :doc:`/guides/vue-form/how-to-customize-form`
+-  :doc:`/book/vue-form-bundle/visitors`
