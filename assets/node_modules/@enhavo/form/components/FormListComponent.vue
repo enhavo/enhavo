@@ -71,17 +71,10 @@ export default class extends Vue
 
     created()
     {
-        /**
-         * If the data we get is not an array, we have to convert it into an array to take care of the order
-         */
-        if (!Array.isArray(this.form.children)) {
-            this.form.children = Object.values(this.form.children);
-        }
-
         if (this.form.index === null) {
             let index = -1;
-            for (let key of Object.keys(this.form.children)) {
-                let childIndex = parseInt(this.form.children[key].name);
+            for (let child of this.form.children) {
+                let childIndex = parseInt(child.name);
                 if (childIndex > index) {
                     index = childIndex;
                 }
@@ -142,8 +135,8 @@ export default class extends Vue
     private updateParents(form: FormData, parent: FormData)
     {
         form.parent = parent;
-        for (let key of Object.keys(form.children)) {
-            this.updateParents(form.children[key], form);
+        for (let child of form.children) {
+            this.updateParents(child, form);
         }
     }
 
@@ -182,9 +175,9 @@ export default class extends Vue
         let i = 0;
         for (let child of this.form.children) {
             let grandChildren = child.children;
-            for (let formKey in grandChildren) {
-                if (grandChildren.hasOwnProperty(formKey) && grandChildren[formKey].position === true) {
-                    grandChildren[formKey].value = i;
+            for (let grandChild of grandChildren) {
+                if (grandChild.position === true) {
+                    grandChild.value = i;
                     i++;
                 }
             }
@@ -207,16 +200,16 @@ export default class extends Vue
         form.fullName = this.form.fullName + '[' + form.name + ']';
         form.parent = this.form;
 
-        for (let key of Object.keys(form.children)) {
-            this.updateFullName(form.children[key]);
+        for (let child of form.children) {
+            this.updateFullName(child);
         }
     }
 
     private updateFullName(form: FormData)
     {
         form.fullName = form.parent.fullName + '[' + form.name + ']';
-        for (let key of Object.keys(form.children)) {
-            this.updateFullName(form.children[key]);
+        for (let child of form.children) {
+            this.updateFullName(child);
         }
     }
 }

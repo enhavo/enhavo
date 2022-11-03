@@ -1,6 +1,6 @@
 <template>
     <div :id="form.id" ref="element">
-        <template v-for="child in form.children">
+        <template v-for="child of form.children">
             <form-widget :form="child"></form-widget>
             <form-label :form="child"></form-label>
         </template>

@@ -25,9 +25,16 @@ export class FormData
 
         let searchElement: FormData = this;
         for (let property of propertyChain) {
-            if (searchElement.children.hasOwnProperty(property)) {
-                searchElement = searchElement.children[property];
-            } else {
+            let hasPropertyChild = false;
+            for (let child of searchElement.children) {
+                if (child.name === property) {
+                    hasPropertyChild = true;
+                    searchElement = child;
+                    break;
+                }
+            }
+
+            if (!hasPropertyChild) {
                 return null;
             }
         }

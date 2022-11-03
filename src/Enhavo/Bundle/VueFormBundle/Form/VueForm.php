@@ -103,7 +103,7 @@ class VueForm
     {
         if ($data['compound']) {
             $returnData = [];
-            foreach ($data['children'] as $key => $child) {
+            foreach ($data['children'] as $child) {
                 $returnData[$child['name']] = $this->submit($child);
             }
             return $returnData;
