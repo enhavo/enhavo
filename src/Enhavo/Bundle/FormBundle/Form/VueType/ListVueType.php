@@ -29,7 +29,9 @@ class ListVueType extends AbstractVueType
         $data['blockName'] = $view->vars['block_name'];
         $data['prototype'] = $this->vueForm->createData($view->vars['prototype']);
         $data['prototypeName'] = $view->vars['prototype_name'];
-        $data['index'] = $view->vars['index'];
+        $data['index'] = null;
+        $data['draggableGroup'] = $view->vars['draggable_group'];
+        $data['draggableHandle'] = $view->vars['draggable_handle'];
 
 
         $data['component'] = 'form-list';
