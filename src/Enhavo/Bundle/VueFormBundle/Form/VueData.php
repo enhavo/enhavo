@@ -151,7 +151,9 @@ class VueData implements \IteratorAggregate, \Countable, \ArrayAccess
 
         $array['children'] = [];
         foreach ($this->getChildren() as $key => $child) {
-            $array['children'][$key] = $child->toArray();
+            $childArray = $child->toArray();
+            $childArray['name'] = $key;
+            $array['children'][] = $childArray;
         }
         return $array;
     }

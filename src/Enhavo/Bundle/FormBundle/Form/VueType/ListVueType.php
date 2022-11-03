@@ -27,7 +27,7 @@ class ListVueType extends AbstractVueType
         $data['allowDelete'] = $view->vars['allow_delete'];
         $data['allowAdd'] = $view->vars['allow_add'];
         $data['blockName'] = $view->vars['block_name'];
-        $data['prototype'] = $this->vueForm->createData($view->vars['prototype']);
+        $data['prototype'] = isset($view->vars['prototype']) ? $this->vueForm->createData($view->vars['prototype']) : null;
         $data['prototypeName'] = $view->vars['prototype_name'];
         $data['index'] = null;
         $data['draggableGroup'] = $view->vars['draggable_group'];
