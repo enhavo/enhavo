@@ -77,6 +77,9 @@ class ListType extends AbstractType
         $view->vars['allow_delete'] = $options['allow_delete'];
         $view->vars['allow_add'] = $options['allow_add'];
         $view->vars['block_name'] = $options['block_name'];
+        $view->vars['draggable_group'] = $options['draggable_group'];
+        $view->vars['draggable_handle'] = $options['draggable_handle'];
+
         $lastIndex = null;
         $array = $form->getData();
         if ($array instanceof Collection) {
@@ -117,7 +120,9 @@ class ListType extends AbstractType
             'prototype' => true,
             'allow_add' => true,
             'by_reference' => false,
-            'allow_delete' => true
+            'allow_delete' => true,
+            'draggable_group' => null,
+            'draggable_handle' => '.drag-button',
         ));
 
         $resolver->setNormalizer('prototype_name', function(Options $options, $value) {

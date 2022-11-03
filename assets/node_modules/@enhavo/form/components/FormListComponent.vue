@@ -2,22 +2,34 @@
     <div class="form-list" ref="element">
         <slot name="list">
             <ul>
-                <component :is="form.itemComponent"
-                       v-for="child of form.children"
-                       :form="child"
-                       :deletable="form.allowDelete"
-                       :sortable="form.sortable"
-                       @delete="deleteItem"
-                       @up="moveItemUp"
-                       @down="moveItemDown">
-                    <template v-slot>
-                        <slot name="item"></slot>
+                <draggable
+                    v-model="form.children"
+                    item-key="name"
+                    @change="changeOrder"
+                    :group="form.draggableGroup"
+                    :handle="form.draggableHandle"
+                >
+                    <template #item="{ element }">
+                        <component :is="form.itemComponent"
+                                   :form="element"
+                                   :deletable="form.allowDelete"
+                                   :sortable="form.sortable"
+
+                                   @delete="deleteItem"
+                                   @up="moveItemUp"
+                                   @down="moveItemDown"
+                        >
+                            <template v-slot>
+                                <slot name="item"></slot>
+                            </template>
+                            <template v-slot:buttons><slot name="item-buttons"></slot></template>
+                            <template v-slot:down-button><slot name="item-down-button"></slot></template>
+                            <template v-slot:up-button><slot name="item-up-button"></slot></template>
+                            <template v-slot:delete-button><slot name="item-delete-button"></slot></template>
+                            <template v-slot:drag-button><slot name="item-drag-button"></slot></template>
+                        </component>
                     </template>
-                    <template v-slot:buttons><slot name="item-buttons"></slot></template>
-                    <template v-slot:down-button><slot name="item-down-button"></slot></template>
-                    <template v-slot:up-button><slot name="item-up-button"></slot></template>
-                    <template v-slot:delete-button><slot name="item-delete-button"></slot></template>
-                </component>
+                </draggable>
             </ul>
         </slot>
 
@@ -34,10 +46,14 @@
 <script lang="ts">
 import {Vue, Options, Prop} from "vue-property-decorator";
 import {Form} from "@enhavo/vue-form/form/Form";
+import {FormData} from "@enhavo/vue-form/data/FormData";
 import ListItem from "@enhavo/form/type/ListItem";
 import {Util} from "@enhavo/vue-form/form/Util";
+import * as draggable from 'vuedraggable'
 
-@Options({})
+@Options({
+    components: {'draggable': draggable}
+})
 export default class extends Vue
 {
     @Prop()
@@ -60,6 +76,17 @@ export default class extends Vue
          */
         if (!Array.isArray(this.form.children)) {
             this.form.children = Object.values(this.form.children);
+        }
+
+        if (this.form.index === null) {
+            let index = -1;
+            for (let key of Object.keys(this.form.children)) {
+                let childIndex = parseInt(this.form.children[key].name);
+                if (childIndex > index) {
+                    index = childIndex;
+                }
+            }
+            this.form.index = index+1;
         }
     }
 
@@ -84,7 +111,8 @@ export default class extends Vue
 
     private addItem()
     {
-        this.form.children.push(this.createItem())
+        let item = this.createItem();
+        this.form.children.push(item);
         this.updatePosition();
     }
 
@@ -92,6 +120,8 @@ export default class extends Vue
     {
         let item = JSON.parse(JSON.stringify(this.form.prototype));
         this.updateIndex(item, this.form.index);
+        this.updateParents(item, this.form);
+        this.updateFullName(item);
         this.form.index++;
         return item;
     }
@@ -102,10 +132,18 @@ export default class extends Vue
             if (item.hasOwnProperty(key)) {
                 if (typeof item[key] === "string") {
                     item[key] = item[key].replace(new RegExp(this.form.prototypeName, 'g'), index);
-                } else if (typeof item[key] === "object") {
+                } else if (typeof item[key] === "object" && key !== 'parent') {
                     this.updateIndex(item[key], index);
                 }
             }
+        }
+    }
+
+    private updateParents(form: FormData, parent: FormData)
+    {
+        form.parent = parent;
+        for (let key of Object.keys(form.children)) {
+            this.updateParents(form.children[key], form);
         }
     }
 
@@ -152,6 +190,35 @@ export default class extends Vue
             }
         }
     }
+
+    public changeOrder(event: any)
+    {
+        if (event.added) {
+            this.updateChangeIndex(event.added.element);
+            this.form.index++;
+        }
+
+        this.updatePosition();
+    }
+
+    private updateChangeIndex(form: FormListData)
+    {
+        form.name = this.form.index.toString();
+        form.fullName = this.form.fullName + '[' + form.name + ']';
+        form.parent = this.form;
+
+        for (let key of Object.keys(form.children)) {
+            this.updateFullName(form.children[key]);
+        }
+    }
+
+    private updateFullName(form: FormData)
+    {
+        form.fullName = form.parent.fullName + '[' + form.name + ']';
+        for (let key of Object.keys(form.children)) {
+            this.updateFullName(form.children[key]);
+        }
+    }
 }
 
 class FormListData extends Form
@@ -166,6 +233,8 @@ class FormListData extends Form
     public index: number;
     public itemComponent: string;
     public onDelete: (form: FormData) => boolean|Promise<boolean>;
+    public draggableGroup: string
+    public draggableHandle: string
 }
 
 </script>

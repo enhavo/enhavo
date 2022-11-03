@@ -7,6 +7,7 @@ import {FormComponentVisitor} from "@enhavo/vue-form/form/FormVisitor";
 import {Theme} from "@enhavo/vue-form/form/Theme";
 import {HTMLDiff} from "../util/HTMLDiff";
 
+
 export default class extends Controller
 {
     private formValue: any
@@ -25,7 +26,7 @@ export default class extends Controller
         let theme = this.getTheme();
         let form = formFactory.create(this.formValue, theme);
 
-        console.log(form)
+        console.log(form);
 
         const app = vueFactory.createApp({}, {
             form: reactive(form)
@@ -51,6 +52,10 @@ export default class extends Controller
 
     private diff()
     {
+        if (!document.getElementById('one') || !document.getElementById('output')) {
+            return;
+        }
+
         let one = document.getElementById('one').childNodes[0];
         let two = document.getElementById('two').childNodes[1];
         let output = document.getElementById('output');
@@ -58,8 +63,6 @@ export default class extends Controller
         console.log(one);
         console.log(two);
 
-        if (one && two && output) {
-            output.innerText = HTMLDiff.isEqual(one, two) ? 'Success' : 'Failure'
-        }
+        output.innerText = HTMLDiff.isEqual(one, two) ? 'Success' : 'Failure'
     }
 }

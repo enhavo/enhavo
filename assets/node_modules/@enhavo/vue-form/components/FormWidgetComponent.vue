@@ -1,6 +1,6 @@
 <template>
-    <form-compound-widget v-if="form.compound" :form="form" />
-    <component v-if="!form.compound" :is="getComponent()" :form="form" />
+    <form-compound-widget v-if="form.compound && !this.form.component" :form="form" />
+    <component v-else :is="getComponent()" :form="form" />
 </template>
 
 <script lang="ts">
@@ -15,7 +15,7 @@ export default class extends Vue
 
     getComponent()
     {
-        if (!this.form.compound || this.form.component) {
+        if (this.form.component) {
             return this.form.component;
         }
 

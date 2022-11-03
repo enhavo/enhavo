@@ -112,6 +112,29 @@ class FormController extends AbstractController
         return $this->handleForm($form, $request);
     }
 
+    #[Route('/list-connected', name: "app_form_list_connected")]
+    public function listConnectedAction(Request $request)
+    {
+        $form = $this->createFormBuilder(null)
+            ->add('items', ListType::class, [
+                'entry_type' => ItemsType::class,
+                'sortable' => true,
+                'draggable_group' => 'item'
+            ])
+            ->add('items2', ListType::class, [
+                'entry_type' => ItemsType::class,
+                'sortable' => true,
+                'draggable_group' => 'item'
+            ])
+            ->add('button', SubmitType::class, [
+                'label' => 'save'
+            ])
+            ->setMethod('POST')
+            ->getForm();
+
+        return $this->handleForm($form, $request);
+    }
+
     #[Route('/list-custom', name: "app_form_list_custom")]
     public function listCustomAction(Request $request)
     {
