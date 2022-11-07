@@ -134,19 +134,19 @@ The VueForm plugin provide components similar to the twig function from Symfony.
       <form-form :form="form" />
 
       <!-- like {{ form_row(form.property) }} in twig -->
-      <form-row :form="form.children.property" />
+      <form-row :form="form.get('property')" />
 
       <!-- like {{ form_widget(form.property) }} in twig -->
-      <form-widget :form="form.children.property" />
+      <form-widget :form="form.get('property')" />
 
       <!-- like {{ form_label(form.property) }} in twig -->
-      <form-label :form="form.children.property" />
+      <form-label :form="form.get('property')" />
 
       <!-- like {{ form_errors(form.property) }} in twig -->
-      <form-errors :form="form.children.property" />
+      <form-errors :form="form.get('property')" />
 
       <!-- like {{ form_help(form.property) }} in twig -->
-      <form-help :form="form.children.property" />
+      <form-help :form="form.get('property')" />
   </template>
 
 

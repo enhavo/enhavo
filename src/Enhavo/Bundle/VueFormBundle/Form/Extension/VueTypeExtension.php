@@ -13,12 +13,20 @@ class VueTypeExtension extends AbstractTypeExtension
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['component'] = $options['component'];
+
+        if (is_string($options['component_visitors'])) {
+            $view->vars['component_visitors'] = [$options['component_visitors']];
+        } else {
+            $view->vars['component_visitors'] = $options['component_visitors'];
+        }
+
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'component' => null
+            'component' => null,
+            'component_visitors' => [],
         ]);
     }
 

@@ -8,25 +8,25 @@ services:
         tags:
             - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 
-    Enhavo\Bundle\VueFormBundle\Form\VueType\ButtonVueType:
-        tags:
-            - { name: 'vue.type', priority: 10 }
-
     Enhavo\Bundle\VueFormBundle\Form\VueType\BaseVueType:
         arguments:
             - '@translator'
         tags:
-            - { name: 'vue.type', priority: 1 }
+            - { name: 'vue.type', priority: 200 }
+
+    Enhavo\Bundle\VueFormBundle\Form\VueType\ButtonVueType:
+        tags:
+            - { name: 'vue.type', priority: 190 }
 
     Enhavo\Bundle\VueFormBundle\Form\VueType\FormVueType:
         arguments:
             - '@translator'
         tags:
-            - { name: 'vue.type', priority: 200 }
+            - { name: 'vue.type', priority: 150 }
 
     Enhavo\Bundle\VueFormBundle\Form\VueType\RadioVueType:
         tags:
-            - { name: 'vue.type', priority: 200 }
+            - { name: 'vue.type', priority: 150 }
 
     Enhavo\Bundle\VueFormBundle\Form\VueType\CheckboxVueType:
         tags:
@@ -49,3 +49,7 @@ services:
             - '@translator'
         tags:
             - { name: 'vue.type', priority: 110 }
+
+    Enhavo\Bundle\VueFormBundle\Form\VueType\ComponentVueType:
+        tags:
+            - { name: 'vue.type', priority: 10 }

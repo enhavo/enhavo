@@ -8,6 +8,7 @@ export class FormData
     labelFormat: string;
     compound: boolean;
     component: string;
+    componentVisitors: string[];
     rowComponent: string;
     id: string;
     labelAttr: object;
@@ -27,7 +28,7 @@ export class FormData
         for (let property of propertyChain) {
             let hasPropertyChild = false;
             for (let child of searchElement.children) {
-                if (child.name === property) {
+                if (child.name == property) {
                     hasPropertyChild = true;
                     searchElement = child;
                     break;
