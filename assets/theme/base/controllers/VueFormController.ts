@@ -3,9 +3,11 @@ import vueForm from "@enhavo/vue-form/index";
 import {VueFactory} from "@enhavo/app/vue/VueFactory";
 import {reactive} from "vue";
 import {FormFactory} from "@enhavo/vue-form/form/FormFactory";
-import {FormComponentVisitor} from "@enhavo/vue-form/form/FormVisitor";
+import {FormComponentVisitor, FormVisitor} from "@enhavo/vue-form/form/FormVisitor";
 import {Theme} from "@enhavo/vue-form/form/Theme";
 import {HTMLDiff} from "../util/HTMLDiff";
+import {FormListData} from "@enhavo/form/form/data/FormListData";
+import {FormData} from "@enhavo/vue-form/data/FormData";
 
 
 export default class extends Controller
@@ -45,6 +47,11 @@ export default class extends Controller
         if (this.themeValue) {
             let theme = new Theme()
             theme.addVisitor(new FormComponentVisitor('form-list', 'form-custom-list'));
+            theme.addVisitor(new FormVisitor((form: FormData) => {
+                return form.component === 'form-list';
+            }, (form: FormListData) => {
+                form.onMove = (form: FormData) => { console.log(form) }
+            }));
             return theme;
         }
         return null;

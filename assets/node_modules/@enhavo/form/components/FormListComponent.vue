@@ -45,7 +45,7 @@
 
 <script lang="ts">
 import {Vue, Options, Prop} from "vue-property-decorator";
-import {Form} from "@enhavo/vue-form/form/Form";
+import {FormListData} from "@enhavo/form/form/data/FormListData";
 import {FormData} from "@enhavo/vue-form/data/FormData";
 import ListItem from "@enhavo/form/type/ListItem";
 import {Util} from "@enhavo/vue-form/form/Util";
@@ -153,6 +153,10 @@ export default class extends Vue
         this.form.children.splice(toIndex, 0, element);
 
         this.updatePosition();
+
+        if (this.form.onMove) {
+            this.form.onMove(item);
+        }
     }
 
     public moveItemDown(item: ListItem)
@@ -168,6 +172,10 @@ export default class extends Vue
         this.form.children.splice(toIndex, 0, element);
 
         this.updatePosition();
+
+        if (this.form.onMove) {
+            this.form.onMove(item);
+        }
     }
 
     private updatePosition()
@@ -192,6 +200,10 @@ export default class extends Vue
         }
 
         this.updatePosition();
+
+        if (event.moved && this.form.onMove) {
+            this.form.onMove(event.moved.element);
+        }
     }
 
     private updateChangeIndex(form: FormListData)
@@ -214,20 +226,5 @@ export default class extends Vue
     }
 }
 
-class FormListData extends Form
-{
-    public border: boolean;
-    public sortable: boolean;
-    public allowDelete: boolean;
-    public allowAdd: boolean;
-    public blockName: string;
-    public prototype: Form;
-    public prototypeName: string;
-    public index: number;
-    public itemComponent: string;
-    public onDelete: (form: FormData) => boolean|Promise<boolean>;
-    public draggableGroup: string
-    public draggableHandle: string
-}
 
 </script>
