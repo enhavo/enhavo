@@ -1,9 +1,9 @@
-import {FormData} from "@enhavo/vue-form/data/FormData";
+import {Form} from "@enhavo/vue-form/model/Form";
 
 export interface FormVisitorInterface
 {
-    supports(form: FormData): boolean;
-    apply(form: FormData): void;
+    supports(form: Form): boolean;
+    apply(form: Form): Form|void;
     getPriority(): number;
     setPriority(priority: number): void;
 }
@@ -11,28 +11,28 @@ export interface FormVisitorInterface
 export class FormVisitor implements FormVisitorInterface
 {
     constructor(
-        private supportCallback: (form: FormData) => boolean = null,
-        private applyCallback: (form: FormData) => void = null,
+        private supportCallback: (form: Form) => boolean = null,
+        private applyCallback: (form: Form) => Form|void = null,
         private priority: number = 100,
     ) {
     }
 
-    supports(form: FormData): boolean
+    supports(form: Form): boolean
     {
         return this.supportCallback(form);
     }
 
-    setSupportCallback(supportCallback: (form: FormData) => boolean): void
+    setSupportCallback(supportCallback: (form: Form) => boolean): void
     {
         this.supportCallback = supportCallback;
     }
 
-    apply(form: FormData): void
+    apply(form: Form): Form|void
     {
         return this.applyCallback(form);
     }
 
-    setApplyCallback(applyCallback: (form: FormData) => void): void
+    setApplyCallback(applyCallback: (form: Form) => Form): void
     {
         this.applyCallback = applyCallback;
     }
@@ -57,7 +57,7 @@ export class FormComponentVisitor implements FormVisitorInterface
     ) {
     }
 
-    supports(form: FormData): boolean
+    supports(form: Form): boolean
     {
         if (typeof this.fromComponent === 'string') {
             return form.component == this.fromComponent;
@@ -72,7 +72,7 @@ export class FormComponentVisitor implements FormVisitorInterface
         return false;
     }
 
-    apply(form: FormData): void
+    apply(form: Form): Form|void
     {
         form.component = this.toComponent;
     }

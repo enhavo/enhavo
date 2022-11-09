@@ -1,55 +1,68 @@
-import {Form} from "@enhavo/vue-form/form/Form";
 import * as _ from "lodash";
-import {FormData} from "@enhavo/vue-form/data/FormData";
+import {Form} from "@enhavo/vue-form/model/Form";
 import {Theme} from "@enhavo/vue-form/form/Theme";
 import {FormVisitorInterface} from "@enhavo/vue-form/form/FormVisitor";
+import {RootForm} from "@enhavo/vue-form/model/RootForm";
 
 export class FormFactory
 {
     private visitors: Array<FormVisitorInterface> = [];
 
-    public create(data: FormData, theme: Theme|Array<Theme> = null)
+    public create(data: object, visitors: FormVisitorInterface|Array<FormVisitorInterface>|Theme = null, parent: Form = null)
     {
-        let form = _.assign(new Form(), data);
+        let form = parent === null ? new RootForm() : new Form();
 
-        for (let childProperty in form.children) {
-            if (form.children.hasOwnProperty(childProperty)) {
-                form.children[childProperty] = this.createFormData(form.children[childProperty]);
-                form.children[childProperty].parent = form;
-            }
+        form = _.extend(form, data);
+        form.parent = parent;
+
+        for (let key in form.children) {
+            form.children[key] = this.createFormData(form.children[key]);
+            form.children[key].parent = form;
         }
-        form.parent = null;
 
-
-        let visitors = [];
+        let applyVisitors = [];
         for (let visitor of this.visitors) {
-            visitors.push(visitor);
-        }
-        if (theme) {
-            for (let visitor of this.getThemeVisitors(theme)) {
-                visitors.push(visitor);
+            if (applyVisitors.indexOf(visitor) === -1) {
+                applyVisitors.push(visitor);
             }
         }
 
-        visitors = visitors.sort((a: FormVisitorInterface, b: FormVisitorInterface) => {
+        if (visitors) {
+            if (visitors instanceof Theme) {
+                visitors = visitors.getVisitors();
+            }
+
+            for (let visitor of this.getVisitors(visitors)) {
+                if (applyVisitors.indexOf(visitor) === -1) {
+                    applyVisitors.push(visitor);
+                }
+            }
+        }
+
+        applyVisitors = applyVisitors.sort((a: FormVisitorInterface, b: FormVisitorInterface) => {
             return b.getPriority() - a.getPriority();
         })
 
-        this.applyVisitors(form, visitors);
+        form = this.applyVisitors(form, applyVisitors);
+
+        let root =  <RootForm>form.getRoot();
+        for (let applyVisitor of applyVisitors) {
+            if (root.visitors.indexOf(applyVisitor) == -1) {
+                root.visitors.push(applyVisitor);
+            }
+        }
 
         return form;
     }
 
-    private createFormData(data: FormData)
+    private createFormData(form: Form)
     {
-        data = _.assign(new FormData(), data);
-        for (let childProperty in data.children) {
-            if (data.children.hasOwnProperty(childProperty)) {
-                data.children[childProperty] = this.createFormData(data.children[childProperty]);
-                data.children[childProperty].parent = data;
-            }
+        form = _.assign(new Form(), form);
+        for (let key in form.children) {
+            form.children[key] = this.createFormData(form.children[key]);
+            form.children[key].parent = form;
         }
-        return data;
+        return form;
     }
 
     public addVisitor(visitor: FormVisitorInterface)
@@ -57,45 +70,43 @@ export class FormFactory
         this.visitors.push(visitor);
     }
 
-    public addTheme(theme: Theme|Array<Theme>)
+    public addVisitors(visitors: Array<FormVisitorInterface>)
     {
-        let visitors = this.getThemeVisitors(theme);
-
         for (let visitor of visitors) {
             this.addVisitor(visitor);
         }
     }
 
-    private getThemeVisitors(theme: Theme|Array<Theme>): Array<FormVisitorInterface>
+    public addTheme(theme: Theme)
     {
-        let visitors = [];
+        this.addVisitors(theme.getVisitors());
+    }
 
-        if (Array.isArray(theme)) {
-            for (let singleTheme of theme) {
-                for (let visitor of singleTheme.getVisitors()) {
-                    visitors.push(visitor);
-                }
+    private getVisitors(visitors: FormVisitorInterface|Array<FormVisitorInterface> = null): Array<FormVisitorInterface>
+    {
+        let applyVisitors = [];
+
+        if (Array.isArray(visitors)) {
+            for (let visitor of visitors) {
+                applyVisitors.push(visitor);
             }
         } else {
-            for (let visitor of theme.getVisitors()) {
-                visitors.push(visitor);
-            }
+            applyVisitors.push(visitors);
         }
 
-        return visitors;
+        return applyVisitors;
     }
 
-    private applyVisitors(form: FormData, visitors: Array<FormVisitorInterface>)
+    private applyVisitors(form: Form, visitors: Array<FormVisitorInterface>): Form
     {
-        this.updateComponent(form, visitors);
+        form = this.updateComponent(form, visitors);
         for (let key in form.children) {
-            if (form.children.hasOwnProperty(key)) {
-                this.applyVisitors(form.children[key], visitors);
-            }
+            form.children[key] = this.applyVisitors(form.children[key], visitors);
         }
+        return form;
     }
 
-    private updateComponent(form: FormData, visitors: Array<FormVisitorInterface>)
+    private updateComponent(form: Form, visitors: Array<FormVisitorInterface>): Form
     {
         let applicableVisitors = [];
         for (let visitor of visitors) {
@@ -105,7 +116,12 @@ export class FormFactory
         }
 
         for (let applicableVisitor of applicableVisitors) {
-            applicableVisitor.apply(form);
+            let returnForm = applicableVisitor.apply(form);
+            if (returnForm) {
+                form = returnForm;
+            }
         }
+
+        return form;
     }
 }

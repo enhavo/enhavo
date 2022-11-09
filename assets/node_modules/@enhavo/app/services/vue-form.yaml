@@ -3,6 +3,8 @@ services:
         chunk: 'form'
         from: '@enhavo/vue-form/form/FormFactory'
         import: FormFactory
+        tags:
+            - { name: vue.service, service: 'formFactory' }
 
 compiler_pass:
     vue-form-visitor:

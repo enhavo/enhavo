@@ -1,6 +1,6 @@
-import {FormData} from "@enhavo/vue-form/data/FormData";
+import {Form} from "@enhavo/vue-form/model/Form";
 
-export class FormListData extends FormData
+export class FormList extends Form
 {
     public border: boolean;
     public sortable: boolean;
@@ -11,8 +11,8 @@ export class FormListData extends FormData
     public prototypeName: string;
     public index: number;
     public itemComponent: string;
-    public onDelete: (form: FormListData) => boolean|Promise<boolean>;
-    public onMove: (form: FormListData) => void;
+    public onDelete: (form: Form) => boolean|Promise<boolean>;
+    public onMove: (form: Form) => void;
     public draggableGroup: string
     public draggableHandle: string
 }

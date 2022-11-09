@@ -25,9 +25,4 @@ export class Util
         value = value.charAt(0).toUpperCase() + value.slice(1);
         return value;
     }
-
-    static serializeForm(form: HTMLFormElement)
-    {
-        return new FormData(form);
-    }
 }

@@ -11,13 +11,13 @@
 
 <script lang="ts">
 import {Vue, Options, Prop} from "vue-property-decorator";
-import {Form} from "@enhavo/vue-form/form/Form";
+import {RootForm} from "@enhavo/vue-form/model/RootForm";
 
 @Options({})
 export default class extends Vue
 {
     @Prop()
-    form: Form
+    form: RootForm
 
     getMethod()
     {

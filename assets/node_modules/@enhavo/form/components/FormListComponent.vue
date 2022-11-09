@@ -44,12 +44,14 @@
 </template>
 
 <script lang="ts">
-import {Vue, Options, Prop} from "vue-property-decorator";
-import {FormListData} from "@enhavo/form/form/data/FormListData";
-import {FormData} from "@enhavo/vue-form/data/FormData";
-import ListItem from "@enhavo/form/type/ListItem";
+import {Vue, Options, Prop, Inject} from "vue-property-decorator";
+import {FormList} from "@enhavo/form/form/model/FormList";
+import {FormPosition} from "@enhavo/form/form/model/FormPosition";
+import {Form} from "@enhavo/vue-form/model/Form";
 import {Util} from "@enhavo/vue-form/form/Util";
 import * as draggable from 'vuedraggable'
+import {FormFactory} from "@enhavo/vue-form/form/FormFactory";
+import {RootForm} from "@enhavo/vue-form/model/RootForm";
 
 @Options({
     components: {'draggable': draggable}
@@ -57,15 +59,20 @@ import * as draggable from 'vuedraggable'
 export default class extends Vue
 {
     @Prop()
-    form: FormListData;
+    form: FormList;
+
+    @Inject()
+    formFactory: FormFactory;
 
     updated()
     {
+        this.form.element = this.$refs.element;
         Util.updateAttributes(<HTMLElement>this.$refs.element, this.form.attr);
     }
 
     mounted()
     {
+        this.form.element = this.$refs.element;
         Util.updateAttributes(<HTMLElement>this.$refs.element, this.form.attr);
     }
 
@@ -83,7 +90,7 @@ export default class extends Vue
         }
     }
 
-    private deleteItem(child: FormData)
+    private deleteItem(child: Form)
     {
         let shouldDelete = true;
         if (this.form.onDelete) {
@@ -112,8 +119,8 @@ export default class extends Vue
     private createItem()
     {
         let item = JSON.parse(JSON.stringify(this.form.prototype));
+        item = this.formFactory.create(item, (<RootForm>this.form.getRoot()).visitors, this.form);
         this.updateIndex(item, this.form.index);
-        this.updateParents(item, this.form);
         this.updateFullName(item);
         this.form.index++;
         return item;
@@ -132,15 +139,7 @@ export default class extends Vue
         }
     }
 
-    private updateParents(form: FormData, parent: FormData)
-    {
-        form.parent = parent;
-        for (let child of form.children) {
-            this.updateParents(child, form);
-        }
-    }
-
-    public moveItemUp(item: ListItem)
+    public moveItemUp(item: Form)
     {
         const fromIndex = this.form.children.indexOf(item);
         if (fromIndex === 0) {
@@ -159,7 +158,7 @@ export default class extends Vue
         }
     }
 
-    public moveItemDown(item: ListItem)
+    public moveItemDown(item: Form)
     {
         const fromIndex = this.form.children.indexOf(item);
         if (fromIndex === this.form.children.length - 1) {
@@ -184,8 +183,8 @@ export default class extends Vue
         for (let child of this.form.children) {
             let grandChildren = child.children;
             for (let grandChild of grandChildren) {
-                if (grandChild.position === true) {
-                    grandChild.value = i;
+                if ((<FormPosition>grandChild).position === true) {
+                    grandChild.value = i.toString();
                     i++;
                 }
             }
@@ -206,7 +205,7 @@ export default class extends Vue
         }
     }
 
-    private updateChangeIndex(form: FormListData)
+    private updateChangeIndex(form: FormList)
     {
         form.name = this.form.index.toString();
         form.fullName = this.form.fullName + '[' + form.name + ']';
@@ -217,7 +216,7 @@ export default class extends Vue
         }
     }
 
-    private updateFullName(form: FormData)
+    private updateFullName(form: Form)
     {
         form.fullName = form.parent.fullName + '[' + form.name + ']';
         for (let child of form.children) {
@@ -225,6 +224,5 @@ export default class extends Vue
         }
     }
 }
-
 
 </script>
