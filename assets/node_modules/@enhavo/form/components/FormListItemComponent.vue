@@ -28,7 +28,7 @@
 
 <script lang="ts">
 import {Vue, Options, Prop} from "vue-property-decorator";
-import {Form} from "@enhavo/vue-form/form/Form";
+import {Form} from "@enhavo/vue-form/model/Form";
 
 @Options({})
 export default class extends Vue

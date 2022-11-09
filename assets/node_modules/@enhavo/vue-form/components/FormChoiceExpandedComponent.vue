@@ -9,22 +9,24 @@
 
 <script lang="ts">
 import {Vue, Options, Prop} from "vue-property-decorator";
-import {ChoiceFormData} from "@enhavo/vue-form/data/ChoiceFormData";
+import {ChoiceForm} from "@enhavo/vue-form/model/ChoiceForm";
 import {Util} from "@enhavo/vue-form/form/Util";
 
 @Options({})
 export default class extends Vue
 {
     @Prop()
-    form: ChoiceFormData
+    form: ChoiceForm
 
     updated()
     {
+        this.form.element = <HTMLElement>this.$refs.element;
         Util.updateAttributes(<HTMLElement>this.$refs.element, this.form.attr);
     }
 
     mounted()
     {
+        this.form.element = <HTMLElement>this.$refs.element;
         Util.updateAttributes(<HTMLElement>this.$refs.element, this.form.attr);
     }
 }

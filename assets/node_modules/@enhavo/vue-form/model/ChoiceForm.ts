@@ -1,6 +1,6 @@
-import {FormData} from "@enhavo/vue-form/data/FormData"
+import {Form} from "@enhavo/vue-form/model/Form"
 
-export class ChoiceFormData extends FormData
+export class ChoiceForm extends Form
 {
     expanded: boolean;
     placeholderInChoices: boolean;

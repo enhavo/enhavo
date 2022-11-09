@@ -11,13 +11,13 @@
 import {Vue, Options, Prop} from "vue-property-decorator";
 import {Util} from "@enhavo/vue-form/form/Util";
 import * as _ from "lodash";
-import {ChoiceFormData} from "@enhavo/vue-form/data/ChoiceFormData";
+import {ChoiceForm} from "@enhavo/vue-form/model/ChoiceForm";
 
 @Options({})
 export default class extends Vue
 {
     @Prop()
-    form: ChoiceFormData
+    form: ChoiceForm
 
     size(object: object)
     {
@@ -62,11 +62,13 @@ export default class extends Vue
 
     updated()
     {
+        this.form.element = <HTMLElement>this.$refs.element;
         Util.updateAttributes(<HTMLElement>this.$refs.element, this.form.attr);
     }
 
     mounted()
     {
+        this.form.element = <HTMLElement>this.$refs.element;
         Util.updateAttributes(<HTMLElement>this.$refs.element, this.form.attr);
     }
 }

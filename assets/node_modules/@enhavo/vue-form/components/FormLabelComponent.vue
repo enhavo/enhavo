@@ -10,14 +10,14 @@
 
 <script lang="ts">
 import {Vue, Options, Prop} from "vue-property-decorator";
-import {FormData} from "@enhavo/vue-form/data/FormData"
+import {Form} from "@enhavo/vue-form/model/Form"
 import {Util} from "@enhavo/vue-form/form/Util";
 
 @Options({})
 export default class extends Vue
 {
     @Prop()
-    form: FormData;
+    form: Form;
 
     @Prop()
     element: string|null;

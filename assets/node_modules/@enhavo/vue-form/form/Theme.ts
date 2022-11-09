@@ -1,12 +1,21 @@
-import {FormVisitorInterface} from "@enhavo/vue-form/form/FormVisitor";
+import {FormVisitor, FormVisitorInterface} from "@enhavo/vue-form/form/FormVisitor";
+import {Form} from "@enhavo/vue-form/model/Form";
 
 export class Theme
 {
-    private visitors: Array<FormVisitorInterface> = [];
+    constructor(
+        private visitors: Array<FormVisitorInterface> = []
+    ) {
+    }
 
     addVisitor(visitor: FormVisitorInterface)
     {
         this.visitors.push(visitor);
+    }
+
+    addVisitorCallback(supportCallback: (form: Form) => boolean, applyCallback: (form: Form) => Form|void, priority: number = 100)
+    {
+        this.visitors.push(new FormVisitor(supportCallback, applyCallback, priority));
     }
 
     merge(theme: Theme|Array<Theme>)

@@ -19,9 +19,12 @@ class ComponentVueType extends AbstractVueType
             $data['component'] = $view->vars['component'];
         }
 
-        if (!isset($data['componentVisitors'])) {
+        if (!isset($view->vars['component_visitors'])) {
             $data['componentVisitors'] = [];
         } else {
+            if (!isset($data['componentVisitors'])) {
+                $data['componentVisitors'] = [];
+            }
             $data['componentVisitors'] = array_merge($data['componentVisitors'], $view->vars['component_visitors']);
         }
     }

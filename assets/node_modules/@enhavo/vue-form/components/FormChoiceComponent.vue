@@ -4,13 +4,13 @@
 
 <script lang="ts">
 import {Vue, Options, Prop} from "vue-property-decorator";
-import {ChoiceFormData} from "@enhavo/vue-form/data/ChoiceFormData";
+import {ChoiceForm} from "@enhavo/vue-form/model/ChoiceForm";
 
 @Options({})
 export default class extends Vue
 {
     @Prop()
-    form: ChoiceFormData
+    form: ChoiceForm
 
     getComponent()
     {
