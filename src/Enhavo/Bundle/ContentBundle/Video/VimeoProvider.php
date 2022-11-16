@@ -40,7 +40,7 @@ class VimeoProvider implements ProviderInterface
             str_replace(array("<br>", "<br/>", "<br />"), NULL, $data[0]->description),
             $data[0]->thumbnail_large,
             sprintf("https://vimeo.com/%s", $data[0]->id),
-            sprintf("https://player.vimeo.com/video/%s", $data[0]->id),
+            sprintf("https://player.vimeo.com/video/%s", $data[0]->id)
         );
     }
 
