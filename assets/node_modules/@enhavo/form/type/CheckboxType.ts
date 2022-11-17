@@ -10,7 +10,7 @@ export default class CheckboxType extends FormType
             radioClass: 'icheckbox'
         });
 
-        let $formRow = this.$element.parents('[data-form-row]');
+        let $formRow = this.$element.closest('[data-form-row]');
         let $count = $formRow.find('[data-selected-count]');
 
         if ($count.length) { // if there is a data-selected-count element, then multiple must have been true
