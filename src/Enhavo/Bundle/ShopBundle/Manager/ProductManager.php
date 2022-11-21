@@ -144,6 +144,15 @@ class ProductManager
         return null;
     }
 
+    public function getDefaultVariantProxies(array $products): array
+    {
+        $proxies = [];
+        foreach ($products as $product) {
+            $proxies[] = $this->getDefaultVariantProxy($product);
+        }
+        return $proxies;
+    }
+
     public function getVariantProxies(iterable $productVariants): array
     {
         $proxies = [];
@@ -153,17 +162,7 @@ class ProductManager
         return $proxies;
     }
 
-    public function transformProductsToDefaultVariantProxies(array $products): array
-    {
-        $proxies = [];
-        foreach ($products as $product) {
-            $defaultVariant = $product->getDefaultVariant();
-            if ($defaultVariant) {
-                $proxies[] = $this->getVariantProxy($defaultVariant);
-            }
-        }
-        return $proxies;
-    }
+
 
     public function getVariantProxy(ProductVariantInterface $productVariant): ProductVariantProxyInterface
     {
