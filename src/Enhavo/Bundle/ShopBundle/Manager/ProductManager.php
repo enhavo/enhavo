@@ -136,6 +136,15 @@ class ProductManager
         return $resource === null;
     }
 
+    public function getDefaultVariantProxies(array $products): array
+    {
+        $proxies = [];
+        foreach ($products as $product) {
+            $proxies[] = $this->getDefaultVariantProxy($product);
+        }
+        return $proxies;
+    }
+
     public function getDefaultVariantProxy(ProductInterface $product): ?ProductAccessInterface
     {
         if ($product->getDefaultVariant()) {
