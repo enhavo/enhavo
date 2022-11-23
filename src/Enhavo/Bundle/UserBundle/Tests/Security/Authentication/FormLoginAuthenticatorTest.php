@@ -206,6 +206,7 @@ class FormLoginAuthenticatorTest extends TestCase
         $this->assertEquals('_security.user.target_path.session', $response->getTargetUrl());
     }
 
+
     public function testAuthenticationFailure()
     {
         $dependencies = $this->createDependencies();
@@ -214,7 +215,12 @@ class FormLoginAuthenticatorTest extends TestCase
             $configuration->setRoute('config.login.route');
             return $configuration;
         });
-        $dependencies->request->expects($this->once())->method('get')->willReturn('failed@enhavo.com');
+        $dependencies->request->method('get')->willReturnCallback(function($key) {
+            if ($key === '_email') {
+                return 'failed@enhavo.com';
+            }
+            return null;
+        });
 
         $instance = $this->createInstance($dependencies);
 
