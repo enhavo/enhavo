@@ -176,6 +176,7 @@ class FormLoginAuthenticatorTest extends TestCase
     public function testAuthenticationFailure()
     {
         $dependencies = $this->createDependencies();
+
         $dependencies->userRepository->method('loadUserByIdentifier')->willReturnCallback(function($name) {
             if ($name === '1337.user@enhavo.com') {
                 $user = new UserMock();
@@ -190,6 +191,7 @@ class FormLoginAuthenticatorTest extends TestCase
             $this->assertEquals('1337.user@enhavo.com', $event->getUser()->getUsername());
             return $event;
         });
+
         $dependencies->configurationProvider->method('getLoginConfiguration')->willReturnCallback(function($name) {
             $loginConfiguration = new LoginConfiguration();
             $loginConfiguration->setRoute('login_route');
@@ -202,6 +204,24 @@ class FormLoginAuthenticatorTest extends TestCase
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertEquals('login_route.generated', $response->getTargetUrl());
+    }
+
+    public function testAuthenticationFailureWithFailurePath()
+    {
+        $dependencies = $this->createDependencies();
+
+        $dependencies->request->method('get')->willReturnCallback(function($key) {
+            if ($key === '_failure_path') {
+                return '/login/failure';
+            }
+            return null;
+        });
+
+        $instance = $this->createInstance($dependencies);
+        $response = $instance->onAuthenticationFailure($dependencies->request, new AuthenticationException());
+
+        $this->assertInstanceOf(RedirectResponse::class, $response);
+        $this->assertEquals('/login/failure', $response->getTargetUrl());
     }
 }
 
