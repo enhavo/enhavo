@@ -2,55 +2,22 @@
 
 namespace Enhavo\Bundle\UserBundle\Command;
 
-use Enhavo\Bundle\UserBundle\Mapper\UserMapperInterface;
-use Enhavo\Bundle\UserBundle\Repository\UserRepository;
-use Enhavo\Bundle\UserBundle\User\UserManager;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\Question;
 
-class ChangePasswordCommand extends Command
+
+class ChangePasswordCommand extends AbstractUserCommand
 {
     protected static $defaultName = 'enhavo:user:change-password';
-
-    /** @var UserManager */
-    private $userManager;
-
-    /** @var UserRepository */
-    private $userRepository;
-
-    /** @var UserMapperInterface */
-    private $userMapper;
-
-    /**
-     * ChangePasswordCommand constructor.
-     * @param UserManager $userManager
-     * @param UserRepository $userRepository
-     * @param UserMapperInterface $userMapper
-     */
-    public function __construct(UserManager $userManager, UserRepository $userRepository, UserMapperInterface $userMapper)
-    {
-        $this->userManager = $userManager;
-        $this->userRepository = $userRepository;
-        $this->userMapper = $userMapper;
-
-        parent::__construct();
-    }
-
 
     /**
      * {@inheritdoc}
      */
     protected function configure()
     {
-        $definitions = [];
-        $properties = $this->userMapper->getRegisterProperties();
-        foreach ($properties as $property) {
-            $definitions[] = new InputArgument($property, InputArgument::REQUIRED, sprintf('The %s required for login', $property));
-        }
-
+        $definitions = $this->getPropertyDefinitions();
         $definitions[] = new InputArgument('password', InputArgument::REQUIRED, 'The password');
 
         $this
@@ -77,20 +44,19 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $credentials = [];
-        $properties = $this->userMapper->getRegisterProperties();
-        foreach ($properties as $property) {
-            $credentials[$property] = $input->getArgument($property);
+        $user = $this->getUser($input);
+
+        if ($user === null) {
+            $output->writeln('<error> Can\'t find user! </error>');
+            return Command::FAILURE;
         }
 
         $password = $input->getArgument('password');
 
-        $username = $this->userMapper->getUsername($credentials);
-        $user = $this->userRepository->loadUserByIdentifier($username);
         $user->setPlainPassword($password);
         $this->userManager->changePassword($user);
 
-        $output->writeln(sprintf('Changed password for user <comment>%s</comment>', $username));
+        $output->writeln(sprintf('Changed password for user <comment>%s</comment>', $user->getUserIdentifier()));
         return Command::SUCCESS;
     }
 
@@ -99,39 +65,7 @@ EOT
      */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
-        $questions = [];
-        $properties = $this->userMapper->getRegisterProperties();
-
-        foreach ($properties as $property) {
-            if (!$input->getArgument($property)) {
-                $question = new Question(sprintf('Please choose a %s:', $property));
-                $question->setValidator(function ($username) use ($property) {
-                    if (empty($username)) {
-                        throw new \Exception(sprintf('%s can not be empty', $property));
-                    }
-
-                    return $username;
-                });
-                $questions[$property] = $question;
-            }
-        }
-
-        if (!$input->getArgument('password')) {
-            $question = new Question('Please enter the new password:');
-            $question->setValidator(function ($password) {
-                if (empty($password)) {
-                    throw new \Exception('Password can not be empty');
-                }
-
-                return $password;
-            });
-            $question->setHidden(true);
-            $questions['password'] = $question;
-        }
-
-        foreach ($questions as $name => $question) {
-            $answer = $this->getHelper('question')->ask($input, $output, $question);
-            $input->setArgument($name, $answer);
-        }
+        parent::interact($input, $output);
+        $this->addPasswordQuestion($input, $output);
     }
 }

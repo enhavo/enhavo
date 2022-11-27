@@ -3,7 +3,7 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@Enhavo\Bundle\AppBundle\Mailer\MailerManager'
-            - '@Enhavo\Bundle\UserBundle\Mapper\UserMapper'
+            - '@Enhavo\Bundle\UserBundle\UserIdentifier\UserIdentifierProviderResolver'
             - '@enhavo_app.util.secure_url_token_generator'
             - '@translator'
             - '@security.encoder_factory.generic'
@@ -52,17 +52,13 @@ services:
             - '@enhavo_user.repository.user'
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
             - '@router'
-            - '@Enhavo\Bundle\UserBundle\Mapper\UserMapper'
             - '@event_dispatcher'
+            - '@form.factory'
             - '%enhavo_user.model.user.class%'
 
     Enhavo\Bundle\UserBundle\Security\UserChecker:
         arguments:
             - '@event_dispatcher'
-
-    Enhavo\Bundle\UserBundle\Mapper\UserMapper:
-        arguments:
-            - '%enhavo_user.mapper%'
 
     Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider:
         arguments:
@@ -98,7 +94,9 @@ services:
     Enhavo\Bundle\UserBundle\Component\LoginComponent:
         arguments:
             - '@request_stack'
-            - '@security.csrf.token_manager'
+            - '@form.factory'
+            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
+            - '@Enhavo\Bundle\UserBundle\Security\Authentication\AuthenticationError'
         tags:
             - { name: twig.component, key: user_login,  template: 'theme/component/user/login.html.twig' }
 
@@ -136,3 +134,15 @@ services:
             - '@translator'
         tags:
             - { name: 'enhavo_user.error_message' }
+
+    Enhavo\Bundle\UserBundle\UserIdentifier\UserIdentifierProviderResolver:
+        arguments:
+            - '%enhavo_user.user_identifiers%'
+        calls:
+            - ['setContainer', ['@service_container']]
+
+    Enhavo\Bundle\UserBundle\UserIdentifier\EmailUserIdentifierProvider:
+        public: true
+
+    Enhavo\Bundle\UserBundle\UserIdentifier\UsernamelUserIdentifieProvider:
+        public: true

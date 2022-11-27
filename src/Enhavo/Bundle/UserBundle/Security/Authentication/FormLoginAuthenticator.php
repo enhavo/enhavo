@@ -10,11 +10,13 @@ namespace Enhavo\Bundle\UserBundle\Security\Authentication;
 use Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider;
 use Enhavo\Bundle\UserBundle\Event\UserEvent;
 use Enhavo\Bundle\UserBundle\Exception\ConfigurationException;
-use Enhavo\Bundle\UserBundle\Mapper\UserMapperInterface;
+use Enhavo\Bundle\UserBundle\UserIdentifier\UserIdentifierProvider;
+use Enhavo\Bundle\UserBundle\Model\CredentialsInterface;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Enhavo\Bundle\UserBundle\Repository\UserRepository;
 use Enhavo\Bundle\UserBundle\User\UserManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,9 +41,10 @@ class FormLoginAuthenticator extends AbstractAuthenticator
         private UserRepository $userRepository,
         private ConfigurationProvider $configurationProvider,
         private UrlGeneratorInterface $urlGenerator,
-        private UserMapperInterface $userMapper,
         private EventDispatcherInterface $eventDispatcher,
-        string $className)
+        private FormFactoryInterface $formFactory,
+        string $className
+    )
     {
     }
 
@@ -63,32 +66,31 @@ class FormLoginAuthenticator extends AbstractAuthenticator
     {
         $credentials = $this->getCredentials($request);
 
+        $rememberMeBadge = new RememberMeBadge();
+        $credentials->isRememberMe() ? $rememberMeBadge->enable(): $rememberMeBadge->disable();
+
+        $tokenBadge = new CsrfTokenBadge('authenticate', $credentials->getCsrfToken());
+
         return new Passport(
-            new UserBadge($credentials['username'], [$this->userRepository, 'loadUserByIdentifier']),
-            new PasswordCredentials($credentials['password']),
-            [
-                new RememberMeBadge(),
-                new CsrfTokenBadge('authenticate', $credentials['csrf_token'])
-            ],
+            new UserBadge($credentials->getUserIdentifier(), [$this->userRepository, 'loadUserByIdentifier']),
+            new PasswordCredentials($credentials->getPassword()),
+            [ $rememberMeBadge, $tokenBadge ],
         );
     }
 
-    private function getCredentials(Request $request): array
+    private function getCredentials(Request $request): CredentialsInterface
     {
-        $usernameCredentials = [];
-        $properties = $this->userMapper->getCredentialProperties();
-        foreach ($properties as $property) {
-            $usernameCredentials[$property] = $request->request->get('_' .$property);
+        $loginConfiguration = $this->configurationProvider->getLoginConfiguration();
+
+        $form = $this->formFactory->create($loginConfiguration->getFormClass(), null, $loginConfiguration->getFormOptions());
+        $form->handleRequest($request);
+        $credentials = $form->getData();
+
+        if (!$credentials instanceof CredentialsInterface) {
+            throw new \InvalidArgumentException();
         }
-        $username = $this->userMapper->getUsername($usernameCredentials);
 
-        $request->getSession()->set(Security::LAST_USERNAME, $username);
-
-        return [
-            'password' => $request->request->get('_password'),
-            'csrf_token' => $request->request->get('_csrf_token'),
-            'username' => $username,
-        ];
+        return $credentials;
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $firewallName): ?Response
@@ -100,6 +102,7 @@ class FormLoginAuthenticator extends AbstractAuthenticator
         $event = $this->dispatchSuccess($user);
 
         $this->removeTargetPath($session, $firewallName);
+        $request->getSession()->set('_security.credentials', null);
 
         if ($targetPath) {
             return $event->getResponse() ?? new RedirectResponse($targetPath);
@@ -110,15 +113,17 @@ class FormLoginAuthenticator extends AbstractAuthenticator
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
     {
+        $credentials = $this->getCredentials($request);
+
         if ($request->hasSession()) {
             $request->getSession()->set(Security::AUTHENTICATION_ERROR, $exception);
+            $request->getSession()->set('_security.credentials', $credentials);
         }
 
         $user = $exception->getToken()?->getUser();
 
         if ($user === null) {
-            $credentials = $this->getCredentials($request);
-            $user = $this->userRepository->loadUserByIdentifier($credentials['username']);
+            $user = $this->userRepository->loadUserByIdentifier($credentials->getUserIdentifier());
         }
 
         if ($user) {

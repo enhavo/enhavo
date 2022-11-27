@@ -10,6 +10,7 @@ use Enhavo\Bundle\UserBundle\Form\Type\ChangeEmailRequestType;
 use Enhavo\Bundle\UserBundle\Form\Type\ChangePasswordType;
 use Enhavo\Bundle\UserBundle\Form\Type\DeleteConfirmType;
 use Enhavo\Bundle\UserBundle\Form\Type\GroupType;
+use Enhavo\Bundle\UserBundle\Form\Type\LoginType;
 use Enhavo\Bundle\UserBundle\Form\Type\ProfileType;
 use Enhavo\Bundle\UserBundle\Form\Type\RegistrationType;
 use Enhavo\Bundle\UserBundle\Form\Type\ResetPasswordRequestType;
@@ -44,7 +45,7 @@ class Configuration implements ConfigurationInterface
 
         $this->addResourceSection($rootNode);
         $this->addParametersSection($rootNode);
-        $this->addMapperSection($rootNode);
+        $this->addUserIdentifierSection($rootNode);
         $this->addConfigNode($rootNode);
 
         return $treeBuilder;
@@ -111,17 +112,12 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
-    private function addMapperSection(ArrayNodeDefinition $node)
+    private function addUserIdentifierSection(ArrayNodeDefinition $node)
     {
         $node
             ->children()
-                ->arrayNode('mapper')
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->variableNode('credential_properties')->defaultValue(['email'])->end()
-                        ->variableNode('register_properties')->defaultValue(['email'])->end()
-                        ->scalarNode('glue')->defaultValue('.')->end()
-                    ->end()
+                ->arrayNode('user_identifiers')
+                    ->prototype('scalar')
                 ->end()
             ->end()
         ;
@@ -335,6 +331,13 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->arrayNode('login')
                     ->children()
+                        ->arrayNode('form')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('class')->defaultValue(LoginType::class)->end()
+                                ->variableNode('options')->defaultValue([])->end()
+                            ->end()
+                        ->end()
                         ->scalarNode('template')->isRequired()->cannotBeEmpty()->end()
                         ->scalarNode('redirect_route')->defaultValue(null)->end()
                         ->scalarNode('route')->isRequired()->cannotBeEmpty()->end()

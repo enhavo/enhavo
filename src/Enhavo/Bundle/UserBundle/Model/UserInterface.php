@@ -17,6 +17,10 @@ interface UserInterface extends BaseUserInterface
     const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
     const ROLE_ADMIN = 'ROLE_ADMIN';
 
+    public function getUserIdentifier(): string;
+
+    public function setUserIdentifier(string $userIdentifier): void;
+
     public function setUsername(?string $username);
 
     public function setSalt(?string $salt);

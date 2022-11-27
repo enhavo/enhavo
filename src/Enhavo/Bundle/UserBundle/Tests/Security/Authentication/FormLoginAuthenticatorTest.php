@@ -6,13 +6,12 @@
 
 namespace Enhavo\Bundle\UserBundle\Tests\Security\Authentication;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider;
 use Enhavo\Bundle\UserBundle\Configuration\Login\LoginConfiguration;
 use Enhavo\Bundle\UserBundle\Event\UserEvent;
-use Enhavo\Bundle\UserBundle\Mapper\UserMapper;
+use Enhavo\Bundle\UserBundle\Model\Credentials;
+use Enhavo\Bundle\UserBundle\UserIdentifier\UserMapper;
 use Enhavo\Bundle\UserBundle\Model\User;
-use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Enhavo\Bundle\UserBundle\Repository\UserRepository;
 use Enhavo\Bundle\UserBundle\Security\Authentication\FormLoginAuthenticator;
 use Enhavo\Bundle\UserBundle\Tests\Mocks\UserMock;
@@ -20,44 +19,32 @@ use Enhavo\Bundle\UserBundle\User\UserManager;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
-use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
-use Symfony\Component\Security\Core\User\UserProviderInterface;
-use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\CsrfTokenBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
 
 class FormLoginAuthenticatorTest extends TestCase
 {
-    private function createInstance(FormLoginAuthenticatorTestDependencies $dependencies, $mappings = null, $className = null): FormLoginAuthenticator
+    private function createInstance(FormLoginAuthenticatorTestDependencies $dependencies, $className = null): FormLoginAuthenticator
     {
         $className = $className ?? User::class;
-        $mappings = $mappings ?? [
-                UserMapper::CREDENTIAL_PROPERTIES => [
-                    'customerId', 'email'
-                ],
-                UserMapper::REGISTER_PROPERTIES => [
-                    'customerId', 'email'
-                ],
-                'glue' => '.',
-        ];
 
         return new FormLoginAuthenticator(
             $dependencies->userManager,
             $dependencies->userRepository,
             $dependencies->configurationProvider,
             $dependencies->urlGenerator,
-            $dependencies->getUserMapper($mappings),
             $dependencies->eventDispatcher,
+            $dependencies->formFactory,
             $className,
         );
     }
@@ -78,15 +65,13 @@ class FormLoginAuthenticatorTest extends TestCase
         $dependencies->request->attributes = new ParameterBag();
         $dependencies->request->request = new ParameterBag();
         $dependencies->request->attributes->set('_config', 'config');
-        $dependencies->request->request->set('_password', '__PW__');
-        $dependencies->request->request->set('_csrf_token', '__CSRF__');
-        $dependencies->request->request->set('_email', 'user@enhavo.com');
-        $dependencies->request->request->set('_customerId', '1337');
         $dependencies->session = $this->getMockBuilder(Session::class)->getMock();
         $dependencies->session->method('get')->willReturnCallback(function ($key) {
             return $key.'.session';
         });
         $dependencies->request->method('getSession')->willReturn($dependencies->session);
+        $dependencies->formFactory = $this->getMockBuilder(FormFactoryInterface::class)->getMock();
+        $dependencies->form = $this->getMockBuilder(Form::class)->disableOriginalConstructor()->getMock();
 
         return $dependencies;
     }
@@ -132,6 +117,22 @@ class FormLoginAuthenticatorTest extends TestCase
     public function testBadgeData()
     {
         $dependencies = $this->createDependencies();
+
+        $dependencies->configurationProvider->method('getLoginConfiguration')->willReturnCallback(function() {
+            $configuration = new LoginConfiguration();
+            $configuration->setFormClass('formClass');
+            $configuration->setFormOptions([]);
+            return $configuration;
+        });
+
+        $dependencies->formFactory->method('create')->willReturn($dependencies->form);
+
+        $credentials = new Credentials();
+        $credentials->setUserIdentifier('1337.user@enhavo.com');
+        $credentials->setPassword('__PW__');
+        $credentials->setCsrfToken('__CSRF__');
+        $dependencies->form->method('getData')->willReturn($credentials);
+
         $instance = $this->createInstance($dependencies);
         $passport = $instance->authenticate($dependencies->request);
 
@@ -185,6 +186,7 @@ class FormLoginAuthenticatorTest extends TestCase
             }
             return null;
         });
+
         $dependencies->eventDispatcher->expects($this->once())->method('dispatch')->willReturnCallback(function ($event, $name) {
             $this->assertInstanceOf(UserEvent::class, $event);
             $this->assertEquals(UserEvent::LOGIN_FAILURE, $name);
@@ -195,8 +197,17 @@ class FormLoginAuthenticatorTest extends TestCase
         $dependencies->configurationProvider->method('getLoginConfiguration')->willReturnCallback(function($name) {
             $loginConfiguration = new LoginConfiguration();
             $loginConfiguration->setRoute('login_route');
+            $loginConfiguration->setFormClass('formClass');
+            $loginConfiguration->setFormOptions([]);
             return $loginConfiguration;
         });
+
+
+        $dependencies->formFactory->method('create')->willReturn($dependencies->form);
+
+        $credentials = new Credentials();
+        $credentials->setUserIdentifier('1337.user@enhavo.com');
+        $dependencies->form->method('getData')->willReturn($credentials);
 
         $instance = $this->createInstance($dependencies);
 
@@ -209,6 +220,17 @@ class FormLoginAuthenticatorTest extends TestCase
     public function testAuthenticationFailureWithFailurePath()
     {
         $dependencies = $this->createDependencies();
+
+        $dependencies->configurationProvider->method('getLoginConfiguration')->willReturnCallback(function($name) {
+            $loginConfiguration = new LoginConfiguration();
+            $loginConfiguration->setFormClass('formClass');
+            $loginConfiguration->setFormOptions([]);
+            return $loginConfiguration;
+        });
+
+        $dependencies->formFactory->method('create')->willReturn($dependencies->form);
+
+        $dependencies->form->method('getData')->willReturn(new Credentials());
 
         $dependencies->request->method('get')->willReturnCallback(function($key) {
             if ($key === '_failure_path') {
@@ -248,8 +270,9 @@ class FormLoginAuthenticatorTestDependencies
     /** @var UserRepository|MockObject */
     public $userRepository;
 
-    public function getUserMapper($mappings)
-    {
-        return new UserMapper($mappings);
-    }
+    /** @var FormFactoryInterface|MockObject */
+    public $formFactory;
+
+    /** @var Form|MockObject */
+    public $form;
 }

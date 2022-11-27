@@ -7,19 +7,18 @@
 namespace Enhavo\Bundle\UserBundle\Tests\User;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Enhavo\Bundle\AppBundle\Exception\PropertyNotExistsException;
 use Enhavo\Bundle\AppBundle\Mailer\Defaults;
 use Enhavo\Bundle\AppBundle\Mailer\MailerManager;
 use Enhavo\Bundle\AppBundle\Mailer\Message;
 use Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface;
 use Enhavo\Bundle\UserBundle\Configuration\ChangeEmail\ChangeEmailConfirmConfiguration;
-use Enhavo\Bundle\UserBundle\Configuration\Login\LoginConfiguration;
 use Enhavo\Bundle\UserBundle\Configuration\Registration\RegistrationConfirmConfiguration;
 use Enhavo\Bundle\UserBundle\Configuration\Registration\RegistrationRegisterConfiguration;
 use Enhavo\Bundle\UserBundle\Configuration\ResetPassword\ResetPasswordRequestConfiguration;
 use Enhavo\Bundle\UserBundle\Event\UserEvent;
-use Enhavo\Bundle\UserBundle\Mapper\UserMapper;
-use Enhavo\Bundle\UserBundle\Model\User;
+use Enhavo\Bundle\UserBundle\UserIdentifier\UserIdentifierProviderInterface;
+use Enhavo\Bundle\UserBundle\UserIdentifier\UserIdentifierProviderResolver;
+use Enhavo\Bundle\UserBundle\UserIdentifier\UserMapper;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Enhavo\Bundle\UserBundle\Repository\UserRepository;
 use Enhavo\Bundle\UserBundle\Tests\Mocks\UserMock;
@@ -44,24 +43,10 @@ class UserManagerTest extends TestCase
 {
     private function createInstance(UserManagerTestDependencies $dependencies, array $mapping = null)
     {
-        if (!$mapping) {
-            $mapping = [
-                UserMapper::REGISTER_PROPERTIES => [
-                    'customerId',
-                    'email'
-                ],
-                UserMapper::CREDENTIAL_PROPERTIES => [
-                    'customerId',
-                    'email'
-                ],
-                'glue' => '.',
-            ];
-        }
-
         return new UserManager(
             $dependencies->entityManager,
             $dependencies->mailerManager,
-            $dependencies->getUserMapper($mapping),
+            $dependencies->resolver,
             $dependencies->tokenGenerator,
             $dependencies->translator,
             $dependencies->encoderFactory,
@@ -105,6 +90,8 @@ class UserManagerTest extends TestCase
         $dependencies->requestStack = $this->getMockBuilder(RequestStack::class)->disableOriginalConstructor()->getMock();
         $dependencies->sessionStrategy = $this->getMockBuilder(SessionAuthenticationStrategyInterface::class)->getMock();
         $dependencies->defaultFirewall = 'main';
+        $dependencies->resolver = $this->getMockBuilder(UserIdentifierProviderResolver::class)->disableOriginalConstructor()->getMock();
+        $dependencies->resolver->method('getProvider')->willReturn(new CustomerIdUserIdentifierProvider());
 
         return $dependencies;
     }
@@ -158,7 +145,7 @@ class UserManagerTest extends TestCase
         $manager= $this->createInstance($dependencies);
         $manager->register($user, $configuration);
 
-        $this->assertEquals('1337.user@enhavo.com', $user->getUsername());
+        $this->assertEquals('1337.user@enhavo.com', $user->getUserIdentifier());
         $this->assertEquals('password.hashed', $user->getPassword());
         $this->assertNull($user->getPlainPassword());
         $this->assertEquals('__TOKEN__', $user->getConfirmationToken());
@@ -213,7 +200,7 @@ class UserManagerTest extends TestCase
 
         $manager->confirm($user, $configuration);
 
-        $this->assertEquals('1337.user@enhavo.com', $user->getUsername());
+        $this->assertEquals('1337.user@enhavo.com', $user->getUserIdentifier());
         $this->assertEquals('password.hashed', $user->getPassword());
         $this->assertNull($user->getPlainPassword());
         $this->assertNull($user->getConfirmationToken());
@@ -270,7 +257,7 @@ class UserManagerTest extends TestCase
 
         $manager->resetPassword($user, $configuration);
 
-        $this->assertEquals('1337.user@enhavo.com', $user->getUsername());
+        $this->assertEquals('1337.user@enhavo.com', $user->getUserIdentifier());
         $this->assertEquals('password.hashed', $user->getPassword());
         $this->assertNull($user->getPlainPassword());
         $this->assertEquals('__TOKEN__', $user->getConfirmationToken());
@@ -332,7 +319,7 @@ class UserManagerTest extends TestCase
         $manager->changeEmail($user, 'new@mail.com', $configuration);
 
         $this->assertEquals('new@mail.com', $user->getEmail());
-        $this->assertEquals('1337.new@mail.com', $user->getUsername());
+        $this->assertEquals('1337.new@mail.com', $user->getUserIdentifier());
     }
 
     public function testActivate()
@@ -405,31 +392,23 @@ class UserManagerTest extends TestCase
         $this->assertNull($user->getPlainPassword());
         $this->assertNull($user->getSalt());
     }
+}
 
-    public function testMapValues()
+class CustomerIdUserIdentifierProvider implements UserIdentifierProviderInterface
+{
+    public function getUserIdentifier(\Symfony\Component\Security\Core\User\UserInterface $user): string
     {
-        $dependencies = $this->createDependencies();
-        $manager = $this->createInstance($dependencies, []);
+        return $user->getCustomerId() . '.' . $user->getEmail();
+    }
 
-        $user = new UserMock();
-        $values = [
-            'customerId' => 1337,
-            'email' => 'e@mail.com',
-        ];
+    public function getUserIdentifierByPropertyValues(array $values): string
+    {
+        return $values['customerId'] . '.' . $values['email'];
+    }
 
-        $manager->mapValues($user, $values);
-
-        $this->assertEquals(1337, $user->getCustomerId());
-        $this->assertEquals('e@mail.com', $user->getEmail());
-
-        $this->expectException(PropertyNotExistsException::class);
-
-        $values = [
-            'clusterId' => 'abcdefg',
-            'email' => 'hijklmnop',
-        ];
-
-        $manager->mapValues($user, $values);
+    public function getUserIdentifierProperties(): array
+    {
+        return ['customerId', 'email'];
     }
 }
 
@@ -483,9 +462,7 @@ class UserManagerTestDependencies
     /** @var string */
     public $defaultFirewall;
 
-    public function getUserMapper($config): UserMapper
-    {
-        return new UserMapper($config);
-    }
+    /** @var UserIdentifierProviderResolver|MockObject */
+    public $resolver;
 }
 

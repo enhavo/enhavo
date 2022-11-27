@@ -9,32 +9,34 @@
                 </div>
             {% endif %}
 
-            <input type="hidden" id="remember_me" name="_remember_me" value="on">
             <div class="mb1">
-                <div class="input-container">
-                    <input placeholder="{{ 'security.login.username'|trans }}" type="text" id="email" name="_email" value="{{ last_username }}" autofocus />
-                </div>
+                {{ form_row(form.userIdentifier) }}
             </div>
+
             <div class="mb1">
-                <div class="input-container">
-                    <input placeholder="{{ 'security.login.password'|trans }}" type="password" id="password" name="_password" />
-                </div>
+                {{ form_row(form.password) }}
             </div>
+
             <div class="row">
                 <div class="col-sm-6 col-xs-12">
-                    <input type="checkbox" id="_remember" name="_remember">
+                    {{ form_widget(form.rememberMe) }}
                     <span></span>
-                    <label for="_remember">{{ 'security.login.remember_me'|trans|nl2br }}</label>
+                    {{ form_label(form.rememberMe) }}
                 </div>
                 <div class="col-sm-6 col-xs-12 reset">
                     <a href="{{ path('enhavo_user_theme_reset_password_request') }}">{{ 'reset_password.request.submit'|trans|nl2br }}</a>
                     <a href="{{ path('enhavo_user_theme_registration_register') }}">{{ 'registration'|trans|nl2br }}</a>
                 </div>
             </div>
-            <button class="btn loginButton" type="submit" id="_submit" name="_submit">{{ 'security.login.submit'|trans|nl2br }}</button>
-            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+            <button class="btn loginButton" type="submit">{{ 'security.login.submit'|trans|nl2br }}</button>
+            {{ form_widget(form.csrfToken) }}
+
             {% if failure_path %}
                 <input type="hidden" name="_failure_path" value="{{ failure_path }}" />
+            {% endif %}
+
+            {% if target_path %}
+                <input type="hidden" name="_target_path" value="{{ target_path }}" />
             {% endif %}
         </form>
     </div>

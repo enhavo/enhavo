@@ -1,4 +1,7 @@
 enhavo_user:
+    user_identifiers:
+        Enhavo\Bundle\UserBundle\Model\User: Enhavo\Bundle\UserBundle\UserIdentifier\EmailUserIdentifierProvider
+
     config:
         theme:
             firewall: main

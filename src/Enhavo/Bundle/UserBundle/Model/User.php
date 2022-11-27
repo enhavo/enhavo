@@ -10,6 +10,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 class User implements UserInterface, GroupableInterface, ResourceInterface, PasswordAuthenticatedUserInterface
 {
     private ?int $id = null;
+    private string $userIdentifier;
     private ?string $firstName = null;
     private ?string $lastName = null;
     private bool $enabled = false;
@@ -44,6 +45,16 @@ class User implements UserInterface, GroupableInterface, ResourceInterface, Pass
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->userIdentifier;
+    }
+
+    public function setUserIdentifier(string $userIdentifier): void
+    {
+        $this->userIdentifier = $userIdentifier;
     }
 
     public function isAdmin(): bool
@@ -318,5 +329,4 @@ class User implements UserInterface, GroupableInterface, ResourceInterface, Pass
     {
         $this->lastFailedLoginAttempt = $lastFailedLoginAttempt;
     }
-
 }

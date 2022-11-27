@@ -1,9 +1,5 @@
 {% extends template('theme/base.html.twig') %}
 
 {% block main %}
-    {{ component('user_login', {
-        error: error,
-        csrf_token: csrf_token,
-        last_username: last_username
-    }) }}
+    {{ component('user_login', {error: error}) }}
 {% endblock main %}

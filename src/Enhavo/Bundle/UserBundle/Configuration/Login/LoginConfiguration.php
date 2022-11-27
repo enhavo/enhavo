@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\UserBundle\Configuration\Login;
 
+use Enhavo\Bundle\UserBundle\Configuration\Attribute\FormTrait;
 use Enhavo\Bundle\UserBundle\Configuration\Attribute\MaxFailedLoginAttemptsTrait;
 use Enhavo\Bundle\UserBundle\Configuration\Attribute\RedirectRouteTrait;
 use Enhavo\Bundle\UserBundle\Configuration\Attribute\TemplateTrait;
@@ -10,6 +11,7 @@ class LoginConfiguration
 {
     use TemplateTrait;
     use RedirectRouteTrait;
+    use FormTrait;
 
     private ?string $route = null;
     private ?int $maxFailedLoginAttempts;

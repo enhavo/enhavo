@@ -2,16 +2,18 @@
 
 namespace Enhavo\Bundle\UserBundle\Command;
 
-use Enhavo\Bundle\UserBundle\Mapper\UserMapperInterface;
+use Enhavo\Bundle\AppBundle\Exception\PropertyNotExistsException;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
+use Enhavo\Bundle\UserBundle\Repository\UserRepository;
 use Enhavo\Bundle\UserBundle\User\UserManager;
+use Enhavo\Bundle\UserBundle\UserIdentifier\UserIdentifierProviderResolver;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\Question;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 
 /**
  * Class CreateUserCommand
@@ -19,32 +21,19 @@ use Symfony\Component\Console\Question\Question;
  *
  * @property $userFactory UserFactory
  */
-class CreateUserCommand extends Command
+class CreateUserCommand extends AbstractUserCommand
 {
     protected static $defaultName = 'enhavo:user:create';
 
-    /** @var UserManager */
-    private $userManager;
-
-    /** @var FactoryInterface */
-    private $userFactory;
-
-    /** @var UserMapperInterface */
-    private $userMapper;
-
-    /**
-     * CreateUserCommand constructor.
-     * @param UserManager $userManager
-     * @param FactoryInterface $userFactory
-     * @param UserMapperInterface $userMapper
-     */
-    public function __construct(UserManager $userManager, FactoryInterface $userFactory, UserMapperInterface $userMapper)
+    public function __construct(
+        UserManager $userManager,
+        UserRepository $userRepository,
+        UserIdentifierProviderResolver $resolver,
+        string $userClass,
+        private FactoryInterface $userFactory
+    )
     {
-        $this->userManager = $userManager;
-        $this->userFactory = $userFactory;
-        $this->userMapper = $userMapper;
-
-        parent::__construct();
+        parent::__construct($userManager, $userRepository, $resolver, $userClass);
     }
 
 
@@ -53,19 +42,15 @@ class CreateUserCommand extends Command
      */
     protected function configure()
     {
-        $definition = [];
-        $properties = $this->userMapper->getRegisterProperties();
-        foreach ($properties as $property) {
-            $definition[] = new InputArgument($property, InputArgument::REQUIRED, sprintf('The %s required for login', $property));
-        }
-        $definition[] = new InputArgument('password', InputArgument::REQUIRED, 'The password');
-        $definition[] = new InputOption('super-admin', null, InputOption::VALUE_NONE, 'Set the user as super admin');
-        $definition[] = new InputOption('inactive', null, InputOption::VALUE_NONE, 'Set the user as inactive');
+        $definitions = $this->getPropertyDefinitions();
+        $definitions[] = new InputArgument('password', InputArgument::REQUIRED, 'The password');
+        $definitions[] = new InputOption('super-admin', null, InputOption::VALUE_NONE, 'Set the user as super admin');
+        $definitions[] = new InputOption('disable', null, InputOption::VALUE_NONE, 'Disable user');
 
         $this
             ->setName('enhavo:user:create')
             ->setDescription('Create a user.')
-            ->setDefinition($definition)
+            ->setDefinition($definitions)
             ->setHelp(<<<'EOT'
 The <info>enhavo:user:create</info> command creates a user:
 
@@ -94,22 +79,18 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $credentials = [];
-        $properties = $this->userMapper->getRegisterProperties();
-        foreach ($properties as $property) {
-            $credentials[$property] = $input->getArgument($property);
-        }
-
-        $password = $input->getArgument('password');
-        $inactive = $input->getOption('inactive');
-        $superadmin = $input->getOption('super-admin');
-
         /** @var UserInterface $user */
         $user = $this->userFactory->createNew();
+
+        $this->applyProperties($input, $user);
+        $password = $input->getArgument('password');
+        $disable = $input->getOption('disable');
+        $superAdmin = (bool)$input->getOption('super-admin');
+
         $user->setPlainPassword($password);
-        $user->setEnabled((bool) !$inactive);
-        $user->setSuperAdmin((bool) $superadmin);
-        $this->userMapper->mapValues($user, $credentials);
+        $user->setEnabled(!$disable);
+        $user->setSuperAdmin($superAdmin);
+
         $this->userManager->add($user);
 
         $output->writeln(sprintf('Created user <comment>%s</comment>', $user->getUsername()));
@@ -117,44 +98,31 @@ EOT
         return Command::SUCCESS;
     }
 
+    private function applyProperties(InputInterface $input, UserInterface $user)
+    {
+        $values = [];
+        $properties = $this->getProvider($input)->getUserIdentifierProperties();
+        foreach ($properties as $property) {
+            $values[$property] = $input->getOption($property);
+        }
+
+        $propertyAccessor = new PropertyAccessor();
+        foreach ($values as $property => $value) {
+            if ($propertyAccessor->isWritable($user, $property)) {
+                $value = $values[$property];
+                $propertyAccessor->setValue($user, $property, $value);
+            } else {
+                throw new PropertyNotExistsException(sprintf('Error while setting property "%s"', $property));
+            }
+        }
+    }
+
     /**
      * {@inheritdoc}
      */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
-        $questions = [];
-        $properties = $this->userMapper->getRegisterProperties();
-
-        foreach ($properties as $property) {
-            if (!$input->getArgument($property)) {
-                $question = new Question(sprintf('Please choose a %s:', $property));
-                $question->setValidator(function ($username) use ($property) {
-                    if (empty($username)) {
-                        throw new \Exception(sprintf('%s can not be empty', $property));
-                    }
-
-                    return $username;
-                });
-                $questions[$property] = $question;
-            }
-        }
-
-        if (!$input->getArgument('password')) {
-            $question = new Question('Please choose a password:');
-            $question->setValidator(function ($password) {
-                if (empty($password)) {
-                    throw new \Exception('Password can not be empty');
-                }
-
-                return $password;
-            });
-            $question->setHidden(true);
-            $questions['password'] = $question;
-        }
-
-        foreach ($questions as $name => $question) {
-            $answer = $this->getHelper('question')->ask($input, $output, $question);
-            $input->setArgument($name, $answer);
-        }
+        parent::interact($input, $output);
+        $this->addPasswordQuestion($input, $output);
     }
 }
