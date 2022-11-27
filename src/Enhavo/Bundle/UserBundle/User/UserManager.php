@@ -19,9 +19,9 @@ use Enhavo\Bundle\UserBundle\Configuration\Registration\RegistrationRegisterConf
 use Enhavo\Bundle\UserBundle\Configuration\ResetPassword\ResetPasswordRequestConfiguration;
 use Enhavo\Bundle\UserBundle\Configuration\Verification\VerificationRequestConfiguration;
 use Enhavo\Bundle\UserBundle\Event\UserEvent;
-use Enhavo\Bundle\UserBundle\Mapper\UserMapperInterface;
+use Enhavo\Bundle\UserBundle\UserIdentifier\UserIdentifierProvider;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
-use Exception;
+use Enhavo\Bundle\UserBundle\UserIdentifier\UserIdentifierProviderResolver;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -37,19 +37,19 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class UserManager
 {
     public function __construct(
-        protected EntityManagerInterface $em,
-        protected MailerManager $mailerManager,
-        private UserMapperInterface $userMapper,
-        private TokenGeneratorInterface $tokenGenerator,
-        private TranslatorInterface $translator,
-        private EncoderFactoryInterface $encoderFactory,
-        protected RouterInterface $router,
-        private EventDispatcherInterface $eventDispatcher,
-        private TokenStorageInterface $tokenStorage,
-        private RequestStack $requestStack,
+        protected EntityManagerInterface               $em,
+        protected MailerManager                        $mailerManager,
+        private UserIdentifierProviderResolver         $resolver,
+        private TokenGeneratorInterface                $tokenGenerator,
+        private TranslatorInterface                    $translator,
+        private EncoderFactoryInterface                $encoderFactory,
+        protected RouterInterface                      $router,
+        private EventDispatcherInterface               $eventDispatcher,
+        private TokenStorageInterface                  $tokenStorage,
+        private RequestStack                           $requestStack,
         private SessionAuthenticationStrategyInterface $sessionStrategy,
-        private UserCheckerInterface $userChecker,
-        private string $defaultFirewall,
+        private UserCheckerInterface                   $userChecker,
+        private string                                 $defaultFirewall,
     ) {
 
     }
@@ -64,7 +64,9 @@ class UserManager
 
     public function update(UserInterface $user, $flush = true): void
     {
-        $this->updateUsername($user);
+        $provider = $this->resolver->getProvider($user);
+        $user->setUserIdentifier($provider->getUserIdentifier($user));
+
         $this->updatePassword($user);
 
         if ($flush) {
@@ -84,11 +86,6 @@ class UserManager
         if ($flush) {
             $this->em->flush();
         }
-    }
-
-    private function updateUsername(UserInterface $user): void
-    {
-        $this->userMapper->setUsername($user);
     }
 
     private function enable(UserInterface $user): void
@@ -116,11 +113,6 @@ class UserManager
         $this->update($user);
         $event = new UserEvent($user);
         $this->eventDispatcher->dispatch($event, UserEvent::PASSWORD_CHANGED);
-    }
-
-    public function mapValues(UserInterface $user, array $values): void
-    {
-        $this->userMapper->mapValues($user, $values);
     }
 
     public function login(UserInterface $user, ?string $firewallName = null): void

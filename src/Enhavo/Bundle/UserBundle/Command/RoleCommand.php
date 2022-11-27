@@ -2,54 +2,23 @@
 
 namespace Enhavo\Bundle\UserBundle\Command;
 
-use Enhavo\Bundle\UserBundle\Mapper\UserMapperInterface;
-use Enhavo\Bundle\UserBundle\Repository\UserRepository;
-use Enhavo\Bundle\UserBundle\User\UserManager;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\Question;
 
-class RoleCommand extends Command
+class RoleCommand extends AbstractUserCommand
 {
     protected static $defaultName = 'enhavo:user:role';
-
-    /** @var UserManager */
-    private $userManager;
-
-    /** @var UserRepository */
-    private $userRepository;
-
-    /** @var UserMapperInterface */
-    private $userMapper;
-
-    /**
-     * ChangePasswordCommand constructor.
-     * @param UserManager $userManager
-     * @param UserRepository $userRepository
-     * @param UserMapperInterface $userMapper
-     */
-    public function __construct(UserManager $userManager, UserRepository $userRepository, UserMapperInterface $userMapper)
-    {
-        $this->userManager = $userManager;
-        $this->userRepository = $userRepository;
-        $this->userMapper = $userMapper;
-
-        parent::__construct();
-    }
 
     /**
      * {@inheritdoc}
      */
     protected function configure()
     {
-        $definitions = [];
-        $properties = $this->userMapper->getRegisterProperties();
-        foreach ($properties as $property) {
-            $definitions[] = new InputArgument($property, InputArgument::REQUIRED, sprintf('The %s required for login', $property));
-        }
-
+        $definitions = $this->getPropertyDefinitions();
         $definitions[] = new InputArgument('role', InputArgument::REQUIRED, 'The role');
         $definitions[] = new InputOption('remove', null, InputOption::VALUE_NONE, 'Remove role');
 
@@ -75,27 +44,43 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $credentials = [];
-        $properties = $this->userMapper->getRegisterProperties();
-        foreach ($properties as $property) {
-            $credentials[$property] = $input->getArgument($property);
+        $user = $this->getUser($input);
+
+        if ($user === null) {
+            $output->writeln('<error> Can\'t find user! </error>');
+            return Command::FAILURE;
         }
 
         $role = $input->getArgument('role');
         $remove = $input->getOption('remove');
 
-        $username = $this->userMapper->getUsername($credentials);
-        $user = $this->userRepository->loadUserByIdentifier($username);
-
         if ($remove) {
             $user->removeRole($role);
-            $output->writeln(sprintf('Remove role <comment>%s</comment> for user <comment>%s</comment>', $role, $username));
+            $output->writeln(sprintf('Remove role <comment>%s</comment> for user <comment>%s</comment>', $role, $user->getUserIdentifier()));
         } else {
             $user->addRole($role);
-            $output->writeln(sprintf('Add role <comment>%s</comment> for user <comment>%s</comment>', $role, $username));
+            $output->writeln(sprintf('Add role <comment>%s</comment> for user <comment>%s</comment>', $role, $user->getUserIdentifier()));
         }
 
         $this->userManager->update($user);
         return Command::SUCCESS;
+    }
+
+    protected function interact(InputInterface $input, OutputInterface $output)
+    {
+        parent::interact($input, $output);
+
+        if (!$input->getArgument('role')) {
+            $question = new Question('Please choose a role:');
+            $question->setValidator(function ($password) {
+                if (empty($password)) {
+                    throw new \Exception('Role can\'t be empty');
+                }
+
+                return $password;
+            });
+            $answer = $this->getHelper('question')->ask($input, $output, $question);
+            $input->setArgument('role', $answer);
+        }
     }
 }

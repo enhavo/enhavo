@@ -45,3 +45,14 @@ services:
             - { name: form.type }
         arguments:
             - '%enhavo_user.model.user.class%'
+
+    Enhavo\Bundle\UserBundle\Form\Type\LoginType:
+        tags:
+            - { name: form.type }
+        arguments:
+            - '@Enhavo\Bundle\UserBundle\Form\EventListener\CredentialsEventSubscriber'
+
+    Enhavo\Bundle\UserBundle\Form\EventListener\CredentialsEventSubscriber:
+        arguments:
+            - '@session'
+            - '@security.csrf.token_manager'

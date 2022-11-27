@@ -2,8 +2,10 @@ services:
     Enhavo\Bundle\UserBundle\Command\CreateUserCommand:
         arguments:
             - '@enhavo_user.user.manager'
+            - '@enhavo_user.repository.user'
+            - '@Enhavo\Bundle\UserBundle\UserIdentifier\UserIdentifierProviderResolver'
+            - '%enhavo_user.model.user.class%'
             - '@enhavo_user.factory.user'
-            - '@Enhavo\Bundle\UserBundle\Mapper\UserMapper'
         tags:
             - { name: console.command }
 
@@ -11,7 +13,8 @@ services:
         arguments:
             - '@enhavo_user.user.manager'
             - '@enhavo_user.repository.user'
-            - '@Enhavo\Bundle\UserBundle\Mapper\UserMapper'
+            - '@Enhavo\Bundle\UserBundle\UserIdentifier\UserIdentifierProviderResolver'
+            - '%enhavo_user.model.user.class%'
         tags:
             - { name: console.command }
 
@@ -19,7 +22,8 @@ services:
         arguments:
             - '@enhavo_user.user.manager'
             - '@enhavo_user.repository.user'
-            - '@Enhavo\Bundle\UserBundle\Mapper\UserMapper'
+            - '@Enhavo\Bundle\UserBundle\UserIdentifier\UserIdentifierProviderResolver'
+            - '%enhavo_user.model.user.class%'
         tags:
             - { name: console.command }
 
@@ -27,6 +31,7 @@ services:
         arguments:
             - '@enhavo_user.user.manager'
             - '@enhavo_user.repository.user'
-            - '@Enhavo\Bundle\UserBundle\Mapper\UserMapper'
+            - '@Enhavo\Bundle\UserBundle\UserIdentifier\UserIdentifierProviderResolver'
+            - '%enhavo_user.model.user.class%'
         tags:
             - { name: console.command }

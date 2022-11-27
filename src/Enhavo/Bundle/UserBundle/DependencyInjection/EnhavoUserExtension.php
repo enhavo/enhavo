@@ -29,7 +29,7 @@ class EnhavoUserExtension extends AbstractResourceExtension implements PrependEx
         $container->setParameter('enhavo_user.config_key_provider', $config['config_key_provider']);
         $container->setParameter('enhavo_user.default_firewall', $config['default_firewall']);
         $container->setParameter('enhavo_user.config', $config['config']);
-        $container->setParameter('enhavo_user.mapper', $config['mapper']);
+        $container->setParameter('enhavo_user.user_identifiers', $config['user_identifiers']);
 
         $configFiles = array(
             'services/controller.yaml',

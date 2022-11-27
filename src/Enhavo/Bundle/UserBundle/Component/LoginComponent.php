@@ -2,11 +2,14 @@
 
 namespace Enhavo\Bundle\UserBundle\Component;
 
+use Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 use Symfony\UX\TwigComponent\Attribute\ExposeInTemplate;
 use Symfony\UX\TwigComponent\Attribute\PreMount;
@@ -14,21 +17,22 @@ use Symfony\UX\TwigComponent\Attribute\PreMount;
 #[AsTwigComponent('user_login', template: 'theme/component/user/login.html.twig')]
 class LoginComponent
 {
-    #[ExposeInTemplate(name: 'csrf_token')]
-    public ?string $csrfToken = null;
-
-    #[ExposeInTemplate(name: 'last_username')]
-    public ?string $lastUsername = null;
-
     #[ExposeInTemplate]
     public ?string $error = null;
+
+    #[ExposeInTemplate]
+    public ?FormView $form = null;
 
     #[ExposeInTemplate(name: 'failure_path')]
     public ?string $failurePath = null;
 
+    #[ExposeInTemplate(name: 'target_path')]
+    public ?string $targetPath = null;
+
     public function __construct(
         private RequestStack $requestStack,
-        private CsrfTokenManagerInterface $tokenManager
+        private FormFactoryInterface $formFactory,
+        private ConfigurationProvider $configurationProvider,
     ) {
     }
 
@@ -37,46 +41,34 @@ class LoginComponent
     {
         $resolver = new OptionsResolver();
         $resolver->setDefaults([
-            'config' => 'theme',
-            'csrf_token' => null,
-            'last_username' => null,
-            'error' => null,
+            'config' => null,
+            'form' => null,
+            'form_options' => [],
             'failure_path' => null,
+            'target_path' => null,
         ]);
         return $this->createViewData($resolver->resolve($data));
     }
 
     private function createViewData(array $options)
     {
-        if ($options['csrf_token']) {
-            $token = $options['csrf_token'];
-        } else {
-            $token = $this->getCsrfToken();
-        }
+        $formClass = $options['form'] ?? $this->configurationProvider->getLoginConfiguration($options['config'])->getFormClass();
+        $formOptions = $options['form_options'] ?? $this->configurationProvider->getLoginConfiguration($options['config'])->getFormOptions();
 
-        if ($options['last_username']) {
-            $lastUsername = $options['last_username'];
-        } else {
-            $lastUsername = $this->getLastUserName();
-        }
+        $request = $this->requestStack->getMainRequest();
 
-        if ($options['error']) {
-            $error = $options['error'];
-        } else {
-            $error = $this->getError();
+        $form = $this->formFactory->create($formClass, null, $formOptions);
+
+        if ($request->isMethod(Request::METHOD_POST)) {
+            $form->handleRequest($request);
         }
 
         return [
-            'csrfToken' => $token,
-            'lastUsername' => $lastUsername,
-            'error' => $error,
-            'failurePath' => $options['failure_path']
+            'error' => $this->getError(),
+            'form' => $form->createView(),
+            'failurePath' => $options['failure_path'],
+            'targetPath' => $options['target_path'],
         ];
-    }
-
-    private function getCsrfToken()
-    {
-        return $this->tokenManager->getToken('authenticate')->getValue();
     }
 
     private function getError()
@@ -98,12 +90,5 @@ class LoginComponent
             $error = null;
         }
         return $error;
-    }
-
-    private function getLastUserName()
-    {
-        $request = $this->requestStack->getMainRequest();
-        $session = $request->getSession();
-        return (null === $session) ? '' : $session->get(Security::LAST_USERNAME);
     }
 }
