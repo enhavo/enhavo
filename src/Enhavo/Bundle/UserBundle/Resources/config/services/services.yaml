@@ -96,6 +96,7 @@ services:
             - '@request_stack'
             - '@form.factory'
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
+            - '@Enhavo\Bundle\UserBundle\Security\Authentication\AuthenticationError'
         tags:
             - { name: twig.component, key: user_login,  template: 'theme/component/user/login.html.twig' }
 

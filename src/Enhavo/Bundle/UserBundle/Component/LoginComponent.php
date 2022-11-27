@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\UserBundle\Component;
 
 use Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider;
+use Enhavo\Bundle\UserBundle\Security\Authentication\AuthenticationError;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,6 +34,7 @@ class LoginComponent
         private RequestStack $requestStack,
         private FormFactoryInterface $formFactory,
         private ConfigurationProvider $configurationProvider,
+        private AuthenticationError $authenticationError,
     ) {
     }
 
@@ -42,6 +44,7 @@ class LoginComponent
         $resolver = new OptionsResolver();
         $resolver->setDefaults([
             'config' => null,
+            'error' => null,
             'form' => null,
             'form_options' => [],
             'failure_path' => null,
@@ -64,7 +67,7 @@ class LoginComponent
         }
 
         return [
-            'error' => $this->getError(),
+            'error' => $options['error'] ?? $this->authenticationError->getError(),
             'form' => $form->createView(),
             'failurePath' => $options['failure_path'],
             'targetPath' => $options['target_path'],
@@ -73,22 +76,6 @@ class LoginComponent
 
     private function getError()
     {
-        $request = $this->requestStack->getMainRequest();
-        $session = $request->getSession();
-        $authErrorKey = Security::AUTHENTICATION_ERROR;
 
-        if ($request->attributes->has($authErrorKey)) {
-            $error = $request->attributes->get($authErrorKey);
-        } elseif (null !== $session && $session->has($authErrorKey)) {
-            $error = $session->get($authErrorKey);
-            $session->remove($authErrorKey);
-        } else {
-            $error = null;
-        }
-
-        if (!$error instanceof AuthenticationException) {
-            $error = null;
-        }
-        return $error;
     }
 }
