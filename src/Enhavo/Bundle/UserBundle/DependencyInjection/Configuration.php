@@ -338,6 +338,7 @@ class Configuration implements ConfigurationInterface
                                 ->variableNode('options')->defaultValue([])->end()
                             ->end()
                         ->end()
+                        ->scalarNode('repository_method')->defaultValue('loadUserByIdentifier')->cannotBeEmpty()->end()
                         ->scalarNode('template')->isRequired()->cannotBeEmpty()->end()
                         ->scalarNode('redirect_route')->defaultValue(null)->end()
                         ->scalarNode('route')->isRequired()->cannotBeEmpty()->end()

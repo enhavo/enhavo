@@ -43,7 +43,7 @@ class TooManyLoginAttemptsSubscriber implements EventSubscriberInterface
         $user = $event->getUser();
         $exception = $event->getException();
 
-        if ($exception instanceof BadCredentialsException) {
+        if ($user && $exception instanceof BadCredentialsException) {
             $user->setLastFailedLoginAttempt(new DateTime());
             $user->setFailedLoginAttempts(1 + $user->getFailedLoginAttempts());
             $this->userManager->update($user);

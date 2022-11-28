@@ -48,6 +48,7 @@ services:
             - '@translator'
             - '@security.authentication_utils'
             - '@Enhavo\Bundle\UserBundle\Security\Authentication\AuthenticationError'
+            - '@form.factory'
         calls:
             - [ setContainer, [ '@service_container' ] ]
         tags:

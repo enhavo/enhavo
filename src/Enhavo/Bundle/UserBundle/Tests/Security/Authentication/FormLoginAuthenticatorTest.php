@@ -122,6 +122,7 @@ class FormLoginAuthenticatorTest extends TestCase
             $configuration = new LoginConfiguration();
             $configuration->setFormClass('formClass');
             $configuration->setFormOptions([]);
+            $configuration->setRepositoryMethod('loadUserByIdentifier');
             return $configuration;
         });
 
@@ -181,7 +182,7 @@ class FormLoginAuthenticatorTest extends TestCase
         $dependencies->userRepository->method('loadUserByIdentifier')->willReturnCallback(function($name) {
             if ($name === '1337.user@enhavo.com') {
                 $user = new UserMock();
-                $user->setUsername($name);
+                $user->setUserIdentifier($name);
                 return $user;
             }
             return null;
@@ -190,7 +191,7 @@ class FormLoginAuthenticatorTest extends TestCase
         $dependencies->eventDispatcher->expects($this->once())->method('dispatch')->willReturnCallback(function ($event, $name) {
             $this->assertInstanceOf(UserEvent::class, $event);
             $this->assertEquals(UserEvent::LOGIN_FAILURE, $name);
-            $this->assertEquals('1337.user@enhavo.com', $event->getUser()->getUsername());
+            $this->assertEquals('1337.user@enhavo.com', $event->getUser()->getUserIdentifier());
             return $event;
         });
 
@@ -199,6 +200,7 @@ class FormLoginAuthenticatorTest extends TestCase
             $loginConfiguration->setRoute('login_route');
             $loginConfiguration->setFormClass('formClass');
             $loginConfiguration->setFormOptions([]);
+            $loginConfiguration->setRepositoryMethod('loadUserByIdentifier');
             return $loginConfiguration;
         });
 
@@ -225,6 +227,7 @@ class FormLoginAuthenticatorTest extends TestCase
             $loginConfiguration = new LoginConfiguration();
             $loginConfiguration->setFormClass('formClass');
             $loginConfiguration->setFormOptions([]);
+            $loginConfiguration->setRepositoryMethod('loadUserByIdentifier');([]);
             return $loginConfiguration;
         });
 
