@@ -64,6 +64,8 @@ class FormLoginAuthenticator extends AbstractAuthenticator
 
     public function authenticate(Request $request)
     {
+        $loginConfiguration = $this->configurationProvider->getLoginConfiguration();
+
         $credentials = $this->getCredentials($request);
 
         $rememberMeBadge = new RememberMeBadge();
@@ -72,7 +74,7 @@ class FormLoginAuthenticator extends AbstractAuthenticator
         $tokenBadge = new CsrfTokenBadge('authenticate', $credentials->getCsrfToken());
 
         return new Passport(
-            new UserBadge($credentials->getUserIdentifier(), [$this->userRepository, 'loadUserByIdentifier']),
+            new UserBadge($credentials->getUserIdentifier(), [$this->userRepository, $loginConfiguration->getRepositoryMethod()]),
             new PasswordCredentials($credentials->getPassword()),
             [ $rememberMeBadge, $tokenBadge ],
         );
@@ -113,6 +115,7 @@ class FormLoginAuthenticator extends AbstractAuthenticator
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
     {
+        $loginConfiguration = $this->configurationProvider->getLoginConfiguration();
         $credentials = $this->getCredentials($request);
 
         if ($request->hasSession()) {
@@ -123,15 +126,13 @@ class FormLoginAuthenticator extends AbstractAuthenticator
         $user = $exception->getToken()?->getUser();
 
         if ($user === null) {
-            $user = $this->userRepository->loadUserByIdentifier($credentials->getUserIdentifier());
+            $user = call_user_func([$this->userRepository, $loginConfiguration->getRepositoryMethod()], $credentials->getUserIdentifier());
         }
 
-        if ($user) {
-            $event = $this->dispatchFailure($user, $exception);
+        $event = $this->dispatchFailure($user, $exception);
 
-            if ($event->getResponse()) {
-                return $event->getResponse();
-            }
+        if ($event->getResponse()) {
+            return $event->getResponse();
         }
 
         $failurePath = $request->get('_failure_path');
@@ -150,7 +151,7 @@ class FormLoginAuthenticator extends AbstractAuthenticator
         return $event;
     }
 
-    private function dispatchFailure(UserInterface $user, AuthenticationException $exception): UserEvent
+    private function dispatchFailure(?UserInterface $user, AuthenticationException $exception): UserEvent
     {
         $event = new UserEvent($user);
         $event->setException($exception);

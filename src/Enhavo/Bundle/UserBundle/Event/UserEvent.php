@@ -29,7 +29,7 @@ class UserEvent extends Event
     {
     }
 
-    public function getUser(): UserInterface
+    public function getUser(): ?UserInterface
     {
         return $this->user;
     }

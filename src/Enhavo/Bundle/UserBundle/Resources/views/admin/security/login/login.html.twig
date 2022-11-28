@@ -16,26 +16,26 @@
     <form action="{{ path("enhavo_user_security_login") }}" method="post" novalidate class="login-form">
         <div class="form-row">
             <div class="input-container">
-                <label for="email">{{ 'security.login.email'|trans }}</label>
-                <input type="text" id="email" name="_email" value="{{ last_username }}" class="textfield" autofocus />
+                {{ form_label(form.userIdentifier) }}
+                {{ form_widget(form.userIdentifier, {attr: { class: 'textfield', autofocus: '' }}) }}
             </div>
         </div>
         <div class="form-row">
             <div class="input-container">
-                <label for="password">{{ 'security.login.password'|trans }}</label>
+                {{ form_label(form.password) }}
                 <a href="{{ path('enhavo_user_reset_password_request') }}" class="reset-pw-link">{{ 'reset_password.request.submit'|trans|nl2br }}</a>
-                <input type="password" id="password" name="_password" class="textfield" />
+                {{ form_widget(form.password, {attr: { class: 'textfield' }}) }}
             </div>
         </div>
         <div class="button-row">
             <div class="checkbox-container">
-                <input type="checkbox" id="_remember" name="_remember">
+                {{ form_widget(form.rememberMe, {attr: { class: 'textfield' }}) }}
                 <span><i class="icon icon-check indicator"></i></span>
-                <label for="_remember">{{ 'security.login.remember_me'|trans|nl2br }}</label>
+                {{ form_label(form.rememberMe) }}
             </div>
             <button class="btn login-button" type="submit" id="_submit" name="_submit">{{ 'security.login.submit'|trans|nl2br }}</button>
         </div>
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+        {{ form_widget(form.csrfToken) }}
         {% if redirect_uri %}
             <input type="hidden" name="_target_path" value="{{ redirect_uri }}" />
         {% endif %}

@@ -55,7 +55,7 @@ class CredentialsEventSubscriber implements EventSubscriberInterface
     {
         /** @var Credentials $credentials */
         $credentials = $this->session->get('_security.credentials', null);
-        return null === $credentials && $credentials->isRememberMe();
+        return null !== $credentials && $credentials->isRememberMe();
     }
 
     private function getCsrfToken(): string

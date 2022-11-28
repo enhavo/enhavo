@@ -13,15 +13,15 @@ You can add the visitor to the ``FormFactory``, so every time the form will be c
   import {createApp, reactive} from "vue";
   import {FormFactory} from "@enhavo/vue-form/form/FormFactory";
   import {FormVisitor} from "@enhavo/vue-form/form/FormVisitor";
-  import {FormData} from "@enhavo/vue-form/data/FormData";
+  import {Form} from "@enhavo/vue-form/model/Form";
 
   let formFactory = new FormFactory();
 
   formFactory.addVisitor(new FormVisitor(
-      (form: FormData) => {
+      (form: Form) => {
           return form.component == 'form-choice' && !form.expanded;
       },
-      (form: FormData) => {
+      (form: Form) => {
           form.attr.class = 'my-class'
       },
   );

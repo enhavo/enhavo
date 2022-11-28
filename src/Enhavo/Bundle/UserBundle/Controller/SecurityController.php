@@ -9,6 +9,7 @@ namespace Enhavo\Bundle\UserBundle\Controller;
 use Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider;
 use Enhavo\Bundle\UserBundle\Security\Authentication\AuthenticationError;
 use Enhavo\Bundle\UserBundle\User\UserManager;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,6 +26,7 @@ class SecurityController extends AbstractUserController
         private TranslatorInterface $translator,
         private AuthenticationUtils $authenticationUtils,
         private AuthenticationError $authenticationError,
+        private FormFactoryInterface $formFactory,
     ) {
         parent::__construct($userManager, $configurationProvider);
     }
@@ -42,10 +44,13 @@ class SecurityController extends AbstractUserController
         $lastUsername = $this->authenticationUtils->getLastUsername(); // last username entered by the user
         $csrfToken = $this->tokenManager?->getToken('authenticate')->getValue();
 
+        $form = $this->createForm($configuration->getFormClass(), null, $configuration->getFormOptions());
+
         $template = $this->getTemplate($configuration->getTemplate());
         $response = $this->render($template, [
             'last_username' => $lastUsername,
             'error' => $error,
+            'form' => $form->createView(),
             'redirect_uri' => $request->query->get('redirect'),
             'csrf_token' => $csrfToken,
             'data' => [

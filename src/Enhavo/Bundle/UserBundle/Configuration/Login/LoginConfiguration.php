@@ -17,6 +17,7 @@ class LoginConfiguration
     private ?int $maxFailedLoginAttempts;
     private ?string $passwordMaxAge;
     private bool $verificationRequired = false;
+    private ?string $repositoryMethod;
 
     public function getRoute(): ?string
     {
@@ -56,5 +57,15 @@ class LoginConfiguration
     public function setVerificationRequired(bool $verificationRequired): void
     {
         $this->verificationRequired = $verificationRequired;
+    }
+
+    public function getRepositoryMethod(): ?string
+    {
+        return $this->repositoryMethod;
+    }
+
+    public function setRepositoryMethod(?string $repositoryMethod): void
+    {
+        $this->repositoryMethod = $repositoryMethod;
     }
 }

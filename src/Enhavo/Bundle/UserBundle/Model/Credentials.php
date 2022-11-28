@@ -11,32 +11,32 @@ class Credentials implements CredentialsInterface
 
     public function getUserIdentifier(): ?string
     {
-        return $this->userIdentifier;
+        return (string)$this->userIdentifier;
     }
 
     public function setUserIdentifier(?string $userIdentifier): void
     {
-        $this->userIdentifier = $userIdentifier;
+        $this->userIdentifier = (string)$userIdentifier;
     }
 
     public function getPassword(): ?string
     {
-        return $this->password;
+        return (string)$this->password;
     }
 
     public function setPassword(?string $password): void
     {
-        $this->password = $password;
+        $this->password = (string)$password;
     }
 
     public function getCsrfToken(): ?string
     {
-        return $this->csrfToken;
+        return (string)$this->csrfToken;
     }
 
     public function setCsrfToken(?string $csrfToken): void
     {
-        $this->csrfToken = $csrfToken;
+        $this->csrfToken = (string)$csrfToken;
     }
 
     public function isRememberMe(): bool
