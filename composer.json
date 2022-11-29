@@ -30,7 +30,6 @@
     "bacon/bacon-string-utils": "~1.0.3",
     "liip/imagine-bundle": "~1.0.6",
     "knplabs/knp-menu-bundle": "~2.0",
-    "plasmaconduit/dependency-graph" :"~0.1.0",
     "memio/memio": "~1.0",
     "stof/doctrine-extensions-bundle": "^1.2",
     "elasticsearch/elasticsearch": "~2.0",
