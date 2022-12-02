@@ -2,18 +2,17 @@ Enhavo\Bundle\UserBundle\Model\User:
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
             fields: email
-            groups: [register]
+            groups: [register, create, update]
     properties:
-        username:
-            - NotBlank: ~
         email:
             - Email:
                 message: The email "{{ value }}" is not a valid email.
+                groups: [register, create, update]
             - NotBlank:
-                groups: [register]
+                groups: [register, create, update]
         plainPassword:
             - NotBlank:
-                groups: [register, reset]
+                groups: [register, reset, create]
 
 Enhavo\Bundle\UserBundle\Model\Group:
     constraints:

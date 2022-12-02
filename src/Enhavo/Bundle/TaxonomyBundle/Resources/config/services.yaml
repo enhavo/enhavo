@@ -62,3 +62,13 @@ services:
             - '@enhavo_taxonomy.factory.term'
         tags:
             - { name: form.type }
+
+    Enhavo\Bundle\TaxonomyBundle\Taxonomy\TaxonomyManager:
+        arguments:
+            - '@enhavo_taxonomy.repository.taxonomy'
+
+    Enhavo\Bundle\TaxonomyBundle\EventListener\TermSubscriber:
+        arguments:
+            - '@Enhavo\Bundle\TaxonomyBundle\Taxonomy\TaxonomyManager'
+        tags:
+            - { name: kernel.event_subscriber }

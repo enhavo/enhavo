@@ -2,84 +2,42 @@
 
 namespace Enhavo\Bundle\TaxonomyBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\TaxonomyBundle\Model\TaxonomyInterface;
 use Enhavo\Bundle\TaxonomyBundle\Model\TermInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
-/**
- * Taxonomy
- */
 class Term implements TermInterface, ResourceInterface
 {
-    /**
-     * @var integer
-     */
-    private $id;
+    private ?int $id = null;
+    private ?string $name = null;
+    private ?Taxonomy $taxonomy = null;
+    private ?int $position = null;
+    private ?string $slug = null;
+    private ?string $text = null;
+    private ?Term $parent = null;
 
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var Taxonomy
-     */
-    private $taxonomy;
-
-    /**
-     * @var integer
-     */
-    private $position;
-
-    /**
-     * @var string
-     */
-    private $slug;
-
-    /**
-     * @var string
-     */
-    private $text;
-
-    /**
-     * @var Term[]|Collection
-     */
+    /**  @var Term[]|Collection */
     private $children;
 
-    /**
-     * @var Term
-     */
-    private $parent;
+    public function __construct()
+    {
+        $this->children = new ArrayCollection();
+    }
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * Set name
-     *
-     * @param string $name
-     * @return Term
-     */
-    public function setName($name)
+    public function setName(?string $name)
     {
         $this->name = $name;
         return $this;
     }
 
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -92,88 +50,53 @@ class Term implements TermInterface, ResourceInterface
         return '';
     }
 
-    /**
-     * Set text
-     *
-     * @param string $text
-     * @return Term
-     */
-    public function setText($text)
+    public function setText(?string $text)
     {
         $this->text = $text;
 
         return $this;
     }
 
-    /**
-     * Get text
-     *
-     * @return string
-     */
-    public function getText()
+    public function getText(): ?string
     {
         return $this->text;
     }
 
-    /**
-     * @return string
-     */
-    public function getSlug()
+    public function getSlug(): ?string
     {
         return $this->slug;
     }
 
-    /**
-     * @param string $slug
-     */
-    public function setSlug($slug)
+    public function setSlug(?string $slug)
     {
         $this->slug = $slug;
     }
 
-    /**
-     * @return TaxonomyInterface
-     */
     public function getTaxonomy(): TaxonomyInterface
     {
         return $this->taxonomy;
     }
 
-    /**
-     * @param TaxonomyInterface $taxonomy
-     */
     public function setTaxonomy(TaxonomyInterface $taxonomy): void
     {
         $this->taxonomy = $taxonomy;
     }
 
-    /**
-     * @return int
-     */
     public function getPosition(): ?int
     {
         return $this->position;
     }
 
-    /**
-     * @param int $position
-     */
     public function setPosition(int $position): void
     {
         $this->position = $position;
     }
 
-    /**
-     * @return Term
-     */
     public function getParent(): ?TermInterface
     {
         return $this->parent;
     }
 
-    /**
-     * @return Term[]
-     */
     public function getParents(): array
     {
         $parents = [];
@@ -185,37 +108,38 @@ class Term implements TermInterface, ResourceInterface
         return $parents;
     }
 
-    /**
-     * @param TermInterface $parent
-     */
-    public function setParent(TermInterface $parent): void
+    public function setParent(?TermInterface $parent): void
     {
         $this->parent = $parent;
     }
 
-    /**
-     * @param TermInterface $child
-     */
     public function addChildren(TermInterface $child)
     {
         $this->children->add($child);
         $child->setParent($this);
     }
 
-    /**
-     * @param TermInterface $children
-     */
     public function removeChildren(TermInterface $children)
     {
         $this->children->removeElement($children);
         $children->setParent(null);
     }
 
-    /**
-     * @return Collection|Term[]
-     */
-    public function getChildren()
+    public function getChildren(): Collection
     {
         return $this->children;
+    }
+
+    public function getDescendants(): Collection
+    {
+        $descendants = [];
+        $children = $this->getChildren();
+        foreach($children as $child) {
+            $descendants[] = $child;
+            foreach($child->getDescendants() as $descendant) {
+                $descendants[] = $descendant;
+            }
+        }
+        return new ArrayCollection($descendants);
     }
 }

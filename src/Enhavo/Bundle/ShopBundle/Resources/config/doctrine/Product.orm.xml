@@ -18,6 +18,10 @@
 
         <many-to-one field="picture" target-entity="Enhavo\Bundle\MediaBundle\Model\FileInterface">
             <join-column on-delete="SET NULL" />
+            <cascade>
+                <cascade-persist />
+                <cascade-refresh />
+            </cascade>
         </many-to-one>
 
         <many-to-one field="taxCategory" target-entity="Sylius\Component\Taxation\Model\TaxCategoryInterface">
