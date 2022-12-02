@@ -236,6 +236,7 @@ sylius_product:
             classes:
                 model: Enhavo\Bundle\ShopBundle\Entity\ProductOptionValue
                 form: Enhavo\Bundle\ShopBundle\Form\Type\ProductOptionValueType
+                repository: Enhavo\Bundle\ShopBundle\Repository\ProductOptionValueRepository
         product_variant:
             classes:
                 model: Enhavo\Bundle\ShopBundle\Entity\ProductVariant

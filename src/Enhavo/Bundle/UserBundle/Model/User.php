@@ -13,7 +13,7 @@ class User implements UserInterface, GroupableInterface, ResourceInterface, Pass
     private string $userIdentifier;
     private ?string $firstName = null;
     private ?string $lastName = null;
-    private bool $enabled = false;
+    private bool $enabled = true;
     private bool $verified = false;
     private ?string $username = null;
     private ?string $email = null;

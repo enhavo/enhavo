@@ -23,7 +23,7 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
 {
     use ProductAccessTrait;
 
-    private ?Route $route;
+    private ?Route $route = null;
     private Collection $categories;
     private Collection $tags;
 
@@ -76,7 +76,8 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
                 return $variant;
             }
         }
-        return null;
+
+        return $variants->first();
     }
 
     /**

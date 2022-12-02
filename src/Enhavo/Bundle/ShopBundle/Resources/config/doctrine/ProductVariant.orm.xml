@@ -21,6 +21,7 @@
         <field name="volumeUnit" nullable="true" />
         <field name="lengthUnit" nullable="true" />
         <field name="overridePrice" type="boolean" />
+        <field name="overridePictures" type="boolean" />
         <field name="overrideDescription" type="boolean" />
         <field name="overrideShipping" type="boolean" />
         <field name="overrideTaxCategory" type="boolean" />
@@ -29,6 +30,10 @@
 
         <many-to-one field="picture" target-entity="Enhavo\Bundle\MediaBundle\Model\FileInterface">
             <join-column on-delete="SET NULL" />
+            <cascade>
+                <cascade-persist />
+                <cascade-refresh />
+            </cascade>
         </many-to-one>
 
         <many-to-one field="taxCategory" target-entity="Sylius\Component\Taxation\Model\TaxCategoryInterface">

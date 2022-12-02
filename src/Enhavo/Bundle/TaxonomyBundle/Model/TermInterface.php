@@ -10,88 +10,43 @@
 namespace Enhavo\Bundle\TaxonomyBundle\Model;
 
 use Doctrine\Common\Collections\Collection;
+use Enhavo\Bundle\TaxonomyBundle\Entity\Term;
 
 interface TermInterface
 {
-    /**
-     * Set name
-     *
-     * @param string $name
-     */
-    public function setName($name);
+    public function setName(?string $name);
 
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName();
+    public function getName(): ?string;
 
-    /**
-     * Set text
-     *
-     * @param string $text
-     */
-    public function setText($text);
+    public function setText(?string $text);
 
-    /**
-     * Get text
-     *
-     * @return string
-     */
-    public function getText();
+    public function getText(): ?string;
 
-    /**
-     * @return string
-     */
-    public function getSlug();
+    public function getSlug(): ?string;
 
-    /**
-     * @param string $slug
-     */
-    public function setSlug($slug);
+    public function setSlug(?string $slug);
 
-    /**
-     * @return TaxonomyInterface
-     */
     public function getTaxonomy(): TaxonomyInterface;
 
-    /**
-     * @param TaxonomyInterface $taxonomy
-     */
     public function setTaxonomy(TaxonomyInterface $taxonomy): void;
 
-    /**
-     * @return int
-     */
     public function getPosition(): ?int;
 
-    /**
-     * @param int $position
-     */
     public function setPosition(int $position): void;
 
-    /**
-     * @return TermInterface
-     */
     public function getParent(): ?TermInterface;
 
-    /**
-     * @param TermInterface $parent
-     */
+    /** @return Term[] */
+    public function getParents(): array;
+
     public function setParent(TermInterface $parent): void;
 
-    /**
-     * @param TermInterface $child
-     */
     public function addChildren(TermInterface $child);
-    /**
-     * @param TermInterface $child
-     */
+
     public function removeChildren(TermInterface $child);
 
-    /**
-     * @return Collection|TermInterface[]
-     */
-    public function getChildren();
+    /** @return Collection|TermInterface[] */
+    public function getChildren(): Collection;
+
+    public function getDescendants(): Collection;
 }

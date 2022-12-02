@@ -68,6 +68,16 @@ trait ProductAccessTrait
         $this->pictures = $pictures;
     }
 
+    public function addPicture(FileInterface $picture): void
+    {
+        $this->pictures->add($picture);
+    }
+
+    public function removePicture(FileInterface $picture): void
+    {
+        $this->pictures->remove($picture);
+    }
+
     public function getPrice(): ?int
     {
         return $this->price;

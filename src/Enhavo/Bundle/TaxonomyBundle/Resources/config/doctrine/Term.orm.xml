@@ -9,9 +9,7 @@
         <field name="name" length="255" nullable="true" />
         <field name="text" type="text" nullable="true" />
         <field name="position" type="integer" nullable="true" />
-        <field name="slug" length="255" nullable="true">
-            <gedmo:slug fields="name" separator="-" style="default" updatable="false" />
-        </field>
+        <field name="slug" length="255" nullable="true" />
 
         <many-to-one field="taxonomy" target-entity="Enhavo\Bundle\TaxonomyBundle\Model\TaxonomyInterface" inversed-by="terms">
             <join-column on-delete="CASCADE" />

@@ -22,6 +22,8 @@ interface ProductInterface extends ResourceInterface, SyliusProductInterface, Pr
     public function setDescription(?string $description): void;
     public function setPicture(?FileInterface $picture): void;
     public function setPictures(Collection $pictures): void;
+    public function addPicture(FileInterface $picture): void;
+    public function removePicture(FileInterface $picture): void;
     public function setPrice(?int $price): void;
     public function setReducedPrice(?int $reducedPrice): void;
     public function setReduced(bool $reduced): void;
