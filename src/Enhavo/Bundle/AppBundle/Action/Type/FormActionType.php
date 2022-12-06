@@ -9,6 +9,7 @@ class FormActionType extends AbstractUrlActionType
 {
     const TYPE_OPEN = 'open';
     const TYPE_DOWNLOAD = 'download';
+    const TYPE_RELOAD = 'reload';
 
     public function configureOptions(OptionsResolver $resolver)
     {
@@ -39,10 +40,10 @@ class FormActionType extends AbstractUrlActionType
         $data['openRouteMapping'] = $options['open_route_mapping'];
         $data['openType'] = $options['open_type'];
         $data['viewKey'] = $options['view_key'];
+        $data['target'] = $options['target'];
 
         return $data;
     }
-
 
     public function getType()
     {

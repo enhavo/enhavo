@@ -265,7 +265,7 @@ class User implements UserInterface, GroupableInterface, ResourceInterface, Pass
         $this->salt = $salt;
     }
 
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }

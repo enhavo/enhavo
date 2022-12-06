@@ -12,10 +12,12 @@ export default class FormAction extends AbstractAction
 {
     public static readonly OPEN = 'open';
     public static readonly DOWNLOAD = 'download';
+    public static readonly RELOAD = 'reload';
 
     private url: string;
     private saveLabel: string;
     private viewKey: string;
+    private target: string;
     private openRoute: string;
     private openRouteParameters: object = {};
     private openRouteMapping: object = {};
@@ -42,9 +44,11 @@ export default class FormAction extends AbstractAction
             saveLabel: this.translator.trans(this.saveLabel),
             actionHandler: async (modal: AjaxFormModal, data: any) => {
                 if (data.status === 200) {
-                    if (this.openRoute) {
+                    if (this.openType === FormAction.RELOAD) {
+                        window.location.reload()
+                    } else if (this.openRoute) {
                         this.open(modal, data)
-                    } else {
+                    } else if (this.openType === FormAction.DOWNLOAD) {
                         this.download(modal, data)
                     }
 
@@ -70,20 +74,28 @@ export default class FormAction extends AbstractAction
             openRouteParameters[key] = formData[value];
         }
 
+        if (this.target === '_self') {
+            openRouteParameters['view_id'] = this.view.getId();
+        }
+
         let url = this.router.generate(this.openRoute, openRouteParameters);
         if (this.openType === FormAction.OPEN) {
-            this.view.open(url, this.viewKey);
+            if (this.target === '_view') {
+                this.view.open(url, this.viewKey);
+            } else {
+                window.open(url, this.target);
+            }
         } else if(this.openType === FormAction.DOWNLOAD) {
 
             axios.post(url, {}, {
                 responseType: 'arraybuffer'
             })
-            .then((response) => {
-                AxiosResponseHandler.download(response);
-            })
-            .catch(function (response) {
-                console.error(response);
-            });
+                .then((response) => {
+                    AxiosResponseHandler.download(response);
+                })
+                .catch(function (response) {
+                    console.error(response);
+                });
         }
     }
 
