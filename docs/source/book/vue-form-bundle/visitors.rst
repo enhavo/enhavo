@@ -29,6 +29,35 @@ You can add the visitor to the ``FormFactory``, so every time the form will be c
   let data = {}; // get data somewhere
   let form = formFactory.create(data.form);
 
+Apply visitor to FormType
+-------------------------
+
+Instead of checking the component inside the ``supports`` function. You can also check the ``componentVisitors`` property
+and apply the visitor to a predefined string.
+
+.. code-block:: typescript
+
+  let formFactory = new FormFactory();
+
+  formFactory.addVisitor(new FormVisitor(
+      (form: Form) => {
+          return form.componentVisitors.indexOf('custom_visitor') >= 0;
+      },
+      (form: Form) => {
+          // do something
+      },
+  );
+
+In the form builder definition you are able to apply that visitor to your form.
+
+.. code-block:: php
+
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+          $builder->add('name', TextType::class, [
+              'component_visitors' => ['custom_visitor'],
+          ]);
+    }
 
 Further Reading
 ---------------

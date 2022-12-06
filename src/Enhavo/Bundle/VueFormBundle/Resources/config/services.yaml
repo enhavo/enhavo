@@ -40,6 +40,10 @@ services:
         tags:
             - { name: 'vue.type', priority: 110 }
 
+    Enhavo\Bundle\VueFormBundle\Form\VueType\PasswordVueType:
+        tags:
+            - { name: 'vue.type', priority: 110 }
+
     Enhavo\Bundle\VueFormBundle\Form\VueType\TextareaVueType:
         tags:
             - { name: 'vue.type', priority: 110 }

@@ -72,7 +72,7 @@ export default class AjaxFormModal extends AbstractModal
             }
 
             axios.post(this.getActionUrl(), this.buildQuery(data), {
-                headers: {'Content-Type': 'multipart/form-data' },
+                headers: {'Content-Type': 'application/x-www-form-urlencoded' },
                 responseType: 'arraybuffer'
             }).then((responseData) => {
                 this.receiveForm(responseData, resolve, reject)
