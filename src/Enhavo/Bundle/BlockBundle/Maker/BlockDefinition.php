@@ -227,7 +227,7 @@ class BlockDefinition
 
     public function createEntityPhpClass(): PhpClass
     {
-        $class = new PhpClass($this->getEntityNamespace(), $this->getName(), $this->getImplements(), $this->getUse(), $this->getProperties());
+        $class = new PhpClass($this->getEntityNamespace(), $this->getName(), $this->getImplements(), $this->getUse(), $this->getTraits(), $this->getProperties());
         $class->generateConstructor();
         $class->generateGettersSetters();
         $class->generateAddersRemovers();
@@ -267,7 +267,7 @@ class BlockDefinition
 
     public function createFormTypePhpClass(): PhpClass
     {
-        return new PhpClass($this->getFormNamespace(), $this->getFormTypeName(), null, $this->getFormUse(), []);
+        return new PhpClass($this->getFormNamespace(), $this->getFormTypeName(), null, $this->getFormUse(), [], []);
     }
 
     public function createDoctrineOrmYaml(): DoctrineOrmYaml
@@ -291,15 +291,20 @@ class BlockDefinition
         return $this->config['properties'] ?? [];
     }
 
+    public function getTraits(): array
+    {
+        return $this->config['traits'] ?? [];
+    }
+
     public function getConfig(string $key, $default = null)
     {
         return $this->config[$key] ?? $default;
     }
-
-    public function getProperty(string $key)
-    {
-        return isset($this->config['properties'][$key]) ?? $this->config['properties'][$key];
-    }
+//
+//    public function getProperty(string $key)
+//    {
+//        return isset($this->config['properties'][$key]) ?? $this->config['properties'][$key];
+//    }
 
     public function getNamespace()
     {
