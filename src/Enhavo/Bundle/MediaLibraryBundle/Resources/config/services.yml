@@ -58,6 +58,7 @@ services:
     Enhavo\Bundle\MediaLibraryBundle\Form\Type\FileType:
         arguments:
             - '@Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryManager'
+            - '@enhavo_media.media.public_url_generator'
         tags:
             - { name: form.type }
 
