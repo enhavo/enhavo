@@ -6,6 +6,7 @@
 
 namespace Enhavo\Bundle\MediaLibraryBundle\Form\Type;
 
+use Enhavo\Bundle\MediaBundle\Media\UrlGeneratorInterface;
 use Enhavo\Bundle\MediaLibraryBundle\Entity\File;
 use Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryManager;
 use Enhavo\Bundle\TaxonomyBundle\Form\Type\TermAutoCompleteChoiceType;
@@ -13,18 +14,18 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class FileType extends AbstractType
 {
-    private MediaLibraryManager $mediaLibraryManager;
 
-    /**
-     * @param MediaLibraryManager $mediaLibraryManager
-     */
-    public function __construct(MediaLibraryManager $mediaLibraryManager)
+    public function __construct(
+        private MediaLibraryManager $mediaLibraryManager,
+        private UrlGeneratorInterface $urlGenerator,
+    )
     {
-        $this->mediaLibraryManager = $mediaLibraryManager;
     }
 
 
@@ -47,6 +48,15 @@ class FileType extends AbstractType
                 'view_key' => 'media_library_tags'
             ])
         ;
+
+        $builder->addEventListener(FormEvents::PRE_SET_DATA,  function(FormEvent $event) {
+            $data = $event->getData();
+            $form = $event->getForm();
+            $form->add('url', TextType::class, [
+                'mapped' => false,
+                'data' => $this->urlGenerator->generate($data)
+            ]);
+        });
 
     }
 

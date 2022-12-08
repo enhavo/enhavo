@@ -18,7 +18,7 @@
     "enhavo/form-bundle": "^0.11",
     "enhavo/metadata": "^0.11",
     "enhavo/routing-bundle": "^0.11",
-    "league/uri": "^6.4"
+    "league/uri-components": "^2.4"
   },
   "require-dev": {
     "phpunit/phpunit": "^9.5"

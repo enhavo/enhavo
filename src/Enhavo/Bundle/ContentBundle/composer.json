@@ -13,7 +13,8 @@
   ],
   "require": {
     "php": "^8.0",
-    "enhavo/app-bundle": "^0.11"
+    "enhavo/app-bundle": "^0.11",
+    "league/uri": "^6.4"
   },
   "require-dev": {
     "phpunit/phpunit": "^9.5"
