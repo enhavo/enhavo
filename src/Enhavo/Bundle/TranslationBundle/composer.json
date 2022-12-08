@@ -13,12 +13,21 @@
   ],
   "require": {
     "php": "^8.0",
+<<<<<<< HEAD
     "enhavo/app-bundle": "^0.11",
     "enhavo/doctrine-extension-bundle": "^0.11",
     "enhavo/form-bundle": "^0.11",
     "enhavo/metadata": "^0.11",
     "enhavo/routing-bundle": "^0.11",
     "league/uri": "^6.4"
+=======
+    "enhavo/app-bundle": "dev-master",
+    "enhavo/doctrine-extension-bundle": "dev-master",
+    "enhavo/form-bundle": "dev-master",
+    "enhavo/metadata": "dev-master",
+    "enhavo/routing-bundle": "dev-master",
+    "league/uri-components": "^2.4"
+>>>>>>> 71df6d0e1 (Fix packages and missing url field (#1675))
   },
   "require-dev": {
     "phpunit/phpunit": "^9.5"

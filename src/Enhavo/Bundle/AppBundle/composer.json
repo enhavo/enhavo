@@ -16,8 +16,12 @@
     "ext-ctype": "*",
     "ext-json": "*",
     "ext-zlib": "*",
+<<<<<<< HEAD
     "enhavo/type": "^0.11",
     "league/uri": "^6.4",
+=======
+    "enhavo/type": "dev-master",
+>>>>>>> 71df6d0e1 (Fix packages and missing url field (#1675))
     "friendsofsymfony/jsrouting-bundle": "^3.1",
     "sylius/resource-bundle": "~1.8.4",
     "symfony/asset": "^5.4",
@@ -32,12 +36,12 @@
     "symfony/security-bundle": "^5.4",
     "symfony/serializer-pack": "^1.0",
     "symfony/mailer": "^5.4",
+    "symfony/ux-twig-component": "^2.1",
     "symfony/translation": "^5.4",
     "symfony/twig-bundle": "^5.4",
     "symfony/validator": "^5.4",
     "symfony/webpack-encore-bundle": "^1.5",
-    "symfony/yaml": "^5.4",
-    "symfony/twig-bridge": "^5.4"
+    "symfony/yaml": "^5.4"
   },
   "require-dev": {
     "phpunit/phpunit": "^9.5"
