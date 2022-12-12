@@ -76,11 +76,6 @@ class OrderItem extends SyliusOrderItem implements OrderItemInterface
             foreach($adjustments as $adjustment) {
                 $total += $adjustment->getAmount();
             }
-
-            $adjustments = $unit->getAdjustments(AdjustmentInterface::TAX_PROMOTION_ADJUSTMENT);
-            foreach($adjustments as $adjustment) {
-                $total += $adjustment->getAmount();
-            }
         }
 
         return $total;
@@ -107,12 +102,6 @@ class OrderItem extends SyliusOrderItem implements OrderItemInterface
         }
 
         $adjustments = $unit->getAdjustments(AdjustmentInterface::TAX_ADJUSTMENT);
-        /** @var AdjustmentInterface $adjustment */
-        foreach($adjustments as $adjustment) {
-            $total += $adjustment->getAmount();
-        }
-
-        $adjustments = $unit->getAdjustments(AdjustmentInterface::TAX_PROMOTION_ADJUSTMENT);
         /** @var AdjustmentInterface $adjustment */
         foreach($adjustments as $adjustment) {
             $total += $adjustment->getAmount();
