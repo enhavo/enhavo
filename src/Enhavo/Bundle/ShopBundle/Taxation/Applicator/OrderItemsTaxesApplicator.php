@@ -10,6 +10,7 @@ use Sylius\Component\Order\Model\OrderItemUnitInterface;
 use Sylius\Component\Taxation\Calculator\CalculatorInterface;
 use Sylius\Component\Taxation\Model\TaxRateInterface;
 use Sylius\Component\Taxation\Resolver\TaxRateResolverInterface;
+use Webmozart\Assert\Assert;
 
 class OrderItemsTaxesApplicator implements OrderTaxesApplicatorInterface
 {
@@ -23,15 +24,27 @@ class OrderItemsTaxesApplicator implements OrderTaxesApplicatorInterface
     {
         /** @var OrderItemInterface $item */
         foreach ($order->getItems() as $item) {
+
+            if ($item->getQuantity() === 0) {
+                continue;
+            }
+
             $taxRate = $this->taxRateResolver->resolve($item->getProduct());
             if (null === $taxRate) {
                 continue;
             }
 
-            $taxAmount = $this->calculator->calculate($item->getProduct()->getPrice(), $taxRate);
+            $totalTaxAmount = $this->calculator->calculate($item->getTotal(), $taxRate);
+            $splitTaxes = $this->distribute($totalTaxAmount, $item->getQuantity());
 
+            $i = 0;
             foreach ($item->getUnits() as $unit) {
-                $this->addAdjustment($unit, $taxAmount, $taxRate);
+                if (0 === $splitTaxes[$i]) {
+                    continue;
+                }
+
+                $this->addAdjustment($unit, $splitTaxes[$i], $taxRate);
+                ++$i;
             }
         }
     }
@@ -50,5 +63,27 @@ class OrderItemsTaxesApplicator implements OrderTaxesApplicatorInterface
             ]
         );
         $unit->addAdjustment($unitTaxAdjustment);
+    }
+
+    public function distribute(float $amount, int $numberOfTargets): array
+    {
+        $sign = $amount < 0 ? -1 : 1;
+        $amount = abs($amount);
+
+        $low = (int) ($amount / $numberOfTargets);
+        $high = $low + 1;
+
+        $remainder = $amount % $numberOfTargets;
+        $result = [];
+
+        for ($i = 0; $i < $remainder; ++$i) {
+            $result[] = $high * $sign;
+        }
+
+        for ($i = $remainder; $i < $numberOfTargets; ++$i) {
+            $result[] = $low * $sign;
+        }
+
+        return $result;
     }
 }

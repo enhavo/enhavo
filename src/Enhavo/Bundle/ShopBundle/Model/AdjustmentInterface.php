@@ -19,6 +19,5 @@ interface AdjustmentInterface extends SyliusAdjustmentInterface
     public const SHIPPING_ADJUSTMENT = 'shipping';
     public const TAX_SHIPPING_ADJUSTMENT = 'tax_shipping';
     public const TAX_ADJUSTMENT = 'tax';
-    public const TAX_PROMOTION_ADJUSTMENT = 'tax_promotion';
     public const VOUCHER_ADJUSTMENT = 'voucher';
 }
