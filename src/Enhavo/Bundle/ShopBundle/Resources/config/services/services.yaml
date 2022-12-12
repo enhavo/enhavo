@@ -42,6 +42,12 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
+    Enhavo\Bundle\ShopBundle\EventListener\OrderRecalculationSubscriber:
+        arguments:
+            - '@Sylius\Component\Order\Processor\OrderProcessorInterface'
+        tags:
+            - { name: kernel.event_subscriber }
+
     Enhavo\Bundle\ShopBundle\EventListener\ProductSubscriber:
         arguments:
             - '@enhavo_shop.product_manager'
