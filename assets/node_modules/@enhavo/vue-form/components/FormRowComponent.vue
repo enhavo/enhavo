@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <component v-if="form.rowComponent !== 'form-row'" :is="form.rowComponent" />
+    <div v-else>
         <form-label :form="form"></form-label>
         <form-errors :form="form"></form-errors>
         <form-widget :form="form"></form-widget>

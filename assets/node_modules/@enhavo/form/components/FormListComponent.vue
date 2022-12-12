@@ -10,14 +10,14 @@
                     :handle="form.draggableHandle"
                 >
                     <template #item="{ element }">
-                        <component :is="form.itemComponent"
-                                   :form="element"
-                                   :deletable="form.allowDelete"
-                                   :sortable="form.sortable"
-
-                                   @delete="deleteItem"
-                                   @up="moveItemUp"
-                                   @down="moveItemDown"
+                        <component
+                            :is="form.itemComponent"
+                            :form="element"
+                            :deletable="form.allowDelete"
+                            :sortable="form.sortable"
+                            @delete="deleteItem"
+                            @up="moveItemUp"
+                            @down="moveItemDown"
                         >
                             <template v-slot>
                                 <slot name="item"></slot>
@@ -36,7 +36,11 @@
         <slot name="button-row">
             <div class="form-list-button-row" v-if="form.allowAdd">
                 <slot name="buttons">
-                    <div class="form-list-button" @click.prevent="addItem"><i class="icon icon-add_box">+</i></div>
+                    <div class="form-list-button" @click.prevent="addItem">
+                        <slot name="add-button">
+                            <i class="icon icon-add_box">+</i>
+                        </slot>
+                    </div>
                 </slot>
             </div>
         </slot>
