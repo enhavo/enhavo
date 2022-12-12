@@ -253,11 +253,6 @@ class Order extends SyliusOrder implements OrderInterface
             $total += $adjustment->getAmount();
         }
 
-        $adjustments = $this->getAdjustments(AdjustmentInterface::TAX_PROMOTION_ADJUSTMENT);
-        foreach($adjustments as $adjustment) {
-            $total += $adjustment->getAmount();
-        }
-
         return $total;
     }
 
@@ -294,11 +289,6 @@ class Order extends SyliusOrder implements OrderInterface
         $total += $this->getUnitTaxTotal();
 
         $taxes = $this->getAdjustments(AdjustmentInterface::TAX_ADJUSTMENT);
-        foreach($taxes as $adjustment) {
-            $total += $adjustment->getAmount();
-        }
-
-        $taxes = $this->getAdjustments(AdjustmentInterface::TAX_PROMOTION_ADJUSTMENT);
         foreach($taxes as $adjustment) {
             $total += $adjustment->getAmount();
         }

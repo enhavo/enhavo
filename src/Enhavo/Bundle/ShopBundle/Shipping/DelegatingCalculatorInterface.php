@@ -7,5 +7,5 @@ use Sylius\Component\Shipping\Model\ShipmentInterface;
 
 interface DelegatingCalculatorInterface extends SyliusDelegatingCalculatorInterface
 {
-    public function calculateTax(ShipmentInterface $subject): int;
+    public function calculateTax($price, ShipmentInterface $subject): int;
 }

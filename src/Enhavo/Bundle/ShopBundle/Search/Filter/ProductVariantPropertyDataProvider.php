@@ -6,6 +6,7 @@ use Enhavo\Bundle\AppBundle\Type\AbstractType;
 use Enhavo\Bundle\SearchBundle\Filter\Data;
 use Enhavo\Bundle\SearchBundle\Filter\DataProviderInterface;
 use Enhavo\Bundle\ShopBundle\Manager\ProductManager;
+use Enhavo\Bundle\ShopBundle\Model\ProductInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProductVariantPropertyDataProvider extends AbstractType implements DataProviderInterface
@@ -18,6 +19,10 @@ class ProductVariantPropertyDataProvider extends AbstractType implements DataPro
 
     public function getData($resource, $options)
     {
+        if ($resource instanceof ProductInterface) {
+            $resource = $resource->getDefaultVariant();
+        }
+
         $proxy = $this->productManager->getVariantProxy($resource);
         $value = $this->getProperty($proxy, $options['property']);
         $data = new Data();

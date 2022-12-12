@@ -15,7 +15,7 @@ use Enhavo\Bundle\ShopBundle\Model\ProductVariantProxyInterface;
 class ProductVariantProxyReplaceSubscriber implements EventSubscriber
 {
     public function __construct(
-        private ProductVariantProxyFactoryInterface $factory
+        private ProductVariantProxyFactoryInterface $factory,
     ) {}
 
     public function getSubscribedEvents()
@@ -25,7 +25,6 @@ class ProductVariantProxyReplaceSubscriber implements EventSubscriber
             Events::preFlush,
             Events::postFlush,
             Events::prePersist,
-            Events::postPersist,
         ];
     }
 
@@ -39,16 +38,13 @@ class ProductVariantProxyReplaceSubscriber implements EventSubscriber
 
     public function prePersist(LifecycleEventArgs $args)
     {
-        $entity = $args->getEntity();
+        $entity = $args->getObject();
+        $em = $args->getObjectManager();
         if ($entity instanceof OrderItem) {
             $this->replaceWithOriginal($entity);
-        }
-    }
-
-    public function postPersist(LifecycleEventArgs $args)
-    {
-        $entity = $args->getEntity();
-        if ($entity instanceof OrderItem) {
+            if ($entity->getProduct()) {
+                $em->persist($entity->getProduct());
+            }
             $this->replaceWithProxy($entity);
         }
     }
@@ -56,6 +52,12 @@ class ProductVariantProxyReplaceSubscriber implements EventSubscriber
     public function preFlush(PreFlushEventArgs $args)
     {
         $uow = $args->getEntityManager()->getUnitOfWork();
+
+        foreach ($uow->getScheduledEntityInsertions() as $entity) {
+            if ($entity instanceof OrderItem) {
+                $this->replaceWithOriginal($entity);
+            }
+        }
 
         foreach ($uow->getIdentityMap() as $list) {
             foreach ($list as $entity) {

@@ -10,57 +10,6 @@ services:
         tags:
             - { name: sylius.context.cart, priority: -777 }
 
-    Enhavo\Bundle\ShopBundle\OrderProcessing\OrderAdjustmentsClearer:
-        tags:
-            - { name: sylius.order_processor, priority: 60 }
-
-    Enhavo\Bundle\ShopBundle\OrderProcessing\OrderAddressAssigner:
-        arguments:
-            - '@enhavo_shop.order_manager'
-        tags:
-            - { name: sylius.order_processor, priority: 60 }
-
-
-    Enhavo\Bundle\ShopBundle\OrderProcessing\OrderPricesCalculator:
-        arguments:
-            - '@Enhavo\Bundle\ShopBundle\Manager\PricingManager'
-        tags:
-            - { name: sylius.order_processor, priority: 60 }
-
-    Enhavo\Bundle\ShopBundle\OrderProcessing\OrderVoucherProcessor:
-        arguments:
-            - '@sylius.factory.adjustment'
-            - '@Enhavo\Bundle\ShopBundle\Manager\VoucherManager'
-        tags:
-            - { name: sylius.order_processor, priority: 10 }
-
-    Enhavo\Bundle\ShopBundle\OrderProcessing\ShippingChargesProcessor:
-        arguments:
-            - '@sylius.factory.adjustment'
-            - '@Enhavo\Bundle\ShopBundle\Shipping\DelegatingCalculator'
-        tags:
-            - { name: sylius.order_processor, priority: 30 }
-
-    Enhavo\Bundle\ShopBundle\OrderProcessing\OrderTaxProcessor:
-        arguments:
-            - '@Enhavo\Bundle\ShopBundle\Manager\TaxationManager'
-        tags:
-            - { name: sylius.order_processor, priority: 60 }
-
-    Enhavo\Bundle\ShopBundle\OrderProcessing\OrderShipmentProcessor:
-        arguments:
-            - '@sylius.shipping_method_resolver.default'
-            - '@sylius.factory.shipment'
-            - '@sylius.shipping_methods_resolver'
-        tags:
-            - { name: sylius.order_processor, priority: 40 }
-
-    Enhavo\Bundle\ShopBundle\OrderProcessing\OrderPaymentProcessor:
-        arguments:
-            - '@Enhavo\Bundle\ShopBundle\Payment\Provider\OrderPaymentProvider'
-        tags:
-            - { name: sylius.order_processor, priority: 0 }
-
     Enhavo\Bundle\ShopBundle\Manager\TaxationManager:
 
     Enhavo\Bundle\ShopBundle\Manager\PricingManager:
@@ -86,6 +35,13 @@ services:
 
     Enhavo\Bundle\ShopBundle\Pricing\PriceCalculatorInterface:
         alias: Enhavo\Bundle\ShopBundle\Pricing\DefaultPriceCalculator
+
+    Enhavo\Bundle\ShopBundle\Taxation\Applicator\OrderShipmentTaxesApplicator:
+        arguments:
+            - '@sylius.factory.adjustment'
+            - '@Enhavo\Bundle\ShopBundle\Shipping\DelegatingCalculator'
+        tags:
+            - { name: enhavo_shop.order_taxes_applicator, priority: 20 }
 
     Enhavo\Bundle\ShopBundle\Taxation\Applicator\OrderItemsTaxesApplicator:
         arguments:
