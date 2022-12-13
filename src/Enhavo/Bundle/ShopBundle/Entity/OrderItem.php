@@ -5,11 +5,13 @@ namespace Enhavo\Bundle\ShopBundle\Entity;
 use Enhavo\Bundle\ShopBundle\Model\ProductAccessInterface;
 use Enhavo\Bundle\ShopBundle\Model\ProductVariantInterface;
 use Enhavo\Bundle\ShopBundle\Model\ProductVariantProxyInterface;
+use Sylius\Component\Core\Model\OrderItemUnitInterface;
 use Sylius\Component\Order\Model\OrderItem as SyliusOrderItem;
 use Enhavo\Bundle\ShopBundle\Model\AdjustmentInterface;
 use Sylius\Component\Order\Model\OrderItemInterface as SyliusOrderItemInterface;
 use Enhavo\Bundle\ShopBundle\Model\OrderItemInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
+use Webmozart\Assert\Assert;
 
 class OrderItem extends SyliusOrderItem implements OrderItemInterface
 {
@@ -63,6 +65,25 @@ class OrderItem extends SyliusOrderItem implements OrderItemInterface
     public function getUnitPriceTotal(): int
     {
         return $this->unitPrice * $this->quantity;
+    }
+
+    public function getDiscountedUnitPrice(): int
+    {
+        if ($this->units->isEmpty()) {
+            return $this->unitPrice;
+        }
+
+        $firstUnit = $this->units->first();
+        
+        return
+            $this->unitPrice +
+            $firstUnit->getAdjustmentsTotal(AdjustmentInterface::ORDER_UNIT_PROMOTION_ADJUSTMENT)
+            ;
+    }
+
+    public function getDiscountedUnitPriceTotal(): int
+    {
+        return $this->getDiscountedUnitPrice() * $this->quantity;
     }
 
     /**

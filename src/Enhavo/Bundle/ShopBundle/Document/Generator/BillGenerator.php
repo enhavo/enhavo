@@ -75,7 +75,7 @@ class BillGenerator extends AbstractPDFGenerator
                 $tableHelper->addRow([
                     $item->getName(),
                     $item->getQuantity(),
-                    $this->formatPrice($item->getUnitPrice()),
+                    $this->formatPrice($item->getDiscountedUnitPrice()),
                     $this->formatPrice($item->getTaxTotal()),
                     $this->formatPrice($item->getTotal()),
                 ]);
