@@ -32,7 +32,7 @@
                                     <div class="details" style="display: flex; gap: 5px; flex-wrap: wrap">
                                         <div style="display: flex; justify-content: space-between; width: 100%">
                                             <span>{{ 'order.label.unitPrice'|trans }}:</span><span>
-                                                    {{ item.unitPrice|currency }}
+                                                    {{ item.discountedUnitPrice|currency }}
                                                 </span>
                                         </div>
                                         <div style="display: flex; justify-content: space-between; width: 100%">
@@ -52,7 +52,7 @@
                                     <div class="details" style="display: flex; gap: 5px; flex-wrap: wrap">
                                         <div style="display: flex; justify-content: space-between; width: 100%">
                                             <span>{{ 'order.label.unitPrice'|trans }}:</span><span>
-                                                    {{ item.unitPriceTotal|currency }}
+                                                    {{ item.discountedUnitPriceTotal|currency }}
                                                 </span>
                                         </div>
                                         <div style="display: flex; justify-content: space-between; width: 100%">
@@ -85,7 +85,7 @@
                                     {{'order.label.unitPrice'|trans }}:
                                 </td>
                                 <td>
-                                    {{ resource.unitPriceTotal|currency }}
+                                    {{ resource.discountedUnitPriceTotal|currency }}
                                 </td>
                             </tr>
                             <tr>

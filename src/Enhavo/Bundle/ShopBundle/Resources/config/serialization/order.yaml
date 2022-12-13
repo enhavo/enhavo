@@ -39,7 +39,11 @@ Enhavo\Bundle\ShopBundle\Entity\OrderItem:
             groups: ['cart']
         unitPrice:
             groups: ['cart']
+        discountedUnitPrice:
+            groups: ['cart']
         unitPriceTotal:
+            groups: ['cart']
+        discountedUnitPriceTotal:
             groups: ['cart']
         total:
             groups: ['cart']
