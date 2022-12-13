@@ -10,12 +10,12 @@
                     <div><input type="text" name="quantity" value="{{ item.quantity }}" /></div><button type="submit">Save</button>
                 {% endif %}
 
-                <div>Unit Price: <span data-cart-item-target="unitPrice">{{ item.unitPrice }}</span></div>
+                <div>Unit Price: <span data-cart-item-target="unitPrice">{{ item.discountedUnitPrice }}</span></div>
                 <div>Unit Tax: <span data-cart-item-target="unitTax">{{ item.unitTax }}</span></div>
-                <div>Unit Total: <span data-cart-item-target="unitTotal">{{ item.unitPriceTotal }}</span></div>
+                <div>Unit Total: <span data-cart-item-target="unitTotal">{{ item.discountedUnitPriceTotal }}</span></div>
 
                 <div>Tax Total: <span data-cart-item-target="taxTotal">{{ item.taxTotal }}</span></div>
-                <div>Net Total: <span data-cart-item-target="unitPriceTotal">{{ item.unitPriceTotal }}</span></div>
+                <div>Net Total: <span data-cart-item-target="unitPriceTotal">{{ item.discountedUnitPriceTotal }}</span></div>
                 <div>Total: <span data-cart-item-target="total">{{ item.total }}</span></div>
 
                 {% if not immutable %}
@@ -29,7 +29,7 @@
         Total: <span data-cart-total>{{ cart.total }}</span>
     </div>
     <div>
-        Netto: <span data-cart-unit-price-total>{{ cart.unitPriceTotal }}</span>
+        Netto: <span data-cart-unit-price-total>{{ cart.discountedUnitPriceTotal }}</span>
     </div>
     <div>
         Unit Total: <span data-cart-unit-total>{{ cart.unitTotal }}</span>
