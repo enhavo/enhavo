@@ -274,6 +274,15 @@ class Order extends SyliusOrder implements OrderInterface
         return $total;
     }
 
+    public function getDiscountedUnitPriceTotal()
+    {
+        $total = 0;
+        foreach($this->getItems() as $items) {
+            $total += $items->getDiscountedUnitPriceTotal();
+        }
+        return $total;
+    }
+
     public function getUnitTaxTotal()
     {
         $total = 0;
