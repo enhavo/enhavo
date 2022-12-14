@@ -14,6 +14,8 @@ use Enhavo\Bundle\ShopBundle\Model\ProductVariantProxyInterface;
 
 class ProductVariantProxyReplaceSubscriber implements EventSubscriber
 {
+    private $onFlush = false;
+
     public function __construct(
         private ProductVariantProxyFactoryInterface $factory,
     ) {}
@@ -30,7 +32,7 @@ class ProductVariantProxyReplaceSubscriber implements EventSubscriber
 
     public function postLoad(LifecycleEventArgs $args)
     {
-        $entity = $args->getEntity();
+        $entity = $args->getObjectManager();
         if ($entity instanceof OrderItem) {
             $this->replaceWithProxy($entity);
         }
@@ -45,13 +47,19 @@ class ProductVariantProxyReplaceSubscriber implements EventSubscriber
             if ($entity->getProduct()) {
                 $em->persist($entity->getProduct());
             }
-            $this->replaceWithProxy($entity);
+            // prePersist will trigger also on $em->persist. So we don't know if a flush will come next. The "persist" call
+            // should not change the entity, so we check if we are inside a flush routine and if not, we replace it with our proxy again
+            if (!$this->onFlush) {
+                $this->replaceWithProxy($entity);
+            }
         }
     }
 
     public function preFlush(PreFlushEventArgs $args)
     {
-        $uow = $args->getEntityManager()->getUnitOfWork();
+        $this->onFlush = true;
+
+        $uow = $args->getObjectManager()->getUnitOfWork();
 
         foreach ($uow->getScheduledEntityInsertions() as $entity) {
             if ($entity instanceof OrderItem) {
@@ -70,7 +78,9 @@ class ProductVariantProxyReplaceSubscriber implements EventSubscriber
 
     public function postFlush(PostFlushEventArgs $args)
     {
-        $uow = $args->getEntityManager()->getUnitOfWork();
+        $this->onFlush = false;
+
+        $uow = $args->getObjectManager()->getUnitOfWork();
 
         foreach ($uow->getIdentityMap() as $list) {
             foreach ($list as $entity) {
