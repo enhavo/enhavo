@@ -26,6 +26,8 @@ enhavo_app:
             type: shop_sales
         shop_configuration:
             type: shop_configuration
+        shop_promotion:
+            type: shop_promotion
         navigation:
             type: navigation
         redirect:

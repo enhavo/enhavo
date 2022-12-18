@@ -29,6 +29,11 @@ services:
         tags:
             - { name: enhavo.menu, alias: shop_product_option }
 
+    Enhavo\Bundle\ShopBundle\Menu\PromotionMenu:
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
+        tags:
+            - { name: enhavo.menu, alias: shop_promotion }
+
     Enhavo\Bundle\ShopBundle\Menu\ProductAttributeMenu:
             parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
             tags:

@@ -17,6 +17,12 @@ services:
         tags:
             - { name: enhavo.action, alias: shop_create_attribute }
 
+    Enhavo\Bundle\ShopBundle\Action\GenerateCouponActionType:
+        parent: Enhavo\Bundle\AppBundle\Action\Type\FormActionType
+        public: true
+        tags:
+            - { name: enhavo.action, alias: shop_generate_coupon }
+
     enhavo_shop.product_manager:
         public: true
         alias: Enhavo\Bundle\ShopBundle\Manager\ProductManager
@@ -320,3 +326,7 @@ services:
             - '@sylius.factory.add_to_cart_command'
             - '@sylius.order_item_quantity_modifier'
             - '@sylius.factory.order_item'
+
+    Enhavo\Bundle\ShopBundle\Distributor\IntegerDistributor:
+
+    Enhavo\Bundle\ShopBundle\Distributor\ProportionalIntegerDistributor:
