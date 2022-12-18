@@ -10,13 +10,17 @@ checkout:
         debit: Lastschrift
 
 promotion:
+  label:
+    coupon: Coupon
+    coupons: Coupons
   coupon:
     form:
       label:
         code: Code
-      action:
-        redeem: Einlösen
-        cancel: Entfernen
+    action:
+      redeem: Einlösen
+      cancel: Entfernen
+      generate: Generieren
 
 voucher:
     label:
@@ -156,6 +160,7 @@ product:
     product_option: Option
     product_attribute: Attribut
     product_association_type: Vereinigungstypen
+    promotion: Promotion
     dimension: Abmessungen
     options: Optionen
     meta: Meta

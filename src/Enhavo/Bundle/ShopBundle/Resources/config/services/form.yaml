@@ -27,6 +27,10 @@ services:
         tags:
             - { name: form.type }
 
+    Enhavo\Bundle\ShopBundle\Form\Type\PromotionType:
+        tags:
+            - { name: form.type }
+
     enhavo_shop.form.type.product_generate_variants:
         class: Enhavo\Bundle\ShopBundle\Form\Type\ProductGenerateVariantsType
         arguments:

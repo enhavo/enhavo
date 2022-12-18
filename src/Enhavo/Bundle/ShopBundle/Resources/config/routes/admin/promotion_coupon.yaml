@@ -1,0 +1,102 @@
+sylius_promotion_coupon_index:
+    options:
+        expose: true
+    path: /enhavo/shop/promotion/{promotionId}/coupon/index
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.promotion_coupon:indexAction
+        _sylius:
+            viewer:
+                table_route_parameters:
+                    promotionId: $promotionId
+                actions:
+                    create:
+                        type: create
+                        route: sylius_promotion_coupon_create
+                        route_parameters:
+                            promotionId: $promotionId
+                    generate:
+                        type: shop_generate_coupon
+                        route_parameters:
+                            promotionId: $promotionId
+
+sylius_promotion_coupon_create:
+    options:
+        expose: true
+    path: /enhavo/shop/promotion/{promotionId}/coupon/create
+    methods: [GET,POST]
+    defaults:
+        _controller: sylius.controller.promotion_coupon:createAction
+        _sylius:
+            redirect: sylius_promotion_coupon_update
+            viewer:
+
+sylius_promotion_coupon_update:
+    options:
+        expose: true
+    path: /enhavo/shop/promotion/coupon/update/{id}
+    methods: [GET,POST]
+    defaults:
+        _controller: sylius.controller.promotion_coupon:updateAction
+        _sylius:
+            viewer:
+
+sylius_promotion_coupon_table:
+    options:
+        expose: true
+    path: /enhavo/shop/promotion/{promotionId}/coupon/table
+    methods: [GET,POST]
+    defaults:
+        _controller: sylius.controller.promotion_coupon:tableAction
+        _sylius:
+            viewer:
+                columns:
+                    code:
+                        property: code
+                        width: 4
+                        label: sylius.ui.code
+                        type: property
+                    usage_limit:
+                        property: usageLimit
+                        width: 4
+                        label: sylius.form.promotion_coupon.usage_limit
+                        type: property
+                    expires_at:
+                        property: expiresAt
+                        width: 4
+                        label: sylius.form.promotion_coupon.expires_at
+                        type: date
+
+sylius_promotion_coupon_delete:
+    options:
+        expose: true
+    path: /enhavo/shop/promotion/coupon/delete/{id}
+    methods: [POST]
+    defaults:
+        _controller: sylius.controller.promotion_coupon:deleteAction
+
+sylius_promotion_coupon_batch:
+    options:
+        expose: true
+    path: /enhavo/shop/promotion/coupon/batch
+    methods: [POST]
+    defaults:
+        _controller: sylius.controller.promotion_coupon:batchAction
+        _sylius:
+            paginate: false
+            criteria:
+                id: $ids
+            batches:
+                delete:
+                    type: delete
+
+sylius_promotion_coupon_create_form:
+    options:
+        expose: true
+    path: /enhavo/shop/promotion/{promotionId}/coupon/create-form
+    methods: [GET,POST]
+    defaults:
+        _controller: sylius.controller.promotion_coupon:createFormAction
+        _sylius:
+            form: Enhavo\Bundle\ShopBundle\Form\Type\PromotionCouponGenerateType
+            viewer:

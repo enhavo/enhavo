@@ -1,0 +1,85 @@
+sylius_promotion_index:
+    options:
+        expose: true
+    path: /enhavo/shop/promotion/index
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.promotion:indexAction
+        _sylius:
+            viewer:
+
+sylius_promotion_create:
+    options:
+        expose: true
+    path: /enhavo/shop/promotion/create
+    methods: [GET,POST]
+    defaults:
+        _controller: sylius.controller.promotion:createAction
+        _sylius:
+            redirect: sylius_promotion_update
+            viewer:
+
+sylius_promotion_update:
+    options:
+        expose: true
+    path: /enhavo/shop/promotion/update/{id}
+    methods: [GET,POST]
+    defaults:
+        _controller: sylius.controller.promotion:updateAction
+        _sylius:
+            viewer:
+                actions:
+                    coupon:
+                        type: shop_coupon
+
+sylius_promotion_table:
+    options:
+        expose: true
+    path: /enhavo/shop/promotion/table
+    methods: [GET,POST]
+    defaults:
+        _controller: sylius.controller.promotion:tableAction
+        _sylius:
+            viewer:
+                columns:
+                    name:
+                        property: name
+                        width: 4
+                        label: sylius.form.promotion.name
+                        type: property
+                        sortable: true
+                    startsAt:
+                        property: startsAt
+                        width: 4
+                        label: sylius.form.promotion.starts_at
+                        type: date
+                        sortable: true
+                    endsAt:
+                        property: endsAt
+                        width: 4
+                        label: sylius.form.promotion.ends_at
+                        type: date
+                        sortable: true
+
+sylius_promotion_delete:
+    options:
+        expose: true
+    path: /enhavo/shop/promotion/delete/{id}
+    methods: [POST]
+    defaults:
+        _controller: sylius.controller.promotion:deleteAction
+
+sylius_promotion_batch:
+    options:
+        expose: true
+    path: /enhavo/shop/promotion/batch
+    methods: [POST]
+    defaults:
+        _controller: sylius.controller.promotion:batchAction
+        _sylius:
+            paginate: false
+            criteria:
+                id: $ids
+            batches:
+                delete:
+                    type: delete

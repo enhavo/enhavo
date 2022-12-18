@@ -8,6 +8,7 @@ use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Sylius\Component\Addressing\Model\AddressInterface;
 use Sylius\Component\Order\Model\OrderInterface as SyliusOrderInterface;
 use Sylius\Component\Payment\Model\PaymentInterface;
+use Sylius\Component\Promotion\Model\CountablePromotionSubjectInterface;
 use Sylius\Component\Promotion\Model\PromotionCouponInterface;
 use Sylius\Component\Promotion\Model\PromotionSubjectInterface;
 
@@ -17,7 +18,7 @@ use Sylius\Component\Promotion\Model\PromotionSubjectInterface;
  * @since 15/08/16
  * @author gseidel
  */
-interface OrderInterface extends SyliusOrderInterface, PromotionSubjectInterface, AddressSubjectInterface
+interface OrderInterface extends SyliusOrderInterface, PromotionSubjectInterface, AddressSubjectInterface, CountablePromotionSubjectInterface
 {
     public function setPaymentState(?string $paymentState): void;
     public function getPaymentState(): ?string;
