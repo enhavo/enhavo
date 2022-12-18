@@ -32,7 +32,7 @@ class ProductVariantProxyReplaceSubscriber implements EventSubscriber
 
     public function postLoad(LifecycleEventArgs $args)
     {
-        $entity = $args->getObjectManager();
+        $entity = $args->getObject();
         if ($entity instanceof OrderItem) {
             $this->replaceWithProxy($entity);
         }
