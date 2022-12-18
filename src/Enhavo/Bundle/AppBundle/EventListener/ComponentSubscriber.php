@@ -4,7 +4,7 @@ namespace Enhavo\Bundle\AppBundle\EventListener;
 
 use Enhavo\Bundle\AppBundle\Template\TemplateManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\UX\TwigComponent\EventListener\PreRenderEvent;
+use  Symfony\UX\TwigComponent\Event\PreRenderEvent;
 
 class ComponentSubscriber implements EventSubscriberInterface
 {
