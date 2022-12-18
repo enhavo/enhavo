@@ -53,6 +53,10 @@ export default class FormAction extends AbstractAction
                     }
 
                     return true;
+                } else if (data.status === 400) {
+                    let html = AxiosResponseHandler.getBody(data).trim();
+                    modal.element = <HTMLElement>$.parseHTML(html)[0];
+                    return false;
                 }
 
                 return false;

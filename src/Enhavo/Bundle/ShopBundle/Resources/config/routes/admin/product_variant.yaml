@@ -6,7 +6,6 @@ sylius_product_variant_index:
     defaults:
         _controller: sylius.controller.product_variant::indexAction
         _sylius:
-            form: sylius_product_variant
             viewer:
                 table_route_parameters:
                     productId: $productId

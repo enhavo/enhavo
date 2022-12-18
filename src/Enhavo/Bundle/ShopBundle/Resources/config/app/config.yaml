@@ -57,10 +57,15 @@ sylius_promotion:
         promotion_subject:
             classes:
                 model: "%sylius.model.order.class%"
-
         promotion:
             classes:
                 model: Enhavo\Bundle\ShopBundle\Entity\Promotion
+                controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
+                form: Enhavo\Bundle\ShopBundle\Form\Type\PromotionType
+        promotion_coupon:
+            classes:
+                controller: Enhavo\Bundle\ShopBundle\Controller\PromotionCouponController
+                form: Enhavo\Bundle\ShopBundle\Form\Type\PromotionCouponType
 
 sylius_payment:
     resources:

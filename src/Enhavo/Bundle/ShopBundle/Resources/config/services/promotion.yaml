@@ -1,41 +1,15 @@
 services:
-#    enhavo_shop.promotion_rule_checker.shipping_country:
-#        class: Enhavo\Bundle\ShopBundle\Promotion\Checker\ShippingCountryRuleChecker
-#        arguments:
-#            - '@enhavo_shop.locale.country_resolver'
-#        tags:
-#            - { name: sylius.promotion_rule_checker, type: 'shipping_country', label: "Shipping country" }
-#
-#    enhavo.promotion_action.order_voucher_discount:
-#        class: Enhavo\Bundle\ShopBundle\Promotion\Action\OrderVoucherDiscountAction
-#        arguments:
-#            - '@sylius.originator'
-#            - '@sylius.factory.adjustment'
-#        calls:
-#            - [setContainer, ['@service_container']]
-#        tags:
-#            - { name: sylius.promotion_action, type: order_voucher_discount, label: "Free shipping discount" }
-#
-#    enhavo.promotion_action.free_shipping_discount:
-#        class: Enhavo\Bundle\ShopBundle\Promotion\Action\FreeShippingDiscountAction
-#        arguments:
-#            - '@sylius.originator'
-#            - '@sylius.factory.adjustment'
-#        tags:
-#            - { name: sylius.promotion_action, type: free_shipping_discount, label: "Free shipping discount" }
-#
-#    enhavo.promotion_action.order_fixed_discount:
-#        class: Enhavo\Bundle\ShopBundle\Promotion\Action\OrderFixedDiscountAction
-#        arguments:
-#            - '@sylius.originator'
-#            - '@sylius.factory.adjustment'
-#        tags:
-#            - { name: sylius.promotion_action, type: order_fixed_discount, label: "Order fixed discount" }
-#
-#    enhavo.promotion_action.order_percentage_discount:
-#        class: Enhavo\Bundle\ShopBundle\Promotion\Action\OrderPercentageDiscountAction
-#        arguments:
-#            - '@sylius.originator'
-#            - '@sylius.factory.adjustment'
-#        tags:
-#            - { name: sylius.promotion_action, type: order_percentage_discount, label: "Order percentage discount" }
+    Enhavo\Bundle\ShopBundle\Promotion\Action\PercentageDiscountPromotionActionCommand:
+        arguments:
+            - '@Enhavo\Bundle\ShopBundle\Distributor\ProportionalIntegerDistributor'
+            - '@Enhavo\Bundle\ShopBundle\Promotion\Applicator\UnitsPromotionAdjustmentsApplicator'
+        tags:
+            -   name: sylius.promotion_action
+                type: order_percentage_discount
+                form_type: Sylius\Bundle\PromotionBundle\Form\Type\Action\PercentageDiscountConfigurationType
+                label: "sylius.form.promotion_action.order_percentage_discount"
+
+    Enhavo\Bundle\ShopBundle\Promotion\Applicator\UnitsPromotionAdjustmentsApplicator:
+        arguments:
+            - '@sylius.factory.adjustment'
+            - '@Enhavo\Bundle\ShopBundle\Distributor\IntegerDistributor'
