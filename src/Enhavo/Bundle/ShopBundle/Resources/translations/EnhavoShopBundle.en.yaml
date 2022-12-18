@@ -9,13 +9,17 @@ checkout:
         paypal: Paypal
         debit: Debit
 promotion:
+  label:
+    coupon: Coupon
+    coupons: Coupons
   coupon:
     form:
       label:
         code: Code
-      action:
-        redeem: Redeem
-        cancel: Cancel
+    action:
+      redeem: Redeem
+      cancel: Cancel
+      generate: Generate
 
 voucher:
     label:
@@ -185,6 +189,7 @@ product:
     product_option: Option
     product_attribute: Attribute
     product_association_type: Association Types
+    promotion: Promotion
     dimension: Dimension
     options: Options
     meta: Meta

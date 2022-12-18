@@ -82,7 +82,6 @@ sylius_product_update:
                         template: admin/resource/product/meta.html.twig
                 actions:
                     variant:
-                        icon: book
                         type: shop_variant
 
 sylius_product_table:

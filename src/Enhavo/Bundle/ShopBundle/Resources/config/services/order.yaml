@@ -69,6 +69,12 @@ services:
         tags:
             - { name: enhavo.action, alias: 'shop_order_cancel' }
 
+    Enhavo\Bundle\ShopBundle\Action\CouponActionType:
+        parent: Enhavo\Bundle\AppBundle\Action\Type\OpenActionType
+        public: true
+        tags:
+            - { name: enhavo.action, alias: 'shop_coupon' }
+
     Enhavo\Bundle\ShopBundle\Action\PaidActionType:
         parent: Enhavo\Bundle\AppBundle\Action\Type\TransitionActionType
         public: true

@@ -5,6 +5,7 @@ namespace Enhavo\Bundle\ShopBundle\Controller;
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\AppBundle\Template\TemplateTrait;
 use Enhavo\Bundle\ShopBundle\Manager\ProductManager;
+use Enhavo\Bundle\ShopBundle\Model\ProductInterface;
 use Enhavo\Bundle\ShopBundle\Product\ProductVariantResolverInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,14 +14,13 @@ class ProductController extends ResourceController
 {
     use TemplateTrait;
 
-    public function showResourceAction($contentDocument, Request $request): Response
+    public function showResourceAction(ProductInterface $contentDocument, Request $request): Response
     {
-        $variant = $this->getProductVariantResolver()->resolve($contentDocument, $request);
+        $variant = $this->getProductManager()->getDefaultVariantProxy($contentDocument);
         if ($variant === null) {
             throw $this->createNotFoundException();
         }
 
-        $variant = $this->getProductManager()->getVariantProxy($variant);
         $variants = $this->getProductManager()->getVariantProxies($contentDocument->getVariants());
 
         return $this->render($this->getTemplate('theme/shop/product/show.html.twig'), [
@@ -40,10 +40,5 @@ class ProductController extends ResourceController
     private function getProductManager(): ProductManager
     {
         return $this->get('enhavo_shop.product_manager');
-    }
-
-    private function getProductVariantResolver(): ProductVariantResolverInterface
-    {
-        return $this->get('enhavo_shop.product_variant_resolver');
     }
 }
