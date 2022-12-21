@@ -8,6 +8,7 @@ checkout:
       label:
         paypal: Paypal
         debit: Debit
+
 promotion:
   label:
     coupon: Coupon
@@ -114,6 +115,7 @@ order:
     state: State
     shippingState: Shipment
     paymentState: Payment
+    voucher: Voucher
   action:
     transfer: Transfer to cart
     purchase: Pay

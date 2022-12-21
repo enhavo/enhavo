@@ -8,43 +8,17 @@
 
 namespace Enhavo\Bundle\ShopBundle\Form\Type;
 
-use Symfony\Component\Form\AbstractType;
+use Sylius\Bundle\PromotionBundle\Form\Type\PromotionCouponToCodeType;
+use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotNull;
 
-class OrderPromotionCouponType extends AbstractType
+class OrderPromotionCouponType extends AbstractResourceType
 {
-    /**
-     * @var string
-     */
-    private $dataClass;
-
-    public function __construct($dataClass)
-    {
-        $this->dataClass = $dataClass;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('promotionCoupon', 'sylius_promotion_coupon_to_code', [
+        $builder->add('promotionCoupon', PromotionCouponToCodeType::class, [
             'label' => 'promotion.coupon.form.label.code',
             'translation_domain' => 'EnhavoShopBundle',
-            'required' => $options['required']
         ]);
-    }
-
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(array(
-            'data_class' => $this->dataClass,
-            'validation_groups' => ['redeem'],
-            'required' => true
-        ));
-    }
-
-    public function getBlockPrefix()
-    {
-        return 'enhavo_shop_order_promotion_coupon';
     }
 }
