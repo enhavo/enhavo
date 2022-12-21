@@ -13,3 +13,14 @@ services:
         arguments:
             - '@sylius.factory.adjustment'
             - '@Enhavo\Bundle\ShopBundle\Distributor\IntegerDistributor'
+
+    Enhavo\Bundle\ShopBundle\Promotion\Checker\Rule\NthOrderRuleChecker:
+        arguments:
+            - '@sylius.repository.order'
+        tags:
+            -
+                name: sylius.promotion_rule_checker
+                type: nth_order
+                label: sylius.form.promotion_rule.nth_order
+                form_type: Enhavo\Bundle\ShopBundle\Form\Type\Promotion\NthOrderConfigurationType
+

@@ -20,7 +20,6 @@ use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Enhavo\Bundle\ShopBundle\Model\ShipmentInterface;
 use Enhavo\Bundle\ShopBundle\Model\AdjustmentInterface;
 use Sylius\Component\Payment\Model\PaymentInterface;
-use Sylius\Component\Promotion\Model\CountablePromotionSubjectInterface;
 use Sylius\Component\Promotion\Model\PromotionInterface;
 use Sylius\Component\Order\Model\Order as SyliusOrder;
 use Sylius\Component\Promotion\Model\PromotionCouponInterface;
@@ -246,10 +245,25 @@ class Order extends SyliusOrder implements OrderInterface
         return $total;
     }
 
-    public function getDiscountTotal()
+    public function getDiscountedTotal()
     {
         $total = 0;
-        $adjustments = $this->getAdjustments(AdjustmentInterface::ORDER_PROMOTION_ADJUSTMENT);
+        $adjustments = $this->getAdjustmentsRecursively(AdjustmentInterface::ORDER_PROMOTION_ADJUSTMENT);
+        foreach($adjustments as $adjustment) {
+            $total += $adjustment->getAmount();
+        }
+
+        $adjustments = $this->getAdjustmentsRecursively(AdjustmentInterface::ORDER_UNIT_PROMOTION_ADJUSTMENT);
+        foreach($adjustments as $adjustment) {
+            $total += $adjustment->getAmount();
+        }
+
+        $adjustments = $this->getAdjustmentsRecursively(AdjustmentInterface::ORDER_ITEM_PROMOTION_ADJUSTMENT);
+        foreach($adjustments as $adjustment) {
+            $total += $adjustment->getAmount();
+        }
+
+        $adjustments = $this->getAdjustmentsRecursively(AdjustmentInterface::ORDER_SHIPPING_PROMOTION_ADJUSTMENT);
         foreach($adjustments as $adjustment) {
             $total += $adjustment->getAmount();
         }

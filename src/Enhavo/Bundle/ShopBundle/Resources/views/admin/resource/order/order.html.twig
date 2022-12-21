@@ -103,13 +103,13 @@
                                     </td>
                                 {% endif %}
                             </tr>
-                            {% if resource.discountTotal != 0 %}
+                            {% if resource.discountedTotal != 0 %}
                                 <tr>
                                     <td>
                                         {{ 'order.label.discount'|trans }}:
                                     </td>
                                     <td>
-                                        {{ resource.discountTotal|currency }}
+                                        {{ resource.discountedTotal|currency }}
                                     </td>
                                 </tr>
                             {% endif %}
@@ -121,6 +121,16 @@
                                     {{ resource.taxTotal|currency }}
                                 </td>
                             </tr>
+                            {% if resource.voucherAmountTotal != 0 %}
+                                <tr>
+                                    <td>
+                                        {{ 'order.label.voucher'|trans }}:
+                                    </td>
+                                    <td>
+                                        {{ resource.voucherAmountTotal|currency }}
+                                    </td>
+                                </tr>
+                            {% endif %}
                             <tr class="bordered">
                                 <td>
                                     {{ 'order.label.sum'|trans }}:

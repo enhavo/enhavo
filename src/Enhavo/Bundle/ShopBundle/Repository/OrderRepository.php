@@ -73,4 +73,29 @@ class OrderRepository extends SyliusOrderRepository implements EntityRepositoryI
             'updatedAt' => 'DESC'
         ]);
     }
+
+    public function countByUser(UserInterface $user, \DateTime $from = null, \DateTime $to = null)
+    {
+        $qb = $this->createQueryBuilder("o");
+        $qb->select('COUNT(o.id)');
+
+        if ($from) {
+            $qb->andWhere('o.checkoutCompletedAt > :startTime');
+            $qb->setParameter('startTime', $from);
+        }
+
+        if ($to) {
+            $qb->andWhere('o.checkoutCompletedAt < :endTime');
+            $qb->setParameter('endTime', $to);
+        }
+
+        $qb->andWhere('o.state NOT IN (:states)');
+        $qb->setParameter('states', [OrderInterface::STATE_CART, OrderInterface::STATE_CANCELLED]);
+
+        $qb->join('o.user', 'u');
+        $qb->andWhere('u.id = :id');
+        $qb->setParameter('id', $user->getId());
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
 }
