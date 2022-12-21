@@ -8,7 +8,6 @@
 
 namespace Enhavo\Bundle\ShopBundle\Controller;
 
-use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
 use Enhavo\Bundle\AppBundle\Controller\ResourceControllerTrait;
 use Enhavo\Bundle\ShopBundle\Exception\DocumentGeneratorException;
 use Enhavo\Bundle\ShopBundle\Manager\DocumentManager;

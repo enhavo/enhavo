@@ -2,10 +2,8 @@
 
 namespace Enhavo\Bundle\ShopBundle\Model;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
-use Sylius\Component\Addressing\Model\AddressInterface;
 use Sylius\Component\Order\Model\OrderInterface as SyliusOrderInterface;
 use Sylius\Component\Payment\Model\PaymentInterface;
 use Sylius\Component\Promotion\Model\CountablePromotionSubjectInterface;
@@ -39,7 +37,7 @@ interface OrderInterface extends SyliusOrderInterface, PromotionSubjectInterface
     public function getShippingTotal();
     public function getShippingTax();
     public function getShippingPrice();
-    public function getDiscountTotal();
+    public function getDiscountedTotal();
     public function getTaxTotal();
     public function getUnitTotal();
     public function getUnitPriceTotal();
