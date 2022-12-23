@@ -300,11 +300,6 @@ class BlockDefinition
     {
         return $this->config[$key] ?? $default;
     }
-//
-//    public function getProperty(string $key)
-//    {
-//        return isset($this->config['properties'][$key]) ?? $this->config['properties'][$key];
-//    }
 
     public function getNamespace()
     {
