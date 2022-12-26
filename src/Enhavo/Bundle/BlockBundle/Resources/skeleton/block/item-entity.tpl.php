@@ -15,6 +15,7 @@ class <?= $class->getName(); ?><?php if ($class->getImplements()): ?> implements
 {
 <?php foreach ($class->getProperties() as $property) { ?>
 <?php $ormField = $orm->getField($property->getName()); ?>
+<?php if ($ormField->getOrmType()) { ?>
 <?php if ($ormField->isPrimaryKey()) { ?>
     #[Orm\Id]
 <?php } ?>
@@ -60,6 +61,7 @@ class <?= $class->getName(); ?><?php if ($class->getImplements()): ?> implements
 <?php } ?>
 <?php if ($relation) { ?>
     #[ORM\OrderBy(<?= $relation->getOrderByString() ?>)]
+<?php } ?>
 <?php } ?>
 <?php if ($property->getNullable() || $property->getDefault() !== 'null') { ?>
     private <?= $property->getNullable() .$property->getType() ; ?> $<?= $property->getName(); ?> = <?= $property->getDefault(); ?>;

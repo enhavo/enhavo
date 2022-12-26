@@ -57,7 +57,7 @@ class PhpClassProperty
 
     public function getRemover(): string
     {
-        return $this->config['type_options']['remover'] ?? 'remove';
+        return $this->config['type_options']['remover'] ?? 'removeElement';
     }
 
     public function getSingular(): ?string
