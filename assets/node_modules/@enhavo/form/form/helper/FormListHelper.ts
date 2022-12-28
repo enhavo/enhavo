@@ -142,6 +142,8 @@ export class FormListHelper
 
         if (event.moved && this.form.onMove) {
             this.form.onMove(event.moved.element);
+        } else if (event.added && this.form.onMove) {
+            this.form.onMove(event.added.element);
         }
     }
 
