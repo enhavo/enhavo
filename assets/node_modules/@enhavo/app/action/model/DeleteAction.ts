@@ -12,21 +12,24 @@ export default class DeleteAction extends AbstractAction
     public url: string;
     public token: string;
 
+
+    public confirmMessage: string;
+    public confirmLabelOk: string;
+    public confirmLabelCancel: string;
+
     private readonly view: View;
     private readonly eventDispatcher: EventDispatcher;
-    private readonly translator: Translator;
 
-    constructor(view: View, eventDispatcher: EventDispatcher, translator: Translator) {
+    constructor(view: View, eventDispatcher: EventDispatcher) {
         super();
         this.view = view;
         this.eventDispatcher = eventDispatcher;
-        this.translator = translator;
     }
 
     execute(): void
     {
         this.view.confirm(new Confirm(
-            this.translator.trans('enhavo_app.delete.message.question'),
+            this.confirmMessage,
             () => {
                 let uri = new URI(this.url);
                 uri = uri.addQuery('view_id', this.view.getId());
@@ -37,8 +40,8 @@ export default class DeleteAction extends AbstractAction
             () => {
 
             },
-            this.translator.trans('enhavo_app.delete.label.cancel'),
-            this.translator.trans('enhavo_app.delete.label.delete'),
+            this.confirmLabelCancel,
+            this.confirmLabelOk,
         ));
     }
 }

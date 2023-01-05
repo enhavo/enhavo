@@ -34,9 +34,9 @@ class DeleteActionType extends AbstractUrlActionType implements ActionTypeInterf
 
         $data = array_merge($data, [
             'confirm' => $options['confirm'],
-            'confirm_message' => $this->translator->trans($options['confirm_message'], [], $options['translation_domain']),
-            'confirm_label_ok' => $this->translator->trans($options['confirm_label_ok'], [], $options['translation_domain']),
-            'confirm_label_cancel' => $this->translator->trans($options['confirm_label_cancel'], [], $options['translation_domain']),
+            'confirmMessage' => $this->translator->trans($options['confirm_message'], [], $options['translation_domain']),
+            'confirmLabelOk' => $this->translator->trans($options['confirm_label_ok'], [], $options['translation_domain']),
+            'confirmLabelCancel' => $this->translator->trans($options['confirm_label_cancel'], [], $options['translation_domain']),
             'token' => $this->tokenManager->getToken($resource->getId())->getValue()
         ]);
 
