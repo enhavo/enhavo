@@ -18,6 +18,6 @@ export default class DeleteActionFactory extends AbstractFactory
     }
 
     createNew(): DeleteAction {
-        return new DeleteAction(this.view, this.eventDispatcher, this.translator);
+        return new DeleteAction(this.view, this.eventDispatcher);
     }
 }
