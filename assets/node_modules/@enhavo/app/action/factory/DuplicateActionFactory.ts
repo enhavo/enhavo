@@ -3,7 +3,7 @@ import AbstractFactory from "@enhavo/app/action/factory/AbstractFactory";
 import View from "@enhavo/app/view/View";
 import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
 
-export default class DropdownActionFactory extends AbstractFactory
+export default class DuplicateActionFactory extends AbstractFactory
 {
     private readonly view: View;
     private readonly eventDispatcher: EventDispatcher;
