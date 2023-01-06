@@ -10,11 +10,12 @@ class CheckboxVueType extends AbstractVueType
 {
     public static function supports(FormView $formView): bool
     {
-        return in_array('checkbox', $formView->vars['block_prefixes']);
+        return in_array('checkbox', $formView->vars['block_prefixes']) && !in_array('radio', $formView->vars['block_prefixes']);
     }
 
     public function buildView(FormView $view, VueData $data)
     {
         $data['component'] = 'form-checkbox';
+        $data['checked'] = $view->vars['checked'];
     }
 }

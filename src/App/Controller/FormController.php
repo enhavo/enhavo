@@ -7,6 +7,7 @@ use Enhavo\Bundle\FormBundle\Form\Type\ListType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Enhavo\Bundle\VueFormBundle\Form\VueForm;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -166,5 +167,82 @@ class FormController extends AbstractController
             ->getForm();
 
         return $this->handleForm($form, $request, 'diff');
+    }
+
+    #[Route('/checkbox', name: "app_form_checkbox")]
+    public function checkboxAction(Request $request)
+    {
+        $form = $this->createFormBuilder(null)
+            ->add('enabled', CheckboxType::class, [
+                'label' => 'Enabled',
+                'required' => false,
+            ])
+            ->add('button', SubmitType::class, [
+                'label' => 'save'
+            ])
+            ->setMethod('POST')
+            ->getForm();
+
+        return $this->handleForm($form, $request);
+    }
+
+    #[Route('/text', name: "app_form_text")]
+    public function textAction(Request $request)
+    {
+        $form = $this->createFormBuilder(null)
+            ->add('text', TextType::class, [
+                'label' => 'Text',
+            ])
+            ->add('button', SubmitType::class, [
+                'label' => 'save'
+            ])
+            ->setMethod('POST')
+            ->getForm();
+
+        return $this->handleForm($form, $request);
+    }
+
+    #[Route('/radio', name: "app_form_radio")]
+    public function radioAction(Request $request)
+    {
+        $form = $this->createFormBuilder(null)
+            ->add('gender', ChoiceType::class, [
+                'label' => 'Gender',
+                'multiple' => false,
+                'expanded' => true,
+                'choices' => [
+                    'Male' => 'male',
+                    'Female' => 'female',
+                ]
+            ])
+            ->add('button', SubmitType::class, [
+                'label' => 'save'
+            ])
+            ->setMethod('POST')
+            ->getForm();
+
+        return $this->handleForm($form, $request);
+    }
+
+    #[Route('/select', name: "app_form_select")]
+    public function selectAction(Request $request)
+    {
+        $form = $this->createFormBuilder(null)
+            ->add('gender', ChoiceType::class, [
+                'label' => 'Gender',
+                'multiple' => false,
+                'expanded' => false,
+                'choices' => [
+                    'Male' => 'male',
+                    'Female' => 'female',
+                ]
+            ])
+            ->add('button', SubmitType::class, [
+                'label' => 'save'
+            ])
+            ->setMethod('POST')
+            ->getForm();
+
+        return $this->handleForm($form, $request);
     }
 }

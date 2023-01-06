@@ -1,17 +1,17 @@
 <template>
-    <input type="checkbox" ref="element" :value="form.value" :checked="form.checked" :id="form.id" :name="form.fullName" :disabled="form.disabled" :required="form.required" />
+    <input type="checkbox" ref="element" :value="form.value" :checked="form.checked" :id="form.id" :name="form.fullName" :disabled="form.disabled" :required="form.required" @change="form.checked = form.element.checked" />
 </template>
 
 <script lang="ts">
 import {Vue, Options, Prop} from "vue-property-decorator";
-import {Form} from "@enhavo/vue-form/model/Form"
 import {Util} from "@enhavo/vue-form/form/Util";
+import {CheckboxForm} from "@enhavo/vue-form/model/CheckboxForm";
 
 @Options({})
 export default class extends Vue
 {
     @Prop()
-    form: Form
+    form: CheckboxForm
 
     updated()
     {
