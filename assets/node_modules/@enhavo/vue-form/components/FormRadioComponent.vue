@@ -1,5 +1,15 @@
 <template>
-    <input type="radio" ref="element" :value="form.value" :checked="form.checked" :id="form.id" :name="form.fullName" :disabled="form.disabled" :required="form.required" @change="form.checked = form.element.checked" />
+    <input
+        type="radio"
+        ref="element"
+        :value="form.value"
+        :checked="form.checked"
+        :id="form.id"
+        :name="form.fullName"
+        :disabled="form.disabled"
+        :required="form.required"
+        @change="form.checked = form.element.checked; form.dispatchChange()"
+    />
 </template>
 
 <script lang="ts">

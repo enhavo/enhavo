@@ -9,6 +9,5 @@ export class TestForm extends Form
     }
 
     public foo = "bar";
-    public visitors: string[] = [];
     public testValues: string[];
 }

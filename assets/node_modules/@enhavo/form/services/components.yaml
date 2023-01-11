@@ -1,4 +1,18 @@
 services:
+    '@enhavo/form/form/model/FormList':
+        chunk: 'vue'
+        import: FormList
+        arguments:
+            - '@enhavo/vue-form/form/FormFactory'
+        tags:
+            - { name: form.model, component: 'form-list' }
+
+    '@enhavo/form/form/model/FormWysiwyg':
+        chunk: 'vue'
+        import: FormWysiwyg
+        tags:
+            - { name: form.model, component: 'form-wysiwyg' }
+
     '@enhavo/form/components/FormListComponent':
         chunk: 'vue'
         static: true
@@ -10,3 +24,9 @@ services:
         static: true
         tags:
             - { name: vue.component, component: 'form-list-item' }
+
+    '@enhavo/form/components/FormWysiwygComponent':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'form-wysiwyg' }

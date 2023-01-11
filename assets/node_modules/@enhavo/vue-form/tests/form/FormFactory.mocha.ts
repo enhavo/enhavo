@@ -1,24 +1,65 @@
 import {FormFactory} from "@enhavo/vue-form/form/FormFactory"
-import {RootForm} from "@enhavo/vue-form/model/RootForm";
 import {TestVisitor} from "@enhavo/vue-form/tests/mock/TestVisitor";
 import {Theme} from "@enhavo/vue-form/form/Theme";
 import {TestForm} from "@enhavo/vue-form/tests/mock/TestForm";
 import {FormVisitor} from "@enhavo/vue-form/form/FormVisitor";
 import {Form} from "@enhavo/vue-form/model/Form";
+import {SomeFormModel, SomeService} from "@enhavo/vue-form/tests/mock/SomeFormModel";
+import {describe} from "mocha";
+import {FormEventDispatcher} from "@enhavo/vue-form/form/FormEventDispatcher";
 const assert = require("chai").assert;
 
 describe('vue-form/form/FormFactory', () => {
+    let eventDispatcher = new FormEventDispatcher();
     describe('On create', () => {
+        let factory = new FormFactory(eventDispatcher);
+
         it('it should create a root form object', () => {
-            let factory = new FormFactory();
             let form = factory.create({component: 'test'});
-            assert.isTrue(form instanceof RootForm)
+            assert.isTrue(form instanceof Form)
+            assert.isTrue(form.eventDispatcher == eventDispatcher);
             assert.equal('test', form.component);
         });
     });
 
+    describe('On create with registered models', () => {
+        let factory = new FormFactory(eventDispatcher);
+        let someService = new SomeService();
+        factory.registerModel('some-component', new SomeFormModel(someService));
+
+        it('it should create form with registered model', () => {
+            let data = {
+                component: 'some-component',
+                name: 'some-child'
+            }
+
+            let form = factory.create(data);
+            assert.equal('something', form.testValue);
+            assert.equal(someService, form.service);
+            assert.isTrue(form.eventDispatcher == eventDispatcher);
+            assert.isTrue(form.testInit);
+        });
+
+        it('it should create form with registered model and child', () => {
+
+            let data = {
+                component: 'anything',
+                children: [
+                    {
+                        component: 'some-component',
+                        name: 'some-child'
+                    },
+                ]
+            }
+
+            let form = factory.create(data);
+            assert.isTrue(form instanceof Form)
+            assert.equal('something', form.get('some-child').testValue);
+        });
+    });
+
     describe('After adding some visitors', () => {
-        let factory = new FormFactory();
+        let factory = new FormFactory(eventDispatcher);
         factory.addVisitor(new TestVisitor('foo', 100));
         factory.addVisitors([new TestVisitor('hello', 80)]);
         factory.addTheme(new Theme([new TestVisitor('bar', 90)]));
@@ -49,21 +90,21 @@ describe('vue-form/form/FormFactory', () => {
 
         it('it should store the visitors in the root node', () => {
             let form = <TestForm>factory.create({component: 'test'}, new TestVisitor('world', 70));
-            assert.equal(4, (<RootForm>form.getRoot()).visitors.length);
+            assert.equal(4, (form.getRoot()).visitors.length);
         });
 
         it('it should store the visitors only once at the root node', () => {
-            let form = <RootForm>factory.create({component: 'test'}, new TestVisitor('world', 70));
-            form = <RootForm>factory.create({component: 'test'}, form.visitors, form);
-            assert.equal(4, (<RootForm>form.getRoot()).visitors.length);
+            let form = factory.create({component: 'test'}, new TestVisitor('world', 70));
+            form = factory.create({component: 'test'}, form.visitors, form);
+            assert.equal(4, (form.getRoot()).visitors.length);
         });
     });
 
     describe('After adding some visitors that replace a form', () => {
-        let factory = new FormFactory();
+        let factory = new FormFactory(eventDispatcher);
         factory.addVisitor(new FormVisitor((form: Form) => {
             return form.name == '0';
-        }, (form: RootForm) => {
+        }, (form: Form) => {
             let newForm =  new TestForm('new_0');
             newForm.parent = form.parent;
             newForm.children = form.children;
@@ -99,7 +140,7 @@ describe('vue-form/form/FormFactory', () => {
     });
 
     describe('On create with form tree', () => {
-        let factory = new FormFactory();
+        let factory = new FormFactory(eventDispatcher);
 
         let data = {
             component: '0',

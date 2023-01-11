@@ -2,15 +2,21 @@ import * as _ from "lodash";
 import {Form} from "@enhavo/vue-form/model/Form";
 import {Theme} from "@enhavo/vue-form/form/Theme";
 import {FormVisitorInterface} from "@enhavo/vue-form/form/FormVisitor";
-import {RootForm} from "@enhavo/vue-form/model/RootForm";
+import {FormEventDispatcherInterface} from "@enhavo/vue-form/form/FormEventDispatcherInterface";
 
 export class FormFactory
 {
     private visitors: Array<FormVisitorInterface> = [];
+    private models: Array<ModelEntry> = [];
+
+    constructor(
+        private eventDispatcher: FormEventDispatcherInterface
+    ) {
+    }
 
     public create(data: object, visitors: FormVisitorInterface|Array<FormVisitorInterface>|Theme = null, parent: Form = null)
     {
-        let form = parent === null ? new RootForm() : new Form();
+        let form = this.getModel(data);
 
         form = _.extend(form, data);
         form.parent = parent;
@@ -45,19 +51,29 @@ export class FormFactory
 
         form = this.applyVisitors(form, applyVisitors);
 
-        let root =  <RootForm>form.getRoot();
+        let root = form.getRoot();
         for (let applyVisitor of applyVisitors) {
             if (root.visitors.indexOf(applyVisitor) == -1) {
                 root.visitors.push(applyVisitor);
             }
         }
 
+        this.initForm(form);
+
         return form;
+    }
+
+    private initForm(form: Form)
+    {
+        form.init();
+        for (let child of form.children) {
+            this.initForm(child);
+        }
     }
 
     private createFormData(form: Form)
     {
-        form = _.assign(new Form(), form);
+        form = _.assign(this.getModel(form), form);
         for (let key in form.children) {
             form.children[key] = this.createFormData(form.children[key]);
             form.children[key].parent = form;
@@ -123,5 +139,51 @@ export class FormFactory
         }
 
         return form;
+    }
+
+    public registerModel(component: string, prototype: Form)
+    {
+        let entry = this.getModelEntry(component);
+        if (entry) {
+            this.models.splice(this.models.indexOf(entry), 1);
+        }
+
+        this.models.push(new ModelEntry(component, prototype))
+    }
+
+    private getModelEntry(component: string): ModelEntry|null
+    {
+        for (let entry of this.models) {
+            if (entry.component == component) {
+                return entry;
+            }
+        }
+
+        return null;
+    }
+
+    private getModel(form: Form|object): any
+    {
+        if ((<Form>form).component) {
+            let entry = this.getModelEntry((<Form>form).component);
+            if (entry) {
+                let clone = _.clone(entry.model);
+                clone.eventDispatcher = this.eventDispatcher;
+                return clone;
+            }
+        }
+
+        let model = new Form();
+        model.eventDispatcher = this.eventDispatcher;
+        return model;
+    }
+}
+
+class ModelEntry
+{
+    constructor(
+        public component: string,
+        public model: Form
+    ) {
     }
 }

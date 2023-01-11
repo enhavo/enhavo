@@ -1,4 +1,6 @@
-import {RootForm} from "@enhavo/vue-form/model/RootForm";
+import {FormVisitorInterface} from "@enhavo/vue-form/form/FormVisitor";
+import {FormEventDispatcherInterface} from "@enhavo/vue-form/form/FormEventDispatcherInterface";
+import {ChangeEvent} from "@enhavo/vue-form/event/ChangeEvent";
 
 export class Form
 {
@@ -21,6 +23,10 @@ export class Form
     disabled: boolean;
     attr: object;
     rendered: boolean;
+    method: string = null;
+    action: string = null;
+    visitors: FormVisitorInterface[] = [];
+    eventDispatcher: FormEventDispatcherInterface;
 
     public get(name: string): Form
     {
@@ -44,7 +50,7 @@ export class Form
         return searchElement;
     }
 
-    public getRoot(): RootForm|Form
+    public getRoot(): Form
     {
         if (this.getParents().length > 0) {
             let parent = this.getParents()[this.getParents().length - 1];
@@ -62,5 +68,24 @@ export class Form
             parent = parent.parent;
         }
         return parents;
+    }
+
+    public getValue(): any
+    {
+        if (this.compound) {
+            return undefined;
+        }
+
+        return this.value;
+    }
+
+    public dispatchChange()
+    {
+        this.eventDispatcher.dispatchEvent(new ChangeEvent(this, this.getValue()), 'change');
+    }
+
+    public init()
+    {
+
     }
 }

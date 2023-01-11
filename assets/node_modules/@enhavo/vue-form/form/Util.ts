@@ -1,3 +1,6 @@
+import axios, {AxiosPromise, Method} from "axios";
+import {Form} from "@enhavo/vue-form/model/Form";
+
 export class Util
 {
     static updateAttributes(element: HTMLElement, attributes: object)
@@ -24,5 +27,43 @@ export class Util
         value = value.toLowerCase();
         value = value.charAt(0).toUpperCase() + value.slice(1);
         return value;
+    }
+
+    static serializeForm(form: Form)
+    {
+        return new FormData(<HTMLFormElement>form.element);
+    }
+
+    static submitAsync(form: Form): AxiosPromise
+    {
+        let element: HTMLFormElement = <HTMLFormElement>form.element;
+
+        return axios({
+            method: <Method>element.method,
+            url: element.action,
+            data: Util.serializeForm(form),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        });
+    }
+
+    static submit(form: Form)
+    {
+        let element: HTMLFormElement = <HTMLFormElement>form.element;
+        element.submit();
+    }
+
+    static descendants(form: Form): Form[]
+    {
+        let descendants = []
+        for (let child of form.children) {
+            descendants.push(child);
+            for (let descendant of Util.descendants(child)) {
+                descendants.push(descendant);
+            }
+        }
+        return descendants;
     }
 }

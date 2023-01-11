@@ -8,13 +8,26 @@ const parser = new ArgumentParser({
 });
 
 parser.add_argument('-f', '--file', { help: 'select file'  });
+parser.add_argument('-g', '--grep', { help: 'filter tests'  });
 var args = parser.parse_args();
 
 console.log('Running mocha ...')
 
 var file = args.file ? args.file : 'assets/node_modules/**/tests/**/*.mocha.{ts,js}'
 
-var encore = child_process.spawn('TS_NODE_SKIP_IGNORE=true TS_NODE_PROJECT=./tsconfig.test.json mocha', ['--require', 'ts-node/register', file], {
+
+var passArgs = [];
+passArgs.push('--require');
+passArgs.push('ts-node/register');
+passArgs.push(file);
+
+if (args.grep) {
+    passArgs.push('--grep');
+    passArgs.push(args.grep);
+}
+
+
+var encore = child_process.spawn('TS_NODE_SKIP_IGNORE=true TS_NODE_PROJECT=./tsconfig.test.json mocha', passArgs, {
     stdio: "inherit",
     shell: true
 });

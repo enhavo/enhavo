@@ -1,5 +1,5 @@
 <template>
-    <select :multiple="getMultiple()" v-model="form.value" :name="form.fullName" ref="element">
+    <select :multiple="getMultiple()" v-model="form.value" :name="form.fullName" ref="element" @change="form.dispatchChange()">
         <option v-if="form.placeholder" value="" >{{ form.placeholder }}</option>
         <component v-if="size(form.preferredChoices) > 0" :is="getChoiceComponent(choice)" v-for="choice of form.preferredChoices" :choice="choice" :key="choice.label + '_preferred'" :preferredChoices="true" />
         <option v-if="size(form.preferredChoices) > 0" disabled="disabled">{{ form.separator }}</option>-->

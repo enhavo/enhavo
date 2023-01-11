@@ -38,3 +38,7 @@ services:
     Enhavo\Bundle\FormBundle\Form\VueType\PositionVueType:
         tags:
             - 'vue.type'
+
+    Enhavo\Bundle\FormBundle\Form\VueType\WysiwygVueType:
+        tags:
+            - 'vue.type'

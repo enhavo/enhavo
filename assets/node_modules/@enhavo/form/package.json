@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@enhavo/app": "https://github.com/enhavo/app-assets.git",
+    "@tinymce/tinymce-vue": "^5.0.0",
     "copy-webpack-plugin": "^4.5.2",
     "icheck": "~1.0.2",
     "jquery": "^3.4.1",
