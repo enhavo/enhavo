@@ -8,6 +8,7 @@
         :title="form.attr.title"
         v-model="form.value"
         ref="element"
+        @change="form.dispatchChange()"
     >{{ form.value }}</textarea>
 </template>
 
