@@ -6,9 +6,10 @@ import {FormFactory} from "@enhavo/vue-form/form/FormFactory";
 import {FormComponentVisitor, FormVisitor} from "@enhavo/vue-form/form/FormVisitor";
 import {Theme} from "@enhavo/vue-form/form/Theme";
 import {HTMLDiff} from "../util/HTMLDiff";
-import {FormListData} from "@enhavo/form/form/data/FormListData";
-import {FormData} from "@enhavo/vue-form/data/FormData";
-
+import {Form} from "@enhavo/vue-form/model/Form";
+import {FormList} from "@enhavo/form/form/model/FormList";
+import {FormEventDispatcher} from "@enhavo/vue-form/form/FormEventDispatcher";
+import {MoveEvent} from "@enhavo/form/form/event/MoveEvent";
 
 export default class extends Controller
 {
@@ -22,10 +23,12 @@ export default class extends Controller
 
     async connect()
     {
-        let vueFactory: VueFactory = await  this.application.container.get('@enhavo/app/vue/VueFactory');
-        let formFactory: FormFactory = await  this.application.container.get('@enhavo/vue-form/form/FormFactory');
+        let vueFactory: VueFactory = await this.application.container.get('@enhavo/app/vue/VueFactory');
+        let formFactory: FormFactory = await this.application.container.get('@enhavo/vue-form/form/FormFactory');
+        let formEventDispatcher: FormEventDispatcher = await this.application.container.get('@enhavo/vue-form/form/FormEventDispatcher');
 
-        let theme = this.getTheme();
+        let theme = this.getTheme(formEventDispatcher);
+
         let form = formFactory.create(this.formValue, theme);
 
         console.log(form);
@@ -42,15 +45,17 @@ export default class extends Controller
         }, 500);
     }
 
-    private getTheme()
+    private getTheme(formEventDispatcher: FormEventDispatcher)
     {
         if (this.themeValue) {
             let theme = new Theme()
             theme.addVisitor(new FormComponentVisitor('form-list', 'form-custom-list'));
-            theme.addVisitor(new FormVisitor((form: FormData) => {
+            theme.addVisitor(new FormVisitor((form: Form) => {
                 return form.component === 'form-list';
-            }, (form: FormListData) => {
-                form.onMove = (form: FormData) => { console.log(form) }
+            }, (form: FormList) => {
+                formEventDispatcher.addListener('move', (event: MoveEvent) => {
+                    console.log(event.form)
+                });
             }));
             return theme;
         }

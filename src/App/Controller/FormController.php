@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Form\Type\Form\ItemsType;
+use App\Form\Type\Form\ItemsWysiwygType;
 use Enhavo\Bundle\FormBundle\Form\Type\ListType;
+use Enhavo\Bundle\FormBundle\Form\Type\WysiwygType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Enhavo\Bundle\VueFormBundle\Form\VueForm;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -244,5 +246,38 @@ class FormController extends AbstractController
             ->getForm();
 
         return $this->handleForm($form, $request);
+    }
+
+    #[Route('/wysiwyg', name: "app_form_wysiwyg")]
+    public function wysiwygAction(Request $request)
+    {
+        $form = $this->createFormBuilder(null)
+            ->add('text', WysiwygType::class, [
+                'label' => 'Text',
+            ])
+            ->add('button', SubmitType::class, [
+                'label' => 'save'
+            ])
+            ->setMethod('POST')
+            ->getForm();
+
+        return $this->handleForm($form, $request);
+    }
+
+    #[Route('/wysiwyg-list', name: "app_form_wysiwyg_list")]
+    public function wysiwygListAction(Request $request)
+    {
+        $form = $this->createFormBuilder(null)
+            ->add('items', ListType::class, [
+                'entry_type' => ItemsWysiwygType::class,
+                'sortable' => true,
+            ])
+            ->add('button', SubmitType::class, [
+                'label' => 'save'
+            ])
+            ->setMethod('POST')
+            ->getForm();
+
+        return $this->handleForm($form, $request, theme: true);
     }
 }
