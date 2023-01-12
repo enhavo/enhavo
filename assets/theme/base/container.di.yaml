@@ -3,6 +3,7 @@ imports:
     - path: '@enhavo/app/services/vue-form.yaml'
     - path: '@enhavo/shop/services/theme/*'
     - path: '@enhavo/form/services/theme/*'
+    - path: '@enhavo/media/services/theme/*'
 
 compiler_pass:
     stimulus_controller:

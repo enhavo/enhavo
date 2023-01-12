@@ -20,21 +20,21 @@ services:
         from: '@enhavo/vue-form/model/CheckboxForm'
         import: CheckboxForm
         tags:
-            - { name: form.model, component: 'form-checkbox' }
+            - { name: form.model }
 
     '@enhavo/vue-form/model/RadioForm':
         chunk: 'form'
         from: '@enhavo/vue-form/model/RadioForm'
         import: RadioForm
         tags:
-            - { name: form.model, component: 'form-radio' }
+            - { name: form.model }
 
     '@enhavo/vue-form/model/ChoiceForm':
         chunk: 'form'
         from: '@enhavo/vue-form/model/ChoiceForm'
         import: ChoiceForm
         tags:
-            - { name: form.model, component: 'form-choice' }
+            - { name: form.model }
 
 compiler_pass:
     vue-form-visitor:

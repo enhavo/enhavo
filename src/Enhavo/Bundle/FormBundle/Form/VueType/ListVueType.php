@@ -35,6 +35,7 @@ class ListVueType extends AbstractVueType
 
 
         $data['component'] = 'form-list';
+        $data['componentModel'] = 'FormList';
 
         $data['itemComponent'] = 'form-list-item';
         $data['onDelete'] = null;

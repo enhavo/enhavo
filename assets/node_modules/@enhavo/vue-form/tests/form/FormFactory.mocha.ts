@@ -25,12 +25,13 @@ describe('vue-form/form/FormFactory', () => {
     describe('On create with registered models', () => {
         let factory = new FormFactory(eventDispatcher);
         let someService = new SomeService();
-        factory.registerModel('some-component', new SomeFormModel(someService));
+        factory.registerModel('SomeFormModel', new SomeFormModel(someService));
 
         it('it should create form with registered model', () => {
             let data = {
                 component: 'some-component',
-                name: 'some-child'
+                componentModel: 'SomeFormModel',
+                name: 'some-child',
             }
 
             let form = factory.create(data);
@@ -47,7 +48,8 @@ describe('vue-form/form/FormFactory', () => {
                 children: [
                     {
                         component: 'some-component',
-                        name: 'some-child'
+                        componentModel: 'SomeFormModel',
+                        name: 'some-child',
                     },
                 ]
             }

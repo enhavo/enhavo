@@ -141,20 +141,20 @@ export class FormFactory
         return form;
     }
 
-    public registerModel(component: string, prototype: Form)
+    public registerModel(componentModel: string, prototype: Form)
     {
-        let entry = this.getModelEntry(component);
+        let entry = this.getModelEntry(componentModel);
         if (entry) {
             this.models.splice(this.models.indexOf(entry), 1);
         }
 
-        this.models.push(new ModelEntry(component, prototype))
+        this.models.push(new ModelEntry(componentModel, prototype));
     }
 
-    private getModelEntry(component: string): ModelEntry|null
+    private getModelEntry(componentModel: string): ModelEntry|null
     {
         for (let entry of this.models) {
-            if (entry.component == component) {
+            if (entry.componentModel == componentModel) {
                 return entry;
             }
         }
@@ -164,8 +164,8 @@ export class FormFactory
 
     private getModel(form: Form|object): any
     {
-        if ((<Form>form).component) {
-            let entry = this.getModelEntry((<Form>form).component);
+        if ((<Form>form).componentModel) {
+            let entry = this.getModelEntry((<Form>form).componentModel);
             if (entry) {
                 let clone = _.clone(entry.model);
                 clone.eventDispatcher = this.eventDispatcher;
@@ -182,7 +182,7 @@ export class FormFactory
 class ModelEntry
 {
     constructor(
-        public component: string,
+        public componentModel: string,
         public model: Form
     ) {
     }

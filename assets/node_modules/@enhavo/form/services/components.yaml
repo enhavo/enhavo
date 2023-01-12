@@ -5,13 +5,13 @@ services:
         arguments:
             - '@enhavo/vue-form/form/FormFactory'
         tags:
-            - { name: form.model, component: 'form-list' }
+            - { name: form.model }
 
     '@enhavo/form/form/model/FormWysiwyg':
         chunk: 'vue'
         import: FormWysiwyg
         tags:
-            - { name: form.model, component: 'form-wysiwyg' }
+            - { name: form.model }
 
     '@enhavo/form/components/FormListComponent':
         chunk: 'vue'

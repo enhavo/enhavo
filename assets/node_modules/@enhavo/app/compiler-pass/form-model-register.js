@@ -7,8 +7,13 @@ module.exports = function(builder, options, context)
 
     let componentDefinitions = builder.getDefinitionsByTagName('form.model');
     for (let definition of componentDefinitions) {
+        let className = definition.getTag('form.model').getParameter('class');
+        if (!className) {
+            className = definition.import;
+        }
+
         factory.addCall(new Call('registerModel', [
-            new Argument(definition.getTag('form.model').getParameter('component'), 'string'),
+            new Argument(className, 'string'),
             new Argument(definition.getName()),
         ]));
     }

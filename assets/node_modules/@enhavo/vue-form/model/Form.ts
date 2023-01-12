@@ -14,6 +14,7 @@ export class Form
     compound: boolean;
     component: string;
     componentVisitors: string[] = [];
+    componentModel: string;
     rowComponent: string;
     id: string;
     labelAttr: object;
