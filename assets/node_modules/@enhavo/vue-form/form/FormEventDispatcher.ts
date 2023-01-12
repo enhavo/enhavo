@@ -19,6 +19,11 @@ export class FormEventDispatcher implements FormEventDispatcherInterface
         }
     }
 
+    on(eventName: string|string[], callback: (event: EventInterface) => void, form: Form = null): Listener
+    {
+        return this.addListener(eventName, callback, form);
+    }
+
     addListener(eventName: string|string[], callback: (event: EventInterface) => void, form: Form = null): Listener
     {
         let eventNames = Array.isArray(eventName) ? eventName : [eventName]

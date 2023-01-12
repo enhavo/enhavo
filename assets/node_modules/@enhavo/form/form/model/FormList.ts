@@ -1,10 +1,10 @@
 import {Form} from "@enhavo/vue-form/model/Form";
 import {FormFactory} from "@enhavo/vue-form/form/FormFactory";
 import {FormPosition} from "@enhavo/form/form/model/FormPosition";
-import {FormEventDispatcher} from "@enhavo/vue-form/form/FormEventDispatcher";
 import {MoveEvent} from "@enhavo/form/form/event/MoveEvent";
 import {DeleteEvent} from "@enhavo/form/form/event/DeleteEvent";
 import {CreateEvent} from "@enhavo/form/form/event/CreateEvent";
+import {ChangeEvent} from "@enhavo/vue-form/event/ChangeEvent";
 
 export class FormList extends Form
 {
@@ -25,7 +25,7 @@ export class FormList extends Form
     ) {
         super();
     }
-    
+
     init()
     {
         if (this.index === null) {
@@ -46,6 +46,11 @@ export class FormList extends Form
         this.eventDispatcher.dispatchEvent(event, 'delete')
 
         if (!event.isStopped()) {
+            this.eventDispatcher.dispatchEvent(new ChangeEvent(this, {
+                action: 'delete',
+                item: child,
+                origin: this
+            }), 'change');
             this.children.splice(this.children.indexOf(child), 1);
         }
     }
@@ -67,6 +72,11 @@ export class FormList extends Form
 
         let event = new CreateEvent(item)
         this.eventDispatcher.dispatchEvent(event, 'create')
+        this.eventDispatcher.dispatchEvent(new ChangeEvent(this, {
+            action: 'create',
+            item: item,
+            origin: this
+        }), 'change');
         return event.form;
     }
 
@@ -100,6 +110,11 @@ export class FormList extends Form
         this.updatePosition();
 
         this.eventDispatcher.dispatchEvent(new MoveEvent(item), 'move')
+        this.eventDispatcher.dispatchEvent(new ChangeEvent(this, {
+            action: 'move',
+            item: item,
+            origin: this
+        }), 'change');
     }
 
     public moveItemDown(item: Form)
@@ -119,6 +134,11 @@ export class FormList extends Form
         this.updatePosition();
 
         this.eventDispatcher.dispatchEvent(new MoveEvent(item), 'move')
+        this.eventDispatcher.dispatchEvent(new ChangeEvent(this, {
+            action: 'move',
+            item: item,
+            origin: this
+        }), 'change');
     }
 
     private updatePosition()
@@ -143,10 +163,21 @@ export class FormList extends Form
         }
 
         this.updatePosition();
+        let targetItem = null;
+
         if (event.moved) {
-            this.eventDispatcher.dispatchEvent(new MoveEvent(event.moved.element), 'move')
+            targetItem = event.moved.element;
         } else if (event.added) {
-            this.eventDispatcher.dispatchEvent(new MoveEvent(event.added.element), 'move')
+            targetItem = event.added.element;
+        }
+
+        if (targetItem) {
+            this.eventDispatcher.dispatchEvent(new MoveEvent(targetItem), 'move')
+            this.eventDispatcher.dispatchEvent(new ChangeEvent(this, {
+                action: 'move',
+                item: targetItem,
+                origin: this
+            }), 'change');
         }
     }
 
