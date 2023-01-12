@@ -16,6 +16,7 @@ class CheckboxVueType extends AbstractVueType
     public function buildView(FormView $view, VueData $data)
     {
         $data['component'] = 'form-checkbox';
+        $data['componentModel'] = 'FormCheckbox';
         $data['checked'] = $view->vars['checked'];
     }
 }

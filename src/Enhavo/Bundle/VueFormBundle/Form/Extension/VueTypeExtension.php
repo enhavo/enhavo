@@ -35,6 +35,7 @@ class VueTypeExtension extends AbstractTypeExtension
         $resolver->setDefaults([
             'component' => null,
             'component_visitors' => [],
+            'component_model' => null,
         ]);
     }
 

@@ -16,6 +16,7 @@ class RadioVueType extends AbstractVueType
     public function buildView(FormView $view, VueData $data)
     {
         $data['component'] = 'form-radio';
+        $data['componentModel'] = 'FormRadio';
         $data['checked'] = $view->vars['checked'];
     }
 }

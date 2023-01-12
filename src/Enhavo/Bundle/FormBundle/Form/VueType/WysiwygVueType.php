@@ -16,5 +16,6 @@ class WysiwygVueType extends AbstractVueType
     public function buildView(FormView $view, VueData $data)
     {
         $data['component'] = 'form-wysiwyg';
+        $data['componentModel'] = 'FormWysiwyg';
     }
 }
