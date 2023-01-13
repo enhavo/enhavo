@@ -18,6 +18,10 @@ services:
         tags:
             - { name: form.type, alias: enhavo_media }
 
+    Enhavo\Bundle\MediaBundle\Form\VueType\MediaVueType:
+        tags:
+            - { name: 'vue.type' }
+
     enhavo_media.form.extension.image_cropper:
         class: Enhavo\Bundle\MediaBundle\Form\Extension\ImageCropperMediaExtension
         tags:
