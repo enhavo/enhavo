@@ -86,7 +86,7 @@ export class FormList extends Form
             if (item.hasOwnProperty(key)) {
                 if (typeof item[key] === "string") {
                     item[key] = item[key].replace(new RegExp(this.prototypeName, 'g'), index);
-                } else if (typeof item[key] === "object" && key !== 'parent') {
+                } else if (typeof item[key] === "object" && (key == 'children' || key == 'prototype')) {
                     this.updateIndex(item[key], index);
                 }
             }
