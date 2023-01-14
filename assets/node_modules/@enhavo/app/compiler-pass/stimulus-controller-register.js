@@ -1,5 +1,3 @@
-const Argument = require("@enhavo/dependency-injection/container/Argument");
-const Call = require("@enhavo/dependency-injection/container/Call");
 const Definition = require("@enhavo/dependency-injection/container/Definition");
 const Tag = require("@enhavo/dependency-injection/container/Tag");
 const path = require("path");
@@ -8,10 +6,10 @@ const fs = require('fs');
 /**
  * @param {string} value
  */
-function toSnakeCase(value)
+function toKebapCase(value)
 {
     value = value.replace( /([A-Z])/g, " $1" ).trim();
-    value = value.replace(' ', '_').toLowerCase();
+    value = value.replace(' ', '-').toLowerCase();
     return value;
 }
 
@@ -30,6 +28,24 @@ function addControllerToBuilder(key, filepath, definitionName, builder)
     builder.addDefinition(definition);
 }
 
+function walk(dir, regEx) {
+    let results = [];
+    let list = fs.readdirSync(dir);
+    list.forEach(function (file) {
+        file = dir + '/' + file;
+        var stat = fs.statSync(file);
+        if (stat && stat.isDirectory()) {
+            results = results.concat(walk(file));
+        } else {
+            if (file.match(regEx)) {
+                results.push(file);
+            }
+        }
+    });
+
+    return results;
+};
+
 /**
  * @param {ContainerBuilder} builder
  * @param {object} options
@@ -39,20 +55,11 @@ module.exports = function(builder, options, context)
     let controllerPath = path.resolve(context, options.dir);
     let regEx = options.regex ? options.regex : /.*Controller\./;
     let prefix = options.prefix ? options.prefix : 'controller/';
-    let matchedFiles = [];
-
-    if (fs.existsSync(controllerPath)) {
-        let files = fs.readdirSync(controllerPath);
-        for (let file of files) {
-            if (file.match(regEx)) {
-                matchedFiles.push(file);
-            }
-        }
-    }
+    let matchedFiles = walk(controllerPath, regEx);
 
     for (let file of matchedFiles) {
         let filename = path.parse(file).name;
-        let key = toSnakeCase(filename.replace('Controller', ''));
+        let key = toKebapCase(filename.replace('Controller', ''));
         let definitionName = prefix + filename;
         let filepath = path.resolve(controllerPath, file);
         addControllerToBuilder(key, filepath, definitionName, builder);
