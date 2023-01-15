@@ -89,4 +89,11 @@ export class Form
     {
 
     }
+
+    public destroy()
+    {
+        for (let child of this.children) {
+            child.destroy();
+        }
+    }
 }
