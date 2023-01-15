@@ -1,5 +1,5 @@
 <template>
-    <li class="form-list-item">
+    <div class="form-list-item" ref="element">
         <ul class="form-list-item-buttons-row" v-if="sortable || deletable">
             <slot name="buttons">
                 <slot name="down-button">
@@ -23,12 +23,14 @@
             <div class="form-list-item-label" v-if="blockName">{{ blockName }}</div>
             <form-widget :form="form" />
         </slot>
-    </li>
+    </div>
 </template>
 
 <script lang="ts">
 import {Vue, Options, Prop} from "vue-property-decorator";
 import {Form} from "@enhavo/vue-form/model/Form";
+import {FormList} from "@enhavo/form/form/model/FormList";
+import {Util} from "@enhavo/vue-form/form/Util";
 
 @Options({})
 export default class extends Vue
@@ -44,5 +46,17 @@ export default class extends Vue
 
     @Prop()
     blockName: string
+
+    updated()
+    {
+        this.form.element = <HTMLElement>this.$refs.element;
+        Util.updateAttributes(this.form.element, this.form.attr);
+    }
+
+    mounted()
+    {
+        this.form.element = <HTMLElement>this.$refs.element;
+        Util.updateAttributes(this.form.element, this.form.attr);
+    }
 }
 </script>

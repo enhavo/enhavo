@@ -1,5 +1,5 @@
 import {Form} from "@enhavo/vue-form/model/Form";
-import * as tinymce from "tinymce";
+import * as tinymce from 'tinymce/tinymce';
 import 'tinymce/icons/default';
 import 'tinymce/themes/silver';
 import 'tinymce/skins/ui/oxide/skin.css';
@@ -10,39 +10,51 @@ import 'tinymce/plugins/emoticons/js/emojis';
 import 'tinymce/plugins/link';
 import 'tinymce/plugins/lists';
 import 'tinymce/plugins/table';
-import {FormEventDispatcher} from "@enhavo/vue-form/form/FormEventDispatcher";
-import {Util} from "@enhavo/vue-form/form/Util";
 import {MoveEvent} from "@enhavo/form/form/event/MoveEvent";
 
 export class FormWysiwyg extends Form
 {
-    public settings: any = null;
     public editorId: any = null;
-    public editorKey: string = null;
-    public initCallback: () => void;
+    public editorElement: HTMLElement;
 
     public init()
     {
         // https://github.com/tinymce/tinymce/issues/1073
         this.eventDispatcher.addListener('move', (event: MoveEvent) => {
-            for (let descendant of Util.descendants(event.form.parent)) {
-                if (descendant instanceof FormWysiwyg && descendant.editorId == this.editorId) {
-                    tinymce.EditorManager.remove('#'+this.editorId);
-                    // https://michaelnthiessen.com/force-re-render/
-                    this.editorKey = this.generateId();
-                    this.initCallback();
-                }
-            }
+            this.reinitWysiwyg()
         });
 
         this.editorId = this.generateId();
-        this.editorKey = this.generateId();
-        this.initSettings();
     }
 
-    private initSettings()
+    public destroy()
     {
-        this.settings = {
+        super.destroy();
+        tinymce.EditorManager.remove('#'+this.editorElement.id);
+    }
+
+    public initWysiwyg()
+    {
+        // if init is called to early after a remove was triggered, tinymce will not initialize, so we have to wait a few milli seconds
+        window.setTimeout(() => {
+            tinymce.init(this.getSettings());
+        }, 10)
+    }
+
+    public removeWysiwyg()
+    {
+        tinymce.EditorManager.remove('#'+this.editorElement.id);
+    }
+
+    public reinitWysiwyg()
+    {
+        this.removeWysiwyg();
+        this.initWysiwyg();
+    }
+
+    private getSettings()
+    {
+        return {
             base_url: "/build/enhavo", // Because we use dynamic imports, we need to specify the base path to prevent a loading bug in firefox (https://github.com/tinymce/tinymce-docs/issues/1466)
             toolbar1: "undo redo | styleselect bold italic underline | forecolor backcolor | link | alignleft aligncenter alignright alignjustify | outdent indent | bullist numlist | code",
             menubar: false,
@@ -51,6 +63,7 @@ export class FormWysiwyg extends Form
             force_p_newlines: false,
             forced_root_block: "p",
             cleanup: false,
+            target: this.editorElement,
             cleanup_on_startup: false,
             font_size_style_values: "xx-small,x-small,small,medium,large,x-large,xx-large",
             convert_fonts_to_spans: true,
@@ -65,11 +78,14 @@ export class FormWysiwyg extends Form
             autoresize_on_init: false,
             autoresize_max_height: 1000,
             contextmenu: "",
-            // setup: function (editor: any) {
-            //     editor.on('change', function () {
-            //         tinymce.triggerSave();
-            //     });
-            // }
+            setup: (editor: any) => {
+                editor.on('init', () => {
+                    editor.setContent(this.value);
+                });
+                editor.on('keyup change', () => {
+                    this.value = editor.getContent();
+                });
+            }
         };
     }
 

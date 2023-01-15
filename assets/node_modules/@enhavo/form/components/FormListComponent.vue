@@ -6,8 +6,11 @@
                     v-model="form.children"
                     item-key="name"
                     @change="event => { form.changeOrder(event) }"
+                    @start="event => { form.dragStart(event) }"
+                    @end="event => { form.dragEnd(event) }"
                     :group="form.draggableGroup"
                     :handle="form.draggableHandle"
+                    tag="li"
                 >
                     <template #item="{ element }">
                         <component

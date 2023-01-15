@@ -38,6 +38,17 @@ export class FormList extends Form
             }
             this.index = index+1;
         }
+
+        this.children.sort((a: Form, b: Form) => {
+            let positionFormA = this.getPositionForm(a)
+            let positionFormB = this.getPositionForm(b)
+
+            if (positionFormA && positionFormB) {
+                return parseInt(positionFormA.value) - parseInt(positionFormB.value)
+            }
+
+            return 0;
+        });
     }
 
     public deleteItem(child: Form)
@@ -145,15 +156,51 @@ export class FormList extends Form
     {
         let i = 0;
         for (let child of this.children) {
-            let grandChildren = child.children;
-            for (let grandChild of grandChildren) {
-                if ((<FormPosition>grandChild).position === true) {
-                    grandChild.value = i.toString();
-                    i++;
-                }
+            let positionForm = this.getPositionForm(child);
+            if (positionForm) {
+                positionForm.value = i.toString();
+                i++;
             }
         }
     }
+
+    private getPositionForm(form: Form)
+    {
+        for (let child of form.children) {
+            if ((<FormPosition>child).position === true) {
+                return child;
+            }
+        }
+
+        return null;
+    }
+
+    public dragStart(event: any)
+    {
+        let item = null;
+        for (let child of this.children) {
+            if (child.element == event.item) {
+                item = child;
+                break;
+            }
+        }
+
+        this.eventDispatcher.dispatchEvent(new MoveEvent(item), 'beforeMove')
+    }
+
+    public dragEnd(event: any)
+    {
+        let item = null;
+        for (let child of this.children) {
+            if (child.element == event.item) {
+                item = child;
+                break;
+            }
+        }
+
+        this.eventDispatcher.dispatchEvent(new MoveEvent(item), 'move')
+    }
+
 
     public changeOrder(event: any)
     {
@@ -172,7 +219,6 @@ export class FormList extends Form
         }
 
         if (targetItem) {
-            this.eventDispatcher.dispatchEvent(new MoveEvent(targetItem), 'move')
             this.eventDispatcher.dispatchEvent(new ChangeEvent(this, {
                 action: 'move',
                 item: targetItem,
