@@ -19,6 +19,8 @@ services:
             - { name: form.type, alias: enhavo_media }
 
     Enhavo\Bundle\MediaBundle\Form\VueType\MediaVueType:
+        arguments:
+            - '@Enhavo\Bundle\MediaBundle\Media\MediaManager'
         tags:
             - { name: 'vue.type', priority: 99 }
 
