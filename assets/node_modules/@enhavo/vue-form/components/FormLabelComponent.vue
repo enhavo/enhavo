@@ -11,7 +11,7 @@
 <script lang="ts">
 import {Vue, Options, Prop} from "vue-property-decorator";
 import {Form} from "@enhavo/vue-form/model/Form"
-import {Util} from "@enhavo/vue-form/form/Util";
+import {FormUtil} from "@enhavo/vue-form/form/FormUtil";
 
 @Options({})
 export default class extends Vue
@@ -38,7 +38,7 @@ export default class extends Vue
         if (this.form.labelFormat) {
             return this.format()
         }
-        return Util.humanize(this.form.name);
+        return FormUtil.humanize(this.form.name);
     }
 
     getFor(): string|boolean
@@ -58,12 +58,12 @@ export default class extends Vue
 
     updated()
     {
-        Util.updateAttributes(<HTMLElement>this.$refs.element, this.form.labelAttr);
+        FormUtil.updateAttributes(<HTMLElement>this.$refs.element, this.form.labelAttr);
     }
 
     mounted()
     {
-        Util.updateAttributes(<HTMLElement>this.$refs.element, this.form.labelAttr);
+        FormUtil.updateAttributes(<HTMLElement>this.$refs.element, this.form.labelAttr);
     }
 }
 </script>

@@ -17,6 +17,7 @@ compiler_pass:
         path: '@enhavo/app/compiler-pass/vue-components.js'
         dir: './components'
         priority: 40
+
 services:
     DIFactoryTest:
         from: './factory/DIFactoryTest'

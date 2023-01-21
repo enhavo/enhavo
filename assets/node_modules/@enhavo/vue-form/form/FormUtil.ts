@@ -1,7 +1,7 @@
 import axios, {AxiosPromise, Method} from "axios";
 import {Form} from "@enhavo/vue-form/model/Form";
 
-export class Util
+export class FormUtil
 {
     static updateAttributes(element: HTMLElement, attributes: object)
     {
@@ -41,7 +41,7 @@ export class Util
         return axios({
             method: <Method>element.method,
             url: element.action,
-            data: Util.serializeForm(form),
+            data: FormUtil.serializeForm(form),
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
                 'X-Requested-With': 'XMLHttpRequest'
@@ -60,10 +60,20 @@ export class Util
         let descendants = []
         for (let child of form.children) {
             descendants.push(child);
-            for (let descendant of Util.descendants(child)) {
+            for (let descendant of FormUtil.descendants(child)) {
                 descendants.push(descendant);
             }
         }
         return descendants;
+    }
+
+    static setData(data: any, form: Form)
+    {
+
+    }
+
+    static getData(data: any, form: Form)
+    {
+
     }
 }
