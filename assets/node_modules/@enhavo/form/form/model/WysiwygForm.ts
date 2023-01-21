@@ -12,7 +12,7 @@ import 'tinymce/plugins/lists';
 import 'tinymce/plugins/table';
 import {MoveEvent} from "@enhavo/form/form/event/MoveEvent";
 
-export class FormWysiwyg extends Form
+export class WysiwygForm extends Form
 {
     public editorId: any = null;
     public editorElement: HTMLElement;

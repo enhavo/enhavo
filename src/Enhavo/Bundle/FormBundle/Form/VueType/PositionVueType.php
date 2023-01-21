@@ -16,5 +16,6 @@ class PositionVueType extends AbstractVueType
     public function buildView(FormView $view, VueData $data)
     {
         $data['position'] = true;
+        $data['componentModel'] = 'PositionForm';
     }
 }

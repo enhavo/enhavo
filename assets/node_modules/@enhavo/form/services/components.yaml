@@ -1,15 +1,21 @@
 services:
-    '@enhavo/form/form/model/FormList':
+    '@enhavo/form/form/model/ListForm':
         chunk: 'vue'
-        import: FormList
+        import: ListForm
         arguments:
             - '@enhavo/vue-form/form/FormFactory'
         tags:
             - { name: form.model }
 
-    '@enhavo/form/form/model/FormWysiwyg':
+    '@enhavo/form/form/model/WysiwygForm':
         chunk: 'vue'
-        import: FormWysiwyg
+        import: WysiwygForm
+        tags:
+            - { name: form.model }
+
+    '@enhavo/form/form/model/PositionForm':
+        chunk: 'vue'
+        import: PositionForm
         tags:
             - { name: form.model }
 
