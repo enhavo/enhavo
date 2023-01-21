@@ -3,6 +3,7 @@ imports:
     - path: '@enhavo/app/services/vue-form.yaml'
     - path: '@enhavo/shop/services/theme/*'
     - path: '@enhavo/form/services/theme/*'
+    - path: '@enhavo/media/services/theme/*'
 
 compiler_pass:
     stimulus_controller:
@@ -16,6 +17,7 @@ compiler_pass:
         path: '@enhavo/app/compiler-pass/vue-components.js'
         dir: './components'
         priority: 40
+
 services:
     DIFactoryTest:
         from: './factory/DIFactoryTest'

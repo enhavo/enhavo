@@ -7,7 +7,7 @@ import {FormComponentVisitor, FormVisitor} from "@enhavo/vue-form/form/FormVisit
 import {Theme} from "@enhavo/vue-form/form/Theme";
 import {HTMLDiff} from "../util/HTMLDiff";
 import {Form} from "@enhavo/vue-form/model/Form";
-import {FormList} from "@enhavo/form/form/model/FormList";
+import {ListForm} from "@enhavo/form/form/model/FormList";
 import {FormEventDispatcher} from "@enhavo/vue-form/form/FormEventDispatcher";
 import {MoveEvent} from "@enhavo/form/form/event/MoveEvent";
 
@@ -52,7 +52,7 @@ export default class extends Controller
             theme.addVisitor(new FormComponentVisitor('form-list', 'form-custom-list'));
             theme.addVisitor(new FormVisitor((form: Form) => {
                 return form.component === 'form-list';
-            }, (form: FormList) => {
+            }, (form: ListForm) => {
                 formEventDispatcher.addListener('move', (event: MoveEvent) => {
                     console.log(event.form)
                 });

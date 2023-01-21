@@ -1,12 +1,12 @@
 import {Form} from "@enhavo/vue-form/model/Form";
 import {FormFactory} from "@enhavo/vue-form/form/FormFactory";
-import {FormPosition} from "@enhavo/form/form/model/FormPosition";
+import {PositionForm} from "@enhavo/form/form/model/PositionForm";
 import {MoveEvent} from "@enhavo/form/form/event/MoveEvent";
 import {DeleteEvent} from "@enhavo/form/form/event/DeleteEvent";
 import {CreateEvent} from "@enhavo/form/form/event/CreateEvent";
 import {ChangeEvent} from "@enhavo/vue-form/event/ChangeEvent";
 
-export class FormList extends Form
+export class ListForm extends Form
 {
     public border: boolean;
     public sortable: boolean;
@@ -66,11 +66,12 @@ export class FormList extends Form
         }
     }
 
-    public addItem()
+    public addItem(): Form
     {
         let item = this.createItem();
         this.children.push(item);
         this.updatePosition();
+        return item;
     }
 
     private createItem()
@@ -97,7 +98,11 @@ export class FormList extends Form
             if (item.hasOwnProperty(key)) {
                 if (typeof item[key] === "string") {
                     item[key] = item[key].replace(new RegExp(this.prototypeName, 'g'), index);
-                } else if (typeof item[key] === "object" && (key == 'children' || key == 'prototype')) {
+                } else if (typeof item[key] === "object" && key == 'children') {
+                    for (let child of item[key]) {
+                        this.updateIndex(child, index);
+                    }
+                } else if (typeof item[key] === "object" && key == 'prototype') {
                     this.updateIndex(item[key], index);
                 }
             }
@@ -167,7 +172,7 @@ export class FormList extends Form
     private getPositionForm(form: Form)
     {
         for (let child of form.children) {
-            if ((<FormPosition>child).position === true) {
+            if ((<PositionForm>child).position === true) {
                 return child;
             }
         }
@@ -227,7 +232,7 @@ export class FormList extends Form
         }
     }
 
-    private updateChangeIndex(form: FormList)
+    private updateChangeIndex(form: ListForm)
     {
         form.name = this.index.toString();
         form.fullName = this.fullName + '[' + form.name + ']';

@@ -52,11 +52,31 @@ class FormController extends AbstractController
     #[Route('/media', name: "app_form_media")]
     public function mediaAction(Request $request)
     {
-        $files = [];
+        $form = $this->createFormBuilder(null)
+            ->add('media', MediaType::class, [
+                'multiple' => false
+            ])
+            ->add('button', SubmitType::class, [
+                'label' => 'save'
+            ])
+            ->setMethod('POST')
+            ->getForm();
 
-        $form = $this->createForm(MediaType::class, $files, [
-            'multiple' => true
-        ]);
+        return $this->handleForm($form, $request);
+    }
+
+    #[Route('/media-multiple', name: "app_form_media_multiple")]
+    public function mediaMultipleAction(Request $request)
+    {
+        $form = $this->createFormBuilder(null)
+            ->add('media', MediaType::class, [
+                'multiple' => true
+            ])
+            ->add('button', SubmitType::class, [
+                'label' => 'save'
+            ])
+            ->setMethod('POST')
+            ->getForm();
 
         return $this->handleForm($form, $request);
     }

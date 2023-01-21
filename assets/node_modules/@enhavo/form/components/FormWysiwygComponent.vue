@@ -14,20 +14,20 @@
 
 <script lang="ts">
 import {Vue, Options, Prop, Inject} from "vue-property-decorator";
-import {Util} from "@enhavo/vue-form/form/Util";
-import {FormWysiwyg} from "@enhavo/form/form/model/FormWysiwyg";
+import {FormUtil} from "@enhavo/vue-form/form/FormUtil";
+import {WysiwygForm} from "@enhavo/form/form/model/FormWysiwyg";
 
 @Options({})
 export default class extends Vue
 {
     @Prop()
-    form: FormWysiwyg;
+    form: WysiwygForm;
 
     updated()
     {
         this.form.element = <HTMLElement>this.$refs.element;
         this.form.editorElement = <HTMLElement>this.$refs.editorElement;
-        Util.updateAttributes(this.form.element, this.form.attr);
+        FormUtil.updateAttributes(this.form.element, this.form.attr);
 
         if (this.form.editorElement.id !== this.form.editorId) {
             this.form.initWysiwyg();
@@ -38,7 +38,7 @@ export default class extends Vue
     {
         this.form.element = <HTMLElement>this.$refs.element;
         this.form.editorElement = <HTMLElement>this.$refs.editorElement;
-        Util.updateAttributes(this.form.element, this.form.attr);
+        FormUtil.updateAttributes(this.form.element, this.form.attr);
         this.form.initWysiwyg();
     }
 }

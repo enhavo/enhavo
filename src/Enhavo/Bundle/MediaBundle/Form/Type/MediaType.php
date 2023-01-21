@@ -8,10 +8,10 @@
 
 namespace Enhavo\Bundle\MediaBundle\Form\Type;
 
+use Enhavo\Bundle\FormBundle\Form\Type\ListType;
 use Enhavo\Bundle\MediaBundle\Media\ExtensionManager;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -133,6 +133,6 @@ class MediaType extends AbstractType
 
     public function getParent()
     {
-        return CollectionType::class;
+        return ListType::class;
     }
 }

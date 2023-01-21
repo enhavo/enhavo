@@ -52,8 +52,8 @@
 
 <script lang="ts">
 import {Vue, Options, Prop, Inject} from "vue-property-decorator";
-import {FormList} from "@enhavo/form/form/model/FormList";
-import {Util} from "@enhavo/vue-form/form/Util";
+import {ListForm} from "@enhavo/form/form/model/ListForm";
+import {FormUtil} from "@enhavo/vue-form/form/FormUtil";
 import * as draggable from 'vuedraggable'
 
 @Options({
@@ -62,18 +62,18 @@ import * as draggable from 'vuedraggable'
 export default class extends Vue
 {
     @Prop()
-    form: FormList;
+    form: ListForm;
 
     updated()
     {
         this.form.element = <HTMLElement>this.$refs.element;
-        Util.updateAttributes(this.form.element, this.form.attr);
+        FormUtil.updateAttributes(this.form.element, this.form.attr);
     }
 
     mounted()
     {
         this.form.element = <HTMLElement>this.$refs.element;
-        Util.updateAttributes(this.form.element, this.form.attr);
+        FormUtil.updateAttributes(this.form.element, this.form.attr);
     }
 }
 

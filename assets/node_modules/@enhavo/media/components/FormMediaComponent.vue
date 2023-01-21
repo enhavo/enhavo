@@ -1,0 +1,80 @@
+<template>
+    <div class="form-media">
+        <div class="media-row-container dropzone"
+             @dragover.prevent="form.dragover"
+             @dragleave.prevent="form.dragleave"
+             @dragdrop.prevent="form.dragdrop"
+             @drop.prevent="form.drop"
+        >
+            <span class="indicator icon icon-image"></span>
+            <ul>
+                <draggable
+                    v-model="form.children"
+                    item-key="name"
+                    @change="event => { form.changeOrder(event) }"
+                    @start="event => { form.dragStart(event) }"
+                    @end="event => { form.dragEnd(event) }"
+                    :group="form.draggableGroup"
+                    :handle="form.draggableHandle"
+                >
+                    <template #item="{ element }">
+                        <li>
+                            <component
+                                :is="form.itemComponent"
+                                :form="element"
+                                :deletable="form.allowDelete"
+                                :sortable="form.multiple && form.sortable"
+                                @delete="event => { form.deleteItem(event) }"
+                                @up="event => { form.moveItemUp(event) }"
+                                @down="event => { form.moveItemDown(event) }"
+                            />
+                        </li>
+                    </template>
+                </draggable>
+                <li v-for="upload of form.uploads">
+                    {{ upload.progress }} % <span @click="upload.cancel()">X</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="related-buttons-row">
+            <button class="btn has-symbol upload-button" v-if="form.upload"  @click.prevent="form.startUpload()">{{ form.uploadLabel }}</button>
+            <button class="btn has-symbol" v-for="button of form.buttons">{{ button.label }}</button>
+        </div>
+
+        <div class="messages">
+            <div v-for="error of form.fileErrors">{{ error.message }} <span @click="form.removeError(error)">X</span></div>
+        </div>
+
+        <input :id="form.id" name="files[]" type="file" class="upload-input" multiple ref="element" @change.prevent="form.change" style="display: none" />
+    </div>
+</template>
+
+<script lang="ts">
+import {Vue, Options, Inject, Prop} from "vue-property-decorator";
+import {MediaForm} from "@enhavo/media/form/model/MediaForm";
+import {FormUtil} from "@enhavo/vue-form/form/FormUtil";
+import * as $ from "jquery";
+import * as draggable from "vuedraggable";
+
+@Options({
+    components: {'draggable': draggable}
+})
+export default class extends Vue
+{
+    @Prop()
+    form: MediaForm;
+
+    updated()
+    {
+        this.form.element = <HTMLElement>this.$refs.element;
+        FormUtil.updateAttributes(this.form.element, this.form.attr);
+    }
+
+    mounted()
+    {
+        this.form.element = <HTMLElement>this.$refs.element;
+        FormUtil.updateAttributes(this.form.element, this.form.attr);
+    }
+}
+</script>

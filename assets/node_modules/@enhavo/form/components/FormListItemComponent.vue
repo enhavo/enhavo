@@ -29,8 +29,8 @@
 <script lang="ts">
 import {Vue, Options, Prop} from "vue-property-decorator";
 import {Form} from "@enhavo/vue-form/model/Form";
-import {FormList} from "@enhavo/form/form/model/FormList";
-import {Util} from "@enhavo/vue-form/form/Util";
+import {ListForm} from "@enhavo/form/form/model/ListForm";
+import {FormUtil} from "@enhavo/vue-form/form/FormUtil";
 
 @Options({})
 export default class extends Vue
@@ -50,13 +50,13 @@ export default class extends Vue
     updated()
     {
         this.form.element = <HTMLElement>this.$refs.element;
-        Util.updateAttributes(this.form.element, this.form.attr);
+        FormUtil.updateAttributes(this.form.element, this.form.attr);
     }
 
     mounted()
     {
         this.form.element = <HTMLElement>this.$refs.element;
-        Util.updateAttributes(this.form.element, this.form.attr);
+        FormUtil.updateAttributes(this.form.element, this.form.attr);
     }
 }
 </script>

@@ -1,0 +1,20 @@
+services:
+    '@enhavo/media/form/model/MediaForm':
+        chunk: 'vue'
+        import: MediaForm
+        arguments:
+            - '@enhavo/vue-form/form/FormFactory'
+        tags:
+            - { name: form.model }
+
+    '@enhavo/media/components/FormMediaComponent':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'form-media' }
+
+    '@enhavo/media/components/FormMediaItemComponent':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'form-media-item' }
