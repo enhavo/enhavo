@@ -2,6 +2,9 @@ import * as $ from "jquery";
 import * as async from "async";
 import axios, {CancelTokenSource} from "axios";
 import {ListForm} from "@enhavo/form/form/model/ListForm";
+import {Form} from "@enhavo/vue-form/model/Form";
+import {DeleteEvent} from "@enhavo/form/form/event/DeleteEvent";
+import {ChangeEvent} from "@enhavo/vue-form/event/ChangeEvent";
 
 export class MediaForm extends ListForm
 {
@@ -130,6 +133,7 @@ export class MediaForm extends ListForm
                     for (let file of response.data) {
                         this.addFile(file);
                     }
+
                     callback();
                 })
                 .catch((error) => {
@@ -147,9 +151,12 @@ export class MediaForm extends ListForm
 
     private addFile(file: MediaFile)
     {
+        let updated = false;
+
         if (!this.multiple && this.children.length > 0) {
             for (let child of this.children) {
                 this.deleteItem(child);
+                updated  = true;
             }
         }
 
@@ -161,6 +168,13 @@ export class MediaForm extends ListForm
                 }
             }
         }
+
+        this.eventDispatcher.dispatchEvent(new ChangeEvent(this, {
+            action: updated ? 'update' : 'create',
+            item: item,
+            origin: this
+        }), 'change');
+
     }
 
     protected checkFile(file: File): boolean
@@ -200,6 +214,36 @@ export class MediaForm extends ListForm
         const i = Math.floor(Math.log(bytes) / Math.log(k))
 
         return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
+    }
+
+    public deleteFile(child: Form)
+    {
+        let event = new DeleteEvent(child);
+        this.eventDispatcher.dispatchEvent(event, 'delete')
+
+        if (!event.isStopped()) {
+            this.eventDispatcher.dispatchEvent(new ChangeEvent(this, {
+                action: 'delete',
+                item: child,
+                origin: this
+            }), 'change');
+            this.deleteItem(child);
+        }
+    }
+
+    public deleteItem(child: Form)
+    {
+        this.eventDispatcher.stop();
+        super.deleteItem(child);
+        this.eventDispatcher.start();
+    }
+
+    public addItem(): Form
+    {
+        this.eventDispatcher.stop();
+        let item = super.addItem();
+        this.eventDispatcher.start();
+        return item;
     }
 }
 
