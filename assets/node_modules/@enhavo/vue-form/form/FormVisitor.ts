@@ -8,6 +8,24 @@ export interface FormVisitorInterface
     setPriority(priority: number): void;
 }
 
+export abstract class AbstractFormVisitor implements FormVisitorInterface
+{
+    protected priority: number = 100;
+
+    abstract supports(form: Form): boolean;
+    abstract apply(form: Form): Form|void;
+
+    getPriority(): number
+    {
+        return this.priority;
+    }
+
+    setPriority(priority: number): void
+    {
+        this.priority = priority;
+    }
+}
+
 export class FormVisitor implements FormVisitorInterface
 {
     constructor(

@@ -6,9 +6,14 @@ import {FormEventDispatcherInterface} from "@enhavo/vue-form/form/FormEventDispa
 export class FormEventDispatcher implements FormEventDispatcherInterface
 {
     private listeners: Listener[] = [];
+    private stopped = false;
 
     dispatchEvent(event: EventInterface, eventName: string): void
     {
+        if (this.stopped) {
+            return;
+        }
+
         for (let listener of this.listeners) {
             if (listener.eventNames.indexOf(eventName) >= 0) {
                 if (listener.form && listener.form != event.form) {
@@ -38,5 +43,15 @@ export class FormEventDispatcher implements FormEventDispatcherInterface
         if (index >= 0) {
             this.listeners.splice(index, 1);
         }
+    }
+
+    stop(): void
+    {
+        this.stopped = true;
+    }
+
+    start(): void
+    {
+        this.stopped = false;
     }
 }

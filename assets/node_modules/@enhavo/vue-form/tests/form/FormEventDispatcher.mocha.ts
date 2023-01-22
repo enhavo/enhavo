@@ -76,5 +76,23 @@ describe('vue-form/form/FormEventDispatcher', () => {
             dispatcher.dispatchEvent(new GenericEvent(form), 'drag');
             assert.isFalse(called)
         });
+
+        it('it should not dispatch unless dispatcher is stopped', () => {
+            let dispatcher = new FormEventDispatcher();
+            let form = new Form();
+            let called = false;
+
+            let listener = dispatcher.addListener('move', () => {
+                called = true;
+            });
+
+            dispatcher.stop();
+            dispatcher.dispatchEvent(new GenericEvent(form), 'move');
+            assert.isFalse(called)
+
+            dispatcher.start();
+            dispatcher.dispatchEvent(new GenericEvent(form), 'move');
+            assert.isTrue(called)
+        });
     });
 });
