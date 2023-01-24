@@ -12,58 +12,23 @@ use Enhavo\Bundle\AppBundle\Template\TemplateManager;
 use Enhavo\Bundle\CommentBundle\Comment\PublishStrategyInterface;
 use Enhavo\Bundle\CommentBundle\Model\CommentInterface;
 use Enhavo\Bundle\CommentBundle\Repository\CommentRepository;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
 class ConfirmStrategy implements PublishStrategyInterface
 {
-    /**
-     * @var \Swift_Mailer
-     */
-    private $mailer;
-
-    /**
-     * @var Environment
-     */
-    private $twig;
-
-    /**
-     * @var TemplateManager
-     */
-    private $templateManager;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
-     * @var CommentRepository
-     */
-    private $commentRepository;
-
-    /**
-     * ConfirmStrategy constructor.
-     * @param \Swift_Mailer $mailer
-     * @param Environment $twig
-     * @param TemplateManager $templateManager
-     * @param TranslatorInterface $translator
-     * @param CommentRepository $commentRepository
-     */
     public function __construct(
-        \Swift_Mailer $mailer,
-        Environment $twig,
-        TemplateManager $templateManager,
-        TranslatorInterface $translator,
-        CommentRepository $commentRepository
-    ) {
-        $this->mailer = $mailer;
-        $this->twig = $twig;
-        $this->templateManager = $templateManager;
-        $this->translator = $translator;
-        $this->commentRepository = $commentRepository;
-    }
+        private MailerInterface $mailer,
+        private Environment $twig,
+        private TemplateManager $templateManager,
+        private TranslatorInterface $translator,
+        private CommentRepository $commentRepository,
+        private array $mailerConfig,
+    ) {}
 
     public function preCreate(CommentInterface $comment, array $options): void
     {
@@ -73,6 +38,22 @@ class ConfirmStrategy implements PublishStrategyInterface
     protected function getMailerTo($options)
     {
         return $options['mailer_to'];
+    }
+
+    protected function getMailerFrom($options)
+    {
+        if ($options['mailer_from'] !== null) {
+            return $options['mailer_from'];
+        }
+        return $this->mailerConfig['from'];
+    }
+
+    protected function getMailerSenderName($options)
+    {
+        if ($options['mailer_sender_name'] !== null) {
+            return $options['mailer_sender_name'];
+        }
+        return $this->mailerConfig['name'];
     }
 
     protected function getSubject($options)
@@ -90,12 +71,11 @@ class ConfirmStrategy implements PublishStrategyInterface
             'pendingComments' => $pendingComments
         ]);
 
-        $message = new \Swift_Message();
-        $message->setSubject($this->getSubject($options));
-        $message->setContentType('text/html');
-        $message->setCharset('utf-8');
-        $message->setBody($content);
-        $message->setTo($this->getMailerTo($options));
+        $message = new Email();
+        $message->subject($this->getSubject($options));
+        $message->html($content);
+        $message->to(new Address($this->getMailerTo($options)));
+        $message->from(new Address($this->getMailerFrom($options), $this->getMailerSenderName($options)));
 
         $this->mailer->send($message);
     }
@@ -120,6 +100,8 @@ class ConfirmStrategy implements PublishStrategyInterface
         $resolver->setDefaults([
             'mailer_subject' => 'comment.label.confirm.subject',
             'translation_domain' => 'EnhavoCommentBundle',
+            'mailer_from' => null,
+            'mailer_sender_name' => null,
         ]);
 
         $resolver->setRequired(['mailer_to']);

@@ -9,5 +9,7 @@ comment:
     pending: 'Pending'
     name: 'Name'
     email: 'Email'
+    confirm:
+        subject: 'A new comment is pending moderation'
   action:
     submit: 'Submit comment'

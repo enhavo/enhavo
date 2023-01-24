@@ -57,11 +57,12 @@ services:
 
     Enhavo\Bundle\CommentBundle\Comment\Strategy\ConfirmStrategy:
         arguments:
-            - '@mailer'
+            - '@mailer.mailer'
             - '@twig'
             - '@enhavo_app.template.manager'
             - '@translator'
             - '@enhavo_comment.repository.comment'
+            - '%enhavo_app.mailer.defaults%'
 
     Enhavo\Bundle\CommentBundle\Action\CommentsActionType:
         parent: Enhavo\Bundle\AppBundle\Action\AbstractActionType
@@ -72,6 +73,7 @@ services:
             - { name: enhavo.action, alias: 'comments' }
 
     enhavo_comment.factory.comment:
+        public: true
         class: '%enhavo_comment.factory.comment.class%'
         arguments:
             - '%enhavo_comment.model.comment.class%'
