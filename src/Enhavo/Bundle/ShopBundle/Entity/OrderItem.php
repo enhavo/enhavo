@@ -74,7 +74,7 @@ class OrderItem extends SyliusOrderItem implements OrderItemInterface
         }
 
         $firstUnit = $this->units->first();
-        
+
         return
             $this->unitPrice +
             $firstUnit->getAdjustmentsTotal(AdjustmentInterface::ORDER_UNIT_PROMOTION_ADJUSTMENT)
@@ -134,12 +134,57 @@ class OrderItem extends SyliusOrderItem implements OrderItemInterface
     public function getUnitDiscount()
     {
         $total = 0;
+        /** @var \Enhavo\Bundle\ShopBundle\Model\OrderItemUnitInterface $unit */
         $unit = $this->getUnits()->first();
+
         $adjustments = $unit->getAdjustments(AdjustmentInterface::ORDER_UNIT_PROMOTION_ADJUSTMENT);
         /** @var AdjustmentInterface $adjustment */
         foreach($adjustments as $adjustment) {
             $total += $adjustment->getAmount();
         }
+
+        $adjustments = $unit->getAdjustments(AdjustmentInterface::ORDER_ITEM_PROMOTION_ADJUSTMENT);
+        /** @var AdjustmentInterface $adjustment */
+        foreach($adjustments as $adjustment) {
+            $total += $adjustment->getAmount();
+        }
+
+        $adjustments = $unit->getAdjustments(AdjustmentInterface::ORDER_PROMOTION_ADJUSTMENT);
+        /** @var AdjustmentInterface $adjustment */
+        foreach($adjustments as $adjustment) {
+            $total += $adjustment->getAmount();
+        }
+
+        return $total;
+    }
+
+    public function getUnitsDiscount()
+    {
+        $total = 0;
+
+        /** @var \Enhavo\Bundle\ShopBundle\Model\OrderItemUnitInterface $unit */
+        $unit = $this->getUnits()->first();
+
+        foreach ($this->getUnits() as $unit) {
+            $adjustments = $unit->getAdjustments(AdjustmentInterface::ORDER_UNIT_PROMOTION_ADJUSTMENT);
+            /** @var AdjustmentInterface $adjustment */
+            foreach($adjustments as $adjustment) {
+                $total += $adjustment->getAmount();
+            }
+
+            $adjustments = $unit->getAdjustments(AdjustmentInterface::ORDER_ITEM_PROMOTION_ADJUSTMENT);
+            /** @var AdjustmentInterface $adjustment */
+            foreach($adjustments as $adjustment) {
+                $total += $adjustment->getAmount();
+            }
+
+            $adjustments = $unit->getAdjustments(AdjustmentInterface::ORDER_PROMOTION_ADJUSTMENT);
+            /** @var AdjustmentInterface $adjustment */
+            foreach($adjustments as $adjustment) {
+                $total += $adjustment->getAmount();
+            }
+        }
+
         return $total;
     }
 
