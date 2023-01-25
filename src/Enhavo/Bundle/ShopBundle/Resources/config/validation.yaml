@@ -69,3 +69,15 @@ Enhavo\Bundle\ShopBundle\Entity\ShippingMethod:
         name:
             - NotBlank:
                   groups: ['create','update']
+
+Sylius\Component\Promotion\Model\Promotion:
+    properties:
+        name:
+            - NotBlank:
+                  groups: ['create','update']
+        rules:
+            - Valid:
+                  groups: ['create','update']
+        actions:
+            - Valid:
+                  groups: ['create','update']

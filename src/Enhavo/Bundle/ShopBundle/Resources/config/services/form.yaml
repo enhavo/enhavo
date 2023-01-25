@@ -1,3 +1,6 @@
+parameters:
+    sylius.form.type.promotion.validation_groups: ['create']
+
 services:
     Enhavo\Bundle\ShopBundle\Form\Type\ProductType:
         arguments:
@@ -102,7 +105,7 @@ services:
         tags:
             - { name: form.type }
 
-    Enhavo\Bundle\ShopBundle\Form\Type\UserAddressType:
+    Sylius\Component\Promotion\Model\Promotion:
         arguments:
             - '%enhavo_shop.model.user_address.class%'
         tags:

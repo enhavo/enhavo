@@ -34,6 +34,12 @@ services:
             - '@enhavo_search.search.engine'
             - '@sylius.translation_locale_provider'
 
+    enhavo_shop.promotion_manager:
+        public: true
+        alias: Enhavo\Bundle\ShopBundle\Manager\PromotionManager
+
+    Enhavo\Bundle\ShopBundle\Manager\PromotionManager:
+
     enhavo_shop.shipping_manager:
         public: true
         alias: Enhavo\Bundle\ShopBundle\Manager\ShippingManager
@@ -63,6 +69,12 @@ services:
     Enhavo\Bundle\ShopBundle\EventListener\ProductVariantSubscriber:
         arguments:
             - '@enhavo_shop.product_manager'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    Enhavo\Bundle\ShopBundle\EventListener\PromotionSubscriber:
+        arguments:
+            - '@enhavo_shop.promotion_manager'
         tags:
             - { name: kernel.event_subscriber }
 
