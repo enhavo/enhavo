@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\SearchBundle\Engine\ElasticSearch;
 
 use Doctrine\ORM\EntityManager;
+use Elastica\Index;
 use Enhavo\Bundle\SearchBundle\Engine\Filter\BetweenQuery;
 use Enhavo\Bundle\SearchBundle\Engine\Filter\ContainsQuery;
 use Enhavo\Bundle\SearchBundle\Engine\Filter\Filter;
@@ -27,12 +28,11 @@ use Elastica\Client;
 use Elastica\Document;
 use Elastica\Search;
 use Elastica\Query;
-use Elastica\Type\Mapping;
+use Elastica\Mapping;
 
 class ElasticSearchEngine implements EngineInterface
 {
     const ELASTIC_SEARCH_INDEX = 'elastic_search';
-    const ELASTIC_SEARCH_TYPE = 'document';
 
     /**
      * @var Indexer
@@ -100,7 +100,6 @@ class ElasticSearchEngine implements EngineInterface
         }
 
         $mapping = new Mapping();
-        $mapping->setType($this->getType());
 
         $indexData = [];
         for ($i = 0; $i <= 100; $i++) {
@@ -111,6 +110,9 @@ class ElasticSearchEngine implements EngineInterface
         foreach($this->classes as $class) {
             /** @var Metadata $metadata */
             $metadata = $this->metadataRepository->getMetadata($class);
+            if ($metadata === null) {
+                throw new IndexException(sprintf('Class "%s" is configured for indexing, but no meta data provided', $class));
+            }
             $filters = $metadata->getFilters();
 
             /** @var MetadataFilter $filter */
@@ -134,7 +136,7 @@ class ElasticSearchEngine implements EngineInterface
             ),
         ));
 
-        $mapping->send();
+        $mapping->send($this->getIndex());
     }
 
     private function mapDataType($type)
@@ -143,12 +145,6 @@ class ElasticSearchEngine implements EngineInterface
             return 'keyword';
         }
 
-        return $type;
-    }
-
-    private function getType()
-    {
-        $type = $this->getIndex()->getType(self::ELASTIC_SEARCH_TYPE);
         return $type;
     }
 
@@ -244,7 +240,7 @@ class ElasticSearchEngine implements EngineInterface
     public function search(Filter $filter)
     {
         $search = new Search($this->client);
-        $search->addIndex(self::ELASTIC_SEARCH_INDEX);
+        $search->addIndex($this->getIndex());
         $search->setQuery($this->createQuery($filter));
 
         $result = [];
@@ -275,14 +271,13 @@ class ElasticSearchEngine implements EngineInterface
         if($metadata && in_array($metadata->getClassName(), $this->classes)) {
             $index = $this->getIndex();
             $document = $this->createDocument($resource);
-            $type = $this->getType();
-            $type->addDocument($document);
+            $index->addDocument($document);
             $index->refresh();
         }
     }
 
     /**
-     * @return \Elastica\Index
+     * @return Index
      */
     private function getIndex()
     {
@@ -340,10 +335,8 @@ class ElasticSearchEngine implements EngineInterface
             $className = $metadata->getClassName();
             $documentId = sha1($id.$className);
 
-            $type = $this->getType();
-            $type->deleteById($documentId);
-
             $index = $this->getIndex();
+            $index->deleteById($documentId);
             $index->refresh();
         }
     }
