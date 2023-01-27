@@ -7,7 +7,7 @@ import {FormComponentVisitor, FormVisitor} from "@enhavo/vue-form/form/FormVisit
 import {Theme} from "@enhavo/vue-form/form/Theme";
 import {HTMLDiff} from "../util/HTMLDiff";
 import {Form} from "@enhavo/vue-form/model/Form";
-import {ListForm} from "@enhavo/form/form/model/FormList";
+import {ListForm} from "@enhavo/form/form/model/ListForm";
 import {FormEventDispatcher} from "@enhavo/vue-form/form/FormEventDispatcher";
 import {MoveEvent} from "@enhavo/form/form/event/MoveEvent";
 

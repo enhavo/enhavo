@@ -4,6 +4,7 @@ imports:
     - path: '@enhavo/shop/services/theme/*'
     - path: '@enhavo/form/services/theme/*'
     - path: '@enhavo/media/services/theme/*'
+    - path: '@enhavo/api/services/*'
 
 compiler_pass:
     stimulus_controller:
