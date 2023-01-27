@@ -1,5 +1,5 @@
 import {Form} from "@enhavo/vue-form/model/Form";
-import * as tinymce from 'tinymce/tinymce';
+import tinymce from 'tinymce/tinymce';
 import 'tinymce/icons/default';
 import 'tinymce/themes/silver';
 import 'tinymce/skins/ui/oxide/skin.css';

@@ -15,7 +15,7 @@
 <script lang="ts">
 import {Vue, Options, Prop, Inject} from "vue-property-decorator";
 import {FormUtil} from "@enhavo/vue-form/form/FormUtil";
-import {WysiwygForm} from "@enhavo/form/form/model/FormWysiwyg";
+import {WysiwygForm} from "@enhavo/form/form/model/WysiwygForm";
 
 @Options({})
 export default class extends Vue
