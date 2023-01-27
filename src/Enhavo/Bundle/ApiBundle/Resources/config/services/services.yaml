@@ -1,0 +1,6 @@
+services:
+    Enhavo\Bundle\ApiBundle\Controller\DocumentationController:
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: controller.service_arguments }

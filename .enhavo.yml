@@ -128,6 +128,10 @@ subtrees:
         prefix: src/Enhavo/Bundle/VueFormBundle
         package: enhavo/vue-form-bundle
 
+    api-assets:
+        url: 'git@github.com:enhavo/api-assets'
+        prefix: 'assets/node_modules/@enhavo/api'
+        package: '@enhavo/api'
     app-assets:
         url: 'git@github.com:enhavo/app-assets'
         prefix: 'assets/node_modules/@enhavo/app'

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('base', null, webpack_build()) }}
+    {% endblock %}
+</head>
+
+<body>
+    <div id="myDomId"></div>
+
+    <div data-controller="documentation" >
+        <div data-documentation-target="node"></div>
+    </div>
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('base', null, webpack_build()) }}
+    {% endblock %}
+</body>
+</html>

@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "lib": ["es2015", "dom", "dom.iterable"],
-    "module": "amd",
+    "module": "es6",
     "target": "es6",
     "allowJs": true,
     "noImplicitAny": true,

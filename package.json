@@ -9,8 +9,8 @@
     "webfont:generate": "node ./assets/node_modules/@enhavo/app/bin/webfont-generate.js"
   },
   "dependencies": {
-    "@babel/runtime": "^7.17.9",
     "@babel/plugin-transform-runtime": "^7.17.0",
+    "@babel/runtime": "^7.17.9",
     "@fullcalendar/core": "^4.2.0",
     "@fullcalendar/daygrid": "^4.2.0",
     "@fullcalendar/list": "^4.2.0",
@@ -49,6 +49,7 @@
     "slick-carousel": "^1.8.1",
     "sortablejs": "^1.10.2",
     "source-sans-pro": "^2.45.0",
+    "swagger-ui": "^4.15.5",
     "tinymce": "^5.6.0",
     "ts-loader": "^9.0.0",
     "ts-node": "^9.1.1",
@@ -65,7 +66,9 @@
     "vue3-datepicker": "^0.3.2",
     "vuedraggable": "^4.1.0",
     "webfonts-loader": "^7.2.0",
-    "yaml": "^1.10.0"
+    "yaml": "^1.10.0",
+    "buffer": "6.0.3",
+    "stream-browserify": "3.0.0"
   },
   "devDependencies": {
     "@types/async": "^2.4.1",

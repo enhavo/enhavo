@@ -1,0 +1,6 @@
+
+services:
+    '@enhavo/api/controllers/DocumentationController':
+        static: true
+        tags:
+            - { name: 'stimulus.controller', key: 'documentation'}

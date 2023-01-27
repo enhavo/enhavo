@@ -5,3 +5,9 @@ admin:
 app:
     resource: ../src/App/Controller
     type: annotation
+
+app_controller:
+    resource: ../src/App/Controller
+    type: annotation
+
+

@@ -32,6 +32,7 @@ return [
     Sylius\Bundle\TaxationBundle\SyliusTaxationBundle::class => ['all' => true],
     Payum\Bundle\PayumBundle\PayumBundle::class => ['all' => true],
     winzou\Bundle\StateMachineBundle\winzouStateMachineBundle::class => ['all' => true],
+    Enhavo\Bundle\ApiBundle\EnhavoApiBundle::class => ['all' => true],
     Enhavo\Bundle\AppBundle\EnhavoAppBundle::class => ['all' => true],
     Enhavo\Bundle\UserBundle\EnhavoUserBundle::class => ['all' => true],
     Enhavo\Bundle\MediaBundle\EnhavoMediaBundle::class => ['all' => true],
