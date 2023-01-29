@@ -5,6 +5,8 @@ services:
             - ['setContainer', ['@service_container']]
 
     Enhavo\Bundle\VueFormBundle\Form\Extension\VueTypeExtension:
+        arguments:
+            - '@Enhavo\Bundle\VueFormBundle\Form\VueForm'
         tags:
             - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 

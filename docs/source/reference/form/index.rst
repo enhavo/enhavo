@@ -15,6 +15,6 @@ Form
     message
     position
     slug
+    poly-collection
     unit
-    weekend-date
     wysiwyg

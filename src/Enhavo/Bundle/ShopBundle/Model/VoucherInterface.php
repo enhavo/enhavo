@@ -39,6 +39,8 @@ interface VoucherInterface
 
     public function setExpiredAt(?\DateTime $expiredAt): void;
 
+    public function getRedemption(OrderInterface $order): ?VoucherRedemptionInterface;
+
     public function getRedemptions(): Collection;
 
     public function addRedemption($redemption);

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Form\Type\Form\ItemsType;
 use App\Form\Type\Form\ItemsWysiwygType;
 use Enhavo\Bundle\FormBundle\Form\Type\ListType;
+use Enhavo\Bundle\FormBundle\Form\Type\PolyCollectionType;
 use Enhavo\Bundle\FormBundle\Form\Type\WysiwygType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Enhavo\Bundle\VueFormBundle\Form\VueForm;
@@ -299,5 +300,28 @@ class FormController extends AbstractController
             ->getForm();
 
         return $this->handleForm($form, $request, theme: true);
+    }
+
+    #[Route('/poly-collection', name: "app_form_poly_collection")]
+    public function polyCollectionAction(Request $request)
+    {
+        $form = $this->createFormBuilder(null)
+            ->add('items', PolyCollectionType::class, [
+                'entry_types' => [
+                    'text' => TextType::class,
+                    'date' => DateType::class,
+                ],
+                'entry_types_options' => [
+                    'text' => ['label' => 'I am a label'],
+                    'date' => ['label' => 'Type in the date'],
+                ],
+                'entry_type_resolver' => function($data) {
+                    return $data instanceof DateType ? 'date' : 'text';
+                },
+            ])
+            ->setMethod('POST')
+            ->getForm();
+
+        return $this->handleForm($form, $request);
     }
 }

@@ -35,6 +35,13 @@ services:
         tags:
             - 'vue.type'
 
+    Enhavo\Bundle\FormBundle\Form\VueType\PolyCollectionVueType:
+        arguments:
+            - '@Enhavo\Bundle\VueFormBundle\Form\VueForm'
+            - '@Enhavo\Bundle\FormBundle\Prototype\PrototypeManager'
+        tags:
+            - 'vue.type'
+
     Enhavo\Bundle\FormBundle\Form\VueType\PositionVueType:
         tags:
             - 'vue.type'
