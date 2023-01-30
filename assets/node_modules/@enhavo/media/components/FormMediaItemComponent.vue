@@ -1,5 +1,8 @@
 <template>
     <div class="form-list-item" ref="element">
+        <img v-if="isImage(form.file)" :src="form.path('enhavoPreviewThumb')" />
+        <div v-else><span :class="'icon_'+getIcon(form.file)"></span></div>
+
         <ul class="form-list-item-buttons-row" v-if="sortable || deletable">
             <li v-if="sortable" class="form-list-item-buttons-button drag-button"><i class="icon icon-drag">=</i></li>
             <li  v-if="deletable" class="form-list-item-buttons-button" @click="$emit('delete', form)"><i class="icon icon-close">x</i></li>
@@ -11,14 +14,15 @@
 
 <script lang="ts">
 import {Vue, Options, Prop} from "vue-property-decorator";
-import {Form} from "@enhavo/vue-form/model/Form";
 import {FormUtil} from "@enhavo/vue-form/form/FormUtil";
+import {MediaItemForm} from "@enhavo/media/form/model/MediaItemForm";
+import {MediaUtil} from "@enhavo/media/form/MediaUtil";
 
 @Options({})
 export default class extends Vue
 {
     @Prop()
-    form: Form;
+    form: MediaItemForm;
 
     @Prop()
     sortable: boolean
@@ -39,6 +43,16 @@ export default class extends Vue
     {
         this.form.element = <HTMLElement>this.$refs.element;
         FormUtil.updateAttributes(this.form.element, this.form.attr);
+    }
+
+    isImage(file: File): boolean
+    {
+        return MediaUtil.isImage(this.form.file);
+    }
+
+    getIcon(file: File): string
+    {
+        return MediaUtil.getIcon(this.form.file);
     }
 }
 </script>

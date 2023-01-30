@@ -6,3 +6,9 @@ Enhavo\Bundle\MediaBundle\Entity\File:
             groups: ['media']
         filename:
             groups: ['media']
+        mimeType:
+            groups: ['media']
+        extension:
+            groups: ['media']
+        token:
+            groups: ['media', 'media_private']

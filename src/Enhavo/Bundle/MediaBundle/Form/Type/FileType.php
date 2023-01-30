@@ -20,31 +20,21 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormFactory;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class FileType extends AbstractType
 {
-    /**
-     * @var FormFactory
-     */
-    protected $formFactory;
-
-    /**
-     * @var RepositoryInterface
-     */
-    protected $repository;
-
-    /**
-     * @var ExtensionManager
-     */
-    protected $extensionManager;
-
-    public function __construct($formFactory, RepositoryInterface $repository, ExtensionManager $extensionManager)
+    public function __construct(
+        private FormFactory $formFactory,
+        private RepositoryInterface$repository,
+        private ExtensionManager$extensionManager,
+        private NormalizerInterface $serializer,
+    )
     {
-        $this->formFactory = $formFactory;
-        $this->repository = $repository;
-        $this->extensionManager = $extensionManager;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -132,6 +122,15 @@ class FileType extends AbstractType
         }
 
         $this->extensionManager->buildForm($builder, $options);
+    }
+
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        $vueData = $view->vars['vue_data'];
+        if ($vueData) {
+            $vueData['file'] = $this->serializer->normalize($form->getData(), null, ['groups' => ['media', 'media_private']]);
+            $vueData['componentModel'] = 'MediaItemForm';
+        }
     }
 
     /**
