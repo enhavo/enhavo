@@ -15,13 +15,8 @@ export default class MenuSwitchTenantFactory extends AbstractFactory
         this.eventListener = eventListener;
     }
 
-    createFromData(data: object): MenuDropdown
-    {
-        this.eventListener.listen();
-        return _.extend(data, this.createNew());
-    }
-
     createNew(): MenuDropdown {
+        this.eventListener.listen();
         return new MenuDropdown(this.eventDispatcher, this.menuManager);
     }
 }
