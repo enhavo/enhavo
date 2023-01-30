@@ -46,7 +46,7 @@ class SwitchTenantMenu extends DropdownMenu
 
     protected function getValue(array $options)
     {
-        return $this->tenantManager->getTenant()->getName();
+        return $this->tenantManager->getTenant()->getKey();
     }
 
     /**
