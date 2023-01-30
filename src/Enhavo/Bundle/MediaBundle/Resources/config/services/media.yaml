@@ -8,6 +8,7 @@ services:
             - '@form.factory'
             - '@enhavo_media.repository.file'
             - '@enhavo_media.extension_manager'
+            - '@serializer'
         tags:
             - { name: form.type, alias: enhavo_file }
 

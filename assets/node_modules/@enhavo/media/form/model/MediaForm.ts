@@ -5,6 +5,7 @@ import {ListForm} from "@enhavo/form/form/model/ListForm";
 import {Form} from "@enhavo/vue-form/model/Form";
 import {DeleteEvent} from "@enhavo/form/form/event/DeleteEvent";
 import {ChangeEvent} from "@enhavo/vue-form/event/ChangeEvent";
+import {MediaItemForm} from "@enhavo/media/form/model/MediaItemForm";
 
 export class MediaForm extends ListForm
 {
@@ -160,7 +161,7 @@ export class MediaForm extends ListForm
             }
         }
 
-        let item = this.addItem();
+        let item = <MediaItemForm>this.addItem();
         for (const property in file) {
             if (file.hasOwnProperty(property)) {
                 if (item.get(property)) {
@@ -168,6 +169,8 @@ export class MediaForm extends ListForm
                 }
             }
         }
+
+        item.file = file;
 
         this.eventDispatcher.dispatchEvent(new ChangeEvent(this, {
             action: updated ? 'update' : 'create',

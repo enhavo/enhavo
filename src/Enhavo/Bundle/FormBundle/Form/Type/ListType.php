@@ -87,7 +87,7 @@ class ListType extends AbstractType
         }
         if($array != null) {
             end($array);
-            $lastIndex = key($array);
+            $lastIndex = intval(key($array));
         } else {
             $lastIndex = -1;
         }

@@ -34,8 +34,10 @@ class FormVueType extends AbstractVueType
         $data['helpHtml'] = $view->vars['help_html'];
         $data['rowComponent'] = 'form-row';
         $data['component'] = null;
-        $data['componentModel'] = null;
-
+        if (!isset($data['componentModel'])) {
+            $data['componentModel'] = null;
+        }
+        
         $errors = [];
         foreach ($view->vars['errors'] as $error) {
             $errors[] = [
