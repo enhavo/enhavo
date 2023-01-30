@@ -1,7 +1,15 @@
 <template>
     <div class="menu-dropdown">
         <div class="menu-dropdown-child menu-dropdown-input">
-            <v-select :clearable="false" @input="change" label="label" :placeholder="data.label" :value="data.value" :options="data.choices" :searchable="false"></v-select>
+            <v-select
+                label="label"
+                :placeholder="data.label"
+                :options="data.choices"
+                v-model="data.selectedValue"
+                @update:modelValue="change"
+                :searchable="false"
+                :clearable="false"
+             ></v-select>
         </div>
     </div>
 </template>
@@ -16,7 +24,7 @@ export default class extends Vue
     @Prop()
     data: MenuDropdown;
 
-    change(value): any {
+    change(value: any) {
         this.data.change(value);
     }
 }
