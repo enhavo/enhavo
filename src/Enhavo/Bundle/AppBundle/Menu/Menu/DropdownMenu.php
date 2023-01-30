@@ -39,12 +39,16 @@ class DropdownMenu extends AbstractMenu
 
     public function createViewData(array $options)
     {
+        $value = $this->getValue($options);
+        $choices = $this->getChoices($options);
+
         $data = [
             'info' => $this->translator->trans($options['info'], [], $options['translation_domain']),
-            'choices' => $this->formatChoices($this->getChoices($options), $options['translation_domain']),
+            'choices' => $this->formatChoices($choices, $options['translation_domain']),
             'label' => $this->translator->trans($options['label'], [], $options['translation_domain']),
-            'value' => $this->getValue($options),
+            'value' => $value,
             'event' => $options['event'],
+            'selectedValue' => $this->getInitialValue($value, $choices, $options['translation_domain']),
         ];
 
         $parentData = parent::createViewData($options);
@@ -62,6 +66,19 @@ class DropdownMenu extends AbstractMenu
             ];
         }
         return $data;
+    }
+
+    private function getInitialValue($value, array $choices, $translationDomain)
+    {
+        foreach($choices as $code => $label) {
+            if ($value == $code) {
+                return [
+                    'label' => $this->translator->trans($label, [], $translationDomain),
+                    'code' => $value,
+                ];
+            }
+        }
+        return null;
     }
 
     protected function getChoices($options)

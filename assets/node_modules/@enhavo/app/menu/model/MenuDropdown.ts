@@ -4,9 +4,14 @@ export default class MenuDropdown extends AbstractMenu
 {
     public value: string;
     public event: string;
+    public selectedValue: any;
 
     change(value: any) {
-        this.value = value.label;
+        if(value == null) {
+            this.value = null;
+        } else {
+            this.value = value.code;
+        }
         $(document).trigger(this.event, [value.code]);
     }
 }
