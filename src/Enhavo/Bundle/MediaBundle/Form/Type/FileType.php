@@ -43,16 +43,18 @@ class FileType extends AbstractType
         $repository = $this->repository;
         $formFactory = $this->formFactory;
 
+        $type = get_class($builder->getType()->getInnerType());
+
         $builder->addModelTransformer(new CallbackTransformer(
             function ($originalDescription) {
                 return $originalDescription;
             },
-            function ($submittedDescription) use (&$submitData, $repository, $formFactory, $options) {
+            function ($submittedDescription) use (&$submitData, $repository, $formFactory, $options, $type) {
                 if($submittedDescription instanceof FileInterface && $submittedDescription->getId() === null) {
                     $file = $repository->find($submitData['id']);
 
                     /** @var FormFactory $formFactory */
-                    $form = $formFactory->create(FileType::class, $file, $options);
+                    $form = $formFactory->create($type, $file, $options);
                     $form->submit($submitData);
                     /** @var FileInterface $file */
                     $file = $form->getData();
@@ -69,12 +71,12 @@ class FileType extends AbstractType
             function ($originalDescription) {
                 return $originalDescription;
             },
-            function ($submittedDescription) use (&$submitData, $repository, $formFactory, $options) {
+            function ($submittedDescription) use (&$submitData, $repository, $formFactory, $options, $type) {
                 if($submittedDescription instanceof FileInterface && $submittedDescription->getId() === null) {
                     $file = $repository->find($submitData['id']);
 
                     /** @var FormFactory $formFactory */
-                    $form = $formFactory->create(FileType::class, $file, $options);
+                    $form = $formFactory->create($type, $file, $options);
                     $form->submit($submitData);
                     /** @var FileInterface $file */
                     $file = $form->getData();
@@ -104,7 +106,6 @@ class FileType extends AbstractType
                     'data-media-item-id' => $data instanceof FileInterface ? $data->getId() : true
                 ],
                 'mapped' => false,
-                //'read_only' => true
             ]);
         });
 
@@ -129,7 +130,11 @@ class FileType extends AbstractType
         $vueData = $view->vars['vue_data'];
         if ($vueData) {
             $vueData['file'] = $this->serializer->normalize($form->getData(), null, ['groups' => ['media', 'media_private']]);
-            $vueData['componentModel'] = 'MediaItemForm';
+            if (isset($options['component_model'])) {
+                $vueData['componentModel'] = $options['component_model'];
+            } else if (!isset($vueData['componentModel'])) {
+                $vueData['componentModel'] = 'MediaItemForm';
+            }
         }
     }
 
