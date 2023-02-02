@@ -8,8 +8,8 @@
         <field name="firstName" length="255" nullable="true" />
         <field name="lastName" length="255" nullable="true" />
         <field name="userIdentifier" length="255" unique="true" />
-        <field name="email" length="255" nullable="true" unique="true" />
-        <field name="username" length="255" nullable="true" unique="true" />
+        <field name="email" length="255" nullable="true" />
+        <field name="username" length="255" nullable="true" />
         <field name="password" length="255" nullable="true" />
         <field name="enabled" type="boolean" nullable="true" />
         <field name="verified" type="boolean" nullable="true" />

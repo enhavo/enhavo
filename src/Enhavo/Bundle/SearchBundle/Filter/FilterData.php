@@ -53,7 +53,9 @@ class FilterData
             $dataProvider->configureOptions($optionResolver);
             $options = $optionResolver->resolve($filter->getOptions());
             $data = $dataProvider->getData($resource, $options);
-            if (is_array($data)) {
+            if ($data === null) {
+                continue;
+            } else if (is_array($data)) {
                 foreach ($data as $dataItem) {
                     if ($dataItem->getKey() === null) {
                         throw new \InvalidArgumentException('If array is given a key must be provided');

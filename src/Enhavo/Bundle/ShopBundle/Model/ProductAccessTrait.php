@@ -10,23 +10,23 @@ use Sylius\Component\Taxation\Model\TaxCategoryInterface;
 trait ProductAccessTrait
 {
     private ?string $title = null;
-    private ?string $description;
-    private ?FileInterface $picture;
+    private ?string $description = null;
+    private ?FileInterface $picture = null;
     private Collection $pictures;
-    private ?int $price;
-    private ?int $reducedPrice;
+    private ?int $price = null;
+    private ?int $reducedPrice = null;
     private ?bool $reduced = false;
     private ?ShippingCategoryInterface $shippingCategory;
     private ?TaxCategoryInterface $taxCategory;
     private bool $shippingRequired = true;
-    private ?string $lengthUnit;
-    private ?float $height;
-    private ?float $width;
-    private ?float $depth;
-    private ?string $volumeUnit;
-    private ?float $volume;
-    private ?string $weightUnit;
-    private ?float $weight;
+    private ?string $lengthUnit = null;
+    private ?float $height = null;
+    private ?float $width = null;
+    private ?float $depth = null;
+    private ?string $volumeUnit = null;
+    private ?float $volume = null;
+    private ?string $weightUnit = null;
+    private ?float $weight = null;
 
     public function getTitle(): ?string
     {

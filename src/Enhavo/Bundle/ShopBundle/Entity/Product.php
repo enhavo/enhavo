@@ -77,7 +77,12 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
             }
         }
 
-        return $variants->first();
+        $variant = $variants->first();
+        if ($variant !== false) {
+            return $variant;
+        }
+
+        return null;
     }
 
     /**

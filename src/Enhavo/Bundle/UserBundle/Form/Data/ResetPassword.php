@@ -4,22 +4,15 @@ namespace Enhavo\Bundle\UserBundle\Form\Data;
 
 class ResetPassword
 {
-    /** @var ?string */
-    private $username;
+    private ?string $userIdentifier = null;
 
-    /**
-     * @return string|null
-     */
-    public function getUsername(): ?string
+    public function getUserIdentifier(): ?string
     {
-        return $this->username;
+        return $this->userIdentifier;
     }
 
-    /**
-     * @param string|null $username
-     */
-    public function setUsername(?string $username): void
+    public function setUserIdentifier(?string $userIdentifier): void
     {
-        $this->username = $username;
+        $this->userIdentifier = $userIdentifier;
     }
 }

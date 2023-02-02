@@ -16,7 +16,7 @@ class ResetPasswordRequestType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('username', TextType::class, [
+        $builder->add('userIdentifier', TextType::class, [
             'label' => 'registration.form.username',
             'translation_domain' => 'EnhavoUserBundle'
         ]);
