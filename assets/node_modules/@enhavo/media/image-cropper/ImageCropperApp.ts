@@ -6,6 +6,7 @@ import RemoveEvent from "@enhavo/app/view-stack/event/RemoveEvent";
 import Confirm from "@enhavo/app/view/Confirm";
 import FormatData from "@enhavo/media/image-cropper/FormatData";
 import FlashMessenger from "@enhavo/app/flash-message/FlashMessenger";
+import Translator from "@enhavo/core/Translator";
 import UpdatedEvent from "@enhavo/app/view-stack/event/UpdatedEvent";
 import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
 import * as _ from "lodash";
@@ -18,15 +19,17 @@ export default class ImageCropperApp
     private view: View;
     private actionManager: ActionManager;
     private flashMessenger: FlashMessenger;
+    private translator: Translator;
     private componentRegistry: ComponentRegistryInterface;
 
-    constructor(data: FormatData, eventDispatcher: EventDispatcher, view: View, actionManager: ActionManager, flashMessenger: FlashMessenger, componentRegistry: ComponentRegistryInterface)
+    constructor(data: FormatData, eventDispatcher: EventDispatcher, view: View, actionManager: ActionManager, flashMessenger: FlashMessenger, translator: Translator, componentRegistry: ComponentRegistryInterface)
     {
         this.data = _.assign(new FormatData(), data);
         this.eventDispatcher = eventDispatcher;
         this.view = view;
         this.actionManager = actionManager;
         this.flashMessenger = flashMessenger;
+        this.translator = translator;
         this.componentRegistry = componentRegistry;
     }
 
@@ -53,7 +56,7 @@ export default class ImageCropperApp
             if(this.view.getId() === event.id) {
                 if(this.data.changed) {
                     this.view.confirm(new Confirm(
-                        'not saved confirm',
+                        this.translator.trans('enhavo_media.image_cropper.message.not_saved'),
                         () => {
                             event.resolve();
                             let id = this.view.getId();
@@ -61,7 +64,9 @@ export default class ImageCropperApp
                         },
                         () => {
                             event.reject();
-                        }
+                        },
+                        this.translator.trans('enhavo_media.image_cropper.label.cancel'),
+                        this.translator.trans('enhavo_media.image_cropper.label.close'),
                     ));
                 } else {
                     event.resolve();

@@ -17,6 +17,7 @@ services:
             - '@enhavo/app/view/View'
             - '@enhavo/app/action/ActionManager'
             - '@enhavo/app/flash-message/FlashMessenger'
+            - '@enhavo/core/Translator'
             - '@enhavo/app/vue/VueRegistry'
 
     '@enhavo/media/image-cropper/components/ImageCropperComponent.vue':
