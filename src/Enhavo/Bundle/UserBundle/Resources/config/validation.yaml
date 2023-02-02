@@ -24,7 +24,7 @@ Enhavo\Bundle\UserBundle\Model\Group:
 
 Enhavo\Bundle\UserBundle\Form\Data\ResetPassword:
     properties:
-        username:
+        userIdentifier:
             - Enhavo\Bundle\UserBundle\Validator\Constraints\UserExists:
                   groups: [exists]
             - NotBlank:

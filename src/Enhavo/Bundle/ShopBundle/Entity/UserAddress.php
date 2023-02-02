@@ -9,13 +9,13 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 
 class UserAddress implements AddressSubjectInterface, ResourceInterface
 {
-    private ?int $id;
+    private ?int $id = null;
 
-    private ?AddressInterface $billingAddress;
+    private ?AddressInterface $billingAddress = null;
 
-    private ?AddressInterface $shippingAddress;
+    private ?AddressInterface $shippingAddress = null;
 
-    private ?UserInterface $user;
+    private ?UserInterface $user = null;
 
     public function getId(): ?int
     {

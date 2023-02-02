@@ -23,6 +23,10 @@ class ProductVariantPropertyDataProvider extends AbstractType implements DataPro
             $resource = $resource->getDefaultVariant();
         }
 
+        if ($resource === null) {
+            return null;
+        }
+
         $proxy = $this->productManager->getVariantProxy($resource);
         $value = $this->getProperty($proxy, $options['property']);
         $data = new Data();
