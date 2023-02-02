@@ -218,6 +218,7 @@ class UserManager
     public function resetPassword(UserInterface $user, ResetPasswordRequestConfiguration $configuration): void
     {
         $user->setConfirmationToken($this->tokenGenerator->generateToken());
+        $user->setPasswordRequestedAt(new \DateTime());
         $this->update($user);
         $event = new UserEvent($user);
         $this->eventDispatcher->dispatch($event, UserEvent::PASSWORD_RESET_REQUESTED);
