@@ -46,11 +46,31 @@ export default class extends Vue
         });
 
         element.addEventListener('crop', () => {
-            this.imageCropper.data.height = this.cropper.getData().height;
-            this.imageCropper.data.width = this.cropper.getData().width;
-            this.imageCropper.data.x = this.cropper.getData().x;
-            this.imageCropper.data.y = this.cropper.getData().y;
-            this.imageCropper.data.changed = true;
+            let cropperData = this.cropper.getData();
+
+            let changed = (value1: number, value2: number) => {
+                return Math.abs(value1 - value2) > 0.00001;
+            };
+
+            if (changed(this.imageCropper.data.height, cropperData.height)) {
+                this.imageCropper.data.changed = true;
+                this.imageCropper.data.height = cropperData.height;
+            }
+
+            if (changed(this.imageCropper.data.width, cropperData.width)) {
+                this.imageCropper.data.changed = true;
+                this.imageCropper.data.width = cropperData.width;
+            }
+
+            if (changed(this.imageCropper.data.x, cropperData.x)) {
+                this.imageCropper.data.changed = true;
+                this.imageCropper.data.x = cropperData.x;
+            }
+
+            if (changed(this.imageCropper.data.y, cropperData.y)) {
+                this.imageCropper.data.changed = true;
+                this.imageCropper.data.y = cropperData.y;
+            }
         });
 
         $(document).on('image-cropper-zoom-in', () => {
