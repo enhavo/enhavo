@@ -3,3 +3,9 @@ enhavo_media:
     upload:
         fail:
             message: 'Upload failed. Maybe the file is too large.'
+    image_cropper:
+        message:
+            not_saved: 'Close without saving?'
+        label:
+            cancel: 'Cancel'
+            close: 'Close'
