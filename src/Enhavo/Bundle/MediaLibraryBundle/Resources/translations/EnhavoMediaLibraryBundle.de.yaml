@@ -1,7 +1,7 @@
 media_library:
     form_extension:
         button:
-            label: 'Open Library'
+            label: 'Mediathek öffnen'
     label:
         media_library: Mediathek
         library: 'Dateien'
@@ -9,7 +9,7 @@ media_library:
         id: 'ID'
         title: 'Titel'
         upload: 'Upload'
-        confirm_selection: 'Confirm Selection'
+        confirm_selection: 'Auswahl bestätigen'
     form:
         label:
             create_tag: 'Tag erstellen'
