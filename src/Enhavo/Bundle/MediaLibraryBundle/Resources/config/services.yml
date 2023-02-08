@@ -12,6 +12,12 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
+    Enhavo\Bundle\MediaLibraryBundle\EventListener\FileUploadSubscriber:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: kernel.event_subscriber }
+
     Enhavo\Bundle\MediaLibraryBundle\Form\Extension\MediaExtension:
         tags:
             - { name: form.type_extension, extended_type: Enhavo\Bundle\MediaBundle\Form\Type\MediaType }

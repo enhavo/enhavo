@@ -135,6 +135,7 @@ services:
             - '@enhavo_media.factory.format'
             - '@enhavo_media.media.media_manager'
             - '@validator'
+            - '@event_dispatcher'
             - '%enhavo_media.upload_validation.groups%'
             - '%enhavo_media.enable_garbage_collection%'
         calls:

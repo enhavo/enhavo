@@ -50,12 +50,19 @@ class MediaLibraryViewType extends AbstractViewType
             $this->util->getViewerOption('actions', $requestConfiguration)
         ]);
 
+        $uploadRoute = $this->util->mergeConfig([
+            $this->getUploadRoute($options),
+            $options['upload_route'],
+            $this->util->getViewerOption('upload_route', $requestConfiguration)
+        ]);
+
         $data->set('items', $options['items']);
         $options['data']['content_types'] = $options['content_types'];
         $options['data']['multiple'] = $options['multiple'];
         $options['data']['mode'] = $options['mode'];
         $options['data']['tags'] = $options['tags'];
         $options['data']['limit'] = $options['limit'];
+        $options['data']['uploadRoute'] = $uploadRoute;
         $data->set('data', $options['data']);
         $data->set('messages', []);
         $data->set('actions', $this->actionManager->createActionsViewData($actions));
@@ -80,6 +87,7 @@ class MediaLibraryViewType extends AbstractViewType
             'request' => null,
             'metadata' => null,
             'actions' => [],
+            'upload_route' => null
         ]);
     }
 
@@ -142,5 +150,10 @@ class MediaLibraryViewType extends AbstractViewType
             ];
         }
         return $actions;
+    }
+
+    private function getUploadRoute($options): string
+    {
+        return 'enhavo_media_library_upload';
     }
 }
