@@ -2,6 +2,7 @@ enhavo_media_upload:
     path:  /file/add
     defaults:
         _controller: enhavo_media.controller.upload::uploadAction
+        event_name: ~
     options:
         expose: true
 

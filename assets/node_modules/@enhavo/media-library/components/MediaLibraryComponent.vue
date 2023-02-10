@@ -116,6 +116,7 @@ export default class extends Vue {
     }
 
     mounted() {
+        console.log(this.mediaLibrary.data);
         let element = this.$refs.upload;
 
         $(document).on('upload', function () {
@@ -150,7 +151,7 @@ export default class extends Vue {
                 this.getMediaLibrary().loaded();
             },
             add: (event, data) => {
-                data.url = this.getRouter().generate('enhavo_media_upload', {});
+                data.url = this.getRouter().generate(this.mediaLibrary.data.uploadRoute, {});
                 data.submit();
                 this.getMediaLibrary().loading();
                 this.getMediaLibrary().setProgress(0);
