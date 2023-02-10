@@ -19,6 +19,7 @@ export default class Data
     dropZone: boolean = false;
     dropZoneActive: boolean = false;
     columns: Column[] = [];
+    uploadRoute: string;
 }
 
 export class File

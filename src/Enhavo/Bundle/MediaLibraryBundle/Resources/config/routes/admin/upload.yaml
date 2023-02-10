@@ -1,0 +1,7 @@
+enhavo_media_library_upload:
+    path:  /file/add-library
+    defaults:
+        _controller: enhavo_media.controller.upload::uploadAction
+        event_name: enhavo_media_library.post_upload_library
+    options:
+        expose: true

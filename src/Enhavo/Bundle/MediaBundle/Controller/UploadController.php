@@ -8,12 +8,14 @@
 
 namespace Enhavo\Bundle\MediaBundle\Controller;
 
+use Enhavo\Bundle\MediaBundle\Event\PostUploadEvent;
 use Enhavo\Bundle\MediaBundle\Exception\StorageException;
 use Enhavo\Bundle\MediaBundle\Factory\FileFactory;
 use Enhavo\Bundle\MediaBundle\Factory\FormatFactory;
 use Enhavo\Bundle\MediaBundle\Media\MediaManager;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\File\Exception\UploadException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -31,6 +33,7 @@ class UploadController extends AbstractController
         private FormatFactory $formatFactory,
         private MediaManager $mediaManager,
         private ValidatorInterface $validator,
+        private EventDispatcherInterface $eventDispatcher,
         private array $validationGroups,
         private bool $enableGarbageCollection,
     )
@@ -61,6 +64,7 @@ class UploadController extends AbstractController
                         ]);
                     }
                     $this->mediaManager->saveFile($file);
+                    $this->eventDispatcher->dispatch(new PostUploadEvent($file), $this->getEventName($request));
                     $storedFiles[] = $file;
 
                 } catch(StorageException $exception) {
@@ -155,5 +159,10 @@ class UploadController extends AbstractController
         }
 
         return $result;
+    }
+
+    protected function getEventName(Request $request)
+    {
+        return $request->get('event_name') ?: PostUploadEvent::DEFAULT_EVENT_NAME;
     }
 }
