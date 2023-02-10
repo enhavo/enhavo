@@ -29,6 +29,8 @@ enhavo_media_library_file_files:
         _sylius:
             sorting:
                 createdAt: desc
+            criteria:
+                library: true
             filters:
                 filename:
                     type: text
