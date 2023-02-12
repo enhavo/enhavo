@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Form\Type\Form\ItemsNestedType;
 use App\Form\Type\Form\ItemsType;
 use App\Form\Type\Form\ItemsWysiwygType;
 use Enhavo\Bundle\FormBundle\Form\Type\ListType;
@@ -125,6 +126,23 @@ class FormController extends AbstractController
         $form = $this->createFormBuilder(null)
             ->add('items', ListType::class, [
                 'entry_type' => ItemsType::class,
+                'sortable' => true,
+            ])
+            ->add('button', SubmitType::class, [
+                'label' => 'save'
+            ])
+            ->setMethod('POST')
+            ->getForm();
+
+        return $this->handleForm($form, $request);
+    }
+
+    #[Route('/list-nested', name: "app_form_list_nested")]
+    public function listNestedAction(Request $request)
+    {
+        $form = $this->createFormBuilder(null)
+            ->add('items', ListType::class, [
+                'entry_type' => ItemsNestedType::class,
                 'sortable' => true,
             ])
             ->add('button', SubmitType::class, [

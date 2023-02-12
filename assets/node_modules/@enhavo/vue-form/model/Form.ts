@@ -60,6 +60,9 @@ export class Form
         return this;
     }
 
+    /**
+     * Get parents, the nearest first
+     */
     public getParents(): Form[]
     {
         let parents = [];
