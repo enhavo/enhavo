@@ -337,6 +337,9 @@ class FormController extends AbstractController
                     return $data instanceof DateType ? 'date' : 'text';
                 },
             ])
+            ->add('button', SubmitType::class, [
+                'label' => 'save'
+            ])
             ->setMethod('POST')
             ->getForm();
 

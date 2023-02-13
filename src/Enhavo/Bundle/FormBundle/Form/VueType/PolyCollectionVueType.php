@@ -26,10 +26,19 @@ class PolyCollectionVueType extends AbstractVueType
     {
         $data['allowDelete'] = $view->vars['allow_delete'];
         $data['allowAdd'] = $view->vars['allow_add'];
+        $data['entryLabels'] = $view->vars['entry_labels'];
+        $data['sortable'] = true;
         $data['index'] = null;
+
+
+        $data['prototypeStorage'] = $view->vars['poly_collection_config']['prototypeStorage'];
+        $data['collapsed'] = $view->vars['poly_collection_config']['collapsed'];
+        $data['confirmDelete'] = $view->vars['poly_collection_config']['confirmDelete'];
 
         $data['component'] = 'form-poly-collection';
         $data['componentModel'] = 'PolyCollectionForm';
+
+        $data['itemComponent'] = 'form-poly-collection-item';
     }
 
     public function finishView(FormView $view, VueData $data)
