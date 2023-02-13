@@ -76,7 +76,9 @@ class VueForm
         $data['root'] = false;
 
         foreach ($formView->children as $key => $child) {
-            $data->addChild($key, $this->normalize($child, $vueData));
+            $childVueData = $this->normalize($child, $vueData);
+            $childVueData->setParent($data);
+            $data->addChild($key, $childVueData);
         }
 
         $vueData[] = $data;

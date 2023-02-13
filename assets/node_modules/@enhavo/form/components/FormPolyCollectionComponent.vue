@@ -40,22 +40,25 @@
         <slot name="button-row">
             <div class="form-list-button-row" v-if="form.allowAdd">
                 <slot name="buttons">
-                    <div class="form-list-button" @click.prevent="form.addItem()">
+                    <div class="form-list-button" @click.prevent="form.toggleMenu()">
                         <slot name="add-button">
                             <i class="icon icon-add_box">+</i>
                         </slot>
                     </div>
                 </slot>
+                <div v-if="form.isOpen">
+                    <div v-for="entryLabel of form.entryLabels" @click.prevent="form.addItem(entryLabel.key); form.toggleMenu()">{{ entryLabel.label }}</div>
+                </div>
             </div>
         </slot>
     </div>
 </template>
 
 <script lang="ts">
-import {Vue, Options, Prop, Inject} from "vue-property-decorator";
-import {ListForm} from "@enhavo/form/form/model/ListForm";
+import {Vue, Options, Inject, Prop} from "vue-property-decorator";
 import {FormUtil} from "@enhavo/vue-form/form/FormUtil";
-import * as draggable from 'vuedraggable'
+import {PolyCollectionForm} from "@enhavo/form/form/model/PolyCollectionForm";
+import * as draggable from "vuedraggable";
 
 @Options({
     components: {'draggable': draggable}
@@ -63,7 +66,7 @@ import * as draggable from 'vuedraggable'
 export default class extends Vue
 {
     @Prop()
-    form: ListForm;
+    form: PolyCollectionForm;
 
     updated()
     {
@@ -77,5 +80,4 @@ export default class extends Vue
         FormUtil.updateAttributes(this.form.element, this.form.attr);
     }
 }
-
 </script>

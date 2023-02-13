@@ -68,18 +68,21 @@ export class ListForm extends Form
 
     public addItem(): Form
     {
-        let item = this.createItem();
+        let item = this.createItem(this.getPrototype(), this.getPrototypeName());
         this.children.push(item);
         this.updatePosition();
         return item;
     }
 
-    private createItem()
+    protected createItem(prototype: Form, prototypeName: string)
     {
-        let item = JSON.parse(JSON.stringify(this.prototype));
+
+        let item = JSON.parse(JSON.stringify(prototype));
         item = this.formFactory.create(item, this.getRoot().visitors, this);
-        this.updateIndex(item, this.index);
+        item.name = this.index.toString();
+        item.label = prototypeName.replace(new RegExp(this.prototypeName, 'g'), item.name);
         this.updateFullName(item);
+        this.updateId(item);
         this.index++;
 
         let event = new CreateEvent(item)
@@ -92,21 +95,36 @@ export class ListForm extends Form
         return event.form;
     }
 
-    private updateIndex(item: any, index: number)
+    private getPrototype(): Form
     {
-        for (const key in item) {
-            if (item.hasOwnProperty(key)) {
-                if (typeof item[key] === "string") {
-                    item[key] = item[key].replace(new RegExp(this.prototypeName, 'g'), index);
-                } else if (typeof item[key] === "object" && key == 'children') {
-                    for (let child of item[key]) {
-                        this.updateIndex(child, index);
-                    }
-                } else if (typeof item[key] === "object" && key == 'prototype') {
-                    this.updateIndex(item[key], index);
-                }
+        if(this.prototype) {
+            return this.prototype;
+        }
+
+        for (let parent of this.getParents()) {
+            let form = <ListForm>parent;
+            if (form.prototype) {
+                return form.prototype;
             }
         }
+
+        throw 'Can\'t find prototype';
+    }
+
+    private getPrototypeName(): string
+    {
+        if(this.prototypeName) {
+            return this.prototypeName;
+        }
+
+        for (let parent of this.getParents()) {
+            let form = <ListForm>parent;
+            if (form.prototypeName) {
+                return form.prototypeName;
+            }
+        }
+
+        throw 'Can\'t find prototype name';
     }
 
     public moveItemUp(item: Form)
@@ -157,7 +175,7 @@ export class ListForm extends Form
         }), 'change');
     }
 
-    private updatePosition()
+    protected updatePosition()
     {
         let i = 0;
         for (let child of this.children) {
@@ -243,9 +261,30 @@ export class ListForm extends Form
         }
     }
 
-    private updateFullName(form: Form)
+    protected updateId(form: Form)
     {
-        form.fullName = form.parent.fullName + '[' + form.name + ']';
+        let names = [];
+        for (let parent of form.getParents().reverse()) {
+            names.push(parent.name);
+        }
+        form.id = names.join('_');
+
+        for (let child of form.children) {
+            this.updateId(child);
+        }
+    }
+
+    protected updateFullName(form: Form)
+    {
+        let parents = form.getParents().reverse();
+        let fullName = parents.shift().name;
+        for (let parent of parents) {
+            fullName += '[' + parent.name + ']';
+        }
+        fullName += '[' + form.name + ']';
+
+        form.fullName = fullName;
+
         for (let child of form.children) {
             this.updateFullName(child);
         }

@@ -12,6 +12,8 @@ use Symfony\Component\Form\FormView;
 
 class VueData implements \IteratorAggregate, \Countable, \ArrayAccess
 {
+    protected ?VueData $parent = null;
+
     public function __construct(
         protected array $data = [],
         protected ?FormView $formView = null,
@@ -186,5 +188,15 @@ class VueData implements \IteratorAggregate, \Countable, \ArrayAccess
     public function removeChild($key)
     {
         unset($this->children[$key]);
+    }
+
+    public function getParent(): ?VueData
+    {
+        return $this->parent;
+    }
+
+    public function setParent(?VueData $parent): void
+    {
+        $this->parent = $parent;
     }
 }

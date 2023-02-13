@@ -131,13 +131,13 @@ class PolyCollectionTypeTest extends TypeTestCase
     {
         $form = $this->factory->create(PolyCollectionType::class, [], [
             'entry_types' => ['first' => FirstType::class, 'second' => SecondType::class],
-            'allow_add' => true
+            'allow_add' => false
         ]);
 
         $view = $form->createView();
 
-        $this->assertTrue($view->vars['allow_add']);
-        $this->assertFalse($view->vars['allow_delete']);
+        $this->assertFalse($view->vars['allow_add']);
+        $this->assertTrue($view->vars['allow_delete']);
     }
 
     public function testResolverForUnsupportedType()

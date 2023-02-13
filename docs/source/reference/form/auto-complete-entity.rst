@@ -4,7 +4,7 @@ Auto Complete Entity
 Pass Variable to Repository
 ---------------------------
 
-Imagine you want to write your own ``Repository-Method``, because the search results depend not only on a
+Imagine you want to write your own repository method, because the search results depend not only on a
 search term but also on other attributes (e.g. the User, who bought a specific Product). Let's call this method
 ``findByTermAndUser``. This is, how this method could look like:
 
