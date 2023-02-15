@@ -35,16 +35,21 @@ class EnhavoMediaExtension extends AbstractResourceExtension implements PrependE
         $container->setParameter('enhavo_media.cache_control.class', $config['cache_control']['class']);
         $container->setParameter('enhavo_media.streaming.disabled', $config['streaming']['disabled']);
         $container->setParameter('enhavo_media.streaming.threshold', $config['streaming']['threshold']);
-        $container->setParameter('enhavo_media.enable_delete_unreferenced', $config['enable_delete_unreferenced']);
-        $container->setParameter('enhavo_media.enable_garbage_collection', $config['enable_garbage_collection']);
         $container->setParameter('enhavo_media.upload_validation.groups', $config['upload_validation']['groups']);
         $container->setParameter('enhavo_media.upload_validation.clamav', $config['upload_validation']['clamav']);
+        $container->setParameter('enhavo_media.garbage_collection.enabled', $config['garbage_collection']['enabled']);
+        $container->setParameter('enhavo_media.garbage_collection.enable_listener', $config['garbage_collection']['enable_listener']);
+        $container->setParameter('enhavo_media.garbage_collection.enable_delete_unreferenced', $config['garbage_collection']['enable_delete_unreferenced']);
+        $container->setParameter('enhavo_media.garbage_collection.enable_delete_marked_garbage', $config['garbage_collection']['enable_delete_marked_garbage']);
+        $container->setParameter('enhavo_media.garbage_collection.garbage_collector', $config['garbage_collection']['garbage_collector']);
+        $container->setParameter('enhavo_media.garbage_collection.max_items_per_run', $config['garbage_collection']['max_items_per_run']);
 
         $configFiles = array(
             'services/command.yaml',
             'services/media.yaml',
             'services/extension.yaml',
             'services/filter.yaml',
+            'services/garbage_collection.yaml',
         );
 
         foreach ($configFiles as $configFile) {

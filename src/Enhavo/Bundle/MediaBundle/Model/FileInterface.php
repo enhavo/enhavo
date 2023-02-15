@@ -178,4 +178,14 @@ interface FileInterface extends ResourceInterface
      * @param bool $library
      */
     public function setLibrary($library);
+
+    /**
+     * @param \DateTime|null $garbageCheckedAt
+     */
+    public function setGarbageCheckedAt(?\DateTime $garbageCheckedAt);
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt();
 }

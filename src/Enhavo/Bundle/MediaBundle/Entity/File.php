@@ -77,6 +77,11 @@ class File implements FileInterface
     private $createdAt;
 
     /**
+     * @var ?\DateTime
+     */
+    private $garbageCheckedAt = null;
+
+    /**
      * @var Format[]|Collection
      */
     private $formats;
@@ -393,6 +398,22 @@ class File implements FileInterface
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getGarbageCheckedAt(): ?\DateTime
+    {
+        return $this->garbageCheckedAt;
+    }
+
+    /**
+     * @param \DateTime|null $garbageCheckedAt
+     */
+    public function setGarbageCheckedAt(?\DateTime $garbageCheckedAt): void
+    {
+        $this->garbageCheckedAt = $garbageCheckedAt;
     }
 
     /**

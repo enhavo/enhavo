@@ -8,7 +8,6 @@
 
 namespace Enhavo\Bundle\MediaBundle\Command;
 
-use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Statement;
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Filesystem\Filesystem;
@@ -162,7 +161,6 @@ class CleanUpCommand extends Command
 
     /**
      * @return Statement[]
-     * @throws \Doctrine\DBAL\DBALException
      */
     private function getReferences()
     {
@@ -198,7 +196,6 @@ class CleanUpCommand extends Command
      * @param int $fileId
      * @param Statement[] $references
      * @return bool
-     * @throws DBALException
      */
     private function isReferenced($fileId, $references)
     {
