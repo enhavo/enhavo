@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Repository\EntityRepository;
 use Enhavo\Bundle\MediaBundle\GarbageCollection\Voter\GarbageCollectionVoterInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class GarbageCollector implements GarbageCollectorInterface
 {
@@ -14,6 +15,10 @@ class GarbageCollector implements GarbageCollectorInterface
     private array $voters = [];
 
     private ?DateTime $garbageCheckTimestamp = null;
+
+    private ?OutputInterface $logOutput = null;
+
+    private bool $dryRun = false;
 
     public function __construct(
         private EntityManagerInterface $entityManager,
@@ -26,6 +31,18 @@ class GarbageCollector implements GarbageCollectorInterface
      * @inheritDoc
      */
     public function run(?int $maxItems = null, bool $andFlush = true): void
+    {
+        $this->dryRun = false;
+        $this->doRun($maxItems, $andFlush);
+    }
+
+    public function dryRun(?int $maxItems = null, bool $andFlush = true): void
+    {
+        $this->dryRun = true;
+        $this->doRun($maxItems, $andFlush);
+    }
+
+    protected function doRun(?int $maxItems = null, bool $andFlush = true): void
     {
         if (!$this->enabled) {
             return;
@@ -40,7 +57,7 @@ class GarbageCollector implements GarbageCollectorInterface
             $this->processFile($file);
         }
 
-        if ($andFlush) {
+        if ($andFlush && !$this->dryRun) {
             $this->entityManager->flush();
         }
     }
@@ -58,9 +75,14 @@ class GarbageCollector implements GarbageCollectorInterface
 
         $this->processFile($file);
 
-        if ($andFlush) {
+        if ($andFlush && !$this->dryRun) {
             $this->entityManager->flush();
         }
+    }
+
+    public function setLogOutput(OutputInterface $logOutput)
+    {
+        $this->logOutput = $logOutput;
     }
 
     protected function getMediaFiles(?int $limit)
@@ -78,13 +100,19 @@ class GarbageCollector implements GarbageCollectorInterface
 
     protected function processFile(FileInterface $file): bool
     {
-        $file->setGarbageCheckedAt($this->garbageCheckTimestamp);
+        if (!$this->dryRun) {
+            $file->setGarbageCheckedAt($this->garbageCheckTimestamp);
+        }
 
         foreach($this->voters as $voter) {
             $result = $voter->vote($file);
 
             if ($result === GarbageCollectionVoterInterface::VOTE_DELETE) {
-                $this->deleteFile($file);
+                if ($this->dryRun) {
+                    $this->log('Dry Run: ' . $file->getId() . ' to be deleted, voted by ' . get_class($voter));
+                } else {
+                    $this->deleteFile($file);
+                }
                 return true;
             }
 
@@ -98,6 +126,13 @@ class GarbageCollector implements GarbageCollectorInterface
 
     protected function deleteFile(FileInterface $file) {
         $this->entityManager->remove($file);
+    }
+
+    protected function log(string $message)
+    {
+        if ($this->logOutput && $this->logOutput->isVerbose()) {
+            $this->logOutput->writeln($message);
+        }
     }
 
     public function addVoter(GarbageCollectionVoterInterface $voter)

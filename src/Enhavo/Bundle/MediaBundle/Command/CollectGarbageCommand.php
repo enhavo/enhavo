@@ -25,11 +25,21 @@ class CollectGarbageCommand extends Command
             ->setDescription('Run garbage collector for media files')
             ->addOption('limit', 'l', InputOption::VALUE_REQUIRED, 'Override limit of items per run. 0 or negative values for unlimited.')
         ;
+
+        if (method_exists($this->garbageCollector, 'dryRun')) {
+            $this->addOption('dry-run', 'd', InputOption::VALUE_NONE, 'Dry run');
+        }
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $limit = $input->getOption('limit');
+        $dryRun = false;
+        $dryRunText = '';
+        if (method_exists($this->garbageCollector, 'dryRun')) {
+            $dryRun = $input->getOption('dry-run');
+            $dryRunText = ' in dry run mode';
+        }
 
         $limitFlagText = '';
         if ($limit !== null) {
@@ -40,12 +50,20 @@ class CollectGarbageCommand extends Command
                 $limitFlagText = ' with limit set to ' . $limit;
             }
         }
-        $output->writeln('Starting garbage collection' . $limitFlagText . '...');
+        $output->writeln('Starting garbage collection' . $limitFlagText . $dryRunText . '...');
+
+        if (method_exists($this->garbageCollector, 'setLogOutput')) {
+            $this->garbageCollector->setLogOutput($output);
+        }
 
         $stopWatch = new StopWatch();
         $stopWatch->start();
 
-        $this->garbageCollector->run($limit);
+        if ($dryRun) {
+            $this->garbageCollector->dryRun($limit);
+        } else {
+            $this->garbageCollector->run($limit);
+        }
 
         $stopWatchResults = $stopWatch->stop()->getResult();
 
