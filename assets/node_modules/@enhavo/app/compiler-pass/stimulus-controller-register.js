@@ -9,7 +9,7 @@ const fs = require('fs');
 function toKebapCase(value)
 {
     value = value.replace( /([A-Z])/g, " $1" ).trim();
-    value = value.replace(' ', '-').toLowerCase();
+    value = value.replace(/\s/g, '-').toLowerCase();
     return value;
 }
 
