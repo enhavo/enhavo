@@ -11,7 +11,7 @@ const fs = require('fs');
 function toSnakeCase(value)
 {
     value = value.replace( /([A-Z])/g, " $1" ).trim();
-    value = value.replace(' ', '_').toLowerCase();
+    value = value.replace(/\s/g, '_').toLowerCase();
     return value;
 }
 
