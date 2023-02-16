@@ -7,9 +7,15 @@ services:
             - '@doctrine.orm.entity_manager'
             - '@enhavo_media.repository.file'
             - '@enhavo_media.repository.format'
-            - '%enhavo_media.enable_delete_unreferenced%'
+            - '%enhavo_media.garbage_collection.enable_delete_unreferenced%'
         tags:
             - { name: console.command, command: 'enhavo:media:clean-up' }
+
+    Enhavo\Bundle\MediaBundle\Command\CollectGarbageCommand:
+        arguments:
+            - '@enhavo_media.garbage_collector'
+        tags:
+            - { name: console.command, command: 'enhavo:media:collect-garbage' }
 
     Enhavo\Bundle\MediaBundle\Command\RefreshFormatCommand:
         arguments:
