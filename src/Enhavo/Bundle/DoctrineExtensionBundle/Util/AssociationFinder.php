@@ -126,41 +126,6 @@ class AssociationFinder
 
 
 
-    public function findAssociationsFrom(object $entity, ?string $entityClassName = null, array $excludeClasses = [])
-    {
-        if ($entityClassName === null) {
-            $entityClassName = get_class($entity);
-        }
-        if (!($entity instanceof $entityClassName)) {
-            throw new \Exception('Error: Parameter $entityClassName must be the fully qualified class name of $entity, one of its parent classes or interfaces, or null.');
-        }
-
-        $results = [];
-        foreach($this->getOutgoingAssociationMap($entityClassName, $excludeClasses) as $association) {
-
-            //TODO?
-
-            $queryBuilder = $this->entityManager->createQueryBuilder();
-            $queryBuilder->select('o')
-                ->from($association->getClass(), 'o');
-            if ($association->isSingleValued()) {
-                $queryBuilder->andWhere('o.' . $association->getField() . ' = :entity');
-            } else {
-                $queryBuilder
-                    ->innerJoin('o.' . $association->getField(), 'j')
-                    ->andWhere('j = :entity');
-            }
-            $queryBuilder->setParameter('entity', $entity);
-            $classResult = $queryBuilder->getQuery()->getResult();
-            if (count($classResult) > 0) {
-                foreach($classResult as $row) {
-                    $results []= $row;
-                }
-            }
-        }
-        return $results;
-    }
-
     /**
      * Gets an array of Metadata about ORM associations outgoing from target class.
      *
