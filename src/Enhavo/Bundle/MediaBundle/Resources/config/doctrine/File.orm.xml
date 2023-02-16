@@ -17,6 +17,7 @@
         <field name="garbage" type="boolean" />
         <field name="garbageTimestamp" type="datetime" nullable="true" />
         <field name="createdAt" type="datetime" />
+        <field name="garbageCheckedAt" type="datetime" nullable="true" />
 
         <one-to-many field="formats" target-entity="Enhavo\Bundle\MediaBundle\Model\FormatInterface" mapped-by="file">
             <cascade>

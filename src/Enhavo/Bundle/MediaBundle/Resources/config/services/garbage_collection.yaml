@@ -1,0 +1,31 @@
+services:
+    Enhavo\Bundle\MediaBundle\GarbageCollection\GarbageCollector:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@enhavo_media.repository.file'
+            - '%enhavo_media.garbage_collection.enabled%'
+            - '%enhavo_media.garbage_collection.max_items_per_run%'
+
+    Enhavo\Bundle\MediaBundle\GarbageCollection\Voter\MarkedGarbageCollectionVoter:
+        arguments:
+            - '%enhavo_media.garbage_collection.enable_delete_marked_garbage%'
+        tags:
+            - { name: enhavo_media.garbage_collection_voter, priority: 10 }
+
+    Enhavo\Bundle\MediaBundle\GarbageCollection\Voter\ReferenceGarbageCollectionVoter:
+        arguments:
+            - '@Enhavo\Bundle\DoctrineExtensionBundle\Util\AssociationFinder'
+            - '%enhavo_media.garbage_collection.enable_delete_unreferenced%'
+        tags:
+            - { name: enhavo_media.garbage_collection_voter, priority: -100 }
+
+    Enhavo\Bundle\MediaBundle\EventListener\GarbageCollectionSubscriber:
+        arguments:
+            - '@enhavo_media.garbage_collector'
+            - '@Enhavo\Bundle\DoctrineExtensionBundle\Util\AssociationFinder'
+            - '@doctrine.orm.entity_manager'
+            - '@enhavo_media.repository.file'
+            - '%enhavo_media.garbage_collection.enable_listener%'
+        tags:
+            - { name: doctrine.event_listener, event: preRemove, method: preRemove }
+            - { name: kernel.event_listener, event: enhavo_app.post_delete, method: postDelete }

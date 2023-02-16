@@ -35,7 +35,6 @@ class UploadController extends AbstractController
         private ValidatorInterface $validator,
         private EventDispatcherInterface $eventDispatcher,
         private array $validationGroups,
-        private bool $enableGarbageCollection,
     )
     {
     }
@@ -49,20 +48,14 @@ class UploadController extends AbstractController
             foreach ($uploadedFiles as $uploadedFile) {
                 try {
                     $errors = $this->getErrors($uploadedFile);
-                    if (!count($errors)) {
-                        $file = $this->fileFactory->createFromUploadedFile($uploadedFile);
-                        if ($this->enableGarbageCollection) {
-                            $file->setGarbage(true);
-                        } else {
-                            $file->setGarbage(false);
-                        }
-                    }
                     if (count($errors)) {
                         return new JsonResponse([
                             'success' => false,
                             'errors' => $errors,
                         ]);
                     }
+                    $file = $this->fileFactory->createFromUploadedFile($uploadedFile);
+                    $file->setGarbage(true);
                     $this->mediaManager->saveFile($file);
                     $this->eventDispatcher->dispatch(new PostUploadEvent($file), $this->getEventName($request));
                     $storedFiles[] = $file;
