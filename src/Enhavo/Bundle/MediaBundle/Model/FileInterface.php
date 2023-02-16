@@ -183,9 +183,4 @@ interface FileInterface extends ResourceInterface
      * @param \DateTime|null $garbageCheckedAt
      */
     public function setGarbageCheckedAt(?\DateTime $garbageCheckedAt);
-
-    /**
-     * @return \DateTime
-     */
-    public function getCreatedAt();
 }

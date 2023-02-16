@@ -42,7 +42,7 @@ class GarbageCollector implements GarbageCollectorInterface
         $this->doRun($maxItems, $andFlush);
     }
 
-    protected function doRun(?int $maxItems = null, bool $andFlush = true): void
+    private function doRun(?int $maxItems = null, bool $andFlush = true): void
     {
         if (!$this->enabled) {
             return;
@@ -85,7 +85,7 @@ class GarbageCollector implements GarbageCollectorInterface
         $this->logOutput = $logOutput;
     }
 
-    protected function getMediaFiles(?int $limit)
+    private function getMediaFiles(?int $limit)
     {
         if ($limit <= 0) {
             $limit = null;
@@ -98,7 +98,7 @@ class GarbageCollector implements GarbageCollectorInterface
         );
     }
 
-    protected function processFile(FileInterface $file): bool
+    private function processFile(FileInterface $file): bool
     {
         if (!$this->dryRun) {
             $file->setGarbageCheckedAt($this->garbageCheckTimestamp);
@@ -124,11 +124,12 @@ class GarbageCollector implements GarbageCollectorInterface
         return false;
     }
 
-    protected function deleteFile(FileInterface $file) {
+    private function deleteFile(FileInterface $file)
+    {
         $this->entityManager->remove($file);
     }
 
-    protected function log(string $message)
+    private function log(string $message)
     {
         if ($this->logOutput && $this->logOutput->isVerbose()) {
             $this->logOutput->writeln($message);

@@ -19,8 +19,6 @@ class AssociationFinder
         private EntityManagerInterface $entityManager
     ) {}
 
-    #region Associations to
-
     /**
      * Finds all ORM associations to a doctrine managed entity.
      *
@@ -126,9 +124,7 @@ class AssociationFinder
         }
     }
 
-    #endregion
 
-    #region Associations from
 
     public function findAssociationsFrom(object $entity, ?string $entityClassName = null, array $excludeClasses = [])
     {
@@ -205,8 +201,6 @@ class AssociationFinder
             $this->outgoingAssociationMapCache[$key] []= new AssociationNode($associationClass, $associationName, $classMetadata->isSingleValuedAssociation($associationName));
         }
     }
-
-    #endregion
 
     /**
      * Generates cache key to for caching association maps. This key should be unique for any combination of the parameters $targetClass and $excludedClasses.

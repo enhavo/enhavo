@@ -8,8 +8,6 @@ use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 
 class ReferenceGarbageCollectionVoter implements GarbageCollectionVoterInterface
 {
-    private ?\DateTime $existenceTimestampThreshold = null;
-
     public function __construct(
         private AssociationFinder $associationFinder,
         private bool $enableDeleteUnreferenced,
@@ -22,11 +20,7 @@ class ReferenceGarbageCollectionVoter implements GarbageCollectionVoterInterface
         }
 
         // Prevent deleting files that have just been uploaded and just aren't connected yet
-        if ($this->existenceTimestampThreshold === null) {
-            $this->existenceTimestampThreshold = new \DateTime();
-            $this->existenceTimestampThreshold->modify('-1 days');
-        }
-        if ($file->getCreatedAt() > $this->existenceTimestampThreshold) {
+        if ($file->isGarbage()) {
             return self::VOTE_ABSTAIN;
         }
 

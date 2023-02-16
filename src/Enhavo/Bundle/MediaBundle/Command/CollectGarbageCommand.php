@@ -2,12 +2,12 @@
 
 namespace Enhavo\Bundle\MediaBundle\Command;
 
-use Enhavo\Bundle\AppBundle\Util\StopWatch;
 use Enhavo\Bundle\MediaBundle\GarbageCollection\GarbageCollectorInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Stopwatch\Stopwatch;
 
 class CollectGarbageCommand extends Command
 {
@@ -56,8 +56,8 @@ class CollectGarbageCommand extends Command
             $this->garbageCollector->setLogOutput($output);
         }
 
-        $stopWatch = new StopWatch();
-        $stopWatch->start();
+        $stopWatch = new Stopwatch();
+        $stopWatch->start('mediaGarbageCollect');
 
         if ($dryRun) {
             $this->garbageCollector->dryRun($limit);
@@ -65,10 +65,32 @@ class CollectGarbageCommand extends Command
             $this->garbageCollector->run($limit);
         }
 
-        $stopWatchResults = $stopWatch->stop()->getResult();
+        $stopWatchEvent = $stopWatch->stop('mediaGarbageCollect');
 
-        $output->writeln('finished, took ' . $stopWatchResults->getTimeReadable() . ', memory usage ' . $stopWatchResults->getMemoryReadable());
+        $output->writeln('finished, took ' . $this->formatTimeReadable($stopWatchEvent->getDuration()) . ', memory usage ' . $this->formatMemoryReadable($stopWatchEvent->getMemory()));
 
         return Command::SUCCESS;
+    }
+
+    private function formatTimeReadable(float $time)
+    {
+        $time = round($time / 1000);
+        $timeMinutes = (int)floor($time / 60);
+        $timeSeconds = (int)($time % 60);
+        if ($timeMinutes > 0) {
+            return sprintf('%sm%ss', $timeMinutes, $timeSeconds);
+        }
+        return $timeSeconds . 's';
+    }
+
+    private function formatMemoryReadable(int $memory)
+    {
+        if ($memory < 1024) {
+            return $memory . 'b';
+        } elseif ($memory < 1048576) {
+            return round($memory / 1024) . 'kb';
+        } else {
+            return round($memory / 1048576) . 'mb';
+        }
     }
 }
