@@ -9,7 +9,10 @@
 namespace Enhavo\Bundle\MediaBundle\EventListener;
 
 use Doctrine\Common\EventSubscriber;
-use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PostLoadEventArgs;
+use Doctrine\ORM\Event\PostPersistEventArgs;
+use Doctrine\ORM\Event\PostUpdateEventArgs;
+use Doctrine\ORM\Event\PreRemoveEventArgs;
 use Doctrine\ORM\Events;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\MediaBundle\Model\FormatInterface;
@@ -31,7 +34,7 @@ class DoctrineSubscriber implements EventSubscriber
         );
     }
 
-    public function postUpdate(LifecycleEventArgs $args)
+    public function postUpdate(PostUpdateEventArgs $args)
     {
         $object = $args->getObject();
         if ($object instanceof FileInterface) {
@@ -39,7 +42,7 @@ class DoctrineSubscriber implements EventSubscriber
         }
     }
 
-    public function postPersist(LifecycleEventArgs $args)
+    public function postPersist(PostPersistEventArgs $args)
     {
         $object = $args->getObject();
         if ($object instanceof FileInterface) {
@@ -47,7 +50,7 @@ class DoctrineSubscriber implements EventSubscriber
         }
     }
 
-    public function postLoad(LifecycleEventArgs $args)
+    public function postLoad(PostLoadEventArgs $args)
     {
         $object = $args->getObject();
         if ($object instanceof FileInterface) {
@@ -57,7 +60,7 @@ class DoctrineSubscriber implements EventSubscriber
         }
     }
 
-    public function preRemove(LifecycleEventArgs $args)
+    public function preRemove(PreRemoveEventArgs $args)
     {
         $object = $args->getObject();
         if ($object instanceof FileInterface) {

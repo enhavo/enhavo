@@ -7,6 +7,7 @@ use Enhavo\Bundle\MediaBundle\Controller\FileController;
 use Enhavo\Bundle\MediaBundle\Entity\File;
 use Enhavo\Bundle\MediaBundle\Factory\FileFactory;
 use Enhavo\Bundle\MediaBundle\Form\Type\FileType;
+use Enhavo\Bundle\MediaBundle\GarbageCollection\GarbageCollector;
 use Enhavo\Bundle\MediaBundle\Repository\FileRepository;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -26,10 +27,6 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder('enhavo_media');
         $rootNode = $treeBuilder->getRootNode();
         $rootNode
-            ->children()
-                ->scalarNode('enable_delete_unreferenced')->defaultValue(true)->end()
-                ->scalarNode('enable_garbage_collection')->defaultValue(true)->end()
-            ->end()
             ->children()
                 ->arrayNode('upload_validation')
                     ->addDefaultsIfNotSet()
@@ -149,6 +146,19 @@ class Configuration implements ConfigurationInterface
                             ->end()
                         ->end()
                     ->end()
+                ->end()
+            ->end()
+
+            ->children()
+                ->arrayNode('garbage_collection')
+                ->addDefaultsIfNotSet()
+                ->children()
+                    ->booleanNode('enabled')->defaultValue(true)->end()
+                    ->booleanNode('enable_listener')->defaultValue(true)->end()
+                    ->scalarNode('enable_delete_unreferenced')->defaultValue(true)->end()
+                    ->scalarNode('enable_delete_marked_garbage')->defaultValue(true)->end()
+                    ->scalarNode('garbage_collector')->defaultValue(GarbageCollector::class)->end()
+                    ->scalarNode('max_items_per_run')->defaultValue(1000)->end()
                 ->end()
             ->end()
         ;
