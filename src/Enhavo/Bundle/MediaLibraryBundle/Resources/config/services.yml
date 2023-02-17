@@ -46,7 +46,7 @@ services:
             - '@Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryManager'
             - '@sylius.resource_controller.resources_collection_provider'
             - '@enhavo_media.repository.file'
-            - '@enhavo_media.media.private_url_generator'
+            - '@enhavo_media.media.public_url_generator'
         tags:
             - { name: enhavo_app.view }
 
