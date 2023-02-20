@@ -71,7 +71,7 @@ export default class AjaxFormModal extends AbstractModal
                 data = _.extend(data, this.data);
             }
 
-            axios.post(this.getActionUrl(), this.buildQuery(data), {
+            axios.post(this.getActionUrl(), data, {
                 headers: {'Content-Type': 'multipart/form-data' },
                 responseType: 'arraybuffer'
             }).then((responseData) => {
@@ -114,30 +114,9 @@ export default class AjaxFormModal extends AbstractModal
         return this.getUrl();
     }
 
-    private buildQuery(obj: object, prefix: string = ''): string
+    private getFormData(): FormData
     {
-        let args = [];
-        if(typeof(obj) == 'object') {
-            for(let i in obj) {
-                if(prefix == '') {
-                    args[args.length] = this.buildQuery(obj[i], encodeURIComponent(i));
-                } else {
-                    args[args.length] = this.buildQuery(obj[i], prefix+'['+encodeURIComponent(i)+']');
-                }
-            }
-        } else {
-            args[args.length]=prefix+'='+encodeURIComponent(obj);
-        }
-        return args.join('&');
-    }
-
-    public getFormData(): object
-    {
-        let formData = {};
-        let data = $(this.form).serializeArray();
-        for(let row of data) {
-            formData[row.name] = row.value;
-        }
+        let formData = new FormData(<HTMLFormElement>this.form);
         return formData;
     }
 }
