@@ -13,6 +13,7 @@
   ],
   "require": {
     "php": "^8.0",
+    "doctrine/orm": "^2.14",
     "enhavo/app-bundle": "dev-master",
     "enhavo/doctrine-extension-bundle": "dev-master",
     "spatie/image-optimizer": "^1.0",
