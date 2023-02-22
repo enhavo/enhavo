@@ -11,8 +11,13 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity()]
 #[ORM\Table(name: '<?= $orm->getTableName() ?>')]
-class <?= $class->getName(); ?> extends AbstractBlock
+class <?= $class->getName(); ?> extends AbstractBlock<?php if ($class->getImplements()): ?> implements <?= $class->getImplements(); ?><?php endif; ?>
+
 {
+<?php foreach ($class->getTraits() as $value) { ?>
+    use <?= $value ?>;
+<?php } ?>
+
 <?php foreach ($class->getProperties() as $property) { ?>
 <?php $attributeType = $orm->getAttributeType($property->getName()); ?>
     #[ORM\<?= $attributeType ?>(

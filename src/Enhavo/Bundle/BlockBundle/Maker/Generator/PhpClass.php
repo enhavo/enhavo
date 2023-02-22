@@ -16,6 +16,7 @@ class PhpClass
         private string $name,
         private ?string $implements,
         private array  $use,
+        private array $traits,
         private array  $properties,
     )
     {
@@ -26,7 +27,9 @@ class PhpClass
     {
         $properties = [];
         foreach ($this->properties as $key => $config) {
-            $properties[] = $this->getProperty($key);
+            if (isset($this->properties[$key]['type'])) {
+                $properties[] = $this->getProperty($key);
+            }
         }
 
         return $properties;
@@ -187,4 +190,13 @@ class PhpClass
     {
         return $this->implements;
     }
+
+    /**
+     * @return array
+     */
+    public function getTraits(): array
+    {
+        return $this->traits;
+    }
+
 }

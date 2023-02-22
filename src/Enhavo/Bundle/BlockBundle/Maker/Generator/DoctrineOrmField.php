@@ -35,6 +35,15 @@ class DoctrineOrmField
         return $this->config['orm_type'] ?? $this->config['type'] ?? null;
     }
 
+    public function getOrmType(): ?string
+    {
+        if (isset($this->config['orm_type']) && false === $this->config['orm_type']) {
+            return null;
+        }
+
+        return $this->getType();
+    }
+
     public function getGeneratedValueType(): ?string
     {
         return isset($this->config['orm_generated_value_type']) ? strtoupper($this->config['orm_generated_value_type']) : null;
