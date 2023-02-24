@@ -21,7 +21,7 @@ enhavo_user_user_create:
             redirect: enhavo_user_user_update
             form:
                 options:
-                    validation_groups: [create]
+                    validation_groups: [create, unique_email]
             viewer:
 
 enhavo_user_user_update:
@@ -32,6 +32,9 @@ enhavo_user_user_update:
     defaults:
         _controller: enhavo_user.controller.user::updateAction
         _sylius:
+            form:
+                options:
+                    validation_groups: [update, unique_email]
             viewer:
 
 enhavo_user_user_table:

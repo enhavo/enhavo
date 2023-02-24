@@ -2,7 +2,10 @@ Enhavo\Bundle\UserBundle\Model\User:
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
             fields: email
-            groups: [register, create, update]
+            groups: [unique_email]
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+              fields: username
+              groups: [unique_username]
     properties:
         email:
             - Email:
