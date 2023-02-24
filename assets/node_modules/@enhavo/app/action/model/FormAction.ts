@@ -75,7 +75,7 @@ export default class FormAction extends AbstractAction
         let formData: any = modal.getFormData();
         let openRouteParameters = Object.assign({}, this.openRouteParameters);
         for (const [key, value] of Object.entries(this.openRouteMapping)) {
-            openRouteParameters[key] = formData[value];
+            openRouteParameters[key] = formData.get(value);
         }
 
         if (this.target === '_self') {
