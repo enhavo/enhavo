@@ -16,7 +16,8 @@ enhavo_user:
                 translation_domain: 'EnhavoUserBundle'
                 form:
                     class: Enhavo\Bundle\UserBundle\Form\Type\RegistrationType
-                    options: []
+                    options:
+                        validation_groups: [register, unique_email]
 
             registration_check:
                 template: theme/security/registration/check.html.twig
