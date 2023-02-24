@@ -35,7 +35,7 @@ export default class CreateAttributeAction extends AbstractAction
                 if (data.status === 200) {
                     let formData: any = modal.getFormData();
                     let url = this.router.generate("sylius_product_attribute_create", {
-                        'type': formData.product_attribute_type
+                        'type': formData.get('product_attribute_type')
                     });
                     this.view.open(url, 'edit-view');
                     return true;

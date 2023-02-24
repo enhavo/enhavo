@@ -114,7 +114,7 @@ export default class AjaxFormModal extends AbstractModal
         return this.getUrl();
     }
 
-    private getFormData(): FormData
+    public getFormData(): FormData
     {
         let formData = new FormData(<HTMLFormElement>this.form);
         return formData;
