@@ -7,4 +7,5 @@ export default interface MediaConfig
     extensions: Array<UploadExtension>;
     upload: boolean;
     edit: boolean;
+    prototypeName: string;
 }

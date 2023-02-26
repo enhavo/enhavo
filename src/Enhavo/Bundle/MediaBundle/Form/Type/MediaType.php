@@ -76,6 +76,7 @@ class MediaType extends AbstractType
             'extensions' => $view->vars['extensions'],
             'upload' => $options['upload'],
             'edit' => $options['edit'],
+            'prototypeName' => $options['prototype_name'],
         ];
     }
 

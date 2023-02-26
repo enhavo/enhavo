@@ -80,7 +80,7 @@ export default class MediaRow
     createItem(meta:MediaItemMeta): MediaItem
     {
         let template = this.$element.parents('[data-media-type]').find('[data-media-item-template]').text();
-        template = template.replace(/__name__/g, this.index.toString());
+        template = template.replace(new RegExp(this.media.getConfig().prototypeName, 'g'), this.index.toString());
         let html = $.parseHTML(template)[0];
         let item = new MediaItem(html, meta, this);
         item.setFilename(meta.filename);
