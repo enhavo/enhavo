@@ -186,9 +186,10 @@ class Term implements TermInterface, ResourceInterface
     }
 
     /**
-     * @param TermInterface $parent
+     * @param TermInterface|null $parent
+     * @return void
      */
-    public function setParent(TermInterface $parent): void
+    public function setParent(?TermInterface $parent): void
     {
         $this->parent = $parent;
     }
