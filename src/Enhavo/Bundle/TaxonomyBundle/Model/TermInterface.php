@@ -39,7 +39,7 @@ interface TermInterface
     /** @return Term[] */
     public function getParents(): array;
 
-    public function setParent(TermInterface $parent): void;
+    public function setParent(?TermInterface $parent): void;
 
     public function addChildren(TermInterface $child);
 
