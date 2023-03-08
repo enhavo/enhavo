@@ -30,7 +30,7 @@
     "behat/transliterator": "^1.5",
     "composer/package-versions-deprecated": "1.11.*",
     "doctrine/doctrine-migrations-bundle": "^3.1",
-    "doctrine/orm": "^2.13",
+    "doctrine/orm": "^2.14",
     "ezyang/htmlpurifier": "^4.12",
     "friendsofsymfony/jsrouting-bundle": "^3.1",
     "guzzlehttp/guzzle": "^6.5",
@@ -92,13 +92,13 @@
     "symfony/security-guard": "^5.4",
     "symfony/serializer-pack": "^1.0",
     "symfony/translation": "^5.4",
+    "symfony/twig-bridge": "^5.4",
     "symfony/twig-bundle": "^5.4",
     "symfony/ux-twig-component": "^2.6",
     "symfony/validator": "^5.4",
     "symfony/web-link": "^5.4",
     "symfony/webpack-encore-bundle": "^1.5",
     "symfony/yaml": "^5.4",
-    "symfony/twig-bridge": "^5.4",
     "tecnickcom/tcpdf": "^6.2"
   },
   "require-dev": {
