@@ -76,10 +76,17 @@ interface TermInterface
      */
     public function getParent(): ?TermInterface;
 
+<<<<<<< HEAD
     /**
      * @param TermInterface $parent
      */
     public function setParent(TermInterface $parent): void;
+=======
+    /** @return Term[] */
+    public function getParents(): array;
+
+    public function setParent(?TermInterface $parent): void;
+>>>>>>> b89969944 (fix TermInterface parent can't be set to null when rearanging via listdataview (#1757))
 
     /**
      * @param TermInterface $child
