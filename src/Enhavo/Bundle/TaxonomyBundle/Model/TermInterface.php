@@ -77,9 +77,10 @@ interface TermInterface
     public function getParent(): ?TermInterface;
 
     /**
-     * @param TermInterface $parent
+     * @param TermInterface|null $parent
+     * @return void
      */
-    public function setParent(TermInterface $parent): void;
+    public function setParent(?TermInterface $parent): void;
 
     /**
      * @param TermInterface $child
