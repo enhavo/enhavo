@@ -44,6 +44,12 @@ class MailerManager
         $message = $this->createMessage();
 
         $message->setTo($this->mailsConfig[$key]['to'] ?? $this->defaults->getMailTo());
+        foreach ($this->getCopies($key) as $email) {
+            $message->addCc($email);
+        }
+        foreach ($this->getBlindCopies($key) as $email) {
+            $message->addBcc($email);
+        }
 
         $message->setFrom($this->mailsConfig[$key]['from'] ?? $this->defaults->getMailFrom());
         $senderName = $this->mailsConfig[$key]['name'] ?? $this->defaults->getMailSenderName();
@@ -63,6 +69,32 @@ class MailerManager
         $message->setContentType($this->mailsConfig[$key]['content_type']);
 
         return $message;
+    }
+
+    private function getCopies(string $key): array
+    {
+        $ccs = [];
+        if (is_string($this->mailsConfig[$key]['cc'])) {
+            $ccs[] = trim($this->mailsConfig[$key]['cc']);
+        } else if (is_array($this->mailsConfig[$key]['cc'])) {
+            foreach ($this->mailsConfig[$key]['cc'] as $cc) {
+                $ccs[] = trim($cc);
+            }
+        }
+        return $ccs;
+    }
+
+    private function getBlindCopies(string $key): array
+    {
+        $bcs = [];
+        if (is_string($this->mailsConfig[$key]['bcc'])) {
+            $bcs[] = trim($this->mailsConfig[$key]['bcc']);
+        } else if (is_array($this->mailsConfig[$key]['bcc'])) {
+            foreach ($this->mailsConfig[$key]['bcc'] as $cc) {
+                $bcs[] = trim($cc);
+            }
+        }
+        return $bcs;
     }
 
     public function createMessage(): Message
@@ -86,6 +118,14 @@ class MailerManager
             ))
             ->to(new Address($this->renderString($message->getTo(), $message->getContext())))
         ;
+
+        foreach ($message->getCc() as $cc) {
+            $email->addCc(new Address($cc));
+        }
+
+        foreach ($message->getBcc() as $bcc) {
+            $email->addBcc(new Address($bcc));
+        }
 
         if ($message->getContent() === null) {
             $template = $this->environment->load($this->templateManager->getTemplate($message->getTemplate()));

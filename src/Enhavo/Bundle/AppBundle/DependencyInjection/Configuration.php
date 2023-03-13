@@ -85,6 +85,8 @@ class Configuration implements ConfigurationInterface
                                     ->scalarNode('from')->defaultValue(null)->end()
                                     ->scalarNode('name')->defaultValue(null)->end()
                                     ->scalarNode('to')->defaultValue(null)->end()
+                                    ->variableNode('cc')->defaultValue(null)->end()
+                                    ->variableNode('bcc')->defaultValue(null)->end()
                                     ->scalarNode('subject')->end()
                                     ->scalarNode('translation_domain')->defaultValue(null)->end()
                                     ->scalarNode('template')->end()
