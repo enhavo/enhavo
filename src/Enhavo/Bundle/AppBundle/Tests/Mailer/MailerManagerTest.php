@@ -73,6 +73,8 @@ class MailerManagerTest extends TestCase
                 'template' => 'multipart-mail.html.twig',
                 'content_type' => Message::CONTENT_TYPE_MIXED,
                 'translation_domain' => null,
+                'cc' => null,
+                'bcc' => null,
             ]
         ];
 
@@ -106,6 +108,8 @@ class MailerManagerTest extends TestCase
                 'from' => '{{ resource.from }}',
                 'name' => '{{ resource.name }}',
                 'to' => '{{ resource.to }}',
+                'cc' => ['cc1@test.de', 'cc2@test.de'],
+                'bcc' => 'bcc@test.de',
                 'subject' => '{{ resource.subject }}',
                 'template' => 'simple-mail.html.twig',
                 'content_type' => Message::CONTENT_TYPE_PLAIN,
@@ -118,6 +122,9 @@ class MailerManagerTest extends TestCase
         $dependencies->mailer->expects($this->once())->method('send')->willReturnCallback(function (Email $email) {
             $this->assertEquals('__text__', $email->getHtmlBody());
             $this->assertEquals('__subject__trans', $email->getSubject());
+            $this->assertEquals('cc1@test.de', $email->getCc()[0]->getAddress());
+            $this->assertEquals('cc2@test.de', $email->getCc()[1]->getAddress());
+            $this->assertEquals('bcc@test.de', $email->getBcc()[0]->getAddress());
         });
 
         $manager->sendMail('default', $this->createDefaultResource());
