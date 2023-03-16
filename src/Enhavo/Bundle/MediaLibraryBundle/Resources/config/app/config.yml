@@ -4,6 +4,8 @@ enhavo_app:
             alias: EnhavoMediaLibrary
             path: '@EnhavoMediaLibraryBundle/Resources/views'
             priority: 10
+    form_themes:
+        - '@EnhavoMediaLibrary/admin/form/form/fields.html.twig'
     apps:
         - 'media/Extension/MediaLibrary'
     roles:
@@ -43,12 +45,12 @@ enhavo_app:
 enhavo_media_library:
     content_type:
         audio:
-            label: 'Audio'
+            label: 'media_library.content_type.audio'
             icon: 'icon-file_audio'
             mime_types:
                 - ^audio/.+
         archive:
-            label: 'Archive'
+            label: 'media_library.content_type.archive'
             icon: 'icon-archive'
             mime_types:
                 - application/gzip
@@ -56,7 +58,7 @@ enhavo_media_library:
                 - application/x-tar
                 - application/x-gtar
         document:
-            label: 'Document'
+            label: 'media_library.content_type.document'
             icon: 'icon-file_document'
             mime_types:
                 - application/pdf
@@ -66,17 +68,17 @@ enhavo_media_library:
                 - ^application/ms.+
                 - ^application/vnd.+
         text:
-            label: 'Text'
+            label: 'media_library.content_type.text'
             icon: 'icon-file_text'
             mime_types:
                 - ^text/.+
         image:
-            label: 'Image'
+            label: 'media_library.content_type.image'
             icon: 'icon-image'
             mime_types:
                 - ^image/.+
         video:
-            label: 'Video'
+            label: 'media_library.content_type.video'
             icon: 'icon-file_video'
             mime_types:
                 - ^video/.+

@@ -16,6 +16,7 @@ services:
         class: Enhavo\Bundle\MediaBundle\Form\Type\MediaType
         arguments:
             - '@enhavo_media.extension_manager'
+            - '%enhavo_media.form%'
         tags:
             - { name: form.type, alias: enhavo_media }
 
@@ -106,6 +107,7 @@ services:
             - { name: enhavo.column, alias: media }
 
     enhavo_media.factory.file:
+        public: true
         alias: Enhavo\Bundle\MediaBundle\Factory\FileFactory
 
     Enhavo\Bundle\MediaBundle\Factory\FileFactory:

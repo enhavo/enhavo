@@ -116,7 +116,6 @@ export default class extends Vue {
     }
 
     mounted() {
-        console.log(this.mediaLibrary.data);
         let element = this.$refs.upload;
 
         $(document).on('upload', function () {

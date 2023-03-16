@@ -67,6 +67,7 @@ class FileFactory extends Factory
         $file->setOrder($originalResource->getOrder());
         $file->setFilename($originalResource->getFilename());
         $file->setParameters($originalResource->getParameters());
+        $file->setLibrary($originalResource->isLibrary());
 
         $content = new Content($originalResource->getContent()->getContent());
         $file->setContent($content);
