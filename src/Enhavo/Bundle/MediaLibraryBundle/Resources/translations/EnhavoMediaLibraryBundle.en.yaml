@@ -13,6 +13,10 @@ media_library:
     form:
         label:
             create_tag: 'Create tag'
+            filename: "Filename"
+            url: "Url"
+            content_type: "Content type"
+            tags: "Tags"
     role:
         file:
             label:
@@ -26,3 +30,10 @@ media_library:
                 create: 'Media-Library-Tag create'
                 update: 'Media-Library-Tag update'
                 delete: 'Media-Library-Tag delete'
+    content_type:
+        audio: 'Audio'
+        archive: 'Archive'
+        document: 'Document'
+        text: 'Text'
+        image: 'Image'
+        video: 'Video'

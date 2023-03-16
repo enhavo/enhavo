@@ -33,13 +33,17 @@ class FileType extends AbstractType
     {
         $builder
             ->add('filename', TextType::class, [
-
+                'label' => 'media_library.form.label.filename',
+                'translation_domain' => 'EnhavoMediaLibraryBundle',
             ])
             ->add('contentType', ChoiceType::class, [
+                'label' => 'media_library.form.label.content_type',
+                'translation_domain' => 'EnhavoMediaLibraryBundle',
                 'choices' => array_flip($this->mediaLibraryManager->getContentTypes()),
                 'placeholder' => '---',
             ])
             ->add('tags', TermAutoCompleteChoiceType::class, [
+                'label' => 'media_library.form.label.tags',
                 'multiple' => true,
                 'route' => 'enhavo_media_library_tag_auto_complete',
                 'translation_domain' => 'EnhavoMediaLibraryBundle',
@@ -53,6 +57,8 @@ class FileType extends AbstractType
             $data = $event->getData();
             $form = $event->getForm();
             $form->add('url', TextType::class, [
+                'label' => 'media_library.form.label.url',
+                'translation_domain' => 'EnhavoMediaLibraryBundle',
                 'mapped' => false,
                 'data' => $this->urlGenerator->generate($data)
             ]);

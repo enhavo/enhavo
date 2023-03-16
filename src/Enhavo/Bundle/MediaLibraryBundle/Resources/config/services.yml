@@ -5,6 +5,7 @@ services:
             - '%enhavo_media_library.content_type%'
             - '@enhavo_media.repository.file'
             - '@enhavo_taxonomy.repository.term'
+            - '@translator'
 
     Enhavo\Bundle\MediaLibraryBundle\EventListener\ContentTypeSubscriber:
         arguments:
