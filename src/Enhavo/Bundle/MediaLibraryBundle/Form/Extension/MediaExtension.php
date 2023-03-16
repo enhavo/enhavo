@@ -17,7 +17,6 @@ class MediaExtension extends AbstractTypeExtension
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'upload' => true,
             'extensions' => [
                 'media_library' => []
             ]

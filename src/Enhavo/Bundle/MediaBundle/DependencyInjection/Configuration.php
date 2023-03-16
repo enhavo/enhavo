@@ -55,6 +55,7 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('parameters_type')->defaultValue(null)->end()
+                        ->booleanNode('default_upload_enabled')->defaultValue(true)->end()
                     ->end()
                 ->end()
             ->end()

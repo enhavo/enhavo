@@ -27,13 +27,20 @@ class MediaType extends AbstractType
     private $extensionManager;
 
     /**
+     * @var array
+     */
+    private $formConfiguration;
+
+    /**
      * MediaType constructor.
      *
      * @param ExtensionManager $extensionManager
+     * @param array $formConfiguration
      */
-    public function __construct(ExtensionManager $extensionManager)
+    public function __construct(ExtensionManager $extensionManager, array $formConfiguration)
     {
         $this->extensionManager = $extensionManager;
+        $this->formConfiguration = $formConfiguration;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -120,7 +127,7 @@ class MediaType extends AbstractType
             'prototype_data' => null,
             'prototype_name' => '__name__',
             'item_template' => '@EnhavoMedia/admin/form/media/item.html.twig',
-            'upload' => true,
+            'upload' => $this->formConfiguration['default_upload_enabled'],
             'extensions' => [],
             'route' => 'enhavo_media_upload',
         ));
