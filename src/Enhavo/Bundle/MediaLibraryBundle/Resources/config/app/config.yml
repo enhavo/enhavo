@@ -4,8 +4,6 @@ enhavo_app:
             alias: EnhavoMediaLibrary
             path: '@EnhavoMediaLibraryBundle/Resources/views'
             priority: 10
-    form_themes:
-        - '@EnhavoMediaLibrary/admin/form/form/fields.html.twig'
     apps:
         - 'media/Extension/MediaLibrary'
     roles:
