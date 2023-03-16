@@ -9,6 +9,7 @@ namespace Enhavo\Bundle\MediaLibraryBundle\Media;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\MediaLibraryBundle\Repository\FileRepository;
 use Enhavo\Bundle\TaxonomyBundle\Repository\TermRepository;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class MediaLibraryManager
 {
@@ -16,16 +17,20 @@ class MediaLibraryManager
     private FileRepository $fileRepository;
     private TermRepository $termRepository;
 
+    private TranslatorInterface $translator;
+
     /**
      * @param array $contentTypes
      * @param FileRepository $fileRepository
      * @param TermRepository $termRepository
+     * @param TranslatorInterface $translator
      */
-    public function __construct(array $contentTypes, FileRepository $fileRepository, TermRepository $termRepository)
+    public function __construct(array $contentTypes, FileRepository $fileRepository, TermRepository $termRepository, TranslatorInterface $translator)
     {
         $this->contentTypes = $contentTypes;
         $this->fileRepository = $fileRepository;
         $this->termRepository = $termRepository;
+        $this->translator = $translator;
     }
 
 
@@ -39,7 +44,7 @@ class MediaLibraryManager
         $contentTypes = [];
 
         foreach ($this->contentTypes as $key => $config) {
-            $contentTypes[$key] = $config['label'];
+            $contentTypes[$key] = $this->translator->trans($config['label'], [], 'EnhavoMediaLibraryBundle');
         }
         return $contentTypes;
     }
