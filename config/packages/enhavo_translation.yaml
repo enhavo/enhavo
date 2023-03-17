@@ -1,6 +1,6 @@
 enhavo_translation:
     enable: false
-    default_locale: 'en'
+    default_locale: 'de'
     locales:
         - 'en'
         - 'de'

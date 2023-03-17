@@ -17,6 +17,12 @@ media_library:
             url: "Url"
             content_type: "Content type"
             tags: "Tags"
+    column:
+        label:
+            filename: 'Name'
+            extension: 'Suffix'
+            content_type: 'Type'
+            created_at: 'Date'
     role:
         file:
             label:
