@@ -48,6 +48,7 @@ services:
             - '@sylius.resource_controller.resources_collection_provider'
             - '@enhavo_media.repository.file'
             - '@enhavo_media.media.public_url_generator'
+            - '@translator'
         tags:
             - { name: enhavo_app.view }
 
