@@ -8,8 +8,8 @@ media_library:
         tag: 'Tags'
         id: 'ID'
         title: 'Titel'
-        upload: 'Upload'
-        confirm_selection: 'Auswahl bestätigen'
+        upload: 'Hochladen'
+        confirm_selection: 'Auswählen'
     form:
         label:
             create_tag: 'Tag erstellen'
@@ -17,6 +17,12 @@ media_library:
             url: 'Url'
             content_type: 'Dateityp'
             tags: 'Tags'
+    column:
+        label:
+            filename: 'Name'
+            extension: 'Suffix'
+            content_type: 'Dateityp'
+            created_at: 'Datum'
     role:
         file:
             label:

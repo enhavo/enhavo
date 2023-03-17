@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class FilesViewType extends AbstractViewType
 {
@@ -27,6 +28,7 @@ class FilesViewType extends AbstractViewType
         private ResourcesCollectionProviderInterface $resourcesCollectionProvider,
         private RepositoryInterface $repository,
         private UrlGeneratorInterface $urlGenerator,
+        private TranslatorInterface $translator,
     ) {}
 
     public static function getName(): ?string
@@ -46,8 +48,17 @@ class FilesViewType extends AbstractViewType
         $templateData['files'] = $files;
         $templateData['pages'] = $pages;
         $templateData['page'] = $options['page'];
-        $templateData['columns'] = $options['columns'];
+        $templateData['columns'] = $this->getColumns($options);
         $templateData['sorting'] = $options['sorting'];
+    }
+
+    private function getColumns($options)
+    {
+        $columns = $options['columns'];
+        foreach($columns as $index => $column) {
+            $columns[$index]['label'] = $this->translator->trans($columns[$index]['label'], [], $options['translation_domain']);
+        }
+        return $columns;
     }
 
     public function getResponse($options, Request $request, ViewData $viewData, TemplateData $templateData): Response
@@ -73,11 +84,12 @@ class FilesViewType extends AbstractViewType
                 'createdAt' => 'desc',
             ],
             'columns' => [
-                ['property' => 'filename', 'label' => 'Name'],
-                ['property' => 'extension', 'label' => 'Suffix'],
-                ['property' => 'contentType', 'label' => 'Type'],
-                ['property' => 'createdAt', 'label' => 'Date'],
-            ]
+                ['property' => 'filename', 'label' => 'media_library.column.label.filename'],
+                ['property' => 'extension', 'label' => 'media_library.column.label.extension'],
+                ['property' => 'contentType', 'label' => 'media_library.column.label.content_type'],
+                ['property' => 'createdAt', 'label' => 'media_library.column.label.created_at'],
+            ],
+            'translation_domain' => 'EnhavoMediaLibraryBundle',
         ]);
     }
 
