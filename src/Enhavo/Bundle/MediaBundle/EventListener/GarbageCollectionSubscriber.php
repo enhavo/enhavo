@@ -43,8 +43,12 @@ class GarbageCollectionSubscriber
             return;
         }
 
-        // This is required to prevent an error with entities deleted over database hook on-delete="CASCADE"
-        $this->entityManager->clear();
+        // There was an error with entities deleted over database hook on-delete="CASCADE"
+        // This line was added to fix that error
+        // But then this line caused another error when using batch delete
+        // And the original error couldn't be reproduced, so we just removed the line
+        // Keeping this line commented in case the original error happens again, though it should probably be fixed in another way
+//        $this->entityManager->clear();
 
         foreach ($this->filesToScan as $file) {
             $file = $this->refreshFile($file);

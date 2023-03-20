@@ -38,7 +38,9 @@ class CollectGarbageCommand extends Command
         $dryRunText = '';
         if (method_exists($this->garbageCollector, 'dryRun')) {
             $dryRun = $input->getOption('dry-run');
-            $dryRunText = ' in dry run mode';
+            if ($dryRun) {
+                $dryRunText = ' in dry run mode';
+            }
         }
 
         $limitFlagText = '';
