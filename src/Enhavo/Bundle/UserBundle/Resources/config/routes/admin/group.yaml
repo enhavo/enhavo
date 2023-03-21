@@ -78,7 +78,6 @@ enhavo_user_group_delete:
     methods: [POST, DELETE]
     defaults:
         _controller: enhavo_user.controller.group::deleteAction
-        _format: json
 
 enhavo_user_group_batch:
     options:
