@@ -30,6 +30,8 @@
 {% endif %}
 {% if routes is defined %}
     <script id="routes" type="application/json">{{ routes|raw }}</script>
+{% else %}
+    <script id="routes" type="application/json">{"base_url":"","routes":{}}</script>
 {% endif %}
 {% if translations is defined %}
     <script id="translations" type="application/json">{{ translations|json_encode|raw }}</script>
