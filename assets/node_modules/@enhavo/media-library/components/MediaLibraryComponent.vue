@@ -139,6 +139,7 @@ export default class extends Vue {
                     this.getMediaLibrary().loaded();
 
                 } else {
+                    this.getMediaLibrary().showSuccess(this.translator.trans('enhavo_media_library.upload.success.message'));
                     this.getMediaLibrary().refresh();
                 }
 
