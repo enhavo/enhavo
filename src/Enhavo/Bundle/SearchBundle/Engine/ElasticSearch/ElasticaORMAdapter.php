@@ -38,11 +38,17 @@ class ElasticaORMAdapter implements AdapterInterface
      */
     private $em;
 
-    public function __construct(SearchableInterface $searchable, Query $query, EntityManagerInterface $em)
+    /**
+     * @var ElasticSearchEngine
+     */
+    private $elasticSearchEngine;
+
+    public function __construct(SearchableInterface $searchable, Query $query, EntityManagerInterface $em, ElasticSearchEngine $elasticSearchEngine)
     {
         $this->searchable = $searchable;
         $this->query = $query;
         $this->em = $em;
+        $this->elasticSearchEngine = $elasticSearchEngine;
     }
 
     /**
@@ -95,7 +101,12 @@ class ElasticaORMAdapter implements AdapterInterface
         foreach($resultSet as $data) {
             $id = $data->getDocument()->get('id');
             $className = $data->getDocument()->get('className');
-            $result[] = $this->em->getRepository($className)->find($id);
+            $entity = $this->em->getRepository($className)->find($id);
+            if ($entity === null) {
+                $this->elasticSearchEngine->removeIndexByClassNameAndId($className, $id);
+            } else {
+                $result[] = $entity;
+            }
         }
         return $result;
     }

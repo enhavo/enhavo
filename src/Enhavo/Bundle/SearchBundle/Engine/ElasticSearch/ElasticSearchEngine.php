@@ -257,7 +257,7 @@ class ElasticSearchEngine implements EngineInterface
     {
         $query = $this->createQuery($filter);
         $searchable = $this->getIndex();
-        return new Pagerfanta(new ElasticaORMAdapter($searchable, $query, $this->em));
+        return new Pagerfanta(new ElasticaORMAdapter($searchable, $query, $this->em, $this));
     }
 
     public function index($resource)
@@ -333,12 +333,17 @@ class ElasticSearchEngine implements EngineInterface
 
             $id = $resource->getId();
             $className = $metadata->getClassName();
-            $documentId = sha1($id.$className);
-
-            $index = $this->getIndex();
-            $index->deleteById($documentId);
-            $index->refresh();
+            $this->removeIndexByClassNameAndId($className, $id);
         }
+    }
+
+    public function removeIndexByClassNameAndId($className, $id)
+    {
+        $documentId = sha1($id.$className);
+
+        $index = $this->getIndex();
+        $index->deleteById($documentId);
+        $index->refresh();
     }
 
     public function reindex()
