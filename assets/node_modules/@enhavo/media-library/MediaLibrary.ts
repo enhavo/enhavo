@@ -219,6 +219,10 @@ export default class MediaLibrary {
         this.flashMessenger.addMessage(new Message(Message.ERROR, message));
     }
 
+    public showSuccess(message: string) {
+        this.flashMessenger.addMessage(new Message(Message.SUCCESS, message));
+    }
+
     public refresh() {
         // todo: load tags and reselect?
         this.getFiles();
