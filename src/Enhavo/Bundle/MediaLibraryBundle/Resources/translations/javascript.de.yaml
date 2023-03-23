@@ -2,5 +2,7 @@ enhavo_media_library:
     tags: 'Tags'
     content_types: 'Dateitypen'
     upload:
+        success:
+            message: 'Datei erfolgreich hinzugefügt.'
         fail:
             message: 'Upload fehlgeschlagen. Vielleicht ist die Datei zu groß.'
