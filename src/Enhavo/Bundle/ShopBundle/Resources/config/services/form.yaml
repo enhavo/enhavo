@@ -110,3 +110,9 @@ services:
             - '%enhavo_shop.model.user_address.class%'
         tags:
             - { name: form.type }
+
+    Enhavo\Bundle\ShopBundle\Form\Type\OrderPromotionCouponType:
+        arguments:
+            - '%sylius.model.order.class%'
+        tags:
+            - { name: form.type }

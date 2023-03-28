@@ -9,6 +9,16 @@ services:
                 form_type: Sylius\Bundle\PromotionBundle\Form\Type\Action\PercentageDiscountConfigurationType
                 label: "sylius.form.promotion_action.order_percentage_discount"
 
+    Enhavo\Bundle\ShopBundle\Promotion\Action\FixedDiscountPromotionActionCommand:
+        arguments:
+            - '@Enhavo\Bundle\ShopBundle\Distributor\ProportionalIntegerDistributor'
+            - '@Enhavo\Bundle\ShopBundle\Promotion\Applicator\UnitsPromotionAdjustmentsApplicator'
+        tags:
+            -   name: sylius.promotion_action
+                type: order_fixed_discount
+                form_type: Enhavo\Bundle\ShopBundle\Form\Type\Promotion\FixedDiscountConfigurationType
+                label: "sylius.form.promotion_action.order_fixed_discount"
+
     Enhavo\Bundle\ShopBundle\Promotion\Applicator\UnitsPromotionAdjustmentsApplicator:
         arguments:
             - '@sylius.factory.adjustment'
@@ -24,3 +34,10 @@ services:
                 label: sylius.form.promotion_rule.nth_order
                 form_type: Enhavo\Bundle\ShopBundle\Form\Type\Promotion\NthOrderConfigurationType
 
+    Sylius\Component\Promotion\Checker\Rule\ItemTotalRuleChecker:
+        tags:
+            -
+                name: sylius.promotion_rule_checker
+                type: item_total
+                label: sylius.form.promotion_rule.item_total
+                form_type: Enhavo\Bundle\ShopBundle\Form\Type\Promotion\ItemTotalConfigurationType

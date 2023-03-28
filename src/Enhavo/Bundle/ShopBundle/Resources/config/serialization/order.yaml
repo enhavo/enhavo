@@ -14,6 +14,8 @@ Enhavo\Bundle\ShopBundle\Entity\Order:
     attributes:
         vouchers:
             groups: ['cart']
+        promotionCoupon:
+            groups: ['cart']
         items:
             groups: ['cart']
         totalQuantity:
@@ -46,4 +48,9 @@ Enhavo\Bundle\ShopBundle\Entity\OrderItem:
         discountedUnitPriceTotal:
             groups: ['cart']
         total:
+            groups: ['cart']
+
+Sylius\Component\Promotion\Model\PromotionCoupon:
+    attributes:
+        code:
             groups: ['cart']
