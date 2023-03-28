@@ -1,0 +1,17 @@
+enhavo_shop_theme_promotion_coupon_add:
+    path: /shop/promotion/coupon/add
+    defaults:
+        _controller: sylius.controller.promotion_coupon::addAction
+        _methods: [POST]
+        _sylius:
+            form:
+                type: Enhavo\Bundle\ShopBundle\Form\Type\OrderPromotionCouponType
+                options:
+                    validation_groups: [ promotion_coupon ]
+                    csrf_protection: false
+
+enhavo_shop_theme_promotion_coupon_remove:
+    path: /shop/promotion/coupon/remove
+    defaults:
+        _controller: sylius.controller.promotion_coupon::removeAction
+        _methods: [POST]

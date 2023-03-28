@@ -20,11 +20,12 @@ use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Enhavo\Bundle\ShopBundle\Model\ShipmentInterface;
 use Enhavo\Bundle\ShopBundle\Model\AdjustmentInterface;
 use Sylius\Component\Payment\Model\PaymentInterface;
+use Sylius\Component\Promotion\Model\PromotionCouponAwarePromotionSubjectInterface;
 use Sylius\Component\Promotion\Model\PromotionInterface;
 use Sylius\Component\Order\Model\Order as SyliusOrder;
 use Sylius\Component\Promotion\Model\PromotionCouponInterface;
 
-class Order extends SyliusOrder implements OrderInterface
+class Order extends SyliusOrder implements OrderInterface, PromotionCouponAwarePromotionSubjectInterface
 {
     use AddressSubjectTrait;
 
