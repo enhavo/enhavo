@@ -23,7 +23,6 @@ services:
         arguments:
             - '@enhavo_media.garbage_collector'
             - '@Enhavo\Bundle\DoctrineExtensionBundle\Util\AssociationFinder'
-            - '@doctrine.orm.entity_manager'
             - '@enhavo_media.repository.file'
             - '%enhavo_media.garbage_collection.enable_listener%'
         tags:

@@ -2,7 +2,6 @@
 
 namespace Enhavo\Bundle\MediaBundle\EventListener;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Event\PreRemoveEventArgs;
 use Enhavo\Bundle\AppBundle\Event\ResourcePostDeleteEvent;
 use Enhavo\Bundle\AppBundle\Repository\EntityRepository;
@@ -19,7 +18,6 @@ class GarbageCollectionSubscriber
     public function __construct(
         private GarbageCollector $garbageCollector,
         private AssociationFinder $associationFinder,
-        private EntityManagerInterface $entityManager,
         private EntityRepository $fileRepository,
         protected bool $enableGarbageCollectionListener,
     ) {}
@@ -54,6 +52,7 @@ class GarbageCollectionSubscriber
             $file = $this->refreshFile($file);
             $this->garbageCollector->runOnFile($file);
         }
+        $this->filesToScan = [];
     }
 
     private function collectFilesAssociatedWithEntity($entity)
