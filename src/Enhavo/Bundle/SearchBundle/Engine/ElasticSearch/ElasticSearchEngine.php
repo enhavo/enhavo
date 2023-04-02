@@ -32,8 +32,6 @@ use Elastica\Mapping;
 
 class ElasticSearchEngine implements EngineInterface
 {
-    const ELASTIC_SEARCH_INDEX = 'elastic_search';
-
     /**
      * @var Indexer
      */
@@ -60,6 +58,16 @@ class ElasticSearchEngine implements EngineInterface
     private $extractor;
 
     /**
+     * @var ElasticSearchIndexRemover
+     */
+    private $indexRemover;
+
+    /**
+     * @var ElasticSearchDocumentIdGenerator
+     */
+    private $documentIdGenerator;
+
+    /**
      * @var FilterData
      */
     private $filterData;
@@ -72,24 +80,33 @@ class ElasticSearchEngine implements EngineInterface
     /** @var bool */
     private $indexing;
 
+    /** @var string */
+    private $indexName;
+
     public function __construct(
         Indexer $indexer,
         MetadataRepository $metadataRepository,
         EntityManager $em,
         Client $client,
+        ElasticSearchIndexRemover $indexRemover,
+        ElasticSearchDocumentIdGenerator $documentIdGenerator,
         Extractor $extractor,
         FilterData $filterData,
         $classes,
-        $indexing
+        $indexing,
+        $indexName
     ) {
         $this->indexer = $indexer;
         $this->metadataRepository = $metadataRepository;
         $this->em = $em;
         $this->client = $client;
         $this->extractor = $extractor;
+        $this->indexRemover = $indexRemover;
+        $this->documentIdGenerator = $documentIdGenerator;
         $this->filterData = $filterData;
         $this->classes = $classes;
         $this->indexing = $indexing;
+        $this->indexName = $indexName;
     }
 
     public function initialize()
@@ -257,7 +274,7 @@ class ElasticSearchEngine implements EngineInterface
     {
         $query = $this->createQuery($filter);
         $searchable = $this->getIndex();
-        return new Pagerfanta(new ElasticaORMAdapter($searchable, $query, $this->em));
+        return new Pagerfanta(new ElasticaORMAdapter($searchable, $query, $this->em, $this->indexRemover));
     }
 
     public function index($resource)
@@ -281,7 +298,7 @@ class ElasticSearchEngine implements EngineInterface
      */
     private function getIndex()
     {
-        $index = $this->client->getIndex(self::ELASTIC_SEARCH_INDEX);
+        $index = $this->client->getIndex($this->indexName);
         return $index;
     }
 
@@ -297,7 +314,7 @@ class ElasticSearchEngine implements EngineInterface
 
         $id = $resource->getId();
         $className = $metadata->getClassName();
-        $documentId = sha1($id.$className);
+        $documentId = $this->documentIdGenerator->generateDocumentId($className, $id);
 
         $indexData = [];
         foreach($indexes as $index) {
@@ -327,18 +344,7 @@ class ElasticSearchEngine implements EngineInterface
 
     public function removeIndex($resource)
     {
-        if($this->metadataRepository->hasMetadata($resource)) {
-            /** @var Metadata $metadata */
-            $metadata = $this->metadataRepository->getMetadata($resource);
-
-            $id = $resource->getId();
-            $className = $metadata->getClassName();
-            $documentId = sha1($id.$className);
-
-            $index = $this->getIndex();
-            $index->deleteById($documentId);
-            $index->refresh();
-        }
+        $this->indexRemover->removeIndex($resource);
     }
 
     public function reindex()
