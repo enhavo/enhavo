@@ -49,6 +49,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('host')->defaultValue('localhost')->end()
                         ->scalarNode('port')->defaultValue(9200)->end()
                         ->scalarNode('version')->defaultValue('7.0.0-darwin-x86_64')->end()
+                        ->scalarNode('index_name')->defaultValue('elastic_search')->end()
                     ->end()
                 ->end()
                 ->arrayNode('metadata')

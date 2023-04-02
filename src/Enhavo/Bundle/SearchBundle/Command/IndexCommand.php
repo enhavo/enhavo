@@ -21,7 +21,7 @@ class IndexCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('enhavo:search:initialize')
+            ->setName('enhavo:search:index')
             ->setDescription('Runs search initialize')
         ;
     }

@@ -7,10 +7,13 @@ services:
             - '@Enhavo\Component\Metadata\MetadataRepository[Search]'
             - '@doctrine.orm.entity_manager'
             - '@enhavo_search.elastica.client'
+            - '@enhavo_search.engine.elastic_search_index_remover'
+            - '@enhavo_search.engine.elastic_search_document_id_generator'
             - '@enhavo_search.extractor.extractor'
             - '@enhavo_search.filter.filter_data'
             - '%enhavo_search.index.class%'
             - '%enhavo_search.search.indexing%'
+            - '%enhavo_search.elastica.index_name%'
 
     enhavo_search.elastica.client:
         class: Elastica\Client
@@ -18,3 +21,14 @@ services:
           -
             host: '%enhavo_search.elastica.host%'
             port: '%enhavo_search.elastica.port%'
+
+    enhavo_search.engine.elastic_search_index_remover:
+        class: Enhavo\Bundle\SearchBundle\Engine\ElasticSearch\ElasticSearchIndexRemover
+        arguments:
+            - '@enhavo_search.elastica.client'
+            - '@Enhavo\Component\Metadata\MetadataRepository[Search]'
+            - '@enhavo_search.engine.elastic_search_document_id_generator'
+            - '%enhavo_search.elastica.index_name%'
+
+    enhavo_search.engine.elastic_search_document_id_generator:
+        class: Enhavo\Bundle\SearchBundle\Engine\ElasticSearch\ElasticSearchDocumentIdGenerator
