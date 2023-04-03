@@ -9,6 +9,7 @@ use Sylius\Component\Payment\Model\PaymentInterface;
 use Sylius\Component\Promotion\Model\CountablePromotionSubjectInterface;
 use Sylius\Component\Promotion\Model\PromotionCouponInterface;
 use Sylius\Component\Promotion\Model\PromotionSubjectInterface;
+use Sylius\Component\Promotion\Model\PromotionCouponAwarePromotionSubjectInterface;
 
 /**
  * OrderInterface.php
@@ -16,14 +17,14 @@ use Sylius\Component\Promotion\Model\PromotionSubjectInterface;
  * @since 15/08/16
  * @author gseidel
  */
-interface OrderInterface extends SyliusOrderInterface, PromotionSubjectInterface, AddressSubjectInterface, CountablePromotionSubjectInterface
+interface OrderInterface extends SyliusOrderInterface, PromotionSubjectInterface, AddressSubjectInterface, CountablePromotionSubjectInterface, PromotionCouponAwarePromotionSubjectInterface
 {
     public function setPaymentState(?string $paymentState): void;
     public function getPaymentState(): ?string;
     public function setShippingState(?string $shippingState);
     public function getShippingState();
-    public function setPromotionCoupon(PromotionCouponInterface $promotionCoupon = null);
-    public function getPromotionCoupon();
+    public function setPromotionCoupon(?PromotionCouponInterface $promotionCoupon);
+    public function getPromotionCoupon(): ?PromotionCouponInterface;
     public function addPayment(PaymentInterface $payment);
     public function removePayment(PaymentInterface $payment);
     public function getPayments(): Collection|array;

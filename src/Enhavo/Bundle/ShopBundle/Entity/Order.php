@@ -25,7 +25,7 @@ use Sylius\Component\Promotion\Model\PromotionInterface;
 use Sylius\Component\Order\Model\Order as SyliusOrder;
 use Sylius\Component\Promotion\Model\PromotionCouponInterface;
 
-class Order extends SyliusOrder implements OrderInterface, PromotionCouponAwarePromotionSubjectInterface
+class Order extends SyliusOrder implements OrderInterface
 {
     use AddressSubjectTrait;
 
@@ -83,7 +83,7 @@ class Order extends SyliusOrder implements OrderInterface, PromotionCouponAwareP
         return $this->shippingState;
     }
 
-    public function setPromotionCoupon(?PromotionCouponInterface $promotionCoupon = null)
+    public function setPromotionCoupon(?PromotionCouponInterface $promotionCoupon)
     {
         $this->promotionCoupon = $promotionCoupon;
     }

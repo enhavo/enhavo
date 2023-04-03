@@ -54,3 +54,9 @@ services:
             - '@Enhavo\Bundle\ShopBundle\Payment\Provider\OrderPaymentProvider'
         tags:
             - { name: sylius.order_processor, priority: 10 }
+
+    Enhavo\Bundle\ShopBundle\OrderProcessing\OrderPromotionCouponProcessor:
+        arguments:
+            - '@sylius.promotion_eligibility_checker'
+        tags:
+            - { name: sylius.order_processor, priority: 0 }
