@@ -7,5 +7,7 @@ sylius:
         help: After create or change of a rule type, you have to save first before new input fields will appear
       actions:
         help: After create or change of a action type, you have to save first before new input fields will appear
-      promotion_rule:
-        item_total: Item total
+    promotion_rule:
+      item_total: Item total
+  promotion_coupon:
+    is_not_eligible: Is not eligible

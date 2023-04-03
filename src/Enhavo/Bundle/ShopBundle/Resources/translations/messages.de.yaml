@@ -7,5 +7,7 @@ sylius:
         help: Nach dem Erstellen oder Ändern eines Regeltyps muss zuerst gepeichert werden damit neue Eingabefelder erscheinen
       actions:
         help: Nach dem Erstellen oder Ändern eines Aktiontype muss zuerst gepeichert werden damit neue Eingabefelder erscheinen
-      promotion_rule:
-        item_total: Warenwert
+    promotion_rule:
+      item_total: Warenwert
+  promotion_coupon:
+    is_not_eligible: Ist nicht anwendbar

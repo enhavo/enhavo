@@ -2,10 +2,10 @@
 
 namespace Enhavo\Bundle\ShopBundle\Controller;
 
-use App\Form\CreatePromotionType;
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
+use Enhavo\Bundle\VueFormBundle\Form\VueForm;
 use Sylius\Component\Order\CartActions;
 use Sylius\Component\Order\Context\CartContextInterface;
 use Sylius\Component\Order\Processor\OrderProcessorInterface;
@@ -61,19 +61,21 @@ class PromotionCouponController extends ResourceController
             $this->getOrderProcessor()->process($cart);
             $cartManager = $this->getCartManager();
             $cartManager->flush();
+
+            return new JsonResponse([
+                'cart' => $this->getNormalizer()->normalize($cart, null, [
+                    'groups' => ['cart']
+                ]),
+                'form' => $this->getVueForm()->createData($form->createView()),
+            ]);
         } else {
             return new JsonResponse([
                 'cart' => $this->getNormalizer()->normalize($this->getCurrentCart(), null, [
                     'groups' => ['cart']
-                ])
+                ]),
+                'form' => $this->getVueForm()->createData($form->createView()),
             ], 400);
         }
-
-        return new JsonResponse([
-            'cart' => $this->getNormalizer()->normalize($this->getCurrentCart(), null, [
-                'groups' => ['cart']
-            ])
-        ]);
     }
 
     public function removeAction(Request $request)
@@ -130,5 +132,10 @@ class PromotionCouponController extends ResourceController
     private function getNormalizer(): NormalizerInterface
     {
         return $this->get('serializer');
+    }
+
+    private function getVueForm(): VueForm
+    {
+        return $this->get(VueForm::class);
     }
 }

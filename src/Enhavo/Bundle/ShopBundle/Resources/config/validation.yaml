@@ -13,6 +13,9 @@ Enhavo\Bundle\ShopBundle\Entity\Order:
     constraints:
         - Enhavo\Bundle\ShopBundle\Validator\Constraints\OrderAddressing:
             groups: [checkout_address]
+        - Sylius\Bundle\PromotionBundle\Validator\Constraints\PromotionSubjectCoupon:
+            groups: [promotion_coupon]
+            message: sylius.promotion_coupon.is_not_eligible
 
 Sylius\Component\Addressing\Model\Address:
     properties:
