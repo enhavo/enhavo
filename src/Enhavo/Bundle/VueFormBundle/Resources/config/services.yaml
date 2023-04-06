@@ -23,6 +23,7 @@ services:
     Enhavo\Bundle\VueFormBundle\Form\VueType\FormVueType:
         arguments:
             - '@translator'
+            - '@serializer'
         tags:
             - { name: 'vue.type', priority: 150 }
 
