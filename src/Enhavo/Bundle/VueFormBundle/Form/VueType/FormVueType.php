@@ -5,12 +5,14 @@ namespace Enhavo\Bundle\VueFormBundle\Form\VueType;
 use Enhavo\Bundle\VueFormBundle\Form\AbstractVueType;
 use Enhavo\Bundle\VueFormBundle\Form\VueData;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class FormVueType extends AbstractVueType
 {
     public function __construct(
-        private TranslatorInterface $translator
+        private TranslatorInterface $translator,
+        private NormalizerInterface $normalizer
     )
     {
     }
@@ -23,7 +25,7 @@ class FormVueType extends AbstractVueType
     public function buildView(FormView $view, VueData $data)
     {
         $data['name'] = $view->vars['name'];
-        $data['value'] = $view->vars['value'];
+        $data['value'] = $this->normalizer->normalize($view->vars['value'], null, ['groups' => ['vue-form']]);
         $data['compound'] = $view->vars['compound'];
         $data['id'] = $view->vars['id'];
         $data['required'] = $view->vars['required'];
@@ -37,7 +39,7 @@ class FormVueType extends AbstractVueType
         if (!isset($data['componentModel'])) {
             $data['componentModel'] = null;
         }
-        
+
         $errors = [];
         foreach ($view->vars['errors'] as $error) {
             $errors[] = [
