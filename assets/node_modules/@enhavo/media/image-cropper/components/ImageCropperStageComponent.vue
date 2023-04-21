@@ -26,6 +26,7 @@ export default class extends Vue
 
     cropper: Cropper;
     loading = false;
+    initialDataSetEvent = false;
 
     mounted()
     {
@@ -34,6 +35,7 @@ export default class extends Vue
         element.src = this.imageCropper.data.url;
         this.cropper = new Cropper(element, {
             ready: () => {
+                this.initialDataSetEvent = true;
                 if(this.imageCropper.data.ratio) {
                     this.cropper.setAspectRatio(this.imageCropper.data.ratio);
                 }
@@ -70,6 +72,11 @@ export default class extends Vue
             if (changed(this.imageCropper.data.y, cropperData.y)) {
                 this.imageCropper.data.changed = true;
                 this.imageCropper.data.y = cropperData.y;
+            }
+
+            if (this.initialDataSetEvent) {
+                this.initialDataSetEvent = false;
+                this.imageCropper.data.changed = false;
             }
         });
 
