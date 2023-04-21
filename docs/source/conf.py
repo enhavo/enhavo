@@ -18,8 +18,8 @@ source_suffix = '.rst'
 source_encoding = 'utf-8'
 master_doc = 'index'
 project = u'enhavo'
-copyright = u'2021, xq web'
-author = u'xq web'
+copyright = u'2023, we are indeed'
+author = u'we are indeed'
 version = '0.10'
 release = '0.10'
 language = 'en'
@@ -32,7 +32,7 @@ latex_elements = {}
 
 latex_documents = [
   (master_doc, 'enhavo.tex', u'enhavo Documentation',
-   u'xq web', 'manual'),
+   u'we are indeed', 'manual'),
 ]
 
 man_pages = [

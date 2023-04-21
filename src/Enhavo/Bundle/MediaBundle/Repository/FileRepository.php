@@ -3,7 +3,7 @@
  * FileRepository.php
  *
  * @since 17/12/15
- * @author Fabian Liebl <fabian.liebl@xq-web.de>
+ * @author Fabian Liebl <fl@weareindeed.com>
  */
 
 namespace Enhavo\Bundle\MediaBundle\Repository;
