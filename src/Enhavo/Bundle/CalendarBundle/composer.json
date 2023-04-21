@@ -13,10 +13,10 @@
   ],
   "require": {
     "php": "^8.0",
-    "enhavo/app-bundle": "dev-master",
-    "enhavo/content-bundle": "dev-master",
-    "enhavo/block-bundle": "dev-master",
-    "enhavo/form-bundle": "dev-master",
+    "enhavo/app-bundle": "^0.12",
+    "enhavo/content-bundle": "^0.12",
+    "enhavo/block-bundle": "^0.12",
+    "enhavo/form-bundle": "^0.12",
     "johngrogg/ics-parser": "^2.0",
     "guzzlehttp/guzzle": "^6.5",
     "simshaun/recurr": "^2.2"
