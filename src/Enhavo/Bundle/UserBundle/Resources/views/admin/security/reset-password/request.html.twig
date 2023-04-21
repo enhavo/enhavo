@@ -16,9 +16,9 @@
     <form action="{{ path("enhavo_user_reset_password_request") }}" method="post" novalidate class="login-form">
         <div class="form-row">
             <div class="input-container">
-                <label for="{{ form.username.vars.full_name }}">{{ 'security.login.email'|trans }}</label>
+                <label for="{{ form.userIdentifier.vars.full_name }}">{{ 'security.login.email'|trans }}</label>
                 <a href="{{ path('enhavo_user_security_login') }}" class="reset-pw-link">{{ 'security.login.submit'|trans|nl2br }}</a>
-                <input type="text" id="{{ form.username.vars.id }}" name="{{ form.username.vars.full_name }}" value="" class="textfield" required="required" autofocus />
+                <input type="text" id="{{ form.userIdentifier.vars.id }}" name="{{ form.userIdentifier.vars.full_name }}" value="" class="textfield" required="required" autofocus />
             </div>
         </div>
 
