@@ -29,23 +29,23 @@ services:
         tags:
             - { name: enhavo.column, alias: currency }
 
-    Enhavo\Bundle\FormBundle\Form\VueType\ListVueType:
+    Enhavo\Bundle\FormBundle\Form\Extension\ListVueTypeExtension:
         arguments:
             - '@Enhavo\Bundle\VueFormBundle\Form\VueForm'
         tags:
-            - 'vue.type'
+            - 'form.type_extension'
 
-    Enhavo\Bundle\FormBundle\Form\VueType\PolyCollectionVueType:
+    Enhavo\Bundle\FormBundle\Form\Extension\PolyCollectionVueTypeExtension:
         arguments:
             - '@Enhavo\Bundle\VueFormBundle\Form\VueForm'
             - '@Enhavo\Bundle\FormBundle\Prototype\PrototypeManager'
         tags:
-            - 'vue.type'
+            - 'form.type_extension'
 
-    Enhavo\Bundle\FormBundle\Form\VueType\PositionVueType:
+    Enhavo\Bundle\FormBundle\Form\Extension\PositionVueTypeExtension:
         tags:
-            - 'vue.type'
+            - 'form.type_extension'
 
-    Enhavo\Bundle\FormBundle\Form\VueType\WysiwygVueType:
+    Enhavo\Bundle\FormBundle\Form\Extension\WysiwygVueTypeExtension:
         tags:
-            - 'vue.type'
+            - 'form.type_extension'

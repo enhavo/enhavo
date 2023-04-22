@@ -1,14 +1,12 @@
 services:
     Enhavo\Bundle\VueFormBundle\Form\VueForm:
         public: true
-        calls:
-            - ['setContainer', ['@service_container']]
 
     Enhavo\Bundle\VueFormBundle\Form\Extension\VueTypeExtension:
         arguments:
             - '@Enhavo\Bundle\VueFormBundle\Form\VueForm'
         tags:
-            - { name: form.type_extension }
+            - { name: form.type_extension, priority: 300 }
 
     Enhavo\Bundle\VueFormBundle\Form\Extension\BaseVueTypeExtension:
         arguments:
@@ -16,7 +14,7 @@ services:
         tags:
             - { name: 'form.type_extension', priority: 200 }
 
-    Enhavo\Bundle\VueFormBundle\Form\Extension\ButtonVueTypExtensione:
+    Enhavo\Bundle\VueFormBundle\Form\Extension\ButtonVueTypeExtension:
         tags:
             - { name: 'form.type_extension', priority: 190 }
 
@@ -56,7 +54,3 @@ services:
             - '@translator'
         tags:
             - { name: 'form.type_extension', priority: 110 }
-
-    Enhavo\Bundle\VueFormBundle\Form\Extension\ComponentVueTypeExtension:
-        tags:
-            - { name: 'form.type_extension', priority: 10 }
