@@ -1,14 +1,16 @@
 <?php
 
-namespace Enhavo\Bundle\VueFormBundle\Form\VueType;
+namespace Enhavo\Bundle\VueFormBundle\Form\Extension;
 
-use Enhavo\Bundle\VueFormBundle\Form\AbstractVueType;
+use Enhavo\Bundle\VueFormBundle\Form\AbstractVueTypeExtension;
 use Enhavo\Bundle\VueFormBundle\Form\VueData;
 use Symfony\Component\Form\ChoiceList\View\ChoiceView;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class ChoiceVueType extends AbstractVueType
+class ChoiceVueTypeExtension extends AbstractVueTypeExtension
 {
     public function __construct(
         private TranslatorInterface $translator
@@ -16,24 +18,18 @@ class ChoiceVueType extends AbstractVueType
     {
     }
 
-    public static function supports(FormView $formView): bool
-    {
-        return in_array('choice', $formView->vars['block_prefixes']);
-    }
-
-    public function buildView(FormView $view, VueData $data)
+    public function buildVueData(FormView $view, VueData $data, array $options)
     {
         $data['expanded'] = $view->vars['expanded'];
         $data['multiple'] = $view->vars['multiple'];
         $data['choices'] = $this->getChoices($view->vars['choices'], $view);
-        $data['placeholder'] = $view->vars['placeholder'] ?? $this->translator->trans($view->vars['placeholder'], [], $view->vars['translation_domain']) ;
+        $data['placeholder'] = $view->vars['placeholder'] ? $this->translator->trans($view->vars['placeholder'], [], $view->vars['translation_domain']) : null ;
         $data['placeholderInChoices'] = $view->vars['placeholder_in_choices'];
         $data['preferredChoices'] = $view->vars['preferred_choices'];
         $data['separator'] = $view->vars['separator'];
-        $data['component'] = 'form-choice';
     }
 
-    private function getChoices($choices, FormView $view)
+    private function getChoices($choices, FormView $view): array
     {
         $data = [];
         /** @var ChoiceView $choice */
@@ -53,5 +49,17 @@ class ChoiceVueType extends AbstractVueType
             }
         }
         return $data;
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'component' => 'form-choice',
+        ]);
+    }
+
+    public static function getExtendedTypes(): iterable
+    {
+        return [ChoiceType::class];
     }
 }

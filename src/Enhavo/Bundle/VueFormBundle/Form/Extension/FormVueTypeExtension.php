@@ -1,28 +1,25 @@
 <?php
 
-namespace Enhavo\Bundle\VueFormBundle\Form\VueType;
+namespace Enhavo\Bundle\VueFormBundle\Form\Extension;
 
-use Enhavo\Bundle\VueFormBundle\Form\AbstractVueType;
+use Enhavo\Bundle\VueFormBundle\Form\AbstractVueTypeExtension;
 use Enhavo\Bundle\VueFormBundle\Form\VueData;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class FormVueType extends AbstractVueType
+class FormVueTypeExtension extends AbstractVueTypeExtension
 {
     public function __construct(
         private TranslatorInterface $translator,
-        private NormalizerInterface $normalizer
+        private NormalizerInterface $normalizer,
     )
     {
     }
 
-    public static function supports(FormView $formView): bool
-    {
-        return in_array('form', $formView->vars['block_prefixes']);
-    }
-
-    public function buildView(FormView $view, VueData $data)
+    public function buildVueData(FormView $view, VueData $data, array $options)
     {
         $data['name'] = $view->vars['name'];
         $data['value'] = $this->normalizer->normalize($view->vars['value'], null, ['groups' => ['vue-form']]);
@@ -34,11 +31,6 @@ class FormVueType extends AbstractVueType
         $data['help'] = $view->vars['help'];
         $data['helpAttr'] = $view->vars['help_attr'];
         $data['helpHtml'] = $view->vars['help_html'];
-        $data['rowComponent'] = 'form-row';
-        $data['component'] = null;
-        if (!isset($data['componentModel'])) {
-            $data['componentModel'] = null;
-        }
 
         $errors = [];
         foreach ($view->vars['errors'] as $error) {
@@ -47,5 +39,17 @@ class FormVueType extends AbstractVueType
             ];
         }
         $data['errors'] = $errors;
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'row_component' => 'form-row',
+        ]);
+    }
+
+    public static function getExtendedTypes(): iterable
+    {
+        return [FormType::class];
     }
 }

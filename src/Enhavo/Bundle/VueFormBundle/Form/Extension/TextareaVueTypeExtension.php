@@ -1,20 +1,22 @@
 <?php
 
-namespace Enhavo\Bundle\VueFormBundle\Form\VueType;
+namespace Enhavo\Bundle\VueFormBundle\Form\Extension;
 
-use Enhavo\Bundle\VueFormBundle\Form\AbstractVueType;
-use Enhavo\Bundle\VueFormBundle\Form\VueData;
-use Symfony\Component\Form\FormView;
+use Enhavo\Bundle\VueFormBundle\Form\AbstractVueTypeExtension;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TextareaVueType extends AbstractVueType
+class TextareaVueTypeExtension extends AbstractVueTypeExtension
 {
-    public static function supports(FormView $formView): bool
+    public function configureOptions(OptionsResolver $resolver)
     {
-        return in_array('textarea', $formView->vars['block_prefixes']);
+        $resolver->setDefaults([
+            'component' => 'form-textarea',
+        ]);
     }
 
-    public function buildView(FormView $view, VueData $data)
+    public static function getExtendedTypes(): iterable
     {
-        $data['component'] = 'form-textarea';
+        return [TextareaType::class];
     }
 }

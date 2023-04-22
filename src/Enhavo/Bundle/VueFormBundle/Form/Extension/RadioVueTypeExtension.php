@@ -1,22 +1,30 @@
 <?php
 
-namespace Enhavo\Bundle\VueFormBundle\Form\VueType;
+namespace Enhavo\Bundle\VueFormBundle\Form\Extension;
 
-use Enhavo\Bundle\VueFormBundle\Form\AbstractVueType;
+use Enhavo\Bundle\VueFormBundle\Form\AbstractVueTypeExtension;
 use Enhavo\Bundle\VueFormBundle\Form\VueData;
+use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class RadioVueType extends AbstractVueType
+class RadioVueTypeExtension extends AbstractVueTypeExtension
 {
-    public static function supports(FormView $formView): bool
+    public function buildVueData(FormView $view, VueData $data, array $options)
     {
-        return in_array('radio', $formView->vars['block_prefixes']);
+        $data['checked'] = $view->vars['checked'];
     }
 
-    public function buildView(FormView $view, VueData $data)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $data['component'] = 'form-radio';
-        $data['componentModel'] = 'FormRadio';
-        $data['checked'] = $view->vars['checked'];
+        $resolver->setDefaults([
+            'component' => 'form-radio',
+            'component_model' => 'FormRadio',
+        ]);
+    }
+
+    public static function getExtendedTypes(): iterable
+    {
+        return [RadioType::class];
     }
 }

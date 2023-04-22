@@ -1,13 +1,15 @@
 <?php
 
-namespace Enhavo\Bundle\VueFormBundle\Form\VueType;
+namespace Enhavo\Bundle\VueFormBundle\Form\Extension;
 
-use Enhavo\Bundle\VueFormBundle\Form\AbstractVueType;
+use Enhavo\Bundle\VueFormBundle\Form\AbstractVueTypeExtension;
 use Enhavo\Bundle\VueFormBundle\Form\VueData;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormView;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class BaseVueType extends AbstractVueType
+class BaseVueTypeExtension extends AbstractVueTypeExtension
 {
     public function __construct(
         private TranslatorInterface $translator,
@@ -15,18 +17,7 @@ class BaseVueType extends AbstractVueType
     {
     }
 
-    public static function supports(FormView $formView): bool
-    {
-        if (in_array('button', $formView->vars['block_prefixes'])) {
-            return true;
-        } else if (in_array('form', $formView->vars['block_prefixes'])) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public function buildView(FormView $view, VueData $data)
+    public function buildVueData(FormView $view, VueData $data, array $options)
     {
         $data['disabled'] = $view->vars['disabled'];
 
@@ -48,5 +39,10 @@ class BaseVueType extends AbstractVueType
         }
 
         $data['attr'] = $view->vars['attr'];
+    }
+
+    public static function getExtendedTypes(): iterable
+    {
+        return [FormType::class, ButtonType::class];
     }
 }

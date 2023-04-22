@@ -1,13 +1,16 @@
 <?php
 
-namespace Enhavo\Bundle\FormBundle\Form\VueType;
+namespace Enhavo\Bundle\FormBundle\Form\Extension;
 
-use Enhavo\Bundle\VueFormBundle\Form\AbstractVueType;
+use Enhavo\Bundle\FormBundle\Form\Type\ListType;
+use Enhavo\Bundle\VueFormBundle\Form\AbstractVueTypeExtension;
 use Enhavo\Bundle\VueFormBundle\Form\VueData;
 use Enhavo\Bundle\VueFormBundle\Form\VueForm;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ListVueType extends AbstractVueType
+class ListVueTypeExtension extends AbstractVueTypeExtension
 {
     public function __construct(
         private VueForm $vueForm
@@ -15,12 +18,13 @@ class ListVueType extends AbstractVueType
     {
     }
 
-    public static function supports(FormView $formView): bool
+    public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        return in_array('enhavo_list', $formView->vars['block_prefixes']);
+        parent::buildView($view, $form, $options);
+        $this->getVueData($view)->set('itemComponent', $options['item_component']);
     }
 
-    public function buildView(FormView $view, VueData $data)
+    public function buildVueData(FormView $view, VueData $data, array $options)
     {
         $data['border'] = $view->vars['border'];
         $data['sortable'] = $view->vars['sortable'];
@@ -32,17 +36,20 @@ class ListVueType extends AbstractVueType
         $data['index'] = null;
         $data['draggableGroup'] = $view->vars['draggable_group'];
         $data['draggableHandle'] = $view->vars['draggable_handle'];
-
-
-        $data['component'] = 'form-list';
-        $data['componentModel'] = 'ListForm';
-
-        $data['itemComponent'] = 'form-list-item';
         $data['onDelete'] = null;
     }
 
-    public function finishView(FormView $view, VueData $data)
+    public function configureOptions(OptionsResolver $resolver)
     {
+        $resolver->setDefaults([
+            'component' => 'form-list',
+            'component_model' => 'ListForm',
+            'item_component' => 'form-list-item',
+        ]);
+    }
 
+    public static function getExtendedTypes(): iterable
+    {
+        return [ListType::class];
     }
 }

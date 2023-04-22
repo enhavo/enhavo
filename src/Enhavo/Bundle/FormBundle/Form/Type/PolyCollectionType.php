@@ -24,16 +24,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class PolyCollectionType extends AbstractType
 {
-    /** @var PrototypeManager */
-    private $prototypeManager;
-
-    /**
-     * PolyCollectionType constructor.
-     * @param PrototypeManager $prototypeManager
-     */
-    public function __construct(PrototypeManager $prototypeManager)
+    public function __construct(
+        private PrototypeManager $prototypeManager
+    )
     {
-        $this->prototypeManager = $prototypeManager;
     }
 
     /**

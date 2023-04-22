@@ -1,21 +1,29 @@
 <?php
 
-namespace Enhavo\Bundle\VueFormBundle\Form\VueType;
+namespace Enhavo\Bundle\VueFormBundle\Form\Extension;
 
-use Enhavo\Bundle\VueFormBundle\Form\AbstractVueType;
+use Enhavo\Bundle\VueFormBundle\Form\AbstractVueTypeExtension;
 use Enhavo\Bundle\VueFormBundle\Form\VueData;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TextVueType extends AbstractVueType
+class TextVueTypeExtension extends AbstractVueTypeExtension
 {
-    public static function supports(FormView $formView): bool
+    public function buildVueData(FormView $view, VueData $data, array $options)
     {
-        return in_array('text', $formView->vars['block_prefixes']);
+        $data['type'] = 'text';
     }
 
-    public function buildView(FormView $view, VueData $data)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $data['component'] = 'form-simple';
-        $data['type'] = 'text';
+        $resolver->setDefaults([
+            'component' => 'form-simple',
+        ]);
+    }
+
+    public static function getExtendedTypes(): iterable
+    {
+        return [TextType::class];
     }
 }

@@ -1,21 +1,23 @@
 <?php
 
-namespace Enhavo\Bundle\FormBundle\Form\VueType;
+namespace Enhavo\Bundle\FormBundle\Form\Extension;
 
-use Enhavo\Bundle\VueFormBundle\Form\AbstractVueType;
-use Enhavo\Bundle\VueFormBundle\Form\VueData;
-use Symfony\Component\Form\FormView;
+use Enhavo\Bundle\FormBundle\Form\Type\WysiwygType;
+use Enhavo\Bundle\VueFormBundle\Form\AbstractVueTypeExtension;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class WysiwygVueType extends AbstractVueType
+class WysiwygVueTypeExtension extends AbstractVueTypeExtension
 {
-    public static function supports(FormView $formView): bool
+    public function configureOptions(OptionsResolver $resolver)
     {
-        return in_array('enhavo_wysiwyg', $formView->vars['block_prefixes']);
+        $resolver->setDefaults([
+            'component' => 'form-wysiwyg',
+            'component_model' => 'WysiwygForm',
+        ]);
     }
 
-    public function buildView(FormView $view, VueData $data)
+    public static function getExtendedTypes(): iterable
     {
-        $data['component'] = 'form-wysiwyg';
-        $data['componentModel'] = 'WysiwygForm';
+        return [WysiwygType::class];
     }
 }

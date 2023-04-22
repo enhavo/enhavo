@@ -1,22 +1,30 @@
 <?php
 
-namespace Enhavo\Bundle\VueFormBundle\Form\VueType;
+namespace Enhavo\Bundle\VueFormBundle\Form\Extension;
 
-use Enhavo\Bundle\VueFormBundle\Form\AbstractVueType;
+use Enhavo\Bundle\VueFormBundle\Form\AbstractVueTypeExtension;
 use Enhavo\Bundle\VueFormBundle\Form\VueData;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class HiddenVueType extends AbstractVueType
+class HiddenVueTypeExtension extends AbstractVueTypeExtension
 {
-    public static function supports(FormView $formView): bool
+    public function buildVueData(FormView $view, VueData $data, array $options)
     {
-        return in_array('hidden', $formView->vars['block_prefixes']);
+        $data['type'] = 'hidden';
     }
 
-    public function buildView(FormView $view, VueData $data)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $data['rowComponent'] = 'form-hidden-row';
-        $data['component'] = 'form-simple';
-        $data['type'] = 'hidden';
+        $resolver->setDefaults([
+            'component' => 'form-simple',
+            'row_component' => 'form-hidden-row',
+        ]);
+    }
+
+    public static function getExtendedTypes(): iterable
+    {
+        return [HiddenType::class];
     }
 }

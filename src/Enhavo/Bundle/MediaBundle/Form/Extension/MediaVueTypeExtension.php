@@ -1,13 +1,15 @@
 <?php
 
-namespace Enhavo\Bundle\MediaBundle\Form\VueType;
+namespace Enhavo\Bundle\MediaBundle\Form\Extension;
 
+use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Enhavo\Bundle\MediaBundle\Media\MediaManager;
-use Enhavo\Bundle\VueFormBundle\Form\AbstractVueType;
+use Enhavo\Bundle\VueFormBundle\Form\AbstractVueTypeExtension;
 use Enhavo\Bundle\VueFormBundle\Form\VueData;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class MediaVueType extends AbstractVueType
+class MediaVueTypeExtension extends AbstractVueTypeExtension
 {
     public function __construct(
         private MediaManager $mediaManager,
@@ -15,12 +17,7 @@ class MediaVueType extends AbstractVueType
     {
     }
 
-    public static function supports(FormView $formView): bool
-    {
-        return in_array('enhavo_media', $formView->vars['block_prefixes']);
-    }
-
-    public function buildView(FormView $view, VueData $data)
+    public function buildVueData(FormView $view, VueData $data, array $options)
     {
         $data['upload'] = $view->vars['upload'];
         $data['multiple'] = $view->vars['multiple'];
@@ -28,14 +25,19 @@ class MediaVueType extends AbstractVueType
         $data['buttons'] = null;
         $data['maxUploadSize'] = $this->mediaManager->getMaxUploadSize();
         $data['editable'] = true;
-
-        $data['component'] = $data['component'] == 'form-list' ? 'form-media' : $data['component'];
-        $data['itemComponent'] = $data['itemComponent'] == 'form-list-item' ? 'form-media-item' : $data['itemComponent'];
-        $data['componentModel'] = $data['componentModel'] == 'ListForm' ? 'MediaForm' : $data['componentModel'];
     }
 
-    public function finishView(FormView $view, VueData $data)
+    public function configureOptions(OptionsResolver $resolver)
     {
+        $resolver->setDefaults([
+            'component' => 'form-media',
+            'component_model' => 'MediaForm',
+            'item_component' => 'form-media-item',
+        ]);
+    }
 
+    public static function getExtendedTypes(): iterable
+    {
+        return [MediaType::class];
     }
 }
