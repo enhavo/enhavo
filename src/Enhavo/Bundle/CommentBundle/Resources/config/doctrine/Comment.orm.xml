@@ -18,7 +18,6 @@
         <many-to-one field="thread" target-entity="Enhavo\Bundle\CommentBundle\Model\ThreadInterface" fetch="EAGER" inversed-by="comments">
             <cascade>
                 <cascade-persist />
-                <cascade-remove />
                 <cascade-refresh />
             </cascade>
         </many-to-one>
