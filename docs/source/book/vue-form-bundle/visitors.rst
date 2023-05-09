@@ -41,7 +41,7 @@ and apply the visitor to a predefined string.
 
   formFactory.addVisitor(new FormVisitor(
       (form: Form) => {
-          return form.componentVisitors.indexOf('custom_visitor') >= 0;
+          return form.componentVisitors.indexOf('custom_visitor') >= 0; // you can also check for a name, component or value
       },
       (form: Form) => {
           // do something
@@ -63,4 +63,4 @@ Further Reading
 ---------------
 
 -  :doc:`/guides/vue-form/how-to-customize-form`
-
+-  :doc:`/book/vue-form-bundle/listener`

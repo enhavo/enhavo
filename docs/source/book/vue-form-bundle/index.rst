@@ -7,4 +7,5 @@ VueFormBundle
     installation
     how-it-works
     visitors
+    listener
     configuration

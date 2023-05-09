@@ -1,14 +1,14 @@
 How it works
 =============
 
-First we have to discuss, what is the problem with Symfony forms and vue.js (or any other javascript based render library).
+First we have to discuss, what is the problem with Symfony forms and vue.js (or any other javascript based rendering library).
 In Symfony we have a quite mighty form api which help us to translate a model into a form with view data,
-which can be used by the twig engine to render a html form. On the other hand the form api
+which can be used with the twig engine to render a html form. On the other hand the form api
 can use the input from a request to translate it back to our model with changed data.
 
 .. image:: /_static/image/vue-form-workflow.png
 
-If we use a javascript render library like vue, we will generate the html code with this library on the client side,
+If we use a javascript rendering library like vue, we will generate the html code with this library on the client side,
 so we are not able to use the provided twig functions by symfony. We have to replace this part with our own solution.
 This bundle and the corresponding js package provide a solution and give us a small api to extend the behavior
 for your own forms.
@@ -18,15 +18,10 @@ Let's have a closer look into how symfony is handle the things with twig and how
 .. image:: /_static/image/vue-form-view-workflow.png
 
 On the top of the above image you can see the Symfony workflow. The ``Form`` will create a ``FormView`` which will be used by twig.
-I guess you are already familiar with this. The ``FormView`` contains all necessary data to render the form. For our workflow
-you can see below, we use the view data as input and normalize them to data we need for our vue application.
-
-.. note::
-
-    Why we don't just use the symfony serializer? In the normalize step we also have to add some additional data, which is not provided by the ``FormView``
+The ``FormView`` contains all necessary data to render the form. For our workflow
+we will use the ``FormView`` and create our vue data out of it. The data is normalized array, that can be passed to the client.
 
 Here is a small code example to show how easy it is to use the ``VueForm`` inside a controller.
-
 
 .. code-block:: php
 
@@ -55,38 +50,26 @@ Here is a small code example to show how easy it is to use the ``VueForm`` insid
 
 
 
-VueType
+FormTypeExtension
 -------
 
-A vue type helps us to translate the data from the ``FormView`` into data we need for our vue application.
+We use ``FormTypeExtensions`` to enrich our ``FormView`` with data we need for our vue application.
 
 .. code-block:: php
 
     namespace Enhavo\Bundle\VueFormBundle\Form\VueType;
 
-    use Enhavo\Bundle\VueFormBundle\Form\AbstractVueType;
+    use Enhavo\Bundle\VueFormBundle\Form\AbstractVueTypeExtension;
     use Enhavo\Bundle\VueFormBundle\Form\VueData;
     use Symfony\Component\Form\FormView;
 
-    class TextVueType extends AbstractVueType
+    class TextVueTypeExtension extends AbstractVueTypeExtension
     {
-        public static function supports(FormView $formView): bool
-        {
-            return in_array('text', $formView->vars['block_prefixes']);
-        }
-
-        public function buildView(FormView $view, VueData $data)
+        public function buildVueData(FormView $view, VueData $data, array $options)
         {
             $data['component'] = 'form-simple';
         }
-
-        public function finishView(FormView $view, VueData $data)
-        {
-
-        }
     }
-
-This ``VueType`` reacts only if a ``text`` block prefix is used and add the component which should be used later.
 
 .. note::
 
@@ -125,9 +108,7 @@ On the client side we can use the output from our controller to render the view 
 The VueForm plugin provide components similar to the twig function from Symfony.
 
 
-.. code-block:: vue
-
-  // ./component/Application
+.. code-block:: html
 
   <template>
       <!-- like {{ form(form) }} in twig -->
