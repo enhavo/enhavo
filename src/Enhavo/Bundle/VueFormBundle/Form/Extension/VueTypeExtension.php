@@ -25,6 +25,8 @@ class VueTypeExtension extends AbstractVueTypeExtension
         $data->set('componentModel', $options['component_model']);
         $data->set('componentVisitors', is_string($options['component_visitors']) ? [$options['component_visitors']] : $options['component_visitors']);
         $data->set('rowComponent', $options['row_component']);
+
+        $data->set('visible', true);
     }
 
     public function configureOptions(OptionsResolver $resolver)
