@@ -30,8 +30,8 @@ class FileType extends AbstractType
 {
     public function __construct(
         private FormFactory $formFactory,
-        private RepositoryInterface$repository,
-        private ExtensionManager$extensionManager,
+        private RepositoryInterface $repository,
+        private ExtensionManager $extensionManager,
         private NormalizerInterface $serializer,
     )
     {

@@ -5,6 +5,7 @@ import {ChangeEvent} from "@enhavo/vue-form/event/ChangeEvent";
 export class Form
 {
     element: HTMLElement;
+    visible: boolean;
     parent: Form;
     children: Form[] = [];
     value: string;
@@ -23,7 +24,6 @@ export class Form
     required: boolean;
     disabled: boolean;
     attr: object;
-    rendered: boolean;
     method: string = null;
     action: string = null;
     visitors: FormVisitorInterface[] = [];

@@ -21,26 +21,11 @@ use Symfony\Component\Form\FormInterface;
 
 class MediaType extends AbstractType
 {
-    /**
-     * @var ExtensionManager
-     */
-    private $extensionManager;
-
-    /**
-     * @var array
-     */
-    private $formConfiguration;
-
-    /**
-     * MediaType constructor.
-     *
-     * @param ExtensionManager $extensionManager
-     * @param array $formConfiguration
-     */
-    public function __construct(ExtensionManager $extensionManager, array $formConfiguration)
+    public function __construct(
+        private ExtensionManager $extensionManager,
+        private array $formConfiguration,
+    )
     {
-        $this->extensionManager = $extensionManager;
-        $this->formConfiguration = $formConfiguration;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)

@@ -2,29 +2,38 @@
 
 namespace Enhavo\Bundle\VueFormBundle\Tests\Form;
 
+use Enhavo\Bundle\VueFormBundle\Form\Extension\VueTypeExtension;
+use Enhavo\Bundle\VueFormBundle\Form\VueData;
+use Enhavo\Bundle\VueFormBundle\Form\VueDataHelperTrait;
 use Enhavo\Bundle\VueFormBundle\Form\VueForm;
-use Enhavo\Bundle\VueFormBundle\Form\VueType\FormVueType;
-use Enhavo\Bundle\VueFormBundle\Form\VueType\TextVueType;
-use PHPUnit\Framework\MockObject\MockObject;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Enhavo\Bundle\VueFormBundle\Form\VueType\FormVueTypeExtension;
+use Enhavo\Bundle\VueFormBundle\Form\VueType\TextVueTypeExtension;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\Test\TypeTestCase;
 
 class VueFormTest extends TypeTestCase
 {
+    use VueDataHelperTrait;
+
+    protected function getTypeExtensions()
+    {
+        return [
+            new VueTypeExtension()
+        ];
+    }
+
     public function createInstance(VueFormDependencies $dependencies)
     {
         $instance = new VueForm();
-        $instance->setContainer($dependencies->container);
         return $instance;
     }
 
     public function createDependencies()
     {
         $dependencies = new VueFormDependencies;
-        $dependencies->container = $this->getMockBuilder(ContainerInterface::class)->getMock();
         return $dependencies;
     }
 
@@ -39,6 +48,24 @@ class VueFormTest extends TypeTestCase
 
         $this->assertCount(2, $data['children']);
         $this->assertTrue($data['root']);
+    }
+
+    public function testNormalizeData()
+    {
+        $dependencies = $this->createDependencies();
+        $vueForm = $this->createInstance($dependencies);
+
+        $form = $this->factory->create(TestType::class);
+        $viewData = $form->createView();
+
+        $this->getVueData($viewData)->addNormalizer(function (FormView $formView, VueData $vueData) {
+            $this->assertCount(2, $vueData->getChildren());
+            $vueData['newKey'] = 'newValue';
+        });
+
+        $data = $vueForm->createData($viewData);
+
+        $this->assertEquals('newValue', $data['newKey']);
     }
 
     public function testSubmitData()
@@ -80,8 +107,7 @@ class VueFormTest extends TypeTestCase
 
 class VueFormDependencies
 {
-    /** @var ContainerInterface|MockObject */
-    public $container;
+
 }
 
 class TestType extends AbstractType

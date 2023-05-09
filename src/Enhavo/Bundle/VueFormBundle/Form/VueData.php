@@ -1,120 +1,61 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-08
- * Time: 19:02
- */
 
 namespace Enhavo\Bundle\VueFormBundle\Form;
 
 use Symfony\Component\Form\FormView;
 
-class VueData implements \IteratorAggregate, \Countable, \ArrayAccess
+final class VueData implements \IteratorAggregate, \Countable, \ArrayAccess
 {
-    protected ?VueData $parent = null;
+    private ?VueData $parent = null;
+    private array $normalizer = [];
+    private array $children = [];
 
     public function __construct(
-        protected array $data = [],
-        protected ?FormView $formView = null,
-        protected array $children = []
+        private FormView $formView
     )
     {
-
     }
 
-    /**
-     * Returns the parameter keys.
-     *
-     * @return array An array of parameter keys
-     */
     public function keys()
     {
         return array_keys($this->data);
     }
 
-    /**
-     * Replaces the current parameters by a new set.
-     */
     public function replace(array $parameters = [])
     {
         $this->data = $parameters;
     }
 
-    /**
-     * Adds parameters.
-     */
     public function add(array $parameters = [])
     {
         $this->data = array_replace($this->data, $parameters);
     }
 
-    /**
-     * Returns a parameter by name.
-     *
-     * @param string $key     The key
-     * @param mixed  $default The default value if the parameter key does not exist
-     *
-     * @return mixed
-     */
     public function get($key, $default = null)
     {
         return \array_key_exists($key, $this->data) ? $this->data[$key] : $default;
     }
 
-    /**
-     * Sets a parameter by name.
-     *
-     * @param string $key   The key
-     * @param mixed  $value The value
-     */
     public function set($key, $value)
     {
         $this->data[$key] = $value;
     }
 
-    /**
-     * Returns true if the parameter is defined.
-     *
-     * @param string $key The key
-     *
-     * @return bool true if the parameter exists, false otherwise
-     */
     public function has($key)
     {
         return \array_key_exists($key, $this->data);
     }
 
-    /**
-     * Removes a parameter.
-     *
-     * @param string $key The key
-     */
     public function remove($key)
     {
         unset($this->data[$key]);
     }
 
-    public function normalize(): array
-    {
-        return $this->data;
-    }
-
-    /**
-     * Returns an iterator for parameters.
-     *
-     * @return \ArrayIterator An \ArrayIterator instance
-     */
     public function getIterator()
     {
         return new \ArrayIterator($this->data);
     }
 
-    /**
-     * Returns the number of parameters.
-     *
-     * @return int The number of parameters
-     */
     public function count()
     {
         return \count($this->data);
@@ -165,23 +106,14 @@ class VueData implements \IteratorAggregate, \Countable, \ArrayAccess
         return $this->formView;
     }
 
-    public function setFormView(?FormView $formView): void
-    {
-        $this->formView = $formView;
-    }
-
     public function getChildren(): array
     {
         return $this->children;
     }
 
-    public function setChildren(array $children): void
-    {
-        $this->children = $children;
-    }
-
     public function addChild($key, VueData $data)
     {
+        $data->setParent($this);
         $this->children[$key] = $data;
     }
 
@@ -198,5 +130,16 @@ class VueData implements \IteratorAggregate, \Countable, \ArrayAccess
     public function setParent(?VueData $parent): void
     {
         $this->parent = $parent;
+    }
+
+    public function addNormalizer(callable $callback)
+    {
+        $this->normalizer[] = $callback;
+    }
+
+    /** @return callable[] */
+    public function getNormalizer(): array
+    {
+        return $this->normalizer;
     }
 }

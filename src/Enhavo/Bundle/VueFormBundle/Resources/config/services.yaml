@@ -1,62 +1,56 @@
 services:
     Enhavo\Bundle\VueFormBundle\Form\VueForm:
         public: true
-        calls:
-            - ['setContainer', ['@service_container']]
 
     Enhavo\Bundle\VueFormBundle\Form\Extension\VueTypeExtension:
         arguments:
             - '@Enhavo\Bundle\VueFormBundle\Form\VueForm'
         tags:
-            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
+            - { name: form.type_extension, priority: 300 }
 
-    Enhavo\Bundle\VueFormBundle\Form\VueType\BaseVueType:
+    Enhavo\Bundle\VueFormBundle\Form\Extension\BaseVueTypeExtension:
         arguments:
             - '@translator'
         tags:
-            - { name: 'vue.type', priority: 200 }
+            - { name: 'form.type_extension', priority: 200 }
 
-    Enhavo\Bundle\VueFormBundle\Form\VueType\ButtonVueType:
+    Enhavo\Bundle\VueFormBundle\Form\Extension\ButtonVueTypeExtension:
         tags:
-            - { name: 'vue.type', priority: 190 }
+            - { name: 'form.type_extension', priority: 190 }
 
-    Enhavo\Bundle\VueFormBundle\Form\VueType\FormVueType:
+    Enhavo\Bundle\VueFormBundle\Form\Extension\FormVueTypeExtension:
         arguments:
             - '@translator'
             - '@serializer'
         tags:
-            - { name: 'vue.type', priority: 150 }
+            - { name: 'form.type_extension', priority: 150 }
 
-    Enhavo\Bundle\VueFormBundle\Form\VueType\RadioVueType:
+    Enhavo\Bundle\VueFormBundle\Form\Extension\RadioVueTypeExtension:
         tags:
-            - { name: 'vue.type', priority: 150 }
+            - { name: 'form.type_extension', priority: 150 }
 
-    Enhavo\Bundle\VueFormBundle\Form\VueType\CheckboxVueType:
+    Enhavo\Bundle\VueFormBundle\Form\Extension\CheckboxVueTypeExtension:
         tags:
-            - { name: 'vue.type', priority: 110 }
+            - { name: 'form.type_extension', priority: 110 }
 
-    Enhavo\Bundle\VueFormBundle\Form\VueType\TextVueType:
+    Enhavo\Bundle\VueFormBundle\Form\Extension\TextVueTypeExtension:
         tags:
-            - { name: 'vue.type', priority: 110 }
+            - { name: 'form.type_extension', priority: 110 }
 
-    Enhavo\Bundle\VueFormBundle\Form\VueType\HiddenVueType:
+    Enhavo\Bundle\VueFormBundle\Form\Extension\HiddenVueTypeExtension:
         tags:
-            - { name: 'vue.type', priority: 110 }
+            - { name: 'form.type_extension', priority: 110 }
 
-    Enhavo\Bundle\VueFormBundle\Form\VueType\PasswordVueType:
+    Enhavo\Bundle\VueFormBundle\Form\Extension\PasswordVueTypeExtension:
         tags:
-            - { name: 'vue.type', priority: 110 }
+            - { name: 'form.type_extension', priority: 110 }
 
-    Enhavo\Bundle\VueFormBundle\Form\VueType\TextareaVueType:
+    Enhavo\Bundle\VueFormBundle\Form\Extension\TextareaVueTypeExtension:
         tags:
-            - { name: 'vue.type', priority: 110 }
+            - { name: 'form.type_extension', priority: 110 }
 
-    Enhavo\Bundle\VueFormBundle\Form\VueType\ChoiceVueType:
+    Enhavo\Bundle\VueFormBundle\Form\Extension\ChoiceVueTypeExtension:
         arguments:
             - '@translator'
         tags:
-            - { name: 'vue.type', priority: 110 }
-
-    Enhavo\Bundle\VueFormBundle\Form\VueType\ComponentVueType:
-        tags:
-            - { name: 'vue.type', priority: 10 }
+            - { name: 'form.type_extension', priority: 110 }

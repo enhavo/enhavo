@@ -2,16 +2,30 @@
 
 namespace Enhavo\Bundle\VueFormBundle\Form;
 
+use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 
-abstract class AbstractVueType implements VueTypeInterface
+abstract class AbstractVueType extends AbstractTypeExtension
 {
-    public function buildView(FormView $view, VueData $data)
+    use VueDataHelperTrait;
+
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        $this->buildVueData($view, $this->getVueData($view), $options);
+    }
+
+    public function finishView(FormView $view, FormInterface $form, array $options)
+    {
+        $this->finishVueData($view, $this->getVueData($view), $options);
+    }
+
+    public function buildVueData(FormView $view, VueData $data, array $options)
     {
 
     }
 
-    public function finishView(FormView $view, VueData $data)
+    public function finishVueData(FormView $view, VueData $data, array $options)
     {
 
     }
