@@ -31,6 +31,14 @@ pull_request_rules:
                 branches:
                     - "0.11"
 
+    -   name: backport 0.12
+        conditions:
+            - label=backport-0.12
+        actions:
+            backport:
+                branches:
+                    - "0.12"
+
     -   name: delete head branch after merge
         conditions:
             - merged
