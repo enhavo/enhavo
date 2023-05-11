@@ -40,10 +40,7 @@ class FileController extends ResourceController
 
         $response = $this->getResponse($file);
 
-        $maxAge = $this->getMaxAge();
-        if($maxAge) {
-            $this->setMaxAge($response, $maxAge);
-        }
+        $this->handleCache($response);
 
         return $response;
     }
@@ -115,10 +112,7 @@ class FileController extends ResourceController
 
         $response = $this->getResponse($formatFile);
 
-        $maxAge = $this->getMaxAge();
-        if($maxAge) {
-            $this->setMaxAge($response, $maxAge);
-        }
+        $this->handleCache($response);
 
         return $response;
     }
@@ -151,6 +145,20 @@ class FileController extends ResourceController
         $response->headers->set('Content-Length', $fileSize);
 
         return $response;
+    }
+
+    private function handleCache(Response $response)
+    {
+        if ($response instanceof StreamedResponse) {
+            // StreamedResponse will return an empty response if cached via http cache, so we prevent caching
+            $response->setPrivate();
+            return;
+        }
+
+        $maxAge = $this->getMaxAge();
+        if($maxAge) {
+            $this->setMaxAge($response, $maxAge);
+        }
     }
 
     private function getMaxAge()
