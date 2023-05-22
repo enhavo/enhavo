@@ -2,11 +2,11 @@
 
 namespace Enhavo\Bundle\VueFormBundle\Form;
 
-use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 
-abstract class AbstractVueType extends AbstractTypeExtension
+abstract class AbstractVueType extends AbstractType
 {
     use VueDataHelperTrait;
 

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Form\Type\Form\ItemsNestedType;
 use App\Form\Type\Form\ItemsType;
 use App\Form\Type\Form\ItemsWysiwygType;
+use Enhavo\Bundle\FormBundle\Form\Type\ConditionalType;
 use Enhavo\Bundle\FormBundle\Form\Type\ListType;
 use Enhavo\Bundle\FormBundle\Form\Type\PolyCollectionType;
 use Enhavo\Bundle\FormBundle\Form\Type\WysiwygType;
@@ -17,6 +18,9 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -344,5 +348,38 @@ class FormController extends AbstractController
             ->getForm();
 
         return $this->handleForm($form, $request);
+    }
+
+    #[Route('/conditional', name: "app_form_poly_collection")]
+    public function conditionalAction(Request $request)
+    {
+        $form = $this->createFormBuilder(null)
+            ->add('type', ChoiceType::class, [
+                'choices' => [
+                    'Text' => 'text',
+                    'Date' => 'date',
+                ],
+                'component_visitors' => ['type_conditional'],
+            ])
+            ->add('field', ConditionalType::class, [
+                'entry_types' => [
+                    'text' => TextType::class,
+                    'date' => DateType::class,
+                ],
+                'entry_types_options' => [
+                    'text' => ['label' => 'I am a label'],
+                    'date' => ['label' => 'Type in the date'],
+                ],
+                'entry_type_resolver' => function($data, Form $form) {
+                    return $form->getParent()?->get('type')?->getData();
+                },
+            ])
+            ->add('button', SubmitType::class, [
+                'label' => 'save'
+            ])
+            ->setMethod('POST')
+            ->getForm();
+
+        return $this->handleForm($form, $request, theme: true);
     }
 }
