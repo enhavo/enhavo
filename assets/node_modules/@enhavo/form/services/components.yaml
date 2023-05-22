@@ -28,6 +28,14 @@ services:
         tags:
             - { name: form.model }
 
+    '@enhavo/form/form/model/ConditionalForm':
+        chunk: 'vue'
+        import: ConditionalForm
+        arguments:
+            - '@enhavo/vue-form/form/FormFactory'
+        tags:
+            - { name: form.model }
+
     '@enhavo/form/components/FormListComponent':
         chunk: 'vue'
         static: true
@@ -57,3 +65,9 @@ services:
         static: true
         tags:
             - { name: vue.component, component: 'form-wysiwyg' }
+
+    '@enhavo/form/components/FormConditionalComponent':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'form-conditional' }

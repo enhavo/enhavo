@@ -10,6 +10,7 @@ import {Form} from "@enhavo/vue-form/model/Form";
 import {ListForm} from "@enhavo/form/form/model/ListForm";
 import {FormEventDispatcher} from "@enhavo/vue-form/form/FormEventDispatcher";
 import {MoveEvent} from "@enhavo/form/form/event/MoveEvent";
+import {ConditionalForm} from "@enhavo/form/form/model/ConditionalForm";
 
 export default class extends Controller
 {
@@ -56,6 +57,14 @@ export default class extends Controller
                 formEventDispatcher.addListener('move', (event: MoveEvent) => {
                     console.log(event.form)
                 });
+            }));
+            theme.addVisitor(new FormVisitor((form: Form) => {
+                return form.componentVisitors.indexOf('type_conditional') >= 0;
+            }, (form: ListForm) => {
+                formEventDispatcher.addListener('change', (event: MoveEvent) => {
+                    let targetForm = <ConditionalForm>event.form.parent.get('field');
+                    targetForm.setEntry(event.form.value);
+                }, form);
             }));
             return theme;
         }
