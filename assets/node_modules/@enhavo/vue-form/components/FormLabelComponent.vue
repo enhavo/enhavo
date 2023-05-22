@@ -3,7 +3,7 @@
         v-if="form.label !== false"
         :for="getFor()"
         :is="getComponent()"
-        :style="getStyle()"
+        v-show="form.visible"
         ref="element">
         {{ getLabel() }}
     </component>
@@ -55,13 +55,6 @@ export default class extends Vue
         let label = this.form.labelFormat.replace('%id%', this.form.id);
         label = label.replace('%name%', this.form.name);
         return label;
-    }
-
-    getStyle()
-    {
-        if (this.form.visible === false) {
-            return 'display: none';
-        }
     }
 
     updated()

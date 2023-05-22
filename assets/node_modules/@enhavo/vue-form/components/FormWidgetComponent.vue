@@ -1,6 +1,6 @@
 <template>
-    <form-compound-widget v-if="form.compound && !this.form.component" :form="form" :style="getStyle()" />
-    <component v-else :is="getComponent()" :form="form" :style="getStyle()" />
+    <form-compound-widget v-if="form.compound && !this.form.component" :form="form" v-show="form.visible" />
+    <component v-else :is="getComponent()" :form="form" v-show="form.visible" />
 </template>
 
 <script lang="ts">
@@ -20,13 +20,6 @@ export default class extends Vue
         }
 
         return 'form-simple';
-    }
-
-    getStyle()
-    {
-        if (this.form.visible === false) {
-            return 'display: none';
-        }
     }
 }
 </script>

@@ -76,7 +76,6 @@ export class ListForm extends Form
 
     protected createItem(prototype: Form, prototypeName: string)
     {
-
         let item = JSON.parse(JSON.stringify(prototype));
         item = this.formFactory.create(item, this.getRoot().visitors, this);
         item.name = this.index.toString();
@@ -267,6 +266,7 @@ export class ListForm extends Form
         for (let parent of form.getParents().reverse()) {
             names.push(parent.name);
         }
+        names.push(form.name);
         form.id = names.join('_');
 
         for (let child of form.children) {
