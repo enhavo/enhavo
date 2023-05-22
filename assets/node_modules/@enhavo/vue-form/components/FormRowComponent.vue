@@ -1,6 +1,6 @@
 <template>
-    <component v-if="form.rowComponent !== 'form-row'" :is="form.rowComponent" :style="getStyle()" />
-    <div v-else :style="getStyle()">
+    <component v-if="form.rowComponent !== 'form-row'" :is="form.rowComponent" v-show="form.visible" />
+    <div v-else v-show="form.visible">
         <form-label :form="form"></form-label>
         <form-errors :form="form"></form-errors>
         <form-widget :form="form"></form-widget>
@@ -17,12 +17,5 @@ export default class extends Vue
 {
     @Prop()
     form: Form
-
-    getStyle()
-    {
-        if (this.form.visible === false) {
-            return 'display: none';
-        }
-    }
 }
 </script>

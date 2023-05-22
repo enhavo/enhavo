@@ -26,14 +26,17 @@ the listener.
       apply(form: Form): Form | void
       {
           this.formEventDispatcher.on('change', (event: ChangeEvent) => {
-              // do something if this form has changed
-              // e.g. hide a child if value is changed
-              if (form.getValue() === 'something') {
-                form.get('myChild').visible = false;
+              // Do something if this form has changed, e.g. hide a child if value is changed.
+              // Don't use the form var from outside this scope, always use the event and retrieve the form from it,
+              // because the outside form may not be reactive and thus changes might have no effects!
+              if (event.form.getValue() === 'something') {
+                event.form.parent.get('myChild').visible = false;
               }
-          }, form);
+          }, form.get('field'));
       }
   }
+
+
 
 Further Reading
 ---------------

@@ -10,27 +10,36 @@ export default class VueRegistry implements ComponentRegistryInterface
     private stores: Entry[] = [];
     private configs: Entry[] = [];
 
-    setConfig(name: string, value: string): ComponentRegistryInterface {
+    setConfig(name: string, value: string): ComponentRegistryInterface
+    {
+        this.deleteEntry(name, this.configs);
         this.configs.push(new Entry(name, value));
         return this;
     }
 
-    registerComponent(name: string, component: object): ComponentRegistryInterface {
+    registerComponent(name: string, component: object): ComponentRegistryInterface
+    {
+        this.deleteEntry(name, this.components);
         this.components.push(new Entry(name, component));
         return this;
     }
 
-    registerDirective(name: string, store: object): ComponentRegistryInterface {
+    registerDirective(name: string, store: object): ComponentRegistryInterface
+    {
+        this.deleteEntry(name, this.directives);
         this.directives.push(new Entry(name, store));
         return this;
     }
 
-    registerStore(name: string, store: object): ComponentRegistryInterface {
+    registerStore(name: string, store: object): ComponentRegistryInterface
+    {
+        this.deleteEntry(name, this.stores);
         this.stores.push(new Entry(name, store));
         return this;
     }
 
-    registerData<Type>(data: Type): Type {
+    registerData<Type>(data: Type): Type
+    {
         if (data === null) {
             return;
         }
@@ -38,7 +47,8 @@ export default class VueRegistry implements ComponentRegistryInterface
         return data;
     }
 
-    registerPlugin(plugin: object): ComponentRegistryInterface {
+    registerPlugin(plugin: object): ComponentRegistryInterface
+    {
         this.plugins.push(plugin);
         return this;
     }
@@ -65,6 +75,21 @@ export default class VueRegistry implements ComponentRegistryInterface
 
     getData(): object[] {
         return this.data;
+    }
+
+    private deleteEntry(name: string, list: Entry[])
+    {
+        let foundEntry = null;
+        for (let entry of list) {
+            if (entry.name === name) {
+                foundEntry = entry;
+                break;
+            }
+        }
+
+        if (foundEntry) {
+            list.splice(list.indexOf(foundEntry), 1);
+        }
     }
 }
 
