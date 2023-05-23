@@ -26,6 +26,10 @@ services:
         tags:
             - { name: form.type_extension, priority: 99 }
 
+    Enhavo\Bundle\MediaBundle\Form\Extension\FileVueTypeExtension:
+        tags:
+            - { name: form.type_extension, priority: 99 }
+
     enhavo_media.form.extension.image_cropper:
         class: Enhavo\Bundle\MediaBundle\Form\Extension\ImageCropperMediaExtension
         tags:

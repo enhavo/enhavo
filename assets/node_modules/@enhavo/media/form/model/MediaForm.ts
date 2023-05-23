@@ -66,6 +66,11 @@ export class MediaForm extends ListForm
     init() {
         super.init();
 
+        // overwrite arrays, because this object get cloned before, and we want to prevent, that media objects share the same array
+        this.uploads = [];
+        this.fileErrors = [];
+        this.buttons = [];
+
         $(window).on('dragenter dragover', () => {
             this.highlight = true;
         });
