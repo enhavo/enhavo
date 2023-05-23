@@ -11,6 +11,7 @@ import {ListForm} from "@enhavo/form/form/model/ListForm";
 import {FormEventDispatcher} from "@enhavo/vue-form/form/FormEventDispatcher";
 import {MoveEvent} from "@enhavo/form/form/event/MoveEvent";
 import {ConditionalForm} from "@enhavo/form/form/model/ConditionalForm";
+import {ChangeEvent} from "@enhavo/vue-form/event/ChangeEvent";
 
 export default class extends Controller
 {
@@ -60,8 +61,8 @@ export default class extends Controller
             }));
             theme.addVisitor(new FormVisitor((form: Form) => {
                 return form.componentVisitors.indexOf('type_conditional') >= 0;
-            }, (form: ListForm) => {
-                formEventDispatcher.addListener('change', (event: MoveEvent) => {
+            }, (form: Form) => {
+                formEventDispatcher.addListener('change', (event: ChangeEvent) => {
                     let targetForm = <ConditionalForm>event.form.parent.get('field');
                     targetForm.setEntry(event.form.value);
                 }, form);
