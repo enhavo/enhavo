@@ -10,6 +10,7 @@ Enhavo\Bundle\UserBundle\Model\User:
             - Email:
                 message: The email "{{ value }}" is not a valid email.
                 checkMX: true
+                groups: [register]
             - NotBlank:
                 groups: [register]
         plainPassword:
