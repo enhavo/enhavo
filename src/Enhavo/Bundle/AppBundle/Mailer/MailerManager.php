@@ -66,11 +66,11 @@ class MailerManager
 
         $message = $this->createMessage();
 
-        $message->setFrom($this->mailsConfig[$key]['from'] ?? $this->defaultConfig['from']);
-        $message->setTo($this->mailsConfig[$key]['to'] ?? $this->defaultConfig['to']);
-        $message->setSenderName($this->mailsConfig[$key]['name'] ?? $this->defaultConfig['name']);
+        $message->setFrom($this->renderString($this->mailsConfig[$key]['from'] ?? $this->defaultConfig['from'], ['resource' => $resource]));
+        $message->setTo($this->renderString($this->mailsConfig[$key]['to'] ?? $this->defaultConfig['to'], ['resource' => $resource]));
+        $message->setSenderName($this->renderString($this->mailsConfig[$key]['name'] ?? $this->defaultConfig['name'], ['resource' => $resource]));
 
-        $message->setSubject($this->mailsConfig[$key]['subject']);
+        $message->setSubject($this->renderString($this->mailsConfig[$key]['subject'], ['resource' => $resource]));
         $message->setTemplate($this->mailsConfig[$key]['template']);
         $message->setContext([
             'resource' => $resource,
@@ -95,12 +95,12 @@ class MailerManager
     public function convert(Message $message): Swift_Message
     {
         $swiftMessage = new Swift_Message();
-        $swiftMessage->setSubject($this->renderString($message->getSubject(), $message->getContext()))
+        $swiftMessage->setSubject($message->getSubject())
             ->setFrom(
-                $this->renderString($message->getFrom(), $message->getContext()),
-                $this->renderString($message->getSenderName(), $message->getContext())
+                $message->getFrom(),
+                $message->getSenderName()
             )
-            ->setTo($this->renderString($message->getTo(), $message->getContext()))
+            ->setTo($message->getTo())
         ;
 
         $template = $this->environment->load($this->templateManager->getTemplate($message->getTemplate()));
