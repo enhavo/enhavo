@@ -43,13 +43,14 @@ class MailerManager
 
         $message = $this->createMessage();
 
-        $message->setTo($this->mailsConfig[$key]['to'] ?? $this->defaults->getMailTo());
+        $message->setTo($this->renderString($this->mailsConfig[$key]['to'] ?? $this->defaults->getMailTo(), ['resource' => $resource]));
+        $message->setFrom($this->renderString($this->mailsConfig[$key]['from'] ?? $this->defaults->getMailFrom(), ['resource' => $resource]));
 
-        $message->setFrom($this->mailsConfig[$key]['from'] ?? $this->defaults->getMailFrom());
-        $senderName = $this->mailsConfig[$key]['name'] ?? $this->defaults->getMailSenderName();
+        $senderName = $this->renderString($this->mailsConfig[$key]['name'] ?? $this->defaults->getMailSenderName(), ['resource' => $resource]);
         $message->setSenderName($this->translator->trans($senderName, [], $this->mailsConfig[$key]['translation_domain']));
 
-        $message->setSubject($this->translator->trans($this->mailsConfig[$key]['subject'], [], $this->mailsConfig[$key]['translation_domain']));
+        $subject = $this->renderString($this->mailsConfig[$key]['subject'], ['resource' => $resource]);
+        $message->setSubject($this->translator->trans($subject, [], $this->mailsConfig[$key]['translation_domain']));
 
         $message->setTemplate($this->mailsConfig[$key]['template']);
         $message->setContext([
@@ -79,12 +80,9 @@ class MailerManager
     public function convert(Message $message): Email
     {
         $email = new Email();
-        $email->subject($this->renderString($message->getSubject(), $message->getContext()))
-            ->from(new Address(
-                $this->renderString($message->getFrom(), $message->getContext()),
-                $this->renderString($message->getSenderName(), $message->getContext()),
-            ))
-            ->to(new Address($this->renderString($message->getTo(), $message->getContext())))
+        $email->subject($message->getSubject())
+            ->from(new Address($message->getFrom(), $message->getSenderName(),))
+            ->to(new Address($message->getTo()))
         ;
 
         if ($message->getContent() === null) {
