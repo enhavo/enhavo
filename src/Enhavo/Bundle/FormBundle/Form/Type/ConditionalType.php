@@ -23,6 +23,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ConditionalType extends AbstractVueType implements DataMapperInterface
 {
+    private bool $keyChanged = false;
+
     public function __construct(
         private VueForm $vueForm,
     )
@@ -57,6 +59,15 @@ class ConditionalType extends AbstractVueType implements DataMapperInterface
             $data = $event->getData();
 
             $key = $data['key'];
+            if ($form->getData()) {
+                // detected if key is changed, because we need create a new object out of the new form type
+                $originalKey = $this->resolveKey($options, $form->getData(), $form);
+                $this->keyChanged = false;
+                if ($originalKey != $key) {
+                    $this->keyChanged = true;
+                }
+            }
+
             $this->addConditional($options, $form,  $key);
         });
 
@@ -82,6 +93,7 @@ class ConditionalType extends AbstractVueType implements DataMapperInterface
 
         $type = $options['entry_types'][$key];
         $formOptions = isset($options['entry_types_options'][$key]) ? $options['entry_types_options'][$key] : [];
+
         $form->add('conditional', $type, $formOptions);
     }
 
@@ -132,7 +144,18 @@ class ConditionalType extends AbstractVueType implements DataMapperInterface
         }
 
         $forms = iterator_to_array($forms);
-        $forms['conditional']->setData($viewData);
+
+        /** @var Form $conditionalForm */
+        $conditionalForm = $forms['conditional'];
+
+        if ($this->keyChanged) {
+            // if key changed we let the form itself create a new data object by setting its data to null
+            $conditionalForm->setData(null);
+            $this->keyChanged = false;
+            return;
+        }
+
+        $conditionalForm->setData($viewData);
     }
 
     public function mapFormsToData(\Traversable $forms, &$viewData)
