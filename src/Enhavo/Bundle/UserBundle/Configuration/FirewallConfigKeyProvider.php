@@ -25,7 +25,7 @@ class FirewallConfigKeyProvider implements ConfigKeyProviderInterface
         }
 
         foreach ($this->config as $key => $config) {
-            if ($config['firewall'] === $firewallConfig->getName()) {
+            if (in_array($firewallConfig->getName(), $config['firewalls'])) {
                 return $key;
             }
         }
