@@ -29,7 +29,7 @@ class ConfigurationTest extends TestCase
         ]);
 
         $this->assertTrue(isset($config['config']['theme']));
-        $this->assertNull($config['config']['theme']['firewall']);
+        $this->assertCount(0, $config['config']['theme']['firewalls']);
     }
 
     public function testMissingRegistrationRegisterConfig()

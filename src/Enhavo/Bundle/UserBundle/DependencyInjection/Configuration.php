@@ -149,7 +149,7 @@ class Configuration implements ConfigurationInterface
     {
         $node
             ->children()
-                ->scalarNode('firewall')->defaultValue(null)->end()
+                ->variableNode('firewalls')->defaultValue([])->end()
             ->end()
         ;
     }

@@ -4,7 +4,7 @@ enhavo_user:
 
     config:
         theme:
-            firewall: main
+            firewalls: [main]
 
             registration_register:
                 template: theme/security/registration/register.html.twig
@@ -110,7 +110,7 @@ enhavo_user:
                 template: theme/security/verification/confirm.html.twig
 
         admin:
-            firewall: admin
+            firewalls: [admin]
 
             reset_password_request:
                 template: admin/security/reset-password/request.html.twig
