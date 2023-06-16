@@ -49,6 +49,10 @@ class GarbageCollectionSubscriber
 //        $this->entityManager->clear();
 
         foreach ($this->filesToScan as $file) {
+            // Fix error where files had id = null, might be related to the error commented about above
+            if ($file->getId() === null) {
+                continue;
+            }
             $file = $this->refreshFile($file);
             $this->garbageCollector->runOnFile($file);
         }
