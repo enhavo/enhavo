@@ -23,7 +23,6 @@ class VueForm
         return $data->toArray();
     }
 
-
     private function assembleRelations(VueData $data)
     {
         $data['root'] = false;

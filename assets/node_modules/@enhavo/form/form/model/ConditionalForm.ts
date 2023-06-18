@@ -23,8 +23,7 @@ export class ConditionalForm extends Form
             let form = JSON.parse(JSON.stringify(prototype));
             form = this.formFactory.create(form, this.getRoot().visitors, this);
             form.name = 'conditional';
-            this.updateFullName(form);
-            this.updateId(form);
+            form.update();
             this.replace(form);
         }
     }
@@ -44,36 +43,6 @@ export class ConditionalForm extends Form
     {
         let child = this.get('conditional');
         this.children[this.children.indexOf(child)] = form;
-    }
-
-    protected updateId(form: Form)
-    {
-        let names = [];
-        for (let parent of form.getParents().reverse()) {
-            names.push(parent.name);
-        }
-        names.push(form.name);
-        form.id = names.join('_');
-
-        for (let child of form.children) {
-            this.updateId(child);
-        }
-    }
-
-    protected updateFullName(form: Form)
-    {
-        let parents = form.getParents().reverse();
-        let fullName = parents.shift().name;
-        for (let parent of parents) {
-            fullName += '[' + parent.name + ']';
-        }
-        fullName += '[' + form.name + ']';
-
-        form.fullName = fullName;
-
-        for (let child of form.children) {
-            this.updateFullName(child);
-        }
     }
 }
 

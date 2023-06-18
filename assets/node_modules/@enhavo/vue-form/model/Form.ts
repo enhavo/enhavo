@@ -83,6 +83,16 @@ export class Form
         return this.value;
     }
 
+    public setValue(value: any)
+    {
+        if (this.compound) {
+            return;
+        }
+
+        this.value = value;
+        this.dispatchChange();
+    }
+
     public dispatchChange()
     {
         this.eventDispatcher.dispatchEvent(new ChangeEvent(this, this.getValue()), 'change');
@@ -97,6 +107,28 @@ export class Form
     {
         for (let child of this.children) {
             child.destroy();
+        }
+    }
+
+    public update(recursive: boolean = true)
+    {
+        let names = [];
+        for (let parent of this.getParents().reverse()) {
+            names.push(parent.name);
+        }
+        names.push(this.name);
+        this.id = names.join('_');
+
+        let fullName = '';
+        for (let name of names) {
+            fullName += '[' + name + ']';
+        }
+        this.fullName = fullName;
+
+        if (recursive) {
+            for (let child of this.children) {
+                child.update();
+            }
         }
     }
 }

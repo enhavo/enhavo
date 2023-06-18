@@ -80,8 +80,7 @@ export class ListForm extends Form
         item = this.formFactory.create(item, this.getRoot().visitors, this);
         item.name = this.index.toString();
         item.label = prototypeName.replace(new RegExp(this.prototypeName, 'g'), item.name);
-        this.updateFullName(item);
-        this.updateId(item);
+        item.update();
         this.index++;
 
         let event = new CreateEvent(item)
@@ -223,7 +222,6 @@ export class ListForm extends Form
         this.eventDispatcher.dispatchEvent(new MoveEvent(item), 'move')
     }
 
-
     public changeOrder(event: any)
     {
         if (event.added) {
@@ -256,37 +254,7 @@ export class ListForm extends Form
         form.parent = this;
 
         for (let child of form.children) {
-            this.updateFullName(child);
-        }
-    }
-
-    protected updateId(form: Form)
-    {
-        let names = [];
-        for (let parent of form.getParents().reverse()) {
-            names.push(parent.name);
-        }
-        names.push(form.name);
-        form.id = names.join('_');
-
-        for (let child of form.children) {
-            this.updateId(child);
-        }
-    }
-
-    protected updateFullName(form: Form)
-    {
-        let parents = form.getParents().reverse();
-        let fullName = parents.shift().name;
-        for (let parent of parents) {
-            fullName += '[' + parent.name + ']';
-        }
-        fullName += '[' + form.name + ']';
-
-        form.fullName = fullName;
-
-        for (let child of form.children) {
-            this.updateFullName(child);
+            child.update();
         }
     }
 }

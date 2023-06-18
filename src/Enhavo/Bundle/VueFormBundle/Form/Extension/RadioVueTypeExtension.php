@@ -19,7 +19,7 @@ class RadioVueTypeExtension extends AbstractVueTypeExtension
     {
         $resolver->setDefaults([
             'component' => 'form-radio',
-            'component_model' => 'FormRadio',
+            'component_model' => 'RadioForm',
         ]);
     }
 
