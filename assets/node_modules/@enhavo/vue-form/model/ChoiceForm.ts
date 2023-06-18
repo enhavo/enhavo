@@ -9,6 +9,26 @@ export class ChoiceForm extends Form
     separator: string;
     placeholder: string;
     choices: Choice[];
+
+    init() {
+
+    }
+
+    public update(recursive: boolean = true)
+    {
+        if (this.expanded) {
+            super.update(false);
+            let fullName = this.fullName;
+            if (this.multiple) {
+                fullName += '[]';
+            }
+            for (let child of this.children) {
+                child.fullName = fullName;
+            }
+        } else {
+            super.update(recursive);
+        }
+    }
 }
 
 export class Choice
@@ -18,4 +38,3 @@ export class Choice
     value: string;
     choices: Choice[];
 }
-

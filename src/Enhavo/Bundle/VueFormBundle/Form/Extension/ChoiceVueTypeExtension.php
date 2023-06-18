@@ -51,10 +51,22 @@ class ChoiceVueTypeExtension extends AbstractVueTypeExtension
         return $data;
     }
 
+    public function finishVueData(FormView $view, VueData $data, array $options)
+    {
+        if ($options['expanded']) {
+            foreach ($view as $childView) {
+                /** @var VueData $vueData */
+                $vueData = $childView->vars['vue_data'];
+                $vueData->set('fullName', $childView->vars['full_name']);
+            }
+        }
+    }
+
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'component' => 'form-choice',
+            'component_model' => 'ChoiceForm'
         ]);
     }
 
