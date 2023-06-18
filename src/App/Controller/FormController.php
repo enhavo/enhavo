@@ -33,16 +33,17 @@ class FormController extends AbstractController
     {
         $formView = $form->createView();
         $vueForm = $this->container->get(VueForm::class);
+        $vueFormData = $vueForm->createData($formView);
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($request->isXmlHttpRequest()) {
-                return new JsonResponse(['form' => $vueForm->createData($form->createView()), 'data' => $form->getData()], $form->isValid() ? 201 : 400);
+                return new JsonResponse(['form' => $vueFormData, 'data' => $form->getData()], $form->isValid() ? 201 : 400);
             }
         }
 
         if ($request->isXmlHttpRequest()) {
-            return new JsonResponse(['form' => $vueForm->createData($form->createView())]);
+            return new JsonResponse(['form' => $vueFormData]);
         }
 
         $formView = $form->createView();

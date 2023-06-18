@@ -58,6 +58,7 @@ class ChoiceVueTypeExtension extends AbstractVueTypeExtension
                 /** @var VueData $vueData */
                 $vueData = $childView->vars['vue_data'];
                 $vueData->set('fullName', $childView->vars['full_name']);
+                $vueData->set('value', $childView->vars['value']);
             }
         }
     }

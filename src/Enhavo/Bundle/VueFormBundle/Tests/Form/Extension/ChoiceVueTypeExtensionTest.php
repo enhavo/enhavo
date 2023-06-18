@@ -3,7 +3,6 @@
 namespace Enhavo\Bundle\VueFormBundle\Test\Form\Extension;
 
 use Enhavo\Bundle\AppBundle\Tests\Mock\TranslatorMock;
-use Enhavo\Bundle\VueFormBundle\Form\Extension\BaseVueTypeExtension;
 use Enhavo\Bundle\VueFormBundle\Form\Extension\ChoiceVueTypeExtension;
 use Enhavo\Bundle\VueFormBundle\Form\Extension\FormVueTypeExtension;
 use Enhavo\Bundle\VueFormBundle\Form\Extension\VueTypeExtension;
@@ -61,5 +60,7 @@ class ChoiceVueTypeExtensionTest extends TypeTestCase
         $data = $vueForm->createData($form->createView($view));
         $this->assertEquals('choice[choice]', $data['children'][0]['fullName']);
         $this->assertEquals('choice[choice]', $data['children'][1]['fullName']);
+        $this->assertEquals('value1', $data['children'][0]['value']);
+        $this->assertEquals('value2', $data['children'][1]['value']);
     }
 }
