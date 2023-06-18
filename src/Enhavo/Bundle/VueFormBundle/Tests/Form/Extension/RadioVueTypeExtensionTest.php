@@ -26,6 +26,6 @@ class RadioVueTypeExtensionTest extends TypeTestCase
         $data = $vueForm->createData($form->createView());
 
         $this->assertEquals('form-radio', $data['component']);
-        $this->assertEquals('FormRadio', $data['componentModel']);
+        $this->assertEquals('RadioForm', $data['componentModel']);
     }
 }
