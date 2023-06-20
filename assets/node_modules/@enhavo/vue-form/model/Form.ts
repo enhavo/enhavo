@@ -119,7 +119,7 @@ export class Form
         names.push(this.name);
         this.id = names.join('_');
 
-        let fullName = '';
+        let fullName = names.shift();
         for (let name of names) {
             fullName += '[' + name + ']';
         }
