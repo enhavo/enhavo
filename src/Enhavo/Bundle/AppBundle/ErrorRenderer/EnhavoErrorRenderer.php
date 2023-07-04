@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\AppBundle\ErrorRenderer;
 
+use Enhavo\Bundle\AppBundle\Template\TemplateManager;
 use Symfony\Bridge\Twig\ErrorRenderer\TwigErrorRenderer;
 use Symfony\Component\ErrorHandler\ErrorRenderer\ErrorRendererInterface;
 use Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer;
@@ -11,34 +12,18 @@ use Twig\Environment;
 
 class EnhavoErrorRenderer implements ErrorRendererInterface
 {
-    const DEFAULT_TEMPLATE_REGEX = '@^(.*)/vendor/symfony/twig-bundle/Resources/views/Exception/error\d*.html.twig$@';
+    private ErrorRendererInterface $fallbackErrorRenderer;
+    private \Closure $debug;
 
-    /**
-     * @var Environment
-     */
-    private $twigEnvironment;
-
-    /**
-     * @var ErrorRendererInterface
-     */
-    private $fallbackErrorRenderer;
-
-    /**
-     * @var string
-     */
-    private $projectDir;
-
-    /**
-     * @var callable
-     */
-    private $debug;
-
-    public function __construct(Environment $twigEnvironment, ErrorRendererInterface $fallbackErrorRenderer = null, string $projectDir, RequestStack $requestStack, bool $debug)
-    {
-        $this->twigEnvironment = $twigEnvironment;
+    public function __construct(
+        private Environment $twigEnvironment,
+        private string $projectDir,
+        private TemplateManager $templateManager,
+        ErrorRendererInterface $fallbackErrorRenderer,
+        RequestStack $requestStack,
+        bool $debug,
+    ) {
         $this->fallbackErrorRenderer = $fallbackErrorRenderer ?? new HtmlErrorRenderer();
-        $this->projectDir = $projectDir;
-
         $this->debug = TwigErrorRenderer::isDebug($requestStack, $debug);
     }
 
@@ -54,13 +39,7 @@ class EnhavoErrorRenderer implements ErrorRendererInterface
             return $exception;
         }
 
-        $template = $this->twigTemplate($exception->getStatusCode());
-        $templatePath = $this->twigEnvironment->getLoader()->getSourceContext($template)->getPath();
-        if (!$this->isDefaultTwigTemplatePath($templatePath)) {
-            return $exception;
-        }
-
-        $template = $this->enhavoTemplate($exception->getStatusCode());
+        $template = $this->getTemplate($exception->getStatusCode());
 
         return $exception->setAsString($this->twigEnvironment->render($template, [
             'exception' => $exception,
@@ -69,43 +48,13 @@ class EnhavoErrorRenderer implements ErrorRendererInterface
         ]));
     }
 
-    private function twigTemplate(int $statusCode): ?string
+    private function getTemplate(int $statusCode): string
     {
-        $template = sprintf('@Twig/Exception/error%s.html.twig', $statusCode);
+        $template = $this->templateManager->getTemplate(sprintf('theme/error/%s.html.twig', $statusCode));
         if ($this->twigEnvironment->getLoader()->exists($template)) {
             return $template;
         }
 
-        $template = '@Twig/Exception/error.html.twig';
-        if ($this->twigEnvironment->getLoader()->exists($template)) {
-            return $template;
-        }
-
-        return null;
-    }
-
-    private function enhavoTemplate(int $statusCode): ?string
-    {
-        $template = sprintf('@EnhavoApp/theme/exception/error%s.html.twig', $statusCode);
-        if ($this->twigEnvironment->getLoader()->exists($template)) {
-            return $template;
-        }
-
-        $template = '@EnhavoApp/theme/exception/error.html.twig';
-        if ($this->twigEnvironment->getLoader()->exists($template)) {
-            return $template;
-        }
-
-        return null;
-    }
-
-    private function isDefaultTwigTemplatePath(string $templatePath)
-    {
-        if (preg_match(self::DEFAULT_TEMPLATE_REGEX, $templatePath, $matches)) {
-            if ($matches[1] === $this->projectDir) {
-                return true;
-            }
-        }
-        return false;
+        return $this->templateManager->getTemplate('theme/error/default.html.twig');
     }
 }
