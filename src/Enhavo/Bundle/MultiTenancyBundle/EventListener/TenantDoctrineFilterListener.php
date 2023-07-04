@@ -3,9 +3,7 @@
 namespace Enhavo\Bundle\MultiTenancyBundle\EventListener;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Mapping\ClassMetadata;
 use Enhavo\Bundle\MultiTenancyBundle\Filter\TenantDoctrineFilter;
-use Enhavo\Bundle\MultiTenancyBundle\Model\TenantAwareInterface;
 use Enhavo\Bundle\MultiTenancyBundle\Resolver\ResolverInterface;
 
 class TenantDoctrineFilterListener
@@ -41,11 +39,16 @@ class TenantDoctrineFilterListener
     public function onKernelRequest()
     {
         if ($this->configuration['enabled']) {
+            $tenant = $this->resolver->getTenant();
+            if ($tenant === null) {
+                return;
+            }
+
             $this->entityManager->getConfiguration()->addFilter('tenant', TenantDoctrineFilter::class);
             /** @var TenantDoctrineFilter $filter */
             $filter = $this->entityManager->getFilters()->enable('tenant');
             $filter->setTargetClasses($this->resolveTargetClasses());
-            $filter->setParameter('tenant', $this->resolver->getTenant()->getKey());
+            $filter->setParameter('tenant', $tenant->getKey());
         }
     }
 
@@ -56,12 +59,13 @@ class TenantDoctrineFilterListener
 //        if ($this->configuration['detect_by_interface']) {
 //            $result = $this->detectByInterface();
 //        }
-        foreach($this->configuration['classes'] as $class) {
+        foreach ($this->configuration['classes'] as $class) {
             $result[$class] = $class;
-            foreach(class_parents($class) as $parentClass) {
+            foreach (class_parents($class) as $parentClass) {
                 $result[$parentClass] = $parentClass;
             }
         }
+
         return $result;
     }
 
