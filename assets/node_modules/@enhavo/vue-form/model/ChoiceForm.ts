@@ -1,4 +1,6 @@
 import {Form} from "@enhavo/vue-form/model/Form"
+import {ChangeEvent} from "@enhavo/vue-form/event/ChangeEvent";
+import {RadioForm} from "@enhavo/vue-form/model/RadioForm";
 
 export class ChoiceForm extends Form
 {
@@ -10,8 +12,19 @@ export class ChoiceForm extends Form
     placeholder: string;
     choices: Choice[];
 
-    init() {
-
+    init()
+    {
+        if (!this.multiple && this.expanded) {
+            for (let child of this.children) {
+                this.eventDispatcher.on('change', (event: ChangeEvent) => {
+                    for (let sibling of event.form.parent.children) {
+                        if (sibling != event.form) {
+                            (<RadioForm>sibling).checked = false;
+                        }
+                    }
+                }, child);
+            }
+        }
     }
 
     public update(recursive: boolean = true)
