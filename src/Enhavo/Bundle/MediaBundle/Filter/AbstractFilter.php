@@ -64,6 +64,8 @@ abstract class AbstractFilter extends AbstractType implements FilterInterface
                 return 'png';
             case(IMAGETYPE_BMP):
                 return 'bmp';
+            case(IMAGETYPE_WEBP):
+                return 'webp';
         }
         return null;
     }
@@ -79,6 +81,8 @@ abstract class AbstractFilter extends AbstractType implements FilterInterface
                 return 'image/png';
             case('bmp'):
                 return 'image/bmp';
+            case('webp'):
+                return 'image/webp';
         }
         return null;
     }

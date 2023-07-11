@@ -12,13 +12,12 @@ use Enhavo\Bundle\MediaBundle\Content\ContentInterface;
 use Enhavo\Bundle\MediaBundle\Exception\FilterException;
 use Enhavo\Bundle\MediaBundle\Filter\AbstractFilter;
 use Enhavo\Bundle\MediaBundle\Model\FilterSetting;
-use Imagine\Exception\RuntimeException;
 use Imagine\Gd\Imagine;
-use Imagine\Imagick\Imagine as ImagickImagine;
 use Imagine\Image\Box;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\Palette\RGB;
 use Imagine\Image\Point;
+use Imagine\Imagick\Imagine as ImagickImagine;
 
 class ImageFilter extends AbstractFilter
 {
@@ -42,17 +41,20 @@ class ImageFilter extends AbstractFilter
             $options = $this->getSaveOptions($format, $setting);
             $options['animated'] = true;
             $resultImage->save($content->getFilePath(), $options);
+
         } elseif($format == 'bmp' && class_exists('Imagick') ) {
             $imagine = new ImagickImagine();
             $image = $imagine->load($content->getContent());
             $resultImage = $image->copy();
             $resultImage = $this->resize($resultImage, $setting);
             $resultImage->save($content->getFilePath(), $this->getSaveOptions($format, $setting));
+
         } elseif(class_exists('Imagick') ) {
             $imagine = new ImagickImagine();
             $imagine = $imagine->load($content->getContent());
             $imagine = $this->resize($imagine, $setting);
             $imagine->save($content->getFilePath(), $this->getSaveOptions($format, $setting));
+
         } else {
             $imagine = new Imagine();
             $imagine = $imagine->load($content->getContent());

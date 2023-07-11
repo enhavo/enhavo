@@ -27,6 +27,8 @@
     "ext-libxml": "*",
     "ext-zip": "*",
     "ext-zlib": "*",
+    "ext-gd": "*",
+    "ext-exif": "*",
     "behat/transliterator": "^1.5",
     "composer/package-versions-deprecated": "1.11.*",
     "doctrine/doctrine-migrations-bundle": "^3.1",
