@@ -24,7 +24,6 @@ class MimetypeFilter extends AbstractFilter
 
     public function apply($file, FilterSetting $setting)
     {
-        $content = $this->getContent($file);
         $mimeType = $file->getMimeType();
         $format = $setting->getSetting('format');
         $mimeTypes = $setting->getSetting('mimetypes', []);
@@ -32,7 +31,7 @@ class MimetypeFilter extends AbstractFilter
         foreach ($settings as $setting) {
             if (in_array($mimeType, $mimeTypes)) {
                 $format = $this->formatManager->getFilter($setting->getType());
-                $format->apply($content, $setting);
+                $format->apply($file, $setting);
             }
         }
     }

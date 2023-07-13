@@ -79,6 +79,15 @@ export default class MediaItem
         this.$element.find('[data-media-item-filename]').val(filename);
     }
 
+    setParameters(parameters:object): void  {
+        for (let key in parameters) {
+            let param = this.$element.find('[data-parameter-key="' + key + '"]');
+            if (param.length) {
+                param.val(parameters[key]);
+            }
+        }
+    }
+
     setId(id:number)
     {
         this.meta.id = id;
@@ -125,6 +134,7 @@ export default class MediaItem
             case 'image/jpg':
             case 'image/jpeg':
             case 'image/gif':
+            case 'image/webp':
                 mediaThumb.css('background-image', 'url('+this.getThumbUrl()+')');
                 break;
             case 'video/mpeg':
