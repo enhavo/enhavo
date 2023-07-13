@@ -6,6 +6,7 @@
 
 namespace Enhavo\Bundle\MediaLibraryBundle\Form\Type;
 
+use Enhavo\Bundle\MediaBundle\Form\Type\FileParametersType;
 use Enhavo\Bundle\MediaBundle\Media\UrlGeneratorInterface;
 use Enhavo\Bundle\MediaLibraryBundle\Entity\File;
 use Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryManager;
@@ -51,6 +52,7 @@ class FileType extends AbstractType
                 'edit_route' => 'enhavo_media_library_tag_update',
                 'view_key' => 'media_library_tags'
             ])
+            ->add('parameters', FileParametersType::class)
         ;
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA,  function(FormEvent $event) {
