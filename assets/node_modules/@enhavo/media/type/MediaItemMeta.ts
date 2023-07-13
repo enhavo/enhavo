@@ -13,5 +13,7 @@ export default class MediaItemMeta
 
     token: string;
 
-    order: number
+    order: number;
+
+    parameters: object
 }

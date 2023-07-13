@@ -20,6 +20,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormFactory;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\CallbackTransformer;
 
@@ -114,7 +116,6 @@ class FileType extends AbstractType
                     'data-media-item-id' => $data instanceof FileInterface ? $data->getId() : true
                 ],
                 'mapped' => false,
-                //'read_only' => true
             ]);
         });
 
@@ -132,6 +133,14 @@ class FileType extends AbstractType
         }
 
         $this->extensionManager->buildForm($builder, $options);
+    }
+
+    public function finishView(FormView $view, FormInterface $form, array $options)
+    {
+        foreach ($view->children['parameters'] as $child) {
+            $child->vars['attr'] = $child->vars['attr'] ?: [];
+            $child->vars['attr']['data-parameter-key'] = $child->vars['name'];
+        }
     }
 
     /**
