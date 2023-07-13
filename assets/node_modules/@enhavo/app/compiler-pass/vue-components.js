@@ -53,6 +53,10 @@ module.exports = function(builder, options, context)
         let definition = new Definition('vue-component.'+componentName);
         definition.setStatic(true);
         definition.setFrom('./'+file.buildPath);
+        if (options.chunkName) {
+            definition.setChunkName(options.chunkName)
+        }
+
         builder.addDefinition(definition);
 
         registry.addCall(new Call('registerComponent', [
