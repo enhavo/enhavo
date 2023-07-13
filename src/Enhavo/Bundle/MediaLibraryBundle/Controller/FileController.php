@@ -5,6 +5,7 @@ namespace Enhavo\Bundle\MediaLibraryBundle\Controller;
 use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\MediaBundle\Controller\FileControllerTrait;
+use Enhavo\Bundle\MediaLibraryBundle\Entity\File;
 use Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryManager;
 use Enhavo\Bundle\MediaLibraryBundle\Repository\FileRepository;
 use Enhavo\Bundle\MediaLibraryBundle\View\Type\MediaLibraryViewType;
@@ -144,6 +145,7 @@ class FileController extends ResourceController
     public function addAction(Request $request): JsonResponse
     {
         $id = $request->get('id');
+        /** @var File $file */
         $file = $this->getFileRepository()->find($id);
 
         return new JsonResponse([
@@ -151,6 +153,7 @@ class FileController extends ResourceController
             'filename' => $file->getFilename(),
             'mimeType' => $file->getMimeType(),
             'token' => $file->getToken(),
+            'parameters' => $file->getParameters(),
         ]);
     }
 
