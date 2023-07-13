@@ -134,6 +134,30 @@ class FileType extends AbstractType
         $this->extensionManager->buildForm($builder, $options);
     }
 
+<<<<<<< HEAD
+=======
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        $vueData = $view->vars['vue_data'];
+        if ($vueData) {
+            $vueData['file'] = $this->serializer->normalize($form->getData(), null, ['groups' => ['media', 'media_private']]);
+            if (isset($options['component_model'])) {
+                $vueData['componentModel'] = $options['component_model'];
+            } else if (!isset($vueData['componentModel'])) {
+                $vueData['componentModel'] = 'MediaItemForm';
+            }
+        }
+    }
+
+    public function finishView(FormView $view, FormInterface $form, array $options)
+    {
+        foreach ($view->children['parameters'] as $child) {
+            $child->vars['attr'] = $child->vars['attr'] ?: [];
+            $child->vars['attr']['data-parameter-key'] = $child->vars['name'];
+        }
+    }
+
+>>>>>>> fd35b4ae2 ([Media(Libary)] Add webp + Fix no parameters on MediaLibrary select (#1808))
     /**
      * @param OptionsResolver $resolver
      */

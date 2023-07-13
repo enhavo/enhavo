@@ -85,6 +85,7 @@ export default class MediaRow
         let item = new MediaItem(html, meta, this);
         item.setFilename(meta.filename);
         item.setId(meta.id);
+        item.setParameters(meta.parameters);
         this.items.push(item);
         this.$element.append(html);
         $(document).trigger('mediaAddItem', [item]);
