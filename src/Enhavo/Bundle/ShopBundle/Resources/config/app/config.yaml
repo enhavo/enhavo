@@ -198,9 +198,13 @@ enhavo_routing:
             router:
                 default:
                     type: routable
-                admin:
+                view:
                     type: id
                     route: sylius_product_update
+                admin:
+                    type: admin
+                    index_route: sylius_product_index
+                    update_route: sylius_product_update
             generators:
                 prefix:
                     type: prefix

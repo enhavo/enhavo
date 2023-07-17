@@ -28,9 +28,13 @@ enhavo_routing:
             router:
                 default:
                     type: routable
-                admin:
+                view:
                     type: id
                     route: enhavo_template_template_update
+                admin:
+                    type: admin
+                    index_route: enhavo_template_template_index
+                    update_route: enhavo_template_template_update
             generators:
                 route_name:
                     type: route_name

@@ -38,9 +38,13 @@ enhavo_routing:
             router:
                 default:
                     type: routable
-                admin:
+                view:
                     type: id
                     route: enhavo_page_page_update
+                admin:
+                    type: admin
+                    index_route: enhavo_page_page_index
+                    update_route: enhavo_page_page_update
             generators:
                 prefix:
                     type: prefix
