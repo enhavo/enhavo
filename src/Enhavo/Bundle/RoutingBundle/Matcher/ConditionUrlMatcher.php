@@ -9,42 +9,29 @@
 namespace Enhavo\Bundle\RoutingBundle\Matcher;
 
 use Enhavo\Bundle\RoutingBundle\Condition\ConditionResolverInterface;
+use Enhavo\Bundle\RoutingBundle\Request\RequestContext;
 use Symfony\Cmf\Component\Routing\NestedMatcher\UrlMatcher;
-use Symfony\Component\Routing\RequestContext;
-use Symfony\Component\Routing\Route;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouteCollection;
 
 class ConditionUrlMatcher extends UrlMatcher
 {
-    /**
-     * @var ConditionResolverInterface
-     */
-    private $resolver;
-
-    public function __construct(RouteCollection $routes, RequestContext $context, ConditionResolverInterface $resolver = null)
-    {
-        $this->resolver = $resolver;
+    public function __construct(
+        RouteCollection $routes,
+        RequestContext $context,
+        private ConditionResolverInterface $resolver,
+    ){
         parent::__construct($routes, $context);
     }
 
-    protected function handleRouteRequirements($pathinfo, $name, Route $route)
+    public function finalMatch(RouteCollection $collection, Request $request)
     {
-        // expression condition
-        if ($route->getCondition()) {
-            $expression = $this->getExpressionLanguage()->evaluate($route->getCondition(), array(
-                'resolver' => $this->resolver,
-                'context' => $this->context,
-                'request' => $this->request ?: $this->createRequest($pathinfo))
-            );
-            if(!$expression) {
-                return array(self::REQUIREMENT_MISMATCH, null);
-            }
-        }
+        $this->routes = $collection;
+        $context = new RequestContext();
+        $context->fromRequest($request);
+        $context->setResolver($this->resolver);
+        $this->setContext($context);
 
-        // check HTTP scheme requirement
-        $scheme = $this->context->getScheme();
-        $status = $route->getSchemes() && !$route->hasScheme($scheme) ? self::REQUIREMENT_MISMATCH : self::REQUIREMENT_MATCH;
-
-        return array($status, null);
+        return $this->match($request->getPathInfo());
     }
 }

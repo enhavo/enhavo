@@ -36,7 +36,7 @@ class ConditionGenerator extends AbstractGenerator
         $resolver->setDefaults([
             'resolve_property' => null,
             'route_property' => 'route',
-            'condition' => 'resolver.resolve() == "%s"',
+            'condition' => 'context.resolve() == "%s"',
             'overwrite' => true
         ]);
     }
