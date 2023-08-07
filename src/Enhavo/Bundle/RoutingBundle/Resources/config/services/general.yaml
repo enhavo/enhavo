@@ -25,3 +25,9 @@ services:
     Enhavo\Bundle\RoutingBundle\Twig\SlugifyExtension:
         tags:
             - { name: twig.extension }
+
+    Enhavo\Bundle\RoutingBundle\Request\RequestContext:
+        decorates: router.request_context
+        class: Enhavo\Bundle\RoutingBundle\Request\RequestContext
+        calls:
+            - ['setResolver', ['@enhavo_routing.condition_resolver']]
