@@ -10,20 +10,14 @@ namespace App\Controller;
 
 use App\Form\Type\PersonType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @package App\Controller
- * @Route("/person")
- */
+#[Route('/person')]
 class PersonController extends AbstractController
 {
-    /**
-     * @Route("/", name="app_theme_person_index")
-     */
+    #[Route('/', name: 'app_theme_person_index', condition: 'context.getResolver()')]
     public function indexAction(Request $request)
     {
         $form = $this->createForm(PersonType::class);
