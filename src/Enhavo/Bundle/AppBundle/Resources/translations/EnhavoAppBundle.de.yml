@@ -64,6 +64,8 @@ message:
     confirm: 'Warnung: Wollen Sie dieses Doument wirklich löschen?'
   close:
     confirm: 'Warning: Sie dieses Doument wirklich schließen? Alle Änderungen gehen verloren'
+  open:
+    confirm: 'Wollen Sie diese Aktion wirklich ausführen?'
 tab:
   label:
     category: 'Kategorie'

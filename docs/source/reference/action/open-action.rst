@@ -16,6 +16,10 @@ Opens the specified route in a separate tab in your browser. Can be used, for ex
     - | :ref:`hidden <hidden_open>`
     - | :ref:`route_parameters <route_parameters_open>`
     - | :ref:`view_key <view_key_open>`"
+    - | :ref:`confirm <confirm_open>`"
+    - | :ref:`confirm_message <confirm_message_open>`
+    - | :ref:`confirm_label_ok <confirm_label_ok_open>`
+    - | :ref:`confirm_label_cancel <confirm_label_cancel_open>`
     Class, :class:`Enhavo\\Bundle\\AppBundle\\Action\\Type\\OpenActionType`
     Parent, `Enhavo\\Bundle\\AppBundle\\Action\\AbstractUrlActionType`
 
@@ -88,10 +92,19 @@ a new enhavo view.
 .. |default_view_key| replace:: null
 .. include:: /reference/action/option/view_key.rst
 
+.. _confirm_open:
+.. |default_confirm| replace:: null
+.. include:: /reference/action/option/confirm.rst
 
+.. _confirm_message_open:
+.. |default_confirm_message| replace:: `message.delete.confirm`
+.. include:: /reference/action/option/confirm_message.rst
 
+.. _confirm_label_ok_open:
+.. |default_confirm_label_ok| replace:: `label.ok`
+.. include:: /reference/action/option/confirm_label_ok.rst
 
-
-
-
+.. _confirm_label_cancel_open:
+.. |default_confirm_label_cancel| replace:: `label.cancel`
+.. include:: /reference/action/option/confirm_label_cancel.rst
 
