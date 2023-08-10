@@ -11,19 +11,19 @@ use Enhavo\Bundle\RoutingBundle\Condition\ConditionResolverInterface;
  */
 class RequestContext extends \Symfony\Component\Routing\RequestContext
 {
-    private ?ConditionResolverInterface $resolver;
+    private $resolver;
 
     public function resolve()
     {
         return $this->resolver->resolve();
     }
 
-    public function getResolver(): ?ConditionResolverInterface
+    public function getResolver()
     {
         return $this->resolver;
     }
 
-    public function setResolver(?ConditionResolverInterface $resolver): void
+    public function setResolver($resolver)
     {
         $this->resolver = $resolver;
     }
