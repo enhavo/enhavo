@@ -18,10 +18,12 @@ class ConditionResolverPass implements CompilerPassInterface
     public function process(ContainerBuilder $container)
     {
         $conditionResolver = $container->getParameter('enhavo_routing.condition_resolver');
-        if($conditionResolver) {
+        if ($conditionResolver) {
             $definition = $container->getDefinition('cmf_routing.final_matcher');
             $definition->setClass(ConditionUrlMatcher::class);
             $definition->addArgument(new Reference($conditionResolver));
+
+            $container->setAlias('enhavo_routing.condition_resolver', $conditionResolver);
         }
     }
 }
