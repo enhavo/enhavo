@@ -6,9 +6,10 @@
  * Time: 00:30
  */
 
-namespace Enhavo\Bundle\RoutingBundle\Matcher;
+namespace Enhavo\Bundle\MultiTenancyBundle\Matcher;
 
-use Enhavo\Bundle\MultiTenancyBundle\Request\RequestContext;
+use Enhavo\Bundle\MultiTenancyBundle\Request\RequestContext as EnhavoRequestContext;
+use Symfony\Component\Routing\RequestContext as SymfonyRequestContext;
 use Enhavo\Bundle\MultiTenancyBundle\Resolver\ResolverInterface;
 use Symfony\Cmf\Component\Routing\NestedMatcher\UrlMatcher;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,7 +19,7 @@ class ConditionUrlMatcher extends UrlMatcher
 {
     public function __construct(
         RouteCollection $routes,
-        RequestContext $context,
+        SymfonyRequestContext $context,
         private ResolverInterface $resolver,
     ){
         parent::__construct($routes, $context);
@@ -27,7 +28,7 @@ class ConditionUrlMatcher extends UrlMatcher
     public function finalMatch(RouteCollection $collection, Request $request)
     {
         $this->routes = $collection;
-        $context = new RequestContext();
+        $context = new EnhavoRequestContext();
         $context->fromRequest($request);
         $context->setResolver($this->resolver);
         $this->setContext($context);
