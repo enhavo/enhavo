@@ -6,7 +6,7 @@
  * Time: 19:50
  */
 
-namespace Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator;
+namespace Enhavo\Bundle\MultiTenancyBundle\AutoGenerator\Generator;
 
 
 use Enhavo\Bundle\RoutingBundle\AutoGenerator\AbstractGenerator;
@@ -14,7 +14,7 @@ use Enhavo\Bundle\RoutingBundle\Entity\Route;
 use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ConditionGenerator extends AbstractGenerator
+class TenantConditionGenerator extends AbstractGenerator
 {
     public function generate($resource, $options = [])
     {
@@ -36,7 +36,7 @@ class ConditionGenerator extends AbstractGenerator
         $resolver->setDefaults([
             'resolve_property' => null,
             'route_property' => 'route',
-            'condition' => 'context.resolve() == "%s"',
+            'condition' => 'context.getTenant() == "%s"',
             'overwrite' => true
         ]);
     }

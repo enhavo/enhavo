@@ -52,19 +52,7 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end()
-
-            ->children()
-                ->scalarNode('condition_resolver')->defaultValue(null)->end()
-                ->arrayNode('classes')
-                    ->useAttributeAsKey('class')
-                    ->prototype('array')
-                        ->children()
-                            ->variableNode('router')->end()
-                            ->variableNode('generators')->end()
-                        ->end()
-                    ->end()
-                ->end()
-            ->end();
+        ;
 
         return $treeBuilder;
     }

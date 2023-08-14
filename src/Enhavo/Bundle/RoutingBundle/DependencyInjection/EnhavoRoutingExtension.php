@@ -26,7 +26,6 @@ class EnhavoRoutingExtension extends AbstractResourceExtension implements Prepen
         $this->registerResources('enhavo_routing', $config['driver'], $config['resources'], $container);
 
         $container->setParameter('enhavo_routing.classes', $config['classes']);
-        $container->setParameter('enhavo_routing.condition_resolver', $config['condition_resolver']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services/cfm.yaml');
