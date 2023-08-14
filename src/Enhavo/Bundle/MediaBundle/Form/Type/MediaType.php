@@ -116,6 +116,7 @@ class MediaType extends AbstractType
             'upload' => $this->formConfiguration['default_upload_enabled'],
             'extensions' => [],
             'route' => 'enhavo_media_upload',
+            'error_bubbling' => false,
         ));
     }
 
