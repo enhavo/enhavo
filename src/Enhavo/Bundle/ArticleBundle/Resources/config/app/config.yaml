@@ -17,9 +17,13 @@ enhavo_routing:
                 default:
                     type: template
                     template: article
-                admin:
+                view:
                     type: id
                     route: enhavo_article_article_update
+                admin:
+                    type: admin
+                    index_route: enhavo_article_article_index
+                    update_route: enhavo_article_article_update
             generators:
                 slug:
                     type: slug

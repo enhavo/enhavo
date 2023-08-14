@@ -39,9 +39,13 @@ enhavo_routing:
                 default:
                     type: template
                     template: appointment
-                admin:
+                view:
                     type: id
                     route: enhavo_calendar_appointment_update
+                admin:
+                    type: admin
+                    index_route: enhavo_calendar_appointment_index
+                    update_route: enhavo_calendar_appointment_update
             generators:
                 slug:
                     type: slug

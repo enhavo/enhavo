@@ -94,9 +94,13 @@ enhavo_routing:
             router:
                 default:
                     type: slug
-                admin:
+                view:
                     type: id
                     route: enhavo_newsletter_newsletter_update
+                admin:
+                    type: admin
+                    index_route: enhavo_newsletter_newsletter_index
+                    update_route: enhavo_newsletter_newsletter_update
             generators:
                 slug:
                     type: slug

@@ -46,6 +46,6 @@ class RouterExtension extends AbstractExtension
      */
     public function generate($resource , $parameters = [], $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH, $type = 'default')
     {
-        return $this->router->generate($resource , $parameters, $referenceType, $type = 'default');
+        return $this->router->generate($resource , $parameters, $referenceType, $type);
     }
 }

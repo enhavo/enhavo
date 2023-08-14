@@ -12,6 +12,13 @@ services:
             - '@service_container'
             - 'RouterStrategy'
 
+    Enhavo\Bundle\RoutingBundle\Router\Strategy\AdminStrategy:
+        public: true
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: 'enhavo_route.strategy', alias: 'admin' }
+
     Enhavo\Bundle\RoutingBundle\Router\Strategy\IdStrategy:
         public: true
         calls:
