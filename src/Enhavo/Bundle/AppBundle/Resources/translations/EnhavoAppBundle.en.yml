@@ -58,6 +58,8 @@ message:
     confirm: 'Warning: Do you really want to delete this document?'
   close:
     confirm: 'Warning: You made changes on this document. Do you really want to quit without saving?'
+  open:
+    confirm: 'Do you really want to execute this action?'
 tab:
   label:
     category: 'Category'
