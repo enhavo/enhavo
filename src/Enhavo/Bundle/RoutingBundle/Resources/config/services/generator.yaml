@@ -20,13 +20,6 @@ services:
         tags:
             - { name: 'enhavo_route.generator', alias: 'prefix' }
 
-    Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator\ConditionGenerator:
-        public: true
-        calls:
-            - [setContainer, ['@service_container']]
-        tags:
-            - { name: 'enhavo_route.generator', alias: 'condition' }
-
     Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator\GuessPrefixGenerator:
         public: true
         calls:

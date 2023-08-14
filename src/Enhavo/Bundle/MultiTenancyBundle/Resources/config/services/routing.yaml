@@ -17,3 +17,10 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: 'enhavo_route.strategy', alias: 'tenancy_aware_slug' }
+
+    Enhavo\Bundle\MultiTenancyBundle\AutoGenerator\Generator\TenantConditionGenerator:
+        public: true
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: 'enhavo_route.generator', alias: 'tenant_condition' }

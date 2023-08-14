@@ -54,7 +54,6 @@ class Configuration implements ConfigurationInterface
             ->end()
 
             ->children()
-                ->scalarNode('condition_resolver')->defaultValue(null)->end()
                 ->arrayNode('classes')
                     ->useAttributeAsKey('class')
                     ->prototype('array')
@@ -65,6 +64,7 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end();
+        ;
 
         return $treeBuilder;
     }

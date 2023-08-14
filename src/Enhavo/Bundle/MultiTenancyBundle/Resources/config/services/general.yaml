@@ -32,3 +32,9 @@ services:
         arguments:
             - '@enhavo_multi_tenancy.provider'
             - '@translator'
+
+    Enhavo\Bundle\MultiTenancyBundle\Request\RequestContext:
+        decorates: router.request_context
+        class: Enhavo\Bundle\MultiTenancyBundle\Request\RequestContext
+        calls:
+            - ['setResolver', ['@enhavo_multi_tenancy.resolver']]

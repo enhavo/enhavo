@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\MultiTenancyBundle;
 
+use Enhavo\Bundle\MultiTenancyBundle\DependencyInjection\Compiler\ConditionUrlMatcherCompilerPass;
 use Enhavo\Bundle\MultiTenancyBundle\DependencyInjection\Compiler\ProviderCompilerPass;
 use Enhavo\Bundle\MultiTenancyBundle\DependencyInjection\Compiler\ResolverCompilerPass;
 use Enhavo\Bundle\MultiTenancyBundle\DependencyInjection\Compiler\RolesProviderCompilerPass;
@@ -27,5 +28,6 @@ class EnhavoMultiTenancyBundle extends Bundle
         $container->addCompilerPass(new ResolverCompilerPass());
         $container->addCompilerPass(new TenantResolverAwareCompilerPass());
         $container->addCompilerPass(new RolesProviderCompilerPass());
+        $container->addCompilerPass(new ConditionUrlMatcherCompilerPass());
     }
 }
