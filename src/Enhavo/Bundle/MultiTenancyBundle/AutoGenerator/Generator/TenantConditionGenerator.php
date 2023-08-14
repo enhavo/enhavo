@@ -43,6 +43,6 @@ class TenantConditionGenerator extends AbstractGenerator
 
     public function getType()
     {
-        return 'condition';
+        return 'tenant_condition';
     }
 }
