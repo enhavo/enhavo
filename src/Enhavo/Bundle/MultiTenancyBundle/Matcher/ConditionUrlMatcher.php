@@ -8,8 +8,8 @@
 
 namespace Enhavo\Bundle\RoutingBundle\Matcher;
 
-use Enhavo\Bundle\RoutingBundle\Condition\ConditionResolverInterface;
-use Enhavo\Bundle\RoutingBundle\Request\RequestContext;
+use Enhavo\Bundle\MultiTenancyBundle\Request\RequestContext;
+use Enhavo\Bundle\MultiTenancyBundle\Resolver\ResolverInterface;
 use Symfony\Cmf\Component\Routing\NestedMatcher\UrlMatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouteCollection;
@@ -19,7 +19,7 @@ class ConditionUrlMatcher extends UrlMatcher
     public function __construct(
         RouteCollection $routes,
         RequestContext $context,
-        private ConditionResolverInterface $resolver,
+        private ResolverInterface $resolver,
     ){
         parent::__construct($routes, $context);
     }

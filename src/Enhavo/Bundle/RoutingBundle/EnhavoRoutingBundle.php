@@ -3,7 +3,6 @@
 namespace Enhavo\Bundle\RoutingBundle;
 
 use Doctrine\ORM\Mapping\Driver\XmlDriver;
-use Enhavo\Bundle\RoutingBundle\DependencyInjection\Compiler\ConditionResolverPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\Definition;
@@ -16,7 +15,6 @@ class EnhavoRoutingBundle extends Bundle
     public function build(ContainerBuilder $container)
     {
         $container->addCompilerPass($this->buildRouteCompilerPass());
-        $container->addCompilerPass(new ConditionResolverPass());
 
         $container->addCompilerPass(
             new TypeCompilerPass('enhavo_routing.auto_generator.route_generator_collector', 'enhavo_route.generator')
