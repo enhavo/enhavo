@@ -16,7 +16,7 @@ use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\Validator\Constraints\Collection;
 
-class Comment implements CommentInterface, ResourceInterface
+class Comment implements CommentInterface
 {
     /**
      * @var int
@@ -84,6 +84,7 @@ class Comment implements CommentInterface, ResourceInterface
     public function __construct()
     {
         $this->children = new ArrayCollection();
+        $this->createdAt = new \DateTime();
     }
 
     /**

@@ -1,19 +1,20 @@
 <?php
 /**
- * PublishSubscriber.php
- *
- * @since 15/10/16
- * @author gseidel
+ * Created by PhpStorm.
+ * User: gseidel
+ * Date: 2019-08-26
+ * Time: 00:45
  */
 
-namespace Enhavo\Bundle\ContentBundle\EventListener;
+namespace Enhavo\Bundle\AppBundle\EventListener;
 
 use Enhavo\Bundle\AppBundle\Event\ResourceEvent;
 use Enhavo\Bundle\AppBundle\Event\ResourceEvents;
-use Enhavo\Bundle\ContentBundle\Entity\Content;
+use Enhavo\Bundle\AppBundle\Model\Timestampable;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class UpdatedSubscriber implements EventSubscriberInterface
+
+class TimestampableSubscriber implements EventSubscriberInterface
 {
     public static function getSubscribedEvents()
     {
@@ -27,8 +28,12 @@ class UpdatedSubscriber implements EventSubscriberInterface
     {
         $resource = $event->getSubject();
 
-        if ($resource instanceof Content) {
-            $resource->setUpdated(new \DateTime());
+        if ($resource instanceof Timestampable) {
+            $now = new \DateTime();
+            $resource->setUpdatedAt($now);
+            if ($resource->getCreatedAt() === null) {
+                $resource->setCreatedAt($now);
+            }
         }
     }
 }

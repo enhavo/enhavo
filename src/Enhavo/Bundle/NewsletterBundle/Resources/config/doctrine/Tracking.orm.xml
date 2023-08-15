@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
-                  xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping">
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
     <entity name="Enhavo\Bundle\NewsletterBundle\Entity\Tracking" table="newsletter_tracking">
         <id name="id" type="integer" column="id">
             <generator />
         </id>
 
-        <field name="date" type="datetime" nullable="true">
-            <gedmo:timestampable on="create" />
-        </field>
+        <field name="date" type="datetime" nullable="true" />
         <field name="type" nullable="true" />
 
         <many-to-one field="receiver" target-entity="Enhavo\Bundle\NewsletterBundle\Entity\Receiver" inversed-by="tracking">

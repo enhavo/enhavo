@@ -14,6 +14,7 @@ use Enhavo\Bundle\NewsletterBundle\Entity\Receiver;
 use Enhavo\Bundle\NewsletterBundle\Exception\SendException;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 use Enhavo\Bundle\NewsletterBundle\Provider\ProviderInterface;
+use Enhavo\Bundle\RoutingBundle\Slugifier\Slugifier;
 use Psr\Log\LoggerInterface;
 use Twig\Environment;
 
@@ -259,8 +260,8 @@ class NewsletterManager
 
     public function update(NewsletterInterface $newsletter)
     {
-        if ($newsletter->getCreatedAt() === null) {
-            $newsletter->setCreatedAt(new \DateTime());
+        if ($newsletter->getSlug() === null) {
+            $newsletter->setSlug(Slugifier::slugify($newsletter->getSubject()));
         }
     }
 }

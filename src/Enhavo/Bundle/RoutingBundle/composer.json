@@ -16,6 +16,7 @@
     "enhavo/app-bundle": "dev-master",
     "enhavo/doctrine-extension-bundle": "dev-master",
     "enhavo/metadata": "dev-master",
+    "behat/transliterator": "^1.5",
     "symfony-cmf/routing-bundle": "^2.1"
   },
   "require-dev": {

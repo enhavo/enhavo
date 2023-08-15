@@ -23,10 +23,6 @@ enhavo_doctrine_extension:
                     idField: contentId
                     nameField: contentClass
 
-stof_doctrine_extensions:
-    class:
-        sluggable: Enhavo\Bundle\RoutingBundle\EventListener\SluggableListener
-
 enhavo_routing:
     classes:
         Enhavo\Bundle\RoutingBundle\Entity\Route:

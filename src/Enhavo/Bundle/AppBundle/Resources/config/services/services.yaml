@@ -107,3 +107,7 @@ services:
             - '@enhavo_app.template.manager'
         tags:
             - { name: kernel.event_subscriber }
+
+    Enhavo\Bundle\AppBundle\EventListener\TimestampableSubscriber:
+        tags:
+            - { name: kernel.event_subscriber }

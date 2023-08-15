@@ -8,24 +8,23 @@
 
 namespace Enhavo\Bundle\RoutingBundle\EventListener;
 
-use Gedmo\Sluggable\SluggableListener as GedmoSluggableListener;
 use Enhavo\Bundle\RoutingBundle\Slugifier\Slugifier;
 
-class SluggableListener extends GedmoSluggableListener
-{
-    public function __construct()
+/**
+ * We use this class only if Gedmo was included
+ */
+if (class_exists('Gedmo\Sluggable\SluggableListener')) {
+    class SluggableListener extends \Gedmo\Sluggable\SluggableListener
     {
-        parent::__construct();
-        $this->setTransliterator(array(SluggableListener::class, 'transliterate'));
-    }
+        public function __construct()
+        {
+            parent::__construct();
+            $this->setTransliterator([$this, 'transliterate']);
+        }
 
-    /**
-     * @param string $text
-     * @param string $separator
-     * @return string $text
-     */
-    public static function transliterate($text, $separator = '-')
-    {
-        return Slugifier::slugify($text, $separator);
+        public function transliterate($text, $separator = '-')
+        {
+            return Slugifier::slugify($text, $separator);
+        }
     }
 }

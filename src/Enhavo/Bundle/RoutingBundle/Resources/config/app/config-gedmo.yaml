@@ -1,0 +1,3 @@
+stof_doctrine_extensions:
+    class:
+        sluggable: Enhavo\Bundle\RoutingBundle\EventListener\SluggableListener

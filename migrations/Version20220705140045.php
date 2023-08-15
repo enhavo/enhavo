@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Migration;
+namespace DoctrineMigrations;
 
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20220520095843 extends AbstractMigration
+final class Version20220705140045 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,12 +20,12 @@ final class Version20220520095843 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE shop_product_variant ADD shortTitle VARCHAR(255) DEFAULT NULL, ADD `default` TINYINT(1) DEFAULT NULL, ADD `index` TINYINT(1) DEFAULT NULL');
+        $this->addSql('ALTER TABLE user_user ADD passwordUpdatedAt DATETIME DEFAULT NULL, ADD lastFailedLoginAttempt DATETIME DEFAULT NULL, ADD failedLoginAttempts INT DEFAULT NULL');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE shop_product_variant DROP shortTitle, DROP `default`, DROP `index`');
+        $this->addSql('ALTER TABLE user_user DROP passwordUpdatedAt, DROP lastFailedLoginAttempt, DROP failedLoginAttempts');
     }
 }

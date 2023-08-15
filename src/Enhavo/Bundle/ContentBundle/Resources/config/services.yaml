@@ -56,7 +56,7 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
-    Enhavo\Bundle\ContentBundle\EventListener\UpdatedSubscriber:
+    Enhavo\Bundle\ContentBundle\EventListener\SaveSubscriber:
         tags:
             - { name: kernel.event_subscriber }
 

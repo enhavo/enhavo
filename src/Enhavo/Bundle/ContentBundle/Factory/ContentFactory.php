@@ -13,8 +13,8 @@ class ContentFactory extends Factory
     {
         /** @var Content $resource */
         $resource = parent::createNew();
-        $resource->setCreated(new \DateTime());
-        $resource->setUpdated(new \DateTime());
+        $resource->setCreatedAt(new \DateTime());
+        $resource->setUpdatedAt(new \DateTime());
 
         return $resource;
     }
@@ -39,8 +39,8 @@ class ContentFactory extends Factory
         $newResource->setPublic($originalResource->isPublic());
         $newResource->setPublicationDate($originalResource->getPublicationDate());
         $newResource->setPublishedUntil($originalResource->getPublishedUntil());
-        $newResource->setCreated(new \DateTime());
-        $newResource->setUpdated(new \DateTime());
+        $newResource->setCreatedAt(new \DateTime());
+        $newResource->setUpdatedAt(new \DateTime());
 
         return $newResource;
     }
