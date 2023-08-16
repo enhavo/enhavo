@@ -9,6 +9,8 @@
 
 namespace Enhavo\Bundle\ContentBundle\Entity;
 
+use Enhavo\Bundle\AppBundle\Model\Timestampable;
+use Enhavo\Bundle\AppBundle\Model\TimestampableTrait;
 use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
 use Enhavo\Bundle\RoutingBundle\Model\Routeable;
 use Enhavo\Bundle\RoutingBundle\Model\Slugable;
@@ -18,15 +20,10 @@ use Enhavo\Bundle\ContentBundle\Sitemap\SitemapInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
-abstract class Content implements Publishable, Routeable, Slugable, SitemapInterface, ResourceInterface
+abstract class Content implements Publishable, Routeable, Slugable, SitemapInterface, ResourceInterface, Timestampable
 {
     use PublishableTrait;
-
-    /** @var \DateTime */
-    protected $created;
-
-    /** @var \DateTime */
-    protected $updated;
+    use TimestampableTrait;
 
     /** @var integer */
     protected $id;
@@ -72,52 +69,6 @@ abstract class Content implements Publishable, Routeable, Slugable, SitemapInter
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set created
-     *
-     * @param \DateTime $created
-     * @return Content
-     */
-    public function setCreated($created)
-    {
-        $this->created = $created;
-
-        return $this;
-    }
-
-    /**
-     * Get created
-     *
-     * @return \DateTime
-     */
-    public function getCreated()
-    {
-        return $this->created;
-    }
-
-    /**
-     * Set updated
-     *
-     * @param \DateTime $updated
-     * @return Content
-     */
-    public function setUpdated($updated)
-    {
-        $this->updated = $updated;
-
-        return $this;
-    }
-
-    /**
-     * Get updated
-     *
-     * @return \DateTime
-     */
-    public function getUpdated()
-    {
-        return $this->updated;
     }
 
     /**

@@ -4,6 +4,8 @@ namespace Enhavo\Bundle\NewsletterBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Enhavo\Bundle\AppBundle\Model\Timestampable;
+use Enhavo\Bundle\AppBundle\Model\TimestampableTrait;
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
@@ -13,71 +15,22 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 /**
  * Newsletter
  */
-class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
+class Newsletter implements ResourceInterface, Slugable, NewsletterInterface, Timestampable
 {
-    /**
-     * @var integer
-     */
-    private $id;
+    use TimestampableTrait;
 
-    /**
-     * @var string
-     */
-    private $slug;
+    private ?int $id = null;
+    private ?string $slug = null;
+    private ?string $subject = null;
+    private ?NodeInterface $content = null;
+    private ?\DateTime $startAt = null;
+    private ?\DateTime $finishAt = null;
+    private ?string $template = null;
+    private Collection $groups;
+    private Collection $receivers;
+    private string $state = NewsletterInterface::STATE_CREATED;
+    private Collection $attachments;
 
-    /**
-     * @var string
-     */
-    private $subject;
-
-    /**
-     * @var NodeInterface
-     */
-    private $content;
-
-    /**
-     * @var \DateTime|null
-     */
-    private $startAt;
-
-    /**
-     * @var \DateTime|null
-     */
-    private $finishAt;
-
-    /**
-     * @var \DateTime|null
-     */
-    private $createdAt;
-
-    /**
-     * @var string
-     */
-    private $template;
-
-    /**
-     * @var Collection
-     */
-    private $groups;
-
-    /**
-     * @var Collection
-     */
-    private $receivers;
-
-    /**
-     * @var string
-     */
-    private $state = NewsletterInterface::STATE_CREATED;
-
-    /*
-     * Collection
-     */
-    private $attachments;
-
-    /**
-     * Constructor
-     */
     public function __construct()
     {
         $this->receivers = new ArrayCollection();

@@ -59,7 +59,7 @@ class RepositoryCollector extends AbstractType implements CollectorInterface
     protected function convertToUrl(SitemapInterface $resource)
     {
         $url = new SitemapUrl();
-        $url->setLastModified($resource->getUpdated());
+        $url->setLastModified($resource->getUpdatedAt());
         $url->setLocation($this->router->generate($resource, [], UrlGeneratorInterface::ABSOLUTE_URL));
 
         return $url;

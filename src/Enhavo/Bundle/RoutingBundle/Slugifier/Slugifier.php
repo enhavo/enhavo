@@ -8,8 +8,6 @@
 
 namespace Enhavo\Bundle\RoutingBundle\Slugifier;
 
-use Gedmo\Sluggable\Util\Urlizer;
-
 class Slugifier implements SlugifierInterface
 {
     public static function slugify($content, $separator = '-')

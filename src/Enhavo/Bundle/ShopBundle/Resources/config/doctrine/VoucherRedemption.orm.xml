@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
-                  xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping">
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
     <entity name="Enhavo\Bundle\ShopBundle\Entity\VoucherRedemption" table="shop_voucher_redemption" repository-class="Enhavo\Bundle\ShopBundle\Repository\VoucherRedemptionRepository">
         <id name="id" type="integer" column="id">
             <generator />

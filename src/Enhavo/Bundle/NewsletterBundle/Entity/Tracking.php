@@ -51,6 +51,7 @@ class Tracking implements ResourceInterface
     public function __construct()
     {
         $this->subscriber = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->date = new \DateTime();
     }
 
     /**

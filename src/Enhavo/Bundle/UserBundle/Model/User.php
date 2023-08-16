@@ -4,11 +4,15 @@ namespace Enhavo\Bundle\UserBundle\Model;
 
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
+use Enhavo\Bundle\AppBundle\Model\Timestampable;
+use Enhavo\Bundle\AppBundle\Model\TimestampableTrait;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
-class User implements UserInterface, GroupableInterface, ResourceInterface, PasswordAuthenticatedUserInterface
+class User implements UserInterface, GroupableInterface, ResourceInterface, PasswordAuthenticatedUserInterface, Timestampable
 {
+    use TimestampableTrait;
+
     private ?int $id = null;
     private string $userIdentifier;
     private ?string $firstName = null;
