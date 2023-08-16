@@ -73,8 +73,9 @@ services:
         decorates: twig.error_renderer.html
         arguments:
             - '@twig'
-            - '@enhavo.error_handler.html.inner'
             - '%kernel.project_dir%'
+            - '@enhavo_app.template.manager'
+            - '@enhavo.error_handler.html.inner'
             - '@request_stack'
             - '%kernel.debug%'
 
