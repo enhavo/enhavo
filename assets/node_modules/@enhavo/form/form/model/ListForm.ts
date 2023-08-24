@@ -79,7 +79,6 @@ export class ListForm extends Form
         let item = JSON.parse(JSON.stringify(prototype));
         item = this.formFactory.create(item, this.getRoot().visitors, this);
         item.name = this.index.toString();
-        item.label = prototypeName.replace(new RegExp(this.prototypeName, 'g'), item.name);
         item.update();
         this.index++;
 

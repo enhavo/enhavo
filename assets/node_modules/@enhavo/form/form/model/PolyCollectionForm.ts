@@ -16,20 +16,11 @@ export class PolyCollectionForm extends ListForm
 
     public addItem(key?: string): Form
     {
-        let item = this.createItem(this.getPrototypeEntry(key), this.getPrototypeEntryName(key));
+        let prototype = this.findPrototype(key);
+        let item = this.createItem(prototype.form, prototype.name);
         this.children.push(item);
         this.updatePosition();
         return item;
-    }
-
-    private getPrototypeEntry(key: string): Form
-    {
-        return this.findPrototype(key).form;
-    }
-
-    private getPrototypeEntryName(key: string): string
-    {
-        return this.findPrototype(key).name;
     }
 
     private findPrototype(key: string): Prototype

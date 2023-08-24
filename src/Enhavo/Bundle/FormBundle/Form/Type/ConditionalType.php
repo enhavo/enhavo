@@ -24,6 +24,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ConditionalType extends AbstractVueType implements DataMapperInterface
 {
     private bool $keyChanged = false;
+    private ?string $key = null;
 
     public function __construct(
         private VueForm $vueForm,
@@ -50,6 +51,7 @@ class ConditionalType extends AbstractVueType implements DataMapperInterface
 
             $key = $this->resolveKey($options, $data, $form);
             if ($key) {
+                $this->key = $key;
                 $this->addConditional($options, $form,  $key);
             }
         });
@@ -87,6 +89,10 @@ class ConditionalType extends AbstractVueType implements DataMapperInterface
 
     private function addConditional($options, $form, $key)
     {
+        if ($key === null) {
+            return;
+        }
+
         if (!array_key_exists($key, $options['entry_types'])) {
             throw new \Exception(sprintf('Key "%s" not exists in entry types "%s"', $key, join(',', $options['entry_types'])));
         }
@@ -144,6 +150,13 @@ class ConditionalType extends AbstractVueType implements DataMapperInterface
         }
 
         $forms = iterator_to_array($forms);
+
+        if ($this->key) {
+            /** @var Form $keyForm */
+            $keyForm = $forms['key'];
+            $keyForm->setData($this->key);
+            $this->key = null;
+        }
 
         /** @var Form $conditionalForm */
         $conditionalForm = $forms['conditional'];
