@@ -3,6 +3,8 @@
 namespace Enhavo\Bundle\FormBundle\Tests\Form\Type;
 
 use Enhavo\Bundle\FormBundle\Form\Type\ConditionalType;
+use Enhavo\Bundle\VueFormBundle\Form\Extension\PasswordVueTypeExtension;
+use Enhavo\Bundle\VueFormBundle\Form\Extension\VueTypeExtension;
 use Enhavo\Bundle\VueFormBundle\Form\VueForm;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -14,6 +16,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ConditionalTypeTest extends TypeTestCase
 {
+    protected function getTypeExtensions()
+    {
+        return [
+            new VueTypeExtension()
+        ];
+    }
     protected function getExtensions()
     {
         return [
@@ -58,6 +66,7 @@ class ConditionalTypeTest extends TypeTestCase
                 } elseif ($data instanceof \DateTime) {
                     return 'date';
                 }
+                return null;
             },
         ]);
 
@@ -82,6 +91,7 @@ class ConditionalTypeTest extends TypeTestCase
                 } elseif ($data instanceof Bike) {
                     return 'bike';
                 }
+                return null;
             },
         ]);
 
@@ -93,6 +103,70 @@ class ConditionalTypeTest extends TypeTestCase
         ]);
 
         $this->assertInstanceOf(Bike::class, $form->getData());
+    }
+
+    public function testKeyValue()
+    {
+        $car = new Car();
+
+        $form = $this->factory->create(ConditionalType::class, $car, [
+            'entry_types' => [
+                'car' => CarType::class,
+                'bike' => BikeType::class,
+            ],
+            'entry_type_resolver' => function($data) {
+                if ($data instanceof Car) {
+                    return 'car';
+                } elseif ($data instanceof Bike) {
+                    return 'bike';
+                }
+                return null;
+            },
+        ]);
+
+        $view = $form->createView();
+
+        $this->assertEquals('car', $view->children['key']->vars['value']);
+    }
+
+    public function testNested()
+    {
+        $car = new Car();
+
+        $form = $this->factory->create(ConditionalType::class, $car, [
+            'entry_types' => [
+                'car' => ConditionalType::class,
+                'bike' => BikeType::class,
+            ],
+            'entry_type_resolver' => function($data) {
+                if ($data instanceof Car) {
+                    return 'car';
+                } elseif ($data instanceof Bike) {
+                    return 'bike';
+                }
+                return null;
+            },
+            'entry_types_options' => [
+                'car' => [
+                    'entry_types' => [
+                        'car' => CarType::class,
+                        'bike' => BikeType::class,
+                    ],
+                    'entry_type_resolver' => function($data) {
+                        if ($data instanceof Car) {
+                            return 'car';
+                        } elseif ($data instanceof Bike) {
+                            return 'bike';
+                        }
+                        return null;
+                    },
+                ]
+            ]
+        ]);
+
+        $view = $form->createView();
+
+        $this->assertEquals('car', $view->children['key']->vars['value']);
     }
 }
 

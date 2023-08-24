@@ -19,8 +19,6 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Form;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -351,7 +349,7 @@ class FormController extends AbstractController
         return $this->handleForm($form, $request);
     }
 
-    #[Route('/conditional', name: "app_form_poly_collection")]
+    #[Route('/conditional', name: "app_form_conditional")]
     public function conditionalAction(Request $request)
     {
         $form = $this->createFormBuilder(null)
