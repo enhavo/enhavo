@@ -140,9 +140,11 @@ class FileType extends AbstractType
 
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
-        foreach ($view->children['parameters'] as $child) {
-            $child->vars['attr'] = $child->vars['attr'] ?: [];
-            $child->vars['attr']['data-parameter-key'] = $child->vars['name'];
+        if (isset($view->children['parameters'])) {
+            foreach ($view->children['parameters'] as $child) {
+                $child->vars['attr'] = $child->vars['attr'] ?: [];
+                $child->vars['attr']['data-parameter-key'] = $child->vars['name'];
+            }
         }
     }
 
