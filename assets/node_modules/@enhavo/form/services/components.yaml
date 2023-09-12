@@ -71,3 +71,9 @@ services:
         static: true
         tags:
             - { name: vue.component, component: 'form-conditional' }
+
+    '@enhavo/form/components/FormChoiceCollapsedComponent':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'form-choice-collapsed' }

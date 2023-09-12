@@ -20,6 +20,7 @@ export class VueFactory
 
     registerComponent(name: string, component: Component)
     {
+        this.deleteComponent(name);
         this.components.push(new RegistryComponent(name, component));
     }
 
@@ -55,6 +56,21 @@ export class VueFactory
         }
 
         return app;
+    }
+
+    private deleteComponent(name: string)
+    {
+        let foundEntry = null;
+        for (let entry of this.components) {
+            if (entry.name === name) {
+                foundEntry = entry;
+                break;
+            }
+        }
+
+        if (foundEntry) {
+            this.components.splice(this.components.indexOf(foundEntry), 1);
+        }
     }
 }
 
