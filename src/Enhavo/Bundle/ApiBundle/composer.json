@@ -1,0 +1,23 @@
+{
+  "name": "enhavo/api-bundle",
+  "type": "symfony-bundle",
+  "description": "EnhavoApiBundle",
+  "keywords": ["framework"],
+  "homepage": "https://enhavo.com",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Gerhard Seidel",
+      "email": "gseidel.message@googlemail.com"
+    }
+  ],
+  "require": {
+    "php": "^8.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.5"
+  },
+  "autoload": {
+    "psr-4": { "Enhavo\\Bundle\\ApiBundle\\": "" }
+  }
+}

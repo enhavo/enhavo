@@ -1,0 +1,4 @@
+services:
+    Enhavo\Bundle\ApiBundle\Endpoint\Type\ApiEndpointType:
+        tags:
+            - { name: enhavo_api.endpoint }
