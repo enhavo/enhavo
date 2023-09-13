@@ -4,7 +4,7 @@
       > .menu-child {min-height:0;}
       .menu-list {
         .menu-list-items {
-          .label-container {padding-left:5px;text-align:left;}
+          .label-container {padding-left:5px;}
         }
       }
     }
@@ -17,8 +17,8 @@
       }
     }
     .menu-item {text-decoration: none; color: $grey4;
-        &:visited {color: $grey4}
-        &a{color: $grey4}
+      &:visited {color: $grey4}
+      &a{color: $grey4}
     }
   }
   &.menu-collapsed {flex-wrap:wrap;display:inline-flex;writing-mode: vertical-lr;height:calc(100vh - #{$toolbarHeight + 13px});overflow-y:visible;
