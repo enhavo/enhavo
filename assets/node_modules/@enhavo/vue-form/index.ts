@@ -9,7 +9,6 @@ import FormErrorsComponent from '@enhavo/vue-form/components/FormErrorsComponent
 import FormFormComponent from '@enhavo/vue-form/components/FormFormComponent.vue';
 import FormHelpComponent from '@enhavo/vue-form/components/FormHelpComponent.vue';
 import FormLabelComponent from '@enhavo/vue-form/components/FormLabelComponent.vue';
-import FormRestComponent from '@enhavo/vue-form/components/FormRestComponent.vue';
 import FormRowComponent from '@enhavo/vue-form/components/FormRowComponent.vue';
 import FormRowsComponent from '@enhavo/vue-form/components/FormRowsComponent.vue';
 import FormTextareaComponent from '@enhavo/vue-form/components/FormTextareaComponent.vue';
@@ -39,7 +38,6 @@ class Plugin implements PluginObject<Config>
         Vue.component('form-help', FormHelpComponent);
         Vue.component('form-simple', FormSimpleComponent);
         Vue.component('form-label', FormLabelComponent);
-        Vue.component('form-rest', FormRestComponent);
         Vue.component('form-textarea', FormTextareaComponent);
         Vue.component('form-widget', FormWidgetComponent);
         Vue.component('form-radio', FormRadioComponent);

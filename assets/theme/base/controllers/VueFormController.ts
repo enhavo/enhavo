@@ -1,5 +1,4 @@
 import {Controller} from "@hotwired/stimulus";
-import vueForm from "@enhavo/vue-form/index";
 import {VueFactory} from "@enhavo/app/vue/VueFactory";
 import {reactive} from "vue";
 import {FormFactory} from "@enhavo/vue-form/form/FormFactory";
@@ -39,7 +38,6 @@ export default class extends Controller
             form: reactive(form)
         });
 
-        app.use(vueForm);
         app.mount(this.element);
 
         window.setTimeout(() => {
