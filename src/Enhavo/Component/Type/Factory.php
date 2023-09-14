@@ -39,7 +39,7 @@ class Factory implements FactoryInterface
         $type = $this->registry->getType($options['type']);
         $parents = $this->getParents($type);
         unset($options['type']);
-        $class = new $this->class($type, $parents, $options, $key);
+        $class = new $this->class($type, $parents, $options, $key, $this->getExtensions($type, $parents));
         return $class;
     }
 
@@ -55,5 +55,33 @@ class Factory implements FactoryInterface
         }
 
         return array_reverse($parents);
+    }
+
+    private function getExtensions(TypeInterface $type, array $parents): array
+    {
+        $extensions = [];
+
+        $checkTypes = [$type];
+        foreach ($parents as $parent) {
+            $checkTypes[] = $parent;
+        }
+
+        foreach ($checkTypes as $checkType) {
+            foreach ($this->registry->getExtensions($checkType) as $foundExtension) {
+                $exists = false;
+                foreach ($extensions as $extension) {
+                    if ($extension === $foundExtension) {
+                        $exists = true;
+                        break;
+                    }
+                }
+
+                if (!$exists) {
+                    $extensions[] = $foundExtension;
+                }
+            }
+        }
+
+        return $extensions;
     }
 }

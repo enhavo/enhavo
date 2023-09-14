@@ -17,15 +17,15 @@ class Registry implements RegistryInterface
 {
     use ContainerAwareTrait;
 
-    /**
-     * @var string
-     */
-    private $namespace;
+    /** @var string */
+    private string $namespace;
 
-    /**
-     * @var RegistryEntry[]
-     */
-    private $entries = [];
+    /** @var RegistryEntry[] */
+    private array $entries = [];
+
+    /** @var RegistryExtension[] */
+    private array $extensions = [];
+
 
     public function __construct(string $namespace)
     {
@@ -47,7 +47,7 @@ class Registry implements RegistryInterface
      * @param $class
      * @throws TypeNotValidException
      */
-    private function checkInterface($class)
+    private function checkInterface($class): void
     {
         if (!in_array(TypeInterface::class, class_implements($class))) {
             throw TypeNotValidException::invalidInterface($class);
@@ -164,5 +164,57 @@ class Registry implements RegistryInterface
             $names[] = $entry->getClass();
         }
         return $names;
+    }
+
+    public function registerExtension(string $class, string $id, int $priority = 10)
+    {
+        $this->checkExtensionInterface($class);
+        /** @var string|TypeExtensionInterface $class */
+        $this->checkExtendedTypeAvailable($class);
+
+        $this->extensions[] = new RegistryExtension($id, $class, $class::getExtendedTypes(), $priority);
+
+        usort($this->extensions, function (RegistryExtension $a, RegistryExtension $b) {
+            return $b->getPriority() - $a->getPriority();
+        });
+    }
+
+    private function checkExtensionInterface($class): void
+    {
+        if (!in_array(TypeExtensionInterface::class, class_implements($class))) {
+            throw TypeNotValidException::invalidExtensionInterface($class);
+        }
+    }
+
+    private function checkExtendedTypeAvailable($extensionClass)
+    {
+        $types = $extensionClass::getExtendedTypes();
+        foreach ($this->entries as $entry) {
+            foreach ($types as $type) {
+                if ($entry->getClass() === $type || ($entry->getName() && $entry->getName() === $type)) {
+                    return;
+                }
+            }
+        }
+
+        throw TypeNotValidException::extendedTypeNotExists($extensionClass, $types);
+    }
+
+    public function getExtensions(TypeInterface $type): array
+    {
+        $extensions = [];
+        foreach ($this->extensions as $extension) {
+            foreach ($extension->getExtendedTypes() as $extendedType) {
+                if ($type::class === $extendedType || ($type::getName() && $type::getName() === $extendedType)) {
+                    if ($extension->getService() === null) {
+                        $service = $this->container->get($extension->getId());
+                        $extension->setService($service);
+                    }
+                    $extensionService = clone $extension->getService();
+                    $extensions[] = $extensionService;
+                }
+            }
+        }
+        return $extensions;
     }
 }

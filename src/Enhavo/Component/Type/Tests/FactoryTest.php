@@ -8,6 +8,7 @@
 
 namespace Enhavo\Component\Type\Tests;
 
+use Enhavo\Component\Type\AbstractTypeExtension;
 use Enhavo\Component\Type\AbstractType;
 use Enhavo\Component\Type\Exception\TypeCreateException;
 use Enhavo\Component\Type\Factory;
@@ -34,12 +35,16 @@ class FactoryTest extends TestCase
     {
         $testType = new FactoryTestType();
         $parentType = new FactoryParentType();
+        $parentExtensionType = new FactoryParentExtensionType();
         $rootType = new FactoryRootType();
+        $rootExtensionType = new FactoryRootExtensionType();
 
-        $dependencies =$this->createDependencies();
+        $dependencies = $this->createDependencies();
         $dependencies->registry->register('test', $testType);
         $dependencies->registry->register('parent', $parentType);
         $dependencies->registry->register('root', $rootType);
+        $dependencies->registry->registerExtension('parent', $parentExtensionType);
+        $dependencies->registry->registerExtension('root', $rootExtensionType);
         $factory = $this->createInstance($dependencies);
 
         /** @var ConcreteTest $typeContainer */
@@ -51,6 +56,7 @@ class FactoryTest extends TestCase
         $this->assertTrue($testType === $typeContainer->type);
         $this->assertEquals(['option' => 'value'], $typeContainer->options);
         $this->assertEquals([$rootType, $parentType], $typeContainer->parents);
+        $this->assertEquals([$rootExtensionType, $parentExtensionType], $typeContainer->extensions);
     }
 
     public function testMissingType()
@@ -86,17 +92,21 @@ class ConcreteTest
     /** @var array */
     public $options;
 
+    /** @var array */
+    public $extensions;
+
     /**
      * ConcreteTest constructor.
      * @param TypeInterface $type
      * @param TypeInterface[] $parents
      * @param array $options
      */
-    public function __construct(TypeInterface $type, array $parents, array $options)
+    public function __construct(TypeInterface $type, array $parents, array $options, $key = null, $extensions = [])
     {
         $this->type = $type;
         $this->parents = $parents;
         $this->options = $options;
+        $this->extensions = $extensions;
     }
 }
 
@@ -116,9 +126,25 @@ class FactoryParentType extends AbstractType
     }
 }
 
+class FactoryParentExtensionType extends AbstractTypeExtension
+{
+    public static function getExtendedTypes(): array
+    {
+        return [FactoryParentType::class];
+    }
+}
+
 class FactoryRootType extends AbstractType
 {
 
+}
+
+class FactoryRootExtensionType extends AbstractTypeExtension
+{
+    public static function getExtendedTypes(): array
+    {
+        return [FactoryRootType::class];
+    }
 }
 
 
