@@ -29,7 +29,6 @@ class TypeExtensionCompilerPass implements CompilerPassInterface
         $registryDefinitionId = sprintf('%s[%s]', RegistryInterface::class, $this->namespace);
         $registryDefinition = $container->getDefinition($registryDefinitionId);
 
-
         $taggedServices = $container->findTaggedServiceIds($this->tagName);
 
         foreach ($taggedServices as $id => $tagAttributes) {
