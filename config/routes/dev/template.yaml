@@ -1,0 +1,3 @@
+template:
+    prefix: /template
+    resource: ../template/*

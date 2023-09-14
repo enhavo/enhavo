@@ -1,0 +1,8 @@
+template_hello:
+    path: /endpoint/world.{_format}
+    defaults:
+        _format: 'html'
+        _endpoint:
+            type: template
+            load: [hello.yaml, hello2.php]
+            template: 'theme/endpoint/hello.html.twig'

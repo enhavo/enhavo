@@ -118,3 +118,9 @@ services:
             - '@enhavo_app.template.manager'
         tags:
             - { name: enhavo_api.endpoint }
+
+    Enhavo\Bundle\AppBundle\Endpoint\TemplateEndpointType:
+        arguments:
+            - '%kernel.project_dir%/data'
+        tags:
+            - { name: enhavo_api.endpoint }
