@@ -4,3 +4,20 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: controller.service_arguments }
+
+    Enhavo\Bundle\ApiBundle\EventListener\EndpointRouteListener:
+        arguments:
+            - '@Enhavo\Component\Type\FactoryInterface[Endpoint]'
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, priority: -100 }
+
+    Enhavo\Bundle\ApiBundle\Routing\Loader\EndpointDirectoryLoader:
+        arguments:
+            - '@file_locator'
+            - '@Enhavo\Bundle\ApiBundle\Routing\Loader\AnnotatedRouteEndpointLoader'
+        tags:
+            - { name: routing.loader }
+
+    Enhavo\Bundle\ApiBundle\Routing\Loader\AnnotatedRouteEndpointLoader:
+        arguments:
+            - '@annotation_reader'

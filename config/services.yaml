@@ -6,6 +6,11 @@ services:
         autowire: false
         autoconfigure: false
 
+    App\Endpoint\:
+        resource: '../src/App/Endpoint'
+        autowire: true
+        autoconfigure: true
+
     App\Controller\:
         resource: '../src/App/Controller'
         calls:
