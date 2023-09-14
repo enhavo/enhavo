@@ -26,6 +26,9 @@ abstract class AbstractContainerType
     /** @var string|null */
     protected $key;
 
+    /** @var TypeExtensionInterface[] */
+    protected $extensions;
+
     /**
      * AbstractContainerType constructor.
      * @param TypeInterface $type
@@ -33,23 +36,43 @@ abstract class AbstractContainerType
      * @param array $options
      * @param string|null $key
      */
-    public function __construct(TypeInterface $type, array $parents, array $options, string $key = null)
+    public function __construct(TypeInterface $type, array $parents, array $options, string $key = null, array $extensions = [])
     {
         $this->type = $type;
         $this->parents = $parents;
         $this->key = $key;
+        $this->extensions = $extensions;
 
         $resolver = new OptionsResolver();
-        foreach($this->parents as $parent) {
+        foreach ($this->parents as $parent) {
             $parent->configureOptions($resolver);
+            foreach ($this->extensions as $extension) {
+                if ($this->isExtendable($parent, $extension)) {
+                    $extension->configureOptions($resolver);
+                }
+            }
         }
         $this->type->configureOptions($resolver);
+        foreach ($this->extensions as $extension) {
+            if ($this->isExtendable($this->type, $extension)) {
+                $extension->configureOptions($resolver);
+            }
+        }
 
         try {
             $this->options = $resolver->resolve($options);
         } catch (MissingOptionsException $exception) {
             throw new MissingOptionsException(sprintf('%s: %s', get_class($type), $exception->getMessage()), $exception->getCode(), $exception);
         }
+    }
 
+    protected function isExtendable(TypeInterface $type, TypeExtensionInterface $extension): bool
+    {
+        foreach ($extension::getExtendedTypes() as $extendedType) {
+            if ($type::class === $extendedType || ($type::getName() && $type::getName() === $extendedType)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -11,5 +11,7 @@ namespace Enhavo\Component\Type;
 
 interface RegistryInterface
 {
-    public function getType(string $name);
+    public function getType(string $name): TypeInterface;
+
+    public function getExtensions(TypeInterface $type): array;
 }

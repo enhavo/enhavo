@@ -8,6 +8,7 @@
 
 namespace Enhavo\Component\Type\Exception;
 
+use Enhavo\Component\Type\TypeExtensionInterface;
 use Enhavo\Component\Type\TypeInterface;
 
 class TypeNotValidException extends \InvalidArgumentException
@@ -15,6 +16,16 @@ class TypeNotValidException extends \InvalidArgumentException
     public static function invalidInterface($class)
     {
         return new self(sprintf('"%s" does not implement "%s"', $class, TypeInterface::class));
+    }
+
+    public static function invalidExtensionInterface($class)
+    {
+        return new self(sprintf('"%s" does not implement "%s"', $class, TypeExtensionInterface::class));
+    }
+
+    public static function extendedTypeNotExists(string $extensionClass, array $extendedTypes)
+    {
+        return new self(sprintf('Type "%s" does not exists for extension "%s"', join(',', $extendedTypes), $extensionClass));
     }
 
     public static function nameExists($name, $namespace, $class)

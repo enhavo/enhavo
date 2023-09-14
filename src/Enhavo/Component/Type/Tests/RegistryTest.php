@@ -8,6 +8,7 @@
 
 namespace Enhavo\Component\Type\Tests;
 
+use Enhavo\Component\Type\AbstractTypeExtension;
 use Enhavo\Component\Type\AbstractType;
 use Enhavo\Component\Type\Exception\TypeNotFoundException;
 use Enhavo\Component\Type\Exception\TypeNotValidException;
@@ -162,6 +163,50 @@ class RegistryTest extends TestCase
         $registry->register(TestType::class, TestType::class);
         $registry->register(OtherTestType::class, OtherTestType::class);
     }
+
+    public function testRegisterExtension()
+    {
+        $dependencies = $this->createDependencies();
+        $testExtensionType = new TestExtensionType();
+        $testOtherExtensionType = new TestOtherExtensionType();
+        $dependencies->container->method('get')->willReturnCallback(function($id) use ($testExtensionType, $testOtherExtensionType) {
+            return match ($id) {
+                $testExtensionType::class => $testExtensionType,
+                $testOtherExtensionType::class => $testOtherExtensionType,
+                default => null,
+            };
+        });
+
+        $registry = $this->createInstance($dependencies);
+        $registry->register(TestType::class, TestType::class);
+        $registry->registerExtension(TestExtensionType::class, TestExtensionType::class, 1);
+        $registry->registerExtension(TestOtherExtensionType::class, TestOtherExtensionType::class, 3);
+
+        $testType = new TestType();
+        $extensions = $registry->getExtensions($testType);
+
+        $this->assertCount(2, $extensions);
+        $this->assertTrue($extensions[0] instanceof TestOtherExtensionType);
+        $this->assertTrue($extensions[1] instanceof TestExtensionType);
+    }
+
+    public function testRegisterExtensionWithWrongInterface()
+    {
+        $this->expectException(TypeNotValidException::class);
+
+        $dependencies = $this->createDependencies();
+        $registry = $this->createInstance($dependencies);
+        $registry->registerExtension(TestType::class, TestType::class);
+    }
+
+    public function testRegisterExtensionWithNotExistingExtendedType()
+    {
+        $this->expectException(TypeNotValidException::class);
+
+        $dependencies = $this->createDependencies();
+        $registry = $this->createInstance($dependencies);
+        $registry->registerExtension(TestExtensionType::class, TestExtensionType::class);
+    }
 }
 
 class RegistryDependencies
@@ -187,6 +232,22 @@ class TestType extends AbstractType
     public static function getName(): ?string
     {
         return 'test';
+    }
+}
+
+class TestExtensionType extends AbstractTypeExtension
+{
+    public static function getExtendedTypes(): array
+    {
+        return [TestType::class];
+    }
+}
+
+class TestOtherExtensionType extends AbstractTypeExtension
+{
+    public static function getExtendedTypes(): array
+    {
+        return [TestType::class];
     }
 }
 
