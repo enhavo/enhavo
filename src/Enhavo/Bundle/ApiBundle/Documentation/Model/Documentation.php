@@ -37,6 +37,15 @@ class Documentation
         return $this;
     }
 
+    public function info(): Info
+    {
+        if (!array_key_exists('info', $this->data)) {
+            $this->data['info'] = [];
+        }
+
+        return new Info($this->data['info'], $this);
+    }
+
     public function getOutput(): array
     {
         return $this->data;

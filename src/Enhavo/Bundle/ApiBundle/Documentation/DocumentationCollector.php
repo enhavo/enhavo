@@ -30,13 +30,20 @@ class DocumentationCollector implements EndpointFactoryAwareInterface
             )));
         }
 
+        $sectionConfig = $this->sectionConfig[$section];
 
         /** @var RouteCollection $routes */
         $routes = $this->router->getRouteCollection();
 
         $documentation = new Documentation();
 
-        $documentation->version('3.0.0');
+        $documentation->version($sectionConfig['version']);
+        $documentation
+            ->info()
+                ->title($sectionConfig['info']['title'])
+                ->description($sectionConfig['info']['description'])
+                ->version($sectionConfig['info']['version'])
+            ->end();
 
         foreach ($routes as $route) {
             $defaults = $route->getDefaults();

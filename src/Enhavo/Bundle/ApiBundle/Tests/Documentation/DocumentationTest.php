@@ -74,4 +74,22 @@ class DocumentationTest extends TestCase
             ]
         ], $output['paths']['/test/url']['post']['responses'][200]['application/json']);
     }
+
+    public function testInfo()
+    {
+        $documentation = new Documentation();
+
+        $documentation = $documentation
+            ->info()
+                ->title('This is a title')
+                ->description('This is a description')
+                ->version('This is a version')
+            ->end();
+
+        $output = $documentation->getOutput();
+
+        $this->assertEquals('This is a title', $output['info']['title']);
+        $this->assertEquals('This is a description', $output['info']['description']);
+        $this->assertEquals('This is a version', $output['info']['version']);
+    }
 }

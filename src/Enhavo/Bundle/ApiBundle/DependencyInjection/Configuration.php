@@ -47,7 +47,15 @@ class Configuration implements ConfigurationInterface
     {
         $node
             ->children()
-                ->scalarNode('version')->defaultValue('3.0.1')->end()
+                ->scalarNode('version')->defaultValue('3.0.0')->end()
+                ->arrayNode('info')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('title')->defaultValue(null)->end()
+                        ->scalarNode('description')->defaultValue(null)->end()
+                        ->scalarNode('version')->defaultValue(null)->end()
+                    ->end()
+                ->end()
             ->end()
         ;
     }
