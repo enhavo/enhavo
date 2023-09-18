@@ -20,12 +20,6 @@ class Content
         return new Schema($this->content['schema'], $this);
     }
 
-    public function example($data): self
-    {
-        $this->content['examples'] = $data;
-        return $this;
-    }
-
     public function end()
     {
         return $this->parent;

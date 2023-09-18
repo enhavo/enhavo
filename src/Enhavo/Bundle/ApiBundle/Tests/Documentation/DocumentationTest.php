@@ -41,9 +41,6 @@ class DocumentationTest extends TestCase
                                     ->end()
                                 ->end()
                             ->end()
-                            ->example([
-                                'test' => 'hello'
-                            ])
                         ->end()
                     ->end()
                 ->end()
@@ -69,10 +66,7 @@ class DocumentationTest extends TestCase
                     ]
                 ]
             ],
-            'examples' => [
-                'test' => 'hello'
-            ]
-        ], $output['paths']['/test/url']['post']['responses'][200]['application/json']);
+        ], $output['paths']['/test/url']['post']['responses'][200]['content']['application/json']);
     }
 
     public function testInfo()
