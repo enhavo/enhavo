@@ -19,11 +19,15 @@ class Response
 
     public function content($mimeType = 'application/json'): Content
     {
-        if (!array_key_exists($mimeType, $this->response)) {
-            $this->response[$mimeType] = [];
+        if (!array_key_exists('content', $this->response)) {
+            $this->response['content'] = [];
         }
 
-        return new Content($this->response[$mimeType], $this);
+        if (!array_key_exists($mimeType, $this->response['content'])) {
+            $this->response['content'][$mimeType] = [];
+        }
+
+        return new Content($this->response['content'][$mimeType], $this);
     }
 
     public function end(): Method

@@ -9,7 +9,3 @@ app:
 endpoint:
     resource: ../src/App/Endpoint
     type: endpoint
-
-app_controller:
-    resource: ../src/App/Controller
-    type: annotation
