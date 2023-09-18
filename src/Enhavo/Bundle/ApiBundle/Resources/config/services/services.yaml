@@ -1,5 +1,7 @@
 services:
     Enhavo\Bundle\ApiBundle\Controller\DocumentationController:
+        arguments:
+            - '@Enhavo\Bundle\ApiBundle\Documentation\DocumentationCollector'
         calls:
             - [setContainer, ['@service_container']]
         tags:
@@ -21,3 +23,10 @@ services:
     Enhavo\Bundle\ApiBundle\Routing\Loader\AnnotatedRouteEndpointLoader:
         arguments:
             - '@annotation_reader'
+
+    Enhavo\Bundle\ApiBundle\Documentation\DocumentationCollector:
+        arguments:
+            - '@router'
+            - '%enhavo_api.documentation%'
+        calls:
+            - [setEndpointFactory, ['@Enhavo\Component\Type\FactoryInterface[Endpoint]']]

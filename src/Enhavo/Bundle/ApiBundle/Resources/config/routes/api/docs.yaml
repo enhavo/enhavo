@@ -1,5 +1,6 @@
 enhavo_api_documentation_index:
-    path: /api/docs
+    path: /docs/{section}
     defaults:
         _controller: Enhavo\Bundle\ApiBundle\Controller\DocumentationController::indexAction
+        section: default
     methods: [GET]

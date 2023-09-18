@@ -1,5 +1,0 @@
-enhavo_api_documentation_index:
-    path: /docs
-    defaults:
-        _controller: Enhavo\Bundle\ApiBundle\Controller\DocumentationController::indexAction
-    methods: [GET]

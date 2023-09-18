@@ -9,7 +9,7 @@
 <body>
     <div id="myDomId"></div>
 
-    <div data-controller="documentation" >
+    <div data-controller="documentation" data-documentation-data-value="{{ data|json_encode|e }}">
         <div data-documentation-target="node"></div>
     </div>
 
