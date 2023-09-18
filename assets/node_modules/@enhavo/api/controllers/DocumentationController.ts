@@ -4,7 +4,12 @@ export default class extends Controller
 {
     static targets = [ "node" ]
 
+    static values = {
+        data: Object,
+    }
+
     public nodeTarget: HTMLElement;
+    public dataValue: Object;
 
     async connect()
     {
@@ -16,7 +21,7 @@ export default class extends Controller
 
         SwaggerUI({
             domNode: this.nodeTarget,
-            url: "https://petstore.swagger.io/v2/swagger.json"
+            spec: this.dataValue
         });
     }
 }

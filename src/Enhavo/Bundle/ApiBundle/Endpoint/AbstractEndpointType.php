@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\ApiBundle\Endpoint;
 
-use Enhavo\Bundle\ApiBundle\Documentation\Writer;
+use Enhavo\Bundle\ApiBundle\Documentation\Model\Path;
 use Enhavo\Bundle\ApiBundle\Endpoint\Type\ApiEndpointType;
 use Enhavo\Component\Type\AbstractType;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +21,7 @@ class AbstractEndpointType extends AbstractType implements EndpointTypeInterface
         return $this->parent->getResponse($options, $request, $data, $context);
     }
 
-    public function describe($options, Writer $writer)
+    public function describe($options, Path $path)
     {
 
     }

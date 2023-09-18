@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\ApiBundle\DependencyInjection;
 
+use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -20,6 +21,34 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder('enhavo_api');
         $rootNode = $treeBuilder->getRootNode();
 
+        $this->addDocumentationNode($rootNode);
+
         return $treeBuilder;
+
+    }
+
+    private function addDocumentationNode(NodeDefinition $node)
+    {
+        $prototype = $node
+            ->children()
+                ->arrayNode('documentation')
+                    ->children()
+                        ->arrayNode('section')
+                            ->useAttributeAsKey('key')
+                            ->prototype('array')
+                                ->addDefaultsIfNotSet()
+
+        ;
+
+        $this->addSectionMetadata($prototype);
+    }
+
+    private function addSectionMetadata(NodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->scalarNode('version')->defaultValue('3.0.1')->end()
+            ->end()
+        ;
     }
 }

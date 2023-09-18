@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\ApiBundle\Endpoint\Type;
 
+use Enhavo\Bundle\ApiBundle\Documentation\Model\Path;
 use Enhavo\Bundle\ApiBundle\Documentation\Writer;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Bundle\ApiBundle\Endpoint\Data;
@@ -24,7 +25,7 @@ class ApiEndpointType implements EndpointTypeInterface
         return new JsonResponse($data->normalize(), $context->getStatusCode());
     }
 
-    public function describe($options, Writer $writer)
+    public function describe($options, Path $path)
     {
 
     }

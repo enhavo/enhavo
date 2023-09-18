@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\ApiBundle\Endpoint;
 
+use Enhavo\Bundle\ApiBundle\Documentation\Model\Path;
 use Enhavo\Component\Type\AbstractContainerType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,5 +37,24 @@ class Endpoint extends AbstractContainerType
         }
 
         return $this->type->getResponse($this->options, $request, $data, $context);
+    }
+
+    public function describe(Path $path)
+    {
+        foreach ($this->parents as $parent) {
+            $parent->describe($this->options, $path);
+            foreach ($this->extensions as $extension) {
+                if ($this->isExtendable($parent, $extension)) {
+                    $extension->describe($this->options, $path);
+                }
+            }
+        }
+
+        $this->type->describe($this->options, $path);
+        foreach ($this->extensions as $extension) {
+            if ($this->isExtendable($this->type, $extension)) {
+                $extension->describe($this->options, $path);
+            }
+        }
     }
 }

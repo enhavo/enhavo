@@ -24,6 +24,8 @@ class EnhavoApiExtension extends Extension implements PrependExtensionInterface
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $container->setParameter('enhavo_api.documentation', $config['documentation']['section']);
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services/services.yaml');
         $loader->load('services/endpoint.yaml');
