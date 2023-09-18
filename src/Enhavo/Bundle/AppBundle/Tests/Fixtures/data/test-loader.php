@@ -3,7 +3,5 @@
 use Enhavo\Bundle\AppBundle\Endpoint\Loader;
 
 return function(Loader $loader) {
-    return [
-        'message' => 'test',
-    ];
+    return $loader->load('test.php');
 };
