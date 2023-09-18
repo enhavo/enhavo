@@ -112,15 +112,19 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
-    Enhavo\Bundle\AppBundle\Endpoint\ViewEndpointType:
+    Enhavo\Bundle\AppBundle\Endpoint\Type\ViewEndpointType:
         arguments:
             - '@twig'
             - '@enhavo_app.template.manager'
         tags:
             - { name: enhavo_api.endpoint }
 
-    Enhavo\Bundle\AppBundle\Endpoint\TemplateEndpointType:
+    Enhavo\Bundle\AppBundle\Endpoint\Type\TemplateEndpointType:
         arguments:
-            - '%kernel.project_dir%/data'
+            - '@Enhavo\Bundle\AppBundle\Endpoint\Loader'
         tags:
             - { name: enhavo_api.endpoint }
+
+    Enhavo\Bundle\AppBundle\Endpoint\Loader:
+        arguments:
+            - '%kernel.project_dir%/data'
