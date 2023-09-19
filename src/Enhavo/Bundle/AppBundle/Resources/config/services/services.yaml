@@ -128,3 +128,13 @@ services:
     Enhavo\Bundle\AppBundle\Endpoint\Loader:
         arguments:
             - '%kernel.project_dir%/data'
+
+    Enhavo\Bundle\AppBundle\Endpoint\TemplateEndpointCollector:
+        arguments:
+            - '@router'
+
+    Enhavo\Bundle\AppBundle\Command\DebugEndpointTemplate:
+        arguments:
+            - '@Enhavo\Bundle\AppBundle\Endpoint\TemplateEndpointCollector'
+        tags:
+            - { name: console.command }
