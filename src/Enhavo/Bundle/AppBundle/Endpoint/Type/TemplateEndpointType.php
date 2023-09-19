@@ -21,10 +21,10 @@ class TemplateEndpointType extends AbstractEndpointType
     {
         if (is_array($options['load'])) {
             foreach ($options['load'] as $file) {
-                $this->loader->merge($data, $this->$this->loader->load($file), $options['recursive_merge'], $options['max_depth']);
+                $this->loader->merge($data, $this->loader->load($file), $options['recursive_merge'], $options['max_depth']);
             }
         } else if (is_string($options['load'])) {
-            $this->loader->merge($data, $this->$this->loader->load($options['load']), $options['recursive_merge'], $options['max_depth']);
+            $this->loader->merge($data, $this->loader->load($options['load']), $options['recursive_merge'], $options['max_depth']);
         }
 
         if (is_array($options['data'])) {
