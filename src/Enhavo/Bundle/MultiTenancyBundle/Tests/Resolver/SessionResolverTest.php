@@ -105,8 +105,6 @@ class SessionResolverTest extends TestCase
         $dependencies = $this->createDependencies();
         $dependencies->requestStack = $this->createMock(RequestStack::class);
         $dependencies->requestStack->expects($this->once())->method('getCurrentRequest')->willReturn(null);
-        $dependencies->request->expects($this->never())->method('getPathInfo');
-        $dependencies->request->expects($this->never())->method('getSession');
 
         $resolver = $this->createInstance($dependencies);
 
