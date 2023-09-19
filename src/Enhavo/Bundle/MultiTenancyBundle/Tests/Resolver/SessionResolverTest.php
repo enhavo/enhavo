@@ -100,6 +100,19 @@ class SessionResolverTest extends TestCase
         $this->assertNull($resolver->getTenant());
     }
 
+    public function testRequestMissing()
+    {
+        $dependencies = $this->createDependencies();
+        $dependencies->requestStack = $this->createMock(RequestStack::class);
+        $dependencies->requestStack->expects($this->once())->method('getCurrentRequest')->willReturn(null);
+        $dependencies->request->expects($this->never())->method('getPathInfo');
+        $dependencies->request->expects($this->never())->method('getSession');
+
+        $resolver = $this->createInstance($dependencies);
+
+        $this->assertNull($resolver->getTenant());
+    }
+
 }
 
 class SessionResolverTestDependencies
