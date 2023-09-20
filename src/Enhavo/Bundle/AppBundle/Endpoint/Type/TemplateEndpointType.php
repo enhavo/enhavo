@@ -42,8 +42,8 @@ class TemplateEndpointType extends AbstractEndpointType
         $resolver->setDefaults([
             'data' => null,
             'load' => null,
-            'recursive_merge' => false,
-            'max_depth' => null,
+            'recursive' => false,
+            'depth' => null,
             'description' => null,
         ]);
     }

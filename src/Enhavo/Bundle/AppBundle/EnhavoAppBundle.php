@@ -4,16 +4,12 @@ namespace Enhavo\Bundle\AppBundle;
 
 use Enhavo\Bundle\AppBundle\Batch\Batch;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\FilesystemCompilerPass;
-use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\FOSRestCompilerPass;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\LocaleResolverCompilerPass;
-use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\SecurityCompilerPass;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\SyliusCompilerPass;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\TranslationDumperCompilerPass;
-use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\ViewFactoryCompilerPass;
 use Enhavo\Bundle\AppBundle\Type\TypeCompilerPass;
 use Enhavo\Bundle\AppBundle\View\View;
 use Enhavo\Bundle\AppBundle\View\ViewFactoryAwareInterface;
-use Enhavo\Bundle\AppBundle\View\ViewFactoryInterface;
 use Enhavo\Bundle\AppBundle\View\ViewTypeInterface;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -21,7 +17,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class EnhavoAppBundle extends Bundle
 {
-    const VERSION = '0.12.0';
+    const VERSION = '0.13.0';
 
     public function build(ContainerBuilder $container)
     {
