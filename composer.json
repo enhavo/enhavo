@@ -42,7 +42,6 @@
     "payum/offline": "^1.5",
     "payum/paypal-express-checkout-nvp": "^1.7",
     "payum/payum-bundle": "^2.3",
-    "php-http/guzzle6-adapter": "^1|^2",
     "ruflin/elastica": "^7.1",
     "sensio/framework-extra-bundle": "^5.1",
     "simshaun/recurr": "^2.2",
