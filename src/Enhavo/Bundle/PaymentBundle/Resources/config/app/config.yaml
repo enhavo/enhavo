@@ -11,8 +11,6 @@ payum:
             Enhavo\Bundle\PaymentBundle\Entity\GatewayConfig: { doctrine: orm }
 
     gateways:
-        offline:
-            factory: offline
 
 enhavo_app:
     template_paths:
