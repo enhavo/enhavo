@@ -3,7 +3,6 @@
 namespace Enhavo\Bundle\ApiBundle\Endpoint\Type;
 
 use Enhavo\Bundle\ApiBundle\Documentation\Model\Path;
-use Enhavo\Bundle\ApiBundle\Documentation\Writer;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Bundle\ApiBundle\Endpoint\Data;
 use Enhavo\Bundle\ApiBundle\Endpoint\EndpointTypeInterface;
