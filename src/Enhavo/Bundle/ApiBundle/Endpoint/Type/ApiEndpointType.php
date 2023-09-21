@@ -21,7 +21,13 @@ class ApiEndpointType implements EndpointTypeInterface
 
     public function getResponse($options, Request $request, Data $data, Context $context): Response
     {
-        return new JsonResponse($data->normalize(), $context->getStatusCode());
+        $response = new JsonResponse($data->normalize(), $context->getStatusCode());
+
+        foreach ($context->getHeaders() as $header) {
+            $response->headers->set($header->getName(), $header->getValue());
+        }
+
+        return $response;
     }
 
     public function describe($options, Path $path)
