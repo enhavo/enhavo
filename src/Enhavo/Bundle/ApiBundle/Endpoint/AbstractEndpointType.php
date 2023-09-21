@@ -8,9 +8,12 @@ use Enhavo\Component\Type\AbstractType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Contracts\Service\ServiceSubscriberInterface;
 
-class AbstractEndpointType extends AbstractType implements EndpointTypeInterface
+class AbstractEndpointType extends AbstractType implements EndpointTypeInterface, ServiceSubscriberInterface
 {
+    use EndpointTrait;
+
     public function handleRequest($options, Request $request, Data $data, Context $context)
     {
         return $this->parent->handleRequest($options, $request, $data, $context);

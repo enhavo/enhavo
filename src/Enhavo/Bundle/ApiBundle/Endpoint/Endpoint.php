@@ -22,18 +22,35 @@ class Endpoint extends AbstractContainerType
 
         foreach ($this->parents as $parent) {
             $parent->handleRequest($this->options, $request, $data, $context);
+            if ($context->isStopped()) {
+                return $context->getResponse();
+            }
             foreach ($this->extensions as $extension) {
                 if ($this->isExtendable($parent, $extension)) {
                     $extension->handleRequest($this->options, $request, $data, $context);
+                    if ($context->isStopped()) {
+                        return $context->getResponse();
+                    }
                 }
             }
         }
 
         $this->type->handleRequest($this->options, $request, $data, $context);
+        if ($context->isStopped()) {
+            return $context->getResponse();
+        }
+
         foreach ($this->extensions as $extension) {
             if ($this->isExtendable($this->type, $extension)) {
                 $extension->handleRequest($this->options, $request, $data, $context);
+                if ($context->isStopped()) {
+                    return $context->getResponse();
+                }
             }
+        }
+
+        if ($context->getResponse()) {
+            return $context->getResponse();
         }
 
         return $this->type->getResponse($this->options, $request, $data, $context);

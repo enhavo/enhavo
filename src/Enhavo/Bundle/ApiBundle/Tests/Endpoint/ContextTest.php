@@ -12,10 +12,11 @@ class ContextTest extends TestCase
         $context = new Context();
 
         $context->set('property1', 'something');
+        $context->set('property2', new \stdClass());
 
         $this->assertFalse($context->has('test'));
         $this->assertTrue($context->has('property1'));
         $this->assertEquals('something', $context->get('property1'));
-        $this->assertEquals('something!!', $context->get('property2', 'something!!'));
+        $this->assertTrue($context->get('property2', 'something!!') instanceof \stdClass);
     }
 }

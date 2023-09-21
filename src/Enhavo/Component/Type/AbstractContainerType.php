@@ -8,7 +8,6 @@
 
 namespace Enhavo\Component\Type;
 
-
 use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
