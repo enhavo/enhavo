@@ -44,7 +44,7 @@ class Context
         return $this;
     }
 
-    /** @return Header */
+    /** @return Header[] */
     public function getHeaders(): array
     {
         return array_values($this->headers);

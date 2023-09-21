@@ -25,7 +25,7 @@ class ViewEndpointType extends AbstractEndpointType
             return $this->parent->getResponse($options, $request, $data, $context);
         } else if ($request->get('_format') === 'html') {
             $content = $this->twig->render($this->templateManager->getTemplate($options['template']), $this->getTemplateData($options, $data));
-            return new Response($content, $context->getStatusCode());
+            return $this->updateResponse(new Response($content), $context);
         }
 
         throw new NotFoundHttpException('No format found. Check your route configuration');

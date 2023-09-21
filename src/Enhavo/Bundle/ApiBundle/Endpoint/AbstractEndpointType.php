@@ -43,4 +43,14 @@ class AbstractEndpointType extends AbstractType implements EndpointTypeInterface
     {
         return ApiEndpointType::class;
     }
+
+    protected function updateResponse(Response $response, Context $context): Response
+    {
+        $response->setStatusCode($context->getStatusCode());
+        foreach ($context->getHeaders() as $header) {
+            $response->headers->set($header->getName(), $header->getValue());
+        }
+
+        return $response;
+    }
 }
