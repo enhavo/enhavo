@@ -342,3 +342,6 @@ services:
     Enhavo\Bundle\ShopBundle\Distributor\IntegerDistributor:
 
     Enhavo\Bundle\ShopBundle\Distributor\ProportionalIntegerDistributor:
+
+    Sylius\Calendar\Provider\DateTimeProviderInterface:
+        class: Sylius\Calendar\Provider\Calendar

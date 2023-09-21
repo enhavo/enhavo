@@ -21,7 +21,7 @@ use Enhavo\Bundle\MediaBundle\Media\MediaManager;
 use Enhavo\Bundle\MediaBundle\Media\UrlGeneratorInterface;
 use Sylius\Component\Resource\ResourceActions;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ImageCropperViewType extends AbstractViewType
@@ -31,7 +31,7 @@ class ImageCropperViewType extends AbstractViewType
     public function __construct(
         private ViewUtil $util,
         private ActionManager $actionManager,
-        private FlashBag $flashBag,
+        private RequestStack $requestStack,
         private ImageCropperManager $imageCropperManager,
         private MediaManager $mediaManager,
         private UrlGeneratorInterface $urlGenerator
@@ -77,7 +77,7 @@ class ImageCropperViewType extends AbstractViewType
         $messages = [];
         $types = ['success', 'error', 'notice', 'warning'];
         foreach($types as $type) {
-            foreach($this->flashBag->get($type) as $message) {
+            foreach($this->requestStack->getSession()->getFlashBag()->get($type) as $message) {
                 $messages[] = [
                     'message' => is_array($message) ? $message['message'] : $message,
                     'type' => $type

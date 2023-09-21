@@ -26,7 +26,7 @@ abstract class AbstractMenu extends AbstractType implements MenuInterface
     public function isActive(array $options)
     {
         $route = $this->getOption('route', $options, null);
-        $request = $this->container->get('request_stack')->getMasterRequest();
+        $request = $this->container->get('request_stack')->getMainRequest();
         $currentRoute = $request->get('_route');
         return $currentRoute == $route;
     }

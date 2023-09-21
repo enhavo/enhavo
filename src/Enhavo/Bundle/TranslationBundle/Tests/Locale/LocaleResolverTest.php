@@ -43,7 +43,7 @@ class LocaleResolverTest extends TestCase
         $dependencies = $this->createDependencies();
         $resolver = $this->createInstance($dependencies);
 
-        $dependencies->requestStack->method('getMasterRequest')->willReturn($dependencies->request);
+        $dependencies->requestStack->method('getMainRequest')->willReturn($dependencies->request);
         $dependencies->request->attributes->method('get')->willReturnCallback(function($property) {
             if ($property === '_locale') {
                 return 'es';
@@ -58,7 +58,7 @@ class LocaleResolverTest extends TestCase
         $dependencies = $this->createDependencies();
         $resolver = $this->createInstance($dependencies);
 
-        $dependencies->requestStack->method('getMasterRequest')->willReturn($dependencies->request);
+        $dependencies->requestStack->method('getMainRequest')->willReturn($dependencies->request);
         $dependencies->request->attributes->method('get')->willReturnCallback(function($property) {
             if ($property === '_locale') {
                 return 'es';

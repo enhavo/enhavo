@@ -23,10 +23,8 @@ class SecurityController extends AbstractUserController
         UserManager $userManager,
         ConfigurationProvider $configurationProvider,
         private CsrfTokenManagerInterface $tokenManager,
-        private TranslatorInterface $translator,
         private AuthenticationUtils $authenticationUtils,
         private AuthenticationError $authenticationError,
-        private FormFactoryInterface $formFactory,
     ) {
         parent::__construct($userManager, $configurationProvider);
     }

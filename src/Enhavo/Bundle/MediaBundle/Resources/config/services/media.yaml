@@ -155,7 +155,7 @@ services:
         arguments:
             - '@Enhavo\Bundle\AppBundle\View\ViewUtil'
             - '@enhavo_app.action_manager'
-            - '@session.flash_bag'
+            - '@request_stack'
             - '@enhavo_media.media.image_cropper_manager'
             - '@enhavo_media.media.media_manager'
             - '@enhavo_media.media.private_url_generator'

@@ -62,7 +62,7 @@ class HttpCache implements CacheInterface
     private function getUri(FileInterface $file, $format)
     {
         $path = $this->generator->generateFormat($file, $format);
-        $request = $this->requestStack->getMasterRequest();
+        $request = $this->requestStack->getMainRequest();
 
         $host = $this->host ? $this->host :$request->getHost();
         $port = $this->port ? $this->port :$request->getPort();

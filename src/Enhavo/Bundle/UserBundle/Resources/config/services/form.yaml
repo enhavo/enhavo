@@ -54,5 +54,5 @@ services:
 
     Enhavo\Bundle\UserBundle\Form\EventListener\CredentialsEventSubscriber:
         arguments:
-            - '@session'
+            - '@request_stack'
             - '@security.csrf.token_manager'

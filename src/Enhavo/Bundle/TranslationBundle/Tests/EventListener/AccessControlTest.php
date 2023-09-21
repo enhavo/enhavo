@@ -20,7 +20,7 @@ class AccessControlTest extends TestCase
         $dependencies->requestStack = $this->getMockBuilder(RequestStack::class)->getMock();
         $dependencies->request = $this->getMockBuilder(Request::class)->getMock();
         $dependencies->request->attributes = $this->getMockBuilder(ParameterBag::class)->getMock();
-        $dependencies->requestStack->method('getMasterRequest')->willReturn($dependencies->request);
+        $dependencies->requestStack->method('getMainRequest')->willReturn($dependencies->request);
         $dependencies->localeResolver = $this->getMockBuilder(LocaleResolverInterface::class)->getMock();
 
         return $dependencies;
@@ -42,7 +42,7 @@ class AccessControlTest extends TestCase
         $dependencies = $this->createDependencies();
         $control = $this->createInstance($dependencies);
 
-        $dependencies->requestStack->expects($this->exactly(1))->method('getMasterRequest')->willReturn($dependencies->request);
+        $dependencies->requestStack->expects($this->exactly(1))->method('getMainRequest')->willReturn($dependencies->request);
         $dependencies->request->expects($this->once())->method('getPathInfo')->willReturn('/admin/enhavo/page/page/update/3?view_id=4');
 
         $this->assertFalse($control->isAccess());
@@ -53,7 +53,7 @@ class AccessControlTest extends TestCase
         $dependencies = $this->createDependencies();
         $control = $this->createInstance($dependencies);
 
-        $dependencies->requestStack->expects($this->exactly(1))->method('getMasterRequest')->willReturn($dependencies->request);
+        $dependencies->requestStack->expects($this->exactly(1))->method('getMainRequest')->willReturn($dependencies->request);
         $dependencies->request->expects($this->once())->method('getPathInfo')->willReturn('/my/page/10');
 
         $this->assertTrue($control->isAccess());

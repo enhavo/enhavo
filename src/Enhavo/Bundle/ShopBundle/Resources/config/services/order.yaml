@@ -1,7 +1,7 @@
 services:
     Enhavo\Bundle\ShopBundle\Context\SessionCartContext:
         arguments:
-            - '@session'
+            - '@request_stack'
             - 'enhavo_shop_cart'
             - '@sylius.repository.order'
             - '@sylius.factory.order'

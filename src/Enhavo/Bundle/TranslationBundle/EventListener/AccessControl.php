@@ -58,7 +58,7 @@ class AccessControl
         }
 
         $this->access = true;
-        $request = $this->requestStack->getMasterRequest();
+        $request = $this->requestStack->getMainRequest();
         if ($request === null) {
             return false;
         }

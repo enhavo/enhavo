@@ -62,7 +62,7 @@ class FormLoginAuthenticator extends AbstractAuthenticator
         return $isRoute && $isPost;
     }
 
-    public function authenticate(Request $request)
+    public function authenticate(Request $request): Passport
     {
         $loginConfiguration = $this->configurationProvider->getLoginConfiguration();
 

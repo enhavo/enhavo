@@ -10,32 +10,20 @@ namespace Enhavo\Bundle\RoutingBundle\Entity;
 
 use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
-use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Orm\Route as RouteModel;
+use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Orm\Route as BaseRouteModel;
+use Symfony\Cmf\Bundle\RoutingBundle\Model\Route as RouteModel;
 
-class Route extends RouteModel implements RouteInterface, ResourceInterface
+class Route extends BaseRouteModel implements RouteInterface, ResourceInterface
 {
-    /**
-     * @var string
-     */
-    private $contentClass;
+    private ?string $contentClass;
+    private ?int $contentId;
 
-    /**
-     * @var int
-     */
-    private $contentId;
-
-    /**
-     * @return string
-     */
-    public function getContentClass()
+    public function getContentClass(): ?string
     {
         return $this->contentClass;
     }
 
-    /**
-     * @param string $contentClass
-     */
-    public function setContentClass($contentClass)
+    public function setContentClass(string $contentClass): void
     {
         $this->contentClass = $contentClass;
     }
@@ -43,32 +31,31 @@ class Route extends RouteModel implements RouteInterface, ResourceInterface
     /**
      * @return int
      */
-    public function getContentId()
+    public function getContentId(): ?int
     {
         return $this->contentId;
     }
 
-    /**
-     * @param int $contentId
-     */
-    public function setContentId($contentId)
+    public function setContentId(?int $contentId): void
     {
         $this->contentId = $contentId;
     }
 
-    public function setPath($path)
+    public function setPath(string $pattern): static
     {
-        $prefix = $path;
+        $prefix = $pattern;
         $variablePattern = null;
 
-        $position = strpos($path, '/{');
+        $position = strpos($pattern, '/{');
 
         if($position !== false) {
-            $prefix = substr($path, 0, $position);
-            $variablePattern = substr($path, $position);
+            $prefix = substr($pattern, 0, $position);
+            $variablePattern = substr($pattern, $position);
         }
 
         $this->setStaticPrefix($prefix);
         $this->setVariablePattern($variablePattern);
+
+        return $this;
     }
 }

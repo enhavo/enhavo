@@ -41,7 +41,7 @@ class LocalePathResolverTest extends TestCase
 
         $resolver = $this->createInstance($dependencies);
 
-        $dependencies->requestStack->method('getMasterRequest')->willReturn($dependencies->request);
+        $dependencies->requestStack->method('getMainRequest')->willReturn($dependencies->request);
         $dependencies->request->method('getPathInfo')->willReturn('/es/action/id');
 
         $this->assertEquals('es', $resolver->resolve());
@@ -55,7 +55,7 @@ class LocalePathResolverTest extends TestCase
 
         $resolver = $this->createInstance($dependencies);
 
-        $dependencies->requestStack->method('getMasterRequest')->willReturn($dependencies->request);
+        $dependencies->requestStack->method('getMainRequest')->willReturn($dependencies->request);
         $dependencies->request->method('getPathInfo')->willReturn('/en/action/id');
 
         $this->assertEquals('fr', $resolver->resolve());
@@ -69,7 +69,7 @@ class LocalePathResolverTest extends TestCase
 
         $resolver = $this->createInstance($dependencies);
 
-        $dependencies->requestStack->method('getMasterRequest')->willReturn($dependencies->request);
+        $dependencies->requestStack->method('getMainRequest')->willReturn($dependencies->request);
         $dependencies->request->method('getPathInfo')->willReturn('/es/action/id');
 
         $this->assertEquals('es', $resolver->resolve());

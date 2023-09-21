@@ -45,14 +45,12 @@ services:
             - '@enhavo_user.user.manager'
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
             - '@security.csrf.token_manager'
-            - '@translator'
             - '@security.authentication_utils'
             - '@Enhavo\Bundle\UserBundle\Security\Authentication\AuthenticationError'
-            - '@form.factory'
         calls:
-            - [ setContainer, [ '@service_container' ] ]
+            - ['setContainer', ['@Psr\Container\ContainerInterface']]
         tags:
-            - { name: controller.service_arguments }
+            - { name: container.service_arguments }
 
     Enhavo\Bundle\UserBundle\Controller\ChangePasswordController:
         public: true

@@ -50,7 +50,7 @@ class SendTestBatchType extends AbstractBatchType
     public function execute(array $options, array $resources, ?ResourceInterface $resource = null): ?Response
     {
         $form = $this->formFactory->create(NewsletterEmailType::class);
-        $form->handleRequest($this->requestStack->getMasterRequest());
+        $form->handleRequest($this->requestStack->getMainRequest());
         if(!$form->isValid()) {
             throw new BatchExecutionException($this->translator->trans('newsletter.batch.error.email', [], 'EnhavoNewsletterBundle'));
         }

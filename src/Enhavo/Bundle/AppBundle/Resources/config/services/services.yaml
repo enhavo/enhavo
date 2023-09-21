@@ -63,8 +63,6 @@ services:
             - '@argument_metadata_factory'
 
     Enhavo\Bundle\AppBundle\Security\ExceptionListener:
-        arguments:
-            - '@session'
         tags:
             - { name: kernel.event_listener, event: kernel.exception, priority: 300 }
 

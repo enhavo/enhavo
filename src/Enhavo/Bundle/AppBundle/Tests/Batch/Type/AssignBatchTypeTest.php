@@ -59,7 +59,7 @@ class AssignBatchTypeTest extends TestCase
         $formMock->method('getData')->willReturn(new AssignBatchData('Foobar'));
 
         $dependencies = $this->createDependencies();
-        $dependencies->requestStack->method('getMasterRequest')->willReturn($this->createRequestMock());
+        $dependencies->requestStack->method('getMainRequest')->willReturn($this->createRequestMock());
         $dependencies->formFactory->expects($this->once())->method('create')->willReturn($formMock);
         $dependencies->em->expects($this->once())->method('flush');
         $type = $this->createInstance($dependencies);
@@ -87,7 +87,7 @@ class AssignBatchTypeTest extends TestCase
         $formMock->method('getData')->willReturn($assignData);
 
         $dependencies = $this->createDependencies();
-        $dependencies->requestStack->method('getMasterRequest')->willReturn($this->createRequestMock());
+        $dependencies->requestStack->method('getMainRequest')->willReturn($this->createRequestMock());
         $dependencies->formFactory->expects($this->once())->method('create')->willReturn($formMock);
         $dependencies->em->expects($this->once())->method('flush');
         $type = $this->createInstance($dependencies);
@@ -113,7 +113,7 @@ class AssignBatchTypeTest extends TestCase
         $formMock->method('isValid')->willReturn(false);
 
         $dependencies = $this->createDependencies();
-        $dependencies->requestStack->method('getMasterRequest')->willReturn($this->createRequestMock());
+        $dependencies->requestStack->method('getMainRequest')->willReturn($this->createRequestMock());
         $dependencies->translator->method('trans')->willReturnCallback(function($trans) { return $trans; });
         $dependencies->formFactory->method('create')->willReturn($formMock);
         $type = $this->createInstance($dependencies);

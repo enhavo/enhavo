@@ -18,7 +18,7 @@ class ContentDocumentValueArgumentResolver implements ArgumentValueResolverInter
 {
     const PLACEHOLDER = '__CONTENT_DOCUMENT_PLACEHOLDER__';
 
-    public function supports(Request $request, ArgumentMetadata $argument)
+    public function supports(Request $request, ArgumentMetadata $argument): bool
     {
         if ($argument->getName() === 'contentDocument') {
             return true;
@@ -26,7 +26,7 @@ class ContentDocumentValueArgumentResolver implements ArgumentValueResolverInter
         return false;
     }
 
-    public function resolve(Request $request, ArgumentMetadata $argument)
+    public function resolve(Request $request, ArgumentMetadata $argument): iterable
     {
         yield '__CONTENT_DOCUMENT_PLACEHOLDER__';
     }

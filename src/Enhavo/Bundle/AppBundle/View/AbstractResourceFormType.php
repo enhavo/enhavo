@@ -9,11 +9,10 @@ use Enhavo\Bundle\AppBundle\Resource\ResourceManager;
 use Enhavo\Bundle\AppBundle\View\Type\AppViewType;
 use Sylius\Bundle\ResourceBundle\Controller\EventDispatcherInterface;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceFormFactory;
-
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
@@ -33,7 +32,7 @@ abstract class AbstractResourceFormType extends AbstractViewType
     public function __construct(
         private array $formThemes,
         private ActionManager $actionManager,
-        private FlashBag $flashBag,
+        private RequestStack $requestStack,
         private ViewUtil $util,
         private RouterInterface $router,
         private TranslatorInterface $translator,
@@ -134,7 +133,7 @@ abstract class AbstractResourceFormType extends AbstractViewType
                     return $response;
                 }
 
-                $this->flashBag->add('success', $this->translator->trans('form.message.success', [], 'EnhavoAppBundle'));
+                $this->requestStack->getSession()->getFlashBag()->add('success', $this->translator->trans('form.message.success', [], 'EnhavoAppBundle'));
                 $route = $this->getRedirectRoute($options) ?? $request->get('_route');
                 return new RedirectResponse($this->router->generate($route, [
                     'id' => $this->resource->getId(),
@@ -142,9 +141,9 @@ abstract class AbstractResourceFormType extends AbstractViewType
                     'view_id' => $request->get('view_id')
                 ]));
             } else {
-                $this->flashBag->add('error', $this->translator->trans('form.message.error', [], 'EnhavoAppBundle'));
+                $this->requestStack->getSession()->getFlashBag()->add('error', $this->translator->trans('form.message.error', [], 'EnhavoAppBundle'));
                 foreach($form->getErrors() as $error) {
-                    $this->flashBag->add('error', $error->getMessage());
+                    $this->requestStack->getSession()->getFlashBag()->add('error', $error->getMessage());
                 }
             }
         }

@@ -21,7 +21,7 @@ class PreviewValueArgumentResolver implements ArgumentValueResolverInterface
         $this->previewManager = $previewManager;
     }
 
-    public function supports(Request $request, ArgumentMetadata $argument)
+    public function supports(Request $request, ArgumentMetadata $argument): bool
     {
         if ($argument->getName() === 'preview' && $argument->getType() === 'bool') {
             return true;
@@ -29,7 +29,7 @@ class PreviewValueArgumentResolver implements ArgumentValueResolverInterface
         return false;
     }
 
-    public function resolve(Request $request, ArgumentMetadata $argument)
+    public function resolve(Request $request, ArgumentMetadata $argument): iterable
     {
         yield $this->previewManager->isPreview();
     }
