@@ -8,7 +8,7 @@ use Enhavo\Bundle\AppBundle\Type\TypeCompilerPass;
 
 class EnhavoContentBundle extends Bundle
 {
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         parent::build($container);
 

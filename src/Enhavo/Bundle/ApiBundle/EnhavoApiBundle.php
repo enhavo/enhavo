@@ -14,7 +14,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class EnhavoApiBundle extends Bundle
 {
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         $container->addCompilerPass(
             new TypeCompilerPass('Endpoint', 'enhavo_api.endpoint', Endpoint::class)

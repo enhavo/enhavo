@@ -10,7 +10,7 @@ services:
             - '@Enhavo\Bundle\TranslationBundle\EventListener\AccessControl'
             - '@Enhavo\Component\Metadata\MetadataRepository[Translation]'
         calls:
-            - ['setContainer', ['@service_container']]
+            - [setContainer, ['@service_container']]
         tags:
             - { name: doctrine.event_subscriber }
 

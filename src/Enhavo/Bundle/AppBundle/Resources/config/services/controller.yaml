@@ -4,8 +4,10 @@ services:
             - '@router'
             - '%enhavo_app.login.route%'
             - '%enhavo_app.login.route_parameters%'
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:
-            - { name: controller.service_arguments }
+            - { name: container.service_subscriber }
 
     Enhavo\Bundle\AppBundle\Controller\MainController:
         arguments:
@@ -16,9 +18,9 @@ services:
             - '%enhavo_app.toolbar_widget.primary%'
             - '%enhavo_app.toolbar_widget.secondary%'
         calls:
-            - [setContainer, ['@service_container']]
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:
-            - { name: controller.service_arguments }
+            - { name: container.service_subscriber }
 
     Enhavo\Bundle\AppBundle\Controller\AbstractViewController:
         abstract: true
@@ -33,6 +35,6 @@ services:
 
     Enhavo\Bundle\AppBundle\Controller\ModalController:
         calls:
-            - [setContainer, ['@service_container']]
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:
-            - { name: controller.service_arguments }
+            - { name: container.service_subscriber }

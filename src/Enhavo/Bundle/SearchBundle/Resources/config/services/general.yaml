@@ -2,7 +2,7 @@ services:
     enhavo_search.save_listener:
         class: Enhavo\Bundle\SearchBundle\EventListener\SaveListener
         calls:
-            - [ 'setContainer', [ '@service_container' ]]
+            - [setContainer, [ '@service_container' ]]
         tags:
             - { name: kernel.event_listener, event: enhavo_app.post_create, method: onSave }
             - { name: kernel.event_listener, event: enhavo_app.post_update, method: onSave }
@@ -10,6 +10,6 @@ services:
     enhavo_search.delete_listener:
         class: Enhavo\Bundle\SearchBundle\EventListener\DeleteListener
         calls:
-            - [ 'setContainer', [ '@service_container' ]]
+            - [setContainer, [ '@service_container' ]]
         tags:
             - { name: kernel.event_listener, event: enhavo_app.pre_delete, method: onDelete }

@@ -3,9 +3,9 @@ services:
         arguments:
             - '@Enhavo\Bundle\ApiBundle\Documentation\DocumentationCollector'
         calls:
-            - [setContainer, ['@service_container']]
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:
-            - { name: controller.service_arguments }
+            - { name: container.service_subscriber }
 
     Enhavo\Bundle\ApiBundle\EventListener\EndpointRouteListener:
         arguments:

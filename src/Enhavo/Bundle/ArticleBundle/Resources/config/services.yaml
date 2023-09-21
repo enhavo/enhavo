@@ -29,7 +29,7 @@ services:
     enhavo_article.statistic.article:
         class: Enhavo\Bundle\ArticleBundle\Statistic\ArticleStatistic
         calls:
-          - ['setContainer', ['@service_container']]
+          - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.statistic, alias: article }
 

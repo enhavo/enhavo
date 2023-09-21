@@ -10,7 +10,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class EnhavoUserBundle extends Bundle
 {
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new UserManagerCompilerPass());
         $container->addCompilerPass(new ConfigKeyProviderCompilerPass());

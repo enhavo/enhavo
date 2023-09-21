@@ -139,7 +139,7 @@ services:
         arguments:
             - '%enhavo_user.user_identifiers%'
         calls:
-            - ['setContainer', ['@service_container']]
+            - [setContainer, ['@service_container']]
 
     Enhavo\Bundle\UserBundle\UserIdentifier\EmailUserIdentifierProvider:
         public: true

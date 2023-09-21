@@ -21,15 +21,15 @@ services:
             - '@doctrine.orm.entity_manager'
             - '@translator'
         calls:
-            - ['setContainer', ['@service_container']]
+            - [setContainer, ['@service_container']]
 
     Enhavo\Bundle\TemplateBundle\Controller\TemplateController:
         arguments:
             - '@Enhavo\Bundle\TemplateBundle\Template\TemplateManager'
         calls:
-            - ['setContainer', ['@service_container']]
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:
-            - { name: controller.service_arguments }
+            - { name: container.service_subscriber }
 
     Enhavo\Bundle\TemplateBundle\EventListener\TemplateDoctrineSubscriber:
         calls:

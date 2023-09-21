@@ -8,9 +8,9 @@ services:
             - '@enhavo_user.factory.user'
             - '@enhavo_form.error.error.resolver'
         calls:
-            - [setContainer, ['@service_container']]
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:
-            - { name: controller.service_arguments }
+            - { name: container.service_subscriber }
 
     Enhavo\Bundle\UserBundle\Controller\ResetPasswordController:
         public: true
@@ -21,9 +21,9 @@ services:
             - '@translator'
             - '@Enhavo\Bundle\FormBundle\Error\FormErrorResolver'
         calls:
-            - [ setContainer, [ '@service_container' ] ]
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:
-            - { name: controller.service_arguments }
+            - { name: container.service_subscriber }
 
     Enhavo\Bundle\UserBundle\Controller\ChangeEmailController:
         public: true
@@ -35,9 +35,9 @@ services:
             - '@translator'
             - '@Enhavo\Bundle\FormBundle\Error\FormErrorResolver'
         calls:
-            - [ setContainer, [ '@service_container' ] ]
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:
-            - { name: controller.service_arguments }
+            - { name: container.service_subscriber }
 
     Enhavo\Bundle\UserBundle\Controller\SecurityController:
         public: true
@@ -48,9 +48,9 @@ services:
             - '@security.authentication_utils'
             - '@Enhavo\Bundle\UserBundle\Security\Authentication\AuthenticationError'
         calls:
-            - ['setContainer', ['@Psr\Container\ContainerInterface']]
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:
-            - { name: container.service_arguments }
+            - { name: container.service_subscriber }
 
     Enhavo\Bundle\UserBundle\Controller\ChangePasswordController:
         public: true
@@ -60,9 +60,9 @@ services:
             - '@Enhavo\Component\Type\FactoryInterface[View]'
             - '@translator'
         calls:
-            - [ setContainer, [ '@service_container' ] ]
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:
-            - { name: controller.service_arguments }
+            - { name: container.service_subscriber }
 
     Enhavo\Bundle\UserBundle\Controller\ProfileController:
         public: true
@@ -72,9 +72,9 @@ services:
             - '@translator'
             - '@Enhavo\Bundle\FormBundle\Error\FormErrorResolver'
         calls:
-            - [ setContainer, [ '@service_container' ] ]
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:
-            - { name: controller.service_arguments }
+            - { name: container.service_subscriber }
 
     Enhavo\Bundle\UserBundle\Controller\DeleteController:
         public: true
@@ -84,9 +84,9 @@ services:
             - '@translator'
             - '@Enhavo\Bundle\FormBundle\Error\FormErrorResolver'
         calls:
-            - [ setContainer, [ '@service_container' ] ]
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:
-            - { name: controller.service_arguments }
+            - { name: container.service_subscriber }
 
     Enhavo\Bundle\UserBundle\Controller\VerificationController:
         public: true
@@ -95,6 +95,6 @@ services:
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
             - '@enhavo_user.repository.user'
         calls:
-            - [ setContainer, [ '@service_container' ] ]
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:
-            - { name: controller.service_arguments }
+            - { name: container.service_subscriber }

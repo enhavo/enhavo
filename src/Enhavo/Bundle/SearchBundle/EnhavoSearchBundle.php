@@ -13,7 +13,7 @@ use Doctrine\Persistence\Mapping\Driver\DefaultFileLocator;
 
 class EnhavoSearchBundle extends Bundle
 {
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         $container->addCompilerPass($this->buildDoctrineItemCompilerPass(
             'doctrine-database',

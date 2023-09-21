@@ -19,7 +19,7 @@ class EnhavoAppBundle extends Bundle
 {
     const VERSION = '0.13.0';
 
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         parent::build($container);
 

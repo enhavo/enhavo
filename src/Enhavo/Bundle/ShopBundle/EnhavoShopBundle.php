@@ -13,7 +13,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class EnhavoShopBundle extends Bundle
 {
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new ConfigCompilerPass());
         $container->addCompilerPass(new PriceCalculatorRegisterPass());

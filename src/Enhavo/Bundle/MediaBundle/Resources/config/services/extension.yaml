@@ -25,6 +25,6 @@ services:
         class: Enhavo\Bundle\MediaBundle\Extension\Extension\ImageCropperExtension
         public: true
         calls:
-            - ['setContainer', ['@service_container']]
+            - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.media_extension, alias: 'image_cropper' }
