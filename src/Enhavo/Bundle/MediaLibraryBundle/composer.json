@@ -13,9 +13,9 @@
   ],
   "require": {
     "php": ">=8.0",
-    "enhavo/app-bundle": "dev-master",
-    "enhavo/media-bundle": "dev-master",
-    "enhavo/taxonomy-bundle": "dev-master"
+    "enhavo/app-bundle": "^0.13",
+    "enhavo/media-bundle": "^0.13",
+    "enhavo/taxonomy-bundle": "^0.13"
   },
   "autoload": {
     "psr-4": { "Enhavo\\Bundle\\MediaLibraryBundle\\": "" }

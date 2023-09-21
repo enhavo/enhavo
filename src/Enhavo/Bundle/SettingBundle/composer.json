@@ -13,9 +13,9 @@
   ],
   "require": {
     "php": "^8.0",
-    "enhavo/app-bundle": "dev-master",
-    "enhavo/form-bundle": "dev-master",
-    "enhavo/media-bundle": "dev-master"
+    "enhavo/app-bundle": "^0.13",
+    "enhavo/form-bundle": "^0.13",
+    "enhavo/media-bundle": "^0.13"
   },
   "require-dev": {
     "phpunit/phpunit": "^9.5"

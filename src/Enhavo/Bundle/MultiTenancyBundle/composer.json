@@ -16,8 +16,8 @@
   },
   "require": {
     "php": "^8.0",
-    "enhavo/app-bundle": "dev-master",
-    "enhavo/routing-bundle": "dev-master",
-    "enhavo/doctrine-extension-bundle": "dev-master"
+    "enhavo/app-bundle": "^0.13",
+    "enhavo/routing-bundle": "^0.13",
+    "enhavo/doctrine-extension-bundle": "^0.13"
   }
 }

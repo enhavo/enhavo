@@ -10,6 +10,6 @@
   },
   "dependencies": {
     "@enhavo/core": "https://github.com/enhavo/core-assets.git",
-    "@enhavo/app": "https://github.com/enhavo/font-assets.git"
+    "@enhavo/app": "^0.13"
   }
 }

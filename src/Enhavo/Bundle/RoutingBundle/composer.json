@@ -13,9 +13,9 @@
   ],
   "require": {
     "php": "^8.0",
-    "enhavo/app-bundle": "dev-master",
-    "enhavo/doctrine-extension-bundle": "dev-master",
-    "enhavo/metadata": "dev-master",
+    "enhavo/app-bundle": "^0.13",
+    "enhavo/doctrine-extension-bundle": "^0.13",
+    "enhavo/metadata": "^0.13",
     "behat/transliterator": "^1.5",
     "symfony-cmf/routing-bundle": "^2.1"
   },

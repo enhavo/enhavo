@@ -13,9 +13,9 @@
   ],
   "require": {
     "php": "^8.0",
-    "enhavo/app-bundle": "dev-master",
-    "enhavo/routing-bundle": "dev-master",
-    "enhavo/form-bundle": "dev-master",
+    "enhavo/app-bundle": "^0.13",
+    "enhavo/routing-bundle": "^0.13",
+    "enhavo/form-bundle": "^0.13",
     "league/uri": "^6.4"
   },
   "require-dev": {
