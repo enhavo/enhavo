@@ -28,6 +28,7 @@ services:
             - '@Enhavo\Bundle\TemplateBundle\Template\TemplateManager'
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
         tags:
             - { name: container.service_subscriber }
 

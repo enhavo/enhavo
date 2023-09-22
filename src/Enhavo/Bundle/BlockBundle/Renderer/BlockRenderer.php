@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\BlockBundle\Renderer;
 
-use Enhavo\Bundle\AppBundle\Template\TemplateManager;
+use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
 use Enhavo\Bundle\BlockBundle\Block\BlockManager;
 use Enhavo\Bundle\BlockBundle\Exception\RenderException;
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
@@ -27,9 +27,9 @@ class BlockRenderer implements BlockRendererInterface
     private $renderSets;
 
     /**
-     * @var TemplateManager
+     * @var TemplateResolver
      */
-    private $templateManager;
+    private $templateResolver;
 
     /**
      * @var Environment
@@ -41,14 +41,14 @@ class BlockRenderer implements BlockRendererInterface
      *
      * @param BlockManager $blockManager
      * @param array $renderSets
-     * @param TemplateManager $templateManager
+     * @param TemplateResolver $templateResolver
      * @param Environment $twigEnvironment
      */
-    public function __construct(BlockManager $blockManager, $renderSets, TemplateManager $templateManager, Environment $twigEnvironment)
+    public function __construct(BlockManager $blockManager, $renderSets, TemplateResolver $templateResolver, Environment $twigEnvironment)
     {
         $this->blockManager = $blockManager;
         $this->renderSets = $renderSets;
-        $this->templateManager = $templateManager;
+        $this->templateResolver = $templateResolver;
         $this->twigEnvironment = $twigEnvironment;
     }
 
@@ -141,6 +141,6 @@ class BlockRenderer implements BlockRendererInterface
 
         $viewData = $node->getViewData();
 
-        return $this->renderTemplate($this->templateManager->getTemplate($template), $viewData);
+        return $this->renderTemplate($this->templateResolver->resolve($template), $viewData);
     }
 }

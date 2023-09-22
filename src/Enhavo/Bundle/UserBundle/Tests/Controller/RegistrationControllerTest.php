@@ -7,7 +7,7 @@
 namespace Controller;
 
 
-use Enhavo\Bundle\AppBundle\Template\TemplateManager;
+use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
 use Enhavo\Bundle\FormBundle\Error\FormErrorResolver;
 use Enhavo\Bundle\UserBundle\Controller\RegistrationController;
 use Enhavo\Bundle\UserBundle\Model\User;
@@ -31,7 +31,7 @@ class RegistrationControllerTest //extends TestCase
         return new RegistrationControllerMock(
             $dependencies->userManager,
             $dependencies->userRepository,
-            $dependencies->templateManager,
+            $dependencies->templateResolver,
             $dependencies->userFactory,
             $dependencies->errorResolver
         );
@@ -42,8 +42,8 @@ class RegistrationControllerTest //extends TestCase
         $dependencies = new RegistrationControllerTestDependencies();
         $dependencies->userManager = $this->getMockBuilder(UserManager::class)->disableOriginalConstructor()->getMock();
         $dependencies->userRepository = $this->getMockBuilder(UserRepository::class)->disableOriginalConstructor()->getMock();
-        $dependencies->templateManager = $this->getMockBuilder(TemplateManager::class)->disableOriginalConstructor()->getMock();
-        $dependencies->templateManager->method('getTemplate')->willReturnCallback(function ($template) {
+        $dependencies->templateResolver = $this->getMockBuilder(TemplateResolver::class)->disableOriginalConstructor()->getMock();
+        $dependencies->templateResolver->method('getTemplate')->willReturnCallback(function ($template) {
             return $template .'.managed';
         });
         $dependencies->userFactory = $this->getMockBuilder(FactoryInterface::class)->getMock();
@@ -237,8 +237,8 @@ class RegistrationControllerTestDependencies
     /** @var UserRepository|MockObject */
     public $userRepository;
 
-    /** @var TemplateManager|MockObject */
-    public $templateManager;
+    /** @var TemplateResolver|MockObject */
+    public $templateResolver;
 
     /** @var FactoryInterface|MockObject */
     public $userFactory;

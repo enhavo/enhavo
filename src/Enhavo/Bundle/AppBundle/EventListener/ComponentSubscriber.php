@@ -2,14 +2,14 @@
 
 namespace Enhavo\Bundle\AppBundle\EventListener;
 
-use Enhavo\Bundle\AppBundle\Template\TemplateManager;
+use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use  Symfony\UX\TwigComponent\Event\PreRenderEvent;
 
 class ComponentSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private TemplateManager $templateManager
+        private TemplateResolver $templateResolver
     )
     {}
 
@@ -22,6 +22,6 @@ class ComponentSubscriber implements EventSubscriberInterface
 
     public function onPreRender(PreRenderEvent $event)
     {
-        $event->setTemplate($this->templateManager->getTemplate($event->getTemplate()));
+        $event->setTemplate($this->templateResolver->resolve($event->getTemplate()));
     }
 }

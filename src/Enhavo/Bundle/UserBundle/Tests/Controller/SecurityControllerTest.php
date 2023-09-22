@@ -7,7 +7,7 @@
 namespace Controller;
 
 
-use Enhavo\Bundle\AppBundle\Template\TemplateManager;
+use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
 use Enhavo\Bundle\UserBundle\Controller\SecurityController;
 use Enhavo\Bundle\UserBundle\User\UserManager;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -27,7 +27,7 @@ class SecurityControllerTest //extends TestCase
     {
         return new SecurityControllerMock(
             $dependencies->userManager,
-            $dependencies->templateManager,
+            $dependencies->templateResolver,
             $dependencies->tokenManager,
             $dependencies->translator
         );
@@ -40,7 +40,7 @@ class SecurityControllerTest //extends TestCase
         $dependencies->userManager->method('getConfigKey')->willReturnCallback(function ($request) {
             return $request->attributes->get('_config');
         });
-        $dependencies->templateManager = $this->getMockBuilder(TemplateManager::class)->disableOriginalConstructor()->getMock();
+        $dependencies->templateResolver = $this->getMockBuilder(TemplateResolver::class)->disableOriginalConstructor()->getMock();
         $dependencies->tokenManager = $this->getMockBuilder(CsrfTokenManagerInterface::class)->getMock();
         $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
         $dependencies->translator->method('trans')->willReturnCallback(function ($id, $params, $domain) {
@@ -85,7 +85,7 @@ class SecurityControllerTest //extends TestCase
 
             return [];
         });
-        $dependencies->templateManager->method('getTemplate')->willReturnCallback(function($template) {
+        $dependencies->templateResolver->method('getTemplate')->willReturnCallback(function($template) {
             return $template .'.managed';
         });
 
@@ -141,8 +141,8 @@ class SecurityControllerTestDependencies
     /** @var UserManager|MockObject */
     public $userManager;
 
-    /** @var TemplateManager|MockObject */
-    public $templateManager;
+    /** @var TemplateResolver|MockObject */
+    public $templateResolver;
 
     /** @var CsrfTokenManagerInterface|MockObject */
     public $tokenManager;

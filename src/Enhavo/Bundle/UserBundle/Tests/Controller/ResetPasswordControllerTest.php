@@ -7,7 +7,7 @@
 namespace Controller;
 
 
-use Enhavo\Bundle\AppBundle\Template\TemplateManager;
+use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
 use Enhavo\Bundle\FormBundle\Error\FormErrorResolver;
 use Enhavo\Bundle\UserBundle\Controller\ResetPasswordController;
 use Enhavo\Bundle\UserBundle\Model\User;
@@ -32,7 +32,7 @@ class ResetPasswordControllerTest //extends TestCase
         return new ResetPasswordControllerMock(
             $dependencies->userManager,
             $dependencies->userRepository,
-            $dependencies->templateManager,
+            $dependencies->templateResolver,
             $dependencies->translator,
             $dependencies->errorResolver
         );
@@ -43,8 +43,8 @@ class ResetPasswordControllerTest //extends TestCase
         $dependencies = new ResetPasswordControllerTestDependencies();
         $dependencies->userManager = $this->getMockBuilder(UserManager::class)->disableOriginalConstructor()->getMock();
         $dependencies->userRepository = $this->getMockBuilder(UserRepository::class)->disableOriginalConstructor()->getMock();
-        $dependencies->templateManager = $this->getMockBuilder(TemplateManager::class)->disableOriginalConstructor()->getMock();
-        $dependencies->templateManager->method('getTemplate')->willReturnCallback(function ($template) {
+        $dependencies->templateResolver = $this->getMockBuilder(TemplateResolver::class)->disableOriginalConstructor()->getMock();
+        $dependencies->templateResolver->method('getTemplate')->willReturnCallback(function ($template) {
             return $template .'.managed';
         });
         $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
@@ -325,8 +325,8 @@ class ResetPasswordControllerTestDependencies
     /** @var UserRepository|MockObject */
     public $userRepository;
 
-    /** @var TemplateManager|MockObject */
-    public $templateManager;
+    /** @var TemplateResolver|MockObject */
+    public $templateResolver;
 
     /** @var TranslatorInterface|MockObject */
     public $translator;

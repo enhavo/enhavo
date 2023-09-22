@@ -4,6 +4,8 @@ namespace Enhavo\Bundle\ShopBundle\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
+use Enhavo\Bundle\AppBundle\Template\TemplateResolverAwareInterface;
+use Enhavo\Bundle\AppBundle\Template\TemplateResolverTrait;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Enhavo\Bundle\VueFormBundle\Form\VueForm;
 use Sylius\Component\Order\CartActions;
@@ -15,8 +17,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-class PromotionCouponController extends ResourceController
+class PromotionCouponController extends ResourceController implements TemplateResolverAwareInterface
 {
+    use TemplateResolverTrait;
+
     public function createFormAction(Request $request)
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
@@ -42,7 +46,7 @@ class PromotionCouponController extends ResourceController
             }
         }
 
-        return $this->render($this->getTemplateManager()->getTemplate('admin/view/modal-form.html.twig'), [
+        return $this->render($this->resolveTemplate('admin/view/modal-form.html.twig'), [
             'form' => $form->createView()
         ], $response);
     }
@@ -102,11 +106,6 @@ class PromotionCouponController extends ResourceController
     private function getGenerator()
     {
         return $this->container->get('sylius.promotion_coupon_generator');
-    }
-
-    private function getTemplateManager()
-    {
-        return $this->container->get('enhavo_app.template.manager');
     }
 
     private function getCurrentCart(): OrderInterface

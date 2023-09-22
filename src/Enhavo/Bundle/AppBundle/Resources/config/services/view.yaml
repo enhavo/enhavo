@@ -11,14 +11,14 @@ services:
             - '@request_stack'
             - '@enhavo_app.translation.translation_dumper'
             - '@enhavo_app.locale_resolver'
-            - '@Enhavo\Bundle\AppBundle\Template\TemplateManager'
+            - '@Enhavo\Bundle\AppBundle\Template\TemplateResolver'
         tags:
             - { name: enhavo_app.view }
 
     Enhavo\Bundle\AppBundle\View\Type\ApiViewType:
         arguments:
             - '@twig'
-            - '@Enhavo\Bundle\AppBundle\Template\TemplateManager'
+            - '@Enhavo\Bundle\AppBundle\Template\TemplateResolver'
         tags:
             - { name: enhavo_app.view }
 

@@ -9,7 +9,7 @@
 namespace Enhavo\Bundle\ShopBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Resource\ResourceManager;
-use Enhavo\Bundle\AppBundle\Template\TemplateManager;
+use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
 use Enhavo\Bundle\PaymentBundle\Model\PaymentInterface;
 use Enhavo\Bundle\ShopBundle\Entity\PaymentMethod;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
@@ -22,14 +22,14 @@ class PaymentController extends AbstractController
     public function __construct(
         private RepositoryInterface $orderRepository,
         private ResourceManager $resourceManager,
-        private TemplateManager $templateManager,
+        private TemplateResolver $templateResolver,
     )
     {}
 
     public function purchaseAction(Request $request)
     {
         $order = $this->getOrder($request);
-        return $this->render($this->templateManager->getTemplate('theme/shop/payment/purchase.html.twig'), [
+        return $this->render($this->templateResolver->resolve('theme/shop/payment/purchase.html.twig'), [
             'order' => $order
         ]);
     }

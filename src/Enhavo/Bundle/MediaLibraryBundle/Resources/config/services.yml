@@ -30,7 +30,8 @@ services:
     Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryExtension:
         public: true
         calls:
-            - [ setContainer, [ '@service_container' ] ]
+            - [setContainer, ['@service_container']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
         tags:
             - { name: enhavo.media_extension , alias: media_library }
 

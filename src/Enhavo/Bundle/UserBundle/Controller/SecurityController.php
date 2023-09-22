@@ -42,7 +42,7 @@ class SecurityController extends AbstractUserController
 
         $form = $this->createForm($configuration->getFormClass(), null, $configuration->getFormOptions());
 
-        $template = $this->getTemplate($configuration->getTemplate());
+        $template = $this->resolveTemplate($configuration->getTemplate());
         $response = $this->render($template, [
             'last_username' => $lastUsername,
             'error' => $error,

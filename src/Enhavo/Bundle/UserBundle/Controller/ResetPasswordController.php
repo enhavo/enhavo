@@ -97,7 +97,7 @@ class ResetPasswordController extends AbstractUserController
             }
         }
 
-        $response = $this->render($this->getTemplate($configuration->getTemplate()), [
+        $response = $this->render($this->resolveTemplate($configuration->getTemplate()), [
             'form' => $form->createView(),
             'error' => !$valid,
             'errors' => [
@@ -123,7 +123,7 @@ class ResetPasswordController extends AbstractUserController
     {
         $configuration = $this->provider->getResetPasswordCheckConfiguration();
 
-        return $this->render($this->getTemplate($configuration->getTemplate()));
+        return $this->render($this->resolveTemplate($configuration->getTemplate()));
     }
 
     /**
@@ -176,7 +176,7 @@ class ResetPasswordController extends AbstractUserController
             }
         }
 
-        $response = $this->render($this->getTemplate($configuration->getTemplate()), [
+        $response = $this->render($this->resolveTemplate($configuration->getTemplate()), [
             'user' => $user,
             'form' => $form->createView(),
             'error' => !$valid,
@@ -204,6 +204,6 @@ class ResetPasswordController extends AbstractUserController
     {
         $configuration = $this->provider->getResetPasswordFinishConfiguration();
 
-        return $this->render($this->getTemplate($configuration->getTemplate()));
+        return $this->render($this->resolveTemplate($configuration->getTemplate()));
     }
 }

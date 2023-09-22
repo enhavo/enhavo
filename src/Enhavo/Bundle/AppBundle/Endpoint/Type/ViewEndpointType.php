@@ -5,7 +5,7 @@ namespace Enhavo\Bundle\AppBundle\Endpoint\Type;
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Bundle\ApiBundle\Endpoint\Data;
-use Enhavo\Bundle\AppBundle\Template\TemplateManager;
+use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -16,7 +16,7 @@ class ViewEndpointType extends AbstractEndpointType
 {
     public function __construct(
         private Environment $twig,
-        private TemplateManager $templateManager,
+        private TemplateResolver $templateResolver,
     ) {}
 
     public function getResponse($options, Request $request, Data $data, Context $context): Response
@@ -24,7 +24,7 @@ class ViewEndpointType extends AbstractEndpointType
         if ($request->get('_format') === 'json') {
             return $this->parent->getResponse($options, $request, $data, $context);
         } else if ($request->get('_format') === 'html') {
-            $content = $this->twig->render($this->templateManager->getTemplate($options['template']), $this->getTemplateData($options, $data));
+            $content = $this->twig->render($this->templateResolver->resolve($options['template']), $this->getTemplateData($options, $data));
             return $this->updateResponse(new Response($content), $context);
         }
 

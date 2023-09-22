@@ -8,9 +8,9 @@
 
 namespace Enhavo\Bundle\AppBundle\DependencyInjection\Compiler;
 
-use Enhavo\Bundle\AppBundle\Batch\BatchManager;
 use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
 use Enhavo\Bundle\AppBundle\Controller\ResourcesResolver;
+use Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -68,6 +68,7 @@ class SyliusCompilerPass implements CompilerPassInterface
             if($container->hasDefinition($definitionName)) {
                 $definition = $container->getDefinition($definitionName);
                 $definition->addMethodCall('setViewFactory', [$container->getDefinition('Enhavo\Component\Type\FactoryInterface[View]')]);
+                $definition->addMethodCall('setTemplateResolver', [$container->getDefinition($container->getAlias(TemplateResolverInterface::class))]);
             }
         }
     }

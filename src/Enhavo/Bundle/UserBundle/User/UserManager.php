@@ -149,7 +149,7 @@ class UserManager
             $salt = rtrim(str_replace('+', '.', base64_encode(random_bytes(32))), '=');
             $user->setSalt($salt);
         }
-        $hashedPassword = $hasher->encodePassword($plainPassword, $user->getSalt());
+        $hashedPassword = $hasher->hash($plainPassword, $user->getSalt());
         $user->setPassword($hashedPassword);
         $user->eraseCredentials();
     }

@@ -19,6 +19,7 @@ services:
             - '%enhavo_app.toolbar_widget.secondary%'
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
         tags:
             - { name: container.service_subscriber }
 
@@ -36,5 +37,6 @@ services:
     Enhavo\Bundle\AppBundle\Controller\ModalController:
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
         tags:
             - { name: container.service_subscriber }

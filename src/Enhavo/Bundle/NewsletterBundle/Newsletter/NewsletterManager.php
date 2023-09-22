@@ -7,7 +7,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Mailer\Attachment;
 use Enhavo\Bundle\AppBundle\Mailer\MailerManager;
 use Enhavo\Bundle\AppBundle\Mailer\Message;
-use Enhavo\Bundle\AppBundle\Template\TemplateManager;
+use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
 use Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\NewsletterBundle\Entity\Receiver;
@@ -41,8 +41,8 @@ class NewsletterManager
     /** @var Environment */
     private $twig;
 
-    /** @var TemplateManager */
-    private $templateManager;
+    /** @var TemplateResolver */
+    private $templateResolver;
 
     /** @var ParameterParserInterface */
     private $parameterParser;
@@ -63,7 +63,7 @@ class NewsletterManager
      * @param TokenGeneratorInterface $tokenGenerator
      * @param LoggerInterface $logger
      * @param Environment $twig
-     * @param TemplateManager $templateManager
+     * @param TemplateResolver $templateResolver
      * @param ParameterParser $parameterParser
      * @param ProviderInterface $provider
      * @param string $from
@@ -75,7 +75,7 @@ class NewsletterManager
         TokenGeneratorInterface $tokenGenerator,
         LoggerInterface $logger,
         Environment $twig,
-        TemplateManager $templateManager,
+        TemplateResolver $templateResolver,
         ParameterParser $parameterParser,
         ProviderInterface $provider,
         string $from,
@@ -85,7 +85,7 @@ class NewsletterManager
         $this->mailerManager = $mailer;
         $this->tokenGenerator = $tokenGenerator;
         $this->logger = $logger;
-        $this->templateManager = $templateManager;
+        $this->templateResolver = $templateResolver;
         $this->parameterParser = $parameterParser;
         $this->twig = $twig;
         $this->from = $from;
@@ -214,7 +214,7 @@ class NewsletterManager
     public function render(Receiver $receiver)
     {
         $template = $this->getTemplate($receiver->getNewsletter()->getTemplate());
-        $content = $this->twig->render($this->templateManager->getTemplate($template), [
+        $content = $this->twig->render($this->templateResolver->resolve($template), [
             'resource' => $receiver->getNewsletter(),
             'receiver' => $receiver,
         ]);

@@ -11,7 +11,7 @@ namespace Enhavo\Bundle\NewsletterBundle\Tests\Newsletter;
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Mailer\MailerManager;
 use Enhavo\Bundle\AppBundle\Mailer\Message;
-use Enhavo\Bundle\AppBundle\Template\TemplateManager;
+use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
 use Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface;
 use Enhavo\Bundle\MediaBundle\Content\Content;
 use Enhavo\Bundle\MediaBundle\Entity\File;
@@ -48,8 +48,8 @@ class NewsletterManagerTest extends TestCase
         $dependency->parameterParser->method('parse')->willReturnCallback(function ($content) {
             return $content .'.parsed';
         });
-        $dependency->templateManager = $this->getMockBuilder(TemplateManager::class)->disableOriginalConstructor()->getMock();
-        $dependency->templateManager->method('getTemplate')->willReturnCallback(function ($key) {
+        $dependency->templateResolver = $this->getMockBuilder(TemplateResolver::class)->disableOriginalConstructor()->getMock();
+        $dependency->templateResolver->method('getTemplate')->willReturnCallback(function ($key) {
             return $key .'.managed';
         });
 
@@ -70,7 +70,7 @@ class NewsletterManagerTest extends TestCase
             $dependency->tokenGenerator,
             $dependency->logger,
             $dependency->twig,
-            $dependency->templateManager,
+            $dependency->templateResolver,
             $dependency->parameterParser,
             $dependency->provider,
             $dependency->from,
@@ -281,7 +281,7 @@ class NewsletterManagerTest extends TestCase
     {
         $dependencies = $this->createDependencies();
         $dependencies->twig->method('render')->willReturnCallback(function ($template, $parameters) { return $template; });
-        $dependencies->templateManager->method('getTemplate')->willReturnCallback(function ($template) { return $template; });
+        $dependencies->templateResolver->method('getTemplate')->willReturnCallback(function ($template) { return $template; });
         $newsletterRenderer = $this->createInstance($dependencies, ['other' => [
             'template' => 'pathToOtherTemplate.twig',
             'label' => 'Other Template'
@@ -398,8 +398,8 @@ class DependencyProvider
     public $logger;
     /** @var SubscriptionManager|MockObject */
     public $twig;
-    /** @var TemplateManager|MockObject */
-    public $templateManager;
+    /** @var TemplateResolver|MockObject */
+    public $templateResolver;
     /** @var ParameterParser|MockObject */
     public $parameterParser;
     /** @var ProviderInterface */

@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\CommentBundle\Comment\Strategy;
 
-use Enhavo\Bundle\AppBundle\Template\TemplateManager;
+use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
 use Enhavo\Bundle\CommentBundle\Comment\PublishStrategyInterface;
 use Enhavo\Bundle\CommentBundle\Model\CommentInterface;
 use Enhavo\Bundle\CommentBundle\Repository\CommentRepository;
@@ -24,7 +24,7 @@ class ConfirmStrategy implements PublishStrategyInterface
     public function __construct(
         private MailerInterface $mailer,
         private Environment $twig,
-        private TemplateManager $templateManager,
+        private TemplateResolver $templateResolver,
         private TranslatorInterface $translator,
         private CommentRepository $commentRepository,
         private array $mailerConfig,
@@ -63,7 +63,7 @@ class ConfirmStrategy implements PublishStrategyInterface
 
     public function postCreate(CommentInterface $comment, array $options): void
     {
-        $template = $this->templateManager->getTemplate('mail/comment/confirm.html.twig');
+        $template = $this->templateResolver->resolve('mail/comment/confirm.html.twig');
         $pendingComments = $this->getPendingComments($comment);
 
         $content = $this->twig->render($template, [

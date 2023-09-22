@@ -152,7 +152,7 @@ services:
         arguments:
             - '@sylius.repository.order'
             - '@Enhavo\Bundle\AppBundle\Resource\ResourceManager'
-            - '@enhavo_app.template.manager'
+            - '@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface'
         calls:
             - [setContainer, ['@service_container']]
         tags:
@@ -164,7 +164,7 @@ services:
         arguments:
             - '@enhavo_search.result.result_converter'
             - '@enhavo_search.search.engine'
-            - '@enhavo_app.template.manager'
+            - '@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface'
             - '@enhavo_shop.product_manager'
         calls:
             - [setContainer, ['@service_container']]
@@ -190,6 +190,7 @@ services:
             - '@sylius.context.cart'
         calls:
             - [setContainer, ['@service_container']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
         tags:
             - { name: container.service_subscriber }
 

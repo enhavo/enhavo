@@ -94,7 +94,7 @@ class RegistrationController extends AbstractUserController
             }
         }
 
-        $response = $this->render($this->getTemplate($configuration->getTemplate()), [
+        $response = $this->render($this->resolveTemplate($configuration->getTemplate()), [
             'form' => $form->createView(),
         ]);
 
@@ -112,7 +112,7 @@ class RegistrationController extends AbstractUserController
     {
         $configuration = $this->provider->getRegistrationCheckConfiguration();
 
-        return $this->render($this->getTemplate($configuration->getTemplate()));
+        return $this->render($this->resolveTemplate($configuration->getTemplate()));
     }
 
     /**
@@ -145,6 +145,6 @@ class RegistrationController extends AbstractUserController
     {
         $configuration = $this->provider->getRegistrationFinishConfiguration();
 
-        return $this->render($this->getTemplate($configuration->getTemplate()));
+        return $this->render($this->resolveTemplate($configuration->getTemplate()));
     }
 }

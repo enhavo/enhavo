@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\NavigationBundle\Renderer;
 
-use Enhavo\Bundle\AppBundle\Template\TemplateTrait;
+use Enhavo\Bundle\AppBundle\Template\TemplateResolverTrait;
 use Enhavo\Bundle\NavigationBundle\Exception\RenderException;
 use Enhavo\Bundle\NavigationBundle\Model\NodeInterface;
 use Enhavo\Bundle\NavigationBundle\NavItem\NavItemManager;
@@ -18,7 +18,7 @@ use Twig\Environment;
 class NodeRenderer
 {
     use ContainerAwareTrait;
-    use TemplateTrait;
+    use TemplateResolverTrait;
 
     /** @var NavItemManager */
     private $itemManager;
@@ -71,7 +71,7 @@ class NodeRenderer
             throw new RenderException(sprintf('No default template found for node type "%s"', $node->getName()));
         }
 
-        return $this->renderView($this->getTemplate($template), [
+        return $this->renderView($this->resolveTemplate($template), [
             'node' => $node
         ]);
     }

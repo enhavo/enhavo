@@ -9,6 +9,7 @@ services:
             - '@enhavo_form.error.error.resolver'
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
         tags:
             - { name: container.service_subscriber }
 
@@ -22,6 +23,7 @@ services:
             - '@Enhavo\Bundle\FormBundle\Error\FormErrorResolver'
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
         tags:
             - { name: container.service_subscriber }
 
@@ -36,6 +38,7 @@ services:
             - '@Enhavo\Bundle\FormBundle\Error\FormErrorResolver'
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
         tags:
             - { name: container.service_subscriber }
 
@@ -49,6 +52,7 @@ services:
             - '@Enhavo\Bundle\UserBundle\Security\Authentication\AuthenticationError'
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
         tags:
             - { name: container.service_subscriber }
 
@@ -61,6 +65,7 @@ services:
             - '@translator'
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
         tags:
             - { name: container.service_subscriber }
 
@@ -73,6 +78,7 @@ services:
             - '@Enhavo\Bundle\FormBundle\Error\FormErrorResolver'
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
         tags:
             - { name: container.service_subscriber }
 
@@ -85,6 +91,7 @@ services:
             - '@Enhavo\Bundle\FormBundle\Error\FormErrorResolver'
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
         tags:
             - { name: container.service_subscriber }
 
@@ -96,5 +103,6 @@ services:
             - '@enhavo_user.repository.user'
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
         tags:
             - { name: container.service_subscriber }

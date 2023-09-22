@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Twig;
 
-use Enhavo\Bundle\AppBundle\Template\TemplateManager;
+use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -23,19 +23,19 @@ class TemplateExtension extends AbstractExtension
     private $formThemes;
 
     /**
-     * @var TemplateManager
+     * @var TemplateResolver
      */
-    private $templateManager;
+    private $templateResolver;
 
     /**
      * TemplateExtension constructor.
      * @param array $formThemes
-     * @param TemplateManager $templateManager
+     * @param TemplateResolver $templateResolver
      */
-    public function __construct(array $formThemes, TemplateManager $templateManager)
+    public function __construct(array $formThemes, TemplateResolver $templateResolver)
     {
         $this->formThemes = $formThemes;
-        $this->templateManager = $templateManager;
+        $this->templateResolver = $templateResolver;
     }
 
     public function getFunctions()
@@ -59,12 +59,12 @@ class TemplateExtension extends AbstractExtension
      */
     public function getTemplate(string $template): string
     {
-        return $this->templateManager->getTemplate($template);
+        return $this->templateResolver->resolve($template);
     }
 
     public function getWebpackBuild()
     {
-        return $this->templateManager->getWebpackBuild();
+        return $this->templateResolver->getWebpackBuild();
     }
 
     public function createArray($key, $data)

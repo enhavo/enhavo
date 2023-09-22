@@ -76,7 +76,7 @@ class UserManagerTest extends TestCase
         $dependencies->form = $this->getMockBuilder(FormInterface::class)->getMock();
         $dependencies->encoderFactory = $this->getMockBuilder(EncoderFactoryInterface::class)->getMock();
         $dependencies->encoder = $this->getMockBuilder(PasswordEncoderInterface::class)->getMock();
-        $dependencies->encoder->method('encodePassword')->willReturnCallback(function ($password, $salt) {
+        $dependencies->encoder->method('hash')->willReturnCallback(function ($password, $salt) {
             $this->assertEquals('password', $password);
             $this->assertNotNull($salt);
             return $password .'.hashed';

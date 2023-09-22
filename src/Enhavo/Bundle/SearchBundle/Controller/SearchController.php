@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\SearchBundle\Controller;
 
-use Enhavo\Bundle\AppBundle\Template\TemplateManager;
+use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
 use Enhavo\Bundle\SearchBundle\Engine\EngineInterface;
 use Enhavo\Bundle\SearchBundle\Engine\Filter\Filter;
 use Enhavo\Bundle\SearchBundle\Result\ResultConverter;
@@ -18,19 +18,19 @@ class SearchController extends AbstractController
     /** @var EngineInterface */
     private $searchEngine;
 
-    /** @var TemplateManager */
-    private $templateManager;
+    /** @var TemplateResolver */
+    private $templateResolver;
 
     /**
      * @param ResultConverter $resultConverter
      * @param EngineInterface $searchEngine
-     * @param TemplateManager $templateManager
+     * @param TemplateResolver $templateResolver
      */
-    public function __construct(ResultConverter $resultConverter, EngineInterface $searchEngine, TemplateManager $templateManager)
+    public function __construct(ResultConverter $resultConverter, EngineInterface $searchEngine, TemplateResolver $templateResolver)
     {
         $this->resultConverter = $resultConverter;
         $this->searchEngine = $searchEngine;
-        $this->templateManager = $templateManager;
+        $this->templateResolver = $templateResolver;
     }
 
     /**
@@ -57,7 +57,7 @@ class SearchController extends AbstractController
 
         $results = $this->resultConverter->convert($pagination, $term);
 
-        return $this->render($this->templateManager->getTemplate($configuration->getTemplate()), [
+        return $this->render($this->templateResolver->resolve($configuration->getTemplate()), [
             'results' => $results,
             'pagination' => $pagination,
             'term' => $term

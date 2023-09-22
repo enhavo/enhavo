@@ -77,7 +77,7 @@ class ProfileController extends AbstractUserController
             }
         }
 
-        return $this->render($this->getTemplate($configuration->getTemplate()), [
+        return $this->render($this->resolveTemplate($configuration->getTemplate()), [
             'form' => $form->createView(),
             'data' => [
                 'messages' => $this->getFlashMessages()

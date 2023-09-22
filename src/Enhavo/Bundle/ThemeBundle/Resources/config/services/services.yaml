@@ -49,7 +49,7 @@ services:
     Enhavo\Bundle\ThemeBundle\EventListener\ThemeRegisterSubscriber:
         arguments:
             - '@enhavo_theme.theme.manager'
-            - '@enhavo_app.template.manager'
+            - '@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface'
         tags:
             - { name: kernel.event_subscriber }
 

@@ -27,6 +27,6 @@ class OrderItemController extends BaseOrderItemController
 
     private function clearFlashMessages()
     {
-        $this->get('session')->getFlashBag()->clear();
+        $this->container->get('request_stack')->getFlashBag()->clear();
     }
 }

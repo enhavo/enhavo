@@ -7,7 +7,7 @@
 namespace Controller;
 
 
-use Enhavo\Bundle\AppBundle\Template\TemplateManager;
+use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
 use Enhavo\Bundle\FormBundle\Error\FormErrorResolver;
 use Enhavo\Bundle\UserBundle\Controller\ProfileController;
 use Enhavo\Bundle\UserBundle\Model\User;
@@ -27,7 +27,7 @@ class ProfileControllerTest //extends TestCase
     {
         return new ProfileControllerMock(
             $dependencies->userManager,
-            $dependencies->templateManager,
+            $dependencies->templateResolver,
             $dependencies->translator,
             $dependencies->errorResolver
         );
@@ -40,8 +40,8 @@ class ProfileControllerTest //extends TestCase
         $dependencies->userManager->method('getConfigKey')->willReturnCallback(function ($request) {
             return $request->attributes->get('_config');
         });
-        $dependencies->templateManager = $this->getMockBuilder(TemplateManager::class)->disableOriginalConstructor()->getMock();
-        $dependencies->templateManager->method('getTemplate')->willReturnCallback(function ($template) {
+        $dependencies->templateResolver = $this->getMockBuilder(TemplateResolver::class)->disableOriginalConstructor()->getMock();
+        $dependencies->templateResolver->method('getTemplate')->willReturnCallback(function ($template) {
             return $template .'.managed';
         });
 
@@ -144,8 +144,8 @@ class ProfileControllerTestDependencies
     /** @var UserManager|MockObject */
     public $userManager;
 
-    /** @var TemplateManager|MockObject */
-    public $templateManager;
+    /** @var TemplateResolver|MockObject */
+    public $templateResolver;
 
     /** @var TranslatorInterface|MockObject */
     public $translator;

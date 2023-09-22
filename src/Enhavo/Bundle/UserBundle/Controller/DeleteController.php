@@ -93,7 +93,7 @@ class DeleteController extends AbstractUserController
             }
         }
 
-        $response = $this->render($this->getTemplate($configuration->getTemplate()), [
+        $response = $this->render($this->resolveTemplate($configuration->getTemplate()), [
             'form' => $form->createView(),
             'error' => !$valid,
             'errors' => [
@@ -116,6 +116,6 @@ class DeleteController extends AbstractUserController
     {
         $configuration = $this->provider->getDeleteFinishConfiguration();
 
-        return $this->render($this->getTemplate($configuration->getTemplate()));
+        return $this->render($this->resolveTemplate($configuration->getTemplate()));
     }
 }

@@ -89,3 +89,4 @@ services:
         calls:
             - [setContainer, ['@service_container']]
             - [setTwig, ['@twig']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]

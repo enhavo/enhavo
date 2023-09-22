@@ -4,7 +4,7 @@
 namespace Controller;
 
 
-use Enhavo\Bundle\AppBundle\Template\TemplateManager;
+use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
 use Enhavo\Bundle\FormBundle\Error\FormErrorResolver;
 use Enhavo\Bundle\NewsletterBundle\Controller\SubscriptionController;
 use Enhavo\Bundle\NewsletterBundle\Entity\PendingSubscriber;
@@ -89,11 +89,11 @@ class SubscriptionControllerTest extends TestCase
     public function testActivateAction()
     {
         $dependencies = $this->createDependencies();
-        $templateManager = $this->getMockBuilder(TemplateManager::class)->disableOriginalConstructor()->getMock();
-        $templateManager->expects($this->once())->method('getTemplate')->willReturnCallback(function ($tpl) {
+        $templateResolver = $this->getMockBuilder(TemplateResolver::class)->disableOriginalConstructor()->getMock();
+        $templateResolver->expects($this->once())->method('getTemplate')->willReturnCallback(function ($tpl) {
             return $tpl;
         });
-        $dependencies->container->expects($this->once())->method('get')->willReturn($templateManager);
+        $dependencies->container->expects($this->once())->method('get')->willReturn($templateResolver);
 
         $pendingSubscriber = new PendingSubscriber();
         $pendingSubscriber->setData(new Subscriber());
@@ -166,11 +166,11 @@ class SubscriptionControllerTest extends TestCase
     public function testUnsubscribeAction()
     {
         $dependencies = $this->createDependencies();
-        $templateManager = $this->getMockBuilder(TemplateManager::class)->disableOriginalConstructor()->getMock();
-        $templateManager->expects($this->once())->method('getTemplate')->willReturnCallback(function ($tpl) {
+        $templateResolver = $this->getMockBuilder(TemplateResolver::class)->disableOriginalConstructor()->getMock();
+        $templateResolver->expects($this->once())->method('getTemplate')->willReturnCallback(function ($tpl) {
             return $tpl;
         });
-        $dependencies->container->expects($this->once())->method('get')->willReturn($templateManager);
+        $dependencies->container->expects($this->once())->method('get')->willReturn($templateResolver);
 
         $subscriberMock = $this->getMockBuilder(SubscriberInterface::class)->getMock();
 

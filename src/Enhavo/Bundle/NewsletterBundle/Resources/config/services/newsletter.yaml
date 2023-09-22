@@ -22,7 +22,7 @@ services:
           - '@enhavo_app.util.secure_url_token_generator'
           - '@logger'
           - '@twig'
-          - '@enhavo_app.template.manager'
+          - '@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface'
           - '@Enhavo\Bundle\NewsletterBundle\Newsletter\ParameterParser'
           - '@enhavo_newsletter.newsletter.provider'
           - '%enhavo_newsletter.newsletter.mail.from%'

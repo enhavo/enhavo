@@ -8,10 +8,11 @@
 
 namespace Enhavo\Bundle\AppBundle\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\RouterInterface;
 
-class LoginController
+class LoginController extends AbstractController
 {
     /**
      * @var string

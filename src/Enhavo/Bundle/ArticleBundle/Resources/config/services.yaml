@@ -55,6 +55,7 @@ services:
             - '@Enhavo\Bundle\CommentBundle\Comment\CommentManager'
         calls:
             - [setContainer, ['@service_container']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
 
     enhavo_article.factory.article:
         public: true
