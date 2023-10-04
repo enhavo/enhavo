@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\RoutingBundle\DependencyInjection;
 
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
+use Enhavo\Bundle\RoutingBundle\Condition\NullConditionResolver;
 use Enhavo\Bundle\RoutingBundle\Entity\Route;
 use Enhavo\Bundle\RoutingBundle\Factory\RouteFactory;
 use Enhavo\Bundle\RoutingBundle\Form\Type\RouteType;
@@ -54,7 +55,7 @@ class Configuration implements ConfigurationInterface
             ->end()
 
             ->children()
-                ->scalarNode('condition_resolver')->defaultValue(null)->end()
+                ->scalarNode('condition_resolver')->defaultValue(NullConditionResolver::class)->end()
                 ->arrayNode('classes')
                     ->useAttributeAsKey('class')
                     ->prototype('array')

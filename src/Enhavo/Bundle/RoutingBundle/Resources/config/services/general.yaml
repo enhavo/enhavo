@@ -31,3 +31,5 @@ services:
         class: Enhavo\Bundle\RoutingBundle\Request\RequestContext
         calls:
             - ['setResolver', ['@enhavo_routing.condition_resolver']]
+
+    Enhavo\Bundle\RoutingBundle\Condition\NullConditionResolver:
