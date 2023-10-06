@@ -9,7 +9,7 @@ use Enhavo\Bundle\AppBundle\Model\TimestampableTrait;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
-class User implements UserInterface, GroupableInterface, ResourceInterface, PasswordAuthenticatedUserInterface, Timestampable
+class User implements UserInterface
 {
     use TimestampableTrait;
 

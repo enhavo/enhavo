@@ -6,7 +6,7 @@ services:
             - '@Enhavo\Bundle\UserBundle\UserIdentifier\UserIdentifierProviderResolver'
             - '@enhavo_app.util.secure_url_token_generator'
             - '@translator'
-            - '@security.password_hasher_factory'
+            - '@security.user_password_hasher'
             - '@router'
             - '@event_dispatcher'
             - '@security.token_storage'
