@@ -20,14 +20,14 @@ enhavo_app:
             type: newsletter
         calendar:
             type: calendar
-        shop_catalog:
-            type: shop_catalog
-        shop_sales:
-            type: shop_sales
-        shop_configuration:
-            type: shop_configuration
-        shop_promotion:
-            type: shop_promotion
+#        shop_catalog:
+#            type: shop_catalog
+#        shop_sales:
+#            type: shop_sales
+#        shop_configuration:
+#            type: shop_configuration
+#        shop_promotion:
+#            type: shop_promotion
         navigation:
             type: navigation
         redirect:

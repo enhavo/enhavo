@@ -42,5 +42,5 @@ enhavo_block:
             type: newsletter_subscribe
         comment:
             type: comment
-        shop_product_list:
-            type: shop_product_list
+#        shop_product_list:
+#            type: shop_product_list
