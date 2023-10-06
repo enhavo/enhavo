@@ -165,6 +165,40 @@ class TranslationTypeTest extends TypeTestCase
         $this->assertEquals('(en) Normal Error', $view->vars['errors'][1]->getMessage());
         $this->assertTrue(in_array('enhavo_translation_translation', $view->vars['block_prefixes']));
     }
+
+    public function testInheritData()
+    {
+        $this->translationManager->method('isTranslation')->willReturn(true);
+        $this->translationManager->method('isEnabled')->willReturn(true);
+        $this->translationManager->method('isTranslatable')->willReturnCallback(function ($dataClass) {
+            return $dataClass instanceof MockTranslationModel || $dataClass === MockTranslationModel::class;
+        });
+        $this->translationManager->method('getLocales')->willReturn(['en', 'de']);
+        $this->translationManager->method('getDefaultLocale')->willReturn('en');
+        $this->translationManager->method('getTranslations')->willReturn([]);
+
+        $translationData = null;
+        $this->translationManager->method('setTranslation')->willReturnCallback(function($data, $property, $locale, $value) use (&$translationData) {
+            $translationData = $data;
+        });
+
+        $form = $this->factory->create(MockTranslationFormInheritParentType::class);
+
+        $form->submit([
+            'something' => [
+                'text' => [
+                    'en' => 'Hello',
+                    'de' => 'Hallo'
+                ]
+            ]
+        ]);
+
+        $formData = $form->getData();
+
+        $this->assertEquals('Hello', $formData->getText());
+
+        //$this->assertTrue($translationData === $formData);
+    }
 }
 
 class MockTranslationModel
@@ -199,6 +233,37 @@ class MockTranslationFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
+            'data_class' => MockTranslationModel::class
+        ]);
+    }
+}
+
+class MockTranslationFormInheritParentType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add('something', MockTranslationFormInheritChildType::class);
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => MockTranslationModel::class
+        ]);
+    }
+}
+
+class MockTranslationFormInheritChildType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add('text', TextType::class);
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'inherit_data' => true,
             'data_class' => MockTranslationModel::class
         ]);
     }

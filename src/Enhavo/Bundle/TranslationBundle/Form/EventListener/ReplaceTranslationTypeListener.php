@@ -83,7 +83,8 @@ class ReplaceTranslationTypeListener implements EventSubscriberInterface
             'form_options' => $options,
             'form_type' => get_class($child->getConfig()->getType()->getInnerType()),
             'label' => $options['label'],
-            'translation_domain' => $options['translation_domain']
+            'translation_domain' => $options['translation_domain'],
+            'inherit_data' => $child->getConfig()->getInheritData(),
         ]);
     }
 }
