@@ -13,8 +13,8 @@ class EnhavoTranslationBundleTest extends TestCase
         $container = new ContainerBuilder();
         $config = $container->getCompilerPassConfig();
         $bundle = new EnhavoTranslationBundle();
-        $this->assertCount(6, $config->getBeforeOptimizationPasses());
+        $this->assertCount(7, $config->getBeforeOptimizationPasses());
         $bundle->build($container);
-        $this->assertCount(9, $config->getBeforeOptimizationPasses());
+        $this->assertCount(10, $config->getBeforeOptimizationPasses());
     }
 }

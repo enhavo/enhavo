@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ProfileControllerTest //extends TestCase
@@ -41,7 +42,7 @@ class ProfileControllerTest //extends TestCase
             return $request->attributes->get('_config');
         });
         $dependencies->templateResolver = $this->getMockBuilder(TemplateResolver::class)->disableOriginalConstructor()->getMock();
-        $dependencies->templateResolver->method('getTemplate')->willReturnCallback(function ($template) {
+        $dependencies->templateResolver->method('resolve')->willReturnCallback(function ($template) {
             return $template .'.managed';
         });
 
@@ -73,7 +74,7 @@ class ProfileControllerTest //extends TestCase
 
             return $dependencies->form;
         });
-        $dependencies->userManager->expects($this->exactly(3))->method('getTemplate')->willReturn('profile.html.twig');
+        $dependencies->userManager->expects($this->exactly(3))->method('resolve')->willReturn('profile.html.twig');
         $dependencies->userManager->expects($this->exactly(1))->method('update');
 
         $controller = $this->createInstance($dependencies);
@@ -109,7 +110,7 @@ class ProfileControllerTest //extends TestCase
 
             return $dependencies->form;
         });
-        $dependencies->userManager->expects($this->exactly(1))->method('getTemplate')->willReturn('profile.html.twig');
+        $dependencies->userManager->expects($this->exactly(1))->method('resolve')->willReturn('profile.html.twig');
         $dependencies->userManager->expects($this->exactly(1))->method('update');
 
         $controller = $this->createInstance($dependencies);
@@ -164,7 +165,7 @@ class ProfileControllerMock extends ProfileController
 {
     public $isGranted = false;
 
-    protected function getUser()
+    protected function getUser(): ?UserInterface
     {
         return new User();
     }

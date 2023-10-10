@@ -8,26 +8,22 @@
 
 namespace Enhavo\Bundle\DoctrineExtensionBundle\Tests\Fixtures\Entity\Reference;
 
-/**
- * @Entity
- */
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
+
+
+#[ORM\Entity]
 class EntityContainer
 {
-    /**
-     * @Id
-     * @GeneratedValue
-     * @Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\Column(name: "id", type: Types::INTEGER)]
+    #[ORM\GeneratedValue(strategy: "AUTO")]
     private $id;
 
-    /**
-     * @ManyToOne(targetEntity="Entity", cascade={"all"}, fetch="LAZY")
-     */
+    #[ORM\ManyToOne(targetEntity: Entity::class, cascade: ['all'], fetch: 'LAZY')]
     private $entity;
 
-    /**
-     * @Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(length: 255, nullable: true)]
     private $name;
 
     /**

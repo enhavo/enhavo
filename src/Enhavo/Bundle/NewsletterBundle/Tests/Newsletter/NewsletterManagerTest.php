@@ -49,7 +49,7 @@ class NewsletterManagerTest extends TestCase
             return $content .'.parsed';
         });
         $dependency->templateResolver = $this->getMockBuilder(TemplateResolver::class)->disableOriginalConstructor()->getMock();
-        $dependency->templateResolver->method('getTemplate')->willReturnCallback(function ($key) {
+        $dependency->templateResolver->method('resolve')->willReturnCallback(function ($key) {
             return $key .'.managed';
         });
 
@@ -281,7 +281,7 @@ class NewsletterManagerTest extends TestCase
     {
         $dependencies = $this->createDependencies();
         $dependencies->twig->method('render')->willReturnCallback(function ($template, $parameters) { return $template; });
-        $dependencies->templateResolver->method('getTemplate')->willReturnCallback(function ($template) { return $template; });
+        $dependencies->templateResolver->method('resolve')->willReturnCallback(function ($template) { return $template; });
         $newsletterRenderer = $this->createInstance($dependencies, ['other' => [
             'template' => 'pathToOtherTemplate.twig',
             'label' => 'Other Template'

@@ -89,9 +89,9 @@ class UserIdentifierProviderResolverTest extends TestCase
 
 class EnhavoUser implements UserInterface
 {
-    public function getRoles()
+    public function getRoles(): array
     {
-
+        return [];
     }
 
     public function getPassword()
@@ -112,6 +112,11 @@ class EnhavoUser implements UserInterface
     public function getUsername()
     {
 
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return 'myUsername';
     }
 }
 

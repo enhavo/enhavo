@@ -5,7 +5,7 @@ namespace Enhavo\Bundle\AppBundle\Tests\Column\Type;
 use Enhavo\Bundle\AppBundle\Column\Type\TemplateType;
 use Enhavo\Bundle\AppBundle\Tests\Mock\EntityMock;
 
-class TemplateTypeTest extends AbstractTypeTest
+class TemplateTypeTest extends AbstractTypeTestCase
 {
     function testInitialize()
     {

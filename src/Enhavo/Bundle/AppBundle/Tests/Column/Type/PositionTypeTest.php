@@ -5,7 +5,7 @@ namespace Enhavo\Bundle\AppBundle\Tests\Column\Type;
 use Enhavo\Bundle\AppBundle\Column\Type\PositionType;
 use Enhavo\Bundle\AppBundle\Tests\Mock\EntityMock;
 
-class PositionTypeTest extends AbstractTypeTest
+class PositionTypeTest extends AbstractTypeTestCase
 {
     function testInitialize()
     {

@@ -8,18 +8,16 @@
 
 namespace Enhavo\Bundle\DoctrineExtensionBundle\Tests\Fixtures\Entity\AssociationFinder;
 
-/**
- * @Entity
- */
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
+
+#[ORM\Entity]
 class File
 {
-    /**
-     * @var integer|null
-     * @Id
-     * @GeneratedValue
-     * @Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\Column(name: "id", type: Types::INTEGER)]
+    #[ORM\GeneratedValue(strategy: "AUTO")]
+    private ?int $id;
 
     /**
      * @return int|null

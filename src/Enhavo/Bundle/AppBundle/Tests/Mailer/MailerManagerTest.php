@@ -22,7 +22,7 @@ class MailerManagerTest extends TestCase
     {
         $dependencies = new MailerManagerTestDependencies();
         $dependencies->templateResolver = $this->getMockBuilder(TemplateResolver::class)->disableOriginalConstructor()->getMock();
-        $dependencies->templateResolver->method('getTemplate')->willReturnCallback(function ($tpl) {
+        $dependencies->templateResolver->method('resolve')->willReturnCallback(function ($tpl) {
             return $tpl;
         });
         $dependencies->environment = new Environment(new FilesystemLoader([

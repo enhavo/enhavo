@@ -13,7 +13,7 @@ use Enhavo\Bundle\AppBundle\Column\Type\PropertyType;
 use Enhavo\Bundle\AppBundle\Exception\PropertyNotExistsException;
 use Enhavo\Bundle\AppBundle\Tests\Mock\EntityMock;
 
-class PropertyTypeTest extends AbstractTypeTest
+class PropertyTypeTest extends AbstractTypeTestCase
 {
     function testInitialize()
     {

@@ -67,7 +67,7 @@ class SecurityControllerTest //extends TestCase
         $authenticationUtils->method('getLastAuthenticationError')->willReturn('error');
         $authenticationUtils->method('getLastUsername')->willReturn('username@enhavo.com');
         $dependencies->tokenManager->method('getToken')->willReturn(new CsrfToken('_id_', '_value_'));
-        $dependencies->userManager->method('getTemplate')->willReturnCallback(function ($config, $action) {
+        $dependencies->userManager->method('resolve')->willReturnCallback(function ($config, $action) {
             $this->assertEquals('theme', $config);
             $this->assertEquals('login', $action);
 
@@ -85,7 +85,7 @@ class SecurityControllerTest //extends TestCase
 
             return [];
         });
-        $dependencies->templateResolver->method('getTemplate')->willReturnCallback(function($template) {
+        $dependencies->templateResolver->method('resolve')->willReturnCallback(function($template) {
             return $template .'.managed';
         });
 

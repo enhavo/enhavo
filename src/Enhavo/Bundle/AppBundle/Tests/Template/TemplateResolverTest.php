@@ -40,7 +40,7 @@ class TemplateResolverTest extends TestCase
         $dependencies = $this->createDependencies();
         $instance = $this->createInstance($dependencies);
 
-        self::assertEquals('test', $instance->getTemplate('test'));
+        self::assertEquals('test', $instance->resolve('test'));
     }
 
     public function testRewritingTemplate()
@@ -50,9 +50,9 @@ class TemplateResolverTest extends TestCase
 
         $instance->registerPath(__DIR__.'/../Fixtures/template/something', 'MyAlias');
 
-        self::assertEquals('@MyAlias/hello.html.twig', $instance->getTemplate('hello.html.twig'));
-        self::assertEquals('@MyAlias/deeper/fubar.html.twig', $instance->getTemplate('deeper/fubar.html.twig'));
-        self::assertEquals('else.html.twig', $instance->getTemplate('else.html.twig'));
+        self::assertEquals('@MyAlias/hello.html.twig', $instance->resolve('hello.html.twig'));
+        self::assertEquals('@MyAlias/deeper/fubar.html.twig', $instance->resolve('deeper/fubar.html.twig'));
+        self::assertEquals('else.html.twig', $instance->resolve('else.html.twig'));
     }
 }
 

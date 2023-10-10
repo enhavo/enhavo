@@ -19,7 +19,7 @@ class TranslatorMock implements TranslatorInterface
     {
     }
 
-    public function trans(string $id, array $parameters = [], string $domain = null, string $locale = null)
+    public function trans(string $id, array $parameters = [], string $domain = null, string $locale = null): string
     {
         return $id . $this->postFix;
     }
@@ -27,5 +27,10 @@ class TranslatorMock implements TranslatorInterface
     public function setPostFix(string $postFix): void
     {
         $this->postFix = $postFix;
+    }
+
+    public function getLocale(): string
+    {
+        return 'en';
     }
 }

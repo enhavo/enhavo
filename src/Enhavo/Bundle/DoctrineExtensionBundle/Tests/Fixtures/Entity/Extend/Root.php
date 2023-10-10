@@ -8,24 +8,19 @@
 
 namespace Enhavo\Bundle\DoctrineExtensionBundle\Tests\Fixtures\Entity\Extend;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @Entity
- */
+#[ORM\Entity]
 class Root
 {
-    /**
-     * @Id
-     * @GeneratedValue
-     * @Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\Column(name: "id", type: Types::INTEGER)]
+    #[ORM\GeneratedValue(strategy: "AUTO")]
     private $id;
 
-    /**
-     * @Column(type="string", length=32, nullable=true)
-     */
-    private $name;
+    #[ORM\Column(length: 32, nullable: true)]
+    private ?string $name;
 
     public function getId()
     {

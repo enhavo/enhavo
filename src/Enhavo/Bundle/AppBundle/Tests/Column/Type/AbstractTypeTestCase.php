@@ -11,7 +11,7 @@ namespace Enhavo\Bundle\AppBundle\Tests\Column\Type;
 use Enhavo\Bundle\AppBundle\Column\Column;
 use PHPUnit\Framework\TestCase;
 
-abstract class AbstractTypeTest extends TestCase
+abstract class AbstractTypeTestCase extends TestCase
 {
     /**
      * @param $type

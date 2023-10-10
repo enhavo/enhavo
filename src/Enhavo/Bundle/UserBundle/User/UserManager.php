@@ -123,7 +123,7 @@ class UserManager
 
         $this->updateLoggedIn($user);
 
-        $token = new UsernamePasswordToken($user, null, $firewallName ?? $this->defaultFirewall, $user->getRoles());
+        $token = new UsernamePasswordToken($user, $firewallName ?? $this->defaultFirewall, $user->getRoles());
         $request = $this->requestStack->getCurrentRequest();
         if (null !== $request) {
             $this->sessionStrategy->onAuthentication($request, $token);

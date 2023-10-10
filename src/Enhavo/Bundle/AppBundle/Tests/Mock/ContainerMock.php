@@ -15,17 +15,17 @@ class ContainerMock implements ContainerInterface
         $this->services[$id] = $service;
     }
 
-    public function get(string $id, int $invalidBehavior = self::EXCEPTION_ON_INVALID_REFERENCE)
+    public function get(string $id, int $invalidBehavior = self::EXCEPTION_ON_INVALID_REFERENCE): ?object
     {
         return $this->services[$id];
     }
 
-    public function has(string $id)
+    public function has(string $id): bool
     {
         return array_key_exists($id, $this->services);
     }
 
-    public function initialized(string $id)
+    public function initialized(string $id): bool
     {
        return $this->initialized;
     }
@@ -35,7 +35,7 @@ class ContainerMock implements ContainerInterface
         return $this->parameters[$name];
     }
 
-    public function hasParameter(string $name)
+    public function hasParameter(string $name): bool
     {
         return array_key_exists($name, $this->parameters);
     }

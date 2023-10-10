@@ -5,7 +5,9 @@ namespace Controller;
 
 
 use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
+use Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface;
 use Enhavo\Bundle\FormBundle\Error\FormErrorResolver;
+use Enhavo\Bundle\FormBundle\Serializer\SerializerInterface;
 use Enhavo\Bundle\NewsletterBundle\Controller\SubscriptionController;
 use Enhavo\Bundle\NewsletterBundle\Entity\PendingSubscriber;
 use Enhavo\Bundle\NewsletterBundle\Model\Subscriber;
@@ -22,7 +24,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SubscriptionControllerTest extends TestCase
@@ -37,9 +39,13 @@ class SubscriptionControllerTest extends TestCase
         $dependencies->errorResolver = $this->getMockBuilder(FormErrorResolver::class)->disableOriginalConstructor()->getMock();
         $dependencies->errorResolver->method('getErrorFieldNames')->willReturn([]);
         $dependencies->errorResolver->method('getErrorMessages')->willReturn([]);
-        $dependencies->serializer = $this->getMockBuilder(Serializer::class)->disableOriginalConstructor()->getMock();
+        $dependencies->serializer = $this->getMockBuilder(NormalizerInterface::class)->disableOriginalConstructor()->getMock();
         $dependencies->serializer->method('normalize')->willReturnCallback(function ($resource) {
             return ['email' => $resource->getEmail()];
+        });
+        $dependencies->templateResolver = $this->getMockBuilder(TemplateResolverInterface::class)->getMock();
+        $dependencies->templateResolver->method('resolve')->willReturnCallback(function ($template) {
+            return 'resolved.'.$template;
         });
 
         return $dependencies;
@@ -56,6 +62,7 @@ class SubscriptionControllerTest extends TestCase
             $dependencies->serializer
         );
         $controller->setContainer($dependencies->container);
+        $controller->setTemplateResolver($dependencies->templateResolver);
         return $controller;
     }
 
@@ -89,11 +96,6 @@ class SubscriptionControllerTest extends TestCase
     public function testActivateAction()
     {
         $dependencies = $this->createDependencies();
-        $templateResolver = $this->getMockBuilder(TemplateResolver::class)->disableOriginalConstructor()->getMock();
-        $templateResolver->expects($this->once())->method('getTemplate')->willReturnCallback(function ($tpl) {
-            return $tpl;
-        });
-        $dependencies->container->expects($this->once())->method('get')->willReturn($templateResolver);
 
         $pendingSubscriber = new PendingSubscriber();
         $pendingSubscriber->setData(new Subscriber());
@@ -113,7 +115,7 @@ class SubscriptionControllerTest extends TestCase
 
         $result = $controller->activateAction($request);
 
-        $this->assertEquals('tpl.html.twig.rendered', $result->getContent());
+        $this->assertEquals('resolved.tpl.html.twig.rendered', $result->getContent());
     }
 
     public function testAddAction()
@@ -160,18 +162,12 @@ class SubscriptionControllerTest extends TestCase
         ]);
 
         $response = $controller->addAction($request);
-        $this->assertEquals('{"success":false,"error":true,"message":null,"errors":{"fields":[],"messages":[]},"subscriber":{"email":null}}', $response->getContent());
+        $this->assertEquals('{"success":false,"error":true,"message":"","errors":{"fields":[],"messages":[]},"subscriber":{"email":null}}', $response->getContent());
     }
 
     public function testUnsubscribeAction()
     {
         $dependencies = $this->createDependencies();
-        $templateResolver = $this->getMockBuilder(TemplateResolver::class)->disableOriginalConstructor()->getMock();
-        $templateResolver->expects($this->once())->method('getTemplate')->willReturnCallback(function ($tpl) {
-            return $tpl;
-        });
-        $dependencies->container->expects($this->once())->method('get')->willReturn($templateResolver);
-
         $subscriberMock = $this->getMockBuilder(SubscriberInterface::class)->getMock();
 
 
@@ -191,7 +187,7 @@ class SubscriptionControllerTest extends TestCase
         ]);
 
         $response = $controller->unsubscribeAction($request);
-        $this->assertEquals('tpl.html.twig.rendered', $response->getContent());
+        $this->assertEquals('resolved.tpl.html.twig.rendered', $response->getContent());
 
         $dependencies = $this->createDependencies();
         $controller = $this->createInstance($dependencies);
@@ -207,19 +203,16 @@ class SubscriptionControllerTest extends TestCase
 
 class SubscriptionControllerTestDependencies
 {
-    /** @var SubscriptionManager|MockObject */
-    public $subscriptionManager;
+    public SubscriptionManager&MockObject $subscriptionManager;
     /** @var PendingSubscriberManager|MockObject */
     public $pendingManager;
     /** @var TranslatorInterface|MockObject */
     public $translator;
     /** @var FormErrorResolver|MockObject */
     public $errorResolver;
-    /** @var Serializer|MockObject */
-    public $serializer;
-
-    /** @var Container|MockObject */
-    public $container;
+    public SerializerInterface|MockObject $serializer;
+    public Container|MockObject $container;
+    public TemplateResolver|MockObject $templateResolver;
 }
 
 class SubscriptionTestController extends SubscriptionController

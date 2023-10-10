@@ -8,27 +8,21 @@
 
 namespace Enhavo\Bundle\DoctrineExtensionBundle\Tests\Fixtures\Entity\Reference;
 
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\DBAL\Types\Types;
 
-/**
- * @Entity
- */
+#[ORM\Entity]
 class NodeContainer implements NodeInterface
 {
-    /**
-     * @Id
-     * @GeneratedValue
-     * @Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\Column(name: "id", type: Types::INTEGER)]
+    #[ORM\GeneratedValue(strategy: "AUTO")]
     private $id;
 
-    /**
-     * @Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(length: 255, nullable: true)]
     private $name;
 
-    /**
-     * @ManyToOne(targetEntity="Entity", cascade={"all"})
-     */
+    #[ORM\ManyToOne(targetEntity: Entity::class, cascade: ['all'])]
     private $entity;
 
     public function getId()

@@ -44,7 +44,7 @@ class ResetPasswordControllerTest //extends TestCase
         $dependencies->userManager = $this->getMockBuilder(UserManager::class)->disableOriginalConstructor()->getMock();
         $dependencies->userRepository = $this->getMockBuilder(UserRepository::class)->disableOriginalConstructor()->getMock();
         $dependencies->templateResolver = $this->getMockBuilder(TemplateResolver::class)->disableOriginalConstructor()->getMock();
-        $dependencies->templateResolver->method('getTemplate')->willReturnCallback(function ($template) {
+        $dependencies->templateResolver->method('resolve')->willReturnCallback(function ($template) {
             return $template .'.managed';
         });
         $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
@@ -79,7 +79,7 @@ class ResetPasswordControllerTest //extends TestCase
     public function testRequest()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->userManager->method('getTemplate')->willReturn('request.html.twig');
+        $dependencies->userManager->method('resolve')->willReturn('request.html.twig');
         $dependencies->userManager->method('getStylesheets')->willReturn([]);
         $dependencies->userManager->method('getJavascripts')->willReturn([]);
         $dependencies->userManager->expects($this->once())->method('getRedirectRoute')->willReturn('redirect.route');
@@ -130,7 +130,7 @@ class ResetPasswordControllerTest //extends TestCase
     {
         $dependencies = $this->createDependencies();
         $dependencies->request->method('isXmlHttpRequest')->willReturn(true);
-        $dependencies->userManager->method('getTemplate')->willReturn('request.html.twig');
+        $dependencies->userManager->method('resolve')->willReturn('request.html.twig');
         $dependencies->userManager->method('getStylesheets')->willReturn([]);
         $dependencies->userManager->method('getJavascripts')->willReturn([]);
         $dependencies->userManager->expects($this->once())->method('getRedirectRoute')->willReturn('redirect.route');
@@ -179,7 +179,7 @@ class ResetPasswordControllerTest //extends TestCase
     public function testCheck()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->userManager->method('getTemplate')->willReturnCallback(function($config, $action) {
+        $dependencies->userManager->method('resolve')->willReturnCallback(function($config, $action) {
             $this->assertEquals('theme', $config);
             $this->assertEquals('reset_password_check', $action);
 
@@ -201,7 +201,7 @@ class ResetPasswordControllerTest //extends TestCase
         $dependencies = $this->createDependencies();
         $dependencies->userManager->method('getRedirectRoute')->willReturn('redirect.route');
         $dependencies->userRepository->method('findByConfirmationToken')->willReturn(new User());
-        $dependencies->userManager->method('getTemplate')->willReturnCallback(function($config, $action) {
+        $dependencies->userManager->method('resolve')->willReturnCallback(function($config, $action) {
             $this->assertEquals('theme', $config);
             $this->assertEquals('reset_password_confirm', $action);
 
@@ -241,7 +241,7 @@ class ResetPasswordControllerTest //extends TestCase
         $dependencies = $this->createDependencies();
         $dependencies->userManager->method('getRedirectRoute')->willReturn('redirect.route');
         $dependencies->userRepository->method('findByConfirmationToken')->willReturn(new User());
-        $dependencies->userManager->method('getTemplate')->willReturnCallback(function($config, $action) {
+        $dependencies->userManager->method('resolve')->willReturnCallback(function($config, $action) {
             $this->assertEquals('theme', $config);
             $this->assertEquals('reset_password_confirm', $action);
 
@@ -297,7 +297,7 @@ class ResetPasswordControllerTest //extends TestCase
     public function testFinish()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->userManager->method('getTemplate')->willReturnCallback(function($config, $action) {
+        $dependencies->userManager->method('resolve')->willReturnCallback(function($config, $action) {
             $this->assertEquals('theme', $config);
             $this->assertEquals('reset_password_finish', $action);
 

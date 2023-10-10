@@ -44,7 +44,7 @@ class Route extends BaseRouteModel implements RouteInterface, ResourceInterface
     public function setPath(string $pattern): static
     {
         $prefix = $pattern;
-        $variablePattern = null;
+        $variablePattern = '';
 
         $position = strpos($pattern, '/{');
 

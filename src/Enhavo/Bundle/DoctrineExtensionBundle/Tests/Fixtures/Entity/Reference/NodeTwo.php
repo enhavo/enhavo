@@ -8,22 +8,18 @@
 
 namespace Enhavo\Bundle\DoctrineExtensionBundle\Tests\Fixtures\Entity\Reference;
 
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @Entity
- */
+#[ORM\Entity]
 class NodeTwo implements NodeInterface
 {
-    /**
-     * @Id
-     * @GeneratedValue
-     * @Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\Column(name: "id", type: Types::INTEGER)]
+    #[ORM\GeneratedValue(strategy: "AUTO")]
     private $id;
 
-    /**
-     * @Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(length: 255, nullable: true)]
     private $label;
 
     public function getId()

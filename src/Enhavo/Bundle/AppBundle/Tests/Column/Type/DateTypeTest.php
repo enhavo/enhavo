@@ -11,7 +11,7 @@ namespace Enhavo\Bundle\AppBundle\Tests\Column\Type;
 use Enhavo\Bundle\AppBundle\Column\Type\DateType;
 use Enhavo\Bundle\AppBundle\Tests\Mock\EntityMock;
 
-class DateTypeTest extends AbstractTypeTest
+class DateTypeTest extends AbstractTypeTestCase
 {
     public function testInitialize()
     {

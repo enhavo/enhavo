@@ -17,9 +17,9 @@ use Psr\Container\ContainerInterface;
  */
 trait TemplateResolverTrait
 {
-    protected ?TemplateResolver $templateResolver = null;
+    protected ?TemplateResolverInterface $templateResolver = null;
 
-    public function setTemplateResolver(TemplateResolver $templateResolver): void
+    public function setTemplateResolver(TemplateResolverInterface $templateResolver): void
     {
         $this->templateResolver = $templateResolver;
     }

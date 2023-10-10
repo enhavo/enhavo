@@ -43,7 +43,7 @@ class RegistrationControllerTest //extends TestCase
         $dependencies->userManager = $this->getMockBuilder(UserManager::class)->disableOriginalConstructor()->getMock();
         $dependencies->userRepository = $this->getMockBuilder(UserRepository::class)->disableOriginalConstructor()->getMock();
         $dependencies->templateResolver = $this->getMockBuilder(TemplateResolver::class)->disableOriginalConstructor()->getMock();
-        $dependencies->templateResolver->method('getTemplate')->willReturnCallback(function ($template) {
+        $dependencies->templateResolver->method('resolve')->willReturnCallback(function ($template) {
             return $template .'.managed';
         });
         $dependencies->userFactory = $this->getMockBuilder(FactoryInterface::class)->getMock();
@@ -78,7 +78,7 @@ class RegistrationControllerTest //extends TestCase
         $dependencies->userFactory->method('createNew')->willReturn(new User());
 
         $dependencies->userManager->expects($this->once())->method('register');
-        $dependencies->userManager->method('getTemplate')->willReturn('register.html.twig');
+        $dependencies->userManager->method('resolve')->willReturn('register.html.twig');
         $dependencies->userManager->expects($this->once())->method('getRedirectRoute')->willReturn('redirect.route');
         $dependencies->form->expects($this->exactly(3))->method('handleRequest');
         $controller = $this->createInstance($dependencies);
@@ -118,7 +118,7 @@ class RegistrationControllerTest //extends TestCase
         $dependencies = $this->createDependencies();
         $dependencies->userFactory->method('createNew')->willReturn(new User());
         $dependencies->userManager->expects($this->once())->method('register');
-        $dependencies->userManager->method('getTemplate')->willReturn('register.html.twig');
+        $dependencies->userManager->method('resolve')->willReturn('register.html.twig');
         $dependencies->userManager->expects($this->once())->method('getRedirectRoute')->willReturn('redirect.route');
         $controller = $this->createInstance($dependencies);
 
@@ -153,7 +153,7 @@ class RegistrationControllerTest //extends TestCase
     public function testCheck()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->userManager->method('getTemplate')->willReturnCallback(function($config, $action) {
+        $dependencies->userManager->method('resolve')->willReturnCallback(function($config, $action) {
             $this->assertEquals('theme', $config);
             $this->assertEquals('registration_check', $action);
 
@@ -173,7 +173,7 @@ class RegistrationControllerTest //extends TestCase
     public function testConfirm()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->userManager->method('getTemplate')->willReturn('confirm.html.twig');
+        $dependencies->userManager->method('resolve')->willReturn('confirm.html.twig');
         $dependencies->userManager->expects($this->once())->method('getRedirectRoute')->willReturn('redirect.route');
         $dependencies->userRepository->method('findByConfirmationToken')->willReturn(new User());
         $dependencies->userManager->expects($this->once())->method('confirm');
@@ -210,7 +210,7 @@ class RegistrationControllerTest //extends TestCase
     public function testFinish()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->userManager->method('getTemplate')->willReturnCallback(function($config, $action) {
+        $dependencies->userManager->method('resolve')->willReturnCallback(function($config, $action) {
             $this->assertEquals('theme', $config);
             $this->assertEquals('registration_finish', $action);
 

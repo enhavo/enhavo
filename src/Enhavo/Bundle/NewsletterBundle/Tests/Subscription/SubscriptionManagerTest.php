@@ -13,7 +13,9 @@ use Enhavo\Component\Type\FactoryInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
 
 class SubscriptionManagerTest extends TestCase
 {
@@ -168,7 +170,8 @@ class SubscriptionManagerTest extends TestCase
             return $strategy;
         });
 
-        $dep->formFactory->expects($this->once())->method('create')->willReturnCallback(function ($subscription, $subscriber, $options) {
+        $formMock = $this->getMockBuilder(FormInterface::class)->disableOriginalConstructor()->getMock();
+        $dep->formFactory->expects($this->once())->method('create')->willReturnCallback(function ($subscription, $subscriber, $options) use ($formMock) {
             $this->assertEquals('__FORM_CLASS__', $subscription);
             $this->assertInstanceOf(Subscriber::class, $subscriber);
             $this->assertEquals([
@@ -177,7 +180,7 @@ class SubscriptionManagerTest extends TestCase
                 'subscription' => 'default',
             ], $options);
 
-            return $options;
+            return $formMock;
         });
 
         $manager = $this->createInstance($dep, [

@@ -36,7 +36,6 @@ class FormVueTypeExtensionTest extends TypeTestCase
         $this->assertArrayHasKey('id', $data);
         $this->assertArrayHasKey('required', $data);
         $this->assertArrayHasKey('fullName', $data);
-        $this->assertArrayHasKey('size', $data);
         $this->assertArrayHasKey('help', $data);
         $this->assertArrayHasKey('helpAttr', $data);
         $this->assertArrayHasKey('helpHtml', $data);

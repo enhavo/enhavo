@@ -81,7 +81,7 @@ class RouterTest extends TestCase
 
         $this->assertEquals('/servus', $path);
 
-        $route->setName(null);
+        $route->setName('');
         $this->expectException(UrlResolverException::class);
         $router->generate($mock);
     }
@@ -189,7 +189,7 @@ class RouterTest extends TestCase
 
         $this->assertEquals('/servus', $path);
 
-        $route->setName(null);
+        $route->setName('');
         $this->expectException(UrlResolverException::class);
         $router->generate($route);
     }

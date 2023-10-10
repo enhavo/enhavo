@@ -10,15 +10,11 @@ namespace Enhavo\Bundle\DoctrineExtensionBundle\Tests\Fixtures\Entity\Extend;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @Entity
- */
+#[ORM\Entity]
 class Child extends Entity
 {
-    /**
-     * @Column(type="string", length=255)
-     */
-    private $street;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $street;
 
     /**
      * @return mixed

@@ -5,7 +5,7 @@ namespace Enhavo\Bundle\AppBundle\Tests\Column\Type;
 use Enhavo\Bundle\AppBundle\Column\Type\ListType;
 use Enhavo\Bundle\AppBundle\Tests\Mock\EntityMock;
 
-class ListTypeTest extends AbstractTypeTest
+class ListTypeTest extends AbstractTypeTestCase
 {
     public function testInitialize()
     {
