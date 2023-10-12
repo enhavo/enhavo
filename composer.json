@@ -26,6 +26,7 @@
     "ext-zlib": "*",
     "ext-exif": "*",
     "behat/transliterator": "^1.5",
+    "babdev/pagerfanta-bundle": "^3.8",
     "composer/package-versions-deprecated": "1.11.*",
     "doctrine/doctrine-migrations-bundle": "^3.1",
     "doctrine/orm": "^2.14",
@@ -94,7 +95,11 @@
     "symfony/web-link": "^6.3",
     "symfony/webpack-encore-bundle": "^1.5",
     "symfony/yaml": "^6.3",
-    "tecnickcom/tcpdf": "^6.2"
+    "tecnickcom/tcpdf": "^6.2",
+    "twig/twig": "^2.15",
+    "doctrine/collections": "^1.8",
+    "doctrine/dbal": "^3.6",
+    "symfony/password-hasher": "^6.3"
   },
   "require-dev": {
     "behat/behat": "^3.10",
@@ -102,7 +107,7 @@
     "overtrue/phplint": "^9.0",
     "phpstan/phpstan": "^0.12.29",
     "phpunit/php-code-coverage": "^9.2",
-    "phpunit/phpunit": "^9.5",
+    "phpunit/phpunit": "^9.6",
     "symfony/debug-pack": "^1.0",
     "symfony/maker-bundle": "^1.0",
     "symfony/panther": "^2.0",

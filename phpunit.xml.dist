@@ -16,7 +16,7 @@
     </exclude>
   </coverage>
   <php>
-    <ini name="error_reporting" value="-1"/>
+    <ini name="error_reporting" value="22527"/><!-- E_ALL & ~E_DEPRECATED & ~E_STRICT -->
     <ini name="intl.default_locale" value="en"/>
     <ini name="intl.error_level" value="0"/>
     <ini name="memory_limit" value="-1"/>

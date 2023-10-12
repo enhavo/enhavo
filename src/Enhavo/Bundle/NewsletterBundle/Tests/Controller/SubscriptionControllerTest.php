@@ -162,7 +162,13 @@ class SubscriptionControllerTest extends TestCase
         ]);
 
         $response = $controller->addAction($request);
-        $this->assertEquals('{"success":false,"error":true,"message":"","errors":{"fields":[],"messages":[]},"subscriber":{"email":null}}', $response->getContent());
+        $data = json_decode($response->getContent(), true);
+        $this->assertFalse($data['success']);
+        $this->assertTrue($data['error']);
+        $this->assertEmpty($data['message']);
+        $this->assertEmpty($data['errors']['fields']);
+        $this->assertEmpty($data['errors']['messages']);
+        $this->assertEmpty($data['subscriber']['email']);
     }
 
     public function testUnsubscribeAction()

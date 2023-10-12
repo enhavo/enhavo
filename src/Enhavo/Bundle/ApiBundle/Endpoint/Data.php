@@ -106,7 +106,7 @@ class Data implements \IteratorAggregate, \Countable, \ArrayAccess
      *
      * @return \ArrayIterator An \ArrayIterator instance
      */
-    public function getIterator()
+    public function getIterator(): \Traversable
     {
         return new \ArrayIterator($this->data);
     }
@@ -116,12 +116,12 @@ class Data implements \IteratorAggregate, \Countable, \ArrayAccess
      *
      * @return int The number of parameters
      */
-    public function count()
+    public function count(): int
     {
         return \count($this->data);
     }
 
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (!is_array($value) && !is_scalar($value)) {
             throw new \Exception(sprintf('Data value must be of type array or scalar. "%s" given.', gettype($value)));
@@ -134,17 +134,17 @@ class Data implements \IteratorAggregate, \Countable, \ArrayAccess
         }
     }
 
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->data[$offset]);
     }
 
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->data[$offset]);
     }
 
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return isset($this->data[$offset]) ? $this->data[$offset] : null;
     }
