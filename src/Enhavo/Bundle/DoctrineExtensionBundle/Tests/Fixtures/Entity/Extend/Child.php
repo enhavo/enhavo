@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Child extends Entity
 {
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $street;
+    private ?string $street = null;
 
     /**
      * @return mixed

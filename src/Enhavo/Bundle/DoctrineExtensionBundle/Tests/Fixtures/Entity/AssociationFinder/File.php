@@ -17,7 +17,7 @@ class File
     #[ORM\Id]
     #[ORM\Column(name: "id", type: Types::INTEGER)]
     #[ORM\GeneratedValue(strategy: "AUTO")]
-    private ?int $id;
+    private ?int $id = null;
 
     /**
      * @return int|null

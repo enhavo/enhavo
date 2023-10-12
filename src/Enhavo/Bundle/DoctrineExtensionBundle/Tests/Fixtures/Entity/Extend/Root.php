@@ -20,7 +20,7 @@ class Root
     private $id;
 
     #[ORM\Column(length: 32, nullable: true)]
-    private ?string $name;
+    private ?string $name = null;
 
     public function getId()
     {

@@ -15,7 +15,7 @@ use Sylius\Component\Shipping\Model\Shipment as SyliusShipment;
 
 class Shipment extends SyliusShipment implements ShipmentInterface
 {
-    private ?OrderInterface $order;
+    private ?OrderInterface $order = null;
 
     public function getOrder(): ?OrderInterface
     {

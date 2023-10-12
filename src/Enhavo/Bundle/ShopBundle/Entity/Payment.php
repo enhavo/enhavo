@@ -13,7 +13,7 @@ use Enhavo\Bundle\PaymentBundle\Entity\Payment as EnhavoPayment;
 
 class Payment extends EnhavoPayment
 {
-    private ?OrderInterface $order;
+    private ?OrderInterface $order = null;
 
     public function getOrder(): ?OrderInterface
     {

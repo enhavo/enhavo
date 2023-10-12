@@ -15,8 +15,8 @@ use Symfony\Cmf\Bundle\RoutingBundle\Model\Route as RouteModel;
 
 class Route extends BaseRouteModel implements RouteInterface, ResourceInterface
 {
-    private ?string $contentClass;
-    private ?int $contentId;
+    private ?string $contentClass = null;
+    private ?int $contentId = null;
 
     public function getContentClass(): ?string
     {

@@ -8,8 +8,8 @@ use Sylius\Component\Taxation\Model\TaxCategoryInterface;
 
 class ShippingMethod extends BaseShippingMethod implements ShippingMethodInterface
 {
-    protected ?TaxCategoryInterface $taxCategory;
-    protected ?string $name;
+    protected ?TaxCategoryInterface $taxCategory = null;
+    protected ?string $name = null;
 
     public function getTaxCategory(): ?TaxCategoryInterface
     {

@@ -15,8 +15,8 @@ use Webmozart\Assert\Assert;
 
 class OrderItem extends SyliusOrderItem implements OrderItemInterface
 {
-    private ?ProductAccessInterface $product;
-    private ?string $name;
+    private ?ProductAccessInterface $product = null;
+    private ?string $name = null;
     private array $configuration = [];
     private bool $shippable = true;
 

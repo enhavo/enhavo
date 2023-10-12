@@ -17,10 +17,10 @@ class Article
     #[ORM\Id]
     #[ORM\Column(name: "id", type: Types::INTEGER)]
     #[ORM\GeneratedValue(strategy: "AUTO")]
-    private ?int $id;
+    private ?int $id = null;
 
     #[ORM\OneToOne(targetEntity: File::class)]
-    private ?File $file;
+    private ?File $file = null;
 
     /**
      * @return int
