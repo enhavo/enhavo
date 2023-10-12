@@ -99,11 +99,6 @@ class EnhavoUser implements UserInterface
 
     }
 
-    public function getSalt()
-    {
-
-    }
-
     public function eraseCredentials()
     {
 

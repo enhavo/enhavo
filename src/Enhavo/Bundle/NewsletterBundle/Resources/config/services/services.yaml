@@ -140,7 +140,7 @@ services:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
             - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
         tags:
-            - { name: container.service_subscriber }
+            - { name: controller.service_arguments }
 
     Enhavo\Bundle\NewsletterBundle\Controller\PendingSubscriberController:
         arguments:
@@ -150,7 +150,7 @@ services:
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:
-            - { name: container.service_subscriber }
+            - { name: controller.service_arguments }
 
     Enhavo\Bundle\NewsletterBundle\Provider\GroupProvider:
         arguments:

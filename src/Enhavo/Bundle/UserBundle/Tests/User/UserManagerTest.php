@@ -378,13 +378,11 @@ class UserManagerTest extends TestCase
         $user = new UserMock();
         $user->setCustomerId('123');
         $user->setEmail('test@test.com');
-        $user->setPlainPassword('nosalt');
-        $user->setSalt('notnull');
+        $user->setPlainPassword('somepass');
 
         $manager->update($user);
 
         $this->assertNull($user->getPlainPassword());
-        $this->assertNotEquals('notnull', $user->getSalt());
     }
 }
 

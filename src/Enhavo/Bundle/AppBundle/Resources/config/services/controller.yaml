@@ -7,7 +7,7 @@ services:
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:
-            - { name: container.service_subscriber }
+            - { name: controller.service_arguments }
 
     Enhavo\Bundle\AppBundle\Controller\MainController:
         arguments:
@@ -17,11 +17,13 @@ services:
             - '%enhavo_app.branding%'
             - '%enhavo_app.toolbar_widget.primary%'
             - '%enhavo_app.toolbar_widget.secondary%'
+            - '@enhavo_app.locale_resolver'
+            - '@enhavo_app.translation.translation_dumper'
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
             - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
         tags:
-            - { name: container.service_subscriber }
+            - { name: controller.service_arguments }
 
     Enhavo\Bundle\AppBundle\Controller\AbstractViewController:
         abstract: true
@@ -39,4 +41,4 @@ services:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
             - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
         tags:
-            - { name: container.service_subscriber }
+            - { name: controller.service_arguments }

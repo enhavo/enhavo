@@ -156,7 +156,7 @@ services:
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: container.service_subscriber }
+            - { name: controller.service_arguments }
 
     Enhavo\Bundle\ShopBundle\Payment\Resolver\PaymentSubjectOrderResolver:
 
@@ -169,7 +169,7 @@ services:
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: container.service_subscriber }
+            - { name: controller.service_arguments }
 
     Enhavo\Bundle\ShopBundle\Controller\VoucherController:
         arguments:
@@ -179,7 +179,7 @@ services:
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: container.service_subscriber }
+            - { name: controller.service_arguments }
 
     Enhavo\Bundle\ShopBundle\Controller\UserController:
         arguments:
@@ -192,7 +192,7 @@ services:
             - [setContainer, ['@service_container']]
             - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
         tags:
-            - { name: container.service_subscriber }
+            - { name: controller.service_arguments }
 
     Enhavo\Bundle\ShopBundle\Search\Filter\ProductVariantAttributesDataProvider:
         public: true

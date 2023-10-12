@@ -144,8 +144,6 @@ class UserManager
         if (0 === strlen($plainPassword)) {
             return;
         }
-        $salt = rtrim(str_replace('+', '.', base64_encode(random_bytes(32))), '=');
-        $user->setSalt($salt);
         $hashedPassword = $this->userPasswordHasher->hashPassword($user, $user->getPlainPassword());
         $user->setPassword($hashedPassword);
         $user->eraseCredentials();

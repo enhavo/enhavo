@@ -26,8 +26,6 @@ interface UserInterface extends BaseUserInterface, GroupableInterface, ResourceI
 
     public function setUsername(?string $username);
 
-    public function setSalt(?string $salt);
-
     public function getEmail();
 
     public function setEmail(?string $email);

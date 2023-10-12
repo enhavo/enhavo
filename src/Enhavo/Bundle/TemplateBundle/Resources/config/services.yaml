@@ -30,7 +30,7 @@ services:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
             - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
         tags:
-            - { name: container.service_subscriber }
+            - { name: controller.service_arguments }
 
     Enhavo\Bundle\TemplateBundle\EventListener\TemplateDoctrineSubscriber:
         calls:

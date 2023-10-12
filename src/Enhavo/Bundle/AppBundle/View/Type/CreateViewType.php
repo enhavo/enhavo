@@ -13,7 +13,7 @@ use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactoryInterface
 use Sylius\Bundle\ResourceBundle\Controller\ResourceFormFactoryInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\ResourceActions;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
@@ -24,7 +24,7 @@ class CreateViewType extends AbstractResourceFormType
     public function __construct(
         array $formThemes,
         ActionManager $actionManager,
-        FlashBag $flashBag,
+        RequestStack $requestStack,
         private ViewUtil $util,
         RouterInterface $router,
         TranslatorInterface $translator,
@@ -35,7 +35,7 @@ class CreateViewType extends AbstractResourceFormType
         EventDispatcherInterface $eventDispatcher,
         private NewResourceFactoryInterface $newResourceFactory,
     ) {
-        parent::__construct($formThemes, $actionManager, $flashBag, $util, $router, $translator, $resourceManager, $gridManager, $resourceFormFactory, $normalizer, $eventDispatcher);
+        parent::__construct($formThemes, $actionManager, $requestStack, $util, $router, $translator, $resourceManager, $gridManager, $resourceFormFactory, $normalizer, $eventDispatcher);
     }
 
     public static function getName(): ?string

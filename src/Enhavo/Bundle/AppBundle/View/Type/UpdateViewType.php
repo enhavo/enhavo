@@ -18,7 +18,7 @@ use Sylius\Bundle\ResourceBundle\Controller\ResourceFormFactoryInterface;
 use Sylius\Bundle\ResourceBundle\Controller\SingleResourceProviderInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\ResourceActions;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -31,7 +31,7 @@ class UpdateViewType extends AbstractResourceFormType
     public function __construct(
         array $formThemes,
         ActionManager $actionManager,
-        FlashBag $flashBag,
+        RequestStack $requestStack,
         private ViewUtil $util,
         RouterInterface $router,
         TranslatorInterface $translator,
@@ -42,7 +42,7 @@ class UpdateViewType extends AbstractResourceFormType
         EventDispatcherInterface $eventDispatcher,
         private SingleResourceProviderInterface $singleResourceProvider,
     ) {
-        parent::__construct($formThemes, $actionManager, $flashBag, $util, $router, $translator, $resourceManager, $gridManager, $resourceFormFactory, $normalizer, $eventDispatcher);
+        parent::__construct($formThemes, $actionManager, $requestStack, $util, $router, $translator, $resourceManager, $gridManager, $resourceFormFactory, $normalizer, $eventDispatcher);
     }
 
     public static function getName(): ?string
