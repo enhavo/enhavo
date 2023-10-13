@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\ShopBundle\Controller;
 
-use Enhavo\Bundle\AppBundle\Template\TemplateManager;
+use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
 use Enhavo\Bundle\SearchBundle\Engine\EngineInterface;
 use Enhavo\Bundle\SearchBundle\Engine\Filter\BetweenQuery;
 use Enhavo\Bundle\SearchBundle\Engine\Filter\Filter;
@@ -19,7 +19,7 @@ class SearchController extends AbstractController
     public function __construct(
         private ResultConverter $resultConverter,
         private EngineInterface $searchEngine,
-        private TemplateManager $templateManager,
+        private TemplateResolver $templateResolver,
         private ProductManager $productManager,
     ) {}
 
@@ -36,7 +36,7 @@ class SearchController extends AbstractController
 
         $result = $this->productManager->getVariantProxies($pagination);
 
-        return $this->render($this->templateManager->getTemplate('theme/shop/search/result.html.twig'), [
+        return $this->render($this->templateResolver->resolve('theme/shop/search/result.html.twig'), [
             'results' => $result,
             'pagination' => $pagination,
             'term' => $term,

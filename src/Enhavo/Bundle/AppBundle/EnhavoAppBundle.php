@@ -6,7 +6,10 @@ use Enhavo\Bundle\AppBundle\Batch\Batch;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\FilesystemCompilerPass;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\LocaleResolverCompilerPass;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\SyliusCompilerPass;
+use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\TemplateResolverPass;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\TranslationDumperCompilerPass;
+use Enhavo\Bundle\AppBundle\Template\TemplateResolverAwareInterface;
+use Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface;
 use Enhavo\Bundle\AppBundle\Type\TypeCompilerPass;
 use Enhavo\Bundle\AppBundle\View\View;
 use Enhavo\Bundle\AppBundle\View\ViewFactoryAwareInterface;
@@ -19,7 +22,7 @@ class EnhavoAppBundle extends Bundle
 {
     const VERSION = '0.13.0';
 
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         parent::build($container);
 
@@ -72,6 +75,10 @@ class EnhavoAppBundle extends Bundle
         );
 
         $container->addCompilerPass(
+            new TemplateResolverPass()
+        );
+
+        $container->addCompilerPass(
             new SyliusCompilerPass()
         );
 
@@ -93,5 +100,8 @@ class EnhavoAppBundle extends Bundle
 
         $container->registerForAutoconfiguration(ViewFactoryAwareInterface::class)
             ->addMethodCall('setViewFactory', [new Reference('Enhavo\Component\Type\FactoryInterface[View]')]);
+
+        $container->registerForAutoconfiguration(TemplateResolverAwareInterface::class)
+            ->addMethodCall('setTemplateResolver', [new Reference(TemplateResolverInterface::class)]);
     }
 }

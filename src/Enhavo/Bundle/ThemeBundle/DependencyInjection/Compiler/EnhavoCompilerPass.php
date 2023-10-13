@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\ThemeBundle\DependencyInjection\Compiler;
 
+use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
 use Enhavo\Bundle\ThemeBundle\Theme\ThemeWebpackBuildResolver;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -17,12 +18,12 @@ class EnhavoCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        $this->overwriteTemplateManager($container);
+        $this->overwriteTemplateResolver($container);
     }
 
-    private function overwriteTemplateManager(ContainerBuilder $container)
+    private function overwriteTemplateResolver(ContainerBuilder $container)
     {
-        $container->getDefinition('enhavo_app.template.manager')
+        $container->getDefinition(TemplateResolver::class)
             ->replaceArgument(2, new Reference(ThemeWebpackBuildResolver::class));
     }
 }

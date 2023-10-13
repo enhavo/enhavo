@@ -5,7 +5,7 @@ namespace Enhavo\Bundle\AppBundle\Mailer;
 
 use Enhavo\Bundle\AppBundle\Exception\MailAttachmentException;
 use Enhavo\Bundle\AppBundle\Exception\MailNotFoundException;
-use Enhavo\Bundle\AppBundle\Template\TemplateManager;
+use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Mime\Address;
@@ -19,7 +19,7 @@ class MailerManager
 
     public function __construct(
         private MailerInterface $mailer,
-        private TemplateManager $templateManager,
+        private TemplateResolver $templateResolver,
         private Environment $environment,
         array $defaultConfig,
         private array $mailsConfig,
@@ -127,7 +127,7 @@ class MailerManager
         }
 
         if ($message->getContent() === null) {
-            $template = $this->environment->load($this->templateManager->getTemplate($message->getTemplate()));
+            $template = $this->environment->load($this->templateResolver->resolve($message->getTemplate()));
 
             if ($message->getContentType() === Message::CONTENT_TYPE_MIXED) {
                 $email->html($template->renderBlock('text_html', $message->getContext()));

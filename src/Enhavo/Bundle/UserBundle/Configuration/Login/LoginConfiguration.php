@@ -14,10 +14,10 @@ class LoginConfiguration
     use FormTrait;
 
     private ?string $route = null;
-    private ?int $maxFailedLoginAttempts;
-    private ?string $passwordMaxAge;
+    private ?int $maxFailedLoginAttempts = null;
+    private ?string $passwordMaxAge = null;
     private bool $verificationRequired = false;
-    private ?string $repositoryMethod;
+    private ?string $repositoryMethod = null;
 
     public function getRoute(): ?string
     {

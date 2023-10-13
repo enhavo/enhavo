@@ -9,9 +9,12 @@
 
 namespace Enhavo\Bundle\UserBundle\Model;
 
+use Enhavo\Bundle\AppBundle\Model\Timestampable;
+use Sylius\Component\Resource\Model\ResourceInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface as BaseUserInterface;
 
-interface UserInterface extends BaseUserInterface
+interface UserInterface extends BaseUserInterface, GroupableInterface, ResourceInterface, PasswordAuthenticatedUserInterface, Timestampable
 {
     const ROLE_DEFAULT = 'ROLE_USER';
     const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
@@ -22,8 +25,6 @@ interface UserInterface extends BaseUserInterface
     public function setUserIdentifier(string $userIdentifier): void;
 
     public function setUsername(?string $username);
-
-    public function setSalt(?string $salt);
 
     public function getEmail();
 

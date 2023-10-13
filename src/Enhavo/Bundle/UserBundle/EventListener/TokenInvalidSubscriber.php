@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\UserBundle\EventListener;
 
-use Enhavo\Bundle\AppBundle\Template\TemplateManager;
+use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
 use Enhavo\Bundle\UserBundle\Exception\TokenInvalidException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,7 +13,7 @@ use Twig\Environment;
 class TokenInvalidSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private TemplateManager $templateManager,
+        private TemplateResolver $templateResolver,
         private Environment $templateEngine,
     )
     {
@@ -29,7 +29,7 @@ class TokenInvalidSubscriber implements EventSubscriberInterface
     public function onException(ExceptionEvent $event)
     {
         if ($event->getThrowable() instanceof TokenInvalidException) {
-            $content = $this->templateEngine->render($this->templateManager->getTemplate('theme/error/token-invalid.html.twig'));
+            $content = $this->templateEngine->render($this->templateResolver->resolve('theme/error/token-invalid.html.twig'));
             $event->setResponse(new Response($content, 404));
         }
     }

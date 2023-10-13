@@ -11,7 +11,7 @@ namespace Enhavo\Bundle\AppBundle\Template;
 use Enhavo\Bundle\AppBundle\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-class TemplateManager
+class TemplateResolver implements TemplateResolverInterface
 {
     const PRIORITY_LOW = 10;
     const PRIORITY_HIGH = 100;
@@ -29,7 +29,7 @@ class TemplateManager
     private array $paths = [];
 
     /**
-     * TemplateManager constructor.
+     * TemplateResolver constructor.
      * @param KernelInterface $kernel
      * @param Filesystem $fs
      * @param WebpackBuildResolverInterface $resolver
@@ -79,7 +79,7 @@ class TemplateManager
      * @param $template
      * @return string
      */
-    public function getTemplate($template)
+    public function resolve($template): string
     {
         if (isset($this->cache[$template])) {
             return $this->cache[$template];

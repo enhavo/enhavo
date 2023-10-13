@@ -29,7 +29,7 @@ services:
     enhavo_article.statistic.article:
         class: Enhavo\Bundle\ArticleBundle\Statistic\ArticleStatistic
         calls:
-          - ['setContainer', ['@service_container']]
+          - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.statistic, alias: article }
 
@@ -55,6 +55,7 @@ services:
             - '@Enhavo\Bundle\CommentBundle\Comment\CommentManager'
         calls:
             - [setContainer, ['@service_container']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
 
     enhavo_article.factory.article:
         public: true

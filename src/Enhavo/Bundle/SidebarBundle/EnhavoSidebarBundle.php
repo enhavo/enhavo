@@ -8,13 +8,12 @@
 
 namespace Enhavo\Bundle\SidebarBundle;
 
-use Enhavo\Bundle\ShopBundle\DependencyInjection\Compiler\SyliusCompilerPass;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class EnhavoSidebarBundle extends Bundle
 {
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         parent::build($container);
     }

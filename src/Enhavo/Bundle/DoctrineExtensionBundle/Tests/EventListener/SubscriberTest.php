@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\DoctrineExtensionBundle\Tests\EventListener;
 
+use Doctrine\ORM\ORMSetup;
 use Doctrine\ORM\Tools\SchemaTool;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
@@ -35,7 +36,7 @@ abstract class SubscriberTest extends TestCase
             }
         }
 
-        $config = Setup::createAnnotationMetadataConfiguration(array($entityDir), true, __DIR__ . '/../Fixtures/Proxy');
+        $config = ORMSetup::createAttributeMetadataConfiguration(array($entityDir), true, __DIR__ . '/../Fixtures/Proxy');
         $conn = ['url' => 'sqlite:///:memory:'];
         $this->em = EntityManager::create($conn, $config);
     }

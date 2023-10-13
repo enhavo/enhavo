@@ -25,7 +25,7 @@ class ConditionUrlMatcher extends UrlMatcher
         parent::__construct($routes, $context);
     }
 
-    public function finalMatch(RouteCollection $collection, Request $request)
+    public function finalMatch(RouteCollection $collection, Request $request): array
     {
         $this->routes = $collection;
         $context = new EnhavoRequestContext();

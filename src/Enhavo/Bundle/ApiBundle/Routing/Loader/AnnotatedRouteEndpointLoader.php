@@ -9,7 +9,7 @@ use Symfony\Component\Routing\RouteCollection;
 
 class AnnotatedRouteEndpointLoader extends AnnotationClassLoader
 {
-    public function load($class, string $type = null)
+    public function load($class, string $type = null): RouteCollection
     {
         if (!class_exists($class)) {
             throw new \InvalidArgumentException(sprintf('Class "%s" does not exist.', $class));

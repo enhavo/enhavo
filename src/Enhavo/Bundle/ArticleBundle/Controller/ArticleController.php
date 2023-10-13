@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\ArticleBundle\Controller;
 
-use Enhavo\Bundle\AppBundle\Template\TemplateTrait;
+use Enhavo\Bundle\AppBundle\Template\TemplateResolverTrait;
 use Enhavo\Bundle\ArticleBundle\Entity\Article;
 use Enhavo\Bundle\CommentBundle\Comment\CommentManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ArticleController extends AbstractController
 {
-    use TemplateTrait;
+    use TemplateResolverTrait;
 
     /** @var CommentManager */
     private $commentManager;
@@ -35,7 +35,7 @@ class ArticleController extends AbstractController
             $this->redirect($request->getRequestUri());
         }
 
-        return $this->render($this->getTemplate('theme/resource/article/show.html.twig'), array(
+        return $this->render($this->resolveTemplate('theme/resource/article/show.html.twig'), array(
             'resource' => $contentDocument,
             'commentForm' => $context->getForm()
         ));

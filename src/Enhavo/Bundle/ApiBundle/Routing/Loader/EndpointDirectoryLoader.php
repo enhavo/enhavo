@@ -8,7 +8,7 @@ use Symfony\Component\Routing\RouteCollection;
 
 class EndpointDirectoryLoader extends AnnotationFileLoader
 {
-    public function load($path, string $type = null)
+    public function load($path, string $type = null): RouteCollection
     {
         if (!is_dir($dir = $this->locator->locate($path))) {
             return parent::supports($path, $type) ? parent::load($path, $type) : new RouteCollection();
@@ -50,7 +50,7 @@ class EndpointDirectoryLoader extends AnnotationFileLoader
     /**
      * {@inheritdoc}
      */
-    public function supports($resource, string $type = null)
+    public function supports($resource, string $type = null): bool
     {
         if ('endpoint' === $type) {
             return true;

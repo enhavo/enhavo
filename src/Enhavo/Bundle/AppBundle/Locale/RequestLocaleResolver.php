@@ -34,7 +34,7 @@ class RequestLocaleResolver implements LocaleResolverInterface
 
     public function resolve()
     {
-        $locale = $this->requestStack->getMasterRequest()->getLocale();
+        $locale = $this->requestStack->getMainRequest()->getLocale();
 
         if($locale === null) {
             return $this->defaultLocale;

@@ -16,7 +16,7 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\ResourceActions;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -33,7 +33,7 @@ class DuplicateViewType extends AbstractViewType
         private ViewUtil $util,
         private RouterInterface $router,
         private EntityManagerInterface $em,
-        private FlashBag $flashBag,
+        private RequestStack $requestStack,
         private TranslatorInterface $translator,
         private ResourceManager $resourceManager,
         private SingleResourceProviderInterface $singleResourceProvider,
@@ -85,7 +85,7 @@ class DuplicateViewType extends AbstractViewType
             throw new HttpException($event->getErrorCode(), $event->getMessage());
         }
 
-        $this->flashBag->add('success', $this->translator->trans('form.message.success', [], 'EnhavoAppBundle'));
+        $this->requestStack->getSession()->getFlashBag()->add('success', $this->translator->trans('form.message.success', [], 'EnhavoAppBundle'));
 
         $route = $configuration->getRedirectRoute(null);
 
@@ -96,8 +96,8 @@ class DuplicateViewType extends AbstractViewType
         ]));
     }
 
-    public function configureOptions(OptionsResolver $optionsResolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $optionsResolver->setRequired('request_configuration');
+        $resolver->setRequired('request_configuration');
     }
 }

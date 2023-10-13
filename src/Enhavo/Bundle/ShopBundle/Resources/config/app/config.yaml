@@ -83,6 +83,7 @@ doctrine:
             Sylius\Component\Shipping\Model\ShipmentInterface: Enhavo\Bundle\ShopBundle\Entity\Shipment
             Sylius\Component\Shipping\Model\ShipmentUnitInterface: Enhavo\Bundle\ShopBundle\Entity\OrderItemUnit
             Sylius\Component\Taxation\Model\TaxRateInterface: Sylius\Component\Taxation\Model\TaxRate
+            Sylius\Component\Taxation\Model\TaxCategoryInterface: Sylius\Component\Taxation\Model\TaxCategory
             Sylius\Component\Promotion\Model\PromotionInterface: Enhavo\Bundle\ShopBundle\Entity\Promotion
             Sylius\Component\Product\Model\ProductOptionInterface: Sylius\Component\Product\Model\ProductOption
             Sylius\Component\Product\Model\ProductAssociationInterface: Enhavo\Bundle\ShopBundle\Entity\ProductAssociation
@@ -268,12 +269,14 @@ sylius_taxation:
     resources:
         tax_category:
             classes:
-                model: Enhavo\Bundle\ShopBundle\Entity\TaxCategory
+                model: Sylius\Component\Taxation\Model\TaxCategory
+                repository: Enhavo\Bundle\AppBundle\Repository\EntityRepository
                 controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
                 form: Enhavo\Bundle\ShopBundle\Form\Type\TaxCategoryType
         tax_rate:
             classes:
-                model: Enhavo\Bundle\ShopBundle\Entity\TaxRate
+                model: Sylius\Component\Taxation\Model\TaxRate
+                repository: Enhavo\Bundle\AppBundle\Repository\EntityRepository
                 controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
                 form: Enhavo\Bundle\ShopBundle\Form\Type\TaxRateType
 

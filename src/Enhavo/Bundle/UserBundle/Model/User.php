@@ -9,7 +9,7 @@ use Enhavo\Bundle\AppBundle\Model\TimestampableTrait;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
-class User implements UserInterface, GroupableInterface, ResourceInterface, PasswordAuthenticatedUserInterface, Timestampable
+class User implements UserInterface
 {
     use TimestampableTrait;
 
@@ -21,7 +21,6 @@ class User implements UserInterface, GroupableInterface, ResourceInterface, Pass
     private bool $verified = false;
     private ?string $username = null;
     private ?string $email = null;
-    private ?string $salt = null;
     private ?string $password = null;
     private ?string $plainPassword = null;
     private ?DateTime $lastLogin = null;
@@ -122,7 +121,7 @@ class User implements UserInterface, GroupableInterface, ResourceInterface, Pass
         }
     }
 
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
         $this->plainPassword = null;
     }
@@ -257,16 +256,6 @@ class User implements UserInterface, GroupableInterface, ResourceInterface, Pass
     public function setEmail(?string $email): void
     {
         $this->email = $email;
-    }
-
-    public function getSalt(): ?string
-    {
-        return $this->salt;
-    }
-
-    public function setSalt(?string $salt): void
-    {
-        $this->salt = $salt;
     }
 
     public function getPassword(): ?string

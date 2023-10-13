@@ -29,6 +29,8 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -49,7 +51,7 @@ class UserManagerTest extends TestCase
             $dependencies->resolver,
             $dependencies->tokenGenerator,
             $dependencies->translator,
-            $dependencies->encoderFactory,
+            $dependencies->userPasswordHasher,
             $dependencies->router,
             $dependencies->eventDispatcher,
             $dependencies->tokenStorage,
@@ -74,14 +76,10 @@ class UserManagerTest extends TestCase
         });
         $dependencies->userChecker = $this->getMockBuilder(UserCheckerInterface::class)->getMock();
         $dependencies->form = $this->getMockBuilder(FormInterface::class)->getMock();
-        $dependencies->encoderFactory = $this->getMockBuilder(EncoderFactoryInterface::class)->getMock();
-        $dependencies->encoder = $this->getMockBuilder(PasswordEncoderInterface::class)->getMock();
-        $dependencies->encoder->method('encodePassword')->willReturnCallback(function ($password, $salt) {
-            $this->assertEquals('password', $password);
-            $this->assertNotNull($salt);
+        $dependencies->userPasswordHasher = $this->getMockBuilder(UserPasswordHasherInterface::class)->getMock();
+        $dependencies->userPasswordHasher->method('hashPassword')->willReturnCallback(function ($user, $password) {
             return $password .'.hashed';
         });
-        $dependencies->encoderFactory->method('getEncoder')->willReturn($dependencies->encoder);
         $dependencies->router = $this->getMockBuilder(RouterInterface::class)->getMock();
         $dependencies->eventDispatcher = $this->getMockBuilder(EventDispatcherInterface::class)->getMock();
         $dependencies->message = $this->getMockBuilder(Message::class)->getMock();
@@ -341,7 +339,6 @@ class UserManagerTest extends TestCase
         });
         $dependencies->entityManager->expects($this->never())->method('persist');
         $dependencies->entityManager->expects($this->once())->method('flush');
-        $dependencies->encoderFactory->expects($this->never())->method('getEncoder');
 
         $manager = $this->createInstance($dependencies, []);
 
@@ -376,21 +373,16 @@ class UserManagerTest extends TestCase
     public function testUpdatePassword()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->encoderFactory = $this->getMockBuilder(EncoderFactoryInterface::class)->getMock();
-        $encoder = new NativePasswordEncoder();
-        $dependencies->encoderFactory->method('getEncoder')->willReturn($encoder);
         $manager = $this->createInstance($dependencies, []);
 
         $user = new UserMock();
         $user->setCustomerId('123');
         $user->setEmail('test@test.com');
-        $user->setPlainPassword('nosalt');
-        $user->setSalt('notnull');
+        $user->setPlainPassword('somepass');
 
         $manager->update($user);
 
         $this->assertNull($user->getPlainPassword());
-        $this->assertNull($user->getSalt());
     }
 }
 
@@ -447,8 +439,8 @@ class UserManagerTestDependencies
     /** @var Message|MockObject */
     public $message;
 
-    /** @var PasswordEncoderInterface|MockObject */
-    public $encoder;
+    /** @var UserPasswordHasherInterface|MockObject */
+    public $userPasswordHasher;
 
     /** @var TokenStorageInterface|MockObject */
     public $tokenStorage;

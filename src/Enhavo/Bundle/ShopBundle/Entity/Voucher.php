@@ -11,13 +11,13 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 
 class Voucher implements ResourceInterface, VoucherInterface
 {
-    private ?int $id;
-    private ?string $code;
-    private ?int $amount;
+    private ?int $id = null;
+    private ?string $code = null;
+    private ?int $amount = null;
     private bool $enabled = true;
     private bool $partialRedeemable = true;
-    private ?\DateTime $createdAt;
-    private ?\DateTime $expiredAt;
+    private ?\DateTime $createdAt = null;
+    private ?\DateTime $expiredAt = null;
     /** @var Collection */
     private Collection $redemptions;
 

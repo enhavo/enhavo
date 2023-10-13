@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\AppBundle\View\Type;
 
-use Enhavo\Bundle\AppBundle\Template\TemplateManager;
+use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
 use Enhavo\Bundle\AppBundle\View\AbstractViewType;
 use Enhavo\Bundle\AppBundle\View\ResourceMetadataHelperTrait;
 use Enhavo\Bundle\AppBundle\View\TemplateData;
@@ -19,7 +19,7 @@ class ApiViewType extends AbstractViewType
 
     public function __construct(
         private Environment $twig,
-        private TemplateManager $templateManager,
+        private TemplateResolver $templateResolver,
     ) {}
 
     public static function getName(): ?string
@@ -33,7 +33,7 @@ class ApiViewType extends AbstractViewType
             return new JsonResponse($viewData->normalize());
         }
 
-        $content = $this->twig->render($this->templateManager->getTemplate($templateData->getTemplate()), $templateData->normalize());
+        $content = $this->twig->render($this->templateResolver->resolve($templateData->getTemplate()), $templateData->normalize());
 
         return new Response($content);
     }

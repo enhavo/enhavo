@@ -5,7 +5,7 @@ namespace Enhavo\Bundle\ContactBundle\Contact;
 
 
 use Enhavo\Bundle\AppBundle\Mailer\MailerManager;
-use Enhavo\Bundle\AppBundle\Template\TemplateManager;
+use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
 use Enhavo\Bundle\ContactBundle\Model\ContactInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 
@@ -32,23 +32,23 @@ class ContactManager
     private $mailerManager;
 
     /**
-     * @var TemplateManager
+     * @var TemplateResolver
      */
-    private $templateManager;
+    private $templateResolver;
 
     public function __construct(
         array $forms,
         array $mailerDefaults,
         FormFactoryInterface $formFactory,
         MailerManager $mailerManager,
-        TemplateManager $templateManager
+        TemplateResolver $templateResolver
     )
     {
         $this->forms = $forms;
         $this->mailerDefaults = $mailerDefaults;
         $this->formFactory = $formFactory;
         $this->mailerManager = $mailerManager;
-        $this->templateManager = $templateManager;
+        $this->templateResolver = $templateResolver;
     }
 
     public function submit(ContactInterface $contact, $key = 'default')
@@ -85,7 +85,7 @@ class ContactManager
         $message->setSenderName($options['sender_name'] ?? $this->mailerDefaults['name']);
 
         $message->setSubject($options['subject']);
-        $message->setTemplate($this->templateManager->getTemplate($options['template']));
+        $message->setTemplate($this->templateResolver->resolve($options['template']));
         $message->setContentType($options['content_type']);
         $message->setContext([
             'resource' => $contact,
@@ -125,6 +125,6 @@ class ContactManager
     public function getTemplate($key, $templateKey)
     {
         $templateConfiguration = $this->getOption($key, 'template');
-        return $this->templateManager->getTemplate($templateConfiguration[$templateKey]);
+        return $this->templateResolver->resolve($templateConfiguration[$templateKey]);
     }
 }

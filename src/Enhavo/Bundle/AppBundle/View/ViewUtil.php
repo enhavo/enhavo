@@ -35,7 +35,6 @@ class ViewUtil
         private RequestConfigurationFactory $requestConfigurationFactory,
         private AuthorizationCheckerInterface $authorizationChecker,
         private RequestStack $requestStack,
-        private FlashBag $flashBag,
         private TranslatorInterface $translator,
     ) {
     }
@@ -207,7 +206,7 @@ class ViewUtil
         $messages = [];
         $types = ['success', 'error', 'notice', 'warning'];
         foreach($types as $type) {
-            foreach($this->flashBag->get($type) as $message) {
+            foreach($this->requestStack->getSession()->getFlashBag()->get($type) as $message) {
                 $messages[] = [
                     'message' => $this->translator->trans(is_array($message) ? $message['message'] : $message),
                     'type' => $type

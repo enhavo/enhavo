@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\ContactBundle\Widget;
 
-use Enhavo\Bundle\AppBundle\Template\TemplateManager;
+use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
 use Enhavo\Bundle\AppBundle\Widget\AbstractWidgetType;
 use Enhavo\Bundle\ContactBundle\Contact\ContactManager;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -21,14 +21,14 @@ class ContactWidgetType extends AbstractWidgetType
     private $contactManager;
 
     /**
-     * @var TemplateManager
+     * @var TemplateResolver
      */
-    private $templateManager;
+    private $templateResolver;
 
-    public function __construct(ContactManager $contactManager, TemplateManager $templateManager)
+    public function __construct(ContactManager $contactManager, TemplateResolver $templateResolver)
     {
         $this->contactManager = $contactManager;
-        $this->templateManager = $templateManager;
+        $this->templateResolver = $templateResolver;
     }
 
     public function getType()
@@ -58,6 +58,6 @@ class ContactWidgetType extends AbstractWidgetType
 
     public function getTemplate($options)
     {
-        return $this->templateManager->getTemplate($options['template']);
+        return $this->templateResolver->resolve($options['template']);
     }
 }

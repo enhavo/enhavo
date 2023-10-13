@@ -9,7 +9,7 @@
 namespace Enhavo\Bundle\ThemeBundle\EventListener;
 
 use Doctrine\DBAL\Exception;
-use Enhavo\Bundle\AppBundle\Template\TemplateManager;
+use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
 use Enhavo\Bundle\ThemeBundle\Theme\ThemeManager;
 use Symfony\Component\Console\ConsoleEvents;
 use Symfony\Component\Console\Event\ConsoleCommandEvent;
@@ -19,8 +19,8 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class ThemeRegisterSubscriber implements EventSubscriberInterface
 {
-    /** @var TemplateManager */
-    private $templateManager;
+    /** @var TemplateResolver */
+    private $templateResolver;
 
     /** @var ThemeManager */
     private $themeManager;
@@ -28,12 +28,12 @@ class ThemeRegisterSubscriber implements EventSubscriberInterface
     /**
      * ThemeListener constructor.
      * @param ThemeManager $themeManager
-     * @param TemplateManager $templateManager
+     * @param TemplateResolver $templateResolver
      */
-    public function __construct(ThemeManager $themeManager, TemplateManager $templateManager)
+    public function __construct(ThemeManager $themeManager, TemplateResolver $templateResolver)
     {
         $this->themeManager = $themeManager;
-        $this->templateManager = $templateManager;
+        $this->templateResolver = $templateResolver;
     }
 
     public static function getSubscribedEvents()
@@ -56,7 +56,7 @@ class ThemeRegisterSubscriber implements EventSubscriberInterface
     {
         $path = $this->themeManager->getTheme()->getTemplate()->getPath();
         if($path !== null) {
-            $this->templateManager->registerPath($path, 200);
+            $this->templateResolver->registerPath($path, 200);
         }
     }
 
@@ -68,7 +68,7 @@ class ThemeRegisterSubscriber implements EventSubscriberInterface
         try {
             $path = $this->themeManager->getTheme()->getTemplate()->getPath();
             if($path !== null) {
-                $this->templateManager->registerPath($path, 200);
+                $this->templateResolver->registerPath($path, 200);
             }
         } catch (Exception $e) {
             // Don't throw exception here, because if the schema is not loaded or incorrect, the console should not

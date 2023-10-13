@@ -16,7 +16,7 @@ services:
         arguments:
             - '@enhavo_search.extractor.extractor'
         calls:
-          - [ 'setContainer', ['@service_container']]
+          - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo_search.extractor, alias: model }
 
@@ -25,20 +25,20 @@ services:
         arguments:
             - '@enhavo_search.extractor.extractor'
         calls:
-          - [ 'setContainer', ['@service_container']]
+          - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo_search.extractor, alias: collection }
 
     Enhavo\Bundle\SearchBundle\Extractor\PropertyExtractor\HtmlExtractor:
         public: true
         calls:
-          - [ 'setContainer', ['@service_container']]
+          - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo_search.extractor, alias: html }
 
     Enhavo\Bundle\SearchBundle\Extractor\PropertyExtractor\TextExtractor:
         public: true
         calls:
-          - [ 'setContainer', ['@service_container']]
+          - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo_search.extractor, alias: text }

@@ -10,14 +10,10 @@ namespace Enhavo\Bundle\DoctrineExtensionBundle\Tests\Fixtures\Entity\Extend;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @Entity
- */
+#[ORM\Entity]
 class Entity extends Root
 {
-    /**
-     * @Column(type="string", length=255)
-     */
+    #[ORM\Column(length: 255, nullable: true)]
     private $lastName;
 
     /**

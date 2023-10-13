@@ -24,7 +24,7 @@ services:
         arguments:
             - '@enhavo_search.result.result_converter'
             - '@enhavo_search.search.engine'
-            - '@Enhavo\Bundle\AppBundle\Template\TemplateManager'
+            - '@Enhavo\Bundle\AppBundle\Template\TemplateResolver'
         calls:
             - [setContainer, ['@service_container']]
 

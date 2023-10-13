@@ -5,7 +5,7 @@ namespace Enhavo\Bundle\AppBundle\Tests\Column\Type;
 use Enhavo\Bundle\AppBundle\Column\Type\BooleanType;
 use Enhavo\Bundle\AppBundle\Tests\Mock\EntityMock;
 
-class BooleanTypeTest extends AbstractTypeTest
+class BooleanTypeTest extends AbstractTypeTestCase
 {
     public function testInitialize()
     {

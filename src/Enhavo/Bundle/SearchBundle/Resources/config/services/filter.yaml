@@ -14,20 +14,20 @@ services:
     Enhavo\Bundle\SearchBundle\Filter\DataProvider\ValueDataProvider:
         public: true
         calls:
-          - [ 'setContainer', ['@service_container']]
+          - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo_search.filter_provider, alias: 'value' }
 
     Enhavo\Bundle\SearchBundle\Filter\DataProvider\PropertyDataProvider:
         public: true
         calls:
-          - [ 'setContainer', ['@service_container']]
+          - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo_search.filter_provider, alias: 'property' }
 
     Enhavo\Bundle\SearchBundle\Filter\DataProvider\DateDataProvider:
         public: true
         calls:
-          - [ 'setContainer', ['@service_container']]
+          - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo_search.filter_provider, alias: 'date' }

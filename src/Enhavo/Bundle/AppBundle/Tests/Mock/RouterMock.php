@@ -18,7 +18,7 @@ class RouterMock implements RouterInterface
         // TODO: Implement setContext() method.
     }
 
-    public function getContext()
+    public function getContext(): RequestContext
     {
         // TODO: Implement getContext() method.
     }
@@ -28,7 +28,7 @@ class RouterMock implements RouterInterface
         // TODO: Implement getRouteCollection() method.
     }
 
-    public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
+    public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH): string
     {
         $url = $name;
         if($parameters) {
@@ -38,8 +38,8 @@ class RouterMock implements RouterInterface
         return $url;
     }
 
-    public function match($pathinfo)
+    public function match($pathinfo): array
     {
-        // TODO: Implement match() method.
+        return [];
     }
 }

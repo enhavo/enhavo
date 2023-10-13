@@ -18,7 +18,7 @@ class TenantAwareUrlType extends UrlType
         /** @var Router $router */
         $router = $this->container->get('enhavo_routing.router');
         /** @var Request $request */
-        $request = $this->container->get('request_stack')->getMasterRequest();
+        $request = $this->container->get('request_stack')->getMainRequest();
         /** @var TenantManager $tenantManager */
         $tenantManager = $this->container->get('enhavo_multi_tenancy.manager');
 

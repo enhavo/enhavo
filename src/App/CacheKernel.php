@@ -9,7 +9,7 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 class CacheKernel extends HttpCache
 {
-    public function handle(Request $request, $type = HttpKernelInterface::MASTER_REQUEST, $catch = true)
+    public function handle(Request $request, $type = HttpKernelInterface::MAIN_REQUEST, $catch = true): Response
     {
         if ($request->isMethod('PURGE')) {
             $this->invalidate($request, $catch);

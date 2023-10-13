@@ -46,7 +46,7 @@ services:
             - '@Enhavo\Component\Type\FactoryInterface[NavItem]'
             - '%enhavo_navigation.nav_items%'
         calls:
-            - [ 'setContainer', [ '@service_container' ] ]
+            - [setContainer, [ '@service_container' ] ]
 
     Enhavo\Bundle\NavigationBundle\Widget\NavigationWidgetType:
         public: true
@@ -89,3 +89,4 @@ services:
         calls:
             - [setContainer, ['@service_container']]
             - [setTwig, ['@twig']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]

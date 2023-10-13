@@ -3,48 +3,32 @@
 namespace Enhavo\Bundle\NewsletterBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Exception\TokenExpiredException;
+use Enhavo\Bundle\AppBundle\Template\TemplateResolverAwareInterface;
+use Enhavo\Bundle\AppBundle\Template\TemplateResolverTrait;
 use Enhavo\Bundle\FormBundle\Error\FormErrorResolver;
-use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
+use Enhavo\Bundle\FormBundle\Serializer\SerializerInterface;
 use Enhavo\Bundle\NewsletterBundle\Pending\PendingSubscriberManager;
 use Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class SubscriptionController extends AbstractController
+class SubscriptionController extends AbstractController implements TemplateResolverAwareInterface
 {
-    /** @var SubscriptionManager */
-    private $subscriptionManager;
+    use TemplateResolverTrait;
 
-    /** @var PendingSubscriberManager */
-    private $pendingManager;
-
-    /** @var TranslatorInterface */
-    private $translator;
-
-    /** @var FormErrorResolver */
-    private $formErrorResolver;
-
-    /** @var Serializer */
-    private $serializer;
-
-    /**
-     * SubscriptionController constructor.
-     * @param SubscriptionManager $subscriptionManager
-     * @param PendingSubscriberManager $pendingManager
-     * @param TranslatorInterface $translator
-     * @param FormErrorResolver $formErrorResolver
-     * @param Serializer $serializer
-     */
-    public function __construct(SubscriptionManager $subscriptionManager, PendingSubscriberManager $pendingManager, TranslatorInterface $translator, FormErrorResolver $formErrorResolver, Serializer $serializer)
+    public function __construct(
+        private readonly SubscriptionManager $subscriptionManager,
+        private readonly PendingSubscriberManager $pendingManager,
+        private readonly TranslatorInterface $translator,
+        private readonly FormErrorResolver $formErrorResolver,
+        private readonly NormalizerInterface $serializer
+    )
     {
-        $this->subscriptionManager = $subscriptionManager;
-        $this->pendingManager = $pendingManager;
-        $this->translator = $translator;
-        $this->formErrorResolver = $formErrorResolver;
-        $this->serializer = $serializer;
     }
 
 
@@ -63,8 +47,7 @@ class SubscriptionController extends AbstractController
         $subscriber = $pendingSubscriber->getData();
 
         $strategy->activateSubscriber($subscriber);
-        $templateManager = $this->get('enhavo_app.template.manager');
-        return $this->render($templateManager->getTemplate($strategy->getActivationTemplate()), [
+        return $this->render($this->resolveTemplate($strategy->getActivationTemplate()), [
             'subscriber' => $this->serializer->normalize($subscriber, 'json', [
                 'groups' => ['subscription']
             ]),
@@ -124,8 +107,7 @@ class SubscriptionController extends AbstractController
 
         $message = $subscription->getStrategy()->removeSubscriber($subscriber);
 
-        $templateManager = $this->get('enhavo_app.template.manager');
-        return $this->render($templateManager->getTemplate($strategy->getUnsubscribeTemplate()), [
+        return $this->render($this->resolveTemplate($strategy->getUnsubscribeTemplate()), [
             'message' => $this->translator->trans($message, [], 'EnhavoNewsletterBundle'),
             'subscriber' => $this->serializer->normalize($subscriber, 'json', [
                 'groups' => ['subscription']

@@ -8,61 +8,29 @@
 
 namespace Enhavo\Bundle\AppBundle\Controller;
 
+use Enhavo\Bundle\AppBundle\Locale\LocaleResolverInterface;
 use Enhavo\Bundle\AppBundle\Menu\MenuManager;
-use Enhavo\Bundle\AppBundle\Template\TemplateTrait;
+use Enhavo\Bundle\AppBundle\Template\TemplateResolverTrait;
 use Enhavo\Bundle\AppBundle\Toolbar\ToolbarManager;
+use Enhavo\Bundle\AppBundle\Translation\TranslationDumper;
 use Enhavo\Bundle\AppBundle\Util\StateEncoder;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 class MainController extends AbstractController
 {
-    use TemplateTrait;
-
-    /**
-     * @var MenuManager
-     */
-    private $menuManager;
-
-    /**
-     * @var ToolbarManager
-     */
-    private $toolbarManager;
-
-    /**
-     * @var string
-     */
-    private $projectDir;
-
-    /**
-     * @var array
-     */
-    private $brandingConfig;
-
-    /**
-     * @var array
-     */
-    private $toolbarPrimaryConfig;
-
-    /**
-     * @var array
-     */
-    private $toolbarSecondaryConfig;
+    use TemplateResolverTrait;
 
     public function __construct(
-        MenuManager $menuManager,
-        ToolbarManager $toolbarManager,
-        $projectDir,
-        $brandingConfig,
-        $toolbarPrimaryConfig,
-        $toolbarSecondaryConfig
+        private MenuManager $menuManager,
+        private ToolbarManager $toolbarManager,
+        private string $projectDir,
+        private array $brandingConfig,
+        private array $toolbarPrimaryConfig,
+        private array $toolbarSecondaryConfig,
+        private LocaleResolverInterface $localeResolver,
+        private TranslationDumper $translationDumper,
     ) {
-        $this->menuManager = $menuManager;
-        $this->toolbarManager = $toolbarManager;
-        $this->projectDir = $projectDir;
-        $this->brandingConfig = $brandingConfig;
-        $this->toolbarPrimaryConfig = $toolbarPrimaryConfig;
-        $this->toolbarSecondaryConfig = $toolbarSecondaryConfig;
     }
 
     public function indexAction(Request $request)
@@ -96,7 +64,7 @@ class MainController extends AbstractController
             ]
         ];
 
-        return $this->render($this->getTemplate('admin/main/index.html.twig'), [
+        return $this->render($this->resolveTemplate('admin/main/index.html.twig'), [
             'data' => $data,
             'routes' => $this->getRoutes(),
             'translations' => $this->getTranslations(),
@@ -156,8 +124,7 @@ class MainController extends AbstractController
 
     private function getTranslations()
     {
-        $dumper = $this->get('enhavo_app.translation.translation_dumper');
-        $translations = $dumper->getTranslations('javascript', $this->container->get('enhavo_app.locale_resolver')->resolve());
+        $translations = $this->translationDumper->getTranslations('javascript', $this->localeResolver->resolve());
         return $translations;
     }
 }

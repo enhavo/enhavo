@@ -11,7 +11,7 @@ services:
         arguments:
             - '@Enhavo\Bundle\BlockBundle\Block\BlockManager'
             - '%enhavo_block.render.sets%'
-            - '@enhavo_app.template.manager'
+            - '@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface'
             - '@twig'
 
     validator.video_url_validator:
@@ -26,7 +26,7 @@ services:
             - '@Enhavo\Bundle\BlockBundle\Block\Cleaner'
             - '%enhavo_block.blocks%'
         calls:
-            - ['setContainer', ['@service_container']]
+            - [setContainer, ['@service_container']]
 
     Enhavo\Bundle\BlockBundle\Block\Cleaner:
         arguments:

@@ -9,8 +9,10 @@ doctrine:
     dbal:
         # configure these for your database server
         driver: 'pdo_mysql'
-        server_version: '5.6'
         charset: utf8mb4
+        # need to add any server version to run bin/console doctrine:schema:validate
+        # https://github.com/doctrine/DoctrineBundle/issues/673
+        server_version: 5.6
         default_table_options:
             charset: utf8mb4
             collate: utf8mb4_unicode_ci

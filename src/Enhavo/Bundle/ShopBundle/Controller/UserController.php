@@ -10,7 +10,7 @@ namespace Enhavo\Bundle\ShopBundle\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Controller\AppController;
-use Enhavo\Bundle\AppBundle\Template\TemplateTrait;
+use Enhavo\Bundle\AppBundle\Template\TemplateResolverTrait;
 use Enhavo\Bundle\ShopBundle\Address\AddressProviderInterface;
 use Enhavo\Bundle\ShopBundle\Address\UserAddressProviderInterface;
 use Enhavo\Bundle\ShopBundle\Order\OrderItemTransfer;
@@ -24,7 +24,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends AbstractController
 {
-    use TemplateTrait;
+    use TemplateResolverTrait;
 
     public function __construct(
         private AddressProviderInterface $addressProvider,
@@ -49,7 +49,7 @@ class UserController extends AbstractController
             }
         }
 
-        return $this->render($this->getTemplate('theme/shop/user/address.html.twig'), [
+        return $this->render($this->resolveTemplate('theme/shop/user/address.html.twig'), [
             'form' => $form->createView()
         ]);
     }
@@ -58,7 +58,7 @@ class UserController extends AbstractController
     {
         $orders = $this->orderRepository->findByUser($this->getUser());
 
-        return $this->render($this->getTemplate('theme/shop/user/order-list.html.twig'), [
+        return $this->render($this->resolveTemplate('theme/shop/user/order-list.html.twig'), [
             'orders' => $orders
         ]);
     }
@@ -67,7 +67,7 @@ class UserController extends AbstractController
     {
         $order = $this->getOrder($request);
 
-        return $this->render($this->getTemplate('theme/shop/user/order-show.html.twig'), [
+        return $this->render($this->resolveTemplate('theme/shop/user/order-show.html.twig'), [
             'order' => $order
         ]);
     }

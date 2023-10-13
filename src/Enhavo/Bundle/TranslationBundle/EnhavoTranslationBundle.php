@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class EnhavoTranslationBundle extends Bundle
 {
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         $container->addCompilerPass(
             new \Enhavo\Component\Type\TypeCompilerPass('Translation', 'enhavo_translation.translation', Translation::class)

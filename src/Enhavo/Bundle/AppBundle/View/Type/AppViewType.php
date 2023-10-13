@@ -9,7 +9,7 @@
 namespace Enhavo\Bundle\AppBundle\View\Type;
 
 use Enhavo\Bundle\AppBundle\Locale\LocaleResolverInterface;
-use Enhavo\Bundle\AppBundle\Template\TemplateManager;
+use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
 use Enhavo\Bundle\AppBundle\Translation\TranslationDumper;
 use Enhavo\Bundle\AppBundle\View\AbstractViewType;
 use Enhavo\Bundle\AppBundle\View\TemplateData;
@@ -41,8 +41,8 @@ class AppViewType extends AbstractViewType
     /** @var LocaleResolverInterface */
     private $localResolver;
 
-    /** @var TemplateManager */
-    private $templateManager;
+    /** @var TemplateResolver */
+    private $templateResolver;
 
     /**
      * AppViewType constructor.
@@ -52,7 +52,7 @@ class AppViewType extends AbstractViewType
      * @param RequestStack $requestStack
      * @param TranslationDumper $translationDumper
      * @param LocaleResolverInterface $localResolver
-     * @param TemplateManager $templateManager
+     * @param TemplateResolver $templateResolver
      */
     public function __construct(
         Environment $twig,
@@ -61,7 +61,7 @@ class AppViewType extends AbstractViewType
         RequestStack $requestStack,
         TranslationDumper $translationDumper,
         LocaleResolverInterface $localResolver,
-        TemplateManager $templateManager
+        TemplateResolver $templateResolver
     ) {
         $this->twig = $twig;
         $this->projectDir = $projectDir;
@@ -69,7 +69,7 @@ class AppViewType extends AbstractViewType
         $this->requestStack = $requestStack;
         $this->translationDumper = $translationDumper;
         $this->localResolver = $localResolver;
-        $this->templateManager = $templateManager;
+        $this->templateResolver = $templateResolver;
     }
 
     public function getType()
@@ -103,7 +103,7 @@ class AppViewType extends AbstractViewType
 
         $parameters = array_merge($parameters, $templateData->normalize());
 
-        $content = $this->twig->render($this->templateManager->getTemplate($options['template']), $parameters);
+        $content = $this->twig->render($this->templateResolver->resolve($options['template']), $parameters);
 
         return new Response($content);
     }

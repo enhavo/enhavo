@@ -3,17 +3,13 @@
 namespace Enhavo\Bundle\ShopBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
-use Enhavo\Bundle\AppBundle\Template\TemplateTrait;
 use Enhavo\Bundle\ShopBundle\Manager\ProductManager;
 use Enhavo\Bundle\ShopBundle\Model\ProductInterface;
-use Enhavo\Bundle\ShopBundle\Product\ProductVariantResolverInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProductController extends ResourceController
 {
-    use TemplateTrait;
-
     public function showResourceAction(ProductInterface $contentDocument, Request $request): Response
     {
         $variant = $this->getProductManager()->getDefaultVariantProxy($contentDocument);
@@ -23,7 +19,7 @@ class ProductController extends ResourceController
 
         $variants = $this->getProductManager()->getVariantProxies($contentDocument->getVariants());
 
-        return $this->render($this->getTemplate('theme/shop/product/show.html.twig'), [
+        return $this->render($this->resolveTemplate('theme/shop/product/show.html.twig'), [
             'product' => $contentDocument,
             'variants' => $variants,
             'variant' => $variant,
@@ -32,7 +28,7 @@ class ProductController extends ResourceController
 
     public function listAction(Request $request): Response
     {
-        return $this->render($this->getTemplate('theme/shop/product/list.html.twig'), [
+        return $this->render($this->resolveTemplate('theme/shop/product/list.html.twig'), [
 
         ]);
     }

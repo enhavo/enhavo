@@ -127,7 +127,7 @@ class TranslationManagerTest extends TestCase
         $request->method('getPathInfo')->willReturn('/admin');
 
         $dependencies = $this->createDependencies();
-        $dependencies->requestStack->method('getMasterRequest')->willReturn($request);
+        $dependencies->requestStack->method('getMainRequest')->willReturn($request);
         $manager = $this->createInstance($dependencies);
 
         $this->assertTrue($manager->isTranslation());
@@ -139,7 +139,7 @@ class TranslationManagerTest extends TestCase
         $request->method('getPathInfo')->willReturn('/');
 
         $dependencies = $this->createDependencies();
-        $dependencies->requestStack->expects($this->once())->method('getMasterRequest')->willReturn($request);
+        $dependencies->requestStack->expects($this->once())->method('getMainRequest')->willReturn($request);
         $manager = $this->createInstance($dependencies);
 
         $this->assertFalse($manager->isTranslation());

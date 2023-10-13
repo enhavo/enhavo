@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 trait ResourceControllerTrait
 {
-    protected ?FactoryInterface $viewFactory;
+    protected ?FactoryInterface $viewFactory = null;
 
     public function setViewFactory(FactoryInterface $viewFactory): void
     {

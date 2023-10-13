@@ -10,7 +10,7 @@ namespace Enhavo\Bundle\AppBundle\View;
 
 class TemplateData extends ViewData
 {
-    private ?string $template;
+    private ?string $template = null;
 
     /**
      * @return string|null

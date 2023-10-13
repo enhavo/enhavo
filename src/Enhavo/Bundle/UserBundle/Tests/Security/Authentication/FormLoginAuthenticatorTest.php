@@ -101,7 +101,7 @@ class FormLoginAuthenticatorTest extends TestCase
     public function testSupportsGet()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->request->method('isMethod')->willReturn(function($method) {
+        $dependencies->request->method('isMethod')->willReturnCallback(function($method) {
             return $method === 'GET';
         });
 

@@ -11,7 +11,7 @@ use Enhavo\Component\Type\TypeCompilerPass;
 
 class EnhavoNewsletterBundle extends Bundle
 {
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         $container->addCompilerPass(
             new TypeCompilerPass('NewsletterStorage', 'enhavo_newsletter.storage', Storage::class)

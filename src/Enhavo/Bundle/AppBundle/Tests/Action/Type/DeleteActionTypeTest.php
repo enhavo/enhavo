@@ -79,9 +79,13 @@ class DeleteActionTypeDependencies
     public $tokenManager;
 }
 
-class TestCsrfToken
+class TestCsrfToken extends \Symfony\Component\Security\Csrf\CsrfToken
 {
-    public function getValue()
+    public function __construct()
+    {
+    }
+
+    public function getValue(): string
     {
         return 'csrfTok3n';
     }

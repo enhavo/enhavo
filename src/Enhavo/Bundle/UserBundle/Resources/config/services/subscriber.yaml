@@ -32,7 +32,7 @@ services:
 
     Enhavo\Bundle\UserBundle\EventListener\TokenInvalidSubscriber:
         arguments:
-            - '@enhavo_app.template.manager'
+            - '@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface'
             - '@twig'
         tags:
             - { name: kernel.event_subscriber }

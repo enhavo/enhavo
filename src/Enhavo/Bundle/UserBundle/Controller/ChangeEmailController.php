@@ -102,7 +102,7 @@ class ChangeEmailController extends AbstractUserController
             }
         }
 
-        $response = $this->render($this->getTemplate($configuration->getTemplate()), [
+        $response = $this->render($this->resolveTemplate($configuration->getTemplate()), [
             'form' => $form->createView(),
             'error' => !$valid,
             'errors' => [
@@ -125,7 +125,7 @@ class ChangeEmailController extends AbstractUserController
     {
         $configuration = $this->provider->getChangeEmailCheckConfiguration();
 
-        return $this->render($this->getTemplate($configuration->getTemplate()));
+        return $this->render($this->resolveTemplate($configuration->getTemplate()));
     }
 
     public function confirmAction(Request $request, $token)
@@ -176,7 +176,7 @@ class ChangeEmailController extends AbstractUserController
             }
         }
 
-        $response = $this->render($this->getTemplate($configuration->getTemplate()), [
+        $response = $this->render($this->resolveTemplate($configuration->getTemplate()), [
             'user' => $user,
             'form' => $form->createView(),
             'error' => !$valid,
@@ -201,6 +201,6 @@ class ChangeEmailController extends AbstractUserController
     {
         $configuration = $this->provider->getChangeEmailFinishConfiguration();
 
-        return $this->render($this->getTemplate($configuration->getTemplate()));
+        return $this->render($this->resolveTemplate($configuration->getTemplate()));
     }
 }

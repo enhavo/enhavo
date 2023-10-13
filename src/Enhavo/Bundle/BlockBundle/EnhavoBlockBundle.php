@@ -13,7 +13,7 @@ use Doctrine\Persistence\Mapping\Driver\DefaultFileLocator;
 
 class EnhavoBlockBundle extends Bundle
 {
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         parent::build($container);
         $container->addCompilerPass($this->buildDoctrineBlockCompilerPass(

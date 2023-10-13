@@ -2,14 +2,13 @@
 
 namespace Enhavo\Bundle\CalendarBundle\Controller;
 
-use Enhavo\Bundle\AppBundle\Template\TemplateTrait;
-use Enhavo\Bundle\CalendarBundle\Entity\Appointment;
+use Enhavo\Bundle\AppBundle\Template\TemplateResolverTrait;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 class AppointmentController extends AbstractController
 {
-    use TemplateTrait;
+    use TemplateResolverTrait;
 
     public function showResourceAction($contentDocument, bool $preview = false)
     {
@@ -17,7 +16,7 @@ class AppointmentController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        return $this->render($this->getTemplate('theme/resource/appointment/show.html.twig'), [
+        return $this->render($this->resolveTemplate('theme/resource/appointment/show.html.twig'), [
             'resource' => $contentDocument
         ]);
     }

@@ -11,14 +11,14 @@ services:
             - '@request_stack'
             - '@enhavo_app.translation.translation_dumper'
             - '@enhavo_app.locale_resolver'
-            - '@Enhavo\Bundle\AppBundle\Template\TemplateManager'
+            - '@Enhavo\Bundle\AppBundle\Template\TemplateResolver'
         tags:
             - { name: enhavo_app.view }
 
     Enhavo\Bundle\AppBundle\View\Type\ApiViewType:
         arguments:
             - '@twig'
-            - '@Enhavo\Bundle\AppBundle\Template\TemplateManager'
+            - '@Enhavo\Bundle\AppBundle\Template\TemplateResolver'
         tags:
             - { name: enhavo_app.view }
 
@@ -42,7 +42,6 @@ services:
             - '@sylius.resource_controller.request_configuration_factory'
             - '@sylius.resource_controller.authorization_checker'
             - '@Symfony\Component\HttpFoundation\RequestStack'
-            - '@session.flash_bag'
             - '@translator'
 
     Enhavo\Bundle\AppBundle\View\AbstractResourceFormType:
@@ -50,7 +49,7 @@ services:
         arguments:
             - '%enhavo_app.form_themes%'
             - '@enhavo_app.action_manager'
-            - '@session.flash_bag'
+            - '@request_stack'
             - '@Enhavo\Bundle\AppBundle\View\ViewUtil'
             - '@router'
             - '@translator'
@@ -124,7 +123,7 @@ services:
             - '@Enhavo\Bundle\AppBundle\View\ViewUtil'
             - '@router'
             - '@doctrine.orm.entity_manager'
-            - '@session.flash_bag'
+            - '@request_stack'
             - '@translator'
             - '@enhavo_app.manager.resource'
             - '@sylius.resource_controller.single_resource_provider'

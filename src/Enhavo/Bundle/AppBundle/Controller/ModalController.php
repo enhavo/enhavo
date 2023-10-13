@@ -8,14 +8,14 @@
 
 namespace Enhavo\Bundle\AppBundle\Controller;
 
-use Enhavo\Bundle\AppBundle\Template\TemplateTrait;
+use Enhavo\Bundle\AppBundle\Template\TemplateResolverTrait;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ModalController extends AbstractController
 {
-    use TemplateTrait;
+    use TemplateResolverTrait;
 
     public function formAction(Request $request)
     {
@@ -30,7 +30,7 @@ class ModalController extends AbstractController
             $response->setStatusCode(400);
         }
 
-        return $this->render($this->getTemplate($template), [
+        return $this->render($this->resolveTemplate($template), [
             'form' => $form->createView()
         ], $response);
     }

@@ -3,7 +3,6 @@
 
 namespace Enhavo\Bundle\AppBundle\Controller;
 
-
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver;
 use Symfony\Component\HttpKernel\Controller\ArgumentResolver\RequestAttributeValueResolver;
@@ -28,7 +27,7 @@ class ArgumentResolver implements ArgumentResolverInterface
     /**
      * @inheritDoc
      */
-    public function getArguments(Request $request, $controller)
+    public function getArguments(Request $request, $controller): array
     {
         $arguments = [];
         $resolvers = $this->getDefaultArgumentValueResolvers();
@@ -58,7 +57,6 @@ class ArgumentResolver implements ArgumentResolverInterface
 
         return $arguments;
     }
-
 
     /**
      * copied from Symfony\Component\HttpKernel\Controller\ArgumentResolver

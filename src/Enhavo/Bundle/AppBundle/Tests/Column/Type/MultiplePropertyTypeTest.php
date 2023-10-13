@@ -5,7 +5,7 @@ namespace Enhavo\Bundle\AppBundle\Tests\Column\Type;
 use Enhavo\Bundle\AppBundle\Column\Type\MultiplePropertyType;
 use Enhavo\Bundle\AppBundle\Tests\Mock\EntityMock;
 
-class MultipleTypeTest extends AbstractTypeTest
+class MultiplePropertyTypeTest extends AbstractTypeTestCase
 {
     function testInitialize()
     {

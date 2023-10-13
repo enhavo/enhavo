@@ -58,7 +58,7 @@ class AssignBatchType extends AbstractBatchType
      */
     public function execute(array $options, array $resources, ?ResourceInterface $resource = null): ?Response
     {
-        $request = $this->requestStack->getMasterRequest();
+        $request = $this->requestStack->getMainRequest();
         $form = $this->formFactory->create($options['form']);
 
         $form->handleRequest($request);

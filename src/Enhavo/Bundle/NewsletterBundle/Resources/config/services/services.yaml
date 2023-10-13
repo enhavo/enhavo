@@ -75,7 +75,7 @@ services:
             - '@twig'
 
         calls:
-            - [ 'setContainer', [ '@service_container' ] ]
+            - [setContainer, [ '@service_container' ] ]
         tags:
             - { name: twig.extension }
 
@@ -136,6 +136,9 @@ services:
             - '@translator'
             - '@Enhavo\Bundle\FormBundle\Error\FormErrorResolver'
             - '@serializer'
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
         tags:
             - { name: controller.service_arguments }
 
@@ -144,7 +147,8 @@ services:
             - '@Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager'
             - '@Enhavo\Bundle\NewsletterBundle\Pending\PendingSubscriberManager'
             - '@translator'
-            - '@serializer'
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:
             - { name: controller.service_arguments }
 

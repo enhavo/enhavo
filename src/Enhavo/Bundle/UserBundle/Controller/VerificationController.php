@@ -49,7 +49,7 @@ class VerificationController extends AbstractUserController
             throw $this->createNotFoundException();
         }
 
-        return $this->render($this->getTemplate($configuration->getTemplate()), [
+        return $this->render($this->resolveTemplate($configuration->getTemplate()), [
             'user' => $user,
         ]);
     }
@@ -66,6 +66,6 @@ class VerificationController extends AbstractUserController
 
         $this->userManager->verify($user);
 
-        return $this->render($this->getTemplate($configuration->getTemplate()));
+        return $this->render($this->resolveTemplate($configuration->getTemplate()));
     }
 }

@@ -4,6 +4,8 @@ services:
             - '@router'
             - '%enhavo_app.login.route%'
             - '%enhavo_app.login.route_parameters%'
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:
             - { name: controller.service_arguments }
 
@@ -15,8 +17,11 @@ services:
             - '%enhavo_app.branding%'
             - '%enhavo_app.toolbar_widget.primary%'
             - '%enhavo_app.toolbar_widget.secondary%'
+            - '@enhavo_app.locale_resolver'
+            - '@enhavo_app.translation.translation_dumper'
         calls:
-            - [setContainer, ['@service_container']]
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
         tags:
             - { name: controller.service_arguments }
 
@@ -33,6 +38,7 @@ services:
 
     Enhavo\Bundle\AppBundle\Controller\ModalController:
         calls:
-            - [setContainer, ['@service_container']]
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
         tags:
             - { name: controller.service_arguments }

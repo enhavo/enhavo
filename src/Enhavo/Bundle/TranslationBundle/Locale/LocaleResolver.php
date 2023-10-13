@@ -42,7 +42,7 @@ class LocaleResolver implements LocaleResolverInterface
     {
         $locales = $this->localeProvider->getLocales();
         $this->locale = $this->localeProvider->getDefaultLocale();
-        $request = $this->requestStack->getMasterRequest();
+        $request = $this->requestStack->getMainRequest();
         if ($request !== null) {
             $locale = $request->attributes->get('_locale');
             if ($locale && in_array($locale, $locales)) {

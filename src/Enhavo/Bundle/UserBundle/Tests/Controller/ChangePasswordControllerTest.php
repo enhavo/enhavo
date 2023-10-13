@@ -165,7 +165,7 @@ class ChangePasswordControllerMock extends ChangePasswordController
     public $hasUser = false;
     public $flashMessages = [];
 
-    protected function getUser()
+    protected function getUser(): ?\Symfony\Component\Security\Core\User\UserInterface
     {
         if ($this->hasUser) {
             return new User();

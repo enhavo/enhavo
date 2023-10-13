@@ -21,7 +21,7 @@ services:
         arguments:
             - '@Enhavo\Component\Type\FactoryInterface[View]'
         calls:
-            - [setContainer, ['@service_container']]
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:
             - { name: controller.service_arguments }
 

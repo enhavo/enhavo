@@ -24,12 +24,14 @@ use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Enhavo\Bundle\UserBundle\UserIdentifier\UserIdentifierProviderResolver;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\PasswordHasher\Hasher\NativePasswordHasher;
+use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactory;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
-use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Http\Session\SessionAuthenticationStrategyInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -42,7 +44,7 @@ class UserManager
         private UserIdentifierProviderResolver         $resolver,
         private TokenGeneratorInterface                $tokenGenerator,
         private TranslatorInterface                    $translator,
-        private EncoderFactoryInterface                $encoderFactory,
+        private UserPasswordHasherInterface            $userPasswordHasher,
         protected RouterInterface                      $router,
         private EventDispatcherInterface               $eventDispatcher,
         private TokenStorageInterface                  $tokenStorage,
@@ -121,7 +123,7 @@ class UserManager
 
         $this->updateLoggedIn($user);
 
-        $token = new UsernamePasswordToken($user, null, $firewallName ?? $this->defaultFirewall, $user->getRoles());
+        $token = new UsernamePasswordToken($user, $firewallName ?? $this->defaultFirewall, $user->getRoles());
         $request = $this->requestStack->getCurrentRequest();
         if (null !== $request) {
             $this->sessionStrategy->onAuthentication($request, $token);
@@ -142,14 +144,7 @@ class UserManager
         if (0 === strlen($plainPassword)) {
             return;
         }
-        $encoder = $this->encoderFactory->getEncoder($user);
-        if ($encoder instanceof NativePasswordEncoder) {
-            $user->setSalt(null);
-        } else {
-            $salt = rtrim(str_replace('+', '.', base64_encode(random_bytes(32))), '=');
-            $user->setSalt($salt);
-        }
-        $hashedPassword = $encoder->encodePassword($plainPassword, $user->getSalt());
+        $hashedPassword = $this->userPasswordHasher->hashPassword($user, $user->getPlainPassword());
         $user->setPassword($hashedPassword);
         $user->eraseCredentials();
     }

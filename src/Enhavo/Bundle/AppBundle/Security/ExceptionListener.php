@@ -26,20 +26,6 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  */
 class ExceptionListener
 {
-    /**
-     * @var Session
-     */
-    private $session;
-
-    /**
-     * ExceptionListener constructor.
-     * @param Session $session
-     */
-    public function __construct(Session $session)
-    {
-        $this->session = $session;
-    }
-
     public function onKernelException(ExceptionEvent $event)
     {
         $exception = $event->getThrowable();

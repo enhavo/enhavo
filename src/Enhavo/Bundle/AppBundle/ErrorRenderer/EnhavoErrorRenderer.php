@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\AppBundle\ErrorRenderer;
 
-use Enhavo\Bundle\AppBundle\Template\TemplateManager;
+use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
 use Symfony\Bridge\Twig\ErrorRenderer\TwigErrorRenderer;
 use Symfony\Component\ErrorHandler\ErrorRenderer\ErrorRendererInterface;
 use Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer;
@@ -18,7 +18,7 @@ class EnhavoErrorRenderer implements ErrorRendererInterface
     public function __construct(
         private Environment $twigEnvironment,
         private string $projectDir,
-        private TemplateManager $templateManager,
+        private TemplateResolver $templateResolver,
         ErrorRendererInterface $fallbackErrorRenderer,
         RequestStack $requestStack,
         bool $debug,
@@ -50,11 +50,11 @@ class EnhavoErrorRenderer implements ErrorRendererInterface
 
     private function getTemplate(int $statusCode): string
     {
-        $template = $this->templateManager->getTemplate(sprintf('theme/error/%s.html.twig', $statusCode));
+        $template = $this->templateResolver->resolve(sprintf('theme/error/%s.html.twig', $statusCode));
         if ($this->twigEnvironment->getLoader()->exists($template)) {
             return $template;
         }
 
-        return $this->templateManager->getTemplate('theme/error/default.html.twig');
+        return $this->templateResolver->resolve('theme/error/default.html.twig');
     }
 }

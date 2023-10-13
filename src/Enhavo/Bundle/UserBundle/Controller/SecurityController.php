@@ -9,13 +9,11 @@ namespace Enhavo\Bundle\UserBundle\Controller;
 use Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider;
 use Enhavo\Bundle\UserBundle\Security\Authentication\AuthenticationError;
 use Enhavo\Bundle\UserBundle\User\UserManager;
-use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SecurityController extends AbstractUserController
 {
@@ -23,10 +21,8 @@ class SecurityController extends AbstractUserController
         UserManager $userManager,
         ConfigurationProvider $configurationProvider,
         private CsrfTokenManagerInterface $tokenManager,
-        private TranslatorInterface $translator,
         private AuthenticationUtils $authenticationUtils,
         private AuthenticationError $authenticationError,
-        private FormFactoryInterface $formFactory,
     ) {
         parent::__construct($userManager, $configurationProvider);
     }
@@ -46,7 +42,7 @@ class SecurityController extends AbstractUserController
 
         $form = $this->createForm($configuration->getFormClass(), null, $configuration->getFormOptions());
 
-        $template = $this->getTemplate($configuration->getTemplate());
+        $template = $this->resolveTemplate($configuration->getTemplate());
         $response = $this->render($template, [
             'last_username' => $lastUsername,
             'error' => $error,

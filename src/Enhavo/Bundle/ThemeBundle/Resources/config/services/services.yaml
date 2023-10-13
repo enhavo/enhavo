@@ -20,7 +20,7 @@ services:
             - '@enhavo_theme.factory.theme'
             - '@enhavo_theme.repository.theme'
         calls:
-            - ['setContainer', ['@service_container']]
+            - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.init, alias: 'theme' }
 
@@ -42,14 +42,14 @@ services:
 
     Enhavo\Bundle\ThemeBundle\EventListener\ThemeDoctrineSubscriber:
         calls:
-            - [ setContainer, ['@service_container']]
+            - [setContainer, ['@service_container']]
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
     Enhavo\Bundle\ThemeBundle\EventListener\ThemeRegisterSubscriber:
         arguments:
             - '@enhavo_theme.theme.manager'
-            - '@enhavo_app.template.manager'
+            - '@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface'
         tags:
             - { name: kernel.event_subscriber }
 
@@ -61,7 +61,7 @@ services:
 
     Enhavo\Bundle\ThemeBundle\Command\WebpackBuildCommand:
         calls:
-            - ['setContainer', ['@service_container']]
+            - [setContainer, ['@service_container']]
         tags:
             - { name: console.command }
 
@@ -72,6 +72,6 @@ services:
     Enhavo\Bundle\ThemeBundle\Controller\ThemeController:
         public: true
         calls:
-            - ['setContainer', ['@service_container']]
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:
             - { name: 'controller.service_arguments' }

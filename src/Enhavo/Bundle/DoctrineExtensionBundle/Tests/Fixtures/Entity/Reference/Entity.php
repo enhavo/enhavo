@@ -8,32 +8,24 @@
 
 namespace Enhavo\Bundle\DoctrineExtensionBundle\Tests\Fixtures\Entity\Reference;
 
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @Entity
- */
+#[ORM\Entity]
 class Entity
 {
-    /**
-     * @Id
-     * @GeneratedValue
-     * @Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\Column(name: "id", type: Types::INTEGER)]
+    #[ORM\GeneratedValue(strategy: "AUTO")]
     private $id;
 
-    /**
-     * @Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(length: 255, nullable: true)]
     private $name;
 
-    /**
-     * @Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(length: 255, nullable: true)]
     private $nodeName;
 
-    /**
-     * @Column(type="integer",  nullable=true)
-     */
+    #[ORM\Column(type: Types::INTEGER, nullable: true)]
     private $nodeId;
 
     /** @var NodeInterface */

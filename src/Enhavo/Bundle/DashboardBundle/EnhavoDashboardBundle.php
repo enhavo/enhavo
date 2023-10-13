@@ -10,7 +10,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class EnhavoDashboardBundle extends Bundle
 {
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         $container->addCompilerPass(
             new TypeCompilerPass('DashboardWidget', 'enhavo_dashboard.widget', Widget::class)

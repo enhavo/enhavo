@@ -18,13 +18,13 @@ services:
     enhavo_app.preview.strategy_resolver:
         class: Enhavo\Bundle\AppBundle\Preview\StrategyResolver
         calls:
-            - ['setContainer', ['@service_container']]
+            - [setContainer, ['@service_container']]
 
     enhavo_app.preview.strategy.dynamic:
         class: Enhavo\Bundle\AppBundle\Preview\Strategy\DynamicStrategy
         public: true
         calls:
-            - ['setContainer', ['@service_container']]
+            - [setContainer, ['@service_container']]
 
     enhavo_app.preview.strategy.service:
         class: Enhavo\Bundle\AppBundle\Preview\Strategy\ServiceStrategy
@@ -34,4 +34,4 @@ services:
             - '@request_stack'
             - '@Enhavo\Bundle\AppBundle\Preview\PreviewManager'
         calls:
-            - ['setContainer', ['@service_container']]
+            - [setContainer, ['@service_container']]

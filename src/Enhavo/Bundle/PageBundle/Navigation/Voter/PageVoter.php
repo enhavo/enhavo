@@ -54,7 +54,7 @@ class PageVoter implements VoterInterface
 
     protected function getRequest()
     {
-        return $this->requestStack->getMasterRequest();
+        return $this->requestStack->getMainRequest();
     }
 
     public static function getName(): ?string

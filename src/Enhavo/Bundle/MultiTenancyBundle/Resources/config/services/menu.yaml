@@ -7,7 +7,7 @@ services:
             - '@Enhavo\Bundle\MultiTenancyBundle\Tenant\TenantManager'
             - '@security.authorization_checker'
         calls:
-            - [ 'setContainer', [ '@service_container' ] ]
+            - [setContainer, [ '@service_container' ] ]
         tags:
             - { name: enhavo.menu, alias: 'switch_tenant' }
 
@@ -16,6 +16,6 @@ services:
             - '@Enhavo\Bundle\MultiTenancyBundle\Tenant\TenantManager'
             - '%enhavo_multi_tenancy.tenant_switch_menu.session_key%'
         calls:
-            - [ 'setContainer', [ '@service_container' ] ]
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:
             - { name: controller.service_arguments }

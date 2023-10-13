@@ -3,17 +3,17 @@
 namespace Enhavo\Bundle\AppBundle\Tests\Template;
 
 use Enhavo\Bundle\AppBundle\Filesystem\Filesystem;
-use Enhavo\Bundle\AppBundle\Template\TemplateManager;
+use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
 use Enhavo\Bundle\AppBundle\Template\WebpackBuildResolverInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-class TemplateManagerTest extends TestCase
+class TemplateResolverTest extends TestCase
 {
-    private function createDependencies(): TemplateManagerDependencies
+    private function createDependencies(): TemplateResolverDependencies
     {
-        $dependencies = new TemplateManagerDependencies();
+        $dependencies = new TemplateResolverDependencies();
         $dependencies->kernel = $this->getMockBuilder(KernelInterface::class)->getMock();
         $dependencies->fs = new Filesystem();
         $dependencies->resolver = $this->getMockBuilder(WebpackBuildResolverInterface::class)->getMock();
@@ -21,9 +21,9 @@ class TemplateManagerTest extends TestCase
         return $dependencies;
     }
 
-    private function createInstance(TemplateManagerDependencies $dependencies)
+    private function createInstance(TemplateResolverDependencies $dependencies)
     {
-        $instance = new TemplateManager(
+        $instance = new TemplateResolver(
             $dependencies->kernel,
             $dependencies->fs,
             $dependencies->resolver,
@@ -40,7 +40,7 @@ class TemplateManagerTest extends TestCase
         $dependencies = $this->createDependencies();
         $instance = $this->createInstance($dependencies);
 
-        self::assertEquals('test', $instance->getTemplate('test'));
+        self::assertEquals('test', $instance->resolve('test'));
     }
 
     public function testRewritingTemplate()
@@ -50,13 +50,13 @@ class TemplateManagerTest extends TestCase
 
         $instance->registerPath(__DIR__.'/../Fixtures/template/something', 'MyAlias');
 
-        self::assertEquals('@MyAlias/hello.html.twig', $instance->getTemplate('hello.html.twig'));
-        self::assertEquals('@MyAlias/deeper/fubar.html.twig', $instance->getTemplate('deeper/fubar.html.twig'));
-        self::assertEquals('else.html.twig', $instance->getTemplate('else.html.twig'));
+        self::assertEquals('@MyAlias/hello.html.twig', $instance->resolve('hello.html.twig'));
+        self::assertEquals('@MyAlias/deeper/fubar.html.twig', $instance->resolve('deeper/fubar.html.twig'));
+        self::assertEquals('else.html.twig', $instance->resolve('else.html.twig'));
     }
 }
 
-class TemplateManagerDependencies
+class TemplateResolverDependencies
 {
     public KernelInterface|MockObject $kernel;
     public Filesystem|MockObject $fs;

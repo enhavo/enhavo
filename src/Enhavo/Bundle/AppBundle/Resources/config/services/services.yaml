@@ -39,12 +39,8 @@ services:
     Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface:
         alias: enhavo_app.util.secure_url_token_generator
 
-    Enhavo\Bundle\AppBundle\Template\TemplateManager:
-        alias: enhavo_app.template.manager
 
-    enhavo_app.template.manager:
-        public: true
-        class: Enhavo\Bundle\AppBundle\Template\TemplateManager
+    Enhavo\Bundle\AppBundle\Template\TemplateResolver:
         arguments:
             - '@kernel'
             - '@filesystem'
@@ -63,8 +59,6 @@ services:
             - '@argument_metadata_factory'
 
     Enhavo\Bundle\AppBundle\Security\ExceptionListener:
-        arguments:
-            - '@session'
         tags:
             - { name: kernel.event_listener, event: kernel.exception, priority: 300 }
 
@@ -74,7 +68,7 @@ services:
         arguments:
             - '@twig'
             - '%kernel.project_dir%'
-            - '@enhavo_app.template.manager'
+            - '@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface'
             - '@enhavo.error_handler.html.inner'
             - '@request_stack'
             - '%kernel.debug%'
@@ -83,7 +77,7 @@ services:
         public: true
         arguments:
             - '@mailer.mailer'
-            - '@enhavo_app.template.manager'
+            - '@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface'
             - '@twig'
             - '%enhavo_app.mailer.defaults%'
             - '%enhavo_app.mailer.mails%'
@@ -104,7 +98,7 @@ services:
 
     Enhavo\Bundle\AppBundle\EventListener\ComponentSubscriber:
         arguments:
-            - '@enhavo_app.template.manager'
+            - '@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface'
         tags:
             - { name: kernel.event_subscriber }
 
@@ -115,7 +109,7 @@ services:
     Enhavo\Bundle\AppBundle\Endpoint\Type\ViewEndpointType:
         arguments:
             - '@twig'
-            - '@enhavo_app.template.manager'
+            - '@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface'
         tags:
             - { name: enhavo_api.endpoint }
 

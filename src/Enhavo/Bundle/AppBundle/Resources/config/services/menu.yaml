@@ -16,7 +16,7 @@ services:
           - '@router'
           - '@enhavo_app.menu.manager'
         calls:
-          - [ 'setContainer', ['@service_container']]
+          - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.menu, alias: base }
 
@@ -26,7 +26,7 @@ services:
         - '@translator'
         - '@router'
       calls:
-        - [ 'setContainer', ['@service_container']]
+        - [setContainer, ['@service_container']]
       tags:
         - { name: enhavo.menu, alias: dropdown }
 
@@ -36,7 +36,7 @@ services:
             - '@translator'
             - '@enhavo_app.menu.manager'
         calls:
-          - [ 'setContainer', ['@service_container']]
+          - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.menu, alias: list }
 

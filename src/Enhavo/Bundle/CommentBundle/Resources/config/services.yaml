@@ -59,7 +59,7 @@ services:
         arguments:
             - '@mailer.mailer'
             - '@twig'
-            - '@enhavo_app.template.manager'
+            - '@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface'
             - '@translator'
             - '@enhavo_comment.repository.comment'
             - '%enhavo_app.mailer.defaults%'

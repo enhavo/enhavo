@@ -6,7 +6,7 @@ services:
             - '@Enhavo\Bundle\UserBundle\UserIdentifier\UserIdentifierProviderResolver'
             - '@enhavo_app.util.secure_url_token_generator'
             - '@translator'
-            - '@security.encoder_factory.generic'
+            - '@security.user_password_hasher'
             - '@router'
             - '@event_dispatcher'
             - '@security.token_storage'
@@ -139,7 +139,7 @@ services:
         arguments:
             - '%enhavo_user.user_identifiers%'
         calls:
-            - ['setContainer', ['@service_container']]
+            - [setContainer, ['@service_container']]
 
     Enhavo\Bundle\UserBundle\UserIdentifier\EmailUserIdentifierProvider:
         public: true

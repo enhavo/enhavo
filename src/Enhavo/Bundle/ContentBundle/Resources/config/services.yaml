@@ -64,7 +64,7 @@ services:
         arguments:
             - '@enhavo_content.sitemap.generator'
         calls:
-            - [setContainer, ['@service_container']]
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:
             - { name: controller.service_arguments }
 

@@ -16,7 +16,7 @@ services:
         arguments:
             - '@enhavo_search.indexer.indexer'
         calls:
-          - [ 'setContainer', ['@service_container']]
+          - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo_search.indexer, alias: model }
 
@@ -25,20 +25,20 @@ services:
         arguments:
             - '@enhavo_search.indexer.indexer'
         calls:
-          - [ 'setContainer', ['@service_container']]
+          - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo_search.indexer, alias: collection }
 
     Enhavo\Bundle\SearchBundle\Indexer\Indexer\HtmlIndexer:
         public: true
         calls:
-          - [ 'setContainer', ['@service_container']]
+          - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo_search.indexer, alias: html }
 
     Enhavo\Bundle\SearchBundle\Indexer\Indexer\TextIndexer:
         public: true
         calls:
-          - [ 'setContainer', ['@service_container']]
+          - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo_search.indexer, alias: text }
