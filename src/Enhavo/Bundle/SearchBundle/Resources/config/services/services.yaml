@@ -24,7 +24,12 @@ services:
         arguments:
             - '@enhavo_search.result.result_converter'
             - '@enhavo_search.search.engine'
+<<<<<<< HEAD
             - '@Enhavo\Bundle\AppBundle\Template\TemplateManager'
+=======
+            - '@Enhavo\Bundle\AppBundle\Template\TemplateResolver'
+            - '@sylius.expression_language'
+>>>>>>> 412abfe1b (feat: add static search filter config (#1858))
         calls:
             - [setContainer, ['@service_container']]
 
