@@ -4,3 +4,9 @@ enhavo_search_theme_submit:
         _controller: enhavo_search.controller.search::submitAction
         _config:
             template: 'theme/search/result.html.twig'
+            filters:
+                public:
+                    class: Enhavo\Bundle\SearchBundle\Engine\Filter\MatchQuery
+                    key: public
+                    arguments:
+                        - 'expr:true'

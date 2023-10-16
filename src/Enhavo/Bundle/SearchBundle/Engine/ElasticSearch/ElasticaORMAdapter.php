@@ -60,7 +60,7 @@ class ElasticaORMAdapter implements AdapterInterface
      *
      * @return integer The number of results.
      */
-    public function getNbResults()
+    public function getNbResults(): int
     {
         if (!$this->resultSet) {
             return $this->searchable->search($this->query)->getTotalHits();
@@ -88,7 +88,7 @@ class ElasticaORMAdapter implements AdapterInterface
      *
      * @return array|\Traversable The slice.
      */
-    public function getSlice($offset, $length)
+    public function getSlice($offset, $length): iterable
     {
         $this->resultSet = $this->searchable->search($this->query, array(
             'from' => $offset,
