@@ -7,3 +7,7 @@ enhavo_search:
                     weight: 5
                 content:
                     type: model
+            filter:
+                public:
+                    type: property
+                    property: public
