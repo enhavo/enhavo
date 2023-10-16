@@ -33,7 +33,7 @@ class DatabaseSearchAdapter implements AdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function getNbResults()
+    public function getNbResults(): int
     {
         $queryBuilder = clone $this->queryBuilder;
         return count($queryBuilder->getQuery()->getResult(AbstractQuery::HYDRATE_ARRAY));
@@ -42,7 +42,7 @@ class DatabaseSearchAdapter implements AdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function getSlice($offset, $length)
+    public function getSlice($offset, $length): iterable
     {
         $queryBuilder = clone $this->queryBuilder;
         $queryBuilder->setFirstResult($offset);

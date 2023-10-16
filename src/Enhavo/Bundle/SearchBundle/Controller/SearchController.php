@@ -5,10 +5,13 @@ namespace Enhavo\Bundle\SearchBundle\Controller;
 use Enhavo\Bundle\AppBundle\Template\TemplateManager;
 use Enhavo\Bundle\SearchBundle\Engine\EngineInterface;
 use Enhavo\Bundle\SearchBundle\Engine\Filter\Filter;
+use Enhavo\Bundle\SearchBundle\Engine\Filter\MatchQuery;
 use Enhavo\Bundle\SearchBundle\Result\ResultConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SearchController extends AbstractController
 {
@@ -21,16 +24,28 @@ class SearchController extends AbstractController
     /** @var TemplateManager */
     private $templateManager;
 
+    /** @var ExpressionLanguage */
+    private $expressionLanguage;
+
     /**
      * @param ResultConverter $resultConverter
      * @param EngineInterface $searchEngine
      * @param TemplateManager $templateManager
      */
+<<<<<<< HEAD
     public function __construct(ResultConverter $resultConverter, EngineInterface $searchEngine, TemplateManager $templateManager)
     {
         $this->resultConverter = $resultConverter;
         $this->searchEngine = $searchEngine;
         $this->templateManager = $templateManager;
+=======
+    public function __construct(ResultConverter $resultConverter, EngineInterface $searchEngine, TemplateResolver $templateResolver, ExpressionLanguage $expressionLanguage)
+    {
+        $this->resultConverter = $resultConverter;
+        $this->searchEngine = $searchEngine;
+        $this->templateResolver = $templateResolver;
+        $this->expressionLanguage = $expressionLanguage;
+>>>>>>> 412abfe1b (feat: add static search filter config (#1858))
     }
 
     /**
@@ -49,6 +64,7 @@ class SearchController extends AbstractController
         $filter = new Filter();
         $filter->setTerm($term);
         $filter->setLimit(100);
+        $this->addFilters($filter, $configuration);
 
         $pagination = $this->searchEngine->searchPaginated($filter);
 
@@ -64,7 +80,7 @@ class SearchController extends AbstractController
         ]);
     }
 
-    private function createConfiguration(Request $request): SearchConfiguration
+    protected function createConfiguration(Request $request): SearchConfiguration
     {
         $configuration = new SearchConfiguration();
 
@@ -85,6 +101,32 @@ class SearchController extends AbstractController
             $configuration->setMaxPerPage($config['max_per_page']);
         }
 
+        if (isset($config['filters'])) {
+            $configuration->setFilters($config['filters']);
+        }
+
         return $configuration;
+    }
+
+    protected function addFilters(Filter $filter, SearchConfiguration $configuration)
+    {
+        foreach ($configuration->getFilters() as $filterConfiguration) {
+            $resolver = new OptionsResolver();
+            $resolver->setDefaults([
+                'arguments' => []
+            ]);
+            $resolver->setRequired(['key', 'class']);
+            $options = $resolver->resolve($filterConfiguration);
+
+            foreach($options['arguments'] as &$argument) {
+                if (str_starts_with($argument, 'expr:')) {
+                    $argument = $this->expressionLanguage->evaluate(substr($argument, 5));
+                }
+            }
+
+            $reflection = new \ReflectionClass($options['class']);
+            $query = $reflection->newInstanceArgs($options['arguments']);
+            $filter->addQuery($options['key'], $query);
+        }
     }
 }
