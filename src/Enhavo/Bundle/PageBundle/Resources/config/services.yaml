@@ -53,3 +53,10 @@ services:
             - '@translator'
         tags:
             - { name: form.type }
+
+    Enhavo\Bundle\PageBundle\Endpoint\PageEndpointType:
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }

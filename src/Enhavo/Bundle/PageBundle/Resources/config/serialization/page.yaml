@@ -1,0 +1,6 @@
+Enhavo\Bundle\PageBundle\Entity\Page:
+    attributes:
+        id:
+            groups: ['endpoint']
+        content:
+            groups: ['endpoint']

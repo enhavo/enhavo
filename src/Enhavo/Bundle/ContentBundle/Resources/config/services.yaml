@@ -90,3 +90,9 @@ services:
     Enhavo\Bundle\ContentBundle\Video\YoutubeProvider:
         arguments:
             - '%enhavo_content.video.youtube.api_key%'
+
+    Enhavo\Bundle\ContentBundle\Normalizer\ContentDataNormalizer:
+        arguments:
+            - '@enhavo_routing.router'
+        tags:
+            - { name: enhavo_api.data_normalizer }

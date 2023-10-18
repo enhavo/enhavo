@@ -3,9 +3,9 @@
 namespace App\Endpoint\Extension;
 
 use App\Endpoint\HelloEndpoint;
+use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointTypeExtension;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
-use Enhavo\Bundle\ApiBundle\Endpoint\Data;
 use Symfony\Component\HttpFoundation\Request;
 
 class HelloEndpointExtension extends AbstractEndpointTypeExtension

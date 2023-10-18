@@ -1,0 +1,20 @@
+Enhavo\Bundle\ContentBundle\Entity\Content:
+    attributes:
+        title:
+            groups: ['endpoint']
+        metaDescription:
+            groups: ['endpoint']
+        pageTitle:
+            groups: ['endpoint']
+        noIndex:
+            groups: ['endpoint']
+        noFollow:
+            groups: ['endpoint']
+        openGraphImage:
+            groups: ['endpoint']
+        openGraphTitle:
+            groups: ['endpoint']
+        openGraphDescription:
+            groups: ['endpoint']
+        canonicalUrl:
+            groups: ['endpoint']

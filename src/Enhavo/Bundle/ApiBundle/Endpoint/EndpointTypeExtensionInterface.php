@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\ApiBundle\Endpoint;
 
+use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Documentation\Model\Path;
 use Enhavo\Component\Type\TypeExtensionInterface;
 use Symfony\Component\HttpFoundation\Request;

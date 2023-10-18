@@ -119,6 +119,12 @@ services:
         tags:
             - { name: enhavo_api.endpoint }
 
+    Enhavo\Bundle\AppBundle\Endpoint\Type\AreaEndpointType:
+        arguments:
+            - '@twig'
+        tags:
+            - { name: enhavo_api.endpoint }
+
     Enhavo\Bundle\AppBundle\Endpoint\Loader:
         arguments:
             - '%kernel.project_dir%/data'

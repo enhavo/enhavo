@@ -205,7 +205,7 @@ class Registry implements RegistryInterface
         $extensions = [];
         foreach ($this->extensions as $extension) {
             foreach ($extension->getExtendedTypes() as $extendedType) {
-                if ($type::class === $extendedType || ($type::getName() && $type::getName() === $extendedType)) {
+                if ($this->checkExtends($type, $extendedType)) {
                     if ($extension->getService() === null) {
                         $service = $this->container->get($extension->getId());
                         $extension->setService($service);
@@ -216,5 +216,17 @@ class Registry implements RegistryInterface
             }
         }
         return $extensions;
+    }
+
+    private function checkExtends($type, $extendedType)
+    {
+        if (interface_exists($extendedType) && is_subclass_of($type::class, $extendedType)) {
+            return true;
+        } elseif ($type::class === $extendedType) {
+            return true;
+        } elseif ($type::getName() && $type::getName() === $extendedType) {
+            return true;
+        }
+        return false;
     }
 }

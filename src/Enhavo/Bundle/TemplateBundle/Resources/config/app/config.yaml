@@ -42,4 +42,4 @@ enhavo_routing:
 cmf_routing:
     dynamic:
         controllers_by_class:
-            Enhavo\Bundle\TemplateBundle\Entity\Template: Enhavo\Bundle\TemplateBundle\Controller\TemplateController:showResourceAction
+            Enhavo\Bundle\TemplateBundle\Entity\Template: Enhavo\Bundle\TemplateBundle\Controller\TemplateController::showResourceAction

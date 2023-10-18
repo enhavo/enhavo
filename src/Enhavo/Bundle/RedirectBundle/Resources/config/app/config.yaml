@@ -20,4 +20,4 @@ enhavo_app:
 cmf_routing:
     dynamic:
         controllers_by_class:
-            Enhavo\Bundle\RedirectBundle\Entity\Redirect: enhavo_redirect.controller.redirect:redirectAction
+            Enhavo\Bundle\RedirectBundle\Entity\Redirect: enhavo_redirect.controller.redirect::redirectAction

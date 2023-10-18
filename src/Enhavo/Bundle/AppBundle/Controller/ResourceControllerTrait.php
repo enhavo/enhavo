@@ -2,12 +2,15 @@
 
 namespace Enhavo\Bundle\AppBundle\Controller;
 
+use Enhavo\Bundle\ApiBundle\Endpoint\EndpointFactoryTrait;
 use Enhavo\Component\Type\FactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 trait ResourceControllerTrait
 {
+    use EndpointFactoryTrait;
+
     protected ?FactoryInterface $viewFactory = null;
 
     public function setViewFactory(FactoryInterface $viewFactory): void
