@@ -79,7 +79,7 @@ class EnhavoAppBundle extends Bundle
         );
 
         $container->addCompilerPass(
-            new SyliusCompilerPass()
+            new SyliusCompilerPass(),
         );
 
         $container->addCompilerPass(

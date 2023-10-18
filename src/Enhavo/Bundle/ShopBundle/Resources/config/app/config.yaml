@@ -1,7 +1,7 @@
 cmf_routing:
     dynamic:
         controllers_by_class:
-            Enhavo\Bundle\ShopBundle\Entity\Product: sylius.controller.product:showResourceAction
+            Enhavo\Bundle\ShopBundle\Entity\Product: sylius.controller.product::showResourceAction
 
 payum:
     storages:

@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\ApiBundle\Endpoint;
 
+use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Documentation\Model\Path;
 use Enhavo\Bundle\ApiBundle\Endpoint\Type\ApiEndpointType;
 use Enhavo\Component\Type\AbstractType;

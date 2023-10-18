@@ -6,7 +6,7 @@
  * Time: 19:02
  */
 
-namespace Enhavo\Bundle\ApiBundle\Endpoint;
+namespace Enhavo\Bundle\ApiBundle\Data;
 
 class Data implements \IteratorAggregate, \Countable, \ArrayAccess
 {
@@ -67,9 +67,6 @@ class Data implements \IteratorAggregate, \Countable, \ArrayAccess
      */
     public function set($key, $value)
     {
-        if (!is_array($value) && !is_scalar($value)) {
-            throw new \Exception(sprintf('Data value must be of type array or scalar. "%s" given.', gettype($value)));
-        }
 
         $this->data[$key] = $value;
     }

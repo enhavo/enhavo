@@ -65,9 +65,10 @@ class SyliusCompilerPass implements CompilerPassInterface
         }
 
         foreach ($controllerDefinitionIds as $definitionName) {
-            if($container->hasDefinition($definitionName)) {
+            if ($container->hasDefinition($definitionName)) {
                 $definition = $container->getDefinition($definitionName);
                 $definition->addMethodCall('setViewFactory', [$container->getDefinition('Enhavo\Component\Type\FactoryInterface[View]')]);
+                $definition->addMethodCall('setEndpointFactory', [$container->getDefinition('Enhavo\Component\Type\FactoryInterface[Endpoint]')]);
                 $definition->addMethodCall('setTemplateResolver', [$container->getDefinition($container->getAlias(TemplateResolverInterface::class))]);
             }
         }

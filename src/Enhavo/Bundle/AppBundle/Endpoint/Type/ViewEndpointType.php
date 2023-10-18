@@ -2,9 +2,9 @@
 
 namespace Enhavo\Bundle\AppBundle\Endpoint\Type;
 
+use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
-use Enhavo\Bundle\ApiBundle\Endpoint\Data;
 use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,7 +23,7 @@ class ViewEndpointType extends AbstractEndpointType
     {
         if ($request->get('_format') === 'json') {
             return $this->parent->getResponse($options, $request, $data, $context);
-        } else if ($request->get('_format') === 'html') {
+        } else if (!$request->get('_format') || $request->get('_format') === 'html') {
             $content = $this->twig->render($this->templateResolver->resolve($options['template']), $this->getTemplateData($options, $data));
             return $this->updateResponse(new Response($content), $context);
         }

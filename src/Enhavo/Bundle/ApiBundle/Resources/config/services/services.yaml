@@ -30,3 +30,15 @@ services:
             - '%enhavo_api.documentation%'
         calls:
             - [setEndpointFactory, ['@Enhavo\Component\Type\FactoryInterface[Endpoint]']]
+
+    enhavo_api.normalizer:
+        alias: Enhavo\Bundle\ApiBundle\Normalizer\ChainNormalizer
+
+    Enhavo\Bundle\ApiBundle\Normalizer\ChainNormalizer:
+        calls:
+            - [addNormalizer, ['@serializer', 5]]
+            - [addNormalizer, ['@Enhavo\Bundle\ApiBundle\Normalizer\DataNormalizer', 20]]
+
+    Enhavo\Bundle\ApiBundle\Normalizer\DataNormalizer:
+        arguments:
+            - '@serializer'

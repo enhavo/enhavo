@@ -2,9 +2,9 @@
 
 namespace Endpoint;
 
+use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Documentation\Model\Path;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
-use Enhavo\Bundle\ApiBundle\Endpoint\Data;
 use Enhavo\Bundle\ApiBundle\Endpoint\Endpoint;
 use Enhavo\Bundle\ApiBundle\Endpoint\EndpointTypeInterface;
 use Enhavo\Component\Type\TypeInterface;
