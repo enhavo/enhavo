@@ -14,6 +14,7 @@ use Enhavo\Bundle\AppBundle\Type\TypeCompilerPass;
 use Enhavo\Bundle\AppBundle\View\View;
 use Enhavo\Bundle\AppBundle\View\ViewFactoryAwareInterface;
 use Enhavo\Bundle\AppBundle\View\ViewTypeInterface;
+use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -78,21 +79,13 @@ class EnhavoAppBundle extends Bundle
             new TemplateResolverPass()
         );
 
-        $container->addCompilerPass(
-            new SyliusCompilerPass(),
-        );
+        $container->addCompilerPass(new SyliusCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1);
 
-        $container->addCompilerPass(
-            new FilesystemCompilerPass()
-        );
+        $container->addCompilerPass(new FilesystemCompilerPass());
 
-        $container->addCompilerPass(
-            new TranslationDumperCompilerPass()
-        );
+        $container->addCompilerPass(new TranslationDumperCompilerPass());
 
-        $container->addCompilerPass(
-            new LocaleResolverCompilerPass()
-        );
+        $container->addCompilerPass(new LocaleResolverCompilerPass());
 
         $container->registerForAutoconfiguration(ViewTypeInterface::class)
             ->addTag('enhavo_app.view')
