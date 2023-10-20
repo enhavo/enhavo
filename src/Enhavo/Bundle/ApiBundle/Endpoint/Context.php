@@ -11,7 +11,7 @@ class Context
 
     private bool $stop = false;
 
-    private array $headers;
+    private array $headers = [];
 
     private array $data = [];
 
