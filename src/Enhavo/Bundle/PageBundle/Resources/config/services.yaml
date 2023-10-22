@@ -55,6 +55,8 @@ services:
             - { name: form.type }
 
     Enhavo\Bundle\PageBundle\Endpoint\PageEndpointType:
+        arguments:
+            - '@enhavo_page.repository.page'
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:

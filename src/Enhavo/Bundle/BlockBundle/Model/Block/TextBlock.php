@@ -9,15 +9,8 @@ use Enhavo\Bundle\BlockBundle\Entity\AbstractBlock;
  */
 class TextBlock extends AbstractBlock
 {
-    /**
-     * @var string
-     */
-    private $title;
-
-    /**
-     * @var string
-     */
-    private $text;
+    private ?string $title = null;
+    private ?string $text = null;
 
     /**
      * Set title
@@ -35,7 +28,7 @@ class TextBlock extends AbstractBlock
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -58,7 +51,7 @@ class TextBlock extends AbstractBlock
     /**
      * Get text
      *
-     * @return string 
+     * @return string
      */
     public function getText()
     {

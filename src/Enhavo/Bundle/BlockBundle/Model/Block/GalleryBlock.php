@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\BlockBundle\Model\Block;
 
+use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\BlockBundle\Entity\AbstractBlock;
 use Doctrine\Common\Collections\ArrayCollection;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
@@ -11,20 +12,10 @@ use Enhavo\Bundle\MediaBundle\Model\FileInterface;
  */
 class GalleryBlock extends AbstractBlock
 {
-    /**
-     * @var string
-     */
-    private $title;
+    private ?string $title = null;
+    private ?string $text = null;
 
-    /**
-     * @var string
-     */
-    private $text;
-
-    /**
-     * @var ArrayCollection
-     */
-    private $files;
+    private Collection $files;
 
     public function __construct()
     {

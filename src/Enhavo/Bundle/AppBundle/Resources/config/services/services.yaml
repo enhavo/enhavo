@@ -138,3 +138,9 @@ services:
             - '@Enhavo\Bundle\AppBundle\Endpoint\TemplateEndpointCollector'
         tags:
             - { name: console.command }
+
+    Enhavo\Bundle\AppBundle\Normalizer\FormDataNormalizer:
+        arguments:
+            - '@Enhavo\Bundle\VueFormBundle\Form\VueForm'
+        tags:
+            - { name: enhavo_api.data_normalizer }

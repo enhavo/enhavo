@@ -7,19 +7,37 @@ use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Bundle\AppBundle\Endpoint\Type\AreaEndpointType;
 use Enhavo\Bundle\PageBundle\Model\PageInterface;
+use Enhavo\Bundle\PageBundle\Repository\PageRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PageEndpointType extends AbstractEndpointType
 {
+    public function __construct(
+        private readonly PageRepository $repository,
+    )
+    {
+    }
+
     public function handleRequest($options, Request $request, Data $data, Context $context): void
     {
         /** @var PageInterface $resource */
         $resource = $options['resource'];
+
+        if ($resource === null) {
+            $id = intval($request->get('id'));
+            $resource = $this->repository->find($id);
+        }
+
+        if ($resource === null) {
+            throw $this->createNotFoundException();
+        }
+
         if (!$resource->isPublished() && !$options['preview']) {
             throw $this->createNotFoundException();
         }
 
+        $context->set('resource', $resource);
         $data->set('resource', $this->normalize($resource, null, ['groups' => ['endpoint']]));
     }
 
@@ -32,8 +50,8 @@ class PageEndpointType extends AbstractEndpointType
     {
         $resolver->setDefaults([
             'preview' => false,
-            'template' => '{{ area }}/resource/page/show.html.twig'
+            'template' => '{{ area }}/resource/page/show.html.twig',
+            'resource' => null,
         ]);
-        $resolver->setRequired('resource');
     }
 }

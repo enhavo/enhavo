@@ -9,15 +9,8 @@ use Enhavo\Bundle\BlockBundle\Entity\AbstractBlock;
  */
 class BlockquoteBlock extends AbstractBlock
 {
-    /**
-     * @var string
-     */
-    private $text;
-
-    /**
-     * @var string
-     */
-    private $author;
+    private ?string $text = null;
+    private ?string $author = null;
 
     /**
      * @return string

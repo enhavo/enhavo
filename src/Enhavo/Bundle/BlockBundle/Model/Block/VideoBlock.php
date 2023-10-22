@@ -9,15 +9,8 @@ use Enhavo\Bundle\BlockBundle\Entity\AbstractBlock;
  */
 class VideoBlock extends AbstractBlock
 {
-    /**
-     * @var string
-     */
-    private $title;
-
-    /**
-     * @var string
-     */
-    private $url;
+    private ?string $title = null;
+    private ?string $url = null;
 
     /**
      * Set title
