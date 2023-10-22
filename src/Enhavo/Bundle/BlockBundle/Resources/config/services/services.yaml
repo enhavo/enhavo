@@ -34,3 +34,10 @@ services:
             - '@Enhavo\Bundle\DoctrineExtensionBundle\Util\AssociationFinder'
         calls:
             - ['setBlockManager', ['@Enhavo\Bundle\BlockBundle\Block\BlockManager']]
+
+    Enhavo\Bundle\BlockBundle\Normalizer\NodeDataNormalizer:
+        arguments:
+            - '@Enhavo\Bundle\BlockBundle\Block\BlockManager'
+            - '@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface'
+        tags:
+            - { name: enhavo_api.data_normalizer }

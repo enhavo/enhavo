@@ -10,20 +10,9 @@ use Enhavo\Bundle\MediaBundle\Model\FileInterface;
  */
 class PictureBlock extends AbstractBlock
 {
-    /**
-     * @var string
-     */
-    private $title;
-
-    /**
-     * @var string
-     */
-    private $caption;
-
-    /**
-     * @var FileInterface|null
-     */
-    private $file;
+    private ?string $title = null;
+    private ?string $caption = null;
+    private ?FileInterface $file = null;
 
     /**
      * Set title

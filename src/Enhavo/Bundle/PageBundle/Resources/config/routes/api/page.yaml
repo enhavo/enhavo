@@ -1,0 +1,9 @@
+enhavo_page_api_page:
+    path: /page/{id}
+    methods: [GET]
+    defaults:
+        _describe: true
+        _format: json
+        _endpoint:
+            type: Enhavo\Bundle\PageBundle\Endpoint\PageEndpointType
+            area: theme

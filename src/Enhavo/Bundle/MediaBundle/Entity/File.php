@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\MediaBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\MediaBundle\Content\ContentInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
@@ -11,80 +12,26 @@ use Enhavo\Bundle\MediaBundle\Model\FileInterface;
  */
 class File implements FileInterface
 {
-    /**
-     * @var integer
-     */
-    private $id;
+    private ?int $id = null;
+    private ?string $mimeType = null;
+    private ?string $extension = null;
+    private ?int $order = null;
+    private ?string $filename = null;
+    private array $parameters = [];
+    private bool $garbage = false;
+    private ?\DateTime $garbageTimestamp;
+    private ?ContentInterface $content = null;
+    private ?string $token = null;
+    private ?string $md5Checksum = null;
+    private bool $library = false;
+    private ?\DateTime $createdAt = null;
+    private ?\DateTime $garbageCheckedAt = null;
+    private Collection $formats;
 
-    /**
-     * @var string
-     */
-    private $mimeType;
-
-    /**
-     * @var string
-     */
-    private $extension;
-
-    /**
-     * @var integer
-     */
-    private $order;
-
-    /**
-     * @var string
-     */
-    private $filename;
-
-    /**
-     * @var array
-     */
-    private $parameters;
-
-    /**
-     * @var bool
-     */
-    private $garbage = false;
-
-    /**
-     * @var \DateTime
-     */
-    private $garbageTimestamp;
-
-    /**
-     * @var ContentInterface
-     */
-    private $content;
-
-    /**
-     * @var string
-     */
-    private $token;
-
-    /**
-     * @var string
-     */
-    private $md5Checksum;
-
-    /**
-     * @var bool
-     */
-    private $library;
-
-    /**
-     * @var \DateTime
-     */
-    private $createdAt;
-
-    /**
-     * @var ?\DateTime
-     */
-    private $garbageCheckedAt = null;
-
-    /**
-     * @var Format[]|Collection
-     */
-    private $formats;
+    public function __construct()
+    {
+        $this->formats = new ArrayCollection();
+    }
 
     /**
      * Get id

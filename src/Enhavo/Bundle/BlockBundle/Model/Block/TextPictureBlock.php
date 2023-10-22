@@ -14,40 +14,13 @@ class TextPictureBlock extends AbstractBlock
     const LAYOUT_1_2 = 1;
     const LAYOUT_2_1 = 2;
 
-    /**
-     * @var string
-     */
-    private $text;
-
-    /**
-     * @var string
-     */
-    private $title;
-
-    /**
-     * @var boolean
-     */
-    private $textLeft;
-
-    /**
-     * @var FileInterface|null
-     */
-    private $file;
-
-    /**
-     * @var boolean
-     */
-    private $float;
-
-    /**
-     * @var string
-     */
-    private $caption;
-
-    /**
-     * @var integer
-     */
-    private $layout;
+    private ?string $text = null;
+    private ?string $title = null;
+    private bool $textLeft = false;
+    private ?FileInterface $file = null;
+    private bool $float = false;
+    private ?string $caption = null;
+    private ?int $layout = self::LAYOUT_1_1;
 
     /**
      * Set text

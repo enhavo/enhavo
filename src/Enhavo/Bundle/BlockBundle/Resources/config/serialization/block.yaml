@@ -1,0 +1,84 @@
+Enhavo\Bundle\BlockBundle\Entity\AbstractBlock:
+    attributes:
+        id:
+            groups: ['endpoint']
+
+Enhavo\Bundle\BlockBundle\Model\Block\BlockquoteBlock:
+    attributes:
+        text:
+            groups: ['endpoint']
+        author:
+            groups: ['endpoint']
+
+Enhavo\Bundle\BlockBundle\Model\Block\GalleryBlock:
+    attributes:
+        title:
+            groups: ['endpoint']
+        text:
+            groups: ['endpoint']
+        files:
+            groups: ['endpoint']
+
+Enhavo\Bundle\BlockBundle\Model\Block\PictureBlock:
+    attributes:
+        title:
+            groups: ['endpoint']
+        caption:
+            groups: ['endpoint']
+        file:
+            groups: ['endpoint']
+
+Enhavo\Bundle\BlockBundle\Model\Block\Template:
+    attributes:
+
+Enhavo\Bundle\BlockBundle\Model\Block\TextBlock:
+    attributes:
+        title:
+            groups: ['endpoint']
+        text:
+            groups: ['endpoint']
+
+Enhavo\Bundle\BlockBundle\Model\Block\TextPictureBlock:
+    attributes:
+        text:
+            groups: ['endpoint']
+        title:
+            groups: ['endpoint']
+        textLeft:
+            groups: ['endpoint']
+        file:
+            groups: ['endpoint']
+        float:
+            groups: ['endpoint']
+        caption:
+            groups: ['endpoint']
+        layout:
+            groups: ['endpoint']
+
+Enhavo\Bundle\BlockBundle\Model\Block\VideoBlock:
+    attributes:
+        title:
+            groups: [ 'endpoint' ]
+        url:
+            groups: [ 'endpoint' ]
+
+Enhavo\Bundle\BlockBundle\Model\Column\OneColumnBlock:
+    attributes:
+        column:
+            groups: ['endpoint']
+
+Enhavo\Bundle\BlockBundle\Model\Column\TwoColumnBlock:
+    attributes:
+        columnOne:
+            groups: ['endpoint']
+        columnTwo:
+            groups: ['endpoint']
+
+Enhavo\Bundle\BlockBundle\Model\Column\ThreeColumnBlock:
+    attributes:
+        columnOne:
+            groups: ['endpoint']
+        columnTwo:
+            groups: ['endpoint']
+        columnThree:
+            groups: ['endpoint']

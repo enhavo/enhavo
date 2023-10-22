@@ -5,16 +5,18 @@ namespace Enhavo\Bundle\ApiBundle\Normalizer;
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Laminas\Stdlib\PriorityQueue;
 use Psr\Container\ContainerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-class DataNormalizer implements NormalizerInterface
+class DataNormalizer implements NormalizerInterface, NormalizerAwareInterface
 {
+    use NormalizerAwareTrait;
+
     private readonly PriorityQueue $normalizers;
     private ?ContainerInterface $container = null;
 
-    public function __construct(
-        private readonly NormalizerInterface $defaultNormalizer,
-    ) {
+    public function __construct() {
         $this->normalizers = new PriorityQueue();
     }
 
@@ -30,7 +32,13 @@ class DataNormalizer implements NormalizerInterface
 
     public function normalize(mixed $object, string $format = null, array $context = []): array
     {
-        $normalizedData = $this->defaultNormalizer->normalize($object, $format, $context);
+        if (!isset($context[DataNormalizer::class])) {
+            $context[DataNormalizer::class] = [];
+        }
+        $context[DataNormalizer::class][spl_object_hash($object)] = true;
+
+        $normalizedData = $this->normalizer->normalize($object, $format, $context);
+
         $data = new Data($normalizedData);
 
         foreach ($this->normalizers as $normalizer) {
@@ -39,6 +47,9 @@ class DataNormalizer implements NormalizerInterface
                 if (is_subclass_of($object, $type)) {
                     /** @var DataNormalizerInterface $service */
                     $service = $this->container->get($normalizer);
+                    if ($service instanceof NormalizerAwareInterface) {
+                        $service->setNormalizer($this->normalizer);
+                    }
                     $service->buildData($data, $object, $format, $context);
                     break;
                 }
@@ -48,8 +59,16 @@ class DataNormalizer implements NormalizerInterface
         return $data->normalize();
     }
 
-    public function supportsNormalization(mixed $data, string $format = null): bool
+    public function supportsNormalization(mixed $data, string $format = null, array $context = []): bool
     {
+        if (!is_object($data)) {
+            return false;
+        }
+
+        if (isset($context[DataNormalizer::class][spl_object_hash($data)])) {
+            return false;
+        }
+
         foreach ($this->normalizers as $normalizer) {
             $types = call_user_func([$normalizer, 'getSupportedTypes']);
             foreach ($types as $type) {

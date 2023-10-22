@@ -2,7 +2,6 @@
 
 namespace Enhavo\Bundle\ApiBundle\Endpoint;
 
-use Enhavo\Bundle\ApiBundle\Normalizer\ChainNormalizer;
 use Psr\Container\ContainerInterface;
 use Psr\Link\LinkInterface;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
@@ -26,7 +25,6 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\WebLink\EventListener\AddLinkHeaderListener;
 use Symfony\Component\WebLink\GenericLinkProvider;
@@ -55,7 +53,6 @@ trait EndpointTrait
             'security.token_storage' => '?'.TokenStorageInterface::class,
             'security.csrf.token_manager' => '?'.CsrfTokenManagerInterface::class,
             'parameter_bag' => '?'.ContainerBagInterface::class,
-            'enhavo_api.normalizer' => ChainNormalizer::class,
         ];
     }
 
@@ -255,6 +252,6 @@ trait EndpointTrait
 
     protected function normalize(mixed $object, string $format = null, array $context = [])
     {
-        return $this->container->get('enhavo_api.normalizer')->normalize($object, $format, $context);
+        return $this->container->get('serializer')->normalize($object, $format, $context);
     }
 }

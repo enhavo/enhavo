@@ -1,0 +1,14 @@
+Enhavo\Bundle\MediaBundle\Entity\File:
+    attributes:
+        id:
+            groups: ['endpoint']
+        mimeType:
+            groups: ['endpoint']
+        extension:
+            groups: ['endpoint']
+        filename:
+            groups: ['endpoint']
+        parameters:
+            groups: ['endpoint']
+        md5Checksum:
+            groups: ['endpoint']
