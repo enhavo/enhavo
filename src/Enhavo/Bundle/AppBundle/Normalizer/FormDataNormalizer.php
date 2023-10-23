@@ -11,14 +11,17 @@ use Symfony\Component\Form\FormView;
 class FormDataNormalizer implements DataNormalizerInterface
 {
     public function __construct(
-        private VueForm $vueForm
+        private VueForm $vueForm,
     )
     {
     }
 
     public function buildData(Data $data, $object, string $format = null, array $context = [])
     {
-        $this->vueForm->createData($object instanceof Form ? $object->createView() : $object);
+        $properties = $this->vueForm->createData($object instanceof Form ? $object->createView() : $object);
+        foreach ($properties as $key => $value) {
+            $data->set($key, $value);
+        }
     }
 
     public static function getSupportedTypes(): array

@@ -122,8 +122,12 @@ services:
     Enhavo\Bundle\AppBundle\Endpoint\Type\AreaEndpointType:
         arguments:
             - '@twig'
+            - '@Enhavo\Bundle\AppBundle\Routing\RouteCollectorInterface'
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:
             - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
 
     Enhavo\Bundle\AppBundle\Endpoint\Loader:
         arguments:
@@ -144,3 +148,10 @@ services:
             - '@Enhavo\Bundle\VueFormBundle\Form\VueForm'
         tags:
             - { name: enhavo_api.data_normalizer }
+
+    Enhavo\Bundle\AppBundle\Routing\ExposeRouteCollector:
+        arguments:
+            - '@router'
+
+    Enhavo\Bundle\AppBundle\Routing\RouteCollectorInterface:
+        alias: Enhavo\Bundle\AppBundle\Routing\ExposeRouteCollector

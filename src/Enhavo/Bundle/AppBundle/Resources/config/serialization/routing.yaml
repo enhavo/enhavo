@@ -1,0 +1,4 @@
+Symfony\Component\Routing\Route:
+    attributes:
+        path:
+            groups: ['endpoint']

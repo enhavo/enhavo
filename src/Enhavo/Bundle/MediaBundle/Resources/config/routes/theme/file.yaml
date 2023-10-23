@@ -31,6 +31,7 @@ enhavo_media_file_show:
         height: ~
         filename: ~
         _method: GET
+        _expose: theme
     options:
         expose: true
 
@@ -39,5 +40,6 @@ enhavo_media_file_format:
     defaults:
         _controller: enhavo_media.controller.file::showFormatAction
         _method: GET
+        _expose: theme
     options:
         expose: true

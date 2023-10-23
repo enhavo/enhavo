@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\AppBundle\Tests\Mock;
 
 use Symfony\Component\Routing\RequestContext;
+use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\RouterInterface;
 
 class RouterMock implements RouterInterface
@@ -23,9 +24,9 @@ class RouterMock implements RouterInterface
         // TODO: Implement getContext() method.
     }
 
-    public function getRouteCollection()
+    public function getRouteCollection(): RouteCollection
     {
-        // TODO: Implement getRouteCollection() method.
+        return new RouteCollection();
     }
 
     public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH): string
