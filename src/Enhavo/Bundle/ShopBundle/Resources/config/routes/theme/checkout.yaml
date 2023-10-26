@@ -2,14 +2,14 @@ sylius_shop_checkout_start:
     path: /checkout/
     methods: [GET]
     defaults:
-        _controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController:redirectAction
+        _controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
         route: sylius_shop_checkout_address
 
 sylius_shop_checkout_address:
     path: /checkout/address
     methods: [GET, POST]
     defaults:
-        _controller: sylius.controller.order:checkoutAction
+        _controller: sylius.controller.order::checkoutAction
         _sylius:
             event: address
             flash: false
@@ -30,7 +30,7 @@ sylius_shop_checkout_select_shipping:
     path: /checkout/select-shipping
     methods: [GET, POST]
     defaults:
-        _controller: sylius.controller.order:checkoutAction
+        _controller: sylius.controller.order::checkoutAction
         _sylius:
             event: select_shipping
             flash: false
@@ -51,7 +51,7 @@ sylius_shop_checkout_select_payment:
     path: /checkout/select-payment
     methods: [GET, POST]
     defaults:
-        _controller: sylius.controller.order:checkoutAction
+        _controller: sylius.controller.order::checkoutAction
         _sylius:
             event: select_payment
             flash: false
@@ -72,7 +72,7 @@ sylius_shop_checkout_confirm:
     path: /checkout/confirm
     methods: [GET, POST]
     defaults:
-        _controller: sylius.controller.order:checkoutAction
+        _controller: sylius.controller.order::checkoutAction
         _sylius:
             event: complete
             flash: false

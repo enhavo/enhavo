@@ -209,7 +209,7 @@ enhavo_newsletter_newsletter_test_form:
         expose: true
     path: /enhavo/newsletter/newsletter/test/form
     methods: [GET]
-    controller: enhavo_app.controller.modal:formAction
+    controller: enhavo_app.controller.modal::formAction
     defaults:
         _config:
             form: Enhavo\Bundle\NewsletterBundle\Form\Type\NewsletterEmailType
@@ -219,7 +219,7 @@ enhavo_newsletter_newsletter_stats:
         expose: true
     path: /enhavo/newsletter/newsletter/stats/{id}
     methods: [GET]
-    controller: enhavo_newsletter.controller.newsletter:statsAction
+    controller: enhavo_newsletter.controller.newsletter::statsAction
     defaults:
         _sylius:
             serialization_groups: ['stats']
