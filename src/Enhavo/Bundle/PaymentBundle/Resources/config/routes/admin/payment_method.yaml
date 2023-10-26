@@ -31,7 +31,7 @@ sylius_payment_method_create_form:
         expose: true
     path: /enhavo/payment/payment_method/create/form
     methods: [GET,POST]
-    controller: enhavo_app.controller.modal:formAction
+    controller: enhavo_app.controller.modal::formAction
     defaults:
         _config:
             form: Enhavo\Bundle\PaymentBundle\Form\Type\PaymentMethodCreateType

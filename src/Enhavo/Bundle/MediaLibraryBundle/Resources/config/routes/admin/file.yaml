@@ -5,7 +5,7 @@ enhavo_media_library_file_index:
     path: /enhavo/media-library/file/index
     methods: [GET]
     defaults:
-        _controller: enhavo_media_library.controller.file:indexAction
+        _controller: enhavo_media_library.controller.file::indexAction
         _sylius:
             limit: 12
 
@@ -15,7 +15,7 @@ enhavo_media_library_file_select:
     path: /enhavo/media-library/file/select
     methods: [GET]
     defaults:
-        _controller: enhavo_media_library.controller.file:selectAction
+        _controller: enhavo_media_library.controller.file::selectAction
         _sylius:
             limit: 12
 
@@ -25,7 +25,7 @@ enhavo_media_library_file_files:
     path: /enhavo/media-library/file/files
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_media_library.controller.file:filesAction
+        _controller: enhavo_media_library.controller.file::filesAction
         _sylius:
             sorting:
                 createdAt: desc
@@ -56,7 +56,7 @@ enhavo_media_library_file_tags:
     path: /enhavo/media-library/file/tags
     methods: [GET]
     defaults:
-        _controller: enhavo_media_library.controller.file:tagsAction
+        _controller: enhavo_media_library.controller.file::tagsAction
         _sylius:
             viewer:
 
@@ -66,7 +66,7 @@ enhavo_media_library_file_content_types:
     path: /enhavo/media-library/file/content-types
     methods: [GET]
     defaults:
-        _controller: enhavo_media_library.controller.file:contentTypesAction
+        _controller: enhavo_media_library.controller.file::contentTypesAction
         _sylius:
             viewer:
 
@@ -74,7 +74,7 @@ enhavo_media_library_file_add:
     options:
         expose: true
     path: /enhavo/media-library/file/add/{id}
-    controller: enhavo_media_library.controller.file:addAction
+    controller: enhavo_media_library.controller.file::addAction
     methods: [GET]
     defaults:
         _sylius:
@@ -86,7 +86,7 @@ enhavo_media_library_file_create:
     path: /enhavo/media-library/file/create
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_media_library.controller.file:createAction
+        _controller: enhavo_media_library.controller.file::createAction
         _sylius:
             redirect: enhavo_media_library_file_update
             viewer:
@@ -102,7 +102,7 @@ enhavo_media_library_file_update:
     path: /enhavo/media-library/file/update/{id}
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_media_library.controller.file:updateAction
+        _controller: enhavo_media_library.controller.file::updateAction
         _sylius:
             redirect: enhavo_media_library_file_update
             viewer:
@@ -118,7 +118,7 @@ enhavo_media_library_file_delete:
     path: /enhavo/media-library/file/delete/{id}
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_media_library.controller.file:deleteAction
+        _controller: enhavo_media_library.controller.file::deleteAction
         _sylius:
             redirect: enhavo_media_library_file_update
             viewer:

@@ -24,7 +24,7 @@ enhavo_media_library_tag_create:
     path:  /enhavo/media-library/tag/create
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_taxonomy.controller.term:createAction
+        _controller: enhavo_taxonomy.controller.term::createAction
         _sylius:
             permission: ROLE_ENHAVO_MEDIA_LIBRARY_TAG_CREATE
             redirect: enhavo_media_library_tag_update
@@ -80,7 +80,7 @@ enhavo_media_library_tag_delete:
     path: /enhavo/media-library/tag/delete/{id}
     methods: [POST]
     defaults:
-        _controller: enhavo_taxonomy.controller.term:deleteAction
+        _controller: enhavo_taxonomy.controller.term::deleteAction
         _sylius:
             permission: ROLE_ENHAVO_MEDIA_LIBRARY_TAG_DELETE
             redirect: enhavo_media_library_tag_index

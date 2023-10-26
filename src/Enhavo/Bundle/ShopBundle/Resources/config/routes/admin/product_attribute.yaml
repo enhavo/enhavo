@@ -39,7 +39,7 @@ sylius_product_attribute_create_form:
         expose: true
     path: /enhavo/shop/product/attribute/create/form
     methods: [GET,POST]
-    controller: enhavo_app.controller.modal:formAction
+    controller: enhavo_app.controller.modal::formAction
     defaults:
         _config:
             form: Enhavo\Bundle\ShopBundle\Form\Type\ProductAttributeTypeType

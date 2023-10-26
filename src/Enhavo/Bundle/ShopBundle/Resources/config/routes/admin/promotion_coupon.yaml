@@ -4,7 +4,7 @@ sylius_promotion_coupon_index:
     path: /enhavo/shop/promotion/{promotionId}/coupon/index
     methods: [GET]
     defaults:
-        _controller: sylius.controller.promotion_coupon:indexAction
+        _controller: sylius.controller.promotion_coupon::indexAction
         _sylius:
             viewer:
                 table_route_parameters:
@@ -26,7 +26,7 @@ sylius_promotion_coupon_create:
     path: /enhavo/shop/promotion/{promotionId}/coupon/create
     methods: [GET,POST]
     defaults:
-        _controller: sylius.controller.promotion_coupon:createAction
+        _controller: sylius.controller.promotion_coupon::createAction
         _sylius:
             redirect: sylius_promotion_coupon_update
             viewer:
@@ -37,7 +37,7 @@ sylius_promotion_coupon_update:
     path: /enhavo/shop/promotion/coupon/update/{id}
     methods: [GET,POST]
     defaults:
-        _controller: sylius.controller.promotion_coupon:updateAction
+        _controller: sylius.controller.promotion_coupon::updateAction
         _sylius:
             viewer:
 
@@ -47,7 +47,7 @@ sylius_promotion_coupon_table:
     path: /enhavo/shop/promotion/{promotionId}/coupon/table
     methods: [GET,POST]
     defaults:
-        _controller: sylius.controller.promotion_coupon:tableAction
+        _controller: sylius.controller.promotion_coupon::tableAction
         _sylius:
             viewer:
                 columns:
@@ -73,7 +73,7 @@ sylius_promotion_coupon_delete:
     path: /enhavo/shop/promotion/coupon/delete/{id}
     methods: [POST]
     defaults:
-        _controller: sylius.controller.promotion_coupon:deleteAction
+        _controller: sylius.controller.promotion_coupon::deleteAction
 
 sylius_promotion_coupon_batch:
     options:
@@ -81,7 +81,7 @@ sylius_promotion_coupon_batch:
     path: /enhavo/shop/promotion/coupon/batch
     methods: [POST]
     defaults:
-        _controller: sylius.controller.promotion_coupon:batchAction
+        _controller: sylius.controller.promotion_coupon::batchAction
         _sylius:
             paginate: false
             criteria:
@@ -96,7 +96,7 @@ sylius_promotion_coupon_create_form:
     path: /enhavo/shop/promotion/{promotionId}/coupon/create-form
     methods: [GET,POST]
     defaults:
-        _controller: sylius.controller.promotion_coupon:createFormAction
+        _controller: sylius.controller.promotion_coupon::createFormAction
         _sylius:
             form: Enhavo\Bundle\ShopBundle\Form\Type\PromotionCouponGenerateType
             viewer:

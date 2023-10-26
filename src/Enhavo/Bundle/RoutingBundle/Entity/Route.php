@@ -11,7 +11,6 @@ namespace Enhavo\Bundle\RoutingBundle\Entity;
 use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Orm\Route as BaseRouteModel;
-use Symfony\Cmf\Bundle\RoutingBundle\Model\Route as RouteModel;
 
 class Route extends BaseRouteModel implements RouteInterface, ResourceInterface
 {
@@ -28,9 +27,6 @@ class Route extends BaseRouteModel implements RouteInterface, ResourceInterface
         $this->contentClass = $contentClass;
     }
 
-    /**
-     * @return int
-     */
     public function getContentId(): ?int
     {
         return $this->contentId;
@@ -41,20 +37,25 @@ class Route extends BaseRouteModel implements RouteInterface, ResourceInterface
         $this->contentId = $contentId;
     }
 
-    public function setPath(string $pattern): static
+    public function setPath(?string $pattern): static
     {
         $prefix = $pattern;
         $variablePattern = '';
 
         $position = strpos($pattern, '/{');
 
-        if($position !== false) {
+        if ($position !== false) {
             $prefix = substr($pattern, 0, $position);
             $variablePattern = substr($pattern, $position);
         }
 
-        $this->setStaticPrefix($prefix);
-        $this->setVariablePattern($variablePattern);
+        if ($prefix) {
+            $this->setStaticPrefix($prefix);
+        }
+
+        if ($variablePattern) {
+            $this->setVariablePattern($variablePattern);
+        }
 
         return $this;
     }
