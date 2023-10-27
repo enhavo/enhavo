@@ -1,4 +1,4 @@
-<div class="submenu {% if navigation_node_is_active(node) %}active{% endif %}">
+<div class="submenu {% if node.active %}active{% endif %}">
     <a href="#">{{ node.label }}</a>
     <ul>
         {% for child in node.children %}
