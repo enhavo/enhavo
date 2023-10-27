@@ -1,32 +1,32 @@
 Enhavo\Bundle\BlockBundle\Entity\AbstractBlock:
     attributes:
         id:
-            groups: ['endpoint']
+            groups: ['endpoint.block']
 
 Enhavo\Bundle\BlockBundle\Model\Block\BlockquoteBlock:
     attributes:
         text:
-            groups: ['endpoint']
+            groups: ['endpoint.block']
         author:
-            groups: ['endpoint']
+            groups: ['endpoint.block']
 
 Enhavo\Bundle\BlockBundle\Model\Block\GalleryBlock:
     attributes:
         title:
-            groups: ['endpoint']
+            groups: ['endpoint.block']
         text:
-            groups: ['endpoint']
+            groups: ['endpoint.block']
         files:
-            groups: ['endpoint']
+            groups: ['endpoint.block']
 
 Enhavo\Bundle\BlockBundle\Model\Block\PictureBlock:
     attributes:
         title:
-            groups: ['endpoint']
+            groups: ['endpoint.block']
         caption:
-            groups: ['endpoint']
+            groups: ['endpoint.block']
         file:
-            groups: ['endpoint']
+            groups: ['endpoint.block']
 
 Enhavo\Bundle\BlockBundle\Model\Block\Template:
     attributes:
@@ -34,51 +34,51 @@ Enhavo\Bundle\BlockBundle\Model\Block\Template:
 Enhavo\Bundle\BlockBundle\Model\Block\TextBlock:
     attributes:
         title:
-            groups: ['endpoint']
+            groups: ['endpoint.block']
         text:
-            groups: ['endpoint']
+            groups: ['endpoint.block']
 
 Enhavo\Bundle\BlockBundle\Model\Block\TextPictureBlock:
     attributes:
         text:
-            groups: ['endpoint']
+            groups: ['endpoint.block']
         title:
-            groups: ['endpoint']
+            groups: ['endpoint.block']
         textLeft:
-            groups: ['endpoint']
+            groups: ['endpoint.block']
         file:
-            groups: ['endpoint']
+            groups: ['endpoint.block']
         float:
-            groups: ['endpoint']
+            groups: ['endpoint.block']
         caption:
-            groups: ['endpoint']
+            groups: ['endpoint.block']
         layout:
-            groups: ['endpoint']
+            groups: ['endpoint.block']
 
 Enhavo\Bundle\BlockBundle\Model\Block\VideoBlock:
     attributes:
         title:
-            groups: [ 'endpoint' ]
+            groups: [ 'endpoint.block' ]
         url:
-            groups: [ 'endpoint' ]
+            groups: [ 'endpoint.block' ]
 
 Enhavo\Bundle\BlockBundle\Model\Column\OneColumnBlock:
     attributes:
         column:
-            groups: ['endpoint']
+            groups: ['endpoint.block']
 
 Enhavo\Bundle\BlockBundle\Model\Column\TwoColumnBlock:
     attributes:
         columnOne:
-            groups: ['endpoint']
+            groups: ['endpoint.block']
         columnTwo:
-            groups: ['endpoint']
+            groups: ['endpoint.block']
 
 Enhavo\Bundle\BlockBundle\Model\Column\ThreeColumnBlock:
     attributes:
         columnOne:
-            groups: ['endpoint']
+            groups: ['endpoint.block']
         columnTwo:
-            groups: ['endpoint']
+            groups: ['endpoint.block']
         columnThree:
-            groups: ['endpoint']
+            groups: ['endpoint.block']

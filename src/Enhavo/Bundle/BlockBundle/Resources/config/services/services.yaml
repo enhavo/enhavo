@@ -1,18 +1,11 @@
 services:
-    Enhavo\Bundle\BlockBundle\Twig\TwigExtension:
+    Enhavo\Bundle\BlockBundle\Twig\BlockTwigExtension:
         arguments:
-            - '@Enhavo\Bundle\BlockBundle\Renderer\BlockRenderer'
+            - '%enhavo_block.render.sets%'
         calls:
-            - [ setContainer, ['@service_container']]
+            - [setTwig, ['@twig']]
         tags:
             - { name: twig.extension }
-
-    Enhavo\Bundle\BlockBundle\Renderer\BlockRenderer:
-        arguments:
-            - '@Enhavo\Bundle\BlockBundle\Block\BlockManager'
-            - '%enhavo_block.render.sets%'
-            - '@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface'
-            - '@twig'
 
     validator.video_url_validator:
         class:  Enhavo\Bundle\BlockBundle\Validator\Constraints\VideoUrlValidator

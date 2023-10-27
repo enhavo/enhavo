@@ -1,6 +1,6 @@
 Enhavo\Bundle\BlockBundle\Entity\Node:
     attributes:
         name:
-            groups: ['endpoint']
+            groups: ['endpoint.block']
         type:
-            groups: ['endpoint']
+            groups: ['endpoint.block']
