@@ -90,3 +90,18 @@ services:
             - [setContainer, ['@service_container']]
             - [setTwig, ['@twig']]
             - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
+
+    Enhavo\Bundle\NavigationBundle\Normalizer\NavigationNodeNormalizer:
+        arguments:
+            - '@Enhavo\Bundle\NavigationBundle\Navigation\NavigationManager'
+        tags:
+            - { name: enhavo_api.data_normalizer }
+
+    Enhavo\Bundle\NavigationBundle\Endpoint\NavigationEndpointExtension:
+        arguments:
+            - '@enhavo_navigation.repository.navigation'
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: enhavo_api.endpoint_extension }
+            - { name: container.service_subscriber }
