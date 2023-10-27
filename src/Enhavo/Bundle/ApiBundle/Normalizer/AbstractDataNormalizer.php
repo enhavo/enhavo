@@ -2,8 +2,13 @@
 
 namespace Enhavo\Bundle\ApiBundle\Normalizer;
 
-abstract class AbstractDataNormalizer implements DataNormalizerInterface
+use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
+
+abstract class AbstractDataNormalizer implements DataNormalizerInterface, NormalizerAwareInterface
 {
+    use NormalizerAwareTrait;
+
     protected bool $stopped = false;
 
     protected function hasSerializationGroup(string|array $group, array $context): bool

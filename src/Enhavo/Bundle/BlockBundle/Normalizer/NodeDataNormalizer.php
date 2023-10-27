@@ -7,13 +7,9 @@ use Enhavo\Bundle\ApiBundle\Normalizer\AbstractDataNormalizer;
 use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
 use Enhavo\Bundle\BlockBundle\Block\BlockManager;
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
 
-class NodeDataNormalizer extends AbstractDataNormalizer implements NormalizerAwareInterface
+class NodeDataNormalizer extends AbstractDataNormalizer
 {
-    use NormalizerAwareTrait;
-
     public function __construct(
         private readonly BlockManager $blockManager,
         private readonly TemplateResolver $templateResolver,
@@ -23,7 +19,7 @@ class NodeDataNormalizer extends AbstractDataNormalizer implements NormalizerAwa
 
     public function buildData(Data $data, $object, string $format = null, array $context = [])
     {
-        if (!$this->hasSerializationGroup('endpoint', $context)) {
+        if (!$this->hasSerializationGroup(['endpoint', 'endpoint.block'], $context)) {
             return;
         }
 
@@ -46,7 +42,7 @@ class NodeDataNormalizer extends AbstractDataNormalizer implements NormalizerAwa
 
             if ($object->getViewData()) {
                 foreach ($object->getViewData() as $key => $viewData) {
-                    $nodeData[$key] = $this->normalizer->normalize($viewData, null, ['groups' => 'endpoint']);
+                    $nodeData[$key] = $this->normalizer->normalize($viewData, null, ['groups' => 'endpoint.block']);
                 }
             }
         }
@@ -56,6 +52,15 @@ class NodeDataNormalizer extends AbstractDataNormalizer implements NormalizerAwa
     public static function getSupportedTypes(): array
     {
         return [NodeInterface::class];
+    }
+
+    public function getSerializationGroups(array $groups, array $context = []): array
+    {
+        if (!$this->hasSerializationGroup(['endpoint', 'endpoint.block'], $context)) {
+            return $groups;
+        }
+
+        return ['endpoint.block'];
     }
 
     private function getTemplate(NodeInterface $node)

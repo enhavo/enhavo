@@ -5,13 +5,9 @@ namespace Enhavo\Bundle\NavigationBundle\Normalizer;
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Normalizer\AbstractDataNormalizer;
 use Enhavo\Bundle\NavigationBundle\Entity\Content;
-use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
 
-class NavigationContentNormalizer extends AbstractDataNormalizer implements NormalizerAwareInterface
+class NavigationContentNormalizer extends AbstractDataNormalizer
 {
-    use NormalizerAwareTrait;
-
     public function buildData(Data $data, $object, string $format = null, array $context = []): void
     {
         if (!$this->hasSerializationGroup('endpoint.navigation', $context)) {
