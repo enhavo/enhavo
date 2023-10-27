@@ -25,7 +25,7 @@ class NavigationEndpointExtension extends AbstractEndpointTypeExtension
 
         $navigationData = [];
         foreach ($navigations as $navigation) {
-            $navigationData[$navigation->getCode()] = $this->normalize($navigation, null, ['groups' => ['endpoint']]);
+            $navigationData[$navigation->getCode()] = $this->normalize($navigation, null, ['groups' => ['endpoint.navigation']]);
         }
 
         $data->set('navigation', $navigationData);
