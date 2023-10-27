@@ -31,10 +31,3 @@ Enhavo\Bundle\NavigationBundle\Entity\Link:
             groups: [ 'endpoint.navigation' ]
         target:
             groups: [ 'endpoint.navigation' ]
-
-Enhavo\Bundle\NavigationBundle\Entity\Content:
-    attributes:
-        id:
-            groups: [ 'endpoint.navigation' ]
-        content:
-            groups: [ 'endpoint.navigation' ]

@@ -65,7 +65,7 @@ class DataNormalizer implements NormalizerInterface, NormalizerAwareInterface
         foreach ($this->normalizers as $normalizer) {
             $types = call_user_func([$normalizer, 'getSupportedTypes']);
             foreach ($types as $type) {
-                if (is_subclass_of($data, $type)) {
+                if (is_a($data, $type) || is_subclass_of($data, $type)) {
                     return true;
                 }
             }
@@ -103,7 +103,7 @@ class DataNormalizer implements NormalizerInterface, NormalizerAwareInterface
 
             $types = call_user_func([$normalizer, 'getSupportedTypes']);
             foreach ($types as $type) {
-                if (is_subclass_of($object, $type)) {
+                if (is_a($object, $type) || is_subclass_of($object, $type)) {
                     /** @var DataNormalizerInterface $service */
                     $service = $this->container->get($normalizer);
                     if ($service instanceof NormalizerAwareInterface) {

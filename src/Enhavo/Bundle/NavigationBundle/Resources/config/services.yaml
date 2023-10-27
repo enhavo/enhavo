@@ -75,25 +75,24 @@ services:
         tags:
             - { name: enhavo_navigation.voter }
 
-    Enhavo\Bundle\NavigationBundle\Twig\TwigExtension:
-        tags:
-            - { name: twig.extension }
+    Enhavo\Bundle\NavigationBundle\Twig\NavigationExtension:
         arguments:
-            - '@Enhavo\Bundle\NavigationBundle\Navigation\NavigationManager'
-            - '@Enhavo\Bundle\NavigationBundle\Renderer\NodeRenderer'
-
-    Enhavo\Bundle\NavigationBundle\Renderer\NodeRenderer:
-        arguments:
-            - '@Enhavo\Bundle\NavigationBundle\NavItem\NavItemManager'
             - '%enhavo_navigation.render.sets%'
         calls:
-            - [setContainer, ['@service_container']]
             - [setTwig, ['@twig']]
-            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
+        tags:
+            - { name: twig.extension }
 
     Enhavo\Bundle\NavigationBundle\Normalizer\NavigationNodeNormalizer:
         arguments:
             - '@Enhavo\Bundle\NavigationBundle\Navigation\NavigationManager'
+            - '@Enhavo\Bundle\NavigationBundle\NavItem\NavItemManager'
+        calls:
+            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
+        tags:
+            - { name: enhavo_api.data_normalizer }
+
+    Enhavo\Bundle\NavigationBundle\Normalizer\NavigationContentNormalizer:
         tags:
             - { name: enhavo_api.data_normalizer }
 
