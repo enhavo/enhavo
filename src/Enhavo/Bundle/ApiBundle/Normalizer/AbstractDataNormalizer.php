@@ -4,13 +4,15 @@ namespace Enhavo\Bundle\ApiBundle\Normalizer;
 
 abstract class AbstractDataNormalizer implements DataNormalizerInterface
 {
+    protected bool $stopped = false;
+
     protected function hasSerializationGroup(string|array $group, array $context): bool
     {
         if (empty($context['groups'])) {
             return false;
         }
 
-        $groups = $this->getSerializationGroups($context);
+        $groups = $this->getSerializationGroupsFromContext($context);
         if (is_array($group)) {
             foreach ($group as $singeGroup) {
                 if (in_array($singeGroup, $groups)) {
@@ -24,7 +26,7 @@ abstract class AbstractDataNormalizer implements DataNormalizerInterface
         return false;
     }
 
-    private function getSerializationGroups(array $context): array
+    private function getSerializationGroupsFromContext(array $context): array
     {
         if (is_array($context['groups'])) {
            return $context['groups'];
@@ -32,5 +34,20 @@ abstract class AbstractDataNormalizer implements DataNormalizerInterface
             return [$context['groups']];
         }
         return [];
+    }
+
+    public function getSerializationGroups(array $groups, array $context = []): array
+    {
+        return $groups;
+    }
+
+    public function isStopped(): bool
+    {
+        return $this->stopped;
+    }
+
+    protected function stop(): void
+    {
+        $this->stopped = true;
     }
 }

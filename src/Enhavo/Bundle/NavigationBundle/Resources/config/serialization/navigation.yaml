@@ -1,40 +1,40 @@
 Enhavo\Bundle\NavigationBundle\Entity\Navigation:
     attributes:
         id:
-            groups: [ 'endpoint' ]
+            groups: [ 'endpoint.navigation' ]
         nodes:
-            groups: [ 'endpoint' ]
+            groups: [ 'endpoint.navigation' ]
 
 Enhavo\Bundle\NavigationBundle\Entity\Node:
     attributes:
         id:
-            groups: [ 'endpoint' ]
+            groups: [ 'endpoint.navigation' ]
         name:
-            groups: [ 'endpoint' ]
+            groups: [ 'endpoint.navigation' ]
         label:
-            groups: [ 'endpoint' ]
+            groups: [ 'endpoint.navigation' ]
         children:
-            groups: [ 'endpoint' ]
+            groups: [ 'endpoint.navigation' ]
         subject:
-            groups: [ 'endpoint' ]
+            groups: [ 'endpoint.navigation' ]
 
 Enhavo\Bundle\NavigationBundle\Entity\Submenu:
     attributes:
         id:
-            groups: [ 'endpoint' ]
+            groups: [ 'endpoint.navigation' ]
 
 Enhavo\Bundle\NavigationBundle\Entity\Link:
     attributes:
         id:
-            groups: [ 'endpoint' ]
+            groups: [ 'endpoint.navigation' ]
         link:
-            groups: [ 'endpoint' ]
+            groups: [ 'endpoint.navigation' ]
         target:
-            groups: [ 'endpoint' ]
+            groups: [ 'endpoint.navigation' ]
 
 Enhavo\Bundle\NavigationBundle\Entity\Content:
     attributes:
         id:
-            groups: [ 'endpoint' ]
+            groups: [ 'endpoint.navigation' ]
         content:
-            groups: [ 'endpoint' ]
+            groups: [ 'endpoint.navigation' ]
