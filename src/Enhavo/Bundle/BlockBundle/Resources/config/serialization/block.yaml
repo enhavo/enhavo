@@ -62,6 +62,13 @@ Enhavo\Bundle\BlockBundle\Model\Block\VideoBlock:
         url:
             groups: [ 'endpoint.block' ]
 
+Enhavo\Bundle\BlockBundle\Model\Column\Column:
+    attributes:
+        width:
+            groups: ['endpoint.block']
+        style:
+            groups: ['endpoint.block']
+
 Enhavo\Bundle\BlockBundle\Model\Column\OneColumnBlock:
     attributes:
         column:

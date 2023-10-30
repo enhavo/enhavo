@@ -31,7 +31,7 @@ class BlockTwigExtension extends AbstractExtension
             return '';
         }
 
-        if ($node['type'] === 'block' && (!empty($onlyRenderTypes) || in_array($node['name'], $onlyRenderTypes))) {
+        if ($node['type'] === 'block' && (empty($onlyRenderTypes) || in_array($node['name'], $onlyRenderTypes))) {
             return $this->twig->render($this->getTemplate($node, $renderSet), $node['data']);
         }
 

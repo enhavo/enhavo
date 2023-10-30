@@ -14,23 +14,13 @@ use Symfony\Component\Routing\RouterInterface;
 
 class PublicUrlGenerator implements UrlGeneratorInterface
 {
-    /**
-     * @var MediaManager
-     */
-    private $mediaManager;
-
-    /**
-     * @var RouterInterface
-     */
-    private $router;
-
-    public function __construct(MediaManager $mediaManager, RouterInterface $router)
+    public function __construct(
+        private readonly RouterInterface $router,
+    )
     {
-        $this->mediaManager = $mediaManager;
-        $this->router = $router;
     }
 
-    public function generate(FileInterface $file, $referenceType = UrlGenerator::ABSOLUTE_PATH)
+    public function generate(FileInterface $file, $referenceType = UrlGenerator::ABSOLUTE_PATH): string
     {
         return $this->router->generate('enhavo_media_file_show', [
             'id' => $file->getId(),
@@ -39,7 +29,7 @@ class PublicUrlGenerator implements UrlGeneratorInterface
         ], $referenceType);
     }
 
-    public function generateFormat(FileInterface $file, string $format, $referenceType = UrlGenerator::ABSOLUTE_PATH)
+    public function generateFormat(FileInterface $file, string $format, $referenceType = UrlGenerator::ABSOLUTE_PATH): string
     {
         return $this->router->generate('enhavo_media_file_format', [
             'id' => $file->getId(),

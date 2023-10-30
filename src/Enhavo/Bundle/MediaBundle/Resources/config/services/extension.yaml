@@ -1,7 +1,3 @@
-parameters:
-    enhavo_media.twig.extension_render.class: Enhavo\Bundle\MediaBundle\Extension\ExtensionRenderer
-    enhavo_media.twig.extension_collector.class: Enhavo\Bundle\AppBundle\Type\TypeCollector
-
 services:
     enhavo_media.extension_manager:
         class: Enhavo\Bundle\MediaBundle\Media\ExtensionManager
@@ -9,13 +5,13 @@ services:
           - '@enhavo_media.extension_collector'
 
     enhavo_media.extension_collector:
-        class: '%enhavo_media.twig.extension_collector.class%'
+        class: Enhavo\Bundle\AppBundle\Type\TypeCollector
         arguments:
           - '@service_container'
           - 'MediaExtension'
 
     enhavo_media.twig.extension_renderer:
-        class: '%enhavo_media.twig.extension_render.class%'
+        class: Enhavo\Bundle\MediaBundle\Extension\ExtensionRenderer
         arguments:
             - '@enhavo_media.extension_collector'
         tags:

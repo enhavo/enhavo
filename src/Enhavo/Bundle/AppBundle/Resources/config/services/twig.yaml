@@ -26,6 +26,12 @@ services:
         tags:
             - { name: twig.extension }
 
+    Enhavo\Bundle\AppBundle\Twig\RouterExtension:
+        arguments:
+            - '@Enhavo\Bundle\AppBundle\Twig\TwigRouter'
+        tags:
+            - { name: twig.extension }
+
     Enhavo\Bundle\AppBundle\Twig\WidgetExtension:
         arguments:
             - '@enhavo_app.widget.widget_manager'
@@ -46,3 +52,7 @@ services:
             - '@enhavo_app.locale_resolver'
         tags:
             - { name: twig.extension }
+
+    Enhavo\Bundle\AppBundle\Twig\TwigRouter:
+        arguments:
+            - '@request_stack'

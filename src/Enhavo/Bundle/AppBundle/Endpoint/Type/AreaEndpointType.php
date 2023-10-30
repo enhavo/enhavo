@@ -6,6 +6,7 @@ use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Bundle\AppBundle\Routing\RouteCollectorInterface;
+use Enhavo\Bundle\AppBundle\Twig\TwigRouter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Twig\Environment;
@@ -13,13 +14,14 @@ use Twig\Environment;
 class AreaEndpointType extends AbstractEndpointType
 {
     public function __construct(
-        private Environment $twig,
-        private RouteCollectorInterface $routeCollector,
+        private readonly Environment $twig,
+        private readonly RouteCollectorInterface $routeCollector,
     ) {}
 
     public function handleRequest($options, Request $request, Data $data, Context $context)
     {
         $routesCollection = $this->routeCollector->getRouteCollection($options['area']);
+        $context->set('routes', $routesCollection);
         $data->set('routes', $this->normalize($routesCollection, null, ['groups' => 'endpoint']));
     }
 

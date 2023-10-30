@@ -86,11 +86,13 @@ services:
             - '@enhavo_app.util.secure_url_token_generator'
             - '@enhavo_media.repository.file'
 
-    enhavo_media.twig.media_extension:
-        class: Enhavo\Bundle\MediaBundle\Twig\MediaExtension
+    Enhavo\Bundle\MediaBundle\Twig\MediaTwigExtension:
         arguments:
-            - '@doctrine.orm.entity_manager'
-            - '@enhavo_media.media.public_url_generator'
+            - '@Enhavo\Bundle\AppBundle\Twig\TwigRouter'
+        tags:
+            - { name: twig.extension }
+
+    Enhavo\Bundle\MediaBundle\Twig\MediaFormTwigExtension:
         calls:
             - [setContainer, ['@service_container']]
         tags:
@@ -170,7 +172,6 @@ services:
         class: Enhavo\Bundle\MediaBundle\Media\PublicUrlGenerator
         public: true
         arguments:
-            - '@enhavo_media.media.media_manager'
             - '@router'
 
     enhavo_media.media.private_url_generator:

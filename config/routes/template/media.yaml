@@ -1,0 +1,11 @@
+template_media_file_show:
+    path: /file/show/{id}
+    defaults:
+        _endpoint:
+            type: template_file
+
+template_media_file_format:
+    path: /file/format/{id}/{format}
+    defaults:
+        _endpoint:
+            type: template_file
