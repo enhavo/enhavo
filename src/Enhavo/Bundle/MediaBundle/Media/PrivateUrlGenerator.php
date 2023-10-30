@@ -14,30 +14,21 @@ use Symfony\Component\Routing\RouterInterface;
 
 class PrivateUrlGenerator implements UrlGeneratorInterface
 {
-    /**
-     * @var MediaManager
-     */
-    private $mediaManager;
-
-    /**
-     * @var RouterInterface
-     */
-    private $router;
-
-    public function __construct(MediaManager $mediaManager, RouterInterface $router)
+    public function __construct(
+        private readonly MediaManager $mediaManager,
+        private readonly RouterInterface $router,
+    )
     {
-        $this->mediaManager = $mediaManager;
-        $this->router = $router;
     }
 
-    public function generate(FileInterface $file, $referenceType = UrlGenerator::ABSOLUTE_PATH)
+    public function generate(FileInterface $file, $referenceType = UrlGenerator::ABSOLUTE_PATH): string
     {
         return $this->router->generate('enhavo_media_file_resolve', [
             'token' => $file->getToken()
         ], $referenceType);
     }
 
-    public function generateFormat(FileInterface $file, string $format, $referenceType = UrlGenerator::ABSOLUTE_PATH)
+    public function generateFormat(FileInterface $file, string $format, $referenceType = UrlGenerator::ABSOLUTE_PATH): string
     {
         $formatObj = $this->mediaManager->getFormat($file, $format);
         return $this->router->generate('enhavo_media_file_format', [

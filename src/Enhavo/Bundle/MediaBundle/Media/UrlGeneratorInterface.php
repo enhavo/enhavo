@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Generator\UrlGenerator;
 
 interface UrlGeneratorInterface
 {
-    public function generate(FileInterface $file, $referenceType = UrlGenerator::ABSOLUTE_PATH);
+    public function generate(FileInterface $file, $referenceType = UrlGenerator::ABSOLUTE_PATH): string;
 
-    public function generateFormat(FileInterface $file, string $format, $referenceType = UrlGenerator::ABSOLUTE_PATH);
+    public function generateFormat(FileInterface $file, string $format, $referenceType = UrlGenerator::ABSOLUTE_PATH): string;
 }
