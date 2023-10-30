@@ -169,6 +169,11 @@ services:
     Enhavo\Bundle\AppBundle\Routing\ExposeRouteCollector:
         arguments:
             - '@router'
+        tags:
+            - { name: enhavo_app.route_collector }
+
+    enhavo_app.route_collector:
+        class:  Enhavo\Bundle\AppBundle\Routing\ChainRouteCollector
 
     Enhavo\Bundle\AppBundle\Routing\RouteCollectorInterface:
-        alias: Enhavo\Bundle\AppBundle\Routing\ExposeRouteCollector
+        alias: enhavo_app.route_collector

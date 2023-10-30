@@ -5,9 +5,11 @@ namespace Enhavo\Bundle\AppBundle;
 use Enhavo\Bundle\AppBundle\Batch\Batch;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\FilesystemCompilerPass;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\LocaleResolverCompilerPass;
+use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\RouteCollectorCompilerPass;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\SyliusCompilerPass;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\TemplateResolverPass;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\TranslationDumperCompilerPass;
+use Enhavo\Bundle\AppBundle\Routing\RouteCollectorInterface;
 use Enhavo\Bundle\AppBundle\Template\TemplateResolverAwareInterface;
 use Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface;
 use Enhavo\Bundle\AppBundle\Type\TypeCompilerPass;
@@ -87,14 +89,22 @@ class EnhavoAppBundle extends Bundle
 
         $container->addCompilerPass(new LocaleResolverCompilerPass());
 
+        $container->addCompilerPass(new RouteCollectorCompilerPass());
+
         $container->registerForAutoconfiguration(ViewTypeInterface::class)
             ->addTag('enhavo_app.view')
         ;
 
+        $container->registerForAutoconfiguration(RouteCollectorInterface::class)
+            ->addTag('enhavo_app.route_collector')
+        ;
+
         $container->registerForAutoconfiguration(ViewFactoryAwareInterface::class)
-            ->addMethodCall('setViewFactory', [new Reference('Enhavo\Component\Type\FactoryInterface[View]')]);
+            ->addMethodCall('setViewFactory', [new Reference('Enhavo\Component\Type\FactoryInterface[View]')])
+        ;
 
         $container->registerForAutoconfiguration(TemplateResolverAwareInterface::class)
-            ->addMethodCall('setTemplateResolver', [new Reference(TemplateResolverInterface::class)]);
+            ->addMethodCall('setTemplateResolver', [new Reference(TemplateResolverInterface::class)])
+        ;
     }
 }

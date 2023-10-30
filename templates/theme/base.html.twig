@@ -5,6 +5,10 @@
 
     <a href="{{ path('enhavo_shop_theme_cart_summary') }}">Cart</a>
 
+    {% if page_path_exists('imprint') %}
+        <a href="{{ page_path('imprint') }}">Imprint</a>
+    {% endif %}
+
     {% if app.user %}
         <a href="{{ path('enhavo_user_theme_security_logout') }}">Logout</a>
     {% else %}

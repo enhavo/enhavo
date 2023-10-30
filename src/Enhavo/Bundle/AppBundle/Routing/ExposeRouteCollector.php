@@ -8,12 +8,12 @@ use Symfony\Component\Routing\RouterInterface;
 class ExposeRouteCollector implements RouteCollectorInterface
 {
     public function __construct(
-        private RouterInterface $router,
+        private readonly RouterInterface $router,
     )
     {
     }
 
-    public function getRouteCollection(null|string|array $groups): RouteCollection
+    public function getRouteCollection(null|string|array $groups = null): RouteCollection
     {
         $routes = $this->router->getRouteCollection();
 

@@ -47,4 +47,10 @@ class TwigRouter
         $this->init();
         $this->routes->addCollection($routeCollection);
     }
+
+    public function exists($name): bool
+    {
+        $this->init();
+        return !!$this->routes->get($name);
+    }
 }
