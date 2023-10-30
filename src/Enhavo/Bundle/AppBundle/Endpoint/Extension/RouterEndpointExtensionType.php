@@ -33,6 +33,7 @@ class RouterEndpointExtensionType extends AbstractEndpointTypeExtension
                     $route = new Route($routeParameter['path']);
                     $routeCollection->add($name, $route);
                 }
+                $this->twigRouter->addRouteCollection($routeCollection);
             }
         }
     }
