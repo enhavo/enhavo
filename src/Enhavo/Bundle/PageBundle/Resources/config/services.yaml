@@ -14,7 +14,7 @@ services:
 
     Enhavo\Bundle\PageBundle\Twig\PagePathExtension:
         arguments:
-            - '@Enhavo\Bundle\PageBundle\Page\PageManager'
+            - '@Enhavo\Bundle\AppBundle\Twig\TwigRouter'
         tags:
             - { name: twig.extension }
 
@@ -62,3 +62,10 @@ services:
         tags:
             - { name: enhavo_api.endpoint }
             - { name: container.service_subscriber }
+
+    Enhavo\Bundle\PageBundle\Routing\PageCodeRouteCollector:
+        arguments:
+            - '@enhavo_page.repository.page'
+            - '@enhavo_routing.router'
+        tags:
+            - { name: enhavo_app.route_collector }

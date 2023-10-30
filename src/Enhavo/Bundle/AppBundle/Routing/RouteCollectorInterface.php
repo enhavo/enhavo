@@ -6,5 +6,5 @@ use Symfony\Component\Routing\RouteCollection;
 
 interface RouteCollectorInterface
 {
-    public function getRouteCollection(null|string|array $groups): RouteCollection;
+    public function getRouteCollection(null|string|array $groups = null): RouteCollection;
 }

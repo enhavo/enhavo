@@ -1,0 +1,6 @@
+enhavo_page:
+    special_pages:
+        imprint:
+            label: Imprint
+        privacy:
+            label: Privacy
