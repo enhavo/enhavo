@@ -27,11 +27,16 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/form')]
 class FormController extends AbstractController
 {
+    public function __construct(
+        private VueForm $vueForm,
+    )
+    {
+    }
+
     private function handleForm(FormInterface $form, Request $request, $template = 'form', $theme = false)
     {
         $formView = $form->createView();
-        $vueForm = $this->container->get(VueForm::class);
-        $vueFormData = $vueForm->createData($formView);
+        $vueFormData = $this->vueForm->createData($formView);
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
@@ -48,7 +53,7 @@ class FormController extends AbstractController
 
         return $this->render(sprintf('theme/form/%s.html.twig', $template), [
             'form' => $formView,
-            'vue' => $vueForm->createData($formView),
+            'vue' => $this->vueForm->createData($formView),
             'data' => $form->getData(),
             'theme' => $theme
         ]);
@@ -380,5 +385,25 @@ class FormController extends AbstractController
             ->getForm();
 
         return $this->handleForm($form, $request, theme: true);
+    }
+
+    #[Route('/controller', name: "app_form_controller")]
+    public function controllerAction(Request $request)
+    {
+        $form = $this->createFormBuilder(null)
+            ->add('type', ChoiceType::class, [
+                'choices' => [
+                    'Text' => 'text',
+                    'Date' => 'date',
+                ],
+                'component_visitors' => ['type_conditional'],
+            ])
+            ->add('button', SubmitType::class, [
+                'label' => 'save'
+            ])
+            ->setMethod('POST')
+            ->getForm();
+
+        return $this->handleForm($form, $request, 'controller');
     }
 }

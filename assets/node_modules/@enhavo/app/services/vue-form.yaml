@@ -162,6 +162,12 @@ services:
         tags:
             - { name: vue.component, component: 'form-hidden-row' }
 
+    '@enhavo/app/controllers/FormController':
+        chunk: main
+        static: true
+        tags:
+            - { name: stimulus.controller, key: 'form' }
+
 compiler_pass:
     vue-form-visitor:
         path: '@enhavo/app/compiler-pass/registry.js'

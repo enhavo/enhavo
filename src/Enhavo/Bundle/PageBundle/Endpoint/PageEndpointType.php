@@ -3,6 +3,8 @@
 namespace Enhavo\Bundle\PageBundle\Endpoint;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
+use Enhavo\Bundle\ApiBundle\Documentation\Model\Method;
+use Enhavo\Bundle\ApiBundle\Documentation\Model\Path;
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Bundle\AppBundle\Endpoint\Type\AreaEndpointType;
@@ -39,6 +41,21 @@ class PageEndpointType extends AbstractEndpointType
 
         $context->set('resource', $resource);
         $data->set('resource', $this->normalize($resource, null, ['groups' => ['endpoint']]));
+    }
+
+    public function describe($options, Path $path)
+    {
+        $path
+            ->method(Method::GET)
+                ->description('Page data')
+                ->summary('Get single page data')
+                ->parameter('id')
+                    ->in('path')
+                    ->description('The page id')
+                    ->required(true)
+                ->end()
+            ->end()
+        ;
     }
 
     public static function getParentType(): ?string
