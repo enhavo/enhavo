@@ -53,27 +53,43 @@ export default class VueRegistry implements ComponentRegistryInterface
         return this;
     }
 
-    getComponents(): Entry[] {
+    getComponents(): Entry[]
+    {
         return this.components;
     }
 
-    getDirectives(): Entry[] {
+    getComponent(name: string): object|null
+    {
+        for (let entry of this.components) {
+            if (entry.name === name) {
+                return entry.value;
+            }
+        }
+        return null;
+    }
+
+    getDirectives(): Entry[]
+    {
         return this.directives;
     }
 
-    getStores(): Entry[] {
+    getStores(): Entry[]
+    {
         return this.stores;
     }
 
-    getPlugins(): object[] {
+    getPlugins(): object[]
+    {
         return this.plugins;
     }
 
-    getConfigs(): Entry[] {
+    getConfigs(): Entry[]
+    {
         return this.configs;
     }
 
-    getData(): object[] {
+    getData(): object[]
+    {
         return this.data;
     }
 

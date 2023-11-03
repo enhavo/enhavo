@@ -1,0 +1,8 @@
+{% extends 'theme/form/base.html.twig' %}
+
+{% block body %}
+    <form data-controller="form" data-form-form-value="{{ vue|json_encode|e }}">
+        <form-row :form="form.get('type')"></form-row>
+        <form-widget :form="form.get('_token')"></form-widget>
+    </form>
+{% endblock %}

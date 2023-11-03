@@ -17,7 +17,7 @@ class RouterExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('router_generate', [$this, 'getRoutes']),
+            new TwigFunction('router_generate', [$this, 'generate']),
         ];
     }
 
