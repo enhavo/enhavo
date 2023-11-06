@@ -1,9 +1,9 @@
 Enhavo\Bundle\ContentBundle\Entity\Content:
     attributes:
         id:
-            groups: ['endpoint', 'endpoint.navigation']
+            groups: ['endpoint', 'endpoint.navigation', 'endpoint.block']
         title:
-            groups: ['endpoint', 'endpoint.navigation']
+            groups: ['endpoint', 'endpoint.navigation', 'endpoint.block']
         metaDescription:
             groups: ['endpoint']
         pageTitle:
