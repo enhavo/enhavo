@@ -12,7 +12,7 @@ class TwigRouter implements RouterInterface
 {
     private ?UrlGenerator $generator = null;
     private ?RouteCollection $routes = null;
-    private ?RequestContext $context;
+    private ?RequestContext $context = null;
 
     public function __construct(
         private readonly RequestStack $requestStack
