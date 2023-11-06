@@ -3,7 +3,7 @@ Enhavo\Bundle\TaxonomyBundle\Entity\Term:
         id:
             groups: ['form']
         name:
-            groups: ['form']
+            groups: ['form', 'endpoint.block']
         children:
             groups: ['form']
         parent:
