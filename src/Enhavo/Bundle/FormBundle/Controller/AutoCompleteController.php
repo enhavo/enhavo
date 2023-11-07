@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\FormBundle\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Pagerfanta\Pagerfanta;
 use Sylius\Bundle\ResourceBundle\Controller\ParametersParserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,22 +19,12 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class AutoCompleteController extends AbstractController
 {
-    /**
-     * @var ExpressionLanguage
-     */
-    private $expressionLanguage;
-
-    /** @var ParametersParserInterface */
-    private $parametersParser;
-
-    /**
-     * AutoCompleteController constructor.
-     * @param ExpressionLanguage $expressionLanguage
-     */
-    public function __construct(ParametersParserInterface $parametersParser, ExpressionLanguage $expressionLanguage)
+    public function __construct(
+        private ParametersParserInterface $parametersParser,
+        private ExpressionLanguage $expressionLanguage,
+        private EntityManagerInterface $em,
+    )
     {
-        $this->parametersParser = $parametersParser;
-        $this->expressionLanguage = $expressionLanguage;
     }
 
     public function searchAction(Request $request)
@@ -77,7 +68,7 @@ class AutoCompleteController extends AbstractController
 
         $arguments = $this->parametersParser->parseRequestValues($arguments, $request);
 
-        $repository = $this->getDoctrine()->getRepository($configuration->getClass());
+        $repository = $this->em->getRepository($configuration->getClass());
         $result = call_user_func_array([$repository, $configuration->getRepositoryMethod()], $arguments);
         return $result;
     }

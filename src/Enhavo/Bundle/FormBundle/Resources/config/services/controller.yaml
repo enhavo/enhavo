@@ -4,6 +4,7 @@ services:
         arguments:
             - '@sylius.resource_controller.parameters_parser'
             - '@sylius.expression_language'
+            - '@doctrine.orm.entity_manager'
         public: true
         calls:
             - [setContainer, ['@service_container']]
