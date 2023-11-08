@@ -4,6 +4,7 @@ namespace Enhavo\Bundle\MediaBundle\Test\Form\Extension;
 
 use Enhavo\Bundle\FormBundle\Form\Extension\ListVueTypeExtension;
 use Enhavo\Bundle\MediaBundle\Form\Extension\MediaVueTypeExtension;
+use Enhavo\Bundle\MediaBundle\Form\Type\FileParametersType;
 use Enhavo\Bundle\MediaBundle\Form\Type\FileType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Enhavo\Bundle\MediaBundle\Media\ExtensionManager;
@@ -41,7 +42,9 @@ class MediaVueTypeExtensionTest extends TypeTestCase
             'default_upload_enabled' => true,
         ]);
 
-        $fileType = new FileType($formFactory, $repository, $extensionManager, $serializer);
+        $fileType = new FileType($formFactory, $repository, $extensionManager, $serializer, [
+            'parameters_type' => FileParametersType::class
+        ]);
 
         return [
             new PreloadedExtension([$mediaType, $fileType], []),

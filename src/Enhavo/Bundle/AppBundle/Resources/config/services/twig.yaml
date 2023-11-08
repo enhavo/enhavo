@@ -22,6 +22,12 @@ services:
         tags:
             - { name: twig.extension }
 
+    Enhavo\Bundle\AppBundle\Twig\TwigExtension:
+        arguments:
+            - '@serializer'
+        tags:
+            - { name: twig.extension }
+
     Enhavo\Bundle\AppBundle\Twig\SplObjectExtension:
         tags:
             - { name: twig.extension }

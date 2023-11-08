@@ -7,7 +7,7 @@
     <br/><br/>
     <div class="row">
         <div class="col-md-push-2 col-md-9">
-            <img src="{{ media_url(form.vars.value, 'enhavoMediaLibraryThumb') }}" />
+            <img src="{{ media_url(normalize(form.vars.value, null, {groups: ['endpoint']}), 'enhavoMediaLibraryThumb') }}" />
         </div>
     </div>
 {% endif %}
