@@ -21,14 +21,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class FileType extends AbstractType
 {
-
     public function __construct(
         private MediaLibraryManager $mediaLibraryManager,
         private UrlGeneratorInterface $urlGenerator,
+        private array $formConfiguration,
     )
     {
     }
-
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -52,7 +51,7 @@ class FileType extends AbstractType
                 'edit_route' => 'enhavo_media_library_tag_update',
                 'view_key' => 'media_library_tags'
             ])
-            ->add('parameters', FileParametersType::class)
+            ->add('parameters', $this->formConfiguration['parameters_type'])
         ;
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA,  function(FormEvent $event) {
