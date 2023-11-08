@@ -1,7 +1,7 @@
 Enhavo\Bundle\TaxonomyBundle\Entity\Term:
     attributes:
         id:
-            groups: ['form']
+            groups: ['form', 'endpoint.block']
         name:
             groups: ['form', 'endpoint.block']
         children:
@@ -9,6 +9,6 @@ Enhavo\Bundle\TaxonomyBundle\Entity\Term:
         parent:
             groups: ['form']
         slug:
-            groups: ['form']
+            groups: ['form', 'endpoint.block']
         position:
             groups: ['form']
