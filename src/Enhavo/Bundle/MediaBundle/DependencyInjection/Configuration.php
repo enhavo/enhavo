@@ -6,6 +6,7 @@ use Enhavo\Bundle\MediaBundle\Cache\NoCache;
 use Enhavo\Bundle\MediaBundle\Controller\FileController;
 use Enhavo\Bundle\MediaBundle\Entity\File;
 use Enhavo\Bundle\MediaBundle\Factory\FileFactory;
+use Enhavo\Bundle\MediaBundle\Form\Type\FileParametersType;
 use Enhavo\Bundle\MediaBundle\Form\Type\FileType;
 use Enhavo\Bundle\MediaBundle\GarbageCollection\GarbageCollector;
 use Enhavo\Bundle\MediaBundle\Repository\FileRepository;
@@ -54,7 +55,7 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('form')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->scalarNode('parameters_type')->defaultValue(null)->end()
+                        ->scalarNode('parameters_type')->defaultValue(FileParametersType::class)->end()
                         ->booleanNode('default_upload_enabled')->defaultValue(true)->end()
                     ->end()
                 ->end()

@@ -12,6 +12,9 @@ services:
             - '@enhavo_app.translation.translation_dumper'
             - '@enhavo_app.locale_resolver'
             - '@Enhavo\Bundle\AppBundle\Template\TemplateResolver'
+            - '@Enhavo\Bundle\AppBundle\Twig\TwigRouter'
+            - '@Enhavo\Bundle\AppBundle\Routing\RouteCollectorInterface'
+            - '@serializer'
         tags:
             - { name: enhavo_app.view }
 

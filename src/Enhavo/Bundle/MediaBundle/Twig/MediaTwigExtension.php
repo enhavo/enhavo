@@ -62,12 +62,12 @@ class MediaTwigExtension extends AbstractExtension
 
     public function getMediaParameter(?array $file, $parameterName): ?string
     {
-        if($file === null) {
+        if ($file === null) {
             return null;
         }
 
-        if (isset($file[$parameterName])) {
-            return $file[$parameterName];
+        if (isset($file['parameters'][$parameterName])) {
+            return $file['parameters'][$parameterName];
         }
 
         return null;
@@ -75,7 +75,7 @@ class MediaTwigExtension extends AbstractExtension
 
     public function isPicture(?array $file): bool
     {
-        if($file === null) {
+        if ($file === null) {
             return false;
         }
 

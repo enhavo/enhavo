@@ -9,8 +9,10 @@
 namespace Enhavo\Bundle\AppBundle\View\Type;
 
 use Enhavo\Bundle\AppBundle\Locale\LocaleResolverInterface;
+use Enhavo\Bundle\AppBundle\Routing\RouteCollectorInterface;
 use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
 use Enhavo\Bundle\AppBundle\Translation\TranslationDumper;
+use Enhavo\Bundle\AppBundle\Twig\TwigRouter;
 use Enhavo\Bundle\AppBundle\View\AbstractViewType;
 use Enhavo\Bundle\AppBundle\View\TemplateData;
 use Enhavo\Bundle\AppBundle\View\ViewData;
@@ -18,58 +20,25 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
 class AppViewType extends AbstractViewType
 {
-    /** @var Environment */
-    private $twig;
-
-    /** @var string */
-    private $projectDir;
-
-    /** @var TranslatorInterface */
-    private $translator;
-
-    /** @var RequestStack */
-    private $requestStack;
-
-    /** @var TranslationDumper */
-    private $translationDumper;
-
-    /** @var LocaleResolverInterface */
-    private $localResolver;
-
-    /** @var TemplateResolver */
-    private $templateResolver;
-
-    /**
-     * AppViewType constructor.
-     * @param Environment $twig
-     * @param string $projectDir
-     * @param TranslatorInterface $translator
-     * @param RequestStack $requestStack
-     * @param TranslationDumper $translationDumper
-     * @param LocaleResolverInterface $localResolver
-     * @param TemplateResolver $templateResolver
-     */
     public function __construct(
-        Environment $twig,
-        string $projectDir,
-        TranslatorInterface $translator,
-        RequestStack $requestStack,
-        TranslationDumper $translationDumper,
-        LocaleResolverInterface $localResolver,
-        TemplateResolver $templateResolver
+        private readonly Environment $twig,
+        private readonly string $projectDir,
+        private readonly TranslatorInterface $translator,
+        private readonly RequestStack $requestStack,
+        private readonly TranslationDumper $translationDumper,
+        private readonly LocaleResolverInterface $localResolver,
+        private readonly TemplateResolver $templateResolver,
+        private readonly TwigRouter $twigRouter,
+        private readonly RouteCollectorInterface $routeCollector,
+        private readonly NormalizerInterface $normalizer,
     ) {
-        $this->twig = $twig;
-        $this->projectDir = $projectDir;
-        $this->translator = $translator;
-        $this->requestStack = $requestStack;
-        $this->translationDumper = $translationDumper;
-        $this->localResolver = $localResolver;
-        $this->templateResolver = $templateResolver;
+
     }
 
     public function getType()
@@ -79,6 +48,10 @@ class AppViewType extends AbstractViewType
 
     public function createViewData($options, ViewData $viewData)
     {
+        $routesCollection = $this->routeCollector->getRouteCollection('admin');
+        $this->twigRouter->addRouteCollection($routesCollection);
+        $viewData->set('routes', $this->normalizer->normalize($routesCollection, null, ['groups' => 'endpoint']));
+
         $viewData['view'] = [
             'id' => $this->requestStack->getMainRequest()->get('view_id'),
             'label' => $this->translator->trans($options['label'], [], $options['translation_domain'])

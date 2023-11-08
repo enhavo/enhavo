@@ -33,6 +33,7 @@ class FileType extends AbstractType
         private RepositoryInterface $repository,
         private ExtensionManager $extensionManager,
         private NormalizerInterface $serializer,
+        private array $formConfiguration,
     )
     {
     }
@@ -154,7 +155,7 @@ class FileType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'parameters_type' => FileParametersType::class,
+            'parameters_type' => $this->formConfiguration['parameters_type'],
             'parameters_options' => [],
             'data_class' => File::class,
             'extensions' => []

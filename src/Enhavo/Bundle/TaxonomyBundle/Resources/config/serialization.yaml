@@ -1,14 +1,14 @@
 Enhavo\Bundle\TaxonomyBundle\Entity\Term:
     attributes:
         id:
-            groups: ['form', 'endpoint.block']
+            groups: ['form', 'endpoint', 'endpoint.block']
         name:
-            groups: ['form', 'endpoint.block']
+            groups: ['form', 'endpoint', 'endpoint.block']
         children:
             groups: ['form']
         parent:
             groups: ['form']
         slug:
-            groups: ['form', 'endpoint.block']
+            groups: ['form', 'endpoint', 'endpoint.block']
         position:
             groups: ['form']
