@@ -36,8 +36,10 @@ class LocaleSubscriber implements EventSubscriberInterface
 
     public function onKernelRequest(RequestEvent $event)
     {
+        $locale = $this->resolver->resolve();
         $request = $event->getRequest();
-        $request->setLocale($this->resolver->resolve());
+        $request->attributes->set('_locale', $locale);
+        $request->setLocale($locale);
     }
 
     public static function getSubscribedEvents()
