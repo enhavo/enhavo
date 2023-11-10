@@ -1,7 +1,7 @@
 services:
     Enhavo\Bundle\AppBundle\EventListener\LocaleSubscriber:
         arguments:
-            - 'replace'
+            - '@enhavo_app.locale_resolver'
         tags:
             - { name: kernel.event_subscriber }
 
