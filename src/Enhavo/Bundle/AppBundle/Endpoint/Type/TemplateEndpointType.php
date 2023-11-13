@@ -20,17 +20,6 @@ class TemplateEndpointType extends AbstractEndpointType
 
     public function handleRequest($options, Request $request, Data $data, Context $context)
     {
-        if ($options['media_routes']) {
-            $data->set('routes', [
-                'enhavo_media_file_show' => [
-                    'path' => '/template/file/show/{id}',
-                ],
-                'enhavo_media_file_format' => [
-                    'path' => '/template/file/format/{id}/{format}',
-                ],
-            ]);
-        }
-
         if (is_array($options['load'])) {
             foreach ($options['load'] as $file) {
                 $this->loader->merge($data, $this->loader->load($file), $options['recursive'], $options['depth']);
@@ -57,7 +46,6 @@ class TemplateEndpointType extends AbstractEndpointType
             'recursive' => false,
             'depth' => null,
             'description' => null,
-            'media_routes' => true,
         ]);
     }
 

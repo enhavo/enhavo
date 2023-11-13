@@ -195,3 +195,18 @@ services:
             - '%enhavo_media.upload_validation.clamav%'
         tags:
             - { name: validator.constraint_validator }
+
+    Enhavo\Bundle\MediaBundle\Endpoint\Type\TemplateFileEndpointType:
+        arguments:
+            - '%kernel.project_dir%/data/media'
+            - '@enhavo_media.factory.file'
+            - '@filesystem'
+        tags:
+            - { name: enhavo_api.endpoint }
+
+    Enhavo\Bundle\MediaBundle\Endpoint\Extension\MediaRoutesEndpointExtensionType:
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: enhavo_api.endpoint_extension }
+            - { name: container.service_subscriber }
