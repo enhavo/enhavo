@@ -31,7 +31,7 @@ class TermUniqueValidator extends ConstraintValidator
             'taxonomy' => $value->getTaxonomy()
         ]);
         $isDuplicate = false;
-        foreach($similarTerms as $similarTerm) {
+        foreach ($similarTerms as $similarTerm) {
             if ($similarTerm->getId() !== $value->getId()) {
                 $isDuplicate = true;
                 break;
