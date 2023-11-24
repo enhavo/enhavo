@@ -11,3 +11,6 @@ taxonomy:
 term:
   label:
     name: 'Name'
+    validation:
+      term_unique:
+        message: 'An element with this name already exists.'
