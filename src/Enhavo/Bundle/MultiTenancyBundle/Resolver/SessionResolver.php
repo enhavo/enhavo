@@ -32,23 +32,24 @@ class SessionResolver implements ResolverInterface
     {
         $request = $this->requestStack->getCurrentRequest();
 
-        if ($this->routePrefixOnly !== null && $this->routePrefixOnly !== '') {
-            $path = $request->getPathInfo();
-            if (strpos($path, $this->routePrefixOnly) !== 0) {
+        if ($request) {
+            if ($this->routePrefixOnly !== null && $this->routePrefixOnly !== '') {
+                $path = $request->getPathInfo();
+                if (strpos($path, $this->routePrefixOnly) !== 0) {
+                    return null;
+                }
+            }
+            $session = $request->getSession();
+            if (!$session->has($this->sessionKey)) {
                 return null;
             }
-        }
 
-        if(!$request->getSession()->has($this->sessionKey)) {
-            return null;
-        }
+            $tenantKey = $session->get($this->sessionKey);
 
-        $tenantKey = $request->getSession()->get($this->sessionKey);
-
-        foreach ($this->provider->getTenants() as $tenant) {
-            $keys[] = $tenant->getKey();
-            if ($tenant->getKey() === $tenantKey) {
-                return $tenant;
+            foreach ($this->provider->getTenants() as $tenant) {
+                if ($tenant->getKey() === $tenantKey) {
+                    return $tenant;
+                }
             }
         }
 
