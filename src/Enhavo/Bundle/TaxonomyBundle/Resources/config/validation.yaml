@@ -1,0 +1,3 @@
+Enhavo\Bundle\TaxonomyBundle\Entity\Term:
+    constraints:
+        - Enhavo\Bundle\TaxonomyBundle\Validator\Constraints\TermUnique: ~

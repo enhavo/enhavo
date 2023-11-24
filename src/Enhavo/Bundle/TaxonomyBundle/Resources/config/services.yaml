@@ -72,3 +72,10 @@ services:
             - '@Enhavo\Bundle\TaxonomyBundle\Taxonomy\TaxonomyManager'
         tags:
             - { name: kernel.event_subscriber }
+
+    validator.term_unique:
+        class:  Enhavo\Bundle\TaxonomyBundle\Validator\Constraints\TermUniqueValidator
+        arguments:
+            - '@enhavo_taxonomy.repository.term'
+        tags:
+            - { name: validator.constraint_validator, alias: term_unique }
