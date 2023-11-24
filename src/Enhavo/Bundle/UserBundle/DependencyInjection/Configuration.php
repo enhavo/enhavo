@@ -412,6 +412,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('template')->isRequired()->cannotBeEmpty()->end()
                 ->scalarNode('subject')->defaultValue('registration.mail.subject')->end()
+                ->scalarNode('from')->defaultValue(null)->end()
                 ->scalarNode('sender_name')->defaultValue(null)->end()
                 ->scalarNode('content_type')->defaultValue('text/plain')->end()
             ->end()
