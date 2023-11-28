@@ -4,23 +4,17 @@ namespace Enhavo\Bundle\ContentBundle\Model;
 
 class Video
 {
-    /** @var string */
-    private $provider;
+    private string $provider;
 
-    /** @var string */
-    private $title;
+    private string $title;
 
-    /** @var string */
-    private $description;
+    private string $description;
 
-    /** @var string */
-    private $thumbnail;
+    private string $thumbnail;
 
-    /** @var string */
-    private $videoUrl;
+    private string $videoUrl;
 
-    /** @var string */
-    private $embedUrl;
+    private string $embedUrl;
 
     /**
      * @param string $provider

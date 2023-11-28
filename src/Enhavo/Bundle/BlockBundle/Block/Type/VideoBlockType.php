@@ -1,26 +1,20 @@
 <?php
-/**
- * VideoConfiguration.php
- *
- * @since 17/10/16
- * @author gseidel
- */
 
 namespace Enhavo\Bundle\BlockBundle\Block\Type;
 
 use Enhavo\Bundle\AppBundle\View\ViewData;
-use Enhavo\Bundle\BlockBundle\Model\Block\VideoBlock;
+use Enhavo\Bundle\BlockBundle\Block\AbstractBlockType;
 use Enhavo\Bundle\BlockBundle\Factory\VideoBlockFactory;
 use Enhavo\Bundle\BlockBundle\Form\Type\VideoBlockType as VideoBlockFormType;
-use Enhavo\Bundle\BlockBundle\Block\AbstractBlockType;
+use Enhavo\Bundle\BlockBundle\Model\Block\VideoBlock;
 use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
+use Exception;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class VideoBlockType extends AbstractBlockType
 {
-    /** @var ContainerInterface */
-    private $container;
+    private ContainerInterface $container;
 
     /**
      * @param ContainerInterface $container
@@ -30,7 +24,7 @@ class VideoBlockType extends AbstractBlockType
         $this->container = $container;
     }
 
-    public function configureOptions(OptionsResolver $optionsResolver)
+    public function configureOptions(OptionsResolver $optionsResolver): void
     {
         $optionsResolver->setDefaults([
             'model' => VideoBlock::class,
@@ -43,20 +37,23 @@ class VideoBlockType extends AbstractBlockType
         ]);
     }
 
-    public function createViewData(BlockInterface $block, ViewData $viewData, $resource, array $options)
+    /**
+     * @throws Exception
+     */
+    public function createViewData(BlockInterface $block, ViewData $viewData, $resource, array $options): void
     {
         if (!$this->container->has('Enhavo\Bundle\ContentBundle\Factory\VideoFactory')) {
-            throw new \Exception('You have to use the "enhavo/content-bundle" to use the video block');
+            throw new Exception('You have to use the "enhavo/content-bundle" to use the video block');
         }
 
         $videoFactory = $this->container->get('Enhavo\Bundle\ContentBundle\Factory\VideoFactory');
 
         /** @var $block VideoBlock */
         try {
-            $viewData['video'] = $videoFactory->create($block->getUrl());
-        } catch (\Exception $e) {
+            $viewData->set('video', $videoFactory->create($block->getUrl()));
+        } catch (Exception $e) {
             if (get_class($e) === 'Enhavo\Bundle\ContentBundle\Exception\VideoException') {
-                $viewData['video'] = null;
+                $viewData->set('video', null);
             } else {
                 throw $e;
             }
