@@ -1,0 +1,12 @@
+Enhavo\Bundle\ContentBundle\Model\Video:
+    attributes:
+        title:
+            groups: ['endpoint.block']
+        description:
+            groups: ['endpoint.block']
+        thumbnail:
+            groups: ['endpoint.block']
+        videoUrl:
+            groups: ['endpoint.block']
+        embedUrl:
+            groups: ['endpoint.block']
