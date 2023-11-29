@@ -8,6 +8,7 @@ use <?= $item; ?>;
 <?php } ?>
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity()]
 #[ORM\Table(name: '<?= $orm->getTableName() ?>')]
@@ -58,6 +59,9 @@ class <?= $class->getName(); ?> extends AbstractBlock<?php if ($class->getImplem
 <?php } ?>
 <?php if ($relation) { ?>
     #[ORM\OrderBy(<?= $relation->getOrderByString() ?>)]
+<?php } ?>
+<?php if ($property->hasSerializationGroups()) { ?>
+    #[Groups([<?= $property->getSerializationGroupsString(); ?>])]
 <?php } ?>
 <?php if ($property->getNullable() || $property->getDefault() !== 'null') { ?>
     private <?= $property->getNullable() .$property->getType() ; ?> $<?= $property->getName(); ?> = <?= $property->getDefault(); ?>;
