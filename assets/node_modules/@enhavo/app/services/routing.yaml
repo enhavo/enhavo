@@ -1,0 +1,16 @@
+services:
+    '@enhavo/app/routing/Router':
+        import: Router
+        arguments:
+            - 'param:routes'
+        chunk: 'app'
+        tags:
+            - { name: vue.service, service: 'router', reactive: false }
+
+    '@enhavo/app/view/DataLoader[routes]':
+        init: true
+        from: '@enhavo/app/view/DataLoader'
+        arguments:
+            - 'string:routes'
+            - 'string:routes'
+            - 'container:'
