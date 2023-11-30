@@ -12,8 +12,6 @@ class <?= $definition->getCamelName(); ?>Type extends AbstractBlockType
 {
     public function configureOptions(OptionsResolver $optionsResolver)
     {
-        parent::configureOptions($optionsResolver);
-
         $optionsResolver->setDefaults([
             'model' => <?= $definition->getCamelName(); ?>::class,
             'form' => <?= $definition->getCamelName(); ?>FormType::class,

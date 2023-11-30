@@ -26,6 +26,23 @@ class PhpClassProperty
         return $this->config['initializer'] ?? null;
     }
 
+    public function hasSerializationGroups(): bool
+    {
+        $groups = $this->getSerializationGroups();
+
+         return count($groups) > 0;
+    }
+
+    public function getSerializationGroups(): array
+    {
+        return $this->config['serialization_groups'] ?? ['endpoint.block'];
+    }
+
+    public function getSerializationGroupsString(): string
+    {
+        return sprintf("'%s'", implode("', '", $this->getSerializationGroups()));
+    }
+
     public function getNullable(): string
     {
         return (isset($this->config['nullable']) && $this->config['nullable'])
@@ -88,11 +105,6 @@ class PhpClassProperty
     public function getType(): ?string
     {
         return $this->config['type'] ?? null;
-    }
-
-    public function getTypeOptions(): ?array
-    {
-        return $this->config['type_options'] ?? null;
     }
 
     public function getTypeOption(string $key): ?array
