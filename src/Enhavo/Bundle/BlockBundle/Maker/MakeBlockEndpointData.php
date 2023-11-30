@@ -23,6 +23,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Yaml\Yaml;
+use Throwable;
 
 class MakeBlockEndpointData extends AbstractMaker
 {
@@ -49,40 +50,47 @@ class MakeBlockEndpointData extends AbstractMaker
     {
         $command
             ->setDescription('Creates endpoint data from existing block definitions')
-            ->addOption('blockName', 'b', InputOption::VALUE_OPTIONAL, 'Name of the block (e.g. text_picture)')
-            ->addOption('overwrite', 'o', InputOption::VALUE_OPTIONAL, 'Set true to overwrite existing file(s)')
+            ->addOption('blockName', 'b', InputOption::VALUE_OPTIONAL, 'Name of the block (e.g. text_picture, dumps all with given groups if not specified)')
             ->addOption('groups', 'g', InputOption::VALUE_OPTIONAL, 'Define block assigned groups to filter (comma separated without spaces)', 'layout,content')
+            ->addOption('format', 'f', InputOption::VALUE_OPTIONAL, 'Choose either YAML or JSON as export format', 'yaml')
+            ->addOption('overwrite', 'o', InputOption::VALUE_OPTIONAL, 'Set true to overwrite existing file(s)')
         ;
     }
 
     public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator): void
     {
         $name = $input->getOption('blockName');
+        $groups = explode(',', strtolower($input->getOption('groups')));
+        $format = strtolower($input->getOption('format'));
         $this->overwriteExisting = (bool)$input->getOption('overwrite');
-        $groups = explode(',', $input->getOption('groups'));
 
         if ($name) {
             $blockTypes = [$name => $this->blockManager->getBlock($name)];
+
         } else {
             $blockTypes = $this->blockManager->getBlocks();
         }
+
         foreach ($blockTypes as $blockName => $blockType) {
-            if (!count(array_intersect($groups, $blockType->getGroups()))) {
+            if (!$name && !count(array_intersect($groups, $blockType->getGroups()))) {
                 continue;
             }
 
-            $io->writeln(sprintf('Generating dummy data for block %s', $blockName));
+            $io->write(sprintf('Generating dummy data for block %s...', $blockName));
+
             try {
-                $yamlString = $this->generateYaml($blockName, $blockType);
+                $normalizedData = $this->generateDataArray($blockName, $blockType);
+                $dataAsString = $this->toFormatString($normalizedData, $format);
+                $outputPath = $this->getOutputPath($blockName, $format);
 
-                $outputPath = $this->getOutputPath($blockName);
                 $this->checkExists($outputPath);
-                $generator->generateFile($outputPath, $this->getTemplatePath('block.tpl.php'), ['yaml' => $yamlString]);
-                $io->writeln("\033[32m%s (%s#%d) \033[0m");
+                $generator->generateFile($outputPath, $this->getTemplatePath('block.tpl.php'), ['content' => $dataAsString]);
 
-            } catch (Exception $exception) {
-                $io->writeln(sprintf('Failed due to:', $blockName));
-                $io->writeln(sprintf("\033[31m%s (%s#%d) \033[0m\n", $exception->getMessage(), $exception->getFile(), $exception->getLine()));
+                $io->writeln("\033[32mOK\033[0m");
+
+            } catch (Throwable $exception) {
+                $io->writeln("\033[31mFAILED\033[0m");
+                $io->writeln(sprintf("Reason: %s (%s#%d)\n", $exception->getMessage(), $exception->getFile(), $exception->getLine()));
             }
         }
 
@@ -93,13 +101,20 @@ class MakeBlockEndpointData extends AbstractMaker
      * @throws ExceptionInterface
      * @throws ReflectionException
      */
-    private function generateYaml(string $blockName, Block $blockType): string
+    private function generateDataArray(string $blockName, Block $blockType): array
     {
         $blockInstance = $this->blockFactory->createNew($blockName);
 
-        $normalizedBlockNode = $this->hydrateBlockNode($blockName, $blockType, $blockInstance);
+        return $this->hydrateBlockNode($blockName, $blockType, $blockInstance);
+    }
 
-        return Yaml::dump($normalizedBlockNode, 99, 4, Yaml::DUMP_NULL_AS_TILDE);
+    private function toFormatString(array $dataArray, $format): string
+    {
+        if ($format === 'json') {
+            return json_encode($dataArray, JSON_PRETTY_PRINT);
+        }
+
+        return Yaml::dump($dataArray, 99, 4, Yaml::DUMP_NULL_AS_TILDE);
     }
 
     /**
@@ -223,9 +238,9 @@ class MakeBlockEndpointData extends AbstractMaker
         return null;
     }
 
-    private function getOutputPath($blockName): string
+    private function getOutputPath(string $blockName, string $format): string
     {
-        return sprintf('%s/%s.yaml', $this->getBlockDataPath(), $blockName);
+        return sprintf('%s/%s.%s', $this->getBlockDataPath(), $blockName, $format);
     }
 
     private function getDataPath(): string
