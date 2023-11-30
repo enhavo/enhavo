@@ -24,10 +24,11 @@ class AppThemePackage
             .enableSassLoader()
             .enableTypeScriptLoader()
             .enableVersioning(Encore.isProduction())
+            .enableVueLoader()
         ;
 
         Encore.copyFiles({
-            from: this.config.themePath+'/images',
+            from: this.config.themePath+'/assets/images',
             to: 'images/[path][name].[ext]'
         });
     }

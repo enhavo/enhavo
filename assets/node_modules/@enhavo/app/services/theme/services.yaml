@@ -1,2 +1,4 @@
 imports:
     - path: '../stimulus.yaml'
+    - path: '../vue-form.yaml'
+    - path: '../routing.yaml'
