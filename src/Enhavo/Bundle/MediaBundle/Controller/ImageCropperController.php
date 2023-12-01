@@ -8,23 +8,26 @@
 
 namespace Enhavo\Bundle\MediaBundle\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Resource\ResourceManager;
-use Enhavo\Bundle\MediaBundle\Media\ImageCropperManager;
+use Enhavo\Bundle\MediaBundle\Media\FormatManager;
 use Enhavo\Bundle\MediaBundle\Media\MediaManager;
 use Enhavo\Component\Type\FactoryInterface;
 use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactoryInterface;
-use Sylius\Component\Resource\Metadata\MetadataInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ImageCropperController extends AbstractController
 {
     public function __construct(
         private ResourceManager $resourceManager,
         private RequestConfigurationFactoryInterface $requestConfigurationFactory,
-        private ImageCropperManager $imageCropperManager,
         private MediaManager $mediaManager,
-        private FactoryInterface $viewFactory
+        private FactoryInterface $viewFactory,
+        private FormatManager $formatManager,
+        private TranslatorInterface $translator,
+        private EntityManagerInterface $entityManager
     ) {
     }
 
@@ -36,7 +39,7 @@ class ImageCropperController extends AbstractController
 
         if($request->getMethod() == Request::METHOD_POST) {
             $this->cropFormat($request);
-            $this->addFlash('success', $this->get('translator')->trans('media.image_cropper.message.save', [], 'EnhavoMediaBundle'));
+            $this->addFlash('success', $this->translator->trans('media.image_cropper.message.save', [], 'EnhavoMediaBundle'));
         }
 
         $view = $this->viewFactory->create([
@@ -67,10 +70,9 @@ class ImageCropperController extends AbstractController
         $parameters['cropY'] = $y;
 
         $format->setParameters($parameters);
-        $this->container->get('doctrine.orm.entity_manager')->flush();
+        $this->entityManager->flush();
 
-        $formatManager = $this->get('enhavo_media.media.format_manager');
-        $formatManager->applyFormat($format->getFile(), $format->getName(), $parameters);
+        $this->formatManager->applyFormat($format->getFile(), $format->getName(), $parameters);
     }
 
     /**
