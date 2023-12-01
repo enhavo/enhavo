@@ -147,9 +147,11 @@ services:
         arguments:
             - '@Enhavo\Bundle\AppBundle\Resource\ResourceManager'
             - '@sylius.resource_controller.request_configuration_factory'
-            - '@enhavo_media.media.image_cropper_manager'
             - '@enhavo_media.media.media_manager'
             - '@Enhavo\Component\Type\FactoryInterface[View]'
+            - '@enhavo_media.media.format_manager'
+            - '@translator'
+            - '@doctrine.orm.entity_manager'
         calls:
             - [setContainer, ['@service_container']]
 
