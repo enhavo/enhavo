@@ -126,7 +126,7 @@ class FileController extends ResourceController
         $path = $file->getContent()->getFilePath();
 
         if (!file_exists($path))  {
-            throw $this->createNotFoundException('File not exists, please refresh format');
+            $this->getMediaManager()->handleFileNotFound($file);
         }
 
         $fileSize = filesize($file->getContent()->getFilePath());
