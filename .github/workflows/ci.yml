@@ -205,9 +205,6 @@ jobs:
                 with:
                     node-version: "20.x"
 
-            -   name: Install yarn berry
-                run: corepack enable && npm i -g corepack && corepack prepare yarn@stable --activate
-
             -   name: Setup database
                 run: |
                     APP_DEBUG=1 bin/console doctrine:database:create -vvv
@@ -237,9 +234,6 @@ jobs:
                 uses: actions/setup-node@v4
                 with:
                     node-version: "20.x"
-
-            -   name: Install yarn berry
-                run: corepack enable && npm i -g corepack && corepack prepare yarn@stable --activate
 
             -   name: Install dependencies
                 run: yarn install
