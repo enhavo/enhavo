@@ -210,5 +210,5 @@ services:
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:
-            - { name: enhavo_api.endpoint_extension }
+            - { name: enhavo_api.endpoint_extension, priority: 20 }
             - { name: container.service_subscriber }
