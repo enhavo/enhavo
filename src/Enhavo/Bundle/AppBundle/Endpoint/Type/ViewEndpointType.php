@@ -24,26 +24,15 @@ class ViewEndpointType extends AbstractEndpointType
         if ($request->get('_format') === 'json') {
             return $this->parent->getResponse($options, $request, $data, $context);
         } else if (!$request->get('_format') || $request->get('_format') === 'html') {
-            $content = $this->twig->render($this->templateResolver->resolve($options['template']), $this->getTemplateData($options, $data));
+            $content = $this->twig->render($this->templateResolver->resolve($options['template']), $data->normalize());
             return $this->updateResponse(new Response($content), $context);
         }
 
         throw new NotFoundHttpException('No format found. Check your route configuration');
     }
 
-    private function getTemplateData($options, Data $data): array
-    {
-        $templateData = $data->normalize();
-        $templateData['entrypoint'] = $options['entrypoint'];
-        return $templateData;
-    }
-
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
-            'entrypoint' => null,
-        ]);
-
         $resolver->setRequired('template');
     }
 }
