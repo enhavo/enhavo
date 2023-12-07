@@ -2,6 +2,8 @@
 .settings
 .build
 .phpunit.result.cache
+.yarn
+.pnp.*
 /public/bundles/
 /public/build/*
 !/public/build/.gitignore
