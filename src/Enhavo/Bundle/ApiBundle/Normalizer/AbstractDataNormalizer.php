@@ -41,7 +41,7 @@ abstract class AbstractDataNormalizer implements DataNormalizerInterface, Normal
         return [];
     }
 
-    public function getSerializationGroups(array $groups, array $context = []): array
+    public function getSerializationGroups(array $groups, array $context = []): ?array
     {
         return $groups;
     }

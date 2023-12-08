@@ -120,7 +120,7 @@ class Data implements \IteratorAggregate, \Countable, \ArrayAccess
 
     public function offsetSet($offset, $value): void
     {
-        if (!is_array($value) && !is_scalar($value)) {
+        if ($value !== null && !is_array($value) && !is_scalar($value)) {
             throw new \Exception(sprintf('Data value must be of type array or scalar. "%s" given.', gettype($value)));
         }
 

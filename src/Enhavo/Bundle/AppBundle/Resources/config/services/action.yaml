@@ -6,7 +6,9 @@ services:
             - 'Action'
 
     enhavo_app.action_manager:
-        class: Enhavo\Bundle\AppBundle\Action\ActionManager
+        alias: Enhavo\Bundle\AppBundle\Action\ActionManager
+
+    Enhavo\Bundle\AppBundle\Action\ActionManager:
         arguments:
             - '@enhavo_app.action_collector'
             - '@security.authorization_checker'

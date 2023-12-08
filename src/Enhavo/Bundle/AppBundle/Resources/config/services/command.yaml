@@ -11,3 +11,9 @@ services:
             - '%enhavo_app.mailer.defaults%'
         tags:
             - { name: console.command, command: 'enhavo:email:send' }
+
+    Enhavo\Bundle\AppBundle\Command\DebugEndpointTemplate:
+        arguments:
+            - '@Enhavo\Bundle\AppBundle\Endpoint\TemplateEndpointCollector'
+        tags:
+            - { name: console.command }

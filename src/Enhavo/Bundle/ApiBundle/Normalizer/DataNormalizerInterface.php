@@ -10,7 +10,7 @@ interface DataNormalizerInterface
 
     public static function getSupportedTypes(): array;
 
-    public function getSerializationGroups(array $groups, array $context = []): array;
+    public function getSerializationGroups(array $groups, array $context = []): ?array;
 
     public function isStopped(): bool;
 }
