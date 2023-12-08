@@ -38,4 +38,9 @@ class AreaEndpointType extends AbstractEndpointType
     {
         return ViewEndpointType::class;
     }
+
+    public static function getName(): ?string
+    {
+        return 'area';
+    }
 }

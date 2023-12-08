@@ -129,3 +129,10 @@ services:
 
     Enhavo\Bundle\AppBundle\Routing\RouteCollectorInterface:
         alias: enhavo_app.route_collector
+
+
+    Enhavo\Bundle\AppBundle\Routing\Loader\VueRouterLoader:
+        arguments:
+            - '@file_locator'
+        tags:
+            - { name: routing.loader }
