@@ -1,0 +1,6 @@
+[
+  { "path": "/dashboard", "name": "app_dashboard_index", "component": "dashboard-index" },
+  { "path": "/people", "name": "app_people_index", "component": "people-index", "children": [
+    {"path": "/people/user", "name": "app_people_user", "component": "people-user-index"}
+  ]}
+]
