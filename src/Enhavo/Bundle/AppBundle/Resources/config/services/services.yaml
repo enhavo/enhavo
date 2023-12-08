@@ -106,53 +106,13 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
-    Enhavo\Bundle\AppBundle\Endpoint\Type\ViewEndpointType:
-        arguments:
-            - '@twig'
-            - '@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface'
-        tags:
-            - { name: enhavo_api.endpoint }
-
-    Enhavo\Bundle\AppBundle\Endpoint\Type\TemplateEndpointType:
-        arguments:
-            - '@Enhavo\Bundle\AppBundle\Endpoint\Loader'
-        tags:
-            - { name: enhavo_api.endpoint }
-
-    Enhavo\Bundle\AppBundle\Endpoint\Extension\RouterEndpointExtensionType:
-        arguments:
-            - '@Enhavo\Bundle\AppBundle\Twig\TwigRouter'
-        calls:
-            - [setContainer, ['@Psr\Container\ContainerInterface']]
-        tags:
-            - { name: enhavo_api.endpoint_extension }
-            - { name: container.service_subscriber }
-
-    Enhavo\Bundle\AppBundle\Endpoint\Type\AreaEndpointType:
-        arguments:
-            - '@twig'
-            - '@Enhavo\Bundle\AppBundle\Routing\RouteCollectorInterface'
-        calls:
-            - [setContainer, ['@Psr\Container\ContainerInterface']]
-        tags:
-            - { name: enhavo_api.endpoint }
-            - { name: container.service_subscriber }
-
-    Enhavo\Bundle\AppBundle\Endpoint\Loader:
-        arguments:
-            - '%kernel.project_dir%/data'
-
-    Enhavo\Bundle\AppBundle\Endpoint\TemplateEndpointCollector:
-        arguments:
-            - '@router'
-
-    Enhavo\Bundle\AppBundle\Command\DebugEndpointTemplate:
-        arguments:
-            - '@Enhavo\Bundle\AppBundle\Endpoint\TemplateEndpointCollector'
-        tags:
-            - { name: console.command }
-
     Enhavo\Bundle\AppBundle\Normalizer\FormDataNormalizer:
+        arguments:
+            - '@Enhavo\Bundle\VueFormBundle\Form\VueForm'
+        tags:
+            - { name: enhavo_api.data_normalizer }
+
+    Enhavo\Bundle\AppBundle\Normalizer\RouteCollectionDataNormalizer:
         arguments:
             - '@Enhavo\Bundle\VueFormBundle\Form\VueForm'
         tags:

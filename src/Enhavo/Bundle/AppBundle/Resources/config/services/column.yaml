@@ -6,7 +6,9 @@ services:
           - 'Column'
 
     enhavo_app.column_manager:
-        class: Enhavo\Bundle\AppBundle\Column\ColumnManager
+        alias: Enhavo\Bundle\AppBundle\Column\ColumnManager
+
+    Enhavo\Bundle\AppBundle\Column\ColumnManager:
         arguments:
             - '@enhavo_app.column_collector'
             - '@security.authorization_checker'

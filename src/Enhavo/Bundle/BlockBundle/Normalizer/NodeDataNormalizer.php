@@ -54,7 +54,7 @@ class NodeDataNormalizer extends AbstractDataNormalizer
         return [NodeInterface::class];
     }
 
-    public function getSerializationGroups(array $groups, array $context = []): array
+    public function getSerializationGroups(array $groups, array $context = []): ?array
     {
         if (!$this->hasSerializationGroup(['endpoint', 'endpoint.block'], $context)) {
             return $groups;

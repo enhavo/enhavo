@@ -88,6 +88,11 @@ class DataNormalizer implements NormalizerInterface, NormalizerAwareInterface
         foreach ($normalizers as $normalizer) {
             $groups = $normalizer->getSerializationGroups($groups, $context);
         }
+
+        if ($groups === null) {
+            return [];
+        }
+
         $context['groups'] = $groups;
         return $this->normalizer->normalize($object, $format, $context);
     }
