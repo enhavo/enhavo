@@ -1,6 +1,16 @@
 Enhavo\Bundle\ArticleBundle\Entity\Article:
     attributes:
         id:
-            groups: ['form']
+            groups: ['form', 'endpoint', 'endpoint.navigation', 'endpoint.block']
         title:
-            groups: ['form']
+            groups: ['form', 'endpoint', 'endpoint.navigation', 'endpoint.block']
+        picture:
+            groups: ['endpoint', 'endpoint.block']
+        teaser:
+            groups: ['endpoint', 'endpoint.block']
+        content:
+            groups: ['endpoint', 'endpoint.block']
+        categories:
+            groups: ['endpoint', 'endpoint.block']
+        tags:
+            groups: ['endpoint', 'endpoint.block']
