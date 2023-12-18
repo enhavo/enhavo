@@ -16,6 +16,7 @@ services:
     Enhavo\Bundle\UserBundle\Form\Type\UserType:
         arguments:
             - '%enhavo_user.model.user.class%'
+            - '%enhavo_user.model.group.class%'
             - '@security.authorization_checker'
             - [default]
         tags:

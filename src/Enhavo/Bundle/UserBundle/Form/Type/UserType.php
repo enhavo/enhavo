@@ -24,9 +24,15 @@ class UserType extends AbstractResourceType
      */
     private $authorizationChecker;
 
-    public function __construct(string $dataClass, AuthorizationCheckerInterface $authorizationChecker, array $validationGroups = [])
+    /**
+     * @var string
+     */
+    private $groupDataClass;
+
+    public function __construct(string $dataClass, string $groupDataClass, AuthorizationCheckerInterface $authorizationChecker, array $validationGroups = [])
     {
         parent::__construct($dataClass, $validationGroups);
+        $this->groupDataClass = $groupDataClass;
         $this->authorizationChecker = $authorizationChecker;
     }
 
@@ -79,7 +85,7 @@ class UserType extends AbstractResourceType
         }
 
         $builder->add('groups', EntityType::class, array(
-            'class' => 'EnhavoUserBundle:Group',
+            'class' => $this->groupDataClass,
             'choice_label' => 'name',
             'multiple' => true,
             'expanded' => true,
