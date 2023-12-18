@@ -1,9 +1,9 @@
 <?php
 
-use Enhavo\Bundle\AppBundle\Endpoint\Loader;
+use Enhavo\Bundle\AppBundle\Endpoint\Template\Loader;
 
 return function(Loader $loader) {
     return [
-        'message' => 'test',
+        'message' => 'expr:lorem_ipsum()',
     ];
 };

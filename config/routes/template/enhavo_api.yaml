@@ -1,0 +1,3 @@
+enhavo_api:
+    resource: "@EnhavoApiBundle/Resources/config/routes/api/*"
+    prefix: /api

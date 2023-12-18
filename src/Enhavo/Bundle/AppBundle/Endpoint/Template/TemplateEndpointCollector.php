@@ -1,6 +1,6 @@
 <?php
 
-namespace Enhavo\Bundle\AppBundle\Endpoint;
+namespace Enhavo\Bundle\AppBundle\Endpoint\Template;
 
 use Enhavo\Bundle\AppBundle\Endpoint\Type\TemplateEndpointType;
 use Symfony\Component\Routing\Route;

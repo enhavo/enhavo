@@ -5,8 +5,7 @@ namespace Enhavo\Bundle\AppBundle\Endpoint\Type;
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
-use Enhavo\Bundle\AppBundle\Endpoint\Loader;
-use Enhavo\Bundle\AppBundle\Twig\TwigRouter;
+use Enhavo\Bundle\AppBundle\Endpoint\Template\Loader;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 

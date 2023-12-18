@@ -4,6 +4,7 @@ namespace Enhavo\Bundle\AppBundle;
 
 use Enhavo\Bundle\AppBundle\Batch\Batch;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\FilesystemCompilerPass;
+use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\LoaderExpressionLanguageCompilerPass;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\LocaleResolverCompilerPass;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\RouteCollectorCompilerPass;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\SyliusCompilerPass;
@@ -90,6 +91,8 @@ class EnhavoAppBundle extends Bundle
         $container->addCompilerPass(new LocaleResolverCompilerPass());
 
         $container->addCompilerPass(new RouteCollectorCompilerPass());
+
+        $container->addCompilerPass(new LoaderExpressionLanguageCompilerPass());
 
         $container->registerForAutoconfiguration(ViewTypeInterface::class)
             ->addTag('enhavo_app.view')

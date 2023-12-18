@@ -1,6 +1,6 @@
 <?php
 
-namespace Enhavo\Bundle\AppBundle\Endpoint;
+namespace Enhavo\Bundle\AppBundle\Endpoint\Template;
 
 class TemplateEndpointFilter
 {

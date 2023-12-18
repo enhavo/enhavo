@@ -1,15 +1,24 @@
 <?php
 
-namespace Enhavo\Bundle\AppBundle\Endpoint;
+namespace Enhavo\Bundle\AppBundle\Endpoint\Template;
 
+use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Symfony\Component\Yaml\Yaml;
 
 class Loader
 {
     public function __construct(
-        public string $dataPath
+        private readonly string $dataPath,
+        private readonly ExpressionLanguage $expressionLanguage,
     )
     {
+        $expressionLanguage = new ExpressionLanguage();
+
+        $expressionLanguage->register('include', function ($file): string {
+            return '$loader->load($file)';
+        }, function ($arguments, $file): mixed {
+            return $this->load($file);
+        });
     }
 
     public function merge(&$target, $source, ?bool $recursive = false, ?int $depth = null)
@@ -39,7 +48,7 @@ class Loader
         return false;
     }
 
-    public function load($file): array
+    public function load($file): mixed
     {
         $path = realpath($this->dataPath) . '/' . $file;
         if (!file_exists($path)) {
@@ -54,11 +63,24 @@ class Loader
             default => throw new \Exception(sprintf('Extension "%s" not supported', $ext))
         };
 
-        if (!is_array($fileData)) {
-            throw new \Exception(sprintf('The file "%s" must return an array', $file));
-        }
+        $fileData = $this->render($fileData);
 
         return $fileData;
+    }
+
+    private function render(mixed $data): mixed
+    {
+        if (is_array($data)) {
+            foreach ($data as $key => $value) {
+                $data[$key] = $this->render($value);
+            }
+        } else if (is_string($data)) {
+            if (str_starts_with($data, 'expr:')) {
+                $data = $this->expressionLanguage->evaluate(substr($data, 5));
+            }
+        }
+
+        return $data;
     }
 
     private function loadYamlFile($path)

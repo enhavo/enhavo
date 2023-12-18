@@ -8,7 +8,7 @@ services:
 
     Enhavo\Bundle\AppBundle\Endpoint\Type\TemplateEndpointType:
         arguments:
-            - '@Enhavo\Bundle\AppBundle\Endpoint\Loader'
+            - '@Enhavo\Bundle\AppBundle\Endpoint\Template\Loader'
         tags:
             - { name: enhavo_api.endpoint }
 
@@ -31,10 +31,28 @@ services:
             - { name: enhavo_api.endpoint }
             - { name: container.service_subscriber }
 
-    Enhavo\Bundle\AppBundle\Endpoint\Loader:
+    enhavo_app.endpoint.expression_language:
+        class: Symfony\Component\ExpressionLanguage\ExpressionLanguage
+
+    Enhavo\Bundle\AppBundle\Endpoint\Template\Loader:
         arguments:
             - '%kernel.project_dir%/data'
+            - '@enhavo_app.endpoint.expression_language'
 
-    Enhavo\Bundle\AppBundle\Endpoint\TemplateEndpointCollector:
+    Enhavo\Bundle\AppBundle\Endpoint\Template\TemplateEndpointCollector:
         arguments:
             - '@router'
+
+    Enhavo\Bundle\AppBundle\Endpoint\Template\ExpressionLanguage\LoremIpsumGenerator:
+
+    Enhavo\Bundle\AppBundle\Endpoint\Template\ExpressionLanguage\IncludeFunctionProvider:
+        arguments:
+            - '@Enhavo\Bundle\AppBundle\Endpoint\Template\Loader'
+        tags:
+            - { name: enhavo_app.endpoint.expression_language }
+
+    Enhavo\Bundle\AppBundle\Endpoint\Template\ExpressionLanguage\LoremIpsumFunctionProvider:
+        arguments:
+            - '@Enhavo\Bundle\AppBundle\Endpoint\Template\ExpressionLanguage\LoremIpsumGenerator'
+        tags:
+            - { name: enhavo_app.endpoint.expression_language }
