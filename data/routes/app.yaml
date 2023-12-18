@@ -6,4 +6,3 @@ template_hello:
             type: template
             load: [hello.yaml, hello2.php]
             template: 'theme/endpoint/hello.html.twig'
-

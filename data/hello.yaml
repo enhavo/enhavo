@@ -1,4 +1,5 @@
 message:
     'hello world template!!!'
-test:
-    'test'
+test: expr:include("hello2.php")
+
+

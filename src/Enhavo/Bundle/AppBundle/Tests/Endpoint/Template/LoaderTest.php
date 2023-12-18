@@ -1,15 +1,16 @@
 <?php
 
-namespace Enhavo\Bundle\AppBundle\Tests\Endpoint;
+namespace Enhavo\Bundle\AppBundle\Tests\Endpoint\Template;
 
-use Enhavo\Bundle\AppBundle\Endpoint\Loader;
+use Enhavo\Bundle\AppBundle\Endpoint\Template\Loader;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
 class LoaderTest extends TestCase
 {
     private function createLoader()
     {
-        return new Loader(__DIR__ . '/../Fixtures/data');
+        return new Loader(__DIR__ . '/../../Fixtures/data', new ExpressionLanguage());
     }
 
     public function testLoadYaml()
