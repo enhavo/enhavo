@@ -69,3 +69,7 @@ services:
             - '@enhavo_routing.router'
         tags:
             - { name: enhavo_app.route_collector }
+
+    Enhavo\Bundle\PageBundle\Vue\PageVueRouteProviderType:
+        tags:
+            - { name: enhavo_app.vue_route_provider }

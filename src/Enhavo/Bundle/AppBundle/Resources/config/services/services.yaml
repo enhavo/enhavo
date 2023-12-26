@@ -131,8 +131,22 @@ services:
         alias: enhavo_app.route_collector
 
 
-    Enhavo\Bundle\AppBundle\Routing\Loader\VueRouterLoader:
+    Enhavo\Bundle\AppBundle\Routing\Loader\VueRouterRouteLoader:
         arguments:
             - '@file_locator'
         tags:
             - { name: routing.loader }
+
+    Enhavo\Bundle\AppBundle\Vue\RouteProvider\VueRouteProviderInterface:
+        alias: Enhavo\Bundle\AppBundle\Vue\RouteProvider\ChainVueRouteProvider
+
+    Enhavo\Bundle\AppBundle\Vue\RouteProvider\ChainVueRouteProvider:
+        arguments:
+            - '%enhavo_app.vue.route_providers%'
+            - '@Enhavo\Component\Type\FactoryInterface[VueRouteProvider]'
+
+    Enhavo\Bundle\AppBundle\Vue\RouteProvider\FileVueRouteProviderType:
+        arguments:
+            - '%kernel.project_dir%'
+        tags:
+            - { name: 'enhavo_app.vue_route_provider' }

@@ -72,3 +72,7 @@ services:
             - '@enhavo_article.repository.article'
         tags:
             - { name: enhavo.provider, alias: article.total }
+
+    Enhavo\Bundle\ArticleBundle\Vue\ArticleVueRouteProviderType:
+        tags:
+            - { name: enhavo_app.vue_route_provider }
