@@ -1,8 +1,10 @@
 template_hello:
-    path: /endpoint/world.{_format}
+    path: /world.{_format}
     defaults:
         _format: 'html'
         _endpoint:
             type: template
             load: [hello.yaml, hello2.php]
             template: 'theme/endpoint/hello.html.twig'
+            vue_routes_enabled: true
+            vue_routes_groups: ['template']

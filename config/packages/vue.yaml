@@ -1,0 +1,29 @@
+enhavo_app:
+    vue:
+        route_providers:
+            theme:
+                type: file
+                path: assets/theme/routes.json
+                groups: ['theme']
+            page:
+                type: page
+                component: page
+                groups: ['theme']
+            article:
+                type: article
+                component: article
+                groups: ['theme']
+            template:
+                type: file
+                path: assets/theme/routes.json
+                prefix: /template
+                groups: ['template']
+
+when@template:
+    enhavo_app:
+        vue:
+            route_providers:
+                template:
+                    type: file
+                    path: assets/theme/routes.json
+                    groups: ['template']

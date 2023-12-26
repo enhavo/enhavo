@@ -1,0 +1,9 @@
+enhavo_app_api_vue_routes:
+    path: /vue-routes
+    methods: [GET]
+    defaults:
+        _describe: true
+        _format: json
+        _endpoint:
+            type: Enhavo\Bundle\AppBundle\Endpoint\Type\VueRoutesEndpointType
+            groups: theme

@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Yaml\Yaml;
 
-class VueRouterLoader extends FileLoader
+class VueRouterRouteLoader extends FileLoader
 {
     public function load(mixed $resource, string $type = null): RouteCollection
     {
@@ -37,7 +37,7 @@ class VueRouterLoader extends FileLoader
             return json_decode(file_get_contents($resource->getResource()), true);
         }
 
-        throw new \Exception(sprintf('VueRouterLoader can only read yaml or json formats. Trying to read "%s"', $resource->getResource()));
+        throw new \Exception(sprintf('VueRouterRouteLoader can only read yaml or json formats. Trying to read "%s"', $resource->getResource()));
     }
 
     private function getRoutes(mixed $content): array

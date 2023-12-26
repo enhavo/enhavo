@@ -25,3 +25,9 @@ services:
     Enhavo\Bundle\RoutingBundle\Twig\SlugifyExtension:
         tags:
             - { name: twig.extension }
+
+    Enhavo\Bundle\RoutingBundle\Vue\RoutingVueRouteProviderType:
+        arguments:
+            - '@enhavo_routing.repository.route'
+        tags:
+            - { name: enhavo_app.vue_route_provider }

@@ -31,6 +31,15 @@ services:
             - { name: enhavo_api.endpoint }
             - { name: container.service_subscriber }
 
+    Enhavo\Bundle\AppBundle\Endpoint\Type\VueRoutesEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\AppBundle\Vue\RouteProvider\VueRouteProviderInterface'
+        calls:
+            - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
     enhavo_app.endpoint.expression_language:
         class: Symfony\Component\ExpressionLanguage\ExpressionLanguage
 
@@ -56,3 +65,12 @@ services:
             - '@Enhavo\Bundle\AppBundle\Endpoint\Template\ExpressionLanguage\LoremIpsumGenerator'
         tags:
             - { name: enhavo_app.endpoint.expression_language }
+
+    Enhavo\Bundle\AppBundle\Endpoint\Extension\VueRouteEndpointExtensionType:
+        arguments:
+            - '@Enhavo\Bundle\AppBundle\Vue\RouteProvider\VueRouteProviderInterface'
+        calls:
+            - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
+        tags:
+            - { name: enhavo_api.endpoint_extension }
+            - { name: container.service_subscriber }

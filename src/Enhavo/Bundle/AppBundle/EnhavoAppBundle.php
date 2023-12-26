@@ -17,10 +17,12 @@ use Enhavo\Bundle\AppBundle\Type\TypeCompilerPass;
 use Enhavo\Bundle\AppBundle\View\View;
 use Enhavo\Bundle\AppBundle\View\ViewFactoryAwareInterface;
 use Enhavo\Bundle\AppBundle\View\ViewTypeInterface;
+use Enhavo\Bundle\AppBundle\Vue\RouteProvider\RouteProvider;
+use Enhavo\Bundle\AppBundle\Vue\RouteProvider\VueRouteProviderTypeInterface;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class EnhavoAppBundle extends Bundle
 {
@@ -52,6 +54,10 @@ class EnhavoAppBundle extends Bundle
 
         $container->addCompilerPass(
             new \Enhavo\Component\Type\TypeCompilerPass('View', 'enhavo_app.view', View::class)
+        );
+
+        $container->addCompilerPass(
+            new \Enhavo\Component\Type\TypeCompilerPass('VueRouteProvider', 'enhavo_app.vue_route_provider', RouteProvider::class)
         );
 
         $container->addCompilerPass(
@@ -96,6 +102,10 @@ class EnhavoAppBundle extends Bundle
 
         $container->registerForAutoconfiguration(ViewTypeInterface::class)
             ->addTag('enhavo_app.view')
+        ;
+
+        $container->registerForAutoconfiguration(VueRouteProviderTypeInterface::class)
+            ->addTag('enhavo_app.vue_route_provider')
         ;
 
         $container->registerForAutoconfiguration(RouteCollectorInterface::class)

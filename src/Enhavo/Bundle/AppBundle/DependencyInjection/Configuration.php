@@ -25,6 +25,7 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->getRootNode();
 
         $this->addViewerSectionSection($rootNode);
+        $this->addVueSectionSection($rootNode);
         $this->addMailSectionSection($rootNode);
         $this->addWebpackBuildSection($rootNode);
         $this->addFormThemesSection($rootNode);
@@ -57,6 +58,20 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->arrayNode('apps')
                     ->prototype('scalar')->end()
+                ->end()
+            ->end()
+        ;
+    }
+
+    private function addVueSectionSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('vue')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->variableNode('route_providers')
+                    ->end()
                 ->end()
             ->end()
         ;
