@@ -9,6 +9,7 @@ services:
     Enhavo\Bundle\AppBundle\Endpoint\Type\TemplateEndpointType:
         arguments:
             - '@Enhavo\Bundle\AppBundle\Endpoint\Template\Loader'
+            - '@Enhavo\Bundle\AppBundle\Endpoint\Template\ExpressionLanguage\TemplateExpressionLanguageEvaluator'
         tags:
             - { name: enhavo_api.endpoint }
 
@@ -40,13 +41,17 @@ services:
             - { name: enhavo_api.endpoint }
             - { name: container.service_subscriber }
 
-    enhavo_app.endpoint.expression_language:
+    enhavo_app.endpoint.template_expression_language:
         class: Symfony\Component\ExpressionLanguage\ExpressionLanguage
+
+    Enhavo\Bundle\AppBundle\Endpoint\Template\ExpressionLanguage\TemplateExpressionLanguageEvaluator:
+        arguments:
+            - '@enhavo_app.endpoint.template_expression_language'
 
     Enhavo\Bundle\AppBundle\Endpoint\Template\Loader:
         arguments:
             - '%kernel.project_dir%/data'
-            - '@enhavo_app.endpoint.expression_language'
+            - '@Enhavo\Bundle\AppBundle\Endpoint\Template\ExpressionLanguage\TemplateExpressionLanguageEvaluator'
 
     Enhavo\Bundle\AppBundle\Endpoint\Template\TemplateEndpointCollector:
         arguments:
@@ -63,6 +68,18 @@ services:
     Enhavo\Bundle\AppBundle\Endpoint\Template\ExpressionLanguage\LoremIpsumFunctionProvider:
         arguments:
             - '@Enhavo\Bundle\AppBundle\Endpoint\Template\ExpressionLanguage\LoremIpsumGenerator'
+        tags:
+            - { name: enhavo_app.endpoint.expression_language }
+
+    Enhavo\Bundle\AppBundle\Endpoint\Template\ExpressionLanguage\RefFunctionProvider:
+        arguments:
+            - '@Enhavo\Bundle\AppBundle\Endpoint\Template\Loader'
+        tags:
+            - { name: enhavo_app.endpoint.expression_language }
+
+    Enhavo\Bundle\AppBundle\Endpoint\Template\ExpressionLanguage\UrlFunctionProvider:
+        arguments:
+            - '%enhavo_app.endpoint.template_url_prefix%'
         tags:
             - { name: enhavo_app.endpoint.expression_language }
 

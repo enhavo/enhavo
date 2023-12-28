@@ -207,6 +207,8 @@ services:
             - { name: enhavo_api.endpoint }
 
     Enhavo\Bundle\MediaBundle\Endpoint\Extension\MediaRoutesEndpointExtensionType:
+        arguments:
+            - '@Enhavo\Bundle\AppBundle\Endpoint\Template\ExpressionLanguage\TemplateExpressionLanguageEvaluator'
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:

@@ -5,6 +5,7 @@ namespace Enhavo\Bundle\AppBundle\Endpoint\Type;
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
+use Enhavo\Bundle\AppBundle\Endpoint\Template\ExpressionLanguage\TemplateExpressionLanguageEvaluator;
 use Enhavo\Bundle\AppBundle\Endpoint\Template\Loader;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -13,6 +14,7 @@ class TemplateEndpointType extends AbstractEndpointType
 {
     public function __construct(
         private readonly Loader $loader,
+        private readonly TemplateExpressionLanguageEvaluator $templateExpressionLanguageEvaluator,
     )
     {
     }
@@ -28,7 +30,8 @@ class TemplateEndpointType extends AbstractEndpointType
         }
 
         if (is_array($options['data'])) {
-            $this->loader->merge($data, $options['data'], $options['recursive'], $options['depth']);
+            $templateData = $this->templateExpressionLanguageEvaluator->evaluate($options['data']);
+            $this->loader->merge($data, $templateData, $options['recursive'], $options['depth']);
         }
     }
 
