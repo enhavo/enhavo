@@ -43,6 +43,7 @@ class EnhavoAppExtension extends Extension implements PrependExtensionInterface
         $container->setParameter('enhavo_app.toolbar_widget.primary', $config['toolbar_widget']['primary']);
         $container->setParameter('enhavo_app.toolbar_widget.secondary', $config['toolbar_widget']['secondary']);
         $container->setParameter('enhavo_app.vue.route_providers', $config['vue']['route_providers'] ?? []);
+        $container->setParameter('enhavo_app.endpoint.template_url_prefix', $config['endpoint']['template_url_prefix'] ?? null);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 

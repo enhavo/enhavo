@@ -2,15 +2,22 @@
 
 namespace Enhavo\Bundle\AppBundle\Tests\Endpoint\Template;
 
+use Enhavo\Bundle\AppBundle\Endpoint\Template\ExpressionLanguage\TemplateExpressionLanguageEvaluator;
 use Enhavo\Bundle\AppBundle\Endpoint\Template\Loader;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
 class LoaderTest extends TestCase
 {
     private function createLoader()
     {
-        return new Loader(__DIR__ . '/../../Fixtures/data', new ExpressionLanguage());
+        $templateExpressionLanguageEvaluatorMock = $this->getMockBuilder(TemplateExpressionLanguageEvaluator::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $templateExpressionLanguageEvaluatorMock
+            ->method('evaluate')->willReturnCallback(function($value) { return $value; });
+
+        return new Loader(__DIR__ . '/../../Fixtures/data', $templateExpressionLanguageEvaluatorMock);
     }
 
     public function testLoadYaml()

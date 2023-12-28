@@ -26,6 +26,7 @@ class Configuration implements ConfigurationInterface
 
         $this->addViewerSectionSection($rootNode);
         $this->addVueSectionSection($rootNode);
+        $this->addEndpointSection($rootNode);
         $this->addMailSectionSection($rootNode);
         $this->addWebpackBuildSection($rootNode);
         $this->addFormThemesSection($rootNode);
@@ -76,6 +77,21 @@ class Configuration implements ConfigurationInterface
             ->end()
         ;
     }
+
+    private function addEndpointSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('endpoint')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('template_url_prefix')->defaultValue(null)->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+    }
+
 
     private function addMailSectionSection(ArrayNodeDefinition $node)
     {

@@ -9,12 +9,3 @@ app:
 endpoint:
     resource: ../src/App/Endpoint
     type: endpoint
-
-vue:
-    resource: ../assets/theme/routes.json
-    type: vue
-    defaults:
-        _endpoint:
-            type: area
-            area: theme
-            template: "{{ area }}/base.html.twig"
