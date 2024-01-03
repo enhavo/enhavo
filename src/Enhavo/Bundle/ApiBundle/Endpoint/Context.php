@@ -78,6 +78,11 @@ class Context
         return \array_key_exists($key, $this->data);
     }
 
+    public function getData(): array
+    {
+        return $this->data;
+    }
+
     public function isStopped()
     {
         return $this->stop;

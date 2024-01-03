@@ -56,8 +56,10 @@ class Endpoint extends AbstractContainerType
 
         $this->type->handleRequest($this->options, $request, $data, $context);
         $this->endpointDataCollector->addType($this->type);
-        $this->endpointDataCollector->setData($data);
+
         if ($context->isStopped()) {
+            $this->endpointDataCollector->setContext($context);
+            $this->endpointDataCollector->setData($data);
             return $context->getResponse();
         }
 
@@ -66,10 +68,15 @@ class Endpoint extends AbstractContainerType
                 $extension->handleRequest($this->options, $request, $data, $context);
                 $this->endpointDataCollector->addExtension($extension);
                 if ($context->isStopped()) {
+                    $this->endpointDataCollector->setContext($context);
+                    $this->endpointDataCollector->setData($data);
                     return $context->getResponse();
                 }
             }
         }
+
+        $this->endpointDataCollector->setContext($context);
+        $this->endpointDataCollector->setData($data);
 
         if ($context->getResponse()) {
             return $context->getResponse();

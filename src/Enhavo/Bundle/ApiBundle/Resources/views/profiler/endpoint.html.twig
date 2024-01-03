@@ -36,81 +36,121 @@
 {% endblock %}
 
 {% block panel %}
-    <h2>Endpoint</h2>
+    <h2>{{ collector.lastNode.type }}</h2>
 
-    <h3>Data</h3>
+    <div class="sf-tabs">
 
-    <table class="{{ class|default('') }}">
-        <thead>
-        <tr>
-            <th scope="col" class="key">{{ labels is defined ? labels[0] : 'Key' }}</th>
-            <th scope="col">{{ labels is defined ? labels[1] : 'Value' }}</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for key,value in collector.data|sort %}
-            <tr>
-                <th>{{ key }}</th>
-                <td>{{ profiler_dump(value, maxDepth=maxDepth|default(0)) }}</td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="2">(no data)</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <div class="tab">
+            <h3 class="tab-title">Data</h3>
+            <div class="tab-content">
+                <table class="{{ class|default('') }}">
+                    <thead>
+                    <tr>
+                        <th scope="col" class="key">{{ labels is defined ? labels[0] : 'Key' }}</th>
+                        <th scope="col">{{ labels is defined ? labels[1] : 'Value' }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for key,value in collector.data|sort %}
+                        <tr>
+                            <th>{{ key }}</th>
+                            <td>{{ profiler_dump(value, maxDepth=maxDepth|default(0)) }}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="2">(no data)</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-    <h3>Types</h3>
+        <div class="tab">
+            <h3 class="tab-title">Context</h3>
+            <div class="tab-content">
+                <table class="{{ class|default('') }}">
+                    <thead>
+                    <tr>
+                        <th scope="col" class="key">{{ labels is defined ? labels[0] : 'Key' }}</th>
+                        <th scope="col">{{ labels is defined ? labels[1] : 'Value' }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for key,value in collector.context|sort %}
+                        <tr>
+                            <th>{{ key }}</th>
+                            <td>{{ profiler_dump(value, maxDepth=maxDepth|default(0)) }}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="2">(no data)</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-    <table class="{{ class|default('') }}">
-        <thead>
-        <tr>
-            <th scope="col">{{ labels is defined ? labels[0] : 'Endpoint' }}</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for node in collector.nodes %}
-            <tr>
-                <th>
-                    <div>{{ node.type }}</div>
-                    {% if node.extensions %}
-                        <ul style="margin-top: 5px;">
-                            {% for extension in node.extensions %}
-                                <li>{{ extension }}</li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
-                </th>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="1">(no endpoint)</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <div class="tab">
+            <h3 class="tab-title">Types</h3>
+            <div class="tab-content">
+                <table class="{{ class|default('') }}">
+                    <thead>
+                    <tr>
+                        <th scope="col">{{ labels is defined ? labels[0] : 'Endpoint' }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for node in collector.nodes %}
+                        <tr>
+                            <th>
+                                <div>{{ node.type }}</div>
+                                {% if node.extensions %}
+                                    <ul style="margin-top: 5px;">
+                                        {% for extension in node.extensions %}
+                                            <li>{{ extension }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </th>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="1">(no endpoint)</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-    <h3>Options</h3>
 
-    <table class="{{ class|default('') }}">
-        <thead>
-        <tr>
-            <th scope="col" class="key">{{ labels is defined ? labels[0] : 'Key' }}</th>
-            <th scope="col">{{ labels is defined ? labels[1] : 'Value' }}</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for key,value in collector.options|sort %}
-            <tr>
-                <th>{{ key }}</th>
-                <td>{{ profiler_dump(value, maxDepth=maxDepth|default(0)) }}</td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="2">(no options)</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <div class="tab">
+            <h3 class="tab-title">Options</h3>
+            <div class="tab-content">
+                <table class="{{ class|default('') }}">
+                    <thead>
+                    <tr>
+                        <th scope="col" class="key">{{ labels is defined ? labels[0] : 'Key' }}</th>
+                        <th scope="col">{{ labels is defined ? labels[1] : 'Value' }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for key,value in collector.options|sort %}
+                        <tr>
+                            <th>{{ key }}</th>
+                            <td>{{ profiler_dump(value, maxDepth=maxDepth|default(0)) }}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="2">(no options)</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
 {% endblock %}

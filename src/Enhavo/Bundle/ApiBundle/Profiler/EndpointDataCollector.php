@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\ApiBundle\Profiler;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
+use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Bundle\ApiBundle\Endpoint\EndpointTypeExtensionInterface;
 use Enhavo\Bundle\ApiBundle\Endpoint\EndpointTypeInterface;
 use Symfony\Bundle\FrameworkBundle\DataCollector\AbstractDataCollector;
@@ -60,6 +61,16 @@ class EndpointDataCollector extends AbstractDataCollector
     public function getData()
     {
         return $this->data['data'];
+    }
+
+    public function setContext(Context $data)
+    {
+        $this->data['context'] = $this->cloneVar($data->getData());
+    }
+
+    public function getContext()
+    {
+        return $this->data['context'];
     }
 
     public function setOptions($options)
