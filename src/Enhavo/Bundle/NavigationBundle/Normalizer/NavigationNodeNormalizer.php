@@ -14,8 +14,8 @@ class NavigationNodeNormalizer extends AbstractDataNormalizer
     use TemplateResolverTrait;
 
     public function __construct(
-        private NavigationManager $navigationManager,
-        private NavItemManager $itemManager,
+        private readonly NavigationManager $navigationManager,
+        private readonly NavItemManager $itemManager,
     ) {}
 
     public function buildData(Data $data, $object, string $format = null, array $context = [])
@@ -25,11 +25,11 @@ class NavigationNodeNormalizer extends AbstractDataNormalizer
         }
 
         /** @var NodeInterface $object */
-
         $data->set('active', $this->navigationManager->isActive($object));
 
         $item = $this->itemManager->getNavItem($object->getName());
         $data->set('template', $this->resolveTemplate($item->getTemplate()));
+        $data->set('component', $item->getComponent());
     }
 
     public static function getSupportedTypes(): array

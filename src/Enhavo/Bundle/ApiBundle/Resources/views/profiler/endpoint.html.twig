@@ -1,0 +1,116 @@
+{% extends '@WebProfiler/Profiler/layout.html.twig' %}
+
+{% block toolbar %}
+    {% if collector.lastNode.type %}
+        {% set icon %}
+            <svg width="800px" height="800px" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="48" height="48" fill="white" fill-opacity="0.01"/>
+                <path d="M43 40H23.2857C20.0414 40 7 40 7 40L7 27M43 8H23.2857C14.2914 8 7 8 7 8L7 21M43 24H10" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="7" cy="24" r="3" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="sf-toolbar-value">{{ collector.type }}</span>
+        {% endset %}
+
+        {% set text %}
+            <div class="sf-toolbar-info-piece">
+                <b>Endpoint</b>
+                <span>{{ collector.lastNode.type }}</span>
+            </div>
+        {% endset %}
+
+        {{ include('@WebProfiler/Profiler/toolbar_item.html.twig', { link: true }) }}
+    {% endif %}
+{% endblock %}
+
+{% block menu %}
+    <span class="label">
+        <span class="icon">
+            <svg width="800px" height="800px" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="48" height="48" fill="white" fill-opacity="0.01"/>
+                <path d="M43 40H23.2857C20.0414 40 7 40 7 40L7 27M43 8H23.2857C14.2914 8 7 8 7 8L7 21M43 24H10" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="7" cy="24" r="3" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </span>
+        <strong>Endpoint</strong>
+    </span>
+{% endblock %}
+
+{% block panel %}
+    <h2>Endpoint</h2>
+
+    <h3>Data</h3>
+
+    <table class="{{ class|default('') }}">
+        <thead>
+        <tr>
+            <th scope="col" class="key">{{ labels is defined ? labels[0] : 'Key' }}</th>
+            <th scope="col">{{ labels is defined ? labels[1] : 'Value' }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for key,value in collector.data|sort %}
+            <tr>
+                <th>{{ key }}</th>
+                <td>{{ profiler_dump(value, maxDepth=maxDepth|default(0)) }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="2">(no data)</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <h3>Types</h3>
+
+    <table class="{{ class|default('') }}">
+        <thead>
+        <tr>
+            <th scope="col">{{ labels is defined ? labels[0] : 'Endpoint' }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for node in collector.nodes %}
+            <tr>
+                <th>
+                    <div>{{ node.type }}</div>
+                    {% if node.extensions %}
+                        <ul style="margin-top: 5px;">
+                            {% for extension in node.extensions %}
+                                <li>{{ extension }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </th>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="1">(no endpoint)</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <h3>Options</h3>
+
+    <table class="{{ class|default('') }}">
+        <thead>
+        <tr>
+            <th scope="col" class="key">{{ labels is defined ? labels[0] : 'Key' }}</th>
+            <th scope="col">{{ labels is defined ? labels[1] : 'Value' }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for key,value in collector.options|sort %}
+            <tr>
+                <th>{{ key }}</th>
+                <td>{{ profiler_dump(value, maxDepth=maxDepth|default(0)) }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="2">(no options)</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

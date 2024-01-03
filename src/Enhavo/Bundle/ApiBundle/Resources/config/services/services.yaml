@@ -34,3 +34,14 @@ services:
     Enhavo\Bundle\ApiBundle\Normalizer\DataNormalizer:
         tags:
             - { name: serializer.normalizer }
+
+    Enhavo\Bundle\ApiBundle\Profiler\EndpointDataCollector:
+        tags:
+            - { name: data_collector, id: 'endpoint' }
+
+    Enhavo\Component\Type\FactoryInterface[Endpoint]:
+        class: Enhavo\Bundle\ApiBundle\Factory\EndpointFactory
+        arguments:
+            - 'Enhavo\Bundle\ApiBundle\Endpoint\Endpoint'
+            - '@Enhavo\Component\Type\RegistryInterface[Endpoint]'
+            - '@Enhavo\Bundle\ApiBundle\Profiler\EndpointDataCollector'

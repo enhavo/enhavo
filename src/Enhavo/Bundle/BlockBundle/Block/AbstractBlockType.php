@@ -48,6 +48,11 @@ abstract class AbstractBlockType extends AbstractType implements BlockTypeInterf
         return $this->parent->getTemplate($options);
     }
 
+    public function getComponent(array $options)
+    {
+        return $this->parent->getComponent($options);
+    }
+
     public function getGroups(array $options)
     {
         return $this->parent->getGroups($options);

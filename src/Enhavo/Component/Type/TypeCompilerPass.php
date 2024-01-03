@@ -16,23 +16,12 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class TypeCompilerPass implements CompilerPassInterface
 {
-    /** @var string */
-    private $namespace;
-
-    /** @var string */
-    private $tagName;
-
-    /** @var string */
-    private $class;
-
-    /** @var string */
-    private $alias;
-
-    public function __construct($namespace, $tagName, $class)
+    public function __construct(
+        private readonly string $namespace,
+        private readonly string $tagName,
+        private readonly string $class,
+    )
     {
-        $this->namespace = $namespace;
-        $this->tagName = $tagName;
-        $this->class = $class;
     }
 
     /**
@@ -41,13 +30,15 @@ class TypeCompilerPass implements CompilerPassInterface
     public function process(ContainerBuilder $container)
     {
         $registryDefinition = $this->createRegistryDefinition();
-        $factoryDefinition = $this->createFactoryDefinition( $this->class, $registryDefinition);
-
         $container->addDefinitions([
             sprintf('%s[%s]', RegistryInterface::class, $this->namespace) => $registryDefinition,
-            sprintf('%s[%s]', FactoryInterface::class, $this->namespace) => $factoryDefinition,
         ]);
 
+        $factoryDefinitionName = sprintf('%s[%s]', FactoryInterface::class, $this->namespace);
+        if (!$container->hasDefinition($factoryDefinitionName)) {
+            $factoryDefinition = $this->createFactoryDefinition($this->class, $registryDefinition);
+            $container->addDefinitions([$factoryDefinitionName => $factoryDefinition]);
+        }
 
         $taggedServices = $container->findTaggedServiceIds($this->tagName);
 

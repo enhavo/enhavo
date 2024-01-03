@@ -37,6 +37,11 @@ class Block extends AbstractContainerType
         return $this->type->getTemplate($this->options);
     }
 
+    public function getComponent()
+    {
+        return $this->type->getComponent($this->options);
+    }
+
     public function getGroups()
     {
         return $this->type->getGroups($this->options);

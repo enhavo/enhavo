@@ -12,16 +12,11 @@ use Enhavo\Component\Type\Exception\TypeCreateException;
 
 class Factory implements FactoryInterface
 {
-    /** @var RegistryInterface */
-    private $registry;
-
-    /** @var string */
-    private $class;
-
-    public function __construct($class, RegistryInterface $registry)
+    public function __construct(
+        private readonly string $class,
+        private readonly RegistryInterface $registry,
+    )
     {
-        $this->class = $class;
-        $this->registry = $registry;
     }
 
     /**
@@ -33,14 +28,25 @@ class Factory implements FactoryInterface
     public function create(array $options, $key = null)
     {
         if(!isset($options['type'])) {
-            throw TypeCreateException::missionOption($this->class, $options);
+            throw TypeCreateException::missingOption($this->class, $options);
         }
 
         $type = $this->registry->getType($options['type']);
         $parents = $this->getParents($type);
         unset($options['type']);
-        $class = new $this->class($type, $parents, $options, $key, $this->getExtensions($type, $parents));
+        $class = $this->instantiate($this->class, [
+            'type' => $type,
+            'parents' => $parents,
+            'options' => $options,
+            'key' => $key,
+            'extensions' => $this->getExtensions($type, $parents),
+        ]);
         return $class;
+    }
+
+    protected function instantiate($class, $arguments)
+    {
+        return new $class($arguments['type'], $arguments['parents'], $arguments['options'], $arguments['key'], $arguments['extensions']);
     }
 
     private function getParents(TypeInterface $type)

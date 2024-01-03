@@ -10,7 +10,7 @@ namespace Enhavo\Component\Type\Exception;
 
 class TypeCreateException extends \InvalidArgumentException
 {
-    public static function missionOption($class, $options)
+    public static function missingOption($class, $options)
     {
         return new self(sprintf('Option "type" is missing to create "%s". Given options are [%s]', join(',', $options), $class));
     }

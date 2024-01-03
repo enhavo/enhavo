@@ -69,8 +69,6 @@ class PageEndpointType extends AbstractEndpointType
             'preview' => false,
             'template' => '{{ area }}/resource/page/show.html.twig',
             'resource' => null,
-            'vue_routes_enabled' => true,
-            'vue_routes_groups' => ['theme'],
         ]);
     }
 }

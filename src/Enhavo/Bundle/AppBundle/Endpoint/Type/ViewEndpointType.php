@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Twig\Environment;
+use function PHPUnit\Framework\throwException;
 
 class ViewEndpointType extends AbstractEndpointType
 {
@@ -24,6 +25,9 @@ class ViewEndpointType extends AbstractEndpointType
         if ($request->get('_format') === 'json') {
             return $this->parent->getResponse($options, $request, $data, $context);
         } else if (!$request->get('_format') || $request->get('_format') === 'html') {
+            if ($options['template'] === null) {
+                throw new \Exception('If format is html, then a template need to be provided over the configuration');
+            }
             $content = $this->twig->render($this->templateResolver->resolve($options['template']), $data->normalize());
             return $this->updateResponse(new Response($content), $context);
         }

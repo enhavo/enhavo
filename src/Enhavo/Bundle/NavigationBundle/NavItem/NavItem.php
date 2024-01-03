@@ -40,6 +40,11 @@ class NavItem extends AbstractContainerType
         return $this->type->getTemplate($this->options);
     }
 
+    public function getComponent()
+    {
+        return $this->type->getComponent($this->options);
+    }
+
     public function getLabel()
     {
         return $this->type->getLabel($this->options);

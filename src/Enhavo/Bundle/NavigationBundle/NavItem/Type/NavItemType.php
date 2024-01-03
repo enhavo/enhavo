@@ -49,6 +49,11 @@ class NavItemType extends AbstractType implements NavItemTypeInterface
         return $options['template'];
     }
 
+    public function getComponent($options)
+    {
+        return $options['component'];
+    }
+
     public function render($options)
     {
         return '';
@@ -59,6 +64,7 @@ class NavItemType extends AbstractType implements NavItemTypeInterface
         $resolver->setDefaults([
             'translation_domain' => null,
             'template' => null,
+            'component' => null,
             'form_options' => [],
         ]);
 
