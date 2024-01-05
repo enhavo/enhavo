@@ -20,3 +20,5 @@ Enhavo\Bundle\ContentBundle\Entity\Content:
             groups: ['endpoint']
         canonicalUrl:
             groups: ['endpoint']
+        publicationDate:
+            groups: ['endpoint', 'endpoint.block']

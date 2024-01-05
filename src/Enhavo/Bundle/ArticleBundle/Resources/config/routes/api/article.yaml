@@ -1,0 +1,9 @@
+enhavo_article_api_article:
+    path: /article/{id}
+    methods: [GET]
+    defaults:
+        _describe: true
+        _format: json
+        _endpoint:
+            type: Enhavo\Bundle\ArticleBundle\Endpoint\ArticleEndpointType
+            area: api

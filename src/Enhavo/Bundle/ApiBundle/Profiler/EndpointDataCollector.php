@@ -17,43 +17,53 @@ class EndpointDataCollector extends AbstractDataCollector
 
     }
 
-    private function initNodes()
+    private function initNodes(): void
     {
         if (!isset($this->data['nodes'])) {
             $this->data['nodes'] = [];
         }
     }
 
-    public function addParent(EndpointTypeInterface $parent)
+    public function addParent(EndpointTypeInterface $parent): void
     {
         $this->initNodes();
         $this->data['nodes'][] = new EndpointNode(get_class($parent));
     }
 
-    public function addType(EndpointTypeInterface $parent)
+    public function addType(EndpointTypeInterface $parent): void
     {
         $this->initNodes();
         $this->data['nodes'][] = new EndpointNode(get_class($parent));
     }
 
-    public function addExtension(EndpointTypeExtensionInterface $extension)
+    public function addExtension(EndpointTypeExtensionInterface $extension): void
     {
         $this->initNodes();
         $this->getLastNode()->addExtension(get_class($extension));
     }
 
-    public function getLastNode(): EndpointNode
+    public function getLastNode(): ?EndpointNode
     {
-        return $this->data['nodes'][count($this->data['nodes']) - 1];
+        $this->initNodes();
+
+        if (count($this->data['nodes'])) {
+            return $this->data['nodes'][count($this->data['nodes']) - 1];
+        }
+
+        return null;
     }
 
     public function getType(): ?string
     {
+        if ($this->getLastNode() === null) {
+            return null;
+        }
+
         $parts = explode('\\', $this->getLastNode()->getType());
         return array_pop($parts);
     }
 
-    public function setData(Data $data)
+    public function setData(Data $data): void
     {
         $this->data['data'] = $this->cloneVar($data->normalize());
     }
@@ -63,7 +73,7 @@ class EndpointDataCollector extends AbstractDataCollector
         return $this->data['data'];
     }
 
-    public function setContext(Context $data)
+    public function setContext(Context $data): void
     {
         $this->data['context'] = $this->cloneVar($data->getData());
     }
@@ -73,7 +83,7 @@ class EndpointDataCollector extends AbstractDataCollector
         return $this->data['context'];
     }
 
-    public function setOptions($options)
+    public function setOptions($options): void
     {
         $this->data['options'] = $this->cloneVar($options);
     }
