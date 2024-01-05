@@ -7,7 +7,10 @@
     "di": "node ./assets/node_modules/@enhavo/dependency-injection/bin/dependency-injection.js",
     "dev": "encore dev",
     "watch": "encore dev --watch",
-    "webfont:generate": "node ./assets/node_modules/@enhavo/app/bin/webfont-generate.js"
+    "webfont:generate": "node ./assets/node_modules/@enhavo/app/bin/webfont-generate.js",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.17.0",
@@ -102,6 +105,7 @@
     "karma-mocha": "^2.0.1",
     "karma-sourcemap-loader": "^0.3.8",
     "mocha": "^8.0.1",
+    "vitepress": "^1.0.0-rc.35",
     "webpack-notifier": "^1.7.0"
   }
 }

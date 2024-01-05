@@ -1,1 +1,2 @@
-*.pyc
+.vitepress/cache
+.vitepress/dist
