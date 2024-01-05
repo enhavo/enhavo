@@ -19,7 +19,7 @@
     "spatie/image-optimizer": "^1.0",
     "imagine/imagine": "^1.2",
     "guzzlehttp/guzzle": "^6.5",
-    "symfony/mime": "^6.3",
+    "symfony/mime": "^6.4",
     "ext-exif": "*"
   },
   "require-dev": {
