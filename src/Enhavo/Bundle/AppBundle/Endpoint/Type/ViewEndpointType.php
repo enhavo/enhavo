@@ -11,7 +11,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Twig\Environment;
-use function PHPUnit\Framework\throwException;
 
 class ViewEndpointType extends AbstractEndpointType
 {

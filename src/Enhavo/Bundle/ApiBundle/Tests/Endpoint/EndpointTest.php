@@ -7,6 +7,7 @@ use Enhavo\Bundle\ApiBundle\Documentation\Model\Path;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Bundle\ApiBundle\Endpoint\Endpoint;
 use Enhavo\Bundle\ApiBundle\Endpoint\EndpointTypeInterface;
+use Enhavo\Bundle\ApiBundle\Profiler\EndpointDataCollector;
 use Enhavo\Component\Type\TypeInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -19,7 +20,7 @@ class EndpointTest extends TestCase
 {
     public function createInstance(EndpointDependencies $dependencies)
     {
-        $endpoint = new Endpoint($dependencies->type, $dependencies->parents, $dependencies->options, $dependencies->key, $dependencies->extensions);
+        $endpoint = new Endpoint($dependencies->type, $dependencies->parents, $dependencies->options, $dependencies->key, $dependencies->extensions, $dependencies->dataCollector);
         return $endpoint;
     }
 
@@ -28,6 +29,7 @@ class EndpointTest extends TestCase
         $dependencies = new EndpointDependencies();
         $dependencies->type = new MainType();
         $dependencies->request = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();
+        $dependencies->dataCollector = $this->getMockBuilder(EndpointDataCollector::class)->disableOriginalConstructor()->getMock();
         return $dependencies;
     }
 
@@ -56,6 +58,7 @@ class EndpointDependencies
     public string $key = 'key';
     public array $extensions = [];
     public Request $request;
+    public EndpointDataCollector $dataCollector;
 }
 
 class MainType implements EndpointTypeInterface
