@@ -15,8 +15,8 @@
     "php": "^8.0",
     "enhavo/app-bundle": "dev-master",
     "enhavo/form-bundle": "dev-master",
-    "symfony/security-bundle": "^6.3",
-    "symfony/password-hasher": "^6.3",
+    "symfony/security-bundle": "^6.4",
+    "symfony/password-hasher": "^6.4",
     "laminas/laminas-stdlib": "^3.2"
   },
   "require-dev": {

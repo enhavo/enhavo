@@ -12,46 +12,24 @@ use Doctrine\ORM\EntityManager;
 use Enhavo\Bundle\NewsletterBundle\Entity\Newsletter;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager;
-use Symfony\Bridge\Monolog\Logger;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Command\LockableTrait;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 class SendNewsletterCommand extends Command
 {
-    use ContainerAwareTrait;
     use LockableTrait;
 
-    /**
-     * @var NewsletterManager
-     */
-    private $manager;
-
-    /**
-     * @var EntityManager $em
-     */
-    private $em;
-
-    /**
-     * @var Logger $logger
-     */
-    private $logger;
-
-    /**
-     * SendNewsletterCommand constructor.
-     * @param NewsletterManager $manager
-     * @param EntityManager $em
-     * @param Logger $logger
-     */
-    public function __construct(NewsletterManager $manager, EntityManager $em, Logger $logger)
+    public function __construct(
+        private readonly NewsletterManager $manager,
+        private readonly EntityManager $em,
+        private readonly LoggerInterface $logger
+    )
     {
         parent::__construct();
-        $this->manager = $manager;
-        $this->em = $em;
-        $this->logger = $logger;
     }
 
 
@@ -67,7 +45,7 @@ class SendNewsletterCommand extends Command
     {
         if (!$this->lock()) {
             $output->writeln('Skip sending.. Command is already running in another process.');
-            return;
+            return Command::SUCCESS;
         }
 
         $limit = $input->getOption('limit');
