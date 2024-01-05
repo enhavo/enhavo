@@ -2,4 +2,10 @@ enhavo_article_theme_article_show:
     path: /article/{slug}
     methods: [GET,POST]
     defaults:
-        _controller: Enhavo\Bundle\ArticleBundle\Controller\ArticleController::showAction
+        _endpoint:
+             type: Enhavo\Bundle\ArticleBundle\Endpoint\ArticleEndpointType
+             find_by: 'slug'
+             area: 'theme'
+             navigation: true
+             routes: true
+             vue_routes: ['theme']

@@ -6,4 +6,4 @@ enhavo_page_api_page:
         _format: json
         _endpoint:
             type: Enhavo\Bundle\PageBundle\Endpoint\PageEndpointType
-            area: theme
+            area: api

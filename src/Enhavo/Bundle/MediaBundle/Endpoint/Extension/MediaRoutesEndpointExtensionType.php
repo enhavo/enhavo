@@ -20,7 +20,7 @@ class MediaRoutesEndpointExtensionType extends AbstractEndpointTypeExtension
 
     public function handleRequest($options, Request $request, Data $data, Context $context)
     {
-        if ($options['media_routes_enabled']) {
+        if ($options['media_routes']) {
 
             $routes = $data->has('routes') ? $data->get('routes') : [];
 
@@ -48,7 +48,7 @@ class MediaRoutesEndpointExtensionType extends AbstractEndpointTypeExtension
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'media_routes_enabled' => false,
+            'media_routes' => false,
         ]);
     }
 }

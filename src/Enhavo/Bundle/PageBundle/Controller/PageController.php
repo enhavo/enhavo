@@ -17,8 +17,9 @@ class PageController extends ResourceController
             'resource' => $contentDocument,
             'preview' => $preview,
             'area' => 'theme',
-            'vue_routes_enabled' => true,
-            'vue_routes_groups' => ['theme'],
+            'navigation' => true,
+            'routes' => true,
+            'vue_routes' => ['theme']
         ]);
     }
 }

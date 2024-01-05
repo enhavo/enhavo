@@ -25,6 +25,8 @@ interface BlockTypeInterface extends TypeInterface
 
     public function getTemplate(array $options);
 
+    public function getComponent(array $options);
+
     public function getGroups(array $options);
 
     public function getLabel(array $options);

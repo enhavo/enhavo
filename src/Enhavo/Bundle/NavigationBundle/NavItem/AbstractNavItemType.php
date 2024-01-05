@@ -52,6 +52,11 @@ abstract class AbstractNavItemType extends AbstractType implements NavItemTypeIn
         return $this->parent->getTemplate($options);
     }
 
+    public function getComponent($options)
+    {
+        return $this->parent->getComponent($options);
+    }
+
     public function render($options)
     {
         return $this->parent->render($options);

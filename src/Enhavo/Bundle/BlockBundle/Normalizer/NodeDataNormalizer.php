@@ -25,6 +25,7 @@ class NodeDataNormalizer extends AbstractDataNormalizer
 
         /** @var NodeInterface $object */
         $data->set('template', $this->getTemplate($object));
+        $data->set('component', $this->getComponent($object));
 
         $children = [];
         foreach ($object->getChildren() as $child) {
@@ -63,12 +64,22 @@ class NodeDataNormalizer extends AbstractDataNormalizer
         return ['endpoint.block'];
     }
 
-    private function getTemplate(NodeInterface $node)
+    private function getTemplate(NodeInterface $node): ?string
     {
         if ($node->getType() === NodeInterface::TYPE_BLOCK && $node->getName()) {
             $block = $this->blockManager->getBlock($node->getName());
             $template = $block->getTemplate();
             return $this->templateResolver->resolve($template);
+        }
+
+        return null;
+    }
+
+    private function getComponent(NodeInterface $node): ?string
+    {
+        if ($node->getType() === NodeInterface::TYPE_BLOCK && $node->getName()) {
+            $block = $this->blockManager->getBlock($node->getName());
+            return $block->getComponent();
         }
 
         return null;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Enhavo\Bundle\PageBundle\Endpoint;
+namespace Enhavo\Bundle\ArticleBundle\Endpoint;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Documentation\Model\Method;
@@ -8,27 +8,32 @@ use Enhavo\Bundle\ApiBundle\Documentation\Model\Path;
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Bundle\AppBundle\Endpoint\Type\AreaEndpointType;
-use Enhavo\Bundle\PageBundle\Model\PageInterface;
-use Enhavo\Bundle\PageBundle\Repository\PageRepository;
+use Enhavo\Bundle\ArticleBundle\Model\ArticleInterface;
+use Enhavo\Bundle\ArticleBundle\Repository\ArticleRepository;
+use Enhavo\Bundle\CommentBundle\Comment\CommentManager;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PageEndpointType extends AbstractEndpointType
+class ArticleEndpointType extends AbstractEndpointType
 {
     public function __construct(
-        private readonly PageRepository $repository,
+        private readonly ArticleRepository $repository,
+        private readonly CommentManager $commentManager,
     )
     {
     }
 
     public function handleRequest($options, Request $request, Data $data, Context $context): void
     {
-        /** @var PageInterface $resource */
+        /** @var ArticleInterface $resource */
         $resource = $options['resource'];
 
         if ($resource === null) {
-            $id = intval($request->get('id'));
-            $resource = $this->repository->find($id);
+            $findValue = $request->get($options['find_by']);
+            $resource = $this->repository->findOneBy([
+                $options['find_by'] => $findValue,
+            ]);
         }
 
         if ($resource === null) {
@@ -39,19 +44,25 @@ class PageEndpointType extends AbstractEndpointType
             throw $this->createNotFoundException();
         }
 
+        $commentContext = $this->commentManager->handleSubmitForm($request, $resource);
+        if ($commentContext->isInsert()) {
+            $context->setResponse(new RedirectResponse($request->getRequestUri()));
+        }
+
         $context->set('resource', $resource);
         $data->set('resource', $this->normalize($resource, null, ['groups' => ['endpoint']]));
+        $data->set('commentForm', $this->normalize($commentContext->getForm(), null, ['groups' => ['endpoint']]));
     }
 
     public function describe($options, Path $path)
     {
         $path
             ->method(Method::GET)
-                ->description('Page data')
-                ->summary('Get single page data')
+                ->description('Article data')
+                ->summary('Get single article data')
                 ->parameter('id')
                     ->in('path')
-                    ->description('The page id')
+                    ->description('The article id')
                     ->required(true)
                 ->end()
             ->end()
@@ -67,8 +78,9 @@ class PageEndpointType extends AbstractEndpointType
     {
         $resolver->setDefaults([
             'preview' => false,
-            'template' => '{{ area }}/resource/page/show.html.twig',
+            'template' => '{{ area }}/resource/article/show.html.twig',
             'resource' => null,
+            'find_by' => 'id'
         ]);
     }
 }

@@ -26,5 +26,7 @@ interface NavItemTypeInterface extends TypeInterface
 
     public function getTemplate($options);
 
+    public function getComponent($options);
+
     public function render($options);
 }
