@@ -150,3 +150,10 @@ services:
             - '%kernel.project_dir%'
         tags:
             - { name: 'enhavo_app.vue_route_provider' }
+
+    Enhavo\Bundle\AppBundle\Profiler\TemplateEndpointDataCollector:
+        arguments:
+            - '@Enhavo\Bundle\ApiBundle\Profiler\EndpointDataCollector'
+            - '@router'
+        tags:
+            - { name: data_collector, id: 'template_endpoint', priority: 90 }

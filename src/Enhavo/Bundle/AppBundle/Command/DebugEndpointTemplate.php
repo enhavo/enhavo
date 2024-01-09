@@ -67,10 +67,10 @@ class DebugEndpointTemplate extends Command
         $entries = $this->collector->collect($filter);
 
         $table = new Table($output);
-        $table->setHeaders(['Template', 'Path', 'Route', 'Description']);
+        $table->setHeaders(['Path', 'Route', 'Template', 'Description', 'Variants']);
 
         foreach ($entries as $entry) {
-            $table->addRow([$entry->getTemplate(), $entry->getPath(), $entry->getRouteName(), $entry->getDescription()]);
+            $table->addRow([$entry->getPath(), $entry->getRouteName(), $entry->getTemplate(), $entry->getDescription(), $this->formatVariant($entry->getVariants())]);
         }
 
         $table->render();
@@ -83,12 +83,29 @@ class DebugEndpointTemplate extends Command
 
         foreach ($entries as $entry) {
             $output->writeln('----------------------');
-            $output->writeln(sprintf('Template: %s', $entry->getTemplate()));
             $output->writeln(sprintf('Path: %s', $entry->getPath()));
             $output->writeln(sprintf('Route: %s', $entry->getRouteName()));
+            $output->writeln(sprintf('Template: %s', $entry->getTemplate()));
             $output->writeln(sprintf('Description: %s', $entry->getDescription()));
+
+            if (count($entry->getVariants())) {
+                $output->writeln(sprintf("Variants:\n%s", $this->formatVariant($entry->getVariants())));
+            }
         }
 
         $output->writeln('----------------------');
+    }
+
+    private function formatVariant($variants)
+    {
+        $variantDescription = [];
+        foreach ($variants as $condition => $description) {
+            if ($description) {
+                $variantDescription[] = sprintf("%s (%s)", $condition, $description);
+            } else {
+                $variantDescription[] = sprintf("%s", $condition);
+            }
+        }
+        return implode("\n", $variantDescription);
     }
 }

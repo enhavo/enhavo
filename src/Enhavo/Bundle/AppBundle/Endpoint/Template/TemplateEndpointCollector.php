@@ -82,6 +82,7 @@ class TemplateEndpointCollector
             $route->getPath(),
             $routeName,
             $endpointConfig['description'],
+            $endpointConfig['variants'],
         );
     }
 

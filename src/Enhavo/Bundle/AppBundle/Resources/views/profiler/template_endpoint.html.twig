@@ -1,0 +1,26 @@
+{% extends '@WebProfiler/Profiler/layout.html.twig' %}
+
+{% block toolbar %}
+    {% if collector.variants %}
+        {% set icon %}
+            <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g>
+                    <path fill="none" d="M0 0h24v24H0z"/>
+                    <path stroke="currentColor" d="M11.602 13.76l1.412 1.412 8.466-8.466 1.414 1.414-9.88 9.88-6.364-6.364 1.414-1.414 2.125 2.125 1.413 1.412zm.002-2.828l4.952-4.953 1.41 1.41-4.952 4.953-1.41-1.41zm-2.827 5.655L7.364 18 1 11.636l1.414-1.414 1.413 1.413-.001.001 4.951 4.951z"/>
+                </g>
+            </svg>
+            <span class="sf-toolbar-value">Variants</span>
+        {% endset %}
+
+        {% set text %}
+            {% for variant in collector.variants %}
+                <div class="sf-toolbar-info-piece" {% if variant.link %}onclick="window.location.href = '{{ variant.link }}'" style="cursor: pointer"{% endif %}>
+                    <b>{{ variant.condition }}</b>
+                    <span>{{ variant.description }}</span>
+                </div>
+            {% endfor %}
+        {% endset %}
+    {% endif %}
+
+    {{ include('@WebProfiler/Profiler/toolbar_item.html.twig', { link: false }) }}
+{% endblock %}
