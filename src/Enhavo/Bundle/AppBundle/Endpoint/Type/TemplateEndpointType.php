@@ -21,6 +21,15 @@ class TemplateEndpointType extends AbstractEndpointType
 
     public function handleRequest($options, Request $request, Data $data, Context $context)
     {
+        $this->loadData($options, $data);
+
+        if (is_array($options['variants'])) {
+            $this->loadVariants($request,  $data, $options['variants']);
+        }
+    }
+
+    private function loadData($options, Data $data): void
+    {
         if (is_array($options['load'])) {
             foreach ($options['load'] as $file) {
                 $this->loader->merge($data, $this->loader->load($file), $options['recursive'], $options['depth']);
@@ -48,11 +57,49 @@ class TemplateEndpointType extends AbstractEndpointType
             'recursive' => false,
             'depth' => null,
             'description' => null,
+            'variants' => null,
         ]);
     }
 
     public static function getName(): ?string
     {
         return 'template';
+    }
+
+    private function loadVariants(Request $request, Data $data, $variants)
+    {
+        foreach ($variants as $condition => $options) {
+            if ($this->checkVariantCondition($request, $condition)) {
+                $resolver = new OptionsResolver();
+                $resolver->setDefaults([
+                    'data' => null,
+                    'load' => null,
+                    'recursive' => false,
+                    'depth' => null,
+                    'description' => null,
+                ]);
+                $options = $resolver->resolve($options);
+                $this->loadData($options, $data);
+            }
+        }
+    }
+
+    private function checkVariantCondition(Request $request, $condition): bool
+    {
+        $parts = explode('=', $condition);
+        if (count($parts) != 2) {
+            throw new \Exception(sprintf('Variant condition need exactly one equal sign, %s given for condition \'%s\'', count($parts) - 1, $condition));
+        }
+
+        $key = $parts[0];
+        $value = $parts[1];
+
+        if ($request->query->has($key) && $request->query->get($key) == $value) {
+            return true;
+        } elseif ($request->attributes->has($key) && $request->attributes->get($key) == $value) {
+            return true;
+        }
+
+        return false;
     }
 }

@@ -37,7 +37,7 @@ services:
 
     Enhavo\Bundle\ApiBundle\Profiler\EndpointDataCollector:
         tags:
-            - { name: data_collector, id: 'endpoint' }
+            - { name: data_collector, id: 'endpoint', priority: 100 }
 
     Enhavo\Component\Type\FactoryInterface[Endpoint]:
         class: Enhavo\Bundle\ApiBundle\Factory\EndpointFactory

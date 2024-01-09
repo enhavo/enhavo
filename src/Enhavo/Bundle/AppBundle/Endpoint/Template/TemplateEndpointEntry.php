@@ -8,7 +8,8 @@ class TemplateEndpointEntry
         private ?string $template = null,
         private ?string $path = null,
         private ?string $routeName = null,
-        private ?string $description = null
+        private ?string $description = null,
+        private ?array $variants = null,
     )
     {
     }
@@ -31,5 +32,17 @@ class TemplateEndpointEntry
     public function getDescription(): ?string
     {
         return $this->description;
+    }
+
+    public function getVariants(): array
+    {
+        $variants = [];
+        if (is_array($this->variants)) {
+            foreach ($this->variants as $condition => $variant) {
+                $variants[$condition] = $variant['description'] ?? null;
+            }
+        }
+
+        return $variants;
     }
 }

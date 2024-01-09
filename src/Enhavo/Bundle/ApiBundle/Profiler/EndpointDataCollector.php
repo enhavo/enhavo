@@ -86,6 +86,7 @@ class EndpointDataCollector extends AbstractDataCollector
     public function setOptions($options): void
     {
         $this->data['options'] = $this->cloneVar($options);
+        $this->data['options_original'] = $options;
     }
 
     public function getOptions()
@@ -93,8 +94,15 @@ class EndpointDataCollector extends AbstractDataCollector
         return $this->data['options'];
     }
 
+    public function getOriginalOptions()
+    {
+        return $this->data['options_original'];
+    }
+
+    /** @return EndpointNode[] */
     public function getNodes()
     {
+        $this->initNodes();
         return $this->data['nodes'];
     }
 
