@@ -32,19 +32,21 @@ export class Router
         let missingParameters: string[] = [];
         let defaultParameters: string[] = [];
 
-        for (let variable of variables) {
-            let name = variable.match(/{(!)?([\w\x80-\xFF]+)}/)[2];
+        if (variables) {
+            for (let variable of variables) {
+                let name = variable.match(/{(!)?([\w\x80-\xFF]+)}/)[2];
 
-            let parameterExists = false;
-            if (typeof parameters === 'object') {
-                parameterExists = parameters.hasOwnProperty(name);
-            }
+                let parameterExists = false;
+                if (typeof parameters === 'object') {
+                    parameterExists = parameters.hasOwnProperty(name);
+                }
 
-            if (parameterExists) {
-                usedParameters.push(name);
-                unusedParameters.splice(unusedParameters.indexOf(name), 1);
-            } else {
-                missingParameters.push(name);
+                if (parameterExists) {
+                    usedParameters.push(name);
+                    unusedParameters.splice(unusedParameters.indexOf(name), 1);
+                } else {
+                    missingParameters.push(name);
+                }
             }
         }
 
