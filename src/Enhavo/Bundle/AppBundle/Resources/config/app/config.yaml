@@ -5,13 +5,6 @@ framework:
     session:
         cookie_lifetime: 25920000
 
-doctrine:
-    dbal:
-        mapping_types:
-            enum: string
-            json: string
-            json_array: string
-
 stof_doctrine_extensions:
     default_locale: "%locale%"
     orm:
