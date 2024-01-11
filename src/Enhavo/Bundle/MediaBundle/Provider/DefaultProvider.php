@@ -21,20 +21,14 @@ class DefaultProvider implements ProviderInterface
     private $tokenGenerator;
 
     /**
-     * @var FileRepository
-     */
-    private $fileRepository;
-
-    /**
      * DefaultProvider constructor.
      *
      * @param TokenGeneratorInterface $tokenGenerator
      * @param FileRepository $fileRepository
      */
-    public function __construct(TokenGeneratorInterface $tokenGenerator, FileRepository $fileRepository)
+    public function __construct(TokenGeneratorInterface $tokenGenerator)
     {
         $this->tokenGenerator = $tokenGenerator;
-        $this->fileRepository = $fileRepository;
     }
 
     public function updateFile(FileInterface $file)
@@ -65,15 +59,8 @@ class DefaultProvider implements ProviderInterface
 
     private function generateToken()
     {
-        do {
-            $token = $this->tokenGenerator->generateToken(10);
-            $file = $this->fileRepository->findOneBy([
-                'token' => $token
-            ]);
-        } while($file !== null); //make sure token is unique
-        return $token;
+        return $this->tokenGenerator->generateToken(10);
     }
-
     private function provideChecksum(FileInterface $file)
     {
         $content = $file->getContent()->getContent();
