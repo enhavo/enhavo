@@ -15,3 +15,4 @@ template_hello:
                 'variant=2':
                     load: 'hello_variant_2.yaml'
                     description: Second Variant
+

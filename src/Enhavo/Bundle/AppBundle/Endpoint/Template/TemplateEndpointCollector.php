@@ -23,14 +23,6 @@ class TemplateEndpointCollector
         foreach ($routes as $routeName => $route) {
             $defaults = $route->getDefaults();
             if (isset($defaults['_endpoint']['type']) && (in_array($defaults['_endpoint']['type'], ['template', TemplateEndpointType::class]))) {
-                if (!array_key_exists('description', $defaults['_endpoint'])) {
-                    $defaults['_endpoint']['description'] = null;
-                }
-
-                if (!array_key_exists('template', $defaults['_endpoint'])) {
-                    $defaults['_endpoint']['template'] = null;
-                }
-
                 if ($this->filter($filter, $routeName, $route, $defaults['_endpoint'])) {
                     $entries[] = $this->createEntry($route, $routeName, $defaults['_endpoint']);
                 }
@@ -78,11 +70,11 @@ class TemplateEndpointCollector
     private function createEntry(Route $route, $routeName, $endpointConfig)
     {
         return new TemplateEndpointEntry(
-            $endpointConfig['template'],
+            $endpointConfig['template'] ?? null,
             $route->getPath(),
             $routeName,
-            $endpointConfig['description'],
-            $endpointConfig['variants'],
+            $endpointConfig['description'] ?? null,
+            $endpointConfig['variants'] ?? null,
         );
     }
 
