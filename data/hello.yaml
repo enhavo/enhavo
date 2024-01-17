@@ -1,5 +1,5 @@
 message:
     'hello world template!!!'
-test: expr:include("hello2.php")
+test: expr:load(["hello2.php", "hello_variant_1.yaml"])
 
 

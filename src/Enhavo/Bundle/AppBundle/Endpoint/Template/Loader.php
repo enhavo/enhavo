@@ -16,7 +16,7 @@ class Loader
     {
     }
 
-    public function merge(&$target, $source, ?bool $recursive = false, ?int $depth = null)
+    public function merge(&$target, $source, bool $recursive = false, ?int $depth = null)
     {
         foreach ($source as $key => $value) {
             if ($recursive && ($depth === null || $depth > 0 ) && isset($target[$key]) && $this->isArrayLike($target[$key]) && $this->isArrayLike($value)) {
@@ -43,7 +43,21 @@ class Loader
         return false;
     }
 
-    public function load($file): mixed
+    public function load(array|string $files, bool $recursive = false, ?int $depth = null): mixed
+    {
+        $data = [];
+        if (is_array($files)) {
+            foreach ($files as $file) {
+                $this->merge($data, $this->loadFile($file), $recursive, $depth);
+            }
+        } else if (is_string($files)) {
+            $this->merge($data, $this->loadFile($files), $recursive, $depth);
+        }
+
+        return $data;
+    }
+
+    private function loadFile($file): mixed
     {
         $path = realpath($this->dataPath) . '/' . $file;
 

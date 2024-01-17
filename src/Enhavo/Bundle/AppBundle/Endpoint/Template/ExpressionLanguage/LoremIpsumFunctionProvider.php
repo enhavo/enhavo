@@ -16,10 +16,10 @@ class LoremIpsumFunctionProvider implements ExpressionFunctionProviderInterface
     public function getFunctions(): array
     {
         return [
-            new ExpressionFunction('lorem_ipsum', function ($length = 1): string {
-                return '(new LoremIpsumGenerator)->generate($length)';
-            }, function ($arguments, $length = 1): string {
-                return $this->loremIpsumGenerator->generate($length);
+            new ExpressionFunction('lorem_ipsum', function (bool $html = false, int|array $paragraphs = 1, int|array $sentences = [3, 8], int|array $words = [3, 10], int|array $chars = [2,12], int $commaChance = 33): string {
+                return '(new LoremIpsumGenerator)->generate($html, $words, $sentences, $paragraphs, $chars, $commaChance)';
+            }, function ($arguments, bool $html = false, int|array $paragraphs = 1, int|array $sentences = [3, 8], int|array $words = [3, 10], int|array $chars = [2,12], int $commaChance = 33): string {
+                return $this->loremIpsumGenerator->generate($html, $paragraphs, $sentences, $words, $chars, $commaChance);
             }),
         ];
     }

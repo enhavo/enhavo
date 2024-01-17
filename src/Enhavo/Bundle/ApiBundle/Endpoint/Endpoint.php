@@ -23,7 +23,7 @@ class Endpoint extends AbstractContainerType
         array $parents,
         array $options,
         string $key = null,
-        array $extensions = [],
+        array $extensions,
         private readonly EndpointDataCollector $endpointDataCollector,
     )
     {
