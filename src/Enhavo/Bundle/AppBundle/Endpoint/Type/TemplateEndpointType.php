@@ -30,11 +30,7 @@ class TemplateEndpointType extends AbstractEndpointType
 
     private function loadData($options, Data $data): void
     {
-        if (is_array($options['load'])) {
-            foreach ($options['load'] as $file) {
-                $this->loader->merge($data, $this->loader->load($file), $options['recursive'], $options['depth']);
-            }
-        } else if (is_string($options['load'])) {
+        if ($options['load']) {
             $this->loader->merge($data, $this->loader->load($options['load']), $options['recursive'], $options['depth']);
         }
 

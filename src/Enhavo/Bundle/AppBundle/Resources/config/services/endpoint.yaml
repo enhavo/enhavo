@@ -59,7 +59,7 @@ services:
 
     Enhavo\Bundle\AppBundle\Endpoint\Template\ExpressionLanguage\LoremIpsumGenerator:
 
-    Enhavo\Bundle\AppBundle\Endpoint\Template\ExpressionLanguage\IncludeFunctionProvider:
+    Enhavo\Bundle\AppBundle\Endpoint\Template\ExpressionLanguage\LoadFunctionProvider:
         arguments:
             - '@Enhavo\Bundle\AppBundle\Endpoint\Template\Loader'
         tags:

@@ -23,43 +23,97 @@ class LoremIpsumGenerator
         'aliquet', 'habitant', 'morbi', 'tristique', 'senectus', 'netus', 'fames', 'nisl', 'iaculis', 'cras', 'aenean'
     ];
 
-    public function generate($nparagraphs = 1): string
+    public function generate(bool $html = false, int|array $paragraphs = 1, int|array $sentences = [3, 8], int|array $words = [3, 10], int|array $chars = [2,12], int $punctuationChance = 33): string
     {
-        $paragraphs = [];
-        for ($p = 0; $p < $nparagraphs; ++$p) {
-            $nSentences = random_int(3, 8);
-            $sentences = [];
+        $wordsData = $this->getWords($chars);
+        $paragraphData = [];
+        $nParagraphs = $this->getNumber($paragraphs, 'paragraphs');
+        for ($p = 0; $p < $nParagraphs; ++$p) {
+            $nSentences = $this->getNumber($sentences, 'sentences');
+            $sentenceData = [];
             for ($s = 0; $s < $nSentences; ++$s) {
-                $frags = [];
-                $commaChance = .33;
-                while (true) {
-                    $nWords = random_int(3, 15);
-                    $words = $this->getRandomWords($nWords);
-                    $frags[] = implode(' ', $words);
-                    if ($this->getRandomFloat() >= $commaChance) {
-                        break;
-                    }
-                    $commaChance /= 2;
-                }
-
-                $sentences[] = ucfirst(implode(', ', $frags)) . '.';
+                $nWords = $this->getNumber($words, 'words');
+                $wordData = $this->getRandomWords($nWords, $wordsData);
+                $wordData = $this->generateComma($wordData, $punctuationChance);
+                $sentenceData[] = ucfirst(implode(' ', $wordData)) . ($punctuationChance == 0 ? '' : '.');
             }
-            $paragraphs[] = implode(' ', $sentences);
+            $paragraphData[] = implode(' ', $sentenceData);
         }
-        return implode("\n\n", $paragraphs);
+
+        if ($html) {
+            $paragraphData = array_map(function($value) {
+                return '<p>'.$value.'</p>';
+            }, $paragraphData);
+        }
+
+        return implode("\n\n", $paragraphData);
     }
 
-    private function getRandomFloat(): float
+    private function getNumber(int|array $value, $name)
     {
-        return random_int(0, PHP_INT_MAX - 1) / PHP_INT_MAX;
+        if (is_array($value)) {
+            if (count($value) != 2 || !isset($value[0], $value[1]) || !is_int($value[0]) || !is_int($value[1]) || $value[0] < 0 || $value[1] < 0) {
+                throw new \Exception(sprintf('Number of %s must be an array with exact two positive integers. The min and max value, but "[%s]" given', $name, implode(',', $value)));
+            }
+
+            return random_int($value[0], $value[1]);
+        }
+
+        return $value;
     }
 
-    private function getRandomWords($count): array
+    private function getWords(int|array $chars): array
     {
-        $keys = array_rand($this->words, $count);
-        if ($count == 1) {
-            $keys = [$keys];
+        $min = 2;
+        $max = 12;
+        if (is_array($chars)) {
+            if (count($chars) != 2 || !isset($chars[0], $chars[1]) || !is_int($chars[0]) || !is_int($chars[1]) || $chars[0] < $min || $chars[1] > $max) {
+                throw new \Exception(sprintf('Number of chars must be an array with two integers. The min not less then %s and max value not more than %s, but "[%s]" given', $min, $max, implode(',', $chars)));
+            }
+
+            $min = $chars[0];
+            $max = $chars[1];
+        } else {
+            $min = $chars;
+            $max = $chars;
         }
-        return array_intersect_key($this->words, array_fill_keys($keys, null));
+
+        $words = [];
+        foreach ($this->words as $word) {
+            if (strlen($word) >= $min && strlen($word) <= $max) {
+                $words[] = $word;
+            }
+        }
+
+        return $words;
+    }
+
+    private function getRandomWords(int $count, array $words): array
+    {
+        $wordsData = [];
+        for ($i = 0; $i < $count; $i++) {
+            $randomIndex = random_int(0, count($words) - 1);
+            $wordsData[] = $words[$randomIndex];
+        }
+
+        return $wordsData;
+    }
+
+    private function generateComma($wordData, $commaChance): array
+    {
+        $value = random_int(1,100);
+        $space = 2;
+
+        $nWords = count($wordData);
+        if ($nWords < ($space*2+1)) {
+            return $wordData;
+        } else if ($value > $commaChance) {
+            return $wordData;
+        }
+
+        $index = random_int($space - 1, $nWords - $space - 1);
+        $wordData[$index] = $wordData[$index] . ',';
+
+        return $wordData;
     }
 }
