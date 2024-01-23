@@ -20,7 +20,7 @@ class AreaEndpointType extends AbstractEndpointType
     public function handleRequest($options, Request $request, Data $data, Context $context)
     {
         if ($options['routes']) {
-            $routesCollection = $this->routeCollector->getRouteCollection($options['area']);
+            $routesCollection = $this->routeCollector->getRouteCollection($options['routes']);
             $context->set('routes', $routesCollection);
             $data->set('routes', $this->normalize($routesCollection, null, ['groups' => 'endpoint']));
         }
