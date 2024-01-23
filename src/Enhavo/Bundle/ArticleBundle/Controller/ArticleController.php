@@ -22,7 +22,7 @@ class ArticleController extends ResourceController
             'preview' => $preview,
             'area' => 'theme',
             'navigation' => true,
-            'routes' => true,
+            'routes' => ['theme', 'api'],
             'vue_routes' => ['theme']
         ]);
     }

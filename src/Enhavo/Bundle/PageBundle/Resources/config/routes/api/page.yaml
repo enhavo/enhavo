@@ -2,6 +2,7 @@ enhavo_page_api_page:
     path: /page/{id}
     methods: [GET]
     defaults:
+        _expose: api
         _describe: true
         _format: json
         _endpoint:
