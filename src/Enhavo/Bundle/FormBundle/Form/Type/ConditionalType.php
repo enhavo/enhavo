@@ -70,7 +70,9 @@ class ConditionalType extends AbstractVueType implements DataMapperInterface
                 }
             }
 
-            $this->addConditional($options, $form,  $key);
+            if ($key) {
+                $this->addConditional($options, $form,  $key);
+            }
         });
 
         $builder->setDataMapper($this);
