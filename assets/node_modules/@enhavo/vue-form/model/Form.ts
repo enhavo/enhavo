@@ -131,4 +131,24 @@ export class Form
             }
         }
     }
+
+    public remove(name: string)
+    {
+        let element = this.get(name);
+        let parent = element.parent;
+
+        parent.children.splice(parent.children.indexOf(element), 1);
+    }
+
+    public add(form: Form)
+    {
+        if (this.get(form.name)) {
+            this.remove(form.name);
+        }
+
+        this.children.push(form);
+        form.parent = this;
+
+        form.update();
+    }
 }
