@@ -168,6 +168,26 @@ class ConditionalTypeTest extends TypeTestCase
 
         $this->assertEquals('car', $view->children['key']->vars['value']);
     }
+
+    public function testSubmitWithEmptyKeyAndTypes()
+    {
+        $car = new Car();
+
+        $form = $this->factory->create(ConditionalType::class, $car, [
+            'entry_types' => [],
+            'entry_type_resolver' => function($data) {
+                return null;
+            },
+            'entry_types_options' => []
+        ]);
+
+        $form->submit([
+            'conditional' => [],
+            'key' => ''
+        ]);
+
+        $this->assertNull($form->getData());
+    }
 }
 
 class FormAType extends AbstractType
