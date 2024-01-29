@@ -73,3 +73,14 @@ services:
     Enhavo\Bundle\PageBundle\Vue\PageVueRouteProviderType:
         tags:
             - { name: enhavo_app.vue_route_provider }
+
+    enhavo.error_renderer.html:
+        class: Enhavo\Bundle\PageBundle\ErrorRenderer\SpecialPageErrorRenderer
+        decorates: enhavo.error_handler.html
+        arguments:
+            - '@enhavo_page.repository.page'
+            - '@enhavo.error_renderer.html.inner'
+            - '@request_stack'
+            - '%kernel.debug%'
+        calls:
+            - [setEndpointFactory, ['@Enhavo\Component\Type\FactoryInterface[Endpoint]']]
