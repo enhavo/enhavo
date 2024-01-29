@@ -7,7 +7,7 @@ enhavo_user:
             firewalls: [main]
 
             registration_register:
-                template: theme/security/registration/register.html.twig
+                template: theme/user/registration/register.html.twig
                 redirect_route: enhavo_user_theme_registration_check
                 confirmation_route: enhavo_user_theme_registration_confirm
                 mail:
@@ -20,10 +20,10 @@ enhavo_user:
                         validation_groups: [register, unique_email]
 
             registration_check:
-                template: theme/security/registration/check.html.twig
+                template: theme/user/registration/check.html.twig
 
             registration_confirm:
-                template: 'theme/security/registration/confirm.html.twig'
+                template: 'theme/user/registration/confirm.html.twig'
                 mail:
                     template: 'mail/security/confirmation.html.twig'
                     subject: 'confirmation.mail.subject'
@@ -31,13 +31,13 @@ enhavo_user:
                 redirect_route: 'enhavo_user_theme_registration_finish'
 
             registration_finish:
-                template: 'theme/security/registration/finish.html.twig'
+                template: 'theme/user/registration/finish.html.twig'
 
             profile:
                 template: theme/resource/user/profile.html.twig
 
             reset_password_request:
-                template: theme/security/reset-password/request.html.twig
+                template: theme/user/reset-password/request.html.twig
                 mail:
                     template: mail/security/reset-password.html.twig
                     subject: reset_password.mail.subject
@@ -46,18 +46,18 @@ enhavo_user:
                 confirmation_route: enhavo_user_theme_reset_password_confirm
 
             reset_password_check:
-                template: 'theme/security/reset-password/check.html.twig'
+                template: 'theme/user/reset-password/check.html.twig'
 
             reset_password_confirm:
                 auto_login: true
-                template: 'theme/security/reset-password/confirm.html.twig'
+                template: 'theme/user/reset-password/confirm.html.twig'
                 redirect_route: 'enhavo_user_theme_reset_password_finish'
 
             reset_password_finish:
-                template: 'theme/security/reset-password/finish.html.twig'
+                template: 'theme/user/reset-password/finish.html.twig'
 
             change_email_request:
-                template: theme/security/change-email/request.html.twig
+                template: theme/user/change-email/request.html.twig
                 mail:
                     template: mail/security/change-email.html.twig
                     subject: change_email.mail.subject
@@ -66,10 +66,10 @@ enhavo_user:
                 confirmation_route: enhavo_user_theme_change_email_confirm
 
             change_email_check:
-                template: theme/security/change-email/check.html.twig
+                template: theme/user/change-email/check.html.twig
 
             change_email_confirm:
-                template: theme/security/change-email/confirm.html.twig
+                template: theme/user/change-email/confirm.html.twig
                 mail:
                     template: mail/security/change-email-confirm.html.twig
                     subject: change_email_confirm.mail.subject
@@ -78,28 +78,29 @@ enhavo_user:
                 confirmation_route: enhavo_user_theme_registration_confirm
 
             change_email_finish:
-                template: theme/security/change-email/finish.html.twig
+                template: theme/user/change-email/finish.html.twig
 
             login:
-                template: theme/security/login.html.twig
+                template: theme/user/login.html.twig
                 redirect_route: enhavo_user_theme_user_profile
                 route: enhavo_user_theme_security_login
+                check_route: enhavo_user_theme_security_login
 
             change_password:
-                template: theme/security/change-password/change.html.twig
+                template: theme/user/change-password/change.html.twig
 
             delete_confirm:
-                template: theme/security/delete/confirm.html.twig
+                template: theme/user/delete/confirm.html.twig
                 mail:
                     template: mail/security/delete-confirm.html.twig
                     subject: delete_confirm.mail.subject
                 redirect_route: enhavo_user_theme_delete_finish
 
             delete_finish:
-                template: theme/security/delete/finish.html.twig
+                template: theme/user/delete/finish.html.twig
 
             verification_request:
-                template: theme/security/verification/request.html.twig
+                template: theme/user/verification/request.html.twig
                 mail:
                     template: mail/security/verification.html.twig
                     subject: verification.mail.subject
@@ -107,13 +108,13 @@ enhavo_user:
                 confirmation_route: enhavo_user_theme_verification_confirm
 
             verification_confirm:
-                template: theme/security/verification/confirm.html.twig
+                template: theme/user/verification/confirm.html.twig
 
         admin:
             firewalls: [admin]
 
             reset_password_request:
-                template: admin/security/reset-password/request.html.twig
+                template: admin/user/reset-password/request.html.twig
                 mail:
                     template: mail/security/reset-password.html.twig
                     subject: reset_password.mail.subject
@@ -125,7 +126,7 @@ enhavo_user:
                      options: []
 
             reset_password_confirm:
-                template: admin/security/reset-password/confirm.html.twig
+                template: admin/user/reset-password/confirm.html.twig
                 auto_login: true
                 redirect_route: enhavo_app_index
                 form:
@@ -133,9 +134,10 @@ enhavo_user:
                      options: []
 
             login:
-                template: admin/security/login/login.html.twig
+                template: admin/user/login/login.html.twig
                 redirect_route: enhavo_app_index
-                route: enhavo_user_security_login
+                route: enhavo_user_login
+                check_route: enhavo_user_api_login
 
             change_password:
                 template: '@EnhavoApp/admin/view/form.html.twig'
@@ -200,7 +202,7 @@ enhavo_app:
                 icon: person
                 menu:
                     logout:
-                        route: enhavo_user_security_logout
+                        route: enhavo_user_logout
                         label: label.logout
                         translation_domain: EnhavoAppBundle
                         target: _self

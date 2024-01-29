@@ -4,6 +4,7 @@ namespace Enhavo\Bundle\UserBundle\Endpoint\Type\ChangePassword;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
+use Enhavo\Bundle\AppBundle\Endpoint\Type\AbstractFormEndpointType;
 use Enhavo\Bundle\AppBundle\Template\TemplateResolverTrait;
 use Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
@@ -12,6 +13,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
+
 
 class ChangePasswordEndpointType extends AbstractFormEndpointType
 {

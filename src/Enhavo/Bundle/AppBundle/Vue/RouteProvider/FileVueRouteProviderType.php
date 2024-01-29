@@ -10,7 +10,7 @@ use Symfony\Component\Yaml\Yaml;
 
 class FileVueRouteProviderType extends AbstractType implements VueRouteProviderTypeInterface
 {
-    use GroupHelperTrait;
+    use VueProviderTypeHelperTrait;
 
     /** @var VueRoute[] */
     private ?array $routes = null;
@@ -42,23 +42,7 @@ class FileVueRouteProviderType extends AbstractType implements VueRouteProviderT
         return $this->search($path, $this->routes);
     }
 
-    /**
-     * @param VueRoute[] $routes
-     */
-    private function search(string $path, array $routes): ?VueRoute
-    {
-        foreach ($routes as $route) {
-            if ($route->getPath() === $path) {
-                return $route;
-            }
 
-            if (count($route->getChildren()) > 0) {
-                return $this->search($path, $route->getChildren());
-            }
-        }
-
-        return null;
-    }
 
     private function load($options): void
     {

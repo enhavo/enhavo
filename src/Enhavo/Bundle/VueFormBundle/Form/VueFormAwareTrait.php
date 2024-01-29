@@ -2,9 +2,7 @@
 
 namespace Enhavo\Bundle\VueFormBundle\Form;
 
-use Enhavo\Bundle\VueFormBundle\Exception\VueFormException;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormView;
 
 trait VueFormAwareTrait
 {

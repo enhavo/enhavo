@@ -10,3 +10,5 @@ enhavo_user:
         not_exists: "The user doesn't exist"
     email:
         exists: 'The email address is already used'
+    login:
+        bad_credentials: 'Bad credentials'

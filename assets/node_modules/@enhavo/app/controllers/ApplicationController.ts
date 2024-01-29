@@ -1,11 +1,14 @@
-import { Controller } from "@hotwired/stimulus"
+import {AbstractController} from "./AbstractController";
 
-export default class extends Controller
+export default class extends AbstractController
 {
     static values = {
         application: String,
         component: String,
     }
+
+    public applicationValue: string;
+    public componentValue: string;
 
     connect() {
         this.init().then(() => {});

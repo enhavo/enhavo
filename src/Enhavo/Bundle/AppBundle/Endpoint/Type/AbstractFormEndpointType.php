@@ -1,11 +1,10 @@
 <?php
 
-namespace Enhavo\Bundle\UserBundle\Endpoint\Type\ChangePassword;
+namespace Enhavo\Bundle\AppBundle\Endpoint\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
-use Enhavo\Bundle\AppBundle\Endpoint\Type\AreaEndpointType;
 use Enhavo\Bundle\VueFormBundle\Form\VueFormAwareInterface;
 use Enhavo\Bundle\VueFormBundle\Form\VueFormAwareTrait;
 use Symfony\Component\Form\FormInterface;
@@ -19,6 +18,10 @@ abstract class AbstractFormEndpointType extends AbstractEndpointType implements 
     {
         $this->init($options, $request, $data, $context);
 
+        if ($context->getResponse()) {
+            return;
+        }
+
         $form = $this->getForm($options, $request, $data, $context);
         $context->set('form', $form);
 
@@ -27,6 +30,10 @@ abstract class AbstractFormEndpointType extends AbstractEndpointType implements 
             $url = null;
             if ($form->isSubmitted() && $form->isValid()) {
                 $this->handleSuccess($options, $request, $data, $context, $form);
+
+                if ($context->getResponse()) {
+                    return;
+                }
 
                 $url = $this->getRedirectUrl($options, $request, $data, $context, $form);
                 if ($url) {
@@ -43,6 +50,11 @@ abstract class AbstractFormEndpointType extends AbstractEndpointType implements 
             } else {
                 $success = false;
                 $this->handleFailed($options, $request, $data, $context, $form);
+
+                if ($context->getResponse()) {
+                    return;
+                }
+
                 $context->setStatusCode(400);
             }
 

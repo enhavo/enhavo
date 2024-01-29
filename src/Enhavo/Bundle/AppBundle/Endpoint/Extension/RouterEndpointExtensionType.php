@@ -6,8 +6,7 @@ use Enhavo\Bundle\ApiBundle\Data\Data;
 
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointTypeExtension;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
-use Enhavo\Bundle\AppBundle\Endpoint\Type\AreaEndpointType;
-use Enhavo\Bundle\AppBundle\Endpoint\Type\TemplateEndpointType;
+use Enhavo\Bundle\AppBundle\Endpoint\Type\ViewEndpointType;
 use Enhavo\Bundle\AppBundle\Twig\TwigRouter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Route;
@@ -40,6 +39,6 @@ class RouterEndpointExtensionType extends AbstractEndpointTypeExtension
 
     public static function getExtendedTypes(): array
     {
-        return [TemplateEndpointType::class, AreaEndpointType::class];
+        return [ViewEndpointType::class];
     }
 }

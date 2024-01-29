@@ -192,21 +192,19 @@ services:
             - { name: enhavo_api.endpoint }
             - { name: container.service_subscriber }
 
-    Enhavo\Bundle\UserBundle\Endpoint\Type\Security\SecurityLoginEndpointType:
+    Enhavo\Bundle\UserBundle\Endpoint\Type\Login\LoginEndpointType:
         arguments:
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
-            - '@security.csrf.token_manager'
-            - '@security.authentication_utils'
-            - '@Enhavo\Bundle\UserBundle\Security\Authentication\AuthenticationError'
-            - '@Enhavo\Bundle\VueFormBundle\Form\VueForm'
+            - '@security.firewall.map'
         calls:
+            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
             - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
             - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
         tags:
             - { name: enhavo_api.endpoint }
             - { name: container.service_subscriber }
 
-    Enhavo\Bundle\UserBundle\Endpoint\Type\Security\SecurityLogoutEndpointType:
+    Enhavo\Bundle\UserBundle\Endpoint\Type\Login\LogoutEndpointType:
         tags:
             - { name: enhavo_api.endpoint }
             - { name: container.service_subscriber }
@@ -229,6 +227,16 @@ services:
             - '@enhavo_user.repository.user'
         calls:
             - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
+            - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\UserBundle\Endpoint\Type\LoginAppEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
+            - '%enhavo_app.branding%'
+        calls:
             - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
         tags:
             - { name: enhavo_api.endpoint }

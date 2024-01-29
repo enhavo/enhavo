@@ -2,9 +2,9 @@ import { Controller } from '@hotwired/stimulus';
 import {VueFactory} from "@enhavo/app/vue/VueFactory";
 import {FormFactory} from "@enhavo/vue-form/form/FormFactory";
 import {reactive} from "vue";
-import {any} from "async";
+import {AbstractController} from "./AbstractController";
 
-export default class extends Controller
+export default class extends AbstractController
 {
     public static values = {
         'form': Object,

@@ -7,7 +7,7 @@ use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Bundle\AppBundle\Endpoint\Type\AreaEndpointType;
 use Enhavo\Bundle\AppBundle\Template\TemplateResolverTrait;
 use Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider;
-use Enhavo\Bundle\UserBundle\Endpoint\Type\ChangePassword\AbstractFormEndpointType;
+use Enhavo\Bundle\AppBundle\Endpoint\Type\AbstractFormEndpointType;
 use Enhavo\Bundle\UserBundle\Exception\TokenInvalidException;
 use Enhavo\Bundle\UserBundle\Repository\UserRepository;
 use Enhavo\Bundle\UserBundle\User\UserManager;

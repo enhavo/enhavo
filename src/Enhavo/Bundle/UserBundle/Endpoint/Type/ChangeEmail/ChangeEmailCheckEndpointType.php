@@ -19,6 +19,11 @@ class ChangeEmailCheckEndpointType extends AbstractEndpointType
     {
     }
 
+    public static function getName(): ?string
+    {
+        return 'user_change_email_check';
+    }
+
     public static function getParentType(): ?string
     {
         return AreaEndpointType::class;

@@ -2,9 +2,9 @@
 
 namespace Enhavo\Bundle\AppBundle\Vue\RouteProvider;
 
-trait GroupHelperTrait
+trait VueProviderTypeHelperTrait
 {
-    public function isGroupSelected($options, $group): bool
+    protected function isGroupSelected($options, $group): bool
     {
         if ($options['groups'] === null && $group === null) {
             return true;
@@ -29,5 +29,23 @@ trait GroupHelperTrait
         }
 
         return false;
+    }
+
+    /**
+     * @param VueRoute[] $routes
+     */
+    protected function search(string $path, array $routes): ?VueRoute
+    {
+        foreach ($routes as $route) {
+            if ($route->getPath() === $path) {
+                return $route;
+            }
+
+            if (count($route->getChildren()) > 0) {
+                return $this->search($path, $route->getChildren());
+            }
+        }
+
+        return null;
     }
 }

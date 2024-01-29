@@ -28,11 +28,13 @@
 {% if data is defined %}
     <script id="data" type="application/json">{{ data|json_encode|raw }}</script>
 {% endif %}
-{% if routes is defined %}
-    <script id="routes" type="application/json">{{ routes|raw }}</script>
-{% else %}
-    <script id="routes" type="application/json">{"base_url":"","routes":{}}</script>
-{% endif %}
+{% block routes %}
+    {% if routes is defined %}
+        <script id="routes" type="application/json">{{ routes|raw }}</script>
+    {% else %}
+        <script id="routes" type="application/json">{"base_url":"","routes":{}}</script>
+    {% endif %}
+{% endblock %}
 {% if translations is defined %}
     <script id="translations" type="application/json">{{ translations|json_encode|raw }}</script>
 {% endif %}
