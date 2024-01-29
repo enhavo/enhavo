@@ -1,0 +1,12 @@
+enhavo_user_api_login:
+    options:
+        expose: true
+    path: /login
+    methods: [GET, POST]
+    defaults:
+        _format: json
+        _config: admin
+        _expose: admin
+        _endpoint:
+            type: user_login
+            area: admin

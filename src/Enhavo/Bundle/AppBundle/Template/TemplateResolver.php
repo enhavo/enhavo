@@ -115,6 +115,8 @@ class TemplateResolver implements TemplateResolverInterface
             } catch(\InvalidArgumentException $e) {
                 return null;
             }
+
+            $template = ltrim($template, '/');
             return sprintf('@%s/%s', $templatePath->getAlias(), $template);
         } else {
             $templateFile = sprintf('%s/%s', $templatePath->getPath(), $template);

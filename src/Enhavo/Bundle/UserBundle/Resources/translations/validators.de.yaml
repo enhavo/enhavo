@@ -1,12 +1,15 @@
 enhavo_user:
     password:
-        mismatch: 'Die Passwörter stimmen nicht überein.'
+        mismatch: 'Die Passwörter stimmen nicht überein'
+        length: 'Das Passwort muss mindestens 8 Zeichen lang sein'
     current_password:
-        invalid: 'Das Passwort ist inkorrekt.'
+        invalid: 'Das Passwort ist inkorrekt'
     change_email:
-        mismatch: 'E-Mail Adressen stimmen nicht überein.'
+        mismatch: 'E-Mail Adressen stimmen nicht überein'
     user:
         exists: 'Der Benutzer existriert bereits'
         not_exists: "Der Benutzer existriert nicht"
     email:
         exists: 'Die Email Addresse ist bereits vergeben'
+    login:
+        bad_credentials: 'Falsche Logindaten'

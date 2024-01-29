@@ -151,6 +151,12 @@ services:
         tags:
             - { name: 'enhavo_app.vue_route_provider' }
 
+    Enhavo\Bundle\AppBundle\Vue\RouteProvider\RoutingVueRouteProviderType:
+        arguments:
+            - '@router'
+        tags:
+            - { name: 'enhavo_app.vue_route_provider' }
+
     Enhavo\Bundle\AppBundle\Profiler\TemplateEndpointDataCollector:
         arguments:
             - '@Enhavo\Bundle\ApiBundle\Profiler\EndpointDataCollector'

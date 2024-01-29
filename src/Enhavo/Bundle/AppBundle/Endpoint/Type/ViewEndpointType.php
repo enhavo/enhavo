@@ -36,6 +36,8 @@ class ViewEndpointType extends AbstractEndpointType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setRequired('template');
+        $resolver->setDefaults([
+            'template' => null
+        ]);
     }
 }

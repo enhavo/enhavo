@@ -15,7 +15,11 @@ Enhavo\Bundle\UserBundle\Model\User:
                 groups: [register, create, update]
         plainPassword:
             - NotBlank:
-                groups: [register, reset, create]
+                groups: [register, reset_password, create, change_password]
+            - Length:
+                groups: [register, reset_password, create, change_password]
+                min: 8
+                minMessage: 'enhavo_user.password.length'
 
 Enhavo\Bundle\UserBundle\Model\Group:
     constraints:

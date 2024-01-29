@@ -1,0 +1,243 @@
+services:
+
+    Enhavo\Bundle\UserBundle\Endpoint\Type\ChangeEmail\ChangeEmailCheckEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
+        calls:
+            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
+            - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\UserBundle\Endpoint\Type\ChangeEmail\ChangeEmailConfirmEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
+            - '@enhavo_user.user.manager'
+            - '@translator'
+            - '@enhavo_user.repository.user'
+        calls:
+            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
+            - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\UserBundle\Endpoint\Type\ChangeEmail\ChangeEmailFinishEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
+        calls:
+            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
+            - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\UserBundle\Endpoint\Type\ChangeEmail\ChangeEmailRequestEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
+            - '@enhavo_user.user.manager'
+            - '@translator'
+        calls:
+            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
+            - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+
+    Enhavo\Bundle\UserBundle\Endpoint\Type\ChangePassword\ChangePasswordEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
+            - '@enhavo_user.user.manager'
+            - '@translator'
+        calls:
+            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
+            - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+
+    Enhavo\Bundle\UserBundle\Endpoint\Type\Delete\DeleteConfirmEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
+            - '@enhavo_user.user.manager'
+            - '@translator'
+        calls:
+            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
+            - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\UserBundle\Endpoint\Type\Delete\DeleteFinishEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
+        calls:
+            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
+            - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+
+    Enhavo\Bundle\UserBundle\Endpoint\Type\Profile\ProfileEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
+            - '@enhavo_user.user.manager'
+            - '@translator'
+        calls:
+            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
+            - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+
+    Enhavo\Bundle\UserBundle\Endpoint\Type\Registration\RegistrationCheckEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
+        calls:
+            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
+            - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\UserBundle\Endpoint\Type\Registration\RegistrationConfirmEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
+            - '@enhavo_user.user.manager'
+            - '@enhavo_user.repository.user'
+        calls:
+            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
+            - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\UserBundle\Endpoint\Type\Registration\RegistrationFinishEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
+        calls:
+            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
+            - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\UserBundle\Endpoint\Type\Registration\RegistrationRegisterEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
+            - '@enhavo_user.user.manager'
+            - '@enhavo_user.factory.user'
+        calls:
+            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
+            - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\UserBundle\Endpoint\Type\ResetPassword\ResetPasswordCheckEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
+        calls:
+            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
+            - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\UserBundle\Endpoint\Type\ResetPassword\ResetPasswordConfirmEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
+            - '@enhavo_user.user.manager'
+            - '@enhavo_user.repository.user'
+        calls:
+            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
+            - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\UserBundle\Endpoint\Type\ResetPassword\ResetPasswordFinishEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
+        calls:
+            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
+            - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\UserBundle\Endpoint\Type\ResetPassword\ResetPasswordRequestEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
+            - '@enhavo_user.user.manager'
+            - '@enhavo_user.repository.user'
+            - '@translator'
+        calls:
+            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
+            - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\UserBundle\Endpoint\Type\Login\LoginEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
+            - '@security.firewall.map'
+        calls:
+            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
+            - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\UserBundle\Endpoint\Type\Login\LogoutEndpointType:
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\UserBundle\Endpoint\Type\Verification\VerificationConfirmEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
+            - '@enhavo_user.user.manager'
+        calls:
+            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
+            - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\UserBundle\Endpoint\Type\Verification\VerificationRequestEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
+            - '@enhavo_user.user.manager'
+            - '@enhavo_user.repository.user'
+        calls:
+            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
+            - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\UserBundle\Endpoint\Type\LoginAppEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
+            - '%enhavo_app.branding%'
+        calls:
+            - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }

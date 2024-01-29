@@ -4,6 +4,7 @@ namespace Enhavo\Bundle\UserBundle\Form\Type;
 
 use Enhavo\Bundle\UserBundle\Form\EventListener\CredentialsEventSubscriber;
 use Enhavo\Bundle\UserBundle\Model\Credentials;
+use Enhavo\Bundle\UserBundle\Validator\Constraints\CredentialsValid;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -50,6 +51,7 @@ class LoginType extends AbstractType
             'identifier_translation_domain' => 'EnhavoUserBundle',
             'data_class' => Credentials::class,
             'csrf_protection' => false,
+            'constraints' => [new CredentialsValid()],
         ]);
     }
 }

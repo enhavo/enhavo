@@ -14,6 +14,7 @@ class LoginConfiguration
     use FormTrait;
 
     private ?string $route = null;
+    private ?string $checkRoute = null;
     private ?int $maxFailedLoginAttempts = null;
     private ?string $passwordMaxAge = null;
     private bool $verificationRequired = false;
@@ -67,5 +68,15 @@ class LoginConfiguration
     public function setRepositoryMethod(?string $repositoryMethod): void
     {
         $this->repositoryMethod = $repositoryMethod;
+    }
+
+    public function getCheckRoute(): ?string
+    {
+        return $this->checkRoute;
+    }
+
+    public function setCheckRoute(?string $checkRoute): void
+    {
+        $this->checkRoute = $checkRoute;
     }
 }

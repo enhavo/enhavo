@@ -38,6 +38,7 @@ class EnhavoUserExtension extends AbstractResourceExtension implements PrependEx
             'services/command.yaml',
             'services/form.yaml',
             'services/menu.yaml',
+            'services/endpoint.yaml',
         );
         foreach ($configFiles as $configFile) {
             $loader->load($configFile);

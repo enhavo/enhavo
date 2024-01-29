@@ -17,3 +17,9 @@ services:
             - '@Enhavo\Bundle\AppBundle\Endpoint\Template\TemplateEndpointCollector'
         tags:
             - { name: console.command }
+
+    Enhavo\Bundle\AppBundle\Command\DebugTemplate:
+        arguments:
+            - '@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface'
+        tags:
+            - { name: console.command }

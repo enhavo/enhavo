@@ -16,6 +16,7 @@ use Enhavo\Bundle\UserBundle\Repository\UserRepository;
 use Enhavo\Bundle\UserBundle\Security\Authentication\FormLoginAuthenticator;
 use Enhavo\Bundle\UserBundle\Tests\Mocks\UserMock;
 use Enhavo\Bundle\UserBundle\User\UserManager;
+use Enhavo\Component\Type\FactoryInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -39,12 +40,12 @@ class FormLoginAuthenticatorTest extends TestCase
         $className = $className ?? User::class;
 
         return new FormLoginAuthenticator(
-            $dependencies->userManager,
             $dependencies->userRepository,
             $dependencies->configurationProvider,
             $dependencies->urlGenerator,
             $dependencies->eventDispatcher,
             $dependencies->formFactory,
+            $dependencies->endpointFactory,
             $className,
         );
     }
@@ -52,7 +53,7 @@ class FormLoginAuthenticatorTest extends TestCase
     private function createDependencies(): FormLoginAuthenticatorTestDependencies
     {
         $dependencies = new FormLoginAuthenticatorTestDependencies();
-        $dependencies->userManager = $this->getMockBuilder(UserManager::class)->disableOriginalConstructor()->getMock();
+        $dependencies->endpointFactory = $this->getMockBuilder(FactoryInterface::class)->getMock();
         $dependencies->configurationProvider = $this->getMockBuilder(ConfigurationProvider::class)->disableOriginalConstructor()->getMock();
         $dependencies->urlGenerator = $this->getMockBuilder(UrlGeneratorInterface::class)->getMock();
         $dependencies->urlGenerator->method('generate')->willReturnCallback(function ($route) {
@@ -87,6 +88,7 @@ class FormLoginAuthenticatorTest extends TestCase
         $dependencies->configurationProvider->method('getLoginConfiguration')->willReturnCallback(function() {
            $configuration = new LoginConfiguration();
            $configuration->setRoute('config.login.route');
+           $configuration->setCheckRoute('config.login.route');
            return $configuration;
         });
 
@@ -120,6 +122,7 @@ class FormLoginAuthenticatorTest extends TestCase
 
         $dependencies->configurationProvider->method('getLoginConfiguration')->willReturnCallback(function() {
             $configuration = new LoginConfiguration();
+            $configuration->setRoute('config.login.route');
             $configuration->setFormClass('formClass');
             $configuration->setFormOptions([]);
             $configuration->setRepositoryMethod('loadUserByIdentifier');
@@ -160,6 +163,7 @@ class FormLoginAuthenticatorTest extends TestCase
             $this->assertInstanceOf(UserEvent::class, $event);
             $this->assertEquals($user, $event->getUser());
             $this->assertEquals(UserEvent::LOGIN_SUCCESS, $name);
+            $event->setResponse(new RedirectResponse('_security.user.target_path.session'));
             return $event;
         });
 
@@ -218,42 +222,12 @@ class FormLoginAuthenticatorTest extends TestCase
         $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertEquals('login_route.generated', $response->getTargetUrl());
     }
-
-    public function testAuthenticationFailureWithFailurePath()
-    {
-        $dependencies = $this->createDependencies();
-
-        $dependencies->configurationProvider->method('getLoginConfiguration')->willReturnCallback(function($name) {
-            $loginConfiguration = new LoginConfiguration();
-            $loginConfiguration->setFormClass('formClass');
-            $loginConfiguration->setFormOptions([]);
-            $loginConfiguration->setRepositoryMethod('loadUserByIdentifier');([]);
-            return $loginConfiguration;
-        });
-
-        $dependencies->formFactory->method('create')->willReturn($dependencies->form);
-
-        $dependencies->form->method('getData')->willReturn(new Credentials());
-
-        $dependencies->request->method('get')->willReturnCallback(function($key) {
-            if ($key === '_failure_path') {
-                return '/login/failure';
-            }
-            return null;
-        });
-
-        $instance = $this->createInstance($dependencies);
-        $response = $instance->onAuthenticationFailure($dependencies->request, new AuthenticationException());
-
-        $this->assertInstanceOf(RedirectResponse::class, $response);
-        $this->assertEquals('/login/failure', $response->getTargetUrl());
-    }
 }
 
 class FormLoginAuthenticatorTestDependencies
 {
-    /** @var UserManager|MockObject */
-    public $userManager;
+    /** @var FactoryInterface|MockObject */
+    public $endpointFactory;
 
     /** @var ConfigurationProvider|MockObject */
     public $configurationProvider;

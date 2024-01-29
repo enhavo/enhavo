@@ -16,6 +16,7 @@ services:
     Enhavo\Bundle\AppBundle\Endpoint\Extension\RouterEndpointExtensionType:
         arguments:
             - '@Enhavo\Bundle\AppBundle\Twig\TwigRouter'
+            - '@Enhavo\Bundle\AppBundle\Routing\RouteCollectorInterface'
         calls:
             - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
         tags:
@@ -25,7 +26,6 @@ services:
     Enhavo\Bundle\AppBundle\Endpoint\Type\AreaEndpointType:
         arguments:
             - '@twig'
-            - '@Enhavo\Bundle\AppBundle\Routing\RouteCollectorInterface'
         calls:
             - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
         tags:
@@ -86,6 +86,16 @@ services:
     Enhavo\Bundle\AppBundle\Endpoint\Extension\VueRouteEndpointExtensionType:
         arguments:
             - '@Enhavo\Bundle\AppBundle\Vue\RouteProvider\VueRouteProviderInterface'
+        calls:
+            - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
+        tags:
+            - { name: enhavo_api.endpoint_extension }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\AppBundle\Endpoint\Extension\TranslationEndpointExtensionType:
+        arguments:
+            - '@enhavo_app.translation.translation_dumper'
+            - '@enhavo_app.locale_resolver'
         calls:
             - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
         tags:

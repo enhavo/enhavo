@@ -1,0 +1,21 @@
+{% extends template('admin/view/base.html.twig') %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('enhavo/application', null, 'enhavo') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('enhavo/application', null, 'enhavo') }}
+{% endblock %}
+
+{% block routes %}
+    <script id="routes" type="application/json">{{ routes|json_encode|raw }}</script>
+{% endblock %}
+
+{% block content %}
+    <script id="vue_routes" type="application/json">{{ vue_routes|json_encode|raw }}</script>
+    <script id="branding" type="application/json">{{ branding|json_encode|raw }}</script>
+    <div data-controller="user"></div>
+{% endblock %}

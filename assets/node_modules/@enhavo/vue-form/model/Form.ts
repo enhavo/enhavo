@@ -28,6 +28,7 @@ export class Form
     action: string = null;
     visitors: FormVisitorInterface[] = [];
     eventDispatcher: FormEventDispatcherInterface;
+    errors: FormErrors[] = [];
 
     public get(name: string): Form
     {
@@ -151,4 +152,9 @@ export class Form
 
         form.update();
     }
+}
+
+export class FormErrors
+{
+    message: string;
 }

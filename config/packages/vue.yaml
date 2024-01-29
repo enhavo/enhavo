@@ -18,6 +18,9 @@ enhavo_app:
                 path: assets/theme/routes.json
                 prefix: /template
                 groups: ['template']
+            admin:
+                type: routing
+                groups: ['admin']
 
 when@template:
     enhavo_app:

@@ -7,14 +7,14 @@
 
 namespace Enhavo\Bundle\UserBundle\Security\Authentication;
 
+use Enhavo\Bundle\ApiBundle\Endpoint\Endpoint;
 use Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider;
 use Enhavo\Bundle\UserBundle\Event\UserEvent;
 use Enhavo\Bundle\UserBundle\Exception\ConfigurationException;
-use Enhavo\Bundle\UserBundle\UserIdentifier\UserIdentifierProvider;
 use Enhavo\Bundle\UserBundle\Model\CredentialsInterface;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Enhavo\Bundle\UserBundle\Repository\UserRepository;
-use Enhavo\Bundle\UserBundle\User\UserManager;
+use Enhavo\Component\Type\FactoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -23,26 +23,23 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\CsrfTokenBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
-use Symfony\Component\Security\Http\Util\TargetPathTrait;
+use Symfony\Component\Security\Http\SecurityRequestAttributes;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 
 class FormLoginAuthenticator extends AbstractAuthenticator
 {
-    use TargetPathTrait;
-
     public function __construct(
-        private UserManager $userManager,
-        private UserRepository $userRepository,
-        private ConfigurationProvider $configurationProvider,
-        private UrlGeneratorInterface $urlGenerator,
-        private EventDispatcherInterface $eventDispatcher,
-        private FormFactoryInterface $formFactory,
+        private readonly UserRepository $userRepository,
+        private readonly ConfigurationProvider $configurationProvider,
+        private readonly UrlGeneratorInterface $urlGenerator,
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly FormFactoryInterface $formFactory,
+        private readonly FactoryInterface $endpointFactory,
         string $className
     )
     {
@@ -51,7 +48,7 @@ class FormLoginAuthenticator extends AbstractAuthenticator
     public function supports(Request $request): bool
     {
         try {
-            $loginRoute = $this->configurationProvider->getLoginConfiguration()->getRoute();
+            $loginRoute = $this->configurationProvider->getLoginConfiguration()->getCheckRoute();
         } catch (ConfigurationException $exception) {
             return false;
         }
@@ -99,15 +96,13 @@ class FormLoginAuthenticator extends AbstractAuthenticator
     {
         /** @var UserInterface $user */
         $user = $token->getUser();
-        $session = $request->getSession();
-        $targetPath = $request->get('_target_path') ?? $this->getTargetPath($session, $firewallName);
         $event = $this->dispatchSuccess($user);
 
-        $this->removeTargetPath($session, $firewallName);
-        $request->getSession()->set('_security.credentials', null);
-
-        if ($targetPath) {
-            return $event->getResponse() ?? new RedirectResponse($targetPath);
+        $endpointConfig = $request->attributes->get('_endpoint');
+        if ($endpointConfig) {
+            /** @var Endpoint $endpoint */
+            $endpoint = $this->endpointFactory->create($endpointConfig);
+            return $endpoint->getResponse($request);
         }
 
         return $event->getResponse();
@@ -119,7 +114,7 @@ class FormLoginAuthenticator extends AbstractAuthenticator
         $credentials = $this->getCredentials($request);
 
         if ($request->hasSession()) {
-            $request->getSession()->set(Security::AUTHENTICATION_ERROR, $exception);
+            $request->getSession()->set(SecurityRequestAttributes::AUTHENTICATION_ERROR, $exception);
             $request->getSession()->set('_security.credentials', $credentials);
         }
 
@@ -135,9 +130,11 @@ class FormLoginAuthenticator extends AbstractAuthenticator
             return $event->getResponse();
         }
 
-        $failurePath = $request->get('_failure_path');
-        if ($failurePath) {
-            return new RedirectResponse($failurePath);
+        $endpointConfig = $request->attributes->get('_endpoint');
+        if ($endpointConfig) {
+            /** @var Endpoint $endpoint */
+            $endpoint = $this->endpointFactory->create($endpointConfig);
+            return $endpoint->getResponse($request);
         }
 
         return new RedirectResponse($this->getLoginUrl());

@@ -3,7 +3,7 @@
 namespace Enhavo\Bundle\RoutingBundle\Vue;
 
 use Doctrine\ORM\AbstractQuery;
-use Enhavo\Bundle\AppBundle\Vue\RouteProvider\GroupHelperTrait;
+use Enhavo\Bundle\AppBundle\Vue\RouteProvider\VueProviderTypeHelperTrait;
 use Enhavo\Bundle\AppBundle\Vue\RouteProvider\VueRoute;
 use Enhavo\Bundle\AppBundle\Vue\RouteProvider\VueRouteProviderTypeInterface;
 use Enhavo\Bundle\RoutingBundle\Repository\RouteRepository;
@@ -12,7 +12,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class RoutingVueRouteProviderType extends AbstractType implements VueRouteProviderTypeInterface
 {
-    use GroupHelperTrait;
+    use VueProviderTypeHelperTrait;
 
     public function __construct(
         private readonly RouteRepository $routeRepository,

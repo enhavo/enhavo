@@ -44,6 +44,7 @@ class FormAuthenticationEntryPointTest extends TestCase
         $dependencies->configurationProvider->method('getLoginConfiguration')->willReturnCallback(function() {
             $configuration = new LoginConfiguration();
             $configuration->setRoute('config.login.route');
+            $configuration->setCheckRoute('config.login.route');
             return $configuration;
         });
 
