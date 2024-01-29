@@ -94,7 +94,6 @@ class ChangeEmailControllerTest //extends TestCase
         $dependencies->provider->method('getChangeMailRequestConfiguration')->willReturnCallback(function() {
             $configuration = new ChangeEmailRequestConfiguration();
             $configuration->setRoute('config.login.route');
-            $configuration->set('config.login.route');
             return $configuration;
         });
 

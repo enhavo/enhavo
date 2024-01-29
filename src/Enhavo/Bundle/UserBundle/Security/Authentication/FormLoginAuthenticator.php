@@ -14,7 +14,6 @@ use Enhavo\Bundle\UserBundle\Exception\ConfigurationException;
 use Enhavo\Bundle\UserBundle\Model\CredentialsInterface;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Enhavo\Bundle\UserBundle\Repository\UserRepository;
-use Enhavo\Bundle\UserBundle\User\UserManager;
 use Enhavo\Component\Type\FactoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -30,18 +29,17 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\SecurityRequestAttributes;
-use Symfony\Component\Security\Http\Util\TargetPathTrait;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 
 class FormLoginAuthenticator extends AbstractAuthenticator
 {
     public function __construct(
-        private UserRepository $userRepository,
-        private ConfigurationProvider $configurationProvider,
-        private UrlGeneratorInterface $urlGenerator,
-        private EventDispatcherInterface $eventDispatcher,
-        private FormFactoryInterface $formFactory,
-        private FactoryInterface $endpointFactory,
+        private readonly UserRepository $userRepository,
+        private readonly ConfigurationProvider $configurationProvider,
+        private readonly UrlGeneratorInterface $urlGenerator,
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly FormFactoryInterface $formFactory,
+        private readonly FactoryInterface $endpointFactory,
         string $className
     )
     {
