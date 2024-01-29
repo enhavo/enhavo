@@ -40,8 +40,8 @@ class ResetPasswordRequestEndpointType extends AbstractFormEndpointType
     protected function handleSuccess($options, Request $request, Data $data, Context $context, FormInterface $form): void
     {
         $configuration = $this->provider->getResetPasswordRequestConfiguration();
-        $data = $form->getData();
-        $user = $this->userRepository->loadUserByIdentifier($data->getUserIdentifier());
+        $formData = $form->getData();
+        $user = $this->userRepository->loadUserByIdentifier($formData->getUserIdentifier());
 
         $data->set('message', $this->translator->trans('reset_password.flash.message.success', [], 'EnhavoUserBundle'));
         $this->userManager->resetPassword($user, $configuration);

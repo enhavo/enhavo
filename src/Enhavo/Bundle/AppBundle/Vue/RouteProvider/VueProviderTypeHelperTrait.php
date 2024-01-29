@@ -48,4 +48,13 @@ trait VueProviderTypeHelperTrait
 
         return null;
     }
+
+    protected function convertPath($path)
+    {
+        $path = preg_replace_callback('/\{([0-9A-Za-z_-]+)\}/', function($matches) {
+            return ':' . $matches[1];
+        }, $path);
+
+        return $path;
+    }
 }

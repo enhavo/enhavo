@@ -45,8 +45,15 @@ class RoutingVueRouteProviderType extends AbstractType implements VueRouteProvid
                 $vueGroups = $defaults['_vue']['groups'] ?? null;
                 if ($this->isGroupSelected($options, $vueGroups)) {
                     $vueRoute = new VueRoute($defaults['_vue']);
-                    $vueRoute->setName($key);
-                    $vueRoute->setPath($route->getPath());
+
+                    if ($vueRoute->getName() === null) {
+                        $vueRoute->setName($key);
+                    }
+
+                    if ($vueRoute->getPath() === null) {
+                        $vueRoute->setPath($this->convertPath($route->getPath()));
+                    }
+
                     $this->routes[] = $vueRoute;
                 }
             }

@@ -14,19 +14,6 @@ enhavo_user_login:
             component: user-login
             groups: admin
 
-enhavo_user_api_login:
-    options:
-        expose: true
-    path: /api/login
-    methods: [GET, POST]
-    defaults:
-        _format: json
-        _config: admin
-        _expose: admin
-        _endpoint:
-            type: user_login
-            area: admin
-
 enhavo_user_logout:
     options:
         expose: true

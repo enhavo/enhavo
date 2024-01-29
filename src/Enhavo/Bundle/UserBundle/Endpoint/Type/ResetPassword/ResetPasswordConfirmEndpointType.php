@@ -51,9 +51,16 @@ class ResetPasswordConfirmEndpointType extends AbstractFormEndpointType
         $user = $form->getData();
         $configuration = $this->provider->getResetPasswordConfirmConfiguration();
         $this->userManager->changePassword($user);
+        $data->set('autoLogin', $configuration->isAutoLogin());
         if ($configuration->isAutoLogin()) {
             $this->userManager->login($user);
         }
+    }
+
+    protected function handleFailed($options, Request $request, Data $data, Context $context, FormInterface $form): void
+    {
+        $configuration = $this->provider->getResetPasswordConfirmConfiguration();
+        $data->set('autoLogin', $configuration->isAutoLogin());
     }
 
     protected function getRedirectUrl($options, Request $request, Data $data, Context $context, FormInterface $form): ?string
