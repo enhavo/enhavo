@@ -10,6 +10,7 @@ enhavo_user_login:
             type: user_login_app
             vue_routes: admin
             area: admin
+            translations: EnhavoUserBundle
         _vue:
             component: user-login
             groups: admin

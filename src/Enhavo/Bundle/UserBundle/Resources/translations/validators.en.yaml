@@ -1,10 +1,11 @@
 enhavo_user:
     password:
-        mismatch: 'The entered passwords do not match.'
+        mismatch: 'The entered passwords do not match'
+        length: 'The passwort must have 8 character'
     current_password:
-        invalid: 'The password is incorrect.'
+        invalid: 'The password is incorrect'
     change_email:
-        mismatch: 'Email-Adresses do not match.'
+        mismatch: 'Email-Adresses do not match'
     user:
         exists: 'The user exists'
         not_exists: "The user doesn't exist"

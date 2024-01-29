@@ -35,8 +35,10 @@
         <script id="routes" type="application/json">{"base_url":"","routes":{}}</script>
     {% endif %}
 {% endblock %}
-{% if translations is defined %}
-    <script id="translations" type="application/json">{{ translations|json_encode|raw }}</script>
-{% endif %}
+{% block translations %}
+    {% if translations is defined %}
+        <script id="translations" type="application/json">{{ translations|json_encode|raw }}</script>
+    {% endif %}
+{% endblock %}
 </body>
 </html>
