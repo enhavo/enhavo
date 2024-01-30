@@ -24,7 +24,7 @@ export class UserManager
     public loadLogin()
     {
         this.loading = true;
-        const url = this.router.generate('enhavo_user_api_login');
+        const url = this.router.generate('enhavo_user_admin_api_login');
         fetch(url).then((response) => {
             response.json().then((data: any) => {
                 this.loading = false;
@@ -36,7 +36,7 @@ export class UserManager
     public login()
     {
         this.loading = true;
-        const url = this.router.generate('enhavo_user_api_login');
+        const url = this.router.generate('enhavo_user_admin_api_login');
         const data = FormUtil.serializeForm(this.loginForm);
 
         fetch(url, {
@@ -60,7 +60,7 @@ export class UserManager
     {
         this.loading = true;
 
-        const url = this.router.generate('enhavo_user_api_reset_password_request');
+        const url = this.router.generate('enhavo_user_admin_api_reset_password_request');
         fetch(url).then((response) => {
             response.json().then((data: any) => {
                 this.loading = false;
@@ -75,7 +75,7 @@ export class UserManager
         this.loading = true;
 
         return new Promise((resolve, reject) => {
-            const url = this.router.generate('enhavo_user_api_reset_password_request');
+            const url = this.router.generate('enhavo_user_admin_api_reset_password_request');
             const data = FormUtil.serializeForm(this.resetPasswordRequestForm);
 
             fetch(url, {
@@ -98,7 +98,7 @@ export class UserManager
         this.loading = true;
         this.resetPasswordConfirmTokenError = false;
 
-        const url = this.router.generate('enhavo_user_api_reset_password_confirm', {
+        const url = this.router.generate('enhavo_user_admin_api_reset_password_confirm', {
             token: token
         });
 
@@ -119,7 +119,7 @@ export class UserManager
     {
         this.loading = true;
 
-        const url = this.router.generate('enhavo_user_api_reset_password_confirm', {
+        const url = this.router.generate('enhavo_user_admin_api_reset_password_confirm', {
             token: token
         });
 

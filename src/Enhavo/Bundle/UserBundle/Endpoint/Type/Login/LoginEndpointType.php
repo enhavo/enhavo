@@ -88,11 +88,6 @@ class LoginEndpointType extends AbstractFormEndpointType
         $data->set('viewId', $request->getSession()->get('enhavo.view_id'));
     }
 
-    public static function getName(): ?string
-    {
-        return 'user_login';
-    }
-
     public static function getParentType(): ?string
     {
         return AreaEndpointType::class;

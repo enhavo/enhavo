@@ -18,7 +18,7 @@ abstract class AbstractFormEndpointType extends AbstractEndpointType implements 
     {
         $this->init($options, $request, $data, $context);
 
-        if ($context->getResponse()) {
+        if ($context->getResponse() || $context->isStopped()) {
             return;
         }
 
@@ -31,7 +31,7 @@ abstract class AbstractFormEndpointType extends AbstractEndpointType implements 
             if ($form->isSubmitted() && $form->isValid()) {
                 $this->handleSuccess($options, $request, $data, $context, $form);
 
-                if ($context->getResponse()) {
+                if ($context->getResponse() || $context->isStopped()) {
                     return;
                 }
 
@@ -51,7 +51,7 @@ abstract class AbstractFormEndpointType extends AbstractEndpointType implements 
                 $success = false;
                 $this->handleFailed($options, $request, $data, $context, $form);
 
-                if ($context->getResponse()) {
+                if ($context->getResponse() || $context->isStopped()) {
                     return;
                 }
 

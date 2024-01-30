@@ -23,8 +23,8 @@ security:
             custom_authenticators:
                 - Enhavo\Bundle\UserBundle\Security\Authentication\FormLoginAuthenticator
             logout:
-                path: enhavo_user_logout
-                target: enhavo_user_login
+                path: enhavo_user_admin_logout
+                target: enhavo_user_admin_login
 
         main:
             pattern: .*

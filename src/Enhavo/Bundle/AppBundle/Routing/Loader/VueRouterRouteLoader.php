@@ -47,7 +47,7 @@ class VueRouterRouteLoader extends FileLoader
         if (is_array($content)) {
             foreach ($content as $route) {
                 if (isset($route['path'], $route['name'])) {
-                    $routes[$route['name']] = $route['path'];
+                    $routes[$route['name']] = $this->convertPath($route['path']);
                 }
                 if (isset($route['children'])) {
                     $childRoutes = $this->getRoutes($route['children']);
@@ -59,6 +59,15 @@ class VueRouterRouteLoader extends FileLoader
         }
 
         return $routes;
+    }
+
+    private function convertPath($path)
+    {
+        $path = preg_replace_callback('/:([0-9A-Za-z_-]+)/', function($matches) {
+            return '{' . $matches[1] . '}';
+        }, $path);
+
+        return $path;
     }
 
     public function supports(mixed $resource, string $type = null)

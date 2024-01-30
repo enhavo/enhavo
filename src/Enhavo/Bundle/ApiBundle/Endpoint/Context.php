@@ -87,4 +87,9 @@ class Context
     {
         return $this->stop;
     }
+
+    public function stop()
+    {
+        return $this->stop = true;
+    }
 }

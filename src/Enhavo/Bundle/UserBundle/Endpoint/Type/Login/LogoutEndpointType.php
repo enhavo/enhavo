@@ -9,10 +9,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class LogoutEndpointType extends AbstractEndpointType
 {
-    public static function getName(): ?string
-    {
-        return 'user_logout';
-    }
     public function handleRequest($options, Request $request, Data $data, Context $context): void
     {
         throw new \LogicException('You must activate the logout in your security firewall configuration.');

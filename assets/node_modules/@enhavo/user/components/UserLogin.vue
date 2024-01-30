@@ -17,7 +17,7 @@
         <div class="form-row">
             <div class="input-container">
                 <form-label :form="userManger.loginForm.get('password')"></form-label>
-                <router-link :to="{name: 'enhavo_user_reset_password_request'}" class="reset-pw-link">{{ translator.trans('reset_password.request.submit', null, 'EnhavoUserBundle') }}</router-link>
+                <router-link :to="{name: 'enhavo_user_admin_reset_password_request'}" class="reset-pw-link">{{ translator.trans('reset_password.request.submit', null, 'EnhavoUserBundle') }}</router-link>
                 <form-widget :form="userManger.loginForm.get('password')" class="textfield"></form-widget>
             </div>
         </div>
@@ -55,11 +55,6 @@ function redirectUrl(): string
 {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get('redirectUrl');
-}
-
-function openResetPassword(): void
-{
-    router.push({ name: 'enhavo_user_reset_password_request'})
 }
 
 </script>
