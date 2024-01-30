@@ -141,7 +141,7 @@ enhavo_user:
             login:
                 template: admin/user/login/login.html.twig
                 redirect_route: enhavo_app_index
-                route: enhavo_user_login
+                route: enhavo_user_admin_login
                 check_route: enhavo_user_admin_api_login
 
             change_password:
