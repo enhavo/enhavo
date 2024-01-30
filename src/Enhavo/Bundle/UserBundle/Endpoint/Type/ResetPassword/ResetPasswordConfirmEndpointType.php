@@ -14,6 +14,7 @@ use Enhavo\Bundle\UserBundle\User\UserManager;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ResetPasswordConfirmEndpointType extends AbstractFormEndpointType
 {
@@ -23,6 +24,7 @@ class ResetPasswordConfirmEndpointType extends AbstractFormEndpointType
         private readonly ConfigurationProvider $provider,
         private readonly UserManager $userManager,
         private readonly UserRepository $userRepository,
+        private readonly TranslatorInterface $translator,
     )
     {
     }
@@ -31,12 +33,16 @@ class ResetPasswordConfirmEndpointType extends AbstractFormEndpointType
     {
         $token = $request->get('token');
         $user = $this->userRepository->findByConfirmationToken($token);
-        $context->set('targetUser', $user);
-        $data->set('token', $token);
 
         if (null === $user) {
-            throw new TokenInvalidException(sprintf('A user with confirmation token "%s" does not exist', $token));
+            $data->set('message', $this->translator->trans('reset_password.confirm.invalid_token', [], 'EnhavoUserBundle'));
+            $context->stop();
+            $context->setStatusCode(404);
+            return;
         }
+
+        $context->set('targetUser', $user);
+        $data->set('token', $token);
     }
 
     protected function getForm($options, Request $request, Data $data, Context $context): FormInterface

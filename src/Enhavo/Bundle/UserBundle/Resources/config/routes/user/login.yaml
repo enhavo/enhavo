@@ -1,21 +1,21 @@
-enhavo_user_admin_login:
+enhavo_user_theme_login:
     options:
         expose: true
     path: /login
     methods: [GET, POST]
     defaults:
         _format: html
-        _config: admin
+        _config: theme
         _endpoint:
             type: user_login_app
             vue_routes: admin
-            area: admin
+            area: theme
             translations: EnhavoUserBundle
         _vue:
             component: user-login
-            groups: admin
+            groups: theme
 
-enhavo_user_admin_logout:
+enhavo_user_theme_logout:
     options:
         expose: true
     path: /logout
@@ -24,9 +24,4 @@ enhavo_user_admin_logout:
         _config: admin
         _endpoint:
             type: user_login_app
-            vue_routes: admin
             area: admin
-            translations: EnhavoUserBundle
-        _vue:
-            component: user-logout
-            groups: admin

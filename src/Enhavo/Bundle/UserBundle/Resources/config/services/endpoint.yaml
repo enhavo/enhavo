@@ -160,6 +160,7 @@ services:
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
             - '@enhavo_user.user.manager'
             - '@enhavo_user.repository.user'
+            - '@translator'
         calls:
             - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
             - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]

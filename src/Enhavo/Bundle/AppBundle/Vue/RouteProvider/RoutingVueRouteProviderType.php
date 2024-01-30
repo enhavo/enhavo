@@ -20,12 +20,20 @@ class RoutingVueRouteProviderType extends AbstractType implements VueRouteProvid
 
     public function getRoutes($options, array|string|null $groups = null): array
     {
+        if (!$this->isGroupSelected($options, $groups)) {
+            return [];
+        }
+
         $this->load($options);
         return $this->routes;
     }
 
     public function getRoute($options, $path, array|string|null $groups = null): ?VueRoute
     {
+        if (!$this->isGroupSelected($options, $groups)) {
+            return null;
+        }
+
         $this->load($options);
         return $this->search($path, $this->routes);
     }

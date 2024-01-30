@@ -41,14 +41,14 @@ class Endpoint extends AbstractContainerType
             $parent->handleRequest($this->options, $request, $data, $context);
             $this->endpointDataCollector->addParent($parent);
             if ($context->isStopped()) {
-                return $context->getResponse();
+                return $context->getResponse() ?? $this->type->getResponse($this->options, $request, $data, $context);
             }
             foreach ($this->extensions as $extension) {
                 if ($this->isExtendable($parent, $extension)) {
                     $extension->handleRequest($this->options, $request, $data, $context);
                     $this->endpointDataCollector->addExtension($extension);
                     if ($context->isStopped()) {
-                        return $context->getResponse();
+                        return $context->getResponse() ?? $this->type->getResponse($this->options, $request, $data, $context);
                     }
                 }
             }
@@ -60,7 +60,7 @@ class Endpoint extends AbstractContainerType
         if ($context->isStopped()) {
             $this->endpointDataCollector->setContext($context);
             $this->endpointDataCollector->setData($data);
-            return $context->getResponse();
+            return $context->getResponse() ?? $this->type->getResponse($this->options, $request, $data, $context);
         }
 
         foreach ($this->extensions as $extension) {
@@ -70,7 +70,7 @@ class Endpoint extends AbstractContainerType
                 if ($context->isStopped()) {
                     $this->endpointDataCollector->setContext($context);
                     $this->endpointDataCollector->setData($data);
-                    return $context->getResponse();
+                    return $context->getResponse() ?? $this->type->getResponse($this->options, $request, $data, $context);
                 }
             }
         }

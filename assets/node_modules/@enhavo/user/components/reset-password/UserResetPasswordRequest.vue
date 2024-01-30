@@ -10,7 +10,7 @@
         <div class="form-row">
             <div class="input-container">
                 <form-label :form="userManger.resetPasswordRequestForm.get('userIdentifier')"></form-label>
-                <router-link :to="{name: 'enhavo_user_login'}" class="reset-pw-link">{{ translator.trans('reset_password.label.login', null, 'EnhavoUserBundle') }}</router-link>
+                <router-link :to="{name: 'enhavo_user_admin_login'}" class="reset-pw-link">{{ translator.trans('reset_password.label.login', null, 'EnhavoUserBundle') }}</router-link>
                 <form-widget :form="userManger.resetPasswordRequestForm.get('userIdentifier')" class="textfield" autofocus></form-widget>
                 <form-errors :form="userManger.resetPasswordRequestForm.get('userIdentifier')"></form-errors>
             </div>

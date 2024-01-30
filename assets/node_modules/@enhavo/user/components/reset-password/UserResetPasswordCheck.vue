@@ -7,7 +7,7 @@
         </div>
 
         <div class="button-row">
-            <router-link :to="{name: 'enhavo_user_login'}" class="btn login-button">{{ translator.trans('reset_password.label.login', null, 'EnhavoUserBundle') }}</router-link>
+            <router-link :to="{name: 'enhavo_user_admin_login'}" class="btn login-button">{{ translator.trans('reset_password.label.login', null, 'EnhavoUserBundle') }}</router-link>
         </div>
     </div>
 </template>

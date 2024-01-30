@@ -123,8 +123,8 @@ enhavo_user:
                     template: mail/security/reset-password.html.twig
                     subject: reset_password.mail.subject
                 translation_domain: EnhavoUserBundle
-                redirect_route: enhavo_user_reset_password_check
-                confirmation_route: enhavo_user_reset_password_confirm
+                redirect_route: enhavo_user_admin_reset_password_check
+                confirmation_route: enhavo_user_admin_reset_password_confirm
                 form:
                      class: Enhavo\Bundle\UserBundle\Form\Type\ResetPasswordRequestType
                      options: []
@@ -142,7 +142,7 @@ enhavo_user:
                 template: admin/user/login/login.html.twig
                 redirect_route: enhavo_app_index
                 route: enhavo_user_login
-                check_route: enhavo_user_api_login
+                check_route: enhavo_user_admin_api_login
 
             change_password:
                 template: '@EnhavoApp/admin/view/form.html.twig'
@@ -207,7 +207,7 @@ enhavo_app:
                 icon: person
                 menu:
                     logout:
-                        route: enhavo_user_logout
+                        route: enhavo_user_admin_logout
                         label: label.logout
                         translation_domain: EnhavoAppBundle
                         target: _self

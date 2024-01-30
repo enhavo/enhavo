@@ -10,7 +10,7 @@
         <div class="form-row">
             <div class="input-container">
                 <form-label :form="userManger.resetPasswordConfirmForm.get('plainPassword.first')"></form-label>
-                <router-link :to="{name: 'enhavo_user_login'}" class="reset-pw-link">{{ translator.trans('reset_password.label.login', null, 'EnhavoUserBundle') }}</router-link>
+                <router-link :to="{name: 'enhavo_user_admin_login'}" class="reset-pw-link">{{ translator.trans('reset_password.label.login', null, 'EnhavoUserBundle') }}</router-link>
                 <form-widget :form="userManger.resetPasswordConfirmForm.get('plainPassword.first')" class="textfield" autofocus></form-widget>
                 <form-errors :form="userManger.resetPasswordConfirmForm.get('plainPassword.first')"></form-errors>
             </div>
@@ -39,7 +39,7 @@
         </div>
 
         <div class="button-row">
-            <router-link :to="{name: 'enhavo_user_reset_password_request'}" class="btn login-button">{{ translator.trans('reset_password.confirm.renew_request', null, 'EnhavoUserBundle') }}</router-link>
+            <router-link :to="{name: 'enhavo_user_admin_reset_password_request'}" class="btn login-button">{{ translator.trans('reset_password.confirm.renew_request', null, 'EnhavoUserBundle') }}</router-link>
         </div>
     </div>
 </template>
@@ -51,17 +51,17 @@ import {useRouter, useRoute} from "vue-router";
 import {Translator} from "@enhavo/app/translation/Translator";
 
 const router = useRouter();
-const params = useRoute().params as {token: String};
+const token = useRoute().params.token as string;
 const userManger = inject('userManager') as UserManager
 const translator = inject('translator') as Translator
 
 onMounted(() => {
-    userManger.loadResetPasswordConfirm(params.token);
+    userManger.loadResetPasswordConfirm(token);
 })
 
 function submit()
 {
-    userManger.resetPasswordConfirm(params.token).then((data: ResetPasswordData) => {
+    userManger.resetPasswordConfirm(token).then((data: ResetPasswordData) => {
         if (data.success) {
             router.push({path: data.url})
         }
