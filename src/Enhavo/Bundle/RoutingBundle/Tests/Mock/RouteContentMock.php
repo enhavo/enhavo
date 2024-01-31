@@ -16,115 +16,71 @@ use Enhavo\Bundle\RoutingBundle\Model\Slugable;
 
 class RouteContentMock implements Proxy, Slugable
 {
-    private $id = 999;
+    private ?int $id = 999;
+    private ?string $slug = null;
+    private ?RouteInterface $route = null;
+    private ?string $title = null;
+    private ?string $subTitle = null;
+    private ?RouteInterface $redirectRoute = null;
 
-    private $slug;
-    /**
-     * @var RouteInterface
-     */
-    private $route;
-
-    /**
-     * @var string
-     */
-    private $title;
-
-    /**
-     * @var string
-     */
-    private $subTitle;
-
-    /**
-     * @var RouteInterface
-     */
-    private $redirectRoute;
-
-    /**
-     * @return mixed
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return RouteInterface
-     */
-    public function getRoute(): RouteInterface
+    public function setId(?int $id): void
     {
-        return $this->route;
+        $this->id = $id;
     }
 
-    /**
-     * @param RouteInterface $route
-     */
-    public function setRoute(RouteInterface $route): void
-    {
-        $this->route = $route;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTitle(): string
-    {
-        return $this->title;
-    }
-
-    /**
-     * @param string $title
-     */
-    public function setTitle(string $title): void
-    {
-        $this->title = $title;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSubTitle(): string
-    {
-        return $this->subTitle;
-    }
-
-    /**
-     * @param string $subTitle
-     */
-    public function setSubTitle(string $subTitle): void
-    {
-        $this->subTitle = $subTitle;
-    }
-
-    /**
-     * @return RouteInterface
-     */
-    public function getRedirectRoute(): RouteInterface
-    {
-        return $this->redirectRoute;
-    }
-
-    /**
-     * @param RouteInterface $redirectRoute
-     */
-    public function setRedirectRoute(RouteInterface $redirectRoute): void
-    {
-        $this->redirectRoute = $redirectRoute;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSlug()
+    public function getSlug(): ?string
     {
         return $this->slug;
     }
 
-    /**
-     * @param mixed $slug
-     */
     public function setSlug($slug): void
     {
         $this->slug = $slug;
+    }
+
+    public function getRoute(): ?RouteInterface
+    {
+        return $this->route;
+    }
+
+    public function setRoute(?RouteInterface $route): void
+    {
+        $this->route = $route;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(?string $title): void
+    {
+        $this->title = $title;
+    }
+
+    public function getSubTitle(): ?string
+    {
+        return $this->subTitle;
+    }
+
+    public function setSubTitle(?string $subTitle): void
+    {
+        $this->subTitle = $subTitle;
+    }
+
+    public function getRedirectRoute(): ?RouteInterface
+    {
+        return $this->redirectRoute;
+    }
+
+    public function setRedirectRoute(?RouteInterface $redirectRoute): void
+    {
+        $this->redirectRoute = $redirectRoute;
     }
 
     public function __setInitialized($initialized)
@@ -166,6 +122,4 @@ class RouteContentMock implements Proxy, Slugable
     {
         return false;
     }
-
-
 }

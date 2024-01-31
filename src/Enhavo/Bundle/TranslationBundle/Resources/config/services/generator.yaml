@@ -11,15 +11,6 @@ services:
         tags:
             - { name: 'enhavo_route.generator', alias: 'locale_prefix' }
 
-    Enhavo\Bundle\TranslationBundle\AutoGenerator\Generator\TranslationRouteNameGenerator:
-        public: true
-        arguments:
-            - '@Enhavo\Bundle\TranslationBundle\Translation\TranslationManager'
-            - '@Enhavo\Bundle\TranslationBundle\Translator\Route\RouteTranslator'
-        calls:
-            - [setContainer, ['@service_container']]
-        tags:
-            - { name: 'enhavo_route.generator', alias: 'translation_route_name' }
 
     Enhavo\Bundle\TranslationBundle\AutoGenerator\Generator\TranslationSlugGenerator:
         public: true
