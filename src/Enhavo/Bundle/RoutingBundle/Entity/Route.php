@@ -71,4 +71,9 @@ class Route extends RouteModel implements RouteInterface, ResourceInterface
         $this->setStaticPrefix($prefix);
         $this->setVariablePattern($variablePattern);
     }
+
+    public function generateRouteName()
+    {
+        $this->setName('r' . uniqid());
+    }
 }
