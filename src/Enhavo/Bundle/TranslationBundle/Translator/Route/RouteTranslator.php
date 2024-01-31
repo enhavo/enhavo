@@ -67,13 +67,14 @@ class RouteTranslator extends AbstractTranslator
         $this->deleteTranslationData($entity);
     }
 
-    private function createTranslationRoute($entity, $property, $locale, RouteInterface $route): ?TranslationRoute
+    private function createTranslationRoute($entity, $property, $locale, ?RouteInterface $route): ?TranslationRoute
     {
-        if (empty($route->getStaticPrefix())) {
+        if ($route === null || empty($route->getStaticPrefix())) {
             return null;
         }
 
         $route->setContent($entity);
+        $route->generateRouteName();
 
         $translationRoute = new TranslationRoute();
         $translationRoute->setLocale($locale);
