@@ -38,7 +38,7 @@ class RouteManager
         }
 
         if (empty($route->getName())) {
-            $route->setName('r' . uniqid());
+            $route->generateRouteName();
         }
 
         $this->autoGenerator->generate($resource);

@@ -38,7 +38,7 @@ class RouteType extends AbstractType
                 }
                 $route = new Route();
                 $route->setPath($path);
-                $route->setName('r' . uniqid());
+                $route->generateRouteName();
                 return $route;
             },
         ));

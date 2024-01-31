@@ -59,4 +59,9 @@ class Route extends BaseRouteModel implements RouteInterface, ResourceInterface
 
         return $this;
     }
+
+    public function generateRouteName()
+    {
+        $this->setName('r' . uniqid());
+    }
 }
