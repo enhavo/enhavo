@@ -50,6 +50,8 @@ services:
 
     Enhavo\Bundle\RoutingBundle\Router\Strategy\RouteStrategy:
         public: true
+        arguments:
+            - '@router'
         calls:
             - [setContainer, ['@service_container']]
         tags:
