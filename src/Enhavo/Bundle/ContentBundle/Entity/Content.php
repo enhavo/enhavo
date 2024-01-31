@@ -200,7 +200,7 @@ abstract class Content implements Publishable, Routeable, Slugable, SitemapInter
      * @param RouteInterface $route
      * @return void
      */
-    public function setRoute(RouteInterface $route)
+    public function setRoute(?RouteInterface $route)
     {
         $this->route = $route;
     }

@@ -49,8 +49,6 @@ enhavo_routing:
                 prefix:
                     type: prefix
                     properties: title
-                route_name:
-                    type: route_name
 
 enhavo_content:
     sitemap:

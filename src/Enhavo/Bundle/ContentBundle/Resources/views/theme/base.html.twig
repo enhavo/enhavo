@@ -29,7 +29,11 @@
 
                 <nav class="main-navigation">
                     {% block navigation %}
-                        {{ widget('navigation', {navigation: 'main'}) }}
+                        {% if navigation.main %}
+                            {% for node in navigation.main.nodes %}
+                                {{ navigation_node_render(node, 'main') }}
+                            {% endfor %}
+                        {% endif %}
                     {% endblock %}
                 </nav>
             {% endblock %}
@@ -44,7 +48,11 @@
     <div class="container">
         <div class="inner">
             <nav class="footer-navigation">
-                {{ widget('navigation', {navigation: 'footer'}) }}
+                {% if navigation.main %}
+                    {% for node in navigation.main.nodes %}
+                        {{ navigation_node_render(node, 'main') }}
+                    {% endfor %}
+                {% endif %}
             </nav>
             {% if block("social_media") %}
                 <div class="social-media">

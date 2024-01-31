@@ -44,6 +44,7 @@ services:
         public: true
         calls:
             - [setContainer, ['@service_container']]
+            - [setRouter, ['@enhavo_routing.router']]
         tags:
             - { name: 'enhavo_route.strategy', alias: 'routable' }
 

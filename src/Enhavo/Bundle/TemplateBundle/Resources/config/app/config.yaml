@@ -35,9 +35,7 @@ enhavo_routing:
                     type: admin
                     index_route: enhavo_template_template_index
                     update_route: enhavo_template_template_update
-            generators:
-                route_name:
-                    type: route_name
+
 
 cmf_routing:
     dynamic:

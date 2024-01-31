@@ -13,6 +13,7 @@
                 <cascade-persist />
                 <cascade-refresh />
             </cascade>
+            <join-column on-delete="CASCADE" />
         </many-to-one>
     </entity>
 </doctrine-mapping>
