@@ -34,7 +34,7 @@ class Router
         $this->metadataRepository = $metadataRepository;
     }
 
-    public function generate($resource , $parameters = [], $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH, $type = 'default')
+    public function generate($resource , $parameters = [], $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH, $type = 'default'): ?string
     {
         $metadata = $this->metadataRepository->getMetadata($resource);
 

@@ -36,13 +36,6 @@ services:
         tags:
             - { name: 'enhavo_route.generator', alias: 'slug' }
 
-    Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator\RouteNameGenerator:
-        public: true
-        calls:
-            - [setContainer, ['@service_container']]
-        tags:
-            - { name: 'enhavo_route.generator', alias: 'route_name' }
-
     Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator\HierarchyPrefixGenerator:
         public: true
         calls:

@@ -11,6 +11,7 @@ namespace Enhavo\Bundle\RoutingBundle\Form\Type;
 use Enhavo\Bundle\RoutingBundle\Entity\Route;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -30,6 +31,16 @@ class RouteType extends AbstractType
             'label' => 'label.url',
             'translation_domain' => 'EnhavoAppBundle',
             'data_class' => Route::class,
+            'empty_data' => function (FormInterface $form): ?Route {
+                $path = $form->get('path')->getData();
+                if (empty($path)) {
+                    return null;
+                }
+                $route = new Route();
+                $route->setPath($path);
+                $route->setName('r' . uniqid());
+                return $route;
+            },
         ));
     }
 

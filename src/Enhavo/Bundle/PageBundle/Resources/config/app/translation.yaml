@@ -16,5 +16,3 @@ enhavo_routing:
                     type: locale_prefix
                     property: title
                     generate_translations: false
-                route_name:
-                    type: translation_route_name

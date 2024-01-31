@@ -33,7 +33,7 @@
                 <cascade-remove />
                 <cascade-refresh />
             </cascade>
-            <join-column on-delete="CASCADE" />
+            <join-column on-delete="SET NULL" />
         </many-to-one>
     </mapped-superclass>
 </doctrine-mapping>

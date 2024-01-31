@@ -1,1 +1,1 @@
-<a class="{% if navigation_node_is_active(node) %}active{% endif %}" href="{{ router(node.subject.content) }}">{{ node.label }}</a>
+<a class="{% if node.active %}active{% endif %}" href="{{ node.subject.url }}">{{ node.label }}</a>

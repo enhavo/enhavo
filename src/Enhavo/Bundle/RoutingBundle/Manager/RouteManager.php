@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\RoutingBundle\Manager;
 
+use Doctrine\ORM\EntityManager;
 use Enhavo\Bundle\RoutingBundle\Entity\Route;
 use Enhavo\Bundle\RoutingBundle\Model\Routeable;
 use Enhavo\Bundle\RoutingBundle\AutoGenerator\AutoGenerator;
@@ -15,16 +16,12 @@ use Sylius\Component\Resource\Factory\FactoryInterface;
 
 class RouteManager
 {
-    /** @var AutoGenerator */
-    private $autoGenerator;
-
-    /** @var FactoryInterface */
-    private $routeFactory;
-
-    public function __construct(AutoGenerator $autoGenerator, FactoryInterface $routeFactory)
+    public function __construct(
+        private readonly AutoGenerator $autoGenerator,
+        private readonly FactoryInterface $routeFactory,
+        private readonly EntityManager $em,
+    )
     {
-        $this->autoGenerator = $autoGenerator;
-        $this->routeFactory = $routeFactory;
     }
 
     public function update($resource)
@@ -40,6 +37,15 @@ class RouteManager
             $route->setContent($resource);
         }
 
+        if (empty($route->getName())) {
+            $route->setName('r' . uniqid());
+        }
+
         $this->autoGenerator->generate($resource);
+
+        if (empty($route->getStaticPrefix())) {
+            $resource->setRoute(null);
+            $this->em->remove($route);
+        }
     }
 }
