@@ -43,6 +43,8 @@ class EnhavoMediaExtension extends AbstractResourceExtension implements PrependE
         $container->setParameter('enhavo_media.garbage_collection.enable_delete_marked_garbage', $config['garbage_collection']['enable_delete_marked_garbage']);
         $container->setParameter('enhavo_media.garbage_collection.garbage_collector', $config['garbage_collection']['garbage_collector']);
         $container->setParameter('enhavo_media.garbage_collection.max_items_per_run', $config['garbage_collection']['max_items_per_run']);
+        $container->setParameter('enhavo_media.file_not_found.strategy', $config['file_not_found']['strategy']);
+        $container->setParameter('enhavo_media.file_not_found.strategy_parameters', $config['file_not_found']['strategy_parameters']);
 
         $configFiles = array(
             'services/command.yaml',
@@ -50,6 +52,7 @@ class EnhavoMediaExtension extends AbstractResourceExtension implements PrependE
             'services/extension.yaml',
             'services/filter.yaml',
             'services/garbage_collection.yaml',
+            'services/file_not_found.yaml',
         );
 
         foreach ($configFiles as $configFile) {

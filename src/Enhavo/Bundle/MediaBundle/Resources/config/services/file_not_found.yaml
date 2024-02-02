@@ -1,0 +1,31 @@
+services:
+    enhavo_media.file_not_found_strategy_collector:
+        class: Enhavo\Bundle\AppBundle\Type\TypeCollector
+        arguments:
+            - '@service_container'
+            - 'MediaFileNotFoundStrategy'
+
+    enhavo_media.file_not_found.file_not_found_manager:
+        class: Enhavo\Bundle\MediaBundle\FileNotFound\FileNotFoundManager
+        public: true
+        arguments:
+            - '@enhavo_media.file_not_found_strategy_collector'
+            - '%enhavo_media.file_not_found.strategy%'
+            - '%enhavo_media.file_not_found.strategy_parameters%'
+
+    Enhavo\Bundle\MediaBundle\FileNotFound\Strategy\ExceptionStrategy:
+        public: true
+        tags:
+            - { name: 'enhavo.media_file_not_found_strategy', alias: 'exception' }
+
+    Enhavo\Bundle\MediaBundle\FileNotFound\Strategy\RemoteServerStrategy:
+        public: true
+        arguments:
+            - '@enhavo_media.media.public_url_generator'
+        tags:
+            - { name: 'enhavo.media_file_not_found_strategy', alias: 'remote_server' }
+
+    Enhavo\Bundle\MediaBundle\FileNotFound\Strategy\CreateDummyStrategy:
+        public: true
+        tags:
+            - { name: 'enhavo.media_file_not_found_strategy', alias: 'create_dummy' }

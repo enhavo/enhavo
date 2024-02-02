@@ -8,11 +8,10 @@
 
 namespace Enhavo\Bundle\MediaBundle\Media;
 
-use Doctrine\ORM\EntityManagerInterface;
-
 use Enhavo\Bundle\AppBundle\Resource\ResourceManager;
 use Enhavo\Bundle\DoctrineExtensionBundle\Util\AssociationFinder;
 use Enhavo\Bundle\MediaBundle\Entity\Format;
+use Enhavo\Bundle\MediaBundle\FileNotFound\FileNotFoundManager;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\MediaBundle\Model\FormatInterface;
 use Enhavo\Bundle\MediaBundle\Provider\ProviderInterface;
@@ -28,6 +27,7 @@ class MediaManager
         private ProviderInterface $provider,
         private AssociationFinder $associationFinder,
         private ResourceManager $resourceManager,
+        private FileNotFoundManager $fileNotFoundManager,
     ) {
     }
 
@@ -131,6 +131,24 @@ class MediaManager
     public function updateFile(FileInterface $file)
     {
         $this->provider->updateFile($file);
+    }
+
+    /**
+     * @param FileInterface|FormatInterface $file
+     * @return void
+     */
+    public function handleFileNotFound($file): void
+    {
+        if ($file instanceof FileInterface) {
+            $this->fileNotFoundManager->handleFileNotFound($file);
+        } else {
+            $formatName = $file->getName();
+            $originalFile = $file->getFile();
+            if (!file_exists($originalFile->getContent()->getFilePath()))  {
+                $this->fileNotFoundManager->handleFileNotFound($originalFile);
+            }
+            $this->formatManager->applyFormat($originalFile, $formatName);
+        }
     }
 
     /**

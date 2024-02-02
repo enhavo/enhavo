@@ -56,6 +56,7 @@ services:
             - '@enhavo_media.provider'
             - '@Enhavo\Bundle\DoctrineExtensionBundle\Util\AssociationFinder'
             - '@Enhavo\Bundle\AppBundle\Resource\ResourceManager'
+            - '@enhavo_media.file_not_found.file_not_found_manager'
 
     enhavo_media.media.format_manager:
         class: Enhavo\Bundle\MediaBundle\Media\FormatManager
