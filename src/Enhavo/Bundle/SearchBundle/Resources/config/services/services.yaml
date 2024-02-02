@@ -69,3 +69,6 @@ services:
             - '%enhavo_search.elastica.version%'
         tags:
             - { name: console.command, command: 'enhavo:search:elastic:install' }
+    Enhavo\Bundle\SearchBundle\Command\MetadataCommand:
+        tags:
+            - { name: console.command, command: 'enhavo:search:metadata' }
