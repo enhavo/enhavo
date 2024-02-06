@@ -58,8 +58,8 @@ class MetadataFactory
     {
         $this->load();
 
-        if(array_key_exists($className, $this->configurations)) {
-            foreach($this->providers as $provider) {
+        if (array_key_exists($className, $this->configurations)) {
+            foreach ($this->providers as $provider) {
                 $provider->provide($metadata, $this->configurations[$className]);
             }
             return true;

@@ -39,7 +39,7 @@ services:
         arguments:
             - '@enhavo_calendar.import_manager'
         tags:
-            - { name: console.command, command: 'enhavo:calendar:import' }
+            - { name: console.command }
 
     Enhavo\Bundle\CalendarBundle\Block\CalendarBlockType:
         arguments:

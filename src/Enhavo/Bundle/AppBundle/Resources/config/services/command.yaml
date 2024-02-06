@@ -3,14 +3,14 @@ services:
         arguments:
             - '@enhavo_app.init.init_manager'
         tags:
-            - { name: console.command, command: 'enhavo:init' }
+            - { name: console.command }
 
     Enhavo\Bundle\AppBundle\Command\EmailSendCommand:
         arguments:
             - '@mailer'
             - '%enhavo_app.mailer.defaults%'
         tags:
-            - { name: console.command, command: 'enhavo:email:send' }
+            - { name: console.command }
 
     Enhavo\Bundle\AppBundle\Command\DebugEndpointTemplate:
         arguments:

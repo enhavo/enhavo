@@ -28,7 +28,7 @@ class MetadataRepository
      * @param MetadataFactory $factory
      * @param boolean $allowExtend
      */
-    public function __construct(MetadataFactory $factory, $allowExtend = true)
+    public function __construct(MetadataFactory $factory, bool $allowExtend = true)
     {
         $this->factory = $factory;
         $this->allowExtend = $allowExtend;
@@ -66,7 +66,7 @@ class MetadataRepository
             $this->getParents($className, $parents);
             $parents = array_reverse($parents);
 
-            foreach($parents as $parent) {
+            foreach ($parents as $parent) {
                 $loaded[] = $this->factory->loadMetadata($parent, $metadata);
             }
         } elseif($metadata === null) {
@@ -75,7 +75,7 @@ class MetadataRepository
 
         $loaded[] = $this->factory->loadMetadata($className, $metadata);
 
-        if($this->allowExtend && !in_array(true, $loaded)) {
+        if ($this->allowExtend && !in_array(true, $loaded)) {
             return null;
         }
 

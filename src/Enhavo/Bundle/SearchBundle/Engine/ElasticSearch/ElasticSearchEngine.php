@@ -16,13 +16,11 @@ use Enhavo\Bundle\SearchBundle\Engine\Filter\Filter;
 use Enhavo\Bundle\SearchBundle\Engine\Filter\MatchQuery;
 use Enhavo\Bundle\SearchBundle\Exception\FilterQueryNotSupportedException;
 use Enhavo\Bundle\SearchBundle\Exception\IndexException;
-use Enhavo\Bundle\SearchBundle\Filter\FilterData;
-use Enhavo\Bundle\SearchBundle\Metadata\Filter as MetadataFilter;
+use Enhavo\Bundle\SearchBundle\Filter\FilterDataProvider;
 use Pagerfanta\Pagerfanta;
 use Enhavo\Component\Metadata\MetadataRepository;
-use Enhavo\Bundle\SearchBundle\Engine\EngineInterface;
-use Enhavo\Bundle\SearchBundle\Extractor\Extractor;
-use Enhavo\Bundle\SearchBundle\Indexer\Indexer;
+use Enhavo\Bundle\SearchBundle\Engine\SearchEngineInterface;
+use Enhavo\Bundle\SearchBundle\Index\IndexDataProvider;
 use Enhavo\Bundle\SearchBundle\Metadata\Metadata;
 use Elastica\Client;
 use Elastica\Document;
@@ -30,89 +28,26 @@ use Elastica\Search;
 use Elastica\Query;
 use Elastica\Mapping;
 
-class ElasticSearchEngine implements EngineInterface
+class ElasticSearchEngine implements SearchEngineInterface
 {
-    /**
-     * @var Indexer
-     */
-    private $indexer;
-
-    /**
-     * @var MetadataRepository
-     */
-    private $metadataRepository;
-
-    /**
-     * @var Client
-     */
-    private $client;
-
-    /**
-     * @var EntityManager
-     */
-    private $em;
-
-    /**
-     * @var Extractor
-     */
-    private $extractor;
-
-    /**
-     * @var ElasticSearchIndexRemover
-     */
-    private $indexRemover;
-
-    /**
-     * @var ElasticSearchDocumentIdGenerator
-     */
-    private $documentIdGenerator;
-
-    /**
-     * @var FilterData
-     */
-    private $filterData;
-
-    /**
-     * @var string[]
-     */
-    private $classes;
-
-    /** @var bool */
-    private $indexing;
-
-    /** @var string */
-    private $indexName;
-
     public function __construct(
-        Indexer $indexer,
-        MetadataRepository $metadataRepository,
-        EntityManager $em,
-        Client $client,
-        ElasticSearchIndexRemover $indexRemover,
-        ElasticSearchDocumentIdGenerator $documentIdGenerator,
-        Extractor $extractor,
-        FilterData $filterData,
-        $classes,
-        $indexing,
-        $indexName
+        private IndexDataProvider $indexDataProvider,
+        private MetadataRepository $metadataRepository,
+        private EntityManager $em,
+        private Client $client,
+        private ElasticSearchIndexRemover $indexRemover,
+        private ElasticSearchDocumentIdGenerator $documentIdGenerator,
+        private FilterDataProvider $filterDataProvider,
+        private $classes,
+        private $indexing,
+        private $indexName,
     ) {
-        $this->indexer = $indexer;
-        $this->metadataRepository = $metadataRepository;
-        $this->em = $em;
-        $this->client = $client;
-        $this->extractor = $extractor;
-        $this->indexRemover = $indexRemover;
-        $this->documentIdGenerator = $documentIdGenerator;
-        $this->filterData = $filterData;
-        $this->classes = $classes;
-        $this->indexing = $indexing;
-        $this->indexName = $indexName;
     }
 
     public function initialize()
     {
         $index = $this->getIndex();
-        if(!$index->exists()) {
+        if (!$index->exists()) {
             $index->create();
         }
 
@@ -120,45 +55,43 @@ class ElasticSearchEngine implements EngineInterface
 
         $indexData = [];
         for ($i = 0; $i <= 100; $i++) {
-            $indexData['value.' . $i] = array('type' => 'text', 'boost' => $i);
+            $indexData['value.' . $i] = ['type' => 'text'];
         }
 
         $filterData = [];
-        foreach($this->classes as $class) {
+        foreach ($this->classes as $class) {
             /** @var Metadata $metadata */
-            $metadata = $this->metadataRepository->getMetadata($class);
-            if ($metadata === null) {
-                throw new IndexException(sprintf('Class "%s" is configured for indexing, but no meta data provided', $class));
-            }
-            $filters = $metadata->getFilters();
 
-            /** @var MetadataFilter $filter */
-            foreach($filters as $filter) {
-                $filterData[$filter->getKey()] = [
-                    'type' => $this->mapDataType($filter->getDataType())
+            $fields = $this->filterDataProvider->getFields($class);
+
+            foreach ($fields as $field) {
+                $filterData[$field->getKey()] = [
+                    'type' => $this->mapDataType($field->getFieldType())
                 ];
             }
         }
 
-        $mapping->setProperties(array(
-            'id' => array('type' => 'keyword'),
-            'className' => array('type' => 'keyword'),
-            'indexData' => array(
+        $mapping->setProperties([
+            'id' => ['type' => 'keyword'],
+            'className' => ['type' => 'keyword'],
+            'indexData' => [
                 'type' => 'object',
                 'properties' => $indexData
-            ),
-            'filterData' => array(
+            ],
+            'filterData' => [
                 'type' => 'object',
                 'properties' => $filterData
-            ),
-        ));
+            ],
+        ]);
 
         $mapping->send($this->getIndex());
     }
 
     private function mapDataType($type)
     {
-        if($type == null) {
+        if ($type == null) {
+            return 'keyword';
+        } else if ($type === 'string') {
             return 'keyword';
         }
 
@@ -173,7 +106,7 @@ class ElasticSearchEngine implements EngineInterface
     {
         $query = new Query\BoolQuery();
 
-        if($filter->getTerm()) {
+        if ($filter->getTerm()) {
             for($i = 1; $i <= 100; $i++) {
                 $query->addShould(new Query\MatchQuery(sprintf('indexData.value.%s', $i), $filter->getTerm()));
             }
@@ -185,19 +118,19 @@ class ElasticSearchEngine implements EngineInterface
             $query->addFilter($this->createFilterQuery($fieldName, $filterQuery));
         }
 
-        if($filter->getClass()) {
+        if ($filter->getClass()) {
             $termQuery = new Query\Term();
             $termQuery->setTerm('className', $filter->getClass());
             $query->addFilter($termQuery);
         }
 
         $masterQuery =  new Query($query);
-        if($filter->getLimit() !== null) {
+        if ($filter->getLimit() !== null) {
             $masterQuery->setSize(intval($filter->getLimit()));
         }
-        if($filter->getOrderBy() !== null) {
+        if ($filter->getOrderBy() !== null) {
             $direction = $filter->getOrderDirection();
-            if(empty($direction)) {
+            if (empty($direction)) {
                 $direction = 'ASC';
             }
             $masterQuery->addSort([sprintf('filterData.%s', $filter->getOrderBy()) => $direction]);
@@ -208,12 +141,12 @@ class ElasticSearchEngine implements EngineInterface
 
     private function createFilterQuery($fieldName, $filterQuery)
     {
-        if($filterQuery instanceof MatchQuery) {
-            if($filterQuery->getOperator() == MatchQuery::OPERATOR_EQUAL) {
+        if ($filterQuery instanceof MatchQuery) {
+            if ($filterQuery->getOperator() == MatchQuery::OPERATOR_EQUAL) {
                 $query = new Query\Term();
                 $query->setTerm($fieldName, $filterQuery->getValue());
                 return $query;
-            } elseif($filterQuery->getOperator() == MatchQuery::OPERATOR_NOT) {
+            } elseif ($filterQuery->getOperator() == MatchQuery::OPERATOR_NOT) {
                 $query = new Query\Term();
                 $query->setTerm($fieldName, $filterQuery->getValue());
                 $boolQuery = new Query\BoolQuery();
@@ -229,7 +162,7 @@ class ElasticSearchEngine implements EngineInterface
                 $query = new Query\Range($fieldName, [$operatorMap[$filterQuery->getOperator()] => $filterQuery->getValue()]);
                 return $query;
             }
-        } elseif($filterQuery instanceof BetweenQuery) {
+        } elseif ($filterQuery instanceof BetweenQuery) {
             $operatorFromMap = [
                 BetweenQuery::OPERATOR_THAN => 'gt',
                 BetweenQuery::OPERATOR_EQUAL_THAN => 'gte',
@@ -243,7 +176,7 @@ class ElasticSearchEngine implements EngineInterface
                 $operatorToMap[$filterQuery->getOperatorTo()] => $filterQuery->getTo()
             ]);
             return $query;
-        } elseif($filterQuery instanceof ContainsQuery) {
+        } elseif ($filterQuery instanceof ContainsQuery) {
             $boolQuery = new Query\BoolQuery();
             foreach ($filterQuery->getValues() as $value) {
                 $term = new Query\Term([$fieldName => $value]);
@@ -254,14 +187,14 @@ class ElasticSearchEngine implements EngineInterface
         throw new FilterQueryNotSupportedException(sprintf('Filter query from type "%s" is not supported', get_class($filterQuery)));
     }
 
-    public function search(Filter $filter)
+    public function search(Filter $filter): array
     {
         $search = new Search($this->client);
         $search->addIndex($this->getIndex());
         $search->setQuery($this->createQuery($filter));
 
         $result = [];
-        foreach($search->search() as $document) {
+        foreach ($search->search() as $document) {
             $data = $document->getData();
             $id = $data['id'];
             $className = $data['className'];
@@ -285,7 +218,7 @@ class ElasticSearchEngine implements EngineInterface
 
         /** @var Metadata $metadata */
         $metadata = $this->metadataRepository->getMetadata($resource);
-        if($metadata && in_array($metadata->getClassName(), $this->classes)) {
+        if ($metadata && in_array($metadata->getClassName(), $this->classes)) {
             $index = $this->getIndex();
             $document = $this->createDocument($resource);
             $index->addDocument($document);
@@ -310,7 +243,7 @@ class ElasticSearchEngine implements EngineInterface
     {
         /** @var Metadata $metadata */
         $metadata = $this->metadataRepository->getMetadata($resource);
-        $indexes = $this->indexer->getIndexes($resource);
+        $indexes = $this->indexDataProvider->getIndexData($resource);
 
         $id = $resource->getId();
         $className = $metadata->getClassName();
@@ -320,14 +253,14 @@ class ElasticSearchEngine implements EngineInterface
         foreach($indexes as $index) {
             $weight = intval($index->getWeight());
             $key = 'value.'.$weight;
-            if(!array_key_exists($key, $indexData)) {
+            if (!array_key_exists($key, $indexData)) {
                 $indexData[$key] = [];
             }
             $indexData[$key][] = $index->getValue();
         }
 
         $filterData = [];
-        foreach($this->filterData->getData($resource) as $data) {
+        foreach ($this->filterDataProvider->getFilterData($resource) as $data) {
             $filterData[$data->getKey()] = $data->getValue();
         }
 
@@ -354,7 +287,7 @@ class ElasticSearchEngine implements EngineInterface
         foreach ($this->classes as $class) {
             $repository = $this->em->getRepository($class);
             $entities = $repository->findAll();
-            foreach($entities as $entity) {
+            foreach ($entities as $entity) {
                 try {
                     $this->index($entity);
                 } catch (\Exception $e) {

@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\SearchBundle\DependencyInjection\Compiler;
 
-use Enhavo\Bundle\SearchBundle\Engine\EngineInterface;
+use Enhavo\Bundle\SearchBundle\Engine\SearchEngineInterface;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -18,7 +18,7 @@ class SearchEngineCompilerPass implements CompilerPassInterface
     {
         $container->addAliases([
             'enhavo_search.search.engine' => $container->getParameter('enhavo_search.search.engine'),
-            EngineInterface::class => $container->getParameter('enhavo_search.search.engine'),
+            SearchEngineInterface::class => $container->getParameter('enhavo_search.search.engine'),
         ]);
     }
 }

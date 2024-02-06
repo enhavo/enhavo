@@ -6,11 +6,21 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\SearchBundle\Mock;
+namespace Enhavo\Bundle\SearchBundle\Tests\Mock;
 
 use PHPUnit\Framework\TestCase;
 
 class ModelMock
 {
+    private ?string $text;
 
+    public function getText(): ?string
+    {
+        return $this->text;
+    }
+
+    public function setText(?string $text): void
+    {
+        $this->text = $text;
+    }
 }

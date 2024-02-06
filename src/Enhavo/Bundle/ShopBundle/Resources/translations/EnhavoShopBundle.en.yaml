@@ -78,7 +78,7 @@ order:
       delete: 'Order delete'
   label:
     number: Ordernumber
-    index: Index
+    index: IndexData
     default: Standard
     ordered_at: Ordered At
     name: Name

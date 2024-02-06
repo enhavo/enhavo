@@ -49,7 +49,7 @@ services:
             - '@doctrine.orm.entity_manager'
             - '@logger'
         tags:
-            - { name: console.command, command: 'enhavo:newsletter:send' }
+            - { name: console.command }
 
     Enhavo\Bundle\NewsletterBundle\Column\NewsletterStateColumnType:
         public: true
