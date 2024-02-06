@@ -9,13 +9,13 @@ services:
             - '@enhavo_media.repository.format'
             - '%enhavo_media.garbage_collection.enable_delete_unreferenced%'
         tags:
-            - { name: console.command, command: 'enhavo:media:clean-up' }
+            - { name: console.command }
 
     Enhavo\Bundle\MediaBundle\Command\CollectGarbageCommand:
         arguments:
             - '@enhavo_media.garbage_collector'
         tags:
-            - { name: console.command, command: 'enhavo:media:collect-garbage' }
+            - { name: console.command }
 
     Enhavo\Bundle\MediaBundle\Command\RefreshFormatCommand:
         arguments:
@@ -24,7 +24,7 @@ services:
             - '@enhavo_media.media.media_manager'
             - '@enhavo_media.media.format_manager'
         tags:
-            - { name: console.command, command: 'enhavo:media:refresh-format' }
+            - { name: console.command }
 
     Enhavo\Bundle\MediaBundle\Command\UpdateFileCommand:
         arguments:
@@ -32,4 +32,4 @@ services:
             - '@enhavo_app.util.secure_url_token_generator'
             - '@doctrine.orm.entity_manager'
         tags:
-            - { name: console.command, command: 'enhavo:media:update' }
+            - { name: console.command }

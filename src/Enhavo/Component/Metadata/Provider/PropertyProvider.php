@@ -12,8 +12,9 @@ use Enhavo\Component\Metadata\Exception\ProviderException;
 use Enhavo\Component\Metadata\Extension\Property;
 use Enhavo\Component\Metadata\Extension\PropertyInterface;
 use Enhavo\Component\Metadata\Metadata;
+use Enhavo\Component\Metadata\ProviderInterface;
 
-class PropertyProvider
+class PropertyProvider implements ProviderInterface
 {
     /**
      * @param Metadata $metadata

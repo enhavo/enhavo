@@ -2,36 +2,30 @@
 
 namespace Enhavo\Bundle\ShopBundle\Search\Filter;
 
-use Enhavo\Bundle\AppBundle\Type\AbstractType;
-use Enhavo\Bundle\SearchBundle\Filter\Data;
-use Enhavo\Bundle\SearchBundle\Filter\DataProviderInterface;
+use Enhavo\Bundle\SearchBundle\Filter\FilterData;
+use Enhavo\Bundle\SearchBundle\Filter\FilterDataBuilder;
+use Enhavo\Bundle\SearchBundle\Filter\Type\AbstractFilterType;
 use Enhavo\Bundle\ShopBundle\Model\ProductInterface;
 use Enhavo\Bundle\ShopBundle\Model\ProductVariantInterface;
 use Enhavo\Bundle\TaxonomyBundle\Entity\Term;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProductVariantCategoriesDataProvider extends AbstractType implements DataProviderInterface
+class ProductVariantCategoriesDataProvider extends AbstractFilterType
 {
-    public function getData($resource, $options)
+    public function buildFilter(array $options, $model, string $key, FilterDataBuilder $builder): void
     {
-        if ($resource instanceof ProductInterface) {
-            $resource = $resource->getDefaultVariant();
+        if ($model instanceof ProductInterface) {
+            $model = $model->getDefaultVariant();
         }
 
-        if (!$resource instanceof ProductVariantInterface) {
-            throw new \InvalidArgumentException(sprintf('The search filter type "product_variant_property" can only applied on ProductVariantInterface but "%s" given', get_class($resource)));
+        if (!$model instanceof ProductVariantInterface) {
+            throw new \InvalidArgumentException(sprintf('The search filter type "product_variant_property" can only applied on ProductVariantInterface but "%s" given', get_class($model)));
         }
 
         $return = [];
-        $categories = $this->getCategories($resource);
+        $categories = $this->getCategories($model);
         foreach ($categories as $category) {
-            $data = new Data();
-            $data->setValue($category->getId());
-            $data->setKey('category');
-            $return[] = $data;
+            $builder->addData(new FilterData('category', $category->getId()));
         }
-
-        return $return;
     }
 
     private function getCategories(ProductVariantInterface $resource): array
@@ -55,12 +49,7 @@ class ProductVariantCategoriesDataProvider extends AbstractType implements DataP
         return $categories;
     }
 
-    public function configureOptions(OptionsResolver $optionsResolver)
-    {
-
-    }
-
-    public function getType()
+    public static function getName(): string
     {
         return 'product_variant_categories';
     }

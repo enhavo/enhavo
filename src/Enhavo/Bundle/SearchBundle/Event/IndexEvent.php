@@ -10,7 +10,7 @@ namespace Enhavo\Bundle\SearchBundle\Event;
 
 
 use Enhavo\Bundle\SearchBundle\Indexer\Filter;
-use Enhavo\Bundle\SearchBundle\Indexer\Index;
+use Enhavo\Bundle\SearchBundle\Indexer\IndexData;
 use Symfony\Component\EventDispatcher\Event;
 
 class IndexEvent extends Event
@@ -21,7 +21,7 @@ class IndexEvent extends Event
     private $subject;
 
     /**
-     * @var Index[]
+     * @var IndexData[]
      */
     private $indexes = [];
 
@@ -36,7 +36,7 @@ class IndexEvent extends Event
     }
 
     /**
-     * @return Index[]
+     * @return IndexData[]
      */
     public function getIndexes()
     {
@@ -44,7 +44,7 @@ class IndexEvent extends Event
     }
 
     /**
-     * @param Index[] $indexes
+     * @param IndexData[] $indexes
      */
     public function setIndexes($indexes)
     {

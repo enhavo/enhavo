@@ -3,13 +3,12 @@ services:
         class: Enhavo\Bundle\SearchBundle\Engine\DatabaseSearch\DatabaseSearchEngine
         public: true
         arguments:
-            - '@enhavo_search.indexer.indexer'
+            - '@Enhavo\Bundle\SearchBundle\Index\IndexDataProvider'
             - '@Enhavo\Component\Metadata\MetadataRepository[Search]'
             - '@doctrine.orm.entity_manager'
-            - '@enhavo_search.extractor.extractor'
             - '@enhavo_search.util.text_to_word'
             - '@enhavo_search.util.text_simplify'
             - '@Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface'
-            - '@enhavo_search.filter.filter_data'
+            - '@Enhavo\Bundle\SearchBundle\Filter\FilterDataProvider'
             - '%enhavo_search.index.class%'
             - '%enhavo_search.search.indexing%'

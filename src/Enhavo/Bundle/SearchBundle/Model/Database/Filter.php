@@ -3,7 +3,7 @@
 namespace Enhavo\Bundle\SearchBundle\Model\Database;
 
 /**
- * Index
+ * IndexData
  */
 class Filter
 {

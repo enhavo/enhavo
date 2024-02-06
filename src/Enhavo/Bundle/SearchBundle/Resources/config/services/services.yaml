@@ -1,4 +1,19 @@
 services:
+    enhavo_search.save_listener:
+        class: Enhavo\Bundle\SearchBundle\EventListener\SaveListener
+        calls:
+            - [ 'setContainer', [ '@service_container' ] ]
+        tags:
+            - { name: kernel.event_listener, event: enhavo_app.post_create, method: onSave }
+            - { name: kernel.event_listener, event: enhavo_app.post_update, method: onSave }
+
+    enhavo_search.delete_listener:
+        class: Enhavo\Bundle\SearchBundle\EventListener\DeleteListener
+        calls:
+            - [ 'setContainer', [ '@service_container' ] ]
+        tags:
+            - { name: kernel.event_listener, event: enhavo_app.pre_delete, method: onDelete }
+
     enhavo_search_render:
         class: Enhavo\Bundle\SearchBundle\Twig\SearchForm
         arguments:
@@ -33,12 +48,10 @@ services:
         class: Enhavo\Bundle\SearchBundle\Result\ResultConverter
         arguments:
             - '@enhavo_search.util.hightlighter'
-            - '@enhavo_search.extractor.extractor'
+            - '@Enhavo\Bundle\SearchBundle\Index\IndexDataProvider'
 
     enhavo_search.util.hightlighter:
         class: Enhavo\Bundle\SearchBundle\Util\Highlighter
-        arguments:
-            - '@enhavo_search.extractor.extractor'
 
     enhavo_search.util.text_simplify:
         class: Enhavo\Bundle\SearchBundle\Util\TextSimplify
@@ -52,20 +65,35 @@ services:
             - '@filesystem'
 
     Enhavo\Bundle\SearchBundle\Command\IndexCommand:
-        calls:
-            - [setContainer, ['@service_container']]
+        arguments:
+            - '@Enhavo\Bundle\SearchBundle\Engine\SearchEngineInterface'
         tags:
-            - { name: console.command, command: 'enhavo:search:index' }
+            - { name: console.command }
 
-    Enhavo\Bundle\SearchBundle\Command\ReindexCommand:
-        calls:
-            - [setContainer, ['@service_container']]
+    Enhavo\Bundle\SearchBundle\Command\InitCommand:
+        arguments:
+            - '@Enhavo\Bundle\SearchBundle\Engine\SearchEngineInterface'
         tags:
-            - { name: console.command, command: 'enhavo:search:reindex' }
+            - { name: console.command }
 
     Enhavo\Bundle\SearchBundle\Command\ElasticInstallCommand:
         arguments:
             - '@Enhavo\Bundle\SearchBundle\Elastic\ElasticManager'
             - '%enhavo_search.elastica.version%'
         tags:
-            - { name: console.command, command: 'enhavo:search:elastic:install' }
+            - { name: console.command }
+
+    Enhavo\Bundle\SearchBundle\Command\AnalyzeCommand:
+        arguments:
+            - '@Enhavo\Bundle\SearchBundle\Index\IndexDataProvider'
+            - '@Enhavo\Bundle\SearchBundle\Filter\FilterDataProvider'
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: console.command }
+
+    Enhavo\Bundle\SearchBundle\Command\SearchCommand:
+        arguments:
+            - '@Enhavo\Bundle\SearchBundle\Engine\SearchEngineInterface'
+            - '@enhavo_search.result.result_converter'
+        tags:
+            - { name: console.command }

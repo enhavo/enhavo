@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\SearchBundle\Indexer\Indexer;
 
-use Enhavo\Bundle\SearchBundle\Indexer\Index;
+use Enhavo\Bundle\SearchBundle\Indexer\IndexData;
 use PHPUnit\Framework\TestCase;
 
 class HtmlIndexerTest extends TestCase
@@ -20,7 +20,7 @@ class HtmlIndexerTest extends TestCase
         $indexes = $htmlIndexer->getIndexes($value, []);
 
         $this->assertCount(4, $indexes);
-        /** @var Index $index */
+        /** @var IndexData $index */
         $index = $indexes[0];
         $this->assertEquals('Header', $index->getValue());
         $this->assertEquals(25, $index->getWeight());

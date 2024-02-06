@@ -60,7 +60,7 @@ class Configuration implements ConfigurationInterface
                                 ->useAttributeAsKey('name')
                                 ->prototype('variable')->end()
                             ->end()
-                            ->arrayNode('properties')
+                            ->arrayNode('index')
                                 ->useAttributeAsKey('name')
                                 ->prototype('variable')->end()
                             ->end()

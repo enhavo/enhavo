@@ -1,0 +1,25 @@
+services:
+    Enhavo\Bundle\SearchBundle\Index\IndexDataProvider:
+        arguments:
+            - '@Enhavo\Component\Metadata\MetadataRepository[Search]'
+            - '@Enhavo\Component\Type\FactoryInterface[SearchIndex]'
+
+    Enhavo\Bundle\SearchBundle\Index\Type\ModelIndexType:
+        calls:
+            - [setIndexDataProvider, ['@Enhavo\Bundle\SearchBundle\Index\IndexDataProvider']]
+        tags:
+            - { name: enhavo_search.index }
+
+    Enhavo\Bundle\SearchBundle\Index\Type\CollectionIndexType:
+        calls:
+            - [setIndexDataProvider, ['@Enhavo\Bundle\SearchBundle\Index\IndexDataProvider']]
+        tags:
+            - { name: enhavo_search.index }
+
+    Enhavo\Bundle\SearchBundle\Index\Type\HtmlIndexType:
+        tags:
+            - { name: enhavo_search.index }
+
+    Enhavo\Bundle\SearchBundle\Index\Type\TextIndexType:
+        tags:
+            - { name: enhavo_search.index }

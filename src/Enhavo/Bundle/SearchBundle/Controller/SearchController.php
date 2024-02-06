@@ -3,9 +3,8 @@
 namespace Enhavo\Bundle\SearchBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
-use Enhavo\Bundle\SearchBundle\Engine\EngineInterface;
+use Enhavo\Bundle\SearchBundle\Engine\SearchEngineInterface;
 use Enhavo\Bundle\SearchBundle\Engine\Filter\Filter;
-use Enhavo\Bundle\SearchBundle\Engine\Filter\MatchQuery;
 use Enhavo\Bundle\SearchBundle\Result\ResultConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
@@ -18,7 +17,7 @@ class SearchController extends AbstractController
     /** @var ResultConverter */
     private $resultConverter;
 
-    /** @var EngineInterface */
+    /** @var SearchEngineInterface */
     private $searchEngine;
 
     /** @var TemplateResolver */
@@ -29,10 +28,10 @@ class SearchController extends AbstractController
 
     /**
      * @param ResultConverter $resultConverter
-     * @param EngineInterface $searchEngine
+     * @param SearchEngineInterface $searchEngine
      * @param TemplateResolver $templateResolver
      */
-    public function __construct(ResultConverter $resultConverter, EngineInterface $searchEngine, TemplateResolver $templateResolver, ExpressionLanguage $expressionLanguage)
+    public function __construct(ResultConverter $resultConverter, SearchEngineInterface $searchEngine, TemplateResolver $templateResolver, ExpressionLanguage $expressionLanguage)
     {
         $this->resultConverter = $resultConverter;
         $this->searchEngine = $searchEngine;

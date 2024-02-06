@@ -9,7 +9,7 @@
 namespace Enhavo\Bundle\SearchBundle\Tests\Metadata\Provider;
 
 use Enhavo\Bundle\SearchBundle\Metadata\Metadata;
-use Enhavo\Bundle\SearchBundle\Metadata\Provider\PropertyNodeProvider;
+use Enhavo\Bundle\SearchBundle\Metadata\Provider\IndexProvider;
 use Enhavo\Component\Metadata\Exception\ProviderException;
 use PHPUnit\Framework\TestCase;
 
@@ -17,7 +17,7 @@ class PropertyNodeProviderTest extends TestCase
 {
     public function testProvide()
     {
-        $provider = new PropertyNodeProvider();
+        $provider = new IndexProvider();
         $metadata = new Metadata('SomeClass');
         $provider->provide($metadata, [
             'properties' => [
@@ -41,7 +41,7 @@ class PropertyNodeProviderTest extends TestCase
     public function testInvalidType()
     {
         $this->expectException(ProviderException::class);
-        $provider = new PropertyNodeProvider();
+        $provider = new IndexProvider();
         $metadata = new \Enhavo\Component\Metadata\Metadata('SomeClass');
         $provider->provide($metadata, []);
     }

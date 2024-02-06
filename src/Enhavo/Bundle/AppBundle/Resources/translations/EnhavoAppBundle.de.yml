@@ -47,7 +47,7 @@ label:
   ok: 'Ok'
   filter: 'Filter'
   edit: 'Bearbeiten'
-  index: 'Index'
+  index: 'IndexData'
   change_password: 'Passwort ändern'
   open_homepage: 'Zur Startseite'
 message:

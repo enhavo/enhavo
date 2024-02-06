@@ -1,8 +1,12 @@
 enhavo_search:
     search:
         indexing: true
+        engine: enhavo_search.engine.elastic_search_engine
     index:
         classes:
             - Enhavo\Bundle\PageBundle\Entity\Page
             - Enhavo\Bundle\ArticleBundle\Entity\Article
             - Enhavo\Bundle\ShopBundle\Entity\ProductVariant
+    elastica:
+        port: '9200'
+        host: 'localhost'

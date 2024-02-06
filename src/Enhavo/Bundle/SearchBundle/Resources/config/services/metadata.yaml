@@ -10,19 +10,20 @@ services:
             - 'Enhavo\Bundle\SearchBundle\Metadata\Metadata'
         calls:
             - [addDriver, ['@Enhavo\Component\Metadata\Driver\ConfigurationDriver[Search]']]
-            - [addProvider, ['@Enhavo\Bundle\SearchBundle\Metadata\Provider\PropertyNodeProvider']]
-            - [addProvider, ['@Enhavo\Bundle\SearchBundle\Metadata\Provider\FilterProvider']]
-            - [addProvider, ['@Enhavo\Bundle\SearchBundle\Metadata\Provider\BundleProvider']]
+            - [addProvider, ['@Enhavo\Component\Metadata\Provider\ConfigProvider[Search][Index]']]
+            - [addProvider, ['@Enhavo\Component\Metadata\Provider\ConfigProvider[Search][Filters]']]
 
     Enhavo\Component\Metadata\Driver\ConfigurationDriver[Search]:
         class: Enhavo\Component\Metadata\Driver\ConfigurationDriver
         arguments:
             - '%enhavo_search.metadata%'
 
-    Enhavo\Bundle\SearchBundle\Metadata\Provider\PropertyNodeProvider:
-
-    Enhavo\Bundle\SearchBundle\Metadata\Provider\FilterProvider:
-
-    Enhavo\Bundle\SearchBundle\Metadata\Provider\BundleProvider:
+    Enhavo\Component\Metadata\Provider\ConfigProvider[Search][Index]:
+        class: Enhavo\Component\Metadata\Provider\ConfigProvider
         arguments:
-            - '@kernel'
+            - 'index'
+
+    Enhavo\Component\Metadata\Provider\ConfigProvider[Search][Filters]:
+        class: Enhavo\Component\Metadata\Provider\ConfigProvider
+        arguments:
+            - 'filter'
