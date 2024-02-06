@@ -3,6 +3,8 @@
 
 namespace Enhavo\Bundle\SearchBundle\Metadata;
 
+use Enhavo\Component\Metadata\Extension\Config;
+
 /**
  * Metadata.php
  *
@@ -11,108 +13,57 @@ namespace Enhavo\Bundle\SearchBundle\Metadata;
  */
 class Metadata extends \Enhavo\Component\Metadata\Metadata
 {
-    /**
-     * @var string
-     */
-    private $entityName;
+    /** @var Config[] */
+    private array $index = [];
 
-    /**
-     * @var string
-     */
-    private $bundleName;
+    /** @var Config[] array */
+    private array $filters = [];
 
-    /**
-     * @var string
-     */
-    private $humanizedBundleName;
-
-    /**
-     * @var PropertyNode[]
-     */
-    private $properties = [];
-
-    /**
-     * @var array
-     */
-    private $filters = [];
-
-    /**
-     * @return string
-     */
-    public function getEntityName()
+    public function getEntityName(): string
     {
-        return $this->entityName;
+        $splitClassName = preg_split('/\\\\|\//', $this->getClassName());
+        return array_pop($splitClassName);
+    }
+
+    public function addIndex(Config $index)
+    {
+        $this->index[] = $index;
+    }
+
+    /** @return Config[] */
+    public function getIndex(): array
+    {
+        return $this->index;
     }
 
     /**
-     * @param string $entityName
+     * @param Config $index
      */
-    public function setEntityName($entityName)
+    public function removeIndex(Config $index)
     {
-        $this->entityName = $entityName;
+        if (false !== $key = array_search($index, $this->index, true)) {
+            array_splice($this->index, $key, 1);
+        }
     }
 
-    /**
-     * @return string
-     */
-    public function getBundleName()
+    public function addFilter(Config $filter)
     {
-        return $this->bundleName;
+        $this->filters[] = $filter;
     }
 
-    /**
-     * @param string $bundleName
-     */
-    public function setBundleName($bundleName)
-    {
-        $this->bundleName = $bundleName;
-    }
-
-    /**
-     * @return string
-     */
-    public function getHumanizedBundleName()
-    {
-        return $this->humanizedBundleName;
-    }
-
-    /**
-     * @param string $humanizedBundleName
-     */
-    public function setHumanizedBundleName($humanizedBundleName)
-    {
-        $this->humanizedBundleName = $humanizedBundleName;
-    }
-
-    /**
-     * @return PropertyNode[]
-     */
-    public function getProperties()
-    {
-        return $this->properties;
-    }
-
-    /**
-     * @param PropertyNode $property
-     */
-    public function addProperty(PropertyNode $property)
-    {
-        $this->properties[] = $property;
-    }
-
-    /**
-     * @return Filter[]
-     */
-    public function getFilters()
+    /** @return Config[] */
+    public function getFilter(): array
     {
         return $this->filters;
     }
 
     /**
-     * @param Filter $filter
+     * @param Config $filter
      */
-    public function addFilter($filter)
+    public function removeFilter(Config $filter)
     {
-        $this->filters[] = $filter;
+        if (false !== $key = array_search($filter, $this->filters, true)) {
+            array_splice($this->filters, $key, 1);
+        }
     }
 }

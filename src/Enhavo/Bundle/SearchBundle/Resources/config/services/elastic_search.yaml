@@ -3,14 +3,13 @@ services:
         class: Enhavo\Bundle\SearchBundle\Engine\ElasticSearch\ElasticSearchEngine
         public: true
         arguments:
-            - '@enhavo_search.indexer.indexer'
+            - '@Enhavo\Bundle\SearchBundle\Index\IndexDataProvider'
             - '@Enhavo\Component\Metadata\MetadataRepository[Search]'
             - '@doctrine.orm.entity_manager'
             - '@enhavo_search.elastica.client'
             - '@enhavo_search.engine.elastic_search_index_remover'
             - '@enhavo_search.engine.elastic_search_document_id_generator'
-            - '@enhavo_search.extractor.extractor'
-            - '@enhavo_search.filter.filter_data'
+            - '@Enhavo\Bundle\SearchBundle\Filter\FilterDataProvider'
             - '%enhavo_search.index.class%'
             - '%enhavo_search.search.indexing%'
             - '%enhavo_search.elastica.index_name%'

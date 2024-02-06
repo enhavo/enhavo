@@ -10,7 +10,7 @@ namespace Enhavo\Bundle\ShopBundle\Manager;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\RoutingBundle\Slugifier\Slugifier;
-use Enhavo\Bundle\SearchBundle\Engine\EngineInterface;
+use Enhavo\Bundle\SearchBundle\Engine\SearchEngineInterface;
 use Enhavo\Bundle\ShopBundle\Entity\ProductOption;
 use Enhavo\Bundle\ShopBundle\Entity\ProductVariant;
 use Enhavo\Bundle\ShopBundle\Factory\ProductVariantProxyFactoryInterface;
@@ -32,10 +32,10 @@ class ProductManager
     private PriorityQueue $calculators;
 
     public function __construct(
-        private EntityManagerInterface $em,
+        private EntityManagerInterface              $em,
         private ProductVariantProxyFactoryInterface $proxyFactory,
-        private EngineInterface $engine,
-        private TranslationLocaleProviderInterface $translationLocaleProvider,
+        private SearchEngineInterface               $engine,
+        private TranslationLocaleProviderInterface  $translationLocaleProvider,
     )
     {}
 

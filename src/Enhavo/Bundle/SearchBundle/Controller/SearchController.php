@@ -3,22 +3,21 @@
 namespace Enhavo\Bundle\SearchBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Template\TemplateManager;
-use Enhavo\Bundle\SearchBundle\Engine\EngineInterface;
+use Enhavo\Bundle\SearchBundle\Engine\SearchEngineInterface;
 use Enhavo\Bundle\SearchBundle\Engine\Filter\Filter;
-use Enhavo\Bundle\SearchBundle\Engine\Filter\MatchQuery;
 use Enhavo\Bundle\SearchBundle\Result\ResultConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\OptionsResolver\OptionsResolver;<
 
 class SearchController extends AbstractController
 {
     /** @var ResultConverter */
     private $resultConverter;
 
-    /** @var EngineInterface */
+    /** @var SearchEngineInterface */
     private $searchEngine;
 
     /** @var TemplateManager */
@@ -29,10 +28,10 @@ class SearchController extends AbstractController
 
     /**
      * @param ResultConverter $resultConverter
-     * @param EngineInterface $searchEngine
+     * @param SearchEngineInterface $searchEngine
      * @param TemplateManager $templateManager
      */
-    public function __construct(ResultConverter $resultConverter, EngineInterface $searchEngine, TemplateManager $templateManager, ExpressionLanguage $expressionLanguage)
+    public function __construct(ResultConverter $resultConverter, SearchEngineInterface $searchEngine, TemplateManager $templateManager, ExpressionLanguage $expressionLanguage)
     {
         $this->resultConverter = $resultConverter;
         $this->searchEngine = $searchEngine;

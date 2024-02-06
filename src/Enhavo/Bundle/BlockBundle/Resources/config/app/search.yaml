@@ -1,73 +1,89 @@
 enhavo_search:
     metadata:
         Enhavo\Bundle\BlockBundle\Entity\Node:
-            properties:
+            index:
                 block:
                     type: model
+                    property: block
                 children:
                     type: collection
+                    property: children
 
         Enhavo\Bundle\BlockBundle\Model\Block\BlockquoteBlock:
-            properties:
+            index:
                 blockquote:
                     type: text
                     weight: 8
+                    property: blockquote
 
         Enhavo\Bundle\BlockBundle\Model\Block\PictureBlock:
-            properties:
+            index:
                 title:
                     type: text
                     weight: 8
+                    property: title
                 caption:
                     type: text
                     weight: 8
+                    property: caption
 
         Enhavo\Bundle\BlockBundle\Model\Block\TextBlock:
-            properties:
+            index:
                 title:
-                    type: text
-                    weight: 8
+                    type: html
+                    property: title
                 text:
                     type: html
                     weights:
                         h1: 12
                         h2: 10
                         p: 7
+                    property: text
 
         Enhavo\Bundle\BlockBundle\Model\Block\TextPictureBlock:
-            properties:
+            index:
                 title:
                     type: text
                     weight: 8
+                    property: title
                 text:
                     type: html
+                    property: text
 
         Enhavo\Bundle\BlockBundle\Model\Block\TextText:
-            properties:
+            index:
                 title:
                     type: text
                     weight: 8
+                    property: title
                 titleLeft:
                     type: text
                     weight: 8
+                    property: titleLeft
                 textLeft:
                     type: html
+                    property: textLeft
                 titleRight:
                     type: text
                     weight: 8
+                    property: titleRight
                 textRight:
                     type: html
+                    property: textRight
 
         Enhavo\Bundle\BlockBundle\Model\Block\VideoBlock:
-            properties:
+            index:
                 title:
                     type: text
                     weight: 8
+                    property: title
 
         Enhavo\Bundle\BlockBundle\Model\Block\GalleryBlock:
-            properties:
+            index:
                 title:
                     type: text
                     weight: 8
+                    property: title
                 text:
                     type: html
+                    property: text

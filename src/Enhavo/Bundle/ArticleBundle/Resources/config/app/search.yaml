@@ -1,15 +1,18 @@
 enhavo_search:
     metadata:
         Enhavo\Bundle\ArticleBundle\Entity\Article:
-            properties:
+            index:
                 title:
                     type: text
                     weight: 10
+                    property: title
                 teaser:
                     type: text
                     weight: 8
+                    property: teaser
                 content:
                     type: model
+                    property: content
             filter:
                 permission:
                     type: value

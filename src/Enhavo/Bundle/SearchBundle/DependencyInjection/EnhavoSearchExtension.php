@@ -40,10 +40,8 @@ class EnhavoSearchExtension extends Extension implements PrependExtensionInterfa
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services/services.yaml');
-        $loader->load('services/general.yaml');
         $loader->load('services/metadata.yaml');
-        $loader->load('services/extractor.yaml');
-        $loader->load('services/indexer.yaml');
+        $loader->load('services/index.yaml');
         $loader->load('services/elastic_search.yaml');
         $loader->load('services/database.yaml');
         $loader->load('services/filter.yaml');

@@ -194,34 +194,22 @@ services:
             - { name: controller.service_arguments }
 
     Enhavo\Bundle\ShopBundle\Search\Filter\ProductVariantAttributesDataProvider:
-        public: true
-        calls:
-            - [ 'setContainer', ['@service_container']]
         tags:
-            - { name: enhavo_search.filter_provider, alias: 'product_variant_attributes' }
+            - { name: enhavo_search.filter }
 
     Enhavo\Bundle\ShopBundle\Search\Filter\ProductVariantCategoriesDataProvider:
-        public: true
-        calls:
-            - [ 'setContainer', ['@service_container']]
         tags:
-            - { name: enhavo_search.filter_provider, alias: 'product_variant_categories' }
+            - { name: enhavo_search.filter }
 
     Enhavo\Bundle\ShopBundle\Search\Filter\ProductVariantEnabledDataProvider:
-        public: true
-        calls:
-            - [ 'setContainer', ['@service_container']]
         tags:
-            - { name: enhavo_search.filter_provider, alias: 'product_variant_enabled' }
+            - { name: enhavo_search.filter }
 
     Enhavo\Bundle\ShopBundle\Search\Filter\ProductVariantPropertyDataProvider:
-        public: true
         arguments:
             - '@enhavo_shop.product_manager'
-        calls:
-            - [ 'setContainer', ['@service_container']]
         tags:
-            - { name: enhavo_search.filter_provider, alias: 'product_variant_property' }
+            - { name: enhavo_search.filter }
 
     Enhavo\Bundle\ShopBundle\Form\Type\VoucherType:
         arguments:

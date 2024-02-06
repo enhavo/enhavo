@@ -1,13 +1,7 @@
 enhavo_search:
     metadata:
         Enhavo\Bundle\PageBundle\Entity\Page:
-            properties:
-                title:
-                    type: text
-                    weight: 5
+            index:
                 content:
                     type: model
-            filter:
-                public:
-                    type: property
-                    property: public
+                    property: content

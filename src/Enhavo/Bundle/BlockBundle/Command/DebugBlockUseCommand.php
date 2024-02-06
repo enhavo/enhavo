@@ -44,7 +44,7 @@ class DebugBlockUseCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('debug:enhavo:block')
+            ->setName('debug:block')
             ->setDescription('Find root resource of all blocks, all blocks of one type or one specific block')
             ->addArgument('type', InputArgument::OPTIONAL, '(Optional) block type to search for')
             ->addArgument('id', InputArgument::OPTIONAL, '(Optional) id of specific block');
