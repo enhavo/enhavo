@@ -6,21 +6,34 @@
  * Time: 20:12
  */
 
-namespace Enhavo\Bundle\SearchBundle\Indexer\Indexer;
+namespace Enhavo\Bundle\SearchBundle\Test\Index\Type;
 
-use Enhavo\Bundle\SearchBundle\Indexer\IndexData;
+use Enhavo\Bundle\SearchBundle\Index\IndexDataBuilder;
+use Enhavo\Bundle\SearchBundle\Index\Type\HtmlIndexType;
+use Enhavo\Bundle\SearchBundle\Tests\Mock\ModelMock;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class HtmlIndexerTest extends TestCase
+class HtmlIndexTypeTest extends TestCase
 {
     public function testGetIndexes()
     {
-        $htmlIndexer = new HtmlIndexer();
-        $value = "<p><h1>Header</h1><h2>Header2</h2>Lorem Ipsum dolor </p> Hallo";
-        $indexes = $htmlIndexer->getIndexes($value, []);
+        $htmlIndexer = new HtmlIndexType();
+
+        $model = new ModelMock();
+        $model->setText("<p><h1>Header</h1><h2>Header2</h2>Lorem Ipsum dolor </p> Hallo");
+
+        $builder = new IndexDataBuilder();
+        $resolver = new OptionsResolver();
+
+        $htmlIndexer->configureOptions($resolver);
+        $options = $resolver->resolve(['property' => 'text']);
+
+        $htmlIndexer->buildIndex($options, $model, $builder);
+
+        $indexes = $builder->getIndex();
 
         $this->assertCount(4, $indexes);
-        /** @var IndexData $index */
         $index = $indexes[0];
         $this->assertEquals('Header', $index->getValue());
         $this->assertEquals(25, $index->getWeight());
