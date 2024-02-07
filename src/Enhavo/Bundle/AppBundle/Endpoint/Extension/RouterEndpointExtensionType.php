@@ -32,17 +32,7 @@ class RouterEndpointExtensionType extends AbstractEndpointTypeExtension
         }
 
         if (!$request->get('_format') || $request->get('_format') === 'html') {
-            if ($context->has('routes')) {
-                $this->twigRouter->addRouteCollection($context->get('routes'));
-            } else if ($data->has('routes')) {
-                $routes = $data->get('routes');
-                $routeCollection = new RouteCollection();
-                foreach ($routes as $name => $routeParameter) {
-                    $route = new Route($routeParameter['path']);
-                    $routeCollection->add($name, $route);
-                }
-                $this->twigRouter->addRouteCollection($routeCollection);
-            }
+            $this->twigRouter->addRouteCollection($context->get('routes'));
         }
     }
 

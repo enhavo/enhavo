@@ -50,10 +50,13 @@ class TemplateEndpointDataCollector extends AbstractDataCollector
     {
         try {
             $routeName = $request->attributes->get('_route');
-            return $this->router->generate($routeName);
+            if ($routeName) {
+                return $this->router->generate($routeName);
+            }
         } catch (\Exception $e) {
-            return $request->getPathInfo();
         }
+
+        return $request->getPathInfo();
     }
 
     private function generateVariantLink(Request $request, $condition): ?string
@@ -62,10 +65,13 @@ class TemplateEndpointDataCollector extends AbstractDataCollector
             $routeName = $request->attributes->get('_route');
             $query = [];
             parse_str($condition, $query);
-            return $this->router->generate($routeName, $query);
+            if ($routeName) {
+                return $this->router->generate($routeName, $query);
+            }
         } catch (\Exception $e) {
-            return $request->getPathInfo() . '?' . $condition;
         }
+
+        return $request->getPathInfo() . '?' . $condition;
     }
 
     private function hasTemplateEndpoint(): bool
