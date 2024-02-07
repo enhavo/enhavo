@@ -25,6 +25,8 @@ class TemplateEndpointType extends AbstractEndpointType
 
     public function handleRequest($options, Request $request, Data $data, Context $context)
     {
+        $context->setStatusCode($options['status']);
+
         $this->loadData($options, $data);
 
         if (is_array($options['variants'])) {
@@ -39,6 +41,7 @@ class TemplateEndpointType extends AbstractEndpointType
                 $routeCollection->add($name, $route);
             }
             $this->twigRouter->addRouteCollection($routeCollection);
+            $data->set('routes', $this->normalize($this->twigRouter->getRouteCollection(), null, ['groups' => 'endpoint']));
         }
     }
 
@@ -68,8 +71,7 @@ class TemplateEndpointType extends AbstractEndpointType
             'depth' => null,
             'description' => null,
             'variants' => null,
-            'routes' => ['template'],
-            'vue_routes' => ['template'],
+            'status' => 200,
         ]);
     }
 

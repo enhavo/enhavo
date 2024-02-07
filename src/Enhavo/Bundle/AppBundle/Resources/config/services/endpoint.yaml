@@ -11,8 +11,11 @@ services:
             - '@Enhavo\Bundle\AppBundle\Endpoint\Template\Loader'
             - '@Enhavo\Bundle\AppBundle\Endpoint\Template\ExpressionLanguage\TemplateExpressionLanguageEvaluator'
             - '@Enhavo\Bundle\AppBundle\Twig\TwigRouter'
+        calls:
+            - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
         tags:
             - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
 
     Enhavo\Bundle\AppBundle\Endpoint\Extension\RouterEndpointExtensionType:
         arguments:
