@@ -10,6 +10,7 @@ services:
         arguments:
             - '@Enhavo\Bundle\AppBundle\Endpoint\Template\Loader'
             - '@Enhavo\Bundle\AppBundle\Endpoint\Template\ExpressionLanguage\TemplateExpressionLanguageEvaluator'
+            - '@Enhavo\Bundle\AppBundle\Twig\TwigRouter'
         tags:
             - { name: enhavo_api.endpoint }
 
