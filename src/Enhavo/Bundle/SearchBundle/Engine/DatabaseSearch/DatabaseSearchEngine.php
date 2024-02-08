@@ -9,7 +9,11 @@
 namespace Enhavo\Bundle\SearchBundle\Engine\DatabaseSearch;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Elastica\Search;
 use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface;
+use Enhavo\Bundle\SearchBundle\Engine\Result\EntitySubjectLoader;
+use Enhavo\Bundle\SearchBundle\Engine\Result\ResultEntry;
+use Enhavo\Bundle\SearchBundle\Engine\Result\ResultSummary;
 use Enhavo\Bundle\SearchBundle\Engine\SearchEngineInterface;
 use Enhavo\Bundle\SearchBundle\Engine\Filter\Filter;
 use Enhavo\Bundle\SearchBundle\Filter\FilterDataProvider;
@@ -24,6 +28,7 @@ use Enhavo\Bundle\SearchBundle\Repository\TotalRepository;
 use Enhavo\Bundle\SearchBundle\Util\TextSimplify;
 use Enhavo\Bundle\SearchBundle\Util\TextToWord;
 use Enhavo\Component\Metadata\MetadataRepository;
+use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
 
 class DatabaseSearchEngine implements SearchEngineInterface
@@ -41,26 +46,43 @@ class DatabaseSearchEngine implements SearchEngineInterface
     ) {
     }
 
-    public function search(Filter $filter)
+    public function search(Filter $filter): ResultSummary
     {
         $searchFilter = $this->createSearchFilter($filter);
         $repository = $this->em->getRepository(Index::class);
-
         $searchResults = $repository->getSearchResults($searchFilter);
-        $result = [];
-        foreach($searchResults as $searchResult) {
-            $result[] = $this->entityResolver->getEntity($searchResult['id'], $searchResult['class']);
-        }
 
-        return $result;
+        $entries = $this->getSearchEntries($searchResults);
+        $summary = new ResultSummary($entries, count($entries));
+        return $summary;
     }
 
-    public function searchPaginated(Filter $filter)
+    private function getSearchEntries($searchResults)
+    {
+        $entries = [];
+        foreach ($searchResults as $searchResult) {
+            $id = $searchResult['id'];
+            $className = $searchResult['class'];
+            $entries[] = new ResultEntry(new EntitySubjectLoader($this->em->getRepository($className), $id), [], null);
+        }
+        return $entries;
+    }
+
+    public function suggest(Filter $filter): array
+    {
+        return [];
+    }
+
+    public function searchPaginated(Filter $filter): ResultSummary
     {
         $searchFilter = $this->createSearchFilter($filter);
         $repository = $this->em->getRepository(Index::class);
-        $searchQuery = $repository->createSearchQuery($searchFilter);
-        return new Pagerfanta(new DatabaseSearchAdapter($searchQuery, $this->entityResolver));
+        $searchResults = $repository->getSearchResults($searchFilter);
+
+        $entries = $this->getSearchEntries($searchResults);
+        $pagerfanta = new Pagerfanta(new ArrayAdapter($entries));
+        $summary = new ResultSummary($pagerfanta, count($entries));
+        return $summary;
     }
 
     private function createSearchFilter(Filter $filter)
@@ -254,7 +276,7 @@ class DatabaseSearchEngine implements SearchEngineInterface
         }
     }
 
-    public function initialize()
+    public function initialize($force = false)
     {
         // nothing to do here
     }

@@ -65,7 +65,7 @@ class HtmlIndexType extends AbstractIndexType implements IndexTypeInterface
                     if (count($tagStack)) {
                         $currentTag = $tagStack[count($tagStack) - 1];
                     }
-                    $index = new IndexData(trim($tagValue), $tagWeights[$currentTag] ?? 1);
+                    $index = new IndexData(html_entity_decode(trim($tagValue)), $tagWeights[$currentTag] ?? 1);
                     $builder->addIndex($index);
                 }
             }

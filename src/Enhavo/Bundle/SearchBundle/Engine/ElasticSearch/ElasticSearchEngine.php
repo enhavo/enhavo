@@ -14,9 +14,14 @@ use Enhavo\Bundle\SearchBundle\Engine\Filter\BetweenQuery;
 use Enhavo\Bundle\SearchBundle\Engine\Filter\ContainsQuery;
 use Enhavo\Bundle\SearchBundle\Engine\Filter\Filter;
 use Enhavo\Bundle\SearchBundle\Engine\Filter\MatchQuery;
+use Enhavo\Bundle\SearchBundle\Engine\Result\EntitySubjectLoader;
+use Enhavo\Bundle\SearchBundle\Engine\Result\ResultEntry;
+use Enhavo\Bundle\SearchBundle\Engine\Result\ResultSummary;
 use Enhavo\Bundle\SearchBundle\Exception\FilterQueryNotSupportedException;
 use Enhavo\Bundle\SearchBundle\Exception\IndexException;
 use Enhavo\Bundle\SearchBundle\Filter\FilterDataProvider;
+use Enhavo\Bundle\SearchBundle\Result\Result;
+use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
 use Enhavo\Component\Metadata\MetadataRepository;
 use Enhavo\Bundle\SearchBundle\Engine\SearchEngineInterface;
@@ -44,10 +49,13 @@ class ElasticSearchEngine implements SearchEngineInterface
     ) {
     }
 
-    public function initialize()
+    public function initialize($reinit = false)
     {
         $index = $this->getIndex();
         if (!$index->exists()) {
+            $index->create();
+        } else if ($index->exists() && $reinit) {
+            $index->delete();
             $index->create();
         }
 
@@ -93,6 +101,8 @@ class ElasticSearchEngine implements SearchEngineInterface
             return 'keyword';
         } else if ($type === 'string') {
             return 'keyword';
+        } else if ($type === 'bool') {
+            return 'boolean';
         }
 
         return $type;
@@ -105,15 +115,64 @@ class ElasticSearchEngine implements SearchEngineInterface
     private function createQuery(Filter $filter)
     {
         $query = new Query\BoolQuery();
+        $this->applyTermQueries($filter, $query);
+        $this->applyFilterQueries($filter, $query);
+        return $this->createMasterQuery($filter, $query);
+    }
 
+    private function createSuggestQuery(Filter $filter)
+    {
+        $query = new Query\BoolQuery();
+        $this->applySuggestQueries($filter, $query);
+        $this->applyFilterQueries($filter, $query);
+        return $this->createMasterQuery($filter, $query);
+    }
+
+    private function applyTermQueries(Filter $filter, Query\BoolQuery $query)
+    {
         if ($filter->getTerm()) {
-            for($i = 1; $i <= 100; $i++) {
-                $query->addShould(new Query\MatchQuery(sprintf('indexData.value.%s', $i), $filter->getTerm()));
+            for ($i = 1; $i <= 100; $i++) {
+                $fieldName = sprintf('indexData.value.%s', $i);
+
+                $termQuery = new Query\MatchQuery($fieldName, [
+                    'query' => $filter->getTerm(),
+                ]);
+
+                if ($filter->isFuzzy()) {
+                    $termQuery->setFieldParam($fieldName, 'fuzziness', 2);
+                }
+
+                $constantScoreQuery = new Query\ConstantScore($termQuery);
+                $constantScoreQuery->setBoost($i);
+
+                $query->addShould($constantScoreQuery);
             }
             $query->setMinimumShouldMatch(1);
         }
+    }
 
-        foreach($filter->getQueries() as $key => $filterQuery) {
+    private function applySuggestQueries(Filter $filter, Query\BoolQuery $query)
+    {
+        if ($filter->getTerm()) {
+            for ($i = 1; $i <= 100; $i++) {
+                $fieldName = sprintf('indexData.value.%s', $i);
+
+                $termQuery = new Query\MatchPhrasePrefix($fieldName, [
+                    'query' => $filter->getTerm(),
+                ]);
+
+                $constantScoreQuery = new Query\ConstantScore($termQuery);
+                $constantScoreQuery->setBoost($i);
+
+                $query->addShould($constantScoreQuery);
+            }
+            $query->setMinimumShouldMatch(1);
+        }
+    }
+
+    private function applyFilterQueries(Filter $filter, Query\BoolQuery $query)
+    {
+        foreach ($filter->getQueries() as $key => $filterQuery) {
             $fieldName = sprintf('filterData.%s', $key);
             $query->addFilter($this->createFilterQuery($fieldName, $filterQuery));
         }
@@ -123,8 +182,12 @@ class ElasticSearchEngine implements SearchEngineInterface
             $termQuery->setTerm('className', $filter->getClass());
             $query->addFilter($termQuery);
         }
+    }
 
-        $masterQuery =  new Query($query);
+    private function createMasterQuery(Filter $filter, Query\BoolQuery $query)
+    {
+        $masterQuery = new Query($query);
+
         if ($filter->getLimit() !== null) {
             $masterQuery->setSize(intval($filter->getLimit()));
         }
@@ -187,27 +250,103 @@ class ElasticSearchEngine implements SearchEngineInterface
         throw new FilterQueryNotSupportedException(sprintf('Filter query from type "%s" is not supported', get_class($filterQuery)));
     }
 
-    public function search(Filter $filter): array
+    public function search(Filter $filter): ResultSummary
     {
         $search = new Search($this->client);
         $search->addIndex($this->getIndex());
         $search->setQuery($this->createQuery($filter));
 
-        $result = [];
+        $entries = $this->getSearchEntries($search);
+        $summary = new ResultSummary($entries, count($entries));
+        return $summary;
+    }
+
+    private function getSearchEntries(Search $search)
+    {
+        $entries = [];
         foreach ($search->search() as $document) {
             $data = $document->getData();
             $id = $data['id'];
             $className = $data['className'];
-            $result[] = $this->em->getRepository($className)->find($id);
+            $entries[] = new ResultEntry(new EntitySubjectLoader($this->em->getRepository($className), $id), $data['filterData'], $document->getScore());
         }
-        return $result;
+        return $entries;
     }
 
-    public function searchPaginated(Filter $filter)
+    public function suggest(Filter $filter): array
     {
-        $query = $this->createQuery($filter);
-        $searchable = $this->getIndex();
-        return new Pagerfanta(new ElasticaORMAdapter($searchable, $query, $this->em, $this->indexRemover));
+        $filter->setFuzzy(false);
+        $filter->setLimit(10);
+
+        $search = new Search($this->client);
+        $index = $this->getIndex();
+        $search->addIndex($index);
+        $search->setQuery($this->createSuggestQuery($filter));
+
+        $cannonicalTerm = strtolower($filter->getTerm());
+
+        // build a map with all words and add their weights
+        $suggestionMap = [];
+        foreach ($search->search() as $document) {
+            $data = $document->getData();
+            foreach ($data['indexData'] as $key => $value) {
+                $text = join(' ', $value);
+                $weight = intval(substr($key, 6));
+
+                $token = $index->analyze([
+                    "analyzer" => "standard",
+                    "text" => $text
+                ]);
+
+                foreach ($token as $token) {
+                    $cannonicalToken = strtolower($token['token']);
+                    if (str_starts_with($cannonicalToken, $cannonicalTerm)) {
+                        if (!isset($suggestionMap[$cannonicalToken])) {
+                            $suggestionMap[$cannonicalToken] = [];
+                        }
+                        $suggestionMap[$cannonicalToken][] = $weight;
+                    }
+                }
+            }
+        }
+
+        $suggestionScore = [];
+        foreach ($suggestionMap as $key => $value) {
+            $max = $suggestionMap[$key] = max($value);
+            $total = $suggestionMap[$key] = array_sum($value);
+            $occur = $suggestionMap[$key] = count($value);
+
+            // we want the maximum score to count as most important, but we have to rank the words against each other,
+            // so we use the average weight, but give them less impact to the result
+            $score = $max + ($total / $occur / 100);
+
+            $suggestionScore[] = [
+                'term' => $key,
+                'score' => $score
+            ];
+        }
+
+        usort($suggestionScore, function ($a, $b) {
+            return $b['score'] > $a['score'] ? 1 : -1;
+        });
+
+        $suggestions = [];
+        foreach ($suggestionScore as $suggestion) {
+            $suggestions[] = $filter->getTerm() . substr($suggestion['term'], strlen($cannonicalTerm));
+        }
+        return $suggestions;
+    }
+
+    public function searchPaginated(Filter $filter): ResultSummary
+    {
+        $search = new Search($this->client);
+        $search->addIndex($this->getIndex());
+        $search->setQuery($this->createQuery($filter));
+
+        $entries = $this->getSearchEntries($search);
+        $pagerfanta = new Pagerfanta(new ArrayAdapter($entries));
+        $summary = new ResultSummary($pagerfanta, count($entries));
+        return $summary;
     }
 
     public function index($resource)

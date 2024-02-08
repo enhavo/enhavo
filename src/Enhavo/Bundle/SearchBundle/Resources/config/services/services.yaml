@@ -97,3 +97,9 @@ services:
             - '@enhavo_search.result.result_converter'
         tags:
             - { name: console.command }
+
+    Enhavo\Bundle\SearchBundle\Command\SearchSuggestCommand:
+        arguments:
+            - '@Enhavo\Bundle\SearchBundle\Engine\SearchEngineInterface'
+        tags:
+            - { name: console.command }
