@@ -27,8 +27,10 @@ class PropertyFilterType extends AbstractFilterType
     public function buildFilter(array $options, $model, string $key, FilterDataBuilder $builder): void
     {
         $value = $this->propertyAccessor->getValue($model, $options['property']);
-        $data = new FilterData($key, $value);
-        $builder->addData($data);
+        if ($value !== null) {
+            $data = new FilterData($key, $value);
+            $builder->addData($data);
+        }
     }
 
     public function buildField(array $options, string $key, FilterDataBuilder $builder): void

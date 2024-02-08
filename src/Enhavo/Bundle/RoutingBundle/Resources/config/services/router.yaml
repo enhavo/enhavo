@@ -1,7 +1,9 @@
 services:
     enhavo_routing.router:
-        class: Enhavo\Bundle\RoutingBundle\Router\Router
         public: true
+        alias: Enhavo\Bundle\RoutingBundle\Router\Router
+
+    Enhavo\Bundle\RoutingBundle\Router\Router:
         arguments:
             - '@enhavo_routing.router.strategy_collector'
             - '@Enhavo\Component\Metadata\MetadataRepository[Routing]'
