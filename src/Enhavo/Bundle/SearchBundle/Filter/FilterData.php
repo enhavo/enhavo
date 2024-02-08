@@ -13,7 +13,7 @@ class FilterData
 {
     public function __construct(
         private string $key,
-        private string $value,
+        private mixed $value,
     ) {
 
     }
@@ -23,7 +23,7 @@ class FilterData
         return $this->key;
     }
 
-    public function getValue(): string
+    public function getValue(): mixed
     {
         return $this->value;
     }

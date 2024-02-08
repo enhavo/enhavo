@@ -23,13 +23,22 @@ class InitCommand extends Command
         $this
             ->setName('enhavo:search:init')
             ->setDescription('Runs search init')
+            ->addOption('force', 'f')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('Start init');
-        $this->searchEngine->initialize();
+        $force = $input->getOption('force');
+
+        if ($force) {
+            $output->writeln('Start init with force. Index will be deleted');
+        } else {
+            $output->writeln('Start init');
+        }
+
+        $this->searchEngine->initialize($force);
+        $output->writeln('Init finish');
         return Command::SUCCESS;
     }
 }

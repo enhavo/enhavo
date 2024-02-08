@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\SearchBundle\Result;
 
+use Enhavo\Bundle\SearchBundle\Engine\Result\ResultSummary;
 use Enhavo\Bundle\SearchBundle\Index\IndexDataProvider;
 use Enhavo\Bundle\SearchBundle\Util\Highlighter;
 use Symfony\Component\PropertyAccess\Exception\AccessException;
@@ -23,17 +24,18 @@ class ResultConverter
     }
 
     /** @return Result[] */
-    public function convert($result, $searchTerm, ResultConfiguration $configuration = null): array
+    public function convert(ResultSummary $summary, $searchTerm, ResultConfiguration $configuration = null): array
     {
-        if($configuration === null) {
+        if ($configuration === null) {
             $configuration = new ResultConfiguration();
         }
 
         $data = [];
-        foreach($result as $resultItem) {
+        foreach ($summary->getEntries() as $entry) {
+            $subject = $entry->getSubject();
             $resultData = new Result();
 
-            $text = $this->getText($resultItem, $configuration);
+            $text = $this->getText($subject, $configuration);
 
             $text = $this->highlighter->highlight(
                 $text,
@@ -45,8 +47,8 @@ class ResultConverter
             );
 
             $resultData->setText($text);
-            $resultData->setTitle($this->guessTitle($resultItem));
-            $resultData->setSubject($resultItem);
+            $resultData->setTitle($this->guessTitle($subject));
+            $resultData->setSubject($subject);
 
             $data[] = $resultData;
         }

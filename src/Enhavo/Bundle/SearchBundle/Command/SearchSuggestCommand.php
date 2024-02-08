@@ -1,4 +1,5 @@
 <?php
+
 namespace Enhavo\Bundle\SearchBundle\Command;
 
 use Enhavo\Bundle\SearchBundle\Engine\Filter\Filter;
@@ -8,14 +9,10 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/*
- * This command does the reindexing
- */
-class SearchCommand extends Command
+class SearchSuggestCommand extends Command
 {
     public function __construct(
-        private SearchEngineInterface $searchEngine,
-        private ResultConverter $resultConverter,
+        private SearchEngineInterface $searchEngine
     )
     {
         parent::__construct();
@@ -24,40 +21,29 @@ class SearchCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('enhavo:search')
-            ->setDescription('Search')
+            ->setName('enhavo:search:suggest')
+            ->setDescription('Search suggestion')
             ->addArgument('term')
-            ->addOption('fuzzy', 'f')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $term = $input->getArgument('term');
-        $fuzzy = $input->getOption('fuzzy');
-
+        
         $filter = new Filter();
         $filter->setTerm($term);
-        $filter->setFuzzy($fuzzy);
-        $filter->setLimit(10);
-        $summary = $this->searchEngine->search($filter);
-        $results = $this->resultConverter->convert($summary, $term);
-
+        $results = $this->searchEngine->suggest($filter);
+        
         $output->writeln(sprintf('Search: %s', $term));
         foreach ($results as $result)  {
-            $output->writeln('----------------');
-            $output->writeln(sprintf('Title: %s', $result->getTitle()));
-            $output->writeln(sprintf('Text: %s', $result->getText()));
-            $output->writeln(sprintf('Class: %s', get_class($result->getSubject())));
+            $output->writeln(sprintf('- %s', $result));
         }
 
         if (count($results) === 0) {
-            $output->writeln('----------------');
             $output->writeln('No result.');
         }
-
-        $output->writeln('----------------');
-
+        
         return Command::SUCCESS;
     }
 }
