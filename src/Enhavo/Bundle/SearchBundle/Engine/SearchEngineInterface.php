@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\SearchBundle\Engine;
 
 
 use Enhavo\Bundle\SearchBundle\Engine\Filter\Filter;
+use Enhavo\Bundle\SearchBundle\Engine\Result\ResultSummary;
 use Enhavo\Bundle\SearchBundle\Result\Result;
 use Pagerfanta\Pagerfanta;
 
@@ -19,13 +20,16 @@ interface SearchEngineInterface
      * @param Filter $filter
      * @return Result[]
      */
-    public function search(Filter $filter);
+    public function search(Filter $filter): ResultSummary;
 
+    /** @return string[] */
+    public function suggest(Filter $filter): array;
+    
     /**
      * @param Filter $filter
      * @return Pagerfanta
      */
-    public function searchPaginated(Filter $filter);
+    public function searchPaginated(Filter $filter): ResultSummary;
 
     /**
      * @param $resource
@@ -46,5 +50,5 @@ interface SearchEngineInterface
     /**
      * @return void
      */
-    public function initialize();
+    public function initialize($force = false);
 }

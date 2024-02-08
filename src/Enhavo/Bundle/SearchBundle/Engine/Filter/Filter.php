@@ -14,142 +14,98 @@ class Filter
     const DIRECTION_ASC = 'ASC';
     const DIRECTION_DESC = 'DESC';
 
-    /**
-     * @var string
-     */
-    private $term;
+    private ?string $term = null;
+    /** @var QueryInterface[] */
+    private array $queries = [];
+    private ?string $class = null;
+    private ?string $orderBy = null;
+    private ?string $orderDirection = null;
+    private ?int $limit = null;
+    private bool $fuzzy = false;
 
-    /**
-     * @var QueryInterface[]
-     */
-    private $queries = [];
-
-    /**
-     * @var string
-     */
-    private $class;
-
-    /**
-     * @var string
-     */
-    private $orderBy;
-
-    /**
-     * @var string
-     */
-    private $orderDirection;
-
-    /**
-     * @var integer
-     */
-    private $limit;
-
-    /**
-     * @return string
-     */
-    public function getTerm()
+    public function getTerm(): ?string
     {
         return $this->term;
     }
 
-    /**
-     * @param string $term
-     */
-    public function setTerm($term)
+    public function setTerm(?string $term): self
     {
         $this->term = $term;
+        return $this;
     }
 
-    /**
-     * @param $key
-     * @param $query
-     */
-    public function addQuery($key, QueryInterface $query)
+    public function addQuery(string $key, QueryInterface $query): self
     {
         $this->queries[$key] = $query;
+        return $this;
     }
 
-    /**
-     * @param $key
-     */
-    public function removeQuery($key)
+    public function removeQuery(string $key): self
     {
         if(isset($this->queries[$key])) {
             unset($this->queries[$key]);
         }
+        return $this;
     }
 
-    /**
-     * @return QueryInterface[]
-     */
-    public function getQueries()
+    /** @return QueryInterface[] */
+    public function getQueries(): array
     {
         return $this->queries;
     }
 
-    /**
-     * @return string
-     */
-    public function getClass()
+    public function getClass(): ?string
     {
         return $this->class;
     }
 
-    /**
-     * @param string $class
-     */
-    public function setClass($class)
+    public function setClass(?string $class): self
     {
         $this->class = $class;
+        return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getOrderBy()
+    public function getOrderBy(): ?string
     {
         return $this->orderBy;
     }
 
-    /**
-     * @param string $orderBy
-     * @param string $orderDirection
-     */
-    public function setOrderBy($orderBy, $orderDirection = null)
+    public function setOrderBy(string $orderBy, string $orderDirection = null): self
     {
         $this->orderDirection = $orderDirection;
         $this->orderBy = $orderBy;
+        return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getOrderDirection()
+    public function getOrderDirection(): ?string
     {
         return $this->orderDirection;
     }
 
-    /**
-     * @param string $orderDirection
-     */
-    public function setOrderDirection($orderDirection)
+    public function setOrderDirection(?string $orderDirection): self
     {
         $this->orderDirection = $orderDirection;
+        return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getLimit()
+    public function getLimit(): ?int
     {
         return $this->limit;
     }
 
-    /**
-     * @param int $limit
-     */
-    public function setLimit($limit)
+    public function setLimit(?int $limit): self
     {
         $this->limit = $limit;
+        return $this;
+    }
+
+    public function isFuzzy(): bool
+    {
+        return $this->fuzzy;
+    }
+
+    public function setFuzzy(bool $fuzzy): void
+    {
+        $this->fuzzy = $fuzzy;
     }
 }

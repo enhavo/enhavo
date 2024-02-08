@@ -9,3 +9,4 @@ enhavo_search:
                 public:
                     type: property
                     property: public
+                    field_type: bool
