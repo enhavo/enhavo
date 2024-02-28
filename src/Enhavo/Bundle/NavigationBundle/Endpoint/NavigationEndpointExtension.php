@@ -6,6 +6,8 @@ use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointTypeExtension;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Bundle\AppBundle\Endpoint\Type\AreaEndpointType;
+use Enhavo\Bundle\AppBundle\Endpoint\Type\ViewEndpointType;
+use Enhavo\Bundle\AppBundle\View\View;
 use Enhavo\Bundle\NavigationBundle\Repository\NavigationRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -26,7 +28,7 @@ class NavigationEndpointExtension extends AbstractEndpointTypeExtension
 
         $navigationData = [];
         foreach ($navigations as $navigation) {
-            if (!is_array($options['navigation']) || in_array($navigation->getCode(), $options['navigation'])) {
+            if ($options['navigation'] === true || (is_array($options['navigation']) && in_array($navigation->getCode(), $options['navigation']))) {
                 $navigationData[$navigation->getCode()] = $this->normalize($navigation, null, ['groups' => ['endpoint.navigation']]);
             }
         }
@@ -43,6 +45,6 @@ class NavigationEndpointExtension extends AbstractEndpointTypeExtension
 
     public static function getExtendedTypes(): array
     {
-        return [AreaEndpointType::class];
+        return [ViewEndpointType::class];
     }
 }

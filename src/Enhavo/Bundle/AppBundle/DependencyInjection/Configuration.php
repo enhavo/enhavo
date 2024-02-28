@@ -25,7 +25,8 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->getRootNode();
 
         $this->addViewerSectionSection($rootNode);
-        $this->addVueSectionSection($rootNode);
+        $this->addVueSection($rootNode);
+        $this->addAreaSection($rootNode);
         $this->addEndpointSection($rootNode);
         $this->addMailSectionSection($rootNode);
         $this->addWebpackBuildSection($rootNode);
@@ -64,14 +65,16 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
-    private function addVueSectionSection(ArrayNodeDefinition $node)
+    private function addVueSection(ArrayNodeDefinition $node)
     {
         $node
             ->children()
                 ->arrayNode('vue')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->variableNode('route_providers')
+                        ->arrayNode('route_providers')
+                            ->variablePrototype()
+                        ->end()
                     ->end()
                 ->end()
             ->end()
@@ -92,6 +95,28 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
+    private function addAreaSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('area')
+                    ->prototype('array')
+                        ->children()
+                            ->variableNode('firewall')
+                                ->defaultValue(null)
+                            ->end()
+                            ->variableNode('path')
+                                ->defaultValue(null)
+                            ->end()
+                            ->arrayNode('options')
+                                ->variablePrototype()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+    }
 
     private function addMailSectionSection(ArrayNodeDefinition $node)
     {
@@ -243,7 +268,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->arrayNode('roles')
                     ->useAttributeAsKey('name')
-                    ->prototype('array')
+                    ->arrayPrototype()
                         ->children()
                             ->scalarNode('role')->end()
                             ->scalarNode('label')->defaultValue('')->end()

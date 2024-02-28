@@ -29,7 +29,9 @@ services:
 
     Enhavo\Bundle\AppBundle\Endpoint\Type\AreaEndpointType:
         arguments:
+            - '@Enhavo\Bundle\AppBundle\Area\AreaResolverInterface'
             - '@twig'
+            - '%enhavo_app.areas%'
         calls:
             - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
         tags:

@@ -56,7 +56,6 @@ class SpecialPageErrorRenderer implements ErrorRendererInterface
                                 'type' => PageEndpointType::class,
                                 'resource' => $page,
                                 'preview' => false,
-                                'area' => 'theme',
                             ])
                             ->getResponse($this->requestStack->getCurrentRequest())
                             ->getContent()

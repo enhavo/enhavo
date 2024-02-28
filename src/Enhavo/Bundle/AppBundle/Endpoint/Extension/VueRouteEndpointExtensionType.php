@@ -5,8 +5,6 @@ namespace Enhavo\Bundle\AppBundle\Endpoint\Extension;
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointTypeExtension;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
-use Enhavo\Bundle\AppBundle\Endpoint\Type\AreaEndpointType;
-use Enhavo\Bundle\AppBundle\Endpoint\Type\TemplateEndpointType;
 use Enhavo\Bundle\AppBundle\Endpoint\Type\ViewEndpointType;
 use Enhavo\Bundle\AppBundle\Vue\RouteProvider\VueRouteProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -45,7 +43,7 @@ class VueRouteEndpointExtensionType extends AbstractEndpointTypeExtension
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'vue_routes' => false,
+            'vue_routes' => null,
         ]);
     }
 }

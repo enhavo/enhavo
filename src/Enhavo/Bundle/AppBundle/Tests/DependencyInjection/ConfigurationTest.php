@@ -110,4 +110,44 @@ class ConfigurationTest extends TestCase
             ]
         ], $config['mailer']['mails']);
     }
+
+    public function testAreaMerge()
+    {
+        $a = [
+            'area' => [
+                'theme' => [
+                    'firewall' => 'main',
+                    'options' => [
+                        'navigation' => ['main'],
+                        'routes' => ['theme']
+                    ]
+                ]
+            ]
+        ];
+
+        $b = [
+            'area' => [
+                'theme' => [
+                    'firewall' => 'main',
+                    'options' => [
+                        'navigation' => ['footer']
+                    ]
+                ]
+            ]
+        ];
+
+        $configuration = new Configuration();
+        $config = $this->process($configuration, [$a, $b]);
+
+        $this->assertEquals([
+            'theme' => [
+                'firewall' => 'main',
+                'path' => null,
+                'options' => [
+                    'navigation' => ['footer'],
+                    'routes' => ['theme'],
+                ]
+            ]
+        ], $config['area']);
+    }
 }

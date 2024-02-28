@@ -5,7 +5,3 @@ enhavo_article_theme_article_show:
         _endpoint:
              type: Enhavo\Bundle\ArticleBundle\Endpoint\ArticleEndpointType
              find_by: 'slug'
-             area: 'theme'
-             navigation: true
-             routes: true
-             vue_routes: ['theme']

@@ -9,4 +9,4 @@ enhavo_user_admin_api_login:
         _expose: admin
         _endpoint:
             type: Enhavo\Bundle\UserBundle\Endpoint\Type\Login\LoginEndpointType
-            area: admin
+

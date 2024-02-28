@@ -7,4 +7,4 @@ enhavo_article_api_article:
         _format: json
         _endpoint:
             type: Enhavo\Bundle\ArticleBundle\Endpoint\ArticleEndpointType
-            area: api
+
