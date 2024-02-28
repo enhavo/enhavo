@@ -20,10 +20,6 @@ class ArticleController extends ResourceController
             'type' => ArticleEndpointType::class,
             'resource' => $contentDocument,
             'preview' => $preview,
-            'area' => 'theme',
-            'navigation' => true,
-            'routes' => ['theme', 'api'],
-            'vue_routes' => ['theme']
         ]);
     }
 }

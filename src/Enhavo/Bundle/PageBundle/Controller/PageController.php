@@ -16,10 +16,6 @@ class PageController extends ResourceController
             'type' => PageEndpointType::class,
             'resource' => $contentDocument,
             'preview' => $preview,
-            'area' => 'theme',
-            'navigation' => true,
-            'routes' => ['theme', 'api'],
-            'vue_routes' => ['theme']
         ]);
     }
 }

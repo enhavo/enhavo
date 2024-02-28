@@ -8,8 +8,6 @@ enhavo_user_admin_login:
         _config: admin
         _endpoint:
             type: user_login_app
-            vue_routes: admin
-            area: admin
             translations: EnhavoUserBundle
         _vue:
             component: user-login
@@ -24,8 +22,6 @@ enhavo_user_admin_logout:
         _config: admin
         _endpoint:
             type: user_login_app
-            vue_routes: admin
-            area: admin
             translations: EnhavoUserBundle
         _vue:
             component: user-logout

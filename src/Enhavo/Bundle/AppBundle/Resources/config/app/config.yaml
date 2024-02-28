@@ -26,3 +26,22 @@ enhavo_app:
             path: '@EnhavoAppBundle/Resources/views'
             alias: 'EnhavoApp'
             priority: 10
+    area:
+        theme:
+            firewall: main
+            options:
+                routes: ['api', 'theme']
+                vue_routes: ['theme']
+                navigation: true
+        api:
+            path: ^/api/
+        admin:
+            firewall: admin
+            path:
+                - ^/admin/reset-password/.+
+                - ^/admin/login$
+            options:
+                routes: ['admin', 'admin_api']
+                vue_routes: ['admin']
+        admin_api:
+            path: ^/admin/api/
