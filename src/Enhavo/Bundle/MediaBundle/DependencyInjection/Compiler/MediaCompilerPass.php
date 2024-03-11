@@ -8,7 +8,9 @@
 
 namespace Enhavo\Bundle\MediaBundle\DependencyInjection\Compiler;
 
+use Enhavo\Bundle\MediaBundle\FileNotFound\FileNotFoundHandlerInterface;
 use Enhavo\Bundle\MediaBundle\GarbageCollection\GarbageCollector;
+use Enhavo\Bundle\MediaBundle\GarbageCollection\GarbageCollectorInterface;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -21,27 +23,28 @@ class MediaCompilerPass implements CompilerPassInterface
         $this->createCacheAlias($container);
         $this->injectGarbageCollectorVoters($container);
         $this->addGarbageCollectorAlias($container);
+        $this->addFileNotFoundHandlerAlias($container);
     }
 
-    private function createProviderAlias(ContainerBuilder $container)
+    private function createProviderAlias(ContainerBuilder $container): void
     {
         $providerServiceName = $container->getParameter('enhavo_media.provider');
         $container->setAlias('enhavo_media.provider', $providerServiceName);
     }
 
-    private function createStorageAlias(ContainerBuilder $container)
+    private function createStorageAlias(ContainerBuilder $container): void
     {
         $providerServiceName = $container->getParameter('enhavo_media.storage');
         $container->setAlias('enhavo_media.storage', $providerServiceName);
     }
 
-    private function createCacheAlias(ContainerBuilder $container)
+    private function createCacheAlias(ContainerBuilder $container): void
     {
         $providerServiceName = $container->getParameter('enhavo_media.cache_control.class');
         $container->setAlias('enhavo_media.cache', $providerServiceName);
     }
 
-    private function injectGarbageCollectorVoters(ContainerBuilder $container)
+    private function injectGarbageCollectorVoters(ContainerBuilder $container): void
     {
         $garbageCollectorService = $container->getDefinition(GarbageCollector::class);
         $taggedServices = $container->findTaggedServiceIds('enhavo_media.garbage_collection_voter');
@@ -70,8 +73,18 @@ class MediaCompilerPass implements CompilerPassInterface
         }
     }
 
-    private function addGarbageCollectorAlias(ContainerBuilder $container)
+    private function addGarbageCollectorAlias(ContainerBuilder $container): void
     {
-        $container->addAliases(['enhavo_media.garbage_collector' => $container->getParameter('enhavo_media.garbage_collection.garbage_collector')]);
+        $container->addAliases([
+            'enhavo_media.garbage_collector' => $container->getParameter('enhavo_media.garbage_collection.garbage_collector'),
+            GarbageCollectorInterface::class => $container->getParameter('enhavo_media.garbage_collection.garbage_collector'),
+        ]);
+    }
+
+    private function addFileNotFoundHandlerAlias(ContainerBuilder $container): void
+    {
+        $container->addAliases([
+            FileNotFoundHandlerInterface::class => $container->getParameter('enhavo_media.file_not_found.handler'),
+        ]);
     }
 }

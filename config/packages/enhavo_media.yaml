@@ -16,3 +16,7 @@ enhavo_media:
             type: image
             width: 1300
             height: 600
+
+when@dev:
+    file_not_found:
+        handler: Enhavo\Bundle\MediaBundle\FileNotFound\CreateDummyFileNotFoundHandler

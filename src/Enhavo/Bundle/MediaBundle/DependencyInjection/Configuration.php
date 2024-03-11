@@ -6,6 +6,7 @@ use Enhavo\Bundle\MediaBundle\Cache\NoCache;
 use Enhavo\Bundle\MediaBundle\Controller\FileController;
 use Enhavo\Bundle\MediaBundle\Entity\File;
 use Enhavo\Bundle\MediaBundle\Factory\FileFactory;
+use Enhavo\Bundle\MediaBundle\FileNotFound\ExceptionFileNotFoundHandler;
 use Enhavo\Bundle\MediaBundle\Form\Type\FileParametersType;
 use Enhavo\Bundle\MediaBundle\Form\Type\FileType;
 use Enhavo\Bundle\MediaBundle\GarbageCollection\GarbageCollector;
@@ -169,8 +170,8 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('file_not_found')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->scalarNode('strategy')->defaultValue('exception')->end()
-                        ->arrayNode('strategy_parameters')
+                        ->scalarNode('handler')->defaultValue(ExceptionFileNotFoundHandler::class)->end()
+                        ->arrayNode('parameters')
                             ->defaultValue([])
                             ->useAttributeAsKey('name')
                             ->prototype('variable')->end()

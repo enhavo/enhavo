@@ -1,8 +1,7 @@
 <?php
 
-namespace Enhavo\Bundle\MediaBundle\FileNotFound\Strategy;
+namespace Enhavo\Bundle\MediaBundle\FileNotFound;
 
-use Enhavo\Bundle\MediaBundle\FileNotFound\FileNotFoundStrategyInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
@@ -10,9 +9,18 @@ use Imagine\Image\Fill\Gradient\Vertical;
 use Imagine\Image\Palette\RGB as RGBPalette;
 use Imagine\Image\Point;
 
-class CreateDummyStrategy implements FileNotFoundStrategyInterface
+class CreateDummyFileNotFoundHandler implements FileNotFoundHandlerInterface
 {
-    public function handleFileNotFound(FileInterface $file, ?array $strategyParameters): void
+    public function handleFileNotFound(FileInterface $file, array $parameters = []): void
+    {
+        if ($file->isImage()) {
+            $this->createRandomImage($file);
+        } else {
+            $this->createBlankFile($file);
+        }
+    }
+
+    private function createRandomImage(FileInterface $file): void
     {
         $imagine = new Imagine();
 
@@ -68,6 +76,7 @@ class CreateDummyStrategy implements FileNotFoundStrategyInterface
         $red = 0;
         $green = 0;
         $blue = 0;
+
         switch ($hueInt) {
             case 0:
                 list($red, $green, $blue) = array($valueNormalized, $v3, $v1);
@@ -93,8 +102,8 @@ class CreateDummyStrategy implements FileNotFoundStrategyInterface
         return '#' . dechex(floor($red * 255)) . dechex(floor($green * 255)) . dechex(floor($blue * 255));
     }
 
-    public function getType(): string
+    private function createBlankFile(FileInterface $file): void
     {
-        return 'create_dummy';
+        file_put_contents('', $file->getContent()->getFilePath());
     }
 }
