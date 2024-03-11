@@ -1,33 +1,29 @@
 services:
-    enhavo_search.engine.elastic_search_engine:
-        class: Enhavo\Bundle\SearchBundle\Engine\ElasticSearch\ElasticSearchEngine
-        public: true
+    Enhavo\Bundle\SearchBundle\Engine\ElasticSearch\ElasticSearchEngine:
         arguments:
             - '@Enhavo\Bundle\SearchBundle\Index\IndexDataProvider'
             - '@Enhavo\Component\Metadata\MetadataRepository[Search]'
             - '@doctrine.orm.entity_manager'
-            - '@enhavo_search.elastica.client'
             - '@enhavo_search.engine.elastic_search_index_remover'
             - '@enhavo_search.engine.elastic_search_document_id_generator'
             - '@Enhavo\Bundle\SearchBundle\Filter\FilterDataProvider'
+            - '@Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface'
             - '%enhavo_search.index.class%'
-            - '%enhavo_search.search.indexing%'
-            - '%enhavo_search.elastica.index_name%'
+            - '@Enhavo\Bundle\SearchBundle\Engine\ElasticSearch\ClientFactory'
+            - '%enhavo_search.search.dsn%'
+        tags:
+            - { name: enhavo_search.engine }
 
-    enhavo_search.elastica.client:
-        class: Elastica\Client
+    Enhavo\Bundle\SearchBundle\Engine\ElasticSearch\ClientFactory:
         arguments:
-          -
-            host: '%enhavo_search.elastica.host%'
-            port: '%enhavo_search.elastica.port%'
 
     enhavo_search.engine.elastic_search_index_remover:
         class: Enhavo\Bundle\SearchBundle\Engine\ElasticSearch\ElasticSearchIndexRemover
         arguments:
-            - '@enhavo_search.elastica.client'
             - '@Enhavo\Component\Metadata\MetadataRepository[Search]'
             - '@enhavo_search.engine.elastic_search_document_id_generator'
-            - '%enhavo_search.elastica.index_name%'
+            - '@Enhavo\Bundle\SearchBundle\Engine\ElasticSearch\ClientFactory'
+            - '%enhavo_search.search.dsn%'
 
     enhavo_search.engine.elastic_search_document_id_generator:
         class: Enhavo\Bundle\SearchBundle\Engine\ElasticSearch\ElasticSearchDocumentIdGenerator

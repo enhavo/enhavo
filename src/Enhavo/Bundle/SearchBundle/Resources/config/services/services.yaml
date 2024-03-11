@@ -1,16 +1,16 @@
 services:
     enhavo_search.save_listener:
         class: Enhavo\Bundle\SearchBundle\EventListener\SaveListener
-        calls:
-            - [ 'setContainer', [ '@service_container' ] ]
+        arguments:
+            - '@enhavo_search.search.engine'
         tags:
             - { name: kernel.event_listener, event: enhavo_app.post_create, method: onSave }
             - { name: kernel.event_listener, event: enhavo_app.post_update, method: onSave }
 
     enhavo_search.delete_listener:
         class: Enhavo\Bundle\SearchBundle\EventListener\DeleteListener
-        calls:
-            - [ 'setContainer', [ '@service_container' ] ]
+        arguments:
+            - '@enhavo_search.search.engine'
         tags:
             - { name: kernel.event_listener, event: enhavo_app.pre_delete, method: onDelete }
 
@@ -79,7 +79,7 @@ services:
     Enhavo\Bundle\SearchBundle\Command\ElasticInstallCommand:
         arguments:
             - '@Enhavo\Bundle\SearchBundle\Elastic\ElasticManager'
-            - '%enhavo_search.elastica.version%'
+            - '%enhavo_search.elastic.version%'
         tags:
             - { name: console.command }
 
@@ -103,3 +103,7 @@ services:
             - '@Enhavo\Bundle\SearchBundle\Engine\SearchEngineInterface'
         tags:
             - { name: console.command }
+
+    Enhavo\Bundle\SearchBundle\Engine\NullEngine:
+        tags:
+            - { name: enhavo_search.engine }

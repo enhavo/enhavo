@@ -202,7 +202,7 @@ class TranslationManager
         $this->checkEntity($object);
 
         if (!$this->isTranslated($object)) {
-            throw new TranslationException('Entity was not translated. You can only detach already translated objects');
+            return;
         }
 
         $locale = $this->getTranslatedLocale($object);

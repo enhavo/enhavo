@@ -1,7 +1,5 @@
 services:
-    enhavo_search.engine.database_search_engine:
-        class: Enhavo\Bundle\SearchBundle\Engine\DatabaseSearch\DatabaseSearchEngine
-        public: true
+    Enhavo\Bundle\SearchBundle\Engine\DatabaseSearch\DatabaseSearchEngine:
         arguments:
             - '@Enhavo\Bundle\SearchBundle\Index\IndexDataProvider'
             - '@Enhavo\Component\Metadata\MetadataRepository[Search]'
@@ -11,4 +9,5 @@ services:
             - '@Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface'
             - '@Enhavo\Bundle\SearchBundle\Filter\FilterDataProvider'
             - '%enhavo_search.index.class%'
-            - '%enhavo_search.search.indexing%'
+        tags:
+            - { name: enhavo_search.engine }

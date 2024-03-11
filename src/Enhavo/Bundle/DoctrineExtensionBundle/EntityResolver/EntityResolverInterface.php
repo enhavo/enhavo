@@ -8,8 +8,6 @@
 
 namespace Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver;
 
-use Enhavo\Bundle\DoctrineExtensionBundle\Exception\ResolveException;
-
 interface EntityResolverInterface
 {
     /**

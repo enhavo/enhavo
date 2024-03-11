@@ -9,12 +9,18 @@ use Enhavo\Component\Metadata\MetadataRepository;
 
 class ElasticSearchIndexRemover
 {
+    private readonly Client $client;
+    private readonly string $indexName;
+
     public function __construct(
-        private Client $client,
-        private MetadataRepository $metadataRepository,
-        private ElasticSearchDocumentIdGenerator $documentIdGenerator,
-        private string $indexName,
-    ) {}
+        private readonly MetadataRepository $metadataRepository,
+        private readonly ElasticSearchDocumentIdGenerator $documentIdGenerator,
+        ClientFactory $clientFactory,
+        $dsn,
+    ) {
+        $this->indexName = $clientFactory->getIndexName($dsn);
+        $this->client = $clientFactory->create($dsn);
+    }
 
     public function removeIndex($resource)
     {

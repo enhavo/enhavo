@@ -24,7 +24,7 @@ interface SearchEngineInterface
 
     /** @return string[] */
     public function suggest(Filter $filter): array;
-    
+
     /**
      * @param Filter $filter
      * @return Pagerfanta
@@ -51,4 +51,6 @@ interface SearchEngineInterface
      * @return void
      */
     public function initialize($force = false);
+
+    public static function supports($dsn): bool;
 }

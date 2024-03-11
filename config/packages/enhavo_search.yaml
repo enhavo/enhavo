@@ -1,6 +1,6 @@
 enhavo_search:
     search:
-        indexing: true
+        dsn: '%env(resolve:SEARCH_DSN)%'
     index:
         classes:
             - Enhavo\Bundle\PageBundle\Entity\Page

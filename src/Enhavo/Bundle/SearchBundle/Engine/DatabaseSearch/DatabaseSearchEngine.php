@@ -42,7 +42,6 @@ class DatabaseSearchEngine implements SearchEngineInterface
         private EntityResolverInterface $entityResolver,
         private FilterDataProvider $filterDataProvider,
         private $classes,
-        private $indexing,
     ) {
     }
 
@@ -63,7 +62,7 @@ class DatabaseSearchEngine implements SearchEngineInterface
         foreach ($searchResults as $searchResult) {
             $id = $searchResult['id'];
             $className = $searchResult['class'];
-            $entries[] = new ResultEntry(new EntitySubjectLoader($this->em->getRepository($className), $id), [], null);
+            $entries[] = new ResultEntry(new EntitySubjectLoader($this->entityResolver, $className, $id), [], null);
         }
         return $entries;
     }
@@ -109,10 +108,6 @@ class DatabaseSearchEngine implements SearchEngineInterface
 
     public function index($resource, $locale = null)
     {
-        if (!$this->indexing) {
-            return;
-        }
-
         /** @var Metadata $metadata */
         $metadata = $this->metadataRepository->getMetadata($resource);
         if($metadata && in_array($metadata->getClassName(), $this->classes)) {
@@ -279,5 +274,14 @@ class DatabaseSearchEngine implements SearchEngineInterface
     public function initialize($force = false)
     {
         // nothing to do here
+    }
+
+    public static function supports($dsn): bool
+    {
+        if (str_starts_with($dsn, 'database://')) {
+            return true;
+        }
+
+        return false;
     }
 }
