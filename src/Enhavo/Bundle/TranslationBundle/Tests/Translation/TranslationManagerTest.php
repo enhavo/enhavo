@@ -264,8 +264,9 @@ class TranslationManagerTest extends TestCase
         $manager->detach($entity);
         $this->assertEquals('name-de.old', $entity->getName());
 
-        $this->expectException(TranslationException::class);
+        // after second detach nothing should happen
         $manager->detach($entity);
+        $this->assertEquals('name-de.old', $entity->getName());
     }
 
     public function testTranslateSlug()
