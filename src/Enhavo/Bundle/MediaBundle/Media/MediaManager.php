@@ -11,7 +11,7 @@ namespace Enhavo\Bundle\MediaBundle\Media;
 use Enhavo\Bundle\AppBundle\Resource\ResourceManager;
 use Enhavo\Bundle\DoctrineExtensionBundle\Util\AssociationFinder;
 use Enhavo\Bundle\MediaBundle\Entity\Format;
-use Enhavo\Bundle\MediaBundle\FileNotFound\FileNotFoundManager;
+use Enhavo\Bundle\MediaBundle\FileNotFound\FileNotFoundHandlerInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\MediaBundle\Model\FormatInterface;
 use Enhavo\Bundle\MediaBundle\Provider\ProviderInterface;
@@ -21,13 +21,14 @@ use Enhavo\Bundle\MediaBundle\Storage\StorageInterface;
 class MediaManager
 {
     public function __construct(
-        private StorageInterface $storage,
-        private FormatManager $formatManager,
-        private FileRepository $fileRepository,
-        private ProviderInterface $provider,
-        private AssociationFinder $associationFinder,
-        private ResourceManager $resourceManager,
-        private FileNotFoundManager $fileNotFoundManager,
+        private readonly StorageInterface $storage,
+        private readonly FormatManager $formatManager,
+        private readonly FileRepository $fileRepository,
+        private readonly ProviderInterface $provider,
+        private readonly AssociationFinder $associationFinder,
+        private readonly ResourceManager $resourceManager,
+        private readonly FileNotFoundHandlerInterface $fileNotFoundHandler,
+        private array $fileNotFoundHandlerParameter,
     ) {
     }
 
@@ -140,12 +141,12 @@ class MediaManager
     public function handleFileNotFound($file): void
     {
         if ($file instanceof FileInterface) {
-            $this->fileNotFoundManager->handleFileNotFound($file);
+            $this->fileNotFoundHandler->handleFileNotFound($file, $this->fileNotFoundHandlerParameter);
         } else {
             $formatName = $file->getName();
             $originalFile = $file->getFile();
             if (!file_exists($originalFile->getContent()->getFilePath()))  {
-                $this->fileNotFoundManager->handleFileNotFound($originalFile);
+                $this->fileNotFoundHandler->handleFileNotFound($originalFile, $this->fileNotFoundHandlerParameter);
             }
             $this->formatManager->applyFormat($originalFile, $formatName);
         }
