@@ -13,8 +13,8 @@
   ],
   "require": {
     "php": "^8.0",
-    "enhavo/app-bundle": "dev-master",
-    "enhavo/vue-form-bundle": "dev-master",
+    "enhavo/app-bundle": "^0.14",
+    "enhavo/vue-form-bundle": "^0.14",
     "ezyang/htmlpurifier": "^4.12"
   },
   "require-dev": {

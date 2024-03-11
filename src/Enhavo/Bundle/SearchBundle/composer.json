@@ -14,9 +14,9 @@
   "require": {
     "ext-zip": "*",
     "php": "^8.0",
-    "enhavo/app-bundle": "dev-master",
-    "enhavo/doctrine-extension-bundle": "dev-master",
-    "enhavo/metadata": "dev-master",
+    "enhavo/app-bundle": "^0.14",
+    "enhavo/doctrine-extension-bundle": "^0.14",
+    "enhavo/metadata": "^0.14",
     "ruflin/elastica": "^7.1"
   },
   "require-dev": {

@@ -26,7 +26,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class EnhavoAppBundle extends Bundle
 {
-    const VERSION = '0.13.0';
+    const VERSION = '0.14';
 
     public function build(ContainerBuilder $container): void
     {

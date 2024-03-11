@@ -16,7 +16,7 @@
   },
   "require": {
     "php": "^8.0",
-    "enhavo/app-bundle": "dev-master",
+    "enhavo/app-bundle": "^0.14",
     "sylius/payment-bundle": "^1.12",
     "sylius/payment": "^1.12"
   }

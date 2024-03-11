@@ -13,11 +13,11 @@
   ],
   "require": {
     "php": "^8.0",
-    "enhavo/app-bundle": "dev-master",
-    "enhavo/doctrine-extension-bundle": "dev-master",
-    "enhavo/form-bundle": "dev-master",
-    "enhavo/metadata": "dev-master",
-    "enhavo/routing-bundle": "dev-master",
+    "enhavo/app-bundle": "^0.14",
+    "enhavo/doctrine-extension-bundle": "^0.14",
+    "enhavo/form-bundle": "^0.14",
+    "enhavo/metadata": "^0.14",
+    "enhavo/routing-bundle": "^0.14",
     "league/uri-components": "^2.4"
   },
   "require-dev": {

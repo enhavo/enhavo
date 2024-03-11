@@ -14,8 +14,8 @@
   "require": {
     "php": "^8.0",
     "doctrine/orm": "^2.14",
-    "enhavo/app-bundle": "dev-master",
-    "enhavo/doctrine-extension-bundle": "dev-master",
+    "enhavo/app-bundle": "^0.14",
+    "enhavo/doctrine-extension-bundle": "^0.14",
     "spatie/image-optimizer": "^1.0",
     "imagine/imagine": "^1.2",
     "guzzlehttp/guzzle": "^6.5",
