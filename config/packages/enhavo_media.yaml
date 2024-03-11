@@ -18,5 +18,6 @@ enhavo_media:
             height: 600
 
 when@dev:
-    file_not_found:
-        handler: Enhavo\Bundle\MediaBundle\FileNotFound\CreateDummyFileNotFoundHandler
+    enhavo_media:
+        file_not_found:
+            handler: Enhavo\Bundle\MediaBundle\FileNotFound\CreateDummyFileNotFoundHandler
