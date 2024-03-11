@@ -9,7 +9,9 @@
 namespace Enhavo\Bundle\SearchBundle\Engine\ElasticSearch;
 
 use Doctrine\ORM\EntityManager;
+use Elastica\Client;
 use Elastica\Index;
+use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface;
 use Enhavo\Bundle\SearchBundle\Engine\Filter\BetweenQuery;
 use Enhavo\Bundle\SearchBundle\Engine\Filter\ContainsQuery;
 use Enhavo\Bundle\SearchBundle\Engine\Filter\Filter;
@@ -20,14 +22,12 @@ use Enhavo\Bundle\SearchBundle\Engine\Result\ResultSummary;
 use Enhavo\Bundle\SearchBundle\Exception\FilterQueryNotSupportedException;
 use Enhavo\Bundle\SearchBundle\Exception\IndexException;
 use Enhavo\Bundle\SearchBundle\Filter\FilterDataProvider;
-use Enhavo\Bundle\SearchBundle\Result\Result;
 use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
 use Enhavo\Component\Metadata\MetadataRepository;
 use Enhavo\Bundle\SearchBundle\Engine\SearchEngineInterface;
 use Enhavo\Bundle\SearchBundle\Index\IndexDataProvider;
 use Enhavo\Bundle\SearchBundle\Metadata\Metadata;
-use Elastica\Client;
 use Elastica\Document;
 use Elastica\Search;
 use Elastica\Query;
@@ -35,26 +35,31 @@ use Elastica\Mapping;
 
 class ElasticSearchEngine implements SearchEngineInterface
 {
+    private readonly ?Client $client;
+    private readonly string $indexName;
+
     public function __construct(
-        private IndexDataProvider $indexDataProvider,
-        private MetadataRepository $metadataRepository,
-        private EntityManager $em,
-        private Client $client,
-        private ElasticSearchIndexRemover $indexRemover,
-        private ElasticSearchDocumentIdGenerator $documentIdGenerator,
-        private FilterDataProvider $filterDataProvider,
-        private $classes,
-        private $indexing,
-        private $indexName,
+        private readonly IndexDataProvider $indexDataProvider,
+        private readonly MetadataRepository $metadataRepository,
+        private readonly EntityManager $em,
+        private readonly ElasticSearchIndexRemover $indexRemover,
+        private readonly ElasticSearchDocumentIdGenerator $documentIdGenerator,
+        private readonly FilterDataProvider $filterDataProvider,
+        private readonly EntityResolverInterface $entityResolver,
+        private readonly array $classes,
+        ClientFactory $clientFactory,
+        $dsn,
     ) {
+        $this->indexName = $clientFactory->getIndexName($dsn);
+        $this->client = $clientFactory->create($dsn);
     }
 
-    public function initialize($reinit = false)
+    public function initialize($force = false): void
     {
         $index = $this->getIndex();
         if (!$index->exists()) {
             $index->create();
-        } else if ($index->exists() && $reinit) {
+        } else if ($index->exists() && $force) {
             $index->delete();
             $index->create();
         }
@@ -268,7 +273,7 @@ class ElasticSearchEngine implements SearchEngineInterface
             $data = $document->getData();
             $id = $data['id'];
             $className = $data['className'];
-            $entries[] = new ResultEntry(new EntitySubjectLoader($this->em->getRepository($className), $id), $data['filterData'], $document->getScore());
+            $entries[] = new ResultEntry(new EntitySubjectLoader($this->entityResolver, $className, $id), $data['filterData'], $document->getScore());
         }
         return $entries;
     }
@@ -351,10 +356,6 @@ class ElasticSearchEngine implements SearchEngineInterface
 
     public function index($resource)
     {
-        if (!$this->indexing) {
-            return;
-        }
-
         /** @var Metadata $metadata */
         $metadata = $this->metadataRepository->getMetadata($resource);
         if ($metadata && in_array($metadata->getClassName(), $this->classes)) {
@@ -439,5 +440,14 @@ class ElasticSearchEngine implements SearchEngineInterface
                 }
             }
         }
+    }
+
+    public static function supports($dsn): bool
+    {
+        if (str_starts_with($dsn, 'elastic://')) {
+            return true;
+        }
+
+        return false;
     }
 }

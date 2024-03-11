@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\SearchBundle\Engine\Result;
 
-use Doctrine\ORM\EntityRepository;
+use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface;
 
 class EntitySubjectLoader implements SubjectLoaderInterface
 {
@@ -10,7 +10,8 @@ class EntitySubjectLoader implements SubjectLoaderInterface
     private $loaded = false;
 
     public function __construct(
-        private EntityRepository $repository,
+        private EntityResolverInterface $entityResolver,
+        private string $name,
         private int $id
     )
     {
@@ -22,7 +23,7 @@ class EntitySubjectLoader implements SubjectLoaderInterface
             return $this->subject;
         }
 
-        $this->subject = $this->repository->find($this->id);
+        $this->subject = $this->entityResolver->getEntity($this->id, $this->name);
         $this->loaded = true;
         return $this->subject;
     }
