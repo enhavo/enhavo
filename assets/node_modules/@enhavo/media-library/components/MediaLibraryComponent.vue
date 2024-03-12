@@ -46,7 +46,6 @@
                         <div></div>
                     </div>
                 </div>
-                <br clear="all">
             </div>
         </div>
     </div>
