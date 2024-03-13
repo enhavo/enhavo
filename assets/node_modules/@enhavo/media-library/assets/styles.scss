@@ -89,10 +89,9 @@
   }
 
   .tag-list {
+    flex: 0 0 230px;
     border-radius: 2px;
     border: 1px solid $color4;
-    width: 230px;
-    float: left;
     overflow: hidden;
 
     ul {
@@ -269,8 +268,11 @@
   }
 
   .inner-content {
-    height: calc(100% - 64px);
-    padding-right: 20px;
+    display: flex;
+    gap: 20px;
+    padding: 0 20px 0 0;
+    flex-wrap: wrap;
+    position: relative;
   }
 
   .media-types {
@@ -328,10 +330,13 @@
   }
 
   .media-library-progress {
+    position: absolute;
+    top: -15px;
+    left: 0;
     display: block;
-    padding: 4px 0px;
+    padding: 4px 0;
     line-height: 11px;
-    margin: 12px 0;
+    margin: 0;
     border-radius: 15px;
     color: white;
     background: $color1
@@ -340,6 +345,7 @@
   .media-library-sort {
     display: inline-block;
     margin: 6px 0;
+    padding: 0 84px 0 0;
 
     ul {
       display: inline-block;
@@ -388,9 +394,7 @@
   }
 
   .result-search {
-    width: calc(100% - 260px);
-    float: left;
-    margin-left: 30px;
+    flex: 1;
     position: relative;
     padding-bottom: 75px;
 
@@ -556,6 +560,14 @@
 
 @media all and (max-width: 767px) {
   .media-library-overlay {
+    .inner-content {
+      flex-direction: column;
+      .tag-list {
+        flex: 1 1 100%;
+        max-height: 30dvh;
+        overflow-y: auto;
+      }
+    }
     .images {
       li {
         width: calc(50% - 20px);
