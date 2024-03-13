@@ -26,6 +26,7 @@ class ProductController extends ResourceController
         ]);
     }
 
+<<<<<<< HEAD
     public function listAction(Request $request): Response
     {
         return $this->render($this->resolveTemplate('theme/shop/product/list.html.twig'), [
@@ -33,6 +34,8 @@ class ProductController extends ResourceController
         ]);
     }
 
+=======
+>>>>>>> 1aced5cb8 (Remove listAction from ProductController. (#1945))
     private function getProductManager(): ProductManager
     {
         return $this->get('enhavo_shop.product_manager');
