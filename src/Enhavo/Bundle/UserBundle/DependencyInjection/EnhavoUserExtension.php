@@ -38,6 +38,11 @@ class EnhavoUserExtension extends AbstractResourceExtension implements PrependEx
             'services/command.yaml',
             'services/form.yaml',
             'services/menu.yaml',
+<<<<<<< HEAD
+=======
+            'services/endpoint.yaml',
+            'services/view.yaml',
+>>>>>>> bdff62a72 ([UserBundle] Fix for wrong target resource in change password action (#1949))
         );
         foreach ($configFiles as $configFile) {
             $loader->load($configFile);
