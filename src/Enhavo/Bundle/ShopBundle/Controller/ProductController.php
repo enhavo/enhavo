@@ -30,13 +30,6 @@ class ProductController extends ResourceController
         ]);
     }
 
-    public function listAction(Request $request): Response
-    {
-        return $this->render($this->getTemplate('theme/shop/product/list.html.twig'), [
-
-        ]);
-    }
-
     private function getProductManager(): ProductManager
     {
         return $this->get('enhavo_shop.product_manager');
