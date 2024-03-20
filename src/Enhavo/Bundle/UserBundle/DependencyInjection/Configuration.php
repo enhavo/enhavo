@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\UserBundle\DependencyInjection;
 
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
+use Enhavo\Bundle\UserBundle\Controller\UserController;
 use Enhavo\Bundle\UserBundle\Configuration\RequestConfigKeyProvider;
 use Enhavo\Bundle\UserBundle\Factory\UserFactory;
 use Enhavo\Bundle\UserBundle\Form\Type\ChangeEmailConfirmType;
@@ -71,7 +72,7 @@ class Configuration implements ConfigurationInterface
                                     ->addDefaultsIfNotSet()
                                     ->children()
                                         ->scalarNode('model')->defaultValue(User::class)->end()
-                                        ->scalarNode('controller')->defaultValue(ResourceController::class)->end()
+                                        ->scalarNode('controller')->defaultValue(UserController::class)->end()
                                         ->scalarNode('repository')->defaultValue(UserRepository::class)->end()
                                         ->scalarNode('factory')->defaultValue(UserFactory::class)->end()
                                         ->scalarNode('form')->defaultValue(UserType::class)->cannotBeEmpty()->end()
