@@ -3,6 +3,11 @@
 namespace Enhavo\Bundle\UserBundle\DependencyInjection;
 
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
+<<<<<<< HEAD
+=======
+use Enhavo\Bundle\UserBundle\Configuration\RequestConfigKeyProvider;
+use Enhavo\Bundle\UserBundle\Controller\UserController;
+>>>>>>> bdff62a72 ([UserBundle] Fix for wrong target resource in change password action (#1949))
 use Enhavo\Bundle\UserBundle\Factory\UserFactory;
 use Enhavo\Bundle\UserBundle\Form\Type\ChangeEmailConfirmType;
 use Enhavo\Bundle\UserBundle\Form\Type\ChangeEmailRequestType;
@@ -69,7 +74,7 @@ class Configuration implements ConfigurationInterface
                                     ->addDefaultsIfNotSet()
                                     ->children()
                                         ->scalarNode('model')->defaultValue(User::class)->end()
-                                        ->scalarNode('controller')->defaultValue(ResourceController::class)->end()
+                                        ->scalarNode('controller')->defaultValue(UserController::class)->end()
                                         ->scalarNode('repository')->defaultValue(UserRepository::class)->end()
                                         ->scalarNode('factory')->defaultValue(UserFactory::class)->end()
                                         ->scalarNode('form')->defaultValue(UserType::class)->cannotBeEmpty()->end()
