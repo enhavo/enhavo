@@ -35,7 +35,7 @@ class RoutableStrategy extends AbstractStrategy
         }
 
         try {
-            return $this->router->generate($route);
+            return $this->router->generate($route, $parameters, $referenceType);
         } catch (RouteNotFoundException|UrlResolverException $e) {
             if ($options['error']) {
                 throw new UrlResolverException($e->getMessage());
