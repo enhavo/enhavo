@@ -1,2 +1,0 @@
-Newsletter State Column
-=======================

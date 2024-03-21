@@ -1,16 +1,22 @@
 <template>
-
+    <a :href="getAnker()">{{ name }}</a><span v-if="required">*</span>
 </template>
 
-<script lang="ts">
-import {Vue, Options} from 'vue-property-decorator';
+<script setup lang="ts">
+const props = defineProps<{
+    name: string
+    type: string
+    required: boolean
+}>()
 
-@Options({})
-export default class ReferenceOption extends Vue {
+function getAnker(): string {
+    let name = props.name.replace('_', '-');
+    let type = props.type ? props.type.replace('_', '-') : null;
 
+    if (type) {
+        return '#' + name + '_' + type;
+    }
+
+    return '#' + name;
 }
 </script>
-
-<style scoped>
-
-</style>

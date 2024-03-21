@@ -1,14 +1,12 @@
-Install
--------
+![alt text](enhavo.svg "enhavo")
+<br/>
+<br/>
 
-```bash
-$ pip install -U Sphinx
-```
+The enhavo CMS is a open source PHP project on top of the fullstack Symfony framework and uses awesome Sylius components to serve a very flexible software, that can handle most of complex data structure with a clean and usability interface.
 
-Autobuilder
------------
+More
+---
+This is a subtree split of the main repository.
 
-```bash
-$ pip install sphinx-autobuild
-$ sphinx-autobuild source build/html
-```
+
+For further information check the [main repository](https://github.com/enhavo/enhavo)

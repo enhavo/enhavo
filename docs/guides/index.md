@@ -1,19 +1,22 @@
----
-layout: home
+# Guides
 
-hero:
-  name: "Guides"
-  tagline: Small guides to create your code faster
-
-features:
-  - title: Action
-    details: Create manage action buttons
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
----
+* [Action](action/index)
+* [Assets](assets/index)
+* [Batch](batch/index)
+* [Block](block/index)
+* [Column](column/index)
+* [Contact](contact/index)
+* [Controller](controller/index)
+* [Dashboard Widget](dashboard-widget/index)
+* [Filter](filter/index)
+* [Form](form/index)
+* [Icon](icon/index)
+* [Media](media/index)
+* [Migration](migration/index)
+* [Resource](resource/index)
+* [Routing](routing/index)
+* [Search](search/index)
+* [Setting](setting/index)
+* [Toolbar Widget](toolbar-widget/index)
+* [View](view/index)
+* [Vue Form](vue-form/index)

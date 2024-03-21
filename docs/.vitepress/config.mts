@@ -13,16 +13,16 @@ export default defineConfig({
       { text: 'Contribute', link: '/contribute/' },
     ],
 
-    sidebar: {
-      '/guides/': [
-        {
-          text: 'Guide',
-          items: [
-            { text: 'Action', link: '/guides/action/' },
-          ]
-        }
-      ],
-    },
+    // sidebar: {
+    //   '/guides/': [
+    //     {
+    //       text: 'Guide',
+    //       items: [
+    //         { text: 'Action', link: '/guides/action/' },
+    //       ]
+    //     }
+    //   ],
+    // },
 
     socialLinks: [
       { icon: 'github', link: 'https://github.com/enhavo/enhavo' }
