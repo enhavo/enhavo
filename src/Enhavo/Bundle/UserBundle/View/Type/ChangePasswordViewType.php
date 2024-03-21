@@ -12,6 +12,7 @@ use Sylius\Bundle\ResourceBundle\Controller\ResourceFormFactoryInterface;
 use Sylius\Bundle\ResourceBundle\Controller\SingleResourceProviderInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -25,7 +26,7 @@ class ChangePasswordViewType extends UpdateViewType
     public function __construct(
         array $formThemes,
         ActionManager $actionManager,
-        RequestStack $requestStack,
+        FlashBag $flashBag,
         ViewUtil $util,
         RouterInterface $router,
         TranslatorInterface $translator,
@@ -41,7 +42,7 @@ class ChangePasswordViewType extends UpdateViewType
         parent::__construct(
             $formThemes,
             $actionManager,
-            $requestStack,
+            $flashBag,
             $util,
             $router,
             $translator,
