@@ -7,6 +7,7 @@
 * [Data Handling](general/data-handling)
 * [Headless Controller](general/headless-controller)
 * [Assets](general/assets.md)
+* [Area](general/area.md)
 
 ## Components
 

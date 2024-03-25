@@ -1,7 +1,5 @@
 # Search guide
 
-::: warning
-This article is outdated and may contain information that are not in use anymore
-:::
-
+<!--@include: ./create-index-type.md -->
+<!--@include: ./create-filter-type.md -->
 <!--@include: ./add-search-for-entity.md -->

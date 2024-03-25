@@ -1,38 +1,49 @@
 ## Search engines
 
-### Enhavo Search Engine
+Enhavo comes with some build in search engines. The `database`, `elasticsearch` and `null` engine.
+Both implements the `Enhavo\Bundle\SearchBundle\Engine\SearchEngineInterface`. 
 
-Enhavo offers his own search and index engines which you have configured
-by default in the [enhavo.yml]{.title-ref} under
-[enhavo_search]{.title-ref}
+### Database search engine
 
-``` yaml
-search_engine: enhavo_search_search_engine
-index_engine: enhavo_search_index_engine
-```
-
-With this `index engine` the content gets indexed into the database.
-Therefor all words get separated from each other, simplified and then
+With the database search engine the content gets indexed into the database.
+So no extra service is needed. Therefor all words get separated from each other, simplified and then
 stored in a database table. In addition to that every word gets a score
 which determines the relevance to the other stored words.
 
-When you are searching you use the `search engine` of enhavo. There you
+The downside is, that if your amount of data getting bigger, this engine could get very slow.
+
+By default, the search term has some addons. You
 have the possibility to get better search results by using the operators
 `AND` and `OR`. If you want to exclude a word you can put `-` in front
 of the word and if you want to get results with a whole phrase of words
-just but them into `""`.
+just but them into `"`.
 
-### Elastic-Search
+Configure the database engine with:
 
-If you don\'t want to use the enhavo search there is also the
-possibility to use elasic-search. Just change the `search_engine` and
-`index_engine` in the enhavo.yml.
-
-``` yaml
-search_engine: enhavo_search_elasticsearch_engine
-index_engine: enhavo_search_index_elasticsearch_engine
+```
+# .env.local
+SEARCH_DSN=database://null
 ```
 
-Apart from that you have to download elastic search and start it.
+### Elastic search engine
 
-For elastic-search you do not need the indexing strategy.
+With the elastic search engine you can index your data in an elasticsearch service and use their power and performance.
+
+```
+# .env.local
+SEARCH_DSN=elastic://localhost:9200/elastic_search
+```
+
+### Null engine
+
+The null engine is for `dev` mode, if you want to turn off the indexing. It will always return an empty result.
+
+```
+# .env.local
+SEARCH_DSN=null://null
+```
+
+
+
+
+
