@@ -1,4 +1,4 @@
-![alt text](enhavo.svg "enhavo")
+![alt text](images/enhavo.svg "enhavo")
 <br/>
 <br/>
 

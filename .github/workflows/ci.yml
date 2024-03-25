@@ -82,6 +82,11 @@ jobs:
             -   name: PHP lint check
                 run: vendor/bin/phplint
 
+            -   name: Check docs
+                run: |
+                    yarn install
+                    yarn docs:build
+
     phpunit:
         runs-on: ubuntu-20.04
         name: "PHPUnit on php ${{ matrix.php-versions }}"
