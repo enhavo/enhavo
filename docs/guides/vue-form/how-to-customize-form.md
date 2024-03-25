@@ -61,5 +61,5 @@ export default class extends Vue
 
 ### Further Reading
 
-* [Vue Form Reference](/reference/vue-form/index)
-* [Vue Form Visitors](/book/vue-form-bundle)
+* [Vue Form Reference](/reference/vue-form/index.md)
+* [Vue Form Visitors](/book/vue-form-bundle/index.md)

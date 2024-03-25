@@ -2,8 +2,8 @@
 
 # Contents
 
-* [Get Started](get-started/index)
-* [Book](book/index)
-* [Guides](guides/index )
-* [Reference](reference/index)
-* [Contributing](contributing/index)
+* [Get Started](/get-started/index)
+* [Book](/book/index)
+* [Guides](/guides/index)
+* [Reference](/reference/index)
+* [Contribute](/contribute/index)

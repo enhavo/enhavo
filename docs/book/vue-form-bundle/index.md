@@ -9,4 +9,4 @@
 
 ## Further Reading
 
--   [how-to-customize-form](/guides/vue-form)
+-   [how-to-customize-form](/guides/vue-form/index.md)
