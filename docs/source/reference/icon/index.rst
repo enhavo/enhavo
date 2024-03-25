@@ -1,6 +1,0 @@
-Icon
-====
-
-.. include:: icon.rst
-
-

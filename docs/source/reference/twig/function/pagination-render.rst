@@ -1,2 +1,0 @@
-paginate_render
-===============

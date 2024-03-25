@@ -1,2 +1,0 @@
-Hierarchy Prefix Generator
-==========================

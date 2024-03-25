@@ -1,3 +1,0 @@
-Add toolbar widget
-==================
-

@@ -1,2 +1,0 @@
-Guess Prefix Generator
-======================

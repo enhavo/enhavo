@@ -9,7 +9,6 @@
 namespace Enhavo\Bundle\SearchBundle\Engine\DatabaseSearch;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Elastica\Search;
 use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface;
 use Enhavo\Bundle\SearchBundle\Engine\Result\EntitySubjectLoader;
 use Enhavo\Bundle\SearchBundle\Engine\Result\ResultEntry;

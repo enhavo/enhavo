@@ -1,3 +1,0 @@
-Boolean Component
-=================
-
