@@ -4,6 +4,7 @@ import {RadioForm} from "@enhavo/vue-form/model/RadioForm";
 
 export class ChoiceForm extends Form
 {
+    element: HTMLInputElement;
     expanded: boolean;
     placeholderInChoices: boolean;
     multiple: boolean;

@@ -4,14 +4,10 @@
     </div>
 </template>
 
-<script lang="ts">
-import {Vue, Options, Inject, Prop} from "vue-property-decorator";
+<script setup lang="ts">
 import {Form} from "@enhavo/vue-form/model/Form";
 
-@Options({})
-export default class extends Vue
-{
-    @Prop()
+const props = defineProps<{
     form: Form
-}
+}>()
 </script>

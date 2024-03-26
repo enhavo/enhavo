@@ -4,25 +4,20 @@
     </optgroup>
 </template>
 
-<script lang="ts">
-import { Vue, Options, Prop } from "vue-property-decorator";
+<script setup lang="ts">
 import {Choice} from "@enhavo/vue-form/model/ChoiceForm"
 
-@Options({})
-export default class extends Vue
-{
-    @Prop()
+const props = defineProps<{
     choice: Choice
+    preferredChoices?: boolean
+}>()
 
-    @Prop()
-    preferredChoices: boolean
-
-    getChoiceComponent(choice: Choice)
-    {
-        if (choice.choices.length > 0) {
-            return 'form-choice-optgroup';
-        }
-        return 'form-choice-option';
+function getChoiceComponent(choice: Choice)
+{
+    if (choice.choices.length > 0) {
+        return 'form-choice-optgroup';
     }
+    return 'form-choice-option';
 }
+
 </script>
