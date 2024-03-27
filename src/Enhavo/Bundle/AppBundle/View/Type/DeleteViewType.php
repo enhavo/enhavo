@@ -105,7 +105,7 @@ class DeleteViewType extends AbstractViewType
     {
         $optionsResolver->setDefaults([
             'application' => '@enhavo/app/delete/DeleteApp',
-            'component' => '@enhavo/app/delete/components/DeleteComponent.vue',
+            'component' => '@enhavo/app/components/delete/DeleteComponent.vue',
         ]);
 
         $optionsResolver->setRequired('request_configuration');

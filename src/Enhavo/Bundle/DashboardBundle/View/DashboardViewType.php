@@ -50,7 +50,7 @@ class DashboardViewType extends AbstractViewType
     {
         $optionsResolver->setDefaults([
             'application' => '@enhavo/dashboard/dashboard/DashboardApp',
-            'component' => '@enhavo/dashboard/dashboard/components/ApplicationComponent.vue',
+            'component' => '@enhavo/dashboard/components/ApplicationComponent.vue',
             'label' => 'dashboard.label.dashboard',
             'translation_domain' => 'EnhavoDashboardBundle',
         ]);

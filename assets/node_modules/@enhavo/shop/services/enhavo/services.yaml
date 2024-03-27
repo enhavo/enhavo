@@ -4,7 +4,7 @@ services:
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:create-attribute-action'
-            - '@enhavo/app/action/components/ActionComponent.vue'
+            - '@enhavo/app/components/action/ActionComponent.vue'
             - '@enhavo/shop/action/factory/CreateAttributeFactory'
         tags:
             - 'enhavo_app.action'

@@ -16,7 +16,7 @@ services:
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:menu-switch-tenant'
-            - '@enhavo/app/menu/components/MenuDropdownComponent.vue'
+            - '@enhavo/app/components/menu/MenuDropdownComponent.vue'
             - '@enhavo/multi-tenancy/menu/factory/MenuSwitchTenantFactory'
         tags:
             - 'enhavo_app.menu'
