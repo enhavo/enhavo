@@ -20,11 +20,11 @@ services:
             - '@enhavo/core/Translator'
             - '@enhavo/app/vue/VueRegistry'
 
-    '@enhavo/media/image-cropper/components/ImageCropperComponent.vue':
+    '@enhavo/media/components/ImageCropperComponent.vue':
         chunk: 'image-cropper'
         static: true
 
-    '@enhavo/media/image-cropper/components/ImageCropperStageComponent.vue':
+    '@enhavo/media/components/ImageCropperStageComponent.vue':
         chunk: 'vue'
         static: true
         tags:

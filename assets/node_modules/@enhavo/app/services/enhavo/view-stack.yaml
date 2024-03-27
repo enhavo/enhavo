@@ -7,7 +7,7 @@ services:
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:iframe-view'
-            - '@enhavo/app/view-stack/components/IframeViewComponent.vue'
+            - '@enhavo/app/components/view-stack/IframeViewComponent.vue'
             - '@enhavo/app/view-stack/factory/IframeViewFactory'
         tags:
             - 'enhavo_app.view'
@@ -16,7 +16,7 @@ services:
         chunk: 'main'
         arguments:
 
-    '@enhavo/app/view-stack/components/IframeViewComponent.vue':
+    '@enhavo/app/components/view-stack/IframeViewComponent.vue':
         chunk: 'main'
         static: true
 
@@ -25,7 +25,7 @@ services:
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:ajax-view'
-            - '@enhavo/app/view-stack/components/AjaxViewComponent.vue'
+            - '@enhavo/app/components/view-stack/AjaxViewComponent.vue'
             - '@enhavo/app/view-stack/factory/AjaxViewFactory'
         tags:
             - 'enhavo_app.view'
@@ -34,7 +34,7 @@ services:
         chunk: 'main'
         arguments:
 
-    '@enhavo/app/view-stack/components/AjaxViewComponent.vue':
+    '@enhavo/app/components/view-stack/AjaxViewComponent.vue':
         chunk: 'main'
         static: true
 
@@ -68,19 +68,19 @@ services:
         arguments:
             - '@enhavo/app/view-stack/EventDispatcher'
 
-    '@enhavo/app/view-stack/components/ViewStack.vue':
+    '@enhavo/app/components/view-stack/ViewStack.vue':
         chunk: 'vue'
         static: true
         tags:
             - { name: vue.component, component: 'view-stack' }
 
-    '@enhavo/app/view-stack/components/ViewstackDropdown.vue':
+    '@enhavo/app/components/view-stack/ViewstackDropdown.vue':
         chunk: 'vue'
         static: true
         tags:
             - { name: vue.component, component: 'view-stack-dropdown' }
 
-    '@enhavo/app/view-stack/components/ViewComponent.vue':
+    '@enhavo/app/components/view-stack/ViewComponent.vue':
         chunk: 'vue'
         static: true
         tags:

@@ -8,6 +8,6 @@ services:
             - '@enhavo/app/flash-message/FlashMessenger'
             - '@enhavo/app/vue/VueRegistry'
 
-    '@enhavo/app/delete/components/DeleteComponent.vue':
+    '@enhavo/app/components/delete/DeleteComponent.vue':
         chunk: 'delete'
         static: true

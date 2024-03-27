@@ -4,22 +4,19 @@
     </li>
 </template>
 
-<script lang="ts">
-import {Inject, Options, Prop, Vue} from "vue-property-decorator";
-import {Tag} from "../Data";
+<script setup lang="ts">
+import {inject} from "vue";
+import {Tag} from "@enhavo/media-library/Data";
 import MediaLibrary from "@enhavo/media-library/MediaLibrary";
 
-@Options({})
-export default class extends Vue {
-    @Prop()
-    tag: Tag;
+const mediaLibrary = inject<MediaLibrary>('mediaLibrary');
 
-    @Inject()
-    mediaLibrary: MediaLibrary;
+const props = defineProps<{
+    tag: Tag
+}>()
 
-    onClick() {
-        this.mediaLibrary.setActiveTag(this.tag);
-    }
-
+function onClick()
+{
+    mediaLibrary.setActiveTag(props.tag);
 }
 </script>

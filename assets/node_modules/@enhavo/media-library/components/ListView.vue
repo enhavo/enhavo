@@ -26,31 +26,28 @@
     <pagination v-if="mediaLibrary.hasPagination()"></pagination>
 </template>
 
-<script lang="ts">
-import {Inject, Options, Vue, Watch} from "vue-property-decorator";
+<script setup lang="ts">
+import {inject} from "vue";
 import '@enhavo/app/assets/styles/view.scss';
 import MediaLibrary from "@enhavo/media-library/MediaLibrary";
 import {Column} from "@enhavo/media-library/Data";
 
-@Options({})
-export default class extends Vue {
+const mediaLibrary = inject<MediaLibrary>('mediaLibrary');
 
-    @Inject()
-    mediaLibrary: MediaLibrary;
+function onSort(column: Column)
+{
+    mediaLibrary.setSortColumn(column);
+}
 
-    onSort(column: Column) {
-        this.mediaLibrary.setSortColumn(column);
+function isSorted(column: Column)
+{
+    return mediaLibrary.isSortedColumn(column);
+}
+
+function sortClass(column: Column)
+{
+    if (mediaLibrary.isSortedColumn(column)) {
+        return mediaLibrary.data.sortColumn.direction === 'asc' ? 'icon-arrow_upward' : 'icon-arrow_downward';
     }
-
-    isSorted(column: Column) {
-        return this.mediaLibrary.isSortedColumn(column);
-    }
-
-    sortClass(column: Column) {
-        if (this.mediaLibrary.isSortedColumn(column)) {
-            return this.mediaLibrary.data.sortColumn.direction === 'asc' ? 'icon-arrow_upward' : 'icon-arrow_downward';
-        }
-    }
-
 }
 </script>

@@ -14,7 +14,7 @@ services:
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:menu-item'
-            - '@enhavo/app/menu/components/MenuItemComponent.vue'
+            - '@enhavo/app/components/menu/MenuItemComponent.vue'
             - '@enhavo/app/menu/factory/MenuItemFactory'
         tags:
             - 'enhavo_app.menu'
@@ -25,7 +25,7 @@ services:
             - '@enhavo/app/view-stack/EventDispatcher'
             - '@enhavo/app/menu/MenuManager'
 
-    '@enhavo/app/menu/components/MenuItemComponent.vue':
+    '@enhavo/app/components/menu/MenuItemComponent.vue':
         chunk: 'main'
         static: true
 
@@ -34,7 +34,7 @@ services:
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:menu-list'
-            - '@enhavo/app/menu/components/MenuListComponent.vue'
+            - '@enhavo/app/components/menu/MenuListComponent.vue'
             - '@enhavo/app/menu/factory/MenuListFactory'
         tags:
             - 'enhavo_app.menu'
@@ -46,7 +46,7 @@ services:
             - '@enhavo/app/menu/MenuManager'
             - '@enhavo/app/menu/MenuRegistry'
 
-    '@enhavo/app/menu/components/MenuListComponent.vue':
+    '@enhavo/app/components/menu/MenuListComponent.vue':
         chunk: 'main'
         static: true
 
@@ -55,7 +55,7 @@ services:
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:menu-dropdown'
-            - '@enhavo/app/menu/components/MenuDropdownComponent.vue'
+            - '@enhavo/app/components/menu/MenuDropdownComponent.vue'
             - '@enhavo/app/menu/factory/MenuDropdownFactory'
         tags:
             - 'enhavo_app.menu'
@@ -66,17 +66,17 @@ services:
             - '@enhavo/app/view-stack/EventDispatcher'
             - '@enhavo/app/menu/MenuManager'
 
-    '@enhavo/app/menu/components/MenuDropdownComponent.vue':
+    '@enhavo/app/components/menu/MenuDropdownComponent.vue':
         chunk: 'main'
         static: true
 
-    '@enhavo/app/menu/components/MenuNotificationComponent.vue':
+    '@enhavo/app/components/menu/MenuNotificationComponent.vue':
         chunk: 'vue'
         static: true
         tags:
             - { name: vue.component, component: 'menu-notification' }
 
-    '@enhavo/app/menu/components/Menu.vue':
+    '@enhavo/app/components/menu/Menu.vue':
         chunk: 'vue'
         static: true
         tags:

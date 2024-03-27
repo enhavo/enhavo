@@ -11,7 +11,7 @@ services:
     '@enhavo/app/grid/batch/BatchRegistry':
         chunk: 'batch'
 
-    '@enhavo/app/grid/batch/component/Batches.vue':
+    '@enhavo/app/components/grid/batch/Batches.vue':
         chunk: 'vue'
         static: true
         tags:

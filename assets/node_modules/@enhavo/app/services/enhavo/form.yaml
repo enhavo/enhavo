@@ -23,17 +23,17 @@ services:
             - '@enhavo/app/view/View'
             - '@enhavo/app/vue/VueRegistry'
 
-    '@enhavo/app/form/components/FormComponent.vue':
+    '@enhavo/app/components/form/FormComponent.vue':
         chunk: 'form'
         static: true
 
-    '@enhavo/app/form/components/TabHead.vue':
+    '@enhavo/app/components/form/TabHead.vue':
         chunk: 'vue'
         static: true
         tags:
             - { name: vue.component, component: 'form-tab-head' }
 
-    '@enhavo/app/form/components/TabContainer.vue':
+    '@enhavo/app/components/form/TabContainer.vue':
         chunk: 'vue'
         static: true
         tags:
