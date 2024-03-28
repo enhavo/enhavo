@@ -132,7 +132,7 @@ class FileController extends ResourceController
         $types = $this->createContentTypeList();
 
         return new JsonResponse([
-            'content_types' => $types,
+            'contentTypes' => $types,
         ]);
     }
 

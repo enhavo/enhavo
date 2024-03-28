@@ -57,7 +57,7 @@ class MediaLibraryViewType extends AbstractViewType
         ]);
 
         $data->set('items', $options['items']);
-        $options['data']['content_types'] = $options['content_types'];
+        $options['data']['contentTypes'] = $options['content_types'];
         $options['data']['multiple'] = $options['multiple'];
         $options['data']['mode'] = $options['mode'];
         $options['data']['tags'] = $options['tags'];
