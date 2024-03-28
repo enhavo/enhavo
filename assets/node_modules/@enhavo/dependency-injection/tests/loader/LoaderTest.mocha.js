@@ -1,5 +1,5 @@
-const ContainerBuilder = require("@enhavo/dependency-injection/container/ContainerBuilder");
-const Loader = require("@enhavo/dependency-injection/loader/Loader");
+import ContainerBuilder from "@enhavo/dependency-injection/container/ContainerBuilder"
+import Loader from "@enhavo/dependency-injection/loader/Loader"
 const assert = require("chai").assert;
 
 describe('dependency-injection/Loader/Loader', () => {

@@ -1,6 +1,7 @@
 {
   "name": "@enhavo/dependency-injection",
   "license": "MIT",
+  "type": "module",
   "types": "index.ts",
   "version": "0.8.0",
   "homepage": "https://www.enhavo.com",
@@ -19,7 +20,8 @@
     "yaml": "^1.10.0",
     "loader-utils": "^2.0.0",
     "commander": "^9.4.0",
-    "lodash": "^4.0"
+    "lodash": "^4.0",
+    "@rollup/pluginutils": "^5.1"
   },
   "devDependencies": {
     "acorn": "^7.3.1"

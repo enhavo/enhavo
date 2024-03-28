@@ -1,6 +1,6 @@
-const ContainerBuilder = require("@enhavo/dependency-injection/container/ContainerBuilder");
+import ContainerBuilder from "@enhavo/dependency-injection/container/ContainerBuilder.js"
 
-class Compiler
+export default class Compiler
 {
     /**
      * @param {ContainerBuilder} builder
@@ -244,5 +244,3 @@ class Compiler
         return content;
     }
 }
-
-module.exports = Compiler;

@@ -1,5 +1,5 @@
 
-class Call
+export default class Call
 {
     constructor(methodName, methodArguments = []) {
         this._name = methodName;
@@ -14,5 +14,3 @@ class Call
         return this._arguments;
     }
 }
-
-module.exports = Call;

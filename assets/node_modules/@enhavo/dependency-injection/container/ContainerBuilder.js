@@ -1,9 +1,9 @@
-const Definition = require("@enhavo/dependency-injection/container/Definition");
-const CompilerPass = require("@enhavo/dependency-injection/container/CompilerPass");
-const Map = require("@enhavo/dependency-injection/container/Map");
-const fs = require("fs");
+import Definition from "@enhavo/dependency-injection/container/Definition.js";
+import CompilerPass from "@enhavo/dependency-injection/container/CompilerPass.js"
+import Map from "@enhavo/dependency-injection/container/Map.js"
+import fs from "fs";
 
-class ContainerBuilder
+export default class ContainerBuilder
 {
     constructor() {
         /** @type {Map<Definition>} */
@@ -93,21 +93,17 @@ class ContainerBuilder
         return this.compilerPasses.getValues();
     }
 
-    prepare() {
-
+    async prepare() {
         let compilers = this.getCompilerPasses().sort((a, b) => {
             return b.priority - a.priority;
         });
 
         for (let compilerPass of compilers) {
-            let content = fs.readFileSync(compilerPass.path)+'';
             try {
-                let m = new module.constructor();
-                m.paths = module.paths;
-                m._compile(content, compilerPass.path);
-                m.exports(this, compilerPass.getOptions(), compilerPass.getContext());
+                let instance = await import(compilerPass.path);
+                instance.default(this, compilerPass.getOptions(), compilerPass.getContext());
             } catch (e) {
-                throw 'Error occured while using compiler pass "'+compilerPass.path+'" with error: ' + e;
+                throw 'Error occured while using compiler pass "'+compilerPass.path+'" with error: ' + e + "\n" + e.stack;
             }
         }
     }
@@ -118,5 +114,3 @@ class ContainerBuilder
         this.files = [];
     }
 }
-
-module.exports = ContainerBuilder;

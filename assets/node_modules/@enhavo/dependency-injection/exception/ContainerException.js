@@ -1,4 +1,4 @@
-class ContainerException
+export default class ContainerException
 {
     constructor(message) {
         this.message = message;
@@ -9,6 +9,3 @@ class ContainerException
         return this.name + ": " + this.message;
     }
 }
-
-
-module.exports = ContainerException;

@@ -1,4 +1,4 @@
-const ContainerException = require('@enhavo/dependency-injection/exception/ContainerException');
+import ContainerException from '@enhavo/dependency-injection/exception/ContainerException.js';
 
 const TYPE_NULL = 'null';
 const TYPE_SERVICE = 'service';
@@ -8,7 +8,7 @@ const TYPE_BOOLEAN = 'boolean';
 const TYPE_PARAM = 'param';
 const TYPE_CONTAINER = 'container';
 
-class Argument
+export default class Argument
 {
     constructor(expression, type = null)
     {
@@ -80,5 +80,3 @@ class Argument
         return this.type;
     }
 }
-
-module.exports = Argument;

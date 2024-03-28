@@ -1,5 +1,5 @@
 const assert = require("chai").assert;
-const ParameterBag = require("@enhavo/dependency-injection/container/ParameterBag");
+import ParameterBag from "@enhavo/dependency-injection/container/ParameterBag"
 
 describe('dependency-injection/Container/ParameterBag', () => {
     describe('test get and set', () => {

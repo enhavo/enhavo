@@ -1,7 +1,7 @@
-const Argument = require("@enhavo/dependency-injection/container/Argument");
-const Call = require("@enhavo/dependency-injection/container/Call");
+import Argument from "@enhavo/dependency-injection/container/Argument.js"
+import Call from "@enhavo/dependency-injection/container/Call.js"
 
-module.exports = function(builder, options, context)
+export default function(builder, options, context)
 {
     let factory = builder.getDefinition('@enhavo/vue-form/form/FormFactory');
 

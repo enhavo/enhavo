@@ -1,7 +1,7 @@
-@import "~compass-mixins/lib/_animate.scss";
-@import "~compass-mixins/lib/_compass.scss";
+@import "compass-mixins/lib/_animate.scss";
+@import "compass-mixins/lib/_compass.scss";
 @import 'module/vars';
-@import "~@ibm/plex/css/ibm-plex.css";
+@import "@ibm/plex/css/ibm-plex.css";
 
 .bundle-user-login {position:fixed;top:0;left:0;width:100%;height:100%;color:#fff;
     a {text-decoration: none;color:#fff;}

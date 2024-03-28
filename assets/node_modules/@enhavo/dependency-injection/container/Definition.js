@@ -1,7 +1,7 @@
-const sha1 = require('sha1');
-const Tag = require('@enhavo/dependency-injection/container/Tag');
+import sha1 from 'sha1';
+import Tag from '@enhavo/dependency-injection/container/Tag.js';
 
-class Definition
+export default class Definition
 {
     /**
      * @param {string} name
@@ -248,4 +248,3 @@ class Definition
     }
 }
 
-module.exports = Definition;

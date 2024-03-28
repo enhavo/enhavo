@@ -1,7 +1,7 @@
 const Validator = require('@enhavo/dependency-injection/validation/Validator');
 const Loader = require('@enhavo/dependency-injection/loader/Loader');
 const ContainerBuilder = require('@enhavo/dependency-injection/container/ContainerBuilder');
-const chai = require("chai");
+import chai from "chai"
 
 describe('dependency-injection/Validation/Validator', () => {
     describe('Validation with circular reference', () => {

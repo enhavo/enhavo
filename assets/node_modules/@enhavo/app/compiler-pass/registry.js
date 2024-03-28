@@ -1,11 +1,11 @@
-const Argument = require("@enhavo/dependency-injection/container/Argument");
-const Call = require("@enhavo/dependency-injection/container/Call");
+import Argument from "@enhavo/dependency-injection/container/Argument.js"
+import Call from "@enhavo/dependency-injection/container/Call.js"
 
 /**
  * @param {ContainerBuilder} builder
  * @param {object} options
  */
-module.exports = function(builder, options) {
+export default function(builder, options) {
     let registry = builder.getDefinition(options.service);
     let definitions = builder.getDefinitionsByTagName(options.tag);
 

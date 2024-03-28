@@ -1,5 +1,5 @@
 
-class Map
+export default class Map
 {
     constructor() {
         /** @type {Entry[]} */
@@ -90,5 +90,3 @@ class Entry
         this._value = value;
     }
 }
-
-module.exports = Map;
