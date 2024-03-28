@@ -10,7 +10,6 @@ namespace Enhavo\Bundle\TranslationBundle\Form\Type;
 
 use Enhavo\Bundle\TranslationBundle\Form\Transformer\TranslationValueTransformer;
 use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
-use Enhavo\Bundle\TranslationBundle\Validator\Constraints\Translation;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormError;
@@ -71,8 +70,7 @@ class TranslationType extends AbstractType
     {
         $resolver->setDefaults([
             'error_bubbling' => false,
-            'constraints' => [
-            ]
+            'constraints' => []
         ]);
 
         $resolver->setRequired([
