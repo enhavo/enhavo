@@ -26,8 +26,12 @@ class ClientFactory
         return new Client($config);
     }
 
-    public function getIndexName($dsn): string
+    public function getIndexName($dsn): ?string
     {
+        if (!str_starts_with($dsn, 'elastic://')) {
+            return null;
+        }
+
         $parts = parse_url($dsn);
         if (!isset($parts['path'])) {
             throw  new \Exception('The path must be defined for search dsn');

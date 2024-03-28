@@ -1,28 +1,12 @@
 <template>
-    <input :type="form.type" :id="form.id" :name="form.fullName" v-model="form.value" ref="element" @change="form.dispatchChange()" />
+    <input :type="form.type" :id="form.id" :name="form.fullName" v-model="form.value" :ref="(el) => form.setElement(el)" @change="form.dispatchChange()" />
 </template>
 
-<script lang="ts">
-import { Vue, Options, Prop } from "vue-property-decorator";
+<script setup lang="ts">
 import {Form} from "@enhavo/vue-form/model/Form"
-import {FormUtil} from "@enhavo/vue-form/form/FormUtil";
 
-@Options({})
-export default class extends Vue
-{
-    @Prop()
+const props = defineProps<{
     form: Form
+}>()
 
-    updated()
-    {
-        this.form.element = <HTMLElement>this.$refs.element;
-        FormUtil.updateAttributes(<HTMLElement>this.$refs.element, this.form.attr);
-    }
-
-    mounted()
-    {
-        this.form.element = <HTMLElement>this.$refs.element;
-        FormUtil.updateAttributes(<HTMLElement>this.$refs.element, this.form.attr);
-    }
-}
 </script>

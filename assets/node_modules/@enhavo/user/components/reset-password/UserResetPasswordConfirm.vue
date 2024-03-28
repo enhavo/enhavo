@@ -67,6 +67,4 @@ function submit()
         }
     })
 }
-
-
 </script>

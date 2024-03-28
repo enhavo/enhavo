@@ -4,6 +4,7 @@ export default class Receiver
 {
     tracking: Tracking[];
     sentAt: Date;
+    email: string;
 
     public isRead(): boolean
     {

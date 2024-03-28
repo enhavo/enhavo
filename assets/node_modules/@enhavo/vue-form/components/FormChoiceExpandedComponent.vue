@@ -1,5 +1,5 @@
 <template>
-    <div :id="form.id" ref="element">
+    <div :id="form.id" :ref="(el) => form.setElement(el)">
         <template v-for="child of form.children">
             <form-widget :form="child"></form-widget>
             <form-label :form="child"></form-label>
@@ -7,27 +7,10 @@
     </div>
 </template>
 
-<script lang="ts">
-import {Vue, Options, Prop} from "vue-property-decorator";
+<script setup lang="ts">
 import {ChoiceForm} from "@enhavo/vue-form/model/ChoiceForm";
-import {FormUtil} from "@enhavo/vue-form/form/FormUtil";
 
-@Options({})
-export default class extends Vue
-{
-    @Prop()
+const props = defineProps<{
     form: ChoiceForm
-
-    updated()
-    {
-        this.form.element = <HTMLElement>this.$refs.element;
-        FormUtil.updateAttributes(<HTMLElement>this.$refs.element, this.form.attr);
-    }
-
-    mounted()
-    {
-        this.form.element = <HTMLElement>this.$refs.element;
-        FormUtil.updateAttributes(<HTMLElement>this.$refs.element, this.form.attr);
-    }
-}
+}>()
 </script>

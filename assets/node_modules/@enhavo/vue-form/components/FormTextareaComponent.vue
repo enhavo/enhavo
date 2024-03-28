@@ -5,34 +5,27 @@
         :name="form.fullName"
         :required="form.required"
         :disabled="form.disabled"
-        :title="form.attr.title"
+        :title="getTitle()"
         v-model="form.value"
-        ref="element"
+        :ref="(el) => form.setElement(el)"
         @change="form.dispatchChange()"
     >{{ form.value }}</textarea>
 </template>
 
-<script lang="ts">
-import {Vue, Options, Prop} from "vue-property-decorator";
+<script setup lang="ts">
 import {Form} from "@enhavo/vue-form/model/Form"
-import {FormUtil} from "@enhavo/vue-form/form/FormUtil";
 
-@Options({})
-export default class extends Vue
-{
-    @Prop()
+const props = defineProps<{
     form: Form
+}>()
 
-    updated()
-    {
-        this.form.element = <HTMLElement>this.$refs.element;
-        FormUtil.updateAttributes(<HTMLElement>this.$refs.element, this.form.attr);
-    }
+const form = props.form;
 
-    mounted()
-    {
-        this.form.element = <HTMLElement>this.$refs.element;
-        FormUtil.updateAttributes(<HTMLElement>this.$refs.element, this.form.attr);
+function getTitle()
+{
+    if (form.attr.hasOwnProperty('title')) {
+        return form.attr['title'];
     }
+    return null;
 }
 </script>

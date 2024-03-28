@@ -4,7 +4,7 @@ services:
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:create-payment-method-action'
-            - '@enhavo/app/action/components/ActionComponent.vue'
+            - '@enhavo/app/components/action/ActionComponent.vue'
             - '@enhavo/payment/action/factory/CreatePaymentMethodFactory'
         tags:
             - 'enhavo_app.action'

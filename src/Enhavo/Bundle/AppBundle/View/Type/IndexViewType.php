@@ -148,7 +148,7 @@ class IndexViewType extends AbstractViewType
     {
         $optionsResolver->setDefaults([
             'application' => '@enhavo/app/index/IndexApp',
-            'component' => '@enhavo/app/index/components/IndexComponent.vue',
+            'component' => '@enhavo/app/components/index/IndexComponent.vue',
             'request_configuration' => null,
             'actions' => [],
             'table_route' => null,

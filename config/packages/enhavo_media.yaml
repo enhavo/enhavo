@@ -16,6 +16,10 @@ enhavo_media:
             type: image
             width: 1300
             height: 600
+        person_image:
+            type: image
+            width: 500
+            height: 500
 
 when@dev:
     enhavo_media:

@@ -157,7 +157,7 @@ class ImageCropperViewType extends AbstractViewType
         parent::configureOptions($optionsResolver);
         $optionsResolver->setDefaults([
             'application' => '@enhavo/media/image-cropper/ImageCropperApp',
-            'component' => '@enhavo/media/image-cropper/components/ImageCropperComponent.vue',
+            'component' => '@enhavo/media/components/ImageCropperComponent.vue',
             'template' => 'admin/view/image-cropper.html.twig',
             'actions' => [],
             'label' => 'media.image_cropper.label.image_cropper',

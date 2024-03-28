@@ -18,17 +18,17 @@ services:
             - '@enhavo/app/flash-message/FlashMessenger'
             - '@enhavo/app/vue/VueRegistry'
 
-    '@enhavo/app/list/components/ListApplicationComponent.vue':
+    '@enhavo/app/components/list/ListApplicationComponent.vue':
         chunk: 'list'
         static: true
 
-    '@enhavo/app/list/components/ListComponent.vue':
+    '@enhavo/app/components/list/ListComponent.vue':
         chunk: 'vue'
         static: true
         tags:
             - { name: vue.component, component: 'list-list' }
 
-    '@enhavo/app/list/components/ItemComponent.vue':
+    '@enhavo/app/components/list/ItemComponent.vue':
         chunk: 'vue'
         static: true
         tags:

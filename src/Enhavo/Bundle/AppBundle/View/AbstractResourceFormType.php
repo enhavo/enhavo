@@ -164,7 +164,7 @@ abstract class AbstractResourceFormType extends AbstractViewType
         $optionsResolver->setDefaults([
             'tabs' => [],
             'application' => '@enhavo/app/form/FormApp',
-            'component' => '@enhavo/app/form/components/FormComponent.vue',
+            'component' => '@enhavo/app/components/form/FormComponent.vue',
             'actions' => [],
             'actions_secondary' => [],
             'form' => null,

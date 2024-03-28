@@ -8,6 +8,6 @@ services:
             - '@enhavo/app/action/ActionManager'
             - '@enhavo/app/vue/VueRegistry'
 
-    '@enhavo/app/preview/components/ApplicationComponent.vue':
+    '@enhavo/app/components/preview/ApplicationComponent.vue':
         chunk: 'preview'
         static: true

@@ -36,7 +36,7 @@ services:
             - 'string:translations'
             - 'container:'
 
-    '@enhavo/app/view/components/ViewComponent':
+    '@enhavo/app/components/view/ViewComponent.vue':
         chunk: 'vue'
         static: true
         tags:

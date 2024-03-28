@@ -38,7 +38,6 @@ services:
         tags:
             - { name: vue.component, component: 'list-view' }
 
-
     '@enhavo/media-library/components/ThumbnailView.vue':
         chunk: 'vue'
         static: true
@@ -68,6 +67,7 @@ services:
         static: true
         tags:
             - { name: vue.component, component: 'tag' }
+
     '@enhavo/media-library/components/ContentTypeList.vue':
         chunk: 'vue'
         static: true
@@ -79,7 +79,6 @@ services:
         static: true
         tags:
             - { name: vue.component, component: 'content-type' }
-
 
     '@enhavo/media-library/components/Pagination.vue':
         chunk: 'vue'

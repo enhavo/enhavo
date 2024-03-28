@@ -10,6 +10,6 @@ services:
             - '@enhavo/app/grid/Grid'
             - '@enhavo/app/form/FormRegistry'
 
-    '@enhavo/app/index/components/IndexComponent.vue':
+    '@enhavo/app/components/index/IndexComponent.vue':
         chunk: 'vue'
         static: true

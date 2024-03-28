@@ -6,14 +6,14 @@ services:
             - '@enhavo/app/action/ActionManager'
             - '@enhavo/app/vue/VueRegistry'
 
-    '@enhavo/newsletter/stats/components/IndexComponent.vue':
+    '@enhavo/newsletter/components/stats/IndexComponent.vue':
         static: true
 
     action.newsletter-send:
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:newsletter-send'
-            - '@enhavo/app/action/components/ActionComponent.vue'
+            - '@enhavo/app/components/action/ActionComponent.vue'
             - '@enhavo/newsletter/action/factory/NewsletterSendActionFactory'
         tags:
             - 'enhavo_app.action'
@@ -22,7 +22,7 @@ services:
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:newsletter-send-test'
-            - '@enhavo/app/action/components/ActionComponent.vue'
+            - '@enhavo/app/components/action/ActionComponent.vue'
             - '@enhavo/newsletter/action/factory/NewsletterSendTestActionFactory'
         tags:
             - 'enhavo_app.action'

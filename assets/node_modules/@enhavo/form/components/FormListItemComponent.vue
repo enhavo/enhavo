@@ -1,5 +1,5 @@
 <template>
-    <div class="form-list-item" ref="element">
+    <div class="form-list-item" :ref="(el) => form.setElement(el)">
         <ul class="form-list-item-buttons-row" v-if="sortable || deletable">
             <slot name="buttons">
                 <slot name="down-button">
@@ -26,36 +26,13 @@
     </div>
 </template>
 
-<script lang="ts">
-import {Vue, Options, Prop} from "vue-property-decorator";
+<script setup lang="ts">
 import {Form} from "@enhavo/vue-form/model/Form";
-import {FormUtil} from "@enhavo/vue-form/form/FormUtil";
 
-@Options({})
-export default class extends Vue
-{
-    @Prop()
-    form: Form;
-
-    @Prop()
-    sortable: boolean
-
-    @Prop()
-    deletable: boolean
-
-    @Prop()
-    blockName: string
-
-    updated()
-    {
-        this.form.element = <HTMLElement>this.$refs.element;
-        FormUtil.updateAttributes(this.form.element, this.form.attr);
-    }
-
-    mounted()
-    {
-        this.form.element = <HTMLElement>this.$refs.element;
-        FormUtil.updateAttributes(this.form.element, this.form.attr);
-    }
-}
+const props = defineProps<{
+    form: Form,
+    sortable: boolean,
+    deletable: boolean,
+    blockName: string,
+}>()
 </script>

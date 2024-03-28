@@ -36,43 +36,43 @@ services:
         tags:
             - { name: form.model }
 
-    '@enhavo/form/components/FormListComponent':
+    '@enhavo/form/components/FormListComponent.vue':
         chunk: 'vue'
         static: true
         tags:
             - { name: vue.component, component: 'form-list' }
 
-    '@enhavo/form/components/FormListItemComponent':
+    '@enhavo/form/components/FormListItemComponent.vue':
         chunk: 'vue'
         static: true
         tags:
             - { name: vue.component, component: 'form-list-item' }
 
-    '@enhavo/form/components/FormPolyCollectionComponent':
+    '@enhavo/form/components/FormPolyCollectionComponent.vue':
         chunk: 'vue'
         static: true
         tags:
             - { name: vue.component, component: 'form-poly-collection' }
 
-    '@enhavo/form/components/FormPolyCollectionItemComponent':
+    '@enhavo/form/components/FormPolyCollectionItemComponent.vue':
         chunk: 'vue'
         static: true
         tags:
             - { name: vue.component, component: 'form-poly-collection-item' }
 
-    '@enhavo/form/components/FormWysiwygComponent':
+    '@enhavo/form/components/FormWysiwygComponent.vue':
         chunk: 'vue'
         static: true
         tags:
             - { name: vue.component, component: 'form-wysiwyg' }
 
-    '@enhavo/form/components/FormConditionalComponent':
+    '@enhavo/form/components/FormConditionalComponent.vue':
         chunk: 'vue'
         static: true
         tags:
             - { name: vue.component, component: 'form-conditional' }
 
-    '@enhavo/form/components/FormChoiceCollapsedComponent':
+    '@enhavo/form/components/FormChoiceCollapsedComponent.vue':
         chunk: 'vue'
         static: true
         tags:

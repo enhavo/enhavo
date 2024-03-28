@@ -1,5 +1,5 @@
 <template>
-    <div class="form-list" ref="element">
+    <div class="form-list" :ref="(el) => form.setElement(el)">
         <slot name="list">
             <ul>
                 <draggable
@@ -51,31 +51,12 @@
     </div>
 </template>
 
-<script lang="ts">
-import {Vue, Options, Prop, Inject} from "vue-property-decorator";
+<script setup lang="ts">
 import {ListForm} from "@enhavo/form/form/model/ListForm";
-import {FormUtil} from "@enhavo/vue-form/form/FormUtil";
-import * as draggable from 'vuedraggable'
+import * as draggableComponent from 'vuedraggable'
 
-@Options({
-    components: {'draggable': draggable}
-})
-export default class extends Vue
-{
-    @Prop()
-    form: ListForm;
-
-    updated()
-    {
-        this.form.element = <HTMLElement>this.$refs.element;
-        FormUtil.updateAttributes(this.form.element, this.form.attr);
-    }
-
-    mounted()
-    {
-        this.form.element = <HTMLElement>this.$refs.element;
-        FormUtil.updateAttributes(this.form.element, this.form.attr);
-    }
-}
-
+const draggable = draggableComponent;
+const props = defineProps<{
+    form: ListForm
+}>()
 </script>

@@ -4,13 +4,13 @@ import {PrivateFile} from '@enhavo/media/model/PrivateFile';
 
 export class MediaItemForm extends Form
 {
+    public file: PrivateFile;
+
     constructor(
         private fileResolver: FileUrlResolverInterface
     ) {
         super();
     }
-
-    file: PrivateFile;
 
     path(format: string = null)
     {

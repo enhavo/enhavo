@@ -1,25 +1,22 @@
 <template>
     <li :class="{'active':contentType.selected}">
-        <div class="tag-name" v-bind:contentType="contentType" @click="onClick()">{{ contentType.label }}</div>
+        <div class="tag-name" @click="onClick()">{{ contentType.label }}</div>
     </li>
 </template>
 
-<script lang="ts">
-import {Inject, Options, Prop, Vue} from "vue-property-decorator";
-import {ContentType} from "../Data";
+<script setup lang="ts">
+import {inject} from "vue";
+import {ContentType} from "@enhavo/media-library/Data";
 import MediaLibrary from "@enhavo/media-library/MediaLibrary";
 
-@Options({})
-export default class extends Vue {
-    @Prop()
-    contentType: ContentType;
+const mediaLibrary = inject<MediaLibrary>('mediaLibrary');
 
-    @Inject()
-    mediaLibrary: MediaLibrary;
+const props = defineProps<{
+    contentType: ContentType
+}>()
 
-    onClick() {
-        this.mediaLibrary.setActiveContentType(this.contentType);
-    }
-
+function onClick()
+{
+    mediaLibrary.setActiveContentType(props.contentType);
 }
 </script>

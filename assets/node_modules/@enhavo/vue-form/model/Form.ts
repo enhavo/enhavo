@@ -10,7 +10,7 @@ export class Form
     children: Form[] = [];
     value: string;
     name: string;
-    label: string;
+    label: string|boolean;
     labelFormat: string;
     compound: boolean;
     component: string;
@@ -29,6 +29,7 @@ export class Form
     visitors: FormVisitorInterface[] = [];
     eventDispatcher: FormEventDispatcherInterface;
     errors: FormErrors[] = [];
+    type: string;
 
     public get(name: string): Form
     {
@@ -151,6 +152,25 @@ export class Form
         form.parent = this;
 
         form.update();
+    }
+
+    public setElement(element: HTMLElement)
+    {
+        this.element = element;
+        if (element && this.attr) {
+            for (let name in this.attr) {
+                if (this.attr.hasOwnProperty( name ) ) {
+                    if (this.attr[name] === true) {
+                        // @ts-ignore setAttribute exists on HTMLElement
+                        element.setAttribute(name, name);
+                    } else if (this.attr[name] === true) {
+
+                    }
+                    // @ts-ignore setAttribute exists on HTMLElement
+                    element.setAttribute(name, this.attr[name]);
+                }
+            }
+        }
     }
 }
 

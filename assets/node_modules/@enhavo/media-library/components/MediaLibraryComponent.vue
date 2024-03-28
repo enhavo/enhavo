@@ -1,9 +1,8 @@
 <template>
     <div class="app-view">
-<!--        <view-view></view-view>-->
         <flash-messages></flash-messages>
         <action-bar></action-bar>
-        <input v-show="false" v-once ref="upload" multiple type="file">
+        <input v-show="false" v-once :ref="(el) => setElement(el, 'upload')" multiple type="file">
         <div class="media-library-overlay" data-media-library-overlay>
             <div class="inner-content" data-scroll-container>
                 <div class="media-library-progress" style="width: 0%;" v-bind:style="{'width': styleProgress()}"></div>
@@ -19,12 +18,13 @@
                         {{ translator.trans('enhavo_media_library.content_types') }}
                     </div>
                     <content-type-list
+                        v-if="mediaLibrary.data.contentTypes.length > 0"
                         :content-types="mediaLibrary.data.contentTypes"
                     ></content-type-list>
                 </div>
                 <div class="result-search">
                     <div class="search">
-                        <input ref="searchInput" v-model="mediaLibrary.data.searchString" type="text" data-media-library-search />
+                        <input :ref="(el) => setElement(el, 'searchInput')" v-model="mediaLibrary.data.searchString" type="text" data-media-library-search />
                         <span class="media-library-search-reset" @click="clearSearch()"><i class="icon icon-close"></i></span>
                         <span class="media-library-search-submit" @click="search()"><i class="icon icon-search"></i></span>
                     </div>
@@ -51,178 +51,160 @@
     </div>
 </template>
 
-<script lang="ts">
-import * as $ from 'jquery';
-import {Inject, Options, Vue, Watch} from "vue-property-decorator";
-import '@enhavo/app/assets/styles/view.scss';
+<script setup lang="ts">
+import {inject, onMounted, ref, watch} from "vue";
 import Translator from "@enhavo/core/Translator";
 import Router from "@enhavo/core/Router";
-import {Column, File} from "@enhavo/media-library/Data";
 import MediaLibrary from "@enhavo/media-library/MediaLibrary";
+import * as $ from 'jquery';
+import '@enhavo/app/assets/styles/view.scss';
 import "blueimp-file-upload/js/jquery.fileupload";
 import '@enhavo/media-library/assets/styles.scss';
 
-@Options({})
-export default class extends Vue {
-    @Inject()
-    translator: Translator;
+const translator = inject<Translator>('translator');
+const mediaLibrary = inject<MediaLibrary>('mediaLibrary');
+const router = inject<Router>('router');
 
-    @Inject()
-    mediaLibrary: MediaLibrary;
+const searchString = ref<string>(mediaLibrary.data.searchString);
 
-    @Inject()
-    router: Router;
+watch(searchString, (val) => {
+    mediaLibrary.data.searchString = val;
+})
 
-    @Watch('searchString')
-    onChangeSearchString(val: string) {
-        this.getMediaLibrary().data.searchString = val;
-    }
+const elements = {
+    searchInput: null,
+    upload:  null,
+    itemList:  null,
+    mediaLibrary: null,
+}
 
-    styleProgress() {
-        return this.mediaLibrary.data.progress + '%';
-    }
-
-    getAddLabel() {
-        if (this.getMediaLibrary().data.multiple) {
-            return "media_library.add_selecteded";
-        } else {
-            return "media_library.add_selected";
-        }
-    }
-
-    setView(type: string) {
-        this.mediaLibrary.setView(type);
-    }
-
-    search() {
-        this.getMediaLibrary().search();
-    }
-
-    clearSearch() {
-        this.getMediaLibrary().clearSearch()
-
-    }
-
-    created() {
-        window.addEventListener('keydown', (e) => {
-            if (e.key == 'Enter') {
-                let isSearchFocus = $(this.$refs.searchInput).is(':focus');
-                if (isSearchFocus) {
-                    this.search();
-                }
+onMounted(() => {
+    window.addEventListener('keydown', (e) => {
+        if (e.key == 'Enter') {
+            let isSearchFocus = $(elements.searchInput).is(':focus');
+            if (isSearchFocus) {
+                search();
             }
-        });
-    }
-
-    mounted() {
-        let element = this.$refs.upload;
-
-        $(document).on('upload', function () {
-            $(element).trigger('click');
-        });
-
-        $(element).fileupload({
-            replaceFileInput: false,
-            dataType: 'json',
-            paramName: 'files',
-            done: (event, data) => {
-                if (false === data.response().result.success) {
-                    data.response().result.errors.forEach((error) => {
-                        this.getMediaLibrary().showError(error);
-                    });
-
-                    this.getMediaLibrary().loaded();
-
-                } else if (data.response().result.length === 0) {
-                    this.getMediaLibrary().showError(this.translator.trans('enhavo_media_library.upload.fail.message'));
-                    this.getMediaLibrary().loaded();
-
-                } else {
-                    this.getMediaLibrary().showSuccess(this.translator.trans('enhavo_media_library.upload.success.message'));
-                    this.getMediaLibrary().refresh();
-                }
-
-                this.getMediaLibrary().setProgress(0);
-            },
-            fail: (event, data) => {
-                this.getMediaLibrary().showError(this.translator.trans('enhavo_media_library.upload.fail.message'));
-                this.getMediaLibrary().setProgress(0);
-                this.getMediaLibrary().loaded();
-            },
-            add: (event, data) => {
-                data.url = this.getRouter().generate(this.mediaLibrary.data.uploadRoute, {});
-                data.submit();
-                this.getMediaLibrary().loading();
-                this.getMediaLibrary().setProgress(0);
-            },
-            progressall: (event, data) => {
-                let progress = data.loaded / data.total * 100;
-                this.getMediaLibrary().setProgress(progress);
-            },
-            dropZone: this.$refs.itemList,
-            pasteZone: null
-        });
-
-        $(document).bind('dragover', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            this.getMediaLibrary().showDropZone();
-        });
-
-        $(this.$refs.mediaLibrary).bind('dragover', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            this.getMediaLibrary().showDropZone();
-            this.getMediaLibrary().showDropZoneActive();
-        });
-
-        $(document).bind('dragleave', (e) => {
-            if ($(document).find('.app-view').length > 0 && $(document).find('.app-view').find(e.target).length > 0) return;
-            e.preventDefault();
-            e.stopPropagation();
-            this.getMediaLibrary().hideDropZone();
-        });
-
-        $(this.$refs.mediaLibrary).bind('dragleave', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            this.getMediaLibrary().hideDropZoneActive();
-        });
-
-        $(document).bind('drop', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            this.getMediaLibrary().hideDropZone();
-            this.getMediaLibrary().hideDropZoneActive();
-        });
-    }
-
-    onClickPage(page: number) {
-        this.getMediaLibrary().setActivePage(page);
-    }
-
-    open(item: File) {
-        this.getMediaLibrary().open(item)
-    }
-
-    getMediaLibrary(): MediaLibrary {
-        return this.mediaLibrary;
-    }
-
-    getRouter() {
-        return this.router;
-    }
-
-    getType(extension) {
-        if (extension == 'png' || extension == 'jpg' || extension == 'jpeg' || extension == 'gif') {
-            return 'image';
         }
+    });
 
-        if (extension == 'pdf') {
-            return 'document';
-        }
+    $(document).on('upload', function () {
+        $(elements.upload).trigger('click');
+    });
 
-        return 'file';
+    $(elements.upload).fileupload({
+        replaceFileInput: false,
+        dataType: 'json',
+        paramName: 'files',
+        done: (event, data) => {
+            if (false === data.response().result.success) {
+                data.response().result.errors.forEach((error) => {
+                    mediaLibrary.showError(error);
+                });
+
+                mediaLibrary.loaded();
+
+            } else if (data.response().result.length === 0) {
+                mediaLibrary.showError(translator.trans('enhavo_media_library.upload.fail.message'));
+                mediaLibrary.loaded();
+
+            } else {
+                mediaLibrary.showSuccess(translator.trans('enhavo_media_library.upload.success.message'));
+                mediaLibrary.refresh();
+            }
+
+            mediaLibrary.setProgress(0);
+        },
+        fail: (event, data) => {
+            mediaLibrary.showError(translator.trans('enhavo_media_library.upload.fail.message'));
+            mediaLibrary.setProgress(0);
+            mediaLibrary.loaded();
+        },
+        add: (event, data) => {
+            data.url = getRouter().generate(mediaLibrary.data.uploadRoute, {});
+            data.submit();
+            mediaLibrary.loading();
+            mediaLibrary.setProgress(0);
+        },
+        progressall: (event, data) => {
+            let progress = data.loaded / data.total * 100;
+            mediaLibrary.setProgress(progress);
+        },
+        dropZone: elements.itemList,
+        pasteZone: null
+    });
+
+    $(document).on('dragover', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        mediaLibrary.showDropZone();
+    });
+
+    $(elements.mediaLibrary).on('dragover', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        mediaLibrary.showDropZone();
+        mediaLibrary.showDropZoneActive();
+    });
+
+    $(document).on('dragleave', (e) => {
+        if ($(document).find('.app-view').length > 0 && $(document).find('.app-view').find(e.target).length > 0) return;
+        e.preventDefault();
+        e.stopPropagation();
+        mediaLibrary.hideDropZone();
+    });
+
+    $(elements.mediaLibrary).on('dragleave', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        mediaLibrary.hideDropZoneActive();
+    });
+
+    $(document).on('drop', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        mediaLibrary.hideDropZone();
+        mediaLibrary.hideDropZoneActive();
+    });
+});
+
+function styleProgress() 
+{
+    return mediaLibrary.data.progress + '%';
+}
+
+function getAddLabel()
+{
+    if (mediaLibrary.data.multiple) {
+        return "media_library.add_selecteded";
+    } else {
+        return "media_library.add_selected";
     }
+}
+
+function setView(type: string) 
+{
+    mediaLibrary.setView(type);
+}
+
+function search() 
+{
+    mediaLibrary.search();
+}
+
+function clearSearch() 
+{
+    mediaLibrary.clearSearch()
+
+}
+
+function getRouter() 
+{
+    return router;
+}
+
+function setElement(el: HTMLElement, property: string)
+{
+    elements[property] = el;
 }
 </script>

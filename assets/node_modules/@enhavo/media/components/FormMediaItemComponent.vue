@@ -1,5 +1,5 @@
 <template>
-    <div class="form-list-item" ref="element">
+    <div class="form-list-item" :ref="(el) => form.setElement(el)">
         <img v-if="isImage(form.file)" :src="form.path('enhavoPreviewThumb')" />
         <div v-else><span :class="'icon_'+getIcon(form.file)"></span></div>
 
@@ -12,47 +12,25 @@
     </div>
 </template>
 
-<script lang="ts">
-import {Vue, Options, Prop} from "vue-property-decorator";
-import {FormUtil} from "@enhavo/vue-form/form/FormUtil";
+<script setup lang="ts">
 import {MediaItemForm} from "@enhavo/media/form/model/MediaItemForm";
 import {MediaUtil} from "@enhavo/media/form/MediaUtil";
 
-@Options({})
-export default class extends Vue
+const props = defineProps<{
+    form: MediaItemForm,
+    sortable: boolean,
+    deletable: boolean,
+    blockName: string,
+}>()
+
+function isImage(file: File): boolean
 {
-    @Prop()
-    form: MediaItemForm;
-
-    @Prop()
-    sortable: boolean
-
-    @Prop()
-    deletable: boolean
-
-    @Prop()
-    blockName: string
-
-    updated()
-    {
-        this.form.element = <HTMLElement>this.$refs.element;
-        FormUtil.updateAttributes(this.form.element, this.form.attr);
-    }
-
-    mounted()
-    {
-        this.form.element = <HTMLElement>this.$refs.element;
-        FormUtil.updateAttributes(this.form.element, this.form.attr);
-    }
-
-    isImage(file: File): boolean
-    {
-        return MediaUtil.isImage(this.form.file);
-    }
-
-    getIcon(file: File): string
-    {
-        return MediaUtil.getIcon(this.form.file);
-    }
+    return MediaUtil.isImage(props.form.file);
 }
+
+function getIcon(file: File): string
+{
+    return MediaUtil.getIcon(props.form.file);
+}
+
 </script>

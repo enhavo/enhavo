@@ -46,35 +46,16 @@
             <div v-for="error of form.fileErrors">{{ error.message }} <span @click="form.removeError(error)">X</span></div>
         </div>
 
-        <input :id="form.id" name="files[]" type="file" class="upload-input" multiple ref="element" @change.prevent="form.change" style="display: none" />
+        <input :id="form.id" name="files[]" type="file" class="upload-input" multiple :ref="(el) => form.setElement(el)" @change.prevent="form.change" style="display: none" />
     </div>
 </template>
 
-<script lang="ts">
-import {Vue, Options, Inject, Prop} from "vue-property-decorator";
+<script setup lang="ts">
+import * as draggableComponent from 'vuedraggable'
 import {MediaForm} from "@enhavo/media/form/model/MediaForm";
-import {FormUtil} from "@enhavo/vue-form/form/FormUtil";
-import * as $ from "jquery";
-import * as draggable from "vuedraggable";
 
-@Options({
-    components: {'draggable': draggable}
-})
-export default class extends Vue
-{
-    @Prop()
-    form: MediaForm;
-
-    updated()
-    {
-        this.form.element = <HTMLElement>this.$refs.element;
-        FormUtil.updateAttributes(this.form.element, this.form.attr);
-    }
-
-    mounted()
-    {
-        this.form.element = <HTMLElement>this.$refs.element;
-        FormUtil.updateAttributes(this.form.element, this.form.attr);
-    }
-}
+const draggable = draggableComponent;
+const props = defineProps<{
+    form: MediaForm
+}>()
 </script>

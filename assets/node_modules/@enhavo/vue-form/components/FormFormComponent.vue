@@ -1,5 +1,5 @@
 <template>
-    <form :name="getName()" :method="getMethod()" :action="getAction()" ref="element">
+    <form :name="getName()" :method="getMethod()" :action="getAction()" :ref="(el) => form.setElement(el)">
         <slot name="form-before"></slot>
         <input v-if="getDifferentMethod()" type="hidden" name="_method" :value="getDifferentMethod()" />
         <slot>
@@ -9,62 +9,50 @@
     </form>
 </template>
 
-<script lang="ts">
-import {Vue, Options, Prop} from "vue-property-decorator";
+<script setup lang="ts">
 import {Form} from "@enhavo/vue-form/model/Form";
 
-@Options({})
-export default class extends Vue
-{
-    @Prop()
+const props = defineProps<{
     form: Form
+}>()
 
-    getMethod()
-    {
-        if (typeof this.form.method === 'string') {
-            let method = this.form.method.toLowerCase();
-            if (['get', 'post'].indexOf(method) >= 0) {
-                return method;
-            }
+const form = props.form;
+
+function getMethod()
+{
+    if (typeof form.method === 'string') {
+        let method = form.method.toLowerCase();
+        if (['get', 'post'].indexOf(method) >= 0) {
+            return method;
         }
-        return null;
     }
+    return null;
+}
 
-    getDifferentMethod()
-    {
-        if (typeof this.form.method === 'string') {
-            let method = this.form.method.toLowerCase();
-            if (['get', 'post'].indexOf(method) == -1) {
-                return method;
-            }
+function getDifferentMethod()
+{
+    if (typeof form.method === 'string') {
+        let method = form.method.toLowerCase();
+        if (['get', 'post'].indexOf(method) == -1) {
+            return method;
         }
-        return null;
     }
+    return null;
+}
 
-    getAction()
-    {
-        if (typeof this.form.action === 'string') {
-            return this.form.action;
-        }
-        return null;
+function getAction()
+{
+    if (typeof form.action === 'string') {
+        return form.action;
     }
+    return null;
+}
 
-    getName()
-    {
-        if (typeof this.form.name === 'string') {
-            return this.form.name;
-        }
-        return null;
+function getName()
+{
+    if (typeof form.name === 'string') {
+        return form.name;
     }
-
-    updated()
-    {
-        this.form.element = <HTMLElement>this.$refs.element;
-    }
-
-    mounted()
-    {
-        this.form.element = <HTMLElement>this.$refs.element;
-    }
+    return null;
 }
 </script>

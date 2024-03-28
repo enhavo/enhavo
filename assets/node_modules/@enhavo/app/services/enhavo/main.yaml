@@ -18,17 +18,17 @@ services:
             - '@enhavo/app/view-stack/GlobalDataStorageManager'
             - '@enhavo/app/vue/VueRegistry'
 
-    '@enhavo/app/main/components/MainComponent.vue':
+    '@enhavo/app/components/main/MainComponent.vue':
         chunk: 'main'
         static: true
 
-    '@enhavo/app/main/components/OverlayContainer.vue':
+    '@enhavo/app/components/main/OverlayContainer.vue':
         chunk: 'vue'
         static: true
         tags:
             - { name: vue.component, component: 'overlay-container' }
 
-    '@enhavo/app/main/components/LoadingScreen.vue':
+    '@enhavo/app/components/main/LoadingScreen.vue':
         chunk: 'vue'
         static: true
         tags:

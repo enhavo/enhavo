@@ -1,19 +1,13 @@
 <template>
     <ul>
-        <content-type
-            v-for="contentType of contentTypes"
-            :contentType="contentType"
-        ></content-type>
+        <content-type v-for="contentType in contentTypes" :content-type="contentType"></content-type>
     </ul>
 </template>
 
-<script lang="ts">
-import {Options, Prop, Vue} from "vue-property-decorator";
-import {ContentType} from "../Data";
+<script setup lang="ts">
+import {ContentType as ContentTypeData} from "@enhavo/media-library/Data";
 
-@Options({})
-export default class extends Vue {
-    @Prop()
-    contentTypes: Array<ContentType>;
-}
+const props = defineProps<{
+    contentTypes: Array<ContentTypeData>;
+}>()
 </script>

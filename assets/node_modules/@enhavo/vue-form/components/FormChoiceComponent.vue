@@ -2,23 +2,19 @@
     <component :is="getComponent()" :form="form"></component>
 </template>
 
-<script lang="ts">
-import {Vue, Options, Prop} from "vue-property-decorator";
+<script setup lang="ts">
 import {ChoiceForm} from "@enhavo/vue-form/model/ChoiceForm";
 
-@Options({})
-export default class extends Vue
-{
-    @Prop()
+const props = defineProps<{
     form: ChoiceForm
+}>()
 
-    getComponent()
-    {
-        if (this.form.expanded) {
-            return 'form-choice-expanded';
-        } else {
-            return 'form-choice-collapsed'
-        }
+function getComponent()
+{
+    if (props.form.expanded) {
+        return 'form-choice-expanded';
+    } else {
+        return 'form-choice-collapsed'
     }
 }
 </script>

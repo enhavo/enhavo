@@ -10,7 +10,7 @@ services:
     '@enhavo/app/action/ActionRegistry':
         chunk: 'action'
 
-    '@enhavo/app/action/components/ActionBar.vue':
+    '@enhavo/app/components/action/ActionBar.vue':
         static: true
         chunk: 'vue'
         tags:
@@ -21,7 +21,7 @@ services:
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:close-action'
-            - '@enhavo/app/action/components/ActionComponent.vue'
+            - '@enhavo/app/components/action/ActionComponent.vue'
             - '@enhavo/app/action/factory/CloseActionFactory'
         tags:
             - 'enhavo_app.action'
@@ -31,7 +31,7 @@ services:
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:delete-action'
-            - '@enhavo/app/action/components/ActionComponent.vue'
+            - '@enhavo/app/components/action/ActionComponent.vue'
             - '@enhavo/app/action/factory/DeleteActionFactory'
         tags:
             - 'enhavo_app.action'
@@ -41,7 +41,7 @@ services:
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:dropdown-action'
-            - '@enhavo/app/action/components/DropdownActionComponent.vue'
+            - '@enhavo/app/components/action/DropdownActionComponent.vue'
             - '@enhavo/app/action/factory/DropdownActionFactory'
         tags:
             - 'enhavo_app.action'
@@ -51,7 +51,7 @@ services:
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:filter-action'
-            - '@enhavo/app/action/components/DropdownActionComponent.vue'
+            - '@enhavo/app/components/action/DropdownActionComponent.vue'
             - '@enhavo/app/action/factory/FilterActionFactory'
         tags:
             - 'enhavo_app.action'
@@ -61,7 +61,7 @@ services:
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:preview-action'
-            - '@enhavo/app/action/components/ActionComponent.vue'
+            - '@enhavo/app/components/action/ActionComponent.vue'
             - '@enhavo/app/action/factory/PreviewActionFactory'
         tags:
             - 'enhavo_app.action'
@@ -71,7 +71,7 @@ services:
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:save-action'
-            - '@enhavo/app/action/components/ActionComponent.vue'
+            - '@enhavo/app/components/action/ActionComponent.vue'
             - '@enhavo/app/action/factory/SaveActionFactory'
         tags:
             - 'enhavo_app.action'
@@ -81,7 +81,7 @@ services:
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:single-filter-action'
-            - '@enhavo/app/action/components/ActionComponent.vue'
+            - '@enhavo/app/components/action/ActionComponent.vue'
             - '@enhavo/app/action/factory/SingleFilterActionFactory'
         tags:
             - 'enhavo_app.action'
@@ -91,7 +91,7 @@ services:
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:event-action'
-            - '@enhavo/app/action/components/ActionComponent.vue'
+            - '@enhavo/app/components/action/ActionComponent.vue'
             - '@enhavo/app/action/factory/EventActionFactory'
         tags:
             - 'enhavo_app.action'
@@ -101,7 +101,7 @@ services:
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:open-action'
-            - '@enhavo/app/action/components/ActionComponent.vue'
+            - '@enhavo/app/components/action/ActionComponent.vue'
             - '@enhavo/app/action/factory/OpenActionFactory'
         tags:
             - 'enhavo_app.action'
@@ -111,7 +111,7 @@ services:
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:duplicate-action'
-            - '@enhavo/app/action/components/ActionComponent.vue'
+            - '@enhavo/app/components/action/ActionComponent.vue'
             - '@enhavo/app/action/factory/DuplicateActionFactory'
         tags:
             - 'enhavo_app.action'
@@ -121,7 +121,7 @@ services:
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:download-action'
-            - '@enhavo/app/action/components/ActionComponent.vue'
+            - '@enhavo/app/components/action/ActionComponent.vue'
             - '@enhavo/app/action/factory/DownloadActionFactory'
         tags:
             - 'enhavo_app.action'
@@ -131,7 +131,7 @@ services:
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:modal-action'
-            - '@enhavo/app/action/components/ActionComponent.vue'
+            - '@enhavo/app/components/action/ActionComponent.vue'
             - '@enhavo/app/action/factory/ModalActionFactory'
         tags:
             - 'enhavo_app.action'
@@ -141,7 +141,7 @@ services:
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:form-action'
-            - '@enhavo/app/action/components/ActionComponent.vue'
+            - '@enhavo/app/components/action/ActionComponent.vue'
             - '@enhavo/app/action/factory/FormActionFactory'
         tags:
             - 'enhavo_app.action'
@@ -217,10 +217,10 @@ services:
         arguments:
             - '@enhavo/app/grid/filter/FilterManager'
 
-    '@enhavo/app/action/components/ActionComponent.vue':
+    '@enhavo/app/components/action/ActionComponent.vue':
         chunk: 'action'
         static: true
 
-    '@enhavo/app/action/components/DropdownActionComponent.vue':
+    '@enhavo/app/components/action/DropdownActionComponent.vue':
         chunk: 'action'
         static: true

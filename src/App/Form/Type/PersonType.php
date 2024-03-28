@@ -20,7 +20,10 @@ class PersonType extends AbstractType
             'route' => 'app_term_occupation_auto_complete'
         ]);
         $builder->add('picture', MediaType::class, [
-            'multiple' => false
+            'multiple' => false,
+            'formats' => [
+                'person_image' => 'Person Image',
+            ]
         ]);
     }
 }

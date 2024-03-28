@@ -22,15 +22,15 @@ services:
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:number-widget'
-            - '@enhavo/dashboard/widget/components/NumberWidgetComponent.vue'
+            - '@enhavo/dashboard/components/NumberWidgetComponent.vue'
             - '@enhavo/dashboard/widget/factory/NumberWidgetFactory'
         tags:
             - 'enhavo_dashboard.widget'
 
     '@enhavo/dashboard/widget/factory/NumberWidgetFactory':
 
-    '@enhavo/dashboard/widget/components/NumberWidgetComponent.vue':
+    '@enhavo/dashboard/components/NumberWidgetComponent.vue':
         static: true
 
-    '@enhavo/dashboard/dashboard/components/ApplicationComponent.vue':
+    '@enhavo/dashboard/components/ApplicationComponent.vue':
         static: true

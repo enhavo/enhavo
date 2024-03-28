@@ -19,13 +19,13 @@ services:
         tags:
             - { name: form.model }
 
-    '@enhavo/media/components/FormMediaComponent':
+    '@enhavo/media/components/FormMediaComponent.vue':
         chunk: 'vue'
         static: true
         tags:
             - { name: vue.component, component: 'form-media' }
 
-    '@enhavo/media/components/FormMediaItemComponent':
+    '@enhavo/media/components/FormMediaItemComponent.vue':
         chunk: 'vue'
         static: true
         tags:

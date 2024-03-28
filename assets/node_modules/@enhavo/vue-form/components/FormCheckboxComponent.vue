@@ -1,7 +1,7 @@
 <template>
     <input
         type="checkbox"
-        ref="element"
+        :ref="(el) => form.setElement(el)"
         :value="form.value"
         :checked="form.checked"
         :id="form.id"
@@ -12,27 +12,10 @@
     />
 </template>
 
-<script lang="ts">
-import {Vue, Options, Prop} from "vue-property-decorator";
-import {FormUtil} from "@enhavo/vue-form/form/FormUtil";
+<script setup lang="ts">
 import {CheckboxForm} from "@enhavo/vue-form/model/CheckboxForm";
 
-@Options({})
-export default class extends Vue
-{
-    @Prop()
+const props = defineProps<{
     form: CheckboxForm
-
-    updated()
-    {
-        this.form.element = <HTMLElement>this.$refs.element;
-        FormUtil.updateAttributes(<HTMLElement>this.$refs.element, this.form.attr);
-    }
-
-    mounted()
-    {
-        this.form.element = <HTMLElement>this.$refs.element;
-        FormUtil.updateAttributes(<HTMLElement>this.$refs.element, this.form.attr);
-    }
-}
+}>()
 </script>

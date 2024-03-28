@@ -1,5 +1,5 @@
 <template>
-    <div class="form-list" ref="element">
+    <div class="form-list" :ref="(el) => form.setElement(el)">
         <slot name="list">
             <ul>
                 <draggable
@@ -54,30 +54,12 @@
     </div>
 </template>
 
-<script lang="ts">
-import {Vue, Options, Inject, Prop} from "vue-property-decorator";
-import {FormUtil} from "@enhavo/vue-form/form/FormUtil";
+<script setup lang="ts">
 import {PolyCollectionForm} from "@enhavo/form/form/model/PolyCollectionForm";
-import * as draggable from "vuedraggable";
+import * as draggableComponent from 'vuedraggable'
 
-@Options({
-    components: {'draggable': draggable}
-})
-export default class extends Vue
-{
-    @Prop()
-    form: PolyCollectionForm;
-
-    updated()
-    {
-        this.form.element = <HTMLElement>this.$refs.element;
-        FormUtil.updateAttributes(this.form.element, this.form.attr);
-    }
-
-    mounted()
-    {
-        this.form.element = <HTMLElement>this.$refs.element;
-        FormUtil.updateAttributes(this.form.element, this.form.attr);
-    }
-}
+const draggable = draggableComponent;
+const props = defineProps<{
+    form: PolyCollectionForm
+}>()
 </script>

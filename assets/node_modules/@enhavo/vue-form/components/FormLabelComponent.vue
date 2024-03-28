@@ -4,67 +4,54 @@
         :for="getFor()"
         :is="getComponent()"
         v-show="form.visible"
-        ref="element">
+        :ref="(el) => form.setElement(el)">
         {{ getLabel() }}
     </component>
 </template>
 
-<script lang="ts">
-import {Vue, Options, Prop} from "vue-property-decorator";
-import {Form} from "@enhavo/vue-form/model/Form"
-import {FormUtil} from "@enhavo/vue-form/form/FormUtil";
+<script setup lang="ts">
+import {Form} from "@enhavo/vue-form/model/Form";
+import {FormUtil} from "../form/FormUtil";
 
-@Options({})
-export default class extends Vue
+const props = defineProps<{
+    form: Form,
+    element?: string
+}>()
+
+const form = props.form;
+const element = props.element;
+
+function getComponent(): string
 {
-    @Prop()
-    form: Form;
-
-    @Prop()
-    element: string|null;
-
-    getComponent(): string
-    {
-        if (typeof this.element === 'string') {
-            return this.element;
-        }
-        return 'label';
+    if (typeof element === 'string') {
+        return element;
     }
+    return 'label';
+}
 
-    getLabel(): string
-    {
-        if (this.form.label) {
-            return this.form.label;
-        }
-        if (this.form.labelFormat) {
-            return this.format()
-        }
-        return FormUtil.humanize(this.form.name);
+function getLabel(): string|boolean
+{
+    if (form.label) {
+        return form.label;
     }
+    if (form.labelFormat) {
+        return format()
+    }
+    return FormUtil.humanize(form.name);
+}
 
-    getFor(): string|boolean
-    {
-        if (!this.form.compound) {
-            return this.form.id
-        }
-        return false;
+function getFor(): string|boolean
+{
+    if (!form.compound) {
+        return form.id
     }
+    return false;
+}
 
-    format(): string
-    {
-        let label = this.form.labelFormat.replace('%id%', this.form.id);
-        label = label.replace('%name%', this.form.name);
-        return label;
-    }
-
-    updated()
-    {
-        FormUtil.updateAttributes(<HTMLElement>this.$refs.element, this.form.labelAttr);
-    }
-
-    mounted()
-    {
-        FormUtil.updateAttributes(<HTMLElement>this.$refs.element, this.form.labelAttr);
-    }
+function format(): string
+{
+    let label = form.labelFormat.replace('%id%', form.id);
+    label = label.replace('%name%', form.name);
+    return label;
 }
 </script>

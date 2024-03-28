@@ -2,17 +2,11 @@
     <option :value="choice.value">{{ choice.label }}</option>
 </template>
 
-<script lang="ts">
-import {Vue, Options, Prop} from "vue-property-decorator";
+<script setup lang="ts">
 import {Choice} from "@enhavo/vue-form/model/ChoiceForm"
 
-@Options({})
-export default class extends Vue
-{
-    @Prop()
+const props = defineProps<{
     choice: Choice
-
-    @Prop()
-    preferredChoices: boolean
-}
+    preferredChoices?: boolean
+}>()
 </script>
