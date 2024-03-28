@@ -1,4 +1,4 @@
-import {ComponentAwareInterface } from "@enhavo/core";
+import ComponentAwareInterface from "@enhavo/core/ComponentAwareInterface";
 import Event from "./Event"
 
 export default class CreateEvent extends Event

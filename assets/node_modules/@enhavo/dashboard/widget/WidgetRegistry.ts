@@ -1,4 +1,4 @@
-import { Registry } from "@enhavo/core";
+import Registry from "@enhavo/core/Registry";
 import WidgetFactoryInterface from "./WidgetFactoryInterface";
 
 export default class WidgetRegistry extends Registry

@@ -1,4 +1,4 @@
-import * as uuidv4 from "uuid/v4";
+import uuidv4 from "uuid/v4";
 import EventDispatcher from '@enhavo/app/view-stack/EventDispatcher';
 
 export default class Event

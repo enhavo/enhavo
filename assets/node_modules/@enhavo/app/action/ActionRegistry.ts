@@ -1,6 +1,6 @@
-import { Registry } from "@enhavo/core";
+import Registry from "@enhavo/core/Registry";
 import ActionFactoryInterface from "./ActionFactoryInterface";
-import RegistryInterface from "@enhavo/core/RegistryInterface";
+import {RegistryInterface} from "@enhavo/core/RegistryInterface";
 
 export default class ActionRegistry extends Registry
 {
