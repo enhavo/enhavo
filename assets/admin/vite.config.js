@@ -10,7 +10,8 @@ export default defineConfig({
     plugins: [
         vue(),
         liveReload([
-            __dirname + '/../src/**/*.php',
+            __dirname + '/../../src/**/*.php',
+            __dirname + '/../../templates/**/*.twig',
         ]),
         splitVendorChunkPlugin(),
         containerDIPlugin(),
@@ -33,7 +34,7 @@ export default defineConfig({
     },
     server: {
         strictPort: true,
-        port: process.env.VITE_PORT
+        port: process.env.VITE_ADMIN_PORT
     },
     resolve: {
         alias: {

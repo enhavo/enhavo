@@ -10,7 +10,8 @@ export default defineConfig({
     plugins: [
         vue(),
         liveReload([
-            __dirname + '/../src/**/*.php',
+            __dirname + '/../../src/**/*.php',
+            __dirname + '/../../templates/**/*.twig',
         ]),
         splitVendorChunkPlugin(),
         containerDIPlugin(),
@@ -28,12 +29,12 @@ export default defineConfig({
         manifest: true,
 
         rollupOptions: {
-            input: path.resolve(__dirname, 'entrypoints/base.js'),
+            input: '/entrypoints/main.js'
         }
     },
     server: {
         strictPort: true,
-        port: process.env.VITE_PORT
+        port: process.env.VITE_THEME_PORT
     },
     resolve: {
         alias: {

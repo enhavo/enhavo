@@ -1,38 +1,45 @@
 #!/usr/bin/env node
-const Loader = require('@enhavo/dependency-injection/loader/Loader');
-const Compiler = require('@enhavo/dependency-injection/compiler/Compiler');
-const Validator = require('@enhavo/dependency-injection/validation/Validator');
-const ContainerBuilder = require('@enhavo/dependency-injection/container/ContainerBuilder');
-const process = require('process');
-const path = require('path');
-const fs = require('fs');
-const {Command} = require('commander');
+import Loader from '@enhavo/dependency-injection/loader/Loader.js';
+import Compiler from '@enhavo/dependency-injection/compiler/Compiler.js';
+import Validator from '@enhavo/dependency-injection/validation/Validator.js';
+import ContainerBuilder from '@enhavo/dependency-injection/container/ContainerBuilder.js';
+import process from 'process';
+import path from 'path';
+import fs from 'fs';
+import {Command} from 'commander';
 
 class CommandLineInterface
 {
     constructor()
     {
         this.program = new Command();
+        this.containerPath = null;
 
         this.program
             .name('di')
             .description('CLI to analyse a dependency injection container')
 
+
+        this.program
+            .option('--file <string>', 'path to dependency injection container', null)
+            .on("option:file", (value) => {
+                this.containerPath = value;
+            })
+
+
         this.program.command('inspect')
             .description('Display all services')
-            .argument('<string>', 'path to dependency injection container')
             .option('--name <string>', 'service which contain name')
             .option('--tag <string>', 'list only service with tag')
-            .action((path, options) => {
-                this._inspect(path, options.name, options.tag);
+            .action(async (options) => {
+                await this._inspect(this.containerPath, options.name, options.tag);
             });
 
         this.program.command('compile')
             .description('Write compiled container to target file')
-            .argument('<string>', 'path to dependency injection container')
             .argument('<string>', 'target file')
-            .action((path, target, options) => {
-                this._compile(path, target);
+            .action(async (target, options) => {
+                await this._compile(this.containerPath, target);
             });
     }
 
@@ -41,14 +48,18 @@ class CommandLineInterface
         this.program.parse();
     }
 
-    _inspect(containerPath, name, tag)
+    async _inspect(containerPath, name, tag)
     {
+        if (!containerPath) {
+            throw '--file options must be set for inspect'
+        }
+
         let builder = new ContainerBuilder;
 
         const loader = new Loader;
 
         loader.loadFile(containerPath, builder);
-        builder.prepare();
+        await builder.prepare();
         (new Validator).validate(builder);
 
         if (!name && !tag) {
@@ -85,13 +96,17 @@ class CommandLineInterface
         this._write('');
     }
 
-    _compile(containerPath, filePath)
+    async _compile(containerPath, filePath)
     {
+        if (!containerPath) {
+            throw '--file options must be set for inspect'
+        }
+
         const loader = new Loader;
 
         let builder = new ContainerBuilder;
         loader.loadFile(containerPath, builder);
-        builder.prepare();
+        await builder.prepare();
         (new Validator).validate(builder);
         let content = (new Compiler).compile(builder);
         let file = path.resolve(process.cwd(), filePath);

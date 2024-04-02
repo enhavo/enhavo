@@ -10,11 +10,12 @@
     "docs:preview": "vitepress preview docs",
     "admin:dev": "vite --config assets/admin/vite.config.js",
     "admin:build": "vite build --config assets/admin/vite.config.js",
-    "admin:di": "node ./assets/node_modules/@enhavo/dependency-injection/bin/dependency-injection.js assets/admin/container.di.yaml",
+    "admin:di": "node ./assets/node_modules/@enhavo/dependency-injection/bin/dependency-injection.js --file assets/admin/container.di.yaml",
     "theme:dev": "vite --config assets/theme/vite.config.js",
     "theme:build": "vite build --config assets/theme/vite.config.js",
-    "theme:di": "node ./assets/node_modules/@enhavo/dependency-injection/bin/dependency-injection.js assets/theme/container.di.yaml",
-    "build": "vite build --config vite.admin.config.js && vite build --config vite.theme.config.js"
+    "theme:di": "node ./assets/node_modules/@enhavo/dependency-injection/bin/dependency-injection.js --file assets/theme/container.di.yaml",
+    "build": "vite build --config vite.admin.config.js && vite build --config vite.theme.config.js",
+    "vite:clean": "rm -rf ./node_modules/.vite && rm -rf ./public/build/*"
   },
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.17.0",

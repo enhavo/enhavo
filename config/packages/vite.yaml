@@ -1,0 +1,15 @@
+enhavo_app:
+    vite:
+        builds:
+            admin:
+                port: '%env(VITE_ADMIN_PORT)%'
+                manifest: '%kernel.project_dir%/public/build/admin/.vite/manifest.json'
+            theme:
+                port: '%env(VITE_THEME_PORT)%'
+                manifest: '%kernel.project_dir%/public/build/theme/.vite/manifest.json'
+
+
+when@prod:
+    enhavo_app:
+        vite:
+            mode: build
