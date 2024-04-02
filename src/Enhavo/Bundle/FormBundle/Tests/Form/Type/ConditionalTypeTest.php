@@ -135,19 +135,19 @@ class ConditionalTypeTest extends TypeTestCase
 
         $form = $this->factory->create(ConditionalType::class, $car, [
             'entry_types' => [
-                'car' => ConditionalType::class,
+                'nested' => ConditionalType::class,
                 'bike' => BikeType::class,
             ],
             'entry_type_resolver' => function($data) {
                 if ($data instanceof Car) {
-                    return 'car';
+                    return 'nested';
                 } elseif ($data instanceof Bike) {
                     return 'bike';
                 }
                 return null;
             },
             'entry_types_options' => [
-                'car' => [
+                'nested' => [
                     'entry_types' => [
                         'car' => CarType::class,
                         'bike' => BikeType::class,
@@ -165,8 +165,21 @@ class ConditionalTypeTest extends TypeTestCase
         ]);
 
         $view = $form->createView();
+        $this->assertEquals('nested', $view->children['key']->vars['value']);
 
-        $this->assertEquals('car', $view->children['key']->vars['value']);
+        $form->submit([
+            'conditional' => [
+                'conditional' => [
+                    'pedals' => '2'
+                ],
+                'key' => 'bike'
+            ],
+            'key' => 'nested'
+        ]);
+
+        $data = $form->getData();
+        $this->assertInstanceOf(Bike::class, $data);
+        $this->assertEquals('2', $data->getPedals());
     }
 
     public function testSubmitWithEmptyKeyAndTypes()
