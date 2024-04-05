@@ -1,7 +1,7 @@
 ## Search
 
 To execute a search programmatically, you have to inject the search engine, create a filter and search. With the `ResultConverter`
-you can change the results and highlight the text with the search term.
+you can change the results and highlight the search term in the text.
 
 ```php
 namespace App\Service;
