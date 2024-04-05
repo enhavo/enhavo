@@ -6,8 +6,8 @@
 * [Bundle Structure](general/bundle-structure)
 * [Data Handling](general/data-handling)
 * [Headless Controller](general/headless-controller)
-* [Assets](general/assets.md)
 * [Area](general/area.md)
+* [Template Mode](general/template-mode.md)
 
 ## Components
 
