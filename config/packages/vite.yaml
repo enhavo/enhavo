@@ -4,9 +4,11 @@ enhavo_app:
             admin:
                 port: '%env(VITE_ADMIN_PORT)%'
                 manifest: '%kernel.project_dir%/public/build/admin/.vite/manifest.json'
+                base: '/build/admin'
             theme:
                 port: '%env(VITE_THEME_PORT)%'
                 manifest: '%kernel.project_dir%/public/build/theme/.vite/manifest.json'
+                base: '/build/theme'
 
 
 when@prod:

@@ -5,6 +5,7 @@ namespace Enhavo\Bundle\UserBundle\Security\EntryPoint;
 use Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Http\EntryPoint\AuthenticationEntryPointInterface;
@@ -18,7 +19,7 @@ class FormAuthenticationEntryPoint implements AuthenticationEntryPointInterface
     {
     }
 
-    public function start(Request $request, AuthenticationException $authException = null)
+    public function start(Request $request, AuthenticationException $authException = null): Response
     {
         $params = [];
         if ($request->query->has('view_id')) {

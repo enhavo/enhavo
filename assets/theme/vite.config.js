@@ -19,7 +19,7 @@ export default defineConfig({
 
     // config
     root: path.resolve(__dirname),
-    base: process.env.APP_ENV === 'dev' ? '/' : '/dist/',
+    base: '/build/theme',
     build: {
         // output dir for production build
         outDir: '../../public/build/theme',
@@ -34,7 +34,8 @@ export default defineConfig({
     },
     server: {
         strictPort: true,
-        port: process.env.VITE_THEME_PORT
+        port: process.env.VITE_THEME_PORT,
+        origin: 'http://localhost:' + process.env.VITE_THEME_PORT
     },
     resolve: {
         alias: {

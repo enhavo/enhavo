@@ -1,6 +1,6 @@
 import MenuData from "@enhavo/app/menu/MenuData";
 import MenuRegistry from "@enhavo/app/menu/MenuRegistry";
-import * as _ from "lodash";
+import _ from "lodash";
 import MenuInterface from "@enhavo/app/menu/MenuInterface";
 import GlobalDataStorageManager from "@enhavo/app/view-stack/GlobalDataStorageManager";
 import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
@@ -15,7 +15,6 @@ export default class MenuManager
 
     constructor(data: MenuData, registry: MenuRegistry, dataStorage: GlobalDataStorageManager, componentRegistry: ComponentRegistryInterface)
     {
-        _.extend(data, new MenuData);
         this.data = data;
         this.registry = registry;
         this.dataStorage = dataStorage;
@@ -78,7 +77,7 @@ export default class MenuManager
     }
 
     start() {
-        if(this.data.items.length > 0) {
+        if (this.data.items && this.data.items.length > 0) {
             this.clearSelections();
             for(let item of this.data.items) {
                 if(item.clickable) {

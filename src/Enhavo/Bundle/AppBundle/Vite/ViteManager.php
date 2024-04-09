@@ -35,8 +35,8 @@ class ViteManager
     {
         $files = [];
         if ($this->isDev($entrypoint, $build)) {
-            $files[] = $this->getHost($build) . '/@vite/client';
-            $files[] = $this->getHost($build) . '/' . $entrypoint;
+            $files[] = $this->getHost($build) . $this->getBase($build) . '/@vite/client';
+            $files[] = $this->getHost($build) . $this->getBase($build) . '/' . $entrypoint;
         } else {
             $files[] = $this->getAssetUrl($entrypoint, $build);
         }
@@ -54,6 +54,12 @@ class ViteManager
     private function getHost(string $build)
     {
         return sprintf('http://%s:%s', $this->getBuildConfig($build)['host'], $this->getBuildConfig($build)['port']);
+    }
+
+    private function getBase(string $build)
+    {
+        $config = $this->getBuildConfig($build);
+        return $config['base'] ?? '';
     }
 
     private function getBuildConfig(string $build): array
@@ -81,7 +87,7 @@ class ViteManager
 
         try {
             $client = HttpClient::create();
-            $response = $client->request('GET', $this->getHost($build) . '/' . $entrypoint);
+            $response = $client->request('GET', $this->getHost($build) . $this->getBase($build) . '/' . $entrypoint);
 
             $success = $response->getStatusCode() === 200;
         } catch (TransportException $e) {

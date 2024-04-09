@@ -6,7 +6,9 @@ import 'dotenv/config'
 import containerDIPlugin from '@enhavo/dependency-injection/rollup-plugin-container-di'
 
 export default defineConfig({
-
+    optimizeDeps: {
+        include: ['axios', 'uuid/v4', 'vuedraggable', 'jquery'],
+    },
     plugins: [
         vue(),
         liveReload([
@@ -19,7 +21,7 @@ export default defineConfig({
 
     // config
     root: path.resolve(__dirname),
-    base: process.env.APP_ENV === 'dev' ? '/' : '/dist/',
+    base: '/build/admin/',
     build: {
         // output dir for production build
         outDir: '../../public/build/admin',
@@ -29,12 +31,13 @@ export default defineConfig({
         manifest: true,
 
         rollupOptions: {
-            input: path.resolve(__dirname, 'entrypoints/application.js'),
+            input: '/entrypoints/application.js',
         }
     },
     server: {
         strictPort: true,
-        port: process.env.VITE_ADMIN_PORT
+        port: process.env.VITE_ADMIN_PORT,
+        origin: 'http://localhost:' + process.env.VITE_ADMIN_PORT
     },
     resolve: {
         alias: {
