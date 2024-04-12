@@ -4,6 +4,7 @@ import liveReload from 'vite-plugin-live-reload'
 import path from 'node:path'
 import 'dotenv/config'
 import containerDIPlugin from '@enhavo/dependency-injection/rollup-plugin-container-di'
+import {fantasticon} from "@enhavo/app/vite/fantasticon-plugin/plugin.js";
 
 export default defineConfig({
     optimizeDeps: {
@@ -12,11 +13,19 @@ export default defineConfig({
     plugins: [
         vue(),
         liveReload([
-            __dirname + '/../../src/**/*.php',
-            __dirname + '/../../templates/**/*.twig',
+            __dirname + '/../../templates/admin/*.twig',
         ]),
         splitVendorChunkPlugin(),
         containerDIPlugin(),
+        fantasticon({
+            name: "icon",
+            outputDir: path.resolve(__dirname, '../../public/build/admin'),
+            inputDir: path.resolve(__dirname, '../node_modules/@enhavo/app/assets/icons'),
+            fontTypes: ["ttf", "woff", "woff2"],
+            assetTypes: ["css", "html"],
+            prefix: 'icon',
+            tag: '*'
+        }),
     ],
 
     // config
