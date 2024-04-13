@@ -7,18 +7,7 @@
     <meta name="robots" content="noindex, nofollow">
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     {% block stylesheets %}
-        {% if entrypoints is defined %}
-            {% for entrypoint in entrypoints %}
-                {{ encore_entry_link_tags(entrypoint, null, 'enhavo') }}
-            {% endfor %}
-        {% endif %}
-    {% endblock %}
-    {% block javascripts %}
-        {% if entrypoints is defined %}
-            {% for entrypoint in entrypoints %}
-                {{ encore_entry_script_tags(entrypoint, null, 'enhavo') }}
-            {% endfor %}
-        {% endif %}
+        {{ vite_css_tags('entrypoints/application.js', 'admin') }}
     {% endblock %}
 </head>
 <body>
@@ -39,6 +28,10 @@
     {% if translations is defined %}
         <script id="translations" type="application/json">{{ translations|json_encode|raw }}</script>
     {% endif %}
+{% endblock %}
+{% block javascripts %}
+    {{ vite_js_tags('entrypoints/application.js', 'admin') }}
+    {{ vite_js_preload_tags('entrypoints/application.js', 'admin') }}
 {% endblock %}
 </body>
 </html>

@@ -17,7 +17,7 @@
         <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('favicon.ico') }}">
 
         {% block stylesheets %}
-            {{ encore_entry_link_tags('base', null, webpack_build()) }}
+            {{ vite_css_tags('entrypoints/base.js', 'admin') }}
         {% endblock %}
     </head>
     <body class="{% block body_class %}{% endblock %}">
@@ -30,7 +30,8 @@
 
         {% block javascripts %}
             <script id="routes" type="application/json">{{ routes()|raw }}</script>
-            {{ encore_entry_script_tags('base', null, webpack_build()) }}
+            {{ vite_js_tags('entrypoints/base.js', 'admin') }}
+            {{ vite_js_preload_tags('entrypoints/base.js', 'admin') }}
         {% endblock %}
     </body>
 </html>
