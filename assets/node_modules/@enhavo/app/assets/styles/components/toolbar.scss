@@ -2,7 +2,7 @@
   &.menu-collapsed {
     .branding-container {background-position:13px 52%;width:$collapsedMenuWidth;}
   }
-  .branding-container {height:$toolbarHeight;width:$sidebarWidth;background:url('../../images/enhavo_white.svg');background-size:auto 60%;background-position:13px 52%;background-repeat:no-repeat;position:relative;@include transition(all 300ms);cursor:pointer;}
+  .branding-container {height:$toolbarHeight;width:$sidebarWidth;background:url("../../images/enhavo_white.svg");background-size:auto 60%;background-position:13px 52%;background-repeat:no-repeat;position:relative;@include transition(all 300ms);cursor:pointer;}
   .menu-toggle {height:100%;width:30px;position:relative;color:#fff;font-size:2rem;cursor:pointer; border-left:1px solid $color2b;
     &:hover {background:$color2b;}
     * {position:absolute;top:50%;left:50%;@include transform(translate(-50%,-50%));}
