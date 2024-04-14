@@ -18,7 +18,7 @@ class AppTestPackage
         Encore
             .disableSingleRuntimeChunk()
             .enableSourceMaps(true)
-            .autoProvidejQuery()
+            .autoProvide$()
             .enableVueLoader()
             .enableSassLoader()
             .enableTypeScriptLoader()

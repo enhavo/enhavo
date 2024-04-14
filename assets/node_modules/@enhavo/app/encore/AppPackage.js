@@ -23,7 +23,7 @@ class AppPackage
             .enableSingleRuntimeChunk()
             .enableSourceMaps(!Encore.isProduction())
             .splitEntryChunks()
-            .autoProvidejQuery()
+            .autoProvide$()
             .enableVueLoader(() => {}, { runtimeCompilerBuild: false })
             .enableSassLoader()
             .enableTypeScriptLoader()

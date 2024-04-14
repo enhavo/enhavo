@@ -12,7 +12,7 @@ import View from "@enhavo/app/view/View";
 import UpdatedEvent from "@enhavo/app/view-stack/event/UpdatedEvent";
 import Translator from "@enhavo/core/Translator";
 import FlashMessenger from "@enhavo/app/flash-message/FlashMessenger";
-import * as jexl from "jexl";
+import jexl from "jexl";
 import ViewInterface from "@enhavo/app/view-stack/ViewInterface";
 import * as async from "async";
 import Confirm from "@enhavo/app/view/Confirm";

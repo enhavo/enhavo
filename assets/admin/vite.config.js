@@ -9,7 +9,20 @@ import {watchNodeModules} from "@enhavo/app/vite/watch-node-modules-plugin.js";
 
 export default defineConfig({
     optimizeDeps: {
-        include: ['axios', 'uuid/v4', 'vuedraggable', 'jquery', 'async', 'pako', 'lodash', 'ansi-to-html', 'jexl'],
+        include: [
+            'axios',
+            'uuid/v4',
+            'vuedraggable',
+            'jquery',
+            'async',
+            'pako',
+            'lodash',
+            'ansi-to-html',
+            'jexl',
+            'blueimp-file-upload',
+            'select2',
+            'icheck'
+        ],
     },
     plugins: [
         vue(),
@@ -77,9 +90,7 @@ export default defineConfig({
     },
     resolve: {
         alias: {
-            vue: 'vue/dist/vue.esm-bundler.js',
-            '$':  'jQuery',
+            vue: 'vue/dist/vue.esm-bundler.js'
         }
-    }
-
+    },
 })
