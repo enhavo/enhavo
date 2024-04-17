@@ -89,7 +89,7 @@ class ViteManager
             $client = HttpClient::create();
             $response = $client->request('GET', $this->getHost($build) . $this->getBase($build) . '/' . $entrypoint);
 
-            $success = $response->getStatusCode() === 200;
+            $success = in_array($response->getStatusCode(), [200,500]);
         } catch (TransportException $e) {
             $success = false;
         }

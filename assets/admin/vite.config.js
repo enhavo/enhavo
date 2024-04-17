@@ -21,7 +21,15 @@ export default defineConfig({
             'jexl',
             'blueimp-file-upload',
             'select2',
-            'icheck'
+            'icheck',
+            'tinymce',
+            'tinymce/plugins/advlist',
+            'tinymce/plugins/code',
+            'tinymce/plugins/emoticons',
+            'tinymce/plugins/emoticons/js/emojis',
+            'tinymce/plugins/link',
+            'tinymce/plugins/lists',
+            'tinymce/plugins/table',
         ],
     },
     plugins: [
