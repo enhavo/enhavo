@@ -3,7 +3,6 @@
 namespace Enhavo\Bundle\FormBundle\Test\Form\Extension;
 
 use Enhavo\Bundle\FormBundle\Form\Extension\WysiwygVueTypeExtension;
-use Enhavo\Bundle\FormBundle\Form\Helper\EntrypointFileManager;
 use Enhavo\Bundle\FormBundle\Form\Type\WysiwygType;
 use Enhavo\Bundle\VueFormBundle\Form\Extension\VueTypeExtension;
 use Enhavo\Bundle\VueFormBundle\Form\VueForm;
@@ -22,12 +21,7 @@ class WysiwygVueTypeExtensionTest extends TypeTestCase
 
     protected function getExtensions()
     {
-        $entrypontFileManagerMock = $this->getMockBuilder(EntrypointFileManager::class)->disableOriginalConstructor()->getMock();
-        $entrypontFileManagerMock->method('getCssFiles')->willReturn([
-            'file1', 'file2'
-        ]);
-
-        $type = new WysiwygType('entrypoint', 'build', $entrypontFileManagerMock);
+        $type = new WysiwygType('entrypoint', 'build');
         return array(
             new PreloadedExtension(array($type), array()),
         );

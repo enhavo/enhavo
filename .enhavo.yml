@@ -111,10 +111,6 @@ subtrees:
         url: 'git@github.com:enhavo/EnhavoTemplateBundle.git'
         prefix: src/Enhavo/Bundle/TemplateBundle
         package: enhavo/template-bundle
-    ThemeBundle:
-        url: 'git@github.com:enhavo/EnhavoThemeBundle.git'
-        prefix: src/Enhavo/Bundle/ThemeBundle
-        package: enhavo/theme-bundle
     TranslationBundle:
         url: 'git@github.com:enhavo/EnhavoTranslationBundle.git'
         prefix: src/Enhavo/Bundle/TranslationBundle
@@ -164,10 +160,6 @@ subtrees:
         url: 'git@github.com:enhavo/dependency-injection.git'
         prefix: 'assets/node_modules/@enhavo/dependency-injection'
         package: '@enhavo/dependency-injection'
-    font-assets:
-        url: 'git@github.com:enhavo/font-assets'
-        prefix: 'assets/node_modules/@enhavo/font'
-        package: '@enhavo/font'
     form-assets:
         url: 'git@github.com:enhavo/form-assets'
         prefix: 'assets/node_modules/@enhavo/form'
@@ -200,10 +192,6 @@ subtrees:
         url: 'git@github.com:enhavo/payment-assets'
         prefix: 'assets/node_modules/@enhavo/payment'
         package: '@enhavo/payment'
-    theme-assets:
-        url: 'git@github.com:enhavo/theme-assets'
-        prefix: 'assets/node_modules/@enhavo/theme'
-        package: '@enhavo/theme'
     translation-assets:
         url: 'git@github.com:enhavo/translation-assets'
         prefix: 'assets/node_modules/@enhavo/translation'

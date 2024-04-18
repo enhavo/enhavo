@@ -13,9 +13,7 @@ export default class extends Controller
 
     async connect()
     {
-        // @ts-ignore we using webpack import here
-        import('swagger-ui/dist/swagger-ui.css');
-        // @ts-ignore we using webpack import here
+        await import('swagger-ui/dist/swagger-ui.css');
         let swagger = await import('swagger-ui');
         let SwaggerUI = swagger.default;
 

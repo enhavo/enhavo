@@ -17,7 +17,7 @@ class PreloadExtensionFactory
 {
     public static function createWysiwygExtension()
     {
-        $type = new WysiwygType('', '', new EntrypointFileManagerMock());
+        $type = new WysiwygType('', '');
         return new PreloadedExtension([$type], []);
     }
 
@@ -27,4 +27,3 @@ class PreloadExtensionFactory
         return new PreloadedExtension([new PolyCollectionType($manager)], []);
     }
 }
-

@@ -35,7 +35,6 @@ class EnhavoAppExtension extends Extension implements PrependExtensionInterface
         $container->setParameter('enhavo_app.login.route', $config['login']['route']);
         $container->setParameter('enhavo_app.login.route_parameters', $config['login']['route_parameters']);
         $container->setParameter('enhavo_app.template_paths', $config['template_paths']);
-        $container->setParameter('enhavo_app.webpack_build', $config['webpack_build']);
         $container->setParameter('enhavo_app.roles', $config['roles']);
         $container->setParameter('enhavo_app.form_themes', $config['form_themes']);
         $container->setParameter('enhavo_app.locale', $config['locale']);

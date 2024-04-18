@@ -19,7 +19,6 @@ class TemplateResolver implements TemplateResolverInterface
     private KernelInterface $kernel;
     private Filesystem $fs;
     private string $defaultPath;
-    private WebpackBuildResolverInterface $resolver;
     private string $themePath;
 
     /** @var string[] */
@@ -32,7 +31,6 @@ class TemplateResolver implements TemplateResolverInterface
      * TemplateResolver constructor.
      * @param KernelInterface $kernel
      * @param Filesystem $fs
-     * @param WebpackBuildResolverInterface $resolver
      * @param array $templatePaths
      * @param string $defaultPath
      * @param string $themePath
@@ -40,7 +38,6 @@ class TemplateResolver implements TemplateResolverInterface
     public function __construct(
         KernelInterface $kernel,
         Filesystem $fs,
-        WebpackBuildResolverInterface $resolver,
         array $templatePaths = [],
         string $defaultPath = null,
         string $themePath = null
@@ -48,7 +45,6 @@ class TemplateResolver implements TemplateResolverInterface
         $this->fs = $fs;
         $this->kernel = $kernel;
         $this->defaultPath = $defaultPath;
-        $this->resolver = $resolver;
         $this->themePath = $themePath;
 
         $this->registerPath($this->defaultPath, '', 150);
@@ -99,11 +95,6 @@ class TemplateResolver implements TemplateResolverInterface
         // if nothing found we return input template
         $this->cache[$template] = $template;
         return $template;
-    }
-
-    public function getWebpackBuild()
-    {
-        return $this->resolver->resolve();
     }
 
     private function rewritePath(TemplatePath $templatePath, string $template)

@@ -2,7 +2,7 @@
 <html>
 <head>
     {% block stylesheets %}
-        {{ encore_entry_link_tags('base', null, webpack_build()) }}
+        {{ vite_css_tags('entrypoints/application.js', 'admin') }}
     {% endblock %}
 </head>
 
@@ -14,7 +14,8 @@
     </div>
 
     {% block javascripts %}
-        {{ encore_entry_script_tags('base', null, webpack_build()) }}
+        {{ vite_js_tags('entrypoints/application.js', 'admin') }}
+        {{ vite_js_preload_tags('entrypoints/application.js', 'admin') }}
     {% endblock %}
 </body>
 </html>

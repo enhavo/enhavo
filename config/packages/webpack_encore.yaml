@@ -1,6 +1,0 @@
-webpack_encore:
-    output_path: '%kernel.project_dir%/public/build/base'
-    builds:
-        enhavo: '%kernel.project_dir%/public/build/enhavo'
-        demo: '%kernel.project_dir%/public/build/demo'
-        base: '%kernel.project_dir%/public/build/base'

@@ -2,10 +2,8 @@
   "name": "@enhavo/dependency-injection",
   "license": "MIT",
   "type": "module",
-  "types": "index.ts",
   "version": "0.8.0",
   "homepage": "https://www.enhavo.com",
-  "main": "service-loader.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/enhavo/enhavo.git"
@@ -18,7 +16,6 @@
     "sha1": "^1.1.1",
     "glob": "^7.1.6",
     "yaml": "^1.10.0",
-    "loader-utils": "^2.0.0",
     "commander": "^9.4.0",
     "lodash": "^4.0",
     "@rollup/pluginutils": "^5.1"

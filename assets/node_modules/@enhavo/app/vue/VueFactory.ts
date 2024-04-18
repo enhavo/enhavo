@@ -1,11 +1,4 @@
 import {createApp, Component, App, Plugin, reactive} from "vue";
-import {Vue} from "vue-class-component";
-
-Vue.registerHooks([
-    "beforeRouteEnter",
-    "beforeRouteLeave",
-    "beforeRouteUpdate"
-]);
 
 export class VueFactory
 {
