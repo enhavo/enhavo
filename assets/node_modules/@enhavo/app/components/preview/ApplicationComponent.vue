@@ -14,16 +14,13 @@
 </template>
 
 <script setup lang="ts">
-import {onMounted, getCurrentInstance} from "vue";
+import {onMounted, getCurrentInstance, inject} from "vue";
 import '@enhavo/app/assets/styles/view.scss';
 import $ from "jquery";
 import PreviewApp from "@enhavo/app/preview/PreviewApp";
 
-const props = defineProps<{
-    previewApp: PreviewApp
-}>()
+const previewApp = inject<PreviewApp>('previewApp');
 
-const previewApp = props.previewApp;
 const instance = getCurrentInstance();
 let iframeClass = 'desktop';
 
