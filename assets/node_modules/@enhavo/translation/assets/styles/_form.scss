@@ -1,7 +1,7 @@
 .translation {position: relative;
   .translation-switcher {height:24px; padding:0px 6px; background:$grey1;color:$color2b;min-width:45px;border-radius:10px;font-size: 0.85rem; font-weight:$fontMedium;
       position: absolute; right: 1px; top: -26px; cursor: pointer; border:1px solid $grey1;transition: all .2s;
-      &:after {font-family: "enhavo-icons";content: "\f2bc"; position:absolute; right:6px; top:2px;color:$color1}
+      &:after {font-family: "icon";content: "\f2bc"; position:absolute; right:6px; top:2px;color:$color1}
     .active {display:none;}
     .translation-switcher-current {padding-right:14px;
       img { display: none;

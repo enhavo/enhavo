@@ -1,5 +1,9 @@
 @import "base";
 @import "components";
+
+// fix: since vite is not rewriting a css url, if we have nested imports, we have to define the url here atm
+.app-toolbar .branding-container { background-image: url("../images/enhavo_white.svg"); }
+
 .app-view {padding-top:60px;
   .actions {height:60px;position:fixed;top:0;left:0;width:100%;background:$grey1;z-index:3;
     .action {text-align:center;flex:1 1 100px;min-width:90px;padding:8px 3px;cursor:pointer; color:$grey3;transition:all .2s;position:relative;

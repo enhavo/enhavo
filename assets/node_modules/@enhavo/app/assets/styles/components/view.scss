@@ -34,7 +34,7 @@
     iframe {display:block;}
   }
   .view-resizer {position:absolute;top:30px;right:0;width:10px;height:calc(100% - 30px);border-right:1px solid $grey5;/*cursor:col-resize;border-left:1px solid $grey5;background:$grey1;
-    &:before {font-family:"enhavo-icons";position:absolute;top:50%;transform:translateY(-50%);color:$grey2;font-size:0.6rem;left:0;content:"\f28e";}
+    &:before {font-family:"icons";position:absolute;top:50%;transform:translateY(-50%);color:$grey2;font-size:0.6rem;left:0;content:"\f28e";}
     UNCOMMENT STYLES WHEN THIS ELEMENT HAS A FUNCTION
   */}
 }

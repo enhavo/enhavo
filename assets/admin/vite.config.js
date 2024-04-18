@@ -5,6 +5,7 @@ import path from 'node:path'
 import 'dotenv/config'
 import containerDIPlugin from '@enhavo/dependency-injection/rollup-plugin-container-di'
 import {fantasticon} from "@enhavo/app/vite/fantasticon-plugin/plugin.js";
+import {fantasticonSetting} from "@enhavo/app/vite/fantasticon-settings.js";
 import {watchNodeModules} from "@enhavo/app/vite/watch-node-modules-plugin.js";
 
 export default defineConfig({
@@ -39,15 +40,9 @@ export default defineConfig({
         ]),
         splitVendorChunkPlugin(),
         containerDIPlugin(),
-        fantasticon({
-            name: "icon",
+        fantasticon(fantasticonSetting({
             outputDir: path.resolve(__dirname, '../../public/build/admin'),
-            inputDir: path.resolve(__dirname, '../node_modules/@enhavo/app/assets/icons'),
-            fontTypes: ["ttf", "woff", "woff2"],
-            assetTypes: ["css", "html"],
-            prefix: 'icon',
-            tag: '*'
-        }),
+        })),
         watchNodeModules([
             '@enhavo/app',
             '@enhavo/api',

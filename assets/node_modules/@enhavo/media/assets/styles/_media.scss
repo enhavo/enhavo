@@ -74,7 +74,7 @@
   .upload-input {display: none;}
   .upload-button {border-radius:10px;}
   .upload-button,.download-button {
-    &:after {content: '\f236';font-family: "enhavo-icons";position:absolute;top:5px;right:10px;}
+    &:after {content: '\f236';font-family: "icon";position:absolute;top:5px;right:10px;}
     + .btn {margin-left:7px;}
   }
   .download-button {
