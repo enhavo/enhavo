@@ -146,6 +146,7 @@ enhavo_page_page_resource_preview:
     path: /enhavo/page/page/preview/resource
     defaults:
         _controller: enhavo_page.controller.page::previewResourceAction
+        _area: theme
         _sylius:
             viewer:
                 strategy_options:

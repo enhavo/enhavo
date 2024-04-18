@@ -85,6 +85,7 @@
     methods: [POST]
     defaults:
         _controller: <?= $app ?>.controller.<?= $resource ?>:previewResourceAction
+        _area: theme
         _sylius:
             viewer:
                 strategy_options:

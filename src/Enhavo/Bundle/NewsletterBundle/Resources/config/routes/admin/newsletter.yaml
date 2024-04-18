@@ -183,6 +183,7 @@ enhavo_newsletter_newsletter_resource_preview:
     methods: [POST]
     defaults:
         _controller: enhavo_newsletter.controller.newsletter::previewResourceAction
+        _area: theme
         _sylius:
             viewer:
                 strategy_options:

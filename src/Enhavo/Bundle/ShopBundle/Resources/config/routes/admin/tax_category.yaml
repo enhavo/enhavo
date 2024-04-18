@@ -100,6 +100,7 @@ sylius_tax_category_resource_preview:
     methods: [POST]
     defaults:
         _controller: sylius.controller.tax_category::previewResourceAction
+        _area: theme
         _sylius:
             viewer:
                 strategy_options:

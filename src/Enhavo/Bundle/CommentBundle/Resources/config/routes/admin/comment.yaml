@@ -111,6 +111,7 @@ enhavo_comment_comment_resource_preview:
     methods: [POST]
     defaults:
         _controller: enhavo_comment.controller.comment::previewResourceAction
+        _area: theme
         _sylius:
             viewer:
                 strategy_options:
