@@ -125,6 +125,7 @@ sylius_product_attribute_resource_preview:
     methods: [POST]
     defaults:
         _controller: sylius.controller.product_attributes::previewResourceAction
+        _area: theme
         _sylius:
             viewer:
                 strategy_options:

@@ -118,6 +118,7 @@ app_person_resource_preview:
     methods: [POST]
     defaults:
         _controller: app.controller.person::previewResourceAction
+        _area: theme
         _sylius:
             viewer:
                 strategy_options:

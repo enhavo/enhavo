@@ -176,6 +176,7 @@ enhavo_article_article_resource_preview:
     methods: [POST]
     defaults:
         _controller: enhavo_article.controller.article::previewResourceAction
+        _area: theme
         _sylius:
             viewer:
                 strategy_options:
