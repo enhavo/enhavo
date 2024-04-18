@@ -45,6 +45,7 @@ class EnhavoAppExtension extends Extension implements PrependExtensionInterface
         $container->setParameter('enhavo_app.vue.route_providers', $config['vue']['route_providers'] ?? []);
         $container->setParameter('enhavo_app.endpoint.template_url_prefix', $config['endpoint']['template_url_prefix'] ?? null);
         $container->setParameter('enhavo_app.areas', $config['area'] ?? []);
+        $container->setParameter('enhavo_app.vite.builds', $config['vite']['builds'] ?? []);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 

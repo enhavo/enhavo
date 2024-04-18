@@ -26,7 +26,6 @@
 <script setup lang="ts">
 import { inject, onMounted } from 'vue'
 import Form from "@enhavo/app/form/Form";
-import '@enhavo/app/assets/fonts/enhavo-icons.font'
 import '@enhavo/app/assets/styles/base.scss'
 import '@enhavo/app/assets/styles/form.scss'
 import '@enhavo/app/assets/styles/view.scss';

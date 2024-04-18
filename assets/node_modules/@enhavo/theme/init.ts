@@ -1,5 +1,5 @@
 import "@enhavo/theme/assets/styles/base.scss"
-import * as $ from "jquery";
+import $ from "jquery";
 import Theme from "./lib/Theme";
 
 $(() => {

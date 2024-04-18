@@ -1,7 +1,7 @@
 import FormType from "@enhavo/app/form/FormType";
 import 'jquery-datetimepicker'
 import 'jquery-datetimepicker/build/jquery.datetimepicker.min.css'
-import * as $ from "jquery";
+import $ from "jquery";
 
 export default class DateTimeType extends FormType
 {

@@ -1,17 +1,17 @@
-const ContainerBuilder = require('@enhavo/dependency-injection/container/ContainerBuilder');
-const Definition = require('@enhavo/dependency-injection/container/Definition');
-const Call = require('@enhavo/dependency-injection/container/Call');
-const Argument = require('@enhavo/dependency-injection/container/Argument');
-const CompilerPass = require('@enhavo/dependency-injection/container/CompilerPass');
-const Tag = require('@enhavo/dependency-injection/container/Tag');
-const FileLoadException = require('@enhavo/dependency-injection/exception/FileLoadException');
-const glob = require('glob');
-const path = require('path');
-const YAML = require('yaml');
-const _ = require('lodash');
-const fs = require('fs');
+import ContainerBuilder from '@enhavo/dependency-injection/container/ContainerBuilder.js'
+import Definition from '@enhavo/dependency-injection/container/Definition.js'
+import Call from '@enhavo/dependency-injection/container/Call.js'
+import Argument from '@enhavo/dependency-injection/container/Argument.js'
+import CompilerPass from '@enhavo/dependency-injection/container/CompilerPass.js'
+import Tag from '@enhavo/dependency-injection/container/Tag.js'
+import FileLoadException from '@enhavo/dependency-injection/exception/FileLoadException.js'
+import glob from 'glob'
+import path from 'path'
+import YAML from 'yaml'
+import _ from 'lodash'
+import fs from 'fs'
 
-class Loader
+export default class Loader
 {
     constructor() {
         this.loadedFiles = [];
@@ -283,4 +283,3 @@ class Configuration
     }
 }
 
-module.exports = Loader;

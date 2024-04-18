@@ -35,7 +35,6 @@
 
 <script setup lang="ts">
 import {inject } from "vue";
-import * as URI from 'urijs';
 import MainApp from "@enhavo/app/main/MainApp";
 import MenuManager from "@enhavo/app/menu/MenuManager";
 import WidgetManager from "@enhavo/app/toolbar/widget/WidgetManager";
@@ -56,7 +55,7 @@ function getBrandingImageStyles()
 
 function home()
 {
-    let uri = new URI(window.location.href);
-    window.location.href = uri.path()
+    let uri = new URL(window.location.href);
+    window.location.href = uri.pathname;
 }
 </script>

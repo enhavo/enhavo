@@ -8,7 +8,6 @@
 <script setup lang="ts">
 import AutoCompleteEntityFilter from "@enhavo/app/grid/filter/model/AutoCompleteEntityFilter";
 import axios from 'axios';
-import * as URI from 'urijs';
 
 const props = defineProps<{
     data: AutoCompleteEntityFilter
@@ -33,13 +32,12 @@ function fetchOptions(search: string, loading: (value: boolean) => void)
     }
     loading(true);
 
-    let uri = new URI(data.url);
-    uri.addQuery('q', search);
-    uri.addQuery('page', 1);
-    let uriString = uri + '';
+    let uri = new URL(data.url, window.origin);
+    uri.searchParams.set('q', search);
+    uri.searchParams.set('page', '1');
 
     axios
-        .get(uriString)
+        .get(uri.toString())
         .then((data) => {
             data.choices = [];
             for (let result of data.data.results) {

@@ -1,4 +1,4 @@
-import RegistryInterface from "./RegistryInterface";
+import {RegistryInterface} from "@enhavo/core/RegistryInterface";
 import RegistryEntry from "@enhavo/core/RegistryEntry";
 
 export default class Registry implements RegistryInterface

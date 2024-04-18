@@ -1,3 +1,0 @@
-imports:
-    - path: '@enhavo/app/services/theme/*'
-    - path: '@enhavo/shop/services/theme/*'

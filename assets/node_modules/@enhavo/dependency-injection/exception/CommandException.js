@@ -1,4 +1,4 @@
-class CommandException
+export default class CommandException
 {
     constructor(message) {
         this.message = message;
@@ -9,6 +9,3 @@ class CommandException
         return this.name + ": " + this.message;
     }
 }
-
-
-module.exports = CommandException;

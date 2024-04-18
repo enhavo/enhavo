@@ -1,4 +1,4 @@
-import * as $ from "jquery";
+import $ from "jquery";
 import MediaType from "@enhavo/media/type/MediaType";
 import AbstractLoader from "@enhavo/form/loader/AbstractLoader";
 import "@enhavo/media/assets/styles/style.scss";

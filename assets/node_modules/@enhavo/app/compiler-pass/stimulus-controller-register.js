@@ -1,7 +1,7 @@
-const Definition = require("@enhavo/dependency-injection/container/Definition");
-const Tag = require("@enhavo/dependency-injection/container/Tag");
-const path = require("path");
-const fs = require('fs');
+import Definition from "@enhavo/dependency-injection/container/Definition.js"
+import Tag from "@enhavo/dependency-injection/container/Tag.js"
+import path from "path"
+import fs from 'fs'
 
 /**
  * @param {string} value
@@ -50,7 +50,7 @@ function walk(dir, regEx) {
  * @param {ContainerBuilder} builder
  * @param {object} options
  */
-module.exports = function(builder, options, context)
+export default function(builder, options, context)
 {
     let controllerPath = path.resolve(context, options.dir);
     let regEx = options.regex ? options.regex : /.*Controller\./;

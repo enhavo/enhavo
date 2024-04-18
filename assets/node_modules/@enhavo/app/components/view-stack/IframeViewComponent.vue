@@ -5,7 +5,6 @@
 <script setup lang="ts">
 import {inject, onMounted, onUnmounted, onUpdated, getCurrentInstance, ref} from "vue";
 import IframeView from '@enhavo/app/view-stack/model/IframeView';
-import * as URI from 'urijs';
 import ViewStack from "@enhavo/app/view-stack/ViewStack";
 import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
 
@@ -24,8 +23,11 @@ let frame: HTMLIFrameElement = null;
 
 function getUrl()
 {
-    let uri = new URI(data.url);
-    return uri.addQuery('view_id', data.id) + '';
+    let uri = new URL(data.url, window.origin);
+    if (data.id) {
+        uri.searchParams.set('view_id', data.id.toString());
+    }
+    return uri.toString();
 }
 
 onMounted(() => {

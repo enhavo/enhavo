@@ -1,6 +1,6 @@
 import FormType from "@enhavo/app/form/FormType";
 import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
-import * as $ from "jquery";
+import $ from "jquery";
 import LoadGlobalDataEvent from "@enhavo/app/view-stack/event/LoadGlobalDataEvent";
 import SaveGlobalDataEvent from "@enhavo/app/view-stack/event/SaveGlobalDataEvent";
 import DataStorageEntry from "@enhavo/app/view-stack/DataStorageEntry";

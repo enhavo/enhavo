@@ -1,4 +1,4 @@
-@import '~select2/select2.css';
+@import 'select2/dist/css/select2.css';
 
 .select2-container { width: 100%;
     &.select2-dropdown-open {
@@ -13,7 +13,7 @@
     .select2-choice { border-radius:10px;padding:5px 9px;border:0;background-image:none;background:$grey1;color:#000;box-shadow:none;height:auto;
         .select2-arrow {width:22px;border:0;border-radius:0;background:$grey5;background-image:none;
             b {margin-top:6px;margin-left:3px;height:26px;display:block;position:relative;background:none;width:calc(100% - 3px);
-                &:before {font-family:"enhavo-icons";content:"\f2bb";}
+                &:before {font-family:"icon";content:"\f2bb";}
             }
         }
     }

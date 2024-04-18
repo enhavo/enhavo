@@ -1,6 +1,6 @@
 import MediaItem from '@enhavo/media/type/MediaItem';
 import ImageCropperConfiguration from "@enhavo/media/extension/ImageCropperConfiguration";
-import * as $ from 'jquery'
+import $ from 'jquery'
 
 export default class ImageCropperExtension
 {

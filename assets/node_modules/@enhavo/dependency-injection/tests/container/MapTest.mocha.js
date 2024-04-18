@@ -1,5 +1,5 @@
 const assert = require("chai").assert;
-const Map = require("@enhavo/dependency-injection/container/Map");
+import Map from "@enhavo/dependency-injection/container/Map"
 
 describe('dependency-injection/Container/Map', () => {
     describe('test get and setter', () => {

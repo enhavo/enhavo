@@ -2,8 +2,8 @@ import {Form} from "@enhavo/vue-form/model/Form"
 
 export class RadioForm extends Form
 {
+    declare element: HTMLInputElement;
     checked: boolean;
-    element: HTMLInputElement;
 
     getValue(): any
     {

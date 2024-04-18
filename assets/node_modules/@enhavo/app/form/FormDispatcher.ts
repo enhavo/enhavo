@@ -1,4 +1,4 @@
-import * as $ from "jquery";
+import $ from "jquery";
 import FormElementEvent from '@enhavo/app/form/event/FormElementEvent';
 import FormConvertEvent from '@enhavo/app/form/event/FormConvertEvent';
 import FormInsertEvent from '@enhavo/app/form/event/FormInsertEvent';

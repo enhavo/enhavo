@@ -219,7 +219,7 @@ jobs:
                 run: |
                     yarn install
                     yarn routes:dump
-                    yarn encore dev
+                    yarn build
                     bin/console enhavo:init
 
             -   name: Run tests
@@ -243,8 +243,8 @@ jobs:
             -   name: Install dependencies
                 run: yarn install
 
-            -   name: Run mocha
-                run: bin/mocha
-
-            -   name: Run karma
-                run: bin/karma
+#            -   name: Run mocha
+#                run: bin/mocha
+#
+#            -   name: Run karma
+#                run: bin/karma

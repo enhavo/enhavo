@@ -1,6 +1,6 @@
 import RegistryEntry from "@enhavo/core/RegistryEntry";
 
-export default interface RegistryInterface
+export interface RegistryInterface
 {
     register(entry: RegistryEntry): RegistryInterface;
     getComponent(name: string): object;

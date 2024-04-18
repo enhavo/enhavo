@@ -24,7 +24,7 @@ class GroupRoleVoter  implements VoterInterface
         return true;
     }
 
-    public function vote(TokenInterface $token, $object, array $attributes)
+    public function vote(TokenInterface $token, mixed $subject, array $attributes): int
     {
         $user = $token->getUser();
         if($user instanceof User) {

@@ -1,5 +1,5 @@
 
-class Validator
+export default class Validator
 {
     /**
      * @param {ContainerBuilder} builder
@@ -74,5 +74,3 @@ class Validator
         return newArray;
     }
 }
-
-module.exports = Validator;

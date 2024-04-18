@@ -1,0 +1,17 @@
+import { normalizePath } from "vite";
+import { extname } from "path/posix";
+
+export function assetPath(config, asset, basePath = '') {
+    const { pathOptions, name } = config;
+    return normalizePath(pathOptions?.[asset] ?? `${basePath}${name}.${asset}`);
+}
+
+export function withoutQuery(path) {
+    const index = path.indexOf("?");
+    return index === -1 ? path : path.slice(0, index);
+}
+
+export function assetType(resource) {
+    return extname(resource).slice(1);
+}
+

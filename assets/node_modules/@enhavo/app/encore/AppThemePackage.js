@@ -20,7 +20,7 @@ class AppThemePackage
             .enableSingleRuntimeChunk()
             .enableSourceMaps(!Encore.isProduction())
             .splitEntryChunks()
-            .autoProvidejQuery()
+            .autoProvide$()
             .enableSassLoader()
             .enableTypeScriptLoader()
             .enableVersioning(Encore.isProduction())

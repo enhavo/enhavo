@@ -1,4 +1,4 @@
-import * as $ from "jquery";
+import $ from "jquery";
 import ConditionType from "@enhavo/form/type/ConditionType";
 import ConditionObserverConfig from "@enhavo/form/type/ConditionObserverConfig";
 

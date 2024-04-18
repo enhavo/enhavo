@@ -1,7 +1,8 @@
 import FormType from "@enhavo/app/form/FormType";
 import MediaRow from "@enhavo/media/type/MediaRow";
 import MediaConfig from "@enhavo/media/type/MediaConfig";
-import * as $ from "jquery";
+import $ from "jquery";
+import "blueimp-file-upload/js/vendor/jquery.ui.widget.js";
 import "blueimp-file-upload/js/jquery.iframe-transport";
 import "blueimp-file-upload/js/jquery.fileupload";
 import Message from "@enhavo/app/flash-message/Message";
@@ -119,7 +120,7 @@ export default class MediaType extends FormType
     private initUploadButton()
     {
         let self = this;
-        this.$element.find('[data-file-upload-button]').on('click', (event: JQuery.ClickEvent) => {
+        this.$element.find('[data-file-upload-button]').on('click', (event: $.ClickEvent) => {
             event.preventDefault();
             event.stopPropagation();
             self.$element.find('[data-file-upload]').trigger('click');

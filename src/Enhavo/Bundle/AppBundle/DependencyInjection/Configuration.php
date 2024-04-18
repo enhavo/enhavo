@@ -26,6 +26,7 @@ class Configuration implements ConfigurationInterface
 
         $this->addViewerSectionSection($rootNode);
         $this->addVueSection($rootNode);
+        $this->addViteSection($rootNode);
         $this->addAreaSection($rootNode);
         $this->addEndpointSection($rootNode);
         $this->addMailSectionSection($rootNode);
@@ -274,6 +275,29 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('label')->defaultValue('')->end()
                             ->scalarNode('translation_domain')->defaultValue(null)->end()
                             ->scalarNode('display')->defaultValue(true)->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end();
+    }
+
+    private function addViteSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('vite')
+                    ->children()
+                        ->scalarNode('mode')->defaultValue('test')->end()
+                        ->arrayNode('builds')
+                            ->useAttributeAsKey('name')
+                            ->arrayPrototype()
+                                ->children()
+                                    ->scalarNode('host')->defaultValue('localhost')->end()
+                                    ->scalarNode('port')->defaultValue('5200')->end()
+                                    ->scalarNode('manifest')->end()
+                                    ->scalarNode('base')->end()
+                                ->end()
+                            ->end()
                         ->end()
                     ->end()
                 ->end()

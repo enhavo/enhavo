@@ -12,8 +12,10 @@ import {onMounted, onUpdated, ref} from "vue";
 import {FormUtil} from "@enhavo/vue-form/form/FormUtil";
 import * as _ from "lodash";
 import {ChoiceForm} from "@enhavo/vue-form/model/ChoiceForm";
-import * as $ from "jquery";
-import "select2";
+import $ from "jquery";
+import select2 from "select2";
+
+select2($);
 
 const props = defineProps<{
     form: ChoiceForm

@@ -1,9 +1,8 @@
-import * as $ from "jquery";
+import $ from "jquery";
 import AbstractAction from "@enhavo/app/action/model/AbstractAction";
 import LoadingEvent from "@enhavo/app/view-stack/event/LoadingEvent";
 import View from "@enhavo/app/view/View";
 import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
-import * as URI from "urijs";
 
 export default class SaveAction extends AbstractAction
 {
@@ -26,9 +25,9 @@ export default class SaveAction extends AbstractAction
         let $form = $('form');
 
         if (this.url) {
-            let uri = new URI(this.url);
-            uri = uri.addQuery('view_id', this.view.getId());
-            $form.attr('action', uri);
+            let uri = new URL(this.url, window.origin);
+            uri.searchParams.set('view_id', this.view.getId().toString());
+            $form.attr('action', uri.toString);
         }
         
         $form.submit();

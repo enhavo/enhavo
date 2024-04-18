@@ -2,7 +2,7 @@
     <head>
         {% block head %}
             {% block stylesheets %}
-                {{ encore_entry_link_tags('base', null, webpack_build()) }}
+                {{ vite_css_tags('entrypoints/main.js', 'theme') }}
             {% endblock %}
         {% endblock %}
     </head>
@@ -22,7 +22,7 @@
 
         {% block javascripts %}
             <script id="routes" type="application/json">{{ routes()|raw }}</script>
-            {{ encore_entry_script_tags('base', null, webpack_build()) }}
+            {{ vite_js_tags('entrypoints/main.js', 'theme') }}
         {% endblock %}
 
     {% endblock %}

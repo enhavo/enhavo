@@ -1,4 +1,5 @@
-import 'select2'
+import select2 from "select2";
+import $ from 'jquery';
 import FormType from "@enhavo/app/form/FormType";
 import Sortable from 'sortablejs';
 import UpdatedEvent from "@enhavo/app/view-stack/event/UpdatedEvent";
@@ -7,6 +8,8 @@ import DataStorageEntry from "@enhavo/app/view-stack/DataStorageEntry";
 import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
 import Router from "@enhavo/core/Router";
 import View from "@enhavo/app/view/View";
+
+select2($);
 
 export default class AutoCompleteType extends FormType
 {
@@ -23,7 +26,7 @@ export default class AutoCompleteType extends FormType
         this.eventDispatcher = eventDispatcher;
         this.router = router;
         this.view = view;
-        this.initListener(this.viewKey);
+        //this.initListener(this.viewKey);
     }
 
     private initListener(viewKey: string)
@@ -42,6 +45,7 @@ export default class AutoCompleteType extends FormType
 
     protected init()
     {
+        return;
         let data = this.$element.data('auto-complete-entity');
         this.idProperty = data.id_property;
         this.labelProperty = data.label_property;

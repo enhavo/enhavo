@@ -1,6 +1,7 @@
 {
   "name": "@enhavo/app",
   "license": "MIT",
+  "type": "module",
   "types": "index.ts",
   "version": "0.8.0",
   "homepage": "https://www.enhavo.com",
@@ -12,6 +13,7 @@
     "@enhavo/core": "https://github.com/enhavo/core-assets.git",
     "@hotwired/stimulus": "^3.0.1",
     "@ibm/plex": "^1.2.3",
+    "@vuepic/vue-datepicker": "^8.3.1",
     "ansi-to-html": "^0.6.11",
     "async": "^2.6.2",
     "argparse": "^2.0.1",
@@ -31,7 +33,6 @@
     "vue-router": "^4.2.5",
     "vue-select": "4.0.0-beta.3",
     "vuedraggable": "^4.1.0",
-    "vue3-datepicker": "^0.3.2",
     "webfonts-loader": "^7.2.0"
   }
 }

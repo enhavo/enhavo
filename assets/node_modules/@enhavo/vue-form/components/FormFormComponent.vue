@@ -1,5 +1,5 @@
 <template>
-    <form :name="getName()" :method="getMethod()" :action="getAction()" :ref="(el) => form.setElement(el)">
+    <form :name="getName()" :method="getMethod()" :action="getAction()" :ref="(el) => form.setElement(<HTMLElement>el)">
         <slot name="form-before"></slot>
         <input v-if="getDifferentMethod()" type="hidden" name="_method" :value="getDifferentMethod()" />
         <slot>

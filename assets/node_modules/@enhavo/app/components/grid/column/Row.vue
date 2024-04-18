@@ -22,7 +22,7 @@
 <script setup lang="ts">
 import {inject, onMounted, getCurrentInstance} from "vue";
 import RowData from "@enhavo/app/grid/column/RowData";
-import * as $ from "jquery";
+import $ from "jquery";
 import BatchManager from "@enhavo/app/grid/batch/BatchManager";
 import ColumnManager from "@enhavo/app/grid/column/ColumnManager";
 import Grid from "@enhavo/app/grid/Grid";

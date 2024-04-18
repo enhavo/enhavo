@@ -57,7 +57,7 @@ class WysiwygType extends AbstractType
         $editorEntrypointBuild = $options['editor_entrypoint_build'] === null ? $this->entrypointBuild : $options['editor_entrypoint_build'];
         $view->vars['editor_css'] = null;
         if($editorEntrypoint) {
-            $view->vars['editor_css'] = $this->entrypointManager->getCssFiles($editorEntrypoint, $editorEntrypointBuild);
+            //$view->vars['editor_css'] = $this->entrypointManager->getCssFiles($editorEntrypoint, $editorEntrypointBuild);
         }
     }
 

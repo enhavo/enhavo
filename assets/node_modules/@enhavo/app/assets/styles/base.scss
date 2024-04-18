@@ -1,12 +1,8 @@
-@import "~compass-mixins/lib/_animate.scss";
-@import "~compass-mixins/lib/_compass.scss";
-@import "~@ibm/plex/css/ibm-plex.css";
-@import "variables";
-@import "reset";
-@import "mixins";
-@import "blueprints";
-@import "custom_animations";
-@import '~vue-select/dist/vue-select.css';
+@import "compass-mixins/lib/_animate.scss";
+@import "compass-mixins/lib/_compass.scss";
+@import "@ibm/plex/css/ibm-plex.css";
+@import "core/_index";
+@import 'vue-select/dist/vue-select.css';
 
 *:focus {outline:none;}
 

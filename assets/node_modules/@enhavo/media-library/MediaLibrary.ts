@@ -3,7 +3,7 @@ import * as _ from "lodash";
 import Data, {Column, ContentType, File, Tag} from "@enhavo/media-library/Data";
 import UpdatedEvent from "@enhavo/app/view-stack/event/UpdatedEvent";
 import * as async from "async";
-import * as $ from "jquery";
+import $ from "jquery";
 import Message from "@enhavo/app/flash-message/Message";
 import FlashMessenger from "@enhavo/app/flash-message/FlashMessenger";
 import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";

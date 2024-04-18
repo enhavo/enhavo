@@ -15,7 +15,7 @@ export default class extends AbstractController
     }
 
     async init() {
-        const vueFactory = await this.application.container.get("@enhavo/app/vue/VueFactory") as VueFactory;
+        const vueFactory = await this.get("@enhavo/app/vue/VueFactory") as VueFactory;
         const vueRouterFactory = await this.application.container.get("@enhavo/app/vue/VueRouterFactory") as VueRouterFactory;
         const app = vueFactory.createApp(UserApp);
         app.use(vueRouterFactory.createRouter());

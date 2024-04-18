@@ -1,4 +1,4 @@
-import * as $ from 'jquery'
+import $ from 'jquery'
 import FormInitializer from "@enhavo/app/form/FormInitializer";
 import PolyCollectionItem from "@enhavo/form/type/PolyCollectionItem";
 import PolyCollectionMenu from "@enhavo/form/type/PolyCollectionMenu";

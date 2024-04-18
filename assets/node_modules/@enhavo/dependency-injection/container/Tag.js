@@ -1,5 +1,5 @@
 
-class Tag
+export default class Tag
 {
     /**
      * @param {string} name
@@ -23,5 +23,3 @@ class Tag
         return this.parameters;
     }
 }
-
-module.exports = Tag;

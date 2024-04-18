@@ -1,7 +1,7 @@
 import AbstractAction from "@enhavo/app/action/model/AbstractAction";
 import {AxiosResponseHandler} from "@enhavo/app/util/AxiosResponseHandler";
 import axios from 'axios';
-import * as $ from 'jquery';
+import $ from 'jquery';
 
 export default class DownloadAction extends AbstractAction
 {

@@ -90,7 +90,7 @@
     "symfony/property-info": "^6.4",
     "symfony/runtime": "^6.4",
     "symfony/security-bundle": "^6.4",
-    "symfony/serializer-pack": "^1.0",
+    "symfony/serializer": "^6.4",
     "symfony/translation": "^6.4",
     "symfony/twig-bridge": "^6.4",
     "symfony/twig-bundle": "^6.4",
@@ -161,6 +161,13 @@
     "auto-scripts": {
       "cache:clear": "symfony-cmd",
       "assets:install %PUBLIC_DIR%": "symfony-cmd"
+    }
+  },
+  "extra": {
+    "symfony": {
+      "allow-contrib": false,
+      "require": "6.4.*",
+      "docker": false
     }
   }
 }

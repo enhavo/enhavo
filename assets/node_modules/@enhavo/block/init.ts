@@ -1,4 +1,4 @@
-import * as $ from "jquery";
+import $ from "jquery";
 import GalleryBlock from "@enhavo/block/block/GalleryBlock";
 import '@enhavo/block/assets/styles/block.scss';
 

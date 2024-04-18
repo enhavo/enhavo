@@ -1,7 +1,6 @@
 {
   "name": "@enhavo/core",
   "license": "MIT",
-  "types": "index.ts",
   "version": "0.8.0",
   "homepage": "https://www.enhavo.com",
   "repository": {

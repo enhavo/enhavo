@@ -1,5 +1,5 @@
-const Argument = require("@enhavo/dependency-injection/container/Argument");
-const Call = require("@enhavo/dependency-injection/container/Call");
+import Argument from "@enhavo/dependency-injection/container/Argument.js"
+import Call from "@enhavo/dependency-injection/container/Call.js"
 
 /**
  * @param {ContainerBuilder} builder
@@ -64,7 +64,7 @@ function registerPlugin(builder, options) {
  * @param {ContainerBuilder} builder
  * @param {object} options
  */
-module.exports = function(builder, options) {
+export default function(builder, options) {
     registerComponents(builder, options);
     registerDirective(builder, options);
     registerStore(builder, options);

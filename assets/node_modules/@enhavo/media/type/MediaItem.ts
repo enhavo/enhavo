@@ -1,4 +1,4 @@
-import * as $ from "jquery";
+import $ from "jquery";
 import MediaItemMeta from "@enhavo/media/type/MediaItemMeta";
 import MediaRow from "@enhavo/media/type/MediaRow";
 

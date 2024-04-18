@@ -18,7 +18,6 @@ import SaveStateEvent from "@enhavo/app/view-stack/event/SaveStateEvent";
 import ChangeUrlEvent from "@enhavo/app/view-stack/event/ChangeUrlEvent";
 import FrameStorage from "@enhavo/app/view-stack/FrameStorage";
 import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
-import * as $ from "jquery";
 import MaximizeEvent from "@enhavo/app/view-stack/event/MaximizeEvent";
 
 export default class ViewStack
@@ -65,11 +64,11 @@ export default class ViewStack
     init() {
         this.data = this.componentRegistry.registerData(this.data);
 
-        $(window).resize(() => {
+        window.addEventListener('resize', () => {
             this.arrangeManager.resize(this.data.views);
         });
 
-        if(!this.data.views) {
+        if (!this.data.views) {
             this.data.views = [];
             this.views = <ViewInterface[]>this.data.views;
         } else {

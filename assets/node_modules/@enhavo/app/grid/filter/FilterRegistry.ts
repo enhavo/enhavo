@@ -1,6 +1,6 @@
-import { Registry } from "@enhavo/core";
+import Registry from "@enhavo/core/Registry";
 import FilterFactoryInterface from "@enhavo/app/grid/filter/FilterFactoryInterface";
-import RegistryInterface from "@enhavo/core/RegistryInterface";
+import {RegistryInterface} from "@enhavo/core/RegistryInterface";
 
 export default class FilterRegistry extends Registry
 {

@@ -1,5 +1,5 @@
 import AbstractAction from "@enhavo/app/action/model/AbstractAction";
-import * as $ from 'jquery';
+import $ from 'jquery';
 import DataEvent from "@enhavo/app/view-stack/event/DataEvent";
 import ExistsEvent from "@enhavo/app/view-stack/event/ExistsEvent";
 import LoadedEvent from "@enhavo/app/view-stack/event/LoadedEvent";

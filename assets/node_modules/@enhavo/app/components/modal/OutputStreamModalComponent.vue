@@ -13,7 +13,7 @@
 import {watch, ref} from "vue";
 import OutputStreamModal from "@enhavo/app/modal/model/OutputStreamModal"
 import * as Convert from "ansi-to-html";
-import * as $ from "jquery";
+import $ from "jquery";
 
 const props = defineProps<{
     modal: OutputStreamModal

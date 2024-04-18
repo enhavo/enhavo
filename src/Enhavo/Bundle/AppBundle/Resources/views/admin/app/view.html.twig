@@ -8,14 +8,15 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     <script id="data" type="application/json">{{ data|json_encode|raw }}</script>
     {% block stylesheets %}
-        {{ encore_entry_link_tags('enhavo/view', null, 'enhavo') }}
+        {{ vite_css_tags('entrypoints/application.js', 'admin') }}
     {% endblock %}
 </head>
 
 <body>
 <div id="app"></div>
 {% block javascripts %}
-    {{ encore_entry_script_tags('enhavo/view', null, 'enhavo') }}
+    {{ vite_js_tags('entrypoints/application.js', 'admin') }}
+    {{ vite_js_preload_tags('entrypoints/application.js', 'admin') }}
 {% endblock %}
 </body>
 </html>

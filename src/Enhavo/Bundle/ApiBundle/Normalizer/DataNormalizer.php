@@ -121,4 +121,11 @@ class DataNormalizer implements NormalizerInterface, NormalizerAwareInterface
         }
         return $normalizerToExecute;
     }
+
+    public function getSupportedTypes(?string $format): array
+    {
+        return [
+            '*' => false,
+        ];
+    }
 }

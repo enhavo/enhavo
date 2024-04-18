@@ -18,7 +18,7 @@ class SuperAdminVoter implements VoterInterface
         return true;
     }
 
-    public function vote(TokenInterface $token, $object, array $attributes)
+    public function vote(TokenInterface $token, mixed $subject, array $attributes): int
     {
         if(0 === strpos($attributes[0], 'ROLE_')){
             if($token->getUser() instanceof User && in_array('ROLE_SUPER_ADMIN', $token->getUser()->getRoles())) {

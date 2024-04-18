@@ -1,4 +1,4 @@
-import * as $ from 'jquery'
+import $ from 'jquery'
 import axios from "axios";
 import * as async from "async";
 

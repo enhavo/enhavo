@@ -1,4 +1,4 @@
-import * as $ from "jquery";
+import $ from "jquery";
 import ListType from "@enhavo/form/type/ListType";
 
 export default class ListItem

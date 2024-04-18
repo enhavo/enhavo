@@ -1,4 +1,4 @@
-import * as $ from "jquery";
+import $ from "jquery";
 import FormDispatcher from '@enhavo/app/form/FormDispatcher';
 
 export default class FormInitializer

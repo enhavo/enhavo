@@ -4,12 +4,13 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {{ encore_entry_link_tags('enhavo/application', null, 'enhavo') }}
+    {{ vite_css_tags('entrypoints/application.js', 'admin') }}
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('enhavo/application', null, 'enhavo') }}
+    {{ vite_js_tags('entrypoints/application.js', 'admin') }}
+    {{ vite_js_preload_tags('entrypoints/application.js', 'admin') }}
 {% endblock %}
 
 {% block form %}

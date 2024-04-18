@@ -1,5 +1,5 @@
 import InitializerInterface from "@enhavo/app/InitializerInterface";
-import * as $ from "jquery";
+import $ from "jquery";
 import "slick-carousel";
 
 export default class GalleryBlock implements InitializerInterface

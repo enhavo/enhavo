@@ -30,6 +30,7 @@ services:
             - { name: vue.component, component: 'v-select' }
 
     'vue3-datepicker':
+        from: '@vuepic/vue-datepicker'
         chunk: 'vue'
         static: true
         tags:

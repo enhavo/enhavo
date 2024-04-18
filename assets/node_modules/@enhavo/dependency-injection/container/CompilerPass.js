@@ -1,5 +1,5 @@
 
-class CompilerPass
+export default class CompilerPass
 {
     /**
      * @param {string} name
@@ -37,4 +37,3 @@ class CompilerPass
     }
 }
 
-module.exports = CompilerPass;

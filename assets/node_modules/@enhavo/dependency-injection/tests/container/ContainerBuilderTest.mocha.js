@@ -1,6 +1,6 @@
 const assert = require("chai").assert;
-const ContainerBuilder = require("@enhavo/dependency-injection/container/ContainerBuilder");
-const Definition = require("@enhavo/dependency-injection/container/Definition");
+import ContainerBuilder from "@enhavo/dependency-injection/container/ContainerBuilder"
+import Definition from "@enhavo/dependency-injection/container/Definition"
 
 describe('dependency-injection/Container/ContainerBuilder', () => {
     describe('test definition functions', () => {

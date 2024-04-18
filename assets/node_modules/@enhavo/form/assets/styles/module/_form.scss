@@ -1,6 +1,6 @@
 .form-row {
     .autocomplete-create-button {display:inline-block;@extend %btn-secondary;text-decoration: none;
-        &:after {font-family:"enhavo-icons";content:"\f10d";position:absolute;top:5px; right:10px; font-weight:$fontRegular;}
+        &:after {font-family:"icon";content:"\f10d";position:absolute;top:5px; right:10px; font-weight:$fontRegular;}
     }
 
     .autocomplete-action-button {display:inline-block;@extend %btn-secondary;text-decoration: none;

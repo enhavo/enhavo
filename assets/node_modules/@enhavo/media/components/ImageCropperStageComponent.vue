@@ -14,8 +14,8 @@
 <script setup lang="ts">
 import {inject, onMounted, ref, getCurrentInstance} from "vue";
 import ImageCropperApp from "../image-cropper/ImageCropperApp";
-import * as $ from "jquery";
-import * as Cropper from 'cropperjs';
+import $ from "jquery";
+import Cropper from 'cropperjs';
 import 'cropperjs/dist/cropper.min.css';
 
 const imageCropper = inject<ImageCropperApp>('imageCropper');

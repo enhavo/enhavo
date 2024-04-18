@@ -1,7 +1,8 @@
-const Argument = require("@enhavo/dependency-injection/container/Argument");
-const Definition = require("@enhavo/dependency-injection/container/Definition");
-const Tag = require("@enhavo/dependency-injection/container/Tag");
-const Call = require("@enhavo/dependency-injection/container/Call");
+import Argument from "@enhavo/dependency-injection/container/Argument.js"
+import Definition from "@enhavo/dependency-injection/container/Definition.js"
+import Tag from "@enhavo/dependency-injection/container/Tag.js"
+import Call from "@enhavo/dependency-injection/container/Call.js"
+
 
 function createVueFactoryDefinition(builder)
 {
@@ -17,7 +18,7 @@ function createVueFactoryDefinition(builder)
     return definition;
 }
 
-module.exports = function(builder, options, context)
+export default function(builder, options, context)
 {
     let factory = createVueFactoryDefinition(builder);
 

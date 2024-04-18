@@ -1,4 +1,4 @@
-import * as $ from "jquery";
+import $ from "jquery";
 import * as async from "async";
 import axios, {CancelTokenSource} from "axios";
 import {ListForm} from "@enhavo/form/form/model/ListForm";

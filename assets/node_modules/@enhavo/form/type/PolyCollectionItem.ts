@@ -1,4 +1,4 @@
-import * as $ from "jquery";
+import $ from "jquery";
 import PolyCollectionType from "@enhavo/form/type/PolyCollectionType";
 import FormDispatcher from "@enhavo/app/form/FormDispatcher";
 import FormRegistry from "@enhavo/app/form/FormRegistry";

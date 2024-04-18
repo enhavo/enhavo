@@ -51,7 +51,7 @@ services:
         from: '@enhavo/core/RegistryEntry'
         arguments:
             - 'string:filter-action'
-            - '@enhavo/app/components/action/DropdownActionComponent.vue'
+            - '@enhavo/app/components/action/ActionComponent.vue'
             - '@enhavo/app/action/factory/FilterActionFactory'
         tags:
             - 'enhavo_app.action'

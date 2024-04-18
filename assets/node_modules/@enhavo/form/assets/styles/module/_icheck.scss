@@ -1,4 +1,4 @@
-.icheckbox { display: inline-block;vertical-align: middle;border: none;background:#FFF;border:1px solid $color1;padding: 3px 3px 3px 3px;height: 22px;width: 22px;font-size: 15px;line-height: 16px;cursor: pointer;text-align:center;font-family: "enhavo-icons";font-weight: normal;font-style: normal;text-decoration: inherit;-webkit-font-smoothing: antialiased;border-radius:50%;position: relative;transition:border .3s;
+.icheckbox { display: inline-block;vertical-align: middle;border: none;background:#FFF;border:1px solid $color1;padding: 3px 3px 3px 3px;height: 22px;width: 22px;font-size: 15px;line-height: 16px;cursor: pointer;text-align:center;font-family: "icon";font-weight: normal;font-style: normal;text-decoration: inherit;-webkit-font-smoothing: antialiased;border-radius:50%;position: relative;transition:border .3s;
   &:hover { font-weight:$fontMedium;border-width:1px;background:rgba($color1,0.8);}
   &.checked{ background:$color1;
     &:after {transform:scale(1);transition:all .3s;pointer-events:none; opacity:1;}

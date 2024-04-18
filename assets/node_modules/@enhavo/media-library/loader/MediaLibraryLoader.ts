@@ -7,7 +7,7 @@ import LoadDataEvent from "@enhavo/app/view-stack/event/LoadDataEvent";
 import DataStorageEntry from "@enhavo/app/view-stack/DataStorageEntry";
 import MediaType from "@enhavo/media/type/MediaType"
 import MediaItemMeta from "@enhavo/media/type/MediaItemMeta"
-import * as $ from "jquery";
+import $ from "jquery";
 
 export default class MediaLibraryLoader extends AbstractLoader {
     private currentType: MediaType;
@@ -65,7 +65,7 @@ export default class MediaLibraryLoader extends AbstractLoader {
         let elements = this.findElements(mediaType.getElement(), '[data-file-media-library]');
 
         for (let element of elements) {
-            $(element).on('click', (event: JQuery.ClickEvent) => {
+            $(element).on('click', (event: $.ClickEvent) => {
                 event.preventDefault();
                 this.view.open(url, 'media_library');
                 this.currentType = mediaType;

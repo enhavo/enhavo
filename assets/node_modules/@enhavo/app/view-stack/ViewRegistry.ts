@@ -1,4 +1,4 @@
-import { Registry } from "@enhavo/core";
+import Registry from "@enhavo/core/Registry";
 import ViewFactoryInterface from "./ViewFactoryInterface";
 
 export default class ViewRegistry extends Registry

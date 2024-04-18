@@ -163,3 +163,8 @@ services:
             - '@router'
         tags:
             - { name: data_collector, id: 'template_endpoint', priority: 90 }
+
+    Enhavo\Bundle\AppBundle\Vite\ViteManager:
+        arguments:
+            - '%enhavo_app.vite.builds%'
+            - '%kernel.project_dir%/public'

@@ -1,4 +1,4 @@
-import * as $ from "jquery";
+import $ from "jquery";
 import PolyCollectionType from "@enhavo/form/type/PolyCollectionType";
 import PolyCollectionItemAddButton from "@enhavo/form/type/PolyCollectionItemAddButton";
 

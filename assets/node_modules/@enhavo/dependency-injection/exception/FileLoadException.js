@@ -1,4 +1,4 @@
-class FileLoadException
+export default class FileLoadException
 {
     constructor(message) {
         this.message = message;
@@ -9,6 +9,3 @@ class FileLoadException
         return this.name + ": " + this.message;
     }
 }
-
-
-module.exports = FileLoadException;

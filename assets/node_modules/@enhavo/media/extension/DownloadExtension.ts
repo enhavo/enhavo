@@ -1,6 +1,6 @@
 import MediaRouter from "@enhavo/media/MediaRouter";
 import MediaItem from '@enhavo/media/type/MediaItem';
-import * as $ from 'jquery'
+import $ from 'jquery'
 
 export default class DownloadExtension
 {

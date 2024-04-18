@@ -56,8 +56,9 @@ import {inject, onMounted, ref, watch} from "vue";
 import Translator from "@enhavo/core/Translator";
 import Router from "@enhavo/core/Router";
 import MediaLibrary from "@enhavo/media-library/MediaLibrary";
-import * as $ from 'jquery';
+import $ from 'jquery';
 import '@enhavo/app/assets/styles/view.scss';
+import "blueimp-file-upload/js/vendor/jquery.ui.widget.js";
 import "blueimp-file-upload/js/jquery.fileupload";
 import '@enhavo/media-library/assets/styles.scss';
 

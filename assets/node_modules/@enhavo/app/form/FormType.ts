@@ -1,4 +1,4 @@
-import * as $ from "jquery";
+import $ from "jquery";
 import FormTypeInterface from "@enhavo/app/form/FormTypeInterface";
 
 export default abstract class FormType implements FormTypeInterface

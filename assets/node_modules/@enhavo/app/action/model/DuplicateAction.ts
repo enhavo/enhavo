@@ -1,8 +1,7 @@
 import AbstractAction from "@enhavo/app/action/model/AbstractAction";
 import Confirm from "@enhavo/app/view/Confirm";
-import * as URI from "urijs";
 import LoadingEvent from "@enhavo/app/view-stack/event/LoadingEvent";
-import * as $ from "jquery";
+import $ from "jquery";
 import View from "@enhavo/app/view/View";
 import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
 
@@ -28,11 +27,11 @@ export default class DuplicateAction extends AbstractAction
         this.view.confirm(new Confirm(
             this.confirmMessage,
             () => {
-                let uri = new URI(this.url);
-                uri = uri.addQuery('view_id', this.view.getId());
+                let uri = new URL(this.url, window.origin);
+                uri.searchParams.set('view_id', this.view.getId().toString());
                 let event = new LoadingEvent(this.view.getId());
                 this.eventDispatcher.dispatch(event);
-                $('<form method="post" action="'+uri+'"><input type="hidden" name="_csrf_token" value="'+this.token+'"/></form>').appendTo('body').submit();
+                $('<form method="post" action="'+uri.toString()+'"><input type="hidden" name="_csrf_token" value="'+this.token+'"/></form>').appendTo('body').submit();
             },
             () => {
 

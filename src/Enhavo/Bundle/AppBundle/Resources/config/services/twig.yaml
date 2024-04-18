@@ -62,3 +62,9 @@ services:
     Enhavo\Bundle\AppBundle\Twig\TwigRouter:
         arguments:
             - '@request_stack'
+
+    Enhavo\Bundle\AppBundle\Twig\ViteExtension:
+        arguments:
+            - '@Enhavo\Bundle\AppBundle\Vite\ViteManager'
+        tags:
+            - { name: twig.extension }
