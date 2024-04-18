@@ -43,7 +43,6 @@ class TemplateExtension extends AbstractExtension
         return array(
             new TwigFunction('template', array($this, 'getTemplate')),
             new TwigFunction('form_themes', array($this, 'getFormThemes')),
-            new TwigFunction('webpack_build', array($this, 'getWebpackBuild')),
             new TwigFunction('create_array', array($this, 'createArray')),
         );
     }
@@ -60,11 +59,6 @@ class TemplateExtension extends AbstractExtension
     public function getTemplate(string $template): string
     {
         return $this->templateResolver->resolve($template);
-    }
-
-    public function getWebpackBuild()
-    {
-        return $this->templateResolver->getWebpackBuild();
     }
 
     public function createArray($key, $data)

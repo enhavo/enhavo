@@ -30,7 +30,6 @@ class Configuration implements ConfigurationInterface
         $this->addAreaSection($rootNode);
         $this->addEndpointSection($rootNode);
         $this->addMailSectionSection($rootNode);
-        $this->addWebpackBuildSection($rootNode);
         $this->addFormThemesSection($rootNode);
         $this->addTemplatePathsSection($rootNode);
         $this->addLoginSection($rootNode);
@@ -153,15 +152,6 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-            ->end()
-        ;
-    }
-
-    private function addWebpackBuildSection(ArrayNodeDefinition $node)
-    {
-        $node
-            ->children()
-                ->scalarNode('webpack_build')->defaultValue('_default')->end()
             ->end()
         ;
     }

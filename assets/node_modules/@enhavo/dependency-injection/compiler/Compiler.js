@@ -86,53 +86,8 @@ export default class Compiler
         let content = '';
         content += `async load_`+definition.getHash()+`() {\n`;
         content += `return await import(\n`;
-        content += this._generateWebpackOptions(definition)+`\n`;
         content += `"`+definition.getFrom()+`");\n`;
         content += `}\n`;
-        return content;
-    }
-
-
-    /**
-     * @param {Definition} definition
-     * @returns {string}
-     */
-    _generateWebpackOptions(definition)
-    {
-        let content = '';
-
-        if(definition.getInclude() !== null) {
-            content += `/* webpackInclude: `+definition.getInclude()+` */\n`;
-        }
-
-        if(definition.getExclude() !== null) {
-            content += `/* webpackExclude: `+definition.getExclude()+` */\n`;
-        }
-
-        if(definition.getChunkName() !== null) {
-            content += `/* webpackChunkName: "`+definition.getChunkName()+`" */\n`;
-        }
-
-        if(definition.getMode() !== null) {
-            content += `/* webpackMode: "`+definition.getMode()+`" */\n`;
-        }
-
-        if(definition.getPrefetch() !== null) {
-            content += `/* webpackPrefetch: `+definition.getPrefetch() ? 'true' : 'false' +` */\n`;
-        }
-
-        if(definition.getPreload() !== null) {
-            content += `/* webpackPreload: `+definition.getPreload() ? 'true' : 'false' +` */\n`;
-        }
-
-        if(definition.getExports() !== null) {
-            content += `/* webpackPreload: `+JSON.stringify(definition.getExports())+` */\n`;
-        }
-
-        if(definition.getIgnore() !== null) {
-            content += `/* webpackPreload: `+definition.getIgnore() ? 'true' : 'false' +` */\n`;
-        }
-
         return content;
     }
 

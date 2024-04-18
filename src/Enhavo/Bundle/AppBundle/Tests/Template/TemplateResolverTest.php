@@ -4,7 +4,6 @@ namespace Enhavo\Bundle\AppBundle\Tests\Template;
 
 use Enhavo\Bundle\AppBundle\Filesystem\Filesystem;
 use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
-use Enhavo\Bundle\AppBundle\Template\WebpackBuildResolverInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -16,7 +15,6 @@ class TemplateResolverTest extends TestCase
         $dependencies = new TemplateResolverDependencies();
         $dependencies->kernel = $this->getMockBuilder(KernelInterface::class)->getMock();
         $dependencies->fs = new Filesystem();
-        $dependencies->resolver = $this->getMockBuilder(WebpackBuildResolverInterface::class)->getMock();
         $dependencies->themePath = __DIR__.'/../Fixtures/template/theme';
         return $dependencies;
     }
@@ -26,7 +24,6 @@ class TemplateResolverTest extends TestCase
         $instance = new TemplateResolver(
             $dependencies->kernel,
             $dependencies->fs,
-            $dependencies->resolver,
             $dependencies->templatePaths,
             $dependencies->defaultPath,
             $dependencies->themePath,
@@ -60,7 +57,6 @@ class TemplateResolverDependencies
 {
     public KernelInterface|MockObject $kernel;
     public Filesystem|MockObject $fs;
-    public WebpackBuildResolverInterface|MockObject $resolver;
     public array $templatePaths = [];
     public string $defaultPath = '';
     public string $themePath = '';

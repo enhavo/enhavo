@@ -44,15 +44,9 @@ services:
         arguments:
             - '@kernel'
             - '@filesystem'
-            - '@enhavo_app.template.config_webpack_build_resolver'
             - '%enhavo_app.template_paths%'
             - '%twig.default_path%'
             - '%kernel.project_dir%/assets/theme'
-
-    enhavo_app.template.config_webpack_build_resolver:
-        class: Enhavo\Bundle\AppBundle\Template\ConfigWebpackBuildResolver
-        arguments:
-            - '%enhavo_app.webpack_build%'
 
     Enhavo\Bundle\AppBundle\Controller\ArgumentResolver:
         arguments:

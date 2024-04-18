@@ -9,6 +9,7 @@
 * [Vite](general/vite.md)
 * [Area](general/area.md)
 * [Template Mode](general/template-mode.md)
+* [JS Dependency Injection](general/js-dependency-injection.md)
 
 ## Components
 

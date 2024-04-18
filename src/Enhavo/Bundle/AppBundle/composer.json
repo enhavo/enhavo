@@ -41,7 +41,6 @@
     "symfony/translation": "^6.4",
     "symfony/twig-bundle": "^6.4",
     "symfony/validator": "^6.4",
-    "symfony/webpack-encore-bundle": "^1.5",
     "symfony/yaml": "^6.4",
     "twig/twig": "^2.15"
   },

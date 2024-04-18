@@ -1,6 +1,0 @@
-theme:
-    label:
-        theme: 'Theme'
-    action:
-        build:
-            label: 'Build'

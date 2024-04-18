@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@enhavo/app": "https://github.com/enhavo/app-assets.git",
-    "copy-webpack-plugin": "^4.5.2",
     "icheck": "~1.0.2",
     "jquery": "^3.4.1",
     "jquery-datetimepicker": "^2.5.21",

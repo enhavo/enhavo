@@ -36,13 +36,8 @@ services:
         arguments:
             - '%enhavo_form.wysiwyg.editor_entrypoint%'
             - '%enhavo_form.wysiwyg.editor_entrypoint_build%'
-            - '@Enhavo\Bundle\FormBundle\Form\Helper\EntrypointFileManager'
         tags:
             - { name: form.type }
-
-    Enhavo\Bundle\FormBundle\Form\Helper\EntrypointFileManager:
-        arguments:
-            - '@webpack_encore.entrypoint_lookup_collection'
 
     Enhavo\Bundle\FormBundle\Form\Type\AutoCompleteEntityType:
         arguments:

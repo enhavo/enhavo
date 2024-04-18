@@ -38,8 +38,6 @@ enhavo_app:
             type: sidebar
         template:
             type: template
-        theme:
-            type: theme
         settings:
             type: setting
         person:

@@ -97,7 +97,6 @@
     "symfony/ux-twig-component": "^2.6",
     "symfony/validator": "^6.4",
     "symfony/web-link": "^6.4",
-    "symfony/webpack-encore-bundle": "^1.5",
     "symfony/yaml": "^6.4",
     "tecnickcom/tcpdf": "^6.2",
     "twig/twig": "^2.15"

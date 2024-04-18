@@ -3,7 +3,7 @@ import vue from '@vitejs/plugin-vue'
 import liveReload from 'vite-plugin-live-reload'
 import path from 'node:path'
 import 'dotenv/config'
-import containerDIPlugin from '@enhavo/dependency-injection/rollup-plugin-container-di'
+import containerDIPlugin from '@enhavo/app/vite/rollup-plugin-container-di'
 
 export default defineConfig({
 
