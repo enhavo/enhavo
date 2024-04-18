@@ -104,6 +104,7 @@ enhavo_newsletter_group_resource_preview:
     methods: [POST]
     defaults:
         _controller: enhavo_newsletter.controller.group::previewResourceAction
+        _area: theme
         _sylius:
             viewer:
                 strategy_options:

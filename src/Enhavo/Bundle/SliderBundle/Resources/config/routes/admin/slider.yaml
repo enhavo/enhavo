@@ -83,6 +83,7 @@ enhavo_slider_slider_resource_preview:
     methods: [POST]
     defaults:
         _controller: enhavo_slider.controller.slider::previewResourceAction
+        _area: theme
         _sylius:
             viewer:
                 strategy_options:
