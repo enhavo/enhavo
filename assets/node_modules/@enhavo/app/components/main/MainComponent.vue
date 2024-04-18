@@ -14,7 +14,6 @@
 
 <script setup lang="ts">
 import { inject } from 'vue'
-import '@enhavo/app/assets/fonts/enhavo-icons.font'
 import '@enhavo/app/assets/styles/app.scss'
 import MainApp from "@enhavo/app/main/MainApp";
 import MenuManager from "@enhavo/app/menu/MenuManager";

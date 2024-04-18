@@ -13,7 +13,6 @@
 
 <script setup lang="ts">
 import {inject} from "vue";
-import '@enhavo/app/assets/fonts/enhavo-icons.font'
 import '@enhavo/app/assets/styles/view.scss';
 import WidgetManager from "@enhavo/dashboard/widget/WidgetManager";
 
