@@ -16,6 +16,7 @@ class NotEnabledSubscriber implements EventSubscriberInterface
     {
         return [
             UserEvent::POST_AUTH => 'onPostAuth',
+            UserEvent::PRE_AUTH => 'onPostAuth',
         ];
     }
 

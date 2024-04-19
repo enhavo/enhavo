@@ -165,8 +165,8 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('redirect_route')->defaultValue(null)->end()
                         ->scalarNode('confirmation_route')->isRequired()->cannotBeEmpty()->end()
                         ->append($this->addConfigMailNode())
-                        ->scalarNode('auto_login')->defaultValue(true)->end()
-                        ->scalarNode('auto_enabled')->defaultValue(true)->end()
+                        ->scalarNode('auto_login')->defaultValue(false)->end()
+                        ->scalarNode('auto_enabled')->defaultValue(false)->end()
                         ->scalarNode('auto_verified')->defaultValue(false)->end()
                         ->scalarNode('translation_domain')->defaultValue('EnhavoUserBundle')->end()
                         ->arrayNode('form')
@@ -252,7 +252,7 @@ class Configuration implements ConfigurationInterface
 
                 ->arrayNode('reset_password_confirm')
                     ->children()
-                        ->scalarNode('auto_login')->defaultValue(true)->end()
+                        ->scalarNode('auto_login')->defaultValue(false)->end()
                         ->scalarNode('template')->defaultValue('{{ area }}/user/reset-password/confirm.html.twig')->end()
                         ->scalarNode('redirect_route')->defaultValue(null)->end()
                         ->arrayNode('form')
@@ -314,6 +314,7 @@ class Configuration implements ConfigurationInterface
                                 ->variableNode('options')->defaultValue([])->end()
                             ->end()
                         ->end()
+                        ->scalarNode('auto_login')->defaultValue(false)->end()
                     ->end()
                 ->end()
 

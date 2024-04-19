@@ -31,6 +31,7 @@ class VerificationRequiredListenerSubscriber implements EventSubscriberInterface
     {
         return [
             UserEvent::POST_AUTH => 'onPostAuth',
+            UserEvent::PRE_AUTH => 'onPostAuth',
         ];
     }
 
