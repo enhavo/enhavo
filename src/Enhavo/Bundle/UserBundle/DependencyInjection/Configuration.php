@@ -314,7 +314,6 @@ class Configuration implements ConfigurationInterface
                                 ->variableNode('options')->defaultValue([])->end()
                             ->end()
                         ->end()
-                        ->scalarNode('auto_login')->defaultValue(true)->end()
                     ->end()
                 ->end()
 
