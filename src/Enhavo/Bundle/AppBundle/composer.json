@@ -24,6 +24,7 @@
     "enhavo/type": "dev-master",
     "enhavo/api-bundle": "dev-master",
     "friendsofsymfony/jsrouting-bundle": "^3.1",
+    "nikic/php-parser": "^5.0",
     "pagerfanta/doctrine-orm-adapter": "^4.2",
     "sylius/resource-bundle": "^1.10",
     "symfony/asset": "^6.4",

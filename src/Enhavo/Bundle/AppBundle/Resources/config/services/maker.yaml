@@ -1,4 +1,8 @@
 services:
+    Enhavo\Bundle\AppBundle\Maker\Test\InsideBundleTestClassResolver:
+        arguments:
+            - '%kernel.project_dir%'
+
     enhavo_app.maker.util:
         class: Enhavo\Bundle\AppBundle\Maker\MakerUtil
         arguments:
@@ -7,6 +11,13 @@ services:
     Enhavo\Bundle\AppBundle\Maker\MakeRouting:
         arguments:
             - '@enhavo_app.maker.util'
+        tags:
+            - { name: 'maker.command' }
+
+    Enhavo\Bundle\AppBundle\Maker\MakeTest:
+        arguments:
+            - '@enhavo_app.maker.util'
+            - '@Enhavo\Bundle\AppBundle\Maker\Test\InsideBundleTestClassResolver'
         tags:
             - { name: 'maker.command' }
 
