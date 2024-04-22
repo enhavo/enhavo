@@ -42,6 +42,7 @@
     "league/uri-components": "^2.4",
     "mailchimp/marketing": "^3.0",
     "mailjet/mailjet-apiv3-php": "^1.5",
+    "nikic/php-parser": "^5.0",
     "pagerfanta/doctrine-orm-adapter": "^4.2",
     "payum/offline": "^1.5",
     "payum/paypal-express-checkout-nvp": "^1.7",
