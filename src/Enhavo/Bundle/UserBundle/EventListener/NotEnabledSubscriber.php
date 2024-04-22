@@ -15,11 +15,11 @@ class NotEnabledSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            UserEvent::POST_AUTH => 'onPostAuth',
+            UserEvent::PRE_AUTH => 'onPreAuth',
         ];
     }
 
-    public function onPostAuth(UserEvent $userEvent): void
+    public function onPreAuth(UserEvent $userEvent): void
     {
         if (!$userEvent->getUser()->isEnabled()) {
             $exception = new NotEnabledException('Not enabled');
