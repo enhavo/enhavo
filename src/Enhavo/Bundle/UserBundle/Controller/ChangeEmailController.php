@@ -146,9 +146,6 @@ class ChangeEmailController extends AbstractUserController
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $this->userManager->changeEmail($user, $changeEmail->getEmail(), $configuration);
-                if ($configuration->isAutoLogin()) {
-                    $this->userManager->login($user);
-                }
 
                 $url = $this->generateUrl($configuration->getRedirectRoute());
 

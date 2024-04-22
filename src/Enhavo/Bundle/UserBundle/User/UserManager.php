@@ -127,6 +127,8 @@ class UserManager
             $this->sessionStrategy->onAuthentication($request, $token);
         }
         $this->tokenStorage->setToken($token);
+
+        $this->userChecker->checkPostAuth($user);
     }
 
     public function logout(): void
