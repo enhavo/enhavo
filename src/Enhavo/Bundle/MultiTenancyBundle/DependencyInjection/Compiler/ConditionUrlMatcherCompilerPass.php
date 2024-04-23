@@ -12,8 +12,10 @@ class ConditionUrlMatcherCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        $definition = $container->getDefinition('cmf_routing.final_matcher');
-        $definition->setClass(ConditionUrlMatcher::class);
-        $definition->addArgument(new Reference(ResolverInterface::class));
+        if ($container->hasDefinition('cmf_routing.final_matcher')) {
+            $definition = $container->getDefinition('cmf_routing.final_matcher');
+            $definition->setClass(ConditionUrlMatcher::class);
+            $definition->addArgument(new Reference(ResolverInterface::class));
+        }
     }
 }

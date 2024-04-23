@@ -1,0 +1,6 @@
+when@template:
+    cmf_routing:
+        dynamic:
+            enabled: false
+        chain:
+            replace_symfony_router: false

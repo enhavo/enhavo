@@ -15,7 +15,7 @@ class ExposeRouteCollector implements RouteCollectorInterface
     {
     }
 
-    public function getRouteCollection(null|string|array $groups = null): RouteCollection
+    public function getRouteCollection(null|string|array|bool $groups = null): RouteCollection
     {
         $routes = $this->router->getRouteCollection();
 

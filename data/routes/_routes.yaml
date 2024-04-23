@@ -1,0 +1,13 @@
+enhavo_media_file_show:
+    path: /file/show/{id}
+    defaults:
+        _expose: template
+        _endpoint:
+            type: template_file
+
+enhavo_media_file_format:
+    path: /file/show/format/{format}/{id}
+    defaults:
+        _expose: template
+        _endpoint:
+            type: template_file
