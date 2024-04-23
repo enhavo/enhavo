@@ -53,7 +53,7 @@ base:
 
 ### Add data to route
 
-To add data to a route you have some options. You can load a file with `load` options, that accept a single path or an
+To add data to a route, you have some options. You can load a file with `load` option, that accept a single path or an
 array of paths. The path shouldn't start with `/` and don't need the data prefix, but the file itself must be inside the `/data` directory. 
 
 The following example will load the two files `/data/navigation.json` and `/data/page/homepage.json`.
@@ -231,6 +231,40 @@ Give each route and variant a clear and short description of what it is going to
 to understand the need of the route and variant.
 :::
 
+## Expose routes
+
+Use the `_expose: template` setting, to easily access the routes later in other template endpoints.
+
+```yaml
+some_route:
+    path: /path
+    defaults:
+        _expose: template // [!code ++]
+        _endpoint:
+            type: template
+            template: 'theme/base.html.twig'
+```
+
+If you add the corresponding `routes: template` setting in a route, all exposed routes will load automatically within your data.
+
+```yaml
+route_name:
+    path: /path
+    defaults:
+        _endpoint:
+            type: template
+            routes: template // [!code ++]
+```
+
+So now, you can use your router in twig or javascript to generate the url. Still you can overwrite single routes with the `data` or `load` setting.
+
+::: warning
+Expose only routes, that will exist in dev or prod later. You expose a route, because you will generate an url from it.
+Generating an url takes place in a template or javascript file. This code is shared to dev or prod, so generate an url from 
+a route name that exists only in template mode will not make sense at all.
+
+:::
+
 
 ## Media files
 
@@ -246,12 +280,14 @@ Because the template mode doesn't come with predefined routes we have to make su
 enhavo_media_file_show:
     path: /file/show/{id}
     defaults:
+        _expose: template
         _endpoint:
             type: template_file
 
 enhavo_media_file_format:
     path: /file/show/format/{format}/{id}
     defaults:
+        _expose: template
         _endpoint:
             type: template_file
 ```
@@ -368,3 +404,27 @@ still access the test data of the template mode.
 
 That why it's important to follow the recommendations like [use url for every link](#recommendations-url)
 
+## Dependency Restriction
+
+In template mode, you can work without dependencies to any 3rd party service.
+Enhavo take care, to not load any services using e.g. the database. But if you add some bundles or hooks,
+that execute code with dependencies to 3rd party application before entering the endpoint, you may get errors.
+For example, that could be code using the kernel request hook for lookup locals or user data in the database. 
+
+In this case, you need to prevent executing the code in template mode. The easiest way is to add conditional config or if this
+is not working, you may add a compiler pass and overwrite or delete the service, which is causing the error.
+
+```php
+class TemplateModeCompilerPass implements CompilerPassInterface
+{
+    public function process(ContainerBuilder $container)
+    {
+        if ($container->getParameter('kernel.environment') === 'template' &&
+            $container->getDefinition('service.id'))
+        {
+            $definition = $container->getDefinition('service.id');
+            $definition->setClass(OverwriteClass::class);
+        }
+    }
+}
+```
