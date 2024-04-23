@@ -7,6 +7,7 @@ use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Bundle\AppBundle\Endpoint\Template\ExpressionLanguage\TemplateExpressionLanguageEvaluator;
 use Enhavo\Bundle\AppBundle\Endpoint\Template\Loader;
+use Enhavo\Bundle\AppBundle\Routing\RouteCollectorInterface;
 use Enhavo\Bundle\AppBundle\Twig\TwigRouter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -19,6 +20,7 @@ class TemplateEndpointType extends AbstractEndpointType
         private readonly Loader $loader,
         private readonly TemplateExpressionLanguageEvaluator $templateExpressionLanguageEvaluator,
         private readonly TwigRouter $twigRouter,
+        private readonly RouteCollectorInterface $routeCollector,
     )
     {
     }
@@ -31,6 +33,13 @@ class TemplateEndpointType extends AbstractEndpointType
 
         if (is_array($options['variants'])) {
             $this->loadVariants($request,  $data, $options['variants']);
+        }
+
+        if ($options['routes']) {
+            $routesCollection = $this->routeCollector->getRouteCollection($options['routes']);
+            $routes = $data->get('routes') ?? [];
+            $routes = array_merge($this->normalize($routesCollection, null, ['groups' => 'endpoint'], $routes));
+            $data->set('routes', $routes);
         }
 
         if ($data->get('routes')) {
@@ -72,6 +81,7 @@ class TemplateEndpointType extends AbstractEndpointType
             'description' => null,
             'variants' => null,
             'status' => 200,
+            'routes' => null,
         ]);
     }
 
