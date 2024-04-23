@@ -14,7 +14,7 @@ class ChainRouteCollector implements RouteCollectorInterface
         $this->routeCollectors[] = $routeCollector;
     }
 
-    public function getRouteCollection(array|string|null $groups = null): RouteCollection
+    public function getRouteCollection(array|string|null|bool $groups = null): RouteCollection
     {
         $routeCollection = new RouteCollection();
         foreach ($this->routeCollectors as $collector) {
