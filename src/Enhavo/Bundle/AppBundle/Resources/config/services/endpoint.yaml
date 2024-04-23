@@ -11,6 +11,7 @@ services:
             - '@Enhavo\Bundle\AppBundle\Endpoint\Template\Loader'
             - '@Enhavo\Bundle\AppBundle\Endpoint\Template\ExpressionLanguage\TemplateExpressionLanguageEvaluator'
             - '@Enhavo\Bundle\AppBundle\Twig\TwigRouter'
+            - '@Enhavo\Bundle\AppBundle\Routing\RouteCollectorInterface'
         calls:
             - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
         tags:

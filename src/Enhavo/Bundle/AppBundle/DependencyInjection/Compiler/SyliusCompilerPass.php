@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\AppBundle\DependencyInjection\Compiler;
 
 use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
 use Enhavo\Bundle\AppBundle\Controller\ResourcesResolver;
+use Enhavo\Bundle\AppBundle\Locale\TemplateModeSyliusLocaleProvider;
 use Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -23,6 +24,7 @@ class SyliusCompilerPass implements CompilerPassInterface
         $this->overwriteController($container);
         $this->overwriteResourceResolver($container);
         $this->setSyliusFormClassParameters($container);
+        $this->overwriteLocalProvider($container);
     }
 
     private function setSyliusFormClassParameters(ContainerBuilder $container)
@@ -79,5 +81,15 @@ class SyliusCompilerPass implements CompilerPassInterface
         $definition = $container->getDefinition('sylius.resource_controller.resources_resolver');
         $definition->setClass(ResourcesResolver::class);
         $definition->addArgument($container->getDefinition('enhavo_app.filter.filer_query_builder'));
+    }
+
+    private function overwriteLocalProvider(ContainerBuilder $container)
+    {
+        if ($container->getParameter('kernel.environment') === 'template' &&
+            $container->getDefinition('sylius.locale_provider'))
+        {
+            $definition = $container->getDefinition('sylius.locale_provider');
+            $definition->setClass(TemplateModeSyliusLocaleProvider::class);
+        }
     }
 }
