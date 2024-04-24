@@ -189,6 +189,8 @@ services:
     Enhavo\Bundle\MediaBundle\Cache\HttpCache:
         arguments:
             - '@request_stack'
+            - 'null'
+            -
         calls:
             - [setUrlGenerator, ['@enhavo_media.media.public_url_generator']]
 

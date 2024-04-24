@@ -10,11 +10,13 @@ namespace Enhavo\Bundle\CalendarBundle\Import;
 
 
 use Enhavo\Bundle\CalendarBundle\Entity\Appointment;
-use GuzzleHttp\Client;
+use ICal\Event;
 use ICal\EventObject;
 use ICal\ICal;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class ICSImporter implements ImporterInterface, ContainerAwareInterface
 {
@@ -35,8 +37,9 @@ class ICSImporter implements ImporterInterface, ContainerAwareInterface
      *
      * @param string $importerName
      * @param array $config
+     * @param HttpClientInterface $client
      */
-    public function __construct($importerName, $config)
+    public function __construct($importerName, $config, private HttpClientInterface $client)
     {
         $this->importerName = $importerName;
         $this->url = $config['url'];
@@ -44,14 +47,13 @@ class ICSImporter implements ImporterInterface, ContainerAwareInterface
 
     public function import($from = null, $to = null, $filter = [])
     {
-        $client = new Client();
         try{
-            $response = $client->request('GET', $this->url);
+            $response = $this->client->request('GET', $this->url);
         } catch (\Exception $e) {
             return [];
         }
 
-        $content = $response->getBody()->getContents();
+        $content = $response->getContent();
         $contentLines = explode("\r\n", $content);
         $ical = new ICal($contentLines, ['skipRecurrence' => true]);
         if($from && $to) {
@@ -61,7 +63,7 @@ class ICSImporter implements ImporterInterface, ContainerAwareInterface
         }
 
         $appointments = [];
-        /** @var EventObject $event */
+        /** @var Event $event */
         foreach ($events as $event){
             $appointment = $this->getAppointmentFromEvent($event, $ical);
             $appointments[] = $appointment;
@@ -69,7 +71,7 @@ class ICSImporter implements ImporterInterface, ContainerAwareInterface
         return $appointments;
     }
 
-    protected function getAppointmentFromEvent(EventObject $event, ICal $ical)
+    protected function getAppointmentFromEvent(Event $event, ICal $ical)
     {
         $appointment = new Appointment();
         $appointment->setImporterName($this->importerName);

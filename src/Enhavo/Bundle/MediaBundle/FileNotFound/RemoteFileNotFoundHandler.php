@@ -5,7 +5,7 @@ namespace Enhavo\Bundle\MediaBundle\FileNotFound;
 use Enhavo\Bundle\MediaBundle\Exception\FileException;
 use Enhavo\Bundle\MediaBundle\Media\UrlGeneratorInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
-use GuzzleHttp\Client;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class RemoteFileNotFoundHandler implements FileNotFoundHandlerInterface
 {
@@ -13,18 +13,18 @@ class RemoteFileNotFoundHandler implements FileNotFoundHandlerInterface
 
     public function __construct(
         private UrlGeneratorInterface $urlGenerator,
+        private HttpClientInterface $client,
     ) {}
 
     public function handleFileNotFound(FileInterface $file, array $parameters = []): void
     {
         $url = $this->getRemoteServerUrl($parameters) . $this->urlGenerator->generate($file);
 
-        $client = new Client();
-        $response = $client->request('GET', $url);
+        $response = $this->client->request('GET', $url);
         if($response->getStatusCode() != 200) {
             throw new FileException(sprintf('File not found on remote server: "%s"', $url));
         }
-        file_put_contents($file->getContent()->getFilePath(), $response->getBody());
+        file_put_contents($file->getContent()->getFilePath(), $response->getContent());
     }
 
     private function getRemoteServerUrl($parameters)
