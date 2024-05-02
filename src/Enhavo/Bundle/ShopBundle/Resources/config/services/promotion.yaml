@@ -41,3 +41,11 @@ services:
                 type: item_total
                 label: sylius.form.promotion_rule.item_total
                 form_type: Enhavo\Bundle\ShopBundle\Form\Type\Promotion\ItemTotalConfigurationType
+
+
+    enhavo_shop.custom_factory.promotion_coupon:
+        class: Enhavo\Bundle\ShopBundle\Factory\PromotionCouponFactory
+        decorates: sylius.custom_factory.promotion_coupon
+        arguments:
+            - '@enhavo_shop.custom_factory.promotion_coupon.inner'
+            - '@sylius.repository.promotion'

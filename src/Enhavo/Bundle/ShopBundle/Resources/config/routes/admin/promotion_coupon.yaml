@@ -29,6 +29,9 @@ sylius_promotion_coupon_create:
         _controller: sylius.controller.promotion_coupon::createAction
         _sylius:
             redirect: sylius_promotion_coupon_update
+            factory:
+                method: createForPromotionId
+                arguments: [$promotionId]
             viewer:
 
 sylius_promotion_coupon_update:
@@ -49,6 +52,10 @@ sylius_promotion_coupon_table:
     defaults:
         _controller: sylius.controller.promotion_coupon::tableAction
         _sylius:
+            repository:
+                method: findByPromotionId
+                arguments:
+                    - $promotionId
             viewer:
                 columns:
                     code:
