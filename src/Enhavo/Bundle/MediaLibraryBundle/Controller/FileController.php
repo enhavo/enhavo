@@ -175,10 +175,10 @@ class FileController extends ResourceController
     {
         $terms = $this->getMediaLibraryManager()->getContentTypes();
         $contentTypes = [];
-        foreach ($terms as $term) {
+        foreach ($terms as $key => $term) {
             $contentTypes[] = [
-                'key' => $term,
-                'label' => ucfirst($term),
+                'key' => $key,
+                'label' => $term,
             ];
         }
         return $contentTypes;
