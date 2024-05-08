@@ -38,7 +38,7 @@ class FileController extends ResourceController
             throw $this->createAccessDeniedException();
         }
 
-        $response = $this->getResponse($file);
+        $response = $this->getResponse($file, $request->headers->get('Range'));
 
         $this->handleCache($response);
 
@@ -110,7 +110,7 @@ class FileController extends ResourceController
             throw $this->createAccessDeniedException();
         }
 
-        $response = $this->getResponse($formatFile);
+        $response = $this->getResponse($formatFile, $request->headers->get('Range'));
 
         $this->handleCache($response);
 
@@ -119,18 +119,45 @@ class FileController extends ResourceController
 
     /**
      * @param FileInterface|FormatInterface $file
+     * @param string|null $rangeHeader
      * @return Response
      */
-    private function getResponse($file): Response
+    private function getResponse($file, $rangeHeader): Response
     {
         $path = $file->getContent()->getFilePath();
 
         if (!file_exists($path))  {
-            $this->getMediaManager()->handleFileNotFound($file);
+            throw $this->createNotFoundException('File not exists, please refresh format');
         }
 
         $fileSize = filesize($file->getContent()->getFilePath());
-        if (!$this->getStreamingDisabled() && $this->getStreamingThreshold() < $fileSize) {
+        $length = $fileSize;
+        $start = 0;
+        $end = $length - 1;
+
+        if ($rangeHeader) {
+            if (preg_match('/bytes=(\d*)-(\d*)/', $rangeHeader, $matches)) {
+                $start = ($matches[1] !== '') ? intval($matches[1]) : 0;
+                $end = ($matches[2] !== '') ? intval($matches[2]) : $end;
+
+                // Adjust if range is beyond the file size
+                if ($end >= $fileSize) {
+                    $end = $fileSize - 1;
+                }
+                $length = $end - $start + 1;
+            }
+
+            $handle = fopen($path, 'rb');
+            // Seek to the starting position and read the specified length
+            fseek($handle, $start);
+            $content = fread($handle, $length);
+            fclose($handle);
+
+            $response = new Response($content, 206);
+            $response->headers->set('Content-Range', "bytes $start-$end/$fileSize");
+            $response->headers->set('Accept-Ranges', '0-' . $fileSize);
+
+        } else if (!$this->getStreamingDisabled() && $this->getStreamingThreshold() < $fileSize) {
             $response = new StreamedResponse(function () use ($file) {
                 $outputStream = fopen('php://output', 'wb');
                 $fileStream = fopen($file->getContent()->getFilePath(), 'r');
@@ -142,7 +169,7 @@ class FileController extends ResourceController
             $response->setContent($content);
         }
         $response->headers->set('Content-Type', $file->getMimeType());
-        $response->headers->set('Content-Length', $fileSize);
+        $response->headers->set('Content-Length', $length);
 
         return $response;
     }
