@@ -132,10 +132,11 @@ class FileController extends ResourceController
 
         $fileSize = filesize($file->getContent()->getFilePath());
         $length = $fileSize;
-        $start = 0;
-        $end = $length - 1;
 
         if ($rangeHeader) {
+            $start = 0;
+            $end = $length - 1;
+
             if (preg_match('/bytes=(\d*)-(\d*)/', $rangeHeader, $matches)) {
                 $start = ($matches[1] !== '') ? intval($matches[1]) : 0;
                 $end = ($matches[2] !== '') ? intval($matches[2]) : $end;
@@ -164,9 +165,7 @@ class FileController extends ResourceController
                 stream_copy_to_stream($fileStream, $outputStream);
             });
         } else {
-            $response = new Response();
-            $content = $file->getContent()->getContent();
-            $response->setContent($content);
+            $response = new Response($file->getContent()->getContent());
         }
         $response->headers->set('Content-Type', $file->getMimeType());
         $response->headers->set('Content-Length', $length);
