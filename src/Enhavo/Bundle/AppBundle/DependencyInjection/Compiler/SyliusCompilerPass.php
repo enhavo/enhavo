@@ -86,7 +86,7 @@ class SyliusCompilerPass implements CompilerPassInterface
     private function overwriteLocalProvider(ContainerBuilder $container)
     {
         if ($container->getParameter('kernel.environment') === 'template' &&
-            $container->getDefinition('sylius.locale_provider'))
+            $container->hasDefinition('sylius.locale_provider'))
         {
             $definition = $container->getDefinition('sylius.locale_provider');
             $definition->setClass(TemplateModeSyliusLocaleProvider::class);
