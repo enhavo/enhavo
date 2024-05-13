@@ -66,6 +66,7 @@ sylius_promotion:
             classes:
                 controller: Enhavo\Bundle\ShopBundle\Controller\PromotionCouponController
                 form: Enhavo\Bundle\ShopBundle\Form\Type\PromotionCouponType
+                repository: Enhavo\Bundle\ShopBundle\Repository\PromotionCouponRepository
 
 sylius_payment:
     resources:
