@@ -24,3 +24,13 @@ services:
                 label: sylius.form.promotion_rule.nth_order
                 form_type: Enhavo\Bundle\ShopBundle\Form\Type\Promotion\NthOrderConfigurationType
 
+<<<<<<< HEAD
+=======
+    Sylius\Component\Promotion\Checker\Rule\ItemTotalRuleChecker:
+        tags:
+            -
+                name: sylius.promotion_rule_checker
+                type: item_total
+                label: sylius.form.promotion_rule.item_total
+                form_type: Enhavo\Bundle\ShopBundle\Form\Type\Promotion\ItemTotalConfigurationType
+>>>>>>> 56a394ba5 ([ShopBundle] Fixed missing association between Coupons and their Prom… (#1984))
