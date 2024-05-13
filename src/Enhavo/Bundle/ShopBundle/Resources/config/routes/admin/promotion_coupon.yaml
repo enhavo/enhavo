@@ -30,8 +30,9 @@ sylius_promotion_coupon_create:
         _sylius:
             redirect: sylius_promotion_coupon_update
             factory:
-                method: createForPromotionId
-                arguments: [$promotionId]
+                method: createForPromotion
+                arguments:
+                    - expr:notFoundOnNull(service('sylius.repository.promotion').find($promotionId))
             viewer:
 
 sylius_promotion_coupon_update:
