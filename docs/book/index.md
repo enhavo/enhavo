@@ -10,6 +10,7 @@
 * [Area](general/area.md)
 * [Template Mode](general/template-mode.md)
 * [JS Dependency Injection](general/js-dependency-injection.md)
+* [Working with vue](general/working-with-vue.md)
 
 ## Components
 
