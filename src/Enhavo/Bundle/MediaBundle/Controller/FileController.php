@@ -161,6 +161,8 @@ class FileController extends ResourceController
                 $fileStream = fopen($file->getContent()->getFilePath(), 'r');
                 stream_copy_to_stream($fileStream, $outputStream);
             });
+            $response->headers->set('Content-Type', $file->getMimeType());
+
         } else {
             $response = new FileResponse($file);
         }
