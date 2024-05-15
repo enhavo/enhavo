@@ -145,11 +145,6 @@ class FileController extends ResourceController
             if (preg_match('/bytes=(\d*)-(\d*)/', $rangeHeader, $matches)) {
                 $start = ($matches[1] !== '') ? intval($matches[1]) : 0;
                 $end = ($matches[2] !== '') ? intval($matches[2]) : $end;
-
-                // Adjust if range is beyond the file size
-                if ($end >= $fileSize) {
-                    $end = $fileSize - 1;
-                }
             }
 
             $response = new FileRangeResponse($file, $start, $end);

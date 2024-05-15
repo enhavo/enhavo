@@ -23,6 +23,11 @@ class FileRangeResponse extends Response
     {
         $path = $file->getContent()->getFilePath();
         $size = filesize($path);
+
+        // Adjust if range is beyond the file size
+        if ($end >= $size) {
+            $end = $size - 1;
+        }
         $length = $end - $start + 1;
 
         $handle = fopen($path, 'rb');
