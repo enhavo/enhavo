@@ -2,10 +2,12 @@
 
 namespace Enhavo\Bundle\MediaBundle\Controller;
 
+use DateTime;
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
+use Enhavo\Bundle\MediaBundle\Http\FileRangeResponse;
+use Enhavo\Bundle\MediaBundle\Http\FileResponse;
 use Enhavo\Bundle\MediaBundle\Media\MediaManager;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
-use Enhavo\Bundle\MediaBundle\Model\FormatInterface;
 use Enhavo\Bundle\MediaBundle\Security\AuthorizationCheckerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,7 +19,7 @@ class FileController extends ResourceController
     /**
      * @return MediaManager
      */
-    private function getMediaManager()
+    private function getMediaManager(): MediaManager
     {
         return $this->container->get('enhavo_media.media.media_manager');
     }
@@ -25,7 +27,7 @@ class FileController extends ResourceController
     /**
      * @return AuthorizationCheckerInterface
      */
-    private function getAuthorizationChecker()
+    private function getAuthorizationChecker(): AuthorizationCheckerInterface
     {
         return $this->container->get('enhavo_media.security.default_authorization_checker');
     }
@@ -34,11 +36,11 @@ class FileController extends ResourceController
     {
         $file = $this->getFile($request);
 
-        if(!$this->getAuthorizationChecker()->isGranted($file)) {
+        if (!$this->getAuthorizationChecker()->isGranted($file)) {
             throw $this->createAccessDeniedException();
         }
 
-        $response = $this->getResponse($file, $request->headers->get('Range'));
+        $response = $this->getResponse($file, $request);
 
         $this->handleCache($response);
 
@@ -60,11 +62,11 @@ class FileController extends ResourceController
             'filename' => $filename
         ]);
 
-        if($file === null) {
+        if ($file === null) {
             throw $this->createNotFoundException();
         }
 
-        if($shortChecksum != substr($file->getMd5Checksum(), 0, 6)) {
+        if ($shortChecksum != substr($file->getMd5Checksum(), 0, 6)) {
             throw $this->createNotFoundException();
         }
 
@@ -78,6 +80,7 @@ class FileController extends ResourceController
         $response = $this->showAction($request);
         $response->headers->set('Content-Type', 'application/octet-stream');
         $response->headers->set('Content-Disposition', sprintf('attachment; filename="%s"', $filename));
+
         return $response;
     }
 
@@ -92,25 +95,25 @@ class FileController extends ResourceController
             'id' => $id
         ]);
 
-        if($file === null) {
+        if ($file === null) {
             throw $this->createNotFoundException();
         }
 
-        if($shortChecksum != substr($file->getMd5Checksum(), 0, 6)) {
+        if ($shortChecksum != substr($file->getMd5Checksum(), 0, 6)) {
             throw $this->createNotFoundException();
         }
 
         $formatFile = $this->getMediaManager()->getFormat($file, $format);
 
-        if(pathinfo($formatFile->getFilename())['filename'] !== pathinfo($filename)['filename']) {
+        if (pathinfo($formatFile->getFilename())['filename'] !== pathinfo($filename)['filename']) {
             throw $this->createNotFoundException();
         }
 
-        if(!$this->getAuthorizationChecker()->isGranted($file)) {
+        if (!$this->getAuthorizationChecker()->isGranted($file)) {
             throw $this->createAccessDeniedException();
         }
 
-        $response = $this->getResponse($formatFile, $request->headers->get('Range'));
+        $response = $this->getResponse($formatFile->getFile(), $request);
 
         $this->handleCache($response);
 
@@ -118,22 +121,24 @@ class FileController extends ResourceController
     }
 
     /**
-     * @param FileInterface|FormatInterface $file
-     * @param string|null $rangeHeader
+     * @param FileInterface $file
+     * @param Request $request
      * @return Response
      */
-    private function getResponse($file, $rangeHeader): Response
+    private function getResponse(FileInterface $file, Request $request): Response
     {
         $path = $file->getContent()->getFilePath();
 
-        if (!file_exists($path))  {
+        if (!file_exists($path)) {
             $this->getMediaManager()->handleFileNotFound($file);
         }
 
-        $fileSize = filesize($file->getContent()->getFilePath());
-        $length = $fileSize;
+        $fileSize = filesize($path);
 
-        if ($rangeHeader) {
+        if ($request->headers->get('Range')) {
+            $rangeHeader = $request->headers->get('Range');
+
+            $length = $fileSize;
             $start = 0;
             $end = $length - 1;
 
@@ -148,15 +153,7 @@ class FileController extends ResourceController
                 $length = $end - $start + 1;
             }
 
-            $handle = fopen($path, 'rb');
-            // Seek to the starting position and read the specified length
-            fseek($handle, $start);
-            $content = fread($handle, $length);
-            fclose($handle);
-
-            $response = new Response($content, 206);
-            $response->headers->set('Content-Range', "bytes $start-$end/$fileSize");
-            $response->headers->set('Accept-Ranges', '0-' . $fileSize);
+            $response = new FileRangeResponse($file, $length, $start, $end);
 
         } else if (!$this->getStreamingDisabled() && $this->getStreamingThreshold() < $fileSize) {
             $response = new StreamedResponse(function () use ($file) {
@@ -165,15 +162,13 @@ class FileController extends ResourceController
                 stream_copy_to_stream($fileStream, $outputStream);
             });
         } else {
-            $response = new Response($file->getContent()->getContent());
+            $response = new FileResponse($file);
         }
-        $response->headers->set('Content-Type', $file->getMimeType());
-        $response->headers->set('Content-Length', $length);
 
         return $response;
     }
 
-    private function handleCache(Response $response)
+    private function handleCache(Response $response): void
     {
         if ($response instanceof StreamedResponse) {
             // StreamedResponse will return an empty response if cached via http cache, so we prevent caching
@@ -182,7 +177,7 @@ class FileController extends ResourceController
         }
 
         $maxAge = $this->getMaxAge();
-        if($maxAge) {
+        if ($maxAge) {
             $this->setMaxAge($response, $maxAge);
         }
     }
@@ -202,7 +197,7 @@ class FileController extends ResourceController
         return $this->getParameter('enhavo_media.streaming.threshold');
     }
 
-    private function setMaxAge(Response $response, $maxAge)
+    private function setMaxAge(Response $response, $maxAge): void
     {
         $response
             ->setExpires($this->getDateInSeconds($maxAge))
@@ -214,9 +209,9 @@ class FileController extends ResourceController
         ]);
     }
 
-    private function getDateInSeconds($seconds)
+    private function getDateInSeconds($seconds): DateTime
     {
-        $date = new \DateTime();
+        $date = new DateTime();
         $date->modify(sprintf('+%s seconds', $seconds));
         return $date;
     }
