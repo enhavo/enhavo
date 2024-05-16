@@ -146,15 +146,9 @@ class FileController extends ResourceController
             if (preg_match('/bytes=(\d*)-(\d*)/', $rangeHeader, $matches)) {
                 $start = ($matches[1] !== '') ? intval($matches[1]) : 0;
                 $end = ($matches[2] !== '') ? intval($matches[2]) : $end;
-
-                // Adjust if range is beyond the file size
-                if ($end >= $fileSize) {
-                    $end = $fileSize - 1;
-                }
-                $length = $end - $start + 1;
             }
 
-            $response = new FileRangeResponse($file, $length, $start, $end);
+            $response = new FileRangeResponse($file, $start, $end);
 
         } else if (!$this->getStreamingDisabled() && $this->getStreamingThreshold() < $fileSize) {
             $response = new StreamedResponse(function () use ($file) {
