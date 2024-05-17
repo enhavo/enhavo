@@ -68,7 +68,7 @@ enhavo_app:
 ```
 
 ::: tip Note
-We recommend to use groups with area names, because normally they need to loaded only in a specific area.
+We recommend to use groups with [area](/book/general/area.md) names, because normally they need to loaded only in a specific area.
 :::
 
 Now, you can use the `vue_routes` options in app or area endpoint to pass the data to the frontend. With a string or array

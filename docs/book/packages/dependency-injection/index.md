@@ -1,11 +1,11 @@
-# JS Dependency Injection
+# Dependency Injection
 
 Dependency injection for webpack. How does it work? First, you have to define all your services and their dependencies in a ``yaml`` or ``json`` format.
 During the webpack compile time the service loader will create a container class. This container class
 can be loaded in your entrypoint and you can retrieve your service with all its dependencies. This project is heavily inspired by the symfony dependency injection.
 If you like it, please leave a github star.
 
-### Install
+## Install
 
 Add the package to your project
 
@@ -29,7 +29,7 @@ module.exports = {
 };
 ```
 
-### Define services
+## Define services
 
 A simple hello world service inside the project root dir.
 
@@ -53,7 +53,7 @@ services:
 
 ```
 
-### Use service
+## Use service
 
 Inside an entrypoint you can load the service via the dependency injection container.
 
@@ -67,7 +67,7 @@ import Container from "./container.di.yaml"
 })();
 ```
 
-### Import
+## Import
 
 You can import further files through import statements
 
@@ -84,7 +84,7 @@ imports:
 
 ```
 
-### Overwrite
+## Overwrite
 
 You can overwrite services by redefining it with the same service name.
 Be careful that you are loading the services files in the correct order.
@@ -108,7 +108,7 @@ services:
 
 ```
 
-### Service options
+## Service options
 
 Because the services are loaded dynamically. You can apply the [webpack magic options](https://webpack.js.org/api/module-methods/#magic-comments)
 
@@ -154,19 +154,19 @@ services:
 
 ```
 
-### Parameters
+## Parameters
 
 tbc.
 
-### Compiler pass
+## Compiler pass
 
 tbc.
 
-### Multiple containers
+## Multiple containers
 
 tbc.
 
-### Debugging
+## Debugging
 
 You can use the `di` cli tools.
 ```
@@ -174,9 +174,5 @@ $ yarn di inspect <pathToContainerFile>
 $ yarn di compile <pathToContainerFile> <outputFile>
 ```
 
-
-### Contributing
-
-This is a subtree split of the main repository. For contributing please check the [main repository](https://github.com/enhavo/enhavo)
 
 

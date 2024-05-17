@@ -50,7 +50,7 @@ course.
 
 If you are creating a new resource rather than modifying an existing
 one, you can use the route generator command ([see CRUD Routing
-generator](/book/routing-bundle/index.md)). It has an optional
+generator](/book/bundles/routing-bundle/index.md)). It has an optional
 parameter `sorting` that, if set to the property name defined above,
 adds route configurations for sortable resources.
 
