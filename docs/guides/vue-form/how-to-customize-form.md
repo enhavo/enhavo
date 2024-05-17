@@ -3,7 +3,7 @@
 ### Use Visitors
 
 Make sure you are familiar with the [Vue Form Visitors
-\</book/vue-form-bundle/visitors\>]{.title-ref}. Use the `Theme` to add
+\</book/bundles/vue-form-bundle/visitors\>]{.title-ref}. Use the `Theme` to add
 multiple `FormVisitor` together, and apply them to a form. You can add
 the theme object to the `FormFactory` to use it for all forms that will
 be created or just to single one on the `create` function.
@@ -62,4 +62,4 @@ export default class extends Vue
 ### Further Reading
 
 * [Vue Form Reference](/reference/vue-form/index.md)
-* [Vue Form Visitors](/book/vue-form-bundle/index.md)
+* [Vue Form Visitors](/book/bundles/vue-form-bundle/index.md)

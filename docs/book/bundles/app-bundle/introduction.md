@@ -26,4 +26,4 @@ to easily add these yourself.
 
 ### Read more
 
-* [Data handling in enhavo](../general/data-handling.md)
+* [Data handling in enhavo](/book/general/data-handling.md)
