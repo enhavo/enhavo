@@ -9,7 +9,7 @@ Enhavo\Bundle\ArticleBundle\Entity\Article:
         teaser:
             groups: ['endpoint', 'endpoint.block']
         content:
-            groups: ['endpoint', 'endpoint.block']
+            groups: ['endpoint']
         categories:
             groups: ['endpoint', 'endpoint.block']
         tags:
