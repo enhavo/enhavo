@@ -12,7 +12,7 @@ namespace Enhavo\Bundle\MediaBundle\Model;
 use Enhavo\Bundle\MediaBundle\Content\ContentInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
-interface FileInterface extends ResourceInterface
+interface FileInterface extends ResourceInterface, FileContentInterface
 {
     /**
      * Get id

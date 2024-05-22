@@ -7,6 +7,7 @@ use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\MediaBundle\Http\FileRangeResponse;
 use Enhavo\Bundle\MediaBundle\Http\FileResponse;
 use Enhavo\Bundle\MediaBundle\Media\MediaManager;
+use Enhavo\Bundle\MediaBundle\Model\FileContentInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\MediaBundle\Security\AuthorizationCheckerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -113,7 +114,7 @@ class FileController extends ResourceController
             throw $this->createAccessDeniedException();
         }
 
-        $response = $this->getResponse($formatFile->getFile(), $request);
+        $response = $this->getResponse($formatFile, $request);
 
         $this->handleCache($response);
 
@@ -121,11 +122,11 @@ class FileController extends ResourceController
     }
 
     /**
-     * @param FileInterface $file
+     * @param FileContentInterface $file
      * @param Request $request
      * @return Response
      */
-    private function getResponse(FileInterface $file, Request $request): Response
+    private function getResponse(FileContentInterface $file, Request $request): Response
     {
         $path = $file->getContent()->getFilePath();
 
