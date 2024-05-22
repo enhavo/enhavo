@@ -6,8 +6,8 @@ enhavo_media:
     formats:
         articleThumbnail:
             type: image
-            width: 350
-            height: 350
+            width: 35
+            height: 35
         sliderHero:
             type: image
             width: 1300
