@@ -12,6 +12,7 @@ use Enhavo\Bundle\AppBundle\Resource\ResourceManager;
 use Enhavo\Bundle\DoctrineExtensionBundle\Util\AssociationFinder;
 use Enhavo\Bundle\MediaBundle\Entity\Format;
 use Enhavo\Bundle\MediaBundle\FileNotFound\FileNotFoundHandlerInterface;
+use Enhavo\Bundle\MediaBundle\Model\FileContentInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\MediaBundle\Model\FormatInterface;
 use Enhavo\Bundle\MediaBundle\Provider\ProviderInterface;
@@ -135,14 +136,14 @@ class MediaManager
     }
 
     /**
-     * @param FileInterface|FormatInterface $file
+     * @param FileContentInterface $file
      * @return void
      */
-    public function handleFileNotFound($file): void
+    public function handleFileNotFound(FileContentInterface $file): void
     {
         if ($file instanceof FileInterface) {
             $this->fileNotFoundHandler->handleFileNotFound($file, $this->fileNotFoundHandlerParameter);
-        } else {
+        } else if ($file instanceof FormatInterface) {
             $formatName = $file->getName();
             $originalFile = $file->getFile();
             if (!file_exists($originalFile->getContent()->getFilePath()))  {
