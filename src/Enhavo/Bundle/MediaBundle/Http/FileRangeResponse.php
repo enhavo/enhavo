@@ -6,20 +6,20 @@
 
 namespace Enhavo\Bundle\MediaBundle\Http;
 
-use Enhavo\Bundle\MediaBundle\Model\FileInterface;
+use Enhavo\Bundle\MediaBundle\Model\FileContentInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 class FileRangeResponse extends Response
 {
 
-    public function __construct(FileInterface $file, int $start, int $end)
+    public function __construct(FileContentInterface $file, int $start, int $end)
     {
         parent::__construct();
         $this->setStatusCode(Response::HTTP_PARTIAL_CONTENT);
         $this->setFile($file, $start, $end);
     }
 
-    public function setFile(FileInterface $file, int $start, int $end): void
+    public function setFile(FileContentInterface $file, int $start, int $end): void
     {
         $path = $file->getContent()->getFilePath();
         $size = filesize($path);
