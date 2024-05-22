@@ -13,6 +13,11 @@ use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Resource\ResourceManager;
 use Enhavo\Bundle\DoctrineExtensionBundle\Util\AssociationFinder;
 use Enhavo\Bundle\MediaBundle\Entity\Format;
+<<<<<<< HEAD
+=======
+use Enhavo\Bundle\MediaBundle\FileNotFound\FileNotFoundHandlerInterface;
+use Enhavo\Bundle\MediaBundle\Model\FileContentInterface;
+>>>>>>> 8f201093b ([MediaBundle] Fixed FileController->showFormatAction() always returning original file (#2009))
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\MediaBundle\Model\FormatInterface;
 use Enhavo\Bundle\MediaBundle\Provider\ProviderInterface;
@@ -134,6 +139,27 @@ class MediaManager
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * @param FileContentInterface $file
+     * @return void
+     */
+    public function handleFileNotFound(FileContentInterface $file): void
+    {
+        if ($file instanceof FileInterface) {
+            $this->fileNotFoundHandler->handleFileNotFound($file, $this->fileNotFoundHandlerParameter);
+        } else if ($file instanceof FormatInterface) {
+            $formatName = $file->getName();
+            $originalFile = $file->getFile();
+            if (!file_exists($originalFile->getContent()->getFilePath()))  {
+                $this->fileNotFoundHandler->handleFileNotFound($originalFile, $this->fileNotFoundHandlerParameter);
+            }
+            $this->formatManager->applyFormat($originalFile, $formatName);
+        }
+    }
+
+    /**
+>>>>>>> 8f201093b ([MediaBundle] Fixed FileController->showFormatAction() always returning original file (#2009))
      * Finds entities referencing the file.
      *
      * @param FileInterface $file File to find references to
