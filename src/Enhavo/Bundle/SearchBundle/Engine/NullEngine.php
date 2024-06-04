@@ -19,6 +19,11 @@ class NullEngine implements SearchEngineInterface
         return new ResultSummary([], 0);
     }
 
+    public function count(Filter $filter): int
+    {
+        return 0;
+    }
+
     public function suggest(Filter $filter): array
     {
         return [];
