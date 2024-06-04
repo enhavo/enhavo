@@ -278,6 +278,12 @@ class ElasticSearchEngine implements SearchEngineInterface
         return $entries;
     }
 
+    public function count(Filter $filter): int
+    {
+        //TODO: Implement
+        throw new \Exception('Feature not implemented yet');
+    }
+
     public function suggest(Filter $filter): array
     {
         $filter->setFuzzy(false);
