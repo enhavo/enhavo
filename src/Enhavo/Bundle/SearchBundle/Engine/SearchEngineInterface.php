@@ -22,6 +22,12 @@ interface SearchEngineInterface
      */
     public function search(Filter $filter): ResultSummary;
 
+    /**
+     * @param Filter $filter
+     * @return int
+     */
+    public function count(Filter $filter): int;
+
     /** @return string[] */
     public function suggest(Filter $filter): array;
     
