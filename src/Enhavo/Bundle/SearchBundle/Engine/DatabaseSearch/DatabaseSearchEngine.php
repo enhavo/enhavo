@@ -66,6 +66,14 @@ class DatabaseSearchEngine implements SearchEngineInterface
         return $entries;
     }
 
+    public function count(Filter $filter): int
+    {
+        $searchFilter = $this->createSearchFilter($filter);
+        $repository = $this->em->getRepository(Index::class);
+
+        return $repository->countSearchResults($searchFilter);
+    }
+
     public function suggest(Filter $filter): array
     {
         return [];
