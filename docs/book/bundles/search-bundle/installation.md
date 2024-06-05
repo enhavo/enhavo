@@ -5,10 +5,6 @@
 $ composer require enhavo/search-bundle
 ```
 
-```bash
-$ yarn add @enhavo/search
-```
-
 To initialize the engine you have to fire the `enhavo:search:init` command.
 
 ```bash
