@@ -10,6 +10,7 @@ namespace App\Endpoint;
 
 use App\Form\RegisterForm;
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Route(path: '/register', name: 'app_register', defaults: ['_format' => 'html'])]
 #[Route(path: '/api/register', defaults: ['_format' => 'json'])]
@@ -81,11 +82,11 @@ enhavo_app:
     area:
         api: # name of the area
             path: '^/api/.*'
-            endpoint:
+            options:
                 format: 'json'
         theme:
             firewall: main
-            endpoint:
+            options:
                 navigation: ['theme', 'endpoint']
                 routes: ['theme']
                 vue_routes: ['theme']
