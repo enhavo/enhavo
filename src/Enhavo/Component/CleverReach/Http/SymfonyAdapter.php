@@ -2,6 +2,7 @@
 
 namespace Enhavo\Component\CleverReach\Http;
 
+use Enhavo\Bundle\ApiBundle\Endpoint\Endpoint;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
@@ -11,22 +12,24 @@ use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
+use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class GuzzleAdapter implements AdapterInterface, LoggerAwareInterface
+class SymfonyAdapter implements AdapterInterface, LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
     const API_ENDPOINT = 'https://rest.cleverreach.com';
     const API_ENDPOINT_CONFIG_KEY = 'api_endpoint';
 
-    /** @var array */
-    private $config;
-
-    /** @var Client */
-    private $client;
-
     /** @var string */
     private $accessToken;
+
+    /** @var string */
+    private string $endpoint;
 
     /**
      * Client constructor.
@@ -34,13 +37,11 @@ class GuzzleAdapter implements AdapterInterface, LoggerAwareInterface
      * @param array $config
      * @param LoggerInterface|null $logger
      */
-    public function __construct(array $config = [], LoggerInterface $logger = null)
+    public function __construct(private HttpClientInterface $client, private array $config = [], LoggerInterface $logger = null)
     {
         $endpoint = isset($config[self::API_ENDPOINT_CONFIG_KEY]) ? $config[self::API_ENDPOINT_CONFIG_KEY] : self::API_ENDPOINT;
 
-        $this->client = new Client([
-            'base_uri' => $endpoint
-        ]);
+        $this->endpoint = $endpoint;
 
         if ($logger) {
             $this->logger = $logger;
@@ -53,8 +54,9 @@ class GuzzleAdapter implements AdapterInterface, LoggerAwareInterface
     public function authorize(string $clientId, string $clientSecret)
     {
         try {
-            $response = $this->client->request('post', '/oauth/token.php', [
-                'auth' => [
+            $response = $this->client->request('POST', '/oauth/token.php', [
+                'base_uri' => $this->endpoint,
+                'auth_basic' => [
                     $clientId,
                     $clientSecret,
                 ],
@@ -65,7 +67,7 @@ class GuzzleAdapter implements AdapterInterface, LoggerAwareInterface
                     'grant_type' => 'client_credentials',
                 ],
             ]);
-            $data = json_decode($response->getBody()->getContents(), true);
+            $data = json_decode($response->getContent(), true);
 
             if (!isset($data['access_token'])) {
                 throw new AuthorizeException('Access token was not provided');
@@ -74,7 +76,7 @@ class GuzzleAdapter implements AdapterInterface, LoggerAwareInterface
             $this->accessToken = $data['access_token'];
 
             return true;
-        } catch (ClientException $e) {
+        } catch (TransportExceptionInterface | ClientExceptionInterface | RedirectionExceptionInterface | ServerExceptionInterface $e) {
             $this->log(LogLevel::ERROR, $e->getMessage());
             throw new AuthorizeException($e->getMessage());
         }
@@ -92,15 +94,15 @@ class GuzzleAdapter implements AdapterInterface, LoggerAwareInterface
         }
 
         try {
-            $response = $this->client->request($method, $path, ['headers' => ['Authorization' => "Bearer {$this->getAccessToken()}", 'Accept' => 'application/json',], 'json' => $data,]);
-            $data = json_decode($response->getBody()->getContents(), true);
+            $response = $this->client->request($method, $path, ['base_uri' => $this->endpoint, 'headers' => ['Authorization' => "Bearer {$this->getAccessToken()}", 'Accept' => 'application/json',], 'json' => $data,]);
+            $data = json_decode($response->getContent(), true);
             $this->log(LogLevel::INFO, 'Response data.', ['response' => $data]);
 
 
-        } catch (ServerException $e) {
+        } catch (ClientExceptionInterface | RedirectionExceptionInterface | ServerExceptionInterface $e) {
             $this->log(LogLevel::ERROR, $e->getMessage());
             throw new RequestException($e->getMessage());
-        } catch (ClientException $e) {
+        } catch (TransportExceptionInterface $e) {
             if ($e->getCode() !== 404) {
                 $this->log(LogLevel::ERROR, $e->getMessage());
                 throw new RequestException($e->getMessage());

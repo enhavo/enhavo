@@ -4,11 +4,12 @@ namespace Enhavo\Component\CleverReach\Tests\Http;
 
 use Enhavo\Component\CleverReach\Exception\AuthorizeException;
 use Enhavo\Component\CleverReach\Exception\RequestException;
-use Enhavo\Component\CleverReach\Http\GuzzleAdapter;
+use Enhavo\Component\CleverReach\Http\SymfonyAdapter;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpClient\CurlHttpClient;
 use Symfony\Component\Panther\ProcessManager\WebServerManager;
 
-class GuzzleAdapterTest extends TestCase
+class SymfonyAdapterTest extends TestCase
 {
     /** @var WebServerManager */
     private static $server;
@@ -29,41 +30,41 @@ class GuzzleAdapterTest extends TestCase
         }
     }
 
-    private function createGuzzleAdapter()
+    private function createSymfonyAdapter()
     {
-        return new GuzzleAdapter([
+        return new SymfonyAdapter(new CurlHttpClient(), [
             'api_endpoint' => 'http://127.0.0.1:1234',
         ]);
     }
 
     public function testAuthorize()
     {
-        $guzzle = $this->createGuzzleAdapter();
-        $result = $guzzle->authorize('cli3ntId', 'clientS3cr3t');
+        $symfony = $this->createSymfonyAdapter();
+        $result = $symfony->authorize('cli3ntId', 'clientS3cr3t');
         $this->assertTrue($result);
-        $this->assertEquals('s3cr3t_acc3ss_token', $guzzle->getAccessToken());
+        $this->assertEquals('s3cr3t_acc3ss_token', $symfony->getAccessToken());
     }
 
     public function testFailAuthorize()
     {
         $this->expectException(AuthorizeException::class);
-        $guzzle = $this->createGuzzleAdapter();
-        $guzzle->authorize('something', 'wrong');
+        $symfony = $this->createSymfonyAdapter();
+        $symfony->authorize('something', 'wrong');
     }
 
     public function testAction()
     {
-        $guzzle = $this->createGuzzleAdapter();
-        $guzzle->authorize('cli3ntId', 'clientS3cr3t');
-        $data = $guzzle->action('GET', '/action/test');
+        $symfony = $this->createSymfonyAdapter();
+        $symfony->authorize('cli3ntId', 'clientS3cr3t');
+        $data = $symfony->action('GET', '/action/test');
         $this->assertEquals('test', $data['test']);
     }
 
     public function testFailAction()
     {
         $this->expectException(RequestException::class);
-        $guzzle = $this->createGuzzleAdapter();
-        $guzzle->authorize('cli3ntId', 'clientS3cr3t');
-        $guzzle->action('GET', '/server/error');
+        $symfony = $this->createSymfonyAdapter();
+        $symfony->authorize('cli3ntId', 'clientS3cr3t');
+        $symfony->action('GET', '/server/error');
     }
 }
