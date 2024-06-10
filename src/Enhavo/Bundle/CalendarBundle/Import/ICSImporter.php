@@ -52,11 +52,9 @@ class ICSImporter implements ImporterInterface, ContainerAwareInterface
 
     public function import($from = null, $to = null, $filter = [])
     {
-        try{
-            $response = $this->client->request('GET', $this->url);
-        } catch (TransportExceptionInterface $e) {
-            return [];
-        }
+
+        $response = $this->client->request('GET', $this->url);
+
 
         $content = $response->getContent();
         $contentLines = explode("\r\n", $content);
