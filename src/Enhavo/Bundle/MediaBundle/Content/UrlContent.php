@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\MediaBundle\Content;
 
 use Enhavo\Bundle\MediaBundle\Exception\FileException;
+use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class UrlContent extends AbstractContent
@@ -30,12 +31,16 @@ class UrlContent extends AbstractContent
 
     public function __construct(
         $url,
-        private HttpClientInterface $client,
+        private ?HttpClientInterface $client = null,
     )
     {
         $this->url = $url;
         $tempPath = tempnam(sys_get_temp_dir(), 'Content');
         $this->path = $tempPath;
+
+        if ($this->client == null) {
+            $this->client = HttpClient::create();
+        }
     }
 
     public function getContent()
