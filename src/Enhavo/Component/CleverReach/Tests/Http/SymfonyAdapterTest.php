@@ -32,9 +32,7 @@ class SymfonyAdapterTest extends TestCase
 
     private function createSymfonyAdapter()
     {
-        return new SymfonyAdapter(new CurlHttpClient(), [
-            'api_endpoint' => 'http://127.0.0.1:1234',
-        ]);
+        return new SymfonyAdapter(['api_endpoint' => 'http://127.0.0.1:1234'], null, new CurlHttpClient());
     }
 
     public function testAuthorize()
