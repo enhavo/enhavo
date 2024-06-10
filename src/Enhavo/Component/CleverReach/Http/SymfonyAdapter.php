@@ -12,6 +12,7 @@ use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
+use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
@@ -37,7 +38,7 @@ class SymfonyAdapter implements AdapterInterface, LoggerAwareInterface
      * @param array $config
      * @param LoggerInterface|null $logger
      */
-    public function __construct(private HttpClientInterface $client, private array $config = [], LoggerInterface $logger = null)
+    public function __construct(private array $config = [], LoggerInterface $logger = null, private ?HttpClientInterface $client = null)
     {
         $endpoint = isset($config[self::API_ENDPOINT_CONFIG_KEY]) ? $config[self::API_ENDPOINT_CONFIG_KEY] : self::API_ENDPOINT;
 
@@ -46,6 +47,11 @@ class SymfonyAdapter implements AdapterInterface, LoggerAwareInterface
         if ($logger) {
             $this->logger = $logger;
         }
+
+        if ($this->client == null) {
+            $this->client = HttpClient::create();
+        }
+
     }
 
     /**
