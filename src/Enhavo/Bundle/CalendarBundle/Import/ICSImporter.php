@@ -15,6 +15,7 @@ use ICal\EventObject;
 use ICal\ICal;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
@@ -39,17 +40,21 @@ class ICSImporter implements ImporterInterface, ContainerAwareInterface
      * @param array $config
      * @param HttpClientInterface $client
      */
-    public function __construct($importerName, $config, private HttpClientInterface $client)
+    public function __construct($importerName, $config, private ?HttpClientInterface $client = null)
     {
         $this->importerName = $importerName;
         $this->url = $config['url'];
+
+        if ($this->client == null) {
+            $this->client = HttpClient::create();
+        }
     }
 
     public function import($from = null, $to = null, $filter = [])
     {
         try{
             $response = $this->client->request('GET', $this->url);
-        } catch (\Exception $e) {
+        } catch (TransportExceptionInterface $e) {
             return [];
         }
 
