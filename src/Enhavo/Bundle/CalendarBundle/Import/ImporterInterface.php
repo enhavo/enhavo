@@ -22,7 +22,7 @@ interface ImporterInterface
      *
      * @param array $config
      */
-    public function __construct($importerName, $config, HttpClientInterface $client);
+    public function __construct($importerName, $config, ?HttpClientInterface $client = null);
 
     /**
      * @param \DateTime $from

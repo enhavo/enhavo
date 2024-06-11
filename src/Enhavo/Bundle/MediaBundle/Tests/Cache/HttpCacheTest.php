@@ -6,7 +6,6 @@ use Enhavo\Bundle\MediaBundle\Cache\HttpCache;
 use Enhavo\Bundle\MediaBundle\Content\UrlContent;
 use Enhavo\Bundle\MediaBundle\Media\UrlGeneratorInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
-use phpDocumentor\Reflection\Types\This;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientInterface;
