@@ -10,8 +10,7 @@ namespace Enhavo\Bundle\MediaBundle\Cache;
 
 use Enhavo\Bundle\MediaBundle\Media\UrlGeneratorInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
-use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Request;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class HttpCache implements CacheInterface
@@ -21,43 +20,16 @@ class HttpCache implements CacheInterface
      */
     private $generator;
 
-    /**
-     * @var Client
-     */
-    private $client;
-
-    /**
-     * @var RequestStack
-     */
-    private $requestStack;
-
-    /**
-     * @var string
-     */
-    private $host;
-
-    /**
-     * @var string
-     */
-    private $port;
-
-    /**
-     * @var string
-     */
-    private $schema;
-
-    public function __construct(RequestStack $requestStack, $host = null, $port = null, $schema = null, $timeout = 2)
-    {
-        $this->requestStack = $requestStack;
-
-            $this->host = $host;
-            $this->port = $port;
-            $this->schema = $schema;
-
-        $this->client = new Client([
-            'timeout' => $timeout
-        ]);
-    }
+    public function __construct(
+        private RequestStack $requestStack,
+        private HttpClientInterface $client,
+        private $host = null,
+        private $port = null,
+        private $schema = null,
+        private $timeout = 2,
+        private $method = 'PURGE'
+    )
+    {}
 
     private function getUri(FileInterface $file, $format)
     {
@@ -79,8 +51,7 @@ class HttpCache implements CacheInterface
     public function invalid(FileInterface $file, $format)
     {
         $uri = $this->getUri($file, $format);
-        $request = new Request('PURGE', $uri);
-        $this->client->send($request);
+        $this->client->request($this->method, $uri, ['timeout' => $this->timeout]);
     }
 
     public function set(FileInterface $file, $format)

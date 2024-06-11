@@ -6,7 +6,8 @@ use Enhavo\Bundle\MediaBundle\Content\PathContent;
 use Enhavo\Bundle\MediaBundle\Exception\FileException;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\MediaBundle\Provider\ProviderInterface;
-use GuzzleHttp\Client;
+use Psr\Http\Client\ClientInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 use function GuzzleHttp\Psr7\parse_header;
 use Enhavo\Bundle\AppBundle\Factory\Factory;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -22,7 +23,7 @@ class FileFactory extends Factory
      */
     private $provider;
 
-    public function __construct($className, ProviderInterface $provider)
+    public function __construct($className, ProviderInterface $provider, private HttpClientInterface $client)
     {
         parent::__construct($className);
         $this->provider = $provider;
@@ -157,12 +158,10 @@ class FileFactory extends Factory
      * @param string $uri
      * @param string $filename
      * @return FileInterface
-     * @throws FileException
      */
     public function createFromUri($uri, $filename = null)
     {
-        $client = new Client();
-        $response = $client->request('GET', $uri);
+        $response = $this->client->request('GET', $uri);
         if($response->getStatusCode() != 200) {
             throw new FileException(sprintf('File could not be download from uri "%s".', $uri));
         }
@@ -171,7 +170,8 @@ class FileFactory extends Factory
         $file = $this->createNew();
 
         $file->setMimeType('application/octet-stream');
-        $contentType = $response->getHeader('Content-Type');
+        $headers = $response->getHeaders();
+        $contentType = $headers['content-type'];
         if(!empty($contentType)) {
             $parsedHeader = parse_header($contentType[count($contentType)-1]);
             if(!empty($parsedHeader) && isset($parsedHeader[0]) && isset($parsedHeader[0][0])) {
@@ -180,11 +180,10 @@ class FileFactory extends Factory
         }
 
         if($filename === null) {
-            $contentDisposition = $response->getHeader('Content-Disposition');
+            $contentDisposition = $headers['content-disposition'];
             if(!empty($contentDisposition)) {
-                $parsedHeader = parse_header($contentDisposition[count($contentDisposition)-1]);
-                if(!empty($parsedHeader) && $parsedHeader['filename']) {
-                    $filename = $parsedHeader['filename'];
+                if (preg_match('/.*?filename="(.+?)"/', $contentDisposition[0], $matches)) {
+                    $filename = $matches[1];
                 }
             } else {
                 $path = parse_url($uri, PHP_URL_PATH);
@@ -206,7 +205,7 @@ class FileFactory extends Factory
         $file->setExtension($extension);
 
         $file->setGarbage(true);
-        $file->setContent(new Content((string)$response->getBody()));
+        $file->setContent(new Content((string)$response->getContent()));
 
         $this->provider->updateFile($file);
         return $file;
