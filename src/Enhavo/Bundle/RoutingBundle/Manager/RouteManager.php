@@ -38,8 +38,24 @@ class RouteManager
 
             $route = $resource->getRoute();
             $route->setContent($resource);
+
+<<<<<<< HEAD
+        $this->autoGenerator->generate($resource);
+=======
+            if (empty($route->getName())) {
+                $route->generateRouteName();
+            }
         }
 
         $this->autoGenerator->generate($resource);
+
+        if ($resource instanceof Routeable) {
+            $route = $resource->getRoute();
+            if ($route && empty($route->getStaticPrefix())) {
+                $resource->setRoute(null);
+                $this->em->remove($route);
+            }
+        }
+>>>>>>> 15f617163 (fix: routing manager update (#2033))
     }
 }
