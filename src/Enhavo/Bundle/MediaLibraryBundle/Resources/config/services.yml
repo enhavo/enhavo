@@ -82,3 +82,4 @@ services:
         arguments:
             - '%enhavo_media_library.model.file.class%'
             - '@enhavo_media.provider'
+            - '@http_client'
