@@ -16,9 +16,8 @@
     "enhavo/app-bundle": "^0.13",
     "enhavo/form-bundle": "^0.13",
     "enhavo/block-bundle": "^0.13",
-    "guzzlehttp/guzzle": "^6.2",
-    "symfony/lock": "^5.4",
     "symfony/http-client": "^5.4",
+    "symfony/lock": "^5.4",
     "enhavo/cleverreach": "^0.13",
     "mailjet/mailjet-apiv3-php": "^1.5",
     "mailchimp/marketing": "^3.0"

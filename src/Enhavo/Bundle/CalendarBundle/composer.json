@@ -18,7 +18,7 @@
     "enhavo/block-bundle": "^0.13",
     "enhavo/form-bundle": "^0.13",
     "johngrogg/ics-parser": "^2.0",
-    "guzzlehttp/guzzle": "^6.5",
+    "symfony/http-client": "^5.4",
     "simshaun/recurr": "^2.2"
   },
   "require-dev": {
