@@ -119,6 +119,7 @@ services:
         arguments:
             - '%enhavo_media.model.file.class%'
             - '@enhavo_media.provider'
+            - '@http_client'
 
     enhavo_media.factory.format:
         class: Enhavo\Bundle\MediaBundle\Factory\FormatFactory
@@ -183,6 +184,7 @@ services:
     Enhavo\Bundle\MediaBundle\Cache\HttpCache:
         arguments:
             - '@request_stack'
+            - '@http_client'
         calls:
             - [setUrlGenerator, ['@enhavo_media.media.public_url_generator']]
 
