@@ -280,8 +280,10 @@ class ElasticSearchEngine implements SearchEngineInterface
 
     public function count(Filter $filter): int
     {
-        //TODO: Implement
-        throw new \Exception('Feature not implemented yet');
+        $search = new Search($this->client);
+        $search->addIndex($this->getIndex());
+        $search->setQuery($this->createQuery($filter));
+        return $search->count();
     }
 
     public function suggest(Filter $filter): array
