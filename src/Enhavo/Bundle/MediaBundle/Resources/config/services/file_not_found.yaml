@@ -4,5 +4,6 @@ services:
     Enhavo\Bundle\MediaBundle\FileNotFound\RemoteFileNotFoundHandler:
         arguments:
             - '@enhavo_media.media.public_url_generator'
+            - '@http_client'
 
     Enhavo\Bundle\MediaBundle\FileNotFound\CreateDummyFileNotFoundHandler:

@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\CalendarBundle\Import;
 
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 interface ImporterInterface
 {
@@ -21,7 +22,7 @@ interface ImporterInterface
      *
      * @param array $config
      */
-    public function __construct($importerName, $config);
+    public function __construct($importerName, $config, ?HttpClientInterface $client = null);
 
     /**
      * @param \DateTime $from

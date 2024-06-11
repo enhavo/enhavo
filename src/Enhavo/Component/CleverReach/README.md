@@ -19,9 +19,9 @@ composer require enhavo/cleverreach
 
 ```php
 use Enhavo\Component\CleverReach\ApiManager;
-use Enhavo\Component\CleverReach\Http\GuzzleAdapter;
+use Enhavo\Component\CleverReach\Http\SymfonyAdapter;
 
-$adapter = new GuzzleAdapter();
+$adapter = new SymfonyAdapter();
 
 // Authorize your app by credentials
 $adapter->authorize('<CLIENT_ID>', '<CLIENT_SECRET>');
