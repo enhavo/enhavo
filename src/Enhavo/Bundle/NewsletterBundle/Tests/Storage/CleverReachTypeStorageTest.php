@@ -16,7 +16,7 @@ use Enhavo\Bundle\NewsletterBundle\Storage\Type\CleverReachStorageType;
 use Enhavo\Bundle\NewsletterBundle\Storage\Type\StorageType;
 use Enhavo\Bundle\NewsletterBundle\Tests\Mocks\GroupAwareSubscriberMock;
 use Enhavo\Component\CleverReach\ApiManager;
-use Enhavo\Component\CleverReach\Http\GuzzleAdapter;
+use Enhavo\Component\CleverReach\Http\SymfonyAdapter;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -29,7 +29,7 @@ class CleverReachTypeStorageTest extends TestCase
         $dependencies->subscriber = $this->getMockBuilder(SubscriberInterface::class)->getMock();
         $dependencies->eventDispatcher = $this->getMockBuilder(EventDispatcherInterface::class)->getMock();
         $dependencies->apiManager = $this->getMockBuilder(ApiManager::class)->disableOriginalConstructor()->getMock();
-        $dependencies->client = new CleverReachClientMock($dependencies->eventDispatcher, CleverReachGuzzleHttpMock::class);
+        $dependencies->client = new CleverReachClientMock($dependencies->eventDispatcher, CleverReachSymfonyHttpMock::class);
         $dependencies->client->_apiManager = $dependencies->apiManager;
 
         return $dependencies;
@@ -361,7 +361,7 @@ class CleverReachClientMock extends CleverReachClient
     }
 }
 
-class CleverReachGuzzleHttpMock extends GuzzleAdapter
+class CleverReachSymfonyHttpMock extends SymfonyAdapter
 {
     public function authorize(string $clientId, string $clientSecret)
     {
