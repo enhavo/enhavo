@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\RoutingBundle\Manager;
 
+use Doctrine\ORM\EntityManager;
 use Enhavo\Bundle\RoutingBundle\Entity\Route;
 use Enhavo\Bundle\RoutingBundle\Model\Routeable;
 use Enhavo\Bundle\RoutingBundle\AutoGenerator\AutoGenerator;
@@ -21,10 +22,14 @@ class RouteManager
     /** @var FactoryInterface */
     private $routeFactory;
 
-    public function __construct(AutoGenerator $autoGenerator, FactoryInterface $routeFactory)
+    /** @var EntityManager */
+    private $em;
+
+    public function __construct(AutoGenerator $autoGenerator, FactoryInterface $routeFactory, EntityManager $em)
     {
         $this->autoGenerator = $autoGenerator;
         $this->routeFactory = $routeFactory;
+        $this->em = $em;
     }
 
     public function update($resource)
@@ -38,8 +43,20 @@ class RouteManager
 
             $route = $resource->getRoute();
             $route->setContent($resource);
+
+            if (empty($route->getName())) {
+                $route->generateRouteName();
+            }
         }
 
         $this->autoGenerator->generate($resource);
+
+        if ($resource instanceof Routeable) {
+            $route = $resource->getRoute();
+            if ($route && empty($route->getStaticPrefix())) {
+                $resource->setRoute(null);
+                $this->em->remove($route);
+            }
+        }
     }
 }
