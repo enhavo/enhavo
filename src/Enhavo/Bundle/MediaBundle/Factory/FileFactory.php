@@ -6,9 +6,7 @@ use Enhavo\Bundle\MediaBundle\Content\PathContent;
 use Enhavo\Bundle\MediaBundle\Exception\FileException;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\MediaBundle\Provider\ProviderInterface;
-use Psr\Http\Client\ClientInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
-use function GuzzleHttp\Psr7\parse_header;
 use Enhavo\Bundle\AppBundle\Factory\Factory;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\File;
@@ -173,7 +171,7 @@ class FileFactory extends Factory
         $headers = $response->getHeaders();
         $contentType = $headers['content-type'];
         if(!empty($contentType)) {
-            $parsedHeader = parse_header($contentType[count($contentType)-1]);
+            $parsedHeader = $this->parse($contentType[count($contentType)-1]);
             if(!empty($parsedHeader) && isset($parsedHeader[0]) && isset($parsedHeader[0][0])) {
                 $file->setMimeType($parsedHeader[0][0]);
             }
@@ -209,5 +207,52 @@ class FileFactory extends Factory
 
         $this->provider->updateFile($file);
         return $file;
+    }
+
+    private function parse($header)
+    {
+        $trimmed = "\"'  \n\t\r";
+        $params = $matches = [];
+
+        foreach ($this->normalize($header) as $val) {
+            $part = [];
+            foreach (preg_split('/;(?=([^"]*"[^"]*")*[^"]*$)/', $val) as $kvp) {
+                if (preg_match_all('/<[^>]+>|[^=]+/', $kvp, $matches)) {
+                    $m = $matches[0];
+                    if (isset($m[1])) {
+                        $part[trim($m[0], $trimmed)] = trim($m[1], $trimmed);
+                    } else {
+                        $part[] = trim($m[0], $trimmed);
+                    }
+                }
+            }
+            if ($part) {
+                $params[] = $part;
+            }
+        }
+
+        return $params;
+    }
+
+    private function normalize($header)
+    {
+        if (!is_array($header)) {
+            return array_map('trim', explode(',', $header));
+        }
+
+        $result = [];
+        foreach ($header as $value) {
+            foreach ((array) $value as $v) {
+                if (strpos($v, ',') === false) {
+                    $result[] = $v;
+                    continue;
+                }
+                foreach (preg_split('/,(?=([^"]*"[^"]*")*[^"]*$)/', $v) as $vv) {
+                    $result[] = trim($vv);
+                }
+            }
+        }
+
+        return $result;
     }
 }
