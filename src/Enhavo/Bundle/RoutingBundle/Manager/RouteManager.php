@@ -35,17 +35,20 @@ class RouteManager
 
             $route = $resource->getRoute();
             $route->setContent($resource);
-        }
 
-        if (empty($route->getName())) {
-            $route->generateRouteName();
+            if (empty($route->getName())) {
+                $route->generateRouteName();
+            }
         }
 
         $this->autoGenerator->generate($resource);
 
-        if (empty($route->getStaticPrefix())) {
-            $resource->setRoute(null);
-            $this->em->remove($route);
+        if ($resource instanceof Routeable) {
+            $route = $resource->getRoute();
+            if ($route && empty($route->getStaticPrefix())) {
+                $resource->setRoute(null);
+                $this->em->remove($route);
+            }
         }
     }
 }
