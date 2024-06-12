@@ -31,6 +31,7 @@ services:
             - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
         tags:
             - { name: controller.service_arguments }
+            - { name: container.service_subscriber }
 
     Enhavo\Bundle\TemplateBundle\EventListener\TemplateDoctrineSubscriber:
         calls:

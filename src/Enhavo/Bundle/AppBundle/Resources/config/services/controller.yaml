@@ -8,6 +8,7 @@ services:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:
             - { name: controller.service_arguments }
+            - { name: container.service_subscriber }
 
     Enhavo\Bundle\AppBundle\Controller\MainController:
         arguments:
@@ -24,6 +25,7 @@ services:
             - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
         tags:
             - { name: controller.service_arguments }
+            - { name: container.service_subscriber }
 
     Enhavo\Bundle\AppBundle\Controller\AbstractViewController:
         abstract: true
@@ -42,3 +44,4 @@ services:
             - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
         tags:
             - { name: controller.service_arguments }
+            - { name: container.service_subscriber }

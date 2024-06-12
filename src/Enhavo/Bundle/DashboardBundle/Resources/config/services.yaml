@@ -24,6 +24,7 @@ services:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:
             - { name: controller.service_arguments }
+            - { name: container.service_subscriber }
 
     Enhavo\Bundle\DashboardBundle\View\DashboardViewType:
         arguments:
