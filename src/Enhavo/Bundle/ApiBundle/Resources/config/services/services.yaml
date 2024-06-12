@@ -6,6 +6,7 @@ services:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:
             - { name: controller.service_arguments }
+            - { name: container.service_subscriber }
 
     Enhavo\Bundle\ApiBundle\EventListener\EndpointRouteListener:
         arguments:
