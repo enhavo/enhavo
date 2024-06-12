@@ -7,14 +7,13 @@
         <field name="reducedPrice" type="integer" nullable="true" />
         <field name="reduced" type="boolean" nullable="true" />
         <field name="lengthUnit" nullable="true" />
-        <field name="height" type="integer" nullable="true" />
-        <field name="width" type="integer" nullable="true" />
-        <field name="depth" type="integer" nullable="true" />
+        <field name="height" type="float" nullable="true" />
+        <field name="width" type="float" nullable="true" />
+        <field name="depth" type="float" nullable="true" />
         <field name="volumeUnit" nullable="true" />
-        <field name="volume" type="integer" nullable="true" />
+        <field name="volume" type="float" nullable="true" />
         <field name="weightUnit" nullable="true" />
-        <field name="weight" type="integer" nullable="true" />
-        <field name="shippingCategory" type="integer" nullable="true" />
+        <field name="weight" type="float" nullable="true" />
 
         <many-to-one field="picture" target-entity="Enhavo\Bundle\MediaBundle\Model\FileInterface">
             <join-column on-delete="SET NULL" />
@@ -83,5 +82,9 @@
                 </inverse-join-columns>
             </join-table>
         </many-to-many>
+
+        <many-to-one field="shippingCategory" target-entity="Sylius\Component\Shipping\Model\ShippingCategoryInterface">
+            <join-column on-delete="SET NULL" />
+        </many-to-one>
     </entity>
 </doctrine-mapping>
