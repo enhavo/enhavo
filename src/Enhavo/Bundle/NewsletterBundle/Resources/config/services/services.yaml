@@ -141,6 +141,7 @@ services:
             - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
         tags:
             - { name: controller.service_arguments }
+            - { name: container.service_subscriber }
 
     Enhavo\Bundle\NewsletterBundle\Controller\PendingSubscriberController:
         arguments:
@@ -151,6 +152,7 @@ services:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:
             - { name: controller.service_arguments }
+            - { name: container.service_subscriber }
 
     Enhavo\Bundle\NewsletterBundle\Provider\GroupProvider:
         arguments:

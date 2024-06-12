@@ -67,6 +67,7 @@ services:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:
             - { name: controller.service_arguments }
+            - { name: container.service_subscriber }
 
     Enhavo\Bundle\ContentBundle\Command\SitemapDumpCommand:
         arguments:
