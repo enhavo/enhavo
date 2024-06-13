@@ -127,6 +127,7 @@ login:
     template: theme/security/login.html.twig
     redirect_route: enhavo_user_theme_user_profile
     route: enhavo_user_theme_security_login
+    check_route: enhavo_user_theme_security_login
     verification_required: true
     max_failed_login_attempts: 3
     password_max_age: 3 days
