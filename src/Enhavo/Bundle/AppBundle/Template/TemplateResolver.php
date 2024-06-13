@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Template;
 
-use Enhavo\Bundle\AppBundle\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 class TemplateResolver implements TemplateResolverInterface

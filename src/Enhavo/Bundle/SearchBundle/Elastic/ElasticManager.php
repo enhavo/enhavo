@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\SearchBundle\Elastic;
 
-use Enhavo\Bundle\AppBundle\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Filesystem;
 
 class ElasticManager
 {

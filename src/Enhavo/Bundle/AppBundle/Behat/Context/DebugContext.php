@@ -10,7 +10,7 @@ namespace Enhavo\Bundle\AppBundle\Behat\Context;
 
 
 use Behat\Behat\Context\Context;
-use Enhavo\Bundle\AppBundle\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Filesystem;
 
 class DebugContext implements ClientAwareContext, Context
 {

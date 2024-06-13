@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\FormBundle\Tests\Formatter;
 
-use Enhavo\Bundle\AppBundle\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Filesystem;
 use Enhavo\Bundle\FormBundle\Formatter\HtmlSanitizer;
 use PHPUnit\Framework\TestCase;
 

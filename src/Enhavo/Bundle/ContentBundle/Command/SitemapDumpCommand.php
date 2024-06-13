@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\ContentBundle\Command;
 
-use Enhavo\Bundle\AppBundle\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Filesystem;
 use Enhavo\Bundle\ContentBundle\Sitemap\SitemapGenerator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
