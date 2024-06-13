@@ -10,7 +10,7 @@ namespace Enhavo\Bundle\MediaBundle\Command;
 
 use Doctrine\DBAL\Statement;
 use Doctrine\ORM\EntityManagerInterface;
-use Enhavo\Bundle\AppBundle\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Filesystem;
 use Enhavo\Bundle\MediaBundle\Media\MediaManager;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\MediaBundle\Repository\FileRepository;

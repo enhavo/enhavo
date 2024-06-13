@@ -5,7 +5,7 @@ namespace Enhavo\Bundle\MediaBundle\Endpoint\Type;
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
-use Enhavo\Bundle\AppBundle\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Filesystem;
 use Enhavo\Bundle\MediaBundle\Factory\FileFactory;
 use Enhavo\Bundle\MediaBundle\Http\FileResponse;
 use Symfony\Component\Finder\Finder;

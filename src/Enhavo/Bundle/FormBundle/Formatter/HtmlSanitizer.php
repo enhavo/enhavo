@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\FormBundle\Formatter;
 
-use Enhavo\Bundle\AppBundle\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Filesystem;
 
 class HtmlSanitizer
 {

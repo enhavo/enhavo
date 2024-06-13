@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\MediaBundle\Storage;
 
-use Enhavo\Bundle\AppBundle\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Filesystem;
 use Enhavo\Bundle\MediaBundle\Content\PathContent;
 use Enhavo\Bundle\MediaBundle\Exception\StorageException;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;

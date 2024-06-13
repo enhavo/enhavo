@@ -3,7 +3,6 @@
 namespace Enhavo\Bundle\AppBundle;
 
 use Enhavo\Bundle\AppBundle\Batch\Batch;
-use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\FilesystemCompilerPass;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\LocaleResolverCompilerPass;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\RouteCollectorCompilerPass;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\SyliusCompilerPass;
@@ -89,8 +88,6 @@ class EnhavoAppBundle extends Bundle
         );
 
         $container->addCompilerPass(new SyliusCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1);
-
-        $container->addCompilerPass(new FilesystemCompilerPass());
 
         $container->addCompilerPass(new TranslationDumperCompilerPass());
 
