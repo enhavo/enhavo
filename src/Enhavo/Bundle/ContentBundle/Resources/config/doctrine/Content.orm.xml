@@ -7,6 +7,7 @@
 
         <field name="title" length="255" nullable="true" />
         <field name="slug" length="255" nullable="true" />
+        <field name="canonicalUrl" length="255" nullable="true" />
         <field name="metaDescription" type="text" nullable="true" />
         <field name="pageTitle" type="text" nullable="true" />
         <field name="public" type="boolean" nullable="true" />
