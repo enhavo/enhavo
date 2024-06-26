@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator;
 
-use Enhavo\Bundle\AppBundle\Repository\EntityRepositoryInterface;
+use Enhavo\Bundle\ResourceBundle\Repository\EntityRepositoryInterface;
 use Enhavo\Bundle\RoutingBundle\AutoGenerator\AbstractGenerator;
 use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
 use Enhavo\Bundle\RoutingBundle\Slugifier\Slugifier;

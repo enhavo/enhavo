@@ -8,8 +8,8 @@
 
 namespace Enhavo\Bundle\DashboardBundle\View;
 
+use AppViewType;
 use Enhavo\Bundle\AppBundle\View\AbstractViewType;
-use Enhavo\Bundle\AppBundle\View\Type\AppViewType;
 use Enhavo\Bundle\AppBundle\View\ViewData;
 use Enhavo\Bundle\DashboardBundle\Widget\WidgetManager;
 use Symfony\Component\OptionsResolver\OptionsResolver;

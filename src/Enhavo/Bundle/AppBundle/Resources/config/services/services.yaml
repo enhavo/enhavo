@@ -78,18 +78,6 @@ services:
             - '%enhavo_app.mailer.model%'
             - '@translator'
 
-    enhavo_app.manager.resource:
-        alias: Enhavo\Bundle\AppBundle\Resource\ResourceManager
-
-    Enhavo\Bundle\AppBundle\Resource\ResourceManager:
-        arguments:
-            - '@event_dispatcher'
-            - '@doctrine.orm.entity_manager'
-            - '@sylius.resource_registry'
-            - '@sm.factory'
-        calls:
-            - [setContainer, ['@service_container']]
-
     Enhavo\Bundle\AppBundle\EventListener\ComponentSubscriber:
         arguments:
             - '@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface'

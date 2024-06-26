@@ -3,7 +3,7 @@
 namespace Enhavo\Bundle\PaymentBundle\Entity;
 
 use Payum\Core\Model\GatewayConfig as BaseGatewayConfig;
-use Sylius\Component\Resource\Model\ResourceInterface;
+use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 
 class GatewayConfig extends BaseGatewayConfig implements ResourceInterface
 {

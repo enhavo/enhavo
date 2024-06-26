@@ -3,7 +3,7 @@
 namespace Enhavo\Bundle\PaymentBundle\Entity;
 
 use Payum\Core\Model\Token;
-use Sylius\Component\Resource\Model\ResourceInterface;
+use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 
 class PaymentSecurityToken extends Token implements ResourceInterface
 {

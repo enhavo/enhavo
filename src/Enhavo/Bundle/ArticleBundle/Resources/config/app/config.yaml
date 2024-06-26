@@ -74,3 +74,21 @@ doctrine:
     orm:
         resolve_target_entities:
             Enhavo\Bundle\ArticleBundle\Model\ArticleInterface: Enhavo\Bundle\ArticleBundle\Entity\Article
+
+
+enhavo_resource:
+    resources:
+        enhavo_article.article:
+            classes:
+                model: Enhavo\Bundle\ArticleBundle\Model\Article
+    grids:
+        enhavo_article.article:
+            class: Enhavo\Bundle\ResourceBundle\Grid\Grid
+            resource: enhavo_article.article
+            actions:
+                filter:
+                    type: filter
+    inputs:
+        enhavo_article.article:
+            class: Enhavo\Bundle\ResourceBundle\Input\Input
+            resource: enhavo_article.article

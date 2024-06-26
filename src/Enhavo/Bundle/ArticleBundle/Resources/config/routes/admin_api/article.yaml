@@ -1,0 +1,12 @@
+enhavo_article_admin_api_article_grid:
+    path: /article/grid
+    methods: [GET]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_grid
+            grid: enhavo_article.article
+            actions:
+                filter:
+                    type: filter
+                    label: Test

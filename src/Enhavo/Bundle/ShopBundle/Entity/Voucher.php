@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Enhavo\Bundle\ShopBundle\Model\VoucherInterface;
 use Enhavo\Bundle\ShopBundle\Model\VoucherRedemptionInterface;
-use Sylius\Component\Resource\Model\ResourceInterface;
+use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 
 class Voucher implements ResourceInterface, VoucherInterface
 {

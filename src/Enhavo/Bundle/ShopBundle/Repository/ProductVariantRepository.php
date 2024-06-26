@@ -8,9 +8,9 @@
 
 namespace Enhavo\Bundle\ShopBundle\Repository;
 
-use Enhavo\Bundle\AppBundle\Filter\FilterQuery;
-use Enhavo\Bundle\AppBundle\Repository\EntityRepositoryInterface;
-use Enhavo\Bundle\AppBundle\Repository\EntityRepositoryTrait;
+use Enhavo\Bundle\ResourceBundle\Filter\FilterQuery;
+use Enhavo\Bundle\ResourceBundle\Repository\EntityRepositoryInterface;
+use Enhavo\Bundle\ResourceBundle\Repository\EntityRepositoryTrait;
 use Enhavo\Bundle\ShopBundle\Model\ProductInterface;
 use Sylius\Bundle\ProductBundle\Doctrine\ORM\ProductVariantRepository as SyliusProductVariantRepository;
 

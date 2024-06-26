@@ -3,15 +3,14 @@
 
 namespace Enhavo\Bundle\ShopBundle\Action;
 
-use Enhavo\Bundle\AppBundle\Action\ActionTypeInterface;
-use Enhavo\Bundle\AppBundle\Action\Type\FormActionType;
+use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
+use Enhavo\Bundle\ResourceBundle\Action\Type\FormActionType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class GenerateCouponActionType extends FormActionType implements ActionTypeInterface
+class GenerateCouponActionType extends AbstractActionType
 {
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        parent::configureOptions($resolver);
         $resolver->setDefaults([
             'icon' => 'autorenew',
             'translation_domain' => 'EnhavoShopBundle',
@@ -22,7 +21,12 @@ class GenerateCouponActionType extends FormActionType implements ActionTypeInter
         ]);
     }
 
-    public function getType()
+    public static function getParentType(): ?string
+    {
+        return FormActionType::class;
+    }
+
+    public static function getName(): ?string
     {
         return 'shop_generate_coupon';
     }

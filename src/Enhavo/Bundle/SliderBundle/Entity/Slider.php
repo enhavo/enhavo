@@ -4,7 +4,7 @@ namespace Enhavo\Bundle\SliderBundle\Entity;
 
 use Enhavo\Bundle\SliderBundle\Model\SliderInterface;
 use Enhavo\Bundle\SliderBundle\Model\SlideInterface;
-use Sylius\Component\Resource\Model\ResourceInterface;
+use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 
 /**
  * Slider
@@ -42,7 +42,7 @@ class Slider implements SliderInterface, ResourceInterface
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -65,7 +65,7 @@ class Slider implements SliderInterface, ResourceInterface
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {

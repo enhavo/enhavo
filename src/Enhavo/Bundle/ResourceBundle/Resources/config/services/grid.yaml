@@ -1,0 +1,11 @@
+services:
+    Enhavo\Bundle\ResourceBundle\Grid\Grid:
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: 'container.service_subscriber' }
+            - { name: 'enhavo_resource.grid' }
+
+    Enhavo\Bundle\ResourceBundle\Grid\GridFactory:
+        arguments:
+            - '%enhavo_resources.grids%'

@@ -3,11 +3,11 @@
 namespace Enhavo\Bundle\PaymentBundle\DependencyInjection;
 
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
-use Enhavo\Bundle\AppBundle\Factory\Factory;
 use Enhavo\Bundle\PaymentBundle\Entity\GatewayConfig;
 use Enhavo\Bundle\PaymentBundle\Entity\PaymentSecurityToken;
 use Enhavo\Bundle\PaymentBundle\Factory\GatewayConfigFactory;
 use Enhavo\Bundle\PaymentBundle\Form\Type\GatewayConfigType;
+use Enhavo\Bundle\ResourceBundle\Factory\Factory;
 use Sylius\Bundle\ResourceBundle\SyliusResourceBundle;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;

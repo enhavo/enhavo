@@ -9,34 +9,28 @@
 namespace Enhavo\Bundle\TaxonomyBundle\Filter;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Enhavo\Bundle\AppBundle\Filter\AbstractFilterType;
-use Enhavo\Bundle\AppBundle\Filter\FilterQuery;
+use Enhavo\Bundle\ApiBundle\Data\Data;
+use Enhavo\Bundle\ResourceBundle\Filter\AbstractFilterType;
+use Enhavo\Bundle\ResourceBundle\Filter\FilterQuery;
 use Enhavo\Bundle\TaxonomyBundle\Entity\Term;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 
 class TaxonomyFilterType extends AbstractFilterType
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    private $em;
-
-    public function __construct(TranslatorInterface $translator, EntityManagerInterface $em)
+    public function __construct(
+        private readonly EntityManagerInterface $em
+    )
     {
-        parent::__construct($translator);
-        $this->em = $em;
     }
 
-    public function createViewData($options, $name)
+    public function createViewData($options, Data $data): void
     {
         $choices = $this->getChoices($options);
-        $data = parent::createViewData($options, $name);
         $data['choices'] = $choices;
-        return $data;
     }
 
-    public function buildQuery(FilterQuery $query, $options, $value)
+    public function buildQuery($options, FilterQuery $query, mixed $value): void
     {
         if ($value == null) {
             return;
@@ -47,7 +41,7 @@ class TaxonomyFilterType extends AbstractFilterType
         $query->addWhere('id', FilterQuery::OPERATOR_EQUALS, $value, $propertyPath);
     }
 
-    protected function getInitialValue($options)
+    private function getInitialValue($options)
     {
         if ($options['initial_value'] === null) {
             return 0;
@@ -66,7 +60,7 @@ class TaxonomyFilterType extends AbstractFilterType
             throw new \InvalidArgumentException('Parameter "initial_value_method" must be a method of the repository defined by parameter "repository"');
         }
 
-        if($arguments) {
+        if ($arguments) {
             if (!is_array($arguments)) {
                 $arguments = [$arguments];
             }
@@ -82,38 +76,39 @@ class TaxonomyFilterType extends AbstractFilterType
             $initialValueEntity = $initialValueEntity[0];
         }
 
-        return $this->getProperty($initialValueEntity, 'id');
+        $propertyAccessor = new PropertyAccessor();
+        return $propertyAccessor->getValue($initialValueEntity, 'id');
     }
 
-    private function getChoices($options)
+    private function getChoices($options): array
     {
+        $propertyAccessor = new PropertyAccessor();
         $repository = $this->em->getRepository(Term::class);
         $entities = $repository->findByTaxonomyName($options['taxonomy']);
         $choices = [];
         foreach ($entities as $entity) {
             $choices[] = [
-                'label' => $this->getProperty($entity, 'name'),
-                'code' => $this->getProperty($entity, 'id')
+                'label' => $propertyAccessor->getValue($entity, 'name'),
+                'code' => $propertyAccessor->getValue($entity, 'id')
             ];
         }
         return $choices;
     }
 
-    public function configureOptions(OptionsResolver $optionsResolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        parent::configureOptions($optionsResolver);
-        $optionsResolver->setDefaults([
+        $resolver->setDefaults([
             'component' => 'filter-entity',
             'initial_value_method' => 'findOneByNameAndTaxonomy',
             'initial_value_arguments' => null
         ]);
 
-        $optionsResolver->setRequired([
+        $resolver->setRequired([
             'taxonomy'
         ]);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'taxonomy';
     }

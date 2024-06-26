@@ -8,9 +8,9 @@
 
 namespace Enhavo\Bundle\UserBundle\Repository;
 
-use Enhavo\Bundle\AppBundle\Repository\EntityRepository;
+use Enhavo\Bundle\ResourceBundle\Repository\EntityRepository;
 
 class GroupRepository extends EntityRepository
 {
-    
+
 }

@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\AppBundle;
 
-use Enhavo\Bundle\AppBundle\Batch\Batch;
+use Batch;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\LocaleResolverCompilerPass;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\RouteCollectorCompilerPass;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\SyliusCompilerPass;

@@ -2,13 +2,22 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Column;
 
-use Enhavo\Bundle\AppBundle\Column\AbstractColumnType;
+use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
+use Enhavo\Bundle\ResourceBundle\Column\AbstractColumnType;
+use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class NewsletterStateColumnType extends AbstractColumnType
 {
-    public function createResourceViewData(array $options, $resource)
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+    )
+    {
+    }
+
+    public function createResourceViewData(array $options, ResourceInterface $resource, Data $data): void
     {
         if(!$resource instanceof NewsletterInterface) {
             throw new \InvalidArgumentException;
@@ -21,27 +30,17 @@ class NewsletterStateColumnType extends AbstractColumnType
             NewsletterInterface::STATE_SENT  => 'green'
         ];
 
-        $translator = $this->container->get('translator');
-        return [
-            'value' => $translator->trans(sprintf('newsletter.label.%s', $resource->getState()), [], 'EnhavoNewsletterBundle'),
-            'color' => $stateMap[$resource->getState()]
-        ];
+        $data->set('value', $this->translator->trans(sprintf('newsletter.label.%s', $resource->getState()), [], 'EnhavoNewsletterBundle'));
+        $data->set('color', $stateMap[$resource->getState()]);
     }
 
-    public function createColumnViewData(array $options)
+    public function createColumnViewData(array $options, Data $data): void
     {
-        $data = parent::createColumnViewData($options);
-
-        $data = array_merge($data, [
-            'wrap' => true
-        ]);
-
-        return $data;
+        $data->set('wrap', true);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        parent::configureOptions($resolver);
         $resolver->setDefaults([
             'component' => 'column-state',
             'label' => 'newsletter.label.state',
@@ -49,7 +48,7 @@ class NewsletterStateColumnType extends AbstractColumnType
         ]);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'newsletter_state';
     }

@@ -8,52 +8,42 @@
 
 namespace Enhavo\Bundle\FormBundle\Column\Type;
 
-use Enhavo\Bundle\AppBundle\Column\AbstractColumnType;
+use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\FormBundle\Formatter\CurrencyFormatter;
+use Enhavo\Bundle\ResourceBundle\Column\AbstractColumnType;
+use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 
 class CurrencyType extends AbstractColumnType
 {
-
-    /**
-     * @var CurrencyFormatter
-     */
-    private $formatter;
-
-    public function __construct(CurrencyFormatter $formatter)
+    public function __construct(
+        private readonly CurrencyFormatter $formatter
+    )
     {
-        $this->formatter = $formatter;
     }
 
-    public function createResourceViewData(array $options, $resource)
+    public function createResourceViewData(array $options, ResourceInterface $resource, Data $data): void
     {
-        $property = $this->getProperty($resource, $options['property']);
+        $propertyAccessor = new PropertyAccessor();
+
+        $property = $propertyAccessor->getValue($resource, $options['property']);
         $currency = $options['currency'];
         $position = $options['position'];
 
         $value = $this->formatter->getCurrency($property, $currency, $position);
-
-        return $value;
+        $data->set('value', $value);
     }
 
-    public function createColumnViewData(array $options)
+    public function createColumnViewData(array $options, Data $data): void
     {
-        $data = parent::createColumnViewData($options);
-
-        $data = array_merge($data, [
-            'property' => $options['property'],
-            'sortingProperty' => ($options['sortingProperty'] ? $options['sortingProperty'] : $options['property']),
-            'wrap' => $options['wrap'],
-            'currency' => $options['currency'],
-            'position' => $options['position']
-        ]);
-
-        return $data;
+        $data->set('currency', $options['currency']);
+        $data->set('position', $options['position']);
+        $data->set('wrap', $options['wrap']);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        parent::configureOptions($resolver);
         $resolver->setDefaults([
             'component' => 'column-text',
             'sortingProperty' => null,
@@ -64,7 +54,7 @@ class CurrencyType extends AbstractColumnType
         $resolver->setRequired(['property']);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'currency';
     }

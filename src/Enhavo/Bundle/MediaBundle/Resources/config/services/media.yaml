@@ -55,7 +55,7 @@ services:
             - '@enhavo_media.repository.file'
             - '@enhavo_media.provider'
             - '@Enhavo\Bundle\DoctrineExtensionBundle\Util\AssociationFinder'
-            - '@Enhavo\Bundle\AppBundle\Resource\ResourceManager'
+            - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
             - '@Enhavo\Bundle\MediaBundle\FileNotFound\FileNotFoundHandlerInterface'
             - '%enhavo_media.file_not_found.parameters%'
 
@@ -109,11 +109,10 @@ services:
             - { name: doctrine.event_subscriber, connection: default }
 
     Enhavo\Bundle\MediaBundle\Column\MediaColumn:
-        public: true
-        calls:
-            - [setContainer, ['@service_container']]
+        arguments:
+            - '@enhavo_media.media.public_url_generator'
         tags:
-            - { name: enhavo.column, alias: media }
+            - { name: enhavo.column }
 
     enhavo_media.factory.file:
         public: true
@@ -148,7 +147,7 @@ services:
         public: true
         class: Enhavo\Bundle\MediaBundle\Controller\ImageCropperController
         arguments:
-            - '@Enhavo\Bundle\AppBundle\Resource\ResourceManager'
+            - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
             - '@sylius.resource_controller.request_configuration_factory'
             - '@enhavo_media.media.media_manager'
             - '@Enhavo\Component\Type\FactoryInterface[View]'
@@ -158,17 +157,17 @@ services:
         calls:
             - [setContainer, ['@service_container']]
 
-    Enhavo\Bundle\MediaBundle\View\Type\ImageCropperViewType:
-        public: true
-        arguments:
-            - '@Enhavo\Bundle\AppBundle\View\ViewUtil'
-            - '@enhavo_app.action_manager'
-            - '@request_stack'
-            - '@enhavo_media.media.image_cropper_manager'
-            - '@enhavo_media.media.media_manager'
-            - '@enhavo_media.media.private_url_generator'
-        tags:
-            - { name: enhavo_app.view, alias: image_cropper }
+#    Enhavo\Bundle\MediaBundle\View\Type\ImageCropperViewType:
+#        public: true
+#        arguments:
+#            - '@Enhavo\Bundle\AppBundle\View\ViewUtil'
+#            - '@enhavo_app.action_manager'
+#            - '@request_stack'
+#            - '@enhavo_media.media.image_cropper_manager'
+#            - '@enhavo_media.media.media_manager'
+#            - '@enhavo_media.media.private_url_generator'
+#        tags:
+#            - { name: enhavo_app.view, alias: image_cropper }
 
     enhavo_media.security.default_authorization_checker:
         public: true

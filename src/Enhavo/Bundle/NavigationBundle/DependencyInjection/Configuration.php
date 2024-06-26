@@ -10,7 +10,7 @@ use Enhavo\Bundle\NavigationBundle\Form\Type\NavigationType;
 use Enhavo\Bundle\NavigationBundle\Form\Type\NodeType;
 use Enhavo\Bundle\NavigationBundle\Repository\NavigationRepository;
 use Enhavo\Bundle\NavigationBundle\Repository\NodeRepository;
-use Enhavo\Bundle\AppBundle\Factory\Factory;
+use Enhavo\Bundle\ResourceBundle\Factory\Factory;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
