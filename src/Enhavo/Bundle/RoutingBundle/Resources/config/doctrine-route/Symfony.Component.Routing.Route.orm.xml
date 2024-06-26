@@ -7,5 +7,6 @@
         <field name="defaults" type="json" nullable="true" />
         <field name="requirements" type="json" nullable="true" />
         <field name="options" type="json" nullable="true" />
+        <field name="condition" />
     </mapped-superclass>
 </doctrine-mapping>
