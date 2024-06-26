@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\MediaBundle\Repository;
 
-use Enhavo\Bundle\AppBundle\Repository\EntityRepository;
+use Enhavo\Bundle\ResourceBundle\Repository\EntityRepository;
 
 class FileRepository extends EntityRepository
 {

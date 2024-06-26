@@ -3,7 +3,7 @@
 namespace Enhavo\Bundle\TaxonomyBundle\DependencyInjection;
 
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
-use Enhavo\Bundle\AppBundle\Factory\Factory;
+use Enhavo\Bundle\ResourceBundle\Factory\Factory;
 use Enhavo\Bundle\TaxonomyBundle\Entity\Taxonomy;
 use Enhavo\Bundle\TaxonomyBundle\Entity\Term;
 use Enhavo\Bundle\TaxonomyBundle\Factory\TermFactory;

@@ -2,15 +2,14 @@
 
 namespace Enhavo\Bundle\PaymentBundle\Action;
 
-use Enhavo\Bundle\AppBundle\Action\Type\TransitionActionType;
+use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
+use Enhavo\Bundle\ResourceBundle\Action\Type\TransitionActionType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CompleteActionType extends TransitionActionType
+class CompleteActionType extends AbstractActionType
 {
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        parent::configureOptions($resolver);
-
         $resolver->setDefaults([
             'label' => 'payment.action.complete',
             'translation_domain' => 'EnhavoPaymentBundle',
@@ -22,7 +21,12 @@ class CompleteActionType extends TransitionActionType
         ]);
     }
 
-    public function getType()
+    public static function getParentType(): ?string
+    {
+        return TransitionActionType::class;
+    }
+
+    public static function getName(): ?string
     {
         return 'payment_complete';
     }

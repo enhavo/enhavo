@@ -2,9 +2,9 @@
 
 namespace Enhavo\Bundle\PaymentBundle\View;
 
+use ApiViewType;
 use Enhavo\Bundle\AppBundle\View\AbstractViewType;
 use Enhavo\Bundle\AppBundle\View\TemplateData;
-use Enhavo\Bundle\AppBundle\View\Type\ApiViewType;
 use Enhavo\Bundle\AppBundle\View\ViewData;
 use Enhavo\Bundle\PaymentBundle\Resolver\PaymentSubjectResolverInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;

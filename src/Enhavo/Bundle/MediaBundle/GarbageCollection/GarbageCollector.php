@@ -4,9 +4,9 @@ namespace Enhavo\Bundle\MediaBundle\GarbageCollection;
 
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
-use Enhavo\Bundle\AppBundle\Repository\EntityRepository;
 use Enhavo\Bundle\MediaBundle\GarbageCollection\Voter\GarbageCollectionVoterInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
+use Enhavo\Bundle\ResourceBundle\Repository\EntityRepository;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class GarbageCollector implements GarbageCollectorInterface

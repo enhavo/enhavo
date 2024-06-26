@@ -2,21 +2,13 @@
 
 namespace Enhavo\Bundle\PaymentBundle\Action;
 
-use Enhavo\Bundle\AppBundle\Action\AbstractActionType;
+use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CreatePaymentMethodActionType extends AbstractActionType
 {
-    public function createViewData(array $options, $resource = null)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        $data = parent::createViewData($options, $resource);
-        return $data;
-    }
-
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        parent::configureOptions($resolver);
-
         $resolver->setDefaults([
             'component' => 'create-payment-method-action',
             'icon' => 'add_circle_outline',
@@ -28,7 +20,7 @@ class CreatePaymentMethodActionType extends AbstractActionType
         ]);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'payment_create_payment_method';
     }

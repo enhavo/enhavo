@@ -4,7 +4,7 @@ namespace Enhavo\Bundle\RedirectBundle\Entity;
 
 use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
 use Enhavo\Bundle\RedirectBundle\Model\RedirectInterface;
-use Sylius\Component\Resource\Model\ResourceInterface;
+use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 
 /**
  * Redirect
@@ -39,7 +39,7 @@ class Redirect implements RedirectInterface, ResourceInterface
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -62,7 +62,7 @@ class Redirect implements RedirectInterface, ResourceInterface
     /**
      * Get from
      *
-     * @return string 
+     * @return string
      */
     public function getFrom()
     {
@@ -85,7 +85,7 @@ class Redirect implements RedirectInterface, ResourceInterface
     /**
      * Get to
      *
-     * @return string 
+     * @return string
      */
     public function getTo()
     {

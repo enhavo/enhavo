@@ -1,0 +1,6 @@
+services:
+    Enhavo\Bundle\ResourceBundle\Resource\ResourceManager:
+        arguments:
+            - '@event_dispatcher'
+            - '@doctrine.orm.entity_manager'
+            - '@sm.factory'

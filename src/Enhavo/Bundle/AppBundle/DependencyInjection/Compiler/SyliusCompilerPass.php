@@ -22,7 +22,7 @@ class SyliusCompilerPass implements CompilerPassInterface
         $this->setSyliusResourceParameter($container);
         $this->overwriteRequestConfigurationFactory($container);
         $this->overwriteController($container);
-        $this->overwriteResourceResolver($container);
+//        $this->overwriteResourceResolver($container);
         $this->setSyliusFormClassParameters($container);
         $this->overwriteLocalProvider($container);
     }

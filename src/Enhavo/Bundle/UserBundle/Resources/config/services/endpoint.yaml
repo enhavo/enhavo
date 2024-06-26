@@ -17,7 +17,7 @@ services:
             - '@translator'
             - '@enhavo_user.repository.user'
         calls:
-            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
+#            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
             - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
             - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
         tags:
@@ -40,7 +40,7 @@ services:
             - '@enhavo_user.user.manager'
             - '@translator'
         calls:
-            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
+#            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
             - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
             - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
         tags:
@@ -54,7 +54,7 @@ services:
             - '@enhavo_user.user.manager'
             - '@translator'
         calls:
-            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
+#            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
             - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
             - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
         tags:
@@ -68,7 +68,7 @@ services:
             - '@enhavo_user.user.manager'
             - '@translator'
         calls:
-            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
+#            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
             - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
             - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
         tags:
@@ -92,7 +92,7 @@ services:
             - '@enhavo_user.user.manager'
             - '@translator'
         calls:
-            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
+#            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
             - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
             - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
         tags:
@@ -138,7 +138,7 @@ services:
             - '@enhavo_user.user.manager'
             - '@enhavo_user.factory.user'
         calls:
-            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
+#            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
             - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
             - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
         tags:
@@ -162,7 +162,7 @@ services:
             - '@enhavo_user.repository.user'
             - '@translator'
         calls:
-            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
+#            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
             - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
             - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
         tags:
@@ -186,7 +186,7 @@ services:
             - '@enhavo_user.repository.user'
             - '@translator'
         calls:
-            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
+#            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
             - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
             - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
         tags:
@@ -198,7 +198,7 @@ services:
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
             - '@security.firewall.map'
         calls:
-            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
+#            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
             - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
             - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
         tags:

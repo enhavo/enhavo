@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\SettingBundle\Repository;
 
-use Enhavo\Bundle\AppBundle\Repository\EntityRepository;
+use Enhavo\Bundle\ResourceBundle\Repository\EntityRepository;
 
 class SettingRepository extends EntityRepository
 {

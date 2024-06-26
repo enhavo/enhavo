@@ -10,7 +10,7 @@ namespace Enhavo\Bundle\ShopBundle\Model;
 
 use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
-use Sylius\Component\Resource\Model\ResourceInterface;
+use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Sylius\Component\Product\Model\ProductInterface as SyliusProductInterface;
 use Sylius\Component\Shipping\Model\ShippingCategoryInterface;
 use Sylius\Component\Taxation\Model\TaxCategoryInterface;

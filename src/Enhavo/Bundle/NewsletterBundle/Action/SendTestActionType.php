@@ -2,16 +2,14 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Action;
 
-use Enhavo\Bundle\AppBundle\Action\ActionTypeInterface;
-use Enhavo\Bundle\AppBundle\Action\Type\ModalActionType;
+use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
+use Enhavo\Bundle\ResourceBundle\Action\Type\ModalActionType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SendTestActionType extends ModalActionType implements ActionTypeInterface
+class SendTestActionType extends AbstractActionType
 {
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        parent::configureOptions($resolver);
-
         $resolver->setDefaults([
             'component' => 'newsletter-send-test',
             'modal' => [
@@ -25,7 +23,13 @@ class SendTestActionType extends ModalActionType implements ActionTypeInterface
         ]);
     }
 
-    public function getType()
+    public static function getParentType(): ?string
+    {
+        return ModalActionType::class;
+    }
+
+
+    public static function getName(): ?string
     {
         return 'newsletter_send_test';
     }
