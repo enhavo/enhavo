@@ -44,7 +44,6 @@ services:
             - '@router'
             - '@doctrine.orm.entity_manager'
             - '@property_accessor'
-            - '@enhavo_app.action_manager'
         tags:
             - { name: form.type, alias: 'enhavo_auto_complete_entity' }
 
@@ -74,7 +73,7 @@ services:
 
     Enhavo\Bundle\FormBundle\Form\Extension\ActionExtension:
         arguments:
-            - '@enhavo_app.action_manager'
+            - '@Enhavo\Bundle\ResourceBundle\Action\ActionManager'
         tags:
             - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 

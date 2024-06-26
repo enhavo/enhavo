@@ -8,8 +8,8 @@
 
 namespace Enhavo\Bundle\TemplateBundle\Factory;
 
-use Enhavo\Bundle\AppBundle\Factory\Factory;
 use Enhavo\Bundle\BlockBundle\Entity\Node;
+use Enhavo\Bundle\ResourceBundle\Factory\Factory;
 use Enhavo\Bundle\RoutingBundle\Entity\Route;
 use Enhavo\Bundle\TemplateBundle\Template\Template;
 

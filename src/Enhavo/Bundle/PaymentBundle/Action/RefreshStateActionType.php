@@ -2,48 +2,14 @@
 
 namespace Enhavo\Bundle\PaymentBundle\Action;
 
-use Enhavo\Bundle\AccountingBundle\Model\Accounting;
-use Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType;
-use Enhavo\Bundle\AppBundle\Action\ActionLanguageExpression;
-use Symfony\Component\HttpFoundation\RequestStack;
+use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
+use Enhavo\Bundle\ResourceBundle\Action\Type\UrlActionType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Routing\RouterInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
-class RefreshStateActionType extends AbstractUrlActionType
+class RefreshStateActionType extends AbstractActionType
 {
-    /** @var RequestStack */
-    private $requestStack;
-
-    /**
-     * CalculateAction constructor.
-     * @param RequestStack $requestStack
-     */
-    public function __construct(TranslatorInterface $translator, ActionLanguageExpression $actionLanguageExpression, RouterInterface $router, RequestStack $requestStack)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        parent::__construct($translator, $actionLanguageExpression, $router);
-        $this->requestStack = $requestStack;
-    }
-
-    protected function getUrl(array $options, $resource = null)
-    {
-        $parameters = [];
-
-        if($options['append_id'] && $resource !== null && $resource->getId() !== null) {
-            $parameters[$options['append_key']] = $resource->getId();
-        }
-
-        $parameters['view_id'] = $this->requestStack->getMainRequest()->get('view_id');
-
-        $parameters = array_merge_recursive($parameters, $options['route_parameters']);
-
-        return $this->router->generate($options['route'], $parameters);
-    }
-
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        parent::configureOptions($resolver);
-
         $resolver->setDefaults([
             'route' => 'sylius_payment_refresh_state',
             'component' => 'save-action',
@@ -54,7 +20,12 @@ class RefreshStateActionType extends AbstractUrlActionType
         ]);
     }
 
-    public function getType()
+    public static function getParentType(): ?string
+    {
+        return UrlActionType::class;
+    }
+
+    public static function getName(): ?string
     {
         return 'payment_refresh_state';
     }

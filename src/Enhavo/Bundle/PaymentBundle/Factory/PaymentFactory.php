@@ -2,9 +2,9 @@
 
 namespace Enhavo\Bundle\PaymentBundle\Factory;
 
-use Enhavo\Bundle\AppBundle\Factory\Factory;
 use Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface;
 use Enhavo\Bundle\PaymentBundle\Entity\Payment;
+use Enhavo\Bundle\ResourceBundle\Factory\Factory;
 use Sylius\Component\Payment\Factory\PaymentFactoryInterface;
 use Sylius\Component\Payment\Model\PaymentInterface;
 

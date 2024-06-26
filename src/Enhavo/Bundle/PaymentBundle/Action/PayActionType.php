@@ -2,12 +2,27 @@
 
 namespace Enhavo\Bundle\PaymentBundle\Action;
 
-use Enhavo\Bundle\AppBundle\Action\Type\OpenActionType;
+use Enhavo\Bundle\ApiBundle\Data\Data;
+use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
+use Enhavo\Bundle\ResourceBundle\Action\Type\OpenActionType;
+use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\RouterInterface;
 
-class PayActionType extends OpenActionType
+class PayActionType extends AbstractActionType
 {
-    protected function getUrl(array $options, $resource = null)
+    public function __construct(
+        private readonly RouterInterface $router,
+    )
+    {
+    }
+
+    public function createViewData(array $options, Data $data, ResourceInterface $resource = null): void
+    {
+        $data->set('url', $this->getUrl($options, $resource));
+    }
+
+    private function getUrl(array $options, $resource = null): string
     {
         $parameters = [
             'tokenValue' => $resource->getToken()
@@ -18,10 +33,8 @@ class PayActionType extends OpenActionType
         return $this->router->generate($options['route'], $parameters);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        parent::configureOptions($resolver);
-
         $resolver->setDefaults([
             'label' => 'payment.action.pay',
             'translation_domain' => 'EnhavoPaymentBundle',
@@ -32,7 +45,12 @@ class PayActionType extends OpenActionType
         ]);
     }
 
-    public function getType()
+    public static function getParentType(): ?string
+    {
+        return OpenActionType::class;
+    }
+
+    public static function getName(): ?string
     {
         return 'payment_pay';
     }

@@ -2,18 +2,28 @@
 
 namespace Enhavo\Bundle\ApiBundle\Endpoint;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class Context
 {
     private int $statusCode = 200;
     private ?Response $response = null;
-
     private bool $stop = false;
-
     private array $headers = [];
-
     private array $data = [];
+
+    public function __construct(
+        private readonly Request $request
+    )
+    {
+    }
+
+    public function getRequest(): Request
+    {
+        return $this->request;
+    }
+
 
     public function getStatusCode(): int
     {

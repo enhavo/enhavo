@@ -2,8 +2,7 @@
 
 namespace Enhavo\Bundle\SettingBundle\DependencyInjection;
 
-use Enhavo\Bundle\AppBundle\Controller\ResourceController;
-use Enhavo\Bundle\AppBundle\Factory\Factory;
+use Enhavo\Bundle\ResourceBundle\Factory\Factory;
 use Enhavo\Bundle\SettingBundle\Controller\SettingController;
 use Enhavo\Bundle\SettingBundle\Entity\Setting;
 use Enhavo\Bundle\SettingBundle\Form\Type\SettingType;

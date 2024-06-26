@@ -2,7 +2,7 @@
 namespace Enhavo\Bundle\AppBundle\Controller;
 
 use Sylius\Component\Resource\Factory\FactoryInterface;
-use Sylius\Component\Resource\Model\ResourceInterface;
+use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Sylius\Bundle\ResourceBundle\Controller\NewResourceFactoryInterface;
 
 interface DuplicateResourceFactoryInterface

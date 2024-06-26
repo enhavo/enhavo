@@ -7,7 +7,7 @@
 namespace Enhavo\Bundle\UserBundle\Factory;
 
 
-use Enhavo\Bundle\AppBundle\Factory\Factory;
+use Enhavo\Bundle\ResourceBundle\Factory\Factory;
 
 /**
  * Class UserFactory

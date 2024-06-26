@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Tests\Mock;
 
-use Sylius\Component\Resource\Model\ResourceInterface;
+use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 
 class EntityMock implements ResourceInterface
 {

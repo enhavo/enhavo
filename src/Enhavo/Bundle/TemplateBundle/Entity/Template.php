@@ -12,7 +12,7 @@ use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 use Enhavo\Bundle\RoutingBundle\Entity\Route;
 use Enhavo\Bundle\RoutingBundle\Model\Routeable;
 use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
-use Sylius\Component\Resource\Model\ResourceInterface;
+use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 
 class Template implements ResourceInterface, Routeable
 {
@@ -83,7 +83,7 @@ class Template implements ResourceInterface, Routeable
 
     /**
      * Get content
-     * 
+     *
      * @return NodeInterface
      */
     public function getContent()

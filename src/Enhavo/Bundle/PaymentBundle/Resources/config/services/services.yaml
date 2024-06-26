@@ -1,9 +1,7 @@
 services:
     Enhavo\Bundle\PaymentBundle\Action\CreatePaymentMethodActionType:
-        parent: Enhavo\Bundle\AppBundle\Action\AbstractActionType
-        public: true
         tags:
-            - { name: enhavo.action, alias: payment_create_payment_method }
+            - { name: enhavo.action }
 
     Enhavo\Bundle\PaymentBundle\Form\Type\PaymentMethodCreateType:
         arguments:
@@ -74,36 +72,26 @@ services:
             - '@enhavo_app.util.secure_url_token_generator'
 
     Enhavo\Bundle\PaymentBundle\Action\CompleteActionType:
-        parent: Enhavo\Bundle\AppBundle\Action\Type\TransitionActionType
-        public: true
         tags:
-            - { name: enhavo.action, alias: 'payment_complete' }
+            - { name: enhavo.action }
 
     Enhavo\Bundle\PaymentBundle\Action\PayActionType:
-        parent: Enhavo\Bundle\AppBundle\Action\Type\OpenActionType
-        public: true
         tags:
-            - { name: enhavo.action, alias: 'payment_pay' }
+            - { name: enhavo.action }
 
     Enhavo\Bundle\PaymentBundle\Action\RefreshStateActionType:
-        parent: Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType
-        public: true
         arguments:
             - '@request_stack'
         tags:
-            - { name: enhavo.action, alias: 'payment_refresh_state' }
+            - { name: enhavo.action }
 
     Enhavo\Bundle\PaymentBundle\Action\ResetActionType:
-        parent: Enhavo\Bundle\AppBundle\Action\Type\TransitionActionType
-        public: true
         tags:
-            - { name: enhavo.action, alias: 'payment_reset' }
+            - { name: enhavo.action }
 
     Enhavo\Bundle\PaymentBundle\Action\CancelActionType:
-        parent: Enhavo\Bundle\AppBundle\Action\Type\TransitionActionType
-        public: true
         tags:
-            - { name: enhavo.action, alias: 'payment_cancel' }
+            - { name: enhavo.action }
 
     Enhavo\Bundle\PaymentBundle\EventListener\PaymentSubscriber:
         tags:
@@ -124,14 +112,14 @@ services:
 
     Enhavo\Bundle\PaymentBundle\Resolver\PaymentStateResolver:
         arguments:
-            - '@Enhavo\Bundle\AppBundle\Resource\ResourceManager'
+            - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
 
-    Enhavo\Bundle\PaymentBundle\View\PaymentDoneViewType:
-        arguments:
-            - '@sylius.repository.payment'
-            - '@enhavo_payment.resolver.payment_subject'
-        tags:
-            - { name: enhavo_app.view }
+#    Enhavo\Bundle\PaymentBundle\View\PaymentDoneViewType:
+#        arguments:
+#            - '@sylius.repository.payment'
+#            - '@enhavo_payment.resolver.payment_subject'
+#        tags:
+#            - { name: enhavo_app.view }
 
     Enhavo\Bundle\PaymentBundle\Resolver\PaymentSubjectResolver:
 

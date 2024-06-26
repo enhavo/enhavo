@@ -2,10 +2,10 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Factory;
 
-use Enhavo\Bundle\AppBundle\Factory\Factory;
 use Enhavo\Bundle\NewsletterBundle\Entity\Group;
 use Enhavo\Bundle\NewsletterBundle\Model\LocalSubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
+use Enhavo\Bundle\ResourceBundle\Factory\Factory;
 use Enhavo\Bundle\SliderBundle\Model\SliderInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 

@@ -3,7 +3,6 @@
 namespace Enhavo\Bundle\CommentBundle\DependencyInjection;
 
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
-use Enhavo\Bundle\AppBundle\Factory\Factory;
 use Enhavo\Bundle\CommentBundle\Comment\Strategy\ImmediatelyPublishStrategy;
 use Enhavo\Bundle\CommentBundle\Entity\Comment;
 use Enhavo\Bundle\CommentBundle\Entity\Thread;
@@ -13,6 +12,7 @@ use Enhavo\Bundle\CommentBundle\Form\Type\CommentType;
 use Enhavo\Bundle\CommentBundle\Form\Type\ThreadType;
 use Enhavo\Bundle\CommentBundle\Repository\CommentRepository;
 use Enhavo\Bundle\CommentBundle\Repository\ThreadRepository;
+use Enhavo\Bundle\ResourceBundle\Factory\Factory;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 

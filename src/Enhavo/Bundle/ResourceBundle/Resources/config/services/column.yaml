@@ -1,0 +1,112 @@
+services:
+    Enhavo\Bundle\ResourceBundle\Column\ColumnManager:
+        arguments:
+            - '@Enhavo\Component\Type\FactoryInterface[Column]'
+            - '@security.authorization_checker'
+
+#    enhavo_app.column_collector:
+#        class: Enhavo\Bundle\AppBundle\Type\TypeCollector
+#        arguments:
+#            - '@service_container'
+#            - 'Column'
+#
+#    enhavo_app.column_manager:
+#        alias: Enhavo\Bundle\AppBundle\Column\ColumnManager
+#
+#    Enhavo\Bundle\AppBundle\Column\ColumnManager:
+#        arguments:
+#            - '@enhavo_app.column_collector'
+#            - '@security.authorization_checker'
+#
+#    Enhavo\Bundle\AppBundle\Column\Type\ListType:
+#        public: true
+#        calls:
+#            - [setContainer, ['@service_container']]
+#        tags:
+#            - { name: enhavo.column, alias: list }
+#
+#    Enhavo\Bundle\AppBundle\Column\Type\TemplateType:
+#        public: true
+#        calls:
+#            - [setContainer, ['@service_container']]
+#        tags:
+#            - { name: enhavo.column, alias: template }
+#
+#    Enhavo\Bundle\AppBundle\Column\Type\MultiplePropertyType:
+#        public: true
+#        calls:
+#            - [setContainer, ['@service_container']]
+#        tags:
+#            - { name: enhavo.column, alias: multiple_property }
+#
+#    Enhavo\Bundle\AppBundle\Column\Type\PropertyType:
+#        public: true
+#        calls:
+#            - [setContainer, ['@service_container']]
+#        tags:
+#            - { name: enhavo.column, alias: property }
+#
+#    Enhavo\Bundle\AppBundle\Column\Type\StateType:
+#        public: true
+#        calls:
+#            - [setContainer, ['@service_container']]
+#        tags:
+#            - { name: enhavo.column, alias: state }
+#
+#    Enhavo\Bundle\AppBundle\Column\Type\PositionType:
+#        public: true
+#        calls:
+#            - [setContainer, ['@service_container']]
+#        tags:
+#            - { name: enhavo.column, alias: position }
+#
+#    Enhavo\Bundle\AppBundle\Column\Type\DateType:
+#        public: true
+#        calls:
+#            - [setContainer, ['@service_container']]
+#        tags:
+#            - { name: enhavo.column, alias: date }
+#
+#    Enhavo\Bundle\AppBundle\Column\Type\DateTimeType:
+#        public: true
+#        calls:
+#            - [setContainer, ['@service_container']]
+#        tags:
+#            - { name: enhavo.column, alias: datetime }
+#
+#    Enhavo\Bundle\AppBundle\Column\Type\BooleanType:
+#        public: true
+#        calls:
+#            - [setContainer, ['@service_container']]
+#        tags:
+#            - { name: enhavo.column, alias: boolean }
+#
+#    Enhavo\Bundle\AppBundle\Column\Type\LabelType:
+#        public: true
+#        calls:
+#            - [setContainer, ['@service_container']]
+#        tags:
+#            - { name: enhavo.column, alias: label }
+#
+#    Enhavo\Bundle\AppBundle\Column\Type\UrlType:
+#        public: true
+#        calls:
+#            - [setContainer, ['@service_container']]
+#        tags:
+#            - { name: enhavo.column, alias: url }
+#
+#    Enhavo\Bundle\AppBundle\Column\Type\TextType:
+#        public: true
+#        calls:
+#            - [setContainer, ['@service_container']]
+#        tags:
+#            - { name: enhavo.column, alias: text }
+#
+#    Enhavo\Bundle\AppBundle\Column\Type\ActionType:
+#        public: true
+#        arguments:
+#            - '@enhavo_app.action_manager'
+#        calls:
+#            - [setContainer, ['@service_container']]
+#        tags:
+#            - { name: enhavo.column, alias: action }
