@@ -15,8 +15,11 @@ class NavigationContentNormalizer extends AbstractDataNormalizer
         }
 
         /** @var Content $object */
-        $normalizedContent = $this->normalizer->normalize($object->getContent(), null, ['groups' => 'endpoint.navigation']);
-        $data->add($normalizedContent);
+        $content = $object->getContent();
+        if ($content !== null) {
+            $normalizedContent = $this->normalizer->normalize($content, null, ['groups' => 'endpoint.navigation']);
+            $data->add($normalizedContent);
+        }
     }
 
     public static function getSupportedTypes(): array
