@@ -269,13 +269,13 @@ sylius_taxation:
         tax_category:
             classes:
                 model: Sylius\Component\Taxation\Model\TaxCategory
-                repository: Enhavo\Bundle\AppBundle\Repository\EntityRepository
+                repository: Enhavo\Bundle\ResourceBundle\Repository\EntityRepository
                 controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
                 form: Enhavo\Bundle\ShopBundle\Form\Type\TaxCategoryType
         tax_rate:
             classes:
                 model: Sylius\Component\Taxation\Model\TaxRate
-                repository: Enhavo\Bundle\AppBundle\Repository\EntityRepository
+                repository: Enhavo\Bundle\ResourceBundle\Repository\EntityRepository
                 controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
                 form: Enhavo\Bundle\ShopBundle\Form\Type\TaxRateType
 

@@ -35,23 +35,23 @@ services:
         tags:
             - { name: enhavo.media_extension , alias: media_library }
 
-    Enhavo\Bundle\MediaLibraryBundle\View\Type\MediaLibraryViewType:
-        arguments:
-            - '@enhavo_app.action_manager'
-            - '@Enhavo\Bundle\AppBundle\View\ViewUtil'
-            - '@translator'
-        tags:
-            - { name: enhavo_app.view }
+#    Enhavo\Bundle\MediaLibraryBundle\View\Type\MediaLibraryViewType:
+#        arguments:
+#            - '@enhavo_app.action_manager'
+#            - '@Enhavo\Bundle\AppBundle\View\ViewUtil'
+#            - '@translator'
+#        tags:
+#            - { name: enhavo_app.view }
 
-    Enhavo\Bundle\MediaLibraryBundle\View\Type\FilesViewType:
-        arguments:
-            - '@Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryManager'
-            - '@sylius.resource_controller.resources_collection_provider'
-            - '@enhavo_media.repository.file'
-            - '@enhavo_media.media.public_url_generator'
-            - '@translator'
-        tags:
-            - { name: enhavo_app.view }
+#    Enhavo\Bundle\MediaLibraryBundle\View\Type\FilesViewType:
+#        arguments:
+#            - '@Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryManager'
+#            - '@sylius.resource_controller.resources_collection_provider'
+#            - '@enhavo_media.repository.file'
+#            - '@enhavo_media.media.public_url_generator'
+#            - '@translator'
+#        tags:
+#            - { name: enhavo_app.view }
 
     Enhavo\Bundle\MediaLibraryBundle\Menu\MediaLibraryRootMenuType:
         parent: Enhavo\Bundle\AppBundle\Menu\Menu\ListMenu

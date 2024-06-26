@@ -1,4 +1,0 @@
-services:
-    Enhavo\Bundle\AppBundle\Grid\GridManager:
-        arguments:
-            - '@translator'

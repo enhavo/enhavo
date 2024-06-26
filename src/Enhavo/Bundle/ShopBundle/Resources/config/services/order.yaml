@@ -52,46 +52,32 @@ services:
             - { name: enhavo_shop.order_taxes_applicator, priority: 10 }
 
     Enhavo\Bundle\ShopBundle\Action\BillingActionType:
-        parent: Enhavo\Bundle\AppBundle\Action\Type\DownloadActionType
-        public: true
         tags:
-            - { name: enhavo.action, alias: 'shop_billing' }
+            - { name: enhavo.action }
 
     Enhavo\Bundle\ShopBundle\Action\PackingSlipActionType:
-        parent: Enhavo\Bundle\AppBundle\Action\Type\DownloadActionType
-        public: true
         tags:
-            - { name: enhavo.action, alias: 'shop_packing_slip' }
+            - { name: enhavo.action }
 
     Enhavo\Bundle\ShopBundle\Action\CancelActionType:
-        parent: Enhavo\Bundle\AppBundle\Action\Type\TransitionActionType
-        public: true
         tags:
-            - { name: enhavo.action, alias: 'shop_order_cancel' }
+            - { name: enhavo.action }
 
     Enhavo\Bundle\ShopBundle\Action\CouponActionType:
-        parent: Enhavo\Bundle\AppBundle\Action\Type\OpenActionType
-        public: true
         tags:
-            - { name: enhavo.action, alias: 'shop_coupon' }
+            - { name: enhavo.action }
 
     Enhavo\Bundle\ShopBundle\Action\PaidActionType:
-        parent: Enhavo\Bundle\AppBundle\Action\Type\TransitionActionType
-        public: true
         tags:
-            - { name: enhavo.action, alias: 'shop_order_paid' }
+            - { name: enhavo.action }
 
     Enhavo\Bundle\ShopBundle\Action\RefundActionType:
-        parent: Enhavo\Bundle\AppBundle\Action\Type\TransitionActionType
-        public: true
         tags:
-            - { name: enhavo.action, alias: 'shop_order_refund' }
+            - { name: enhavo.action }
 
     Enhavo\Bundle\ShopBundle\Action\ShipActionType:
-        parent: Enhavo\Bundle\AppBundle\Action\Type\TransitionActionType
-        public: true
         tags:
-            - { name: enhavo.action, alias: 'shop_order_ship' }
+            - { name: enhavo.action }
 
     enhavo.state_resolver.order:
         public: true

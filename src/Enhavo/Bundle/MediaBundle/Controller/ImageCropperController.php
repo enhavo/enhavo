@@ -9,10 +9,10 @@
 namespace Enhavo\Bundle\MediaBundle\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Enhavo\Bundle\AppBundle\Resource\ResourceManager;
 use Enhavo\Bundle\MediaBundle\Media\FormatManager;
 use Enhavo\Bundle\MediaBundle\Media\MediaManager;
 use Enhavo\Component\Type\FactoryInterface;
+use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
 use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

@@ -1,0 +1,31 @@
+services:
+#    Enhavo\Bundle\AppBundle\Batch\Type\DeleteBatchType:
+#        arguments:
+#            - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
+#        tags:
+#            - { name: enhavo_app.batch }
+#
+#    Enhavo\Bundle\AppBundle\Batch\Type\AssignBatchType:
+#        arguments:
+#            - '@request_stack'
+#            - '@form.factory'
+#            - '@translator'
+#            - '@doctrine.orm.entity_manager'
+#        tags:
+#            - { name: enhavo_app.batch }
+#
+#    Enhavo\Bundle\AppBundle\Batch\Type\BaseBatchType:
+#        arguments:
+#            - '@translator'
+#            - '@doctrine.orm.entity_manager'
+#        tags:
+#            - { name: enhavo_app.batch }
+#
+#    Enhavo\Bundle\AppBundle\Batch\Type\FormBatchType:
+#        tags:
+#            - { name: enhavo_app.batch }
+#
+    Enhavo\Bundle\ResourceBundle\Batch\BatchManager:
+        arguments:
+            - '@Enhavo\Component\Type\FactoryInterface[Batch]'
+            - '@security.authorization_checker'

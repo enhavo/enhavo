@@ -6,9 +6,7 @@ To add you custom filter, just add class which extends from
 ```php
 namespace AppBundle\Filter;
 
-use Enhavo\Bundle\AppBundle\Filter\AbstractFilter;
-use Enhavo\Bundle\AppBundle\Filter\FilterQuery;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Enhavo\Bundle\AppBundle\Filter\AbstractFilter;use Enhavo\Bundle\ResourceBundle\Filter\FilterQuery;use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DateFilter extends AbstractFilter
 {

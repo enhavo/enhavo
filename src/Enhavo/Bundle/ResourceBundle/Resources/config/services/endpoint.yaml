@@ -1,0 +1,10 @@
+services:
+    Enhavo\Bundle\ResourceBundle\Endpoint\Type\ResourceGridEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\ResourceBundle\Grid\GridFactory'
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+

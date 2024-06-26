@@ -52,6 +52,7 @@ return [
     Enhavo\Bundle\CommentBundle\EnhavoCommentBundle::class => ['all' => true],
     Enhavo\Bundle\PaymentBundle\EnhavoPaymentBundle::class => ['all' => true],
     Enhavo\Bundle\DoctrineExtensionBundle\EnhavoDoctrineExtensionBundle::class => ['all' => true],
+    Enhavo\Bundle\ResourceBundle\EnhavoResourceBundle::class => ['all' => true],
     Enhavo\Bundle\RoutingBundle\EnhavoRoutingBundle::class => ['all' => true],
     Enhavo\Bundle\NavigationBundle\EnhavoNavigationBundle::class => ['all' => true],
     Enhavo\Bundle\TranslationBundle\EnhavoTranslationBundle::class => ['all' => true],

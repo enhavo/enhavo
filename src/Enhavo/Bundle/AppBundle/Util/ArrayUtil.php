@@ -29,7 +29,7 @@ class ArrayUtil
                 $result[$key] = $value;
             }
         }
-        foreach($array2 as $key => $value) {
+        foreach ($array2 as $key => $value) {
             if (!isset($result[$key])) {
                 $result[$key] = $value;
             }

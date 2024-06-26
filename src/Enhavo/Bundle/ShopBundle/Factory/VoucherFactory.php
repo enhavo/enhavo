@@ -2,9 +2,8 @@
 
 namespace Enhavo\Bundle\ShopBundle\Factory;
 
-use Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface;
+use Enhavo\Bundle\ResourceBundle\Factory\Factory;
 use Enhavo\Bundle\ShopBundle\Entity\Voucher;
-use Enhavo\Bundle\AppBundle\Factory\Factory;
 use Enhavo\Bundle\ShopBundle\Manager\VoucherManager;
 
 class VoucherFactory extends Factory

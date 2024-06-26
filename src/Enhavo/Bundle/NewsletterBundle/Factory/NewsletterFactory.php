@@ -4,10 +4,10 @@
 namespace Enhavo\Bundle\NewsletterBundle\Factory;
 
 
-use Enhavo\Bundle\AppBundle\Factory\Factory;
 use Enhavo\Bundle\BlockBundle\Factory\NodeFactory;
 use Enhavo\Bundle\NewsletterBundle\Entity\Group;
 use Enhavo\Bundle\NewsletterBundle\Entity\Newsletter;
+use Enhavo\Bundle\ResourceBundle\Factory\Factory;
 
 class NewsletterFactory extends Factory
 {

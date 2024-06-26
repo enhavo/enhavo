@@ -37,13 +37,11 @@ Later on you want a object with the same api to handle your actions, but
 you don\'t have to take care about how this object is configured inside.
 
 ```php
-<?php
-
-    $actions = $manager->getActions($configuration);
-    $viewData = [];
-    foreach($actions as $action) {
-        $viewData[$action->getKey()] = $action->createViewData($resource);
-    }
+$actions = $manager->getActions($configuration);
+$viewData = [];
+foreach($actions as $action) {
+    $viewData[$action->getKey()] = $action->createViewData($resource);
+}
 ```
 
 As a user of actions you don\'t want to deal with `OptionResolver`, this
@@ -52,27 +50,26 @@ data is delegated to the type. After you get the actions from the
 manager, you don\'t need the configuration anymore.
 
 ```php
-<?php
-    class SaveActionType extends ActionTypeInterface
+class SaveActionType extends ActionTypeInterface
+{
+    public function createViewData(array $options, $resource = null)
     {
-        public function createViewData(array $options, $resource = null)
-        {
-            return [
-                'label' => $options['label'],
-                'icon' => $options['icon'],
-                'url' => $this->router->generate($options['route']);
-            ];
-        }
-
-        public function configureOptions(OptionsResolver $resolver)
-        {
-            $resolver->setDefaults([
-                'label' => 'Save'
-                'icon' => 'disk',
-            ])
-            $resolver->setRequired('route');
-        }
+        return [
+            'label' => $options['label'],
+            'icon' => $options['icon'],
+            'url' => $this->router->generate($options['route']);
+        ];
     }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'label' => 'Save'
+            'icon' => 'disk',
+        ])
+        $resolver->setRequired('route');
+    }
+}
 ```
 
 Thanks to the symfony dependency injection container we can add this

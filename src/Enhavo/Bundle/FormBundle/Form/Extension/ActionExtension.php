@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\FormBundle\Form\Extension;
 
-use Enhavo\Bundle\AppBundle\Action\ActionManager;
+use Enhavo\Bundle\ResourceBundle\Action\ActionManager;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormInterface;

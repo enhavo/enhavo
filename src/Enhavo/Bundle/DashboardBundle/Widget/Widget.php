@@ -6,7 +6,7 @@ namespace Enhavo\Bundle\DashboardBundle\Widget;
 
 use Enhavo\Bundle\AppBundle\View\ViewData;
 use Enhavo\Component\Type\AbstractContainerType;
-use Sylius\Component\Resource\Model\ResourceInterface;
+use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 
 class Widget extends AbstractContainerType
 {

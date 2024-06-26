@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\ShopBundle\Factory;
 
-use Enhavo\Bundle\AppBundle\Factory\Factory;
+use Enhavo\Bundle\ResourceBundle\Factory\Factory;
 use Sylius\Component\Addressing\Model\AddressInterface;
 
 class AddressFactory extends Factory

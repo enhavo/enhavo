@@ -3,7 +3,6 @@
 namespace Enhavo\Bundle\TemplateBundle\DependencyInjection;
 
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
-use Enhavo\Bundle\AppBundle\Factory\Factory;
 use Enhavo\Bundle\TemplateBundle\Entity\Template;
 use Enhavo\Bundle\TemplateBundle\Factory\TemplateFactory;
 use Enhavo\Bundle\TemplateBundle\Form\Type\TemplateType;

@@ -2,33 +2,25 @@
 
 namespace Enhavo\Bundle\MultiTenancyBundle\Filter;
 
-use Doctrine\ORM\EntityManagerInterface;
+use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\AppBundle\Exception\FilterException;
-use Enhavo\Bundle\AppBundle\Filter\AbstractFilterType;
-use Enhavo\Bundle\AppBundle\Filter\FilterQuery;
 use Enhavo\Bundle\MultiTenancyBundle\Tenant\TenantManager;
+use Enhavo\Bundle\ResourceBundle\Filter\AbstractFilterType;
+use Enhavo\Bundle\ResourceBundle\Filter\FilterQuery;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\PropertyAccess\PropertyAccess;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class TenancyFilterType extends AbstractFilterType
 {
-    /**
-     * @var TenantManager
-     */
-    private $tenantManager;
-
-    public function __construct(TranslatorInterface $translator, TenantManager $tenantManager)
+    public function __construct(
+        private readonly TenantManager $tenantManager
+    )
     {
-        parent::__construct($translator);
-        $this->tenantManager = $tenantManager;
     }
 
-    public function createViewData($options, $name)
+    public function createViewData($options, Data $data): void
     {
-        $data = parent::createViewData($options, $name);
         $data['choices'] = $this->getTenantChoices($options);
-        return $data;
     }
 
     protected function getInitialValue($options)
@@ -36,7 +28,7 @@ class TenancyFilterType extends AbstractFilterType
         return $options['initial_value'] === null ? $this->tenantManager->getTenant()->getKey() : $options['initial_value'];
     }
 
-    protected function getTenantChoices($options)
+    private function getTenantChoices($options): array
     {
         $data = [];
         $tenants = $this->tenantManager->getTenants();
@@ -50,7 +42,7 @@ class TenancyFilterType extends AbstractFilterType
         return $data;
     }
 
-    public function buildQuery(FilterQuery $query, $options, $value)
+    public function buildQuery($options, FilterQuery $query, mixed $value): void
     {
         $this->tenantManager->disableDoctrineFilter();
 
@@ -60,14 +52,14 @@ class TenancyFilterType extends AbstractFilterType
 
         $possibleValues = $this->getTenantChoices($options);
         $possibleValueFound = false;
-        foreach($possibleValues as $possibleValue) {
+        foreach ($possibleValues as $possibleValue) {
             if ($value == $possibleValue['code']) {
                 $possibleValueFound = true;
                 break;
             }
         }
 
-        if(!$possibleValueFound) {
+        if (!$possibleValueFound) {
             throw new FilterException('Value submitted for TenancyFilter is not a valid tenant');
         }
 
@@ -76,10 +68,9 @@ class TenancyFilterType extends AbstractFilterType
         $query->addWhere($property, FilterQuery::OPERATOR_EQUALS, $value, $propertyPath);
     }
 
-    public function configureOptions(OptionsResolver $optionsResolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        parent::configureOptions($optionsResolver);
-        $optionsResolver->setDefaults([
+        $resolver->setDefaults([
             'label' => 'filter.tenancy.label',
             'translation_domain' => 'EnhavoMultiTenancyBundle',
             'tenantLabelProperty' => 'name',
@@ -87,7 +78,7 @@ class TenancyFilterType extends AbstractFilterType
         ]);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'tenancy';
     }

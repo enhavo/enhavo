@@ -9,7 +9,7 @@
 namespace Enhavo\Bundle\TaxonomyBundle\Factory;
 
 use Doctrine\ORM\EntityRepository;
-use Enhavo\Bundle\AppBundle\Factory\Factory;
+use Enhavo\Bundle\ResourceBundle\Factory\Factory;
 use Enhavo\Bundle\TaxonomyBundle\Exception\TaxonomyNotFoundException;
 use Enhavo\Bundle\TaxonomyBundle\Model\TaxonomyInterface;
 use Enhavo\Bundle\TaxonomyBundle\Model\TermInterface;
