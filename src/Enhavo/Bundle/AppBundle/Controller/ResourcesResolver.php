@@ -8,9 +8,8 @@
 
 namespace Enhavo\Bundle\AppBundle\Controller;
 
-use Enhavo\Bundle\AppBundle\Filter\FilterQueryBuilder;
-use Enhavo\Bundle\AppBundle\Repository\EntityRepositoryInterface;
-use Pagerfanta\Pagerfanta;
+use Enhavo\Bundle\ResourceBundle\Filter\FilterQueryBuilder;
+use Enhavo\Bundle\ResourceBundle\Repository\EntityRepositoryInterface;
 use Sylius\Bundle\ResourceBundle\Controller\RequestConfiguration as SyliusRequestConfiguration;
 use Sylius\Bundle\ResourceBundle\Controller\ResourcesResolverInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;

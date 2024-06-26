@@ -2,10 +2,10 @@
 
 namespace Enhavo\Bundle\PaymentBundle\Factory;
 
-use Enhavo\Bundle\AppBundle\Factory\Factory;
 use Enhavo\Bundle\PaymentBundle\Entity\GatewayConfig;
 use Enhavo\Bundle\PaymentBundle\Entity\PaymentMethod;
 use Enhavo\Bundle\PaymentBundle\Provider\PaymentMethodTypeProvider;
+use Enhavo\Bundle\ResourceBundle\Factory\Factory;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 
 class PaymentMethodFactory extends Factory

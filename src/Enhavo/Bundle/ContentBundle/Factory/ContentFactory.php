@@ -2,7 +2,7 @@
 namespace Enhavo\Bundle\ContentBundle\Factory;
 
 use Enhavo\Bundle\ContentBundle\Entity\Content;
-use Enhavo\Bundle\AppBundle\Factory\Factory;
+use Enhavo\Bundle\ResourceBundle\Factory\Factory;
 
 class ContentFactory extends Factory
 {

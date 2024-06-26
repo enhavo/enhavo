@@ -11,7 +11,7 @@ namespace Enhavo\Bundle\NewsletterBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
-use Sylius\Component\Resource\Model\ResourceInterface;
+use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 
 class Receiver implements ResourceInterface
 {

@@ -2,43 +2,33 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Batch;
 
-use Enhavo\Bundle\AppBundle\Batch\AbstractBatchType;
-use Enhavo\Bundle\NewsletterBundle\Entity\Newsletter;
-use Enhavo\Bundle\NewsletterBundle\Exception\SendException;
+use Enhavo\Bundle\ApiBundle\Data\Data;
+use Enhavo\Bundle\ApiBundle\Endpoint\Context;
+use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager;
-use Sylius\Component\Resource\Model\ResourceInterface;
-use Symfony\Component\HttpFoundation\Response;
+use Enhavo\Bundle\ResourceBundle\Batch\AbstractBatchType;
+use Enhavo\Bundle\ResourceBundle\Repository\EntityRepositoryInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-/**
- * PublishBatch.php
- *
- * @since 04/07/16
- * @author gseidel
- */
 class SendBatchType extends AbstractBatchType
 {
-    /**
-     * @var NewsletterManager
-     */
-    private $newsletterManager;
-
-    /**
-     * @param array $options
-     * @param Newsletter[] $resources
-     * @param ResourceInterface|null $resource
-     * @return Response|null
-     * @throws SendException
-     */
-    public function execute(array $options, array $resources, ?ResourceInterface $resource = null): ?Response
+    public function __construct(
+        private readonly NewsletterManager $newsletterManager
+    )
     {
-        foreach($resources as $resource) {
-            $this->newsletterManager->prepare($resource);
-        }
-        return null;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function execute(array $options, array $ids, EntityRepositoryInterface $repository, Data $data, Context $context): void
+    {
+        foreach ($ids as $id) {
+            $resource = $repository->find($id);
+            if ($resource instanceof NewsletterInterface) {
+                $this->newsletterManager->prepare($resource);
+            }
+        }
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'label' => 'newsletter.batch.action.send',

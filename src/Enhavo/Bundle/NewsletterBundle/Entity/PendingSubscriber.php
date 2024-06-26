@@ -3,7 +3,7 @@
 namespace Enhavo\Bundle\NewsletterBundle\Entity;
 
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
-use Sylius\Component\Resource\Model\ResourceInterface;
+use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 
 /**
  * Class PendingSubscriber

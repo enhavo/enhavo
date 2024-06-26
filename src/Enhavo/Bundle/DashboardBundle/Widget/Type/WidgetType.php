@@ -7,7 +7,7 @@ namespace Enhavo\Bundle\DashboardBundle\Widget\Type;
 use Enhavo\Bundle\AppBundle\View\ViewData;
 use Enhavo\Bundle\DashboardBundle\Widget\WidgetTypeInterface;
 use Enhavo\Component\Type\AbstractType;
-use Sylius\Component\Resource\Model\ResourceInterface;
+use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
 

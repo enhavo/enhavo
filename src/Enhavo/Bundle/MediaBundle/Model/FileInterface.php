@@ -10,7 +10,7 @@
 namespace Enhavo\Bundle\MediaBundle\Model;
 
 use Enhavo\Bundle\MediaBundle\Content\ContentInterface;
-use Sylius\Component\Resource\Model\ResourceInterface;
+use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 
 interface FileInterface extends ResourceInterface, FileContentInterface
 {

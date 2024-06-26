@@ -8,17 +8,17 @@
 
 namespace Enhavo\Bundle\MediaBundle\View\Type;
 
-use Enhavo\Bundle\AppBundle\Action\ActionManager;
+use AppViewType;
 use Enhavo\Bundle\AppBundle\View\AbstractViewType;
 use Enhavo\Bundle\AppBundle\View\ResourceMetadataHelperTrait;
 use Enhavo\Bundle\AppBundle\View\TemplateData;
-use Enhavo\Bundle\AppBundle\View\Type\AppViewType;
 use Enhavo\Bundle\AppBundle\View\ViewData;
 use Enhavo\Bundle\AppBundle\View\ViewUtil;
 use Enhavo\Bundle\MediaBundle\Entity\Format;
 use Enhavo\Bundle\MediaBundle\Media\ImageCropperManager;
 use Enhavo\Bundle\MediaBundle\Media\MediaManager;
 use Enhavo\Bundle\MediaBundle\Media\UrlGeneratorInterface;
+use Enhavo\Bundle\ResourceBundle\Action\ActionManager;
 use Sylius\Component\Resource\ResourceActions;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;

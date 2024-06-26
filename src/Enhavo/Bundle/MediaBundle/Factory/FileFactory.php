@@ -6,11 +6,11 @@ use Enhavo\Bundle\MediaBundle\Content\PathContent;
 use Enhavo\Bundle\MediaBundle\Exception\FileException;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\MediaBundle\Provider\ProviderInterface;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
-use Enhavo\Bundle\AppBundle\Factory\Factory;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpFoundation\File\File;
+use Enhavo\Bundle\ResourceBundle\Factory\Factory;
 use Symfony\Component\Finder\SplFileInfo;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class FileFactory extends Factory
 {

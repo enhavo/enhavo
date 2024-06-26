@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\CommentBundle\Repository;
 
-use Enhavo\Bundle\AppBundle\Repository\EntityRepository;
+use Enhavo\Bundle\ResourceBundle\Repository\EntityRepository;
 
 class ThreadRepository extends EntityRepository
 {

@@ -8,10 +8,10 @@
 
 namespace Enhavo\Bundle\CommentBundle\Factory;
 
-use Enhavo\Bundle\AppBundle\Factory\Factory;
-use Enhavo\Bundle\AppBundle\Repository\EntityRepositoryInterface;
 use Enhavo\Bundle\CommentBundle\Exception\NotFoundException;
 use Enhavo\Bundle\CommentBundle\Model\CommentInterface;
+use Enhavo\Bundle\ResourceBundle\Factory\Factory;
+use Enhavo\Bundle\ResourceBundle\Repository\EntityRepositoryInterface;
 
 class CommentFactory extends Factory
 {

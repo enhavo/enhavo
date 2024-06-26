@@ -1,166 +1,166 @@
 services:
-    Enhavo\Bundle\AppBundle\View\Type\BaseViewType:
-        tags:
-            - { name: enhavo_app.view }
-
-    Enhavo\Bundle\AppBundle\View\Type\AppViewType:
-        arguments:
-            - '@twig'
-            - '%kernel.project_dir%'
-            - '@translator'
-            - '@request_stack'
-            - '@enhavo_app.translation.translation_dumper'
-            - '@enhavo_app.locale_resolver'
-            - '@Enhavo\Bundle\AppBundle\Template\TemplateResolver'
-            - '@Enhavo\Bundle\AppBundle\Twig\TwigRouter'
-            - '@Enhavo\Bundle\AppBundle\Routing\RouteCollectorInterface'
-            - '@serializer'
-        tags:
-            - { name: enhavo_app.view }
-
-    Enhavo\Bundle\AppBundle\View\Type\ApiViewType:
-        arguments:
-            - '@twig'
-            - '@Enhavo\Bundle\AppBundle\Template\TemplateResolver'
-        tags:
-            - { name: enhavo_app.view }
-
-    Enhavo\Bundle\AppBundle\View\Type\IndexViewType:
-        arguments:
-            - '@enhavo_app.action_manager'
-            - '@Enhavo\Bundle\AppBundle\Batch\BatchManager'
-            - '@enhavo_app.filter_manager'
-            - '@enhavo_app.column_manager'
-            - '@Enhavo\Bundle\AppBundle\View\ViewUtil'
-            - '@translator'
-        tags:
-            - { name: enhavo_app.view }
-
-    Enhavo\Bundle\AppBundle\View\ViewUtil:
-        arguments:
-            - '@sylius.resource_controller.parameters_parser'
-            - 'Enhavo\Bundle\AppBundle\Controller\RequestConfiguration'
-            - '%sylius.resource.settings%'
-            - '@router'
-            - '@sylius.resource_controller.request_configuration_factory'
-            - '@sylius.resource_controller.authorization_checker'
-            - '@Symfony\Component\HttpFoundation\RequestStack'
-            - '@translator'
-
-    Enhavo\Bundle\AppBundle\View\AbstractResourceFormType:
-        abstract: true
-        arguments:
-            - '%enhavo_app.form_themes%'
-            - '@enhavo_app.action_manager'
-            - '@request_stack'
-            - '@Enhavo\Bundle\AppBundle\View\ViewUtil'
-            - '@router'
-            - '@translator'
-            - '@Enhavo\Bundle\AppBundle\Resource\ResourceManager'
-            - '@Enhavo\Bundle\AppBundle\Grid\GridManager'
-            - '@sylius.resource_controller.form_factory'
-            - '@serializer'
-            - '@sylius.resource_controller.event_dispatcher'
-
-    Enhavo\Bundle\AppBundle\View\Type\CreateViewType:
-        parent: Enhavo\Bundle\AppBundle\View\AbstractResourceFormType
-        arguments:
-            - '@sylius.resource_controller.new_resource_factory'
-        tags:
-            - { name: enhavo_app.view }
-
-    Enhavo\Bundle\AppBundle\View\Type\UpdateViewType:
-        parent: Enhavo\Bundle\AppBundle\View\AbstractResourceFormType
-        arguments:
-            - '@sylius.resource_controller.single_resource_provider'
-        tags:
-            - { name: enhavo_app.view }
-
-    Enhavo\Bundle\AppBundle\View\Type\TableViewType:
-        arguments:
-            - '@Enhavo\Bundle\AppBundle\View\ViewUtil'
-            - '@enhavo_app.column_manager'
-            - '@enhavo_app.manager.resource'
-            - '@sylius.resource_controller.resources_collection_provider'
-        tags:
-            - { name: enhavo_app.view }
-
-    Enhavo\Bundle\AppBundle\View\Type\FormViewType:
-        tags:
-            - { name: enhavo_app.view }
-
-    Enhavo\Bundle\AppBundle\View\Type\ListViewType:
-        arguments:
-            - '@Enhavo\Bundle\AppBundle\View\ViewUtil'
-            - '@enhavo_app.action_manager'
-            - '@enhavo_app.column_manager'
-            - '@translator'
-        tags:
-            - { name: enhavo_app.view }
-
-    Enhavo\Bundle\AppBundle\View\Type\ListDataViewType:
-        arguments:
-            - '@Enhavo\Bundle\AppBundle\View\ViewUtil'
-            - '@enhavo_app.column_manager'
-            - '@enhavo.sorting_manager'
-            - '@security.csrf.token_manager'
-            - '@sylius.resource_controller.resources_collection_provider'
-            - '@enhavo_app.manager.resource'
-        tags:
-            - { name: enhavo_app.view }
-
-    Enhavo\Bundle\AppBundle\View\Type\DeleteViewType:
-        arguments:
-            - '@Enhavo\Bundle\AppBundle\View\ViewUtil'
-            - '@router'
-            - '@doctrine.orm.entity_manager'
-            - '@sylius.resource_controller.flash_helper'
-            - '@enhavo_app.manager.resource'
-            - '@sylius.resource_controller.single_resource_provider'
-            - '@sylius.resource_controller.event_dispatcher'
-        tags:
-            - { name: enhavo_app.view }
-
-    Enhavo\Bundle\AppBundle\View\Type\DuplicateViewType:
-        arguments:
-            - '@Enhavo\Bundle\AppBundle\View\ViewUtil'
-            - '@router'
-            - '@doctrine.orm.entity_manager'
-            - '@request_stack'
-            - '@translator'
-            - '@enhavo_app.manager.resource'
-            - '@sylius.resource_controller.single_resource_provider'
-            - '@sylius.resource_controller.event_dispatcher'
-            - '@enhavo_app.factory.duplicate_resource_factory'
-        tags:
-            - { name: enhavo_app.view }
-
-    Enhavo\Bundle\AppBundle\View\Type\BatchViewType:
-        arguments:
-            - '@enhavo_app.manager.resource'
-            - '@Enhavo\Bundle\AppBundle\Batch\BatchManager'
-            - '@sylius.resource_controller.resources_collection_provider'
-        tags:
-            - { name: enhavo_app.view }
-
-    Enhavo\Bundle\AppBundle\View\Type\PreviewViewType:
-        arguments:
-            - '@Enhavo\Bundle\AppBundle\View\ViewUtil'
-            - '@router'
-            - '@enhavo_app.action_manager'
-            - '@request_stack'
-            - '@enhavo_app.manager.resource'
-            - '@sylius.resource_controller.single_resource_provider'
-        tags:
-            - { name: enhavo_app.view }
-
-    Enhavo\Bundle\AppBundle\View\Type\ResourcePreviewViewType:
-        arguments:
-            - '@Enhavo\Bundle\AppBundle\View\ViewUtil'
-            - '@enhavo_app.preview.strategy_resolver'
-            - '@sylius.resource_controller.single_resource_provider'
-            - '@sylius.resource_controller.new_resource_factory'
-            - '@sylius.resource_controller.form_factory'
-            - '@enhavo_app.manager.resource'
-        tags:
-            - { name: enhavo_app.view }
+#    Enhavo\Bundle\AppBundle\View\Type\BaseViewType:
+#        tags:
+#            - { name: enhavo_app.view }
+#
+#    Enhavo\Bundle\AppBundle\View\Type\AppViewType:
+#        arguments:
+#            - '@twig'
+#            - '%kernel.project_dir%'
+#            - '@translator'
+#            - '@request_stack'
+#            - '@enhavo_app.translation.translation_dumper'
+#            - '@enhavo_app.locale_resolver'
+#            - '@Enhavo\Bundle\AppBundle\Template\TemplateResolver'
+#            - '@Enhavo\Bundle\AppBundle\Twig\TwigRouter'
+#            - '@Enhavo\Bundle\AppBundle\Routing\RouteCollectorInterface'
+#            - '@serializer'
+#        tags:
+#            - { name: enhavo_app.view }
+#
+#    Enhavo\Bundle\AppBundle\View\Type\ApiViewType:
+#        arguments:
+#            - '@twig'
+#            - '@Enhavo\Bundle\AppBundle\Template\TemplateResolver'
+#        tags:
+#            - { name: enhavo_app.view }
+#
+#    Enhavo\Bundle\AppBundle\View\Type\IndexViewType:
+#        arguments:
+#            - '@enhavo_app.action_manager'
+#            - '@Enhavo\Bundle\AppBundle\Batch\BatchManager'
+#            - '@enhavo_app.filter_manager'
+#            - '@enhavo_app.column_manager'
+#            - '@Enhavo\Bundle\AppBundle\View\ViewUtil'
+#            - '@translator'
+#        tags:
+#            - { name: enhavo_app.view }
+#
+#    Enhavo\Bundle\AppBundle\View\ViewUtil:
+#        arguments:
+#            - '@sylius.resource_controller.parameters_parser'
+#            - 'Enhavo\Bundle\AppBundle\Controller\RequestConfiguration'
+#            - '%sylius.resource.settings%'
+#            - '@router'
+#            - '@sylius.resource_controller.request_configuration_factory'
+#            - '@sylius.resource_controller.authorization_checker'
+#            - '@Symfony\Component\HttpFoundation\RequestStack'
+#            - '@translator'
+#
+#    Enhavo\Bundle\AppBundle\View\AbstractResourceFormType:
+#        abstract: true
+#        arguments:
+#            - '%enhavo_app.form_themes%'
+#            - '@enhavo_app.action_manager'
+#            - '@request_stack'
+#            - '@Enhavo\Bundle\AppBundle\View\ViewUtil'
+#            - '@router'
+#            - '@translator'
+#            - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
+#            - '@Enhavo\Bundle\AppBundle\Grid\GridManager'
+#            - '@sylius.resource_controller.form_factory'
+#            - '@serializer'
+#            - '@sylius.resource_controller.event_dispatcher'
+#
+#    Enhavo\Bundle\AppBundle\View\Type\CreateViewType:
+#        parent: Enhavo\Bundle\AppBundle\View\AbstractResourceFormType
+#        arguments:
+#            - '@sylius.resource_controller.new_resource_factory'
+#        tags:
+#            - { name: enhavo_app.view }
+#
+#    Enhavo\Bundle\AppBundle\View\Type\UpdateViewType:
+#        parent: Enhavo\Bundle\AppBundle\View\AbstractResourceFormType
+#        arguments:
+#            - '@sylius.resource_controller.single_resource_provider'
+#        tags:
+#            - { name: enhavo_app.view }
+#
+#    Enhavo\Bundle\AppBundle\View\Type\TableViewType:
+#        arguments:
+#            - '@Enhavo\Bundle\AppBundle\View\ViewUtil'
+#            - '@enhavo_app.column_manager'
+#            - '@enhavo_app.manager.resource'
+#            - '@sylius.resource_controller.resources_collection_provider'
+#        tags:
+#            - { name: enhavo_app.view }
+#
+#    Enhavo\Bundle\AppBundle\View\Type\FormViewType:
+#        tags:
+#            - { name: enhavo_app.view }
+#
+#    Enhavo\Bundle\AppBundle\View\Type\ListViewType:
+#        arguments:
+#            - '@Enhavo\Bundle\AppBundle\View\ViewUtil'
+#            - '@enhavo_app.action_manager'
+#            - '@enhavo_app.column_manager'
+#            - '@translator'
+#        tags:
+#            - { name: enhavo_app.view }
+#
+#    Enhavo\Bundle\AppBundle\View\Type\ListDataViewType:
+#        arguments:
+#            - '@Enhavo\Bundle\AppBundle\View\ViewUtil'
+#            - '@enhavo_app.column_manager'
+#            - '@enhavo.sorting_manager'
+#            - '@security.csrf.token_manager'
+#            - '@sylius.resource_controller.resources_collection_provider'
+#            - '@enhavo_app.manager.resource'
+#        tags:
+#            - { name: enhavo_app.view }
+#
+#    Enhavo\Bundle\AppBundle\View\Type\DeleteViewType:
+#        arguments:
+#            - '@Enhavo\Bundle\AppBundle\View\ViewUtil'
+#            - '@router'
+#            - '@doctrine.orm.entity_manager'
+#            - '@sylius.resource_controller.flash_helper'
+#            - '@enhavo_app.manager.resource'
+#            - '@sylius.resource_controller.single_resource_provider'
+#            - '@sylius.resource_controller.event_dispatcher'
+#        tags:
+#            - { name: enhavo_app.view }
+#
+#    Enhavo\Bundle\AppBundle\View\Type\DuplicateViewType:
+#        arguments:
+#            - '@Enhavo\Bundle\AppBundle\View\ViewUtil'
+#            - '@router'
+#            - '@doctrine.orm.entity_manager'
+#            - '@request_stack'
+#            - '@translator'
+#            - '@enhavo_app.manager.resource'
+#            - '@sylius.resource_controller.single_resource_provider'
+#            - '@sylius.resource_controller.event_dispatcher'
+#            - '@enhavo_app.factory.duplicate_resource_factory'
+#        tags:
+#            - { name: enhavo_app.view }
+#
+#    Enhavo\Bundle\AppBundle\View\Type\BatchViewType:
+#        arguments:
+#            - '@enhavo_app.manager.resource'
+#            - '@Enhavo\Bundle\AppBundle\Batch\BatchManager'
+#            - '@sylius.resource_controller.resources_collection_provider'
+#        tags:
+#            - { name: enhavo_app.view }
+#
+#    Enhavo\Bundle\AppBundle\View\Type\PreviewViewType:
+#        arguments:
+#            - '@Enhavo\Bundle\AppBundle\View\ViewUtil'
+#            - '@router'
+#            - '@enhavo_app.action_manager'
+#            - '@request_stack'
+#            - '@enhavo_app.manager.resource'
+#            - '@sylius.resource_controller.single_resource_provider'
+#        tags:
+#            - { name: enhavo_app.view }
+#
+#    Enhavo\Bundle\AppBundle\View\Type\ResourcePreviewViewType:
+#        arguments:
+#            - '@Enhavo\Bundle\AppBundle\View\ViewUtil'
+#            - '@enhavo_app.preview.strategy_resolver'
+#            - '@sylius.resource_controller.single_resource_provider'
+#            - '@sylius.resource_controller.new_resource_factory'
+#            - '@sylius.resource_controller.form_factory'
+#            - '@enhavo_app.manager.resource'
+#        tags:
+#            - { name: enhavo_app.view }

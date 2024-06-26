@@ -3,7 +3,7 @@
 namespace Enhavo\Bundle\ShopBundle\Entity;
 
 use Enhavo\Bundle\ShopBundle\Model\VoucherRedemptionInterface;
-use Sylius\Component\Resource\Model\ResourceInterface;
+use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 
 class VoucherRedemption implements ResourceInterface, VoucherRedemptionInterface
 {

@@ -13,10 +13,10 @@ use Enhavo\Bundle\MediaBundle\Content\PathContent;
 use Enhavo\Bundle\MediaBundle\Exception\FileException;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\MediaBundle\Model\FormatInterface;
-use Enhavo\Bundle\AppBundle\Factory\Factory;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpFoundation\File\File;
+use Enhavo\Bundle\ResourceBundle\Factory\Factory;
 use Symfony\Component\Finder\SplFileInfo;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FormatFactory extends Factory
 {

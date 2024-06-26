@@ -1,11 +1,15 @@
 enhavo_article_admin:
     resource: "@EnhavoArticleBundle/Resources/config/routes/admin/*"
-    prefix: /admin
+    prefix: /admin/article
+
+enhavo_article_admin_api:
+    resource: "@EnhavoArticleBundle/Resources/config/routes/admin_api/*"
+    prefix: /api/article
+
+enhavo_article_api:
+    resource: "@EnhavoArticleBundle/Resources/config/routes/api/*"
+    prefix: /api/article
 
 enhavo_article_theme:
     resource: "@EnhavoArticleBundle/Resources/config/routes/theme/*"
     prefix: /
-
-enhavo_article_api:
-    resource: "@EnhavoArticleBundle/Resources/config/routes/api/*"
-    prefix: /api

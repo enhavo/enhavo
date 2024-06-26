@@ -8,11 +8,11 @@
 
 namespace Enhavo\Bundle\ShopBundle\Controller;
 
-use Enhavo\Bundle\AppBundle\Resource\ResourceManager;
 use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
 use Enhavo\Bundle\PaymentBundle\Model\PaymentInterface;
 use Enhavo\Bundle\ShopBundle\Entity\PaymentMethod;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
+use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

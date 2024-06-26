@@ -3,8 +3,8 @@
 namespace Enhavo\Bundle\SettingBundle\Setting\Type;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Enhavo\Bundle\AppBundle\Factory\Factory;
-use Enhavo\Bundle\AppBundle\Repository\EntityRepository;
+use Enhavo\Bundle\ResourceBundle\Factory\Factory;
+use Enhavo\Bundle\ResourceBundle\Repository\EntityRepository;
 use Enhavo\Bundle\SettingBundle\Entity\Setting as SettingEntity;
 use Enhavo\Bundle\SettingBundle\Exception\SettingNotExists;
 use Enhavo\Bundle\SettingBundle\Setting\AbstractSettingType;

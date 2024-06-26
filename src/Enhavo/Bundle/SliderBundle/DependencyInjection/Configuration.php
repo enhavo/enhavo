@@ -3,7 +3,7 @@
 namespace Enhavo\Bundle\SliderBundle\DependencyInjection;
 
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
-use Enhavo\Bundle\AppBundle\Factory\Factory;
+use Enhavo\Bundle\ResourceBundle\Factory\Factory;
 use Enhavo\Bundle\SliderBundle\Entity\Slide;
 use Enhavo\Bundle\SliderBundle\Entity\Slider;
 use Enhavo\Bundle\SliderBundle\Factory\SlideFactory;

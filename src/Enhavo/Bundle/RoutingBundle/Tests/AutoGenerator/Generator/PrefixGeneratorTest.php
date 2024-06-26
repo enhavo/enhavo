@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\RoutingBundle\Tests\AutoGenerator\Generator;
 
-use Enhavo\Bundle\AppBundle\Repository\EntityRepositoryInterface;
+use Enhavo\Bundle\ResourceBundle\Repository\EntityRepositoryInterface;
 use Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator;
 use Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator\PrefixGenerator;
 use Enhavo\Bundle\RoutingBundle\Entity\Route;

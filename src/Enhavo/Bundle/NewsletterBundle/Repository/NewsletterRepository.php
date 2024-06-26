@@ -2,8 +2,8 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Repository;
 
-use Enhavo\Bundle\AppBundle\Repository\EntityRepository;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
+use Enhavo\Bundle\ResourceBundle\Repository\EntityRepository;
 
 class NewsletterRepository extends EntityRepository
 {

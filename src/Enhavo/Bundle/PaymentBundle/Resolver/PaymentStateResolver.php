@@ -2,9 +2,9 @@
 
 namespace Enhavo\Bundle\PaymentBundle\Resolver;
 
-use Enhavo\Bundle\AppBundle\Resource\ResourceManager;
 use Enhavo\Bundle\PaymentBundle\Model\PaymentInterface;
 use Payum\Core\Request\GetHumanStatus;
+use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
 
 class PaymentStateResolver
 {

@@ -9,7 +9,7 @@
 namespace Enhavo\Bundle\SidebarBundle\Entity;
 
 use Enhavo\Bundle\SidebarBundle\Model\SidebarInterface;
-use Sylius\Component\Resource\Model\ResourceInterface;
+use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 
 class Sidebar implements ResourceInterface, SidebarInterface
@@ -23,7 +23,7 @@ class Sidebar implements ResourceInterface, SidebarInterface
      * @var string
      */
     private $name;
-    
+
     /**
      * @var string
      */

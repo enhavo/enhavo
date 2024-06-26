@@ -2,11 +2,11 @@
 
 namespace Enhavo\Bundle\RedirectBundle\DependencyInjection;
 
-use Enhavo\Bundle\AppBundle\Factory\Factory;
 use Enhavo\Bundle\RedirectBundle\Controller\RedirectController;
 use Enhavo\Bundle\RedirectBundle\Entity\Redirect;
 use Enhavo\Bundle\RedirectBundle\Form\Type\RedirectType;
 use Enhavo\Bundle\RedirectBundle\Repository\RedirectRepository;
+use Enhavo\Bundle\ResourceBundle\Factory\Factory;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 

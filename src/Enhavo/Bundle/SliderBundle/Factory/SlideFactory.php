@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\SliderBundle\Factory;
 
-use Enhavo\Bundle\AppBundle\Factory\Factory;
+use Enhavo\Bundle\ResourceBundle\Factory\Factory;
 use Enhavo\Bundle\SliderBundle\Model\SlideInterface;
 use Enhavo\Bundle\SliderBundle\Model\SliderInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;

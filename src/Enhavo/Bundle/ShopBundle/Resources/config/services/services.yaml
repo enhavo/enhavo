@@ -1,27 +1,19 @@
 services:
     Enhavo\Bundle\ShopBundle\Action\VariantActionType:
-        parent: Enhavo\Bundle\AppBundle\Action\Type\OpenActionType
-        public: true
         tags:
-            - { name: enhavo.action, alias: shop_variant }
+            - { name: enhavo.action }
 
     Enhavo\Bundle\ShopBundle\Action\GenerateVariantActionType:
-        parent: Enhavo\Bundle\AppBundle\Action\Type\OpenActionType
-        public: true
         tags:
-            - { name: enhavo.action, alias: shop_generate_variant }
+            - { name: enhavo.action }
 
     Enhavo\Bundle\ShopBundle\Action\CreateAttributeActionType:
-        parent: Enhavo\Bundle\AppBundle\Action\AbstractActionType
-        public: true
         tags:
-            - { name: enhavo.action, alias: shop_create_attribute }
+            - { name: enhavo.action }
 
     Enhavo\Bundle\ShopBundle\Action\GenerateCouponActionType:
-        parent: Enhavo\Bundle\AppBundle\Action\Type\FormActionType
-        public: true
         tags:
-            - { name: enhavo.action, alias: shop_generate_coupon }
+            - { name: enhavo.action }
 
     enhavo_shop.product_manager:
         public: true
@@ -151,7 +143,7 @@ services:
         public: true
         arguments:
             - '@sylius.repository.order'
-            - '@Enhavo\Bundle\AppBundle\Resource\ResourceManager'
+            - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
             - '@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface'
         calls:
             - [setContainer, ['@service_container']]

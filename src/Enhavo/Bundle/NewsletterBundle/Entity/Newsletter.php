@@ -10,7 +10,7 @@ use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 use Enhavo\Bundle\RoutingBundle\Model\Slugable;
-use Sylius\Component\Resource\Model\ResourceInterface;
+use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 
 /**
  * Newsletter

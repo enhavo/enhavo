@@ -3,7 +3,7 @@
 namespace Enhavo\Bundle\RoutingBundle\Tests\Mock;
 
 use Enhavo\Bundle\RoutingBundle\Model\Slugable;
-use Sylius\Component\Resource\Model\ResourceInterface;
+use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 
 class SluggableMock implements ResourceInterface, Slugable
 {

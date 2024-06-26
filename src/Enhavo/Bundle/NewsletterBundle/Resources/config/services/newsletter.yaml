@@ -8,7 +8,6 @@ services:
     Enhavo\Bundle\NewsletterBundle\Batch\SendTestBatchType:
         arguments:
             - '@Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager'
-            - '@request_stack'
             - '@translator'
             - '@form.factory'
         tags:

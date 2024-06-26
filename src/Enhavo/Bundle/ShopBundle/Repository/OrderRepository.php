@@ -8,8 +8,8 @@
 
 namespace Enhavo\Bundle\ShopBundle\Repository;
 
-use Enhavo\Bundle\AppBundle\Repository\EntityRepositoryInterface;
-use Enhavo\Bundle\AppBundle\Repository\EntityRepositoryTrait;
+use Enhavo\Bundle\ResourceBundle\Repository\EntityRepositoryInterface;
+use Enhavo\Bundle\ResourceBundle\Repository\EntityRepositoryTrait;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Enhavo\Bundle\ShopBundle\State\OrderCheckoutStates;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;

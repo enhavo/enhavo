@@ -2,13 +2,13 @@
 
 namespace Enhavo\Bundle\ShopBundle\View;
 
-use Enhavo\Bundle\AppBundle\Resource\ResourceManager;
+use ApiViewType;
 use Enhavo\Bundle\AppBundle\View\AbstractViewType;
 use Enhavo\Bundle\AppBundle\View\ResourceMetadataHelperTrait;
 use Enhavo\Bundle\AppBundle\View\TemplateData;
-use Enhavo\Bundle\AppBundle\View\Type\ApiViewType;
 use Enhavo\Bundle\AppBundle\View\ViewData;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
+use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
 use Sylius\Bundle\ResourceBundle\Controller\EventDispatcherInterface;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceFormFactory;
 use Sylius\Component\Order\Context\CartContextInterface;

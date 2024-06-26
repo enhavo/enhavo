@@ -8,7 +8,6 @@
 
 namespace Enhavo\Bundle\MediaBundle\Media;
 
-use Enhavo\Bundle\AppBundle\Resource\ResourceManager;
 use Enhavo\Bundle\DoctrineExtensionBundle\Util\AssociationFinder;
 use Enhavo\Bundle\MediaBundle\Entity\Format;
 use Enhavo\Bundle\MediaBundle\FileNotFound\FileNotFoundHandlerInterface;
@@ -18,6 +17,7 @@ use Enhavo\Bundle\MediaBundle\Model\FormatInterface;
 use Enhavo\Bundle\MediaBundle\Provider\ProviderInterface;
 use Enhavo\Bundle\MediaBundle\Repository\FileRepository;
 use Enhavo\Bundle\MediaBundle\Storage\StorageInterface;
+use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
 
 class MediaManager
 {

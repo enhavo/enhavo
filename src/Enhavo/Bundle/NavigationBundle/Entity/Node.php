@@ -12,7 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\NavigationBundle\Model\NodeInterface;
 use Enhavo\Bundle\NavigationBundle\Model\SubjectInterface;
-use Sylius\Component\Resource\Model\ResourceInterface;
+use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 
 class Node implements NodeInterface, ResourceInterface
 {

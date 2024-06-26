@@ -6,7 +6,7 @@ namespace Enhavo\Bundle\DashboardBundle\Widget;
 
 use Enhavo\Bundle\AppBundle\View\ViewData;
 use Enhavo\Component\Type\TypeInterface;
-use Sylius\Component\Resource\Model\ResourceInterface;
+use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 
 interface WidgetTypeInterface extends TypeInterface
 {

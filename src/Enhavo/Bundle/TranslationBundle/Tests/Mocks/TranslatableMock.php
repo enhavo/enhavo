@@ -7,7 +7,7 @@ namespace Enhavo\Bundle\TranslationBundle\Tests\Mocks;
 
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\RoutingBundle\Model\Slugable;
-use Sylius\Component\Resource\Model\ResourceInterface;
+use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 
 class TranslatableMock implements ResourceInterface, Slugable
 {

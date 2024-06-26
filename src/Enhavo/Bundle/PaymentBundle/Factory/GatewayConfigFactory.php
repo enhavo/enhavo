@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\PaymentBundle\Factory;
 
-use Enhavo\Bundle\AppBundle\Factory\Factory;
+use Enhavo\Bundle\ResourceBundle\Factory\Factory;
 
 class GatewayConfigFactory extends Factory
 {

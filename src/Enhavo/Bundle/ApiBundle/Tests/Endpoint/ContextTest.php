@@ -4,12 +4,13 @@ namespace Endpoint;
 
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\Request;
 
 class ContextTest extends TestCase
 {
     public function testSetGetData()
     {
-        $context = new Context();
+        $context = new Context($this->getMockBuilder(Request::class)->getMock());
 
         $context->set('property1', 'something');
         $context->set('property2', new \stdClass());

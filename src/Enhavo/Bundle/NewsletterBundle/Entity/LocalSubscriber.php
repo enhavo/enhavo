@@ -6,7 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\NewsletterBundle\Model\GroupInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\LocalSubscriberInterface;
-use Sylius\Component\Resource\Model\ResourceInterface;
+use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 
 /**
  * Subscriber

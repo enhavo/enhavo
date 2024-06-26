@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\ShopBundle\Factory;
 
-use Enhavo\Bundle\AppBundle\Factory\Factory;
+use Enhavo\Bundle\ResourceBundle\Factory\Factory;
 use Sylius\Component\Product\Factory\ProductVariantFactoryInterface;
 use Sylius\Component\Product\Model\ProductInterface;
 use Sylius\Component\Product\Model\ProductVariantInterface;

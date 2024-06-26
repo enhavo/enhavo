@@ -3,29 +3,35 @@
 
 namespace Enhavo\Bundle\ShopBundle\Action;
 
-use Enhavo\Bundle\AppBundle\Action\ActionTypeInterface;
-use Enhavo\Bundle\AppBundle\Action\Type\OpenActionType;
+use Enhavo\Bundle\ApiBundle\Data\Data;
+use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
+use Enhavo\Bundle\ResourceBundle\Action\Type\OpenActionType;
+use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Sylius\Component\Promotion\Model\PromotionInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\RouterInterface;
 
-class CouponActionType extends OpenActionType implements ActionTypeInterface
+class CouponActionType extends AbstractActionType
 {
-    public function createViewData(array $options, $resource = null)
+    public function __construct(
+        private readonly RouterInterface $router
+    )
+    {
+    }
+
+    public function createViewData(array $options, Data $data, ResourceInterface $resource = null): void
     {
         if (!$resource instanceof PromotionInterface) {
             throw new \InvalidArgumentException(sprintf('Resource need to be type of "%s"', PromotionInterface::class));
         }
 
-        $options['route_parameters'] = array_merge($options['route_parameters'], [
+        $data->set('url', $this->router->generate($options['route'], array_merge($options['route_parameters'], [
             'promotionId' => $resource->getId()
-        ]);
-
-        return parent::createViewData($options, $resource);
+        ])));
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        parent::configureOptions($resolver);
         $resolver->setDefaults([
             'icon' => 'featured_play_list',
             'target' => '_view',
@@ -36,7 +42,12 @@ class CouponActionType extends OpenActionType implements ActionTypeInterface
         ]);
     }
 
-    public function getType()
+    public static function getParentType(): ?string
+    {
+        return OpenActionType::class;
+    }
+
+    public static function getName(): ?string
     {
         return 'shop_coupon';
     }

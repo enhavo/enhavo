@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\UserBundle\Repository;
 
-use Enhavo\Bundle\AppBundle\Repository\EntityRepository;
+use Enhavo\Bundle\ResourceBundle\Repository\EntityRepository;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;

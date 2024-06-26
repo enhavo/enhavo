@@ -3,9 +3,9 @@
 namespace Enhavo\Bundle\PaymentBundle\Repository;
 
 
-use Enhavo\Bundle\AppBundle\Filter\FilterQuery;
-use Enhavo\Bundle\AppBundle\Repository\EntityRepository;
 use Enhavo\Bundle\PaymentBundle\Model\PaymentInterface;
+use Enhavo\Bundle\ResourceBundle\Filter\FilterQuery;
+use Enhavo\Bundle\ResourceBundle\Repository\EntityRepository;
 
 class PaymentRepository extends EntityRepository
 {

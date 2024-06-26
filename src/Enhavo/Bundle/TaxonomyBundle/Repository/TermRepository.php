@@ -8,8 +8,8 @@
 
 namespace Enhavo\Bundle\TaxonomyBundle\Repository;
 
-use Enhavo\Bundle\AppBundle\Filter\FilterQuery;
-use Enhavo\Bundle\AppBundle\Repository\EntityRepository;
+use Enhavo\Bundle\ResourceBundle\Filter\FilterQuery;
+use Enhavo\Bundle\ResourceBundle\Repository\EntityRepository;
 
 class TermRepository extends EntityRepository
 {

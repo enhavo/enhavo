@@ -6,7 +6,7 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Enhavo\Bundle\AppBundle\Model\Timestampable;
 use Enhavo\Bundle\AppBundle\Model\TimestampableTrait;
-use Sylius\Component\Resource\Model\ResourceInterface;
+use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 class User implements UserInterface

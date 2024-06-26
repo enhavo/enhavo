@@ -9,7 +9,7 @@ use Enhavo\Bundle\NewsletterBundle\Entity\Receiver;
 use Enhavo\Bundle\NewsletterBundle\Form\Type\NewsletterEmailType;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager;
-use Sylius\Component\Resource\Model\ResourceInterface;
+use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Sylius\Component\Resource\ResourceActions;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

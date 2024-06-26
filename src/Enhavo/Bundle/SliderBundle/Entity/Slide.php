@@ -8,7 +8,7 @@ use Enhavo\Bundle\ContentBundle\Content\PublishableTrait;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\SliderBundle\Model\SlideInterface;
 use Enhavo\Bundle\SliderBundle\Model\SliderInterface;
-use Sylius\Component\Resource\Model\ResourceInterface;
+use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 
 /**
  * Slider
@@ -55,7 +55,7 @@ class Slide implements SlideInterface, ResourceInterface, Publishable
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -78,7 +78,7 @@ class Slide implements SlideInterface, ResourceInterface, Publishable
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -101,7 +101,7 @@ class Slide implements SlideInterface, ResourceInterface, Publishable
     /**
      * Get text
      *
-     * @return string 
+     * @return string
      */
     public function getText()
     {
@@ -124,7 +124,7 @@ class Slide implements SlideInterface, ResourceInterface, Publishable
     /**
      * Get url
      *
-     * @return string 
+     * @return string
      */
     public function getUrl()
     {

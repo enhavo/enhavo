@@ -2,7 +2,7 @@
 namespace Enhavo\Bundle\TaxonomyBundle\Entity;
 
 use Enhavo\Bundle\TaxonomyBundle\Model\TaxonomyInterface;
-use Sylius\Component\Resource\Model\ResourceInterface;
+use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 
 class Taxonomy implements ResourceInterface, TaxonomyInterface
 {
@@ -32,7 +32,7 @@ class Taxonomy implements ResourceInterface, TaxonomyInterface
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -50,7 +50,7 @@ class Taxonomy implements ResourceInterface, TaxonomyInterface
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {

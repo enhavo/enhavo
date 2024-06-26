@@ -2,11 +2,11 @@
 
 namespace Enhavo\Bundle\MediaLibraryBundle\View\Type;
 
-use Enhavo\Bundle\AppBundle\Action\ActionManager;
+use AppViewType;
 use Enhavo\Bundle\AppBundle\View\AbstractViewType;
-use Enhavo\Bundle\AppBundle\View\Type\AppViewType;
 use Enhavo\Bundle\AppBundle\View\ViewData;
 use Enhavo\Bundle\AppBundle\View\ViewUtil;
+use Enhavo\Bundle\ResourceBundle\Action\ActionManager;
 use Sylius\Component\Resource\Metadata\MetadataInterface;
 use Sylius\Component\Resource\ResourceActions;
 use Symfony\Component\OptionsResolver\OptionsResolver;

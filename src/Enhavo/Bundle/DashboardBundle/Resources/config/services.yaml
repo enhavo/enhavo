@@ -26,11 +26,11 @@ services:
             - { name: controller.service_arguments }
             - { name: container.service_subscriber }
 
-    Enhavo\Bundle\DashboardBundle\View\DashboardViewType:
-        arguments:
-            - '@Enhavo\Bundle\DashboardBundle\Widget\WidgetManager'
-        tags:
-            - { name: enhavo_app.view }
+#    Enhavo\Bundle\DashboardBundle\View\DashboardViewType:
+#        arguments:
+#            - '@Enhavo\Bundle\DashboardBundle\Widget\WidgetManager'
+#        tags:
+#            - { name: enhavo_app.view }
 
     Enhavo\Bundle\DashboardBundle\Widget\WidgetManager:
         arguments:

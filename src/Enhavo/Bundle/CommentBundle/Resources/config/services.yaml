@@ -41,7 +41,7 @@ services:
             - '%enhavo_comment.submit_form.form%'
             - '@enhavo_comment.factory.comment'
             - '@event_dispatcher'
-            - '@enhavo_app.manager.resource'
+            - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
 
     Enhavo\Bundle\CommentBundle\EventListener\PublishStrategySubscriber:
         arguments:
@@ -65,12 +65,10 @@ services:
             - '%enhavo_app.mailer.defaults%'
 
     Enhavo\Bundle\CommentBundle\Action\CommentsActionType:
-        parent: Enhavo\Bundle\AppBundle\Action\AbstractActionType
-        public: true
         arguments:
             - '@Symfony\Component\Routing\RouterInterface'
         tags:
-            - { name: enhavo.action, alias: 'comments' }
+            - { name: enhavo.action }
 
     enhavo_comment.factory.comment:
         public: true

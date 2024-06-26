@@ -9,7 +9,6 @@
 namespace Enhavo\Bundle\CommentBundle\Comment;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Enhavo\Bundle\AppBundle\Resource\ResourceManager;
 use Enhavo\Bundle\CommentBundle\Event\PostCreateCommentEvent;
 use Enhavo\Bundle\CommentBundle\Event\PostPublishCommentEvent;
 use Enhavo\Bundle\CommentBundle\Event\PreCreateCommentEvent;
@@ -18,6 +17,7 @@ use Enhavo\Bundle\CommentBundle\Exception\CommentSubjectException;
 use Enhavo\Bundle\CommentBundle\Model\CommentInterface;
 use Enhavo\Bundle\CommentBundle\Model\CommentSubjectInterface;
 use Enhavo\Bundle\CommentBundle\Model\ThreadInterface;
+use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormFactoryInterface;

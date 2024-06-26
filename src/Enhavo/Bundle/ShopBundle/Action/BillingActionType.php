@@ -2,15 +2,14 @@
 
 namespace Enhavo\Bundle\ShopBundle\Action;
 
-use Enhavo\Bundle\AppBundle\Action\Type\DownloadActionType;
-use Enhavo\Bundle\AppBundle\Button\ButtonInterface;
+use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
+use Enhavo\Bundle\ResourceBundle\Action\Type\DownloadActionType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class BillingActionType extends DownloadActionType
+class BillingActionType extends AbstractActionType
 {
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        parent::configureOptions($resolver);
         $resolver->setDefaults([
             'icon' => 'file_download',
             'label' => 'order.label.billing',
@@ -20,7 +19,12 @@ class BillingActionType extends DownloadActionType
         ]);
     }
 
-    public function getType()
+    public static function getParentType(): ?string
+    {
+        return DownloadActionType::class;
+    }
+
+    public static function getName(): ?string
     {
         return 'shop_billing';
     }

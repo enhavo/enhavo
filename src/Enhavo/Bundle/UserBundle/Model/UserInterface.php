@@ -10,7 +10,7 @@
 namespace Enhavo\Bundle\UserBundle\Model;
 
 use Enhavo\Bundle\AppBundle\Model\Timestampable;
-use Sylius\Component\Resource\Model\ResourceInterface;
+use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface as BaseUserInterface;
 

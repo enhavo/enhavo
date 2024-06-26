@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\ShopBundle\Repository;
 
-use Enhavo\Bundle\AppBundle\Repository\EntityRepository;
+use Enhavo\Bundle\ResourceBundle\Repository\EntityRepository;
 use Enhavo\Bundle\ShopBundle\Model\VoucherInterface;
 
 class VoucherRepository extends EntityRepository

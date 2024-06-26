@@ -8,16 +8,25 @@
 
 namespace Enhavo\Bundle\CommentBundle\Column;
 
-use Enhavo\Bundle\AppBundle\Column\AbstractColumnType;
+use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\CommentBundle\Exception\TypeException;
 use Enhavo\Bundle\CommentBundle\Model\CommentInterface;
+use Enhavo\Bundle\ResourceBundle\Column\AbstractColumnType;
+use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CommentStateColumnType extends AbstractColumnType
 {
-    public function createResourceViewData(array $options, $resource)
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+    )
     {
-        if(!$resource instanceof CommentInterface) {
+    }
+
+    public function createResourceViewData(array $options, ResourceInterface $resource, Data $data): void
+    {
+        if (!$resource instanceof CommentInterface) {
             throw TypeException::createTypeException($resource, CommentInterface::class);
         }
 
@@ -27,33 +36,24 @@ class CommentStateColumnType extends AbstractColumnType
             CommentInterface::STATE_PENDING  => 'orange'
         ];
 
-        $translator = $this->container->get('translator');
-        return [
-            'value' => $translator->trans(sprintf('comment.label.%s', $resource->getState()), [], 'EnhavoCommentBundle'),
-            'color' => $stateMap[$resource->getState()]
-        ];
+
+        $data->set('value', $this->translator->trans(sprintf('comment.label.%s', $resource->getState()), [], 'EnhavoCommentBundle'));
+        $data->set('color', $stateMap[$resource->getState()]);
     }
 
-    public function createColumnViewData(array $options)
+    public function createColumnViewData(array $options, Data $data): void
     {
-        $data = parent::createColumnViewData($options);
-
-        $data = array_merge($data, [
-            'wrap' => true
-        ]);
-
-        return $data;
+        $data->set('wrap', true);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        parent::configureOptions($resolver);
         $resolver->setDefaults([
             'component' => 'column-state',
         ]);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'comment_state';
     }

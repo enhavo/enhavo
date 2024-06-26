@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Event;
 
-use Sylius\Component\Resource\Model\ResourceInterface;
+use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Symfony\Contracts\EventDispatcher\Event;
 
 class ResourceEvent extends Event

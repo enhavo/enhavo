@@ -22,31 +22,23 @@ services:
     Enhavo\Bundle\NewsletterBundle\Menu\NewsletterMainMenu:
         parent: Enhavo\Bundle\AppBundle\Menu\Menu\ListMenu
         tags:
-            - { name: enhavo.menu, alias: newsletter }
+            - { name: enhavo.menu, alias: 'newsletter' }
 
     Enhavo\Bundle\NewsletterBundle\Action\SendActionType:
-        parent: Enhavo\Bundle\AppBundle\Action\AbstractActionType
-        public: true
         tags:
-            - { name: enhavo.action, alias: newsletter_send }
+            - { name: enhavo.action }
 
     Enhavo\Bundle\NewsletterBundle\Action\SendTestActionType:
-        parent: Enhavo\Bundle\AppBundle\Action\Type\ModalActionType
-        public: true
         tags:
-            - { name: enhavo.action, alias: newsletter_send_test }
+            - { name: enhavo.action }
 
     Enhavo\Bundle\NewsletterBundle\Action\StatsActionType:
-        parent: Enhavo\Bundle\AppBundle\Action\Type\OpenActionType
-        public: true
         tags:
-            - { name: enhavo.action, alias: newsletter_stats }
+            - { name: enhavo.action }
 
     Enhavo\Bundle\NewsletterBundle\Action\ActivateActionType:
-        parent: Enhavo\Bundle\AppBundle\Action\Type\UpdateActionType
-        public: true
         tags:
-            - { name: enhavo.action, alias: newsletter_subscriber_activate }
+            - { name: enhavo.action }
 
     Enhavo\Bundle\NewsletterBundle\Block\SubscribeBlockType:
         tags:

@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Tests\Mock;
 
-use Sylius\Component\Resource\Model\ResourceInterface;
+use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 class EntityRepositoryMock implements RepositoryInterface

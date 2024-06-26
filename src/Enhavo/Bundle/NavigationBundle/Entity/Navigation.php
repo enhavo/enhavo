@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\NavigationBundle\Entity;
 
-use Sylius\Component\Resource\Model\ResourceInterface;
+use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 
 class Navigation implements ResourceInterface
 {
@@ -108,7 +108,7 @@ class Navigation implements ResourceInterface
     /**
      * Get nodes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getNodes()
     {

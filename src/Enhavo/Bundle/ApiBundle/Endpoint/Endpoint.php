@@ -33,7 +33,7 @@ class Endpoint extends AbstractContainerType
     public function getResponse(Request $request): Response
     {
         $data = new Data();
-        $context = new Context();
+        $context = new Context($request);
 
         $this->endpointDataCollector->setOptions($this->options);
 

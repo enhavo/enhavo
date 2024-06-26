@@ -3,7 +3,7 @@
 namespace Enhavo\Bundle\ShopBundle\DependencyInjection;
 
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
-use Enhavo\Bundle\AppBundle\Repository\EntityRepository;
+use Enhavo\Bundle\ResourceBundle\Repository\EntityRepository;
 use Enhavo\Bundle\ShopBundle\Entity\UserAddress;
 use Enhavo\Bundle\ShopBundle\Entity\Voucher;
 use Enhavo\Bundle\ShopBundle\Entity\VoucherRedemption;

@@ -3,7 +3,7 @@
 namespace Enhavo\Bundle\SettingBundle\Entity;
 
 use Enhavo\Bundle\SettingBundle\Model\ValueAccessInterface;
-use Sylius\Component\Resource\Model\ResourceInterface;
+use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 
 class Setting implements ResourceInterface
 {

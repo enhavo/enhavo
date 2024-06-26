@@ -55,7 +55,7 @@ services:
             - '@Enhavo\Bundle\TemplateBundle\Template\TemplateManager'
             - '@enhavo_template.factory.template'
             - '@enhavo_template.repository.template'
-            - '@Enhavo\Bundle\AppBundle\Resource\ResourceManager'
+            - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
         calls:
             - [ setContainer, ['@service_container']]
         tags:

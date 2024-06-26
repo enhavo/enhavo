@@ -2,69 +2,45 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Batch;
 
-use Enhavo\Bundle\AppBundle\Batch\AbstractBatchType;
-use Enhavo\Bundle\AppBundle\Batch\Type\FormBatchType;
-use Enhavo\Bundle\AppBundle\Exception\BatchExecutionException;
+use Enhavo\Bundle\ApiBundle\Data\Data;
+use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Bundle\NewsletterBundle\Form\Type\NewsletterEmailType;
-use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager;
-use Sylius\Component\Resource\Model\ResourceInterface;
+use Enhavo\Bundle\ResourceBundle\Batch\AbstractBatchType;
+use Enhavo\Bundle\ResourceBundle\Batch\Type\FormBatchType;
+use Enhavo\Bundle\ResourceBundle\Exception\BatchExecutionException;
+use Enhavo\Bundle\ResourceBundle\Repository\EntityRepositoryInterface;
 use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SendTestBatchType extends AbstractBatchType
 {
-    /** @var NewsletterManager */
-    private $newsletterManager;
-
-    /** @var RequestStack */
-    private $requestStack;
-
-    /** @var TranslatorInterface */
-    private $translator;
-
-    /** @var FormFactoryInterface */
-    private $formFactory;
-
-    /**
-     * SendTestBatchType constructor.
-     * @param NewsletterManager $newsletterManager
-     * @param RequestStack $requestStack
-     * @param TranslatorInterface $translator
-     * @param FormFactoryInterface $formFactory
-     */
-    public function __construct(NewsletterManager $newsletterManager, RequestStack $requestStack, TranslatorInterface $translator, FormFactoryInterface $formFactory)
+    public function __construct(
+        private readonly NewsletterManager $newsletterManager,
+        private readonly TranslatorInterface $translator,
+        private readonly FormFactoryInterface $formFactory
+    )
     {
-        $this->newsletterManager = $newsletterManager;
-        $this->requestStack = $requestStack;
-        $this->translator = $translator;
-        $this->formFactory = $formFactory;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function execute(array $options, array $resources, ?ResourceInterface $resource = null): ?Response
+    public function execute(array $options, array $ids, EntityRepositoryInterface $repository, Data $data, Context $context): void
     {
         $form = $this->formFactory->create(NewsletterEmailType::class);
-        $form->handleRequest($this->requestStack->getMainRequest());
+        $form->handleRequest($context->getRequest());
         if(!$form->isValid()) {
             throw new BatchExecutionException($this->translator->trans('newsletter.batch.error.email', [], 'EnhavoNewsletterBundle'));
         }
 
         $data = $form->getData();
 
-        /** @var NewsletterInterface $resource */
-        foreach($resources as $resource) {
+        foreach ($ids as $id) {
+            $resource = $repository->find($id);
             $this->newsletterManager->sendTest($resource, $data['email']);
         }
-        return null;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'label' => 'newsletter.batch.action.send_test',
