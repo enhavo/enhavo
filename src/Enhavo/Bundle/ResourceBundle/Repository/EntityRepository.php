@@ -8,9 +8,7 @@
 
 namespace Enhavo\Bundle\ResourceBundle\Repository;
 
-use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository as SyliusEntityRepository;
-
-class EntityRepository extends SyliusEntityRepository implements EntityRepositoryInterface
+class EntityRepository extends \Doctrine\ORM\EntityRepository implements FilterRepositoryInterface
 {
-    use EntityRepositoryTrait;
+    use FilterRepositoryTrait;
 }

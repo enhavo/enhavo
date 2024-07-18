@@ -50,3 +50,7 @@ services:
     Enhavo\Bundle\ApiBundle\Twig\ApiProfilerExtension:
         tags:
             - { name: twig.extension }
+
+    Enhavo\Bundle\ApiBundle\Normalizer\DataDataNormalizer:
+        tags:
+            - { name: enhavo_api.data_normalizer }

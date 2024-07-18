@@ -39,4 +39,9 @@ class VueRoutesEndpointType extends AbstractEndpointType
             'groups' => null,
         ]);
     }
+
+    public static function getName(): ?string
+    {
+        return 'vue_routes';
+    }
 }

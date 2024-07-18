@@ -20,7 +20,7 @@ class ArticleMenuType extends BaseMenu
             'icon' => 'book',
             'label' => 'article.label.article',
             'translation_domain' => 'EnhavoArticleBundle',
-            'route' => 'enhavo_article_article_index',
+            'route' => 'enhavo_article_admin_article_index',
             'role' => 'ROLE_ENHAVO_ARTICLE_ARTICLE_INDEX'
         ]);
     }

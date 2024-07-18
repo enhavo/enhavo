@@ -13,26 +13,38 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class FilterQueryFactory
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    private $em;
-
-    /**
-     * FilterQueryFactory constructor.
-     * @param EntityManagerInterface $em
-     */
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(
+        private EntityManagerInterface $em
+    )
     {
-        $this->em = $em;
     }
 
-    /**
-     * @param string $class
-     * @return FilterQuery
-     */
-    public function create($class)
+    public function create($class, array $filters = [], $criteria = [], $sorting = [], $paginated = false)
     {
-        return new FilterQuery($this->em, $class);
+        $filterQuery = new FilterQuery($this->em, $class);
+
+        foreach ($sorting as $property => $order) {
+            $propertyPath = explode('.', $property);
+            $topProperty = array_pop($propertyPath);
+            $filterQuery->addOrderBy($topProperty, $order, $propertyPath);
+        }
+
+        foreach ($criteria as $property => $value) {
+            if (is_array($value)) {
+                $filterQuery->addWhere($property, FilterQuery::OPERATOR_IN, $value);
+            } else {
+                $filterQuery->addWhere($property, FilterQuery::OPERATOR_EQUALS, $value);
+            }
+        }
+
+        foreach ($filters as $filter) {
+            $filter->buildQuery($filterQuery);
+        }
+
+        $filterQuery->setHydrate(FilterQuery::HYDRATE_OBJECT);
+        $filterQuery->setPaginated($paginated);
+
+        return $filterQuery;
     }
+
 }

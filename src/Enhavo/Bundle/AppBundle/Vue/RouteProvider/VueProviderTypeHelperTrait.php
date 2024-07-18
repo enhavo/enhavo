@@ -10,6 +10,10 @@ trait VueProviderTypeHelperTrait
             return true;
         }
 
+        if (isset($options['groups']) && $options['groups'] === true) {
+            return true;
+        }
+
         $groups = match (gettype($options['groups'])) {
             'array' => $options['groups'],
             'string' => [$options['groups']],

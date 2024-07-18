@@ -3,9 +3,9 @@
 namespace Enhavo\Bundle\NewsletterBundle\Action;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
+use Enhavo\Bundle\AppBundle\Action\Type\UpdateActionType;
 use Enhavo\Bundle\NewsletterBundle\Entity\PendingSubscriber;
 use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
-use Enhavo\Bundle\ResourceBundle\Action\Type\UpdateActionType;
 use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;

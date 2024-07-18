@@ -20,10 +20,6 @@ class RoutingVueRouteProviderType extends AbstractType implements VueRouteProvid
 
     public function getRoutes($options, array|string|null $groups = null): array
     {
-        if (!$this->isGroupSelected($options, $groups)) {
-            return [];
-        }
-
         $this->load($options);
         return $this->routes;
     }
@@ -76,7 +72,7 @@ class RoutingVueRouteProviderType extends AbstractType implements VueRouteProvid
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'groups' => null,
+            'groups' => true,
         ]);
     }
 }

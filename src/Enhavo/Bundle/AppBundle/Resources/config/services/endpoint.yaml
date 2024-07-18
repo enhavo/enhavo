@@ -39,9 +39,25 @@ services:
             - { name: enhavo_api.endpoint }
             - { name: container.service_subscriber }
 
+    Enhavo\Bundle\AppBundle\Endpoint\Type\AdminEndpointType:
+        calls:
+            - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
     Enhavo\Bundle\AppBundle\Endpoint\Type\VueRoutesEndpointType:
         arguments:
             - '@Enhavo\Bundle\AppBundle\Vue\RouteProvider\VueRouteProviderInterface'
+        calls:
+            - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\AppBundle\Endpoint\Type\RoutesEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\AppBundle\Routing\RouteCollectorInterface'
         calls:
             - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
         tags:

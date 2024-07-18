@@ -2,10 +2,10 @@
 
 namespace Enhavo\Bundle\ResourceBundle\Batch;
 
+use Doctrine\ORM\EntityRepository;
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Bundle\ResourceBundle\Batch\Type\BaseBatchType;
-use Enhavo\Bundle\ResourceBundle\Repository\EntityRepositoryInterface;
 use Enhavo\Component\Type\AbstractType;
 
 /**
@@ -13,7 +13,7 @@ use Enhavo\Component\Type\AbstractType;
  */
 abstract class AbstractBatchType extends AbstractType implements BatchTypeInterface
 {
-    public function execute(array $options, array $ids, EntityRepositoryInterface $repository, Data $data, Context $context): void
+    public function execute(array $options, array $ids, EntityRepository $repository, Data $data, Context $context): void
     {
         $this->parent->execute($options, $ids, $repository, $data, $context);
     }
@@ -28,7 +28,7 @@ abstract class AbstractBatchType extends AbstractType implements BatchTypeInterf
         return BaseBatchType::class;
     }
 
-    public function getPermission(array $options, EntityRepositoryInterface $repository): mixed
+    public function getPermission(array $options, EntityRepository $repository): mixed
     {
         return $this->parent->getPermission($options, $repository);
     }

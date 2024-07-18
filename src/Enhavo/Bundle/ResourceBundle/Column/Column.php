@@ -9,45 +9,53 @@
 namespace Enhavo\Bundle\ResourceBundle\Column;
 
 
+use Enhavo\Bundle\ApiBundle\Data\Data;
+use Enhavo\Bundle\ResourceBundle\Filter\FilterQuery;
+use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
+use Enhavo\Component\Type\AbstractContainerType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class Column
+/**
+ * @property ColumnTypeInterface $type
+ * @property ColumnTypeInterface[] $parents
+ */
+class Column extends AbstractContainerType
 {
-    /**
-     * @var ColumnTypeInterface
-     */
-    private $type;
-
-    /**
-     * @var array
-     */
-    private $options;
-
-    /**
-     * Column constructor.
-     * @param ColumnTypeInterface $type
-     * @param $options
-     */
-    public function __construct(ColumnTypeInterface $type, $options)
+    public function createColumnViewData(): array
     {
-        $this->type = $type;
-        $resolver = new OptionsResolver();
-        $this->type->configureOptions($resolver);
-        $this->options = $resolver->resolve($options);
+        $data = new Data();
+        $data->set('key', $this->key);
+
+        foreach ($this->parents as $parent) {
+            $parent->createColumnViewData($this->options, $data);
+        }
+
+        $this->type->createColumnViewData($this->options, $data);
+
+        return $data->normalize();
     }
 
-    public function createColumnViewData()
+    public function createResourceViewData(ResourceInterface $resource): array
     {
-        return $this->type->createColumnViewData($this->options);
+        $data = new Data();
+        $data->set('key', $this->key);
+
+        foreach ($this->parents as $parent) {
+            $parent->createResourceViewData($this->options, $resource, $data);
+        }
+
+        $this->type->createResourceViewData($this->options, $resource, $data);
+
+        return $data->normalize();
     }
 
-    public function createResourceViewData($resource)
+    public function getPermission(): mixed
     {
-        return $this->type->createResourceViewData($this->options, $resource);
+        return $this->type->getPermission($this->options);
     }
 
-    public function getPermission()
+    public function isEnabled(): bool
     {
-        return isset($this->options['permission']) ? $this->options['permission'] : null;
+        return $this->type->isEnabled($this->options);
     }
 }

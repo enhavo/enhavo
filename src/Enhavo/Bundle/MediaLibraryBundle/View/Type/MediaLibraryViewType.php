@@ -18,8 +18,8 @@ class MediaLibraryViewType extends AbstractViewType
     const MODE_EDIT = 'edit';
 
     public function __construct(
-        private ActionManager $actionManager,
-        private ViewUtil $util,
+        private ActionManager       $actionManager,
+        private ViewUtil            $util,
         private TranslatorInterface $translator
     ) {}
 

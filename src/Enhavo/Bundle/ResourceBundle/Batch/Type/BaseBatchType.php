@@ -2,9 +2,9 @@
 
 namespace Enhavo\Bundle\ResourceBundle\Batch\Type;
 
+use Doctrine\ORM\EntityRepository;
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ResourceBundle\Batch\AbstractBatchType;
-use Enhavo\Bundle\ResourceBundle\Repository\EntityRepositoryInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -37,14 +37,14 @@ class BaseBatchType extends AbstractBatchType
         return null;
     }
 
-    public function getPermission(array $options, EntityRepositoryInterface $repository): mixed
+    public function getPermission(array $options, EntityRepository $repository): mixed
     {
         return $options['permission'];
     }
 
     public function isEnabled(array $options): bool
     {
-        return $options['hidden'];
+        return $options['enabled'];
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -53,7 +53,7 @@ class BaseBatchType extends AbstractBatchType
             'permission'  => null,
             'position'  => 0,
             'translation_domain' => null,
-            'hidden' => false,
+            'enabled' => true,
             'confirm_message' => null,
             'component' => 'batch-url',
             'route' => null,

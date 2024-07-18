@@ -4,89 +4,21 @@ services:
             - '@security.authorization_checker'
             - '@Enhavo\Component\Type\FactoryInterface[Action]'
 
-    Enhavo\Bundle\ResourceBundle\Action\ActionLanguageExpression:
-        arguments:
-            - '@sylius.expression_language'
-        calls:
-            - [ 'addVariable', [ 'authorizationChecker', '@security.authorization_checker' ] ]
-            - [ 'addVariable', [ 'tokenStorage', '@security.token_storage' ] ]
-            - [ 'addVariable', [ 'requestStack', '@request_stack' ] ]
-
     Enhavo\Bundle\ResourceBundle\Action\Type\BaseActionType:
         arguments:
             - '@translator'
-            - '@Enhavo\Bundle\ResourceBundle\Action\ActionLanguageExpression'
+            - '@Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage'
         tags:
             - { name: enhavo_resource.action }
 
-#
-#    Enhavo\Bundle\AppBundle\Action\Type\CreateActionType:
-#        parent: Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType
-#        tags:
-#            - { name: enhavo.action }
-#
-#    Enhavo\Bundle\AppBundle\Action\Type\DownloadActionType:
-#        parent: Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType
-#        tags:
-#            - { name: enhavo.action }
-#
-#    Enhavo\Bundle\AppBundle\Action\Type\OpenActionType:
-#        parent: Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType
-#        tags:
-#            - { name: enhavo.action }
-#
-#    Enhavo\Bundle\AppBundle\Action\Type\DeleteActionType:
-#        arguments:
-#            - '@security.csrf.token_manager'
-#        tags:
-#            - { name: enhavo.action }
-#
-#    Enhavo\Bundle\AppBundle\Action\Type\CloseActionType:
-#        tags:
-#            - { name: enhavo.action }
-#
-#    Enhavo\Bundle\AppBundle\Action\Type\PreviewActionType:
-#        tags:
-#            - { name: enhavo.action }
-#
-#    Enhavo\Bundle\AppBundle\Action\Type\SaveActionType:
-#        tags:
-#            - { name: enhavo.action }
-#
-#    Enhavo\Bundle\AppBundle\Action\Type\DuplicateActionType:
-#        tags:
-#            - { name: enhavo.action }
-#
-#    Enhavo\Bundle\AppBundle\Action\Type\EventActionType:
-#        tags:
-#            - { name: enhavo.action }
-#
-#    Enhavo\Bundle\AppBundle\Action\Type\FormActionType:
-#        tags:
-#            - { name: enhavo.action }
-#
-    Enhavo\Bundle\ResourceBundle\Action\Type\FilterActionType:
+    Enhavo\Bundle\ResourceBundle\Action\Type\UrlActionType:
+        arguments:
+            - '@router'
         tags:
             - { name: enhavo_resource.action }
-#
-#    Enhavo\Bundle\AppBundle\Action\Type\UpdateActionType:
-#        tags:
-#            - { name: enhavo.action }
-#
-#    Enhavo\Bundle\AppBundle\Action\Type\TransitionActionType:
-#        tags:
-#            - { name: enhavo.action }
-#
-#    Enhavo\Bundle\AppBundle\Action\Type\ModalActionType:
-#        tags:
-#            - { name: enhavo.action }
-#
-#    Enhavo\Bundle\AppBundle\Action\Type\OutputStreamActionType:
-#        tags:
-#            - { name: enhavo.action }
-#
-#    Enhavo\Bundle\AppBundle\Action\Type\DropdownActionType:
-#        arguments:
-#            - '@enhavo_app.action_manager'
-#        tags:
-#            - { name: enhavo.action }
+
+    Enhavo\Bundle\ResourceBundle\Action\Type\SaveActionType:
+        arguments:
+            - '@router'
+        tags:
+            - { name: enhavo.action }

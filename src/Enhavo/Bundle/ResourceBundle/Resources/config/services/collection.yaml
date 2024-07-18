@@ -1,0 +1,14 @@
+services:
+    Enhavo\Bundle\ResourceBundle\Collection\TableCollection:
+        arguments:
+            - '@Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage'
+            - '@Enhavo\Bundle\ResourceBundle\Filter\FilterQueryFactory'
+            - '@request_stack'
+        tags:
+            - { name: enhavo_resource.collection }
+
+    Enhavo\Bundle\ResourceBundle\Collection\ListCollection:
+        tags:
+            - { name: enhavo_resource.collection }
+
+    Enhavo\Bundle\ResourceBundle\Collection\CollectionFactory:
