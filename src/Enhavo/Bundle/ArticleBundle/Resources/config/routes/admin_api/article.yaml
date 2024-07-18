@@ -1,12 +1,44 @@
-enhavo_article_admin_api_article_grid:
-    path: /article/grid
+enhavo_article_admin_api_article_index:
+    path: /article/index
     methods: [GET]
     defaults:
         _expose: admin_api
         _endpoint:
-            type: resource_grid
+            type: resource_index
             grid: enhavo_article.article
-            actions:
-                filter:
-                    type: filter
-                    label: Test
+
+enhavo_article_admin_api_article_list:
+    path: /article/list
+    methods: [GET]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_list
+            grid: enhavo_article.article
+
+enhavo_article_admin_api_article_create:
+    path: /article/create
+    methods: [GET, PUT]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_create
+            input: enhavo_article.article
+
+enhavo_article_admin_api_article_update:
+    path: /article/update/{id}
+    methods: [GET, POST]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_update
+            input: enhavo_article.article
+
+enhavo_article_admin_api_article_delete:
+    path: /article/delete/{id}
+    methods: [DELETE]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_delete
+            input: enhavo_article.article

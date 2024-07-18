@@ -2,8 +2,8 @@
 
 namespace Enhavo\Bundle\ShopBundle\Action;
 
+use Enhavo\Bundle\AppBundle\Action\Type\DownloadActionType;
 use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
-use Enhavo\Bundle\ResourceBundle\Action\Type\DownloadActionType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PackingSlipActionType extends AbstractActionType

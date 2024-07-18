@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\ResourceBundle\Input;
 
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 interface InputInterface
@@ -9,4 +10,10 @@ interface InputInterface
     public function setOptions($options): void;
 
     public function configureOptions(OptionsResolver $resolver): void;
+
+    public function getForm(array $context = []): ?FormInterface;
+
+    public function getResource(array $context = []): ?object;
+
+    public function getViewData(array $context = []): array;
 }

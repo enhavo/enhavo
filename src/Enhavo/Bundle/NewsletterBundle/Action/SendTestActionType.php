@@ -2,8 +2,8 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Action;
 
+use Enhavo\Bundle\AppBundle\Action\Type\ModalActionType;
 use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
-use Enhavo\Bundle\ResourceBundle\Action\Type\ModalActionType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SendTestActionType extends AbstractActionType

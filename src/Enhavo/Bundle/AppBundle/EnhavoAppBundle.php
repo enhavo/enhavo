@@ -48,10 +48,6 @@ class EnhavoAppBundle extends Bundle
         );
 
         $container->addCompilerPass(
-            new \Enhavo\Component\Type\TypeCompilerPass('Batch', 'enhavo_app.batch', Batch::class)
-        );
-
-        $container->addCompilerPass(
             new \Enhavo\Component\Type\TypeCompilerPass('View', 'enhavo_app.view', View::class)
         );
 

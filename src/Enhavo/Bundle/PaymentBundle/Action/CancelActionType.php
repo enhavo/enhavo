@@ -2,8 +2,8 @@
 
 namespace Enhavo\Bundle\PaymentBundle\Action;
 
+use Enhavo\Bundle\AppBundle\Action\Type\TransitionActionType;
 use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
-use Enhavo\Bundle\ResourceBundle\Action\Type\TransitionActionType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CancelActionType extends AbstractActionType

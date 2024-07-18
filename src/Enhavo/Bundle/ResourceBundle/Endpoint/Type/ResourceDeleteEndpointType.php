@@ -11,7 +11,6 @@ namespace Enhavo\Bundle\ResourceBundle\Endpoint\Type;
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\AppBundle\Controller\AppEventDispatcher;
-use Enhavo\Bundle\AppBundle\View\AbstractViewType;
 use Enhavo\Bundle\AppBundle\View\ResourceMetadataHelperTrait;
 use Enhavo\Bundle\AppBundle\View\TemplateData;
 use Enhavo\Bundle\AppBundle\View\ViewData;
@@ -70,25 +69,7 @@ class ResourceDeleteEndpointType extends AbstractEndpointType
     {
         $configuration = $this->getRequestConfiguration($options);
 
-        $event = $this->eventDispatcher->dispatchPreEvent(ResourceActions::DELETE, $configuration, $this->resource);
-        if ($event->isStopped()) {
-            if ($event->getResponse()) {
-                return $event->getResponse();
-            }
-            throw new HttpException($event->getErrorCode(), $event->getMessage());
-        }
-
         $this->resourceManager->delete($this->resource);
-
-        $event = $this->eventDispatcher->dispatchPostEvent(ResourceActions::DELETE, $configuration, $this->resource);
-        if ($event->isStopped()) {
-            if ($event->getResponse()) {
-                return $event->getResponse();
-            }
-            throw new HttpException($event->getErrorCode(), $event->getMessage());
-        }
-
-        $this->flashHelper->addFlashFromEvent($configuration, $event);
     }
 
     public function createViewData($options, ViewData $data)

@@ -2,9 +2,9 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Action;
 
-use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
+use Enhavo\Bundle\AppBundle\Action\Type\OpenActionType;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
-use Enhavo\Bundle\ResourceBundle\Action\Type\OpenActionType;
+use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class StatsActionType extends AbstractActionType

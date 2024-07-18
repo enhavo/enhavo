@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\ResourceBundle\Column;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
+use Enhavo\Bundle\ResourceBundle\Column\Type\BaseColumnType;
 use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Enhavo\Component\Type\AbstractType;
 
@@ -23,11 +24,16 @@ abstract class AbstractColumnType extends AbstractType implements ColumnTypeInte
 
     public function getPermission(array $options): mixed
     {
-        $this->parent->getPermission($options);
+        return $this->parent->getPermission($options);
     }
 
     public function isEnabled(array $options): bool
     {
-        $this->parent->isEnabled($options);
+        return $this->parent->isEnabled($options);
+    }
+
+    public static function getParentType(): ?string
+    {
+        return BaseColumnType::class;
     }
 }

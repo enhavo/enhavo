@@ -9,15 +9,18 @@
 namespace Enhavo\Bundle\ResourceBundle\Column\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
-use Enhavo\Bundle\ResourceBundle\Column\AbstractColumnType;
+use Enhavo\Bundle\ResourceBundle\Column\ColumnTypeInterface;
+use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage;
 use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
+use Enhavo\Component\Type\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class BaseColumnType extends AbstractColumnType
+class BaseColumnType extends AbstractType implements ColumnTypeInterface
 {
     public function __construct(
         private readonly TranslatorInterface $translator,
+        private readonly ResourceExpressionLanguage $expressionLanguage,
     )
     {
     }
@@ -38,12 +41,12 @@ class BaseColumnType extends AbstractColumnType
 
     public function getPermission(array $options): mixed
     {
-        return $options['permission'];
+        return $this->expressionLanguage->evaluate($options['permission']);
     }
 
     public function isEnabled(array $options): bool
     {
-        return $options['enabled'];
+        return $this->expressionLanguage->evaluate($options['enabled']);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -54,7 +57,8 @@ class BaseColumnType extends AbstractColumnType
             'width' => 1,
             'sortable' => false,
             'condition' => null,
-            'permission' => null
+            'permission' => null,
+            'enabled' => true,
         ]);
     }
 

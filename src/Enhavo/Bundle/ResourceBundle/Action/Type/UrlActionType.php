@@ -14,7 +14,7 @@ use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
 
-abstract class UrlActionType extends AbstractActionType
+class UrlActionType extends AbstractActionType
 {
     public function __construct(
         private readonly RouterInterface $router

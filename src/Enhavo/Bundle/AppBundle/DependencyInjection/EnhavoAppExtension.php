@@ -48,6 +48,7 @@ class EnhavoAppExtension extends Extension implements PrependExtensionInterface
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
+        $loader->load('services/action.yaml');
         $loader->load('services/area.yaml');
         $loader->load('services/services.yaml');
         $loader->load('services/controller.yaml');

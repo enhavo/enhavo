@@ -8,16 +8,16 @@
 
 namespace Enhavo\Bundle\ShopBundle\Repository;
 
-use Enhavo\Bundle\ResourceBundle\Repository\EntityRepositoryInterface;
-use Enhavo\Bundle\ResourceBundle\Repository\EntityRepositoryTrait;
+use Enhavo\Bundle\ResourceBundle\Repository\FilterRepositoryInterface;
+use Enhavo\Bundle\ResourceBundle\Repository\FilterRepositoryTrait;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Enhavo\Bundle\ShopBundle\State\OrderCheckoutStates;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Sylius\Bundle\OrderBundle\Doctrine\ORM\OrderRepository as SyliusOrderRepository;
 
-class OrderRepository extends SyliusOrderRepository implements EntityRepositoryInterface
+class OrderRepository extends SyliusOrderRepository implements FilterRepositoryInterface
 {
-    use EntityRepositoryTrait;
+    use FilterRepositoryTrait;
 
     public function findLastNumber(): OrderInterface
     {

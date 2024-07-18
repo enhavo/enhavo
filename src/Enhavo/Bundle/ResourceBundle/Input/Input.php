@@ -2,43 +2,165 @@
 
 namespace Enhavo\Bundle\ResourceBundle\Input;
 
-use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
+use Enhavo\Bundle\ResourceBundle\Action\Action;
+use Enhavo\Bundle\ResourceBundle\Tab\Tab;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class Input extends AbstractInput
+class Input extends AbstractInput implements InputMergeInterface
 {
-    public function getActionViewData(ResourceInterface $resource = null, array $configuration = []): array
-    {
-        $actions = $this->getActions($this->mergeArray($this->options['actions'], $configuration));
-        $data = [];
-        foreach($actions as $action) {
-            $data[] = $action->createViewData($resource);
-        }
-        return $data;
-    }
-
-    public function getActionSecondaryViewData(ResourceInterface $resource = null, array $configuration = []): array
-    {
-        $actions = $this->getActions($this->options['actions_secondary']);
-        $data = [];
-        foreach($actions as $action) {
-            $data[] = $action->createViewData($resource);
-        }
-        return $data;
-    }
+    /** @var Action[]|null  */
+    private ?array $actions = null;
+    /** @var Tab[]|null  */
+    private ?array $tabs = null;
+    private ?array $actionsSecondary = null;
+    private ?FormInterface $form = null;
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'actions' => [],
             'actions_secondary' => [],
+            'tabs' => [],
+            'form' => null,
+            'form_options' => [],
+            'factory_method' => 'createNew',
+            'factory_arguments' => [],
+            'repository_method' => 'find',
+            'repository_arguments' => [
+                'expr:request.get("id")'
+            ]
         ]);
 
         $resolver->setRequired('resource');
     }
 
-    private function mergeArray($array1, $array2): array
+    public static function mergeOptions($before, $current): array
     {
-        return [];
+        $mergeKeys = [
+            'actions',
+            'actions_secondary',
+        ];
+
+        foreach ($current as $key) {
+            if (array_key_exists($key, $mergeKeys)) {
+                if (is_array($before[$key])) {
+                    $before[$key] = array_merge($before[$key], $current[$key]);
+                } else {
+                    $before[$key] = $current[$key];
+                }
+            } else {
+                $before[$key] = $current[$key];
+            }
+        }
+
+        return $before;
+    }
+
+    protected function getActions(): array
+    {
+        if ($this->actions !== null) {
+            return $this->actions;
+        }
+
+        $this->actions = $this->createActions($this->options['actions']);
+
+        return $this->actions;
+    }
+
+    /** @return Tab[] */
+    protected function getTabs(): array
+    {
+        if ($this->tabs !== null) {
+            return $this->tabs;
+        }
+
+        $this->tabs = $this->createTabs($this->options['tabs']);
+
+        return $this->tabs;
+    }
+
+    protected function getActionsSecondary(): array
+    {
+        if ($this->actionsSecondary !== null) {
+            return $this->actionsSecondary;
+        }
+
+        $this->actionsSecondary = $this->createActions($this->options['actions_secondary']);
+
+        return $this->actionsSecondary;
+    }
+
+    protected function getActionViewData(): array
+    {
+        $data = [];
+        foreach ($this->getActions() as $action) {
+            $data[] = $action->createViewData();
+        }
+        return $data;
+    }
+
+    protected function getActionsSecondaryViewData(): array
+    {
+        $data = [];
+        foreach ($this->getActionsSecondary() as $action) {
+            $data[] = $action->createViewData();
+        }
+        return $data;
+    }
+
+    public function getResourceName(): string
+    {
+        return $this->options['resource'];
+    }
+
+    public function getResource(array $context = []): object
+    {
+        $callable = [$this->getRepository($this->getResourceName()), $this->options['repository_method']];
+        $arguments = $this->evaluateArray($this->options['repository_arguments'], [
+            'request' => $this->getRequest(),
+            'context' => $context,
+        ]);
+        return call_user_func_array($callable, $arguments);
+    }
+
+    public function createResource(array $context = []): object
+    {
+        $callable = [$this->getFactory($this->getResourceName()), $this->options['factory_method']];
+        $arguments = $this->evaluateArray($this->options['factory_arguments'], [
+            'request' => $this->getRequest(),
+            'context' => $context,
+        ]);
+        return call_user_func_array($callable, $arguments);
+    }
+
+    protected function getTabsViewData(): array
+    {
+        $data = [];
+        foreach ($this->getTabs() as $key => $tab) {
+            $data[$key] = $tab->createViewData($this);
+        }
+        return $data;
+    }
+
+    public function getViewData(array $context = []): array
+    {
+        return [
+            'actions' => $this->getActionViewData(),
+            'actionsSecondary' => $this->getActionsSecondaryViewData(),
+            'tabs' => $this->getTabsViewData(),
+        ];
+    }
+
+    public function getForm(array $context = []): ?FormInterface
+    {
+        if ($this->form !== null) {
+            return $this->form;
+        } else if ($this->options['form']) {
+            $this->form = $this->createForm($this->options['form'], null, $this->options['form_options']);
+            return $this->form;
+        }
+
+        return null;
     }
 }
