@@ -31,6 +31,8 @@ class TextType extends AbstractFilterType
             'operator' => FilterQuery::OPERATOR_LIKE,
             'component' => 'filter-text'
         ]);
+
+        $resolver->setRequired('property');
     }
 
     public static function getName(): ?string

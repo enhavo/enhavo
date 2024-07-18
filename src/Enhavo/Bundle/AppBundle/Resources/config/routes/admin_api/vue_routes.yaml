@@ -1,0 +1,6 @@
+enhavo_app_admin_vue_routes:
+    path: /vue_routes
+    defaults:
+        _endpoint:
+            type: vue_routes
+            groups: admin

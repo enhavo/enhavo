@@ -23,17 +23,17 @@ class ChangePasswordEndpointTypeResource extends ResourceUpdateEndpointType
     private TokenStorageInterface $tokenStorage;
 
     public function __construct(
-        array $formThemes,
-        ActionManager $actionManager,
-        RequestStack $requestStack,
-        ViewUtil $util,
-        RouterInterface $router,
-        TranslatorInterface $translator,
-        ResourceManager $resourceManager,
-        GridManager $gridManager,
-        ResourceFormFactoryInterface $resourceFormFactory,
-        NormalizerInterface $normalizer,
-        EventDispatcherInterface $eventDispatcher,
+        array                           $formThemes,
+        ActionManager                   $actionManager,
+        RequestStack                    $requestStack,
+        ViewUtil                        $util,
+        RouterInterface                 $router,
+        TranslatorInterface             $translator,
+        ResourceManager                 $resourceManager,
+        GridManager                     $gridManager,
+        ResourceFormFactoryInterface    $resourceFormFactory,
+        NormalizerInterface             $normalizer,
+        EventDispatcherInterface        $eventDispatcher,
         SingleResourceProviderInterface $singleResourceProvider,
         TokenStorageInterface $tokenStorage,
     )

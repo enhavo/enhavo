@@ -3,11 +3,11 @@
 namespace Enhavo\Bundle\ContentBundle\Batch;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Bundle\ContentBundle\Content\Publishable;
 use Enhavo\Bundle\ResourceBundle\Batch\AbstractBatchType;
-use Enhavo\Bundle\ResourceBundle\Repository\EntityRepositoryInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PublishBatchType extends AbstractBatchType
@@ -18,7 +18,7 @@ class PublishBatchType extends AbstractBatchType
     {
     }
 
-    public function execute(array $options, array $ids, EntityRepositoryInterface $repository, Data $data, Context $context): void
+    public function execute(array $options, array $ids, EntityRepository $repository, Data $data, Context $context): void
     {
         foreach ($ids as $id) {
             $resource = $repository->find($id);

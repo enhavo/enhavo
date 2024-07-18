@@ -9,8 +9,8 @@
 namespace Enhavo\Bundle\ResourceBundle\Action\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
-use Enhavo\Bundle\ResourceBundle\Action\ActionLanguageExpression;
 use Enhavo\Bundle\ResourceBundle\Action\ActionTypeInterface;
+use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage;
 use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Enhavo\Component\Type\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -20,7 +20,7 @@ class BaseActionType extends AbstractType implements ActionTypeInterface
 {
     public function __construct(
         private readonly TranslatorInterface $translator,
-        private readonly ActionLanguageExpression $actionLanguageExpression,
+        private readonly ResourceExpressionLanguage $expressionLanguage,
     )
     {
     }
@@ -40,26 +40,18 @@ class BaseActionType extends AbstractType implements ActionTypeInterface
 
     public function isEnabled(array $options, ResourceInterface $resource = null): bool
     {
-        if (!$options['enabled'] === false && $options['condition']) {
-            $enabled = !$this->actionLanguageExpression->evaluate($options['condition'], [
-                'resource' => $resource,
-                'action' => $this
-            ]);
-        } else if (preg_match('/^exp:/', $options['enabled'])) {
-            $enabled = $this->actionLanguageExpression->evaluate(substr($options['enabled'], 4), [
-                'resource' => $resource,
-                'action' => $this
-            ]);
-        } else {
-            $enabled = $options['enabled'];
-        }
-
-        return $enabled;
+        return $this->expressionLanguage->evaluate($options['enabled'], [
+            'resource' => $resource,
+            'action' => $this
+        ]);
     }
 
     public function getPermission(array $options, ResourceInterface $resource = null): mixed
     {
-        return $options['permission'];
+        return $this->expressionLanguage->evaluate($options['permission'], [
+            'resource' => $resource,
+            'action' => $this
+        ]);
     }
 
     public function getLabel(array $options): string
@@ -73,7 +65,6 @@ class BaseActionType extends AbstractType implements ActionTypeInterface
             'translation_domain' => null,
             'permission' => null,
             'enabled' => true,
-            'condition' => null,
             'confirm' => false,
             'confirm_changes' => true,
             'confirm_message' => 'message.close.confirm',

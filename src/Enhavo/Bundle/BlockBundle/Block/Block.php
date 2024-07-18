@@ -12,11 +12,11 @@ use Enhavo\Bundle\AppBundle\View\ViewData;
 use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
 use Enhavo\Component\Type\AbstractContainerType;
 
+/**
+ * @property BlockTypeInterface $type
+ */
 class Block extends AbstractContainerType
 {
-    /** @var BlockTypeInterface */
-    protected $type;
-
     public function getModel()
     {
         return $this->type->getModel($this->options);

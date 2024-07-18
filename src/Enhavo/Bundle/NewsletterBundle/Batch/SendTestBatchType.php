@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Batch;
 
+use Doctrine\ORM\EntityRepository;
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Bundle\NewsletterBundle\Form\Type\NewsletterEmailType;
@@ -9,7 +10,6 @@ use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager;
 use Enhavo\Bundle\ResourceBundle\Batch\AbstractBatchType;
 use Enhavo\Bundle\ResourceBundle\Batch\Type\FormBatchType;
 use Enhavo\Bundle\ResourceBundle\Exception\BatchExecutionException;
-use Enhavo\Bundle\ResourceBundle\Repository\EntityRepositoryInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -24,7 +24,7 @@ class SendTestBatchType extends AbstractBatchType
     {
     }
 
-    public function execute(array $options, array $ids, EntityRepositoryInterface $repository, Data $data, Context $context): void
+    public function execute(array $options, array $ids, EntityRepository $repository, Data $data, Context $context): void
     {
         $form = $this->formFactory->create(NewsletterEmailType::class);
         $form->handleRequest($context->getRequest());

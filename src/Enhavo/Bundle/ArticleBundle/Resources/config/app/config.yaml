@@ -80,7 +80,7 @@ enhavo_resource:
     resources:
         enhavo_article.article:
             classes:
-                model: Enhavo\Bundle\ArticleBundle\Model\Article
+                model: Enhavo\Bundle\ArticleBundle\Entity\Article
     grids:
         enhavo_article.article:
             class: Enhavo\Bundle\ResourceBundle\Grid\Grid
@@ -88,7 +88,48 @@ enhavo_resource:
             actions:
                 filter:
                     type: filter
+            filters:
+                title:
+                    type: text
+                    property: title
+                    label: Text
+            columns:
+                title:
+                    type: label
+                    property: title
+            batches:
+                delete:
+                    type: delete
+
     inputs:
         enhavo_article.article:
             class: Enhavo\Bundle\ResourceBundle\Input\Input
             resource: enhavo_article.article
+            form: Enhavo\Bundle\ArticleBundle\Form\Type\ArticleType
+            tabs:
+                main:
+                    type: form
+                    label: article.label.article
+                    translation_domain: EnhavoArticleBundle
+                    arrangement: |
+                        link
+                        title
+                        teaser
+                        picture
+                        categories
+                        tags
+                        publication_date
+                        published_until
+                        public
+                content:
+                    type: form
+                    label: article.label.content
+                    translation_domain: EnhavoArticleBundle
+                meta:
+                    type: form
+                    label: article.label.meta
+                    translation_domain: EnhavoArticleBundle
+            actions:
+                preview:
+                    type: preview
+                    route: enhavo_article_admin_article_preview

@@ -29,11 +29,11 @@ class ImageCropperViewType extends AbstractViewType
     use ResourceMetadataHelperTrait;
 
     public function __construct(
-        private ViewUtil $util,
-        private ActionManager $actionManager,
-        private RequestStack $requestStack,
-        private ImageCropperManager $imageCropperManager,
-        private MediaManager $mediaManager,
+        private ViewUtil              $util,
+        private ActionManager         $actionManager,
+        private RequestStack          $requestStack,
+        private ImageCropperManager   $imageCropperManager,
+        private MediaManager          $mediaManager,
         private UrlGeneratorInterface $urlGenerator
     ) {
     }

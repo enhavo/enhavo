@@ -22,9 +22,9 @@ class GarbageCollector implements GarbageCollectorInterface
 
     public function __construct(
         private EntityManagerInterface $entityManager,
-        private EntityRepository $fileRepository,
-        protected bool $enabled,
-        protected int $maxItemsPerRun,
+        private EntityRepository       $fileRepository,
+        protected bool                 $enabled,
+        protected int                  $maxItemsPerRun,
     ) {}
 
     /**

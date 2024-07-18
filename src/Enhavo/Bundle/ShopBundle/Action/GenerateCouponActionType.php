@@ -3,8 +3,8 @@
 
 namespace Enhavo\Bundle\ShopBundle\Action;
 
+use Enhavo\Bundle\AppBundle\Action\Type\FormActionType;
 use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
-use Enhavo\Bundle\ResourceBundle\Action\Type\FormActionType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class GenerateCouponActionType extends AbstractActionType

@@ -3,8 +3,8 @@
 
 namespace Enhavo\Bundle\ShopBundle\Action;
 
+use Enhavo\Bundle\AppBundle\Action\Type\OpenActionType;
 use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
-use Enhavo\Bundle\ResourceBundle\Action\Type\OpenActionType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class GenerateVariantActionType extends AbstractActionType

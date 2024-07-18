@@ -8,11 +8,11 @@
 
 namespace Enhavo\Bundle\MediaBundle\Form\Type;
 
+use Doctrine\ORM\EntityRepository;
 use Enhavo\Bundle\FormBundle\Form\Type\PositionType;
 use Enhavo\Bundle\MediaBundle\Entity\File;
 use Enhavo\Bundle\MediaBundle\Media\ExtensionManager;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -30,7 +30,7 @@ class FileType extends AbstractType
 {
     public function __construct(
         private FormFactory $formFactory,
-        private RepositoryInterface $repository,
+        private EntityRepository $repository,
         private ExtensionManager $extensionManager,
         private NormalizerInterface $serializer,
         private array $formConfiguration,

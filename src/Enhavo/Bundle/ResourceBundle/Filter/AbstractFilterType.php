@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\ResourceBundle\Filter;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
+use Enhavo\Bundle\ResourceBundle\Filter\Type\BaseFilterType;
 use Enhavo\Component\Type\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -39,18 +40,11 @@ abstract class AbstractFilterType extends AbstractType implements FilterTypeInte
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
-            'translation_domain' => null,
-            'permission' => null,
-            'enabled' => false,
-            'initial_active' => false,
-            'initial_value' => null
-        ]);
 
-        $resolver->setRequired([
-            'label',
-            'property',
-            'component'
-        ]);
+    }
+
+    public static function getParentType(): ?string
+    {
+        return BaseFilterType::class;
     }
 }

@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\ResourceBundle\Factory;
 
-use Sylius\Component\Resource\Factory\FactoryInterface;
+
 
 class Factory implements FactoryInterface
 {

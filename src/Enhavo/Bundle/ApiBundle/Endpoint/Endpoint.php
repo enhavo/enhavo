@@ -10,14 +10,12 @@ use Enhavo\Component\Type\TypeInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @property EndpointTypeInterface $type
+ * @property EndpointTypeInterface[] $parents
+ */
 class Endpoint extends AbstractContainerType
 {
-    /** @var EndpointTypeInterface */
-    protected $type;
-
-    /** @var EndpointTypeInterface[] */
-    protected $parents;
-
     public function __construct(
         TypeInterface $type,
         array $parents,

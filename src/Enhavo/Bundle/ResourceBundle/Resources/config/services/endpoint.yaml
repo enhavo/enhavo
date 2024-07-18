@@ -1,5 +1,5 @@
 services:
-    Enhavo\Bundle\ResourceBundle\Endpoint\Type\ResourceGridEndpointType:
+    Enhavo\Bundle\ResourceBundle\Endpoint\Type\ResourceIndexEndpointType:
         arguments:
             - '@Enhavo\Bundle\ResourceBundle\Grid\GridFactory'
         calls:
@@ -8,3 +8,31 @@ services:
             - { name: enhavo_api.endpoint }
             - { name: container.service_subscriber }
 
+    Enhavo\Bundle\ResourceBundle\Endpoint\Type\ResourceListEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\ResourceBundle\Grid\GridFactory'
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\ResourceBundle\Endpoint\Type\ResourceCreateEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\ResourceBundle\Input\InputFactory'
+            - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\ResourceBundle\Endpoint\Type\ResourceUpdateEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\ResourceBundle\Input\InputFactory'
+            - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }

@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\ResourceBundle\Batch;
 
-use Enhavo\Bundle\ResourceBundle\Repository\EntityRepositoryInterface;
+use Doctrine\ORM\EntityRepository;
 use Enhavo\Component\Type\FactoryInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
@@ -24,11 +24,11 @@ class BatchManager
     /**
      * @return Batch[]
      */
-    public function getBatches(array $configuration, EntityRepositoryInterface $repository): array
+    public function getBatches(array $configuration, EntityRepository $repository): array
     {
         $batches = [];
         foreach($configuration as $name => $options) {
-            $batch = $this->factory->create($options);
+            $batch = $this->factory->create($options, $name);
 
             if (!$batch->isEnabled()) {
                 continue;
@@ -44,7 +44,7 @@ class BatchManager
         return $batches;
     }
 
-    public function getBatch($key, array $configuration, EntityRepositoryInterface $repository): ?Batch
+    public function getBatch($key, array $configuration, EntityRepository $repository): ?Batch
     {
         $batches = $this->getBatches($configuration, $repository);
         if (isset($batches[$key])) {

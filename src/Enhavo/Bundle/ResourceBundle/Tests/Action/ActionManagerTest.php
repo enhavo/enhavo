@@ -135,7 +135,7 @@ class Dependencies
     public $checker;
 }
 
-class TestActionType implements ActionTypeInterface
+class TestTabType implements ActionTypeInterface
 {
     /** @var boolean */
     private $hidden;
@@ -181,7 +181,7 @@ class TestActionType implements ActionTypeInterface
     }
 }
 
-class OtherTestActionType extends TestActionType
+class OtherTestActionType extends TestTabType
 {
     public function createViewData(array $options, $resource = null)
     {

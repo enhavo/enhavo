@@ -50,7 +50,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->arrayNode('grids')
                     ->useAttributeAsKey('name')
-                    ->variablePrototype()
+                    ->variablePrototype()->end()
                 ->end()
             ->end()
         ;

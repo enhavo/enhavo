@@ -46,7 +46,12 @@ class ActionExtension extends AbstractTypeExtension
 
     private function createActionsViewData(array $options, $resource)
     {
-        return $this->actionManager->createActionsViewData($options, $resource);
+        $data = [];
+        $actions = $this->actionManager->getActions($options, $resource);
+        foreach ($actions as $key => $action) {
+            $data[$key] = $action->createViewData($resource);
+        }
+        return $data;
     }
 
     public static function getExtendedTypes(): iterable

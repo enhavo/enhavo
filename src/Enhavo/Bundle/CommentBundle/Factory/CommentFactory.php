@@ -11,19 +11,19 @@ namespace Enhavo\Bundle\CommentBundle\Factory;
 use Enhavo\Bundle\CommentBundle\Exception\NotFoundException;
 use Enhavo\Bundle\CommentBundle\Model\CommentInterface;
 use Enhavo\Bundle\ResourceBundle\Factory\Factory;
-use Enhavo\Bundle\ResourceBundle\Repository\EntityRepositoryInterface;
+use Enhavo\Bundle\ResourceBundle\Repository\FilterRepositoryInterface;
 
 class CommentFactory extends Factory
 {
     /**
-     * @var EntityRepositoryInterface
+     * @var FilterRepositoryInterface
      */
     private $threadRepository;
 
     /**
-     * @param EntityRepositoryInterface $repository
+     * @param FilterRepositoryInterface $repository
      */
-    public function setThreadRepository(EntityRepositoryInterface $repository)
+    public function setThreadRepository(FilterRepositoryInterface $repository)
     {
         $this->threadRepository = $repository;
     }

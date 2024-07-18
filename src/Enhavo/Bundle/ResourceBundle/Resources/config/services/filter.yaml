@@ -4,100 +4,56 @@ services:
             - '@security.authorization_checker'
             - '@Enhavo\Component\Type\FactoryInterface[Filter]'
 
-#    enhavo_app.factory.filter:
-#        class: Enhavo\Bundle\AppBundle\Filter\FilterFactory
-#        arguments:
-#            - '@enhavo_app.filter_collector'
-#            - '@router'
-#
-#    enhavo_app.factory.filter_query:
-#        class: Enhavo\Bundle\AppBundle\Filter\FilterQueryFactory
-#        arguments:
-#            - '@doctrine.orm.entity_manager'
-#
-#    enhavo_app.filter_collector:
-#        class: '%enhavo_app.twig.filter_collector.class%'
-#        arguments:
-#            - '@service_container'
-#            - 'Filter'
-#
-#    enhavo_app.filter.filer_query_builder:
-#        class: Enhavo\Bundle\AppBundle\Filter\FilterQueryBuilder
-#        arguments:
-#            - '@enhavo_app.factory.filter'
-#            - '@enhavo_app.factory.filter_query'
-#
-#    enhavo_app.filter_manager:
-#        alias: Enhavo\Bundle\AppBundle\Filter\FilterManager
-#
-#    Enhavo\Bundle\AppBundle\Filter\AbstractFilterType:
-#        abstract: true
-#        public: true
-#        arguments:
-#            - '@translator'
-#        calls:
-#            - [setContainer, ['@service_container']]
-#
-#    Enhavo\Bundle\AppBundle\Filter\Type\TextType:
-#        parent: Enhavo\Bundle\AppBundle\Filter\AbstractFilterType
-#        public: true
-#        calls:
-#            - [setContainer, ['@service_container']]
-#        tags:
-#            - { name: enhavo.filter, alias: text }
-#
-#    Enhavo\Bundle\AppBundle\Filter\Type\BooleanType:
-#        parent: Enhavo\Bundle\AppBundle\Filter\AbstractFilterType
-#        public: true
-#        calls:
-#            - [setContainer, ['@service_container']]
-#        tags:
-#            - { name: enhavo.filter, alias: boolean }
-#
-#    Enhavo\Bundle\AppBundle\Filter\Type\OptionType:
-#        parent: Enhavo\Bundle\AppBundle\Filter\AbstractFilterType
-#        public: true
-#        calls:
-#            - [setContainer, ['@service_container']]
-#        tags:
-#            - { name: enhavo.filter, alias: option }
-#
-#    Enhavo\Bundle\AppBundle\Filter\Type\EntityType:
-#        parent: Enhavo\Bundle\AppBundle\Filter\AbstractFilterType
-#        public: true
-#        calls:
-#            - [setContainer, ['@service_container']]
-#        tags:
-#            - { name: enhavo.filter, alias: entity }
-#
-#    Enhavo\Bundle\AppBundle\Filter\Type\AutoCompleteEntityType:
-#        parent: Enhavo\Bundle\AppBundle\Filter\AbstractFilterType
-#        public: true
-#        calls:
-#            - [setContainer, ['@service_container']]
-#        tags:
-#            - { name: enhavo.filter, alias: auto_complete_entity }
-#
-#    Enhavo\Bundle\AppBundle\Filter\Type\BetweenFilterType:
-#        parent: Enhavo\Bundle\AppBundle\Filter\AbstractFilterType
-#        public: true
-#        calls:
-#            - [setContainer, ['@service_container']]
-#        tags:
-#            - { name: enhavo.filter, alias: between }
-#
-#    Enhavo\Bundle\AppBundle\Filter\Type\AgeFilterType:
-#        parent: Enhavo\Bundle\AppBundle\Filter\AbstractFilterType
-#        public: true
-#        calls:
-#            - [setContainer, ['@service_container']]
-#        tags:
-#            - { name: enhavo.filter, alias: age }
-#
-#    Enhavo\Bundle\AppBundle\Filter\Type\DateBetweenFilterType:
-#        parent: Enhavo\Bundle\AppBundle\Filter\AbstractFilterType
-#        public: true
-#        calls:
-#            - [setContainer, ['@service_container']]
-#        tags:
-#            - { name: enhavo.filter, alias: date_between }
+    Enhavo\Bundle\ResourceBundle\Filter\FilterQueryFactory:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+
+    Enhavo\Bundle\ResourceBundle\Filter\Type\AgeFilterType:
+        tags:
+            - { name: enhavo_resource.filter }
+
+    Enhavo\Bundle\ResourceBundle\Filter\Type\AutoCompleteEntityType:
+        arguments:
+            - '@router'
+            - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
+        tags:
+            - { name: enhavo_resource.filter }
+
+    Enhavo\Bundle\ResourceBundle\Filter\Type\BaseFilterType:
+        arguments:
+            - '@Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage'
+            - '@translator'
+        tags:
+            - { name: enhavo_resource.filter }
+
+    Enhavo\Bundle\ResourceBundle\Filter\Type\BetweenFilterType:
+        arguments:
+            - '@translator'
+        tags:
+            - { name: enhavo_resource.filter }
+
+    Enhavo\Bundle\ResourceBundle\Filter\Type\BooleanType:
+        arguments:
+            - '@translator'
+        tags:
+            - { name: enhavo_resource.filter }
+
+    Enhavo\Bundle\ResourceBundle\Filter\Type\DateBetweenFilterType:
+        tags:
+            - { name: enhavo_resource.filter }
+
+    Enhavo\Bundle\ResourceBundle\Filter\Type\EntityType:
+        arguments:
+            - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
+        tags:
+            - { name: enhavo_resource.filter }
+
+    Enhavo\Bundle\ResourceBundle\Filter\Type\OptionType:
+        arguments:
+            - '@translator'
+        tags:
+            - { name: enhavo_resource.filter }
+
+    Enhavo\Bundle\ResourceBundle\Filter\Type\TextType:
+        tags:
+            - { name: enhavo_resource.filter }

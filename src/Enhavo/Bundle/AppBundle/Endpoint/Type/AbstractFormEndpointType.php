@@ -58,7 +58,7 @@ abstract class AbstractFormEndpointType extends AbstractEndpointType
             $data->set('redirect', $url);
         }
 
-        $data->set('form', $this->normalize($form->getViewData()));
+        $data->set('form', $this->normalize($form));
         $this->final($options, $request, $data, $context, $form);
     }
 

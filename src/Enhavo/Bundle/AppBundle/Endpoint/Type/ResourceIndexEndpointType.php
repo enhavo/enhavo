@@ -28,11 +28,11 @@ class ResourceIndexEndpointType extends AbstractEndpointType
     use ResourceMetadataHelperTrait;
 
     public function __construct(
-        private ActionManager $actionManager,
-        private BatchManager $batchManager,
-        private FilterManager $filterManager,
-        private ColumnManager $columnManager,
-        private ViewUtil $util,
+        private ActionManager       $actionManager,
+        private BatchManager        $batchManager,
+        private FilterManager       $filterManager,
+        private ColumnManager       $columnManager,
+        private ViewUtil            $util,
         private TranslatorInterface $translator
     ) {}
 

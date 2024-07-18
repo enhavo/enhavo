@@ -2,10 +2,10 @@
 
 namespace Enhavo\Bundle\ResourceBundle\Batch\Type;
 
+use Doctrine\ORM\EntityRepository;
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Bundle\ResourceBundle\Batch\AbstractBatchType;
-use Enhavo\Bundle\ResourceBundle\Repository\EntityRepositoryInterface;
 use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,7 +17,7 @@ class DeleteBatchType extends AbstractBatchType
     {
     }
 
-    public function execute(array $options, array $ids, EntityRepositoryInterface $repository, Data $data, Context $context): void
+    public function execute(array $options, array $ids, EntityRepository $repository, Data $data, Context $context): void
     {
         foreach ($ids as $id) {
             $resource = $repository->find($id);

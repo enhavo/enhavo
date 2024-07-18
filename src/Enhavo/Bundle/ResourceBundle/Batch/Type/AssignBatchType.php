@@ -3,11 +3,11 @@
 namespace Enhavo\Bundle\ResourceBundle\Batch\Type;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Bundle\ResourceBundle\Batch\AbstractBatchType;
 use Enhavo\Bundle\ResourceBundle\Exception\BatchExecutionException;
-use Enhavo\Bundle\ResourceBundle\Repository\EntityRepositoryInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\PropertyAccess\PropertyAccess;
@@ -22,7 +22,7 @@ class AssignBatchType extends AbstractBatchType
     ) {
     }
 
-    public function execute(array $options, array $ids, EntityRepositoryInterface $repository, Data $data, Context $context): void
+    public function execute(array $options, array $ids, EntityRepository $repository, Data $data, Context $context): void
     {
         $form = $this->formFactory->create($options['form']);
 

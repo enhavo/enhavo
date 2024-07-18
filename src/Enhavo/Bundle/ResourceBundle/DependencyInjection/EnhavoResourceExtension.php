@@ -14,6 +14,9 @@ class EnhavoResourceExtension extends Extension
     public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();
+        $gridConfigurationMerger = new GridConfigurationMerger();
+        $configs = $gridConfigurationMerger->performMerge($configs);
+
         $config = $this->processConfiguration($configuration, $configs);
 
         $container->setParameter('enhavo_resources.grids', $config['grids']);
@@ -30,5 +33,8 @@ class EnhavoResourceExtension extends Extension
         $loader->load('services/filter.yaml');
         $loader->load('services/grid.yaml');
         $loader->load('services/services.yaml');
+        $loader->load('services/collection.yaml');
+        $loader->load('services/input.yaml');
+        $loader->load('services/tab.yaml');
     }
 }

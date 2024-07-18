@@ -1,0 +1,17 @@
+services:
+    Enhavo\Bundle\ResourceBundle\Tab\TabManager:
+        arguments:
+            - '@security.authorization_checker'
+            - '@Enhavo\Component\Type\FactoryInterface[Tab]'
+
+
+    Enhavo\Bundle\ResourceBundle\Tab\Type\BaseTabType:
+        arguments:
+            - '@translator'
+            - '@Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage'
+        tags:
+            - { name: enhavo_resource.tab }
+
+    Enhavo\Bundle\ResourceBundle\Tab\Type\FormTabType:
+        tags:
+            - { name: enhavo_resource.tab }

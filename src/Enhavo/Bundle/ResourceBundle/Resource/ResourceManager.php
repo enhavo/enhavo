@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\ResourceBundle\Resource;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Enhavo\Bundle\AppBundle\Event\ResourcePostCreateEvent;
 use Enhavo\Bundle\AppBundle\Event\ResourcePostDeleteEvent;
 use Enhavo\Bundle\AppBundle\Event\ResourcePostUpdateEvent;
@@ -13,7 +14,6 @@ use Psr\Container\ContainerInterface;
 use SM\Factory\FactoryInterface as SMFactoryInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Metadata\MetadataInterface;
-use Sylius\Component\Resource\Metadata\RegistryInterface;
 use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -88,14 +88,14 @@ class ResourceManager
         $this->dispatch(new ResourcePostDeleteEvent($resource), 'post_delete');
     }
 
-    public function getRepository($name): RepositoryInterface
+    public function getRepository($name): EntityRepository
     {
-        return $this->container->get(sprintf('%s.repository.%s', $applicationName, $entityName));
+        return $this->container->get(sprintf('%s.repository', $name));
     }
 
     public function getFactory($name): FactoryInterface
     {
-        return $this->container->get(sprintf('%s.factory.%s', $applicationName, $entityName));
+        return $this->container->get(sprintf('%s.factory', $name));
     }
 
     public function getMetadata($name): MetadataInterface
