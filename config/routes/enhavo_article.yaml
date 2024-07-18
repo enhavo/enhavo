@@ -4,7 +4,7 @@ enhavo_article_admin:
 
 enhavo_article_admin_api:
     resource: "@EnhavoArticleBundle/Resources/config/routes/admin_api/*"
-    prefix: /api/article
+    prefix: /admin/api/article
 
 enhavo_article_api:
     resource: "@EnhavoArticleBundle/Resources/config/routes/api/*"

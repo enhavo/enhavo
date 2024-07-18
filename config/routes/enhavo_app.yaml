@@ -2,6 +2,10 @@ enhavo_app_admin:
     resource: "@EnhavoAppBundle/Resources/config/routes/admin/*"
     prefix: /admin
 
+enhavo_app_admin_api:
+    resource: "@EnhavoAppBundle/Resources/config/routes/admin_api/*"
+    prefix: /admin/api
+
 enhavo_app_api:
     resource: "@EnhavoAppBundle/Resources/config/routes/api/*"
     prefix: /api

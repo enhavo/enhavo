@@ -4,3 +4,15 @@ services:
             - '@event_dispatcher'
             - '@doctrine.orm.entity_manager'
             - '@sm.factory'
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+
+    Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage:
+
+    Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface:
+        alias: Enhavo\Bundle\ResourceBundle\RouteResolver\RouteNameRouteResolver
+
+    Enhavo\Bundle\ResourceBundle\RouteResolver\RouteNameRouteResolver:
+        arguments:
+            - '@request_stack'
+            - '@router'

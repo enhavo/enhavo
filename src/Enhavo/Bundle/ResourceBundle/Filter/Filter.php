@@ -13,13 +13,20 @@ use Enhavo\Component\Type\AbstractContainerType;
 
 /**
  * @property FilterTypeInterface $type
- * @property FilterTypeInterface $parents
+ * @property FilterTypeInterface[] $parents
  */
 class Filter extends AbstractContainerType
 {
-    public function buildQuery(FilterQuery $query, $value): void
+    private mixed $value = null;
+
+    public function setFilterValue($value): void
     {
-        $this->type->buildQuery($this->options, $query, $value);
+        $this->value = $value;
+    }
+
+    public function buildQuery(FilterQuery $query): void
+    {
+        $this->type->buildQuery($this->options, $query, $this->value);
     }
 
     public function getPermission(): mixed

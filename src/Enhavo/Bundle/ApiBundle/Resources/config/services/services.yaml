@@ -46,3 +46,7 @@ services:
             - 'Enhavo\Bundle\ApiBundle\Endpoint\Endpoint'
             - '@Enhavo\Component\Type\RegistryInterface[Endpoint]'
             - '@Enhavo\Bundle\ApiBundle\Profiler\EndpointDataCollector'
+
+    Enhavo\Bundle\ApiBundle\Normalizer\DataDataNormalizer:
+        tags:
+            - { name: enhavo_api.data_normalizer }

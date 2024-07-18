@@ -4,8 +4,8 @@
 namespace Enhavo\Bundle\ShopBundle\Action;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
+use Enhavo\Bundle\AppBundle\Action\Type\OpenActionType;
 use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
-use Enhavo\Bundle\ResourceBundle\Action\Type\OpenActionType;
 use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Sylius\Component\Promotion\Model\PromotionInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;

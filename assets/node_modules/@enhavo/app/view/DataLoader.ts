@@ -17,12 +17,19 @@ export default class DataLoader
 
     private init()
     {
-        if(this.loaded) {
+        if (this.loaded) {
             return;
         }
         let element = document.getElementById(this.id);
-        if(element) {
-            let data = JSON.parse(document.getElementById(this.id).innerText);
+        if (element) {
+            let textData = document.getElementById(this.id).innerText;
+            textData = textData
+                .replace(/&amp;/g, '&')
+                .replace(/&lt;/g, '<')
+                .replace(/&gt;/g, '>')
+                .replace(/&quot;/g, '"')
+                .replace(/&#39;/g, "'");
+            let data = JSON.parse(textData);
             this.container.setParameter(this.parameter, data)
         }
     }

@@ -9,14 +9,14 @@
 namespace Enhavo\Bundle\ShopBundle\Repository;
 
 use Enhavo\Bundle\ResourceBundle\Filter\FilterQuery;
-use Enhavo\Bundle\ResourceBundle\Repository\EntityRepositoryInterface;
-use Enhavo\Bundle\ResourceBundle\Repository\EntityRepositoryTrait;
+use Enhavo\Bundle\ResourceBundle\Repository\FilterRepositoryInterface;
+use Enhavo\Bundle\ResourceBundle\Repository\FilterRepositoryTrait;
 use Enhavo\Bundle\ShopBundle\Model\ProductInterface;
 use Sylius\Bundle\ProductBundle\Doctrine\ORM\ProductVariantRepository as SyliusProductVariantRepository;
 
-class ProductVariantRepository extends SyliusProductVariantRepository implements EntityRepositoryInterface
+class ProductVariantRepository extends SyliusProductVariantRepository implements FilterRepositoryInterface
 {
-    use EntityRepositoryTrait;
+    use FilterRepositoryTrait;
 
     public function findByProductId($productId, FilterQuery $filterQuery)
     {

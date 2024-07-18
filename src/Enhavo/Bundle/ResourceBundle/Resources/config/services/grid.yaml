@@ -9,3 +9,4 @@ services:
     Enhavo\Bundle\ResourceBundle\Grid\GridFactory:
         arguments:
             - '%enhavo_resources.grids%'
+

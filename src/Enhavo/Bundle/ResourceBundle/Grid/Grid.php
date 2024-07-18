@@ -2,127 +2,225 @@
 
 namespace Enhavo\Bundle\ResourceBundle\Grid;
 
-use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
+use Enhavo\Bundle\ResourceBundle\Collection\CollectionInterface;
+use Enhavo\Bundle\ResourceBundle\Collection\ResourceItem;
+use Enhavo\Bundle\ResourceBundle\Collection\TableCollection;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class Grid extends AbstractGrid
+class Grid extends AbstractGrid implements GridMergeInterface
 {
-    public function getActionViewData(ResourceInterface $resource = null, array $configuration = []): array
-    {
-        $actions = $this->getActions($this->mergeArray($this->options['actions'], $configuration));
-        $data = [];
-        foreach($actions as $action) {
-            $data[] = $action->createViewData($resource);
-        }
-        return $data;
-    }
-
-    public function getActionSecondaryViewData(ResourceInterface $resource = null, array $configuration = []): array
-    {
-        $actions = $this->getActions($this->options['actions_secondary']);
-        $data = [];
-        foreach($actions as $action) {
-            $data[] = $action->createViewData($resource);
-        }
-        return $data;
-    }
-
-    public function getColumnsViewData(array $configuration = []): array
-    {
-        $columns = $this->getColumns($this->options['columns']);
-        $data = [];
-        foreach($columns as $column) {
-            $data[] = $column->createViewData();
-        }
-        return $data;
-    }
-
-    public function getColumnsResourceViewData(ResourceInterface $resource, array $configuration = []): array
-    {
-        $columns = $this->getColumns($this->options['columns']);
-        $data = [];
-        foreach($columns as $column) {
-            $data[] = $column->createResourceViewData($resource);
-        }
-        return $data;
-    }
-
-    public function getFiltersViewData(array $configuration = []): array
-    {
-        $filters = $this->getFilters($this->options['filters']);
-        $data = [];
-        foreach($filters as $filter) {
-            $data[] = $filter->createViewData();
-        }
-        return $data;
-    }
-
-    public function getBatchesViewData(array $configuration = []): array
-    {
-        $filters = $this->getFilters($this->options['batches']);
-        $data = [];
-        foreach($filters as $filter) {
-            $data[] = $filter->createViewData();
-        }
-        return $data;
-    }
-
-    public function getSorting()
-    {
-        return$this->options['sorting'];
-    }
-
-    public function getRepository(): string
-    {
-        return$this->options['repository'];
-    }
-
-    public function getRepositoryMethods(): string
-    {
-        return $this->options['repository_method'];
-    }
-
-    public function getRepositoryArguments(): array
-    {
-        return $this->options['repository_arguments'];
-    }
-
-    public function createTabViewData(array $tabs, ?string $translationDomain = null): array
-    {
-        $data = [];
-        foreach ($tabs as $key => $tab) {
-            $tabData = [];
-            $tabData['label'] = $this->translator->trans($tab['label'], [], isset($tab['translation_domain']) ? $tab['translation_domain'] : $translationDomain);
-            $tabData['key'] = $key;
-            $tabData['fullWidth'] = isset($tab['full_width']) && $tab['full_width'] ? true : false;
-            $tabData['template'] = $tab['template'];
-            $data[] = $tabData;
-        }
-        return $data;
-    }
+    private ?array $filters = null;
+    private ?array $columns = null;
+    private ?array $actions = null;
+    private ?array $actionsSecondary = null;
+    private ?array $batches = null;
+    private ?CollectionInterface $collection = null;
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'actions' => [],
             'actions_secondary' => [],
+            'criteria' => [],
             'columns' => [],
             'filters' => [],
             'batches' => [],
-            'sorting' => null,
-            'repository_method' => 'findPaginated',
-            'repository_arguments' => [],
+            'collection' => [
+                'class' => TableCollection::class
+            ],
+            'component' => 'grid-grid',
+            'routes' => function (OptionsResolver $resolver): void {
+                $resolver->setDefaults([
+                    'list' => $this->resolveRoute('list'),
+                    'list_parameters' => [],
+                    'batch' => $this->resolveRoute('batch'),
+                    'batch_parameters' => [],
+                    'open' => $this->resolveRoute('update'),
+                    'open_parameters' => [
+                        'id' => 'expr:resource.getId()'
+                    ],
+                ]);
+            },
         ]);
+
+
 
         $resolver->setRequired('resource');
     }
 
-    private function mergeArray($array1, $array2): array
+    public static function mergeOptions($before, $current): array
     {
-        foreach ($array2 as $key => $value) {
-            $array1[$key] = $value;
+        $mergeKeys = [
+            'actions',
+            'actions_secondary',
+            'criteria',
+            'columns',
+            'filters',
+            'batches',
+            'collection',
+        ];
+
+
+        foreach ($current as $key) {
+            if (array_key_exists($key, $mergeKeys)) {
+                if (is_array($before[$key])) {
+                    $before[$key] = array_merge($before[$key], $current[$key]);
+                } else {
+                    $before[$key] = $current[$key];
+                }
+            } else {
+                $before[$key] = $current[$key];
+            }
         }
 
-        return $array1;
+        return $before;
+    }
+
+    protected function getFilters(): array
+    {
+        if ($this->filters !== null) {
+            return $this->filters;
+        }
+
+        $this->filters = $this->createFilters($this->options['filters']);
+
+        return $this->filters;
+    }
+
+    protected function getColumns(): array
+    {
+        if ($this->columns !== null) {
+            return $this->columns;
+        }
+
+        $this->columns = $this->createColumns($this->options['columns']);
+
+        return $this->columns;
+    }
+
+    protected function getActions(): array
+    {
+        if ($this->actions !== null) {
+            return $this->actions;
+        }
+
+        $this->actions = $this->createActions($this->options['actions']);
+
+        return $this->actions;
+    }
+
+    protected function getActionsSecondary(): array
+    {
+        if ($this->actionsSecondary !== null) {
+            return $this->actionsSecondary;
+        }
+
+        $this->actionsSecondary = $this->createActions($this->options['actions_secondary']);
+
+        return $this->actionsSecondary;
+    }
+
+    protected function getBatches(): array
+    {
+        if ($this->batches !== null) {
+            return $this->batches;
+        }
+
+        $this->batches = $this->createBatches($this->options['batches'], $this->getRepository($this->getResourceName()));
+
+        return $this->batches;
+    }
+
+    protected function getCollection(): CollectionInterface
+    {
+        if ($this->collection !== null) {
+            return $this->collection;
+        }
+
+        $this->collection = $this->createCollection($this->getRepository($this->getResourceName()), $this->getFilters(), $this->getColumns(), $this->options['collection']);
+
+        return $this->collection;
+    }
+
+    protected function getActionViewData(): array
+    {
+        $data = [];
+        foreach ($this->getActions() as $action) {
+            $data[] = $action->createViewData();
+        }
+        return $data;
+    }
+
+    protected function getActionsSecondaryViewData(): array
+    {
+        $data = [];
+        foreach ($this->getActionsSecondary() as $action) {
+            $data[] = $action->createViewData();
+        }
+        return $data;
+    }
+
+    protected function getColumnsViewData(): array
+    {
+        $data = [];
+        foreach ($this->getColumns() as $column) {
+            $data[] = $column->createColumnViewData();
+        }
+        return $data;
+    }
+
+    protected function getFiltersViewData(): array
+    {
+        $data = [];
+        foreach ($this->getFilters() as $filter) {
+            $data[] = $filter->createViewData();
+        }
+        return $data;
+    }
+
+    protected function getBatchesViewData(): array
+    {
+        $data = [];
+        foreach ($this->getBatches() as $batch) {
+            $data[] = $batch->createViewData();
+        }
+        return $data;
+    }
+
+    public function getResourceName(): string
+    {
+        return $this->options['resource'];
+    }
+
+    public function getItems(array $context = []): array
+    {
+        $items = $this->getCollection()->getItems($context);
+        $openRoute = $this->options['routes']['open'];
+        foreach ($items as $item) {
+            if ($openRoute) {
+                $item['open'] = $this->generateUrl($openRoute, $this->evaluateArray($this->options['routes']['open_parameters'], [
+                    'resource' => $item->getResource(),
+                    'request' => $this->getRequest(),
+                ]));
+            }
+        }
+        return $items;
+    }
+
+    public function getViewData(array $context = []): array
+    {
+        return [
+            'actions' => $this->getActionViewData(),
+            'actionsSecondary' => $this->getActionsSecondaryViewData(),
+            'filters' => $this->getFiltersViewData(),
+            'columns' => $this->getColumnsViewData(),
+            'collection' => $this->getCollection()->getViewData($context),
+            'routes' => [
+                'list' => $this->options['routes']['list'],
+                'list_parameters' => $this->evaluateArray($this->options['routes']['list_parameters'], ['request' => $this->getRequest()]),
+                'batch' => $this->options['routes']['batch'],
+                'batch_parameters' => $this->evaluateArray($this->options['routes']['batch_parameters'], ['request' => $this->getRequest()]),
+            ]
+        ];
     }
 }

@@ -9,8 +9,8 @@
 namespace Enhavo\Bundle\ResourceBundle\Tests\Action\Type;
 
 use Enhavo\Bundle\AppBundle\Action\Action;
-use Enhavo\Bundle\ResourceBundle\Action\ActionLanguageExpression;
-use Enhavo\Bundle\ResourceBundle\Action\Type\OpenActionType;
+use Enhavo\Bundle\AppBundle\Action\Type\OpenActionType;
+use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -21,7 +21,7 @@ class OpenActionTypeTest extends TestCase
     {
         $dependencies = new OpenActionTypeDependencies();
         $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
-        $dependencies->actionLanguageExpression = $this->getMockBuilder(ActionLanguageExpression::class)->disableOriginalConstructor()->getMock();
+        $dependencies->actionLanguageExpression = $this->getMockBuilder(ResourceExpressionLanguage::class)->disableOriginalConstructor()->getMock();
         $dependencies->router = $this->getMockBuilder(RouterInterface::class)->getMock();
         return $dependencies;
     }
@@ -69,7 +69,7 @@ class OpenActionTypeDependencies
 {
     /** @var TranslatorInterface|\PHPUnit_Framework_MockObject_MockObject */
     public $translator;
-    /** @var ActionLanguageExpression|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var ResourceExpressionLanguage|\PHPUnit_Framework_MockObject_MockObject */
     public $actionLanguageExpression;
     /** @var RouterInterface|\PHPUnit_Framework_MockObject_MockObject */
     public $router;
