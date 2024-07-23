@@ -52,8 +52,8 @@ class SearchController extends AbstractController
 
         $pagination = $this->searchEngine->searchPaginated($filter);
 
-        $pagination->setCurrentPage($page);
         $pagination->setMaxPerPage($configuration->getMaxPerPage());
+        $pagination->setCurrentPage($page);
 
         $results = $this->resultConverter->convert($pagination, $term);
 
