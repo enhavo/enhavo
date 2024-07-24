@@ -22,7 +22,6 @@ use Enhavo\Bundle\SearchBundle\Engine\Result\ResultSummary;
 use Enhavo\Bundle\SearchBundle\Exception\FilterQueryNotSupportedException;
 use Enhavo\Bundle\SearchBundle\Exception\IndexException;
 use Enhavo\Bundle\SearchBundle\Filter\FilterDataProvider;
-use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
 use Enhavo\Component\Metadata\MetadataRepository;
 use Enhavo\Bundle\SearchBundle\Engine\SearchEngineInterface;
@@ -356,10 +355,8 @@ class ElasticSearchEngine implements SearchEngineInterface
         $search->addIndex($this->getIndex());
         $search->setQuery($this->createQuery($filter));
 
-        $entries = $this->getSearchEntries($search);
-        $pagerfanta = new Pagerfanta(new ArrayAdapter($entries));
-        $summary = new ResultSummary($pagerfanta, count($entries));
-        return $summary;
+        $pagerfanta = new Pagerfanta(new ElasticaORMAdapter($search, $this->entityResolver));
+        return new ResultSummary($pagerfanta, $search->count());
     }
 
     public function index($resource)
