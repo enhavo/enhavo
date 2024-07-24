@@ -8,110 +8,66 @@
 
 namespace Enhavo\Bundle\SearchBundle\Engine\ElasticSearch;
 
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\EntityRepository;
-use Elastica\Query;
-use Elastica\Result;
-use Elastica\ResultSet;
-use Elastica\SearchableInterface;
+use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface;
+use Enhavo\Bundle\SearchBundle\Engine\Result\EntitySubjectLoader;
+use Enhavo\Bundle\SearchBundle\Engine\Result\ResultEntry;
 use Pagerfanta\Adapter\AdapterInterface;
+use Elastica\Search;
 
 class ElasticaORMAdapter implements AdapterInterface
 {
-    /**
-     * @var Query
-     */
-    private $query;
-
-    /**
-     * @var \Elastica\ResultSet
-     */
-    private $resultSet;
-
-    /**
-     * @var SearchableInterface
-     */
-    private $searchable;
-
-    /**
-     * @var EntityRepository
-     */
-    private $em;
-
-    /**
-     * @var ElasticSearchIndexRemover
-     */
-    private $indexRemover;
+    private ?array $resultCache = null;
+    private ?int $resultCacheOffset = null;
+    private ?int $resultCacheLength = null;
+    private ?int $countCache = null;
 
     public function __construct(
-        SearchableInterface $searchable,
-        Query $query,
-        EntityManagerInterface $em,
-        ElasticSearchIndexRemover $indexRemover)
-    {
-        $this->searchable = $searchable;
-        $this->query = $query;
-        $this->em = $em;
-        $this->indexRemover = $indexRemover;
-    }
+        private readonly Search $search,
+        private readonly EntityResolverInterface $entityResolver
+    ) {}
 
     /**
-     * Returns the number of results.
-     *
-     * @return integer The number of results.
+     * {@inheritdoc}
      */
     public function getNbResults(): int
     {
-        if (!$this->resultSet) {
-            return $this->searchable->search($this->query)->getTotalHits();
+        if ($this->countCache === null) {
+            $this->countCache = $this->search->count();
         }
-
-        return $this->resultSet->getTotalHits();
+        return $this->countCache;
     }
 
     /**
-     * Returns the Elastica ResultSet. Will return null if getSlice has not yet been
-     * called.
-     *
-     * @return \Elastica\ResultSet|null
+     * {@inheritdoc}
      */
-    public function getResultSet()
+    public function getSlice(int $offset, int $length): iterable
     {
-        return $this->resultSet;
-    }
+        if (!
+        (
+            $this->resultCache
+            && $this->resultCacheOffset === $offset
+            && $this->resultCacheLength === $length
+        )
+        ) {
+            $this->search
+                ->getQuery()
+                ->setFrom($offset)
+                ->setSize($length)
+            ;
 
-    /**
-     * Returns an slice of the results.
-     *
-     * @param integer $offset The offset.
-     * @param integer $length The length.
-     *
-     * @return array|\Traversable The slice.
-     */
-    public function getSlice($offset, $length): iterable
-    {
-        $this->resultSet = $this->searchable->search($this->query, array(
-            'from' => $offset,
-            'size' => $length
-        ));
-
-        return $this->convertResultSet($this->resultSet);
-    }
-
-    private function convertResultSet(ResultSet $resultSet)
-    {
-        $result = [];
-        /** @var Result $data */
-        foreach($resultSet as $data) {
-            $id = $data->getDocument()->get('id');
-            $className = $data->getDocument()->get('className');
-            $entity = $this->em->getRepository($className)->find($id);
-            if ($entity === null) {
-                $this->indexRemover->removeIndexByClassNameAndId($className, $id);
-            } else {
-                $result[] = $entity;
+            $entries = [];
+            foreach ($this->search->search() as $document) {
+                $data = $document->getData();
+                $id = $data['id'];
+                $className = $data['className'];
+                $entries[] = new ResultEntry(new EntitySubjectLoader($this->entityResolver, $className, $id), $data['filterData'], $document->getScore());
             }
+
+            $this->resultCache = $entries;
+            $this->resultCacheOffset = $offset;
+            $this->resultCacheLength = $length;
         }
-        return $result;
+
+        return $this->resultCache;
     }
 }
