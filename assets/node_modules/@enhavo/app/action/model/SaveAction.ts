@@ -1,10 +1,10 @@
 import $ from "jquery";
-import AbstractAction from "@enhavo/app/action/model/AbstractAction";
+import { AbstractAction } from "@enhavo/app/action/model/AbstractAction";
 import LoadingEvent from "@enhavo/app/view-stack/event/LoadingEvent";
 import View from "@enhavo/app/view/View";
 import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
 
-export default class SaveAction extends AbstractAction
+export class SaveAction extends AbstractAction
 {
     public url: string;
 

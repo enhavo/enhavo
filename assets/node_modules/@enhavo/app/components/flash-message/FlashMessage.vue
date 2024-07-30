@@ -5,9 +5,9 @@
 </template>
 
 <script setup lang="ts">
-import Message from "@enhavo/app/flash-message/Message";
+import {FlashMessage} from "@enhavo/app/flash-message/FlashMessenger";
 
 const props = defineProps<{
-    message: Message
+    message: FlashMessage
 }>()
 </script>

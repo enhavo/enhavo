@@ -3,11 +3,11 @@ import Application from "@enhavo/app/Application";
 import AppInterface from "@enhavo/app/AppInterface";
 import ActionAwareApplication from "@enhavo/app/action/ActionAwareApplication";
 import Grid from "@enhavo/app/grid/Grid";
-import FilterManager from "@enhavo/app/grid/filter/FilterManager";
+import {FilterManager} from "@enhavo/app/filter/FilterManager";
 import FilterRegistry from "@enhavo/app/grid/filter/FilterRegistry";
-import ColumnManager from "@enhavo/app/grid/column/ColumnManager";
+import {ColumnManager} from "@enhavo/app/column/ColumnManager";
 import ColumnRegistry from "@enhavo/app/grid/column/ColumnRegistry";
-import BatchManager from "@enhavo/app/grid/batch/BatchManager";
+import {BatchManager} from "@enhavo/app/batch/BatchManager";
 import BatchRegistry from "@enhavo/app/grid/batch/BatchRegistry";
 
 export class IndexApplication extends Application implements ActionAwareApplication

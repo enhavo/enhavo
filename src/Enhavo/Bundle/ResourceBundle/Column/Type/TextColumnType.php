@@ -39,6 +39,7 @@ class TextColumnType extends AbstractColumnType
     {
         $resolver->setDefaults([
             'component' => 'column-text',
+            'model' => 'TextColumn',
             'sortingProperty' => null,
             'wrap' => true,
             'strip_tags' => false,

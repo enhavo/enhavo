@@ -1,6 +1,7 @@
-import { ComponentAwareInterface } from "@enhavo/core/index";
+import { ComponentAwareInterface } from "@enhavo/app/model/ComponentAwareInterface";
+import { ModelAwareInterface } from "@enhavo/app/model/ModelAwareInterface";
 
-export default interface ModalInterface extends ComponentAwareInterface
+export interface ModalInterface extends ComponentAwareInterface, ModelAwareInterface
 {
     init(): void;
 }

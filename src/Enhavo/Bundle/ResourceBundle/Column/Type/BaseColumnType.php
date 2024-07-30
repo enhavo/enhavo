@@ -35,6 +35,7 @@ class BaseColumnType extends AbstractType implements ColumnTypeInterface
         $data->set('label', $this->translator->trans($options['label'], [], $options['translation_domain']));
         $data->set('width', $options['width']);
         $data->set('component',  $options['component']);
+        $data->set('model',  $options['model']);
         $data->set('sortable', $options['sortable'] ?? false);
         $data->set('condition', $options['condition']);
     }
@@ -60,6 +61,9 @@ class BaseColumnType extends AbstractType implements ColumnTypeInterface
             'permission' => null,
             'enabled' => true,
         ]);
+
+        $resolver->setRequired('component');
+        $resolver->setRequired('model');
     }
 
     public static function getName(): ?string

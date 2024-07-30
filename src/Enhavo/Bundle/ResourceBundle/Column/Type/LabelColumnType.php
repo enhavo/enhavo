@@ -33,7 +33,8 @@ class LabelColumnType extends AbstractColumnType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'component' => 'column-text'
+            'component' => 'column-text',
+            'model' => 'TextColumn',
         ]);
         $resolver->setRequired(['property']);
     }

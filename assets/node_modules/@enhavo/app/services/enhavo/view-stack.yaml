@@ -68,23 +68,11 @@ services:
         arguments:
             - '@enhavo/app/view-stack/EventDispatcher'
 
-    '@enhavo/app/components/view-stack/ViewStack.vue':
-        chunk: 'vue'
-        static: true
-        tags:
-            - { name: vue.component, component: 'view-stack' }
 
-    '@enhavo/app/components/view-stack/ViewstackDropdown.vue':
-        chunk: 'vue'
-        static: true
-        tags:
-            - { name: vue.component, component: 'view-stack-dropdown' }
 
-    '@enhavo/app/components/view-stack/ViewComponent.vue':
-        chunk: 'vue'
-        static: true
-        tags:
-            - { name: vue.component, component: 'view-stack-view' }
+
+
+
 
     '@enhavo/app/view-stack/ArrangeManager':
          chunk: 'main'

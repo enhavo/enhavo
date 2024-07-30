@@ -6,13 +6,11 @@ namespace Enhavo\Bundle\DashboardBundle\Provider;
 
 use Enhavo\Component\Type\AbstractContainerType;
 
+/**
+ * @property AbstractDashboardProviderType $type
+ */
 class Provider extends AbstractContainerType implements ProviderInterface
 {
-    /**
-     * @var AbstractDashboardProviderType
-     */
-    protected $type;
-
     public function getData()
     {
         return $this->type->getData($this->options);

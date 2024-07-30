@@ -30,7 +30,6 @@ class DeleteActionType extends AbstractActionType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'component' => 'delete-action',
             'label' => 'label.delete',
             'translation_domain' => 'EnhavoAppBundle',
             'icon' => 'delete',
@@ -38,7 +37,8 @@ class DeleteActionType extends AbstractActionType
             'confirm_message' => 'message.delete.confirm',
             'confirm_label_ok' => 'label.ok',
             'confirm_label_cancel' => 'label.cancel',
-            'append_id' => true
+            'append_id' => true,
+            'model' => 'DeleteAction',
         ]);
     }
 

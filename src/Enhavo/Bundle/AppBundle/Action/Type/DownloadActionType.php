@@ -18,11 +18,11 @@ class DownloadActionType extends AbstractActionType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'component' => 'download-action',
             'label' => 'label.download',
             'translation_domain' => 'EnhavoAppBundle',
             'icon' => 'file_download',
-            'ajax' => false
+            'ajax' => false,
+            'model' => 'DownloadAction',
         ]);
     }
 

@@ -12,7 +12,6 @@ class DuplicateActionType extends AbstractActionType implements ActionTypeInterf
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'component' => 'duplicate-action',
             'label' => 'label.duplicate',
             'translation_domain' => 'EnhavoAppBundle',
             'icon' => 'content_copy',
@@ -20,7 +19,8 @@ class DuplicateActionType extends AbstractActionType implements ActionTypeInterf
             'confirm_message' => 'message.duplicate.confirm',
             'confirm_label_ok' => 'label.ok',
             'confirm_label_cancel' => 'label.cancel',
-            'append_id' => true
+            'append_id' => true,
+            'model' => 'DuplicateAction',
         ]);
     }
 

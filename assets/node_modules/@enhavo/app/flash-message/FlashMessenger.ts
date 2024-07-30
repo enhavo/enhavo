@@ -1,40 +1,29 @@
-import Message from "@enhavo/app/flash-message/Message";
-import * as _ from "lodash";
-import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
 
-export default class FlashMessenger
+export class FlashMessenger
 {
-    public messages: Message[];
+    public messages: FlashMessage[] = [];
 
-    private readonly componentRegistry: ComponentRegistryInterface;
-
-    constructor(messages: Message[], componentRegistry: ComponentRegistryInterface)
+    constructor()
     {
-        this.messages = messages;
-        this.componentRegistry = componentRegistry;
-    }
-
-    init() {
-        for (let i in this.messages) {
-            _.extend(this.messages[i], new Message());
-        }
         setInterval(() => {
             this.tick();
         }, 1000);
-
-        this.componentRegistry.registerStore('flashMessenger', this);
-        this.messages = this.componentRegistry.registerData(this.messages);
     }
 
-    public addMessage(message: Message)
+    public add(message: string = null, type: string = FlashMessage.SUCCESS)
+    {
+        this.addMessage(new FlashMessage(message, type))
+    }
+
+    public addMessage(message: FlashMessage)
     {
         this.messages.push(message);
     }
 
     public has(type: string)
     {
-        for(let message of this.messages) {
-            if(message.type == type) {
+        for (let message of this.messages) {
+            if (message.type == type) {
                 return true;
             }
         }
@@ -43,14 +32,36 @@ export default class FlashMessenger
 
     protected tick()
     {
-        for(let message of this.messages) {
+        for (let message of this.messages) {
             message.ttl--
         }
 
-        for(let message of this.messages) {
-            if(message.ttl <= 0) {
+        for (let message of this.messages) {
+            if (message.ttl <= 0) {
                 this.messages.splice(this.messages.indexOf(message), 1);
             }
+        }
+    }
+}
+
+export class FlashMessage
+{
+    static SUCCESS = 'success';
+    static ERROR = 'error';
+    static NOTICE = 'notice';
+    static WARNING = 'warning';
+
+    public message: string;
+    public type: string;
+    public ttl: number = 5;
+
+    constructor(message: string, type: string = FlashMessage.SUCCESS)
+    {
+        if (type) {
+            this.type = type;
+        }
+        if (message) {
+            this.message = message;
         }
     }
 }

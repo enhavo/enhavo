@@ -29,16 +29,9 @@ class ResourceListEndpointType extends AbstractEndpointType
         /** @var Grid $grid */
         $grid = $this->gridFactory->create($options['grid']);
 
-        $context = [
-            'page' => $request->get('page', 1),
-            'limit' => $request->get('limit', 50),
-        ];
+        $items = $grid->getItems($request->query->all());
 
-        $items = $grid->getItems($context);
-        foreach ($items  as &$item) {
-            $item = $item->normalize();
-        }
-        $data->set('items', $items);
+        $data->add($items->normalize());
     }
 
     public function configureOptions(OptionsResolver $resolver): void

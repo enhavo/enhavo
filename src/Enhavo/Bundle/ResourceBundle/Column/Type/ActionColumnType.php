@@ -30,6 +30,7 @@ class ActionColumnType extends AbstractColumnType
     {
         $resolver->setDefaults([
             'component' => 'column-action',
+            'model' => 'ActionColumn',
         ]);
         $resolver->setRequired(['action']);
     }

@@ -37,7 +37,8 @@ class DateColumnType extends AbstractColumnType
         $resolver->setDefaults([
             'format' => 'd.m.Y',
             'sortingProperty' => null,
-            'component' => 'column-text'
+            'component' => 'column-text',
+            'model' => 'TextColumn',
         ]);
         $resolver->setRequired(['property']);
     }

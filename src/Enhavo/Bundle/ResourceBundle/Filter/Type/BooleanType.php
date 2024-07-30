@@ -92,11 +92,15 @@ class BooleanType extends AbstractFilterType
         $resolver->setDefaults([
             'equals' => true,
             'component' => 'filter-boolean',
+            'model' => 'BooleanFilter',
             'checkbox' => true,
             'label_true' => 'filter.boolean.label_true',
             'label_false' => 'filter.boolean.label_false',
-            'translation_domain' => 'EnhavoAppBundle'
+            'translation_domain' => 'EnhavoAppBundle',
+            'initial_value' => null,
         ]);
+
+        $resolver->setRequired('property');
     }
 
     public static function getName(): ?string

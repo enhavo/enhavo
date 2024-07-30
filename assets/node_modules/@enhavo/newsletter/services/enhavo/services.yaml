@@ -9,36 +9,24 @@ services:
     '@enhavo/newsletter/components/stats/IndexComponent.vue':
         static: true
 
-    action.newsletter-send:
-        from: '@enhavo/core/RegistryEntry'
-        arguments:
-            - 'string:newsletter-send'
-            - '@enhavo/app/components/action/ActionComponent.vue'
-            - '@enhavo/newsletter/action/factory/NewsletterSendActionFactory'
-        tags:
-            - 'enhavo_app.action'
-
-    action.newsletter-send-test:
-        from: '@enhavo/core/RegistryEntry'
-        arguments:
-            - 'string:newsletter-send-test'
-            - '@enhavo/app/components/action/ActionComponent.vue'
-            - '@enhavo/newsletter/action/factory/NewsletterSendTestActionFactory'
-        tags:
-            - 'enhavo_app.action'
-
-    '@enhavo/newsletter/action/factory/NewsletterSendActionFactory':
+    '@enhavo/newsletter/action/NewsletterSendAction':
+        import: NewsletterSendAction
         arguments:
             - '@enhavo/app/form/Form'
             - '@enhavo/core/Translator'
             - '@enhavo/app/view/View'
             - '@enhavo/core/Router'
             - '@enhavo/app/flash-message/FlashMessenger'
+        tags:
+            - { name: 'enhavo_app.action', class: 'NewsletterSendAction' }
 
-    '@enhavo/newsletter/action/factory/NewsletterSendTestActionFactory':
+    '@enhavo/newsletter/action/NewsletterSendTestAction':
+        import: NewsletterSendTestAction
         arguments:
             - '@enhavo/app/flash-message/FlashMessenger'
             - '@enhavo/core/Translator'
             - '@enhavo/app/modal/ModalManager'
             - '@enhavo/app/view/View'
             - '@enhavo/core/Router'
+        tags:
+            - { name: 'enhavo_app.action', class: 'NewsletterSendTestAction' }

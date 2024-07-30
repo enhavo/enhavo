@@ -19,11 +19,11 @@ class PreviewActionType extends AbstractActionType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'component' => 'preview-action',
             'label' => 'label.preview',
             'translation_domain' => 'EnhavoAppBundle',
             'icon' => 'remove_red_eye',
             'append_id' => true,
+            'model' => 'PreviewAction',
         ]);
 
         $resolver->setRequired(['route']);

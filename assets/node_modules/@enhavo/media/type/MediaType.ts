@@ -5,8 +5,7 @@ import $ from "jquery";
 import "blueimp-file-upload/js/vendor/jquery.ui.widget.js";
 import "blueimp-file-upload/js/jquery.iframe-transport";
 import "blueimp-file-upload/js/jquery.fileupload";
-import Message from "@enhavo/app/flash-message/Message";
-import FlashMessenger from "@enhavo/app/flash-message/FlashMessenger";
+import { FlashMessenger, FlashMessage } from "@enhavo/app/flash-message/FlashMessenger";
 import Translator from "@enhavo/core/Translator";
 
 export default class MediaType extends FormType
@@ -66,7 +65,7 @@ export default class MediaType extends FormType
 
     private showError(message)
     {
-        this.flashMessenger.addMessage(new Message(Message.ERROR, message));
+        this.flashMessenger.add(message, FlashMessage.ERROR);
     }
 
     private initFileUpload()
@@ -144,7 +143,7 @@ export default class MediaType extends FormType
 
     static media(mediaType:HTMLElement): MediaType|null
     {
-        for(let media of MediaType.mediaTypes) {
+        for (let media of MediaType.mediaTypes) {
             if(media.$element.get(0) === mediaType) {
                 return media;
             }
@@ -154,7 +153,7 @@ export default class MediaType extends FormType
 
     static map(callback: (mediaType:MediaType) => void)
     {
-        for(let media of MediaType.mediaTypes) {
+        for (let media of MediaType.mediaTypes) {
             callback(media);
         }
     }

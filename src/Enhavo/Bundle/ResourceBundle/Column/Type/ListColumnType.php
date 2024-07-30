@@ -37,6 +37,7 @@ class ListColumnType extends AbstractColumnType
     {
         $resolver->setDefaults([
             'component' => 'column-text',
+            'model' => 'TextColumn',
             'separator' => ','
         ]);
         $resolver->setRequired(['property', 'item_property']);

@@ -17,10 +17,10 @@ class CloseActionType extends AbstractActionType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'component' => 'close-action',
             'label' => 'label.close',
             'translation_domain' => 'EnhavoAppBundle',
             'icon' => 'close',
+            'model' => 'CloseAction',
         ]);
     }
 

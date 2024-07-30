@@ -1,48 +1,28 @@
-import ActionInterface from "@enhavo/app/action/ActionInterface";
-import ActionRegistry from "@enhavo/app/action/ActionRegistry";
-import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
+import {ActionInterface} from "@enhavo/app/action/ActionInterface";
+import {ActionFactory} from "@enhavo/app/action/ActionFactory";
 
-export default class ActionManager
+export class ActionManager
 {
-    public primary: ActionInterface[];
-    public secondary: ActionInterface[];
-    private readonly registry: ActionRegistry;
-    private readonly componentRegistry: ComponentRegistryInterface;
-
     constructor(
-        primary: ActionInterface[],
-        secondary: ActionInterface[],
-        registry: ActionRegistry,
-        componentRegistry: ComponentRegistryInterface
+        private readonly factory: ActionFactory,
     ) {
-        this.primary = primary;
-        this.secondary = secondary;
-        this.registry = registry;
-        this.componentRegistry = componentRegistry;
     }
 
-    init()
+    createActions(actions: object[]): ActionInterface[]
     {
-        this.initializeActions(this.primary);
-        this.initializeActions(this.secondary);
-
-        for (let component of this.registry.getComponents()) {
-            this.componentRegistry.registerComponent(component.name, component.component)
-        }
-
-        this.componentRegistry.registerStore('actionManager', this);
-        this.primary = this.componentRegistry.registerData(this.primary);
-        this.secondary = this.componentRegistry.registerData(this.secondary);
-    }
-
-    hasActions() {
-        return (this.primary && this.primary.length > 0) || (this.secondary && this.secondary.length > 0)
-    }
-
-    initializeActions(actions: ActionInterface[]): void
-    {
+        let data = [];
         for (let i in actions) {
-            actions[i] = this.registry.getFactory(actions[i].component).createFromData(actions[i]);
+            data.push(this.createAction(actions[i]));
         }
+        return data;
+    }
+
+    createAction(action: object): ActionInterface
+    {
+        if (!action.hasOwnProperty('model')) {
+            throw 'The action data needs a "model" property!';
+        }
+
+        return this.factory.createWithData(action['model'], action);
     }
 }
