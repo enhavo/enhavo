@@ -15,7 +15,7 @@ class UpdateActionType extends AbstractActionType
             'translation_domain' => 'EnhavoAppBundle',
             'view_key' => 'edit-view',
             'target' => '_view',
-            'append_id' => true
+            'append_id' => true,
         ]);
 
         $resolver->setRequired(['route']);

@@ -12,10 +12,9 @@ services:
     Enhavo\Bundle\MultiTenancyBundle\Filter\TenancyFilterType:
         public: true
         arguments:
-            - '@translator'
             - '@Enhavo\Bundle\MultiTenancyBundle\Tenant\TenantManager'
         tags:
-            - { name: 'enhavo.filter', alias: 'tenancy' }
+            - { name: enhavo_resource.filter }
 
     Enhavo\Bundle\MultiTenancyBundle\Column\Type\TenantAwareUrlType:
         public: true

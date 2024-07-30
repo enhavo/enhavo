@@ -1,9 +1,9 @@
-import AbstractAction from "@enhavo/app/action/model/AbstractAction";
+import { AbstractAction } from "@enhavo/app/action/model/AbstractAction";
 import {AxiosResponseHandler} from "@enhavo/app/util/AxiosResponseHandler";
 import axios from 'axios';
 import $ from 'jquery';
 
-export default class DownloadAction extends AbstractAction
+export class DownloadAction extends AbstractAction
 {
     public url: string;
     public ajax: boolean;

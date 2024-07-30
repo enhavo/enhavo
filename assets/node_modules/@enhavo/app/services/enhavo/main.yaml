@@ -22,14 +22,6 @@ services:
         chunk: 'main'
         static: true
 
-    '@enhavo/app/components/main/OverlayContainer.vue':
-        chunk: 'vue'
-        static: true
-        tags:
-            - { name: vue.component, component: 'overlay-container' }
 
-    '@enhavo/app/components/main/LoadingScreen.vue':
-        chunk: 'vue'
-        static: true
-        tags:
-            - { name: vue.component, component: 'loading-screen' }
+
+

@@ -1,9 +1,10 @@
-import ModalInterface from "@enhavo/app/modal/ModalInterface";
-import ModalManager from "@enhavo/app/modal/ModalManager";
+import { ModalInterface } from "@enhavo/app/modal/ModalInterface";
+import { ModalManager } from "@enhavo/app/modal/ModalManager";
 
-export default abstract class AbstractModal implements ModalInterface
+export abstract class AbstractModal implements ModalInterface
 {
     component: string;
+    model: string;
 
     protected readonly modalManager: ModalManager;
 

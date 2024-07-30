@@ -33,6 +33,7 @@ class UrlColumnType extends AbstractColumnType
     {
         $resolver->setDefaults([
             'component' => 'column-action',
+            'model' => 'ActionColumn',
             'icon' => 'link',
             'target' => '_blank',
             'resolver_type' => 'default'

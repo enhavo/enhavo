@@ -1,0 +1,16 @@
+services:
+    '@enhavo/app/translation/Translator':
+        chunk: 'view'
+        import: Translator
+        calls:
+            - [ setData, [ 'param:translations' ] ]
+        tags:
+            - { name: vue.service, service: 'translator' }
+
+    '@enhavo/app/view/DataLoader[translations]':
+        init: true
+        from: '@enhavo/app/view/DataLoader'
+        arguments:
+            - 'string:translations'
+            - 'string:translations'
+            - 'container:'

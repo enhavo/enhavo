@@ -21,6 +21,8 @@ services:
     Enhavo\Bundle\ResourceBundle\Batch\Type\BaseBatchType:
         arguments:
             - '@translator'
+            - '@Enhavo\Bundle\ResourceBundle\RouteResolver\RouteNameRouteResolver'
+            - '@router'
         tags:
             - { name: enhavo_resource.batch }
 

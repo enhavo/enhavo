@@ -1,13 +1,21 @@
 # Working with vue
 
 Vue is a browser html rendering framework, that is widely used by frontend developers. Enhavo comes with a huge
-of support function to integrate vue seamless. 
+of support functions to integrate vue seamless. 
 
 
 ## Start a vue application
 
-tbc. (Stimulus)
+Use the stimulus controller `vue` to load a component into your twig template. 
+You can choose the component with the `data-vue-component-value` attribute and if needed, you can pass properties with
+`data-vue-props-value`.
 
+```twig
+<div data-controller="vue" 
+     data-vue-component-value="my-component" 
+     data-vue-props-value="{{ {message: "hello world"}|json_encode|e }}">
+</div>
+```
 
 ## Load components
 

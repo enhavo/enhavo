@@ -45,7 +45,7 @@ class UrlActionType extends AbstractActionType
         $resolver->setDefaults([
             'route_parameters' => [],
             'append_id' => false,
-            'append_key' => 'id'
+            'append_key' => 'id',
         ]);
 
         $resolver->setRequired([

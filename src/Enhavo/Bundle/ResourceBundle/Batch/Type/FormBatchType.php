@@ -19,7 +19,8 @@ class FormBatchType extends AbstractBatchType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'component' => 'batch-form'
+            'component' => 'batch-form',
+            'model' => 'FormBatch',
         ]);
 
         $resolver->setRequired(['form_route']);

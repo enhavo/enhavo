@@ -1,11 +1,11 @@
-import AbstractAction from "@enhavo/app/action/model/AbstractAction";
+import { AbstractAction } from "@enhavo/app/action/model/AbstractAction";
 import Confirm from "@enhavo/app/view/Confirm";
 import LoadingEvent from "@enhavo/app/view-stack/event/LoadingEvent";
 import $ from "jquery";
 import View from "@enhavo/app/view/View";
 import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
 
-export default class DuplicateAction extends AbstractAction
+export class DuplicateAction extends AbstractAction
 {
     public url: string;
     public token: string;

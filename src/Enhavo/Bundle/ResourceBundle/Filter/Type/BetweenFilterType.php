@@ -95,10 +95,12 @@ class BetweenFilterType extends AbstractFilterType
     {
         $resolver->setDefaults([
             'component' => 'filter-between',
+            'model' => 'BetweenFilter',
             'label_from' => 'filter.between.label.from',
             'label_to' => 'filter.between.label.to',
             'translation_domain' => 'EnhavoAppBundle',
             'label' => null,
+            'initial_value' => null,
         ]);
     }
 

@@ -28,6 +28,7 @@ class BaseActionType extends AbstractType implements ActionTypeInterface
     public function createViewData(array $options, Data $data, ResourceInterface $resource = null): void
     {
         $data->set('component', $options['component']);
+        $data->set('model', $options['model']);
         $data->set('icon', $options['icon']);
         $data->set('label', $this->getLabel($options));
 
@@ -70,12 +71,13 @@ class BaseActionType extends AbstractType implements ActionTypeInterface
             'confirm_message' => 'message.close.confirm',
             'confirm_label_ok' => 'label.ok',
             'confirm_label_cancel' => 'label.cancel',
+            'component' => 'action-action'
         ]);
 
         $resolver->setRequired([
             'icon',
-            'component',
-            'label'
+            'model',
+            'label',
         ]);
     }
 }

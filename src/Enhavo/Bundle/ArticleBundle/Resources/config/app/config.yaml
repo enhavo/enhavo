@@ -93,13 +93,44 @@ enhavo_resource:
                     type: text
                     property: title
                     label: Text
+                public:
+                    type: boolean
+                    label: article.label.public
+                    translation_domain: EnhavoArticleBundle
+                    property: public
+                    equals: true
+                category:
+                    type: taxonomy
+                    label: article.label.category
+                    translation_domain: EnhavoArticleBundle
+                    taxonomy: article_category
+                    property: categories
             columns:
+                public:
+                    label: article.label.public
+                    property: public
+                    width: 2
+                    type: boolean
+                    sortable: true
+                    condition: "desktop"
                 title:
-                    type: label
+                    type: text
+                    label: article.label.title
                     property: title
+                    width: 7
+                    sortable: true
+                publicationDate:
+                    label: article.label.publicationDate
+                    property: publicationDate
+                    type: date
+                    width: 3
+                    sortable: true
+                    condition: "desktop || tablet"
             batches:
                 delete:
                     type: delete
+                publish:
+                    type: publish
 
     inputs:
         enhavo_article.article:
@@ -130,6 +161,12 @@ enhavo_resource:
                     label: article.label.meta
                     translation_domain: EnhavoArticleBundle
             actions:
+                duplicate:
+                    type: duplicate
+                    route: enhavo_article_article_duplicate
+                    permission: ROLE_ENHAVO_ARTICLE_ARTICLE_CREATE
                 preview:
                     type: preview
-                    route: enhavo_article_admin_article_preview
+                    route: enhavo_article_article_preview
+                comments:
+                    type: comments

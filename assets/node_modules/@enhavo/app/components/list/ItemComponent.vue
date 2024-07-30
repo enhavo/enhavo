@@ -38,7 +38,7 @@
 import { inject } from 'vue'
 import Item from "@enhavo/app/list/Item";
 import List from "@enhavo/app/list/List";
-import ColumnManager from "@enhavo/app/grid/column/ColumnManager";
+import {ColumnManager} from "@enhavo/app/column/ColumnManager";
 
 const columnManager = inject<ColumnManager>('columnManager')
 const list = inject<List>('list')
