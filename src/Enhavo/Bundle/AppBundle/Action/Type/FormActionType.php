@@ -33,12 +33,12 @@ class FormActionType extends AbstractActionType
             'view_key' => 'form-view',
             'target' => '_view',
             'append_id' => true,
-            'component' => 'form-action',
             'save_label' => 'enhavo_app.save',
             'open_route' => null,
             'open_route_parameters' => [],
             'open_route_mapping' => [],
             'open_type' => self::TYPE_OPEN,
+            'model' => 'FormAction',
         ]);
 
         $resolver->setRequired(['route', 'label']);

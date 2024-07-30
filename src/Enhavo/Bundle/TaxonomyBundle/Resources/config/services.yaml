@@ -8,10 +8,9 @@ services:
     Enhavo\Bundle\TaxonomyBundle\Filter\TaxonomyFilterType:
         public: true
         arguments:
-            - '@translator'
             - '@doctrine.orm.entity_manager'
         tags:
-            - { name: 'enhavo.filter', alias: 'taxonomy' }
+            - { name: enhavo_resource.filter }
 
     Enhavo\Bundle\TaxonomyBundle\Form\Type\TermAutoCompleteChoiceType:
         arguments:

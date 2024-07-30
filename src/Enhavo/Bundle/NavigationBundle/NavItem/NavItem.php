@@ -10,11 +10,11 @@ namespace Enhavo\Bundle\NavigationBundle\NavItem;
 
 use Enhavo\Component\Type\AbstractContainerType;
 
+/**
+ * @property NavItemTypeInterface $type
+ */
 class NavItem extends AbstractContainerType
 {
-    /** @var NavItemTypeInterface */
-    protected $type;
-
     public function getModel()
     {
         return $this->type->getModel($this->options);

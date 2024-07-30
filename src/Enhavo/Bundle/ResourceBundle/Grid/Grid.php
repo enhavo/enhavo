@@ -2,8 +2,9 @@
 
 namespace Enhavo\Bundle\ResourceBundle\Grid;
 
+use Enhavo\Bundle\ResourceBundle\Batch\Batch;
 use Enhavo\Bundle\ResourceBundle\Collection\CollectionInterface;
-use Enhavo\Bundle\ResourceBundle\Collection\ResourceItem;
+use Enhavo\Bundle\ResourceBundle\Collection\ResourceItems;
 use Enhavo\Bundle\ResourceBundle\Collection\TableCollection;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,6 +14,8 @@ class Grid extends AbstractGrid implements GridMergeInterface
     private ?array $columns = null;
     private ?array $actions = null;
     private ?array $actionsSecondary = null;
+
+    /** @var Batch[]  */
     private ?array $batches = null;
     private ?CollectionInterface $collection = null;
 
@@ -137,7 +140,7 @@ class Grid extends AbstractGrid implements GridMergeInterface
             return $this->collection;
         }
 
-        $this->collection = $this->createCollection($this->getRepository($this->getResourceName()), $this->getFilters(), $this->getColumns(), $this->options['collection']);
+        $this->collection = $this->createCollection($this->getRepository($this->getResourceName()), $this->getFilters(), $this->getColumns(), $this->options['routes'], $this->options['collection']);
 
         return $this->collection;
     }
@@ -192,19 +195,9 @@ class Grid extends AbstractGrid implements GridMergeInterface
         return $this->options['resource'];
     }
 
-    public function getItems(array $context = []): array
+    public function getItems(array $context = []): ResourceItems
     {
-        $items = $this->getCollection()->getItems($context);
-        $openRoute = $this->options['routes']['open'];
-        foreach ($items as $item) {
-            if ($openRoute) {
-                $item['open'] = $this->generateUrl($openRoute, $this->evaluateArray($this->options['routes']['open_parameters'], [
-                    'resource' => $item->getResource(),
-                    'request' => $this->getRequest(),
-                ]));
-            }
-        }
-        return $items;
+        return $this->getCollection()->getItems($context);
     }
 
     public function getViewData(array $context = []): array
@@ -214,13 +207,38 @@ class Grid extends AbstractGrid implements GridMergeInterface
             'actionsSecondary' => $this->getActionsSecondaryViewData(),
             'filters' => $this->getFiltersViewData(),
             'columns' => $this->getColumnsViewData(),
+            'batches' => $this->getBatchesViewData(),
             'collection' => $this->getCollection()->getViewData($context),
-            'routes' => [
-                'list' => $this->options['routes']['list'],
-                'list_parameters' => $this->evaluateArray($this->options['routes']['list_parameters'], ['request' => $this->getRequest()]),
-                'batch' => $this->options['routes']['batch'],
-                'batch_parameters' => $this->evaluateArray($this->options['routes']['batch_parameters'], ['request' => $this->getRequest()]),
-            ]
+            'routes' => $this->getRoutes(),
         ];
+    }
+
+    private function getRoutes(): array
+    {
+        $routes = [];
+
+        $routes[] = [
+            'key' => 'list',
+            'route' => $this->options['routes']['list'],
+            'parameters' => $this->evaluateArray($this->options['routes']['list_parameters'], ['request' => $this->getRequest()]),
+        ];
+
+        $routes[] = [
+            'key' => 'batch',
+            'route' => $this->options['routes']['batch'],
+            'parameters' => $this->evaluateArray($this->options['routes']['batch_parameters'], ['request' => $this->getRequest()]),
+        ];
+
+        return $routes;
+    }
+
+    public function getBatch(string $name): ?Batch
+    {
+        $batches = $this->getBatches();
+        if ($batches[$name]) {
+            return $batches[$name];
+        }
+
+        return null;
     }
 }

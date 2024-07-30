@@ -4,14 +4,12 @@ namespace Enhavo\Bundle\SearchBundle\Filter;
 
 use Enhavo\Component\Type\AbstractContainerType;
 
+/**
+ * @property FilterTypeInterface $type
+ * @property FilterTypeInterface[] $parents
+ */
 class Filter extends AbstractContainerType
 {
-    /** @var FilterTypeInterface */
-    protected $type;
-
-    /** @var FilterTypeInterface[] */
-    protected $parents;
-
     /** @return FilterData[] */
     public function getFilterData($model): array
     {

@@ -11,10 +11,10 @@ class FilterActionType extends AbstractActionType implements ActionTypeInterface
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'component' => 'filter-action',
             'label' => 'label.filter',
             'translation_domain' => 'EnhavoAppBundle',
-            'icon' => 'filter_list'
+            'icon' => 'filter_list',
+            'model' => 'FilterAction',
         ]);
     }
 

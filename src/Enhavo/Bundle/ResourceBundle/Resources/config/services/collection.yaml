@@ -4,6 +4,7 @@ services:
             - '@Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage'
             - '@Enhavo\Bundle\ResourceBundle\Filter\FilterQueryFactory'
             - '@request_stack'
+            - '@router'
         tags:
             - { name: enhavo_resource.collection }
 

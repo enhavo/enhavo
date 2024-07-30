@@ -2,14 +2,13 @@ import ListData from "@enhavo/app/list/ListData";
 import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
 import View from "@enhavo/app/view/View";
 import * as _ from "lodash";
-import ColumnManager from "@enhavo/app/grid/column/ColumnManager";
+import {ColumnManager} from "@enhavo/app/column/ColumnManager";
 import Router from "@enhavo/core/Router";
 import axios from "axios";
 import Item from "@enhavo/app/list/Item";
 import Translator from "@enhavo/core/Translator";
 import UpdatedEvent from "@enhavo/app/view-stack/event/UpdatedEvent";
-import FlashMessenger from "@enhavo/app/flash-message/FlashMessenger";
-import Message from "@enhavo/app/flash-message/Message";
+import { FlashMessenger, FlashMessage } from "@enhavo/app/flash-message/FlashMessenger";
 import * as async from "async";
 import ViewInterface from "@enhavo/app/view-stack/ViewInterface";
 import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
@@ -49,7 +48,6 @@ export default class List
 
     public init()
     {
-        this.flashMessenger.init();
         this.view.init();
 
         this.columnManager.columns = this.data.columns;
@@ -164,17 +162,16 @@ export default class List
             .post(url, data)
             // executed on success
             .then(response => {
-                this.flashMessenger.addMessage(new Message(
-                    'success',
+                this.flashMessenger.add(
                     this.translator.trans('enhavo_app.list.message.save')
-                ))
+                )
             })
             // executed on error
             .catch(error => {
-                this.flashMessenger.addMessage(new Message(
-                    'error',
-                    this.translator.trans('enhavo_app.list.message.error')
-                ))
+                this.flashMessenger.add(
+                    this.translator.trans('enhavo_app.list.message.error'),
+                    FlashMessage.ERROR,
+                );
             })
     }
 

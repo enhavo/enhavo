@@ -1,0 +1,266 @@
+services:
+    '@enhavo/app/components/action/ActionAction.vue':
+        chunk: 'action'
+        static: true
+        tags:
+            - { name: vue.component, component: 'action-action' }
+
+    '@enhavo/app/components/action/ActionBar.vue':
+        static: true
+        chunk: 'vue'
+        tags:
+            - { name: vue.component, component: 'action-bar' }
+
+    '@enhavo/app/components/action/ActionDropdown.vue':
+        chunk: 'action'
+        static: true
+        tags:
+            - { name: vue.component, component: 'action-dropdown' }
+
+    '@enhavo/app/components/flash-message/FlashMessages.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'flash-messages' }
+
+    '@enhavo/app/components/flash-message/FlashMessage.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'flash-message' }
+
+    '@enhavo/app/components/modal/ModalStack.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'modal-stack' }
+
+    '@enhavo/app/components/modal/ModalAjaxForm.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'modal-ajax-form' }
+
+    '@enhavo/app/components/modal/ModalIframe.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'modal-iframe' }
+
+    '@enhavo/app/components/modal/ModalOutputStream.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'modal-output-stream' }
+
+    '@enhavo/app/components/filter/FilterBar.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: 'vue.component', component: 'filter-bar' }
+
+    '@enhavo/app/components/view/ViewView.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'view-view' }
+
+    '@enhavo/app/components/form/TabHead.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'form-tab-head' }
+
+    '@enhavo/app/components/main/OverlayContainer.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'overlay-container' }
+
+    '@enhavo/app/components/view-stack/ViewStack.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'view-stack' }
+
+    '@enhavo/app/components/list/ListComponent.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'list-list' }
+
+    '@enhavo/app/components/batch/BatchDropdown.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'batch-dropdown' }
+
+    '@enhavo/app/components/toolbar/Toolbar.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'toolbar' }
+
+    '@enhavo/app/components/main/LoadingScreen.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'loading-screen' }
+
+    '@enhavo/app/components/list/ItemComponent.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'list-item' }
+
+    '@enhavo/app/components/app/AppApp.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'app-app' }
+
+    '@enhavo/app/components/resource/ResourceIndex.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'resource-index' }
+
+    'vue-select':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'v-select' }
+
+    'vue3-datepicker':
+        from: '@vuepic/vue-datepicker'
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'datepicker' }
+
+    '@enhavo/app/components/form/TabContainer.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'form-tab-container' }
+
+    '@enhavo/app/components/menu/MenuNotificationComponent.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'menu-notification' }
+
+    '@enhavo/app/components/menu/Menu.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'app-menu' }
+
+    '@enhavo/app/components/view-stack/ViewstackDropdown.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'view-stack-dropdown' }
+
+    '@enhavo/app/components/view-stack/ViewComponent.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'view-stack-view' }
+
+
+    '@enhavo/app/components/column/ColumnBoolean.vue':
+        chunk: 'grid'
+        static: true
+        tags:
+            - { name: vue.component, component: 'column-boolean' }
+
+    '@enhavo/app/components/column/ColumnText.vue':
+        chunk: 'grid'
+        static: true
+        tags:
+            - { name: vue.component, component: 'column-text' }
+
+    '@enhavo/app/components/column/ColumnAction.vue':
+        chunk: 'grid'
+        static: true
+        tags:
+            - { name: vue.component, component: 'column-action' }
+
+    '@enhavo/app/components/column/ColumnSub.vue':
+        chunk: 'grid'
+        static: true
+        tags:
+            - { name: vue.component, component: 'column-sub' }
+
+    '@enhavo/app/components/column/ColumnMedia.vue':
+        chunk: 'grid'
+        static: true
+        tags:
+            - { name: vue.component, component: 'column-media' }
+
+    '@enhavo/app/components/column/ColumnState.vue':
+        chunk: 'grid'
+        static: true
+        tags:
+            - { name: vue.component, component: 'column-state' }
+
+    '@enhavo/app/components/filter/FilterAutoComplete.vue':
+        chunk: 'grid'
+        static: true
+        tags:
+            - { name: vue.component, component: 'filter-auto-complete' }
+
+    '@enhavo/app/components/filter/FilterCheckbox.vue':
+        chunk: 'grid'
+        static: true
+        tags:
+            - { name: vue.component, component: 'filter-checkbox' }
+
+    '@enhavo/app/components/filter/FilterDropdown.vue':
+        chunk: 'grid'
+        static: true
+        tags:
+            - { name: vue.component, component: 'filter-dropdown' }
+
+    '@enhavo/app/components/filter/FilterText.vue':
+        chunk: 'grid'
+        static: true
+        tags:
+            - { name: vue.component, component: 'filter-text' }
+
+    '@enhavo/app/components/filter/FilterBetween.vue':
+        chunk: 'grid'
+        static: true
+        tags:
+            - { name: vue.component, component: 'filter-between' }
+
+    '@enhavo/app/components/filter/FilterDateBetween.vue':
+        chunk: 'grid'
+        static: true
+        tags:
+            - { name: vue.component, component: 'filter-date-between' }
+
+    '@enhavo/app/components/collection/CollectionList.vue':
+        chunk: 'collection'
+        static: true
+        tags:
+            - { name: vue.component, component: 'collection-list' }
+
+    '@enhavo/app/components/collection/CollectionTable.vue':
+        chunk: 'collection'
+        static: true
+        tags:
+            - { name: vue.component, component: 'collection-table' }
+
+    '@enhavo/app/components/collection/CollectionTableRow.vue':
+        chunk: 'collection'
+        static: true
+        tags:
+            - { name: vue.component, component: 'collection-table-row' }
+
+    '@enhavo/app/components/collection/CollectionTablePagination.vue':
+        chunk: 'collection'
+        static: true
+        tags:
+            - { name: vue.component, component: 'collection-table-pagination' }

@@ -14,7 +14,7 @@ class CollectionFactory
     {
         $this->container = $container;
     }
-    public function create(EntityRepository $repository, array $filters, array $columns, array $configuration): CollectionInterface
+    public function create(EntityRepository $repository, array $filters, array $columns, array $routes, array $configuration): CollectionInterface
     {
         if (isset($configuration['class'])) {
             $class = $configuration['class'];
@@ -36,6 +36,7 @@ class CollectionFactory
         $collection->setFilters($filters);
         $collection->setColumns($columns);
         $collection->setRepository($repository);
+        $collection->setRoutes($routes);
 
 
         $resolver = new OptionsResolver();

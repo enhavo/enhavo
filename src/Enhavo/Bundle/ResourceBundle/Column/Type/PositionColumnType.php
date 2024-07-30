@@ -17,6 +17,7 @@ class PositionColumnType extends AbstractColumnType
     {
         $resolver->setDefaults([
             'component' => 'column-position',
+            'model' => 'PositionColumn',
         ]);
     }
 

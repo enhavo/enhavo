@@ -116,6 +116,7 @@ class EntityType extends AbstractFilterType
             'arguments' => null,
             'choice_label' => null,
             'component' => 'filter-entity',
+            'model' => 'EntityFilter',
             'initial_value_arguments' => null
         ]);
 

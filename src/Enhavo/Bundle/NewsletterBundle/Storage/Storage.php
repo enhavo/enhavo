@@ -9,11 +9,11 @@ use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Component\Type\AbstractContainerType;
 
+/**
+ * @property StorageTypeInterface $type
+ */
 class Storage extends AbstractContainerType
 {
-    /** @var StorageTypeInterface */
-    protected $type;
-
     public function getReceivers(NewsletterInterface $newsletter): array
     {
         return $this->type->getReceivers($newsletter, $this->options);

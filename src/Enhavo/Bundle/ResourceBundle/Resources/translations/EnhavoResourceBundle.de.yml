@@ -1,0 +1,44 @@
+tab:
+  label:
+    category: 'Kategorie'
+    content: 'Inhalt'
+    seo: 'SEO'
+table:
+  empty: 'Keine Daten vorhanden'
+  filter:
+    apply: 'Filter anwenden'
+    show: 'Filter einblenden'
+    hide: 'Filter ausblenden'
+batch:
+  form:
+    action:
+      submit: 'Ausführen'
+    error:
+      noneSelected: 'Keine Elemente ausgewählt'
+      noActionSelected: 'Keine Aktion ausgewählt'
+    label:
+      action: 'Aktion auswählen'
+  delete:
+    label: 'Löschen'
+    message:
+      confirm: 'Wollen sie wirklich alle ausgewählten Elemente löschen?'
+  assign:
+    label: 'Zuweisen'
+    error:
+        assign: 'Fehler beim zuweisen'
+filter:
+  age:
+    label:
+      from: 'Alter von'
+      to: 'Bis'
+  between:
+    label:
+      from: 'Von'
+      to: 'Bis'
+  date_between:
+    label:
+      from: 'Datum von'
+      to: 'Bis'
+  boolean:
+    label_true: 'Ja'
+    label_false: 'Nein'

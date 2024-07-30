@@ -29,7 +29,8 @@ class TextType extends AbstractFilterType
     {
         $resolver->setDefaults([
             'operator' => FilterQuery::OPERATOR_LIKE,
-            'component' => 'filter-text'
+            'component' => 'filter-text',
+            'model' => 'TextFilter',
         ]);
 
         $resolver->setRequired('property');

@@ -20,7 +20,6 @@ class OpenActionType extends AbstractActionType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'component' => 'open-action',
             'label' => 'label.open',
             'translation_domain' => 'EnhavoAppBundle',
             'icon' => 'arrow_forward',
@@ -32,6 +31,7 @@ class OpenActionType extends AbstractActionType
             'confirm_message' => 'message.open.confirm',
             'confirm_label_ok' => 'label.ok',
             'confirm_label_cancel' => 'label.cancel',
+            'model' => 'OpenAction',
         ]);
 
         $resolver->setNormalizer('route', function($options, $value) {

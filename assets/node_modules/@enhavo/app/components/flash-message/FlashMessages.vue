@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import { inject } from 'vue'
-import FlashMessenger from "@enhavo/app/flash-message/FlashMessenger";
+import { FlashMessenger } from "@enhavo/app/flash-message/FlashMessenger";
 
 const flashMessenger = inject<FlashMessenger>('flashMessenger')
 </script>

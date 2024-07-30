@@ -59,6 +59,6 @@ services:
         tags:
             - { name: enhavo.action }
 
-    Enhavo\Bundle\ResourceBundle\Action\Type\FilterActionType:
+    Enhavo\Bundle\AppBundle\Action\Type\FilterActionType:
         tags:
             - { name: enhavo_resource.action }

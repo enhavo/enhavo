@@ -3,7 +3,7 @@ services:
         arguments:
             - '@Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager'
         tags:
-            - { name: enhavo_app.batch }
+            - { name: enhavo_resource.batch }
 
     Enhavo\Bundle\NewsletterBundle\Batch\SendTestBatchType:
         arguments:
@@ -11,7 +11,7 @@ services:
             - '@translator'
             - '@form.factory'
         tags:
-            - { name: enhavo_app.batch }
+            - { name: enhavo_resource.batch }
 
     Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager:
         public: true

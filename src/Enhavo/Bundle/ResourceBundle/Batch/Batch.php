@@ -2,8 +2,8 @@
 
 namespace Enhavo\Bundle\ResourceBundle\Batch;
 
+use Doctrine\ORM\EntityRepository;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
-use Enhavo\Bundle\ResourceBundle\Repository\FilterRepositoryInterface;
 use Enhavo\Component\Type\AbstractContainerType;
 use Enhavo\Bundle\ApiBundle\Data\Data;
 
@@ -13,7 +13,7 @@ use Enhavo\Bundle\ApiBundle\Data\Data;
  */
 class Batch extends AbstractContainerType
 {
-    public function execute($ids, FilterRepositoryInterface $repository, Data $data, Context $context): void
+    public function execute($ids, EntityRepository $repository, Data $data, Context $context): void
     {
         $this->type->execute($this->options, $ids, $repository, $data, $context);
     }
@@ -29,7 +29,7 @@ class Batch extends AbstractContainerType
         return $data->normalize();
     }
 
-    public function getPermission(FilterRepositoryInterface $repository): mixed
+    public function getPermission(EntityRepository $repository): mixed
     {
         return $this->type->getPermission($this->options, $repository);
     }

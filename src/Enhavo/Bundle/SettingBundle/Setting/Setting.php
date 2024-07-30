@@ -6,7 +6,6 @@ use Enhavo\Component\Type\AbstractContainerType;
 
 /**
  * Class Setting
- * @package Enhavo\Bundle\SettingBundle\Setting
  * @property SettingTypeInterface $type
  */
 class Setting extends AbstractContainerType

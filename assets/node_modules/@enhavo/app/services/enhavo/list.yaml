@@ -12,7 +12,7 @@ services:
             - 'param:data.list'
             - '@enhavo/app/view-stack/EventDispatcher'
             - '@enhavo/app/view/View'
-            - '@enhavo/app/grid/column/ColumnManager'
+            - '@enhavo/app/column/ColumnManager'
             - '@enhavo/core/Router'
             - '@enhavo/core/Translator'
             - '@enhavo/app/flash-message/FlashMessenger'
@@ -22,14 +22,5 @@ services:
         chunk: 'list'
         static: true
 
-    '@enhavo/app/components/list/ListComponent.vue':
-        chunk: 'vue'
-        static: true
-        tags:
-            - { name: vue.component, component: 'list-list' }
 
-    '@enhavo/app/components/list/ItemComponent.vue':
-        chunk: 'vue'
-        static: true
-        tags:
-            - { name: vue.component, component: 'list-item' }
+

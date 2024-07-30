@@ -18,7 +18,7 @@ class ModalActionType extends AbstractActionType implements ActionTypeInterface
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'component' => 'modal-action',
+            'model' => 'ModalAction',
         ]);
 
         $resolver->setRequired(['modal']);

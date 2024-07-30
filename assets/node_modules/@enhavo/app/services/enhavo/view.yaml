@@ -2,42 +2,10 @@ services:
     '@enhavo/app/view/View':
         chunk: 'view'
         arguments:
-            - 'param:data.view'
             - '@enhavo/core/Router'
             - '@enhavo/core/Translator'
             - '@enhavo/app/vue/VueRegistry'
         calls:
             - [setEventDispatcher, ['@enhavo/app/view-stack/EventDispatcher']]
-
-    '@enhavo/app/view/DataLoader[data]':
-        chunk: 'view'
-        init: true
-        from: '@enhavo/app/view/DataLoader'
-        arguments:
-            - 'string:data'
-            - 'string:data'
-            - 'container:'
-
-    '@enhavo/app/view/DataLoader[routes]':
-        chunk: 'view'
-        init: true
-        from: '@enhavo/app/view/DataLoader'
-        arguments:
-            - 'string:routes'
-            - 'string:routes'
-            - 'container:'
-
-    '@enhavo/app/view/DataLoader[translations]':
-        chunk: 'view'
-        init: true
-        from: '@enhavo/app/view/DataLoader'
-        arguments:
-            - 'string:translations'
-            - 'string:translations'
-            - 'container:'
-
-    '@enhavo/app/components/view/ViewComponent.vue':
-        chunk: 'vue'
-        static: true
         tags:
-            - { name: vue.component, component: 'view-view' }
+            - { name: vue.service, service: 'view', reactive: true }

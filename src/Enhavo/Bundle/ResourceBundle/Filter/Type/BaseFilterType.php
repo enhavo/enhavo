@@ -28,6 +28,7 @@ class BaseFilterType extends AbstractType implements FilterTypeInterface
     public function createViewData($options, Data $data): void
     {
         $data->set('component', $options['component']);
+        $data->set('model', $options['model']);
         $data->set('label', $this->translator->trans($options['label'], [], $options['translation_domain']));
     }
 
@@ -60,6 +61,7 @@ class BaseFilterType extends AbstractType implements FilterTypeInterface
 
         $resolver->setRequired('component');
         $resolver->setRequired('label');
+        $resolver->setRequired('model');
     }
 
     public static function getName(): ?string

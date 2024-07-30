@@ -27,6 +27,7 @@ class PropertyColumnType extends AbstractColumnType
     {
         $resolver->setDefaults([
             'component' => 'column-text',
+            'model' => 'TextColumn',
             'sortingProperty' => null,
         ]);
         $resolver->setRequired(['property']);

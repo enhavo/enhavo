@@ -10,11 +10,12 @@ namespace Enhavo\Bundle\TranslationBundle\Translation;
 
 use Enhavo\Component\Type\AbstractContainerType;
 
+/**
+ * @property TranslationTypeInterface $type
+ * @property TranslationTypeInterface[] $parents
+ */
 class Translation extends AbstractContainerType
 {
-    /** @var TranslationTypeInterface */
-    protected $type;
-
     public function getTranslation($data, $property, $locale)
     {
         return $this->type->getTranslation($this->options, $data, $property, $locale);

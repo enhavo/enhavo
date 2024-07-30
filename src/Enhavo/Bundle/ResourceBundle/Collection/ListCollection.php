@@ -25,7 +25,7 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManager;
 
-class ListCollection extends AbstractCollectionResolver
+class ListCollection extends AbstractCollection
 {
     public function __construct(
         private readonly FilterManager $filterManager,
@@ -34,23 +34,30 @@ class ListCollection extends AbstractCollectionResolver
     )
     {}
 
-    protected function configureOptions(OptionsResolver $optionsResolver): void
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        $optionsResolver->setDefaults([
+        $resolver->setDefaults([
             'children_property' => null,
             'parent_property' => true,
             'repository_method' => null,
             'repository_arguments' => null,
             'columns' => [],
-            'component' => null,
+            'component' => 'collection-list',
+            'model' => 'ListCollection',
         ]);
     }
 
-    public function getResources(EntityRepository $repository, array $options = []): array|Pagerfanta|Collection
+    public function getItems(array $context = []): ResourceItems
     {
-        $options = $this->getOptions($options);
-
         return [];
+    }
+
+    public function getViewData(array $context = []): array
+    {
+        return [
+            'component' => $this->options['component'],
+            'model' => $this->options['model'],
+        ];
     }
 }
 

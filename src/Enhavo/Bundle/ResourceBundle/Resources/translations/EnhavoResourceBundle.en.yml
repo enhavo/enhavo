@@ -1,0 +1,44 @@
+tab:
+  label:
+    category: 'Category'
+    content: 'Content'
+    seo: 'SEO'
+table:
+  empty: 'no data'
+  filter:
+    apply: 'Apply'
+    show: 'Show filter'
+    hide: 'Hide filter'
+batch:
+  form:
+    action:
+      submit: 'Execute'
+    error:
+      noneSelected: 'No items selected'
+      noActionSelected: 'No action selected'
+    label:
+      action: 'Choose action'
+  delete:
+    label: 'Delete'
+    message:
+      confirm: 'Do you really want to delete all selected items?'
+  assign:
+      label: 'Assign'
+      error:
+          assign: 'Error while assigning'
+filter:
+  age:
+    label:
+      from: 'Age from'
+      to: 'To'
+  between:
+    label:
+      from: 'From'
+      to: 'To'
+  date_between:
+    label:
+      from: 'Date from'
+      to: 'To'
+  boolean:
+    label_true: 'Yes'
+    label_false: 'No'

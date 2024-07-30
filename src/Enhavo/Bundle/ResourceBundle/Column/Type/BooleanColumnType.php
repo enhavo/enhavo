@@ -33,7 +33,8 @@ class BooleanColumnType extends AbstractColumnType
         $resolver->setDefaults([
             'format' => 'd.m.Y H:i',
             'sortingProperty' => null,
-            'component' => 'column-boolean'
+            'component' => 'column-boolean',
+            'model' => 'BooleanColumn',
         ]);
         $resolver->setRequired(['property']);
     }

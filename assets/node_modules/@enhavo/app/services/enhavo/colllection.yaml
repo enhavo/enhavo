@@ -1,0 +1,21 @@
+services:
+    '@enhavo/app/collection/CollectionFactory':
+        import: CollectionFactory
+        chunk: 'collection'
+
+    '@enhavo/app/collection/model/TableCollection':
+        import: TableCollection
+        chunk: 'collection'
+        arguments:
+            - '@enhavo/app/routing/Router'
+            - '@enhavo/app/filter/FilterManager'
+            - '@enhavo/app/column/ColumnManager'
+            - '@enhavo/app/view/View'
+        tags:
+            - { name: enhavo_app.collection }
+
+    '@enhavo/app/collection/model/ListCollection':
+        import: ListCollection
+        chunk: 'collection'
+        tags:
+            - { name: enhavo_app.collection }

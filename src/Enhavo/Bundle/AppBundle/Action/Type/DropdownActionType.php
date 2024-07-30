@@ -31,8 +31,8 @@ class DropdownActionType extends AbstractActionType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'component' => 'dropdown-action',
             'close_after' => true,
+            'model' => 'DropdownAction',
         ]);
 
         $resolver->setRequired([

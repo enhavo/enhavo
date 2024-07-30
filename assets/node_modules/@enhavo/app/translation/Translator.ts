@@ -10,7 +10,7 @@ export class Translator
 
     public trans(value: string, parameters: object = null, translationDomain: string = 'messages')
     {
-        if (this.data[translationDomain] && this.data[translationDomain][value]) {
+        if (this.data && this.data.hasOwnProperty(translationDomain) && this.data[translationDomain].hasOwnProperty(value)) {
             return this.data[translationDomain][value];
         }
         return value;

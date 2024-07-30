@@ -3,20 +3,24 @@ imports:
 
 compiler_pass:
     action:
-        path: '@enhavo/app/compiler-pass/registry.js'
-        service: '@enhavo/app/action/ActionRegistry'
+        path: '@enhavo/app/compiler-pass/model-factory-register.js'
+        service: '@enhavo/app/action/ActionFactory'
         tag: 'enhavo_app.action'
     batch:
-        path: '../../compiler-pass/registry.js'
-        service: '@enhavo/app/grid/batch/BatchRegistry'
+        path: '@enhavo/app/compiler-pass/model-factory-register.js'
+        service: '@enhavo/app/batch/BatchFactory'
         tag: 'enhavo_app.batch'
+    collection:
+        path: '@enhavo/app/compiler-pass/model-factory-register.js'
+        service: '@enhavo/app/collection/CollectionFactory'
+        tag: 'enhavo_app.collection'
     column:
-        path: '../../compiler-pass/registry.js'
-        service: '@enhavo/app/grid/column/ColumnRegistry'
+        path: '@enhavo/app/compiler-pass/model-factory-register.js'
+        service: '@enhavo/app/column/ColumnFactory'
         tag: 'enhavo_app.column'
     filter:
-        path: '../../compiler-pass/registry.js'
-        service: '@enhavo/app/grid/filter/FilterRegistry'
+        path: '@enhavo/app/compiler-pass/model-factory-register.js'
+        service: '@enhavo/app/filter/FilterFactory'
         tag: 'enhavo_app.filter'
     form:
         path: '../../compiler-pass/registry.js'
@@ -27,8 +31,8 @@ compiler_pass:
         service: '@enhavo/app/menu/MenuRegistry'
         tag: 'enhavo_app.menu'
     modal:
-        path: '../../compiler-pass/registry.js'
-        service: '@enhavo/app/modal/ModalRegistry'
+        path: '../../compiler-pass/model-factory-register.js'
+        service: '@enhavo/app/modal/ModalFactory'
         tag: 'enhavo_app.modal'
     view:
         path: '../../compiler-pass/registry.js'
@@ -52,12 +56,3 @@ services:
         chunk: 'view'
         calls:
             - [setData, ['param:translations']]
-
-    '@enhavo/app/translation/Translator':
-        chunk: 'view'
-        import: Translator
-        calls:
-            - [ setData, [ 'param:translations' ] ]
-        tags:
-            - { name: vue.service, service: 'translator' }
-

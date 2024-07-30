@@ -56,7 +56,7 @@
 <script setup lang="ts">
 import { inject } from 'vue'
 import List from "@enhavo/app/list/List";
-import ColumnManager from "@enhavo/app/grid/column/ColumnManager";
+import {ColumnManager} from "@enhavo/app/column/ColumnManager";
 
 const list = inject<List>('list')
 const columnManager = inject<ColumnManager>('columnManager')

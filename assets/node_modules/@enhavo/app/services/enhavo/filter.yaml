@@ -1,131 +1,53 @@
 services:
-    '@enhavo/app/grid/filter/FilterManager':
+    '@enhavo/app/filter/FilterFactory':
+        import: FilterFactory
+
+    '@enhavo/app/filter/FilterManager':
+        import: FilterManager
         chunk: 'grid'
         arguments:
-            - 'param:data.grid.filters'
-            - '@enhavo/app/grid/filter/FilterRegistry'
-            - '@enhavo/app/vue/VueRegistry'
-
-    '@enhavo/app/grid/filter/FilterRegistry':
-        chunk: 'grid'
-
-    '@enhavo/app/components/grid/filter/FilterBar.vue':
-        chunk: 'vue'
-        static: true
+            - '@enhavo/app/filter/FilterFactory'
         tags:
-            - { name: 'vue.component', component: 'filter-bar' }
+            - { name: vue.service, service: 'filterManager' }
 
-    filter.autocomplete-entity:
+    '@enhavo/app/filter/model/BooleanFilter':
+        import: BooleanFilter
         chunk: 'grid'
-        from: '@enhavo/core/RegistryEntry'
-        arguments:
-            - 'string:filter-autocomplete-entity'
-            - '@enhavo/app/components/grid/filter/FilterAutoCompleteComponent.vue'
-            - '@enhavo/app/grid/filter/factory/AutoCompleteEntityFactory'
         tags:
-            - 'enhavo_app.filter'
+            - { name: enhavo_app.filter }
 
-    filter.boolean:
+    '@enhavo/app/filter/model/TextFilter':
+        import: TextFilter
         chunk: 'grid'
-        from: '@enhavo/core/RegistryEntry'
-        arguments:
-            - 'string:filter-boolean'
-            - '@enhavo/app/components/grid/filter/FilterCheckboxComponent.vue'
-            - '@enhavo/app/grid/filter/factory/BooleanFactory'
         tags:
-            - 'enhavo_app.filter'
+            - { name: enhavo_app.filter }
 
-    filter.entity:
+    '@enhavo/app/filter/model/AutoCompleteEntityFilter':
+        import: AutoCompleteEntityFilter
         chunk: 'grid'
-        from: '@enhavo/core/RegistryEntry'
-        arguments:
-            - 'string:filter-entity'
-            - '@enhavo/app/components/grid/filter/FilterDropdownComponent.vue'
-            - '@enhavo/app/grid/filter/factory/EntityFactory'
         tags:
-            - 'enhavo_app.filter'
+            - { name: enhavo_app.filter }
 
-    filter.option:
+    '@enhavo/app/filter/model/EntityFilter':
+        import: EntityFilter
         chunk: 'grid'
-        from: '@enhavo/core/RegistryEntry'
-        arguments:
-            - 'string:filter-option'
-            - '@enhavo/app/components/grid/filter/FilterDropdownComponent.vue'
-            - '@enhavo/app/grid/filter/factory/OptionFactory'
         tags:
-            - 'enhavo_app.filter'
+            - { name: enhavo_app.filter }
 
-    filter.text:
+    '@enhavo/app/filter/model/OptionFilter':
+        import: OptionFilter
         chunk: 'grid'
-        from: '@enhavo/core/RegistryEntry'
-        arguments:
-            - 'string:filter-text'
-            - '@enhavo/app/components/grid/filter/FilterTextComponent.vue'
-            - '@enhavo/app/grid/filter/factory/TextFactory'
         tags:
-            - 'enhavo_app.filter'
+            - { name: enhavo_app.filter }
 
-    filter.between:
+    '@enhavo/app/filter/model/BetweenFilter':
+        import: BetweenFilter
         chunk: 'grid'
-        from: '@enhavo/core/RegistryEntry'
-        arguments:
-            - 'string:filter-between'
-            - '@enhavo/app/components/grid/filter/FilterBetweenComponent.vue'
-            - '@enhavo/app/grid/filter/factory/BetweenFactory'
         tags:
-            - 'enhavo_app.filter'
+            - { name: enhavo_app.filter }
 
-    filter.date-between:
+    '@enhavo/app/filter/model/DateBetweenFilter':
+        import: DateBetweenFilter
         chunk: 'grid'
-        from: '@enhavo/core/RegistryEntry'
-        arguments:
-            - 'string:filter-date-between'
-            - '@enhavo/app/components/grid/filter/FilterDateBetweenComponent.vue'
-            - '@enhavo/app/grid/filter/factory/DateBetweenFactory'
         tags:
-            - 'enhavo_app.filter'
-
-    '@enhavo/app/grid/filter/factory/BooleanFactory':
-        chunk: 'grid'
-
-    '@enhavo/app/grid/filter/factory/TextFactory':
-        chunk: 'grid'
-
-    '@enhavo/app/grid/filter/factory/AutoCompleteEntityFactory':
-        chunk: 'grid'
-
-    '@enhavo/app/grid/filter/factory/EntityFactory':
-        chunk: 'grid'
-
-    '@enhavo/app/grid/filter/factory/OptionFactory':
-        chunk: 'grid'
-
-    '@enhavo/app/grid/filter/factory/BetweenFactory':
-        chunk: 'grid'
-
-    '@enhavo/app/grid/filter/factory/DateBetweenFactory':
-        chunk: 'grid'
-
-    '@enhavo/app/components/grid/filter/FilterAutoCompleteComponent.vue':
-        chunk: 'grid'
-        static: true
-
-    '@enhavo/app/components/grid/filter/FilterCheckboxComponent.vue':
-        chunk: 'grid'
-        static: true
-
-    '@enhavo/app/components/grid/filter/FilterDropdownComponent.vue':
-        chunk: 'grid'
-        static: true
-
-    '@enhavo/app/components/grid/filter/FilterTextComponent.vue':
-        chunk: 'grid'
-        static: true
-
-    '@enhavo/app/components/grid/filter/FilterBetweenComponent.vue':
-        chunk: 'grid'
-        static: true
-
-    '@enhavo/app/components/grid/filter/FilterDateBetweenComponent.vue':
-        chunk: 'grid'
-        static: true
+            - { name: enhavo_app.filter }

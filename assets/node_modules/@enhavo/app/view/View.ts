@@ -26,22 +26,15 @@ export default class View
 {
     public data: ViewData;
 
-    private readonly componentRegistry: ComponentRegistryInterface;
-    private readonly router: Router;
-    private readonly translator: Translator;
     private eventDispatcher: EventDispatcher;
     private initialized: boolean = false;
 
     constructor(
-        data: ViewData,
-        router: Router,
-        translator: Translator,
-        componentRegistry: ComponentRegistryInterface
+        private readonly router: Router,
+        private readonly translator: Translator,
+        private readonly componentRegistry: ComponentRegistryInterface
     ) {
-        this.data = data;
-        this.router = router;
-        this.translator = translator;
-        this.componentRegistry = componentRegistry;
+        this.data = new ViewData();
     }
 
     public static initView(label: string = '')

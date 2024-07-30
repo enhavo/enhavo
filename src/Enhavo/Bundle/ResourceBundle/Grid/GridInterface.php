@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\ResourceBundle\Grid;
 
 use Enhavo\Bundle\ResourceBundle\Collection\ResourceItem;
+use Enhavo\Bundle\ResourceBundle\Collection\ResourceItems;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 interface GridInterface
@@ -13,6 +14,5 @@ interface GridInterface
 
     public function getViewData(array $context = []): array;
 
-    /** @return ResourceItem[] */
-    public function getItems(array $context = []): array;
+    public function getItems(array $context = []): ResourceItems;
 }

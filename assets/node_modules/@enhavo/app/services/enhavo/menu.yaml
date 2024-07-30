@@ -70,14 +70,3 @@ services:
         chunk: 'main'
         static: true
 
-    '@enhavo/app/components/menu/MenuNotificationComponent.vue':
-        chunk: 'vue'
-        static: true
-        tags:
-            - { name: vue.component, component: 'menu-notification' }
-
-    '@enhavo/app/components/menu/Menu.vue':
-        chunk: 'vue'
-        static: true
-        tags:
-            - { name: vue.component, component: 'app-menu' }

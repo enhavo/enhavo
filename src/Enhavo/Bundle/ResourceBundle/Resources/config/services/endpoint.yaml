@@ -36,3 +36,13 @@ services:
         tags:
             - { name: enhavo_api.endpoint }
             - { name: container.service_subscriber }
+
+    Enhavo\Bundle\ResourceBundle\Endpoint\Type\ResourceBatchEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
+            - '@Enhavo\Bundle\ResourceBundle\Grid\GridFactory'
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }

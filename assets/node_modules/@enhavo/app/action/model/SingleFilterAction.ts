@@ -1,7 +1,7 @@
-import FilterManager from "@enhavo/app/grid/filter/FilterManager";
-import AbstractAction from "@enhavo/app/action/model/AbstractAction";
+import {FilterManager} from "@enhavo/app/filter/FilterManager";
+import { AbstractAction } from "@enhavo/app/action/model/AbstractAction";
 
-export default class SingleFilterAction extends AbstractAction
+export class SingleFilterAction extends AbstractAction
 {
     private readonly filterManager: FilterManager;
     active: boolean;

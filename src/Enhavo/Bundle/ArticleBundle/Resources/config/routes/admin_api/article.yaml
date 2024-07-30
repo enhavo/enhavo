@@ -9,7 +9,7 @@ enhavo_article_admin_api_article_index:
 
 enhavo_article_admin_api_article_list:
     path: /article/list
-    methods: [GET]
+    methods: [GET,POST]
     defaults:
         _expose: admin_api
         _endpoint:
@@ -42,3 +42,24 @@ enhavo_article_admin_api_article_delete:
         _endpoint:
             type: resource_delete
             input: enhavo_article.article
+
+
+enhavo_article_admin_api_article_batch:
+    path: /article/batch
+    methods: [POST]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_batch
+            grid: enhavo_article.article
+
+enhavo_article_admin_api_article_auto_complete:
+    options:
+        expose: true
+    path: /enhavo/article/article/auto-complete
+    defaults:
+        _endpoint:
+            type: auto_complete
+            resource: enhavo_article.article
+            repository_method: findByTerm
+            choice_label: title

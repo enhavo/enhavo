@@ -1,4 +1,4 @@
-import AbstractAction from "@enhavo/app/action/model/AbstractAction";
+import { AbstractAction } from "@enhavo/app/action/model/AbstractAction";
 import View from "@enhavo/app/view/View";
 import ModalManager from "@enhavo/app/modal/ModalManager";
 import Router from "@enhavo/core/Router";
@@ -8,7 +8,7 @@ import {AxiosResponseHandler} from "@enhavo/app/util/AxiosResponseHandler";
 import axios, {AxiosResponse} from "axios";
 import $ from "jquery";
 
-export default class FormAction extends AbstractAction
+export class FormAction extends AbstractAction
 {
     public static readonly OPEN = 'open';
     public static readonly DOWNLOAD = 'download';

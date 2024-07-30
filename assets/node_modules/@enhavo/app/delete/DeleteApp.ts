@@ -3,7 +3,7 @@ import View from "@enhavo/app/view/View";
 import UpdatedEvent from "@enhavo/app/view-stack/event/UpdatedEvent";
 import CloseEvent from "@enhavo/app/view-stack/event/RemoveEvent";
 import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
-import FlashMessenger from "@enhavo/app/flash-message/FlashMessenger";
+import {FlashMessenger} from "@enhavo/app/flash-message/FlashMessenger";
 
 export default class DeleteApp
 {
@@ -32,7 +32,6 @@ export default class DeleteApp
         this.data = this.componentRegistry.registerData(this.data);
 
         this.view.init();
-        this.flashMessenger.init();
         this.view.addDefaultCloseListener();
 
         this.eventDispatcher.dispatch(new UpdatedEvent(this.view.getId()));

@@ -1,12 +1,11 @@
-import AbstractAction from "@enhavo/app/action/model/AbstractAction";
+import { AbstractAction } from "@enhavo/app/action/model/AbstractAction";
 import Confirm from "@enhavo/app/view/Confirm";
 import $ from "jquery";
 import LoadingEvent from "@enhavo/app/view-stack/event/LoadingEvent";
 import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
 import View from "@enhavo/app/view/View";
-import Translator from "@enhavo/core/Translator";
 
-export default class DeleteAction extends AbstractAction
+export class DeleteAction extends AbstractAction
 {
     public url: string;
     public token: string;
