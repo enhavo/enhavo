@@ -1,0 +1,19 @@
+services:
+    '@enhavo/app/vue/VueRegistry':
+        chunk: 'vue'
+        arguments:
+            - 'string:app'
+
+    '@enhavo/app/vue/VueRouterFactory':
+        import: VueRouterFactory
+        arguments:
+            - '@enhavo/app/vue/VueFactory'
+            - 'param:vue_routes'
+
+    '@enhavo/app/view/DataLoader[vue_routes]':
+        init: true
+        from: '@enhavo/app/view/DataLoader'
+        arguments:
+            - 'string:vue_routes'
+            - 'string:vue_routes'
+            - 'container:'

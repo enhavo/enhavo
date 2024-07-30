@@ -1,7 +1,7 @@
 import $ from "jquery";
-import AbstractAction from "@enhavo/app/action/model/AbstractAction";
+import { AbstractAction } from "@enhavo/app/action/model/AbstractAction";
 
-export default class EventAction extends AbstractAction
+export class EventAction extends AbstractAction
 {
     public event: string;
 

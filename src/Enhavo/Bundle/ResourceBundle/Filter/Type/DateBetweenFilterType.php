@@ -85,6 +85,7 @@ class DateBetweenFilterType extends AbstractFilterType
     {
         $resolver->setDefaults([
             'component' => 'filter-date-between',
+            'model' => 'DateBetweenFilter',
             'label_from' => 'filter.date_between.label.from',
             'label_to' => 'filter.date_between.label.to',
             'locale' => 'de',

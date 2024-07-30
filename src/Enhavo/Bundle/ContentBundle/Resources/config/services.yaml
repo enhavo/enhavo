@@ -11,7 +11,7 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
         tags:
-            - { name: enhavo_app.batch }
+            - { name: enhavo_resource.batch }
 
     enhavo_content.sitemap_collector:
         class: Enhavo\Bundle\AppBundle\Type\TypeCollector

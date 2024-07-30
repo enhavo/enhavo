@@ -63,8 +63,4 @@ services:
     '@enhavo/app/toolbar/widget/factory/NewWindowWidgetFactory':
         chunk: 'main'
 
-    '@enhavo/app/components/toolbar/Toolbar.vue':
-        chunk: 'vue'
-        static: true
-        tags:
-            - { name: vue.component, component: 'toolbar' }
+

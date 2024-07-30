@@ -1,0 +1,12 @@
+services:
+    '@enhavo/app/manager/ResourceIndexManager':
+        import: ResourceIndexManager
+        arguments:
+            - '@enhavo/app/routing/Router'
+            - '@enhavo/app/action/ActionManager'
+            - '@enhavo/app/filter/FilterManager'
+            - '@enhavo/app/column/ColumnManager'
+            - '@enhavo/app/batch/BatchManager'
+            - '@enhavo/app/collection/CollectionFactory'
+        tags:
+            - { name: vue.service, service: 'resourceIndexManager', reactive: true }

@@ -27,14 +27,5 @@ services:
         chunk: 'form'
         static: true
 
-    '@enhavo/app/components/form/TabHead.vue':
-        chunk: 'vue'
-        static: true
-        tags:
-            - { name: vue.component, component: 'form-tab-head' }
 
-    '@enhavo/app/components/form/TabContainer.vue':
-        chunk: 'vue'
-        static: true
-        tags:
-            - { name: vue.component, component: 'form-tab-container' }
+

@@ -8,11 +8,11 @@ use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Storage\Storage;
 use Enhavo\Component\Type\AbstractContainerType;
 
+/**
+ * @property StrategyTypeInterface $type
+ */
 class Strategy extends AbstractContainerType
 {
-    /** @var StrategyTypeInterface */
-    protected $type;
-
     public function addSubscriber(SubscriberInterface $subscriber)
     {
         return $this->type->addSubscriber($subscriber, $this->options);

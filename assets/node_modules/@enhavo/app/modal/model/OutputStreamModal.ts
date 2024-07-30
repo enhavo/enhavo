@@ -1,6 +1,6 @@
-import AbstractModal from "@enhavo/app/modal/model/AbstractModal";
+import { AbstractModal } from "@enhavo/app/modal/model/AbstractModal";
 
-export default class OutputStreamModal extends AbstractModal
+export class OutputStreamModal extends AbstractModal
 {
     public url: string;
     public closeLabel: string;

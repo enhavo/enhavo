@@ -5,13 +5,17 @@ namespace Enhavo\Bundle\ResourceBundle\Batch\Type;
 use Doctrine\ORM\EntityRepository;
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ResourceBundle\Batch\AbstractBatchType;
+use Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class BaseBatchType extends AbstractBatchType
 {
     public function __construct(
-        private readonly TranslatorInterface $translator
+        private readonly TranslatorInterface $translator,
+        private readonly RouteResolverInterface $routeResolver,
+        private readonly RouterInterface $router,
     )
     {
     }
@@ -22,6 +26,8 @@ class BaseBatchType extends AbstractBatchType
         $data->set('confirmMessage', $this->getConfirmMessage($options));
         $data->set('position', $options['position']);
         $data->set('component', $options['component']);
+        $data->set('model', $options['model']);
+        $data->set('url', $options['route'] ? $this->router->generate($options['route'], $options['route_parameters']) : null);
     }
 
     private function getLabel($options): string
@@ -56,8 +62,9 @@ class BaseBatchType extends AbstractBatchType
             'enabled' => true,
             'confirm_message' => null,
             'component' => 'batch-url',
-            'route' => null,
-            'route_parameters' => null,
+            'model' => 'UrlBatch',
+            'route' => $this->routeResolver->getRoute('batch'),
+            'route_parameters' => [],
         ]);
 
         $resolver->setRequired(['label']);

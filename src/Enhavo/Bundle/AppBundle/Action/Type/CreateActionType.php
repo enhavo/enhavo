@@ -21,7 +21,7 @@ class CreateActionType extends AbstractActionType
             'label' => 'label.create',
             'translation_domain' => 'EnhavoAppBundle',
             'view_key' => 'edit-view',
-            'target' => '_view'
+            'target' => '_view',
         ]);
     }
 

@@ -23,29 +23,7 @@ services:
         tags:
             - { name: vue.directive, directive: 'click-outside' }
 
-    'vue-select':
-        chunk: 'vue'
-        static: true
-        tags:
-            - { name: vue.component, component: 'v-select' }
 
-    'vue3-datepicker':
-        from: '@vuepic/vue-datepicker'
-        chunk: 'vue'
-        static: true
-        tags:
-            - { name: vue.component, component: 'datepicker' }
 
-    '@enhavo/app/vue/VueRouterFactory':
-        import: VueRouterFactory
-        arguments:
-            - '@enhavo/app/vue/VueFactory'
-            - 'param:vue_routes'
 
-    '@enhavo/app/view/DataLoader[vue_routes]':
-        init: true
-        from: '@enhavo/app/view/DataLoader'
-        arguments:
-            - 'string:vue_routes'
-            - 'string:vue_routes'
-            - 'container:'
+

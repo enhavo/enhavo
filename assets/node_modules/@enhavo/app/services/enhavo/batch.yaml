@@ -1,73 +1,41 @@
 services:
-    '@enhavo/app/grid/batch/BatchManager':
+    '@enhavo/app/batch/BatchFactory':
+        import: BatchFactory
+
+    '@enhavo/app/batch/BatchManager':
+        import: BatchManager
         chunk: 'batch'
         arguments:
-            - 'param:data.grid'
-            - '@enhavo/app/grid/batch/BatchRegistry'
-            - '@enhavo/app/view/View'
-            - '@enhavo/core/Translator'
-            - '@enhavo/app/vue/VueRegistry'
-
-    '@enhavo/app/grid/batch/BatchRegistry':
-        chunk: 'batch'
-
-    '@enhavo/app/components/grid/batch/Batches.vue':
-        chunk: 'vue'
-        static: true
+            - '@enhavo/app/batch/BatchFactory'
         tags:
-            - { name: vue.component, component: 'grid-batches' }
+            - { name: vue.service, service: 'batchManager' }
 
-    batch.url:
-        chunk: 'batch'
-        from: '@enhavo/core/RegistryEntry'
-        arguments:
-            - 'string:batch-url'
-            - null
-            - '@enhavo/app/grid/batch/factory/UrlFactory'
-        tags:
-            - 'enhavo_app.batch'
-
-    batch.modal:
-        chunk: 'batch'
-        from: '@enhavo/core/RegistryEntry'
-        arguments:
-            - 'string:batch-modal'
-            - null
-            - '@enhavo/app/grid/batch/factory/ModalFactory'
-        tags:
-            - 'enhavo_app.batch'
-
-    batch.form:
-        chunk: 'batch'
-        from: '@enhavo/core/RegistryEntry'
-        arguments:
-            - 'string:batch-form'
-            - null
-            - '@enhavo/app/grid/batch/factory/FormFactory'
-        tags:
-            - 'enhavo_app.batch'
-
-    '@enhavo/app/grid/batch/factory/UrlFactory':
+    '@enhavo/app/batch/model/UrlBatch':
+        import: UrlBatch
         chunk: 'batch'
         arguments:
-            - 'param:data.grid'
             - '@enhavo/core/Translator'
             - '@enhavo/app/view/View'
             - '@enhavo/app/flash-message/FlashMessenger'
-            - '@enhavo/core/Router'
+        tags:
+            - { name: enhavo_app.batch }
 
-    '@enhavo/app/grid/batch/factory/ModalFactory':
+    '@enhavo/app/batch/model/ModalBatch':
+        import: ModalBatch
         chunk: 'batch'
         arguments:
             - '@enhavo/app/modal/ModalManager'
+        tags:
+            - { name: enhavo_app.batch }
 
-    '@enhavo/app/grid/batch/factory/FormFactory':
+    '@enhavo/app/batch/model/FormBatch':
+        import: FormBatch
         chunk: 'batch'
         arguments:
-            - 'param:data.grid'
             - '@enhavo/core/Translator'
             - '@enhavo/app/view/View'
             - '@enhavo/app/flash-message/FlashMessenger'
             - '@enhavo/core/Router'
             - '@enhavo/app/modal/ModalManager'
-            - '@enhavo/app/grid/Grid'
+        tags:
+            - { name: enhavo_app.batch }

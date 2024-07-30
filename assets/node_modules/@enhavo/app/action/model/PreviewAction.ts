@@ -1,4 +1,4 @@
-import AbstractAction from "@enhavo/app/action/model/AbstractAction";
+import { AbstractAction } from "@enhavo/app/action/model/AbstractAction";
 import $ from 'jquery';
 import DataEvent from "@enhavo/app/view-stack/event/DataEvent";
 import ExistsEvent from "@enhavo/app/view-stack/event/ExistsEvent";
@@ -9,7 +9,7 @@ import DataStorageEntry from "@enhavo/app/view-stack/DataStorageEntry";
 import View from "@enhavo/app/view/View";
 import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
 
-export default class PreviewAction extends AbstractAction
+export class PreviewAction extends AbstractAction
 {
     public url: string;
 

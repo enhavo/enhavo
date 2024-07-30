@@ -49,6 +49,7 @@ class StateColumnType extends AbstractColumnType
     {
         $resolver->setDefaults([
             'component' => 'column-state',
+            'model' => 'StateColumn',
             'states' => [],
             'sortingProperty' => null,
         ]);

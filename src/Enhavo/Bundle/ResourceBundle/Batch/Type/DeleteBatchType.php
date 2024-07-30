@@ -33,8 +33,6 @@ class DeleteBatchType extends AbstractBatchType
             'label' => 'batch.delete.label',
             'confirm_message' => 'batch.delete.message.confirm',
             'translation_domain' => 'EnhavoResourceBundle',
-            'route' => null,
-            'route_parameters' => null,
         ]);
     }
 

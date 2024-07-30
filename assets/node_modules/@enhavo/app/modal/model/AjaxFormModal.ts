@@ -1,11 +1,11 @@
-import AbstractModal from "@enhavo/app/modal/model/AbstractModal";
+import { AbstractModal } from "@enhavo/app/modal/model/AbstractModal";
 import axios from "axios";
 import * as _ from "lodash";
-import ModalManager from "@enhavo/app/modal/ModalManager";
+import { ModalManager } from "@enhavo/app/modal/ModalManager";
 import Router from "@enhavo/core/Router";
 import {AxiosResponseHandler} from "@enhavo/app/util/AxiosResponseHandler";
 
-export default class AjaxFormModal extends AbstractModal
+export class AjaxFormModal extends AbstractModal
 {
     public route: string;
     public routeParameters: object;

@@ -8,13 +8,11 @@ use Enhavo\Bundle\AppBundle\View\ViewData;
 use Enhavo\Component\Type\AbstractContainerType;
 use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 
+/**
+ * @property WidgetTypeInterface $type
+ */
 class Widget extends AbstractContainerType
 {
-    /**
-     * @var WidgetTypeInterface
-     */
-    protected $type;
-
     public function createViewData(ResourceInterface $resource = null)
     {
         $viewData = new ViewData();

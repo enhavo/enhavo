@@ -1,8 +1,8 @@
-import AbstractAction from "@enhavo/app/action/model/AbstractAction";
+import { AbstractAction } from "@enhavo/app/action/model/AbstractAction";
 import Confirm from "@enhavo/app/view/Confirm";
 import View from "@enhavo/app/view/View";
 
-export default class OpenAction extends AbstractAction
+export class OpenAction extends AbstractAction
 {
     public url: string;
     public target: string;

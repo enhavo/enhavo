@@ -100,11 +100,13 @@ class TaxonomyFilterType extends AbstractFilterType
         $resolver->setDefaults([
             'component' => 'filter-entity',
             'initial_value_method' => 'findOneByNameAndTaxonomy',
-            'initial_value_arguments' => null
+            'initial_value_arguments' => null,
+            'model' => 'OptionFilter',
         ]);
 
         $resolver->setRequired([
-            'taxonomy'
+            'taxonomy',
+            'property',
         ]);
     }
 

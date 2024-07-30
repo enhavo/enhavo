@@ -43,12 +43,12 @@ class SaveActionType extends AbstractActionType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'component' => 'save-action',
             'label' => 'label.save',
             'translation_domain' => 'EnhavoAppBundle',
             'icon' => 'save',
             'route' => null,
             'route_parameters' => [],
+            'model' => 'SaveAction'
         ]);
     }
 

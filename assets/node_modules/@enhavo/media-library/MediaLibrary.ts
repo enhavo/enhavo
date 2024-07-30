@@ -4,8 +4,7 @@ import Data, {Column, ContentType, File, Tag} from "@enhavo/media-library/Data";
 import UpdatedEvent from "@enhavo/app/view-stack/event/UpdatedEvent";
 import * as async from "async";
 import $ from "jquery";
-import Message from "@enhavo/app/flash-message/Message";
-import FlashMessenger from "@enhavo/app/flash-message/FlashMessenger";
+import { FlashMessenger, FlashMessage } from "@enhavo/app/flash-message/FlashMessenger";
 import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
 import View from "@enhavo/app/view/View";
 import Router from "@enhavo/core/Router";
@@ -72,9 +71,9 @@ export default class MediaLibrary
 
         async.parallel(calls, (err) => {
             if (err) {
-                this.flashMessenger.addMessage(new Message(Message.ERROR, 'media.library.add.error'));
+                this.flashMessenger.add('media.library.add.error', FlashMessage.ERROR);
             } else {
-                this.flashMessenger.addMessage(new Message(Message.SUCCESS, 'media.library.add.success'));
+                this.flashMessenger.add('media.library.add.success', FlashMessage.SUCCESS);
                 this.eventDispatcher.dispatch(new CloseEvent(this.view.getId())); // todo: could be a setting
             }
             this.view.loaded();

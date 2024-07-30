@@ -20,7 +20,7 @@ class OutputStreamActionType extends AbstractActionType
     public function createViewData(array $options, Data $data, ResourceInterface $resource = null): void
     {
         $data->set('modal', [
-            'component' => 'output-stream',
+            'modal' => $options['modal_component'],
             'url' => $data['url'],
             'closeLabel' => $this->translator->trans('label.close', [], 'EnhavoAppBundle')
         ]);
@@ -29,7 +29,8 @@ class OutputStreamActionType extends AbstractActionType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'component' => 'modal-action',
+            'modal_component' => 'modal-output-stream',
+            'model' => 'OutputStreamAction',
         ]);
 
         $resolver->setRequired(['route']);
