@@ -25,7 +25,7 @@ class ChoiceVueTypeExtension extends AbstractVueTypeExtension
         $data['choices'] = $this->getChoices($view->vars['choices'], $view);
         $data['placeholder'] = $view->vars['placeholder'] ? $this->translator->trans($view->vars['placeholder'], [], $view->vars['translation_domain']) : null ;
         $data['placeholderInChoices'] = $view->vars['placeholder_in_choices'];
-        $data['preferredChoices'] = $view->vars['preferred_choices'];
+        $data['preferredChoices'] = $this->getChoices($view->vars['preferred_choices'], $view);
         $data['separator'] = $view->vars['separator'];
     }
 
