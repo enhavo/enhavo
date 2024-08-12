@@ -82,6 +82,13 @@
         </div>
 
         <div class="tab">
+            <h3 class="tab-title">Json</h3>
+            <div class="tab-content">
+                <pre style="background-color: white; padding: 3px; border-radius: 5px; border: 1px solid var(--table-border-color);" contenteditable="true">{{ json_dump(collector.data) }}</pre>
+            </div>
+        </div>
+
+        <div class="tab">
             <h3 class="tab-title">Context</h3>
             <div class="tab-content">
                 <table class="{{ class|default('') }}">
