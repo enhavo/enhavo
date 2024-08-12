@@ -46,3 +46,7 @@ services:
             - 'Enhavo\Bundle\ApiBundle\Endpoint\Endpoint'
             - '@Enhavo\Component\Type\RegistryInterface[Endpoint]'
             - '@Enhavo\Bundle\ApiBundle\Profiler\EndpointDataCollector'
+
+    Enhavo\Bundle\ApiBundle\Twig\ApiProfilerExtension:
+        tags:
+            - { name: twig.extension }
