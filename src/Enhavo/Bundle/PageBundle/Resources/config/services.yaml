@@ -30,9 +30,8 @@ services:
             - { name: enhavo_navigation.voter }
 
     Enhavo\Bundle\PageBundle\Menu\PageMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: page }
+            - { name: enhavo_app.menu }
 
     enhavo_page.factory.page:
         public: true

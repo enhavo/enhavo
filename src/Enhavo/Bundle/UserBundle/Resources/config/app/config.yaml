@@ -222,5 +222,5 @@ enhavo_app:
                         translation_domain: EnhavoAppBundle
                         target: _blank
 
-    form_themes:
-        - '@EnhavoUser/admin/form/fields.html.twig'
+#    form_themes:
+#        - '@EnhavoUser/admin/form/fields.html.twig'

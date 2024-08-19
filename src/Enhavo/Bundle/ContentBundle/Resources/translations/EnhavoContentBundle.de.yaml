@@ -30,3 +30,4 @@ form:
 content:
   label:
     meta: Meta
+    content: Inhalt

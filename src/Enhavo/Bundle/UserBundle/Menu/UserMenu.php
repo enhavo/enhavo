@@ -8,15 +8,13 @@
 
 namespace Enhavo\Bundle\UserBundle\Menu;
 
-use Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu;
+use Enhavo\Bundle\AppBundle\Menu\AbstractMenuType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UserMenu extends BaseMenu
+class UserMenu extends AbstractMenuType
 {
     public function configureOptions(OptionsResolver $resolver)
     {
-        parent::configureOptions($resolver);
-
         $resolver->setDefaults([
             'icon' => 'person',
             'label' => 'user.label.user',
@@ -26,7 +24,7 @@ class UserMenu extends BaseMenu
         ]);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'user_user';
     }

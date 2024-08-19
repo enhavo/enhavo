@@ -8,51 +8,33 @@
 
 namespace Enhavo\Bundle\AppBundle\Toolbar;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Contracts\Translation\TranslatorInterface;
+use Enhavo\Bundle\ApiBundle\Data\Data;
+use Enhavo\Bundle\AppBundle\Toolbar\Type\BaseToolbarWidgetType;
+use Enhavo\Component\Type\AbstractType;
 
-abstract class AbstractToolbarWidgetType implements ToolbarWidgetTypeInterface
+
+/**
+ * @property ToolbarWidgetTypeInterface $parent
+ */
+abstract class AbstractToolbarWidgetType extends AbstractType implements ToolbarWidgetTypeInterface
 {
-    /**
-     * @var TranslatorInterface
-     */
-    protected $translator;
-
-    public function __construct(TranslatorInterface $translator)
+    public function isEnabled(array $options): bool
     {
-        $this->translator = $translator;
+        return $this->parent->isEnabled($options);
     }
 
-    public function isHidden(array $options)
+    public function getPermission(array $options): mixed
     {
-        return $options['hidden'];
+        return $this->parent->getPermission($options);
     }
 
-    public function getPermission(array $options)
+    public function createViewData(array $options, Data $data): void
     {
-        return $options['permission'];
+
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public static function getParentType(): ?string
     {
-        $resolver->setDefaults([
-            'translation_domain' => null,
-            'permission' => null,
-            'hidden' => false
-        ]);
-
-        $resolver->setRequired([
-            'component'
-        ]);
-    }
-
-    public function createViewData($name, array $options)
-    {
-        $data = [
-            'component' => $options['component'],
-            'name' => $name,
-        ];
-
-        return $data;
+        return BaseToolbarWidgetType::class;
     }
 }

@@ -45,4 +45,12 @@ export default function(builder, options, context)
             new Argument(definition.getTag('vue.service').getParameter('reactive'), 'boolean'),
         ]));
     }
+
+    let directiveDefinitions = builder.getDefinitionsByTagName('vue.directive');
+    for (let definition of directiveDefinitions) {
+        factory.addCall(new Call('registerDirective', [
+            new Argument(definition.getTag('vue.directive').getParameter('directive'), 'string'),
+            new Argument(definition.getName()),
+        ]));
+    }
 };

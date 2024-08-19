@@ -4,10 +4,10 @@
 </template>
 
 <script setup lang="ts">
-import {RadioForm} from "@enhavo/vue-form/model/RadioForm";
+import {Form} from "@enhavo/vue-form/model/Form";
 
 const props = defineProps<{
-    form: RadioForm
+    form: Form
 }>()
 
 function getComponent(): string

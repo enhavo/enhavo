@@ -1,0 +1,6 @@
+enhavo_app_admin_api_main:
+    path: /main
+    defaults:
+        _expose: admin
+        _endpoint:
+            type: Enhavo\Bundle\AppBundle\Endpoint\Type\AdminMainEndpointType

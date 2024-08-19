@@ -8,15 +8,13 @@
 
 namespace Enhavo\Bundle\SettingBundle\Menu;
 
-use Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu;
+use Enhavo\Bundle\AppBundle\Menu\AbstractMenuType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SettingMenu extends BaseMenu
+class SettingMenu extends AbstractMenuType
 {
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver) :void
     {
-        parent::configureOptions($resolver);
-
         $resolver->setDefaults([
             'icon' => 'settings',
             'label' => 'label.setting',
@@ -24,7 +22,8 @@ class SettingMenu extends BaseMenu
             'route' => 'enhavo_setting_setting_index',
             'role' => 'ROLE_ENHAVO_SETTING_SETTING_INDEX',
             'group' => null,
-            'setting' => null
+            'setting' => null,
+            'key' => null,
         ]);
 
         $resolver->setNormalizer('route_parameters', function($options, $value) {
@@ -44,7 +43,7 @@ class SettingMenu extends BaseMenu
         });
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'setting';
     }

@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\ResourceBundle\Input;
 
 use Enhavo\Bundle\ResourceBundle\Action\Action;
+use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Enhavo\Bundle\ResourceBundle\Tab\Tab;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -29,7 +30,9 @@ class Input extends AbstractInput implements InputMergeInterface
             'repository_method' => 'find',
             'repository_arguments' => [
                 'expr:request.get("id")'
-            ]
+            ],
+            'auto_save' => null,
+            'serialization_groups' => 'endpoint'
         ]);
 
         $resolver->setRequired('resource');
@@ -91,20 +94,20 @@ class Input extends AbstractInput implements InputMergeInterface
         return $this->actionsSecondary;
     }
 
-    protected function getActionViewData(): array
+    protected function getActionViewData(object $resource = null): array
     {
         $data = [];
         foreach ($this->getActions() as $action) {
-            $data[] = $action->createViewData();
+            $data[] = $action->createViewData($resource);
         }
         return $data;
     }
 
-    protected function getActionsSecondaryViewData(): array
+    protected function getActionsSecondaryViewData(object $resource = null): array
     {
         $data = [];
         foreach ($this->getActionsSecondary() as $action) {
-            $data[] = $action->createViewData();
+            $data[] = $action->createViewData($resource);
         }
         return $data;
     }
@@ -114,7 +117,7 @@ class Input extends AbstractInput implements InputMergeInterface
         return $this->options['resource'];
     }
 
-    public function getResource(array $context = []): object
+    public function getResource(array $context = []): ?object
     {
         $callable = [$this->getRepository($this->getResourceName()), $this->options['repository_method']];
         $arguments = $this->evaluateArray($this->options['repository_arguments'], [
@@ -143,12 +146,14 @@ class Input extends AbstractInput implements InputMergeInterface
         return $data;
     }
 
-    public function getViewData(array $context = []): array
+    public function getViewData(object $resource = null, array $context = []): array
     {
         return [
-            'actions' => $this->getActionViewData(),
-            'actionsSecondary' => $this->getActionsSecondaryViewData(),
+            'actions' => $this->getActionViewData($resource),
+            'actionsSecondary' => $this->getActionsSecondaryViewData($resource),
             'tabs' => $this->getTabsViewData(),
+            'autoSave' => $resource ? $this->options['auto_save'] : null,
+            'resource' => $resource ? $this->normalize($resource, null, ['groups' => $this->options['serialization_groups']]) : null,
         ];
     }
 

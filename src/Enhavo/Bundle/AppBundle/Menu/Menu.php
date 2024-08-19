@@ -8,50 +8,36 @@
 
 namespace Enhavo\Bundle\AppBundle\Menu;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Enhavo\Bundle\ApiBundle\Data\Data;
+use Enhavo\Component\Type\AbstractContainerType;
 
-class Menu
+/**
+ * @property MenuTypeInterface $type
+ * @property MenuTypeInterface[] $parents
+ */
+class Menu extends AbstractContainerType
 {
-    /**
-     * @var MenuInterface
-     */
-    private $menu;
-
-    /**
-     * @var array
-     */
-    private $options;
-
-    /**
-     * Menu constructor.
-     * @param MenuInterface $menu
-     * @param $options
-     */
-    public function __construct(MenuInterface $menu, $options)
-    {
-        $this->menu = $menu;
-        $resolver = new OptionsResolver();
-        $menu->configureOptions($resolver);
-        $this->options = $resolver->resolve($options);
-    }
-
     public function getPermission()
     {
-        return $this->menu->getPermission($this->options);
+        return $this->type->getPermission($this->options);
     }
 
-    public function isHidden()
+    public function isEnabled()
     {
-        return $this->menu->isHidden($this->options);
+        return $this->type->isEnabled($this->options);
     }
 
-    public function isActive()
+    public function createViewData(): array
     {
-        return $this->menu->isActive($this->options);
-    }
+        $data = new Data();
+        $data->set('key', $this->key);
 
-    public function createViewData()
-    {
-        return $this->menu->createViewData($this->options);
+        foreach ($this->parents as $parent) {
+            $parent->createViewData($this->options, $data);
+        }
+
+        $this->type->createViewData($this->options, $data);
+
+        return $data->normalize();
     }
 }

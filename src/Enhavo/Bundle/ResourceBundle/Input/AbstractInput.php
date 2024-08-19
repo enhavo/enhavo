@@ -18,6 +18,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\Service\ServiceSubscriberInterface;
 
 abstract class AbstractInput implements InputInterface, ServiceSubscriberInterface
@@ -46,6 +47,7 @@ abstract class AbstractInput implements InputInterface, ServiceSubscriberInterfa
             RequestStack::class,
             ResourceExpressionLanguage::class,
             'form.factory' => '?'.FormFactoryInterface::class,
+            SerializerInterface::class,
         ];
     }
 
@@ -155,5 +157,10 @@ abstract class AbstractInput implements InputInterface, ServiceSubscriberInterfa
     protected function createForm(string $type, $data = null, array $options = []): FormInterface
     {
         return $this->container->get('form.factory')->create($type, $data, $options);
+    }
+
+    protected function normalize(mixed $data, ?string $format = null, array $context = []): array|string|int|float|bool|\ArrayObject|null
+    {
+        return $this->container->get(SerializerInterface::class)->normalize($data, $format, $context);
     }
 }

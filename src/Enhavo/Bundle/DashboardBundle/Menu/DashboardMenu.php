@@ -8,15 +8,13 @@
 
 namespace Enhavo\Bundle\DashboardBundle\Menu;
 
-use Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu;
+use Enhavo\Bundle\AppBundle\Menu\AbstractMenuType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class DashboardMenu extends BaseMenu
+class DashboardMenu extends AbstractMenuType
 {
     public function configureOptions(OptionsResolver $resolver)
     {
-        parent::configureOptions($resolver);
-
         $resolver->setDefaults([
             'icon' => 'dashboard',
             'label' => 'dashboard.label.dashboard',
@@ -26,7 +24,7 @@ class DashboardMenu extends BaseMenu
         ]);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'dashboard';
     }

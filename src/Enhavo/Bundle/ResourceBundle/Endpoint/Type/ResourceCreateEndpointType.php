@@ -8,6 +8,7 @@ use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Bundle\ResourceBundle\Input\Input;
 use Enhavo\Bundle\ResourceBundle\Input\InputFactory;
 use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
+use Enhavo\Bundle\VueFormBundle\Form\VueForm;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -16,6 +17,7 @@ class ResourceCreateEndpointType extends AbstractEndpointType
     public function __construct(
         private readonly InputFactory $inputFactory,
         private readonly ResourceManager $resourceManager,
+        private readonly VueForm $vueForm,
     )
     {
     }
@@ -45,7 +47,7 @@ class ResourceCreateEndpointType extends AbstractEndpointType
                 }
             }
 
-            $data->set('form', $this->normalize($form));
+            $data->set('form', $this->vueForm->createData($form->createView()));
         }
 
         $viewData = $input->getViewData();

@@ -8,15 +8,13 @@
 
 namespace Enhavo\Bundle\SliderBundle\Menu;
 
-use Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu;
+use Enhavo\Bundle\AppBundle\Menu\AbstractMenuType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SlideMenu extends BaseMenu
+class SlideMenu extends AbstractMenuType
 {
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        parent::configureOptions($resolver);
-
         $resolver->setDefaults([
             'icon' => 'slideshow',
             'label' => 'slide.label.slide',
@@ -26,7 +24,7 @@ class SlideMenu extends BaseMenu
         ]);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'slide';
     }

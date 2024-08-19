@@ -1,72 +1,29 @@
 services:
+    '@enhavo/app/menu/MenuItemFactory':
+        import: MenuItemFactory
+
     '@enhavo/app/menu/MenuManager':
-        chunk: 'main'
+        import: MenuManager
+        chunk: 'action'
         arguments:
-            - 'param:data.menu'
-            - '@enhavo/app/menu/MenuRegistry'
-            - '@enhavo/app/view-stack/GlobalDataStorageManager'
-            - '@enhavo/app/vue/VueRegistry'
+            - '@enhavo/app/menu/MenuItemFactory'
 
-    '@enhavo/app/menu/MenuRegistry':
-
-    menu.menu-item:
-        chunk: 'main'
-        from: '@enhavo/core/RegistryEntry'
-        arguments:
-            - 'string:menu-item'
-            - '@enhavo/app/components/menu/MenuItemComponent.vue'
-            - '@enhavo/app/menu/factory/MenuItemFactory'
-        tags:
-            - 'enhavo_app.menu'
-
-    '@enhavo/app/menu/factory/MenuItemFactory':
+    '@enhavo/app/menu/model/BaseMenuItem':
+        import: BaseMenuItem
         chunk: 'main'
         arguments:
             - '@enhavo/app/view-stack/EventDispatcher'
-            - '@enhavo/app/menu/MenuManager'
-
-    '@enhavo/app/components/menu/MenuItemComponent.vue':
-        chunk: 'main'
-        static: true
-
-    menu.menu-list:
-        chunk: 'main'
-        from: '@enhavo/core/RegistryEntry'
-        arguments:
-            - 'string:menu-list'
-            - '@enhavo/app/components/menu/MenuListComponent.vue'
-            - '@enhavo/app/menu/factory/MenuListFactory'
         tags:
-            - 'enhavo_app.menu'
+            - { name: 'enhavo_app.menu_item' }
 
-    '@enhavo/app/menu/factory/MenuListFactory':
+    '@enhavo/app/menu/model/ListMenuItem':
+        import: ListMenuItem
         chunk: 'main'
-        arguments:
-            - '@enhavo/app/view-stack/EventDispatcher'
-            - '@enhavo/app/menu/MenuManager'
-            - '@enhavo/app/menu/MenuRegistry'
-
-    '@enhavo/app/components/menu/MenuListComponent.vue':
-        chunk: 'main'
-        static: true
-
-    menu.menu-dropdown:
-        chunk: 'main'
-        from: '@enhavo/core/RegistryEntry'
-        arguments:
-            - 'string:menu-dropdown'
-            - '@enhavo/app/components/menu/MenuDropdownComponent.vue'
-            - '@enhavo/app/menu/factory/MenuDropdownFactory'
         tags:
-            - 'enhavo_app.menu'
+            - { name: 'enhavo_app.menu_item' }
 
-    '@enhavo/app/menu/factory/MenuDropdownFactory':
+    '@enhavo/app/menu/model/DropdownMenuItem':
+        import: DropdownMenuItem
         chunk: 'main'
-        arguments:
-            - '@enhavo/app/view-stack/EventDispatcher'
-            - '@enhavo/app/menu/MenuManager'
-
-    '@enhavo/app/components/menu/MenuDropdownComponent.vue':
-        chunk: 'main'
-        static: true
-
+        tags:
+            - { name: 'enhavo_app.menu_item' }

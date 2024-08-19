@@ -1,56 +1,25 @@
-parameters:
-    enhavo_app.twig.menu_collector.class: Enhavo\Bundle\AppBundle\Type\TypeCollector
-    enhavo_app.main_menu_renderer.template: 'EnhavoAppBundle:Menu:menu.html.twig'
-
 services:
-    enhavo_app.menu_collector:
-        class: '%enhavo_app.twig.menu_collector.class%'
+    Enhavo\Bundle\AppBundle\Menu\MenuManager:
         arguments:
-            - '@service_container'
-            - 'Menu'
+            - '@security.authorization_checker'
+            - '@Enhavo\Component\Type\FactoryInterface[Menu]'
 
-    Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu:
-        public: true
+    Enhavo\Bundle\AppBundle\Menu\Type\BaseMenuType:
         arguments:
           - '@translator'
           - '@router'
-          - '@enhavo_app.menu.manager'
-        calls:
-          - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.menu, alias: base }
+            - { name: enhavo_app.menu }
 
-    Enhavo\Bundle\AppBundle\Menu\Menu\DropdownMenu:
-      public: true
-      arguments:
-        - '@translator'
-        - '@router'
-      calls:
-        - [setContainer, ['@service_container']]
-      tags:
-        - { name: enhavo.menu, alias: dropdown }
-
-    Enhavo\Bundle\AppBundle\Menu\Menu\ListMenu:
-        public: true
+    Enhavo\Bundle\AppBundle\Menu\Type\DropdownMenuType:
         arguments:
             - '@translator'
-            - '@enhavo_app.menu.manager'
-        calls:
-          - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.menu, alias: list }
+            - { name: enhavo_app.menu }
 
-    enhavo_app.menu.factory:
-        class: Enhavo\Bundle\AppBundle\Type\TypeFactory
+    Enhavo\Bundle\AppBundle\Menu\Type\ListMenuType:
         arguments:
-          - 'Enhavo\Bundle\AppBundle\Menu\Menu'
-          - '@enhavo_app.menu_collector'
+            - '@translator'
+            - '@Enhavo\Bundle\AppBundle\Menu\MenuManager'
         tags:
-            - { name: knp_menu.renderer, alias: main_menu }
-
-    enhavo_app.menu.manager:
-      class: Enhavo\Bundle\AppBundle\Menu\MenuManager
-      arguments:
-        - '@enhavo_app.menu.factory'
-        - '@security.authorization_checker'
-        - '%enhavo_app.menu%'
+            - { name: enhavo_app.menu }

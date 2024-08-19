@@ -4,8 +4,8 @@ enhavo_app:
             path: '@EnhavoSettingBundle/Resources/views'
             alias: EnhavoSetting
             priority: 10
-    form_themes:
-        - '@EnhavoSetting/admin/form/setting/fields.html.twig'
+#    form_themes:
+#        - '@EnhavoSetting/admin/form/setting/fields.html.twig'
     roles:
         enhavo_setting_setting_index:
             role: ROLE_ENHAVO_SETTING_SETTING_INDEX

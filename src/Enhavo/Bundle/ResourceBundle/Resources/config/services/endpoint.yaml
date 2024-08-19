@@ -21,6 +21,7 @@ services:
         arguments:
             - '@Enhavo\Bundle\ResourceBundle\Input\InputFactory'
             - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
+            - '@Enhavo\Bundle\VueFormBundle\Form\VueForm'
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:
