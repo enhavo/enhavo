@@ -33,6 +33,10 @@ class ResourceUpdateEndpointType extends AbstractEndpointType
 
         $resource = $input->getResource();
 
+        if ($resource === null) {
+            throw $this->createNotFoundException();
+        }
+
         $form = $input->getForm();
         if ($form) {
             $form->setData($resource);
@@ -52,7 +56,7 @@ class ResourceUpdateEndpointType extends AbstractEndpointType
             $data->set('form', $this->normalize($form));
         }
 
-        $viewData = $input->getViewData();
+        $viewData = $input->getViewData($resource);
         $data->add($viewData);
     }
 

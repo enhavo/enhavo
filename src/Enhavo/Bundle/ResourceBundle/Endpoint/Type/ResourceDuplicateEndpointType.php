@@ -43,7 +43,7 @@ class ResourceDuplicateEndpointType extends AbstractEndpointType
 
     public static function getName(): ?string
     {
-        return 'duplicate';
+        return 'resource_duplicate';
     }
 
     public function init($options)

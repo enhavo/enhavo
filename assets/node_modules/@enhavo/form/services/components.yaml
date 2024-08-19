@@ -77,3 +77,21 @@ services:
         static: true
         tags:
             - { name: vue.component, component: 'form-choice-collapsed' }
+
+    '@enhavo/form/components/FormChoiceExpandedComponent.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'form-choice-expanded' }
+
+    '@enhavo/form/components/FormCheckboxComponent.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'form-checkbox' }
+
+    '@enhavo/form/components/FormRadioComponent.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'form-radio' }

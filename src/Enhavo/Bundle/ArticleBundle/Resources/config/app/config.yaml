@@ -75,7 +75,6 @@ doctrine:
         resolve_target_entities:
             Enhavo\Bundle\ArticleBundle\Model\ArticleInterface: Enhavo\Bundle\ArticleBundle\Entity\Article
 
-
 enhavo_resource:
     resources:
         enhavo_article.article:
@@ -137,6 +136,9 @@ enhavo_resource:
             class: Enhavo\Bundle\ResourceBundle\Input\Input
             resource: enhavo_article.article
             form: Enhavo\Bundle\ArticleBundle\Form\Type\ArticleType
+            form_options:
+                component_theme: admin
+            auto_save: 5
             tabs:
                 main:
                     type: form
@@ -153,20 +155,21 @@ enhavo_resource:
                         published_until
                         public
                 content:
-                    type: form
-                    label: article.label.content
-                    translation_domain: EnhavoArticleBundle
+                    type: content
                 meta:
-                    type: form
-                    label: article.label.meta
-                    translation_domain: EnhavoArticleBundle
+                    type: meta
             actions:
+                save:
+                    type: save
                 duplicate:
                     type: duplicate
-                    route: enhavo_article_article_duplicate
+                    route: enhavo_article_admin_api_duplicate
                     permission: ROLE_ENHAVO_ARTICLE_ARTICLE_CREATE
+                    enabled: 'expr:resource && resource.id'
                 preview:
                     type: preview
-                    route: enhavo_article_article_preview
+                    route: enhavo_article_admin_article_preview
+                    enabled: 'expr:resource && resource.id'
                 comments:
                     type: comments
+                    enabled: 'expr:resource && resource.id'

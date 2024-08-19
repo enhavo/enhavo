@@ -65,12 +65,6 @@ services:
         tags:
             - { name: vue.component, component: 'view-view' }
 
-    '@enhavo/app/components/form/TabHead.vue':
-        chunk: 'vue'
-        static: true
-        tags:
-            - { name: vue.component, component: 'form-tab-head' }
-
     '@enhavo/app/components/main/OverlayContainer.vue':
         chunk: 'vue'
         static: true
@@ -95,17 +89,35 @@ services:
         tags:
             - { name: vue.component, component: 'batch-dropdown' }
 
-    '@enhavo/app/components/toolbar/Toolbar.vue':
+    '@enhavo/app/components/toolbar/ToolbarToolbar.vue':
         chunk: 'vue'
         static: true
         tags:
-            - { name: vue.component, component: 'toolbar' }
+            - { name: vue.component, component: 'toolbar-toolbar' }
+
+    '@enhavo/app/components/toolbar/ToolbarWidgetQuickMenu.vue':
+        chunk: 'main'
+        static: true
+        tags:
+            - { name: vue.component, component: 'toolbar-widget-quick-menu' }
+
+    '@enhavo/app/components/toolbar/ToolbarWidgetIcon.vue':
+        chunk: 'main'
+        static: true
+        tags:
+            - { name: vue.component, component: 'toolbar-widget-icon' }
 
     '@enhavo/app/components/main/LoadingScreen.vue':
         chunk: 'vue'
         static: true
         tags:
             - { name: vue.component, component: 'loading-screen' }
+
+    '@enhavo/app/components/main/MainMain.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'main-main' }
 
     '@enhavo/app/components/list/ItemComponent.vue':
         chunk: 'vue'
@@ -125,6 +137,12 @@ services:
         tags:
             - { name: vue.component, component: 'resource-index' }
 
+    '@enhavo/app/components/resource/ResourceCreate.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'resource-create' }
+
     'vue-select':
         chunk: 'vue'
         static: true
@@ -138,23 +156,35 @@ services:
         tags:
             - { name: vue.component, component: 'datepicker' }
 
-    '@enhavo/app/components/form/TabContainer.vue':
+    '@enhavo/app/components/menu/MenuMenu.vue':
         chunk: 'vue'
         static: true
         tags:
-            - { name: vue.component, component: 'form-tab-container' }
+            - { name: vue.component, component: 'menu-menu' }
 
-    '@enhavo/app/components/menu/MenuNotificationComponent.vue':
-        chunk: 'vue'
+    '@enhavo/app/components/menu/MenuDropdown.vue':
+        chunk: 'main'
+        static: true
+        tags:
+            - { name: vue.component, component: 'menu-dropdown' }
+
+    '@enhavo/app/components/menu/MenuItem.vue':
+        chunk: 'main'
+        static: true
+        tags:
+            - { name: vue.component, component: 'menu-item' }
+
+    '@enhavo/app/components/menu/MenuList.vue':
+        chunk: 'main'
+        static: true
+        tags:
+            - { name: vue.component, component: 'menu-list' }
+
+    '@enhavo/app/components/menu/MenuNotification.vue':
+        chunk: 'main'
         static: true
         tags:
             - { name: vue.component, component: 'menu-notification' }
-
-    '@enhavo/app/components/menu/Menu.vue':
-        chunk: 'vue'
-        static: true
-        tags:
-            - { name: vue.component, component: 'app-menu' }
 
     '@enhavo/app/components/view-stack/ViewstackDropdown.vue':
         chunk: 'vue'
@@ -264,3 +294,15 @@ services:
         static: true
         tags:
             - { name: vue.component, component: 'collection-table-pagination' }
+
+    '@enhavo/app/components/tab/TabForm.vue':
+        chunk: 'tab'
+        static: true
+        tags:
+            - { name: vue.component, component: 'tab-form' }
+
+    '@enhavo/app/components/tab/TabBase.vue':
+        chunk: 'tab'
+        static: true
+        tags:
+            - { name: vue.component, component: 'tab-base' }

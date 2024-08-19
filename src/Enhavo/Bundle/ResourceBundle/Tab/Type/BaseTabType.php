@@ -28,6 +28,7 @@ class BaseTabType extends AbstractType implements TabTypeInterface
     public function createViewData(array $options, Data $data, InputInterface $input): void
     {
         $data->set('component', $options['component']);
+        $data->set('model', $options['model']);
         $data->set('label', $this->translator->trans($options['label'], [], $options['translation_domain']));
     }
 
@@ -53,6 +54,7 @@ class BaseTabType extends AbstractType implements TabTypeInterface
             'translation_domain' => null,
             'permission' => null,
             'enabled' => true,
+            'model' => 'BaseTab',
         ]);
 
         $resolver->setRequired([

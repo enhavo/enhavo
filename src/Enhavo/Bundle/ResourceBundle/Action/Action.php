@@ -8,11 +8,11 @@ use Enhavo\Component\Type\AbstractContainerType;
 
 /**
  * @property ActionTypeInterface $type
- * @property ActionTypeInterface $parents
+ * @property ActionTypeInterface[] $parents
  */
 class Action extends AbstractContainerType
 {
-    public function createViewData(ResourceInterface $resource = null): array
+    public function createViewData(object $resource = null): array
     {
         $data = new Data();
         $data->set('key', $this->key);
@@ -26,12 +26,12 @@ class Action extends AbstractContainerType
         return $data->normalize();
     }
 
-    public function getPermission(ResourceInterface $resource = null)
+    public function getPermission(object $resource = null)
     {
         return $this->type->getPermission($this->options, $resource);
     }
 
-    public function isEnabled(ResourceInterface $resource = null): bool
+    public function isEnabled(object $resource = null): bool
     {
         return $this->type->isEnabled($this->options, $resource);
     }

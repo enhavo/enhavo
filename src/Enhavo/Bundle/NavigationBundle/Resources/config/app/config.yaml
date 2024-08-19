@@ -4,8 +4,8 @@ enhavo_app:
             path: '@EnhavoNavigationBundle/Resources/views'
             alias: EnhavoNavigation
             priority: 10
-    form_themes:
-        - '@EnhavoNavigation/admin/form/navigation/fields.html.twig'
+#    form_themes:
+#        - '@EnhavoNavigation/admin/form/navigation/fields.html.twig'
     roles:
         enhavo_navigation_navigation_index:
             role: ROLE_ENHAVO_NAVIGATION_NAVIGATION_INDEX

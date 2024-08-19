@@ -5,59 +5,59 @@ services:
 
     Enhavo\Bundle\AppBundle\Action\Type\CreateActionType:
         tags:
-            - { name: enhavo.action }
+            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\AppBundle\Action\Type\DownloadActionType:
         tags:
-            - { name: enhavo.action }
+            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\AppBundle\Action\Type\OpenActionType:
         tags:
-            - { name: enhavo.action }
+            - { name: enhavo_resource.action }
 
-    Enhavo\Bundle\AppBundle\Action\Type\DeleteActionType:
-        arguments:
-            - '@security.csrf.token_manager'
-        tags:
-            - { name: enhavo.action }
+#    Enhavo\Bundle\AppBundle\Action\Type\DeleteActionType:
+#        arguments:
+#            - '@security.csrf.token_manager'
+#        tags:
+#            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\AppBundle\Action\Type\CloseActionType:
         tags:
-            - { name: enhavo.action }
+            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\AppBundle\Action\Type\DuplicateActionType:
         tags:
-            - { name: enhavo.action }
+            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\AppBundle\Action\Type\EventActionType:
         tags:
-            - { name: enhavo.action }
+            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\AppBundle\Action\Type\FormActionType:
         tags:
-            - { name: enhavo.action }
+            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\AppBundle\Action\Type\UpdateActionType:
         tags:
-            - { name: enhavo.action }
+            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\AppBundle\Action\Type\TransitionActionType:
         tags:
-            - { name: enhavo.action }
+            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\AppBundle\Action\Type\ModalActionType:
         tags:
-            - { name: enhavo.action }
+            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\AppBundle\Action\Type\OutputStreamActionType:
         tags:
-            - { name: enhavo.action }
+            - { name: enhavo_resource.action }
 
-    Enhavo\Bundle\AppBundle\Action\Type\DropdownActionType:
-        arguments:
-            - '@enhavo_app.action_manager'
-        tags:
-            - { name: enhavo.action }
+#    Enhavo\Bundle\AppBundle\Action\Type\DropdownActionType:
+#        calls:
+#            - [setActionManager, ['@Enhavo\Bundle\ResourceBundle\Action\ActionManager']]
+#        tags:
+#            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\AppBundle\Action\Type\FilterActionType:
         tags:

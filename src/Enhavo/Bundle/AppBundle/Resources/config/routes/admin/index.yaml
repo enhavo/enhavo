@@ -1,0 +1,9 @@
+enhavo_app_admin_index:
+    path: /
+    defaults:
+        _expose: admin
+        _vue:
+            component: main-main
+            groups: admin
+        _endpoint:
+            type: admin

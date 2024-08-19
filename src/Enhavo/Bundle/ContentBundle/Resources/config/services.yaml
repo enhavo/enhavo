@@ -97,3 +97,11 @@ services:
             - '@enhavo_routing.router'
         tags:
             - { name: enhavo_api.data_normalizer }
+
+    Enhavo\Bundle\ContentBundle\Tab\MetaTabType:
+        tags:
+            - { name: enhavo_resource.tab }
+
+    Enhavo\Bundle\ContentBundle\Tab\ContentTabType:
+        tags:
+            - { name: enhavo_resource.tab }

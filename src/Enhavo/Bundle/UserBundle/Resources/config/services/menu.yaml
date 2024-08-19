@@ -1,15 +1,12 @@
 services:
     Enhavo\Bundle\UserBundle\Menu\UserMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: user_user }
+            - { name: enhavo_app.menu }
 
     Enhavo\Bundle\UserBundle\Menu\GroupMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: user_group }
+            - { name: enhavo_app.menu }
 
-    Enhavo\Bundle\UserBundle\Menu\UserMainMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\ListMenu
+    Enhavo\Bundle\UserBundle\Menu\UserMainMenuType:
         tags:
-            - { name: enhavo.menu, alias: user }
+            - { name: enhavo_app.menu }

@@ -18,7 +18,7 @@ use Symfony\Component\Routing\RouterInterface;
 class SaveActionType extends AbstractActionType
 {
     public function __construct(
-        private readonly RouterInterface $router
+        private readonly RouterInterface $router,
     )
     {
     }

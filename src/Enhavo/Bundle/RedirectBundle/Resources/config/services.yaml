@@ -1,8 +1,7 @@
 services:
     Enhavo\Bundle\RedirectBundle\Menu\RedirectMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: redirect }
+            - { name: enhavo_app.menu }
 
     enhavo_redirect.redirect.redirect_manager:
         class: Enhavo\Bundle\RedirectBundle\Redirect\RedirectManager

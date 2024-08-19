@@ -19,26 +19,25 @@ services:
         tags:
             - { name: validator.constraint_validator, alias: subscriber_exists }
 
-    Enhavo\Bundle\NewsletterBundle\Menu\NewsletterMainMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\ListMenu
+    Enhavo\Bundle\NewsletterBundle\Menu\NewsletterMainMenuType:
         tags:
-            - { name: enhavo.menu, alias: 'newsletter' }
+            - { name: enhavo_app.menu }
 
     Enhavo\Bundle\NewsletterBundle\Action\SendActionType:
         tags:
-            - { name: enhavo.action }
+            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\NewsletterBundle\Action\SendTestActionType:
         tags:
-            - { name: enhavo.action }
+            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\NewsletterBundle\Action\StatsActionType:
         tags:
-            - { name: enhavo.action }
+            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\NewsletterBundle\Action\ActivateActionType:
         tags:
-            - { name: enhavo.action }
+            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\NewsletterBundle\Block\SubscribeBlockType:
         tags:
@@ -72,19 +71,16 @@ services:
             - { name: twig.extension }
 
     Enhavo\Bundle\NewsletterBundle\Menu\SubscriberMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: newsletter_subscriber }
+            - { name: enhavo_app.menu }
 
     Enhavo\Bundle\NewsletterBundle\Menu\PendingMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: newsletter_pending }
+            - { name: enhavo_app.menu }
 
     Enhavo\Bundle\NewsletterBundle\Menu\GroupMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: newsletter_group }
+            - { name: enhavo_app.menu }
 
     Enhavo\Bundle\NewsletterBundle\Form\Type\SubscriberType:
         arguments:

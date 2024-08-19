@@ -60,7 +60,7 @@
     "source-sans-pro": "^2.45.0",
     "stream-browserify": "3.0.0",
     "swagger-ui": "^4.15.5",
-    "tinymce": "^7.0.1",
+    "tinymce": "^7.2.1",
     "typeface-cormorant-garamond": "^0.0.72",
     "typescript": "^5.2.2",
     "uuid": "^3.3.2",

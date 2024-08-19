@@ -27,24 +27,30 @@ compiler_pass:
         service: '@enhavo/app/form/FormRegistry'
         tag: 'enhavo_app.form'
     menu:
-        path: '../../compiler-pass/registry.js'
-        service: '@enhavo/app/menu/MenuRegistry'
-        tag: 'enhavo_app.menu'
+        path: '@enhavo/app/compiler-pass/model-factory-register.js'
+        service: '@enhavo/app/menu/MenuItemFactory'
+        tag: 'enhavo_app.menu_item'
     modal:
         path: '../../compiler-pass/model-factory-register.js'
         service: '@enhavo/app/modal/ModalFactory'
         tag: 'enhavo_app.modal'
+    tab:
+        path: '../../compiler-pass/model-factory-register.js'
+        service: '@enhavo/app/tab/TabFactory'
+        tag: 'enhavo_app.tab'
     view:
         path: '../../compiler-pass/registry.js'
         service: '@enhavo/app/view-stack/ViewRegistry'
         tag: 'enhavo_app.view'
     toolbar_widget:
-        path: '../../compiler-pass/registry.js'
-        service: '@enhavo/app/toolbar/widget/WidgetRegistry'
-        tag: 'enhavo_app.toolbar'
+        path: '@enhavo/app/compiler-pass/model-factory-register.js'
+        service: '@enhavo/app/toolbar/ToolbarWidgetFactory'
+        tag: 'enhavo_app.toolbar_widget'
     vue_factory:
         path: '@enhavo/app/compiler-pass/vue-factory.js'
         priority: 150
+    admin_form:
+        path: '@enhavo/app/compiler-pass/admin-form-register.js'
 
 services:
     '@enhavo/core/Router':

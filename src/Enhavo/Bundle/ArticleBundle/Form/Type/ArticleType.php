@@ -31,10 +31,10 @@ class ArticleType extends AbstractResourceType
             ]
         ));
 
-        $builder->add('content', BlockNodeType::class, array(
-            'label' => 'form.label.content',
-            'translation_domain' => 'EnhavoAppBundle',
-        ));
+//        $builder->add('content', BlockNodeType::class, array(
+//            'label' => 'form.label.content',
+//            'translation_domain' => 'EnhavoAppBundle',
+//        ));
 
         $builder->add('thread', ThreadType::class, array(
             'label' => 'form.label.comment',

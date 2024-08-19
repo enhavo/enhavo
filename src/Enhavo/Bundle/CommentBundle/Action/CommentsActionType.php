@@ -43,6 +43,7 @@ class CommentsActionType extends AbstractActionType
     {
         $resolver->setDefaults([
             'component' => 'open-action',
+            'model' => 'OpenAction',
             'route' => 'enhavo_comment_comment_index',
             'label' => 'comment.label.comments',
             'translation_domain' => 'EnhavoCommentBundle',

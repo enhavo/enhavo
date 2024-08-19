@@ -21,4 +21,4 @@ services:
         arguments:
             - '@router'
         tags:
-            - { name: enhavo.action }
+            - { name: enhavo_resource.action }

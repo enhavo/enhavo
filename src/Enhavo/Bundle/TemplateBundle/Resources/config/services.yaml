@@ -1,8 +1,7 @@
 services:
     Enhavo\Bundle\TemplateBundle\Menu\TemplateMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: template }
+            - { name: enhavo_app.menu }
 
     Enhavo\Bundle\TemplateBundle\Form\Type\TemplateType:
         arguments:

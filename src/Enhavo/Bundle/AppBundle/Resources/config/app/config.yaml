@@ -26,6 +26,10 @@ enhavo_app:
             path: '@EnhavoAppBundle/Resources/views'
             alias: 'EnhavoApp'
             priority: 10
+    admin:
+#        form_mapping:
+#            form-row: form-admin-row
+#            form-widget': form-admin-widget
     area:
         theme:
             firewall: main

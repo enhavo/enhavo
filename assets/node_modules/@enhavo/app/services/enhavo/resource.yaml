@@ -10,3 +10,13 @@ services:
             - '@enhavo/app/collection/CollectionFactory'
         tags:
             - { name: vue.service, service: 'resourceIndexManager', reactive: true }
+
+    '@enhavo/app/manager/ResourceInputManager':
+        import: ResourceInputManager
+        arguments:
+            - '@enhavo/app/routing/Router'
+            - '@enhavo/app/action/ActionManager'
+            - '@enhavo/app/tab/TabManager'
+            - '@enhavo/vue-form/form/FormFactory'
+        tags:
+            - { name: vue.service, service: 'resourceInputManager', reactive: true }

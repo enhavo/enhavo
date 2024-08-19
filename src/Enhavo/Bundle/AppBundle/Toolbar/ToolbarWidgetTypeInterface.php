@@ -8,33 +8,14 @@
 
 namespace Enhavo\Bundle\AppBundle\Toolbar;
 
-use Enhavo\Bundle\AppBundle\Type\TypeInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Enhavo\Bundle\ApiBundle\Data\Data;
+use Enhavo\Component\Type\TypeInterface;
 
 interface ToolbarWidgetTypeInterface extends TypeInterface
 {
-    /**
-     * @param $name string
-     * @param $options array
-     * @return string
-     */
-    public function createViewData($name, array $options);
+    public function createViewData(array $options, Data $data): void;
 
-    /**
-     * @param array $options
-     * @return string
-     */
-    public function getPermission(array $options);
+    public function getPermission(array $options): mixed;
 
-    /**
-     * @param array $options
-     * @return boolean
-     */
-    public function isHidden(array $options);
-
-    /**
-     * @param $resolver OptionsResolver
-     * @return void
-     */
-    public function configureOptions(OptionsResolver $resolver);
+    public function isEnabled(array $options): bool;
 }

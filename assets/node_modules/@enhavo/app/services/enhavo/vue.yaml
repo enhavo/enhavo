@@ -1,29 +1,31 @@
-compiler_pass:
-    vue:
-        path: '../../compiler-pass/vue.js'
-        service: '@enhavo/app/vue/VueRegistry'
-
 services:
     '@enhavo/app/vue/VueRegistry':
         chunk: 'vue'
         arguments:
             - 'string:app'
 
-    '@enhavo/app/vue/VueApp':
-        chunk: 'vue'
-        arguments:
-            - '@enhavo/app/vue/VueRegistry'
-            - '@enhavo/app/view-stack/EventDispatcher'
-
     '@enhavo/app/vue/ClickOutside':
         chunk: 'vue'
+        import: ClickOutside
         arguments:
             - '@enhavo/app/view-stack/EventDispatcher'
             - '@enhavo/app/view/View'
         tags:
             - { name: vue.directive, directive: 'click-outside' }
 
+    '@enhavo/app/components/form/FormAdminRow.vue':
+        chunk: 'form'
+        static: true
+        tags:
+            - { name: vue.component, component: 'form-admin-row' }
+
+    '@enhavo/app/components/form/FormAdminWidget.vue':
+        chunk: 'form'
+        static: true
+        tags:
+            - { name: vue.component, component: 'form-widget' }
 
 
-
-
+    # missing services
+    # app.provide('eventDispatcher', this.eventDispatcher);
+    # app.component('draggable', draggable);

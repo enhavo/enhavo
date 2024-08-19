@@ -36,7 +36,7 @@ class EnhavoAppExtension extends Extension implements PrependExtensionInterface
         $container->setParameter('enhavo_app.login.route_parameters', $config['login']['route_parameters']);
         $container->setParameter('enhavo_app.template_paths', $config['template_paths']);
         $container->setParameter('enhavo_app.roles', $config['roles']);
-        $container->setParameter('enhavo_app.form_themes', $config['form_themes']);
+        $container->setParameter('enhavo_app.form_themes', $config['form_themes'] ?? []);
         $container->setParameter('enhavo_app.locale', $config['locale']);
         $container->setParameter('enhavo_app.locale_resolver', $config['locale_resolver']);
         $container->setParameter('enhavo_app.toolbar_widget.primary', $config['toolbar_widget']['primary']);
@@ -45,6 +45,7 @@ class EnhavoAppExtension extends Extension implements PrependExtensionInterface
         $container->setParameter('enhavo_app.endpoint.template_url_prefix', $config['endpoint']['template_url_prefix'] ?? null);
         $container->setParameter('enhavo_app.areas', $config['area'] ?? []);
         $container->setParameter('enhavo_app.vite.builds', $config['vite']['builds'] ?? []);
+        $container->setParameter('enhavo_app.form_mapping', ['admin' => $config['admin']['form_mapping'] ?? []]);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 

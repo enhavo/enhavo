@@ -1,39 +1,30 @@
 services:
-    enhavo_app.toolbar_widget_collector:
-        class: Enhavo\Bundle\AppBundle\Type\TypeCollector
-        arguments:
-            - '@service_container'
-            - 'ToolbarWidget'
-
     Enhavo\Bundle\AppBundle\Toolbar\ToolbarManager:
         arguments:
-            - '@enhavo_app.toolbar_widget_collector'
             - '@security.authorization_checker'
+            - '@Enhavo\Component\Type\FactoryInterface[ToolbarWidget]'
 
-    Enhavo\Bundle\AppBundle\Toolbar\AbstractToolbarWidgetType:
-        abstract: true
-        arguments:
-            - '@translator'
-
-    Enhavo\Bundle\AppBundle\Toolbar\Widget\IconToolbarWidgetType:
-        public: true
-        arguments:
-            - '@translator'
-            - '@router'
+    Enhavo\Bundle\AppBundle\Toolbar\Type\BaseToolbarWidgetType:
         tags:
-            - { name: enhavo_app.toolbar_widget, alias: icon }
+            - { name: enhavo_app.toolbar_widget }
 
-    Enhavo\Bundle\AppBundle\Toolbar\Widget\QuickMenuToolbarWidgetType:
-        public: true
+    Enhavo\Bundle\AppBundle\Toolbar\Type\IconToolbarWidgetType:
         arguments:
             - '@translator'
             - '@router'
         tags:
-            - { name: enhavo_app.toolbar_widget, alias: quick_menu }
+            - { name: enhavo_app.toolbar_widget }
 
-
-    Enhavo\Bundle\AppBundle\Toolbar\Widget\NewWindowToolbarWidgetType:
-        public: true
-        parent: Enhavo\Bundle\AppBundle\Toolbar\AbstractToolbarWidgetType
+    Enhavo\Bundle\AppBundle\Toolbar\Type\QuickMenuToolbarWidgetType:
+        arguments:
+            - '@translator'
+            - '@router'
         tags:
-            - { name: enhavo_app.toolbar_widget, alias: new_window }
+            - { name: enhavo_app.toolbar_widget }
+
+
+    Enhavo\Bundle\AppBundle\Toolbar\Type\NewWindowToolbarWidgetType:
+        arguments:
+            - '@translator'
+        tags:
+            - { name: enhavo_app.toolbar_widget }

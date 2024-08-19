@@ -14,7 +14,6 @@ class OpenActionType extends AbstractActionType
     public function createViewData(array $options, Data $data, ResourceInterface $resource = null): void
     {
         $data->set('target', $options['target']);
-        $data->set('key', $options['key']);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

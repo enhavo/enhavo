@@ -1,0 +1,23 @@
+services:
+    '@enhavo/app/tab/TabFactory':
+        import: TabFactory
+
+    '@enhavo/app/tab/TabManager':
+        import: TabManager
+        chunk: 'tab'
+        arguments:
+            - '@enhavo/app/tab/TabFactory'
+        tags:
+            - { name: vue.service, service: 'tabManager' }
+
+    '@enhavo/app/tab/model/BaseTab':
+        import: BaseTab
+        chunk: 'tab'
+        tags:
+            - { name: 'enhavo_app.tab' }
+
+    '@enhavo/app/tab/model/FormTab':
+        import: FormTab
+        chunk: 'tab'
+        tags:
+            - { name: 'enhavo_app.tab' }

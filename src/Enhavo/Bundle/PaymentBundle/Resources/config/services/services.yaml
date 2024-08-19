@@ -1,7 +1,7 @@
 services:
     Enhavo\Bundle\PaymentBundle\Action\CreatePaymentMethodActionType:
         tags:
-            - { name: enhavo.action }
+            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\PaymentBundle\Form\Type\PaymentMethodCreateType:
         arguments:
@@ -23,14 +23,12 @@ services:
             - { name: form.type }
 
     Enhavo\Bundle\PaymentBundle\Menu\PaymentMethodMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: payment_payment_method }
+            - { name: enhavo_app.menu }
 
     Enhavo\Bundle\PaymentBundle\Menu\PaymentMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: payment_payment }
+            - { name: enhavo_app.menu }
 
     Enhavo\Bundle\PaymentBundle\Resolver\DefaultPaymentMethodResolver:
         arguments:
@@ -73,25 +71,25 @@ services:
 
     Enhavo\Bundle\PaymentBundle\Action\CompleteActionType:
         tags:
-            - { name: enhavo.action }
+            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\PaymentBundle\Action\PayActionType:
         tags:
-            - { name: enhavo.action }
+            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\PaymentBundle\Action\RefreshStateActionType:
         arguments:
             - '@request_stack'
         tags:
-            - { name: enhavo.action }
+            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\PaymentBundle\Action\ResetActionType:
         tags:
-            - { name: enhavo.action }
+            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\PaymentBundle\Action\CancelActionType:
         tags:
-            - { name: enhavo.action }
+            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\PaymentBundle\EventListener\PaymentSubscriber:
         tags:

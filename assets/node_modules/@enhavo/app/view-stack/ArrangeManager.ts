@@ -1,6 +1,6 @@
 import ViewInterface from "./ViewInterface";
 import MenuManager from "@enhavo/app/menu/MenuManager";
-import MenuList from "@enhavo/app/menu/model/MenuList";
+import ListMenu from "@enhavo/app/menu/model/MenuList";
 
 export default class ArrangeManager
 {
@@ -25,8 +25,8 @@ export default class ArrangeManager
                 if(views.length >= 2) {
                     this.menuManager.close();
                     for(let item of this.menuManager.getItems()) {
-                        if((<MenuList>item).close) {
-                            (<MenuList>item).close();
+                        if((<ListMenu>item).close) {
+                            (<ListMenu>item).close();
                         }
                     }
                 } else if(views.length == 0) {

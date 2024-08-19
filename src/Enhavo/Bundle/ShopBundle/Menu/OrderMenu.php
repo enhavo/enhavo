@@ -8,15 +8,13 @@
 
 namespace Enhavo\Bundle\ShopBundle\Menu;
 
-use Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu;
+use Enhavo\Bundle\AppBundle\Menu\AbstractMenuType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class OrderMenu extends BaseMenu
+class OrderMenu extends AbstractMenuType
 {
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        parent::configureOptions($resolver);
-
         $resolver->setDefaults([
             'icon' => 'shopping_cart',
             'label' => 'label.order',
@@ -26,7 +24,7 @@ class OrderMenu extends BaseMenu
         ]);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'shop_order';
     }

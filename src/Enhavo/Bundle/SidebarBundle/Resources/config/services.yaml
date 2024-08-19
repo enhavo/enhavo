@@ -1,8 +1,7 @@
 services:
     Enhavo\Bundle\SidebarBundle\Menu\SidebarMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: sidebar }
+            - { name: enhavo_app.menu }
 
     Enhavo\Bundle\SidebarBundle\Form\Type\SidebarType:
         arguments:

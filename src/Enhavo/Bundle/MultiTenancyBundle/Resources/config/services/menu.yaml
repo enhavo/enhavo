@@ -1,15 +1,10 @@
 services:
     Enhavo\Bundle\MultiTenancyBundle\Menu\SwitchTenantMenu:
-        public: true
         arguments:
-            - '@translator'
-            - '@router'
             - '@Enhavo\Bundle\MultiTenancyBundle\Tenant\TenantManager'
             - '@security.authorization_checker'
-        calls:
-            - [setContainer, [ '@service_container' ] ]
         tags:
-            - { name: enhavo.menu, alias: 'switch_tenant' }
+            - { name: enhavo_app.menu }
 
     Enhavo\Bundle\MultiTenancyBundle\Controller\MultiTenancyController:
         arguments:

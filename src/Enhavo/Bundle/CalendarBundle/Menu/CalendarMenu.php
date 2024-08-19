@@ -8,15 +8,13 @@
 
 namespace Enhavo\Bundle\CalendarBundle\Menu;
 
-use Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu;
+use Enhavo\Bundle\AppBundle\Menu\AbstractMenuType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CalendarMenu extends BaseMenu
+class CalendarMenu extends AbstractMenuType
 {
     public function configureOptions(OptionsResolver $resolver)
     {
-        parent::configureOptions($resolver);
-
         $resolver->setDefaults([
             'icon' => 'event',
             'label' => 'label.calendar',
@@ -26,7 +24,7 @@ class CalendarMenu extends BaseMenu
         ]);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'calendar';
     }

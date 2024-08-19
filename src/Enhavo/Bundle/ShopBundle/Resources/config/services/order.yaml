@@ -53,31 +53,31 @@ services:
 
     Enhavo\Bundle\ShopBundle\Action\BillingActionType:
         tags:
-            - { name: enhavo.action }
+            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\ShopBundle\Action\PackingSlipActionType:
         tags:
-            - { name: enhavo.action }
+            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\ShopBundle\Action\CancelActionType:
         tags:
-            - { name: enhavo.action }
+            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\ShopBundle\Action\CouponActionType:
         tags:
-            - { name: enhavo.action }
+            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\ShopBundle\Action\PaidActionType:
         tags:
-            - { name: enhavo.action }
+            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\ShopBundle\Action\RefundActionType:
         tags:
-            - { name: enhavo.action }
+            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\ShopBundle\Action\ShipActionType:
         tags:
-            - { name: enhavo.action }
+            - { name: enhavo_resource.action }
 
     enhavo.state_resolver.order:
         public: true

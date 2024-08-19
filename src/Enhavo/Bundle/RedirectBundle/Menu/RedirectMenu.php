@@ -8,15 +8,13 @@
 
 namespace Enhavo\Bundle\RedirectBundle\Menu;
 
-use Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu;
+use Enhavo\Bundle\AppBundle\Menu\AbstractMenuType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class RedirectMenu extends BaseMenu
+class RedirectMenu extends AbstractMenuType
 {
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        parent::configureOptions($resolver);
-
         $resolver->setDefaults([
             'icon' => 'compare_arrows',
             'label' => 'redirect.label.redirect',
@@ -26,7 +24,7 @@ class RedirectMenu extends BaseMenu
         ]);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'redirect';
     }

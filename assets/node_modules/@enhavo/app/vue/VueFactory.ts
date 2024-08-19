@@ -5,6 +5,7 @@ export class VueFactory
     private plugins: Plugin[] = [];
     private components: Array<RegistryComponent> = [];
     private services: Array<RegistryService> = [];
+    private directives: Array<RegistryDirective> = [];
 
     registerPlugin(plugin: Plugin)
     {
@@ -15,6 +16,12 @@ export class VueFactory
     {
         this.deleteComponent(name);
         this.components.push(new RegistryComponent(name, component));
+    }
+
+    registerDirective(name: string, directive: any)
+    {
+        this.deleteDirective(name);
+        this.directives.push(new RegistryDirective(name, directive));
     }
 
     registerService(name: string, service: any, reactive: boolean|null = false)
@@ -38,6 +45,10 @@ export class VueFactory
 
         for (let plugin of this.plugins) {
             app.use(plugin);
+        }
+
+        for (let directive of this.directives) {
+            app.directive(directive.name, directive.directive);
         }
 
         for (let component of this.components) {
@@ -65,6 +76,21 @@ export class VueFactory
             this.components.splice(this.components.indexOf(foundEntry), 1);
         }
     }
+
+    private deleteDirective(name: string)
+    {
+        let foundEntry = null;
+        for (let entry of this.directives) {
+            if (entry.name === name) {
+                foundEntry = entry;
+                break;
+            }
+        }
+
+        if (foundEntry) {
+            this.directives.splice(this.directives.indexOf(foundEntry), 1);
+        }
+    }
 }
 
 class RegistryService
@@ -82,6 +108,15 @@ class RegistryComponent
     constructor(
         public name: string,
         public component: Component
+    ) {
+    }
+}
+
+class RegistryDirective
+{
+    constructor(
+        public name: string,
+        public directive: any
     ) {
     }
 }
