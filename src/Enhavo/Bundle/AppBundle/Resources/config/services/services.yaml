@@ -39,7 +39,6 @@ services:
     Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface:
         alias: enhavo_app.util.secure_url_token_generator
 
-
     Enhavo\Bundle\AppBundle\Template\TemplateResolver:
         arguments:
             - '@kernel'
@@ -150,3 +149,9 @@ services:
         arguments:
             - '%enhavo_app.vite.builds%'
             - '%kernel.project_dir%/public'
+
+    Enhavo\Bundle\AppBundle\Form\ThemeVueTypeExtension:
+        arguments:
+            - '%enhavo_app.form_mapping%'
+        tags:
+            - { name: 'form.type_extension', priority: 0 }

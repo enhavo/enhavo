@@ -53,6 +53,16 @@ enhavo_article_admin_api_article_batch:
             type: resource_batch
             grid: enhavo_article.article
 
+
+enhavo_article_admin_api_duplicate:
+    path: /article/duplicate/{id}
+    methods: [POST]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_duplicate
+            grid: enhavo_article.article
+
 enhavo_article_admin_api_article_auto_complete:
     options:
         expose: true

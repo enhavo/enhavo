@@ -5,9 +5,8 @@ services:
             - '%enhavo_setting.settings%'
 
     Enhavo\Bundle\SettingBundle\Menu\SettingMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: setting }
+            - { name: enhavo_app.menu }
 
     Enhavo\Bundle\SettingBundle\Init\InitSetting:
         public: true

@@ -1,19 +1,19 @@
 services:
     Enhavo\Bundle\ShopBundle\Action\VariantActionType:
         tags:
-            - { name: enhavo.action }
+            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\ShopBundle\Action\GenerateVariantActionType:
         tags:
-            - { name: enhavo.action }
+            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\ShopBundle\Action\CreateAttributeActionType:
         tags:
-            - { name: enhavo.action }
+            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\ShopBundle\Action\GenerateCouponActionType:
         tags:
-            - { name: enhavo.action }
+            - { name: enhavo_resource.action }
 
     enhavo_shop.product_manager:
         public: true

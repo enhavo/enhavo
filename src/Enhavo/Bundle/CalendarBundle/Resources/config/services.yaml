@@ -14,9 +14,8 @@ services:
             - { name: validator.constraint_validator, alias: valid_appointment_date }
 
     Enhavo\Bundle\CalendarBundle\Menu\CalendarMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: calendar }
+            - { name: enhavo_app.menu }
 
     enhavo_calendar.import_manager:
         class: Enhavo\Bundle\CalendarBundle\Import\ImportManager

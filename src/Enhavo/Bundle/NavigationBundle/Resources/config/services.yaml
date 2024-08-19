@@ -1,8 +1,7 @@
 services:
     Enhavo\Bundle\NavigationBundle\Menu\NavigationMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: navigation }
+            - { name: enhavo_app.menu }
 
     Enhavo\Bundle\NavigationBundle\Form\Type\NavigationType:
         arguments:

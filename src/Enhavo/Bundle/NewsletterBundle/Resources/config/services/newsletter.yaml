@@ -38,9 +38,8 @@ services:
             - { name: form.type, alias: enhavo_newsletter_newsletter }
 
     Enhavo\Bundle\NewsletterBundle\Menu\NewsletterMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: newsletter_newsletter }
+            - { name: enhavo_app.menu }
 
     Enhavo\Bundle\NewsletterBundle\Command\SendNewsletterCommand:
         arguments:

@@ -106,8 +106,8 @@ enhavo_doctrine_extension:
             discrName: 'enhavo'
 
 enhavo_app:
-    form_themes:
-        - '@EnhavoShop/admin/form/shop/fields.html.twig'
+#    form_themes:
+#        - '@EnhavoShop/admin/form/shop/fields.html.twig'
     template_paths:
         enhavo_shop:
             path: '@EnhavoShopBundle/Resources/views'

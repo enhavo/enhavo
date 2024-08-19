@@ -47,10 +47,37 @@ export class Form
             }
 
             if (!hasPropertyChild) {
-                return null;
+                let path = [];
+                for (let parent of this.getParents()) {
+                    path.push(parent.name);
+                }
+                path.push(this.name);
+                throw 'Form child "'+name+'" does not exist in "'+path.join('.')+'".'
             }
         }
         return searchElement;
+    }
+
+    public has(name: string): boolean
+    {
+        let propertyChain = name.split('.');
+
+        let searchElement: Form = this;
+        for (let property of propertyChain) {
+            let hasPropertyChild = false;
+            for (let child of searchElement.children) {
+                if (child.name == property) {
+                    hasPropertyChild = true;
+                    searchElement = child;
+                    break;
+                }
+            }
+
+            if (!hasPropertyChild) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public getRoot(): Form

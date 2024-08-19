@@ -1,85 +1,68 @@
 services:
-    Enhavo\Bundle\ShopBundle\Menu\CatalogMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\ListMenu
+    Enhavo\Bundle\ShopBundle\Menu\CatalogMenuType:
         tags:
-            - { name: enhavo.menu, alias: shop_catalog }
+            - { name: enhavo_app.menu }
 
-    Enhavo\Bundle\ShopBundle\Menu\ConfigurationMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\ListMenu
+    Enhavo\Bundle\ShopBundle\Menu\ConfigurationMenuType:
         tags:
-            - { name: enhavo.menu, alias: shop_configuration }
+            - { name: enhavo_app.menu }
 
-    Enhavo\Bundle\ShopBundle\Menu\SalesMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\ListMenu
+    Enhavo\Bundle\ShopBundle\Menu\SalesMenuType:
         tags:
-            - { name: enhavo.menu, alias: shop_sales }
+            - { name: enhavo_app.menu }
 
     Enhavo\Bundle\ShopBundle\Menu\ProductMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: shop_product }
+            - { name: enhavo_app.menu }
 
     Enhavo\Bundle\ShopBundle\Menu\OrderMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: shop_order }
+            - { name: enhavo_app.menu }
 
     Enhavo\Bundle\ShopBundle\Menu\ProductOptionMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: shop_product_option }
+            - { name: enhavo_app.menu }
 
     Enhavo\Bundle\ShopBundle\Menu\PromotionMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: shop_promotion }
+            - { name: enhavo_app.menu }
 
     Enhavo\Bundle\ShopBundle\Menu\ProductAttributeMenu:
-            parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
-            tags:
-                - { name: enhavo.menu, alias: shop_product_attribute }
+        tags:
+            - { name: enhavo_app.menu }
 
     Enhavo\Bundle\ShopBundle\Menu\ProductAssociationTypeMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: shop_product_association_type }
+            - { name: enhavo_app.menu }
 
     Enhavo\Bundle\ShopBundle\Menu\TaxCategoryMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: shop_tax_category }
+            - { name: enhavo_app.menu }
 
     Enhavo\Bundle\ShopBundle\Menu\TaxRateMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: shop_tax_rate }
+            - { name: enhavo_app.menu }
 
     Enhavo\Bundle\ShopBundle\Menu\VoucherMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: shop_voucher }
+            - { name: enhavo_app.menu }
 
     Enhavo\Bundle\ShopBundle\Menu\CategoryMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: shop_category }
+            - { name: enhavo_app.menu }
 
     Enhavo\Bundle\ShopBundle\Menu\TagMenuType:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: shop_tag }
+            - { name: enhavo_app.menu }
 
     Enhavo\Bundle\ShopBundle\Menu\CountryMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: shop_country }
+            - { name: enhavo_app.menu }
 
     Enhavo\Bundle\ShopBundle\Menu\ShippingMethodMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: shop_shipping_method }
+            - { name: enhavo_app.menu }
 
     Enhavo\Bundle\ShopBundle\Menu\ShipmentMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: shop_shipment }
+            - { name: enhavo_app.menu }

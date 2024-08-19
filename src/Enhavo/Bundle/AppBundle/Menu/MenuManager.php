@@ -8,78 +8,39 @@
 
 namespace Enhavo\Bundle\AppBundle\Menu;
 
-use Enhavo\Bundle\AppBundle\Type\TypeFactory;
+use Enhavo\Component\Type\FactoryInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class MenuManager
 {
-    /**
-     * @var TypeFactory
-     */
-    private $factory;
-
-    /**
-     * @var array
-     */
-    private $configuration;
-
-    /**
-     * @var AuthorizationCheckerInterface
-     */
-    private $checker;
-
-    public function __construct(TypeFactory $factory, AuthorizationCheckerInterface $checker, $configuration)
+    public function __construct(
+        private readonly AuthorizationCheckerInterface $checker,
+        private readonly FactoryInterface $menuFactory,
+    )
     {
-        $this->factory = $factory;
-        $this->configuration = $configuration;
-        $this->checker = $checker;
-    }
-
-    public function createMenuViewData()
-    {
-        $data = [];
-        $menus = $this->getMenuItems();
-        foreach($menus as $menu) {
-            $data[] = $menu->createViewData();
-        }
-        return $data;
     }
 
     /**
      * @return Menu[]
      */
-    public function getMenuItems()
+    public function getMenuItems(array $configuration): array
     {
-        if(!$this->configuration) {
-            return [];
-        }
-        return $this->getMenuItemsByConfiguration($this->configuration);
-    }
-
-    /**
-     * @param $configuration
-     * @return Menu[]
-     */
-    public function getMenuItemsByConfiguration($configuration)
-    {
-        $menus = [];
-        foreach($configuration as $key => $options) {
+        $items = [];
+        foreach ($configuration as $key => $options) {
             /** @var Menu $menu */
-            $menu = $this->factory->create(array_merge($options, [
-                'key' => $key
-            ]));
+            $menu = $this->menuFactory->create($options, $key);
 
-            if($menu->isHidden()) {
+            if (!$menu->isEnabled()) {
                 continue;
             }
 
-            if($menu->getPermission() !== null && !$this->checker->isGranted($menu->getPermission())) {
+            if ($menu->getPermission() !== null && !$this->checker->isGranted($menu->getPermission())) {
                 continue;
             }
 
-            $menus[] = $menu;
+            $items[$key] = $menu;
         }
 
-        return $menus;
+        return $items;
     }
 }

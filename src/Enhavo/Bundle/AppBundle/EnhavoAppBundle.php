@@ -2,16 +2,17 @@
 
 namespace Enhavo\Bundle\AppBundle;
 
-use Batch;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\LocaleResolverCompilerPass;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\RouteCollectorCompilerPass;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\SyliusCompilerPass;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\TemplateExpressionLanguageCompilerPass;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\TemplateResolverPass;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\TranslationDumperCompilerPass;
+use Enhavo\Bundle\AppBundle\Menu\Menu;
 use Enhavo\Bundle\AppBundle\Routing\RouteCollectorInterface;
 use Enhavo\Bundle\AppBundle\Template\TemplateResolverAwareInterface;
 use Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface;
+use Enhavo\Bundle\AppBundle\Toolbar\ToolbarWidget;
 use Enhavo\Bundle\AppBundle\Type\TypeCompilerPass;
 use Enhavo\Bundle\AppBundle\View\View;
 use Enhavo\Bundle\AppBundle\View\ViewFactoryAwareInterface;
@@ -32,22 +33,6 @@ class EnhavoAppBundle extends Bundle
         parent::build($container);
 
         $container->addCompilerPass(
-            new TypeCompilerPass('enhavo_app.column_collector', 'enhavo.column')
-        );
-
-        $container->addCompilerPass(
-            new TypeCompilerPass('enhavo_app.button_collector', 'enhavo.button')
-        );
-
-        $container->addCompilerPass(
-            new TypeCompilerPass('enhavo_app.action_collector', 'enhavo.action')
-        );
-
-        $container->addCompilerPass(
-            new TypeCompilerPass('enhavo_app.viewer_collector', 'enhavo.viewer')
-        );
-
-        $container->addCompilerPass(
             new \Enhavo\Component\Type\TypeCompilerPass('View', 'enhavo_app.view', View::class)
         );
 
@@ -56,11 +41,11 @@ class EnhavoAppBundle extends Bundle
         );
 
         $container->addCompilerPass(
-            new TypeCompilerPass('enhavo_app.menu_collector', 'enhavo.menu')
+            new \Enhavo\Component\Type\TypeCompilerPass('ToolbarWidget', 'enhavo_app.toolbar_widget', ToolbarWidget::class)
         );
 
         $container->addCompilerPass(
-            new TypeCompilerPass('enhavo_app.filter_collector', 'enhavo.filter')
+            new \Enhavo\Component\Type\TypeCompilerPass('Menu', 'enhavo_app.menu', Menu::class)
         );
 
         $container->addCompilerPass(
@@ -73,10 +58,6 @@ class EnhavoAppBundle extends Bundle
 
         $container->addCompilerPass(
             new TypeCompilerPass('enhavo_app.init_collector', 'enhavo.init')
-        );
-
-        $container->addCompilerPass(
-            new TypeCompilerPass('enhavo_app.toolbar_widget_collector', 'enhavo_app.toolbar_widget')
         );
 
         $container->addCompilerPass(

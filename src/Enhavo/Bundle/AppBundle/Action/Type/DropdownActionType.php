@@ -10,10 +10,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DropdownActionType extends AbstractActionType
 {
-    public function __construct(
-        private readonly ActionManager $actionManager
-    )
+    private ActionManager $actionManager;
+
+    public function setActionManager(ActionManager $actionManager): void
     {
+        $this->actionManager = $actionManager;
     }
 
     public function createViewData(array $options, Data $data, ResourceInterface $resource = null): void

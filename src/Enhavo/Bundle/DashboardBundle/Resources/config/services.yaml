@@ -1,8 +1,7 @@
 services:
     Enhavo\Bundle\DashboardBundle\Menu\DashboardMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: dashboard }
+            - { name: enhavo_app.menu }
 
     enhavo_dashboard.statistic_collector:
         class: Enhavo\Bundle\AppBundle\Type\TypeCollector

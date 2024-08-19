@@ -9,9 +9,9 @@
 </template>
 
 <script setup lang="ts">
-import {CheckboxForm} from "@enhavo/vue-form/model/CheckboxForm";
+import {Form} from "@enhavo/vue-form/model/Form";
 
 const props = defineProps<{
-    form: CheckboxForm
+    form: Form
 }>()
 </script>

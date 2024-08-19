@@ -9,15 +9,13 @@
 
 namespace Enhavo\Bundle\MediaLibraryBundle\Menu;
 
-use Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu;
+use Enhavo\Bundle\AppBundle\Menu\AbstractMenuType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class MediaLibraryMenu extends BaseMenu
+class MediaLibraryMenu extends AbstractMenuType
 {
     public function configureOptions(OptionsResolver $resolver)
     {
-        parent::configureOptions($resolver);
-
         $resolver->setDefaults([
             'icon' => 'image',
             'label' => 'media_library.label.library',
@@ -27,7 +25,7 @@ class MediaLibraryMenu extends BaseMenu
         ]);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'media_library_library';
     }

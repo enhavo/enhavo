@@ -68,7 +68,7 @@ services:
         arguments:
             - '@Symfony\Component\Routing\RouterInterface'
         tags:
-            - { name: enhavo.action }
+            - { name: enhavo_resource.action }
 
     enhavo_comment.factory.comment:
         public: true

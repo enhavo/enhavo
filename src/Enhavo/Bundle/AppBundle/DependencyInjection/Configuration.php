@@ -30,7 +30,7 @@ class Configuration implements ConfigurationInterface
         $this->addAreaSection($rootNode);
         $this->addEndpointSection($rootNode);
         $this->addMailSectionSection($rootNode);
-        $this->addFormThemesSection($rootNode);
+        $this->addAdminSection($rootNode);
         $this->addTemplatePathsSection($rootNode);
         $this->addLoginSection($rootNode);
         $this->addToolbarWidgetSection($rootNode);
@@ -156,12 +156,17 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
-    private function addFormThemesSection(ArrayNodeDefinition $node)
+    private function addAdminSection(ArrayNodeDefinition $node)
     {
         $node
             ->children()
-                ->arrayNode('form_themes')
-                    ->prototype('scalar')->end()
+                ->arrayNode('admin')
+                    ->children()
+                        ->arrayNode('form_mapping')
+                            ->normalizeKeys(false)
+                            ->variablePrototype()
+                            ->end()
+                    ->end()
                 ->end()
             ->end();
     }

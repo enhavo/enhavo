@@ -1,66 +1,39 @@
 services:
-    '@enhavo/app/toolbar/widget/WidgetManager':
+    '@enhavo/app/toolbar/ToolbarWidgetFactory':
+        import: ToolbarWidgetFactory
+
+    '@enhavo/app/toolbar/ToolbarWidgetManager':
+        import: ToolbarWidgetManager
         chunk: 'main'
         arguments:
-            - 'param:data.toolbar.primaryWidgets'
-            - 'param:data.toolbar.secondaryWidgets'
-            - '@enhavo/app/toolbar/widget/WidgetRegistry'
-            - '@enhavo/app/vue/VueRegistry'
+            - '@enhavo/app/toolbar/ToolbarWidgetFactory'
 
-    '@enhavo/app/toolbar/widget/WidgetRegistry':
+    '@enhavo/app/toolbar/model/BaseToolbarWidget':
+        import: BaseToolbarWidget
         chunk: 'main'
-
-    toolbar.icon-widget:
-        chunk: 'main'
-        from: '@enhavo/core/RegistryEntry'
-        arguments:
-            - 'string:icon-widget'
-            - '@enhavo/app/components/toolbar/widget/IconWidgetComponent.vue'
-            - '@enhavo/app/toolbar/widget/factory/IconWidgetFactory'
         tags:
-            - 'enhavo_app.toolbar'
+            - { name: 'enhavo_app.toolbar_widget' }
 
-    '@enhavo/app/toolbar/widget/factory/IconWidgetFactory':
+    '@enhavo/app/toolbar/model/IconToolbarWidget':
+        import: IconToolbarWidget
         chunk: 'main'
         arguments:
             - '@enhavo/app/view-stack/EventDispatcher'
             - '@enhavo/app/menu/MenuManager'
-
-    '@enhavo/app/components/toolbar/widget/IconWidgetComponent.vue':
-        chunk: 'main'
-        static: true
-
-    toolbar.quick-menu-widget:
-        chunk: 'main'
-        from: '@enhavo/core/RegistryEntry'
-        arguments:
-            - 'string:quick-menu-widget'
-            - '@enhavo/app/components/toolbar/widget/QuickMenuWidgetComponent.vue'
-            - '@enhavo/app/toolbar/widget/factory/QuickMenuWidgetFactory'
         tags:
-            - 'enhavo_app.toolbar'
+            - { name: 'enhavo_app.toolbar_widget' }
 
-    '@enhavo/app/toolbar/widget/factory/QuickMenuWidgetFactory':
+    '@enhavo/app/toolbar/model/NewWindowToolbarWidget':
+        import: NewWindowToolbarWidget
+        chunk: 'main'
+        tags:
+            - { name: 'enhavo_app.toolbar_widget' }
+
+    '@enhavo/app/toolbar/model/QuickMenuToolbarWidget':
+        import: QuickMenuToolbarWidget
         chunk: 'main'
         arguments:
             - '@enhavo/app/view-stack/EventDispatcher'
             - '@enhavo/app/menu/MenuManager'
-
-    '@enhavo/app/components/toolbar/widget/QuickMenuWidgetComponent.vue':
-        chunk: 'main'
-        static: true
-
-    toolbar.new-window-widget:
-        chunk: 'main'
-        from: '@enhavo/core/RegistryEntry'
-        arguments:
-            - 'string:new-window-widget'
-            - '@enhavo/app/components/toolbar/widget/IconWidgetComponent.vue'
-            - '@enhavo/app/toolbar/widget/factory/NewWindowWidgetFactory'
         tags:
-            - 'enhavo_app.toolbar'
-
-    '@enhavo/app/toolbar/widget/factory/NewWindowWidgetFactory':
-        chunk: 'main'
-
-
+            - { name: 'enhavo_app.toolbar_widget' }

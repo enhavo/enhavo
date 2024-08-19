@@ -8,15 +8,13 @@
 
 namespace Enhavo\Bundle\SidebarBundle\Menu;
 
-use Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu;
+use Enhavo\Bundle\AppBundle\Menu\AbstractMenuType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SidebarMenu extends BaseMenu
+class SidebarMenu extends AbstractMenuType
 {
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        parent::configureOptions($resolver);
-
         $resolver->setDefaults([
             'icon' => 'view_column',
             'label' => 'sidebar.label.sidebar',
@@ -26,7 +24,7 @@ class SidebarMenu extends BaseMenu
         ]);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'sidebar';
     }

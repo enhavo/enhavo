@@ -1,14 +1,16 @@
 services:
-    '@enhavo/app/main/MainApp':
+    '@enhavo/app/manager/MainManager':
         chunk: 'main'
+        import: MainManager
         arguments:
-            - 'param:data.branding'
             - '@enhavo/app/view-stack/ViewStack'
             - '@enhavo/app/menu/MenuManager'
             - '@enhavo/app/state/StateManager'
             - '@enhavo/app/view-stack/DataStorageManager'
-            - '@enhavo/app/toolbar/widget/WidgetManager'
-            - '@enhavo/app/vue/VueRegistry'
+            - '@enhavo/app/toolbar/ToolbarWidgetManager'
+            - '@enhavo/app/routing/Router'
+        tags:
+            - { name: vue.service, service: 'mainManager', reactive: true }
 
     '@enhavo/app/state/StateManager':
         chunk: 'main'
@@ -17,11 +19,3 @@ services:
             - '@enhavo/app/view-stack/EventDispatcher'
             - '@enhavo/app/view-stack/GlobalDataStorageManager'
             - '@enhavo/app/vue/VueRegistry'
-
-    '@enhavo/app/components/main/MainComponent.vue':
-        chunk: 'main'
-        static: true
-
-
-
-

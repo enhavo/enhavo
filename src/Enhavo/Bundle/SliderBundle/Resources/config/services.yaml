@@ -29,14 +29,12 @@ services:
             - { name: enhavo.widget, alias: slider }
 
     Enhavo\Bundle\SliderBundle\Menu\SliderMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: slider }
+            - { name: enhavo_app.menu }
 
     Enhavo\Bundle\SliderBundle\Menu\SlideMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: slide }
+            - { name: enhavo_app.menu }
 
     enhavo_slider.factory.slide:
         class: '%enhavo_slider.factory.slide.class%'

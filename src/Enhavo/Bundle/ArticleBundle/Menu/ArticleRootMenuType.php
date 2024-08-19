@@ -8,15 +8,14 @@
 
 namespace Enhavo\Bundle\ArticleBundle\Menu;
 
-use Enhavo\Bundle\AppBundle\Menu\Menu\ListMenu;
+use Enhavo\Bundle\AppBundle\Menu\AbstractMenuType;
+use Enhavo\Bundle\AppBundle\Menu\Type\ListMenuType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ArticleRootMenuType extends ListMenu
+class ArticleRootMenuType extends AbstractMenuType
 {
     public function configureOptions(OptionsResolver $resolver)
     {
-        parent::configureOptions($resolver);
-
         $resolver->setDefaults([
             'icon' => 'book',
             'label' => 'article.label.article',
@@ -35,8 +34,13 @@ class ArticleRootMenuType extends ListMenu
         ]);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'article';
+    }
+
+    public static function getParentType(): ?string
+    {
+        return ListMenuType::class;
     }
 }

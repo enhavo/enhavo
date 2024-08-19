@@ -7,24 +7,20 @@ services:
             - { name: form.type, alias: enhavo_article_article }
 
     Enhavo\Bundle\ArticleBundle\Menu\ArticleRootMenuType:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\ListMenu
         tags:
-            - { name: enhavo.menu, alias: article }
+            - { name: enhavo_app.menu }
 
     Enhavo\Bundle\ArticleBundle\Menu\ArticleMenuType:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: article_article }
+            - { name: enhavo_app.menu }
 
     Enhavo\Bundle\ArticleBundle\Menu\TagMenuType:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: article_tag }
+            - { name: enhavo_app.menu }
 
     Enhavo\Bundle\ArticleBundle\Menu\CategoryMenuType:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: article_category }
+            - { name: enhavo_app.menu }
 
     enhavo_article.statistic.article:
         class: Enhavo\Bundle\ArticleBundle\Statistic\ArticleStatistic

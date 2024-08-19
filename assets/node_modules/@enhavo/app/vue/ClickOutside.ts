@@ -1,10 +1,10 @@
-import { DirectiveOptions, VNode } from "vue"
+import { VNode } from "vue"
 import { DirectiveBinding } from "vue/types/options";
 import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
 import ClickEvent from "@enhavo/app/view-stack/event/ClickEvent";
 import View from "@enhavo/app/view/View";
 
-export default class ClickOutside implements DirectiveOptions
+export class ClickOutside
 {
     private static view: View;
     private static eventDispatcher: EventDispatcher;
@@ -16,20 +16,20 @@ export default class ClickOutside implements DirectiveOptions
         ClickOutside.view = view;
     }
 
-    bind(el: HTMLElement, binding: DirectiveBinding, vnode: VNode, oldVnode: VNode)
+    created(el: HTMLElement, binding: DirectiveBinding, vnode: VNode, oldVnode: VNode)
     {
         let clickHandler = new ClickHandler();
         let executed = false;
         clickHandler.subscriber = ClickOutside.eventDispatcher.on('click', (event: ClickEvent) => {
-           if(ClickOutside.view.getId() != event.id) {
-               if(!executed) {
-                   binding.value();
-                   executed = true;
-                   setTimeout(() => {
-                       executed = false;
-                   },100);
-               }
-           }
+            if(ClickOutside.view.getId() != event.id) {
+                if(!executed) {
+                    binding.value();
+                    executed = true;
+                    setTimeout(() => {
+                        executed = false;
+                    },100);
+                }
+            }
         });
 
         clickHandler.element = el;
@@ -58,7 +58,7 @@ export default class ClickOutside implements DirectiveOptions
         document.addEventListener('click', clickHandler.handler);
     }
 
-    unbind(el: HTMLElement, binding: DirectiveBinding, vnode: VNode, oldVnode: VNode)
+    unmounted(el: HTMLElement, binding: DirectiveBinding, vnode: VNode, oldVnode: VNode)
     {
         for(let clickHandler of ClickOutside.clickHandlers) {
             if(clickHandler.element == el) {

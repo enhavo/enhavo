@@ -15,8 +15,8 @@ enhavo_app:
             path: '@EnhavoBlockBundle/Resources/views'
             alias: EnhavoBlock
             priority: 10
-    form_themes:
-        - '@EnhavoBlock/admin/form/block/fields.html.twig'
+#    form_themes:
+#        - '@EnhavoBlock/admin/form/block/fields.html.twig'
 
 enhavo_doctrine_extension:
     metadata:

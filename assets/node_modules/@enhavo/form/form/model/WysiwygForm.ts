@@ -64,12 +64,13 @@ export class WysiwygForm extends Form
     private getSettings()
     {
         return {
-            base_url: "/build/enhavo", // Because we use dynamic imports, we need to specify the base path to prevent a loading bug in firefox (https://github.com/tinymce/tinymce-docs/issues/1466)
+            license_key: 'gpl',
+            base_url: "/build/admin/tinymce", // Because we use dynamic imports, we need to specify the base path to prevent a loading bug in firefox (https://github.com/tinymce/tinymce-docs/issues/1466)
             toolbar1: "undo redo | styleselect bold italic underline | forecolor backcolor | link | alignleft aligncenter alignright alignjustify | outdent indent | bullist numlist | code",
             menubar: false,
             branding: false,
             force_br_newlines: false,
-            force_p_newlines: false,
+            // force_p_newlines: false,
             forced_root_block: "p",
             cleanup: false,
             target: this.editorElement,
@@ -79,14 +80,16 @@ export class WysiwygForm extends Form
             resize: false,
             relative_urls: false,
             remove_script_host:false,
-            plugins: ["advlist autolink lists link image charmap print preview anchor",
-                "searchreplace visualblocks code fullscreen",
-                "insertdatetime media table paste autoresize"],
+            plugins: ["advlist", "autolink", "lists", "link", "image", "charmap", "preview", "anchor",
+                "searchreplace", "visualblocks", "code", "fullscreen", "insertdatetime", "media", "table", "autoresize"
+            ],
             // content_css: editorCss,
             min_height: 160,
-            autoresize_on_init: false,
+            // autoresize_on_init: false,
             autoresize_max_height: 1000,
             contextmenu: "",
+            skin_url: 'default',
+            content_css: "/build/admin/tinymce/content.css",
             setup: (editor: any) => {
                 editor.on('init', () => {
                     editor.setContent(this.value);

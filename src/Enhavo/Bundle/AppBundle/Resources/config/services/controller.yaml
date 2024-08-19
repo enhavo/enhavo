@@ -12,7 +12,7 @@ services:
 
     Enhavo\Bundle\AppBundle\Controller\MainController:
         arguments:
-            - '@enhavo_app.menu.manager'
+            - '@Enhavo\Bundle\AppBundle\Menu\MenuManager'
             - '@Enhavo\Bundle\AppBundle\Toolbar\ToolbarManager'
             - '%kernel.project_dir%'
             - '%enhavo_app.branding%'
