@@ -1,7 +1,7 @@
 import { AbstractAction } from "@enhavo/app/action/model/AbstractAction";
-import CloseEvent from "@enhavo/app/view-stack/event/CloseEvent";
+import CloseEvent from "@enhavo/app/frame/event/CloseEvent";
 import View from "@enhavo/app/view/View";
-import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
+import EventDispatcher from "@enhavo/app/frame/EventDispatcher";
 
 export class CloseAction extends AbstractAction
 {

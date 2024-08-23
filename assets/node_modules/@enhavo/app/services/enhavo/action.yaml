@@ -14,8 +14,8 @@ services:
         import: CloseAction
         chunk: 'action'
         arguments:
-            - '@enhavo/app/view/View'
-            - '@enhavo/app/view-stack/EventDispatcher'
+            - '@enhavo/app/frame/FrameManager'
+            - '@enhavo/app/frame/EventDispatcher'
         tags:
             - { name: 'enhavo_app.action', class: 'CloseAction' }
 
@@ -23,8 +23,8 @@ services:
         import: DeleteAction
         chunk: 'action'
         arguments:
-            - '@enhavo/app/view/View'
-            - '@enhavo/app/view-stack/EventDispatcher'
+            - '@enhavo/app/frame/FrameManager'
+            - '@enhavo/app/frame/EventDispatcher'
             - '@enhavo/core/Translator'
         tags:
             - { name: 'enhavo_app.action', class: 'DeleteAction' }
@@ -47,8 +47,8 @@ services:
         import: DuplicateAction
         chunk: 'action'
         arguments:
-            - '@enhavo/app/view/View'
-            - '@enhavo/app/view-stack/EventDispatcher'
+            - '@enhavo/app/frame/FrameManager'
+            - '@enhavo/app/frame/EventDispatcher'
         tags:
             - { name: 'enhavo_app.action', class: 'DuplicateAction' }
 
@@ -79,7 +79,7 @@ services:
         import: FormAction
         chunk: 'action'
         arguments:
-            - '@enhavo/app/view/View'
+            - '@enhavo/app/frame/FrameManager'
             - '@enhavo/core/Router'
             - '@enhavo/app/modal/ModalManager'
             - '@enhavo/core/Translator'
@@ -90,7 +90,7 @@ services:
         import: OpenAction
         chunk: 'action'
         arguments:
-            - '@enhavo/app/view/View'
+            - '@enhavo/app/frame/FrameManager'
         tags:
             - { name: 'enhavo_app.action', class: 'OpenAction' }
 
@@ -98,8 +98,8 @@ services:
         import: PreviewAction
         chunk: 'action'
         arguments:
-            - '@enhavo/app/view/View'
-            - '@enhavo/app/view-stack/EventDispatcher'
+            - '@enhavo/app/frame/FrameManager'
+            - '@enhavo/app/frame/EventDispatcher'
         tags:
             - { name: 'enhavo_app.action', class: 'PreviewAction' }
 
@@ -107,8 +107,8 @@ services:
         import: SaveAction
         chunk: 'action'
         arguments:
-            - '@enhavo/app/view/View'
-            - '@enhavo/app/view-stack/EventDispatcher'
+            - '@enhavo/app/frame/FrameManager'
+            - '@enhavo/app/frame/EventDispatcher'
             - '@enhavo/app/manager/ResourceInputManager'
         tags:
             - { name: 'enhavo_app.action', class: 'SaveAction' }

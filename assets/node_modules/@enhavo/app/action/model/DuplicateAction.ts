@@ -1,9 +1,9 @@
 import { AbstractAction } from "@enhavo/app/action/model/AbstractAction";
-import Confirm from "@enhavo/app/view/Confirm";
-import LoadingEvent from "@enhavo/app/view-stack/event/LoadingEvent";
+import Confirm from "@enhavo/app/ui/Confirm";
+import LoadingEvent from "@enhavo/app/frame/event/LoadingEvent";
 import $ from "jquery";
 import View from "@enhavo/app/view/View";
-import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
+import EventDispatcher from "@enhavo/app/frame/EventDispatcher";
 
 export class DuplicateAction extends AbstractAction
 {

@@ -7,7 +7,7 @@ compiler_pass:
 services:
     '@enhavo/dashboard/dashboard/DashboardApp':
         arguments:
-            - '@enhavo/app/view/View'
+            - '@enhavo/app/frame/FrameManager'
             - '@enhavo/dashboard/widget/WidgetManager'
 
     '@enhavo/dashboard/widget/WidgetManager':

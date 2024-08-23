@@ -8,10 +8,10 @@ import FormType from "@enhavo/app/form/FormType";
 import {PrototypeManager} from "@enhavo/form/prototype/PrototypeManager";
 import Prototype from "@enhavo/form/prototype/Prototype";
 import View from "@enhavo/app/view/View";
-import Confirm from "@enhavo/app/view/Confirm";
+import Confirm from "@enhavo/app/ui/Confirm";
 import Translator from "@enhavo/core/Translator";
-import SaveStateEvent from "@enhavo/app/view-stack/event/SaveStateEvent";
-import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
+import SaveStateEvent from "@enhavo/app/frame/event/SaveStateEvent";
+import EventDispatcher from "@enhavo/app/frame/EventDispatcher";
 
 export default class PolyCollectionType extends FormType
 {

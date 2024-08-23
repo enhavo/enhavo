@@ -11,4 +11,17 @@ imports:
     - path: '@enhavo/user/services/enhavo/*'
     - path: '@enhavo/payment/services/enhavo/*'
 
+compiler_pass:
+    vue_components:
+        path: '@enhavo/app/compiler-pass/vue-components.js'
+        dir: './components'
+        priority: 40
+
 services:
+    'manager/FrameTestManager':
+        from: './manager/FrameTestManager'
+        import: FrameTestManager
+        arguments:
+            - '@enhavo/app/frame/FrameManager'
+        tags:
+            - { name: vue.service, service: frameTestManager, reactive: true }

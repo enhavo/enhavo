@@ -1,7 +1,7 @@
 import AutoCompleteType from "@enhavo/form/type/AutoCompleteType";
 import AbstractLoader from "@enhavo/form/loader/AbstractLoader";
 import View from "@enhavo/app/view/View";
-import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
+import EventDispatcher from "@enhavo/app/frame/EventDispatcher";
 import Router from "@enhavo/core/Router";
 import FormRegistry from "@enhavo/app/form/FormRegistry";
 

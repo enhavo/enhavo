@@ -19,10 +19,10 @@
 </template>
 
 <script setup lang="ts">
-import ListMenu from '@enhavo/app/menu/model/MenuList';
+import {ListMenuItem} from '@enhavo/app/menu/model/ListMenuItem';
 
 const props = defineProps<{
-    data: ListMenu
+    data: ListMenuItem
 }>()
 
 const data = props.data;
@@ -42,7 +42,7 @@ function getNotification(): object
     return (data && data.notification) ? data.notification : false;
 }
 
-function toggle (): void
+function toggle(): void
 {
     data.isOpen = !data.isOpen;
     if(data.isOpen) {

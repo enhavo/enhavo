@@ -35,7 +35,6 @@
 
 <script setup lang="ts">
 import {ToolbarWidgetInterface} from "@enhavo/app/toolbar/ToolbarWidgetInterface";
-import {defineEmits} from "vue";
 
 const emit = defineEmits(['toogleMenu']);
 

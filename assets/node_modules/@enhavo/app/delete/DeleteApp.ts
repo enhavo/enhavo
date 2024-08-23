@@ -1,7 +1,7 @@
-import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
+import EventDispatcher from "@enhavo/app/frame/EventDispatcher";
 import View from "@enhavo/app/view/View";
-import UpdatedEvent from "@enhavo/app/view-stack/event/UpdatedEvent";
-import CloseEvent from "@enhavo/app/view-stack/event/RemoveEvent";
+import UpdatedEvent from "@enhavo/app/frame/event/UpdatedEvent";
+import CloseEvent from "@enhavo/app/frame/event/RemoveEvent";
 import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
 import {FlashMessenger} from "@enhavo/app/flash-message/FlashMessenger";
 

@@ -1,5 +1,5 @@
 <template>
-    <a :href="data.mainUrl" v-bind:class="{'menu-child-title menu-item': true, 'selected': data.selected}" @click="open($event)">
+    <a :href="data.mainUrl" v-bind:class="{'menu-child-title menu-item': true, 'selected': data.isActive()}" @click="open($event)">
         <div class="symbol-container">
             <i v-bind:class="['icon', getIcon()]" aria-hidden="true"></i>
         </div>
@@ -11,11 +11,10 @@
 </template>
 
 <script setup lang="ts">
-import ItemMenu from '@enhavo/app/menu/model/MenuItem';
-
+import {BaseMenuItem} from '@enhavo/app/menu/model/BaseMenuItem';
 
 const props = defineProps<{
-    data: ItemMenu
+    data: BaseMenuItem
 }>()
 
 const data = props.data;

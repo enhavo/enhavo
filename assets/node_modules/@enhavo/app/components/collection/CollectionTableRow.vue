@@ -23,7 +23,6 @@
 import {TableCollection} from "../../collection/model/TableCollection";
 import {CollectionResourceItem} from "../../collection/CollectionResourceItem";
 
-
 const props = defineProps<{
     data: CollectionResourceItem,
     collection: TableCollection,
@@ -39,6 +38,7 @@ function changeSelect()
 
 function open()
 {
+
     // if (grid.isRowClickable()) {
     //     grid.open(data);
     // }

@@ -1,22 +1,22 @@
-import ViewStack from "@enhavo/app/view-stack/ViewStack";
+import FrameStack from "@enhavo/app/frame/FrameStack";
 import * as pako from "pako";
-import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
-import GlobalDataStorageManager from "@enhavo/app/view-stack/GlobalDataStorageManager";
-import ViewInterface from "@enhavo/app/view-stack/ViewInterface";
+import EventDispatcher from "@enhavo/app/frame/EventDispatcher";
+import GlobalDataStorageManager from "@enhavo/app/frame/GlobalDataStorageManager";
+import WindowInterface from "@enhavo/app/frame/ViewInterface";
 import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
 
 export default class StateManager
 {
     private readonly baseUrl: string;
-    private readonly viewStack: ViewStack;
+    private readonly frameStack: FrameStack;
     private readonly eventDispatcher: EventDispatcher;
     private readonly dataStorage: GlobalDataStorageManager;
     private readonly componentRegistry: ComponentRegistryInterface;
 
-    constructor(viewStack: ViewStack, eventDispatcher: EventDispatcher, dataStorage: GlobalDataStorageManager, componentRegistry: ComponentRegistryInterface)
+    constructor(frameStack: FrameStack, eventDispatcher: EventDispatcher, dataStorage: GlobalDataStorageManager, componentRegistry: ComponentRegistryInterface)
     {
         this.baseUrl = window.location.href;
-        this.viewStack = viewStack;
+        this.frameStack = frameStack;
         this.eventDispatcher = eventDispatcher;
         this.dataStorage = dataStorage;
         this.componentRegistry = componentRegistry;
@@ -57,7 +57,7 @@ export default class StateManager
     private createStateObject(): object
     {
         let viewData = [];
-        for(let view of this.viewStack.getViews()) {
+        for(let view of this.frameStack.getViews()) {
             viewData.push({
                 url: view.url,
                 id: view.id,
@@ -71,7 +71,7 @@ export default class StateManager
         };
     }
 
-    public generateViewUrl(view: ViewInterface): string
+    public generateViewUrl(view: WindowInterface): string
     {
         let viewData = [];
         viewData.push({

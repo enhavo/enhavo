@@ -36,6 +36,8 @@ class BaseMenuType extends AbstractType implements MenuTypeInterface
             'component' => $options['component'],
             'model' => $options['model'],
             'class' => $options['class'],
+            'frame' => $options['frame'],
+            'clear' => $options['clear'],
             'info' => $this->translator->trans($options['info'], [], $options['translation_domain']),
             'notification' => [
                 'class' => $options['notification_class'],
@@ -75,6 +77,8 @@ class BaseMenuType extends AbstractType implements MenuTypeInterface
             'role' => null,
             'enabled' => true,
             'key' => null,
+            'frame' => null,
+            'clear' => true,
         ]);
 
         $resolver->setRequired([

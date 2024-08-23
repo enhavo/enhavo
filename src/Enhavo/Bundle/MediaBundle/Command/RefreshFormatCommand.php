@@ -8,11 +8,11 @@
 
 namespace Enhavo\Bundle\MediaBundle\Command;
 
+use Doctrine\ORM\EntityRepository;
 use Enhavo\Bundle\MediaBundle\Entity\Format;
 use Enhavo\Bundle\MediaBundle\Exception\FormatException;
 use Enhavo\Bundle\MediaBundle\Media\FormatManager;
 use Enhavo\Bundle\MediaBundle\Media\MediaManager;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -21,44 +21,12 @@ use Symfony\Component\Console\Helper\ProgressBar;
 
 class RefreshFormatCommand extends Command
 {
-    /**
-     * @var RepositoryInterface
-     */
-    private $formatRepository;
-
-    /**
-     * @var RepositoryInterface
-     */
-    private $fileRepository;
-
-    /**
-     * @var MediaManager
-     */
-    private $mediaManager;
-
-    /**
-     * @var FormatManager
-     */
-    private $formatManager;
-
-    /**
-     * RefreshFormatCommand constructor.
-     *
-     * @param RepositoryInterface $formatRepository
-     * @param RepositoryInterface $fileRepository
-     * @param MediaManager $mediaManager
-     * @param FormatManager $formatManager
-     */
     public function __construct(
-        RepositoryInterface $formatRepository,
-        RepositoryInterface $fileRepository,
-        MediaManager $mediaManager,
-        FormatManager $formatManager
+        private EntityRepository $formatRepository,
+        private EntityRepository $fileRepository,
+        private MediaManager $mediaManager,
+        private FormatManager $formatManager
     ) {
-        $this->formatRepository = $formatRepository;
-        $this->fileRepository = $fileRepository;
-        $this->mediaManager = $mediaManager;
-        $this->formatManager = $formatManager;
         parent::__construct();
     }
 

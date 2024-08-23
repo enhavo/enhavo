@@ -1,5 +1,5 @@
 import { AbstractAction } from "@enhavo/app/action/model/AbstractAction";
-import Confirm from "@enhavo/app/view/Confirm";
+import Confirm from "@enhavo/app/ui/Confirm";
 import View from "@enhavo/app/view/View";
 
 export class OpenAction extends AbstractAction
