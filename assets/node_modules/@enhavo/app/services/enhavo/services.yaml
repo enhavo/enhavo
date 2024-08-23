@@ -38,10 +38,6 @@ compiler_pass:
         path: '../../compiler-pass/model-factory-register.js'
         service: '@enhavo/app/tab/TabFactory'
         tag: 'enhavo_app.tab'
-    view:
-        path: '../../compiler-pass/registry.js'
-        service: '@enhavo/app/view-stack/ViewRegistry'
-        tag: 'enhavo_app.view'
     toolbar_widget:
         path: '@enhavo/app/compiler-pass/model-factory-register.js'
         service: '@enhavo/app/toolbar/ToolbarWidgetFactory'

@@ -45,6 +45,12 @@ enhavo_app:
             label: Person
             route: app_person_index
             icon: accessibility
+        frame_test:
+            type: base
+            label: Frame Test
+            route: app_admin_frame_test
+            icon: accessibility
+            clear: false
         list:
             type: base
             label: Table

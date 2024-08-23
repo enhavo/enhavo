@@ -1,8 +1,8 @@
 import { AbstractAction } from "@enhavo/app/action/model/AbstractAction";
-import Confirm from "@enhavo/app/view/Confirm";
+import Confirm from "@enhavo/app/ui/Confirm";
 import $ from "jquery";
-import LoadingEvent from "@enhavo/app/view-stack/event/LoadingEvent";
-import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
+import LoadingEvent from "@enhavo/app/frame/event/LoadingEvent";
+import EventDispatcher from "@enhavo/app/frame/EventDispatcher";
 import View from "@enhavo/app/view/View";
 
 export class DeleteAction extends AbstractAction

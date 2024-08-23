@@ -3,8 +3,8 @@ services:
         chunk: 'preview'
         arguments:
             - 'param:data'
-            - '@enhavo/app/view-stack/EventDispatcher'
-            - '@enhavo/app/view/View'
+            - '@enhavo/app/frame/EventDispatcher'
+            - '@enhavo/app/frame/FrameManager'
             - '@enhavo/app/action/ActionManager'
             - '@enhavo/app/vue/VueRegistry'
 

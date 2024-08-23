@@ -10,6 +10,7 @@ import {CollectionFactory} from "@enhavo/app/collection/CollectionFactory";
 import {BatchManager} from "@enhavo/app/batch/BatchManager";
 import {BatchInterface} from "@enhavo/app/batch/BatchInterface";
 import {RouteContainer} from "../routing/RouteContainer";
+import {FrameManager} from "../frame/FrameManager";
 
 export class ResourceIndexManager
 {
@@ -23,6 +24,7 @@ export class ResourceIndexManager
 
     constructor(
         private router: Router,
+        private frameManager: FrameManager,
         private actionManager: ActionManager,
         private filterManager: FilterManager,
         private columnManager: ColumnManager,
@@ -45,5 +47,7 @@ export class ResourceIndexManager
         this.batches = this.batchManager.createBatches(data.batches);
         this.routes = new RouteContainer(data.routes);
         this.collection = this.collectionFactory.create(data.collection.model, data.collection, this.filters, this.columns, this.batches, this.routes);
+
+        this.frameManager.loaded();
     }
 }

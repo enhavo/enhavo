@@ -8,8 +8,7 @@ services:
         chunk: 'vue'
         import: ClickOutside
         arguments:
-            - '@enhavo/app/view-stack/EventDispatcher'
-            - '@enhavo/app/view/View'
+            - '@enhavo/app/frame/FrameManager'
         tags:
             - { name: vue.directive, directive: 'click-outside' }
 

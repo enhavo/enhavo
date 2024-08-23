@@ -1,6 +1,6 @@
 <template>
     <div class="app-view">
-        <view-view></view-view>
+        <ui-components></ui-components>
         <flash-messages></flash-messages>
         <modal-stack></modal-stack>
         <action-bar :primary="manager.actions" :secondary="manager.actionsSecondary"></action-bar>

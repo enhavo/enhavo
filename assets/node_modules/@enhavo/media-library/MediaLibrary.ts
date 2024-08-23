@@ -1,18 +1,18 @@
 import axios, {CancelTokenSource} from "axios";
 import * as _ from "lodash";
 import Data, {Column, ContentType, File, Tag} from "@enhavo/media-library/Data";
-import UpdatedEvent from "@enhavo/app/view-stack/event/UpdatedEvent";
+import UpdatedEvent from "@enhavo/app/frame/event/UpdatedEvent";
 import * as async from "async";
 import $ from "jquery";
 import { FlashMessenger, FlashMessage } from "@enhavo/app/flash-message/FlashMessenger";
-import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
+import EventDispatcher from "@enhavo/app/frame/EventDispatcher";
 import View from "@enhavo/app/view/View";
 import Router from "@enhavo/core/Router";
 import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
-import ViewInterface from "@enhavo/app/view-stack/ViewInterface";
+import WindowInterface from "@enhavo/app/frame/ViewInterface";
 import Translator from "@enhavo/core/Translator";
-import CloseEvent from "@enhavo/app/view-stack/event/CloseEvent";
-import LoadingEvent from "@enhavo/app/view-stack/event/LoadingEvent";
+import CloseEvent from "@enhavo/app/frame/event/CloseEvent";
+import LoadingEvent from "@enhavo/app/frame/event/LoadingEvent";
 
 export default class MediaLibrary
 {
@@ -99,7 +99,7 @@ export default class MediaLibrary
                 let url = this.router.generate('enhavo_media_library_file_update', {
                     id: file.id,
                 });
-                this.view.open(url, 'edit-view').then((view: ViewInterface) => {
+                this.view.open(url, 'edit-view').then((view: WindowInterface) => {
                     this.view.storeValue('active-view', view.id);
                 });
             });

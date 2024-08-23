@@ -2,7 +2,7 @@ services:
     '@enhavo/media/loader/MediaLoader':
         chunk: 'form'
         arguments:
-            - '@enhavo/app/view/View'
+            - '@enhavo/app/frame/FrameManager'
             - '@enhavo/core/Router'
             - '@enhavo/app/flash-message/FlashMessenger'
             - '@enhavo/core/Translator'
@@ -13,8 +13,8 @@ services:
         chunk: 'image-cropper'
         arguments:
             - 'param:data.format'
-            - '@enhavo/app/view-stack/EventDispatcher'
-            - '@enhavo/app/view/View'
+            - '@enhavo/app/frame/EventDispatcher'
+            - '@enhavo/app/frame/FrameManager'
             - '@enhavo/app/action/ActionManager'
             - '@enhavo/app/flash-message/FlashMessenger'
             - '@enhavo/core/Translator'

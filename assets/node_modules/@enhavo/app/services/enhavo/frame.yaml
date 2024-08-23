@@ -1,0 +1,33 @@
+services:
+    '@enhavo/app/frame/FrameStack':
+        import: FrameStack
+        chunk: 'frame'
+        arguments:
+            - '@enhavo/app/frame/EventDispatcher'
+        tags:
+            - { name: vue.service, service: 'frameStack', reactive: true }
+
+    '@enhavo/app/frame/FrameStackSubscriber':
+        import: FrameStackSubscriber
+        chunk: 'frame'
+        arguments:
+            - '@enhavo/app/frame/EventDispatcher'
+            - '@enhavo/app/frame/FrameStack'
+
+    '@enhavo/app/frame/EventDispatcher':
+        import: EventDispatcher
+        chunk: 'frame'
+
+    '@enhavo/app/frame/FrameManager':
+        import: FrameManager
+        chunk: 'frame'
+        arguments:
+            - '@enhavo/app/frame/EventDispatcher'
+        tags:
+            - { name: vue.service, service: 'frameManager' }
+
+    '@enhavo/app/frame/ArrangeManager':
+         import: ArrangeManager
+         chunk: 'frame'
+         arguments:
+             - '@enhavo/app/frame/EventDispatcher'

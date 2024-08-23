@@ -2,8 +2,8 @@ services:
     '@enhavo/media-library/loader/MediaLibraryLoader':
         chunk: 'form'
         arguments:
-            - '@enhavo/app/view-stack/EventDispatcher'
-            - '@enhavo/app/view/View'
+            - '@enhavo/app/frame/EventDispatcher'
+            - '@enhavo/app/frame/FrameManager'
             - '@enhavo/core/Router'
         tags:
             - 'enhavo_app.form'
@@ -11,7 +11,7 @@ services:
     '@enhavo/media-library/MediaLibraryApp':
         chunk: 'media-library'
         arguments:
-            - '@enhavo/app/view/View'
+            - '@enhavo/app/frame/FrameManager'
             - '@enhavo/app/action/ActionManager'
             - '@enhavo/app/flash-message/FlashMessenger'
             - '@enhavo/media-library/MediaLibrary'
@@ -20,8 +20,8 @@ services:
         chunk: 'media-library'
         arguments:
             - 'param:data'
-            - '@enhavo/app/view-stack/EventDispatcher'
-            - '@enhavo/app/view/View'
+            - '@enhavo/app/frame/EventDispatcher'
+            - '@enhavo/app/frame/FrameManager'
             - '@enhavo/app/flash-message/FlashMessenger'
             - '@enhavo/core/Router'
             - '@enhavo/app/vue/VueRegistry'

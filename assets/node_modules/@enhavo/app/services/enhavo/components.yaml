@@ -59,23 +59,17 @@ services:
         tags:
             - { name: 'vue.component', component: 'filter-bar' }
 
-    '@enhavo/app/components/view/ViewView.vue':
+    '@enhavo/app/components/ui/UiComponents.vue':
         chunk: 'vue'
         static: true
         tags:
-            - { name: vue.component, component: 'view-view' }
+            - { name: vue.component, component: 'ui-components' }
 
     '@enhavo/app/components/main/OverlayContainer.vue':
         chunk: 'vue'
         static: true
         tags:
             - { name: vue.component, component: 'overlay-container' }
-
-    '@enhavo/app/components/view-stack/ViewStack.vue':
-        chunk: 'vue'
-        static: true
-        tags:
-            - { name: vue.component, component: 'view-stack' }
 
     '@enhavo/app/components/list/ListComponent.vue':
         chunk: 'vue'
@@ -186,18 +180,23 @@ services:
         tags:
             - { name: vue.component, component: 'menu-notification' }
 
-    '@enhavo/app/components/view-stack/ViewstackDropdown.vue':
-        chunk: 'vue'
+    '@enhavo/app/components/frame/FrameStack.vue':
+        chunk: 'frame'
         static: true
         tags:
-            - { name: vue.component, component: 'view-stack-dropdown' }
+            - { name: vue.component, component: 'frame-stack' }
 
-    '@enhavo/app/components/view-stack/ViewComponent.vue':
-        chunk: 'vue'
+    '@enhavo/app/components/frame/FrameStackFrame.vue':
+        chunk: 'frame'
         static: true
         tags:
-            - { name: vue.component, component: 'view-stack-view' }
+            - { name: vue.component, component: 'frame-stack-frame' }
 
+    '@enhavo/app/components/frame/FrameStackMobileDropdown.vue':
+        chunk: 'frame'
+        static: true
+        tags:
+            - { name: vue.component, component: 'frame-stack-mobile-dropdown' }
 
     '@enhavo/app/components/column/ColumnBoolean.vue':
         chunk: 'grid'

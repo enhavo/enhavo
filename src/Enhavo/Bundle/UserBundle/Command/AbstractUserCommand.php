@@ -2,10 +2,10 @@
 
 namespace Enhavo\Bundle\UserBundle\Command;
 
+use Enhavo\Bundle\UserBundle\Repository\UserRepository;
 use Enhavo\Bundle\UserBundle\User\UserManager;
 use Enhavo\Bundle\UserBundle\UserIdentifier\UserIdentifierProviderInterface;
 use Enhavo\Bundle\UserBundle\UserIdentifier\UserIdentifierProviderResolver;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -17,7 +17,7 @@ abstract class AbstractUserCommand extends Command
 {
     public function __construct(
         protected UserManager $userManager,
-        protected RepositoryInterface $userRepository,
+        protected UserRepository $userRepository,
         protected UserIdentifierProviderResolver $resolver,
         protected string $userClass,
     )

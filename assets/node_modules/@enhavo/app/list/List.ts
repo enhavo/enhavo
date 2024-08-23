@@ -1,5 +1,5 @@
 import ListData from "@enhavo/app/list/ListData";
-import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
+import EventDispatcher from "@enhavo/app/frame/EventDispatcher";
 import View from "@enhavo/app/view/View";
 import * as _ from "lodash";
 import {ColumnManager} from "@enhavo/app/column/ColumnManager";
@@ -7,10 +7,10 @@ import Router from "@enhavo/core/Router";
 import axios from "axios";
 import Item from "@enhavo/app/list/Item";
 import Translator from "@enhavo/core/Translator";
-import UpdatedEvent from "@enhavo/app/view-stack/event/UpdatedEvent";
+import UpdatedEvent from "@enhavo/app/frame/event/UpdatedEvent";
 import { FlashMessenger, FlashMessage } from "@enhavo/app/flash-message/FlashMessenger";
 import * as async from "async";
-import ViewInterface from "@enhavo/app/view-stack/ViewInterface";
+import WindowInterface from "@enhavo/app/frame/ViewInterface";
 import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
 
 export default class List
@@ -129,7 +129,7 @@ export default class List
         parameters.id = item.id;
         this.activateItem(item).then(() => {
             let url = this.router.generate(this.data.openRoute, parameters);
-            this.view.open(url, 'edit-view').then((view: ViewInterface) => {
+            this.view.open(url, 'edit-view').then((view: WindowInterface) => {
                 this.view.storeValue('active-view', view.id);
             });
         });

@@ -1,0 +1,9 @@
+app_admin_frame_test:
+    path: /app/frame/test
+    defaults:
+        _expose: admin
+        _vue:
+            component: frame-test
+            groups: admin
+        _endpoint:
+            type: admin

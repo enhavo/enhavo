@@ -1,7 +1,7 @@
 import { AbstractAction } from "@enhavo/app/action/model/AbstractAction";
-import LoadingEvent from "@enhavo/app/view-stack/event/LoadingEvent";
+import LoadingEvent from "@enhavo/app/frame/event/LoadingEvent";
 import View from "@enhavo/app/view/View";
-import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
+import EventDispatcher from "@enhavo/app/frame/EventDispatcher";
 import {ResourceInputManager} from "../../manager/ResourceInputManager";
 import {FormUtil} from "@enhavo/vue-form/form/FormUtil";
 

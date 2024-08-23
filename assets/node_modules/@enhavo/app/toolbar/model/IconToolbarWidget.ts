@@ -1,7 +1,7 @@
 import {AbstractToolbarWidget} from "@enhavo/app/toolbar/model/AbstractToolbarWidget";
-import ClearEvent from "@enhavo/app/view-stack/event/ClearEvent";
-import CreateEvent from "@enhavo/app/view-stack/event/CreateEvent";
-import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
+import ClearEvent from "@enhavo/app/frame/event/ClearEvent";
+import CreateEvent from "@enhavo/app/frame/event/CreateEvent";
+import EventDispatcher from "@enhavo/app/frame/EventDispatcher";
 import MenuManager from "@enhavo/app/menu/MenuManager";
 
 export class IconToolbarWidget extends AbstractToolbarWidget
