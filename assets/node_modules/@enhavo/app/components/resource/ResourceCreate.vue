@@ -1,7 +1,7 @@
 <template>
     <div class="app-view">
         <div class="form-view">
-            <view-view></view-view>
+            <ui-components></ui-components>
             <flash-messages></flash-messages>
             <modal-stack></modal-stack>
             <action-bar :primary="manager.actions" :secondary="manager.actionsSecondary"></action-bar>
@@ -32,6 +32,7 @@ import '@enhavo/app/assets/styles/view.scss'
 import {inject } from "vue";
 import { useRoute } from 'vue-router'
 import {ResourceInputManager} from "../../manager/ResourceInputManager";
+import UiComponents from "../ui/UiComponents.vue";
 
 const manager = inject<ResourceInputManager>('resourceInputManager');
 const route = useRoute();

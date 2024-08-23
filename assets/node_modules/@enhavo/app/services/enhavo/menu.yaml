@@ -7,18 +7,23 @@ services:
         chunk: 'action'
         arguments:
             - '@enhavo/app/menu/MenuItemFactory'
+        tags:
+            - { name: vue.service, service: 'menuManager', reactive: true }
 
     '@enhavo/app/menu/model/BaseMenuItem':
         import: BaseMenuItem
         chunk: 'main'
         arguments:
-            - '@enhavo/app/view-stack/EventDispatcher'
+            - '@enhavo/app/frame/FrameStack'
+            - '@enhavo/app/frame/FrameManager'
         tags:
             - { name: 'enhavo_app.menu_item' }
 
     '@enhavo/app/menu/model/ListMenuItem':
         import: ListMenuItem
         chunk: 'main'
+        arguments:
+            - '@enhavo/app/menu/MenuManager'
         tags:
             - { name: 'enhavo_app.menu_item' }
 

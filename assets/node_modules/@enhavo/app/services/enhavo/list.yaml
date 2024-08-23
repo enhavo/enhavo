@@ -2,7 +2,7 @@ services:
     '@enhavo/app/list/ListApp':
         chunk: 'list'
         arguments:
-            - '@enhavo/app/view/View'
+            - '@enhavo/app/frame/FrameManager'
             - '@enhavo/app/action/ActionManager'
             - '@enhavo/app/list/List'
 
@@ -10,8 +10,8 @@ services:
         chunk: 'list'
         arguments:
             - 'param:data.list'
-            - '@enhavo/app/view-stack/EventDispatcher'
-            - '@enhavo/app/view/View'
+            - '@enhavo/app/frame/EventDispatcher'
+            - '@enhavo/app/frame/FrameManager'
             - '@enhavo/app/column/ColumnManager'
             - '@enhavo/core/Router'
             - '@enhavo/core/Translator'

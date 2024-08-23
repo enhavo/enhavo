@@ -1,5 +1,5 @@
 import ActionManager from "@enhavo/app/action/ActionManager";
-import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
+import EventDispatcher from "@enhavo/app/frame/EventDispatcher";
 import View from "@enhavo/app/view/View";
 import FlashMessenger from "@enhavo/app/flash-message/FlashMessenger";
 import ModalManager from "@enhavo/app/modal/ModalManager";

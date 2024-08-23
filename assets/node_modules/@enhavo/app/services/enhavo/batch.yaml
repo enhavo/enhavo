@@ -15,7 +15,7 @@ services:
         chunk: 'batch'
         arguments:
             - '@enhavo/core/Translator'
-            - '@enhavo/app/view/View'
+            - '@enhavo/app/frame/FrameManager'
             - '@enhavo/app/flash-message/FlashMessenger'
         tags:
             - { name: enhavo_app.batch }
@@ -33,7 +33,7 @@ services:
         chunk: 'batch'
         arguments:
             - '@enhavo/core/Translator'
-            - '@enhavo/app/view/View'
+            - '@enhavo/app/frame/FrameManager'
             - '@enhavo/app/flash-message/FlashMessenger'
             - '@enhavo/core/Router'
             - '@enhavo/app/modal/ModalManager'

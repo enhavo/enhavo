@@ -2,7 +2,7 @@ services:
     '@enhavo/newsletter/stats/StatsApp':
         arguments:
             - 'param:data.resource'
-            - '@enhavo/app/view/View'
+            - '@enhavo/app/frame/FrameManager'
             - '@enhavo/app/action/ActionManager'
             - '@enhavo/app/vue/VueRegistry'
 
@@ -14,7 +14,7 @@ services:
         arguments:
             - '@enhavo/app/form/Form'
             - '@enhavo/core/Translator'
-            - '@enhavo/app/view/View'
+            - '@enhavo/app/frame/FrameManager'
             - '@enhavo/core/Router'
             - '@enhavo/app/flash-message/FlashMessenger'
         tags:
@@ -26,7 +26,7 @@ services:
             - '@enhavo/app/flash-message/FlashMessenger'
             - '@enhavo/core/Translator'
             - '@enhavo/app/modal/ModalManager'
-            - '@enhavo/app/view/View'
+            - '@enhavo/app/frame/FrameManager'
             - '@enhavo/core/Router'
         tags:
             - { name: 'enhavo_app.action', class: 'NewsletterSendTestAction' }

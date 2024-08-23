@@ -1,28 +1,26 @@
 import { VNode } from "vue"
 import { DirectiveBinding } from "vue/types/options";
-import EventDispatcher from "@enhavo/app/view-stack/EventDispatcher";
-import ClickEvent from "@enhavo/app/view-stack/event/ClickEvent";
-import View from "@enhavo/app/view/View";
+import {FrameManager} from "../frame/FrameManager";
 
 export class ClickOutside
 {
-    private static view: View;
-    private static eventDispatcher: EventDispatcher;
     private static clickHandlers: ClickHandler[] = [];
+    private static frameManager: FrameManager
 
-    constructor(eventDispatcher: EventDispatcher, view: View)
+    constructor(
+        frameManager: FrameManager
+    )
     {
-        ClickOutside.eventDispatcher = eventDispatcher;
-        ClickOutside.view = view;
+        ClickOutside.frameManager = frameManager;
     }
 
     created(el: HTMLElement, binding: DirectiveBinding, vnode: VNode, oldVnode: VNode)
     {
         let clickHandler = new ClickHandler();
         let executed = false;
-        clickHandler.subscriber = ClickOutside.eventDispatcher.on('click', (event: ClickEvent) => {
-            if(ClickOutside.view.getId() != event.id) {
-                if(!executed) {
+        clickHandler.subscriber = ClickOutside.frameManager.on('click', (event) => {
+            if (window.name != event.origin) {
+                if (!executed) {
                     binding.value();
                     executed = true;
                     setTimeout(() => {
@@ -43,7 +41,7 @@ export class ClickOutside
             while (parentElement != el) {
                 parentElement = parentElement.parentElement;
                 if (parentElement == null) {
-                    if(!executed) {
+                    if (!executed) {
                         binding.value();
                         executed = true;
                         setTimeout(() => {
@@ -60,10 +58,10 @@ export class ClickOutside
 
     unmounted(el: HTMLElement, binding: DirectiveBinding, vnode: VNode, oldVnode: VNode)
     {
-        for(let clickHandler of ClickOutside.clickHandlers) {
-            if(clickHandler.element == el) {
+        for (let clickHandler of ClickOutside.clickHandlers) {
+            if (clickHandler.element == el) {
                 document.removeEventListener('click', clickHandler.handler);
-                ClickOutside.eventDispatcher.remove(clickHandler.subscriber);
+                ClickOutside.frameManager.removeSubscriber(clickHandler.subscriber);
             }
         }
     }

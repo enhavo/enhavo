@@ -3,7 +3,7 @@ services:
         import: CreatePaymentMethodAction
         chunk: 'action'
         arguments:
-            - '@enhavo/app/view/View'
+            - '@enhavo/app/frame/FrameManager'
             - '@enhavo/core/Router'
             - '@enhavo/app/modal/ModalManager'
             - '@enhavo/core/Translator'

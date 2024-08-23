@@ -10,6 +10,7 @@ import * as async from "async";
 import {CollectionResourceItem} from "../CollectionResourceItem";
 import View from "../../view/View";
 import {BatchInterface} from "../../batch/BatchInterface";
+import {FrameManager} from "../../frame/FrameManager";
 
 
 export class TableCollection implements CollectionInterface
@@ -36,7 +37,7 @@ export class TableCollection implements CollectionInterface
         private router: Router,
         private filterManager: FilterManager,
         private columnManager: ColumnManager,
-        private view: View,
+        private frameManager: FrameManager,
     ) {
     }
 
@@ -153,31 +154,7 @@ export class TableCollection implements CollectionInterface
 
     private activateRow(row: CollectionResourceItem)
     {
-        return new Promise((resolve, reject) => {
-            for(let currentRow of this.rows) {
-                currentRow.active = currentRow.id === row.id;
-            }
 
-            async.parallel([(callback: (err: any) => void) => {
-                this.view.storeValue('active-view', null).then(() => {
-                    callback(null);
-                }).catch(() => {
-                    callback(true);
-                });
-            },(callback: (err: any) => void) => {
-                this.view.storeValue('active-row', row.id).then(() => {
-                    callback(null);
-                }).catch(() => {
-                    callback(true);
-                });
-            }], (err: any) => {
-                if(err) {
-                    reject();
-                } else {
-                    resolve();
-                }
-            });
-        });
     }
 
     private checkSelectedRows()
@@ -191,13 +168,13 @@ export class TableCollection implements CollectionInterface
 
     private checkActiveRow()
     {
-        this.view.loadValue('active-row', (id) => {
-            if(id) {
-                for(let currentRow of this.rows) {
-                    currentRow.active = currentRow.id === parseInt(id);
-                }
-            }
-        });
+        // this.view.loadValue('active-row', (id) => {
+        //     if(id) {
+        //         for(let currentRow of this.rows) {
+        //             currentRow.active = currentRow.id === parseInt(id);
+        //         }
+        //     }
+        // });
     }
 
     public clearActiveRow()

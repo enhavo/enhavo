@@ -51,12 +51,24 @@ export class ModelFactory extends ModelRegisterFactory
 {
     createWithData(name: string, data: object)
     {
-        let model = this.createNew(name);
+        let model = this.doCreate(name);
         Object.assign(model, data);
+        if (typeof model.onInit === 'function') {
+            model.onInit();
+        }
         return model;
     }
 
     createNew(name: string)
+    {
+        let model = this.doCreate(name);
+        if (typeof model.onInit === 'function') {
+            model.onInit();
+        }
+        return model;
+    }
+
+    private doCreate(name: string)
     {
         const entry = this.get(name);
         if (entry === null) {

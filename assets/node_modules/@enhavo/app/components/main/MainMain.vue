@@ -1,20 +1,20 @@
 <template>
-    <div class="app" v-bind:class="{ 'menu-collapsed':!mainManager.menuOpen}" v-if="!mainManager.loading">
+    <div class="app" v-bind:class="{ 'menu-collapsed':!menuManager.menuOpen}" v-if="!mainManager.loading">
         <toolbar-toolbar
             :primary="mainManager.primaryToolbarWidgets"
             :secondary="mainManager.secondaryToolbarWidgets"
-            :menu-open="mainManager.menuOpen"
+            :menu-open="menuManager.menuOpen"
             :logo="mainManager.branding ? mainManager.branding.logo : null"
-            @toogle-menu="mainManager.toogleMenu()"
+            @toogle-menu="menuManager.toogleMenu()"
         />
-<!--        <view-stack-dropdown></view-stack-dropdown>-->
-        <div class="sidebar" v-bind:class="{ 'menu-collapsed':!mainManager.menuOpen}">
+<!--        <frame-dropdown></frame-dropdown>-->
+        <div class="sidebar" v-bind:class="{ 'menu-collapsed':!menuManager.menuOpen}">
             <div class="mobile-branding-container" v-bind:style="getBrandingImageStyles()" @click="home"></div>
-            <menu-menu :items="mainManager.menuItems" v-bind:class="{ 'menu-collapsed':!mainManager.menuOpen}"></menu-menu>
+            <menu-menu></menu-menu>
         </div>
-<!--        <div class="toolbar-viewstack-container" v-bind:class="{ 'menu-collapsed':!mainManager.menuOpen}">-->
-<!--            <view-stack></view-stack>&ndash;&gt;-->
-<!--        </div>-->
+        <div class="toolbar-viewstack-container" v-bind:class="{ 'menu-collapsed':!menuManager.menuOpen}">
+            <frame-stack></frame-stack>
+        </div>
     </div>
 </template>
 
@@ -22,8 +22,10 @@
 import { inject } from 'vue'
 import '@enhavo/app/assets/styles/app.scss'
 import {MainManager} from "@enhavo/app/manager/MainManager";
+import {MenuManager} from "../../menu/MenuManager";
 
 const mainManager = inject<MainManager>('mainManager');
+const menuManager = inject<MenuManager>('menuManager');
 
 mainManager.load();
 

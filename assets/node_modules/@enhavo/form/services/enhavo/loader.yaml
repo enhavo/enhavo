@@ -32,8 +32,8 @@ services:
     '@enhavo/form/loader/AutoCompleteLoader':
         chunk: 'form'
         arguments:
-            - '@enhavo/app/view-stack/EventDispatcher'
-            - '@enhavo/app/view/View'
+            - '@enhavo/app/frame/EventDispatcher'
+            - '@enhavo/app/frame/FrameManager'
             - '@enhavo/core/Router'
         tags:
             - 'enhavo_app.form'
@@ -53,9 +53,9 @@ services:
     '@enhavo/form/loader/PolyCollectionLoader':
         chunk: 'form'
         arguments:
-            - '@enhavo/app/view/View'
+            - '@enhavo/app/frame/FrameManager'
             - '@enhavo/core/Translator'
-            - '@enhavo/app/view-stack/EventDispatcher'
+            - '@enhavo/app/frame/EventDispatcher'
         tags:
             - 'enhavo_app.form'
 

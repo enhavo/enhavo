@@ -3,6 +3,7 @@ services:
         import: ResourceIndexManager
         arguments:
             - '@enhavo/app/routing/Router'
+            - '@enhavo/app/frame/FrameManager'
             - '@enhavo/app/action/ActionManager'
             - '@enhavo/app/filter/FilterManager'
             - '@enhavo/app/column/ColumnManager'
