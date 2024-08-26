@@ -1,21 +1,19 @@
-import EventDispatcher from "@enhavo/app/frame/EventDispatcher";
+import {FrameEventDispatcher} from "@enhavo/app/frame/FrameEventDispatcher";
 import View from "@enhavo/app/view/View";
-import UpdatedEvent from "@enhavo/app/frame/event/UpdatedEvent";
-import CloseEvent from "@enhavo/app/frame/event/RemoveEvent";
 import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
 import {FlashMessenger} from "@enhavo/app/flash-message/FlashMessenger";
 
 export default class DeleteApp
 {
     public data: any;
-    private readonly eventDispatcher: EventDispatcher;
+    private readonly eventDispatcher: FrameEventDispatcher;
     private readonly view: View;
     private readonly flashMessenger: FlashMessenger;
     private readonly componentRegistry: ComponentRegistryInterface;
 
     constructor(
         data: any,
-        eventDispatcher: EventDispatcher,
+        eventDispatcher: FrameEventDispatcher,
         view: View,
         flashMessenger: FlashMessenger,
         componentRegistry: ComponentRegistryInterface

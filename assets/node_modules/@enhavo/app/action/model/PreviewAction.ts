@@ -1,13 +1,8 @@
 import { AbstractAction } from "@enhavo/app/action/model/AbstractAction";
-import $ from 'jquery';
-import DataEvent from "@enhavo/app/frame/event/DataEvent";
-import ExistsEvent from "@enhavo/app/frame/event/ExistsEvent";
-import LoadedEvent from "@enhavo/app/frame/event/LoadedEvent";
 import ExistsData from "@enhavo/app/frame/ExistsData";
-import LoadDataEvent from "@enhavo/app/frame/event/LoadDataEvent";
 import DataStorageEntry from "@enhavo/app/frame/DataStorageEntry";
 import View from "@enhavo/app/view/View";
-import EventDispatcher from "@enhavo/app/frame/EventDispatcher";
+import {FrameEventDispatcher} from "@enhavo/app/frame/FrameEventDispatcher";
 
 export class PreviewAction extends AbstractAction
 {
@@ -16,9 +11,9 @@ export class PreviewAction extends AbstractAction
     private static listenerLoaded = false;
 
     private readonly view: View;
-    private readonly eventDispatcher: EventDispatcher;
+    private readonly eventDispatcher: FrameEventDispatcher;
 
-    constructor(view: View, eventDispatcher: EventDispatcher) {
+    constructor(view: View, eventDispatcher: FrameEventDispatcher) {
         super();
         this.view = view;
         this.eventDispatcher = eventDispatcher;

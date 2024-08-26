@@ -4,16 +4,10 @@ services:
         import: MainManager
         arguments:
             - '@enhavo/app/frame/FrameStackSubscriber'
+            - '@enhavo/app/frame/FrameStateManager'
+            - '@enhavo/app/frame/FrameManager'
             - '@enhavo/app/menu/MenuManager'
             - '@enhavo/app/toolbar/ToolbarWidgetManager'
             - '@enhavo/app/routing/Router'
         tags:
             - { name: vue.service, service: 'mainManager', reactive: true }
-
-#    '@enhavo/app/state/StateManager':
-#        chunk: 'main'
-#        arguments:
-#            - '@enhavo/app/frame/FrameStack'
-#            - '@enhavo/app/frame/EventDispatcher'
-#            - '@enhavo/app/frame/GlobalDataStorageManager'
-#            - '@enhavo/app/vue/VueRegistry'

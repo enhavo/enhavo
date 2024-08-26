@@ -1,7 +1,6 @@
 import { AbstractAction } from "@enhavo/app/action/model/AbstractAction";
-import LoadingEvent from "@enhavo/app/frame/event/LoadingEvent";
 import View from "@enhavo/app/view/View";
-import EventDispatcher from "@enhavo/app/frame/EventDispatcher";
+import {FrameEventDispatcher} from "@enhavo/app/frame/FrameEventDispatcher";
 import {ResourceInputManager} from "../../manager/ResourceInputManager";
 import {FormUtil} from "@enhavo/vue-form/form/FormUtil";
 
@@ -11,7 +10,7 @@ export class SaveAction extends AbstractAction
 
     constructor(
         private readonly view: View,
-        private readonly eventDispatcher: EventDispatcher,
+        private readonly eventDispatcher: FrameEventDispatcher,
         private readonly resourceInputManager: ResourceInputManager,
     ) {
         super();

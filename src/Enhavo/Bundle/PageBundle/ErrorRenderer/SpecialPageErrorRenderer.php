@@ -43,7 +43,7 @@ class SpecialPageErrorRenderer implements ErrorRendererInterface
 
         $debug = ($this->debug)($flattenException);
         if ($debug) {
-            $this->fallbackErrorRenderer->render($exception);
+            return $this->fallbackErrorRenderer->render($exception);
         }
 
         try {

@@ -1,40 +1,76 @@
-import {Event, EventDispatcher} from "@enhavo/app/frame/EventDispatcher";
+import {Event, FrameEventDispatcher} from "@enhavo/app/frame/FrameEventDispatcher";
 import {Frame} from '@enhavo/app/frame/Frame';
 import generateId from "uuid/v4";
-import {FrameUpdate} from "./FrameStackSubscriber";
 
-/**
- * @internal
- */
+
 export class FrameStack
 {
     private frames: Frame[] = [];
-    public width: number = null;
 
     constructor(
-        private eventDispatcher: EventDispatcher
+        private eventDispatcher: FrameEventDispatcher
     ) {
     }
 
-    private isRootWindow(): boolean
-    {
-        return window.name == '';
-    }
-
-    public setFrames(options: object[])
+    public async setFrames(options: object[])
     {
         for (let frame of this.frames) {
-            this.removeFrame(frame, true);
+            await this.removeFrame(frame, true);
         }
 
         for (let frameOptions of options) {
-            this.addFrame(options);
+            await this.addFrame(frameOptions);
         }
     }
 
-    public addFrame(options: object)
+    public async updateFrames(frames: Frame[]|object[])
     {
+        for (let updateFrame of frames) {
+            let found = false;
+            for (let frame of this.frames) {
+                if ((updateFrame as Frame).id == frame.id) {
+                    Object.assign(frame, updateFrame);
+                    found = true;
+                    break;
+                }
+            }
+            if (found === false) {
+                await this.addFrame(updateFrame);
+            }
+        }
+
+        for (let frame of this.frames) {
+            let found = false;
+            for (let updateFrame of frames) {
+                if ((updateFrame as Frame).id == frame.id) {
+                    found = true;
+                    break;
+                }
+            }
+            if (found === false) {
+                await this.removeFrame(frame);
+            }
+        }
+    }
+
+    public async addFrame(options: object)
+    {
+        if (options['key'] !== undefined && options['parent'] !== undefined) {
+            for (let frame of this.frames) {
+                if (frame.parent == options['parent'] && frame.key == options['key']) {
+                    await this.removeFrame(frame);
+                    //options.width = frame.width;
+                    break;
+                }
+            }
+        }
+
         let frame = this.createFrame(options);
+
+        if (options['wait'] === false) {
+            frame.loaded = true;
+        }
+
         this.frames.push(frame);
         this.eventDispatcher.dispatch(new FrameAdded(frame));
     }
@@ -59,10 +95,10 @@ export class FrameStack
         });
     }
 
-    public async clearFrames(): Promise<boolean>
+    public async clearFrames(force: boolean = false): Promise<boolean>
     {
         for (let frame of this.frames) {
-             let success = await this.removeFrame(frame);
+             let success = await this.removeFrame(frame, force);
              if (success === false) {
                  return false;
              }
@@ -70,12 +106,14 @@ export class FrameStack
         return true;
     }
 
-    public getFrames(): Frame[]
+    public getFrames(parentId: string = undefined): Frame[]
     {
         let frames = [];
         for (let frame of this.frames) {
-            if(!frame.removed) {
-                frames.push(frame);
+            if (!frame.removed) {
+                if ((parentId != undefined && frame.parent == parentId) || parentId == undefined) {
+                    frames.push(frame);
+                }
             }
         }
         return frames;
@@ -109,8 +147,8 @@ export class FrameStack
         }
 
         /**
-         * We can't delete windows by splice, because the vue components will unmount and mount again because we use
-         * provide key in v-for and this will reload the iframe, to fix this issue, the best practise is to delete only
+         * We can't delete frame with splice, because the vue components will unmount and mount again because we
+         * provide a key in v-for and this will reload the iframe, to fix this issue, the best practise is to delete only
          * the last element. Other elements will just hide until it is the last of the array.
          */
         while (this.frames.length > 0 && this.frames[this.frames.length-1].removed) {

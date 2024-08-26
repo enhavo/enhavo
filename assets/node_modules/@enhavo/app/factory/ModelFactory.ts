@@ -96,3 +96,8 @@ export class Entry
         return this.model;
     }
 }
+
+export interface ModelInitInterface
+{
+    onInit(): void;
+}

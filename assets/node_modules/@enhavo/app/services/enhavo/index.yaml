@@ -2,7 +2,7 @@ services:
 #    '@enhavo/app/index/IndexApp':
 #        chunk: 'index'
 #        arguments:
-#            - '@enhavo/app/frame/EventDispatcher'
+#            - '@enhavo/app/frame/FrameEventDispatcher'
 #            - '@enhavo/app/frame/FrameManager'
 #            - '@enhavo/app/action/ActionManager'
 #            - '@enhavo/app/flash-message/FlashMessenger'

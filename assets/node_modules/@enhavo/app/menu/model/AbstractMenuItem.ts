@@ -25,21 +25,9 @@ export abstract class AbstractMenuItem implements MenuItemInterface
         return descendants;
     }
 
-    unselect(): void {
-        this.selected = false;
-        for (let child of this.children()) {
-            child.unselect();
-        }
-    }
-
-    select(): void {
-        if (this.parent()) {
-            this.parent().select();
-        }
-        this.selected = true;
-    }
-
     open(): void {}
+
+    close(): void {}
 
     parent(): MenuItemInterface {
         return this.parentItem;

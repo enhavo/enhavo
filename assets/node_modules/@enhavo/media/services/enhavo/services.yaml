@@ -13,7 +13,7 @@ services:
         chunk: 'image-cropper'
         arguments:
             - 'param:data.format'
-            - '@enhavo/app/frame/EventDispatcher'
+            - '@enhavo/app/frame/FrameEventDispatcher'
             - '@enhavo/app/frame/FrameManager'
             - '@enhavo/app/action/ActionManager'
             - '@enhavo/app/flash-message/FlashMessenger'

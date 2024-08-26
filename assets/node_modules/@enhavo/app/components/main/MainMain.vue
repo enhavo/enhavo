@@ -5,9 +5,9 @@
             :secondary="mainManager.secondaryToolbarWidgets"
             :menu-open="menuManager.menuOpen"
             :logo="mainManager.branding ? mainManager.branding.logo : null"
-            @toogle-menu="menuManager.toogleMenu()"
+            @toggle-menu="menuManager.toggleMenu()"
         />
-<!--        <frame-dropdown></frame-dropdown>-->
+        <frame-stack-mobile-dropdown></frame-stack-mobile-dropdown>
         <div class="sidebar" v-bind:class="{ 'menu-collapsed':!menuManager.menuOpen}">
             <div class="mobile-branding-container" v-bind:style="getBrandingImageStyles()" @click="home"></div>
             <menu-menu></menu-menu>
@@ -23,6 +23,7 @@ import { inject } from 'vue'
 import '@enhavo/app/assets/styles/app.scss'
 import {MainManager} from "@enhavo/app/manager/MainManager";
 import {MenuManager} from "../../menu/MenuManager";
+import FrameStackMobileDropdown from "../frame/FrameStackMobileDropdown.vue";
 
 const mainManager = inject<MainManager>('mainManager');
 const menuManager = inject<MenuManager>('menuManager');

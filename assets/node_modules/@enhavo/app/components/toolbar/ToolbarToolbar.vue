@@ -4,7 +4,7 @@
             <div class="branding-container" v-bind:style="getBrandingImageStyles()" @click="home"></div>
         </div>
 
-        <div class="toolbar-item" @click="emit('toogleMenu')">
+        <div class="toolbar-item" @click="emit('toggleMenu')">
             <div v-if="menuOpen" class="menu-toggle">
                 <span class="icon icon-chevron_left"></span>
             </div>
@@ -36,7 +36,7 @@
 <script setup lang="ts">
 import {ToolbarWidgetInterface} from "@enhavo/app/toolbar/ToolbarWidgetInterface";
 
-const emit = defineEmits(['toogleMenu']);
+const emit = defineEmits(['toggleMenu']);
 
 const props = defineProps<{
     primary?: ToolbarWidgetInterface[],

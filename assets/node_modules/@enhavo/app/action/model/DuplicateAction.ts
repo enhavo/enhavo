@@ -1,9 +1,8 @@
 import { AbstractAction } from "@enhavo/app/action/model/AbstractAction";
 import Confirm from "@enhavo/app/ui/Confirm";
-import LoadingEvent from "@enhavo/app/frame/event/LoadingEvent";
 import $ from "jquery";
 import View from "@enhavo/app/view/View";
-import EventDispatcher from "@enhavo/app/frame/EventDispatcher";
+import {FrameEventDispatcher} from "@enhavo/app/frame/FrameEventDispatcher";
 
 export class DuplicateAction extends AbstractAction
 {
@@ -14,9 +13,9 @@ export class DuplicateAction extends AbstractAction
     public confirmLabelCancel: string;
 
     private readonly view: View;
-    private readonly eventDispatcher: EventDispatcher;
+    private readonly eventDispatcher: FrameEventDispatcher;
 
-    constructor(view: View, eventDispatcher: EventDispatcher) {
+    constructor(view: View, eventDispatcher: FrameEventDispatcher) {
         super();
         this.view = view;
         this.eventDispatcher = eventDispatcher;

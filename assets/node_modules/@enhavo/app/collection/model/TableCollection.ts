@@ -6,11 +6,10 @@ import {Router} from "../../routing/Router";
 import {FilterManager} from "../../filter/FilterManager";
 import {ColumnManager} from "../../column/ColumnManager";
 import jexl from "jexl";
-import * as async from "async";
 import {CollectionResourceItem} from "../CollectionResourceItem";
-import View from "../../view/View";
 import {BatchInterface} from "../../batch/BatchInterface";
 import {FrameManager} from "../../frame/FrameManager";
+import {Event} from "../../frame/FrameEventDispatcher";
 
 
 export class TableCollection implements CollectionInterface
@@ -19,18 +18,18 @@ export class TableCollection implements CollectionInterface
 
     component: string;
     page: number;
-    pages: [] = [];
+    pages: number[] = [];
     paginationSteps: number[];
     paginationStep: number;
     paginated: boolean;
     selectedAll: boolean;
-    selectedIds: [] = [];
+    selectedIds: number[] = [];
     columns: ColumnInterface[];
     filters: FilterInterface[];
     batches: BatchInterface[];
     routes: RouteContainer;
     loading: boolean = false;
-    rows: CollectionResourceItem[];
+    rows: CollectionResourceItem[] = [];
     count: number;
 
     constructor(
@@ -48,7 +47,13 @@ export class TableCollection implements CollectionInterface
 
     init(): void
     {
+        this.frameManager.on('frame_added', (event: Event) => {
+            this.checkActiveRow();
+        });
 
+        this.frameManager.on('frame_removed', (event: Event) => {
+            this.checkActiveRow();
+        });
     }
 
     async load(): Promise<boolean>
@@ -152,11 +157,6 @@ export class TableCollection implements CollectionInterface
         this.checkColumnConditions();
     }
 
-    private activateRow(row: CollectionResourceItem)
-    {
-
-    }
-
     private checkSelectedRows()
     {
         for (let currentRow of this.rows) {
@@ -166,23 +166,20 @@ export class TableCollection implements CollectionInterface
         }
     }
 
-    private checkActiveRow()
+    private async checkActiveRow()
     {
-        // this.view.loadValue('active-row', (id) => {
-        //     if(id) {
-        //         for(let currentRow of this.rows) {
-        //             currentRow.active = currentRow.id === parseInt(id);
-        //         }
-        //     }
-        // });
-    }
+        const frames = await this.frameManager.getFrames();
 
-    public clearActiveRow()
-    {
-        this.view.storeValue('active-view', null);
-        this.view.storeValue('active-row', null);
-        for(let currentRow of this.rows) {
-            currentRow.active = false;
+        for (let row of this.rows) {
+            row.active = false;
+        }
+
+        for (let frame of frames) {
+            for (let row of this.rows) {
+                if (row.url === frame.url) {
+                    row.active = true;
+                }
+            }
         }
     }
 
@@ -266,11 +263,6 @@ export class TableCollection implements CollectionInterface
         this.selectedIds.splice(0, this.selectedIds.length);
     }
 
-    private hasSelectedIds()
-    {
-        return this.selectedIds.length > 0;
-    }
-
     private markAllRowsWith(value: boolean)
     {
         for (let row of this.rows) {
@@ -302,5 +294,14 @@ export class TableCollection implements CollectionInterface
 
         this.loading = false;
         this.checkSelectedRows();
+    }
+
+    async open(row: CollectionResourceItem) {
+        if (row.url) {
+            await this.frameManager.openFrame({
+                url: row.url,
+                key: 'edit',
+            });
+        }
     }
 }

@@ -3,7 +3,7 @@ services:
         chunk: 'form'
         arguments:
             - 'param:data'
-            - '@enhavo/app/frame/EventDispatcher'
+            - '@enhavo/app/frame/FrameEventDispatcher'
             - '@enhavo/app/frame/FrameManager'
             - '@enhavo/app/action/ActionManager'
             - '@enhavo/core/Translator'
@@ -19,6 +19,6 @@ services:
             - 'param:data'
             - '@enhavo/app/form/FormRegistry'
             - '@enhavo/app/flash-message/FlashMessenger'
-            - '@enhavo/app/frame/EventDispatcher'
+            - '@enhavo/app/frame/FrameEventDispatcher'
             - '@enhavo/app/frame/FrameManager'
             - '@enhavo/app/vue/VueRegistry'

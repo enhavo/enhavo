@@ -1,5 +1,5 @@
 <template>
-    <a :href="data.mainUrl" v-bind:class="{'menu-child-title menu-item': true, 'selected': data.isActive()}" @click="open($event)">
+    <a :href="data.getMainUrl()" v-bind:class="{'menu-child-title menu-item': true, 'selected': data.isActive()}" @click="open($event)">
         <div class="symbol-container">
             <i v-bind:class="['icon', getIcon()]" aria-hidden="true"></i>
         </div>

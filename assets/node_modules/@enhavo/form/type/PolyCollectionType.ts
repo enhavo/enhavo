@@ -10,8 +10,7 @@ import Prototype from "@enhavo/form/prototype/Prototype";
 import View from "@enhavo/app/view/View";
 import Confirm from "@enhavo/app/ui/Confirm";
 import Translator from "@enhavo/core/Translator";
-import SaveStateEvent from "@enhavo/app/frame/event/SaveStateEvent";
-import EventDispatcher from "@enhavo/app/frame/EventDispatcher";
+import {FrameEventDispatcher} from "@enhavo/app/frame/FrameEventDispatcher";
 
 export default class PolyCollectionType extends FormType
 {
@@ -35,9 +34,9 @@ export default class PolyCollectionType extends FormType
 
     private translator: Translator;
 
-    private eventDispatcher: EventDispatcher;
+    private eventDispatcher: FrameEventDispatcher;
 
-    constructor(element: HTMLElement, config: PolyCollectionConfig, prototypeManager: PrototypeManager, view: View, translator: Translator, eventDispatcher: EventDispatcher)
+    constructor(element: HTMLElement, config: PolyCollectionConfig, prototypeManager: PrototypeManager, view: View, translator: Translator, eventDispatcher: FrameEventDispatcher)
     {
         super(element);
         this.$container = this.$element.children('[data-poly-collection-container]');

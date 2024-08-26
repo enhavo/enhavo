@@ -5,6 +5,7 @@ export class MenuManager
 {
     public menuOpen: boolean = true;
     public menuItems: MenuItemInterface[]
+    public menuCustomChange: boolean = false;
 
     constructor(
         private readonly factory: MenuItemFactory,
@@ -34,28 +35,32 @@ export class MenuManager
         this.menuItems = items;
     }
 
-    toogleMenu()
+    toggleMenu()
     {
         this.menuOpen = !this.menuOpen;
+        this.menuCustomChange = true;
     }
 
-    clearSelections() {
-        for (let item of this.menuItems) {
-            item.unselect();
-        }
-    }
-
-    start() {
+    start()
+    {
         if (this.menuItems && this.menuItems.length > 0) {
-            this.clearSelections();
             for (let item of this.menuItems) {
-                if(item.clickable) {
-                    item.select();
+                if (item.clickable) {
                     item.open();
                     return;
                 }
             }
         }
+    }
+
+    open()
+    {
+        this.menuOpen = true;
+    }
+
+    close()
+    {
+        this.menuOpen = false;
     }
 
     getItems(): Array<MenuItemInterface>
@@ -68,5 +73,10 @@ export class MenuManager
             }
         }
         return items;
+    }
+
+    isCustomChange(): boolean
+    {
+        return this.menuCustomChange;
     }
 }

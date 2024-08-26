@@ -31,7 +31,6 @@ class BaseMenuType extends AbstractType implements MenuTypeInterface
         $data->add([
             'label' => $this->translator->trans($options['label'], [], $options['translation_domain']),
             'url' => $url,
-            'mainUrl' => $this->generateMainUrl($url, $options),
             'icon' => $options['icon'],
             'component' => $options['component'],
             'model' => $options['model'],
@@ -47,19 +46,7 @@ class BaseMenuType extends AbstractType implements MenuTypeInterface
             ],
         ]);
     }
-
-    private function generateMainUrl($url, $options)
-    {
-        $state = StateEncoder::encode([
-            'views' => [['url' => $url, 'id' => 2]],
-            'storage' => [['key' => 'menu-active-key', 'value' => $options['key']]]
-        ]);
-
-        return $this->router->generate('enhavo_app_admin_index', [
-            'state' => $state
-        ]);
-    }
-
+    
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
