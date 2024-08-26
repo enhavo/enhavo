@@ -32,7 +32,7 @@ services:
     '@enhavo/form/loader/AutoCompleteLoader':
         chunk: 'form'
         arguments:
-            - '@enhavo/app/frame/EventDispatcher'
+            - '@enhavo/app/frame/FrameEventDispatcher'
             - '@enhavo/app/frame/FrameManager'
             - '@enhavo/core/Router'
         tags:
@@ -55,7 +55,7 @@ services:
         arguments:
             - '@enhavo/app/frame/FrameManager'
             - '@enhavo/core/Translator'
-            - '@enhavo/app/frame/EventDispatcher'
+            - '@enhavo/app/frame/FrameEventDispatcher'
         tags:
             - 'enhavo_app.form'
 

@@ -3,7 +3,7 @@ services:
         chunk: 'delete'
         arguments:
             - 'param:data'
-            - '@enhavo/app/frame/EventDispatcher'
+            - '@enhavo/app/frame/FrameEventDispatcher'
             - '@enhavo/app/frame/FrameManager'
             - '@enhavo/app/flash-message/FlashMessenger'
             - '@enhavo/app/vue/VueRegistry'

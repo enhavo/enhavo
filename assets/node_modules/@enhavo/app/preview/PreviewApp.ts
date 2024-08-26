@@ -1,7 +1,6 @@
 import ActionManager from "@enhavo/app/action/ActionManager";
-import EventDispatcher from "@enhavo/app/frame/EventDispatcher";
+import {FrameEventDispatcher} from "@enhavo/app/frame/FrameEventDispatcher";
 import View from "@enhavo/app/view/View";
-import DataEvent from "@enhavo/app/frame/event/DataEvent";
 import $ from "jquery"
 import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
 import PreviewData from "@enhavo/app/preview/PreviewData";
@@ -11,13 +10,13 @@ export default class PreviewApp
     public data: PreviewData;
 
     private readonly actionManager: ActionManager;
-    private readonly eventDispatcher: EventDispatcher;
+    private readonly eventDispatcher: FrameEventDispatcher;
     private readonly view: View;
     private readonly componentRegistry: ComponentRegistryInterface;
 
     constructor(
         data: PreviewData,
-        eventDispatcher: EventDispatcher,
+        eventDispatcher: FrameEventDispatcher,
         view: View,
         actionManager: ActionManager,
         componentRegistry: ComponentRegistryInterface

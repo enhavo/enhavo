@@ -3,7 +3,7 @@ import generateId from "uuid/v4";
 /**
  * @internal
  *
- * The event dispatcher can send and receive events in one frame or over multiple frames.
+ * The frame event dispatcher can send and receive events in one frame or over multiple frames.
  * It is not implemented for nested iframes, so there are only parent and children.
  *
  * This class should be instantiated in the main frame and the child frame.
@@ -13,33 +13,33 @@ import generateId from "uuid/v4";
  * <iframe src="http://example/two" name="two">
  *
  * Listen to an event:
- * (new EventDispatcher).on('myEvent', (event) => { });
+ * (new FrameEventDispatcher).on('myEvent', (event) => { });
  *
  * Dispatch event:
- * (new EventDispatcher).dispatch(new Event('myEvent'));
+ * (new FrameEventDispatcher).dispatch(new Event('myEvent'));
  *
- * We recommend to create your own event class on extend {Event} from '@enhavo/app/frame/EventDispatcher'
+ * We recommend to create your own event class on extend {Event} from '@enhavo/app/frame/FrameEventDispatcher'
  *
  * Events can also be resolved or rejected like a Promise to deliver back some data to the dispatched event.
  *
  * Resolve:
- * (new EventDispatcher).on('myEvent', (event) => { event.resolve({ someData: 'Test resolve'}) });
+ * (new FrameEventDispatcher).on('myEvent', (event) => { event.resolve({ someData: 'Test resolve'}) });
  *
  * Reject:
- * (new EventDispatcher).on('myEvent', (event) => { event.reject({ someData: 'Test reject'}) });
+ * (new FrameEventDispatcher).on('myEvent', (event) => { event.reject({ someData: 'Test reject'}) });
  *
  * If you expect return data, use the request method
  *
  * Receive resolved data:
- * (new EventDispatcher).request(new Event('myEvent')).then(data => {});
+ * (new FrameEventDispatcher).request(new Event('myEvent')).then(data => {});
  *
  * Receive reject data:
- * (new EventDispatcher).request(new Event('myEvent')).catch(data => {});
+ * (new FrameEventDispatcher).request(new Event('myEvent')).catch(data => {});
  *
  * It is possible that multiple subscriber will receive an event and resolve or reject it, but only the first on that
  * arrive back will trigger the reject or resolve once.
  */
-export class EventDispatcher
+export class FrameEventDispatcher
 {
     private subscribers: Subscriber[] = [];
     private events: EventStore[] = [];
@@ -49,11 +49,11 @@ export class EventDispatcher
     )
     {
         // receive message events
-        let regex = new RegExp('^window_stack_event');
+        let regex = new RegExp('^frame_stack_event');
         window.addEventListener("message", (event) => {
             let data = event.data;
             if (typeof data == 'string' && regex.test(data)) {
-                data = data.substring(19);
+                data = data.substring(18);
                 let eventData = JSON.parse(data);
                 let newEvent = new Event('');
                 Object.assign(newEvent, eventData);
@@ -168,14 +168,14 @@ export class EventDispatcher
         }
 
         // send to own frame
-        window.postMessage('window_stack_event|' + event.serialize());
+        window.postMessage('frame_stack_event|' + event.serialize());
 
         if (window.parent && !this.isRootWindow()) {
             // send event to parent window
             const url = new URL(window.location != window.parent.location ? document.referrer : document.location.href);
             let port = url.port ? ':' +  url.port : '';
             let target = url.protocol + '//' + url.hostname + port;
-            let serializeEvent = 'window_stack_event|' + event.serialize();
+            let serializeEvent = 'frame_stack_event|' + event.serialize();
             window.parent.postMessage(serializeEvent, target);
         } else {
             // send event to child frames
@@ -202,7 +202,7 @@ export class EventDispatcher
     private sendToFrame(frame: HTMLIFrameElement, event: Event)
     {
         let src = frame.getAttribute('src');
-        let data = 'window_stack_event|' + event.serialize();
+        let data = 'frame_stack_event|' + event.serialize();
 
         if (URL.canParse(src)) {
             const url = new URL(src);
@@ -214,12 +214,17 @@ export class EventDispatcher
         }
     }
 
-    public on(eventName: string, callback: (event: Event) => void): Subscriber
+    public on(eventName: string, callback: (event: Event) => void, priority: number = 10): Subscriber
     {
         let subscriber = new Subscriber();
         subscriber.eventName = eventName;
         subscriber.callback = callback;
+        subscriber.priority = priority;
         this.subscribers.push(subscriber);
+        this.subscribers = this.subscribers.sort((a, b) => {
+            return b.priority - a.priority;
+        });
+
         return subscriber;
     }
 
@@ -236,6 +241,7 @@ export class Subscriber
 {
     eventName: string = null;
     callback: (event: Event) => void;
+    priority: number;
 }
 
 class EventStore
@@ -261,7 +267,7 @@ export class Event
     history: string[] = [];
     uuid: string;
     ttl: number;
-    dispatcher: EventDispatcher;
+    dispatcher: FrameEventDispatcher;
 
     constructor(name: string)
     {
@@ -269,12 +275,12 @@ export class Event
         this.uuid = generateId();
     }
 
-    resolve(data: object|object[]|boolean|string|number)
+    resolve(data: object|object[]|boolean|string|number = null)
     {
         this.dispatcher.dispatch(new ResolveEvent(this.uuid, this.name, data));
     }
 
-    reject(data: object|object[]|boolean|string|number)
+    reject(data: object|object[]|boolean|string|number = null)
     {
         this.dispatcher.dispatch(new RejectEvent(this.uuid, this.name, data));
     }

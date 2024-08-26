@@ -1,8 +1,7 @@
 import { AbstractAction } from "@enhavo/app/action/model/AbstractAction";
 import Confirm from "@enhavo/app/ui/Confirm";
 import $ from "jquery";
-import LoadingEvent from "@enhavo/app/frame/event/LoadingEvent";
-import EventDispatcher from "@enhavo/app/frame/EventDispatcher";
+import {FrameEventDispatcher} from "@enhavo/app/frame/FrameEventDispatcher";
 import View from "@enhavo/app/view/View";
 
 export class DeleteAction extends AbstractAction
@@ -16,9 +15,9 @@ export class DeleteAction extends AbstractAction
     public confirmLabelCancel: string;
 
     private readonly view: View;
-    private readonly eventDispatcher: EventDispatcher;
+    private readonly eventDispatcher: FrameEventDispatcher;
 
-    constructor(view: View, eventDispatcher: EventDispatcher) {
+    constructor(view: View, eventDispatcher: FrameEventDispatcher) {
         super();
         this.view = view;
         this.eventDispatcher = eventDispatcher;

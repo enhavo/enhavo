@@ -1,5 +1,5 @@
 <template>
-    <div class="view-component" :style="{order: frame.position, maxWidth: frame.width}" :class="{minimized: frame.minimize, focused: frame.focus}">
+    <div class="view-component" :style="{order: frame.position, maxWidth: frame.width + '%'}" :class="{minimized: frame.minimize, focused: frame.focus}">
         <div class="toolbar">
             <strong v-if="!frame.minimize">{{ frame.label }}</strong>
             <div class="actions">
@@ -27,37 +27,47 @@
 import {inject} from "vue";
 import {Frame} from "@enhavo/app/frame/Frame";
 import {FrameStack} from "@enhavo/app/frame/FrameStack";
+import {FrameUtil} from "@enhavo/app/frame/FrameUtil";
+import {FrameStateManager} from "@enhavo/app/frame/FrameStateManager";
+import {FrameArrangeManager} from "@enhavo/app/frame/FrameArrangeManager";
 
 const frameStack = inject<FrameStack>('frameStack');
+const frameStateManager = inject<FrameStateManager>('frameStateManager');
+const frameArrangeManager = inject<FrameArrangeManager>('frameArrangeManager');
 
 const props = defineProps<{
     frame: Frame,
 }>()
 
 const frame = props.frame;
-const id = frame.id;
 
-function close()
+async function close()
 {
-    frameStack.removeFrame(frame);
+    await frameStack.removeFrame(frame);
+    frameStateManager.saveState();
+    frameArrangeManager.arrange();
 }
 
 function open()
 {
-    let dataString = frameStack.createStringFromWindows([data])
+    let dataString = FrameUtil.getState([frame]);
     let uri = new URL(window.location.href);
-    uri.searchParams.set('frame',  dataString);
+    uri.searchParams.set('frames',  dataString);
     window.open(uri.toString(), '_blank');
 }
 
 function minimize()
 {
     frame.minimize = true;
+    frame.keepMinimized = true;
+    frameArrangeManager.arrange();
 }
 
 function maximize()
 {
     frame.minimize = false;
+    frame.keepMinimized = true;
+    frameArrangeManager.arrange();
 }
 
 function getUrl(): string

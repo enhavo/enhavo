@@ -38,10 +38,7 @@ function changeSelect()
 
 function open()
 {
-
-    // if (grid.isRowClickable()) {
-    //     grid.open(data);
-    // }
+    collection.open(data);
 }
 
 function calcColumnWidth(parts: number): string

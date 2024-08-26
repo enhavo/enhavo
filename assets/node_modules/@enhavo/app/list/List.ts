@@ -1,5 +1,5 @@
 import ListData from "@enhavo/app/list/ListData";
-import EventDispatcher from "@enhavo/app/frame/EventDispatcher";
+import {FrameEventDispatcher} from "@enhavo/app/frame/FrameEventDispatcher";
 import View from "@enhavo/app/view/View";
 import * as _ from "lodash";
 import {ColumnManager} from "@enhavo/app/column/ColumnManager";
@@ -7,7 +7,6 @@ import Router from "@enhavo/core/Router";
 import axios from "axios";
 import Item from "@enhavo/app/list/Item";
 import Translator from "@enhavo/core/Translator";
-import UpdatedEvent from "@enhavo/app/frame/event/UpdatedEvent";
 import { FlashMessenger, FlashMessage } from "@enhavo/app/flash-message/FlashMessenger";
 import * as async from "async";
 import WindowInterface from "@enhavo/app/frame/ViewInterface";
@@ -17,7 +16,7 @@ export default class List
 {
     public data: ListData;
 
-    private readonly eventDispatcher: EventDispatcher;
+    private readonly eventDispatcher: FrameEventDispatcher;
     private readonly columnManager: ColumnManager;
     private readonly view: View;
     private readonly router: Router;
@@ -27,7 +26,7 @@ export default class List
 
     constructor(
         data: ListData,
-        eventDispatcher: EventDispatcher,
+        eventDispatcher: FrameEventDispatcher,
         view: View,
         columnManager: ColumnManager,
         router: Router,

@@ -1,14 +1,13 @@
 import { AbstractAction } from "@enhavo/app/action/model/AbstractAction";
-import CloseEvent from "@enhavo/app/frame/event/CloseEvent";
 import View from "@enhavo/app/view/View";
-import EventDispatcher from "@enhavo/app/frame/EventDispatcher";
+import {FrameEventDispatcher} from "@enhavo/app/frame/FrameEventDispatcher";
 
 export class CloseAction extends AbstractAction
 {
     private readonly view: View;
-    private readonly eventDispatcher: EventDispatcher;
+    private readonly eventDispatcher: FrameEventDispatcher;
 
-    constructor(view: View, eventDispatcher: EventDispatcher) {
+    constructor(view: View, eventDispatcher: FrameEventDispatcher) {
         super();
         this.view = view;
         this.eventDispatcher = eventDispatcher;

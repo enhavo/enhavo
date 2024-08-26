@@ -1,9 +1,7 @@
 import AbstractLoader from "@enhavo/form/loader/AbstractLoader";
-import EventDispatcher from "@enhavo/app/frame/EventDispatcher"
+import {FrameEventDispatcher} from "@enhavo/app/frame/FrameEventDispatcher"
 import View from "@enhavo/app/view/View";
 import Router from "@enhavo/core/Router";
-import UpdatedEvent from "@enhavo/app/frame/event/UpdatedEvent";
-import LoadDataEvent from "@enhavo/app/frame/event/LoadDataEvent";
 import DataStorageEntry from "@enhavo/app/frame/DataStorageEntry";
 import MediaType from "@enhavo/media/type/MediaType"
 import MediaItemMeta from "@enhavo/media/type/MediaItemMeta"
@@ -11,11 +9,11 @@ import $ from "jquery";
 
 export default class MediaLibraryLoader extends AbstractLoader {
     private currentType: MediaType;
-    private readonly eventDispatcher: EventDispatcher;
+    private readonly eventDispatcher: FrameEventDispatcher;
     private readonly view: View;
     private readonly router: Router;
 
-    constructor(eventDispatcher: EventDispatcher, view: View, router: Router) {
+    constructor(eventDispatcher: FrameEventDispatcher, view: View, router: Router) {
         super();
         this.eventDispatcher = eventDispatcher;
         this.view = view;

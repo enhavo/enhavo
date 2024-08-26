@@ -2,11 +2,11 @@
 
 ```ts
 import View from "@enhavo/app/View/View";
-import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
+import FrameEventDispatcher from "@enhavo/app/ViewStack/FrameEventDispatcher";
 import * as $ from "jquery";
 
 let view = new View();
-let eventDispatcher = new EventDispatcher(view);
+let eventDispatcher = new FrameEventDispatcher(view);
 view.setEventDispatcher(eventDispatcher);
 view.addDefaultCloseListener();
 

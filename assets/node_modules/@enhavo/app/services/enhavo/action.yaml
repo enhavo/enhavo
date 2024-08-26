@@ -15,7 +15,7 @@ services:
         chunk: 'action'
         arguments:
             - '@enhavo/app/frame/FrameManager'
-            - '@enhavo/app/frame/EventDispatcher'
+            - '@enhavo/app/frame/FrameEventDispatcher'
         tags:
             - { name: 'enhavo_app.action', class: 'CloseAction' }
 
@@ -24,7 +24,7 @@ services:
         chunk: 'action'
         arguments:
             - '@enhavo/app/frame/FrameManager'
-            - '@enhavo/app/frame/EventDispatcher'
+            - '@enhavo/app/frame/FrameEventDispatcher'
             - '@enhavo/core/Translator'
         tags:
             - { name: 'enhavo_app.action', class: 'DeleteAction' }
@@ -48,7 +48,7 @@ services:
         chunk: 'action'
         arguments:
             - '@enhavo/app/frame/FrameManager'
-            - '@enhavo/app/frame/EventDispatcher'
+            - '@enhavo/app/frame/FrameEventDispatcher'
         tags:
             - { name: 'enhavo_app.action', class: 'DuplicateAction' }
 
@@ -99,7 +99,7 @@ services:
         chunk: 'action'
         arguments:
             - '@enhavo/app/frame/FrameManager'
-            - '@enhavo/app/frame/EventDispatcher'
+            - '@enhavo/app/frame/FrameEventDispatcher'
         tags:
             - { name: 'enhavo_app.action', class: 'PreviewAction' }
 
@@ -108,7 +108,7 @@ services:
         chunk: 'action'
         arguments:
             - '@enhavo/app/frame/FrameManager'
-            - '@enhavo/app/frame/EventDispatcher'
+            - '@enhavo/app/frame/FrameEventDispatcher'
             - '@enhavo/app/manager/ResourceInputManager'
         tags:
             - { name: 'enhavo_app.action', class: 'SaveAction' }

@@ -1,7 +1,5 @@
 import {AbstractToolbarWidget} from "@enhavo/app/toolbar/model/AbstractToolbarWidget";
-import CreateEvent from '@enhavo/app/frame/event/CreateEvent';
-import ClearEvent from '@enhavo/app/frame/event/ClearEvent';
-import EventDispatcher from "@enhavo/app/frame/EventDispatcher";
+import {FrameEventDispatcher} from "@enhavo/app/frame/FrameEventDispatcher";
 import MenuManager from "@enhavo/app/menu/MenuManager";
 
 export class QuickMenuToolbarWidget extends AbstractToolbarWidget
@@ -9,10 +7,10 @@ export class QuickMenuToolbarWidget extends AbstractToolbarWidget
     public menu: Menu[];
     public icon: string;
 
-    private readonly eventDispatcher: EventDispatcher;
+    private readonly eventDispatcher: FrameEventDispatcher;
     private readonly menuManager: MenuManager;
 
-    constructor(eventDispatcher: EventDispatcher, menuManager: MenuManager) {
+    constructor(eventDispatcher: FrameEventDispatcher, menuManager: MenuManager) {
         super();
         this.eventDispatcher = eventDispatcher;
         this.menuManager = menuManager;

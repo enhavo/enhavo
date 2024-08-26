@@ -1,17 +1,15 @@
 import FormType from "@enhavo/app/form/FormType";
-import EventDispatcher from "@enhavo/app/frame/EventDispatcher";
+import {FrameEventDispatcher} from "@enhavo/app/frame/FrameEventDispatcher";
 import $ from "jquery";
-import LoadGlobalDataEvent from "@enhavo/app/frame/event/LoadGlobalDataEvent";
-import SaveGlobalDataEvent from "@enhavo/app/frame/event/SaveGlobalDataEvent";
 import DataStorageEntry from "@enhavo/app/frame/DataStorageEntry";
 
 export default class TranslationType extends FormType
 {
     private locales: string[];
     private currentLocale: string;
-    private eventDispatcher: EventDispatcher;
+    private eventDispatcher: FrameEventDispatcher;
 
-    constructor(element:HTMLElement, eventDispatcher: EventDispatcher)
+    constructor(element:HTMLElement, eventDispatcher: FrameEventDispatcher)
     {
         super(element);
         this.locales = this.$element.data('translation-type');

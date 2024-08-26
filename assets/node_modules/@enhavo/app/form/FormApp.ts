@@ -1,8 +1,6 @@
 import ActionManager from "@enhavo/app/action/ActionManager";
-import EventDispatcher from "@enhavo/app/frame/EventDispatcher";
+import {FrameEventDispatcher} from "@enhavo/app/frame/FrameEventDispatcher";
 import View from "@enhavo/app/view/View";
-import CloseEvent from "@enhavo/app/frame/event/CloseEvent";
-import RemoveEvent from "@enhavo/app/frame/event/RemoveEvent";
 import FormData from "@enhavo/app/form/FormData";
 import Confirm from "@enhavo/app/ui/Confirm";
 import Translator from "@enhavo/core/Translator";
@@ -12,7 +10,7 @@ import Form from "@enhavo/app/form/Form";
 export default class FormApp
 {
     private data: FormData;
-    private readonly eventDispatcher: EventDispatcher;
+    private readonly eventDispatcher: FrameEventDispatcher;
     private readonly view: View;
     private readonly actionManager: ActionManager;
     private readonly translator: Translator;
@@ -21,7 +19,7 @@ export default class FormApp
 
     constructor(
         data: any,
-        eventDispatcher: EventDispatcher,
+        eventDispatcher: FrameEventDispatcher,
         view: View,
         actionManager: ActionManager,
         translator: Translator,

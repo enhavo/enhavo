@@ -1,8 +1,9 @@
-import {Event} from "@enhavo/app/frame/EventDispatcher"
-import {EventDispatcher} from "./EventDispatcher";
+import {Event} from "@enhavo/app/frame/FrameEventDispatcher"
+import {FrameEventDispatcher} from "./FrameEventDispatcher";
 import {FrameStack} from "./FrameStack";
 import {Frame} from "./Frame";
-import {b} from "vite/dist/node/types.d-aGj9QkWt";
+import {FrameStateManager} from "./FrameStateManager";
+import {FrameArrangeManager} from "./FrameArrangeManager";
 
 /**
  * @internal
@@ -10,25 +11,37 @@ import {b} from "vite/dist/node/types.d-aGj9QkWt";
 export class FrameStackSubscriber
 {
     constructor(
-        private readonly dispatcher: EventDispatcher,
+        private readonly dispatcher: FrameEventDispatcher,
         private readonly frameStack: FrameStack,
+        private readonly frameStateManager: FrameStateManager,
+        private readonly frameArrangeManager: FrameArrangeManager,
     ) {
     }
 
     public subscribe()
     {
-        this.addFrameAddListener();
-        this.addFrameGetListener();
-        this.addFrameLoadedListener();
-        this.addFrameUpdateListener();
-        this.addFrameClearListener();
-        this.addFrameRemoveListener();
+        if (window.name == "") {
+            this.addFrameAddListener();
+            this.addFrameGetListener();
+            this.addFrameLoadedListener();
+            this.addFrameUpdateListener();
+            this.addFrameClearListener();
+            this.addFrameRemoveListener();
+            this.addFrameSaveListener();
+            this.addFrameArrangeListener();
+            this.addFrameClickListener();
+        }
     }
 
     private addFrameAddListener()
     {
         this.dispatcher.on('frame_add', (event: Event) => {
-            this.frameStack.addFrame((event as FrameAdd).options);
+            const options = (event as FrameAdd).options;
+            if (options['parent'] === undefined) {
+                options['parent'] = event.origin;
+            }
+            this.frameStack.addFrame(options);
+            event.resolve();
         });
     }
 
@@ -70,6 +83,33 @@ export class FrameStackSubscriber
         this.dispatcher.on('frame_remove', async (event: Event) => {
             const success = await this.frameStack.removeFrame((event as FrameRemove).frame);
             event.resolve(success);
+        });
+    }
+
+    private addFrameSaveListener()
+    {
+        this.dispatcher.on('frame_save', async (event: Event) => {
+            this.frameStateManager.saveState();
+            event.resolve();
+        });
+    }
+
+    private addFrameArrangeListener()
+    {
+        this.dispatcher.on('frame_arrange', async (event: Event) => {
+            this.frameArrangeManager.arrange();
+            event.resolve();
+        });
+    }
+
+    private addFrameClickListener()
+    {
+        this.dispatcher.on('click', async (event: Event) => {
+            if (event.origin) {
+                for (let frame of this.frameStack.getFrames()) {
+                    frame.focus = frame.id === event.origin;
+                }
+            }
         });
     }
 }
@@ -128,5 +168,21 @@ export class FrameClear extends Event
     constructor()
     {
         super('frame_clear');
+    }
+}
+
+export class FrameSave extends Event
+{
+    constructor()
+    {
+        super('frame_save');
+    }
+}
+
+export class FrameArrange extends Event
+{
+    constructor()
+    {
+        super('frame_arrange');
     }
 }

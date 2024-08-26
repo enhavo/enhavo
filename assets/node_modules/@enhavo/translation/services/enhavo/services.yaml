@@ -2,6 +2,6 @@ services:
     '@enhavo/translation/form/loader/TranslationLoader':
         chunk: 'form'
         arguments:
-            - '@enhavo/app/frame/EventDispatcher'
+            - '@enhavo/app/frame/FrameEventDispatcher'
         tags:
             - 'enhavo_app.form'
