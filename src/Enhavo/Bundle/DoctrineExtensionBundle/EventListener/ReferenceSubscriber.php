@@ -10,12 +10,12 @@
 namespace Enhavo\Bundle\DoctrineExtensionBundle\EventListener;
 
 use Doctrine\Common\EventSubscriber;
-use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Event\PostFlushEventArgs;
+use Doctrine\ORM\Event\PostLoadEventArgs;
 use Doctrine\ORM\Event\PreFlushEventArgs;
 use Doctrine\ORM\Events;
-use Doctrine\ORM\Proxy\Proxy;
+use Doctrine\Persistence\Proxy;
 use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface;
 use Enhavo\Bundle\DoctrineExtensionBundle\Metadata\Metadata;
 use Enhavo\Bundle\DoctrineExtensionBundle\Metadata\Reference;
@@ -30,16 +30,13 @@ use Doctrine\ORM\UnitOfWork;
  */
 class ReferenceSubscriber implements EventSubscriber
 {
-    /** @var MetadataRepository */
-    private $metadataRepository;
+    private $scheduleDeleted = [];
 
-    /** @var EntityResolverInterface */
-    private $entityResolver;
-
-    public function __construct(MetadataRepository $metadataRepository, EntityResolverInterface $entityResolver)
+    public function __construct(
+        private MetadataRepository $metadataRepository,
+        private EntityResolverInterface $entityResolver
+    )
     {
-        $this->metadataRepository = $metadataRepository;
-        $this->entityResolver = $entityResolver;
     }
 
     /**
@@ -74,7 +71,7 @@ class ReferenceSubscriber implements EventSubscriber
     /**
      * {@inheritDoc}
      */
-    public function getSubscribedEvents()
+    public function getSubscribedEvents(): array
     {
         return [
             Events::postLoad,
@@ -83,13 +80,10 @@ class ReferenceSubscriber implements EventSubscriber
         ];
     }
 
-    /**
-     * Insert target class on load
-     *
-     * @param $args LifecycleEventArgs
-     */
-    public function postLoad(LifecycleEventArgs $args)
+    public function postLoad(PostLoadEventArgs $args): void
     {
+        // Insert target class on load
+
         $object = $args->getObject();
 
         $metadata = $this->getMetadata($object);
@@ -104,7 +98,7 @@ class ReferenceSubscriber implements EventSubscriber
         }
     }
 
-    private function isParentClass($object, $class)
+    private function isParentClass($object, $class): bool
     {
         $parentClass = get_parent_class($object);
         if ($parentClass === false) {
@@ -116,7 +110,7 @@ class ReferenceSubscriber implements EventSubscriber
         }
     }
 
-    private function loadEntity(Reference $reference, $entity)
+    private function loadEntity(Reference $reference, $entity): void
     {
         $propertyAccessor = PropertyAccess::createPropertyAccessor();
         $id = $propertyAccessor->getValue($entity, $reference->getIdField());
@@ -135,11 +129,15 @@ class ReferenceSubscriber implements EventSubscriber
      *
      * @param PreFlushEventArgs $args
      */
-    public function preFlush(PreFlushEventArgs $args)
+    public function preFlush(PreFlushEventArgs $args): void
     {
-        $uow = $args->getEntityManager()->getUnitOfWork();
-        $em = $args->getEntityManager();
+        $uow = $args->getObjectManager()->getUnitOfWork();
+        $em = $args->getObjectManager();
         $identityMap = $uow->getIdentityMap();
+
+        foreach ($em->getUnitOfWork()->getScheduledEntityDeletions() as $scheduledEntityDeletions) {
+            $this->scheduleDeleted[] = $scheduledEntityDeletions;
+        }
 
         foreach ($this->getAllMetadata() as $metadata) {
             if (isset($identityMap[$metadata->getClassName()])) {
@@ -162,28 +160,28 @@ class ReferenceSubscriber implements EventSubscriber
         }
     }
 
-    private function updatePersist(Reference $reference, $entity, EntityManagerInterface $em)
+    private function updatePersist(Reference $reference, $entity, EntityManagerInterface $em): void
     {
         $propertyAccessor = PropertyAccess::createPropertyAccessor();
         $targetProperty = $propertyAccessor->getValue($entity, $reference->getProperty());
 
-        if ($targetProperty && $em->getUnitOfWork()->getEntityState($targetProperty) !== UnitOfWork::STATE_MANAGED) {
+        if ($targetProperty
+            && $em->getUnitOfWork()->getEntityState($targetProperty) !== UnitOfWork::STATE_MANAGED // is not managed yet
+            && !in_array($targetProperty, $this->scheduleDeleted) // should not be deleted
+        ) {
             $em->persist($targetProperty);
         }
     }
 
-    /**
-     * Check if entity is not up to date and execute changes
-     *
-     * @param PostFlushEventArgs $args
-     */
-    public function postFlush(PostFlushEventArgs $args)
+    public function postFlush(PostFlushEventArgs $args): void
     {
+        // Check if entity is not up-to-date and execute changes
+
         $persist = false;
         $changes = [];
 
-        $em = $args->getEntityManager();
-        $uow = $args->getEntityManager()->getUnitOfWork();
+        $em = $args->getObjectManager();
+        $uow = $args->getObjectManager()->getUnitOfWork();
         $result = $uow->getIdentityMap();
 
         foreach ($this->getAllMetadata() as $metadata) {
@@ -198,7 +196,10 @@ class ReferenceSubscriber implements EventSubscriber
                         $propertyAccessor = PropertyAccess::createPropertyAccessor();
                         $targetProperty = $propertyAccessor->getValue($entity, $reference->getProperty());
 
-                        if ($targetProperty && $uow->getEntityState($targetProperty) !== UnitOfWork::STATE_MANAGED) {
+                        if ($targetProperty
+                            && $uow->getEntityState($targetProperty) !== UnitOfWork::STATE_MANAGED // is not managed yet
+                            && !in_array($targetProperty, $this->scheduleDeleted) // should not be deleted
+                        ) {
                             $em->persist($targetProperty);
                             $persist = true;
                         }
@@ -208,22 +209,20 @@ class ReferenceSubscriber implements EventSubscriber
         }
 
         if (count($changes)) {
-            $this->executeChanges($changes, $args->getEntityManager());
+            $this->executeChanges($changes, $args->getObjectManager());
         }
 
         if ($persist) {
             $em->flush();
         }
+
+        $this->scheduleDeleted = [];
     }
 
     /**
      * Update entity values
-     *
-     * @param Reference $reference
-     * @param object $entity
-     * @return ReferenceChange[]
      */
-    private function updateEntity(Reference $reference, $entity)
+    private function updateEntity(Reference $reference, object $entity): array
     {
         $changes = [];
 
@@ -269,9 +268,8 @@ class ReferenceSubscriber implements EventSubscriber
 
     /**
      * @param ReferenceChange[] $changes
-     * @param EntityManagerInterface $em
      */
-    private function executeChanges($changes, EntityManagerInterface $em)
+    private function executeChanges(array $changes, EntityManagerInterface $em): void
     {
         $queries = [];
         $entities = [];
