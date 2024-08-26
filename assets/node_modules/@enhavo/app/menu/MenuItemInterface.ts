@@ -6,9 +6,8 @@ export interface MenuItemInterface extends ComponentAwareInterface, ModelAwareIn
     clickable: boolean;
     key: string;
     children(): Array<MenuItemInterface>
-    unselect(): void;
-    select(): void;
     open(): void;
+    close(): void;
     parent(): MenuItemInterface;
     setParent(parent: MenuItemInterface): void;
     getDescendants(): Array<MenuItemInterface>

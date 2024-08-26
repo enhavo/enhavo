@@ -1,5 +1,5 @@
 import ActionManager from "@enhavo/app/action/ActionManager";
-import EventDispatcher from "@enhavo/app/frame/EventDispatcher";
+import {FrameEventDispatcher} from "@enhavo/app/frame/FrameEventDispatcher";
 import View from "@enhavo/app/view/View";
 import FlashMessenger from "@enhavo/app/flash-message/FlashMessenger";
 import ModalManager from "@enhavo/app/modal/ModalManager";
@@ -8,7 +8,7 @@ import FormRegistry from "@enhavo/app/form/FormRegistry";
 
 export default class IndexApp
 {
-    private readonly eventDispatcher: EventDispatcher;
+    private readonly eventDispatcher: FrameEventDispatcher;
     private readonly view: View;
     private readonly actionManager: ActionManager;
     private readonly flashMessenger: FlashMessenger;
@@ -17,7 +17,7 @@ export default class IndexApp
     private readonly formRegistry: FormRegistry;
 
     constructor(
-        eventDispatcher: EventDispatcher,
+        eventDispatcher: FrameEventDispatcher,
         view: View,
         actionManager: ActionManager,
         flashMessenger: FlashMessenger,

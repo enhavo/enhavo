@@ -47,6 +47,7 @@ export class ResourceIndexManager
         this.batches = this.batchManager.createBatches(data.batches);
         this.routes = new RouteContainer(data.routes);
         this.collection = this.collectionFactory.create(data.collection.model, data.collection, this.filters, this.columns, this.batches, this.routes);
+        this.collection.init();
 
         this.frameManager.loaded();
     }

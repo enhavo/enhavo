@@ -1,5 +1,5 @@
 <template>
-    <div class="frame" :ref="(el) => updateWidth(el)">
+    <div class="frame">
         <div class="view-container" :class="{'has-viewstack-dropdown': getHasMoreThanOneView()}">
             <template v-for="frame in frameStack.getRenderFrames()">
                 <frame-stack-frame :frame="frame" v-if="!frame.removed" :key="frame.id"></frame-stack-frame>
@@ -14,15 +14,11 @@ import {FrameStack} from "@enhavo/app/frame/FrameStack";
 
 const frameStack = inject<FrameStack>('frameStack');
 
-function updateWidth(container: HTMLElement)
-{
-    frameStack.width = container.clientWidth;
-}
-
 function getHasMoreThanOneView() 
 {
     return frameStack.getFrames().length > 0;
 }
+
 </script>
 
 <style lang="scss" scoped>

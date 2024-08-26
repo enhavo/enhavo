@@ -1,8 +1,17 @@
-import {EventDispatcher} from "@enhavo/app/frame/EventDispatcher";
-import {FrameAdd, FrameClear, FrameGet, FrameLoaded, FrameRemove, FrameUpdate} from "@enhavo/app/frame/FrameStackSubscriber";
+import {FrameEventDispatcher} from "@enhavo/app/frame/FrameEventDispatcher";
+import {
+    FrameAdd,
+    FrameClear,
+    FrameGet,
+    FrameLoaded,
+    FrameRemove,
+    FrameSave,
+    FrameUpdate,
+    FrameArrange,
+} from "@enhavo/app/frame/FrameStackSubscriber";
 import {Frame} from "@enhavo/app/frame/Frame";
 import {FrameAdded} from "@enhavo/app/frame/FrameStack";
-import {Event, Subscriber} from "@enhavo/app/frame/EventDispatcher";
+import {Event, Subscriber} from "@enhavo/app/frame/FrameEventDispatcher";
 
 export class FrameManager
 {
@@ -11,33 +20,10 @@ export class FrameManager
     private wait: Promise<void> = null;
 
     constructor(
-        private eventDispatcher: EventDispatcher
+        private eventDispatcher: FrameEventDispatcher
     ) {
         window.addEventListener('click', () => {
              this.eventDispatcher.dispatch(new Event('click'));
-        });
-
-        this.eventDispatcher.on('frame_updated', async (event) => {
-            let frame = await this.getFrame((event as FrameAdded).frame.id);
-            if (frame !== null) {
-                this.sendUpdates = false;
-                Object.assign(frame, (event as FrameAdded).frame);
-                this.sendUpdates = true;
-            }
-        });
-
-        this.eventDispatcher.on('frame_removed', async (event) => {
-            let frame = await this.getFrame((event as FrameAdded).frame.id);
-            if (frame !== null) {
-                this.frames.splice(this.frames.indexOf(frame), 1);
-            }
-        });
-
-        this.eventDispatcher.on('frame_added', async (event) => {
-            let frame = await this.getFrame((event as FrameAdded).frame.id);
-            if (frame === null) {
-                this.frames.push(this.createFrame((event as FrameAdded).frame));
-            }
         });
     }
 
@@ -53,9 +39,10 @@ export class FrameManager
                 });
             } else {
                 this.wait = new Promise((resolveWait) => {
-                    this.eventDispatcher.request(new FrameGet()).then((frames: object[]) => {
+                    this.subscribe();
+                    this.eventDispatcher.request(new FrameGet()).then((frames) => {
                         this.frames = [];
-                        for (let options of frames) {
+                        for (let options of (frames as object[])) {
                             this.frames.push(this.createFrame(options));
                         }
                         this.wait = null;
@@ -65,6 +52,32 @@ export class FrameManager
                 });
             }
         });
+    }
+
+    private subscribe()
+    {
+        this.eventDispatcher.on('frame_updated', async (event) => {
+            let frame = await this.getFrame((event as FrameAdded).frame.id);
+            if (frame !== null) {
+                this.sendUpdates = false;
+                Object.assign(frame, (event as FrameAdded).frame);
+                this.sendUpdates = true;
+            }
+        }, 100);
+
+        this.eventDispatcher.on('frame_removed', async (event) => {
+            let frame = await this.getFrame((event as FrameAdded).frame.id);
+            if (frame !== null) {
+                this.frames.splice(this.frames.indexOf(frame), 1);
+            }
+        }, 100);
+
+        this.eventDispatcher.on('frame_added', async (event) => {
+            let frame = await this.getFrame((event as FrameAdded).frame.id);
+            if (frame === null) {
+                this.frames.push(this.createFrame((event as FrameAdded).frame));
+            }
+        }, 100);
     }
 
     private createFrame(options: object): Frame
@@ -135,9 +148,9 @@ export class FrameManager
         return (await this.eventDispatcher.request(new FrameRemove(frame, force)) as boolean);
     }
 
-    public on(eventName: string, callback: (event: Event) => void): Subscriber
+    public on(eventName: string, callback: (event: Event) => void, priority: number = 10): Subscriber
     {
-        return this.eventDispatcher.on(eventName, callback);
+        return this.eventDispatcher.on(eventName, callback, priority);
     }
 
     public removeSubscriber(subscriber: Subscriber)
@@ -153,5 +166,22 @@ export class FrameManager
     public dispatch(event: Event): void
     {
         this.eventDispatcher.dispatch(event);
+    }
+
+    public save(): void
+    {
+        this.eventDispatcher.dispatch(new FrameSave());
+    }
+
+    public arrange(): void
+    {
+        this.eventDispatcher.dispatch(new FrameArrange());
+    }
+
+    public async openFrame(options: object)
+    {
+        await this.addFrame(options);
+        this.save();
+        this.arrange()
     }
 }

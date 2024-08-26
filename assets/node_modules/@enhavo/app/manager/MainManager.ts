@@ -1,10 +1,11 @@
-import {FrameStack} from '@enhavo/app/frame/FrameStack';
 import {MenuManager} from '@enhavo/app/menu/MenuManager';
 import {Branding} from '@enhavo/app/model/Branding';
 import {ToolbarWidgetManager} from "@enhavo/app/toolbar/ToolbarWidgetManager";
 import {ToolbarWidgetInterface} from "@enhavo/app/toolbar/ToolbarWidgetInterface";
 import {Router} from "@enhavo/app/routing/Router";
 import {FrameStackSubscriber} from "../frame/FrameStackSubscriber";
+import {FrameStateManager} from "../frame/FrameStateManager";
+import {FrameManager} from "../frame/FrameManager";
 
 export class MainManager
 {
@@ -15,6 +16,8 @@ export class MainManager
 
     constructor(
         private frameSubscriber: FrameStackSubscriber,
+        private frameStageManager: FrameStateManager,
+        private frameManager: FrameManager,
         private menuManager: MenuManager,
         private widgetManager: ToolbarWidgetManager,
         private router: Router,
@@ -23,7 +26,10 @@ export class MainManager
 
     async load()
     {
+        this.frameStageManager.subscribe();
         this.frameSubscriber.subscribe();
+
+        await this.frameStageManager.loadState();
 
         let url = this.router.generate('enhavo_app_admin_api_main');
 
@@ -36,11 +42,11 @@ export class MainManager
         let menuItems = this.menuManager.createMenuItems(data['menu']);
         this.menuManager.setMenuItems(menuItems);
 
-        this.loading = false;
-    }
+        let frames = await this.frameManager.getFrames();
+        if (frames.length === 0) {
+            this.menuManager.start();
+        }
 
-    isCustomChange()
-    {
-        return this.data.customChange;
+        this.loading = false;
     }
 }

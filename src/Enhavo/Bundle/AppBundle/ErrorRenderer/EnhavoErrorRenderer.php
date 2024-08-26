@@ -36,6 +36,7 @@ class EnhavoErrorRenderer implements ErrorRendererInterface
 
         $debug = ($this->debug)($exception);
         if ($debug) {
+            $exception->setAsString($this->enhanceExceptionString($exception->getAsString()));
             return $exception;
         }
 
@@ -56,5 +57,12 @@ class EnhavoErrorRenderer implements ErrorRendererInterface
         }
 
         return $this->templateResolver->resolve('theme/error/default.html.twig');
+    }
+
+    private function enhanceExceptionString(string $content): string
+    {
+        $jsSnippet = file_get_contents(__DIR__.'/../Resources/assets/exception.js');
+        $replaceContent = sprintf("<script type='application/javascript'>\n%s\n</script>\n", $jsSnippet);
+        return str_replace('</body>', $replaceContent, $content);
     }
 }

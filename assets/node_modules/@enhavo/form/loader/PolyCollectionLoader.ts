@@ -6,15 +6,15 @@ import prototypeManager from "@enhavo/form/prototype/PrototypeManager";
 import FormRegistry from "@enhavo/app/form/FormRegistry";
 import View from "@enhavo/app/view/View";
 import Translator from "@enhavo/core/Translator";
-import EventDispatcher from "@enhavo/app/frame/EventDispatcher";
+import {FrameEventDispatcher} from "@enhavo/app/frame/FrameEventDispatcher";
 
 export default class PolyCollectionLoader extends AbstractLoader
 {
     private view: View;
     private translator: Translator;
-    private eventDispatcher: EventDispatcher;
+    private eventDispatcher: FrameEventDispatcher;
 
-    constructor(view: View, translator: Translator, eventDispatcher: EventDispatcher) {
+    constructor(view: View, translator: Translator, eventDispatcher: FrameEventDispatcher) {
         super();
         this.view = view;
         this.translator = translator;

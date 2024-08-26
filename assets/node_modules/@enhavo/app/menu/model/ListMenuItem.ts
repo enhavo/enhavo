@@ -14,34 +14,35 @@ export class ListMenuItem extends AbstractMenuItem
         super();
     }
 
-    onInit() {
+    onInit()
+    {
         for (let i in this.items) {
             this.items[i] = this.menuManager.createMenuItem(this.items[i]);
         }
     }
 
-    children(): Array<MenuItemInterface> {
+    children(): Array<MenuItemInterface>
+    {
         return this.items;
     }
 
-    select() {
-        super.select();
+    open()
+    {
         this.isOpen = true;
     }
 
-    open() {
-        this.isOpen = true;
-    }
-
-    close() {
+    close()
+    {
         this.isOpen = false;
     }
 
-    isMainMenuOpen() {
+    isMainMenuOpen()
+    {
         return this.menuManager.menuOpen;
     }
 
-    closeOtherMenus() {
+    closeOtherMenus()
+    {
         for (let item of this.menuManager.getItems()) {
             if (item !== this && !this.isChildOf(item)) {
                 if ((<ListMenuItem>item).close) {
@@ -62,7 +63,8 @@ export class ListMenuItem extends AbstractMenuItem
         return false;
     }
 
-    isActive(): boolean {
+    isActive(): boolean
+    {
         for (let child of this.items) {
             if (child.isActive()) {
                 return true;

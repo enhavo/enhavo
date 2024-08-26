@@ -2,10 +2,8 @@ import select2 from "select2";
 import $ from 'jquery';
 import FormType from "@enhavo/app/form/FormType";
 import Sortable from 'sortablejs';
-import UpdatedEvent from "@enhavo/app/frame/event/UpdatedEvent";
-import LoadDataEvent from "@enhavo/app/frame/event/LoadDataEvent";
 import DataStorageEntry from "@enhavo/app/frame/DataStorageEntry";
-import EventDispatcher from "@enhavo/app/frame/EventDispatcher";
+import {FrameEventDispatcher} from "@enhavo/app/frame/FrameEventDispatcher";
 import Router from "@enhavo/core/Router";
 import View from "@enhavo/app/view/View";
 
@@ -16,11 +14,11 @@ export default class AutoCompleteType extends FormType
     private idProperty: string;
     private labelProperty: string;
     private viewKey: string;
-    private eventDispatcher: EventDispatcher;
+    private eventDispatcher: FrameEventDispatcher;
     private router: Router;
     private view: View;
 
-    constructor(element: HTMLElement, eventDispatcher: EventDispatcher, router: Router, view: View)
+    constructor(element: HTMLElement, eventDispatcher: FrameEventDispatcher, router: Router, view: View)
     {
         super(element);
         this.eventDispatcher = eventDispatcher;

@@ -5,4 +5,5 @@ export class CollectionResourceItem
     public data: any;
     public selected: boolean = false;
     public active: boolean = false;
+    public url: string;
 }

@@ -38,7 +38,7 @@ class Grid extends AbstractGrid implements GridMergeInterface
                     'list_parameters' => [],
                     'batch' => $this->resolveRoute('batch'),
                     'batch_parameters' => [],
-                    'open' => $this->resolveRoute('update'),
+                    'open' => $this->resolveRoute('update', ['api' => false]),
                     'open_parameters' => [
                         'id' => 'expr:resource.getId()'
                     ],

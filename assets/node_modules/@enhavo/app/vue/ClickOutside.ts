@@ -38,7 +38,7 @@ export class ClickOutside
             }
 
             let parentElement = (<HTMLElement>event.target).parentElement;
-            while (parentElement != el) {
+            while (parentElement != el && parentElement != null) {
                 parentElement = parentElement.parentElement;
                 if (parentElement == null) {
                     if (!executed) {

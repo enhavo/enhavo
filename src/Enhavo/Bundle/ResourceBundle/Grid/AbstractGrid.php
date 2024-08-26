@@ -168,7 +168,7 @@ abstract class AbstractGrid implements GridInterface, ServiceSubscriberInterface
         return $newArray;
     }
 
-    protected function resolveRoute(string $name): ?string
+    protected function resolveRoute(string $name, array $context = []): ?string
     {
         if (!$this->container->has(RouteResolverInterface::class)) {
             throw GridException::missingService(RouteResolverInterface::class);
@@ -176,7 +176,7 @@ abstract class AbstractGrid implements GridInterface, ServiceSubscriberInterface
 
         /** @var RouteResolverInterface $routeResolver */
         $routeResolver = $this->container->get(RouteResolverInterface::class);
-        return $routeResolver->getRoute($name);
+        return $routeResolver->getRoute($name, $context);
     }
 
     protected function generateUrl(string $route, array $parameters = [], int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string

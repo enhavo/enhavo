@@ -1,11 +1,12 @@
 import {AbstractMenuItem} from "@enhavo/app/menu/model/AbstractMenuItem";
 import {FrameManager} from "@enhavo/app/frame/FrameManager";
 import {FrameStack} from "@enhavo/app/frame/FrameStack";
+import {FrameUtil} from "@enhavo/app/frame/FrameUtil";
+import {Frame} from "@enhavo/app/frame/Frame";
 
 export class BaseMenuItem extends AbstractMenuItem
 {
     public url: string;
-    public mainUrl: string;
     public clickable: boolean = true;
     public frame: object;
     public clear: boolean;
@@ -31,6 +32,9 @@ export class BaseMenuItem extends AbstractMenuItem
             })
             await this.frameManager.addFrame(options);
         }
+
+        this.frameManager.save();
+        this.frameManager.arrange();
     }
 
     isActive(): boolean
@@ -41,5 +45,22 @@ export class BaseMenuItem extends AbstractMenuItem
             }
         }
         return false;
+    }
+
+    getMainUrl(): string
+    {
+        let options = this.frame !== null && typeof this.frame == 'object' ? this.frame : {};
+        Object.assign(options, {
+            url: this.url,
+        })
+        let frame = new Frame(options);
+
+
+        let url = new URL(window.location.href);
+        if (url.searchParams.has('frames')) {
+            url.searchParams.delete('frames');
+        }
+        url.searchParams.set('frames', FrameUtil.getState([frame]));
+        return url.toString();
     }
 }

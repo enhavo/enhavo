@@ -1,13 +1,10 @@
 import ActionManager from "@enhavo/app/action/ActionManager";
-import EventDispatcher from "@enhavo/app/frame/EventDispatcher";
+import {FrameEventDispatcher} from "@enhavo/app/frame/FrameEventDispatcher";
 import View from "@enhavo/app/view/View";
-import CloseEvent from "@enhavo/app/frame/event/CloseEvent";
-import RemoveEvent from "@enhavo/app/frame/event/RemoveEvent";
 import Confirm from "@enhavo/app/ui/Confirm";
 import FormatData from "@enhavo/media/image-cropper/FormatData";
 import FlashMessenger from "@enhavo/app/flash-message/FlashMessenger";
 import Translator from "@enhavo/core/Translator";
-import UpdatedEvent from "@enhavo/app/frame/event/UpdatedEvent";
 import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
 import * as _ from "lodash";
 
@@ -15,14 +12,14 @@ export default class ImageCropperApp
 {
     public data: FormatData;
 
-    private eventDispatcher: EventDispatcher;
+    private eventDispatcher: FrameEventDispatcher;
     private view: View;
     private actionManager: ActionManager;
     private flashMessenger: FlashMessenger;
     private translator: Translator;
     private componentRegistry: ComponentRegistryInterface;
 
-    constructor(data: FormatData, eventDispatcher: EventDispatcher, view: View, actionManager: ActionManager, flashMessenger: FlashMessenger, translator: Translator, componentRegistry: ComponentRegistryInterface)
+    constructor(data: FormatData, eventDispatcher: FrameEventDispatcher, view: View, actionManager: ActionManager, flashMessenger: FlashMessenger, translator: Translator, componentRegistry: ComponentRegistryInterface)
     {
         this.data = _.assign(new FormatData(), data);
         this.eventDispatcher = eventDispatcher;

@@ -6,5 +6,5 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 interface RouteResolverInterface
 {
-    public function getRoute(string $name): ?string;
+    public function getRoute(string $name, array $context = []): ?string;
 }

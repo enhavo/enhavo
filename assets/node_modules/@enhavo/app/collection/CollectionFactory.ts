@@ -21,6 +21,11 @@ export class CollectionFactory extends ModelRegisterFactory
         collection.filters = filters;
         collection.batches = batches;
         collection.routes = routes;
+
+        if (typeof collection['onInit'] === 'function') {
+            collection['onInit']();
+        }
+
         return collection;
     }
 

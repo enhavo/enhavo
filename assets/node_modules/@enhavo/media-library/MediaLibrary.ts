@@ -1,31 +1,28 @@
 import axios, {CancelTokenSource} from "axios";
 import * as _ from "lodash";
 import Data, {Column, ContentType, File, Tag} from "@enhavo/media-library/Data";
-import UpdatedEvent from "@enhavo/app/frame/event/UpdatedEvent";
 import * as async from "async";
 import $ from "jquery";
 import { FlashMessenger, FlashMessage } from "@enhavo/app/flash-message/FlashMessenger";
-import EventDispatcher from "@enhavo/app/frame/EventDispatcher";
+import {FrameEventDispatcher} from "@enhavo/app/frame/FrameEventDispatcher";
 import View from "@enhavo/app/view/View";
 import Router from "@enhavo/core/Router";
 import ComponentRegistryInterface from "@enhavo/core/ComponentRegistryInterface";
 import WindowInterface from "@enhavo/app/frame/ViewInterface";
 import Translator from "@enhavo/core/Translator";
-import CloseEvent from "@enhavo/app/frame/event/CloseEvent";
-import LoadingEvent from "@enhavo/app/frame/event/LoadingEvent";
 
 export default class MediaLibrary
 {
     public data: Data;
     private source: CancelTokenSource;
-    private readonly eventDispatcher: EventDispatcher;
+    private readonly eventDispatcher: FrameEventDispatcher;
     private readonly flashMessenger: FlashMessenger;
     private readonly view: View;
     private readonly router: Router;
     private readonly componentRegistry: ComponentRegistryInterface;
     private readonly translator: Translator;
 
-    public constructor(data: any, eventDispatcher: EventDispatcher, view: View, flashMessenger: FlashMessenger, router: Router, componentRegistry: ComponentRegistryInterface, translator: Translator) {
+    public constructor(data: any, eventDispatcher: FrameEventDispatcher, view: View, flashMessenger: FlashMessenger, router: Router, componentRegistry: ComponentRegistryInterface, translator: Translator) {
         this.data = _.extend(new Data(), data.data);
         this.flashMessenger = flashMessenger;
         this.eventDispatcher = eventDispatcher;
