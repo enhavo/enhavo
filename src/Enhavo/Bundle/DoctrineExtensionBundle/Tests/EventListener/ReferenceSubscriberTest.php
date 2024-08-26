@@ -177,6 +177,50 @@ class ReferenceSubscriberTest extends SubscriberTest
         $this->assertEquals('entity_inner', $entityOuter->getNode()->getEntity()->getName());
         $this->assertEquals('inner', $entityOuter->getNode()->getEntity()->getNode()->getName());
     }
+
+    public function testDeleteEntityThatIsReferenced()
+    {
+        $this->bootstrap(__DIR__ . "/../Fixtures/Entity/Reference");
+
+        $dependencies = $this->createDependencies([
+            Entity::class => [
+                'reference' => [
+                    'node' => [
+                        'nameField' => 'nodeName',
+                        'idField' => 'nodeId'
+                    ]
+                ]
+            ]
+        ]);
+
+        $subscriber = $this->createInstance($dependencies);
+        $this->em->getEventManager()->addEventSubscriber($subscriber);
+        $this->updateSchema();
+
+        // Entity has a reference to Node, so we create an Entity class with a Node and try to delete only the Node
+
+        $node = new NodeOne();
+        $node->setName('node');
+
+        $entity = new Entity();
+        $entity->setName('entity');
+        $entity->setNode($node);
+
+        $this->em->persist($entity);
+        $this->em->flush();
+        $this->em->clear();
+
+        $entity = $this->em->getRepository(Entity::class)->findOneBy(['name' => 'entity']);
+
+        $this->em->remove($entity->getNode());
+        $this->em->flush();
+        $this->em->clear();
+
+        $node = $this->em->getRepository(NodeOne::class)->findOneBy(['name' => 'node']);
+
+        $this->assertNull($node);
+    }
+
 }
 
 class ReferenceSubscriberDependencies
