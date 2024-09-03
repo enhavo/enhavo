@@ -43,3 +43,12 @@ services:
             - '@Enhavo\Bundle\SettingBundle\Setting\SettingManager'
         tags:
             - { name: twig.extension }
+
+    Enhavo\Bundle\SettingBundle\Endpoint\Extension\SettingEndpointExtensionType:
+        arguments:
+            - '@Enhavo\Bundle\SettingBundle\Setting\SettingManager'
+        calls:
+            - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
+        tags:
+            - { name: enhavo_api.endpoint_extension }
+            - { name: container.service_subscriber }

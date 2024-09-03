@@ -20,4 +20,6 @@ interface SettingTypeInterface extends TypeInterface
     public function getFormTypeOptions(array $options, $key = null);
 
     public function getViewValue(array $options, $value, $key = null);
+
+    public function getGroup(array $options, $key = null);
 }

@@ -72,4 +72,15 @@ class SettingManager
     {
         return $this->getOrCreateSetting($key)->getViewValue($value);
     }
+
+    public function getSettingsByGroup($group) {
+        $settings = [];
+        foreach (array_keys($this->settingConfig) as $key) {
+            $setting = $this->settingRepository->findBy(['group' => $group, 'key' => $key]);
+            if ($setting) {
+                $settings[] = $setting;
+            }
+        }
+        return $settings;
+    }
 }
