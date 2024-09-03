@@ -35,16 +35,9 @@ class SettingEndpointExtensionType extends AbstractEndpointTypeExtension
         } else if (is_array($options['settings'])) {
             $groups = $options['settings'];
         } else if (is_bool($options['settings'])) {
-            if ($options['settings']) {
-                $keys = $this->settingManager->getKeys();
-                foreach ($keys as $key) {
-                    $value = $this->settingManager->getValue($key);
-                    if (is_scalar($value) || $value == null) {
-                        $settings[$key] = $value;
-                    } else {
-                        $settings[$key] = $this->normalize($value, null, ['groups' => 'endpoint']);
-                    }
-                }
+            $keys = $this->settingManager->getKeys();
+            foreach ($keys as $key) {
+                $settings[$key] = $this->normalizeSetting($key);
             }
         }
 
@@ -53,16 +46,20 @@ class SettingEndpointExtensionType extends AbstractEndpointTypeExtension
             foreach ($keys as $key) {
                 $setting = $this->settingManager->getSetting($key);
                 if ($setting->getGroup() == $group) {
-                    $value = $this->settingManager->getValue($key);
-                    if (is_scalar($value) || $value == null) {
-                        $settings[$key] = $setting->getValue();
-                    } else {
-                        $settings[$key] = $this->normalize($value, null, ['groups' => 'endpoint']);
-                    }
+                    $settings[$key] = $this->normalizeSetting($key);
                 }
             }
         }
         $data->set('settings', $settings);
+    }
+
+    private function normalizeSetting($key) {
+        $value = $this->settingManager->getValue($key);
+        if (is_scalar($value) || $value == null) {
+            return $value;
+        } else {
+            return $this->normalize($value, null, ['groups' => 'endpoint']);
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void
