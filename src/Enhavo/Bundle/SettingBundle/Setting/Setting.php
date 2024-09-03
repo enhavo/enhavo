@@ -35,4 +35,9 @@ class Setting extends AbstractContainerType
     {
         return $this->type->getViewValue($this->options, $value, $this->key);
     }
+
+    public function getGroup()
+    {
+        return $this->type->getGroup($this->options, $this->key);
+    }
 }
