@@ -74,6 +74,11 @@ class BaseSettingType extends AbstractSettingType implements SettingTypeInterfac
         return $settingEntity->getValue();
     }
 
+    public function getGroup(array $options, $key = null)
+    {
+        return $options['group'];
+    }
+
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
