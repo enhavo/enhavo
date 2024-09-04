@@ -27,9 +27,9 @@ class ImageCropperExtension extends AbstractType implements ExtensionInterface
 
     public function buildForm(FormBuilderInterface $builder, $options)
     {
-        $builder->add('image_cropper', ImageCropperType::class, [
-            'formats' => $options['formats']
-        ]);
+//        $builder->add('image_cropper', ImageCropperType::class, [
+//            'formats' => $options['formats']
+//        ]);
     }
 
     public function getType()

@@ -76,7 +76,7 @@ class AutoCompleteEntityType extends AbstractType
                     if(empty($submittedDescription)) {
                         return $collection;
                     }
-                    $ids = explode(',', $submittedDescription);
+                    $ids = $submittedDescription;
                     $i = 0;
                     foreach($ids as $id) {
                         $i++;
@@ -146,13 +146,16 @@ class AutoCompleteEntityType extends AbstractType
         $view->vars['multiple'] = $options['multiple'];
         $view->vars['count'] = $options['count'];
 
-        if ($options['multiple'] === false) {
+        if (!$options['multiple']) {
             $value = $view->vars['value'];
             if (is_object($value) && method_exists($value, 'getId')) {
                 $view->vars['value'] = $value->getId();
             } elseif (is_array($value) && isset($value['id'])) {
                 $view->vars['value'] = $value['id'];
             }
+        } else {
+            $view->vars['full_name'] = $view->vars['full_name'] . '[]';
+            $view->vars['vue_data']->set('fullName', $view->vars['full_name']);
         }
     }
 
@@ -180,7 +183,7 @@ class AutoCompleteEntityType extends AbstractType
             'edit_route_parameters' => [],
             'create_route' => null,
             'create_route_parameters' => [],
-            'view_key' => uniqid()
+            'view_key' => uniqid(),
         ]);
 
         $resolver->setNormalizer('actions', function(Options $options, $value) {

@@ -33,30 +33,32 @@ class PolyCollectionVueTypeExtension extends AbstractVueTypeExtension
 
         $data['itemComponent'] = $options['item_component'];
 
-        $data->addNormalizer(function(FormView $view, VueData $data)
-        {
-            $storage = $view->vars['poly_collection_config']['prototypeStorage'];
-            $prototypes = $this->prototypeManager->getPrototypes($storage);
+        if ($options['prototype']) {
+            $data->addNormalizer(function(FormView $view, VueData $data)
+            {
+                $storage = $view->vars['poly_collection_config']['prototypeStorage'];
+                $prototypes = $this->prototypeManager->getPrototypes($storage);
 
-            $root = $this->getRoot($data);
+                $root = $this->getRoot($data);
 
-            if (!$root->has('prototypes')) {
-                $root->set('prototypes', []);
-            }
+                if (!$root->has('prototypes')) {
+                    $root->set('prototypes', []);
+                }
 
-            $array = $root->get('prototypes');
+                $array = $root->get('prototypes');
 
-            foreach ($prototypes as $prototype) {
-                $array[] = [
-                    'name' => $prototype->getName(),
-                    'storageName' => $prototype->getStorageName(),
-                    'parameters' => $prototype->getParameters(),
-                    'form' => $this->vueForm->createData($prototype->getForm()->createView()),
-                ];
-            }
+                foreach ($prototypes as $prototype) {
+                    $array[] = [
+                        'name' => $prototype->getName(),
+                        'storageName' => $prototype->getStorageName(),
+                        'parameters' => $prototype->getParameters(),
+                        'form' => $this->vueForm->createData($prototype->getForm()->createView()),
+                    ];
+                }
 
-            $root->set('prototypes', $array);
-        });
+                $root->set('prototypes', $array);
+            });
+        }
     }
 
     private function getRoot(VueData $data): VueData

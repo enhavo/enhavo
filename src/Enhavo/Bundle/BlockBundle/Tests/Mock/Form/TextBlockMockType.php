@@ -19,7 +19,8 @@ class TextBlockMockType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('text', BlockNodeType::class, [
-            'label' => 'Text'
+            'label' => 'Text',
+            'prototype' => false,
         ]);
     }
 

@@ -9,9 +9,9 @@
 namespace Enhavo\Bundle\ResourceBundle\Tests\Action\Type;
 
 use Enhavo\Bundle\AppBundle\Action\Action;
-use Enhavo\Bundle\AppBundle\Action\Type\DeleteActionType;
 use Enhavo\Bundle\AppBundle\Tests\Mock\ResourceMock;
 use Enhavo\Bundle\AppBundle\Tests\Mock\RouterMock;
+use Enhavo\Bundle\ResourceBundle\Action\Type\DeleteActionType;
 use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Routing\RouterInterface;

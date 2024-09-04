@@ -8,7 +8,6 @@ import FormType from "@enhavo/app/form/FormType";
 import {PrototypeManager} from "@enhavo/form/prototype/PrototypeManager";
 import Prototype from "@enhavo/form/prototype/Prototype";
 import View from "@enhavo/app/view/View";
-import Confirm from "@enhavo/app/ui/Confirm";
 import Translator from "@enhavo/core/Translator";
 import {FrameEventDispatcher} from "@enhavo/app/frame/FrameEventDispatcher";
 

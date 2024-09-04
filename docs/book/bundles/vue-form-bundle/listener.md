@@ -8,6 +8,7 @@ able to add the current form (or any other) to the listener.
 ```js
 import {AbstractFormVisitor} from "@enhavo/vue-form/form/FormVisitor"
 import {FormEventDispatcher} from "@enhavo/vue-form/form/FormEventDispatcher"
+import {Form} from "@enhavo/vue-form/model/Form"
 
 export class MyCustomVisitor extends AbstractFormVisitor
 {

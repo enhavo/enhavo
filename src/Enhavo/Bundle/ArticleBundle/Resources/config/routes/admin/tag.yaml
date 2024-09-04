@@ -98,7 +98,7 @@ enhavo_article_tag_batch:
 enhavo_article_tag_auto_complete:
     options:
         expose: true
-    path: /enhavo/article/tag/auto_complete
+    path: /enhavo/article/tag/auto-complete
     defaults:
         _controller: enhavo_form.controller.auto_complete::searchAction
         _config:

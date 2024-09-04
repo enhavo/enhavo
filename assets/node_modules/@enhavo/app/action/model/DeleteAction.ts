@@ -1,5 +1,4 @@
 import { AbstractAction } from "@enhavo/app/action/model/AbstractAction";
-import Confirm from "@enhavo/app/ui/Confirm";
 import $ from "jquery";
 import {FrameEventDispatcher} from "@enhavo/app/frame/FrameEventDispatcher";
 import View from "@enhavo/app/view/View";

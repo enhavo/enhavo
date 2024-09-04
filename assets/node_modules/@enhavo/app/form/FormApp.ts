@@ -2,7 +2,6 @@ import ActionManager from "@enhavo/app/action/ActionManager";
 import {FrameEventDispatcher} from "@enhavo/app/frame/FrameEventDispatcher";
 import View from "@enhavo/app/view/View";
 import FormData from "@enhavo/app/form/FormData";
-import Confirm from "@enhavo/app/ui/Confirm";
 import Translator from "@enhavo/core/Translator";
 import ModalManager from "@enhavo/app/modal/ModalManager";
 import Form from "@enhavo/app/form/Form";

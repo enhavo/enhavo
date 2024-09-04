@@ -1,32 +1,38 @@
 import { AbstractAction } from "@enhavo/app/action/model/AbstractAction";
-import View from "@enhavo/app/view/View";
-import {FrameEventDispatcher} from "@enhavo/app/frame/FrameEventDispatcher";
 import {ResourceInputManager} from "../../manager/ResourceInputManager";
-import {FormUtil} from "@enhavo/vue-form/form/FormUtil";
+import {FrameManager} from "@enhavo/app/frame/FrameManager";
+import {UiManager} from "@enhavo/app/ui/UiManager";
+import {FlashMessenger} from "@enhavo/app/flash-message/UiManager";
+import {Translator} from "@enhavo/app/translation/Translator";
 
 export class SaveAction extends AbstractAction
 {
     public url: string;
 
     constructor(
-        private readonly view: View,
-        private readonly eventDispatcher: FrameEventDispatcher,
+        private readonly frameManager: FrameManager,
+        private readonly uiManager: UiManager,
         private readonly resourceInputManager: ResourceInputManager,
+        private readonly flashMessenger: FlashMessenger,
+        private readonly translator: Translator,
     ) {
         super();
     }
 
-    execute(): void
+    async execute(): Promise<void>
     {
-        let event = new LoadingEvent(this.view.getId());
-        this.eventDispatcher.dispatch(event);
-
-        let data = FormUtil.serializeForm(this.resourceInputManager.form);
-        
-        if (this.url) {
-            // let uri = new URL(this.url, window.origin);
-            // uri.searchParams.set('view_id', this.view.getId().toString());
-            // $form.attr('action', uri.toString);
+        this.uiManager.loading(true);
+        try {
+            await this.resourceInputManager.save(this.url, true);
+            this.flashMessenger.add(this.translator.trans('enhavo_app.input.message.save_success', {}, 'javascript'));
+        } catch (err) {
+            console.error(err);
+            this.uiManager.loading(false);
+            this.uiManager.alert({
+                message: 'An error occured'
+            });
         }
+
+        this.uiManager.loading(false);
     }
 }

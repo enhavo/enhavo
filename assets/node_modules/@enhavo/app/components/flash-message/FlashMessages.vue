@@ -1,5 +1,5 @@
 <template>
-    <div v-show="flashMessenger.messages && flashMessenger.messages.length > 0">
+    <div v-if="flashMessenger.messages && flashMessenger.messages.length > 0">
         <div class="flash-message-container">
             <template v-for="message in flashMessenger.messages">
                 <flash-message v-bind:message="message"></flash-message>

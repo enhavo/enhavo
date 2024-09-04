@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="tab-container">
         <div v-for="row in tab.arrangement" class="form-row">
             <template v-for="column in row">
                 <div v-if="form.has(column.key)" :class="getSizeClass(column, row)">

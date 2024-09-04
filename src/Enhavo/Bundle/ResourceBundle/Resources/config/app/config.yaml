@@ -1,0 +1,32 @@
+enhavo_resource:
+    grids:
+        enhavo_resource.grid:
+            class: Enhavo\Bundle\ResourceBundle\Grid\Grid
+            actions:
+                create:
+                    type: create
+                    route: 'expr:resolve_route("create", {api: false})'
+                filter:
+                    type: filter
+            columns:
+                id:
+                    label: id
+                    translation_domain: EnhavoResourceBundle
+                    property: id
+                    width: 2
+                    type: text
+                    sortable: true
+                    condition: "desktop"
+            batches:
+                delete:
+                    type: delete
+    inputs:
+        enhavo_resource.input:
+            class: Enhavo\Bundle\ResourceBundle\Input\Input
+            actions:
+                save:
+                    type: save
+            actions_secondary:
+                delete:
+                    type: delete
+                    enabled: 'expr:resource && resource.getId()'

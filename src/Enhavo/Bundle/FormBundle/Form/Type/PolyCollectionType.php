@@ -35,9 +35,11 @@ class PolyCollectionType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        if(!$this->prototypeManager->hasStorage($options['prototype_storage'])) {
-            $this->prototypeManager->initStorage($options['prototype_storage']);
-            $this->buildPrototypes($builder, $options);
+        if ($options['prototype']) {
+            if (!$this->prototypeManager->hasStorage($options['prototype_storage'])) {
+                $this->prototypeManager->initStorage($options['prototype_storage']);
+                $this->buildPrototypes($builder, $options);
+            }
         }
 
         $resizeListener = new ResizePolyFormListener(

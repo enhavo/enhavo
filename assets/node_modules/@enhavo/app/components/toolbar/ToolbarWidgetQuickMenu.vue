@@ -2,7 +2,7 @@
     <div class="toolbar-dropdown" v-click-outside="close" v-bind:class="{'selected': isOpen}">
         <div class="toolbar-dropdown-title" @click="toggle">
             <i :class="getIcon()"></i>
-            <i v-bind:class="['open-indicator', 'icon icon-keyboard_arrow_down', {'icon-keyboard_arrow_up': isOpen }]" aria-hidden="true"></i>
+            <i v-bind:class="['open-indicator', 'icon icon-keyboard_arrow_down', {'icon-keyboard_arrow_up': isOpen }]"></i>
         </div>
         <div class="toolbar-dropdown-menu" v-show="isOpen">
             <template v-for="menu in data.menu">

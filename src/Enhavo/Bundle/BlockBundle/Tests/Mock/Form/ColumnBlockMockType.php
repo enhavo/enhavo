@@ -19,11 +19,13 @@ class ColumnBlockMockType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('column', BlockNodeType::class, [
-            'label' => 'Column'
+            'label' => 'Column',
+            'prototype' => false,
         ]);
 
         $builder->add('text', BlockNodeType::class, [
-            'label' => 'Text'
+            'label' => 'Text',
+            'prototype' => false,
         ]);
     }
 

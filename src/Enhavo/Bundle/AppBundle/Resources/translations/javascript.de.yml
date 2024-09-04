@@ -3,9 +3,13 @@ enhavo_app:
     create: 'Erstellen'
     preview: 'Vorschau'
     save: 'Speichern'
+    auto_save: 'Autosave'
     abort: 'Abbrechen'
     cancel: 'Abbrechen'
     error: 'Ein Fehler ist aufgetreten'
+    input:
+        message:
+            save_success: 'Erfolgreich gespeichert'
     batch:
         label:
             placeholder: 'Batch wählen'

@@ -1,5 +1,6 @@
 <template>
     <div class="app" v-bind:class="{ 'menu-collapsed':!menuManager.menuOpen}" v-if="!mainManager.loading">
+        <flash-messages></flash-messages>
         <toolbar-toolbar
             :primary="mainManager.primaryToolbarWidgets"
             :secondary="mainManager.secondaryToolbarWidgets"
@@ -24,6 +25,7 @@ import '@enhavo/app/assets/styles/app.scss'
 import {MainManager} from "@enhavo/app/manager/MainManager";
 import {MenuManager} from "../../menu/MenuManager";
 import FrameStackMobileDropdown from "../frame/FrameStackMobileDropdown.vue";
+import FlashMessages from "@enhavo/app/components/flash-message/FlashMessages.vue";
 
 const mainManager = inject<MainManager>('mainManager');
 const menuManager = inject<MenuManager>('menuManager');

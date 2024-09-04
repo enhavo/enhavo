@@ -1,5 +1,6 @@
 import path from 'node:path'
 import { fileURLToPath } from 'node:url';
+
 export function fantasticonSetting(setting)
 {
     let defaultSettings =  {
@@ -9,6 +10,9 @@ export function fantasticonSetting(setting)
         assetTypes: ["css", "html"],
         prefix: 'icon',
         tag: '*',
+        templates: {
+            html: path.resolve(import.meta.dirname, './fantasticon-plugin/html.hbs'),
+        },
         codepoints: {
             '3d_rotation': 0xf101,
             'ac_unit': 0xf102,

@@ -15,13 +15,15 @@ class TwoColumnBlockType extends AbstractType
         $builder->add('columnOne', BlockNodeType::class, [
             'label' => 'column.label.column_one',
             'translation_domain' => 'EnhavoBlockBundle',
-            'item_groups' => ['content']
+            'item_groups' => ['content'],
+            'prototype' => false,
         ]);
 
         $builder->add('columnTwo', BlockNodeType::class, [
             'label' => 'column.label.column_two',
             'translation_domain' => 'EnhavoBlockBundle',
-            'item_groups' => ['content']
+            'item_groups' => ['content'],
+            'prototype' => false,
         ]);
     }
 
