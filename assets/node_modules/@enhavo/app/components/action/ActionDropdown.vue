@@ -2,7 +2,7 @@
     <div class="action" :ref="(el) => element = el">
         <div @click="toggleOpen()">
             <div class="action-icon">
-                <i v-bind:class="['icon', 'icon-' + data.icon]" aria-hidden="true"></i>
+                <i v-bind:class="['icon', 'icon-' + data.icon]"></i>
             </div>
             <div class="label">{{ data.label }}</div>
         </div>

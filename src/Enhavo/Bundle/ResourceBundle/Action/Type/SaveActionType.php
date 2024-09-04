@@ -12,6 +12,7 @@ namespace Enhavo\Bundle\ResourceBundle\Action\Type;
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
 use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
+use Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -19,25 +20,40 @@ class SaveActionType extends AbstractActionType
 {
     public function __construct(
         private readonly RouterInterface $router,
+        private readonly RouteResolverInterface $routeResolver,
     )
     {
     }
 
     public function createViewData(array $options, Data $data, ResourceInterface $resource = null): void
     {
-        $url = null;
         if ($options['route']) {
-            $url = $this->getUrl($options, $resource);
+            $url = $this->getUrl($options['route'], $options['route_parameters'], $resource);
+        } else {
+            if ($resource === null || $resource->getId() === null) {
+                $route = $this->routeResolver->getRoute('create', ['api' => true]);
+            } else {
+                $route = $this->routeResolver->getRoute('update', ['api' => true]);
+            }
+
+            if ($route === null) {
+                throw new \Exception(sprintf('Can\'t resolve route for resource "%s". You have to explicit define the route.', get_class($resource)));
+            }
+
+            $url = $this->getUrl($route, $options['route_parameters'], $resource);
         }
 
         $data->set('url', $url);
     }
 
-    private function getUrl(array $options, ResourceInterface $resource = null): string
+    private function getUrl(string $route, array $routeParameters = [], ResourceInterface $resource = null): string
     {
-        $parameters['id'] = $resource->getId();
-        $parameters = array_merge_recursive($parameters, $options['route_parameters']);
-        return $this->router->generate($options['route'], $parameters);
+        $parameters = [];
+        if ($resource !== null && $resource->getId() !== null) {
+            $parameters['id'] = $resource->getId();
+        }
+        $parameters = array_merge_recursive($parameters, $routeParameters);
+        return $this->router->generate($route, $parameters);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

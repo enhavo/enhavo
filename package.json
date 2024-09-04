@@ -87,7 +87,7 @@
     "@types/mocha": "^8.0.0",
     "@types/pako": "^1.0.1",
     "@types/qs": "^6.9.6",
-    "@types/select2": "4.0.37",
+    "@types/select2": "^4.0.63",
     "@types/slick-carousel": "^1.6.33",
     "@types/sortablejs": "^1.10.2",
     "@types/tinymce": "^4.6.0",

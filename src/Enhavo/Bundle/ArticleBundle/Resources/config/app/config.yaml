@@ -82,11 +82,8 @@ enhavo_resource:
                 model: Enhavo\Bundle\ArticleBundle\Entity\Article
     grids:
         enhavo_article.article:
-            class: Enhavo\Bundle\ResourceBundle\Grid\Grid
+            extends: enhavo_resource.grid
             resource: enhavo_article.article
-            actions:
-                filter:
-                    type: filter
             filters:
                 title:
                     type: text
@@ -107,6 +104,7 @@ enhavo_resource:
             columns:
                 public:
                     label: article.label.public
+                    translation_domain: EnhavoArticleBundle
                     property: public
                     width: 2
                     type: boolean
@@ -115,11 +113,13 @@ enhavo_resource:
                 title:
                     type: text
                     label: article.label.title
+                    translation_domain: EnhavoArticleBundle
                     property: title
                     width: 7
                     sortable: true
                 publicationDate:
                     label: article.label.publicationDate
+                    translation_domain: EnhavoArticleBundle
                     property: publicationDate
                     type: date
                     width: 3
@@ -133,21 +133,20 @@ enhavo_resource:
 
     inputs:
         enhavo_article.article:
-            class: Enhavo\Bundle\ResourceBundle\Input\Input
+            extends: enhavo_resource.input
             resource: enhavo_article.article
             form: Enhavo\Bundle\ArticleBundle\Form\Type\ArticleType
             form_options:
                 component_theme: admin
-            auto_save: 5
             tabs:
                 main:
                     type: form
                     label: article.label.article
                     translation_domain: EnhavoArticleBundle
                     arrangement: |
+                        teaser
                         link
                         title
-                        teaser
                         picture
                         categories
                         tags
@@ -159,17 +158,18 @@ enhavo_resource:
                 meta:
                     type: meta
             actions:
-                save:
-                    type: save
                 duplicate:
                     type: duplicate
                     route: enhavo_article_admin_api_duplicate
                     permission: ROLE_ENHAVO_ARTICLE_ARTICLE_CREATE
-                    enabled: 'expr:resource && resource.id'
+                    enabled: 'expr:resource && resource.getId()'
                 preview:
                     type: preview
                     route: enhavo_article_admin_article_preview
-                    enabled: 'expr:resource && resource.id'
+                    api_route: enhavo_article_admin_api_preview
+                    enabled: 'expr:resource && resource.getId()'
                 comments:
                     type: comments
-                    enabled: 'expr:resource && resource.id'
+                    enabled: 'expr:resource && resource.getId()'
+#                auto_save:
+#                    type: auto_save

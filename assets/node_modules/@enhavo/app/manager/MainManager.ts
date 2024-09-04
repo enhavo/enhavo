@@ -3,9 +3,10 @@ import {Branding} from '@enhavo/app/model/Branding';
 import {ToolbarWidgetManager} from "@enhavo/app/toolbar/ToolbarWidgetManager";
 import {ToolbarWidgetInterface} from "@enhavo/app/toolbar/ToolbarWidgetInterface";
 import {Router} from "@enhavo/app/routing/Router";
-import {FrameStackSubscriber} from "../frame/FrameStackSubscriber";
-import {FrameStateManager} from "../frame/FrameStateManager";
-import {FrameManager} from "../frame/FrameManager";
+import {FrameStackSubscriber} from "@enhavo/app/frame/FrameStackSubscriber";
+import {FrameStateManager} from "@enhavo/app/frame/FrameStateManager";
+import {FrameManager} from "@enhavo/app/frame/FrameManager";
+import {FlashMessenger} from "@enhavo/app/flash-message/FlashMessenger";
 
 export class MainManager
 {
@@ -21,13 +22,16 @@ export class MainManager
         private menuManager: MenuManager,
         private widgetManager: ToolbarWidgetManager,
         private router: Router,
+        private flashMessenger: FlashMessenger,
     ) {
     };
 
     async load()
     {
+        this.frameManager.setMainFrame(true);
         this.frameStageManager.subscribe();
         this.frameSubscriber.subscribe();
+        this.flashMessenger.subscribe();
 
         await this.frameStageManager.loadState();
 

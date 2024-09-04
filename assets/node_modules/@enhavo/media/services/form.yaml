@@ -1,0 +1,20 @@
+services:
+    '@enhavo/media/resolver/FileResolver':
+        chunk: 'vue'
+        import: FileResolver
+
+    '@enhavo/media/form/model/MediaForm':
+        chunk: 'vue'
+        import: MediaForm
+        arguments:
+            - '@enhavo/vue-form/form/FormFactory'
+        tags:
+            - { name: form.model }
+
+    '@enhavo/media/form/model/MediaItemForm':
+        chunk: 'vue'
+        import: MediaItemForm
+        arguments:
+            - '@enhavo/media/resolver/FileResolver'
+        tags:
+            - { name: form.model }

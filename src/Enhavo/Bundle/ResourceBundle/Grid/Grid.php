@@ -6,9 +6,10 @@ use Enhavo\Bundle\ResourceBundle\Batch\Batch;
 use Enhavo\Bundle\ResourceBundle\Collection\CollectionInterface;
 use Enhavo\Bundle\ResourceBundle\Collection\ResourceItems;
 use Enhavo\Bundle\ResourceBundle\Collection\TableCollection;
+use Enhavo\Bundle\ResourceBundle\DependencyInjection\Merge\ConfigMergeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class Grid extends AbstractGrid implements GridMergeInterface
+class Grid extends AbstractGrid implements ConfigMergeInterface
 {
     private ?array $filters = null;
     private ?array $columns = null;
@@ -46,12 +47,10 @@ class Grid extends AbstractGrid implements GridMergeInterface
             },
         ]);
 
-
-
         $resolver->setRequired('resource');
     }
 
-    public static function mergeOptions($before, $current): array
+    public static function mergeConfigs($before, $current): array
     {
         $mergeKeys = [
             'actions',
@@ -63,10 +62,9 @@ class Grid extends AbstractGrid implements GridMergeInterface
             'collection',
         ];
 
-
-        foreach ($current as $key) {
-            if (array_key_exists($key, $mergeKeys)) {
-                if (is_array($before[$key])) {
+        foreach ($current as $key => $value) {
+            if (in_array($key, $mergeKeys)) {
+                if (array_key_exists($key, $before) && is_array($before[$key])) {
                     $before[$key] = array_merge($before[$key], $current[$key]);
                 } else {
                     $before[$key] = $current[$key];

@@ -1,7 +1,7 @@
 <template>
     <div class="view-table-pagination">
         <div class="pagination-select">
-            <div class="label">{{ translator.trans('enhavo_app.grid.label.entry_per_page') }}:</div>
+            <div class="label">{{ translator.trans('enhavo_app.grid.label.entry_per_page', {}, 'javascript') }}:</div>
             <v-select v-model="collection.pagination" :options="getOptions()" :clearable="false" :searchable="false" :reduce="value => value.code"></v-select>
         </div>
 
@@ -38,7 +38,7 @@
 
 <script setup lang="ts">
 import { inject, watch, ref } from 'vue'
-import Translator from "@enhavo/core/Translator";
+import {Translator} from "@enhavo/app/translation/Translator";
 import {TableCollection} from "../../collection/model/TableCollection";
 
 const props = defineProps<{

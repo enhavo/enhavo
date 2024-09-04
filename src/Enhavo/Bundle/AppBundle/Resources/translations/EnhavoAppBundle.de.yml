@@ -31,6 +31,7 @@ label:
   cancel: 'Abbrechen'
   close: 'Schließen'
   save: 'Speichern'
+  auto_save: 'Autosave'
   delete: 'Löschen'
   preview: 'Vorschau'
   create: 'Erstellen'

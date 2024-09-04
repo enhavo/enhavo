@@ -6,7 +6,7 @@
 import {TextColumn} from "@enhavo/app/column/model/TextColumn";
 
 const props = defineProps<{
-    data?: string,
+    data?: string|number,
     column: TextColumn,
 }>()
 </script>

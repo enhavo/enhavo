@@ -1,13 +1,39 @@
+import {FrameManager} from "@enhavo/app/frame/FrameManager";
+import {Event} from "@enhavo/app/frame/FrameEventDispatcher";
 
 export class FlashMessenger
 {
     public messages: FlashMessage[] = [];
+    private intervalId: number;
 
-    constructor()
+    constructor(
+        private frameManager: FrameManager,
+    )
     {
-        setInterval(() => {
+    }
+
+    private init()
+    {
+        if (this.intervalId) {
+            return;
+        }
+
+        this.intervalId = setInterval(() => {
             this.tick();
         }, 1000);
+    }
+
+    private tick()
+    {
+        for (let message of this.messages) {
+            message.ttl--
+        }
+
+        for (let message of this.messages) {
+            if (message.ttl <= 0) {
+                this.messages.splice(this.messages.indexOf(message), 1);
+            }
+        }
     }
 
     public add(message: string = null, type: string = FlashMessage.SUCCESS)
@@ -17,7 +43,12 @@ export class FlashMessenger
 
     public addMessage(message: FlashMessage)
     {
-        this.messages.push(message);
+        if (this.frameManager.isRoot()) {
+            this.init();
+            this.messages.push(message);
+        } else {
+            this.frameManager.dispatch(new FlashMessageEvent(message.message, message.type));
+        }
     }
 
     public has(type: string)
@@ -30,17 +61,11 @@ export class FlashMessenger
         return false;
     }
 
-    protected tick()
+    public subscribe()
     {
-        for (let message of this.messages) {
-            message.ttl--
-        }
-
-        for (let message of this.messages) {
-            if (message.ttl <= 0) {
-                this.messages.splice(this.messages.indexOf(message), 1);
-            }
-        }
+        this.frameManager.on('flash-message', (event) => {
+            this.add((event as FlashMessageEvent).message, (event as FlashMessageEvent).type)
+        });
     }
 }
 
@@ -63,5 +88,15 @@ export class FlashMessage
         if (message) {
             this.message = message;
         }
+    }
+}
+
+class FlashMessageEvent extends Event
+{
+    constructor(
+        public message: string,
+        public type: string,
+    ) {
+        super('flash-message');
     }
 }

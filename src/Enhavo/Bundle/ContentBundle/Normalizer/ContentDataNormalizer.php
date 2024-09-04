@@ -18,6 +18,7 @@ class ContentDataNormalizer extends AbstractDataNormalizer
 
     public function buildData(Data $data, $object, string $format = null, array $context = [])
     {
+        /** @var $object Content */
         if (!$this->hasSerializationGroup(['endpoint', 'endpoint.navigation', 'endpoint.block'], $context)) {
             return;
         }

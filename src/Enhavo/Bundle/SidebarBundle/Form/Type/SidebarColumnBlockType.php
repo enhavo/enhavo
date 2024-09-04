@@ -33,6 +33,7 @@ class SidebarColumnBlockType extends AbstractType
             'label' => 'column.label.column',
             'translation_domain' => 'EnhavoBlockBundle',
             'item_groups' => ['content'],
+            'prototype' => false,
         ]);
     }
 

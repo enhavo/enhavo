@@ -14,7 +14,8 @@ class OneColumnBlockType extends AbstractType
         $builder->add('column', BlockNodeType::class, [
             'label' => 'column.label.column',
             'translation_domain' => 'EnhavoBlockBundle',
-            'item_groups' => ['content']
+            'item_groups' => ['content'],
+            'prototype' => false,
         ]);
     }
 
@@ -24,7 +25,7 @@ class OneColumnBlockType extends AbstractType
             'data_class' => OneColumnBlock::class
         ]);
     }
-    
+
     public function getParent()
     {
         return ColumnType::class;

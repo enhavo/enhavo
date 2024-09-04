@@ -4,7 +4,6 @@ namespace Enhavo\Bundle\AppBundle\Action\Type;
 
 use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
 use Enhavo\Bundle\ResourceBundle\Action\ActionTypeInterface;
-use Enhavo\Bundle\ResourceBundle\Action\Type\UrlActionType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DuplicateActionType extends AbstractActionType implements ActionTypeInterface

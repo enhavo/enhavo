@@ -22,3 +22,9 @@ services:
             - '@enhavo/app/frame/FrameEventDispatcher'
             - '@enhavo/app/frame/FrameManager'
             - '@enhavo/app/vue/VueRegistry'
+
+    '@enhavo/app/form/visitor/AdminFormVisitor':
+        import: AdminFormVisitor
+        chunk: 'form'
+        tags:
+            - { name: enhavo_app.admin.form_visitor }

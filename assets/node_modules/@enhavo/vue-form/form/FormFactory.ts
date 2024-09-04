@@ -3,6 +3,7 @@ import {Form} from "@enhavo/vue-form/model/Form";
 import {Theme} from "@enhavo/vue-form/form/Theme";
 import {FormVisitorInterface} from "@enhavo/vue-form/form/FormVisitor";
 import {FormEventDispatcherInterface} from "@enhavo/vue-form/form/FormEventDispatcherInterface";
+import generateId from "uuid/v4";
 
 export class FormFactory
 {
@@ -20,6 +21,7 @@ export class FormFactory
 
         form = _.extend(form, data);
         form.parent = parent;
+        form.key = generateId();
 
         for (let key in form.children) {
             form.children[key] = this.createFormData(form.children[key]);
@@ -74,6 +76,7 @@ export class FormFactory
     private createFormData(form: Form)
     {
         form = _.assign(this.getModel(form), form);
+        form.key = generateId();
         for (let key in form.children) {
             form.children[key] = this.createFormData(form.children[key]);
             form.children[key].parent = form;

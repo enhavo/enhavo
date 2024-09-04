@@ -18,7 +18,7 @@ enhavo_article_admin_api_article_list:
 
 enhavo_article_admin_api_article_create:
     path: /article/create
-    methods: [GET, PUT]
+    methods: [GET, POST]
     defaults:
         _expose: admin_api
         _endpoint:
@@ -43,7 +43,6 @@ enhavo_article_admin_api_article_delete:
             type: resource_delete
             input: enhavo_article.article
 
-
 enhavo_article_admin_api_article_batch:
     path: /article/batch
     methods: [POST]
@@ -53,7 +52,6 @@ enhavo_article_admin_api_article_batch:
             type: resource_batch
             grid: enhavo_article.article
 
-
 enhavo_article_admin_api_duplicate:
     path: /article/duplicate/{id}
     methods: [POST]
@@ -62,6 +60,20 @@ enhavo_article_admin_api_duplicate:
         _endpoint:
             type: resource_duplicate
             grid: enhavo_article.article
+
+enhavo_article_admin_api_preview:
+    path: /article/preview/{id}
+    methods: [GET, POST]
+    defaults:
+        _expose: admin_api
+        _area: theme
+        _endpoint:
+            type: preview
+            input: enhavo_article.article
+            endpoint:
+                type: Enhavo\Bundle\ArticleBundle\Endpoint\ArticleEndpointType
+                resource: expr:resource
+                preview: true
 
 enhavo_article_admin_api_article_auto_complete:
     options:

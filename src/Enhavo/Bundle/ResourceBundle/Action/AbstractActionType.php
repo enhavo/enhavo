@@ -25,12 +25,12 @@ abstract class AbstractActionType extends AbstractType implements ActionTypeInte
 
     public function getPermission(array $options, ResourceInterface $resource = null): mixed
     {
-        return $this->parent->getPermission($options);
+        return $this->parent->getPermission($options, $resource);
     }
 
     public function isEnabled(array $options, ResourceInterface $resource = null): bool
     {
-        return $this->parent->isEnabled($options);
+        return $this->parent->isEnabled($options, $resource);
     }
 
     public function getLabel(array $options): string

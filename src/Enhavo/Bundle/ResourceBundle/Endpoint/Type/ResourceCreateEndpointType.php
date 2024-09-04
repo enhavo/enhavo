@@ -8,6 +8,7 @@ use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Bundle\ResourceBundle\Input\Input;
 use Enhavo\Bundle\ResourceBundle\Input\InputFactory;
 use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
+use Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface;
 use Enhavo\Bundle\VueFormBundle\Form\VueForm;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -18,6 +19,7 @@ class ResourceCreateEndpointType extends AbstractEndpointType
         private readonly InputFactory $inputFactory,
         private readonly ResourceManager $resourceManager,
         private readonly VueForm $vueForm,
+        private readonly RouteResolverInterface $routeResolver,
     )
     {
     }
@@ -42,6 +44,11 @@ class ResourceCreateEndpointType extends AbstractEndpointType
                 if ($form->isValid()) {
                     $this->resourceManager->create($resource);
                     $context->setStatusCode(201);
+
+                    $redirectRoute = $this->routeResolver->getRoute('update', ['api' => false]);
+                    if ($redirectRoute) {
+                        $data->set('redirect', $this->generateUrl($redirectRoute, ['id' => $resource->getId()]));
+                    }
                 } else {
                     $context->setStatusCode(400);
                 }
@@ -50,7 +57,7 @@ class ResourceCreateEndpointType extends AbstractEndpointType
             $data->set('form', $this->vueForm->createData($form->createView()));
         }
 
-        $viewData = $input->getViewData();
+        $viewData = $input->getViewData($resource);
         $data->add($viewData);
     }
 

@@ -1,18 +1,14 @@
 <template>
-    <div @click="execute($event)" class="action">
+    <div @click="execute($event)" class="action" :class="data.class">
         <div class="action-icon">
-            <i v-bind:class="['icon', getIcon()]" aria-hidden="true"></i>
+            <i :class="['icon', getIcon()]"></i>
         </div>
         <div class="label">{{ data.label }}</div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { inject } from 'vue'
-import {ActionManager} from "@enhavo/app/action/ActionManager";
 import {ActionInterface} from "@enhavo/app/action/ActionInterface";
-
-const actionManager = inject<ActionManager>('actionManager');
 
 const props = defineProps<{
     data: ActionInterface,

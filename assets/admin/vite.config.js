@@ -25,6 +25,7 @@ export default defineConfig({
             'icheck',
             'tinymce',
             'tinymce/plugins/advlist',
+            'tinymce/plugins/autolink',
             'tinymce/plugins/code',
             'tinymce/plugins/emoticons',
             'tinymce/plugins/emoticons/js/emojis',

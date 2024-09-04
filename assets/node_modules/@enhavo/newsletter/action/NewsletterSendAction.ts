@@ -1,7 +1,6 @@
 import {AbstractAction} from "@enhavo/app/action/model/AbstractAction";
 import { FlashMessenger, FlashMessage } from "@enhavo/app/flash-message/FlashMessenger";
 import axios from "axios";
-import Confirm from "@enhavo/app/ui/Confirm";
 import Form from "@enhavo/app/form/Form";
 import Translator from "@enhavo/core/Translator";
 import View from "@enhavo/app/view/View";
