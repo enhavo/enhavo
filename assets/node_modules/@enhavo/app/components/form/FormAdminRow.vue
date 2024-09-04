@@ -1,9 +1,11 @@
 <template>
     <component v-if="form.rowComponent !== 'form-admin-row'" :form="form" :is="form.rowComponent" />
-    <div v-else v-show="form.visible">
+    <div v-else v-show="form.visible" class="form-row">
         <form-label :form="form"></form-label>
         <form-errors :form="form"></form-errors>
-        <form-widget :form="form"></form-widget>
+        <div class="formwidget-container">
+            <form-widget :form="form"></form-widget>
+        </div>
         <form-help :form="form"></form-help>
     </div>
 </template>

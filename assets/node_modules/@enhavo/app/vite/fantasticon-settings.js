@@ -10,9 +10,9 @@ export function fantasticonSetting(setting)
         assetTypes: ["css", "html"],
         prefix: 'icon',
         tag: '*',
-        templates: {
+        /*templates: {
             html: path.resolve(import.meta.dirname, './fantasticon-plugin/html.hbs'),
-        },
+        },*/
         codepoints: {
             '3d_rotation': 0xf101,
             'ac_unit': 0xf102,

@@ -1,27 +1,31 @@
 <template>
     <div class="form-list-item" :ref="(el) => form.setElement(el)">
-        <ul class="form-list-item-buttons-row" v-if="sortable || deletable">
-            <slot name="buttons">
-                <slot name="down-button">
-                    <li v-if="sortable" class="form-list-item-buttons-button" @click="$emit('down', form)"><i class="icon icon-arrow_downward">down</i></li>
-                </slot>
+        <div class="buttons-label-container" v-if="blockName || sortable || deletable">
+            <div class="form-list-item-label" v-if="blockName || form.label">{{ blockName ?? form.label }}</div>
+            <div class="form-list-item-buttons" v-if="sortable || deletable">
+                <slot name="buttons">
+                    <slot name="down-button">
+                        <div v-if="sortable" class="button" @click="$emit('down', form)"><i class="icon icon-arrow_downward"></i></div>
+                    </slot>
 
-                <slot name="up-button">
-                    <li v-if="sortable" class="form-list-item-buttons-button" @click="$emit('up', form)"><i class="icon icon-arrow_upward">up</i></li>
-                </slot>
+                    <slot name="up-button">
+                        <div v-if="sortable" class="button" @click="$emit('up', form)"><i class="icon icon-arrow_upward"></i></div>
+                    </slot>
 
-                <slot name="drag-button">
-                    <li v-if="sortable" class="form-list-item-buttons-button drag-button"><i class="icon icon-drag">=</i></li>
-                </slot>
+                    <slot name="drag-button">
+                        <div v-if="sortable" class="button"><i class="icon icon-drag_handle"></i></div>
+                    </slot>
 
-                <slot name="delete-button">
-                    <li  v-if="deletable" class="form-list-item-buttons-button" @click="$emit('delete', form)"><i class="icon icon-close">x</i></li>
+                    <slot name="delete-button">
+                        <div v-if="deletable" class="button button-delete" @click="$emit('delete', form)"><i class="icon icon-close"></i></div>
+                    </slot>
                 </slot>
-            </slot>
-        </ul>
+            </div>
+        </div>
         <slot>
-            <div class="form-list-item-label" v-if="blockName">{{ blockName }}</div>
-            <form-widget :form="form" />
+            <div class="form-list-item-content">
+                <form-widget :form="form" />
+            </div>
         </slot>
     </div>
 </template>

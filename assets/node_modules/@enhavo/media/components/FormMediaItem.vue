@@ -1,31 +1,35 @@
 <template>
-    <div class="form-list-item" :ref="(el) => form.setElement(el)">
-        <img v-if="isImage(form.file)" :src="form.path('enhavoPreviewThumb')" />
-        <div v-else><span :class="'icon_'+getIcon(form.file)"></span></div>
-
-        <ul class="form-list-item-buttons-row" v-if="sortable || deletable">
-            <li v-if="sortable" class="form-list-item-buttons-button drag-button"><i class="icon icon-drag">=</i></li>
-            <li  v-if="deletable" class="form-list-item-buttons-button" @click="$emit('delete', form)"><i class="icon icon-close">x</i></li>
-        </ul>
-        <form-widget :form="form.get('filename')" />
-        <form-widget :form="form.get('order')" />
-        <form-widget :form="form.get('parameters')" />
-        <form-widget :form="form.get('id')" />
-
-        <button>Herunterladen <i class="icon icon-cloud_download"></i></button>
-        <button>Format <i class="icon icon-crop"></i></button>
+    <div class="form-media-item" :ref="(el) => form.setElement(el)">
+        <div class="thumb" @click="toggleEdit">
+            <img v-if="isImage(form.file)" :src="form.path('enhavoPreviewThumb')" />
+            <div v-else><span class="icon" :class="'icon-'+getIcon(form.file)"></span></div>
+        </div>
+        <div v-if="deletable" class="delete-button" @click="$emit('delete', form)"><i class="icon icon-close"></i></div>
+        <div class="edit-container" ref="editContainer">
+            <form-row :form="form.get('filename')" />
+            <form-widget :form="form.get('parameters')" />
+            <div class="button-row">
+                <button class="btn has-symbol">Herunterladen <i class="icon icon-cloud_download"></i></button>
+                <button class="btn has-symbol">Format <i class="icon icon-crop"></i></button>
+            </div>
+            <form-widget :form="form.get('order')" />
+            <form-widget :form="form.get('id')" />
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
 import {MediaItemForm} from "@enhavo/media/form/model/MediaItemForm";
 import {MediaUtil} from "@enhavo/media/form/MediaUtil";
+import {ref} from "vue";
 
 const props = defineProps<{
     form: MediaItemForm,
     sortable: boolean,
     deletable: boolean,
 }>()
+
+const editContainer = ref();
 
 function isImage(file: File): boolean
 {
@@ -35,6 +39,18 @@ function isImage(file: File): boolean
 function getIcon(file: File): string
 {
     return MediaUtil.getIcon(props.form.file);
+}
+
+function toggleEdit()
+{
+    let element = $(editContainer.value);
+    element.toggleClass('show');
+    if(element.hasClass('show')) {
+        let parent = element.parents('[data-form-media]');
+        if(parent) {
+            element.width(parent.width());
+        }
+    }
 }
 
 </script>

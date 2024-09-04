@@ -5,3 +5,52 @@
   &:-ms-input-placeholder { @content; }
   &::-webkit-input-placeholder { @content; }
 }
+
+@mixin column-styles($columnSpacing,$width) {
+  padding-left:#{$columnSpacing};
+  padding-right:#{$columnSpacing};
+  min-height:1px;
+  width:$width;
+  position:relative;
+}
+
+@mixin grid($columns,$columnSpacing,$affix:"") {
+
+  .row#{$affix} {display:flex;flex-flow: row wrap;margin-left:-$columnSpacing;margin-right:-$columnSpacing;}
+
+  @for $i from 1 through $columns {
+
+    .col#{$affix}-m-#{$i} { @include column-styles($columnSpacing,100%); }
+    .col#{$affix}-l-#{$i} { @include column-styles($columnSpacing,100%); }
+
+    .col#{$affix}-s-#{$i} { @include column-styles($columnSpacing,percentage(1/$columns*$i)); }
+  }
+
+  @media all and (min-width:768px) and (max-width:991px) {
+    @for $i from 1 through $columns {
+      .col#{$affix}-m-push-#{$i} {left:percentage(1/$columns*$i);}
+      .col#{$affix}-m-pull-#{$i} {right:percentage(1/$columns*$i);}
+    }
+  }
+
+  @media all and (max-width:767px) {
+    @for $i from 1 through $columns {
+      .col#{$affix}-s-push-#{$i} {left:percentage(1/$columns*$i);}
+      .col#{$affix}-s-pull-#{$i} {right:percentage(1/$columns*$i);}
+    }
+  }
+
+  @media all and (min-width:768px) {
+    @for $i from 1 through $columns {
+      .col#{$affix}-m-#{$i} { @include column-styles($columnSpacing,percentage(1/$columns*$i)); }
+    }
+  }
+
+  @media all and (min-width:992px) {
+    @for $i from 1 through $columns {
+      .col#{$affix}-l-#{$i} { @include column-styles($columnSpacing,percentage(1/$columns*$i)); }
+      .col#{$affix}-l-push-#{$i} {left:percentage(1/$columns*$i);}
+      .col#{$affix}-l-pull-#{$i} {right:percentage(1/$columns*$i);}
+    }
+  }
+}

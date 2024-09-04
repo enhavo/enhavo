@@ -93,6 +93,7 @@ export default defineConfig({
         origin: 'http://localhost:' + process.env.VITE_ADMIN_PORT
     },
     resolve: {
+        preserveSymlinks: true,
         alias: {
             vue: 'vue/dist/vue.esm-bundler.js'
         }

@@ -1,5 +1,5 @@
 <template>
-    <div class="form-media">
+    <div class="form-media" data-form-media :class="{'multiple': form.multiple}">
         <div class="media-row-container dropzone"
              @dragover.prevent="form.dragover"
              @dragleave.prevent="form.dragleave"
@@ -7,7 +7,8 @@
              @drop.prevent="form.drop"
         >
             <span class="indicator icon icon-image"></span>
-            <ul>
+
+            <div class="media-items-container">
                 <draggable
                     v-model="form.children"
                     item-key="name"
@@ -16,6 +17,8 @@
                     @end="event => { form.dragEnd(event) }"
                     :group="form.draggableGroup"
                     :handle="form.draggableHandle"
+                    tag="ul"
+                    :class="'media-items'"
                 >
                     <template #item="{ element }">
                         <li>
@@ -31,14 +34,16 @@
                         </li>
                     </template>
                 </draggable>
-                <li v-for="upload of form.uploads">
-                    {{ upload.progress }} % <span @click="upload.cancel()">X</span>
-                </li>
-            </ul>
+            </div>
+        </div>
+
+        <div v-for="upload of form.uploads" class="upload-progress">
+            <div class="label">{{ upload.progress }} % <span @click="upload.cancel()" class="icon icon-close"></span></div>
+            <div class="bar" :style="'width:'+upload.progress+'%'"></div>
         </div>
 
         <div class="related-buttons-row">
-            <button class="btn has-symbol upload-button" v-if="form.upload" @click.prevent="form.startUpload()">{{ form.uploadLabel }}</button>
+            <button class="btn has-symbol" v-if="form.upload" @click.prevent="form.startUpload()">{{ form.uploadLabel }} <span class="icon icon-cloud_upload"></span></button>
             <button class="btn has-symbol" v-for="button of form.buttons">{{ button.label }}</button>
         </div>
 
@@ -46,7 +51,7 @@
             <div v-for="error of form.fileErrors">{{ error.message }} <span @click="form.removeError(error)">X</span></div>
         </div>
 
-        <input :id="form.id" type="file" class="upload-input" multiple :ref="(el) => form.setElement(el)" @change.prevent="form.change" style="display: none" />
+        <input :id="form.id" type="file" class="upload-input" :multiple="form.multiple" :ref="(el) => form.setElement(el)" @change.prevent="form.change" style="display: none" />
     </div>
 </template>
 

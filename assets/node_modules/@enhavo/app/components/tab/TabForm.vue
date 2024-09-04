@@ -1,11 +1,13 @@
 <template>
     <div class="tab-container">
         <div v-for="row in tab.arrangement" class="form-row">
-            <template v-for="column in row">
-                <div v-if="form.has(column.key)" :class="getSizeClass(column, row)">
-                    <form-row :form="form.get(column.key)"></form-row>
-                </div>
-            </template>
+            <div class="row-form">
+                <template v-for="column in row">
+                    <div v-if="form.has(column.key)" :class="getSizeClass(column, row)">
+                        <form-row :form="form.get(column.key)"></form-row>
+                    </div>
+                </template>
+            </div>
         </div>
     </div>
 </template>
@@ -35,6 +37,6 @@ function getSizeClass(column: Column, row: Column[]): string
     }
 
     let size = Math.round(column.size / total * 12);
-    return 'md-col-' + size;
+    return 'col-form-m-' + size;
 }
 </script>
