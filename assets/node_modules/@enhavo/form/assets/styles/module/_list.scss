@@ -30,3 +30,40 @@
     }
   }
 }
+
+.form-list {
+  .form-list-add-button-row {margin:10px 0;position:relative;z-index:1;
+    .form-list-add-button {background:$color1;padding:5px 10px;cursor:pointer;text-align:center; transition:all 300ms;border-radius:10px;color:#fff;display:inline-block;
+      &:hover { background:$color1b;}
+    }
+  }
+
+  .form-list-add-menu {margin:10px 0;padding:8px 13px;background:#FFF;border:1px solid $color1;border-radius:19px;display:flex;flex-wrap:wrap;gap:8px;
+    .add-menu-item {width:150px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;padding:7px;border-radius:10px;text-align:center;cursor:pointer;flex:1 1 auto;background:$grey1;font-size:0.875rem;line-height:1.3em;
+      &:hover {background:$color1;color:#fff;}
+    }
+  }
+}
+
+.form-list-items {display:flex;flex-direction:column;gap:16px;}
+
+.form-list-item {background:#fff;overflow:hidden;border:1px solid $grey5;
+  .buttons-label-container {border-bottom: 1px solid $grey5;padding:6px;display:flex;align-items:center;
+    .form-list-item-buttons {margin-left:auto;display:flex;
+      .button {cursor: pointer;height:100%;z-index:1;top:0;text-align:center;width:33px;background:#FFF;border-radius:3px;color:$grey3;padding:4px 0;
+        &:hover {color:#fff;background:$color1;}
+      }
+      .button-delete {order:5;background:rgba($color6b,0.1);
+        &:hover {background:$color6b;}
+      }
+      .button-down {order:2;}
+      .button-up {order:1;}
+      .button-expand {order:3;}
+      .button-collapse {order:3;}
+    }
+    .form-list-item-label {font-weight: 700;order: 0;margin-right:auto;letter-spacing: 0.5px;padding:1px 0 0 9px;
+      .custom { font-weight:normal;color:$grey6;text-overflow:ellipsis;margin-left:5px; }
+    }
+  }
+  .form-list-item-content {padding:10px;}
+}
