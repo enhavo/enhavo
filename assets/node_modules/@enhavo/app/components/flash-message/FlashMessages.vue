@@ -1,15 +1,8 @@
 <template>
-    <div v-if="flashMessenger.messages && flashMessenger.messages.length > 0">
-        <div class="flash-message-container">
-            <template v-for="message in flashMessenger.messages">
-                <flash-message v-bind:message="message"></flash-message>
-            </template>
-        </div>
-        <div class="flash-message-placeholders">
-            <template v-for="message in flashMessenger.messages">
-                <flash-message v-bind:message="message"></flash-message>
-            </template>
-        </div>
+    <div class="flash-message-container" v-if="flashMessenger.messages && flashMessenger.messages.length > 0">
+        <template v-for="message in flashMessenger.messages">
+            <flash-message v-bind:message="message"></flash-message>
+        </template>
     </div>
 </template>
 
