@@ -23,34 +23,34 @@
     .col#{$affix}-m-#{$i} { @include column-styles($columnSpacing,100%); }
     .col#{$affix}-l-#{$i} { @include column-styles($columnSpacing,100%); }
 
-    .col#{$affix}-s-#{$i} { @include column-styles($columnSpacing,percentage(1/$columns*$i)); }
+    .col#{$affix}-s-#{$i} { @include column-styles($columnSpacing,calc(100%/$columns*$i)); }
   }
 
   @media all and (min-width:768px) and (max-width:991px) {
     @for $i from 1 through $columns {
-      .col#{$affix}-m-push-#{$i} {left:percentage(1/$columns*$i);}
-      .col#{$affix}-m-pull-#{$i} {right:percentage(1/$columns*$i);}
+      .col#{$affix}-m-push-#{$i} {left:calc(100%/$columns*$i);}
+      .col#{$affix}-m-pull-#{$i} {right:calc(100%/$columns*$i);}
     }
   }
 
   @media all and (max-width:767px) {
     @for $i from 1 through $columns {
-      .col#{$affix}-s-push-#{$i} {left:percentage(1/$columns*$i);}
-      .col#{$affix}-s-pull-#{$i} {right:percentage(1/$columns*$i);}
+      .col#{$affix}-s-push-#{$i} {left:calc(100%/$columns*$i);}
+      .col#{$affix}-s-pull-#{$i} {right:calc(100%/$columns*$i);}
     }
   }
 
   @media all and (min-width:768px) {
     @for $i from 1 through $columns {
-      .col#{$affix}-m-#{$i} { @include column-styles($columnSpacing,percentage(1/$columns*$i)); }
+      .col#{$affix}-m-#{$i} { @include column-styles($columnSpacing,calc(100%/$columns*$i)); }
     }
   }
 
   @media all and (min-width:992px) {
     @for $i from 1 through $columns {
-      .col#{$affix}-l-#{$i} { @include column-styles($columnSpacing,percentage(1/$columns*$i)); }
-      .col#{$affix}-l-push-#{$i} {left:percentage(1/$columns*$i);}
-      .col#{$affix}-l-pull-#{$i} {right:percentage(1/$columns*$i);}
+      .col#{$affix}-l-#{$i} { @include column-styles($columnSpacing,calc(100%/$columns*$i)); }
+      .col#{$affix}-l-push-#{$i} {left:calc(100%/$columns*$i);}
+      .col#{$affix}-l-pull-#{$i} {right:calc(100%/$columns*$i);}
     }
   }
 }

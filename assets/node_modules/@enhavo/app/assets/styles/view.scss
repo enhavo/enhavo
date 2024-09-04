@@ -35,7 +35,6 @@
   }
   .btn {@extend %btn-primary;}
   .checkbox-container {@extend %checkboxContainer;}
-  .flash-message-container {top:60px;}
   .loading-screen {position:fixed;}
   .modal-confirm {position:fixed;top:0;left:0;width:100%;height:100%;z-index:11;background:rgba($color2,0.9);text-align:center;display:flex;align-items:center;justify-content: center;flex-direction:column;
     .buttons {display:flex;justify-content:center;
