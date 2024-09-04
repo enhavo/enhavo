@@ -12,18 +12,6 @@ services:
         tags:
             - { name: vue.directive, directive: 'click-outside' }
 
-    '@enhavo/app/components/form/FormAdminRow.vue':
-        chunk: 'form'
-        static: true
-        tags:
-            - { name: vue.component, component: 'form-admin-row' }
-
-    '@enhavo/app/components/form/FormAdminWidget.vue':
-        chunk: 'form'
-        static: true
-        tags:
-            - { name: vue.component, component: 'form-widget' }
-
 
     # missing services
     # app.provide('eventDispatcher', this.eventDispatcher);

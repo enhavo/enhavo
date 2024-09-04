@@ -115,6 +115,7 @@ class BlockCollectionType extends AbstractType
         $data = [];
         foreach($this->blockManager->getBlocks() as $key => $block) {
             $node = new Node();
+            $node->setName($key);
             $modelClass = $block->getModel();
             $node->setBlock(new $modelClass);
             $data[$key] = $node;

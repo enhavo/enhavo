@@ -25,6 +25,7 @@ class VueTypeExtension extends AbstractVueTypeExtension
         $data->set('componentModel', $options['component_model']);
         $data->set('componentVisitors', is_string($options['component_visitors']) ? [$options['component_visitors']] : $options['component_visitors']);
         $data->set('rowComponent', $options['row_component']);
+        $data->set('widgetComponent', $options['widget_component']);
 
         $data->set('visible', true);
     }
@@ -36,6 +37,7 @@ class VueTypeExtension extends AbstractVueTypeExtension
             'component_model' => null,
             'component_visitors' => [],
             'row_component' => null,
+            'widget_component' => 'form-widget',
         ]);
     }
 

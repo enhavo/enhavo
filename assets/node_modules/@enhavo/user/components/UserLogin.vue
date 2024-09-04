@@ -1,5 +1,5 @@
 <template>
-    <form-form :form="userManger.loginForm" v-if="userManger.loginForm" class="login-form">
+    <form-form :form="userManger.loginForm" v-if="userManger.loginForm" class="login-form" :key="userManger.loginForm.key">
 
         <div class="feedback-messages" v-if="userManger.loginForm.errors.length > 0">
             <div class="feedback-message error">

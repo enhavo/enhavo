@@ -11,14 +11,17 @@ services:
         tags:
             - { name: enhavo_resource.action }
 
-    Enhavo\Bundle\ResourceBundle\Action\Type\UrlActionType:
-        arguments:
-            - '@router'
-        tags:
-            - { name: enhavo_resource.action }
-
     Enhavo\Bundle\ResourceBundle\Action\Type\SaveActionType:
         arguments:
             - '@router'
+            - '@Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface'
+        tags:
+            - { name: enhavo_resource.action }
+
+    Enhavo\Bundle\ResourceBundle\Action\Type\DeleteActionType:
+        arguments:
+            - '@security.csrf.token_manager'
+            - '@router'
+            - '@Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface'
         tags:
             - { name: enhavo_resource.action }

@@ -4,7 +4,7 @@
         <flash-messages></flash-messages>
         <modal-stack></modal-stack>
         <action-bar :primary="manager.actions" :secondary="manager.actionsSecondary"></action-bar>
-        <div>
+        <div class="grid">
             <filter-bar v-if="manager.filters" :filters="manager.filters"></filter-bar>
             <component
                 v-if="manager.collection"

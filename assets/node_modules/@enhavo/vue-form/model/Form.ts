@@ -5,6 +5,7 @@ import {ChangeEvent} from "@enhavo/vue-form/event/ChangeEvent";
 export class Form
 {
     element: HTMLElement;
+    key: string;
     visible: boolean;
     parent: Form;
     children: Form[] = [];
@@ -17,6 +18,7 @@ export class Form
     componentVisitors: string[] = [];
     componentModel: string;
     rowComponent: string;
+    widgetComponent: string;
     id: string;
     labelAttr: object;
     placeholder: string;
@@ -30,6 +32,8 @@ export class Form
     eventDispatcher: FormEventDispatcherInterface;
     errors: FormErrors[] = [];
     type: string;
+
+    private morphStartValue: any;
 
     public get(name: string): Form
     {
@@ -107,6 +111,18 @@ export class Form
     {
         if (this.compound) {
             return undefined;
+        }
+
+        return this.value;
+    }
+
+    public getModelValue(): any
+    {
+        if (this.compound) {
+            const value = {};
+            for (let child of this.children) {
+                value[child.name] = child.getModelValue();
+            }
         }
 
         return this.value;
@@ -198,6 +214,53 @@ export class Form
                 }
             }
         }
+    }
+
+    public morphStart()
+    {
+        if (!this.compound) {
+            this.morphStartValue = this.value;
+        } else {
+            for (let child of this.children) {
+                child.morphStart();
+            }
+        }
+    }
+
+    public morphMerge(form: Form)
+    {
+        if (!this.compound) {
+            if (this.morphStartValue == this.value) {
+                this.value = form.value;
+            }
+            this.errors = form.errors;
+        } else {
+            for (let formChild of form.children) {
+                if (this.has(formChild.name)) {
+                    this.get(formChild.name).morphMerge(formChild);
+                } else {
+                    this.add(formChild);
+                }
+            }
+
+            for (let child of this.children) {
+                if (!form.has(child.name)) {
+                    this.remove(child.name);
+                    child.destroy();
+                }
+            }
+        }
+    }
+
+    public morphFinish()
+    {
+        this.morphStartValue = undefined;
+
+        for (let child of this.children) {
+            child.morphFinish();
+        }
+
+        this.update();
     }
 }
 

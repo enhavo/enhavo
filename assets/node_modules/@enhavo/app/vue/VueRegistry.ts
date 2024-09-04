@@ -1,6 +1,7 @@
 import ComponentRegistryInterface from '@enhavo/core/ComponentRegistryInterface';
 import * as Vue from "vue";
 
+/** @deprecated */
 export default class VueRegistry implements ComponentRegistryInterface
 {
     private plugins: object[] = [];

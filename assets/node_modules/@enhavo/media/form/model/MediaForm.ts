@@ -169,7 +169,7 @@ export class MediaForm extends ListForm
         let item = <MediaItemForm>this.addItem();
         for (const property in file) {
             if (file.hasOwnProperty(property)) {
-                if (item.get(property)) {
+                if (item.has(property)) {
                     item.get(property).value = file[property];
                 }
             }

@@ -15,7 +15,7 @@ enhavo_article_admin_article_create:
     defaults:
         _expose: admin
         _vue:
-            component: resource-create
+            component: resource-input
             groups: admin
             meta:
                 api: enhavo_article_admin_api_article_create
@@ -27,20 +27,10 @@ enhavo_article_admin_article_update:
     defaults:
         _expose: admin
         _vue:
-            component: resource-update
+            component: resource-input
             groups: admin
             meta:
                 api: enhavo_article_admin_api_article_update
-        _endpoint:
-            type: admin
-
-enhavo_article_admin_article_delete:
-    path: /article/delete
-    defaults:
-        _expose: admin
-        _vue:
-            component: resource-form
-            groups: admin
         _endpoint:
             type: admin
 
@@ -52,7 +42,7 @@ enhavo_article_admin_article_preview:
     defaults:
         _expose: admin
         _vue:
-            component: resource-form
+            component: resource-preview
             groups: admin
         _endpoint:
             type: admin

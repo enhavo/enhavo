@@ -1,7 +1,6 @@
 import ActionManager from "@enhavo/app/action/ActionManager";
 import {FrameEventDispatcher} from "@enhavo/app/frame/FrameEventDispatcher";
 import View from "@enhavo/app/view/View";
-import Confirm from "@enhavo/app/ui/Confirm";
 import FormatData from "@enhavo/media/image-cropper/FormatData";
 import FlashMessenger from "@enhavo/app/flash-message/FlashMessenger";
 import Translator from "@enhavo/core/Translator";

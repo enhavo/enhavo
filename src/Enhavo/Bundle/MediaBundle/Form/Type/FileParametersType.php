@@ -23,7 +23,6 @@ class FileParametersType extends AbstractType
         $builder->add('title', TextType::class, [
             'required' => false
         ]);
-        $builder->add('download', DownloadType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

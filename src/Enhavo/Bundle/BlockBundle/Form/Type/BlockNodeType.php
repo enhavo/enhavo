@@ -21,7 +21,8 @@ class BlockNodeType extends AbstractType
             'item_groups' => $options['item_groups'],
             'items' => $options['items'],
             'add_label' => $options['add_label'],
-            'translation_domain' => $options['translation_domain']
+            'translation_domain' => $options['translation_domain'],
+            'prototype' => $options['prototype'],
         ]);
     }
 
@@ -34,6 +35,7 @@ class BlockNodeType extends AbstractType
             'item_groups' => [],
             'items' => [],
             'add_label' => '',
+            'prototype' => true,
         ));
     }
 

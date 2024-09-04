@@ -5,19 +5,21 @@ import {
     FrameGet,
     FrameLoaded,
     FrameRemove,
-    FrameSave,
     FrameUpdate,
+    FrameSave,
     FrameArrange,
 } from "@enhavo/app/frame/FrameStackSubscriber";
 import {Frame} from "@enhavo/app/frame/Frame";
-import {FrameAdded} from "@enhavo/app/frame/FrameStack";
+import {FrameAdded, FrameUpdated} from "@enhavo/app/frame/FrameStack";
 import {Event, Subscriber} from "@enhavo/app/frame/FrameEventDispatcher";
+import generateId from "uuid/v4";
 
 export class FrameManager
 {
+    private mainFrame: boolean = false;
     private frames: Frame[] = null;
     private sendUpdates: boolean = true;
-    private wait: Promise<void> = null;
+    private waitPromise: Promise<void> = null;
 
     constructor(
         private eventDispatcher: FrameEventDispatcher
@@ -29,23 +31,27 @@ export class FrameManager
 
     private init(): Promise<void>
     {
+        if (window.name === '' && this.frames === null && !this.mainFrame) {
+            this.frames = [new Frame({id: ""})];
+        }
+
         // if init is called one after the other, the fetch is may not be finish, so we have to sync the fetches
         return new Promise((resolve) => {
             if (this.frames !== null) {
                 resolve();
-            } else if (this.wait !== null) {
-                this.wait.then(() => {
+            } else if (this.waitPromise !== null) {
+                this.waitPromise.then(() => {
                     resolve()
                 });
             } else {
-                this.wait = new Promise((resolveWait) => {
+                this.waitPromise = new Promise((resolveWait) => {
                     this.subscribe();
                     this.eventDispatcher.request(new FrameGet()).then((frames) => {
                         this.frames = [];
                         for (let options of (frames as object[])) {
                             this.frames.push(this.createFrame(options));
                         }
-                        this.wait = null;
+                        this.waitPromise = null;
                         resolveWait();
                         resolve();
                     });
@@ -105,14 +111,19 @@ export class FrameManager
         this.eventDispatcher.dispatch(new FrameUpdate(frame));
     }
 
+    public getId(): string
+    {
+        return window.name;
+    }
+
     public loaded()
     {
         this.eventDispatcher.dispatch(new FrameLoaded(window.name));
     }
 
-    public async addFrame(options: object): Promise<void>
+    public async addFrame(options: object): Promise<Frame>
     {
-        await this.eventDispatcher.request(new FrameAdd(options));
+        return await this.eventDispatcher.request(new FrameAdd(options)) as Frame;
     }
 
     public async getFrames(): Promise<Frame[]>
@@ -178,10 +189,76 @@ export class FrameManager
         this.eventDispatcher.dispatch(new FrameArrange());
     }
 
-    public async openFrame(options: object)
+    /**
+     * Open a frame and save and arrange the frame stack. When the new frame has a wait = true option,
+     * then openFrame waits until the frame send a loaded message, else it will just return after the frame
+     * was added.
+     */
+    public async openFrame(options: object): Promise<Frame>
     {
-        await this.addFrame(options);
-        this.save();
-        this.arrange()
+        let frameOptions = new Frame(options);
+
+        return new Promise(async (resolve) => {
+            if (frameOptions.wait) {
+                this.on('frame_loaded', async (event) => {
+                    if ((event as FrameLoaded).id === frameOptions.id) {
+                        let frame = await this.getFrame(frameOptions.id)
+                        resolve(frame);
+                    }
+                });
+            }
+
+            let frame = await this.addFrame(frameOptions.getOptions());
+            this.save();
+            this.arrange()
+
+            if (!frameOptions.wait) {
+                resolve(frame);
+            }
+        });
+    }
+
+    public onChange(callback: (frame: Frame, type: string) => void): Subscriber
+    {
+        return this.eventDispatcher.on('frame_updated', async (event) => {
+            if (window.name === (event as FrameUpdated).frame.id) {
+                let frame = await this.getFrame();
+                if (frame !== null) {
+                    callback(frame, 'updated');
+                }
+            }
+        }, 90);
+    }
+
+    public wait(frame: Frame): Promise<void>
+    {
+        return new Promise(resolve => {
+            let resolved = false;
+            this.on('frame_loaded', async (event) => {
+                if ((event as FrameLoaded).id === frame.id && !resolved) {
+                    resolve();
+                }
+            });
+
+            if (frame.loaded) {
+                resolve();
+                resolved = true;
+            }
+        })
+    }
+
+    public setMainFrame(value: boolean)
+    {
+        this.mainFrame = value;
+    }
+
+    public isMainFrame(): boolean
+    {
+        return this.mainFrame;
+    }
+
+    public isRoot(): boolean
+    {
+        return this.getId() === '';
     }
 }

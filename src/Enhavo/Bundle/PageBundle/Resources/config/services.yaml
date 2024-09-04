@@ -1,14 +1,14 @@
 services:
     Enhavo\Bundle\PageBundle\Form\Type\PageType:
         arguments:
-            - '%enhavo_page.model.page.class%'
+            - '%enhavo_page.page.model.class%'
             - '%enhavo_page.special_pages%'
         tags:
             - { name: form.type }
 
     Enhavo\Bundle\PageBundle\Form\Type\PageChoiceType:
         arguments:
-            - '%enhavo_page.model.page.class%'
+            - '%enhavo_page.page.model.class%'
         tags:
             - { name: form.type }
 
@@ -34,16 +34,15 @@ services:
             - { name: enhavo_app.menu }
 
     enhavo_page.factory.page:
-        public: true
-        class: '%enhavo_page.factory.page.class%'
+        class: '%enhavo_page.page.factory.class%'
         arguments:
-            - '%enhavo_page.model.page.class%'
+            - '%enhavo_page.page.model.class%'
             - '@enhavo_block.factory.node'
             - '@enhavo_routing.factory.route'
 
     Enhavo\Bundle\PageBundle\Page\PageManager:
         arguments:
-            - '@enhavo_page.repository.page'
+            - '@enhavo_page.page.repository'
             - '@router'
 
     Enhavo\Bundle\PageBundle\Form\Type\SpecialPageType:
@@ -55,7 +54,7 @@ services:
 
     Enhavo\Bundle\PageBundle\Endpoint\PageEndpointType:
         arguments:
-            - '@enhavo_page.repository.page'
+            - '@enhavo_page.page.repository'
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:
@@ -64,7 +63,7 @@ services:
 
     Enhavo\Bundle\PageBundle\Routing\PageCodeRouteCollector:
         arguments:
-            - '@enhavo_page.repository.page'
+            - '@enhavo_page.page.repository'
             - '@enhavo_routing.router'
         tags:
             - { name: enhavo_app.route_collector }
@@ -77,7 +76,7 @@ services:
         class: Enhavo\Bundle\PageBundle\ErrorRenderer\SpecialPageErrorRenderer
         decorates: enhavo.error_handler.html
         arguments:
-            - '@enhavo_page.repository.page'
+            - '@enhavo_page.page.repository'
             - '@enhavo.error_renderer.html.inner'
             - '@request_stack'
             - '%kernel.debug%'

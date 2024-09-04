@@ -53,7 +53,7 @@ export class FrameStack
         }
     }
 
-    public async addFrame(options: object)
+    public async addFrame(options: object): Promise<Frame>
     {
         if (options['key'] !== undefined && options['parent'] !== undefined) {
             for (let frame of this.frames) {
@@ -73,6 +73,7 @@ export class FrameStack
 
         this.frames.push(frame);
         this.eventDispatcher.dispatch(new FrameAdded(frame));
+        return frame;
     }
 
     private createFrame(options: object): Frame

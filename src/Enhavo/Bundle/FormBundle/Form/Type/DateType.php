@@ -62,6 +62,7 @@ class DateType extends AbstractType
             'config' => $this->defaultDateTimePickerConfig,
             'allow_typing' => false,
             'allow_clear' => false,
+            'locale' => 'de',
             'attr' => [
                 'data-date-picker' => null,
                 'autocomplete' => 'off'

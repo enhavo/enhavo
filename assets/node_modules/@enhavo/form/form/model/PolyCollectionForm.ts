@@ -4,7 +4,7 @@ import {Form} from "@enhavo/vue-form/model/Form";
 export class PolyCollectionForm extends ListForm
 {
     public isOpen: boolean;
-    public entryLabels: Object;
+    public entryLabels: EntryLabel[];
     public prototypeStorage: string;
     public confirmDelete: boolean;
     public collapsed: boolean;
@@ -46,3 +46,10 @@ class Prototype
     parameters: any
     storageName: string;
 }
+
+class EntryLabel
+{
+    key: string;
+    label: string;
+}
+

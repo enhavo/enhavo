@@ -2,8 +2,8 @@
 
 namespace Enhavo\Bundle\PaymentBundle\Action;
 
+use Enhavo\Bundle\AppBundle\Action\Type\UrlActionType;
 use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
-use Enhavo\Bundle\ResourceBundle\Action\Type\UrlActionType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class RefreshStateActionType extends AbstractActionType

@@ -35,13 +35,13 @@ export class FrameStackSubscriber
 
     private addFrameAddListener()
     {
-        this.dispatcher.on('frame_add', (event: Event) => {
+        this.dispatcher.on('frame_add', async (event: Event) => {
             const options = (event as FrameAdd).options;
             if (options['parent'] === undefined) {
                 options['parent'] = event.origin;
             }
-            this.frameStack.addFrame(options);
-            event.resolve();
+            let frame = await this.frameStack.addFrame(options);
+            event.resolve(frame);
         });
     }
 
@@ -56,6 +56,7 @@ export class FrameStackSubscriber
     {
         this.dispatcher.on('frame_loaded', (event: Event) => {
             const frame = this.frameStack.getFrame((event as FrameLoaded).id);
+
             if (frame) {
                 frame.loaded = true;
             }

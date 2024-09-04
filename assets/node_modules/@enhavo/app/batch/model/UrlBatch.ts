@@ -1,5 +1,4 @@
 import {AbstractBatch} from "@enhavo/app/batch/model/AbstractBatch";
-import Confirm from "@enhavo/app/ui/Confirm";
 import axios from "axios";
 import { FlashMessenger, FlashMessage } from "@enhavo/app/flash-message/FlashMessenger";
 import Translator from "@enhavo/core/Translator";

@@ -3,7 +3,7 @@
 namespace Enhavo\Bundle\ResourceBundle\Tests\DependencyInjection;
 
 use Enhavo\Bundle\ResourceBundle\DependencyInjection\Configuration;
-use Enhavo\Bundle\ResourceBundle\DependencyInjection\GridConfigurationMerger;
+use Enhavo\Bundle\ResourceBundle\DependencyInjection\Merge\GridConfigurationMerger;
 use Enhavo\Bundle\ResourceBundle\Grid\GridMergeInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\Processor;
@@ -73,7 +73,6 @@ class ConfigurationTest extends TestCase
         ];
 
         $configuration = new Configuration();
-
 
         $config = $this->process($configuration, [$a, $b]);
 
@@ -148,6 +147,38 @@ class ConfigurationTest extends TestCase
         $this->assertEquals([
             'class' => Grid::class,
             'prop3' => '1',
+        ], $config['grids']['my.grid']);
+    }
+
+    public function testGridMergeExtends()
+    {
+        $a  = [
+            'grids' => [
+                'my.grid' => [
+                    'extends' =>  'base.grid',
+                    'prop2' => '22',
+                ],
+            ]
+        ];
+
+        $b = [
+            'grids' => [
+                'base.grid' => [
+                    'class' => Grid::class,
+                    'prop1' => '1',
+                    'prop2' => '2',
+                ],
+            ]
+        ];
+
+        $configuration = new Configuration();
+
+        $config = $this->process($configuration, [$a, $b]);
+
+        $this->assertEquals([
+            'class' => Grid::class,
+            'prop1' => '1',
+            'prop2' => '22',
         ], $config['grids']['my.grid']);
     }
 }

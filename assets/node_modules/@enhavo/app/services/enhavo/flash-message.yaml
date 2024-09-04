@@ -3,6 +3,6 @@ services:
         import: FlashMessenger
         chunk: 'flash-message'
         arguments:
-            - '@enhavo/app/vue/VueRegistry'
+            - '@enhavo/app/frame/FrameManager'
         tags:
-            - { name: vue.service, service: 'flashMessenger' }
+            - { name: vue.service, service: 'flashMessenger', reactive: true }

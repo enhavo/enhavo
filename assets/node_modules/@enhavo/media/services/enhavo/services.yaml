@@ -1,3 +1,6 @@
+imports:
+    - path: '../*'
+
 services:
     '@enhavo/media/loader/MediaLoader':
         chunk: 'form'
@@ -20,11 +23,11 @@ services:
             - '@enhavo/core/Translator'
             - '@enhavo/app/vue/VueRegistry'
 
-    '@enhavo/media/components/ImageCropperComponent.vue':
+    '@enhavo/media/components/ImageCropper.vue':
         chunk: 'image-cropper'
         static: true
 
-    '@enhavo/media/components/ImageCropperStageComponent.vue':
+    '@enhavo/media/components/ImageCropperStage.vue':
         chunk: 'vue'
         static: true
         tags:

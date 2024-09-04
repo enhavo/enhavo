@@ -91,6 +91,7 @@ services:
         chunk: 'action'
         arguments:
             - '@enhavo/app/frame/FrameManager'
+            - '@enhavo/app/ui/UiManager'
         tags:
             - { name: 'enhavo_app.action', class: 'OpenAction' }
 
@@ -99,7 +100,9 @@ services:
         chunk: 'action'
         arguments:
             - '@enhavo/app/frame/FrameManager'
-            - '@enhavo/app/frame/FrameEventDispatcher'
+            - '@enhavo/app/ui/UiManager'
+            - '@enhavo/app/manager/ResourceInputManager'
+            - '@enhavo/vue-form/form/FormEventDispatcher'
         tags:
             - { name: 'enhavo_app.action', class: 'PreviewAction' }
 
@@ -108,10 +111,24 @@ services:
         chunk: 'action'
         arguments:
             - '@enhavo/app/frame/FrameManager'
-            - '@enhavo/app/frame/FrameEventDispatcher'
+            - '@enhavo/app/ui/UiManager'
             - '@enhavo/app/manager/ResourceInputManager'
+            - '@enhavo/app/flash-message/FlashMessenger'
+            - '@enhavo/app/translation/Translator'
         tags:
             - { name: 'enhavo_app.action', class: 'SaveAction' }
+
+    '@enhavo/app/action/model/AutoSaveAction':
+        import: AutoSaveAction
+        chunk: 'action'
+        arguments:
+            - '@enhavo/app/flash-message/FlashMessenger'
+            - '@enhavo/app/ui/UiManager'
+            - '@enhavo/app/manager/ResourceInputManager'
+            - '@enhavo/app/translation/Translator'
+            - '@enhavo/vue-form/form/FormEventDispatcher'
+        tags:
+            - { name: 'enhavo_app.action', class: 'AutoSaveAction' }
 
     '@enhavo/app/action/model/SingleFilterAction':
         import: SingleFilterAction
@@ -121,3 +138,10 @@ services:
         tags:
             - { name: 'enhavo_app.action', class: 'SingleFilterAction' }
 
+    '@enhavo/app/action/model/PreviewModeAction':
+        import: PreviewModeAction
+        chunk: 'action'
+        arguments:
+            - '@enhavo/app/manager/ResourcePreviewManager'
+        tags:
+            - { name: 'enhavo_app.action', class: 'PreviewModeAction' }

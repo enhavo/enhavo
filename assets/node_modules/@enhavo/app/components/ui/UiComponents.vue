@@ -1,23 +1,23 @@
 <template>
     <div class="view">
-        <div v-if="uiManager.confirm" class="modal-confirm">
+        <div v-if="uiManager.confirmData" class="modal-confirm">
             <div>
-                <div class="message">{{ uiManager.confirm.message }}</div>
+                <div class="message">{{ uiManager.confirmData.message }}</div>
                 <div class="buttons">
-                    <div @click="uiManager.confirm.accept()" class="modal-btn primary">{{ uiManager.confirm.acceptText }}</div>
-                    <div @click="uiManager.confirm.deny()" class="modal-btn">{{ uiManager.confirm.denyText }}</div>
+                    <div @click="uiManager.confirmData.accept()" class="modal-btn primary">{{ uiManager.confirmData.acceptLabel }}</div>
+                    <div @click="uiManager.confirmData.deny()" class="modal-btn">{{ uiManager.confirmData.denyLabel }}</div>
                 </div>
             </div>
         </div>
 
-        <div v-if="uiManager.alert" class="modal-confirm">
-            <div class="message">{{ uiManager.alert }}</div>
+        <div v-if="uiManager.alertData" class="modal-confirm">
+            <div class="message">{{ uiManager.alertData.message }}</div>
             <div class="buttons">
-                <div @click="uiManager.alert = null" class="modal-btn primary">{{ translator.trans('enhavo_app.view.label.ok') }}</div>
+                <div @click="uiManager.alertData.accept()" class="modal-btn primary">{{ getLabel() }}</div>
             </div>
         </div>
 
-        <loading-screen v-if="uiManager.loading"></loading-screen>
+        <loading-screen v-if="uiManager.loadingData"></loading-screen>
     </div>
 </template>
 
@@ -28,4 +28,13 @@ import {Translator} from "@enhavo/app/translation/Translator";
 
 const uiManager = inject<UiManager>('uiManager');
 const translator = inject<Translator>('translator');
+
+function getLabel()
+{
+    if (uiManager.alertData.acceptLabel) {
+        return uiManager.alertData.acceptLabel;
+    }
+
+    return translator.trans('enhavo_app.view.label.ok');
+}
 </script>

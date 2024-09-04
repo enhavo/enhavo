@@ -37,6 +37,18 @@ class GridFactory
             unset($configuration['class']);
         }
 
+        if (isset($configuration['priority'])) {
+            unset($configuration['priority']);
+        }
+
+        if (isset($configuration['extends'])) {
+            unset($configuration['extends']);
+        }
+
+        if (isset($configuration['overwrite'])) {
+            unset($configuration['overwrite']);
+        }
+
         if ($this->container->has($class)) {
             $grid = clone $this->container->get($class);
         } else {

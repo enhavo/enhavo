@@ -1,6 +1,6 @@
-import { AbstractAction } from "@enhavo/app/action/model/AbstractAction";
-import Confirm from "@enhavo/app/ui/Confirm";
-import View from "@enhavo/app/view/View";
+import {AbstractAction} from "@enhavo/app/action/model/AbstractAction";
+import {FrameManager} from "@enhavo/app/frame/FrameManager";
+import {UiManager} from "@enhavo/app/ui/UiManager";
 
 export class OpenAction extends AbstractAction
 {
@@ -13,25 +13,25 @@ export class OpenAction extends AbstractAction
     public confirmLabelOk: string;
     public confirmLabelCancel: string;
 
-    private readonly view: View;
-
-    constructor(view: View) {
+    constructor(
+        private readonly frameManager: FrameManager,
+        private readonly uiManager: UiManager,
+    ) {
         super();
-        this.view = view;
     }
 
     execute(): void
     {
         if (this.confirm) {
-            this.view.confirm(new Confirm(
-                this.confirmMessage,
-                () => {
+            this.uiManager.confirm({
+                message: this.confirmMessage,
+                denyLabel: this.confirmLabelCancel,
+                acceptLabel: this.confirmLabelOk,
+            }).then((accept: boolean) => {
+                if (accept) {
                     this.open();
-                },
-                () => {},
-                this.confirmLabelCancel,
-                this.confirmLabelOk,
-            ));
+                }
+            });
         } else {
             this.open();
         }
@@ -39,14 +39,13 @@ export class OpenAction extends AbstractAction
 
     private open()
     {
-        if(this.target == '_view') {
-            if(this.key) {
-                this.view.open(this.url, this.key);
-            } else {
-                this.view.open(this.url);
-            }
-            return;
+        if (this.target == '_view') {
+            this.frameManager.openFrame({
+                url: this.url,
+                key: this.key,
+            }).then();
+        } else {
+            window.open(this.url, this.target);
         }
-        window.open(this.url, this.target);
     }
 }

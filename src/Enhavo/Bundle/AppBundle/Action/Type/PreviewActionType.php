@@ -9,13 +9,27 @@
 
 namespace Enhavo\Bundle\AppBundle\Action\Type;
 
+use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
-use Enhavo\Bundle\ResourceBundle\Action\Type\UrlActionType;
-
+use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\RouterInterface;
 
 class PreviewActionType extends AbstractActionType
 {
+    public function __construct(
+        private RouterInterface $router,
+    )
+    {
+    }
+
+    public function createViewData(array $options, Data $data, ResourceInterface $resource = null): void
+    {
+        $data->set('apiUrl', $this->router->generate($options['api_route'], [
+            'id' => $resource->getId()
+        ]));
+    }
+
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -24,9 +38,10 @@ class PreviewActionType extends AbstractActionType
             'icon' => 'remove_red_eye',
             'append_id' => true,
             'model' => 'PreviewAction',
+            'component' => 'action-preview'
         ]);
 
-        $resolver->setRequired(['route']);
+        $resolver->setRequired(['route', 'api_route']);
     }
 
     public static function getParentType(): ?string
