@@ -26,6 +26,7 @@ class EnhavoSearchExtension extends Extension implements PrependExtensionInterfa
         $container->setParameter('enhavo_search.search.dsn', $config['search']['dsn']);
         $container->setParameter('enhavo_search.search.template', $config['search']['template']);
         $container->setParameter('enhavo_search.elastic.version', $config['elastic']['version']);
+        $container->setParameter('enhavo_search.elastic.index_settings', $config['elastic']['index_settings']);
         $container->setParameter('enhavo_search.index.class', $config['index']['classes']);
         $container->setParameter('enhavo_search.metadata', $config['metadata']);
 
