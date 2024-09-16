@@ -51,6 +51,9 @@ class Route extends BaseRouteModel implements RouteInterface, ResourceInterface
 
         if ($prefix) {
             $this->setStaticPrefix($prefix);
+
+        } else {
+            $this->setStaticPrefix('');
         }
 
         if ($variablePattern) {
