@@ -107,3 +107,8 @@ services:
     Enhavo\Bundle\SearchBundle\Engine\NullEngine:
         tags:
             - { name: enhavo_search.engine }
+
+            - { name: console.command, command: 'enhavo:search:elastic:install' }
+    Enhavo\Bundle\SearchBundle\Command\MetadataCommand:
+        tags:
+            - { name: console.command, command: 'enhavo:search:metadata' }
