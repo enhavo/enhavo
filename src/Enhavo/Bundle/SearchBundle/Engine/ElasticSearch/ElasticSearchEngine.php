@@ -48,6 +48,7 @@ class ElasticSearchEngine implements SearchEngineInterface
         private readonly array $classes,
         ClientFactory $clientFactory,
         $dsn,
+        private readonly ?array $indexSettings
     ) {
         $this->indexName = $clientFactory->getIndexName($dsn);
         $this->client = $clientFactory->create($dsn);
@@ -55,12 +56,17 @@ class ElasticSearchEngine implements SearchEngineInterface
 
     public function initialize($force = false): void
     {
+        $createIndexArguments = [];
+        if ($this->indexSettings !== null) {
+            $createIndexArguments['settings'] = $this->indexSettings;
+        }
+
         $index = $this->getIndex();
         if (!$index->exists()) {
-            $index->create();
+            $index->create($createIndexArguments);
         } else if ($index->exists() && $force) {
             $index->delete();
-            $index->create();
+            $index->create($createIndexArguments);
         }
 
         $mapping = new Mapping();
