@@ -46,6 +46,7 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('version')->defaultValue('7.0.0-darwin-x86_64')->end()
+                        ->variableNode('index_settings')->defaultValue(null)->end()
                     ->end()
                 ->end()
                 ->arrayNode('metadata')
