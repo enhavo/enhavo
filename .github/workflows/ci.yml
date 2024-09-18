@@ -62,7 +62,6 @@ jobs:
                     composer validate --strict src/Enhavo/Bundle/SliderBundle/composer.json
                     composer validate --strict src/Enhavo/Bundle/TaxonomyBundle/composer.json
                     composer validate --strict src/Enhavo/Bundle/TemplateBundle/composer.json
-                    composer validate --strict src/Enhavo/Bundle/ThemeBundle/composer.json
                     composer validate --strict src/Enhavo/Bundle/TranslationBundle/composer.json
                     composer validate --strict src/Enhavo/Bundle/UserBundle/composer.json
                     composer validate --strict src/Enhavo/Bundle/VueFormBundle/composer.json
