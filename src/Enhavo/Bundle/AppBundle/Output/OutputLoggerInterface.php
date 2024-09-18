@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Output;
 
-use Monolog\Logger;
+use Monolog\Level;
 use Psr\Log\LoggerInterface;
 
 interface OutputLoggerInterface extends LoggerInterface
@@ -14,7 +14,7 @@ interface OutputLoggerInterface extends LoggerInterface
      * @param int $level The log level used, one of the constants from Monolog\Logger
      * @param array $context The log context as used in Monolog\LoggerInterface functions
      */
-    public function writeln($message, $level = Logger::INFO, $context = array());
+    public function writeln($message, $level = Level::Info, $context = array());
 
     /**
      * Write text to the output without a newline at the end
@@ -22,7 +22,7 @@ interface OutputLoggerInterface extends LoggerInterface
      * @param string $message The message to write
      * @param int $level The log level used, one of the constants from Monolog\Logger
      */
-    public function write($message, $level = Logger::INFO);
+    public function write($message, $level = Level::Info);
 
     /**
      * Create and display a progress bar. If the output does not support progress bars, nothing is done.
