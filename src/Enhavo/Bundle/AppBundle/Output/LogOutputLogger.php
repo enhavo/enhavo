@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Output;
 
-use Monolog\Logger;
+use Monolog\Level;
 use Psr\Log\LoggerInterface;
 
 class LogOutputLogger extends AbstractOutputLogger
@@ -34,7 +34,7 @@ class LogOutputLogger extends AbstractOutputLogger
     /**
      * {@inheritdoc}
      */
-    public function writeln($message, $level = Logger::INFO, $context = array())
+    public function writeln($message, $level = Level::Info, $context = array())
     {
         if ($this->lineBuffer !== '') {
             if ($this->lineBufferLogLevel !== $level) {
@@ -50,7 +50,7 @@ class LogOutputLogger extends AbstractOutputLogger
     /**
      * {@inheritdoc}
      */
-    public function write($message, $level = Logger::INFO)
+    public function write($message, $level = Level::Info)
     {
         if ($this->lineBuffer !== '' && $this->lineBufferLogLevel != $level) {
             $this->flushLineBuffer();

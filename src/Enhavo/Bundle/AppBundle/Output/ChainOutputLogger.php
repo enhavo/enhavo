@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Output;
 
-use Monolog\Logger;
+use Monolog\Level;
 
 class ChainOutputLogger implements OutputLoggerInterface
 {
@@ -22,7 +22,7 @@ class ChainOutputLogger implements OutputLoggerInterface
     /**
      * {@inheritdoc}
      */
-    public function writeln($message, $level = Logger::INFO, $context = array())
+    public function writeln($message, $level = Level::Info, $context = array())
     {
         foreach($this->outputLoggers as $logger) {
             $logger->writeln($message, $level, $context);
@@ -32,7 +32,7 @@ class ChainOutputLogger implements OutputLoggerInterface
     /**
      * {@inheritdoc}
      */
-    public function write($message, $level = Logger::INFO)
+    public function write($message, $level = Level::Info)
     {
         foreach($this->outputLoggers as $logger) {
             $logger->write($message, $level);
