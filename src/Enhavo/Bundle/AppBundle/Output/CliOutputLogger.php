@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Output;
 
-use Monolog\Logger;
+use Monolog\Level;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
@@ -16,7 +16,7 @@ class CliOutputLogger extends AbstractOutputLogger
     /**
      * @var int
      */
-    private $verboseRequiredLevel = Logger::DEBUG;
+    private $verboseRequiredLevel = Level::Debug;
 
     /**
      * CliOutputLogger constructor.
@@ -55,7 +55,7 @@ class CliOutputLogger extends AbstractOutputLogger
     /**
      * {@inheritdoc}
      */
-    public function writeln($message, $level = Logger::INFO, $context = array())
+    public function writeln($message, $level = Level::Info, $context = array())
     {
         $type = $level <= $this->getVerboseRequiredLevel() ? OutputInterface::OUTPUT_NORMAL | OutputInterface::VERBOSITY_VERBOSE : OutputInterface::OUTPUT_NORMAL;
         $this->symfonyStyle->writeln($message, $type);
@@ -64,7 +64,7 @@ class CliOutputLogger extends AbstractOutputLogger
     /**
      * {@inheritdoc}
      */
-    public function write($message, $level = Logger::INFO)
+    public function write($message, $level = Level::Info)
     {
         $type = $level <= $this->getVerboseRequiredLevel() ? OutputInterface::OUTPUT_NORMAL | OutputInterface::VERBOSITY_VERBOSE : OutputInterface::OUTPUT_NORMAL;
         $this->symfonyStyle->write($message, false, $type);
