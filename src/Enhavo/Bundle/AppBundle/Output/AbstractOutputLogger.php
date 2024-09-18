@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Output;
 
+use Monolog\Level;
 use Monolog\Logger;
 
 abstract class AbstractOutputLogger implements OutputLoggerInterface
@@ -9,71 +10,71 @@ abstract class AbstractOutputLogger implements OutputLoggerInterface
     /**
      * {@inheritdoc}
      */
-    public function emergency($message, array $context = array())
+    public function emergency(string|\Stringable $message, array $context = array()): void
     {
-        $this->writeln($message, Logger::EMERGENCY, $context);
+        $this->writeln($message, Level::Emergency, $context);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function alert($message, array $context = array())
+    public function alert(string|\Stringable $message, array $context = array()): void
     {
-        $this->writeln($message, Logger::ALERT, $context);
+        $this->writeln($message, Level::Alert, $context);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function critical($message, array $context = array())
+    public function critical(string|\Stringable $message, array $context = array()): void
     {
-        $this->writeln($message, Logger::CRITICAL, $context);
+        $this->writeln($message, Level::Critical, $context);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function error($message, array $context = array())
+    public function error(string|\Stringable $message, array $context = array()): void
     {
-        $this->writeln($message, Logger::ERROR, $context);
+        $this->writeln($message, Level::Error, $context);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function warning($message, array $context = array())
+    public function warning(string|\Stringable $message, array $context = array()): void
     {
-        $this->writeln($message, Logger::WARNING, $context);
+        $this->writeln($message, Level::Warning, $context);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function notice($message, array $context = array())
+    public function notice(string|\Stringable $message, array $context = array()): void
     {
-        $this->writeln($message, Logger::NOTICE, $context);
+        $this->writeln($message, Level::Notice, $context);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function info($message, array $context = array())
+    public function info(string|\Stringable $message, array $context = array()): void
     {
-        $this->writeln($message, Logger::INFO, $context);
+        $this->writeln($message, Level::Info, $context);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function debug($message, array $context = array())
+    public function debug(string|\Stringable $message, array $context = array()): void
     {
-        $this->writeln($message, Logger::DEBUG, $context);
+        $this->writeln($message, Level::Debug, $context);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function log($level, $message, array $context = array())
+    public function log($level, string|\Stringable $message, array $context = array()): void
     {
         $level = Logger::toMonologLevel($level);
         $this->writeln($message, $level, $context);
