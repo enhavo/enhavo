@@ -51,18 +51,24 @@ class AccessControl
         $this->accessControl = $accessControl;
     }
 
-    public function isAccess()
+    public function isAccess(): bool
     {
         if ($this->access !== null) {
             return $this->access;
         }
 
+<<<<<<< HEAD
         $this->access = true;
         $request = $this->requestStack->getMasterRequest();
+=======
+        $request = $this->requestStack->getMainRequest();
+>>>>>>> 850d2a42f (Avoid AccessControl to set access to true per default (#2083))
         if ($request === null) {
-            return false;
+            $this->access = false;
+            return $this->access;
         }
 
+        $this->access = true;
         $path = $request->getPathInfo();
         foreach ($this->accessControl as $regex) {
             if (!preg_match($regex, $path)) {
