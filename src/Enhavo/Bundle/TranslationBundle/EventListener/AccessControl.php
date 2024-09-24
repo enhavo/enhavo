@@ -51,18 +51,19 @@ class AccessControl
         $this->accessControl = $accessControl;
     }
 
-    public function isAccess()
+    public function isAccess(): bool
     {
         if ($this->access !== null) {
             return $this->access;
         }
 
-        $this->access = true;
         $request = $this->requestStack->getMainRequest();
         if ($request === null) {
-            return false;
+            $this->access = false;
+            return $this->access;
         }
 
+        $this->access = true;
         $path = $request->getPathInfo();
         foreach ($this->accessControl as $regex) {
             if (!preg_match($regex, $path)) {

@@ -20,7 +20,6 @@ class AccessControlTest extends TestCase
         $dependencies->requestStack = $this->getMockBuilder(RequestStack::class)->getMock();
         $dependencies->request = $this->getMockBuilder(Request::class)->getMock();
         $dependencies->request->attributes = $this->getMockBuilder(ParameterBag::class)->getMock();
-        $dependencies->requestStack->method('getMainRequest')->willReturn($dependencies->request);
         $dependencies->localeResolver = $this->getMockBuilder(LocaleResolverInterface::class)->getMock();
 
         return $dependencies;
@@ -53,7 +52,7 @@ class AccessControlTest extends TestCase
         $dependencies = $this->createDependencies();
         $control = $this->createInstance($dependencies);
 
-        $dependencies->requestStack->expects($this->exactly(1))->method('getMainRequest')->willReturn($dependencies->request);
+        $dependencies->requestStack->expects($this->once())->method('getMainRequest')->willReturn($dependencies->request);
         $dependencies->request->expects($this->once())->method('getPathInfo')->willReturn('/my/page/10');
 
         $this->assertTrue($control->isAccess());
@@ -86,6 +85,17 @@ class AccessControlTest extends TestCase
 
         $this->assertEquals('_locale', $control->getLocale());
         $this->assertNotEquals('__locale', $control->getLocale());
+    }
+
+    public function testIsAccessFalseNoMainRequestTwice()
+    {
+        $dependencies = $this->createDependencies();
+        $control = $this->createInstance($dependencies);
+
+        $dependencies->requestStack->expects($this->once())->method('getMainRequest')->willReturn(null);
+
+        $this->assertFalse($control->isAccess());
+        $this->assertFalse($control->isAccess());
     }
 }
 
