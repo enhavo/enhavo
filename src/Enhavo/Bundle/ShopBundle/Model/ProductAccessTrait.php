@@ -75,7 +75,7 @@ trait ProductAccessTrait
 
     public function removePicture(FileInterface $picture): void
     {
-        $this->pictures->remove($picture);
+        $this->pictures->removeElement($picture);
     }
 
     public function getPrice(): ?int
