@@ -58,6 +58,32 @@ class AccessControlTest extends TestCase
 
         $this->assertTrue($control->isAccess());
     }
+
+    public function testDefaultAccessFalseIsFalse()
+    {
+        $dependencies = $this->createDependencies();
+        $control = $this->createInstance($dependencies, [
+            '#^/admin/enhavo/.*#',
+        ], false);
+
+        $dependencies->requestStack->expects($this->exactly(1))->method('getMainRequest')->willReturn($dependencies->request);
+        $dependencies->request->expects($this->once())->method('getPathInfo')->willReturn('/admin/custom/10');
+
+        $this->assertFalse($control->isAccess());
+    }
+
+    public function testDefaultAccessFalseIsTrue()
+    {
+        $dependencies = $this->createDependencies();
+        $control = $this->createInstance($dependencies, [
+            '#^/admin/enhavo/.*#',
+        ], false);
+
+        $dependencies->requestStack->expects($this->exactly(1))->method('getMainRequest')->willReturn($dependencies->request);
+        $dependencies->request->expects($this->once())->method('getPathInfo')->willReturn('/admin/enhavo/10');
+
+        $this->assertTrue($control->isAccess());
+    }
 }
 
 class AccessControlTestDependencies
