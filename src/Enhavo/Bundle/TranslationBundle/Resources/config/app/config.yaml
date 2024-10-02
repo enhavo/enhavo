@@ -1,7 +1,5 @@
 enhavo_translation:
     default_locale: '%locale%'
-    translation_paths:
-        - '#^/admin/.+#'
     translator:
         default_access: true
         access_control:
@@ -9,7 +7,7 @@ enhavo_translation:
     form:
         default_access: true
         access_control:
-            - '#^/admin/.*#'
+            - '#^/admin/.+#'
 
 enhavo_app:
     locale_resolver: Enhavo\Bundle\TranslationBundle\Locale\LocalePathResolver

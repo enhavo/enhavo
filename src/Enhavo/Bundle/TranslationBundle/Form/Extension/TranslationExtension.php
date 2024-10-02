@@ -39,7 +39,6 @@ class TranslationExtension extends AbstractTypeExtension
     {
         return $options['compound']
             && $this->translationManager->isEnabled()
-            && $this->translationManager->isTranslation()
             && $this->accessControl->isAccess();
     }
 
