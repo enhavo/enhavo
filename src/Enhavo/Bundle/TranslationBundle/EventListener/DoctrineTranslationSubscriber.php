@@ -7,10 +7,11 @@
 namespace Enhavo\Bundle\TranslationBundle\EventListener;
 
 use Doctrine\Common\EventSubscriber;
-use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PostFlushEventArgs;
 use Doctrine\ORM\Event\PreFlushEventArgs;
-use Doctrine\ORM\Proxy\Proxy;
+use Doctrine\Persistence\Proxy;
+use Doctrine\Persistence\Event\LifecycleEventArgs;
+use Enhavo\Bundle\TranslationBundle\Locale\LocaleResolver;
 use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
 use Enhavo\Component\Metadata\MetadataRepository;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
@@ -28,21 +29,12 @@ class DoctrineTranslationSubscriber implements EventSubscriber
 {
     use ContainerAwareTrait;
 
-    /** @var AccessControl */
-    private $accessControl;
-
-    /** @var MetadataRepository */
-    private $metadataRepository;
-
-    /**
-     * DoctrineTranslationSubscriber constructor.
-     * @param AccessControl $accessControl
-     * @param MetadataRepository $metadataRepository
-     */
-    public function __construct(AccessControl $accessControl, MetadataRepository $metadataRepository)
+    public function __construct(
+        private AccessControl $accessControl,
+        private MetadataRepository $metadataRepository,
+        private LocaleResolver $localeResolver,
+    )
     {
-        $this->accessControl = $accessControl;
-        $this->metadataRepository = $metadataRepository;
     }
 
     /**
@@ -70,7 +62,7 @@ class DoctrineTranslationSubscriber implements EventSubscriber
             return;
         }
 
-        $em = $event->getEntityManager();
+        $em = $event->getObjectManager();
         $uow = $em->getUnitOfWork();
 
         /*
@@ -100,12 +92,12 @@ class DoctrineTranslationSubscriber implements EventSubscriber
             return;
         }
 
-        $uow = $args->getEntityManager()->getUnitOfWork();
+        $uow = $args->getObjectManager()->getUnitOfWork();
         foreach ($uow->getIdentityMap() as $class => $entities) {
             if ($this->metadataRepository->hasMetadata($class)) {
                 foreach ($entities as $entity) {
                     if (!($entity instanceof Proxy)) {
-                        $this->getTranslationManager()->translate($entity, $this->accessControl->getLocale());
+                        $this->getTranslationManager()->translate($entity, $this->localeResolver->resolve());
                     }
                 }
             }
@@ -119,7 +111,7 @@ class DoctrineTranslationSubscriber implements EventSubscriber
      */
     public function preRemove(LifecycleEventArgs $args)
     {
-        $entity = $args->getEntity();
+        $entity = $args->getObject();
         if ($this->metadataRepository->hasMetadata($entity)) {
             $this->getTranslationManager()->delete($entity);
         }
@@ -137,9 +129,9 @@ class DoctrineTranslationSubscriber implements EventSubscriber
             return;
         }
 
-        $entity = $args->getEntity();
+        $entity = $args->getObject();
         if ($this->metadataRepository->hasMetadata($entity)) {
-            $this->getTranslationManager()->translate($entity, $this->accessControl->getLocale());
+            $this->getTranslationManager()->translate($entity, $this->localeResolver->resolve());
         }
     }
 

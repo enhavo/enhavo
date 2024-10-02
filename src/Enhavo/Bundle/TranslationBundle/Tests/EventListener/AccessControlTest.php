@@ -20,17 +20,18 @@ class AccessControlTest extends TestCase
         $dependencies->requestStack = $this->getMockBuilder(RequestStack::class)->getMock();
         $dependencies->request = $this->getMockBuilder(Request::class)->getMock();
         $dependencies->request->attributes = $this->getMockBuilder(ParameterBag::class)->getMock();
+        $dependencies->requestStack->method('getMainRequest')->willReturn($dependencies->request);
         $dependencies->localeResolver = $this->getMockBuilder(LocaleResolverInterface::class)->getMock();
 
         return $dependencies;
     }
 
-    private function createInstance($dependencies, array $accessRegex = ['#^(?!/admin/).*#'])
+    private function createInstance($dependencies, array $accessRegex = ['#^(?!/admin/).*#'], bool $defaultAccess = true)
     {
         $accessControl = new AccessControl(
             $dependencies->requestStack,
-            $dependencies->localeResolver,
-            $accessRegex
+            $accessRegex,
+            $defaultAccess
         );
 
         return $accessControl;
@@ -52,50 +53,10 @@ class AccessControlTest extends TestCase
         $dependencies = $this->createDependencies();
         $control = $this->createInstance($dependencies);
 
-        $dependencies->requestStack->expects($this->once())->method('getMainRequest')->willReturn($dependencies->request);
+        $dependencies->requestStack->expects($this->exactly(1))->method('getMainRequest')->willReturn($dependencies->request);
         $dependencies->request->expects($this->once())->method('getPathInfo')->willReturn('/my/page/10');
 
         $this->assertTrue($control->isAccess());
-    }
-
-    public function testGetLocale()
-    {
-        $dependencies = $this->createDependencies();
-        $control = $this->createInstance($dependencies);
-
-        $dependencies->localeResolver->expects($this->once())->method('resolve')->willReturn('_locale');
-
-        $this->assertEquals('_locale', $control->getLocale());
-    }
-
-    public function testGetLocaleTwice()
-    {
-        $dependencies = $this->createDependencies();
-        $control = $this->createInstance($dependencies);
-
-        $localeDelivered = false;
-
-        $dependencies->localeResolver->expects($this->once())->method('resolve')->willReturnCallback(function () use ($localeDelivered) {
-            if (false == $localeDelivered) {
-                return '_locale';
-            }
-
-            return '__locale';
-        });
-
-        $this->assertEquals('_locale', $control->getLocale());
-        $this->assertNotEquals('__locale', $control->getLocale());
-    }
-
-    public function testIsAccessFalseNoMainRequestTwice()
-    {
-        $dependencies = $this->createDependencies();
-        $control = $this->createInstance($dependencies);
-
-        $dependencies->requestStack->expects($this->once())->method('getMainRequest')->willReturn(null);
-
-        $this->assertFalse($control->isAccess());
-        $this->assertFalse($control->isAccess());
     }
 }
 

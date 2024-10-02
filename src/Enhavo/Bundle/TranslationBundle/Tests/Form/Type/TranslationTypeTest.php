@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Tests\Form\Type;
 
+use Enhavo\Bundle\TranslationBundle\EventListener\AccessControlInterface;
 use Enhavo\Bundle\TranslationBundle\Form\Extension\TranslationExtension;
 use Enhavo\Bundle\TranslationBundle\Form\Type\TranslationType;
 use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
@@ -33,8 +34,11 @@ class TranslationTypeTest extends TypeTestCase
 
     protected function getTypeExtensions()
     {
+        $accessControl = $this->getMockBuilder(AccessControlInterface::class)->getMock();
+        $accessControl->method('isAccess')->willReturn(true);
+
         return [
-            new TranslationExtension($this->translationManager)
+            new TranslationExtension($this->translationManager, $accessControl)
         ];
     }
 

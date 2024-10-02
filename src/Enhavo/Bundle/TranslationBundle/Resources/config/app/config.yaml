@@ -3,8 +3,13 @@ enhavo_translation:
     translation_paths:
         - '#^/admin/.+#'
     translator:
+        default_access: true
         access_control:
             - '#^(?!/admin/).*#'
+    form:
+        default_access: true
+        access_control:
+            - '#^/admin/.*#'
 
 enhavo_app:
     locale_resolver: Enhavo\Bundle\TranslationBundle\Locale\LocalePathResolver

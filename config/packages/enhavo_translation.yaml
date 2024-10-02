@@ -1,6 +1,7 @@
 enhavo_translation:
-    enable: false
-    default_locale: 'de'
+    enable: true
+    default_locale: 'en'
     locales:
         - 'en'
         - 'de'
+        - 'fr'

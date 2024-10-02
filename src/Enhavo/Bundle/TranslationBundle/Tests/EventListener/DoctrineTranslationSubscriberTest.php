@@ -10,6 +10,7 @@ use Doctrine\ORM\Event\PreFlushEventArgs;
 use Doctrine\ORM\UnitOfWork;
 use Enhavo\Bundle\TranslationBundle\EventListener\AccessControl;
 use Enhavo\Bundle\TranslationBundle\EventListener\DoctrineTranslationSubscriber;
+use Enhavo\Bundle\TranslationBundle\Locale\LocaleResolver;
 use Enhavo\Bundle\TranslationBundle\Tests\Mocks\TranslatableMock;
 use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
 use Enhavo\Component\Metadata\MetadataRepository;
@@ -26,6 +27,7 @@ class DoctrineTranslationSubscriberTest extends TestCase
         $dependencies->accessControl = $this->getMockBuilder(AccessControl::class)->disableOriginalConstructor()->getMock();
         $dependencies->metadataRepository = $this->getMockBuilder(MetadataRepository::class)->disableOriginalConstructor()->getMock();
         $dependencies->entityManager = $this->getMockBuilder(EntityManagerInterface::class)->getMock();
+        $dependencies->localeResolver = $this->getMockBuilder(LocaleResolver::class)->disableOriginalConstructor()->getMock();
 
         return $dependencies;
     }
@@ -34,7 +36,8 @@ class DoctrineTranslationSubscriberTest extends TestCase
     {
         $subscriber =  new DoctrineTranslationSubscriber(
             $dependencies->accessControl,
-            $dependencies->metadataRepository
+            $dependencies->metadataRepository,
+            $dependencies->localeResolver,
         );
 
         /** @var ContainerInterface|MockObject $container */
@@ -98,7 +101,7 @@ class DoctrineTranslationSubscriberTest extends TestCase
         /** @var UnitOfWork|MockObject $unitOfWork */
         $unitOfWork = $this->getMockBuilder(UnitOfWork::class)->disableOriginalConstructor()->getMock();
 
-        $eventArgs->method('getEntityManager')->willReturn($dependencies->entityManager);
+        $eventArgs->method('getObjectManager')->willReturn($dependencies->entityManager);
         $dependencies->entityManager->method('getUnitOfWork')->willReturn($unitOfWork);
         $unitOfWork->method('getIdentityMap')->willReturn([
             'class1' => [new TranslatableMock()]
@@ -121,7 +124,7 @@ class DoctrineTranslationSubscriberTest extends TestCase
         /** @var UnitOfWork|MockObject $unitOfWork */
         $unitOfWork = $this->getMockBuilder(UnitOfWork::class)->disableOriginalConstructor()->getMock();
 
-        $eventArgs->method('getEntityManager')->willReturn($dependencies->entityManager);
+        $eventArgs->method('getObjectManager')->willReturn($dependencies->entityManager);
         $dependencies->entityManager->method('getUnitOfWork')->willReturn($unitOfWork);
         $unitOfWork->method('getIdentityMap')->willReturn([
             'class1' => [new TranslatableMock()]
@@ -180,4 +183,7 @@ class DoctrineTranslationSubscriberTestDependencies
 
     /** @var EntityManagerInterface|MockObject */
     public $entityManager;
+
+    /** @var LocaleResolver|MockObject */
+    public $localeResolver;
 }
