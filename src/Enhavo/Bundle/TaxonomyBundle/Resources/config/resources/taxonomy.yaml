@@ -1,0 +1,23 @@
+enhavo_resource:
+    resources:
+        enhavo_taxonomy.taxonomy:
+            classes:
+                model: Enhavo\Bundle\TaxonomyBundle\Entity\Taxonomy
+                factory: Enhavo\Bundle\ResourceBundle\Factory\Factory
+                repository: Enhavo\Bundle\TaxonomyBundle\Repository\TaxonomyRepository
+    grids:
+        enhavo_taxonomy.taxonomy:
+            extends: enhavo_resource.grid
+            resource: enhavo_taxonomy.taxonomy
+            actions: {  }
+            filters: {  }
+            columns: {  }
+            batches: {  }
+    inputs:
+        enhavo_taxonomy.taxonomy:
+            extends: enhavo_resource.input
+            resource: enhavo_taxonomy.taxonomy
+            form: Symfony\Component\Form\Extension\Core\Type\FormType
+            form_options: {  }
+            actions: {  }
+            tabs: {  }

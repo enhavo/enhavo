@@ -2,24 +2,20 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Factory;
 
-use Enhavo\Bundle\NewsletterBundle\Entity\Group;
+use Doctrine\ORM\EntityRepository;
+use Enhavo\Bundle\NewsletterBundle\Model\GroupInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\LocalSubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\ResourceBundle\Factory\Factory;
-use Enhavo\Bundle\SliderBundle\Model\SliderInterface;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 class LocalSubscriberFactory extends Factory implements LocalSubscriberFactoryInterface
 {
-    /**
-     * @var RepositoryInterface
-     */
-    private $groupRepository;
-
-    public function __construct(string $className, RepositoryInterface $groupRepository)
+    public function __construct(
+        string $className,
+        private readonly EntityRepository $groupRepository,
+    )
     {
         parent::__construct($className);
-        $this->groupRepository = $groupRepository;
     }
 
     public function createFrom(SubscriberInterface $subscriber): LocalSubscriberInterface
@@ -34,10 +30,9 @@ class LocalSubscriberFactory extends Factory implements LocalSubscriberFactoryIn
 
     public function createWithGroupId($groupId): LocalSubscriberInterface
     {
-        /** @var SliderInterface $slider */
+        /** @var GroupInterface $group */
         $group = $this->groupRepository->find($groupId);
 
-        /** @var Group $group */
         $subscriber = $this->createNew();
         $subscriber->addGroup($group);
         return $subscriber;

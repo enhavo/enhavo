@@ -19,7 +19,7 @@ class UserMenu extends AbstractMenuType
             'icon' => 'person',
             'label' => 'user.label.user',
             'translation_domain' => 'EnhavoUserBundle',
-            'route' => 'enhavo_user_user_index',
+            'route' => 'enhavo_user_admin_user_index',
             'role' => 'ROLE_ENHAVO_USER_USER_INDEX',
         ]);
     }

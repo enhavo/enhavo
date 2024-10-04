@@ -24,10 +24,11 @@ class ViewEndpointType extends AbstractEndpointType
         if ($request->get('_format') === 'json') {
             return $this->parent->getResponse($options, $request, $data, $context);
         } else if (!$request->get('_format') || $request->get('_format') === 'html') {
-            if ($options['template'] === null) {
-                throw new \Exception('If format is html, then a template need to be provided over the configuration');
+            if ($options['template'] === null && !$context->has('template')) {
+                throw new \Exception('If format is html, then a template need to be provided over the configuration or context');
             }
-            $content = $this->twig->render($this->templateResolver->resolve($options['template']), $data->normalize());
+            $template = $context->has('template') ? $context->get('template') : $options['template'];
+            $content = $this->twig->render($this->templateResolver->resolve($template), $data->normalize());
             return $this->updateResponse(new Response($content), $context);
         }
 

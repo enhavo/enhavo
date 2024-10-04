@@ -117,11 +117,11 @@ class EntityType extends AbstractFilterType
             'choice_label' => null,
             'component' => 'filter-entity',
             'model' => 'EntityFilter',
-            'initial_value_arguments' => null
+            'initial_value_arguments' => null,
         ]);
 
         $resolver->setRequired([
-            'resource'
+            'resource', 'property'
         ]);
     }
 

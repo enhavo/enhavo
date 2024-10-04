@@ -1,18 +1,21 @@
 enhavo_newsletter_subscribe_activate:
     path: /newsletter/activate/{token}/{type}
-    options:
-        expose: true
-    controller: Enhavo\Bundle\NewsletterBundle\Controller\SubscriptionController::activateAction
+    defaults:
+        _expose: theme
+        _endpoint:
+            type: Enhavo\Bundle\NewsletterBundle\Endpoint\SubscriptionActivateEndpointType
 
 enhavo_newsletter_subscribe_add:
     path: /newsletter/add/{type}
-    options:
-        expose: true
-    controller: Enhavo\Bundle\NewsletterBundle\Controller\SubscriptionController::addAction
     methods: [POST]
+    defaults:
+        _expose: theme
+        _endpoint:
+            type: Enhavo\Bundle\NewsletterBundle\Endpoint\SubscriptionAddEndpointType
 
 enhavo_newsletter_subscriber_unsubscribe:
     path: /newsletter/unsubscribe/{token}/{type}
-    options:
-        expose: true
-    controller: Enhavo\Bundle\NewsletterBundle\Controller\SubscriptionController::unsubscribeAction
+    defaults:
+        _expose: theme
+        _endpoint:
+            type: Enhavo\Bundle\NewsletterBundle\Endpoint\SubscriptionUnsubscribeEndpointType

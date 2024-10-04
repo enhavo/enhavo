@@ -5,7 +5,7 @@ namespace Enhavo\Bundle\DashboardBundle\Tests\Widget\Type;
 
 
 use Enhavo\Bundle\AppBundle\View\ViewData;
-use Enhavo\Bundle\DashboardBundle\Widget\Type\WidgetType;
+use Enhavo\Bundle\DashboardBundle\Dashboard\Type\BaseDashboardWidgetType;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -70,7 +70,7 @@ class WidgetTypeTest extends TestCase
 
     private function createInstance(WidgetTypeTestDependencies $dependencies)
     {
-        return new WidgetType($dependencies->translator);
+        return new BaseDashboardWidgetType($dependencies->translator);
     }
 
     private function createDependencies()

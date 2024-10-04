@@ -3,7 +3,7 @@ enhavo_content:
         collectors:
             appointment:
                 type: publish
-                repository: enhavo_calendar.repository.appointment
+                repository: enhavo_calendar.appointment.repository
 
 enhavo_app:
     template_paths:
@@ -54,7 +54,7 @@ enhavo_routing:
 enhavo_template:
     template:
         appointment:
-            repository: enhavo_calendar.repository.appointment
+            repository: enhavo_calendar.appointment.repository
             label: appointment.label.appointment
             translation_domain: EnhavoCalendarBundle
             resource_template: theme/resource/appointment/resource.html.twig

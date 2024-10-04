@@ -112,3 +112,4 @@ doctrine:
 #            Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface: Enhavo\Bundle\NewsletterBundle\Model\Subscriber
             Enhavo\Bundle\NewsletterBundle\Model\GroupInterface: Enhavo\Bundle\NewsletterBundle\Entity\Group
             Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface: Enhavo\Bundle\NewsletterBundle\Entity\Newsletter
+

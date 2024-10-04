@@ -1,9 +1,11 @@
 Enhavo\Bundle\NewsletterBundle\Entity\Newsletter:
     attributes:
         id:
-            groups: ['form']
+            groups: ['endpoint', 'form']
         receivers:
             groups: ['stats']
+        content:
+            groups: ['endpoint']
 
 Enhavo\Bundle\NewsletterBundle\Entity\Receiver:
     attributes:
@@ -15,6 +17,8 @@ Enhavo\Bundle\NewsletterBundle\Entity\Receiver:
             groups: ['stats']
         email:
             groups: ['stats']
+        token:
+            groups: ['endpoint', 'stats']
 
 Enhavo\Bundle\NewsletterBundle\Entity\Tracking:
     attributes:

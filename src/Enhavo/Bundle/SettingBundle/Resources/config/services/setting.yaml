@@ -17,8 +17,8 @@ services:
 
     Enhavo\Bundle\SettingBundle\Setting\Type\BaseSettingType:
         arguments:
-            - '@enhavo_setting.repository.setting'
-            - '@enhavo_setting.factory.setting'
+            - '@enhavo_setting.setting.repository'
+            - '@enhavo_setting.setting.factory'
             - '@doctrine.orm.entity_manager'
         tags:
             - enhavo_setting.setting

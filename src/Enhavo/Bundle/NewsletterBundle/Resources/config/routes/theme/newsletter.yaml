@@ -1,7 +1,8 @@
 enhavo_newsletter_newsletter_show:
-    options:
-        expose: true
     path: /newsletter/show/{slug}
     methods: [GET]
     defaults:
-        _controller: enhavo_newsletter.controller.newsletter::showAction
+        _expose: theme
+        _endpoint:
+            type: Enhavo\Bundle\NewsletterBundle\Endpoint\NewsletterEndpointType
+            find_by: slug

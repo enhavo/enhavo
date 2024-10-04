@@ -10,9 +10,9 @@ use Enhavo\Bundle\NewsletterBundle\Entity\PendingSubscriber;
 use Enhavo\Bundle\NewsletterBundle\Model\Subscriber;
 use Enhavo\Bundle\NewsletterBundle\Pending\PendingSubscriberManager;
 use Enhavo\Bundle\NewsletterBundle\Repository\PendingSubscriberRepository;
+use Enhavo\Bundle\ResourceBundle\Factory\FactoryInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Sylius\Component\Resource\Factory\FactoryInterface;
 
 class PendingSubscriberManagerTest extends TestCase
 {

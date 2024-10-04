@@ -10,4 +10,5 @@ export abstract class AbstractAction implements ActionInterface
     class: string;
     abstract execute(): void;
     morph(source: ActionInterface): void {}
+    mounted(): void {}
 }

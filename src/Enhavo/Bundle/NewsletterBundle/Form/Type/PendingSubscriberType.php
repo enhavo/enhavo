@@ -2,11 +2,11 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Form\Type;
 
+use Doctrine\ORM\EntityRepository;
 use Enhavo\Bundle\NewsletterBundle\Entity\Group;
 use Enhavo\Bundle\NewsletterBundle\Entity\PendingSubscriber;
 use Enhavo\Bundle\NewsletterBundle\Model\GroupAwareInterface;
 use Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,21 +16,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PendingSubscriberType extends AbstractType
 {
-    /** @var SubscriptionManager */
-    private $subscriptionManager;
-
-    /** @var RepositoryInterface */
-    private $groupRepository;
-
-    /**
-     * PendingSubscriberType constructor.
-     * @param SubscriptionManager $subscriptionManager
-     * @param RepositoryInterface $groupRepository
-     */
-    public function __construct(SubscriptionManager $subscriptionManager, RepositoryInterface $groupRepository)
+    public function __construct(
+        private readonly SubscriptionManager $subscriptionManager,
+        private readonly EntityRepository $groupRepository
+    )
     {
-        $this->subscriptionManager = $subscriptionManager;
-        $this->groupRepository = $groupRepository;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -72,15 +62,10 @@ class PendingSubscriberType extends AbstractType
 
     }
 
-    public function resolveOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(array(
             'data_class' => PendingSubscriber::class,
         ));
-    }
-
-    public function getBlockPrefix()
-    {
-        return 'enhavo_newsletter_subscriber';
     }
 }

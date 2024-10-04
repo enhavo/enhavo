@@ -1,0 +1,87 @@
+enhavo_page_admin_api_page_index:
+    path: /page/index
+    methods: [GET]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_index
+            grid: enhavo_page.page
+
+enhavo_page_admin_api_page_list:
+    path: /page/list
+    methods: [GET,POST]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_list
+            grid: enhavo_page.page
+
+enhavo_page_admin_api_page_create:
+    path: /page/create
+    methods: [GET, POST]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_create
+            input: enhavo_page.page
+
+enhavo_page_admin_api_page_update:
+    path: /page/update/{id}
+    methods: [GET, POST]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_update
+            input: enhavo_page.page
+
+enhavo_page_admin_api_page_delete:
+    path: /page/delete/{id}
+    methods: [DELETE]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_delete
+            input: enhavo_page.page
+
+enhavo_page_admin_api_page_batch:
+    path: /page/batch
+    methods: [POST]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_batch
+            grid: enhavo_page.page
+
+enhavo_page_admin_api_duplicate:
+    path: /page/duplicate/{id}
+    methods: [POST]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_duplicate
+            grid: enhavo_page.page
+
+enhavo_page_admin_api_preview:
+    path: /page/preview/{id}
+    methods: [GET, POST]
+    defaults:
+        _expose: admin_api
+        _area: theme
+        _endpoint:
+            type: preview
+            input: enhavo_page.page
+            endpoint:
+                type: Enhavo\Bundle\PageBundle\Endpoint\PageEndpointType
+                resource: expr:resource
+                preview: true
+
+enhavo_page_admin_api_page_auto_complete:
+    options:
+        expose: true
+    path: /page/page/page/auto-complete
+    defaults:
+        _endpoint:
+            type: auto_complete
+            resource: enhavo_page.page
+            repository_method: findByTerm
+            choice_label: title

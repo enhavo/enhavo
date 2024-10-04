@@ -1,76 +1,35 @@
-enhavo_navigation_navigation_index:
-    options:
-        expose: true
-    path: /enhavo/navigation/navigation/index
-    methods: [GET]
+enhavo_navigation_admin_navigation_index:
+    path: /navigation/index
     defaults:
-        _controller: enhavo_navigation.controller.navigation::indexAction
-        _sylius:
-            viewer:
-                label: navigation.label.navigation
-                translation_domain: EnhavoNavigationBundle
+        _expose: admin
+        _vue:
+            component: resource-index
+            groups: admin
+            meta:
+                api: enhavo_navigation_admin_api_navigation_index
+        _endpoint:
+            type: admin
 
-enhavo_navigation_navigation_create:
-    options:
-        expose: true
-    path: /enhavo/navigation/navigation/create
-    methods: [GET,POST]
+enhavo_navigation_admin_navigation_create:
+    path: /navigation/create
     defaults:
-        _controller: enhavo_navigation.controller.navigation::createAction
-        _sylius:
-            redirect: enhavo_navigation_navigation_update
-            viewer:
-                tabs:
-                    main:
-                        label: navigation.label.navigation
-                        translation_domain: EnhavoNavigationBundle
-                        template: admin/resource/navigation/main.html.twig
-                    nodes:
-                        label: navigation.label.items
-                        translation_domain: EnhavoNavigationBundle
-                        template: admin/resource/navigation/nodes.html.twig
-                        full_width: true
+        _expose: admin
+        _vue:
+            component: resource-input
+            groups: admin
+            meta:
+                api: enhavo_navigation_admin_api_navigation_create
+        _endpoint:
+            type: admin
 
-enhavo_navigation_navigation_update:
-    options:
-        expose: true
-    path: /enhavo/navigation/navigation/update/{id}
-    methods: [GET,POST]
+enhavo_navigation_admin_navigation_update:
+    path: '/navigation/update/{id}'
     defaults:
-        _controller: enhavo_navigation.controller.navigation::updateAction
-        _sylius:
-            viewer:
-                tabs:
-                    main:
-                        label: navigation.label.navigation
-                        translation_domain: EnhavoNavigationBundle
-                        template: admin/resource/navigation/main.html.twig
-                    nodes:
-                        label: navigation.label.items
-                        translation_domain: EnhavoNavigationBundle
-                        template: admin/resource/navigation/nodes.html.twig
-                        full_width: true
-
-enhavo_navigation_navigation_table:
-    options:
-        expose: true
-    path: /enhavo/navigation/navigation/table
-    defaults:
-        _controller: enhavo_navigation.controller.navigation::tableAction
-        _sylius:
-            viewer:
-                translation_domain: EnhavoNavigationBundle
-                columns:
-                    name:
-                        type: text
-                        property: name
-                        label: navigation.label.name
-                        width: 10
-
-enhavo_navigation_navigation_delete:
-    options:
-        expose: true
-    path: /enhavo/navigation/navigation/delete/{id}
-    methods: [POST]
-    defaults:
-        _controller: enhavo_navigation.controller.navigation::deleteAction
+        _expose: admin
+        _vue:
+            component: resource-input
+            groups: admin
+            meta:
+                api: enhavo_navigation_admin_api_navigation_update
+        _endpoint:
+            type: admin

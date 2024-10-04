@@ -1,7 +1,15 @@
 enhavo_page_admin:
     resource: "@EnhavoPageBundle/Resources/config/routes/admin/*"
-    prefix: /admin
+    prefix: /admin/page
+
+enhavo_page_admin_api:
+    resource: "@EnhavoPageBundle/Resources/config/routes/admin_api/*"
+    prefix: /admin/api/page
 
 enhavo_page_api:
     resource: "@EnhavoPageBundle/Resources/config/routes/api/*"
-    prefix: /api
+    prefix: /api/page
+
+enhavo_page_theme:
+    resource: "@EnhavoPageBundle/Resources/config/routes/theme/*"
+    prefix: /

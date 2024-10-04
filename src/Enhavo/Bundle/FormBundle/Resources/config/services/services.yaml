@@ -49,3 +49,13 @@ services:
     Enhavo\Bundle\FormBundle\Form\Extension\WysiwygVueTypeExtension:
         tags:
             - 'form.type_extension'
+
+    Enhavo\Bundle\FormBundle\Endpoint\AutoCompleteEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage'
+            - '@doctrine.orm.entity_manager'
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }

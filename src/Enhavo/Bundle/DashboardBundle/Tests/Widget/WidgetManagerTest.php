@@ -4,8 +4,8 @@
 namespace Enhavo\Bundle\DashboardBundle\Tests\Widget;
 
 
-use Enhavo\Bundle\DashboardBundle\Widget\Widget;
-use Enhavo\Bundle\DashboardBundle\Widget\WidgetManager;
+use Enhavo\Bundle\DashboardBundle\Dashboard\DashboardWidget;
+use Enhavo\Bundle\DashboardBundle\Dashboard\DashboardManager;
 use Enhavo\Component\Type\FactoryInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
@@ -92,7 +92,7 @@ class WidgetManagerTest extends TestCase
 
     private function createInstance(WidgetManagerTestDependencies $dependencies)
     {
-        return new WidgetManager($dependencies->factory, $dependencies->checker, $dependencies->configurations);
+        return new DashboardManager($dependencies->factory, $dependencies->checker, $dependencies->configurations);
     }
 
     private function createDependencies()
@@ -105,12 +105,12 @@ class WidgetManagerTest extends TestCase
     }
 
     /**
-     * @return Widget|\PHPUnit_Framework_MockObject_MockObject
+     * @return DashboardWidget|\PHPUnit_Framework_MockObject_MockObject
      */
     private function createWidgetMock(bool $hidden = false, string $role = 'ROLE_TEST', int $value = 0)
     {
         /** @var \PHPUnit_Framework_MockObject_MockObject $mock */
-        $mock = $this->createMock(Widget::class);
+        $mock = $this->createMock(DashboardWidget::class);
         $mock->method('isHidden')->willReturn($hidden);
         $mock->method('getPermission')->willReturn($role);
         $mock->method('createViewData')->willReturn([

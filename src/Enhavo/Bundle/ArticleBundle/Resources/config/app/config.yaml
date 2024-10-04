@@ -8,7 +8,7 @@ enhavo_content:
         collectors:
             article:
                 type: publish
-                repository: enhavo_article.repository.article
+                repository: enhavo_article.article.repository
 
 enhavo_routing:
     classes:
@@ -65,7 +65,7 @@ enhavo_taxonomy:
 enhavo_template:
     template:
         article:
-            repository: enhavo_article.repository.article
+            repository: enhavo_article.article.repository
             label: article.label.article
             translation_domain: EnhavoArticleBundle
             resource_template: theme/resource/article/resource.html.twig
@@ -164,7 +164,6 @@ enhavo_resource:
                     enabled: 'expr:resource && resource.getId()'
                 preview:
                     type: preview
-                    route: enhavo_article_admin_article_preview
                     api_route: enhavo_article_admin_api_preview
                     enabled: 'expr:resource && resource.getId()'
                 comments:

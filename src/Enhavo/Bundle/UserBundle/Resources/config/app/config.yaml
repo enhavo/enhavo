@@ -222,5 +222,102 @@ enhavo_app:
                         translation_domain: EnhavoAppBundle
                         target: _blank
 
-#    form_themes:
-#        - '@EnhavoUser/admin/form/fields.html.twig'
+enhavo_resource:
+    resources:
+        enhavo_user.user:
+            classes:
+                model: Enhavo\Bundle\UserBundle\Model\User
+                factory: Enhavo\Bundle\UserBundle\Factory\UserFactory
+                repository: Enhavo\Bundle\UserBundle\Repository\UserRepository
+        enhavo_user.group:
+            classes:
+                model: Enhavo\Bundle\UserBundle\Model\Group
+                factory: Sylius\Component\Resource\Factory\Factory
+                repository: Enhavo\Bundle\UserBundle\Repository\GroupRepository
+
+    grids:
+        enhavo_user.user:
+            extends: enhavo_resource.grid
+            resource: enhavo_user.user
+            filters:
+                username:
+                    type: text
+                    property: email
+                    label: user.label.email
+                    translation_domain: EnhavoUserBundle
+                group:
+                    type: entity
+                    property: groups
+                    label: group.label.group
+                    resource: enhavo_user.group
+                    translation_domain: EnhavoUserBundle
+            columns:
+                email:
+                    type: text
+                    label: user.label.email
+                    property: email
+                    width: 6
+                    sortable: true
+                groups:
+                    type: list
+                    label: group.label.group
+                    property: groups
+                    item_property: name
+                    width: 6
+                    sortable: true
+            batches:
+                delete:
+                    type: delete
+        enhavo_user.group:
+            extends: enhavo_resource.grid
+            resource: enhavo_user.group
+            actions: {  }
+            filters:
+                title:
+                    type: text
+                    property: name
+                    label: group.label.name
+                    translation_domain: EnhavoUserBundle
+            columns:
+                name:
+                    type: text
+                    label: group.label.name
+                    property: name
+                    width: 12
+            batches:
+                delete:
+                    type: delete
+    inputs:
+        enhavo_user.user.create:
+            extends: enhavo_resource.input
+            resource: enhavo_user.user
+            form: Enhavo\Bundle\UserBundle\Form\Type\UserType
+            form_options:
+                validation_groups: [create, unique_email]
+
+        enhavo_user.user.update:
+            extends: enhavo_resource.input
+            resource: enhavo_user.user
+            form: Enhavo\Bundle\UserBundle\Form\Type\UserType
+            form_options:
+                validation_groups: [update, unique_email]
+
+        enhavo_user.group:
+            extends: enhavo_resource.input
+            resource: enhavo_user.group
+            form: Enhavo\Bundle\UserBundle\Form\Type\GroupType
+            form_options: {  }
+            actions: {  }
+            tabs:
+                main:
+                    label: group.label.group
+                    translation_domain: EnhavoUserBundle
+                    type: form
+                    arrangement:
+                        - name
+                permission:
+                    label: group.label.permission
+                    translation_domain: EnhavoUserBundle
+                    type: form
+                    arrangement:
+                        - roles

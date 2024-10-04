@@ -13,6 +13,7 @@ use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Bundle\ResourceBundle\Grid\Grid;
 use Enhavo\Bundle\ResourceBundle\Grid\GridFactory;
+use Symfony\Component\HttpFoundation\Exception\JsonException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -29,9 +30,23 @@ class ResourceListEndpointType extends AbstractEndpointType
         /** @var Grid $grid */
         $grid = $this->gridFactory->create($options['grid']);
 
+        if ($request->isMethod(Request::METHOD_POST) && $this->hasAction($request)) {
+            $grid->handleAction($request->getPayload()->get('action'), $request->getPayload()->all());
+        }
+
         $items = $grid->getItems($request->query->all());
 
         $data->add($items->normalize());
+    }
+
+    private function hasAction(Request $request): bool
+    {
+        try {
+            $payload = $request->getPayload();
+            return $payload->has('action');
+        } catch(JsonException $exception) {
+            return false;
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void

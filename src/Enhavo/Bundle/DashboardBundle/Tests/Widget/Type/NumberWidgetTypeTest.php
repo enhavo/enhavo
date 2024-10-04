@@ -6,7 +6,7 @@ namespace Enhavo\Bundle\DashboardBundle\Tests\Widget\Type;
 
 use Enhavo\Bundle\AppBundle\View\ViewData;
 use Enhavo\Bundle\DashboardBundle\Provider\Provider;
-use Enhavo\Bundle\DashboardBundle\Widget\Type\NumberWidgetType;
+use Enhavo\Bundle\DashboardBundle\Dashboard\Type\NumberDashboardWidgetType;
 use Enhavo\Component\Type\FactoryInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
@@ -36,7 +36,7 @@ class NumberWidgetTypeTest extends TestCase
 
     public function testGetName()
     {
-        $this->assertEquals('number', NumberWidgetType::getName());
+        $this->assertEquals('number', NumberDashboardWidgetType::getName());
     }
 
     public function testConfigureOptionsMissingRequiredParameter()
@@ -61,7 +61,7 @@ class NumberWidgetTypeTest extends TestCase
 
     private function createInstance(NumberWidgetTypeTestDependencies $dependencies)
     {
-        return new NumberWidgetType($dependencies->factory);
+        return new NumberDashboardWidgetType($dependencies->factory);
     }
 }
 

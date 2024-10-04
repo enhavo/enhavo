@@ -1,106 +1,35 @@
-enhavo_newsletter_local_subscriber_index:
-    options:
-        expose: true
-    path: /enhavo/newsletter/local-subscriber/index
-    methods: [GET]
+enhavo_newsletter_admin_local_subscriber_index:
+    path: /local_subscriber/index
     defaults:
-        _controller: enhavo_newsletter.controller.local_subscriber::indexAction
-        _sylius:
-            viewer:
-                label: subscriber.label.subscribers
-                translation_domain: EnhavoNewsletterBundle
-                table_route_parameters:
-                    group: $id
-                actions:
-                    create:
-                        type: create
-                        route: enhavo_newsletter_local_subscriber_create
-                        route_parameters:
-                            group: $id
+        _expose: admin
+        _vue:
+            component: resource-index
+            groups: admin
+            meta:
+                api: enhavo_newsletter_admin_api_local_subscriber_index
+        _endpoint:
+            type: admin
 
-enhavo_newsletter_local_subscriber_create:
-    options:
-        expose: true
-    path: /enhavo/newsletter/local-subscriber/create
-    methods: [GET,POST]
+enhavo_newsletter_admin_local_subscriber_create:
+    path: /local_subscriber/create
     defaults:
-        _controller: enhavo_newsletter.controller.local_subscriber::createAction
-        _sylius:
-            redirect: enhavo_newsletter_local_subscriber_update
-            factory:
-                method: createWithGroupId
-                arguments: $group
-            viewer:
-                label: subscriber.label.create
-                translation_domain: EnhavoNewsletterBundle
+        _expose: admin
+        _vue:
+            component: resource-input
+            groups: admin
+            meta:
+                api: enhavo_newsletter_admin_api_local_subscriber_create
+        _endpoint:
+            type: admin
 
-enhavo_newsletter_local_subscriber_update:
-    options:
-        expose: true
-    path: /enhavo/newsletter/local-subscriber/update/{id}
-    methods: [GET,POST]
+enhavo_newsletter_admin_local_subscriber_update:
+    path: '/local_subscriber/update/{id}'
     defaults:
-        _controller: enhavo_newsletter.controller.local_subscriber::updateAction
-        _sylius:
-            viewer:
-                label: subscriber.label.update
-                translation_domain: EnhavoNewsletterBundle
-
-enhavo_newsletter_local_subscriber_table:
-    options:
-        expose: true
-    path: /enhavo/newsletter/local-subscriber/table
-    defaults:
-        _controller: enhavo_newsletter.controller.local_subscriber::tableAction
-        _sylius:
-            filters:
-                email:
-                    type: text
-                    property: email
-                    label: subscriber.label.email
-                    translation_domain: EnhavoNewsletterBundle
-            repository:
-                method: findByGroupId
-                arguments:
-                    - $group
-            viewer:
-                translation_domain: EnhavoNewsletterBundle
-                columns:
-                    email:
-                        type: text
-                        label: subscriber.label.email
-                        property: email
-                        width: 10
-
-enhavo_newsletter_local_subscriber_delete:
-    options:
-        expose: true
-    path: /enhavo/newsletter/local-subscriber/delete/{id}
-    methods: [POST]
-    defaults:
-        _controller: enhavo_newsletter.controller.local_subscriber::deleteAction
-
-enhavo_newsletter_local_subscriber_batch:
-    options:
-        expose: true
-    path: /enhavo/newsletter/local-subscriber/batch
-    methods: [POST]
-    defaults:
-        _controller: enhavo_newsletter.controller.local_subscriber::batchAction
-        _sylius:
-            paginate: false
-            criteria:
-                id: $ids
-            batches:
-                delete:
-                    type: delete
-
-enhavo_newsletter_local_subscriber_preview:
-    options:
-        expose: true
-    path: /enhavo/newsletter/local-subscriber/preview
-    methods: [POST]
-    defaults:
-        _controller: enhavo_newsletter.controller.local_subscriber::previewAction
-        _sylius:
-            viewer:
+        _expose: admin
+        _vue:
+            component: resource-input
+            groups: admin
+            meta:
+                api: enhavo_newsletter_admin_api_local_subscriber_update
+        _endpoint:
+            type: admin

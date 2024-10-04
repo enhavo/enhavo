@@ -1,10 +1,9 @@
-enhavo_dashboard_index:
-    path:  /enhavo/dashboard
-    methods: [GET]
+enhavo_dashboard_admin_index:
+    path: /dashboard
     defaults:
-        _controller: Enhavo\Bundle\DashboardBundle\Controller\DashboardController::indexAction
-        _sylius:
-            viewer:
-                label: dashboard.label.dashboard
-                type: dashboard
-                translation_domain: EnhavoDashboardBundle
+        _expose: admin
+        _vue:
+            component: dashboard-index
+            groups: admin
+        _endpoint:
+            type: admin

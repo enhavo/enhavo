@@ -13,7 +13,7 @@ use Symfony\Component\Yaml\Yaml;
 
 class EnhavoResourceExtension extends Extension implements PrependExtensionInterface
 {
-    use ResourceExtensionTrait;
+    use PrependExtensionTrait;
 
     public function load(array $configs, ContainerBuilder $container): void
     {
@@ -29,8 +29,7 @@ class EnhavoResourceExtension extends Extension implements PrependExtensionInter
 
         $container->setParameter('enhavo_resources.grids', $config['grids']);
         $container->setParameter('enhavo_resources.inputs', $config['inputs']);
-
-        $this->registerResources($config['resources'], $container);
+        $container->setParameter('enhavo_resources', $config['resources']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
@@ -46,13 +45,10 @@ class EnhavoResourceExtension extends Extension implements PrependExtensionInter
         $loader->load('services/tab.yaml');
     }
 
-    public function prepend(ContainerBuilder $container): void
+    protected function prependFiles(): array
     {
-        $configs = Yaml::parse(file_get_contents(__DIR__.'/../Resources/config/app/config.yaml'));
-        foreach($configs as $name => $config) {
-            if (is_array($config)) {
-                $container->prependExtensionConfig($name, $config);
-            }
-        }
+        return [
+            __DIR__.'/../Resources/config/app/config.yaml'
+        ];
     }
 }

@@ -17,5 +17,12 @@ services:
     '@enhavo/app/collection/model/ListCollection':
         import: ListCollection
         chunk: 'collection'
+        arguments:
+            - '@enhavo/app/routing/Router'
+            - '@enhavo/app/filter/FilterManager'
+            - '@enhavo/app/column/ColumnManager'
+            - '@enhavo/app/frame/FrameManager'
+            - '@enhavo/app/flash-message/FlashMessenger'
+            - '@enhavo/app/translation/Translator'
         tags:
             - { name: enhavo_app.collection }

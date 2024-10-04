@@ -1,153 +1,35 @@
-enhavo_page_page_index:
-    path: /enhavo/page/page/index
-    methods: [GET]
+enhavo_page_admin_page_index:
+    path: /page/index
     defaults:
-        _controller: enhavo_page.controller.page::listAction
-        _sylius:
-            viewer:
-                label: page.label.page
-                translation_domain: EnhavoPageBundle
+        _expose: admin
+        _vue:
+            component: resource-index
+            groups: admin
+            meta:
+                api: enhavo_page_admin_api_page_index
+        _endpoint:
+            type: admin
 
-enhavo_page_page_create:
-    path: /enhavo/page/page/create
-    methods: [GET,POST]
-    options:
-        expose: true
+enhavo_page_admin_page_create:
+    path: /page/create
     defaults:
-        _controller: enhavo_page.controller.page::createAction
-        _sylius:
-            redirect: enhavo_page_page_update
-            viewer:
-                type: create
-                tabs:
-                    main:
-                        label: page.label.page
-                        translation_domain: EnhavoPageBundle
-                        template: admin/resource/page/page.html.twig
-                    content:
-                        label: page.label.content
-                        translation_domain: EnhavoPageBundle
-                        template: admin/resource/content/content.html.twig
-                        full_width: true
-                    meta:
-                        label: page.label.meta
-                        translation_domain: EnhavoPageBundle
-                        template: admin/resource/content/meta.html.twig
-                actions:
-                    preview:
-                        type: preview
-                        route: enhavo_page_page_preview
+        _expose: admin
+        _vue:
+            component: resource-input
+            groups: admin
+            meta:
+                api: enhavo_page_admin_api_page_create
+        _endpoint:
+            type: admin
 
-enhavo_page_page_update:
-    options:
-        expose: true
-    path: /enhavo/page/page/update/{id}
-    methods: [GET,POST]
+enhavo_page_admin_page_update:
+    path: /page/update/{id}
     defaults:
-        _controller: enhavo_page.controller.page::updateAction
-        _sylius:
-            viewer:
-                tabs:
-                    main:
-                        label: page.label.page
-                        translation_domain: EnhavoPageBundle
-                        template: admin/resource/page/page.html.twig
-                    content:
-                        label: page.label.content
-                        translation_domain: EnhavoPageBundle
-                        template: admin/resource/content/content.html.twig
-                        full_width: true
-                    meta:
-                        label: page.label.meta
-                        translation_domain: EnhavoPageBundle
-                        template: admin/resource/content/meta.html.twig
-                actions:
-                    preview:
-                        type: preview
-                        route: enhavo_page_page_preview
-                    duplicate:
-                        type: duplicate
-                        route: enhavo_page_page_duplicate
-                        permission: ROLE_ENHAVO_PAGE_PAGE_CREATE
-
-enhavo_page_page_data:
-    options:
-        expose: true
-    path: /enhavo/page/page/data
-    defaults:
-        _controller: enhavo_page.controller.page::listDataAction
-        _sylius:
-            sortable: true
-            sorting:
-                position: asc
-            criteria:
-                parent: null
-            viewer:
-                translation_domain: EnhavoPageBundle
-                children_property: children
-                parent_property: parent
-                position_property: position
-                columns:
-                    public:
-                        type: boolean
-                        label: page.label.public
-                        property: public
-                        width: 2
-                    title:
-                        type: text
-                        label: page.label.title
-                        property: title
-                        width: 10
-
-enhavo_page_page_delete:
-    path: /enhavo/page/page/delete/{id}
-    methods: [POST]
-    defaults:
-        _controller: enhavo_page.controller.page::deleteAction
-
-enhavo_page_page_duplicate:
-    options:
-        expose: true
-    path: /enhavo/page/page/duplicate/{id}
-    defaults:
-        _controller: enhavo_page.controller.page::duplicateAction
-        _sylius:
-            redirect: enhavo_page_page_update
-
-enhavo_page_page_batch:
-    options:
-        expose: true
-    path: /enhavo/page/page/batch
-    methods: [POST]
-    defaults:
-        _controller: enhavo_page.controller.page::batchAction
-        _sylius:
-            paginate: false
-            criteria:
-                id: $ids
-            batches:
-                delete:
-                    type: delete
-                publish:
-                    type: publish
-
-enhavo_page_page_preview:
-    options:
-        expose: true
-    path: /enhavo/page/page/preview
-    defaults:
-        _controller: enhavo_page.controller.page::previewAction
-        _sylius:
-            viewer:
-
-enhavo_page_page_resource_preview:
-    options:
-        expose: true
-    path: /enhavo/page/page/preview/resource
-    defaults:
-        _controller: enhavo_page.controller.page::previewResourceAction
-        _area: theme
-        _sylius:
-            viewer:
-                strategy_options:
-                    service: enhavo_page.controller.page:showResourceAction
+        _expose: admin
+        _vue:
+            component: resource-input
+            groups: admin
+            meta:
+                api: enhavo_page_admin_api_page_update
+        _endpoint:
+            type: admin
