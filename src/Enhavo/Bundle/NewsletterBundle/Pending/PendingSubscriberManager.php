@@ -14,34 +14,16 @@ use Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface;
 use Enhavo\Bundle\NewsletterBundle\Entity\PendingSubscriber;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Repository\PendingSubscriberRepository;
-use Sylius\Component\Resource\Factory\FactoryInterface;
+use Enhavo\Bundle\ResourceBundle\Factory\FactoryInterface;
 
 class PendingSubscriberManager
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
-
-    /** @var FactoryInterface */
-    private $subscriberFactory;
-
-    /**
-     * @var TokenGeneratorInterface
-     */
-    private $tokenGenerator;
-
-    /**
-     * PendingSubscriberManager constructor.
-     * @param EntityManagerInterface $entityManager
-     * @param FactoryInterface $subscriberFactory
-     * @param TokenGeneratorInterface $tokenGenerator
-     */
-    public function __construct(EntityManagerInterface $entityManager, FactoryInterface $subscriberFactory, TokenGeneratorInterface $tokenGenerator)
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+        private readonly FactoryInterface $subscriberFactory,
+        private readonly TokenGeneratorInterface $tokenGenerator,
+    )
     {
-        $this->entityManager = $entityManager;
-        $this->subscriberFactory = $subscriberFactory;
-        $this->tokenGenerator = $tokenGenerator;
     }
 
     public function save(PendingSubscriber $subscriber, $flush = true)

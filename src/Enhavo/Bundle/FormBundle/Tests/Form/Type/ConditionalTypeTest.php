@@ -3,7 +3,6 @@
 namespace Enhavo\Bundle\FormBundle\Tests\Form\Type;
 
 use Enhavo\Bundle\FormBundle\Form\Type\ConditionalType;
-use Enhavo\Bundle\VueFormBundle\Form\Extension\PasswordVueTypeExtension;
 use Enhavo\Bundle\VueFormBundle\Form\Extension\VueTypeExtension;
 use Enhavo\Bundle\VueFormBundle\Form\VueForm;
 use Symfony\Component\Form\AbstractType;

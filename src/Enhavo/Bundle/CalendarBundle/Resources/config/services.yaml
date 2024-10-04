@@ -1,7 +1,7 @@
 services:
     Enhavo\Bundle\CalendarBundle\Form\Type\AppointmentType:
         arguments:
-            - '%enhavo_calendar.model.appointment.class%'
+            - '%enhavo_calendar.appointment.model.class%'
             - [default]
         tags:
             - { name: form.type, alias: enhavo_calendar_appointment }
@@ -42,6 +42,6 @@ services:
 
     Enhavo\Bundle\CalendarBundle\Block\CalendarBlockType:
         arguments:
-            - '@enhavo_calendar.repository.appointment'
+            - '@enhavo_calendar.appointment.repository'
         tags:
             - { name: enhavo_block.block }

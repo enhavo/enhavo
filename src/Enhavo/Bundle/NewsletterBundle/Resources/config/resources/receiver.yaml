@@ -1,0 +1,6 @@
+enhavo_resource:
+    resources:
+        enhavo_newsletter.receiver:
+            classes:
+                model: Enhavo\Bundle\NewsletterBundle\Entity\Receiver
+                repository: Enhavo\Bundle\NewsletterBundle\Repository\ReceiverRepository

@@ -3,12 +3,11 @@
 namespace Enhavo\Bundle\ResourceBundle\Collection;
 
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\QueryBuilder;
 use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage;
 use Enhavo\Bundle\ResourceBundle\Filter\FilterQuery;
 use Enhavo\Bundle\ResourceBundle\Filter\FilterQueryFactory;
+use Enhavo\Bundle\ResourceBundle\Repository\EntityRepositoryTrait;
 use Enhavo\Bundle\ResourceBundle\Repository\FilterRepositoryInterface;
-use Pagerfanta\Doctrine\ORM\QueryAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -17,6 +16,8 @@ use Symfony\Component\Routing\RouterInterface;
 
 class TableCollection extends AbstractCollection
 {
+    use EntityRepositoryTrait;
+
     public function __construct(
         private readonly ResourceExpressionLanguage $expressionLanguage,
         private readonly FilterQueryFactory $filterQueryFactory,
@@ -30,15 +31,14 @@ class TableCollection extends AbstractCollection
         $resolver->setDefaults([
             'limit' => 50,
             'paginated' => true,
-            'sorting' => [],
-            'criteria' => [],
-            'filters' => [],
-            'columns' => [],
             'repository_method' => null,
             'repository_arguments' => null,
             'pagination_steps' => [5, 10, 50, 100, 500],
             'component' => 'collection-table',
             'model' => 'TableCollection',
+            'filters' => [],
+            'sorting' => [],
+            'criteria' => [],
         ]);
     }
 
@@ -75,7 +75,7 @@ class TableCollection extends AbstractCollection
         } else if ($this->repository instanceof FilterRepositoryInterface) {
             $resources = $this->repository->filter($filterQuery);
         } else if ($this->isPaginated($context)) {
-            $paginator = $this->createPaginator($this->repository, $this->options);
+            $paginator = $this->createPaginator($this->repository, $this->options['criteria'], $this->options['sorting']);
             $paginator->setMaxPerPage($context['limit'] ?? $this->options['limit']);
             $paginator->setCurrentPage($context['page'] ?? 1);
             $resources = $paginator;
@@ -98,27 +98,32 @@ class TableCollection extends AbstractCollection
     {
         $items = [];
         foreach ($resources as $resource) {
-            $data = [];
-
-            if ($this->isHydrate('data', $context)) {
-                foreach($this->columns as $key => $column) {
-                    $data[$key] = $column->createResourceViewData($resource);
-                }
-            }
-
-            $item = new ResourceItem($data, $resource);
-
-            if ($this->isHydrate('id', $context)) {
-                $item['id'] = is_array($resource) ? $resource['id'] : $resource->getId();
-            }
-
-            if ($this->isHydrate('url', $context)) {
-                $item['url'] = $this->generateUrl($resource);
-            }
-
-            $items[] = $item;
+            $items[] = $this->createItem($resource, $context);
         }
         return $items;
+    }
+
+    protected function createItem($resource, array $context): ResourceItem
+    {
+        $data = [];
+
+        if ($this->isHydrate('data', $context)) {
+            foreach($this->columns as $key => $column) {
+                $data[$key] = $column->createResourceViewData($resource);
+            }
+        }
+
+        $item = new ResourceItem($data, $resource);
+
+        if ($this->isHydrate('id', $context)) {
+            $item['id'] = is_array($resource) ? $resource['id'] : $resource->getId();
+        }
+
+        if ($this->isHydrate('url', $context)) {
+            $item['url'] = $this->generateUrl($resource);
+        }
+
+        return $item;
     }
 
     private function getRepositoryArguments(array $options, FilterQuery $filterQuery, ?Request $request): array
@@ -138,61 +143,14 @@ class TableCollection extends AbstractCollection
         return $arguments;
     }
 
-    private function createPaginator(EntityRepository $repository, array $options): Pagerfanta
+    protected function createPaginator(EntityRepository $repository, array $criteria = [], array $sorting = []): Pagerfanta
     {
         $queryBuilder = $repository->createQueryBuilder('o');
 
-        $this->applyCriteria($queryBuilder, $options['criteria']);
-        $this->applySorting($queryBuilder, $options['sorting']);
+        $this->applyCriteria($queryBuilder, $criteria);
+        $this->applySorting($queryBuilder, $sorting);
 
         return $this->getPaginator($queryBuilder);
-    }
-
-    private function getPaginator(QueryBuilder $queryBuilder): Pagerfanta
-    {
-        if (!class_exists(QueryAdapter::class)) {
-            throw new \LogicException('You can not use the "paginator" if Pargefanta Doctrine ORM Adapter is not available. Try running "composer require pagerfanta/doctrine-orm-adapter".');
-        }
-
-        // Use output walkers option in the query adapter should be false as it affects performance greatly (see sylius/sylius#3775)
-        return new Pagerfanta(new QueryAdapter($queryBuilder, false, false));
-    }
-
-    private function applyCriteria(QueryBuilder $queryBuilder, array $criteria = []): void
-    {
-        foreach ($criteria as $property => $value) {
-            $name = $this->getPropertyName($property);
-
-            if (null === $value) {
-                $queryBuilder->andWhere($queryBuilder->expr()->isNull($name));
-            } elseif (is_array($value)) {
-                $queryBuilder->andWhere($queryBuilder->expr()->in($name, $value));
-            } elseif ('' !== $value) {
-                $parameter = str_replace('.', '_', $property);
-                $queryBuilder
-                    ->andWhere($queryBuilder->expr()->eq($name, ':' . $parameter))
-                    ->setParameter($parameter, $value)
-                ;
-            }
-        }
-    }
-
-    private function applySorting(QueryBuilder $queryBuilder, array $sorting = []): void
-    {
-        foreach ($sorting as $property => $order) {
-            if (!empty($order)) {
-                $queryBuilder->addOrderBy($this->getPropertyName($property), $order);
-            }
-        }
-    }
-
-    private function getPropertyName(string $name): string
-    {
-        if (!str_contains($name, '.')) {
-            return 'o' . '.' . $name;
-        }
-
-        return $name;
     }
 
     private function isPaginated(array $context)
@@ -238,5 +196,10 @@ class TableCollection extends AbstractCollection
             $newArray[$key] = $this->expressionLanguage->evaluate($item, $parameters);
         }
         return $newArray;
+    }
+
+    public function handleAction(string $action, array $payload): void
+    {
+
     }
 }

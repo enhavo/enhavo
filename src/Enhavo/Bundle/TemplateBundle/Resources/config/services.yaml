@@ -5,7 +5,7 @@ services:
 
     Enhavo\Bundle\TemplateBundle\Form\Type\TemplateType:
         arguments:
-            - '%enhavo_template.model.template.class%'
+            - '%enhavo_template.template.model.class%'
         tags:
             - { name: form.type, alias: enhavo_template_template }
 
@@ -41,7 +41,7 @@ services:
     Enhavo\Bundle\TemplateBundle\Router\TemplateStrategy:
         public: true
         arguments:
-            - '@enhavo_template.repository.template'
+            - '@enhavo_template.template.repository'
         calls:
             - [ setContainer, ['@service_container']]
         tags:
@@ -52,8 +52,8 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@Enhavo\Bundle\TemplateBundle\Template\TemplateManager'
-            - '@enhavo_template.factory.template'
-            - '@enhavo_template.repository.template'
+            - '@enhavo_template.template.factory'
+            - '@enhavo_template.template.repository'
             - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
         calls:
             - [ setContainer, ['@service_container']]

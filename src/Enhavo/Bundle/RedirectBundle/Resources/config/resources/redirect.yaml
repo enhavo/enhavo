@@ -1,0 +1,58 @@
+enhavo_resource:
+    resources:
+        enhavo_redirect.redirect:
+            classes:
+                model: Enhavo\Bundle\RedirectBundle\Entity\Redirect
+                factory: Enhavo\Bundle\ResourceBundle\Factory\Factory
+                repository: Enhavo\Bundle\RedirectBundle\Repository\RedirectRepository
+    grids:
+        enhavo_redirect.redirect:
+            extends: enhavo_resource.grid
+            resource: enhavo_redirect.redirect
+            actions: {  }
+            filters:
+                from:
+                    type: text
+                    property: from
+                    label: form.label.from
+                    translation_domain: EnhavoRedirectBundle
+                to:
+                    type: text
+                    property: to
+                    label: form.label.to
+                    translation_domain: EnhavoRedirectBundle
+                code:
+                    type: option
+                    property: code
+                    options:
+                        301: 301
+                        302: 302
+                    label: form.label.code
+                    translation_domain: EnhavoRedirectBundle
+            columns:
+                from:
+                    type: text
+                    property: from
+                    label: form.label.from
+                    width: 5
+                to:
+                    type: text
+                    property: to
+                    label: form.label.to
+                    width: 6
+                code:
+                    type: text
+                    property: code
+                    label: form.label.code
+                    width: 1
+            batches:
+                delete:
+                    type: delete
+    inputs:
+        enhavo_redirect.redirect:
+            extends: enhavo_resource.input
+            resource: enhavo_redirect.redirect
+            form: Enhavo\Bundle\RedirectBundle\Form\Type\RedirectType
+            form_options: {  }
+            actions: {  }
+            tabs: {  }

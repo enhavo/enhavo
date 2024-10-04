@@ -1,0 +1,61 @@
+enhavo_newsletter_admin_api_pending_subscriber_index:
+    path: /pending_subscriber/index
+    methods:
+        - GET
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_index
+            grid: enhavo_newsletter.pending_subscriber
+
+enhavo_newsletter_admin_api_pending_subscriber_list:
+    path: /pending_subscriber/list
+    methods:
+        - GET
+        - POST
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_list
+            grid: enhavo_newsletter.pending_subscriber
+
+enhavo_newsletter_admin_api_pending_subscriber_create:
+    path: /pending_subscriber/create
+    methods:
+        - GET
+        - POST
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_create
+            input: enhavo_newsletter.pending_subscriber
+
+enhavo_newsletter_admin_api_pending_subscriber_update:
+    path: '/pending_subscriber/update/{id}'
+    methods:
+        - GET
+        - POST
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_update
+            input: enhavo_newsletter.pending_subscriber
+
+enhavo_newsletter_admin_api_pending_subscriber_delete:
+    path: '/pending_subscriber/delete/{id}'
+    methods:
+        - DELETE
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_delete
+            input: enhavo_newsletter.pending_subscriber
+
+enhavo_newsletter_admin_api_pending_subscriber_activate:
+    options:
+        expose: true
+    path: /pending-subscriber/activate/{id}
+    methods: [GET,POST]
+    defaults:
+        _endpoint:
+            type: Enhavo\Bundle\NewsletterBundle\Endpoint\PendingSubscriberActiveEndpointType

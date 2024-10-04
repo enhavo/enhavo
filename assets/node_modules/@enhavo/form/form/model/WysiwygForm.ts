@@ -124,6 +124,7 @@ export class WysiwygForm extends Form
                 });
                 editor.on('keyup change', () => {
                     this.value = editor.getContent();
+                    this.dispatchChange();
                 });
             }
         };

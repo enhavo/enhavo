@@ -2,35 +2,32 @@
 
 namespace Enhavo\Bundle\ResourceBundle\Collection;
 
-use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\EntityRepository;
-use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
-use Enhavo\Bundle\AppBundle\Controller\SortingManager;
-use Enhavo\Bundle\AppBundle\View\TemplateData;
-use Enhavo\Bundle\AppBundle\View\ViewData;
-use Enhavo\Bundle\AppBundle\View\ViewUtil;
-use Enhavo\Bundle\ResourceBundle\Column\ColumnManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage;
-use Enhavo\Bundle\ResourceBundle\Filter\FilterManager;
-use Pagerfanta\Pagerfanta;
-use Sylius\Bundle\ResourceBundle\Controller\ResourcesCollectionProviderInterface;
-use Sylius\Component\Resource\ResourceActions;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Enhavo\Bundle\ResourceBundle\Filter\FilterQuery;
+use Enhavo\Bundle\ResourceBundle\Filter\FilterQueryFactory;
+use Enhavo\Bundle\ResourceBundle\Repository\FilterRepositoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManager;
 
 class ListCollection extends AbstractCollection
 {
     public function __construct(
-        private readonly FilterManager $filterManager,
-        private readonly RequestStack $requestStack,
         private readonly ResourceExpressionLanguage $expressionLanguage,
+        private readonly FilterQueryFactory $filterQueryFactory,
+        private readonly RequestStack $requestStack,
+        private readonly RouterInterface $router,
+        private readonly CsrfTokenManager $tokenManager,
+        private readonly EntityManagerInterface $em,
+        private readonly AuthorizationCheckerInterface $authorizationChecker,
     )
     {}
 
@@ -39,155 +36,179 @@ class ListCollection extends AbstractCollection
         $resolver->setDefaults([
             'children_property' => null,
             'parent_property' => true,
+            'position_property' => true,
             'repository_method' => null,
             'repository_arguments' => null,
-            'columns' => [],
+            'permission' => null,
+            'csrf_protection' => true,
+            'filters' => [],
+            'criteria' => [],
             'component' => 'collection-list',
+            'sortable' => false,
             'model' => 'ListCollection',
         ]);
     }
 
     public function getItems(array $context = []): ResourceItems
     {
-        return [];
+        if (count($this->options['filters']) && $this->options['repository_method'] === null && !($this->repository instanceof FilterRepositoryInterface)) {
+            throw new \Exception();
+        } else if ($this->options['repository_arguments'] !== null && $this->options['repository_method'] === null) {
+            throw new \Exception();
+        }
+
+        $filterQuery = $this->filterQueryFactory->create($this->repository->getClassName(), $this->filters, $this->options['criteria']);
+
+        if (isset($context['hydrate']) && $context['hydrate'] === 'id') {
+            $filterQuery->setHydrate('id');
+        }
+
+        if ($this->options['repository_method'] !== null) {
+            $callable = [$this->repository, $this->options['repository_method']];
+            $request = $this->requestStack->getMainRequest();
+            $resources = call_user_func_array($callable, $this->getRepositoryArguments($this->options, $filterQuery, $request));
+        } else if ($this->repository instanceof FilterRepositoryInterface) {
+            $resources = $this->repository->filter($filterQuery);
+        } else {
+            $resources = $this->repository->findBy($this->options['criteria'], $this->options['sorting'], $this->options['limit']);
+        }
+
+        return new ResourceItems($this->createItems($resources, $context));
+    }
+
+    private function getRepositoryArguments(array $options, FilterQuery $filterQuery, ?Request $request): array
+    {
+        if ($options['repository_arguments'] === null) {
+            return [];
+        }
+
+        $arguments = [];
+        foreach ($options['repository_arguments'] as $key => $value) {
+            $arguments[$key] = $this->expressionLanguage->evaluate($value, [
+                'filterQuery' => $filterQuery,
+                'request' => $request,
+                'options' => $options,
+            ]);
+        }
+        return $arguments;
+    }
+
+    private function createItems(iterable $resources, array $context): array
+    {
+        $items = [];
+        foreach ($resources as $resource) {
+            $data = [];
+
+            if ($this->isHydrate('data', $context)) {
+                foreach($this->columns as $key => $column) {
+                    $data[$key] = $column->createResourceViewData($resource);
+                }
+            }
+
+            $item = new ResourceItem($data, $resource);
+
+            if ($this->isHydrate('id', $context)) {
+                $item['id'] = is_array($resource) ? $resource['id'] : $resource->getId();
+            }
+
+            if ($this->isHydrate('url', $context)) {
+                $item['url'] = $this->generateUrl($resource);
+            }
+
+            $items[] = $item;
+        }
+        return $items;
+    }
+
+    private function isHydrate(string $field, array $context): bool
+    {
+        if (!isset($context['hydrate'])) {
+            return true;
+        }
+
+        if ($context['hydrate'] === $field) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private function generateUrl(object $resource): ?string
+    {
+        $route = $this->routes['open'] ?? null;
+
+        if ($route === null) {
+            return null;
+        }
+
+        return $this->router->generate($route, $this->evaluateArray($this->routes['open_parameters'] ?? [], [
+            'resource' => $resource,
+            'request' => $this->requestStack->getMainRequest(),
+        ]));
+    }
+
+    private function evaluateArray($array, $parameters = []): array
+    {
+        $newArray = [];
+        foreach ($array as $key => $item) {
+            $newArray[$key] = $this->expressionLanguage->evaluate($item, $parameters);
+        }
+        return $newArray;
     }
 
     public function getViewData(array $context = []): array
     {
-        return [
+        $viewData =  [
             'component' => $this->options['component'],
             'model' => $this->options['model'],
+            'sortable' => $this->options['sortable'],
         ];
+
+        if ($this->options['csrf_protection']) {
+            $viewData['csrfToken'] = $this->tokenManager->getToken('list_data')->getValue();
+        }
+
+        return $viewData;
+    }
+
+    public function handleAction(string $action, array $payload): void
+    {
+        if ($this->options['permission'] && !$this->authorizationChecker->isGranted($this->options['permission'])) {
+            throw new HttpException(Response::HTTP_FORBIDDEN);
+        }
+
+        if ($this->options['csrf_protection'] &&
+            (!isset($payload['csrfToken']) ||
+            !$this->tokenManager->isTokenValid(new CsrfToken('list_data', $payload['csrfToken']))))
+        {
+            throw new HttpException(Response::HTTP_BAD_REQUEST, 'Invalid csrf token');
+        }
+
+        if ($action === 'sort') {
+            $this->handleSort($payload);
+            return;
+        }
+
+        throw new HttpException(Response::HTTP_BAD_REQUEST, 'Action not found');
+    }
+
+    private function handleSort(array $payload): void
+    {
+        $parentProperty = $this->options['parent_property'];
+        $positionProperty = $this->options['position_property'];
+        $propertyAccessor = PropertyAccess::createPropertyAccessor();
+
+        $parent = $payload['parent'] === null ? null : $this->repository->find($payload['parent']);
+        foreach ($payload['items'] as $position => $id) {
+            $item = $this->repository->find($id);
+            if ($parentProperty) {
+                $propertyAccessor->setValue($item, $parentProperty, $parent);
+            }
+            if ($positionProperty) {
+                $propertyAccessor->setValue($item, $positionProperty, $position);
+            }
+        }
+
+        $this->em->flush();
     }
 }
-
-
-
-//private array $resources;
-//
-//public function __construct(
-//    private ViewUtil $util,
-//    private ColumnManager $columnManager,
-//    private SortingManager $sortingManager,
-//    private CsrfTokenManager $tokenManager,
-//    private ResourcesCollectionProviderInterface $resourcesCollectionProvider,
-//    private ResourceManager $resourceManager,
-//) {}
-//
-//public static function getName(): ?string
-//{
-//    return 'list_data';
-//}
-//
-//public function init($options)
-//{
-//    $configuration = $this->getRequestConfiguration($options);
-//    $metadata = $this->getMetadata($options);
-//
-//    $repository = $this->resourceManager->getRepository($metadata->getApplicationName(), $metadata->getName());
-//
-//    $configuration->getParameters()->set('paginate', false);
-//    $this->util->isGrantedOr403($configuration, ResourceActions::INDEX);
-//    $this->resources = $this->resourcesCollectionProvider->get($configuration, $repository);
-//}
-//
-//public function handleRequest($options, Request $request, ViewData $viewData, TemplateData $templateData)
-//{
-//    $configuration = $this->getRequestConfiguration($options);
-//    $metadata = $this->getMetadata($options);
-//
-//    $repository = $this->resourceManager->getRepository($metadata->getApplicationName(), $metadata->getName());
-//
-//    if ($request->getMethod() === 'POST') {
-//        if ($configuration->isCsrfProtectionEnabled() && !$this->isCsrfTokenValid('list_data', $request->get('_csrf_token'))) {
-//            throw new HttpException(Response::HTTP_FORBIDDEN, 'Invalid csrf token.');
-//        }
-//        $this->sortingManager->handleSort($request, $configuration, $repository);
-//        return new JsonResponse();
-//    }
-//}
-//
-//public function createTemplateData($options, ViewData $data, TemplateData $templateData)
-//{
-//    $requestConfiguration = $this->util->getRequestConfiguration($options);
-//
-//    $columns = $this->util->mergeConfigArray([
-//        $options['columns'],
-//        $this->util->getViewerOption('columns', $requestConfiguration)
-//    ]);
-//
-//    $childrenProperty = $this->util->mergeConfig([
-//        $options['children_property'],
-//        $this->util->getViewerOption('children_property', $requestConfiguration)
-//    ]);
-//
-//    $positionProperty = $this->util->mergeConfig([
-//        $options['position_property'],
-//        $this->util->getViewerOption('position_property', $requestConfiguration)
-//    ]);
-//
-//    $token = $this->tokenManager->getToken('list_data');
-//    $data['token'] = $token->getValue();
-//    $data['resources'] = $this->columnManager->createResourcesViewData($columns, $this->resources, $childrenProperty, $positionProperty);
-//}
-//
-//public function getResponse($options, Request $request, ViewData $viewData, TemplateData $templateData): Response
-//{
-//    return new JsonResponse($viewData->normalize());
-//}
-//
-//public function configureOptions(OptionsResolver $optionsResolver)
-//{
-//    $optionsResolver->setDefaults([
-//        'columns' => [],
-//        'children_property' => null,
-//        'position_property' => null,
-//    ]);
-//
-//    $optionsResolver->setRequired('request_configuration');
-//}
-//
-//protected function isCsrfTokenValid(string $id, ?string $token): bool
-//{
-//    return $this->tokenManager->isTokenValid(new CsrfToken($id, $token));
-//}
-//
-//public function handleSort(Request $request, RequestConfiguration $configuration, EntityRepository $repository)
-//{
-//    $parentProperty = $this->getParentProperty($configuration);
-//    $positionProperty = $this->getPositionProperty($configuration);
-//    $propertyAccessor = PropertyAccess::createPropertyAccessor();
-//
-//    $content = json_decode($request->getContent(), true);
-//    $parent = $content['parent'] === null ? null: $repository->find($content['parent']);
-//    foreach($content['items'] as $position => $id) {
-//        $item = $repository->find($id);
-//        if($parentProperty) {
-//            $propertyAccessor->setValue($item, $parentProperty, $parent);
-//        }
-//        if($positionProperty) {
-//            $propertyAccessor->setValue($item, $positionProperty, $position);
-//        }
-//    }
-//
-//    $this->em->flush();
-//}
-//
-//private function getParentProperty(RequestConfiguration $configuration)
-//{
-//    $options = $configuration->getViewerOptions();
-//    if(isset($options['parent_property'])) {
-//        return $options['parent_property'];
-//    }
-//    return null;
-//}
-//
-//private function getPositionProperty(RequestConfiguration $configuration)
-//{
-//    $options = $configuration->getViewerOptions();
-//    if(isset($options['position_property'])) {
-//        return $options['position_property'];
-//    }
-//    return null;
-//}
-

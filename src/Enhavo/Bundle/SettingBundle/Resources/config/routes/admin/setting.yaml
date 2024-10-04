@@ -1,68 +1,38 @@
-enhavo_setting_setting_index:
-    options:
-        expose: true
-    path: /enhavo/setting/setting/index
-    methods: [GET]
+enhavo_setting_admin_setting_index:
+    path: /setting/index
     defaults:
-        _controller: enhavo_setting.controller.setting::indexAction
-        _sylius:
-            viewer:
-                title: label.setting
-                translation_domain: EnhavoSettingBundle
-                table_route_parameters:
-                    group: $group
-                actions:
-                    create:
-                        type: create
-                        hidden: true
-                        route: ~
+        _expose: admin
+        _vue:
+            component: resource-index
+            groups: admin
+            meta:
+                api: enhavo_setting_admin_api_setting_index
+                api_parameters:
+                    group: expr:query.get("group")
+        _endpoint:
+            type: admin
 
-enhavo_setting_setting_edit:
-    options:
-        expose: true
-    path: /enhavo/setting/setting/edit
+enhavo_setting_admin_setting_create:
+    path: /setting/create
     defaults:
-        _controller: enhavo_setting.controller.setting::editAction
+        _expose: admin
+        _vue:
+            component: resource-input
+            groups: admin
+            meta:
+                api: enhavo_setting_admin_api_setting_create
+        _endpoint:
+            type: admin
 
-enhavo_setting_setting_update:
-    options:
-        expose: true
-    path: /enhavo/setting/setting/update/{id}
-    methods: [GET,POST]
+enhavo_setting_admin_setting_update:
+    path: /setting/update/{id}
     defaults:
-        _controller: enhavo_setting.controller.setting::updateAction
-        _sylius:
-            viewer:
-                actions_secondary:
-                    delete:
-                        type: delete
-                        hidden: true
-                        route: ~
-                tabs:
-                    main:
-                        label: setting.label.setting
-                        translation_domain: EnhavoSettingBundle
-                        template: admin/resource/setting/main.html.twig
+        _expose: admin
+        _vue:
+            component: resource-input
+            groups: admin
+            meta:
+                api: enhavo_setting_admin_api_setting_update
+        _endpoint:
+            type: admin
 
-enhavo_setting_setting_table:
-    options:
-        expose: true
-    path: /enhavo/setting/setting/table
-    defaults:
-        page: 1
-        _controller: enhavo_setting.controller.setting::tableAction
-        _sylius:
-            criteria:
-                group: $group
-            viewer:
-                translation_domain: EnhavoSettingBundle
-                columns:
-                    label:
-                        type: label
-                        property: label
-                        label: setting.label.label
-                        width: 6
-                    value:
-                        type: setting
-                        label: setting.label.value
-                        width: 6

@@ -1,0 +1,41 @@
+enhavo_resource:
+    resources:
+        enhavo_navigation.navigation:
+            classes:
+                model: Enhavo\Bundle\NavigationBundle\Entity\Navigation
+                factory: Enhavo\Bundle\NavigationBundle\Factory\NavigationFactory
+                repository: Enhavo\Bundle\NavigationBundle\Repository\NavigationRepository
+    grids:
+        enhavo_navigation.navigation:
+            extends: enhavo_resource.grid
+            resource: enhavo_navigation.navigation
+            actions: {  }
+            filters: {  }
+            columns:
+                name:
+                    type: text
+                    property: name
+                    label: navigation.label.name
+                    width: 10
+            batches: {  }
+    inputs:
+        enhavo_navigation.navigation:
+            extends: enhavo_resource.input
+            resource: enhavo_navigation.navigation
+            form: Enhavo\Bundle\NavigationBundle\Form\Type\NavigationType
+            form_options: {  }
+            actions: {  }
+            tabs:
+                main:
+                    label: navigation.label.navigation
+                    translation_domain: EnhavoNavigationBundle
+                    type: form
+                    arrangement:
+                        - name
+                        - code
+                nodes:
+                    label: navigation.label.items
+                    translation_domain: EnhavoNavigationBundle
+                    type: form
+                    arrangement:
+                        - nodes

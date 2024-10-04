@@ -5,24 +5,24 @@ services:
 
     Enhavo\Bundle\NavigationBundle\Form\Type\NavigationType:
         arguments:
-            - '%enhavo_navigation.model.navigation.class%'
+            - '%enhavo_navigation.navigation.model.class%'
             - [default]
         tags:
             - { name: form.type }
 
     Enhavo\Bundle\NavigationBundle\Form\Type\NodeType:
         arguments:
-            - '%enhavo_navigation.model.node.class%'
+            - '%enhavo_navigation.node.model.class%'
         tags:
-            - { name: form.type, alias: 'enhavo_navigation_node' }
+            - { name: form.type }
 
     Enhavo\Bundle\NavigationBundle\Form\Type\NodeCollectionType:
         arguments:
-            - '%enhavo_navigation.model.node.class%'
-            - '%enhavo_navigation.form.node.class%'
+            - '%enhavo_navigation.node.model.class%'
+            - 'Enhavo\Bundle\NavigationBundle\Form\Type\NodeType'
             - '@Enhavo\Bundle\NavigationBundle\NavItem\NavItemManager'
         tags:
-            - { name: form.type, alias: 'enhavo_navigation_nodes' }
+            - { name: form.type }
 
     Enhavo\Bundle\NavigationBundle\NavItem\Type\NavItemType:
         tags:
@@ -97,7 +97,7 @@ services:
 
     Enhavo\Bundle\NavigationBundle\Endpoint\NavigationEndpointExtension:
         arguments:
-            - '@enhavo_navigation.repository.navigation'
+            - '@enhavo_navigation.navigation.repository'
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:

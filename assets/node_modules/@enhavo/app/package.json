@@ -28,6 +28,8 @@
     "vue": "^3.2.31",
     "vue-router": "^4.2.5",
     "vue-select": "4.0.0-beta.3",
-    "vuedraggable": "^4.1.0"
+    "vuedraggable": "^4.1.0",
+    "expression-language": "^1.2.0",
+    "html-entities": "^2.5.2"
   }
 }

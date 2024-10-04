@@ -1,0 +1,52 @@
+enhavo_newsletter_admin_api_local_subscriber_index:
+    path: /local_subscriber/index
+    methods:
+        - GET
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_index
+            grid: enhavo_newsletter.local_subscriber
+
+enhavo_newsletter_admin_api_local_subscriber_list:
+    path: /local_subscriber/list
+    methods:
+        - GET
+        - POST
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_list
+            grid: enhavo_newsletter.local_subscriber
+
+enhavo_newsletter_admin_api_local_subscriber_create:
+    path: /local_subscriber/create
+    methods:
+        - GET
+        - POST
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_create
+            input: enhavo_newsletter.local_subscriber
+
+enhavo_newsletter_admin_api_local_subscriber_update:
+    path: '/local_subscriber/update/{id}'
+    methods:
+        - GET
+        - POST
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_update
+            input: enhavo_newsletter.local_subscriber
+
+enhavo_newsletter_admin_api_local_subscriber_delete:
+    path: '/local_subscriber/delete/{id}'
+    methods:
+        - DELETE
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_delete
+            input: enhavo_newsletter.local_subscriber

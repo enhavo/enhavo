@@ -17,10 +17,10 @@ class SendActionType extends AbstractActionType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'component' => 'newsletter-send',
             'label' => 'newsletter.action.send.label',
             'translation_domain' => 'EnhavoNewsletterBundle',
             'icon' => 'send',
+            'model' => 'NewsletterSendAction',
         ]);
     }
 

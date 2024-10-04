@@ -1,0 +1,7 @@
+enhavo_dashboard_admin_api_index:
+    path:  /dashboard
+    methods: [GET]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: Enhavo\Bundle\DashboardBundle\Endpoint\DashboardEndpointType

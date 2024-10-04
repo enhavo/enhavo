@@ -1,10 +1,4 @@
 <?php
-/**
- * SettingType.php
- *
- * @since 06/09/14
- * @author Gerhard Seidel <gseidel.message@googlemail.com>
- */
 
 namespace Enhavo\Bundle\SettingBundle\Form\Type;
 
@@ -19,28 +13,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SettingType extends AbstractType
 {
-    /** @var TranslatorInterface */
-    private $translator;
-
-    /** @var SettingManager */
-    private $settingManager;
-
-    /**
-     * SettingType constructor.
-     * @param TranslatorInterface $translator
-     */
-    public function __construct(TranslatorInterface $translator, SettingManager $settingManager)
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+        private readonly SettingManager $settingManager
+    )
     {
-        $this->translator = $translator;
-        $this->settingManager = $settingManager;
     }
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     * @var Setting $settingObject
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $translator = $this->translator;
         $settingManager = $this->settingManager;

@@ -1,110 +1,35 @@
-enhavo_user_user_index:
-    options:
-        expose: true
-    path: /enhavo/user/user/index
-    methods: [GET]
+enhavo_user_admin_user_index:
+    path: /user/index
     defaults:
-        _controller: enhavo_user.controller.user::indexAction
-        _sylius:
-            viewer:
-                label: user.label.user
-                translation_domain: EnhavoUserBundle
+        _expose: admin
+        _vue:
+            component: resource-index
+            groups: admin
+            meta:
+                api: enhavo_user_admin_api_user_index
+        _endpoint:
+            type: admin
 
-enhavo_user_user_create:
-    options:
-        expose: true
-    path: /enhavo/user/user/create
-    methods: [GET,POST]
+enhavo_user_admin_user_create:
+    path: /user/create
     defaults:
-        _controller: enhavo_user.controller.user::createAction
-        _sylius:
-            redirect: enhavo_user_user_update
-            form:
-                options:
-                    validation_groups: [create, unique_email]
-            viewer:
+        _expose: admin
+        _vue:
+            component: resource-input
+            groups: admin
+            meta:
+                api: enhavo_user_admin_api_user_create
+        _endpoint:
+            type: admin
 
-enhavo_user_user_update:
-    options:
-        expose: true
-    path: /enhavo/user/user/update/{id}
-    methods: [GET,POST]
+enhavo_user_admin_user_update:
+    path: '/user/update/{id}'
     defaults:
-        _controller: enhavo_user.controller.user::updateAction
-        _sylius:
-            form:
-                options:
-                    validation_groups: [update, unique_email]
-            viewer:
-
-enhavo_user_user_table:
-    options:
-        expose: true
-    path: /enhavo/user/user/table
-    defaults:
-        _controller: enhavo_user.controller.user::tableAction
-        _sylius:
-            paginate: $pagination
-            filters:
-                username:
-                    type: text
-                    property: email
-                    label: user.label.email
-                    translation_domain: EnhavoUserBundle
-                group:
-                    type: entity
-                    property: groups
-                    label: group.label.group
-                    repository: enhavo_user.repository.group
-                    translation_domain: EnhavoUserBundle
-            viewer:
-                translation_domain: EnhavoUserBundle
-                columns:
-                    email:
-                        type: text
-                        label: user.label.email
-                        property: email
-                        width: 6
-                        sortable: true
-                    groups:
-                        type: list
-                        label: group.label.group
-                        property: groups
-                        item_property: name
-                        width: 6
-                        sortable: true
-
-enhavo_user_user_delete:
-    options:
-        expose: true
-    path: /enhavo/user/user/delete/{id}
-    methods: [POST]
-    defaults:
-        _controller: enhavo_user.controller.user::deleteAction
-
-enhavo_user_user_batch:
-    options:
-        expose: true
-    path: /enhavo/user/user/batch
-    methods: [POST]
-    defaults:
-        _controller: enhavo_user.controller.user::batchAction
-        _sylius:
-            paginate: false
-            criteria:
-                id: $ids
-            batches:
-                delete:
-                    type: delete
-
-enhavo_user_user_auto_complete:
-    options:
-        expose: true
-    path: /enhavo/user/user/auto_complete
-    methods: [GET]
-    defaults:
-        _controller: enhavo_form.controller.auto_complete::searchAction
-        _config:
-            class: '%enhavo_user.model.user.class%'
-            repository:
-                method: findByTerm
+        _expose: admin
+        _vue:
+            component: resource-input
+            groups: admin
+            meta:
+                api: enhavo_user_admin_api_user_update
+        _endpoint:
+            type: admin

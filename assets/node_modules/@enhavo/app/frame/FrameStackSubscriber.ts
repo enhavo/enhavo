@@ -24,6 +24,7 @@ export class FrameStackSubscriber
             this.addFrameAddListener();
             this.addFrameGetListener();
             this.addFrameLoadedListener();
+            this.addFrameLabelListener();
             this.addFrameUpdateListener();
             this.addFrameClearListener();
             this.addFrameRemoveListener();
@@ -59,6 +60,17 @@ export class FrameStackSubscriber
 
             if (frame) {
                 frame.loaded = true;
+            }
+        });
+    }
+
+    private addFrameLabelListener()
+    {
+        this.dispatcher.on('frame_label', (event: Event) => {
+            const frame = this.frameStack.getFrame((event as FrameLabel).id);
+
+            if (frame) {
+                frame.label = (event as FrameLabel).label;
             }
         });
     }
@@ -122,6 +134,17 @@ export class FrameLoaded extends Event
     )
     {
         super('frame_loaded');
+    }
+}
+
+export class FrameLabel extends Event
+{
+    constructor(
+        public id: string,
+        public label: string,
+    )
+    {
+        super('frame_label');
     }
 }
 

@@ -33,7 +33,7 @@ class UrlActionType extends AbstractActionType
     {
         $parameters = [];
 
-        if($options['append_id'] && $resource !== null && $resource->getId() !== null) {
+        if ($options['append_id'] && $resource !== null && $resource->getId() !== null) {
             $parameters[$options['append_key']] = $resource->getId();
         }
 

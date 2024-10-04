@@ -1,0 +1,62 @@
+enhavo_template_admin_api_template_index:
+    path: /template/index
+    methods:
+        - GET
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_index
+            grid: enhavo_template.template
+
+enhavo_template_admin_api_template_list:
+    path: /template/list
+    methods:
+        - GET
+        - POST
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_list
+            grid: enhavo_template.template
+
+enhavo_template_admin_api_template_create:
+    path: /template/create
+    methods:
+        - GET
+        - POST
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_create
+            input: enhavo_template.template
+
+enhavo_template_admin_api_template_update:
+    path: '/template/update/{id}'
+    methods:
+        - GET
+        - POST
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_update
+            input: enhavo_template.template
+
+enhavo_template_admin_api_template_delete:
+    path: '/template/delete/{id}'
+    methods:
+        - DELETE
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_delete
+            input: enhavo_template.template
+
+enhavo_template_admin_api_template_batch:
+    path: /template/batch
+    methods:
+        - POST
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_batch
+            grid: enhavo_template.template

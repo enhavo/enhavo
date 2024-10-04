@@ -17,49 +17,35 @@ use Symfony\Component\Routing\RouterInterface;
 
 class AutoCompleteEntityType extends AbstractType
 {
-    /** @var RouterInterface */
-    private $router;
-
-    /** @var EntityManagerInterface */
-    private $entityManager;
-
-    /** @var PropertyAccessorInterface */
-    private $propertyAccessor;
-
     public function __construct(
-        RouterInterface $router,
-        EntityManagerInterface $entityManager,
-        PropertyAccessorInterface $propertyAccessor)
+        private readonly RouterInterface $router,
+        private readonly EntityManagerInterface $entityManager,
+        private readonly PropertyAccessorInterface $propertyAccessor,
+    )
     {
-        $this->router = $router;
-        $this->entityManager = $entityManager;
-        $this->propertyAccessor = $propertyAccessor;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $repository = $this->entityManager->getRepository($options['class']);
         $propertyAccessor = $this->propertyAccessor;
 
-        if($options['multiple'] === true) {
+        if ($options['multiple'] === true) {
             $builder->addViewTransformer(new CallbackTransformer(
                 function ($originalDescription) use ($options, $propertyAccessor) {
                     $collection = new ArrayCollection();
-                    if($originalDescription instanceof Collection) {
+                    if ($originalDescription instanceof Collection) {
                         $collection = $originalDescription;
                     }
                     $data = [];
                     foreach($collection as $entry) {
-                        if(!method_exists($entry, 'getId')) {
+                        if (!method_exists($entry, 'getId')) {
                             throw new \Exception('class need to be an entity with getId function');
                         }
                         $id = call_user_func([$entry, 'getId']);
-                        if($options['choice_label'] instanceof \Closure) {
+                        if ($options['choice_label'] instanceof \Closure) {
                             $label = $options['choice_label']($entry);
-                        } elseif(is_string($options['choice_label'])) {
+                        } elseif (is_string($options['choice_label'])) {
                             $label = $propertyAccessor->getValue($entry, $options['choice_label']);
                         } else {
                             $label = (string)$entry;
@@ -73,12 +59,12 @@ class AutoCompleteEntityType extends AbstractType
                 },
                 function ($submittedDescription) use ($repository, $options, $propertyAccessor) {
                     $collection = new ArrayCollection();
-                    if(empty($submittedDescription)) {
+                    if (empty($submittedDescription)) {
                         return $collection;
                     }
                     $ids = $submittedDescription;
                     $i = 0;
-                    foreach($ids as $id) {
+                    foreach ($ids as $id) {
                         $i++;
                         $entity = $repository->find($id);
                         if($options['sortable']) {
@@ -92,14 +78,14 @@ class AutoCompleteEntityType extends AbstractType
         } else {
             $builder->addViewTransformer(new CallbackTransformer(
                 function ($originalDescription) use ($options, $propertyAccessor) {
-                    if($originalDescription !== null) {
-                        if(!method_exists($originalDescription, 'getId')) {
+                    if ($originalDescription !== null) {
+                        if (!method_exists($originalDescription, 'getId')) {
                             throw new \Exception('class need to be an entity with getId function');
                         }
                         $id = call_user_func([$originalDescription, 'getId']);
-                        if($options['choice_label'] instanceof \Closure) {
+                        if ($options['choice_label'] instanceof \Closure) {
                             $label = $options['choice_label']($originalDescription);
-                        } elseif(is_string($options['choice_label'])) {
+                        } elseif (is_string($options['choice_label'])) {
                             $label = $propertyAccessor->getValue($originalDescription, $options['choice_label']);
                         } else {
                             $label = (string)$originalDescription;
@@ -112,7 +98,7 @@ class AutoCompleteEntityType extends AbstractType
                     return null;
                 },
                 function ($submittedDescription) use ($repository) {
-                    if(empty($submittedDescription)) {
+                    if (empty($submittedDescription)) {
                         return null;
                     }
                     return $repository->find($submittedDescription);

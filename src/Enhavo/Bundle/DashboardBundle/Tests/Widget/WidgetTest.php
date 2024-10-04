@@ -4,9 +4,9 @@
 namespace Enhavo\Bundle\DashboardBundle\Tests\Widget;
 
 
-use Enhavo\Bundle\DashboardBundle\Widget\AbstractWidgetType;
-use Enhavo\Bundle\DashboardBundle\Widget\Widget;
-use Enhavo\Bundle\DashboardBundle\Widget\WidgetTypeInterface;
+use Enhavo\Bundle\DashboardBundle\Dashboard\AbstractDashboardWidgetType;
+use Enhavo\Bundle\DashboardBundle\Dashboard\DashboardWidget;
+use Enhavo\Bundle\DashboardBundle\Dashboard\DashboardWidgetTypeInterface;
 use Enhavo\Component\Type\TypeInterface;
 use PHPUnit\Framework\TestCase;
 
@@ -63,16 +63,16 @@ class WidgetTest extends TestCase
 
     private function createInstance(WidgetTestDependencies $dependencies)
     {
-        return new Widget($dependencies->type, $dependencies->parents, $dependencies->options);
+        return new DashboardWidget($dependencies->type, $dependencies->parents, $dependencies->options);
     }
 
     /**
-     * @return Widget|\PHPUnit_Framework_MockObject_MockObject
+     * @return DashboardWidget|\PHPUnit_Framework_MockObject_MockObject
      */
     private function createTypeMock(bool $hidden = false, string $role = 'ROLE_TEST', string $dataKey = 'key', string $data = 'data')
     {
         /** @var \PHPUnit_Framework_MockObject_MockObject $mock */
-        $mock = $this->getMockBuilder(AbstractWidgetType::class)->disableOriginalConstructor()->getMock();
+        $mock = $this->getMockBuilder(AbstractDashboardWidgetType::class)->disableOriginalConstructor()->getMock();
         $mock->method('isHidden')->willReturn($hidden);
         $mock->method('getPermission')->willReturn($role);
         $mock->method('createViewData')->will(
@@ -88,7 +88,7 @@ class WidgetTest extends TestCase
 
 class WidgetTestDependencies
 {
-    /** @var WidgetTypeInterface|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var DashboardWidgetTypeInterface|\PHPUnit_Framework_MockObject_MockObject */
     public $type;
 
     /** @var TypeInterface[]|\PHPUnit_Framework_MockObject_MockObject */

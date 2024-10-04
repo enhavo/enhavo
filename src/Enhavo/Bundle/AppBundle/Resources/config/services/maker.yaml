@@ -21,12 +21,7 @@ services:
         tags:
             - { name: 'maker.command' }
 
-    Enhavo\Bundle\AppBundle\Maker\MakeWidget:
-        arguments:
-            - '@enhavo_app.maker.util'
-            - '@twig'
-        tags:
-            - { name: 'maker.command' }
+
 
     Enhavo\Bundle\AppBundle\Maker\MakeFilter:
         arguments:

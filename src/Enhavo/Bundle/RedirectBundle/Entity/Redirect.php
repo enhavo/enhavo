@@ -2,129 +2,60 @@
 
 namespace Enhavo\Bundle\RedirectBundle\Entity;
 
+use Enhavo\Bundle\RoutingBundle\Entity\Route;
 use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
 use Enhavo\Bundle\RedirectBundle\Model\RedirectInterface;
 use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 
-/**
- * Redirect
- */
 class Redirect implements RedirectInterface, ResourceInterface
 {
-    /**
-     * @var int
-     */
-    private $id;
+    private ?int $id = null;
+    private ?string $from  = null;
+    private ?string $to = null;
+    private ?int $code = null;
+    private ?Route $route = null;
 
-    /**
-     * @var string
-     */
-    private $from;
-
-    /**
-     * @var string
-     */
-    private $to;
-
-    /**
-     * @var integer
-     */
-    private $code;
-
-    /**
-     * @var \Enhavo\Bundle\RoutingBundle\Entity\Route
-     */
-    private $route;
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Set from
-     *
-     * @param string $from
-     * @return Redirect
-     */
-    public function setFrom($from)
+    public function setFrom(?string $value): void
     {
-        $this->from = $from;
-
-        return $this;
+        $this->from = $value;
     }
 
-    /**
-     * Get from
-     *
-     * @return string
-     */
-    public function getFrom()
+    public function getFrom(): ?string
     {
         return $this->from;
     }
 
-    /**
-     * Set to
-     *
-     * @param string $to
-     * @return Redirect
-     */
-    public function setTo($to)
+    public function setTo(?string $value): void
     {
-        $this->to = $to;
-
-        return $this;
+        $this->to = $value;
     }
 
-    /**
-     * Get to
-     *
-     * @return string
-     */
-    public function getTo()
+    public function getTo(): ?string
     {
         return $this->to;
     }
 
-    /**
-     * Set route
-     *
-     * @param RouteInterface $route
-     * @return void
-     */
-    public function setRoute(RouteInterface $route = null)
+    public function setRoute(RouteInterface $route = null): void
     {
         $this->route = $route;
     }
 
-    /**
-     * Get route
-     *
-     * @return RouteInterface
-     */
-    public function getRoute()
+    public function getRoute(): ?RouteInterface
     {
         return $this->route;
     }
 
-    /**
-     * @return integer
-     */
-    public function getCode()
+    public function getCode(): ?int
     {
         return $this->code;
     }
 
-    /**
-     * @param integer $code
-     */
-    public function setCode($code)
+    public function setCode(?int $code): void
     {
         $this->code = $code;
     }

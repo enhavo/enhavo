@@ -1,125 +1,36 @@
-enhavo_newsletter_group_index:
-    options:
-        expose: true
-    path: /enhavo/newsletter/group/index
-    methods: [GET]
+enhavo_newsletter_admin_group_index:
+    path: /group/index
     defaults:
-        _controller: enhavo_newsletter.controller.group::indexAction
-        _sylius:
-            viewer:
-                label: group.label.group
-                translation_domain: EnhavoNewsletterBundle
-                open_route: enhavo_newsletter_local_subscriber_index
+        _expose: admin
+        _vue:
+            component: resource-index
+            groups: admin
+            meta:
+                api: enhavo_newsletter_admin_api_group_index
+        _endpoint:
+            type: admin
 
-enhavo_newsletter_group_create:
-    options:
-        expose: true
-    path: /enhavo/newsletter/group/create
-    methods: [GET,POST]
+enhavo_newsletter_admin_group_create:
+    path: /group/create
     defaults:
-        _controller: enhavo_newsletter.controller.group::createAction
-        _sylius:
-            redirect: enhavo_newsletter_group_update
-            viewer:
-                label: group.label.create
-                translation_domain: EnhavoNewsletterBundle
+        _expose: admin
+        _vue:
+            component: resource-input
+            groups: admin
+            meta:
+                api: enhavo_newsletter_admin_api_group_create
+        _endpoint:
+            type: admin
 
-enhavo_newsletter_group_update:
-    options:
-        expose: true
-    path: /enhavo/newsletter/group/update/{id}
-    methods: [GET,POST]
+enhavo_newsletter_admin_group_update:
+    path: '/group/update/{id}'
     defaults:
-        _controller: enhavo_newsletter.controller.group::updateAction
-        _sylius:
-            viewer:
-                label: group.label.update
-                translation_domain: EnhavoNewsletterBundle
-
-enhavo_newsletter_group_table:
-    options:
-        expose: true
-    path: /enhavo/newsletter/group/table
-    methods: [GET,POST]
-    defaults:
-        _controller: enhavo_newsletter.controller.group::tableAction
-        _sylius:
-            sorting:
-                name: asc
-            viewer:
-                columns:
-                    name:
-                        sortable: true
-                        property: name
-                        width: 8
-                        label: group.label.name
-                        type: property
-                        translation_domain: EnhavoNewsletterBundle
-                    action:
-                        width: 4
-                        label: label.edit
-                        translation_domain: EnhavoAppBundle
-                        type: action
-                        action:
-                            type: update
-                            route: enhavo_newsletter_group_update
-
-enhavo_newsletter_group_delete:
-    options:
-        expose: true
-    path: /enhavo/newsletter/group/delete/{id}
-    methods: [POST]
-    defaults:
-        _controller: enhavo_newsletter.controller.group::deleteAction
-
-enhavo_newsletter_group_batch:
-    options:
-        expose: true
-    path: /enhavo/newsletter/group/batch
-    methods: [POST]
-    defaults:
-        _controller: enhavo_newsletter.controller.group::batchAction
-        _sylius:
-            paginate: false
-            criteria:
-                id: $ids
-            batches:
-                delete:
-                    type: delete
-
-enhavo_newsletter_group_preview:
-    options:
-        expose: true
-    path: /enhavo/newsletter/group/preview
-    methods: [GET]
-    defaults:
-        _controller: enhavo_newsletter.controller.group::previewAction
-        _sylius:
-            viewer:
-
-enhavo_newsletter_group_resource_preview:
-    options:
-        expose: true
-    path: /enhavo/newsletter/group/resource/preview
-    methods: [POST]
-    defaults:
-        _controller: enhavo_newsletter.controller.group::previewResourceAction
-        _area: theme
-        _sylius:
-            viewer:
-                strategy_options:
-                    service: enhavo_article.controller.article:showResourceAction
-
-enhavo_newsletter_group_auto_complete:
-   options:
-       expose: true
-   path: /enhavo/newsletter/group/auto_complete
-   methods: [GET]
-   defaults:
-       _controller: enhavo_form.controller.auto_complete::searchAction
-       _config:
-           class: '%enhavo_newsletter.model.group.class%'
-           repository:
-               method: findByTerm
-           choice_label: name
+        _expose: admin
+        _vue:
+            component: resource-input
+            groups: admin
+            meta:
+                api: enhavo_newsletter_admin_api_group_update
+        _endpoint:
+            type: admin
 

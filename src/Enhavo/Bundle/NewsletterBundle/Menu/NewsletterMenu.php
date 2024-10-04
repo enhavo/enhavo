@@ -19,7 +19,7 @@ class NewsletterMenu extends AbstractMenuType
             'icon' => 'inbox',
             'label' => 'newsletter.label.newsletter',
             'translation_domain' => 'EnhavoNewsletterBundle',
-            'route' => 'enhavo_newsletter_newsletter_index',
+            'route' => 'enhavo_newsletter_admin_newsletter_index',
             'role' => 'ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_INDEX'
         ]);
     }

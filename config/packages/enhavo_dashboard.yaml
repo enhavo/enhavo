@@ -1,0 +1,7 @@
+enhavo_dashboard:
+    widgets:
+        page_number:
+            type: number
+            label: Total page numbers
+            repository: enhavo_page.page
+            repository_method: findAll

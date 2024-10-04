@@ -18,7 +18,6 @@ use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 class Newsletter implements ResourceInterface, Slugable, NewsletterInterface, Timestampable
 {
     use TimestampableTrait;
-
     private ?int $id = null;
     private ?string $slug = null;
     private ?string $subject = null;

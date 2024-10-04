@@ -9,6 +9,7 @@
 
 <script setup lang="ts">
 import {ActionInterface} from "@enhavo/app/action/ActionInterface";
+import {onMounted} from "vue";
 
 const props = defineProps<{
     data: ActionInterface,
@@ -30,4 +31,8 @@ function execute(event: Event)
     }
     data.execute()
 }
+
+onMounted(() => {
+    props.data.mounted()
+})
 </script>

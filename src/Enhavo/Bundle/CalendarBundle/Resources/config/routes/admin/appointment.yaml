@@ -1,134 +1,35 @@
-enhavo_calendar_appointment_index:
-    options:
-        expose: true
-    path: /enhavo/calendar/appointment/index
-    methods: [GET]
+enhavo_calendar_admin_appointment_index:
+    path: /appointment/index
     defaults:
-        _controller: enhavo_calendar.controller.appointment::indexAction
-        _sylius:
-            viewer:
-                label: label.calendar
-                translation_domain: EnhavoCalendarBundle
+        _expose: admin
+        _vue:
+            component: resource-index
+            groups: admin
+            meta:
+                api: enhavo_calendar_admin_api_appointment_index
+        _endpoint:
+            type: admin
 
-enhavo_calendar_appointment_create:
-    options:
-        expose: true
-    path: /enhavo/calendar/appointment/create
-    methods: [GET,POST]
+enhavo_calendar_admin_appointment_create:
+    path: /appointment/create
     defaults:
-        _controller: enhavo_calendar.controller.appointment::createAction
-        _sylius:
-            redirect: enhavo_calendar_appointment_update
-            viewer:
-                tabs:
-                    main:
-                        label: appointment.label.appointment
-                        template: admin/resource/appointment/main.html.twig
-                        translation_domain: EnhavoCalendarBundle
-                    location:
-                        label: appointment.label.location
-                        template: admin/resource/appointment/location.html.twig
-                        translation_domain: EnhavoCalendarBundle
-                    content:
-                        label: appointment.label.content
-                        template: admin/resource/appointment/content.html.twig
-                        translation_domain: EnhavoCalendarBundle
-                        full_width: true
-                    meta:
-                        label: appointment.label.meta
-                        template: admin/resource/content/meta.html.twig
-                        translation_domain: EnhavoCalendarBundle
-                    import:
-                        label: appointment.label.import
-                        template: admin/resource/appointment/import.html.twig
-                        translation_domain: EnhavoCalendarBundle
+        _expose: admin
+        _vue:
+            component: resource-input
+            groups: admin
+            meta:
+                api: enhavo_calendar_admin_api_appointment_create
+        _endpoint:
+            type: admin
 
-enhavo_calendar_appointment_update:
-    options:
-        expose: true
-    path: /enhavo/calendar/appointment/update/{id}
-    methods: [GET,POST]
+enhavo_calendar_admin_appointment_update:
+    path: '/appointment/update/{id}'
     defaults:
-        _controller: enhavo_calendar.controller.appointment::updateAction
-        _sylius:
-            viewer:
-                tabs:
-                    main:
-                        label: appointment.label.appointment
-                        translation_domain: EnhavoCalendarBundle
-                        template: admin/resource/appointment/main.html.twig
-                    location:
-                        label: appointment.label.location
-                        translation_domain: EnhavoCalendarBundle
-                        template: admin/resource/appointment/location.html.twig
-                    content:
-                        label: appointment.label.content
-                        translation_domain: EnhavoCalendarBundle
-                        template: admin/resource/appointment/content.html.twig
-                        full_width: true
-                    meta:
-                        label: appointment.label.meta
-                        translation_domain: EnhavoCalendarBundle
-                        template: admin/resource/content/meta.html.twig
-                    import:
-                        label: appointment.label.import
-                        translation_domain: EnhavoCalendarBundle
-                        template: admin/resource/appointment/import.html.twig
-
-enhavo_calendar_appointment_table:
-    options:
-        expose: true
-    path: /enhavo/calendar/appointment/table
-    defaults:
-        _controller: enhavo_calendar.controller.appointment::tableAction
-        _sylius:
-            filters:
-                title:
-                    type: text
-                    property: title
-                    label: appointment.label.title
-                    translation_domain: EnhavoCalendarBundle
-            viewer:
-                translation_domain: EnhavoCalendarBundle
-                columns:
-                    title:
-                        type: text
-                        label: appointment.label.title
-                        property: title
-                        width: 7
-                    date:
-                        type: datetime
-                        label: appointment.label.date
-                        property: dateFrom
-                        width: 5
-
-enhavo_calendar_appointment_delete:
-    options:
-        expose: true
-    path: /enhavo/calendar/appointment/delete/{id}
-    methods: [POST]
-    defaults:
-        _controller: enhavo_calendar.controller.appointment::deleteAction
-
-enhavo_calendar_appointment_batch:
-    options:
-        expose: true
-    path: /enhavo/calendar/appointment/batch
-    methods: [POST]
-    defaults:
-        _controller: enhavo_calendar.controller.appointment::batchAction
-        _sylius:
-            paginate: false
-            criteria:
-                id: $ids
-            batches:
-                delete:
-                    type: delete
-
-enhavo_calendar_appointment_preview:
-    options:
-        expose: true
-    path: /enhavo/calendar/appointment/preview
-    methods: [POST]
-    defaults:
-        _controller: enhavo_calendar.controller.appointment::previewAction
+        _expose: admin
+        _vue:
+            component: resource-input
+            groups: admin
+            meta:
+                api: enhavo_calendar_admin_api_appointment_update
+        _endpoint:
+            type: admin

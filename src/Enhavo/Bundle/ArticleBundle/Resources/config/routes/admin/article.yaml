@@ -33,26 +33,3 @@ enhavo_article_admin_article_update:
                 api: enhavo_article_admin_api_article_update
         _endpoint:
             type: admin
-
-enhavo_article_admin_article_preview:
-    options:
-        expose: true
-    path: /enhavo/article/article/preview
-    methods: [GET]
-    defaults:
-        _expose: admin
-        _vue:
-            component: resource-preview
-            groups: admin
-        _endpoint:
-            type: admin
-
-enhavo_article_admin_article_preview_resource:
-    options:
-        expose: true
-    path: /enhavo/article/article/preview/resource
-    methods: [POST]
-    defaults:
-        _expose: admin
-        _endpoint:
-            type: preview_resource

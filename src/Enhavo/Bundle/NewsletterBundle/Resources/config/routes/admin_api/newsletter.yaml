@@ -1,0 +1,87 @@
+enhavo_newsletter_admin_api_newsletter_index:
+    path: /newsletter/index
+    methods:
+        - GET
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_index
+            grid: enhavo_newsletter.newsletter
+
+enhavo_newsletter_admin_api_newsletter_list:
+    path: /newsletter/list
+    methods:
+        - GET
+        - POST
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_list
+            grid: enhavo_newsletter.newsletter
+
+enhavo_newsletter_admin_api_newsletter_create:
+    path: /newsletter/create
+    methods:
+        - GET
+        - POST
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_create
+            input: enhavo_newsletter.newsletter
+
+enhavo_newsletter_admin_api_newsletter_update:
+    path: '/newsletter/update/{id}'
+    methods:
+        - GET
+        - POST
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_update
+            input: enhavo_newsletter.newsletter
+
+enhavo_newsletter_admin_api_newsletter_delete:
+    path: '/newsletter/delete/{id}'
+    methods:
+        - DELETE
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_delete
+            input: enhavo_newsletter.newsletter
+
+enhavo_newsletter_admin_api_newsletter_duplicate:
+    path: /newsletter/duplicate/{id}
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_duplicate
+            input: enhavo_newsletter.newsletter
+
+enhavo_newsletter_admin_api_newsletter_test:
+    path: /newsletter/test
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: Enhavo\Bundle\NewsletterBundle\Endpoint\NewsletterTestEndpointType
+
+enhavo_newsletter_admin_api_newsletter_stats:
+    path: /newsletter/stats/{id}
+    methods: [GET]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: Enhavo\Bundle\NewsletterBundle\Endpoint\NewsletterStatsEndpointType
+
+enhavo_newsletter_admin_api_newsletter_preview:
+    path: /newsletter/preview
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: preview
+            input: enhavo_newsletter.newsletter
+            endpoint:
+                type: Enhavo\Bundle\NewsletterBundle\Endpoint\NewsletterEndpointType
+                resource: expr:resource
+                preview: true

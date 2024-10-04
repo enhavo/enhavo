@@ -19,7 +19,7 @@ class TemplateMenu extends AbstractMenuType
             'icon' => 'chrome_reader_mode',
             'label' => 'template.label.template',
             'translation_domain' => 'EnhavoTemplateBundle',
-            'route' => 'enhavo_template_template_index',
+            'route' => 'enhavo_template_admin_template_index',
             'role' => 'ROLE_ENHAVO_TEMPLATE_TEMPLATE_INDEX',
         ]);
     }

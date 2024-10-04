@@ -1,3 +1,7 @@
 enhavo_setting_admin:
     resource: "@EnhavoSettingBundle/Resources/config/routes/admin/*"
-    prefix: /admin
+    prefix: /admin/setting
+
+enhavo_setting_admin_api:
+    resource: "@EnhavoSettingBundle/Resources/config/routes/admin_api/*"
+    prefix: /admin/api/setting

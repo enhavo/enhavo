@@ -2,101 +2,98 @@
 
 ```bash 
 $ composer require enhavo/app-bundle
+$ yarn install @enhavo/app
 ```
 
-### Add packages
+Add js dependency injection service file at `assets/admin/container.di.yaml`
 
-Add following `package.json` to your project root directory.
+```yaml
+# 
+imports:
+    - path: '@enhavo/app/services/enhavo/*'
+```
+
+Create a vite config file at `assets/admin/vite.config.js`
+
+```js
+import { defineConfig, splitVendorChunkPlugin } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import liveReload from 'vite-plugin-live-reload'
+import path from 'node:path'
+import 'dotenv/config'
+import containerDIPlugin from '@enhavo/app/vite/rollup-plugin-container-di'
+import {fantasticon} from "@enhavo/app/vite/fantasticon-plugin/plugin.js";
+import {fantasticonSetting} from "@enhavo/app/vite/fantasticon-settings.js";
+
+export default defineConfig({
+    plugins: [
+        vue(),
+        splitVendorChunkPlugin(),
+        containerDIPlugin(),
+        fantasticon(fantasticonSetting({
+            outputDir: path.resolve(__dirname, '../../public/build/admin'),
+        })),
+    ],
+
+    // config
+    root: path.resolve(__dirname),
+    base: '/build/admin/',
+    build: {
+        // output dir for production build
+        outDir: '../../public/build/admin',
+        emptyOutDir: true,
+
+        // emit manifest so PHP can find the hashed files
+        manifest: true,
+
+        rollupOptions: {
+            input: '/entrypoints/application.js',
+        }
+    },
+    server: {
+        strictPort: true,
+        port: process.env.VITE_ADMIN_PORT,
+        origin: 'http://localhost:' + process.env.VITE_ADMIN_PORT
+    },
+    resolve: {
+        preserveSymlinks: true,
+        alias: {
+            vue: 'vue/dist/vue.esm-bundler.js'
+        }
+    },
+})
+
+```
+
+Add ts config file at `assets/admin/tsconfig.json`
 
 ```json
 {
-  "scripts": {
-    "routes:dump": "bin/console fos:js-routing:dump --format=json --target=public/js/fos_js_routes.json"
-  },
-  "dependencies": {
-    "@enhavo/app": "^0.8.0",
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "skipLibCheck": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true
   }
 }
 ```
 
-### Add webpack config
-
-Add following `webpack.config.js` to your project root directory.
+Add entrypoint file at `assets/admin/entrypoints`
 
 ```js
-const EnhavoEncore = require('@enhavo/core/EnhavoEncore');
-const AppPackage = require('@enhavo/app/Encore/AppPackage');
-const AppThemePackage = require('@enhavo/app/Encore/AppThemePackage');
-const FormPackage = require('@enhavo/form/Encore/FormPackage');
+import container from "../container.di.yaml";
+import {Kernel} from "@enhavo/app/kernel/Kernel";
+import $ from 'jquery';
+import "fantasticon:icon";
 
-EnhavoEncore.add(
-  'enhavo',
-  [new AppPackage(), new FormPackage()],
-  Encore => {},
-  config => {}
-);
+window.$ = $;
+window.jQuery = $;
 
-EnhavoEncore.add(
-  'theme',
-  [new AppThemePackage()],
-  Encore => {
-    Encore.addEntry('base', './assets/theme/base.js');
-  },
-  config => {}
-);
-
-module.exports = EnhavoEncore.export();
+let kernel = new Kernel(container);
+kernel.boot();
 ```
-
-Update your `config/packages/webpack_encore.yaml`
-
-```yaml
-webpack_encore:
-    output_path: '%kernel.project_dir%/public/build/enhavo'
-    builds:
-        enhavo: '%kernel.project_dir%/public/build/enhavo'
-        theme: '%kernel.project_dir%/public/build/theme'
-```
-
-Update your `config/packages/assets.yaml`
-
-```yaml
-framework:
-    assets:
-        json_manifest_path: '%kernel.project_dir%/public/build/theme/manifest.json'
-```
-
-This is optional, but it helps to test your mails using within other
-packages. Just update your `config/packages/dev/swiftmailer.yaml`
-
-```yaml
-swiftmailer:
-    delivery_addresses: ['%env(resolve:MAILER_DELIVERY_ADDRESS)%']
-```
-
-### Add typescript config
-
-Add following `tsconfig.json` to your project root directory.
-
-``` 
-{
-  "compilerOptions": {
-    "lib": [ "es2015", "dom" ],
-    "module": "amd",
-    "target": "es5",
-    "allowJs": true,
-    "noImplicitAny": true,
-    "suppressImplicitAnyIndexErrors": true,
-    "moduleResolution": "node",
-    "sourceMap": true,
-    "experimentalDecorators": true
-  },
-  "include": [
-    "./assets/**/*"
-  ]
-}
-```
-
-### Start application
-
-Open your application under the `/admin` url.
