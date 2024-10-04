@@ -2,32 +2,39 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Action;
 
+use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\AppBundle\Action\Type\ModalActionType;
+use Enhavo\Bundle\NewsletterBundle\Form\Type\NewsletterEmailType;
 use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
+use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
+use Enhavo\Bundle\VueFormBundle\Form\VueForm;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SendTestActionType extends AbstractActionType
 {
+    public function __construct(
+        private readonly FormFactoryInterface $formFactory,
+        private readonly VueForm $vueForm,
+    )
+    {
+    }
+
+    public function createViewData(array $options, Data $data, ResourceInterface $resource = null): void
+    {
+        $form = $this->formFactory->create(NewsletterEmailType::class);
+        $data->set('form', $this->vueForm->createData($form->createView()));
+    }
+
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'component' => 'newsletter-send-test',
-            'modal' => [
-                'component' => 'ajax-form-modal',
-                'route' => 'enhavo_newsletter_newsletter_test_form',
-                'actionRoute' => 'enhavo_newsletter_newsletter_test'
-            ],
             'label' => 'newsletter.action.test_mail.label',
             'translation_domain' => 'EnhavoNewsletterBundle',
             'icon' => 'email',
+            'model' => 'NewsletterSendTestAction',
         ]);
     }
-
-    public static function getParentType(): ?string
-    {
-        return ModalActionType::class;
-    }
-
 
     public static function getName(): ?string
     {

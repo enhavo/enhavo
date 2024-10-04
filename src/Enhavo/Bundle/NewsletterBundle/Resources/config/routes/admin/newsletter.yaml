@@ -1,226 +1,53 @@
-enhavo_newsletter_newsletter_index:
-    options:
-        expose: true
-    path: /enhavo/newsletter/newsletter/index
-    methods: [GET]
+enhavo_newsletter_admin_newsletter_index:
+    path: /newsletter/index
     defaults:
-        _controller: enhavo_newsletter.controller.newsletter::indexAction
-        _sylius:
-            viewer:
-                label: newsletter.label.newsletter
-                translation_domain: EnhavoNewsletterBundle
+        _expose: admin
+        _vue:
+            component: resource-index
+            groups: admin
+            meta:
+                api: enhavo_newsletter_admin_api_newsletter_index
+        _endpoint:
+            type: admin
 
-enhavo_newsletter_newsletter_create:
-    options:
-        expose: true
-    path: /enhavo/newsletter/newsletter/create
-    methods: [GET,POST]
+enhavo_newsletter_admin_newsletter_create:
+    path: /newsletter/create
     defaults:
-        _controller: enhavo_newsletter.controller.newsletter::createAction
-        _sylius:
-            redirect: enhavo_newsletter_newsletter_update
-            viewer:
-                tabs:
-                    main:
-                        label: newsletter.label.newsletter
-                        translation_domain: EnhavoNewsletterBundle
-                        template: admin/resource/newsletter/main.html.twig
-                    content:
-                        label: newsletter.label.content
-                        translation_domain: EnhavoNewsletterBundle
-                        template: admin/resource/content/content.html.twig
-                        full_width: true
-                    meta:
-                        label: newsletter.label.meta
-                        translation_domain: EnhavoNewsletterBundle
-                        template: admin/resource/newsletter/meta.html.twig
-                actions:
-                    preview:
-                        type: preview
-                        route: enhavo_newsletter_newsletter_preview
-                    send_test:
-                        type: newsletter_send_test
+        _expose: admin
+        _vue:
+            component: resource-input
+            groups: admin
+            meta:
+                api: enhavo_newsletter_admin_api_newsletter_create
+        _endpoint:
+            type: admin
 
-enhavo_newsletter_newsletter_update:
-    options:
-        expose: true
-    path: /enhavo/newsletter/newsletter/update/{id}
-    methods: [GET,POST]
+enhavo_newsletter_admin_newsletter_update:
+    path: '/newsletter/update/{id}'
     defaults:
-        _controller: enhavo_newsletter.controller.newsletter::updateAction
-        _sylius:
-            serialization_groups: ['form']
-            viewer:
-                tabs:
-                    main:
-                        label: newsletter.label.newsletter
-                        translation_domain: EnhavoNewsletterBundle
-                        template: admin/resource/newsletter/main.html.twig
-                    content:
-                        label: newsletter.label.content
-                        translation_domain: EnhavoNewsletterBundle
-                        template: admin/resource/content/content.html.twig
-                        full_width: true
-                    meta:
-                        label: newsletter.label.meta
-                        translation_domain: EnhavoNewsletterBundle
-                        template: admin/resource/newsletter/meta.html.twig
-                actions:
-                    duplicate:
-                        type: duplicate
-                        route: enhavo_newsletter_newsletter_duplicate
-                        permission: ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_CREATE
-                    preview:
-                        type: preview
-                        route: enhavo_newsletter_newsletter_preview
-                    send_test:
-                        type: newsletter_send_test
-                    send:
-                        type: newsletter_send
-                    stats:
-                        type: newsletter_stats
+        _expose: admin
+        _vue:
+            component: resource-input
+            groups: admin
+            meta:
+                api: enhavo_newsletter_admin_api_newsletter_update
+        _endpoint:
+            type: admin
 
-enhavo_newsletter_newsletter_table:
-    options:
-        expose: true
-    path: /enhavo/newsletter/newsletter/table
+enhavo_newsletter_admin_newsletter_stats:
+    path: '/newsletter/stats/{id}'
     defaults:
-        _controller: enhavo_newsletter.controller.newsletter::tableAction
-        _sylius:
-            sorting:
-                createdAt: desc
-                finishAt: desc
-            filters:
-                subject:
-                    type: text
-                    property: subject
-                    label: newsletter.label.subject
-                    translation_domain: EnhavoNewsletterBundle
-            viewer:
-                translation_domain: EnhavoNewsletterBundle
-                batches:
-                    actions:
-                        delete:
-                            label: table.batch.action.delete
-                            confirm_message: table.batch.message.confirm.delete
-                            translation_domain: EnhavoAppBundle
-                            permission: ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_DELETE
-                            position: 0
-                        send:
-                            label: newsletter.batch.action.send
-                            confirm_message: newsletter.batch.message.confirm.send
-                            translation_domain: EnhavoNewsletterBundle
-                            permission: ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_SEND
-                columns:
-                    subject:
-                        sortable: true
-                        type: property
-                        label: newsletter.form.label.subject
-                        property: subject
-                        width: 6
-                    state:
-                        sortable: true
-                        type: newsletter_state
-                        width: 3
-                    createdAt:
-                        sortable: true
-                        type: datetime
-                        label: newsletter.label.createdAt
-                        property: createdAt
-                        width: 3
-                        condition: "desktop"
-
-enhavo_newsletter_newsletter_delete:
-    options:
-        expose: true
-    path: /enhavo/newsletter/newsletter/delete/{id}
-    methods: [POST]
-    defaults:
-        _controller: enhavo_newsletter.controller.newsletter::deleteAction
-
-enhavo_newsletter_newsletter_duplicate:
-    options:
-        expose: true
-    path: /enhavo/newsletter/newsletter/duplicate/{id}
-    defaults:
-        _controller: enhavo_newsletter.controller.newsletter::duplicateAction
-        _sylius:
-            redirect: enhavo_newsletter_newsletter_update
-
-enhavo_newsletter_newsletter_batch:
-    options:
-        expose: true
-    path: /enhavo/newsletter/newsletter/batch
-    methods: [POST]
-    defaults:
-        _controller: enhavo_newsletter.controller.newsletter::batchAction
-        _sylius:
-            paginate: false
-            criteria:
-                id: $ids
-            batches:
-                delete:
-                    type: delete
-                newsletter_send:
-                    type: newsletter_send
-                newsletter_send_test:
-                    type: newsletter_send_test
-
-enhavo_newsletter_newsletter_preview:
-    options:
-        expose: true
-    path: /enhavo/newsletter/newsletter/preview
-    methods: [GET]
-    defaults:
-        _controller: enhavo_newsletter.controller.newsletter::previewAction
-        _sylius:
-            viewer:
-
-enhavo_newsletter_newsletter_resource_preview:
-    options:
-        expose: true
-    path: /enhavo/newsletter/newsletter/resource/preview
-    methods: [POST]
-    defaults:
-        _controller: enhavo_newsletter.controller.newsletter::previewResourceAction
-        _area: theme
-        _sylius:
-            viewer:
-                strategy_options:
-                    service: enhavo_newsletter.controller.newsletter:showResourceAction
+        _expose: admin
+        _vue:
+            component: newsletter-stats
+            groups: admin
+        _endpoint:
+            type: admin
 
 enhavo_newsletter_newsletter_send:
     options:
         expose: true
     path: /enhavo/newsletter/newsletter/{id}/send
-#    methods: [POST]
     defaults:
         _controller: enhavo_newsletter.controller.newsletter::sendAction
 
-enhavo_newsletter_newsletter_test:
-    options:
-        expose: true
-    path: /enhavo/newsletter/newsletter/test
-#    methods: [POST]
-    defaults:
-        _controller: enhavo_newsletter.controller.newsletter::testAction
-
-enhavo_newsletter_newsletter_test_form:
-    options:
-        expose: true
-    path: /enhavo/newsletter/newsletter/test/form
-    methods: [GET]
-    controller: enhavo_app.controller.modal::formAction
-    defaults:
-        _config:
-            form: Enhavo\Bundle\NewsletterBundle\Form\Type\NewsletterEmailType
-
-enhavo_newsletter_newsletter_stats:
-    options:
-        expose: true
-    path: /enhavo/newsletter/newsletter/stats/{id}
-    methods: [GET]
-    controller: enhavo_newsletter.controller.newsletter::statsAction
-    defaults:
-        _sylius:
-            serialization_groups: ['stats']

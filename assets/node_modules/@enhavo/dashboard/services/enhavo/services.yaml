@@ -1,36 +1,44 @@
 compiler_pass:
     dashboard_widget:
-        path: '@enhavo/app/compiler-pass/registry.js'
-        service: '@enhavo/dashboard/widget/WidgetRegistry'
+        path: '@enhavo/app/compiler-pass/model-factory-register.js'
+        service: '@enhavo/dashboard/dashboard/DashboardWidgetFactory'
         tag: 'enhavo_dashboard.widget'
 
 services:
-    '@enhavo/dashboard/dashboard/DashboardApp':
+    '@enhavo/dashboard/manager/DashboardManager':
+        import: DashboardManager
         arguments:
             - '@enhavo/app/frame/FrameManager'
-            - '@enhavo/dashboard/widget/WidgetManager'
+            - '@enhavo/dashboard/dashboard/DashboardWidgetManager'
+            - '@enhavo/app/routing/Router'
+        tags:
+            - { name: vue.service, service: 'dashboardManager', reactive: true }
 
-    '@enhavo/dashboard/widget/WidgetManager':
+    '@enhavo/dashboard/dashboard/DashboardWidgetFactory':
+        import: DashboardWidgetFactory
+        chunk: 'column'
+
+    '@enhavo/dashboard/dashboard/DashboardWidgetManager':
+        import: DashboardWidgetManager
         arguments:
-            - 'param:data.widgets'
-            - '@enhavo/dashboard/widget/WidgetRegistry'
-            - '@enhavo/app/vue/VueRegistry'
+            - '@enhavo/dashboard/dashboard/DashboardWidgetFactory'
 
-    '@enhavo/dashboard/widget/WidgetRegistry':
-
-    widget.number:
-        from: '@enhavo/core/RegistryEntry'
-        arguments:
-            - 'string:number-widget'
-            - '@enhavo/dashboard/components/NumberWidgetComponent.vue'
-            - '@enhavo/dashboard/widget/factory/NumberWidgetFactory'
+    '@enhavo/dashboard/dashboard/model/BaseDashboardWidget':
+        import: BaseDashboardWidget
         tags:
             - 'enhavo_dashboard.widget'
 
-    '@enhavo/dashboard/widget/factory/NumberWidgetFactory':
+    '@enhavo/dashboard/dashboard/model/NumberDashboardWidget':
+        import: NumberDashboardWidget
+        tags:
+            - 'enhavo_dashboard.widget'
 
-    '@enhavo/dashboard/components/NumberWidgetComponent.vue':
+    '@enhavo/dashboard/components/DashboardIndex.vue':
         static: true
+        tags:
+            - { name: vue.component, component: 'dashboard-index' }
 
-    '@enhavo/dashboard/components/ApplicationComponent.vue':
+    '@enhavo/dashboard/components/DashboardWidgetNumber.vue':
         static: true
+        tags:
+            - { name: vue.component, component: 'dashboard-widget-number' }

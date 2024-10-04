@@ -2,7 +2,6 @@
 
 namespace Enhavo\Bundle\ResourceBundle\ExpressionLanguage;
 
-use Symfony\Component\ExpressionLanguage\ExpressionFunction;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
 class ResourceExpressionLanguage
@@ -26,9 +25,22 @@ class ResourceExpressionLanguage
         return $expression;
     }
 
-    public function addVariable(string $key, $value): void
+    public function evaluateArray(array $array, array $values = [], $recursive = false): mixed
     {
-        $this->variables[$key] = $value;
+        foreach ($array as $key => $item) {
+            if (is_string($item)) {
+                $array[$key] = $this->evaluate($item, $values);
+            } else if (is_array($array) && $recursive) {
+                $array[$key] = $this->evaluateArray($item, $values, $recursive);
+            }
+        }
+
+        return $array;
+    }
+
+    public function addVariableProvider(ResourceExpressionVariableProviderInterface $provider): void
+    {
+        $this->variables[$provider->getVariableName()] = $provider->getVariableValue();
     }
 
     public function addFunctionProvider(ResourceExpressionFunctionProviderInterface $provider): void

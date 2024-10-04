@@ -8,7 +8,7 @@ use Symfony\Component\ExpressionLanguage\ExpressionFunction;
 class RouteResolverExpressionFunctionProvider implements ResourceExpressionFunctionProviderInterface
 {
     public function __construct(
-        private RouteResolverInterface $routeResolver,
+        private readonly RouteResolverInterface $routeResolver,
     )
     {
     }

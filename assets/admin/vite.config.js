@@ -24,6 +24,7 @@ export default defineConfig({
             'select2',
             'icheck',
             'tinymce',
+            'html-entities',
             'tinymce/plugins/advlist',
             'tinymce/plugins/autolink',
             'tinymce/plugins/code',
@@ -32,6 +33,7 @@ export default defineConfig({
             'tinymce/plugins/link',
             'tinymce/plugins/lists',
             'tinymce/plugins/table',
+            'expression-language/lib/index',
         ],
     },
     plugins: [

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
-    <entity name="Enhavo\Bundle\NewsletterBundle\Entity\Receiver" table="newsletter_receiver">
+    <entity name="Enhavo\Bundle\NewsletterBundle\Entity\Receiver" table="newsletter_receiver" repository-class="Enhavo\Bundle\NewsletterBundle\Repository\ReceiverRepository">
         <id name="id" type="integer" column="id">
             <generator />
         </id>

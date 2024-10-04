@@ -76,6 +76,12 @@ enhavo_resource:
         enhavo_page.page:
             extends: enhavo_resource.grid
             resource: enhavo_page.page
+            collection:
+                class: Enhavo\Bundle\ResourceBundle\Collection\ListCollection
+                children_property: children
+                parent_property: parent
+                position_property: position
+                sortable: true
             filters:
                 title:
                     type: text
@@ -124,17 +130,17 @@ enhavo_resource:
                     type: publish
 
     inputs:
-        enhavo_article.article:
+        enhavo_page.page:
             class: Enhavo\Bundle\ResourceBundle\Input\Input
-            resource: enhavo_article.article
-            form: Enhavo\Bundle\ArticleBundle\Form\Type\ArticleType
+            resource: enhavo_page.page
+            form: Enhavo\Bundle\PageBundle\Form\Type\PageType
             form_options:
                 component_theme: admin
             tabs:
                 main:
                     type: form
-                    label: article.label.article
-                    translation_domain: EnhavoArticleBundle
+                    label: page.label.page
+                    translation_domain: EnhavoPageBundle
                     arrangement: |
                         link
                         title
@@ -154,13 +160,10 @@ enhavo_resource:
                     type: save
                 duplicate:
                     type: duplicate
-                    route: enhavo_article_admin_api_duplicate
-                    permission: ROLE_ENHAVO_ARTICLE_ARTICLE_CREATE
-                    enabled: 'expr:resource && resource.id'
+                    route: enhavo_page_admin_api_duplicate
+                    permission: ROLE_ENHAVO_PAGE_PAGE_CREATE
+                    enabled: 'expr:resource && resource.getId()'
                 preview:
                     type: preview
-                    route: enhavo_article_admin_article_preview
-                    enabled: 'expr:resource && resource.id'
-                comments:
-                    type: comments
-                    enabled: 'expr:resource && resource.id'
+                    api_route: enhavo_page_admin_api_preview
+                    enabled: 'expr:resource && resource.getId()'

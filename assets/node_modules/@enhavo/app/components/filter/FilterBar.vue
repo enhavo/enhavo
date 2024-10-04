@@ -3,10 +3,8 @@
         <div class="view-table-filter filter-headline" v-if="hasActiveFilter(filters)">{{ translator.trans('enhavo_app.grid.label.filter') }}</div>
         <template v-for="filter in filterManager.getActiveFilters(filters)">
             <component
-                class="view-table-filter"
                 :is="filter.component"
                 :data="filter"
-                :data-filter="filter.key"
                 @apply="apply()"
             ></component>
         </template>

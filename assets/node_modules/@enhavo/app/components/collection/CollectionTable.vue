@@ -48,7 +48,6 @@
 <script setup lang="ts">
 import {onMounted, onUnmounted} from "vue";
 import {TableCollection} from "../../collection/model/TableCollection";
-import $ from "jquery";
 import CollectionTablePagination from "./CollectionTablePagination.vue";
 
 const props = defineProps<{

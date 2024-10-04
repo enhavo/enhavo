@@ -17,7 +17,9 @@ class SubmenuType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nodes', NodeCollectionType::class);
+        $builder->add('nodes', NodeCollectionType::class, [
+            'prototype' => false,
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

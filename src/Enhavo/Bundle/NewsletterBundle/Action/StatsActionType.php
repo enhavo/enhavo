@@ -16,7 +16,7 @@ class StatsActionType extends AbstractActionType
             'label' => 'newsletter.action.stats.label',
             'translation_domain' => 'EnhavoNewsletterBundle',
             'icon' => 'assessment',
-            'route' => 'enhavo_newsletter_newsletter_stats',
+            'route' => 'enhavo_newsletter_admin_newsletter_stats',
             'view_key' => 'stats-view',
             'target' => '_view',
             'append_id' => true
@@ -25,10 +25,10 @@ class StatsActionType extends AbstractActionType
 
     public function isEnabled(array $options, $resource = null): bool
     {
-        if(!$resource instanceof NewsletterInterface) {
-            return true;
+        if (!$resource instanceof NewsletterInterface) {
+            return false;
         } elseif($resource->getState() === NewsletterInterface::STATE_CREATED) {
-            return true;
+            return false;
         }
         return $this->parent->isEnabled($options, $resource);
     }

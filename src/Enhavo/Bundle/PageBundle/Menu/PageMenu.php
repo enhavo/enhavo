@@ -13,13 +13,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PageMenu extends AbstractMenuType
 {
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'icon' => 'pages',
             'label' => 'page.label.page',
             'translation_domain' => 'EnhavoPageBundle',
-            'route' => 'enhavo_page_page_index',
+            'route' => 'enhavo_page_admin_page_index',
             'role' => 'ROLE_ENHAVO_PAGE_PAGE_INDEX',
         ]);
     }

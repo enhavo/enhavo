@@ -1,0 +1,52 @@
+enhavo_navigation_admin_api_navigation_index:
+    path: /navigation/index
+    methods:
+        - GET
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_index
+            grid: enhavo_navigation.navigation
+
+enhavo_navigation_admin_api_navigation_list:
+    path: /navigation/list
+    methods:
+        - GET
+        - POST
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_list
+            grid: enhavo_navigation.navigation
+
+enhavo_navigation_admin_api_navigation_create:
+    path: /navigation/create
+    methods:
+        - GET
+        - POST
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_create
+            input: enhavo_navigation.navigation
+
+enhavo_navigation_admin_api_navigation_update:
+    path: '/navigation/update/{id}'
+    methods:
+        - GET
+        - POST
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_update
+            input: enhavo_navigation.navigation
+
+enhavo_navigation_admin_api_navigation_delete:
+    path: '/navigation/delete/{id}'
+    methods:
+        - DELETE
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_delete
+            input: enhavo_navigation.navigation

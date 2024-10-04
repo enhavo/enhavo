@@ -45,6 +45,7 @@ class NewsletterStateColumnType extends AbstractColumnType
             'component' => 'column-state',
             'label' => 'newsletter.label.state',
             'translation_domain' => 'EnhavoNewsletterBundle',
+            'model' => 'StateColumn',
         ]);
     }
 

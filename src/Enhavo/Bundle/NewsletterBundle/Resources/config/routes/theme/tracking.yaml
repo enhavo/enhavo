@@ -1,5 +1,7 @@
 enhavo_newsletter_tracking_open:
-    path: /newsletter/tracking/{token}/open
+    path: /newsletter/tracking/{token}
     methods: [GET]
     defaults:
-        _controller: Enhavo\Bundle\NewsletterBundle\Controller\TrackingController::openAction
+        _expose: theme
+        _endpoint:
+            type: Enhavo\Bundle\NewsletterBundle\Endpoint\TrackingTrackEndpointType

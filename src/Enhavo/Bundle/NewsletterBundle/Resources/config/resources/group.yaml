@@ -1,0 +1,40 @@
+enhavo_resource:
+    resources:
+        enhavo_newsletter.group:
+            classes:
+                model: Enhavo\Bundle\NewsletterBundle\Entity\Group
+                repository: Enhavo\Bundle\NewsletterBundle\Repository\GroupRepository
+    grids:
+        enhavo_newsletter.group:
+            extends: enhavo_resource.grid
+            resource: enhavo_newsletter.group
+            actions: { }
+            filters: { }
+            columns:
+                name:
+                    sortable: true
+                    property: name
+                    width: 8
+                    label: group.label.name
+                    type: property
+                    translation_domain: EnhavoNewsletterBundle
+                action:
+                    width: 4
+                    label: label.edit
+                    translation_domain: EnhavoAppBundle
+                    type: action
+                    action:
+                        type: update
+                        route: enhavo_newsletter_group_update
+            batches:
+                delete:
+                    type: delete
+
+    inputs:
+        enhavo_newsletter.group:
+            extends: enhavo_resource.input
+            resource: enhavo_newsletter.group
+            form: Enhavo\Bundle\NewsletterBundle\Form\Type\GroupType
+            form_options: {  }
+            actions: {  }
+            tabs: {  }

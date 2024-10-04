@@ -2,10 +2,8 @@
 
 namespace Enhavo\Bundle\ResourceBundle\Collection;
 
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityRepository;
-use Enhavo\Bundle\SearchBundle\Engine\Result\ResultSummary;
-use Pagerfanta\Pagerfanta;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 interface CollectionInterface
@@ -25,4 +23,6 @@ interface CollectionInterface
     public function getItems(array $context = []): ResourceItems;
 
     public function getViewData(array $context = []): array;
+
+    public function handleAction(string $action, array $payload): void;
 }

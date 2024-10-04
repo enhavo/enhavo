@@ -3,8 +3,8 @@
 namespace Enhavo\Bundle\SettingBundle\Setting\Type;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Enhavo\Bundle\ResourceBundle\Factory\Factory;
-use Enhavo\Bundle\ResourceBundle\Repository\EntityRepository;
 use Enhavo\Bundle\SettingBundle\Entity\Setting as SettingEntity;
 use Enhavo\Bundle\SettingBundle\Exception\SettingNotExists;
 use Enhavo\Bundle\SettingBundle\Setting\AbstractSettingType;
@@ -13,26 +13,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BaseSettingType extends AbstractSettingType implements SettingTypeInterface
 {
-    /** @var EntityRepository */
-    private $repository;
-
-    /** @var Factory */
-    private $factory;
-
-    /** @var EntityManagerInterface */
-    private $em;
-
-    /**
-     * BaseSettingType constructor.
-     * @param EntityRepository $repository
-     * @param Factory $factory
-     * @param EntityManagerInterface $em
-     */
-    public function __construct(EntityRepository $repository, Factory $factory, EntityManagerInterface $em)
+    public function __construct(
+        private readonly EntityRepository $repository,
+        private readonly Factory $factory,
+        private readonly EntityManagerInterface $em,
+    )
     {
-        $this->repository = $repository;
-        $this->factory = $factory;
-        $this->em = $em;
     }
 
     public function getSettingEntity($options, $key): SettingEntity

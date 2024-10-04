@@ -1,0 +1,62 @@
+enhavo_setting_admin_api_setting_index:
+    path: /setting/index
+    methods:
+        - GET
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_index
+            grid: enhavo_setting.setting
+
+enhavo_setting_admin_api_setting_list:
+    path: /setting/list
+    methods:
+        - GET
+        - POST
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_list
+            grid: enhavo_setting.setting
+
+enhavo_setting_admin_api_setting_create:
+    path: /setting/create
+    methods:
+        - GET
+        - POST
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_create
+            input: enhavo_setting.setting
+
+enhavo_setting_admin_api_setting_update:
+    path: '/setting/update/{id}'
+    methods:
+        - GET
+        - POST
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_update
+            input: enhavo_setting.setting
+
+enhavo_setting_admin_api_setting_delete:
+    path: '/setting/delete/{id}'
+    methods:
+        - DELETE
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_delete
+            input: enhavo_setting.setting
+
+enhavo_setting_admin_api_setting_batch:
+    path: '/setting/batch'
+    methods:
+        - POST
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_batch
+            grid: enhavo_setting.setting

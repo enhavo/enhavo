@@ -5,6 +5,7 @@ namespace Enhavo\Bundle\NewsletterBundle\Tests\Storage;
 
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\NewsletterBundle\Entity\Group;
@@ -23,7 +24,6 @@ use Enhavo\Bundle\NewsletterBundle\Storage\Type\StorageType;
 use Enhavo\Bundle\NewsletterBundle\Tests\Mocks\GroupAwareSubscriberMock;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 class LocalTypeStorageTest extends TestCase
 {
@@ -31,8 +31,8 @@ class LocalTypeStorageTest extends TestCase
     {
         $dependencies = new LocalTypeStorageTestDependencies();
         $dependencies->entityManager = $this->getMockBuilder(EntityManagerInterface::class)->getMock();
-        $dependencies->subscriberRepository = $this->getMockBuilder(RepositoryInterface::class)->getMock();
-        $dependencies->groupRepository = $this->getMockBuilder(RepositoryInterface::class)->getMock();
+        $dependencies->subscriberRepository = $this->getMockBuilder(EntityRepository::class)->disableOriginalConstructor()->getMock();
+        $dependencies->groupRepository = $this->getMockBuilder(EntityRepository::class)->disableOriginalConstructor()->getMock();
         $dependencies->subscriberFactory = $this->getMockBuilder(LocalSubscriberFactoryInterface::class)->getMock();
         return $dependencies;
     }

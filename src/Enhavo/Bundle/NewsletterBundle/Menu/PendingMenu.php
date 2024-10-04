@@ -19,7 +19,7 @@ class PendingMenu extends AbstractMenuType
             'icon' => 'add_box',
             'label' => 'subscriber.label.pending',
             'translation_domain' => 'EnhavoNewsletterBundle',
-            'route' => 'enhavo_newsletter_pending_subscriber_index',
+            'route' => 'enhavo_newsletter_admin_pending_subscriber_index',
             'role' => 'ROLE_ENHAVO_NEWSLETTER_PENDING_SUBSCRIBER_INDEX',
         ]);
     }

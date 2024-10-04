@@ -1,0 +1,52 @@
+enhavo_user_admin_api_group_index:
+    path: /group/index
+    methods:
+        - GET
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_index
+            grid: enhavo_user.group
+
+enhavo_user_admin_api_group_list:
+    path: /group/list
+    methods:
+        - GET
+        - POST
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_list
+            grid: enhavo_user.group
+
+enhavo_user_admin_api_group_create:
+    path: /group/create
+    methods:
+        - GET
+        - POST
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_create
+            input: enhavo_user.group
+
+enhavo_user_admin_api_group_update:
+    path: '/group/update/{id}'
+    methods:
+        - GET
+        - POST
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_update
+            input: enhavo_user.group
+
+enhavo_user_admin_api_group_delete:
+    path: '/group/delete/{id}'
+    methods:
+        - DELETE
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_delete
+            input: enhavo_user.group

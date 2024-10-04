@@ -4,6 +4,7 @@ import {
     FrameClear,
     FrameGet,
     FrameLoaded,
+    FrameLabel,
     FrameRemove,
     FrameUpdate,
     FrameSave,
@@ -260,5 +261,10 @@ export class FrameManager
     public isRoot(): boolean
     {
         return this.getId() === '';
+    }
+
+    public setLabel(label: string): void
+    {
+        return this.eventDispatcher.dispatch(new FrameLabel(window.name, label));
     }
 }

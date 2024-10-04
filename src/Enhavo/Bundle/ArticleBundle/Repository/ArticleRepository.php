@@ -22,12 +22,28 @@ class ArticleRepository extends ContentRepository
         $query->orderBy('a.publicationDate', 'DESC');
     }
 
-    public function findByCategoriesAndTags($categories = [], $tags = [], $pagination = true, $limit = 10)
+    public function findByCategoriesAndTags(
+        $categories = [],
+        $tags = [],
+        $pagination = true,
+        $limit = 10,
+        $includeCategoryDescendants = false,
+    )
     {
         $query = $this->createQueryBuilder('a');
         $query->distinct(true);
 
         $this->addDefaultConditions($query);
+
+        if ($includeCategoryDescendants) {
+            foreach($categories as $category) {
+                foreach($category->getDescendants() as $descendant) {
+                    if (in_array($descendant, $categories)) {
+                        $categories[] = $descendant;
+                    }
+                }
+            }
+        }
 
         if (count($categories) > 0) {
             $query->innerJoin('a.categories', 'c');

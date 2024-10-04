@@ -22,6 +22,8 @@ export class ResourceInputManager
     public form: Form;
 
     private visitors: FormVisitorInterface[] = [];
+    private loadedPromiseResolveCalls: Array<() => void> = [];
+    private loaded: boolean = false;
 
     constructor(
         private router: Router,
@@ -57,6 +59,21 @@ export class ResourceInputManager
         this.initTab(window.location.href);
 
         this.frameManager.loaded();
+        this.loaded = true
+        for (let promise of this.loadedPromiseResolveCalls) {
+            promise();
+        }
+    }
+
+    onLoaded(): Promise<void>
+    {
+        return new Promise(resolve => {
+            if (this.loaded) {
+                resolve();
+            } else {
+                this.loadedPromiseResolveCalls.push(resolve);
+            }
+        })
     }
 
     async save(url: string, morph: boolean  = false)

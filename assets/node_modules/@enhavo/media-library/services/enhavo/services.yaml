@@ -1,4 +1,21 @@
 services:
+    '@enhavo/media-library/manager/MediaLibraryManager':
+        chunk: 'media-library'
+        import: MediaLibraryManager
+        arguments:
+            - '@enhavo/app/frame/FrameEventDispatcher'
+            - '@enhavo/app/frame/FrameManager'
+            - '@enhavo/app/flash-message/FlashMessenger'
+            - '@enhavo/app/routing/Router'
+            - '@enhavo/app/translation/Translator'
+            - '@enhavo/app/action/ActionManager'
+            - '@enhavo/app/filter/FilterManager'
+            - '@enhavo/app/column/ColumnManager'
+            - '@enhavo/app/batch/BatchManager'
+            - '@enhavo/app/collection/CollectionFactory'
+        tags:
+            - { name: vue.service, service: 'mediaLibraryManager', reactive: true }
+
     '@enhavo/media-library/loader/MediaLibraryLoader':
         chunk: 'form'
         arguments:
@@ -8,80 +25,19 @@ services:
         tags:
             - 'enhavo_app.form'
 
-    '@enhavo/media-library/MediaLibraryApp':
-        chunk: 'media-library'
+    '@enhavo/media-library/action/MediaLibraryUploadAction':
+        import: MediaLibraryUploadAction
+        chunk: 'action'
+        tags:
+            - 'enhavo_app.action'
+
+    '@enhavo/media-library/collection/MediaLibraryCollection':
+        import: MediaLibraryCollection
+        chunk: 'collection'
         arguments:
+            - '@enhavo/app/routing/Router'
+            - '@enhavo/app/filter/FilterManager'
+            - '@enhavo/app/column/ColumnManager'
             - '@enhavo/app/frame/FrameManager'
-            - '@enhavo/app/action/ActionManager'
-            - '@enhavo/app/flash-message/FlashMessenger'
-            - '@enhavo/media-library/MediaLibrary'
-
-    '@enhavo/media-library/MediaLibrary':
-        chunk: 'media-library'
-        arguments:
-            - 'param:data'
-            - '@enhavo/app/frame/FrameEventDispatcher'
-            - '@enhavo/app/frame/FrameManager'
-            - '@enhavo/app/flash-message/FlashMessenger'
-            - '@enhavo/core/Router'
-            - '@enhavo/app/vue/VueRegistry'
-            - '@enhavo/core/Translator'
-
-    '@enhavo/media-library/components/MediaLibraryComponent.vue':
-        chunk: 'media-library'
-        static: true
-
-
-    '@enhavo/media-library/components/ListView.vue':
-        chunk: 'vue'
-        static: true
         tags:
-            - { name: vue.component, component: 'list-view' }
-
-    '@enhavo/media-library/components/ThumbnailView.vue':
-        chunk: 'vue'
-        static: true
-        tags:
-            - { name: vue.component, component: 'thumbnail-view' }
-
-    '@enhavo/media-library/components/ThumbnailFile.vue':
-        chunk: 'vue'
-        static: true
-        tags:
-            - { name: vue.component, component: 'file-thumbnail' }
-
-    '@enhavo/media-library/components/ListFile.vue':
-        chunk: 'vue'
-        static: true
-        tags:
-            - { name: vue.component, component: 'file-list' }
-
-    '@enhavo/media-library/components/TagList.vue':
-        chunk: 'vue'
-        static: true
-        tags:
-            - { name: vue.component, component: 'tag-list' }
-
-    '@enhavo/media-library/components/Tag.vue':
-        chunk: 'vue'
-        static: true
-        tags:
-            - { name: vue.component, component: 'tag' }
-
-    '@enhavo/media-library/components/ContentTypeList.vue':
-        chunk: 'vue'
-        static: true
-        tags:
-            - { name: vue.component, component: 'content-type-list' }
-
-    '@enhavo/media-library/components/ContentType.vue':
-        chunk: 'vue'
-        static: true
-        tags:
-            - { name: vue.component, component: 'content-type' }
-
-    '@enhavo/media-library/components/Pagination.vue':
-        chunk: 'vue'
-        static: true
-        tags:
-            - { name: vue.component, component: 'pagination' }
+            - { name: enhavo_app.collection }

@@ -1,3 +1,7 @@
 enhavo_redirect_admin:
     resource: "@EnhavoRedirectBundle/Resources/config/routes/admin/*"
-    prefix: /admin
+    prefix: /admin/redirect
+
+enhavo_redirect_admin_api:
+    resource: "@EnhavoRedirectBundle/Resources/config/routes/admin_api/*"
+    prefix: /admin/api/redirect

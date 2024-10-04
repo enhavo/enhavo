@@ -19,7 +19,7 @@ class GroupMenu extends AbstractMenuType
             'icon' => 'people_outline',
             'label' => 'group.label.group',
             'translation_domain' => 'EnhavoUserBundle',
-            'route' => 'enhavo_user_group_index',
+            'route' => 'enhavo_user_admin_group_index',
             'role' => 'ROLE_ENHAVO_USER_GROUP_INDEX',
         ]);
     }

@@ -2,7 +2,6 @@
 
 namespace Enhavo\Bundle\ResourceBundle;
 
-
 use Enhavo\Bundle\ResourceBundle\Action\Action;
 use Enhavo\Bundle\ResourceBundle\Action\ActionTypeInterface;
 use Enhavo\Bundle\ResourceBundle\Batch\Batch;
@@ -13,8 +12,10 @@ use Enhavo\Bundle\ResourceBundle\DependencyInjection\Compiler\CollectionCompiler
 use Enhavo\Bundle\ResourceBundle\DependencyInjection\Compiler\GridCompilerPass;
 use Enhavo\Bundle\ResourceBundle\DependencyInjection\Compiler\InputCompilerPass;
 use Enhavo\Bundle\ResourceBundle\DependencyInjection\Compiler\ResourceCompilerPass;
+use Enhavo\Bundle\ResourceBundle\DependencyInjection\Compiler\ResourceManagerCompilerPass;
 use Enhavo\Bundle\ResourceBundle\DependencyInjection\Compiler\ResourceExpressionCompilerPass;
 use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionFunctionProviderInterface;
+use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionVariableProviderInterface;
 use Enhavo\Bundle\ResourceBundle\Filter\Filter;
 use Enhavo\Bundle\ResourceBundle\Filter\FilterTypeInterface;
 use Enhavo\Bundle\ResourceBundle\Tab\Tab;
@@ -29,6 +30,7 @@ class EnhavoResourceBundle extends Bundle
     {
         parent::build($container);
         $container->addCompilerPass(new ResourceCompilerPass());
+        $container->addCompilerPass(new ResourceManagerCompilerPass());
         $container->addCompilerPass(new GridCompilerPass());
         $container->addCompilerPass(new CollectionCompilerPass());
         $container->addCompilerPass(new InputCompilerPass());
@@ -63,5 +65,9 @@ class EnhavoResourceBundle extends Bundle
         $container
             ->registerForAutoconfiguration(ResourceExpressionFunctionProviderInterface::class)
             ->addTag('enhavo_resource.expression_language_function_provider');
+
+        $container
+            ->registerForAutoconfiguration(ResourceExpressionVariableProviderInterface::class)
+            ->addTag('enhavo_resource.expression_language_variable_provider');
     }
 }

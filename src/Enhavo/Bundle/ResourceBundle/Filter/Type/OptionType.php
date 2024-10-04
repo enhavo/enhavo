@@ -88,9 +88,10 @@ class OptionType extends AbstractFilterType
     {
         $resolver->setDefaults([
             'component' => 'filter-option',
-            'model' => 'OptionFilter'
+            'model' => 'OptionFilter',
+            'initial_value' => null,
         ]);
-        $resolver->setRequired(['options']);
+        $resolver->setRequired(['options', 'property']);
     }
 
     public static function getName(): ?string

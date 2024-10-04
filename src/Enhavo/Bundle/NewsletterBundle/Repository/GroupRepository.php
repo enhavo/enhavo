@@ -9,9 +9,12 @@
 namespace Enhavo\Bundle\NewsletterBundle\Repository;
 
 use Enhavo\Bundle\ResourceBundle\Repository\EntityRepository;
+use Enhavo\Bundle\ResourceBundle\Repository\EntityRepositoryTrait;
 
 class GroupRepository extends EntityRepository
 {
+    use EntityRepositoryTrait;
+
     public function findByTerm($term, $limit)
     {
         $query = $this->createQueryBuilder('t')
@@ -21,6 +24,7 @@ class GroupRepository extends EntityRepository
 
         $paginator = $this->getPaginator($query);
         $paginator->setMaxPerPage($limit);
+
         return $paginator;
     }
 }

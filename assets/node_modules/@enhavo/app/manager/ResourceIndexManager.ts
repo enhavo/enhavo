@@ -33,9 +33,9 @@ export class ResourceIndexManager
     ) {
     }
 
-    async loadIndex(route: string)
+    async loadIndex(route: string, parameters: object = {})
     {
-        let url = this.router.generate(route);
+        let url = this.router.generate(route, parameters);
 
         const response = await fetch(url);
         const data = await response.json();

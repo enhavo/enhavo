@@ -5,9 +5,7 @@ namespace Enhavo\Bundle\DashboardBundle\Tests\Provider\Type;
 
 
 use Doctrine\ORM\EntityManagerInterface;
-use Enhavo\Bundle\DashboardBundle\Provider\Type\DashboardProviderType;
 use PHPUnit\Framework\TestCase;
-use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
 use Symfony\Component\OptionsResolver\OptionsResolver;

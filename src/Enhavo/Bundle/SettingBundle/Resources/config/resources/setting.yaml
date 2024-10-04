@@ -1,0 +1,41 @@
+enhavo_resource:
+    resources:
+        enhavo_setting.setting:
+            classes:
+                model: Enhavo\Bundle\SettingBundle\Entity\Setting
+                factory: Enhavo\Bundle\ResourceBundle\Factory\Factory
+                repository: Enhavo\Bundle\SettingBundle\Repository\SettingRepository
+    grids:
+        enhavo_setting.setting:
+            routes:
+                list_parameters:
+                    group: expr:request.get("group")
+            extends: enhavo_resource.grid
+            resource: enhavo_setting.setting
+            criteria:
+                group: expr:request.get("group")
+            actions:
+                create:
+                    type: create
+                    enabled: false
+            columns:
+                label:
+                    type: label
+                    property: label
+                    label: setting.label.label
+                    width: 6
+                value:
+                    type: setting
+                    label: setting.label.value
+                    width: 6
+    inputs:
+        enhavo_setting.setting:
+            extends: enhavo_resource.input
+            resource: enhavo_setting.setting
+            form: Enhavo\Bundle\SettingBundle\Form\Type\SettingType
+            form_options: {  }
+            actions_secondary:
+                delete:
+                    type: delete
+                    enabled: false
+            tabs: {  }

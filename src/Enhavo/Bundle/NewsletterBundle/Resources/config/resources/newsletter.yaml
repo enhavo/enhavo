@@ -1,0 +1,86 @@
+enhavo_resource:
+    resources:
+        enhavo_newsletter.newsletter:
+            classes:
+                model: Enhavo\Bundle\NewsletterBundle\Entity\Newsletter
+                factory: Enhavo\Bundle\NewsletterBundle\Factory\NewsletterFactory
+                repository: Enhavo\Bundle\NewsletterBundle\Repository\NewsletterRepository
+    grids:
+        enhavo_newsletter.newsletter:
+            extends: enhavo_resource.grid
+            resource: enhavo_newsletter.newsletter
+            actions: {  }
+            filters:
+                subject:
+                    type: text
+                    property: subject
+                    label: newsletter.label.subject
+                    translation_domain: EnhavoNewsletterBundle
+            columns:
+                subject:
+                    sortable: true
+                    type: property
+                    label: newsletter.form.label.subject
+                    property: subject
+                    width: 6
+                state:
+                    sortable: true
+                    type: newsletter_state
+                    width: 3
+                createdAt:
+                    sortable: true
+                    type: datetime
+                    label: newsletter.label.createdAt
+                    property: createdAt
+                    width: 3
+                    condition: desktop
+            batches:
+                delete:
+                    type: delete
+                newsletter_send:
+                    type: newsletter_send
+                newsletter_send_test:
+                    type: newsletter_send_test
+    inputs:
+        enhavo_newsletter.newsletter:
+            extends: enhavo_resource.input
+            resource: enhavo_newsletter.newsletter
+            form: Enhavo\Bundle\NewsletterBundle\Form\Type\NewsletterType
+            form_options: {  }
+            actions:
+                preview:
+                    type: preview
+                send_test:
+                    type: newsletter_send_test
+                    enabled: expr:resource && resource.getId()
+                send:
+                    type: newsletter_send
+                    enabled: expr:resource && resource.getId()
+                stats:
+                    type: newsletter_stats
+            tabs:
+                main:
+                    label: newsletter.label.newsletter
+                    translation_domain: EnhavoNewsletterBundle
+                    type: form
+                    arrangement:
+                        - template
+                        - link
+                        - route
+                        - subject
+                        - groups
+                        - attachments
+                content:
+                    label: newsletter.label.content
+                    translation_domain: EnhavoNewsletterBundle
+                    type: form
+                    arrangement:
+                        - content
+                meta:
+                    label: newsletter.label.meta
+                    translation_domain: EnhavoNewsletterBundle
+                    type: form
+                    arrangement:
+                        - slug
+                        - id
+                        - state

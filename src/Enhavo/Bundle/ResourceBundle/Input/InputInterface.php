@@ -11,7 +11,7 @@ interface InputInterface
 
     public function configureOptions(OptionsResolver $resolver): void;
 
-    public function getForm(array $context = []): ?FormInterface;
+    public function getForm(mixed $data = null, array $context = []): ?FormInterface;
 
     public function getResource(array $context = []): ?object;
 

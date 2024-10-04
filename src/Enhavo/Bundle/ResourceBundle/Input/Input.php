@@ -155,12 +155,12 @@ class Input extends AbstractInput implements ConfigMergeInterface
         ];
     }
 
-    public function getForm(array $context = []): ?FormInterface
+    public function getForm(mixed $data = null, array $context = []): ?FormInterface
     {
         if ($this->form !== null) {
             return $this->form;
         } else if ($this->options['form']) {
-            $this->form = $this->createForm($this->options['form'], null, $this->options['form_options']);
+            $this->form = $this->createForm($this->options['form'], $data, $this->options['form_options']);
             return $this->form;
         }
 

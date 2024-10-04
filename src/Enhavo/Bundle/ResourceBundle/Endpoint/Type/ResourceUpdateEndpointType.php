@@ -39,9 +39,8 @@ class ResourceUpdateEndpointType extends AbstractEndpointType
             throw $this->createNotFoundException();
         }
 
-        $form = $input->getForm();
+        $form = $input->getForm($resource);
         if ($form) {
-            $form->setData($resource);
             $form->handleRequest($request);
 
             $context->set('form', $form);

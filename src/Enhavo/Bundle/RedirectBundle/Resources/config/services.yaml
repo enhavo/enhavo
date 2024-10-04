@@ -14,3 +14,9 @@ services:
             - '@enhavo_redirect.redirect.redirect_manager'
         tags:
             - { name: kernel.event_subscriber }
+
+    Enhavo\Bundle\RedirectBundle\Form\Type\RedirectType:
+        arguments:
+            - '%enhavo_redirect.redirect.model.class%'
+        tags:
+            - { name: form.type }

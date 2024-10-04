@@ -9,6 +9,14 @@ services:
             - { name: enhavo_resource.collection }
 
     Enhavo\Bundle\ResourceBundle\Collection\ListCollection:
+        arguments:
+            - '@Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage'
+            - '@Enhavo\Bundle\ResourceBundle\Filter\FilterQueryFactory'
+            - '@request_stack'
+            - '@router'
+            - '@security.csrf.token_manager'
+            - '@doctrine.orm.entity_manager'
+            - '@security.authorization_checker'
         tags:
             - { name: enhavo_resource.collection }
 

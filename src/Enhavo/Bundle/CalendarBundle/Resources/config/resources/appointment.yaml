@@ -1,0 +1,69 @@
+enhavo_resource:
+    resources:
+        enhavo_calendar.appointment:
+            classes:
+                model: Enhavo\Bundle\CalendarBundle\Entity\Appointment
+                repository: Enhavo\Bundle\CalendarBundle\Repository\AppointmentRepository
+    grids:
+        enhavo_calendar.appointment:
+            extends: enhavo_resource.grid
+            resource: enhavo_calendar.appointment
+            filters:
+                title:
+                    type: text
+                    property: title
+                    label: appointment.label.title
+                    translation_domain: EnhavoCalendarBundle
+            columns:
+                title:
+                    type: text
+                    label: appointment.label.title
+                    property: title
+                    width: 7
+                date:
+                    type: datetime
+                    label: appointment.label.date
+                    property: dateFrom
+                    width: 5
+            batches:
+                delete:
+                    type: delete
+    inputs:
+        enhavo_calendar.appointment:
+            extends: enhavo_resource.input
+            resource: enhavo_calendar.appointment
+            form: Enhavo\Bundle\CalendarBundle\Form\Type\AppointmentType
+            form_options: {  }
+            actions: {  }
+            tabs:
+                main:
+                    label: appointment.label.appointment
+                    translation_domain: EnhavoCalendarBundle
+                    type: form
+                    arrangement:
+                        - link
+                        - route
+                        - title
+                        - teaser
+                        - picture
+                location:
+                    label: appointment.label.location
+                    translation_domain: EnhavoCalendarBundle
+                    type: form
+                content:
+                    label: appointment.label.content
+                    translation_domain: EnhavoCalendarBundle
+                    type: form
+                    arrangement:
+                        - content
+                meta:
+                    label: appointment.label.meta
+                    translation_domain: EnhavoCalendarBundle
+                    type: form
+                    arrangement:
+                        - slug
+                        - route
+                import:
+                    label: appointment.label.import
+                    translation_domain: EnhavoCalendarBundle
+                    type: form

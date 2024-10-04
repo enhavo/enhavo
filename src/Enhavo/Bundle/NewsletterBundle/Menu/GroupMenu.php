@@ -19,7 +19,7 @@ class GroupMenu extends AbstractMenuType
             'icon' => 'add_box',
             'label' => 'group.label.group',
             'translation_domain' => 'EnhavoNewsletterBundle',
-            'route' => 'enhavo_newsletter_group_index',
+            'route' => 'enhavo_newsletter_admin_group_index',
             'role' => 'ROLE_ENHAVO_NEWSLETTER_GROUP_INDEX',
         ]);
     }

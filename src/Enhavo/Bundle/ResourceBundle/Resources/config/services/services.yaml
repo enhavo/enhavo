@@ -18,6 +18,12 @@ services:
         tags:
             - { name: enhavo_resource.expression_language_function_provider }
 
+    Enhavo\Bundle\ResourceBundle\ExpressionLanguage\RequestResourceExpressionVariableProvider:
+        arguments:
+            - '@request_stack'
+        tags:
+            - { name: enhavo_resource.expression_language_variable_provider }
+
     Enhavo\Bundle\ResourceBundle\RouteResolver\RouteNameRouteResolver:
         arguments:
             - '@request_stack'

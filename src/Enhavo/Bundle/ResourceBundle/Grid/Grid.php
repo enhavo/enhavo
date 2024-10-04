@@ -25,7 +25,6 @@ class Grid extends AbstractGrid implements ConfigMergeInterface
         $resolver->setDefaults([
             'actions' => [],
             'actions_secondary' => [],
-            'criteria' => [],
             'columns' => [],
             'filters' => [],
             'batches' => [],
@@ -238,5 +237,10 @@ class Grid extends AbstractGrid implements ConfigMergeInterface
         }
 
         return null;
+    }
+
+    public function handleAction(string $action, array $payload): void
+    {
+        $this->getCollection()->handleAction($action, $payload);
     }
 }

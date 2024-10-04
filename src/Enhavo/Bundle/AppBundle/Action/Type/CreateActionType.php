@@ -9,11 +9,40 @@
 
 namespace Enhavo\Bundle\AppBundle\Action\Type;
 
+use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
+use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage;
+use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
+use Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\RouterInterface;
 
 class CreateActionType extends AbstractActionType
 {
+    public function __construct(
+        private RouterInterface $router,
+        private RouteResolverInterface $routeResolver,
+        private ResourceExpressionLanguage $expressionLanguage,
+    )
+    {
+    }
+
+    public function createViewData(array $options, Data $data, ResourceInterface $resource = null): void
+    {
+        $route = $this->expressionLanguage->evaluate($options['route']) ?? $this->routeResolver->getRoute('create', ['api' => false]);
+
+        if ($route === null) {
+            throw new \Exception('Can\'t find create route, please provide a route over the "route" option');
+        }
+
+        $routeParameters = $this->expressionLanguage->evaluateArray($options['route_parameters']);
+
+        $data->set('url', $this->router->generate($route, $routeParameters));
+        $data->set('viewKey', $options['view_key']);
+        $data->set('target', $options['target']);
+    }
+
+
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -22,12 +51,10 @@ class CreateActionType extends AbstractActionType
             'translation_domain' => 'EnhavoAppBundle',
             'view_key' => 'edit-view',
             'target' => '_view',
+            'route' => null,
+            'route_parameters' => [],
+            'model' => 'OpenAction',
         ]);
-    }
-
-    public static function getParentType(): ?string
-    {
-        return OpenActionType::class;
     }
 
     public static function getName(): ?string

@@ -1,3 +1,7 @@
 enhavo_template_admin:
     resource: "@EnhavoTemplateBundle/Resources/config/routes/admin/*"
-    prefix: /admin
+    prefix: /admin/template
+
+enhavo_template_admin_api:
+    resource: "@EnhavoTemplateBundle/Resources/config/routes/admin_api/*"
+    prefix: /admin/api/template

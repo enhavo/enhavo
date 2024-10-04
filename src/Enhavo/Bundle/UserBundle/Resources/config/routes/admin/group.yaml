@@ -1,95 +1,35 @@
-enhavo_user_group_index:
-    options:
-        expose: true
-    path: /enhavo/user/group/index
-    methods: [GET]
+enhavo_user_admin_group_index:
+    path: /group/index
     defaults:
-        _controller: enhavo_user.controller.group::indexAction
-        _sylius:
-            viewer:
-                label: group.label.group
-                translation_domain: EnhavoUserBundle
+        _expose: admin
+        _vue:
+            component: resource-index
+            groups: admin
+            meta:
+                api: enhavo_user_admin_api_group_index
+        _endpoint:
+            type: admin
 
-enhavo_user_group_create:
-    options:
-        expose: true
-    path: /enhavo/user/group/create
-    methods: [GET,POST]
+enhavo_user_admin_group_create:
+    path: /group/create
     defaults:
-        _controller: enhavo_user.controller.group::createAction
-        _sylius:
-            redirect: enhavo_user_group_update
-            viewer:
-                tabs:
-                    main:
-                        template: admin/resource/group/group.html.twig
-                        label: group.label.group
-                        translation_domain: EnhavoUserBundle
-                    permission:
-                        template: admin/resource/group/permission.html.twig
-                        label: group.label.permission
-                        translation_domain: EnhavoUserBundle
+        _expose: admin
+        _vue:
+            component: resource-input
+            groups: admin
+            meta:
+                api: enhavo_user_admin_api_group_create
+        _endpoint:
+            type: admin
 
-enhavo_user_group_update:
-    options:
-        expose: true
-    path: /enhavo/user/group/update/{id}
-    methods: [GET,POST]
+enhavo_user_admin_group_update:
+    path: '/group/update/{id}'
     defaults:
-        _controller: enhavo_user.controller.group::updateAction
-        _sylius:
-            viewer:
-                tabs:
-                    main:
-                        template: admin/resource/group/group.html.twig
-                        label: group.label.group
-                        translation_domain: EnhavoUserBundle
-                    permission:
-                        template: admin/resource/group/permission.html.twig
-                        label: group.label.permission
-                        translation_domain: EnhavoUserBundle
-
-enhavo_user_group_table:
-    options:
-        expose: true
-    path: /enhavo/user/group/table
-    defaults:
-        _controller: enhavo_user.controller.group::tableAction
-        _sylius:
-            filters:
-                title:
-                    type: text
-                    property: name
-                    label: group.label.name
-                    translation_domain: EnhavoUserBundle
-            viewer:
-                translation_domain: EnhavoUserBundle
-                columns:
-                    name:
-                        type: text
-                        label: group.label.name
-                        property: name
-                        width: 12
-
-enhavo_user_group_delete:
-    options:
-        expose: true
-    path: /enhavo/user/group/delete/{id}
-    methods: [POST, DELETE]
-    defaults:
-        _controller: enhavo_user.controller.group::deleteAction
-
-enhavo_user_group_batch:
-    options:
-        expose: true
-    path: /enhavo/user/group/batch
-    methods: [POST]
-    defaults:
-        _controller: enhavo_user.controller.group::batchAction
-        _sylius:
-            paginate: false
-            criteria:
-                id: $ids
-            batches:
-                delete:
-                    type: delete
+        _expose: admin
+        _vue:
+            component: resource-input
+            groups: admin
+            meta:
+                api: enhavo_user_admin_api_group_update
+        _endpoint:
+            type: admin

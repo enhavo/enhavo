@@ -19,7 +19,7 @@ class CalendarMenu extends AbstractMenuType
             'icon' => 'event',
             'label' => 'label.calendar',
             'translation_domain' => 'EnhavoCalendarBundle',
-            'route' => 'enhavo_calendar_appointment_index',
+            'route' => 'enhavo_calendar_admin_appointment_index',
             'role' => 'ROLE_ENHAVO_CALENDAR_APPOINTMENT_INDEX'
         ]);
     }

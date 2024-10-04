@@ -6,4 +6,5 @@ export class CollectionResourceItem
     public selected: boolean = false;
     public active: boolean = false;
     public url: string;
+    public children: CollectionResourceItem[];
 }

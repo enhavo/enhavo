@@ -19,7 +19,7 @@ class DashboardMenu extends AbstractMenuType
             'icon' => 'dashboard',
             'label' => 'dashboard.label.dashboard',
             'translation_domain' => 'EnhavoDashboardBundle',
-            'route' => 'enhavo_dashboard_index',
+            'route' => 'enhavo_dashboard_admin_index',
             'role' => 'ROLE_ENHAVO_DASHBOARD_DASHBOARD_INDEX',
         ]);
     }

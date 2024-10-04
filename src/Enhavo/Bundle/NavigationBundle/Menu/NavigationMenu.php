@@ -19,7 +19,7 @@ class NavigationMenu extends AbstractMenuType
             'icon' => 'layers',
             'label' => 'navigation.label.navigation',
             'translation_domain' => 'EnhavoNavigationBundle',
-            'route' => 'enhavo_navigation_navigation_index',
+            'route' => 'enhavo_navigation_admin_navigation_index',
             'role' => 'ROLE_ENHAVO_NAVIGATION_NAVIGATION_INDEX',
         ]);
     }

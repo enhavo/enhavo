@@ -9,7 +9,7 @@
 import {BooleanColumn} from "../../column/model/BooleanColumn";
 
 const props = defineProps<{
-    data: boolean,
+    data: boolean|null,
     column: BooleanColumn,
 }>()
 </script>

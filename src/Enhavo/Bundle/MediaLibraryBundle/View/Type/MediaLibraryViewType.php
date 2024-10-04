@@ -2,7 +2,6 @@
 
 namespace Enhavo\Bundle\MediaLibraryBundle\View\Type;
 
-use AppViewType;
 use Enhavo\Bundle\AppBundle\View\AbstractViewType;
 use Enhavo\Bundle\AppBundle\View\ViewData;
 use Enhavo\Bundle\AppBundle\View\ViewUtil;

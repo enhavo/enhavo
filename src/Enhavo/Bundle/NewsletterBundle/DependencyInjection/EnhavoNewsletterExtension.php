@@ -2,29 +2,22 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\DependencyInjection;
 
-use Sylius\Bundle\ResourceBundle\DependencyInjection\Extension\AbstractResourceExtension;
+use Enhavo\Bundle\ResourceBundle\DependencyInjection\PrependExtensionTrait;
+use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
-use Symfony\Component\Yaml\Yaml;
 
 
-/**
- * This is the class that loads and manages your bundle configuration
- *
- * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
- */
-class EnhavoNewsletterExtension extends AbstractResourceExtension implements PrependExtensionInterface
+class EnhavoNewsletterExtension extends Extension implements PrependExtensionInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function load(array $configs, ContainerBuilder $container)
+    use PrependExtensionTrait;
+
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $configs = $this->processConfiguration(new Configuration(), $configs);
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $this->registerResources('enhavo_newsletter', $configs['driver'], $configs['resources'], $container);
 
         $container->setParameter('enhavo_newsletter.newsletter.mail.from', $configs['newsletter']['mail']['from']);
         $container->setParameter('enhavo_newsletter.newsletter.test_receiver', $configs['newsletter']['test_receiver']);
@@ -42,6 +35,7 @@ class EnhavoNewsletterExtension extends AbstractResourceExtension implements Pre
         $configFiles = array(
             'services/services.yaml',
             'services/newsletter.yaml',
+            'services/endpoint.yaml',
             'services/storage.yaml',
             'services/strategy.yaml',
         );
@@ -51,16 +45,15 @@ class EnhavoNewsletterExtension extends AbstractResourceExtension implements Pre
         }
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function prepend(ContainerBuilder $container)
+    protected function prependFiles(): array
     {
-        $configs = Yaml::parse(file_get_contents(__DIR__ . '/../Resources/config/app/config.yaml'));
-        foreach ($configs as $name => $config) {
-            if (is_array($config)) {
-                $container->prependExtensionConfig($name, $config);
-            }
-        }
+        return [
+            __DIR__ . '/../Resources/config/app/config.yaml',
+            __DIR__ . '/../Resources/config/resources/group.yaml',
+            __DIR__ . '/../Resources/config/resources/local_subscriber.yaml',
+            __DIR__ . '/../Resources/config/resources/newsletter.yaml',
+            __DIR__ . '/../Resources/config/resources/pending_subscriber.yaml',
+            __DIR__ . '/../Resources/config/resources/receiver.yaml',
+        ];
     }
 }

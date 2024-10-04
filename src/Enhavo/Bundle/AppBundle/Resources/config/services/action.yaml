@@ -2,6 +2,7 @@ services:
     Enhavo\Bundle\AppBundle\Action\Type\PreviewActionType:
         arguments:
             - '@router'
+            - '@Enhavo\Bundle\ResourceBundle\RouteResolver\RouteNameRouteResolver'
         tags:
             - { name: enhavo_resource.action }
 
@@ -10,6 +11,10 @@ services:
             - { name: enhavo_resource.action }
 
     Enhavo\Bundle\AppBundle\Action\Type\CreateActionType:
+        arguments:
+            - '@router'
+            - '@Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface'
+            - '@Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage'
         tags:
             - { name: enhavo_resource.action }
 

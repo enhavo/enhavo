@@ -83,12 +83,6 @@ services:
         tags:
             - { name: vue.component, component: 'overlay-container' }
 
-    '@enhavo/app/components/list/ListComponent.vue':
-        chunk: 'vue'
-        static: true
-        tags:
-            - { name: vue.component, component: 'list-list' }
-
     '@enhavo/app/components/batch/BatchDropdown.vue':
         chunk: 'vue'
         static: true
@@ -124,12 +118,6 @@ services:
         static: true
         tags:
             - { name: vue.component, component: 'main-main' }
-
-    '@enhavo/app/components/list/ItemComponent.vue':
-        chunk: 'vue'
-        static: true
-        tags:
-            - { name: vue.component, component: 'list-item' }
 
     '@enhavo/app/components/app/AppApp.vue':
         chunk: 'vue'
@@ -293,6 +281,12 @@ services:
         static: true
         tags:
             - { name: vue.component, component: 'collection-list' }
+
+    '@enhavo/app/components/collection/CollectionListItem.vue':
+        chunk: 'collection'
+        static: true
+        tags:
+            - { name: vue.component, component: 'collection-list-item' }
 
     '@enhavo/app/components/collection/CollectionTable.vue':
         chunk: 'collection'

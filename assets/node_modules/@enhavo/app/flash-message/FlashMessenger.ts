@@ -41,6 +41,26 @@ export class FlashMessenger
         this.addMessage(new FlashMessage(message, type))
     }
 
+    public success(message: string = null)
+    {
+        this.addMessage(new FlashMessage(message, FlashMessage.SUCCESS))
+    }
+
+    public error(message: string = null)
+    {
+        this.addMessage(new FlashMessage(message, FlashMessage.ERROR))
+    }
+
+    public notice(message: string = null)
+    {
+        this.addMessage(new FlashMessage(message, FlashMessage.NOTICE))
+    }
+
+    public warning(message: string = null)
+    {
+        this.addMessage(new FlashMessage(message, FlashMessage.WARNING))
+    }
+
     public addMessage(message: FlashMessage)
     {
         if (this.frameManager.isRoot()) {

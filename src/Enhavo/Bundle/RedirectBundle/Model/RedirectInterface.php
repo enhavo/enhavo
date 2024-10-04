@@ -9,13 +9,16 @@
 namespace Enhavo\Bundle\RedirectBundle\Model;
 
 use Enhavo\Bundle\RoutingBundle\Model\Routeable;
+use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
 
 interface RedirectInterface extends Routeable
 {
-    public function setFrom($url);
-    public function getFrom();
-    public function setTo($url);
-    public function getTo();
-    public function setCode($code);
-    public function getCode();
+    public function setFrom(?string $value): void;
+    public function getFrom(): ?string;
+    public function setTo(?string $value): void;
+    public function getTo(): ?string;
+    public function setCode(?int $code): void;
+    public function getCode(): ?int;
+    public function setRoute(RouteInterface $route = null): void;
+    public function getRoute(): ?RouteInterface;
 }

@@ -12,13 +12,14 @@ services:
     '@enhavo/newsletter/action/NewsletterSendAction':
         import: NewsletterSendAction
         arguments:
-            - '@enhavo/app/form/Form'
-            - '@enhavo/core/Translator'
-            - '@enhavo/app/frame/FrameManager'
-            - '@enhavo/core/Router'
+            - '@enhavo/app/translation/Translator'
+            - '@enhavo/app/routing/Router'
             - '@enhavo/app/flash-message/FlashMessenger'
+            - '@enhavo/app/ui/UiManager'
+            - '@enhavo/app/manager/ResourceInputManager'
+            - '@enhavo/vue-form/form/FormEventDispatcher'
         tags:
-            - { name: 'enhavo_app.action', class: 'NewsletterSendAction' }
+            - { name: 'enhavo_app.action' }
 
     '@enhavo/newsletter/action/NewsletterSendTestAction':
         import: NewsletterSendTestAction
@@ -26,7 +27,5 @@ services:
             - '@enhavo/app/flash-message/FlashMessenger'
             - '@enhavo/core/Translator'
             - '@enhavo/app/modal/ModalManager'
-            - '@enhavo/app/frame/FrameManager'
-            - '@enhavo/core/Router'
         tags:
-            - { name: 'enhavo_app.action', class: 'NewsletterSendTestAction' }
+            - { name: 'enhavo_app.action' }

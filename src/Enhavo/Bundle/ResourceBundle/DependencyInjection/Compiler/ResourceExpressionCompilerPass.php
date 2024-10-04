@@ -16,5 +16,9 @@ class ResourceExpressionCompilerPass implements CompilerPassInterface
         foreach ($container->findTaggedServiceIds('enhavo_resource.expression_language_function_provider') as $id => $tag) {
             $resourceExpressionLanguage->addMethodCall('addFunctionProvider', [new Reference($id)]);
         }
+
+        foreach ($container->findTaggedServiceIds('enhavo_resource.expression_language_variable_provider') as $id => $tag) {
+            $resourceExpressionLanguage->addMethodCall('addVariableProvider', [new Reference($id)]);
+        }
     }
 }

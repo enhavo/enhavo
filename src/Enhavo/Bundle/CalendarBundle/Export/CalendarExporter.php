@@ -39,7 +39,7 @@ class CalendarExporter
         $this->em = $em;
     }
 
-    public function export()
+    public function export(): string
     {
         $appointments = $this->em->getRepository(Appointment::class)->findAll();
 
@@ -72,9 +72,7 @@ class CalendarExporter
         $calendarExport = new CalendarExport(new CalendarStream(), new Formatter());
         $calendarExport->addCalendar($calendar);
 
-        $response = new Response($calendarExport->getStream());
-        $response->headers->set('Content-Type', 'text/calendar');
-        return $response;
+        return $calendarExport->getStream();
     }
 
     protected function getLocationInstance(Appointment $appointment)

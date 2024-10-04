@@ -149,3 +149,13 @@ services:
         tags:
             - { name: enhavo_api.endpoint_extension }
             - { name: container.service_subscriber }
+
+    Enhavo\Bundle\AppBundle\Endpoint\Type\ModalFormEndpointType:
+        arguments:
+            - '@form.factory'
+            - '@Enhavo\Bundle\VueFormBundle\Form\VueForm'
+        calls:
+            - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }

@@ -1,0 +1,65 @@
+enhavo_resource:
+    resources:
+        enhavo_media_library.file:
+            classes:
+                model: Enhavo\Bundle\MediaLibraryBundle\Entity\File
+                factory: Enhavo\Bundle\MediaLibraryBundle\Factory\FileFactory
+                repository: Enhavo\Bundle\MediaLibraryBundle\Repository\FileRepository
+    grids:
+        enhavo_media_library.file:
+            extends: enhavo_resource.grid
+            resource: enhavo_media_library.file
+            actions:
+                create:
+                    type: create
+                    enabled: false
+                upload:
+                    type: media_library_upload
+            collection:
+                class: Enhavo\Bundle\MediaLibraryBundle\Collection\MediaLibraryCollection
+                component: collection-media-library
+                model: MediaLibraryCollection
+                criteria:
+                    library: true
+                sorting:
+                    createdAt: desc
+            filters:
+                filename:
+                    type: text
+                    property: filename
+                    component: filter-media-library-search
+                    label: Name
+                    translation_domain: EnhavoMediaLibraryBundle
+                content_type:
+                    type: media_library_content_type
+                    label: Content Type
+                    translation_domain: EnhavoMediaLibraryBundle
+                tags:
+                    type: entity
+                    component: filter-media-library-choice
+                    property: tags
+                    label: Tags
+                    resource: enhavo_taxonomy.term
+                    translation_domain: EnhavoMediaLibraryBundle
+                unusedFile:
+                    type: media_library_unused_file
+                    label: Unused File
+                    translation_domain: EnhavoMediaLibraryBundle
+
+    inputs:
+        enhavo_media_library.file:
+            extends: enhavo_resource.input
+            resource: enhavo_media_library.file
+            form: Enhavo\Bundle\MediaLibraryBundle\Form\Type\FileType
+            form_options: {  }
+            actions: {  }
+            tabs:
+                main:
+                    label: null
+                    translation_domain: EnhavoMediaLibraryBundle
+                    type: form
+                    arrangement:
+                        - filename
+                        - url
+                        - tags
+                        - parameters

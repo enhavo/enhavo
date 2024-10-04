@@ -8,9 +8,6 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-  },
-  "include": [
-    "./assets/**/*"
-  ]
+    "noFallthroughCasesInSwitch": true
+  }
 }

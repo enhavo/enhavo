@@ -1,47 +1,47 @@
-import { AbstractAction } from "@enhavo/app/action/model/AbstractAction";
-import $ from 'jquery';
-import AjaxFormModal from "@enhavo/app/modal/model/AjaxFormModal";
-import { FlashMessenger, FlashMessage } from "@enhavo/app/flash-message/FlashMessenger";
-import Translator from "@enhavo/core/Translator";
-import ModalManager from "@enhavo/app/modal/ModalManager";
+import {AbstractAction} from "@enhavo/app/action/model/AbstractAction";
+import {AjaxFormModal} from "@enhavo/app/modal/model/AjaxFormModal";
+import {FlashMessenger} from "@enhavo/app/flash-message/FlashMessenger";
+import {Translator} from "@enhavo/app/translation/Translator";
+import {ModalManager} from "@enhavo/app/modal/ModalManager";
+import {ResourceInputManager} from "@enhavo/app/manager/ResourceInputManager";
+import {FormFactory} from "@enhavo/vue-form/form/FormFactory";
 
 export class NewsletterSendTestAction extends AbstractAction
 {
-    private flashMessenger: FlashMessenger;
-    private translator: Translator;
-    private modalManager: ModalManager;
+    public form: any;
 
-    public email: string;
-    public modal: any;
-
-    constructor(flashMessenger: FlashMessenger, translator: Translator, modalManager: ModalManager) {
+    constructor(
+        private readonly flashMessenger: FlashMessenger,
+        private readonly translator: Translator,
+        private readonly modalManager: ModalManager,
+        private readonly resourceInputManager: ResourceInputManager,
+        private readonly formFactory: FormFactory,
+    ) {
         super();
-        this.flashMessenger = flashMessenger;
-        this.translator = translator;
-        this.modalManager = modalManager;
     }
 
     execute(): void
     {
-        this.modal.data = {
-            form: $('form').serialize()
-        };
+        let form = this.formFactory.create(this.form);
 
-        this.modal.actionHandler = (modal: AjaxFormModal, data: any, error: string) => {
-            return new Promise((resolve, reject) => {
-                if(data.status == 400) {
+        this.modalManager.push({
+            model: 'FormModal',
+            actionHandler: (modal: AjaxFormModal, data: any, error: string) => {
+                return new Promise((resolve, reject) => {
+                    if (data.status == 400) {
+                        this.flashMessenger.error(data.data.message);
+                        resolve(false);
+                        return;
+                    } else if (error) {
+                        this.flashMessenger.error(this.translator.trans(error));
+                        resolve(false);
+                        return;
+                    }
                     this.flashMessenger.add(data.data.message, data.data.type);
-                    resolve(false);
-                    return;
-                } else if(error) {
-                    this.flashMessenger.add(this.translator.trans(error));
-                    resolve(false);
-                    return;
-                }
-                this.flashMessenger.add(data.data.message, data.data.type);
-                resolve(true);
-            })
-        };
+                    resolve(true);
+                })
+            }
+        });
 
         this.modalManager.push(this.modal);
     }

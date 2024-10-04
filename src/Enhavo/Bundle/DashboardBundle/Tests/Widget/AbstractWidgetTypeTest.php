@@ -4,9 +4,9 @@
 namespace Enhavo\Bundle\DashboardBundle\Tests\Widget;
 
 
-use Enhavo\Bundle\DashboardBundle\Widget\AbstractWidgetType;
-use Enhavo\Bundle\DashboardBundle\Widget\Type\WidgetType;
-use Enhavo\Bundle\DashboardBundle\Widget\WidgetTypeInterface;
+use Enhavo\Bundle\DashboardBundle\Dashboard\AbstractDashboardWidgetType;
+use Enhavo\Bundle\DashboardBundle\Dashboard\Type\BaseDashboardWidgetType;
+use Enhavo\Bundle\DashboardBundle\Dashboard\DashboardWidgetTypeInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -35,7 +35,7 @@ class AbstractWidgetTypeTest extends TestCase
     {
         $instance = $this->createAbstractWidgetType();
 
-        $this->assertEquals(WidgetType::class, $instance->getParentType());
+        $this->assertEquals(BaseDashboardWidgetType::class, $instance->getParentType());
     }
 
     public function testConfigureOptionsReturns()
@@ -47,18 +47,18 @@ class AbstractWidgetTypeTest extends TestCase
 
     private function createAbstractWidgetType()
     {
-        return $this->getMockBuilder(AbstractWidgetType::class)->getMockForAbstractClass();
+        return $this->getMockBuilder(AbstractDashboardWidgetType::class)->getMockForAbstractClass();
     }
 
     /**
-     * @return WidgetTypeInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @return DashboardWidgetTypeInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     private function createTypeMock(bool $hidden = false, string $role = 'ROLE_TEST')
     {
-        $mock = $this->createMock(WidgetTypeInterface::class);
+        $mock = $this->createMock(DashboardWidgetTypeInterface::class);
         $mock->method('isHidden')->willReturn($hidden);
         $mock->method('getPermission')->willReturn($role);
-        $mock->method('getParentType')->willReturn(WidgetType::class);
+        $mock->method('getParentType')->willReturn(BaseDashboardWidgetType::class);
 
         return $mock;
     }

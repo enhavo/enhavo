@@ -78,7 +78,7 @@ enhavo_article_admin_api_preview:
 enhavo_article_admin_api_article_auto_complete:
     options:
         expose: true
-    path: /enhavo/article/article/auto-complete
+    path: /article/article/article/auto-complete
     defaults:
         _endpoint:
             type: auto_complete

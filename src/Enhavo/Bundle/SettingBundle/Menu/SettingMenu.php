@@ -19,7 +19,7 @@ class SettingMenu extends AbstractMenuType
             'icon' => 'settings',
             'label' => 'label.setting',
             'translation_domain' => 'EnhavoSettingBundle',
-            'route' => 'enhavo_setting_setting_index',
+            'route' => 'enhavo_setting_admin_setting_index',
             'role' => 'ROLE_ENHAVO_SETTING_SETTING_INDEX',
             'group' => null,
             'setting' => null,

@@ -26,9 +26,14 @@ import '@enhavo/app/assets/styles/view.scss'
 import {inject } from "vue";
 import { useRoute } from 'vue-router'
 import {ResourceIndexManager} from "../../manager/ResourceIndexManager";
+import {ExpressionLanguage} from "../../expression-language/ExpressionLanguage";
+import {HtmlEntities} from '@enhavo/app/util/HtmlEntities';
 
 const manager = inject<ResourceIndexManager>('resourceIndexManager');
+const expressionLanguage = inject<ExpressionLanguage>('expressionLanguage');
 const route = useRoute();
-manager.loadIndex(route.meta.api as string);
+const parameters = expressionLanguage.evaluateObject(HtmlEntities.encodeObject(route.meta.api_parameters as Object));
+
+manager.loadIndex(route.meta.api as string, parameters);
 
 </script>

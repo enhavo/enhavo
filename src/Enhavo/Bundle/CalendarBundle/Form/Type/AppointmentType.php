@@ -98,7 +98,6 @@ class AppointmentType extends AbstractResourceType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        parent::configureOptions($resolver);
         $resolver->setDefaults(array(
             'slugable' => true
         ));

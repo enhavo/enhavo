@@ -9,7 +9,7 @@ class ReplaceFileFactoryCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        $alias = $container->setAlias('enhavo_media.factory.file', 'enhavo_media_library.factory.file');
+        $alias = $container->setAlias('enhavo_media.factory.file', 'enhavo_media_library.file.factory');
         $alias->setPublic(true);
     }
 }

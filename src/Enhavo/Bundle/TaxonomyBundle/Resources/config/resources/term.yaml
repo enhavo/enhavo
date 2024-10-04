@@ -1,0 +1,23 @@
+enhavo_resource:
+    resources:
+        enhavo_taxonomy.term:
+            classes:
+                model: Enhavo\Bundle\TaxonomyBundle\Entity\Term
+                factory: Enhavo\Bundle\TaxonomyBundle\Factory\TermFactory
+                repository: Enhavo\Bundle\TaxonomyBundle\Repository\TermRepository
+    grids:
+        enhavo_taxonomy.term:
+            extends: enhavo_resource.grid
+            resource: enhavo_taxonomy.term
+            actions: {  }
+            filters: {  }
+            columns: {  }
+            batches: {  }
+    inputs:
+        enhavo_taxonomy.term:
+            extends: enhavo_resource.input
+            resource: enhavo_taxonomy.term
+            form: Enhavo\Bundle\TaxonomyBundle\Form\Type\TermType
+            form_options: {  }
+            actions: {  }
+            tabs: {  }

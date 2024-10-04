@@ -8,9 +8,9 @@ services:
         public: true
         arguments:
             - '@doctrine.orm.entity_manager'
-            - '@enhavo_newsletter.repository.local_subscriber'
-            - '@enhavo_newsletter.repository.group'
-            - '@enhavo_newsletter.factory.local_subscriber'
+            - '@enhavo_newsletter.local_subscriber.repository'
+            - '@enhavo_newsletter.group.repository'
+            - '@enhavo_newsletter.local_subscriber.factory'
         tags:
             - { name: enhavo_newsletter.storage }
 

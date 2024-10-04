@@ -1,0 +1,49 @@
+enhavo_resource:
+    resources:
+        enhavo_newsletter.pending_subscriber:
+            classes:
+                model: Enhavo\Bundle\NewsletterBundle\Entity\PendingSubscriber
+                repository: Enhavo\Bundle\NewsletterBundle\Repository\PendingSubscriberRepository
+    grids:
+        enhavo_newsletter.pending_subscriber:
+            extends: enhavo_resource.grid
+            resource: enhavo_newsletter.pending_subscriber
+            actions:
+                create:
+                    type: create
+                    enabled: false
+            filters:
+                email:
+                    type: text
+                    property: email
+                    label: subscriber.label.email
+                    translation_domain: EnhavoNewsletterBundle
+            columns:
+                email:
+                    type: text
+                    label: subscriber.label.email
+                    property: email
+                    width: 10
+                subscription:
+                    type: text
+                    property: subscription
+                    label: subscriber.label.subscription
+                    width: 4
+                activate:
+                    width: 4
+                    label: subscriber.label.activate
+                    translation_domain: EnhavoNewsletterBundle
+                    type: action
+                    action:
+                        type: newsletter_subscriber_activate
+            batches:
+                delete:
+                    type: delete
+    inputs:
+        enhavo_newsletter.pending_subscriber:
+            extends: enhavo_resource.input
+            resource: enhavo_newsletter.pending_subscriber
+            form: Enhavo\Bundle\NewsletterBundle\Form\Type\PendingSubscriberType
+            form_options: { }
+            actions: { }
+            tabs: { }

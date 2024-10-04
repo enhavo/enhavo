@@ -11,4 +11,5 @@ namespace Enhavo\Bundle\ResourceBundle\Repository;
 class EntityRepository extends \Doctrine\ORM\EntityRepository implements FilterRepositoryInterface
 {
     use FilterRepositoryTrait;
+    use EntityRepositoryTrait;
 }

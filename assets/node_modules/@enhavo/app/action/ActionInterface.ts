@@ -10,4 +10,5 @@ export interface ActionInterface extends ComponentAwareInterface, ModelAwareInte
     class: string
     execute(): void;
     morph(source: ActionInterface): void;
+    mounted(): void;
 }

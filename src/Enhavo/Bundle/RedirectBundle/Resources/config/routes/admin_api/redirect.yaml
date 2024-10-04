@@ -1,0 +1,61 @@
+enhavo_redirect_admin_api_redirect_index:
+    path: /redirect/index
+    methods:
+        - GET
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_index
+            grid: enhavo_redirect.redirect
+
+enhavo_redirect_admin_api_redirect_list:
+    path: /redirect/list
+    methods:
+        - GET
+        - POST
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_list
+            grid: enhavo_redirect.redirect
+
+enhavo_redirect_admin_api_redirect_create:
+    path: /redirect/create
+    methods:
+        - GET
+        - POST
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_create
+            input: enhavo_redirect.redirect
+
+enhavo_redirect_admin_api_redirect_update:
+    path: '/redirect/update/{id}'
+    methods:
+        - GET
+        - POST
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_update
+            input: enhavo_redirect.redirect
+
+enhavo_redirect_admin_api_redirect_delete:
+    path: '/redirect/delete/{id}'
+    methods:
+        - DELETE
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_delete
+            input: enhavo_redirect.redirect
+
+enhavo_redirect_admin_api_redirect_batch:
+    path: /redirect/batch
+    methods: [POST]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_batch
+            grid: enhavo_redirect.redirect

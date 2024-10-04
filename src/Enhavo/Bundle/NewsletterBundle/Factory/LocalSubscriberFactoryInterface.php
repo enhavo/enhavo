@@ -11,7 +11,7 @@ namespace Enhavo\Bundle\NewsletterBundle\Factory;
 
 use Enhavo\Bundle\NewsletterBundle\Model\LocalSubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
-use Sylius\Component\Resource\Factory\FactoryInterface;
+use Enhavo\Bundle\ResourceBundle\Factory\FactoryInterface;
 
 interface LocalSubscriberFactoryInterface extends FactoryInterface
 {
