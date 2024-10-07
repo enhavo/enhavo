@@ -10,7 +10,7 @@
             <div class="translation-switcher-current" data-translation-switcher-current></div>
             <div class="translation-switcher-menu">
                 {% for locale in translation_locales %}
-                    <div data-translation-switch="{{ locale }}">{{ locale }}</div>
+                    <div class="translation-switcher-item" data-translation-switch="{{ locale }}">{{ locale }}</div>
                 {% endfor %}
             </div>
         </div>

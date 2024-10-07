@@ -9,7 +9,6 @@ services:
             - '@Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface'
             - '@Enhavo\Bundle\TranslationBundle\Locale\LocaleProviderInterface'
             - '%enhavo_translation.enable%'
-            - '%enhavo_translation.translation_paths%'
             - '@Symfony\Component\HttpFoundation\RequestStack'
 
     Enhavo\Bundle\TranslationBundle\Translation\Type\TranslationType:

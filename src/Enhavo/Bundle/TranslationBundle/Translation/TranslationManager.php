@@ -45,9 +45,6 @@ class TranslationManager
     private $enabled;
 
     /** @var RequestStack */
-    private $translationPaths;
-
-    /** @var RequestStack */
     private $requestStack;
 
     /** @var boolean|null */
@@ -70,7 +67,6 @@ class TranslationManager
         EntityResolverInterface $entityResolver,
         LocaleProviderInterface $localeProvider,
         $enabled,
-        $translationPaths,
         RequestStack $requestStack
     )
     {
@@ -81,7 +77,6 @@ class TranslationManager
         $this->entityResolver = $entityResolver;
         $this->localeProvider = $localeProvider;
         $this->enabled = $enabled;
-        $this->translationPaths = $translationPaths;
         $this->requestStack = $requestStack;
         $this->translatedLocale = [];
         $this->nameTransformer = new NameTransformer();
@@ -115,24 +110,6 @@ class TranslationManager
     public function getLocales()
     {
         return $this->localeProvider->getLocales();
-    }
-
-    public function isTranslation()
-    {
-        if ($this->cachedTranslation !== null) {
-            return $this->cachedTranslation;
-        }
-
-        $this->cachedTranslation = false;
-        $request = $this->requestStack->getMainRequest();
-        $path = $request->getPathInfo();
-        foreach ($this->translationPaths as $regex) {
-            if (preg_match($regex, $path)) {
-                $this->cachedTranslation = true;
-                break;
-            }
-        }
-        return $this->cachedTranslation;
     }
 
     public function getDefaultLocale()
