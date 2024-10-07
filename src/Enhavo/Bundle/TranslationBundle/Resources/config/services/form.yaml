@@ -8,6 +8,7 @@ services:
     Enhavo\Bundle\TranslationBundle\Form\Extension\TranslationExtension:
         arguments:
             - '@Enhavo\Bundle\TranslationBundle\Translation\TranslationManager'
+            - '@enhavo_translation.form.access_control'
         tags:
             - { name: form.type_extension }
 

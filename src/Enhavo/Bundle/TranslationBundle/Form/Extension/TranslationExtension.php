@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Form\Extension;
 
+use Enhavo\Bundle\TranslationBundle\EventListener\AccessControlInterface;
 use Enhavo\Bundle\TranslationBundle\Form\EventListener\ReplaceTranslationTypeListener;
 use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
 use Symfony\Component\Form\AbstractTypeExtension;
@@ -16,17 +17,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class TranslationExtension extends AbstractTypeExtension
 {
-    /** @var TranslationManager */
-    private $translationManager;
-
-    /**
-     * DoctrineSubscriber constructor.
-     *
-     * @param TranslationManager $translationManager
-     */
-    public function __construct(TranslationManager $translationManager)
-    {
-        $this->translationManager = $translationManager;
+    public function __construct(
+        private TranslationManager $translationManager,
+        private AccessControlInterface $accessControl,
+    ) {
     }
 
     /**
@@ -43,7 +37,9 @@ class TranslationExtension extends AbstractTypeExtension
 
     private function isTranslatable($options)
     {
-        return $options['compound'] && $this->translationManager->isEnabled() && $this->translationManager->isTranslation();
+        return $options['compound']
+            && $this->translationManager->isEnabled()
+            && $this->accessControl->isAccess();
     }
 
     public static function getExtendedTypes(): iterable

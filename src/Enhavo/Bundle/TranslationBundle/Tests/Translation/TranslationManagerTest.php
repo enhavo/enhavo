@@ -49,7 +49,6 @@ class TranslationManagerTest extends TestCase
             $dependencies->entityResolver,
             $dependencies->localeProvider,
             $dependencies->enabled,
-            $dependencies->translationPaths,
             $dependencies->requestStack
         );
     }
@@ -119,31 +118,6 @@ class TranslationManagerTest extends TestCase
 
         $this->assertFalse($manager->isTranslatable(null));
         $this->assertFalse($manager->isTranslatable(null, 'something'));
-    }
-
-    public function testIsTranslationAdmin()
-    {
-        $request = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();
-        $request->method('getPathInfo')->willReturn('/admin');
-
-        $dependencies = $this->createDependencies();
-        $dependencies->requestStack->method('getMainRequest')->willReturn($request);
-        $manager = $this->createInstance($dependencies);
-
-        $this->assertTrue($manager->isTranslation());
-    }
-
-    public function testIsTranslationRoot()
-    {
-        $request = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();
-        $request->method('getPathInfo')->willReturn('/');
-
-        $dependencies = $this->createDependencies();
-        $dependencies->requestStack->expects($this->once())->method('getMainRequest')->willReturn($request);
-        $manager = $this->createInstance($dependencies);
-
-        $this->assertFalse($manager->isTranslation());
-        $this->assertFalse($manager->isTranslation()); // test caching
     }
 
     public function testGetTranslations()

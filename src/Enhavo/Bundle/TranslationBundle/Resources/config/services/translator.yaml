@@ -1,14 +1,23 @@
 services:
-    Enhavo\Bundle\TranslationBundle\EventListener\AccessControl:
+    enhavo_translation.translation.access_control:
+        class: Enhavo\Bundle\TranslationBundle\EventListener\AccessControl
         arguments:
             - '@request_stack'
-            - '@enhavo_app.locale_resolver'
             - '%enhavo_translation.translator.access_control%'
+            - '%enhavo_translation.translator.default_access%'
+
+    enhavo_translation.form.access_control:
+        class: Enhavo\Bundle\TranslationBundle\EventListener\AccessControl
+        arguments:
+            - '@request_stack'
+            - '%enhavo_translation.form.access_control%'
+            - '%enhavo_translation.form.default_access%'
 
     Enhavo\Bundle\TranslationBundle\EventListener\DoctrineTranslationSubscriber:
         arguments:
-            - '@Enhavo\Bundle\TranslationBundle\EventListener\AccessControl'
+            - '@enhavo_translation.translation.access_control'
             - '@Enhavo\Component\Metadata\MetadataRepository[Translation]'
+            - '@Enhavo\Bundle\TranslationBundle\Locale\LocaleResolver'
         calls:
             - [setContainer, ['@service_container']]
         tags:
