@@ -8,9 +8,11 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Tests\Form\Type;
 
+use Enhavo\Bundle\TranslationBundle\EventListener\AccessControlInterface;
 use Enhavo\Bundle\TranslationBundle\Form\Extension\TranslationExtension;
 use Enhavo\Bundle\TranslationBundle\Form\Type\TranslationType;
 use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
+use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,8 +23,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TranslationTypeTest extends TypeTestCase
 {
-    /** @var TranslationManager|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var TranslationManager|MockObject */
     private $translationManager;
+    private $accessControl;
 
     protected function getExtensions()
     {
@@ -33,20 +36,22 @@ class TranslationTypeTest extends TypeTestCase
 
     protected function getTypeExtensions()
     {
+        $this->accessControl->method('isAccess')->willReturn(true);
+
         return [
-            new TranslationExtension($this->translationManager)
+            new TranslationExtension($this->translationManager, $this->accessControl)
         ];
     }
 
     public function setUp(): void
     {
         $this->translationManager = $this->getMockBuilder(TranslationManager::class)->disableOriginalConstructor()->getMock();
+        $this->accessControl = $this->getMockBuilder(AccessControlInterface::class)->getMock();
         parent::setUp();
     }
 
     public function testSubmitWithData()
     {
-        $this->translationManager->method('isTranslation')->willReturn(true);
         $this->translationManager->method('isEnabled')->willReturn(true);
         $this->translationManager->method('isTranslatable')->willReturnCallback(function ($dataClass) {
             return $dataClass instanceof MockTranslationModel || $dataClass === MockTranslationModel::class;
@@ -79,7 +84,6 @@ class TranslationTypeTest extends TypeTestCase
 
     public function testSubmitWithoutData()
     {
-        $this->translationManager->method('isTranslation')->willReturn(true);
         $this->translationManager->method('isEnabled')->willReturn(true);
         $this->translationManager->method('isTranslatable')->willReturnCallback(function ($dataClass) {
             return $dataClass instanceof MockTranslationModel || $dataClass === MockTranslationModel::class;
@@ -111,7 +115,6 @@ class TranslationTypeTest extends TypeTestCase
 
     public function testSameReferenceForSubmitAndTranslationData()
     {
-        $this->translationManager->method('isTranslation')->willReturn(true);
         $this->translationManager->method('isEnabled')->willReturn(true);
         $this->translationManager->method('isTranslatable')->willReturnCallback(function ($dataClass) {
             return $dataClass instanceof MockTranslationModel || $dataClass === MockTranslationModel::class;

@@ -12,7 +12,7 @@
       .translation-switcher-menu {display: block; border-top:0;}
     }
     .translation-switcher-menu {display: none; position: absolute; z-index: 100; top: 22px; left: -1px; width:calc(100% + 2px); background-color: #FFF;padding:0 6px;border-width:1px;border-style: solid;border-color: $grey5;border-radius:0 0 10px 10px; background:$grey1; color:$grey2;
-      &:hover {color:$color1}
+      .translation-switcher-item:hover {color:$color1}
       .flag-container {padding:3px;line-height:0;}
     }
   }

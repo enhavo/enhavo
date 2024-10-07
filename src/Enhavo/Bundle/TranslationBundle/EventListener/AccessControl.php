@@ -8,80 +8,42 @@
 
 namespace Enhavo\Bundle\TranslationBundle\EventListener;
 
-use Enhavo\Bundle\AppBundle\Locale\LocaleResolverInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class AccessControl
+class AccessControl implements AccessControlInterface
 {
-    /**
-     * @var RequestStack
-     */
-    private $requestStack;
+    private bool $access;
+    private bool $isResolved = false;
 
-    /**
-     * @var LocaleResolverInterface
-     */
-    private $localResolver;
-
-    /**
-     * @var string[]
-     */
-    private $accessControl;
-
-    /**
-     * @var boolean
-     */
-    private $access;
-
-    /**
-     * @var string
-     */
-    private $locale;
-
-    /**
-     * AccessControl constructor.
-     * @param RequestStack $requestStack
-     * @param LocaleResolverInterface $localResolver
-     * @param string[] $accessControl
-     */
-    public function __construct(RequestStack $requestStack, LocaleResolverInterface $localResolver, array $accessControl)
+    public function __construct(
+        private RequestStack $requestStack,
+        private array $accessControl,
+        private $defaultAccess = true,
+    )
     {
-        $this->requestStack = $requestStack;
-        $this->localResolver = $localResolver;
-        $this->accessControl = $accessControl;
+        $this->access = $defaultAccess;
     }
 
     public function isAccess(): bool
     {
-        if ($this->access !== null) {
+        if ($this->isResolved) {
             return $this->access;
         }
 
         $request = $this->requestStack->getMainRequest();
         if ($request === null) {
-            $this->access = false;
-            return $this->access;
+            return false;
         }
 
-        $this->access = true;
         $path = $request->getPathInfo();
         foreach ($this->accessControl as $regex) {
-            if (!preg_match($regex, $path)) {
-                $this->access = false;
+            if (preg_match($regex, $path) != $this->defaultAccess) {
+                $this->access = !$this->defaultAccess;
                 break;
             }
         }
 
+        $this->isResolved = true;
         return $this->access;
-    }
-
-    public function getLocale()
-    {
-        if ($this->locale !== null) {
-            return $this->locale;
-        }
-        $this->locale = $this->localResolver->resolve();
-
-        return $this->locale;
     }
 }
