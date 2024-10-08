@@ -27,7 +27,7 @@ class CreateActionType extends AbstractActionType
     {
     }
 
-    public function createViewData(array $options, Data $data, ResourceInterface $resource = null): void
+    public function createViewData(array $options, Data $data, object $resource = null): void
     {
         $route = $this->expressionLanguage->evaluate($options['route']) ?? $this->routeResolver->getRoute('create', ['api' => false]);
 

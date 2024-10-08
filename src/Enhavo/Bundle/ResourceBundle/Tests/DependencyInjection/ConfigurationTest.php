@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\ResourceBundle\Tests\DependencyInjection;
 
 use Enhavo\Bundle\ResourceBundle\DependencyInjection\Configuration;
+use Enhavo\Bundle\ResourceBundle\DependencyInjection\Merge\ConfigMergeInterface;
 use Enhavo\Bundle\ResourceBundle\DependencyInjection\Merge\GridConfigurationMerger;
 use Enhavo\Bundle\ResourceBundle\Grid\GridMergeInterface;
 use PHPUnit\Framework\TestCase;
@@ -183,9 +184,9 @@ class ConfigurationTest extends TestCase
     }
 }
 
-class Grid implements GridMergeInterface
+class Grid implements ConfigMergeInterface
 {
-    public static function mergeOptions($before, $current): array
+    public static function mergeConfigs($before, $current): array
     {
         if (isset($before['prop1'])) {
             $current['prop1'] = $before['prop1'];

@@ -19,10 +19,6 @@ services:
         tags:
             - { name: enhavo_resource.column }
 
-    Enhavo\Bundle\ResourceBundle\Column\Type\PropertyColumnType:
-        tags:
-            - { name: enhavo_resource.column }
-
     Enhavo\Bundle\ResourceBundle\Column\Type\StateColumnType:
         arguments:
             - '@translator'
@@ -42,12 +38,6 @@ services:
             - { name: enhavo_resource.column }
 
     Enhavo\Bundle\ResourceBundle\Column\Type\BooleanColumnType:
-        tags:
-            - { name: enhavo_resource.column }
-
-    Enhavo\Bundle\ResourceBundle\Column\Type\LabelColumnType:
-        arguments:
-            - '@translator'
         tags:
             - { name: enhavo_resource.column }
 

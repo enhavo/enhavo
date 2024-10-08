@@ -27,14 +27,14 @@ class AssignBatchType extends AbstractBatchType
         $form = $this->formFactory->create($options['form']);
 
         $form->handleRequest($context->getRequest());
-        if(!$form->isValid()) {
+        if (!$form->isValid()) {
             throw new BatchExecutionException($this->translator->trans($options['error_assign'], [], $options['translation_domain']));
         }
 
         $propertyAccessor = PropertyAccess::createPropertyAccessor();
         $data = $form->getData();
 
-        if($options['data_property']) {
+        if ($options['data_property']) {
             $data = $propertyAccessor->getValue($data, $options['data_property']);
         }
 
@@ -53,19 +53,11 @@ class AssignBatchType extends AbstractBatchType
         $this->em->flush();
     }
 
-    public function createViewData(array $options, Data $data): void
-    {
-        $data['route'] = $options['route'];
-        $data['routeParameters'] = $options['route_parameters'];
-    }
-
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'label' => 'batch.assign.label',
             'translation_domain' => 'EnhavoResourceBundle',
-            'route' => null,
-            'route_parameters' => null,
             'form_parameters' => [],
             'error_assign' => 'batch.assign.error.assign',
             'data_property' => null

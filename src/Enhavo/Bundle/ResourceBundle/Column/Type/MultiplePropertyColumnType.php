@@ -25,7 +25,7 @@ class MultiplePropertyColumnType extends AbstractColumnType
             $list[] = $propertyAccessor->getValue($resource, $property);
         }
 
-        $data->set('data', implode($options['separator'], $list));
+        $data->set('value', implode($options['separator'], $list));
     }
 
     public function configureOptions(OptionsResolver $resolver): void

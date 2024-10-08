@@ -28,6 +28,11 @@ use Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
+use Symfony\Component\Serializer\Mapping\Loader\YamlFileLoader;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 use Twig\Environment;
 
 class NewsletterManagerTest extends TestCase
@@ -58,6 +63,8 @@ class NewsletterManagerTest extends TestCase
             $this->createTestReceiver()
         ]);
         $dependency->provider = $providerMock;
+        $classMetadataFactory = new ClassMetadataFactory(new YamlFileLoader(__DIR__.'/../../Resources/config/serialization.yaml'));
+        $dependency->normalizer = new Serializer([new ObjectNormalizer($classMetadataFactory)]);
 
         return $dependency;
     }
@@ -73,6 +80,7 @@ class NewsletterManagerTest extends TestCase
             $dependency->templateResolver,
             $dependency->parameterParser,
             $dependency->provider,
+            $dependency->normalizer,
             $dependency->from,
             $templates
         );
@@ -386,24 +394,16 @@ class NewsletterManagerTest extends TestCase
 
 class DependencyProvider
 {
-    /** @var EntityManagerInterface|MockObject */
-    public $em;
-    /** @var MailerManager|MockObject */
-    public $mailerManager;
-    /** @var string */
-    public $from;
-    /** @var TokenGeneratorInterface|MockObject */
-    public $tokenGenerator;
-    /** @var LoggerInterface|MockObject */
-    public $logger;
-    /** @var SubscriptionManager|MockObject */
-    public $twig;
-    /** @var TemplateResolver|MockObject */
-    public $templateResolver;
-    /** @var ParameterParser|MockObject */
-    public $parameterParser;
-    /** @var ProviderInterface */
-    public $provider;
+    public EntityManagerInterface|MockObject $em;
+    public MailerManager|MockObject $mailerManager;
+    public string $from;
+    public TokenGeneratorInterface|MockObject $tokenGenerator;
+    public  LoggerInterface|MockObject $logger;
+    public SubscriptionManager|MockObject $twig;
+    public TemplateResolver|MockObject $templateResolver;
+    public ParameterParser|MockObject $parameterParser;
+    public ProviderInterface $provider;
+    public NormalizerInterface $normalizer;
 }
 
 class MessageContainer

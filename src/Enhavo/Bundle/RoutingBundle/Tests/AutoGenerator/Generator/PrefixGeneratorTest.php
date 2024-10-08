@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\RoutingBundle\Tests\AutoGenerator\Generator;
 
+use Enhavo\Bundle\ResourceBundle\Repository\EntityRepository;
 use Enhavo\Bundle\ResourceBundle\Repository\FilterRepositoryInterface;
 use Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator;
 use Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator\PrefixGenerator;
@@ -28,7 +29,7 @@ class PrefixGeneratorTest extends TestCase
 
     private function createRepository(array $existPrefixes = [])
     {
-        $repository = $this->getMockBuilder(FilterRepositoryInterface::class)->getMock();
+        $repository = $this->getMockBuilder(EntityRepository::class)->disableOriginalConstructor()->getMock();
         $repository->method('findBy')->willReturnCallback(function ($criteria) use ($existPrefixes) {
             if(isset($criteria['staticPrefix']) && in_array($criteria['staticPrefix'], $existPrefixes)) {
                 return [new Route()];

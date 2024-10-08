@@ -2,8 +2,8 @@
 
 namespace Enhavo\Bundle\TaxonomyBundle\EventListener;
 
-use Enhavo\Bundle\AppBundle\Event\ResourceEvent;
-use Enhavo\Bundle\AppBundle\Event\ResourceEvents;
+use Enhavo\Bundle\ResourceBundle\Event\ResourceEvent;
+use Enhavo\Bundle\ResourceBundle\Event\ResourceEvents;
 use Enhavo\Bundle\TaxonomyBundle\Entity\Term;
 use Enhavo\Bundle\TaxonomyBundle\Taxonomy\TaxonomyManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;

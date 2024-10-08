@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\MediaBundle\Test\Form\Extension;
 
+use Doctrine\ORM\EntityRepository;
 use Enhavo\Bundle\FormBundle\Form\Extension\ListVueTypeExtension;
 use Enhavo\Bundle\MediaBundle\Form\Extension\MediaVueTypeExtension;
 use Enhavo\Bundle\MediaBundle\Form\Type\FileParametersType;
@@ -11,7 +12,6 @@ use Enhavo\Bundle\MediaBundle\Media\ExtensionManager;
 use Enhavo\Bundle\MediaBundle\Media\MediaManager;
 use Enhavo\Bundle\VueFormBundle\Form\Extension\VueTypeExtension;
 use Enhavo\Bundle\VueFormBundle\Form\VueForm;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
@@ -34,7 +34,7 @@ class MediaVueTypeExtensionTest extends TypeTestCase
     protected function getExtensions()
     {
         $extensionManager = $this->getMockBuilder(ExtensionManager::class)->disableOriginalConstructor()->getMock();
-        $repository = $this->getMockBuilder(RepositoryInterface::class)->getMock();
+        $repository = $this->getMockBuilder(EntityRepository::class)->disableOriginalConstructor()->getMock();
         $serializer = $this->getMockBuilder(NormalizerInterface::class)->getMock();
         $formFactory = $this->getMockBuilder(FormFactory::class)->disableOriginalConstructor()->getMock();
 

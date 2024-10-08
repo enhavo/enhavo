@@ -7,7 +7,7 @@ use Enhavo\Bundle\AppBundle\Mailer\Attachment;
 use Enhavo\Bundle\AppBundle\Mailer\MailerManager;
 use Enhavo\Bundle\AppBundle\Mailer\Message;
 use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
-use Enhavo\Bundle\AppBundle\Tests\Mock\TranslatorMock;
+use Enhavo\Bundle\ResourceBundle\Tests\Mock\TranslatorMock;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Mailer\MailerInterface;

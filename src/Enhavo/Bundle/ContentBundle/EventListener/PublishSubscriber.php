@@ -8,9 +8,9 @@
 
 namespace Enhavo\Bundle\ContentBundle\EventListener;
 
-use Enhavo\Bundle\AppBundle\Event\ResourceEvent;
-use Enhavo\Bundle\AppBundle\Event\ResourceEvents;
 use Enhavo\Bundle\ContentBundle\Content\Publishable;
+use Enhavo\Bundle\ResourceBundle\Event\ResourceEvent;
+use Enhavo\Bundle\ResourceBundle\Event\ResourceEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class PublishSubscriber implements EventSubscriberInterface

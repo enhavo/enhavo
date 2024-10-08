@@ -8,51 +8,62 @@
 
 namespace Enhavo\Bundle\ResourceBundle\Tests\Batch\Type;
 
-use Batch;
+use Doctrine\ORM\EntityRepository;
+use Enhavo\Bundle\ResourceBundle\Batch\Batch;
+use Enhavo\Bundle\ResourceBundle\Batch\Type\BaseBatchType;
+use Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface;
+use Enhavo\Bundle\ResourceBundle\Tests\Mock\RouterMock;
+use Enhavo\Bundle\ResourceBundle\Tests\Mock\TranslatorMock;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Type\BaseBatchType;
 
 class BaseBatchTypeTest extends TestCase
 {
-    private function createDependencies()
+    private function createDependencies(): BaseBatchTypeDependencies
     {
-        $dependencies = new \Enhavo\Bundle\AppBundle\Tests\Batch\Type\BaseBatchTypeDependencies();
-        $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
+        $dependencies = new BaseBatchTypeDependencies();
+        $dependencies->translator = new TranslatorMock('.trans');
+        $dependencies->routeResolver = $this->getMockBuilder(RouteResolverInterface::class)->getMock();
+        $dependencies->router = new RouterMock();
+        $dependencies->repository = $this->getMockBuilder(EntityRepository::class)->disableOriginalConstructor()->getMock();
         return $dependencies;
     }
 
-    private function createInstance(\Enhavo\Bundle\AppBundle\Tests\Batch\Type\BaseBatchTypeDependencies $dependencies)
+    private function createInstance(BaseBatchTypeDependencies $dependencies): BaseBatchType
     {
-        return new BaseBatchType($dependencies->translator);
+        return new BaseBatchType(
+            $dependencies->translator,
+            $dependencies->routeResolver,
+            $dependencies->router,
+        );
     }
 
     public function testViewData()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->translator->method('trans')->willReturnCallback(function($trans) { return 'trans|'.$trans; });
         $type = $this->createInstance($dependencies);
 
         $batch = new Batch($type, [], [
             'label' => 'Base Label',
             'confirm_message' => 'Confirm Message',
-            'position' => 1,
+            'route' => 'batch_route',
+            'route_parameters' => ['key' => 'value'],
+            'position' => 3,
         ]);
 
         $viewData = $batch->createViewData();
 
-        $this->assertEquals([
-            'label' => 'trans|Base Label',
-            'confirmMessage' => 'trans|Confirm Message',
-            'position' => 1,
-            'component' => 'batch-url',
-        ], $viewData);
+        $this->assertEquals('Base Label.trans', $viewData['label']);
+        $this->assertEquals('Confirm Message.trans', $viewData['confirmMessage']);
+        $this->assertEquals('/batch_route?key=value', $viewData['url']);
+        $this->assertEquals(3, $viewData['position']);
     }
 
     public function testPermission()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->translator->method('trans')->willReturnCallback(function($trans) { return 'trans|'.$trans; });
         $type = $this->createInstance($dependencies);
 
         $batch = new Batch($type, [], [
@@ -60,26 +71,27 @@ class BaseBatchTypeTest extends TestCase
             'permission' => 'ROLE_USER'
         ]);
 
-        $this->assertEquals('ROLE_USER', $batch->getPermission());
+        $this->assertEquals('ROLE_USER', $batch->getPermission($dependencies->repository));
     }
 
-    public function testHidden()
+    public function testEnabled()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->translator->method('trans')->willReturnCallback(function($trans) { return 'trans|'.$trans; });
         $type = $this->createInstance($dependencies);
 
         $batch = new Batch($type, [], [
             'label' => 'Base Label',
-            'hidden' => true
+            'enabled' => false
         ]);
 
-        $this->assertTrue($batch->isHidden());
+        $this->assertFalse($batch->isEnabled());
     }
 }
 
 class BaseBatchTypeDependencies
 {
-    /** @var TranslatorInterface|\PHPUnit_Framework_MockObject_MockObject */
-    public $translator;
+    public TranslatorInterface|MockObject $translator;
+    public RouteResolverInterface|MockObject $routeResolver;
+    public RouterInterface|MockObject $router;
+    public EntityRepository|MockObject $repository;
 }

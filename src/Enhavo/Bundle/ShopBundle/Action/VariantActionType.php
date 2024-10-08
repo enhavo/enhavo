@@ -19,7 +19,7 @@ class VariantActionType extends AbstractActionType
     {
     }
 
-    public function createViewData(array $options, Data $data, ResourceInterface $resource = null): void
+    public function createViewData(array $options, Data $data, object $resource = null): void
     {
         if (!$resource instanceof ProductInterface) {
             throw new \InvalidArgumentException(sprintf('Resource need to be type of "%s"', ProductInterface::class));

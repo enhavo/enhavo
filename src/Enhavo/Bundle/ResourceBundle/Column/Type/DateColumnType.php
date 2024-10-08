@@ -18,7 +18,7 @@ class DateColumnType extends AbstractColumnType
 {
     public function createResourceViewData(array $options, ResourceInterface $resource, Data $data): void
     {
-        $propertyAccessor= new PropertyAccessor;
+        $propertyAccessor = new PropertyAccessor;
         $value = $propertyAccessor->getValue($resource, $options['property']);
 
         if ($value instanceof \DateTime) {

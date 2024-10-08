@@ -3,8 +3,8 @@
 namespace Enhavo\Bundle\MultiTenancyBundle\Filter;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
-use Enhavo\Bundle\AppBundle\Exception\FilterException;
 use Enhavo\Bundle\MultiTenancyBundle\Tenant\TenantManager;
+use Enhavo\Bundle\ResourceBundle\Exception\FilterException;
 use Enhavo\Bundle\ResourceBundle\Filter\AbstractFilterType;
 use Enhavo\Bundle\ResourceBundle\Filter\FilterQuery;
 use Symfony\Component\OptionsResolver\OptionsResolver;

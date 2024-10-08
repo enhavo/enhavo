@@ -10,7 +10,6 @@ namespace Enhavo\Bundle\ResourceBundle\Action\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
-use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
@@ -26,7 +25,7 @@ class DeleteActionType extends AbstractActionType
     {
     }
 
-    public function createViewData(array $options, Data $data, ResourceInterface $resource = null): void
+    public function createViewData(array $options, Data $data, object $resource = null): void
     {
         if ($options['route']) {
             $url = $this->getUrl($options['route'], $options['route_parameters'], $resource);
@@ -41,9 +40,10 @@ class DeleteActionType extends AbstractActionType
         }
 
         $data->set('url', $url);
+        $data->set('token', $this->tokenManager->getToken('resource_delete')->getValue());
     }
 
-    private function getUrl(string $route, array $routeParameters = [], ResourceInterface $resource = null): string
+    private function getUrl(string $route, array $routeParameters = [], object $resource = null): string
     {
         $parameters = [];
         $parameters['id'] = $resource->getId();
@@ -55,7 +55,7 @@ class DeleteActionType extends AbstractActionType
     {
         $resolver->setDefaults([
             'label' => 'label.delete',
-            'translation_domain' => 'EnhavoAppBundle',
+            'translation_domain' => 'EnhavoResourceBundle',
             'icon' => 'delete',
             'confirm' => true,
             'confirm_message' => 'message.delete.confirm',

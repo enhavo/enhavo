@@ -4,73 +4,69 @@ namespace Enhavo\Bundle\ResourceBundle\Resource;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
-use Enhavo\Bundle\AppBundle\Event\ResourcePostCreateEvent;
-use Enhavo\Bundle\AppBundle\Event\ResourcePostDeleteEvent;
-use Enhavo\Bundle\AppBundle\Event\ResourcePostUpdateEvent;
-use Enhavo\Bundle\AppBundle\Event\ResourcePreCreateEvent;
-use Enhavo\Bundle\AppBundle\Event\ResourcePreDeleteEvent;
-use Enhavo\Bundle\AppBundle\Event\ResourcePreUpdateEvent;
+use Enhavo\Bundle\ResourceBundle\Event\ResourcePreCreateEvent;
+use Enhavo\Bundle\ResourceBundle\Event\ResourcePostCreateEvent;
+use Enhavo\Bundle\ResourceBundle\Event\ResourcePostDeleteEvent;
+use Enhavo\Bundle\ResourceBundle\Event\ResourcePostTransitionEvent;
+use Enhavo\Bundle\ResourceBundle\Event\ResourcePostUpdateEvent;
+use Enhavo\Bundle\ResourceBundle\Event\ResourcePreDeleteEvent;
+use Enhavo\Bundle\ResourceBundle\Event\ResourcePreTransitionEvent;
+use Enhavo\Bundle\ResourceBundle\Event\ResourcePreUpdateEvent;
+use Enhavo\Bundle\ResourceBundle\Factory\FactoryInterface;
+use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Psr\Container\ContainerInterface;
 use SM\Factory\FactoryInterface as SMFactoryInterface;
-use Sylius\Component\Resource\Factory\FactoryInterface;
-use Sylius\Component\Resource\Metadata\MetadataInterface;
-use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
+use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\GroupSequence;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ResourceManager
 {
     private ContainerInterface $container;
+    private PropertyAccessor $propertyAccessor;
 
     public function __construct(
-        private EventDispatcherInterface $eventDispatcher,
-        private EntityManagerInterface $em,
-        private SMFactoryInterface $stateMachineFactory
-    ) {}
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly EntityManagerInterface $em,
+        private readonly SMFactoryInterface $stateMachineFactory,
+        private readonly ValidatorInterface $validator,
+    ) {
+        $this->propertyAccessor = new PropertyAccessor();
+    }
 
     public function setContainer(ContainerInterface $container): void
     {
         $this->container = $container;
     }
 
-    public function save(ResourceInterface $resource, ?string $transition = null, ?string $graph = null)
+    public function save(object $resource): void
     {
-        if ($resource->getId() === null) {
-            $this->create($resource, $transition, $graph);
-        } else {
-            $this->update($resource, $transition, $graph);
-        }
-    }
+        $id = $this->propertyAccessor->getValue($resource, 'id');
 
-    public function create(ResourceInterface $resource, ?string $transition = null, ?string $graph = null)
-    {
-        $this->dispatch(new ResourcePreCreateEvent($resource), 'pre_create');
-
-        if ($transition && $graph) {
-            $this->stateMachineFactory->get($resource, $graph)->apply($transition);
-        }
-
-        $repository = $this->em->getRepository(get_class($resource));
-        if ($repository instanceof RepositoryInterface) {
-            $repository->add($resource);
-        } else {
+        if ($id === null) {
+            $this->dispatch(new ResourcePreCreateEvent($resource), 'pre_create');
             $this->em->persist($resource);
             $this->em->flush();
+            $this->dispatch(new ResourcePostCreateEvent($resource), 'post_create');
+        } else {
+            $this->dispatch(new ResourcePreUpdateEvent($resource), 'pre_update');
+            $this->em->flush();
+            $this->dispatch(new ResourcePostUpdateEvent($resource), 'post_update');
         }
-
-        $this->dispatch(new ResourcePostCreateEvent($resource), 'post_create');
     }
 
-    public function update(ResourceInterface $resource, ?string $transition = null, ?string $graph = null)
+    public function applyTransition(object $resource, string $transition = null, string $graph = null): void
     {
-        $this->dispatch(new ResourcePreUpdateEvent($resource), 'pre_update');
+        $this->dispatch(new ResourcePreTransitionEvent($resource, $transition, $graph), 'pre_transition');
 
         if ($transition && $graph) {
             $this->stateMachineFactory->get($resource, $graph)->apply($transition);
         }
-        $this->em->flush();
 
-        $this->dispatch(new ResourcePostUpdateEvent($resource), 'post_update');
+        $this->dispatch(new ResourcePostTransitionEvent($resource, $transition, $graph), 'post_transition');
     }
 
     public function canApplyTransition(ResourceInterface $resource, ?string $transition = null, ?string $graph = null): bool
@@ -78,7 +74,17 @@ class ResourceManager
         return $this->stateMachineFactory->get($resource, $graph)->can($transition);
     }
 
-    public function delete(ResourceInterface $resource)
+    public function validate(object $resource, Constraint|array|null $constraints = null, string|GroupSequence|array|null $groups = null): ConstraintViolationListInterface
+    {
+        return $this->validator->validate($resource, $constraints, $groups);
+    }
+
+    public function isValid(object $resource, Constraint|array|null $constraints = null, string|GroupSequence|array|null $groups = null): bool
+    {
+        return $this->validator->validate($resource, $constraints, $groups)->count() === 0;
+    }
+
+    public function delete(ResourceInterface $resource): void
     {
         $this->dispatch(new ResourcePreDeleteEvent($resource), 'pre_delete');
 
@@ -98,13 +104,8 @@ class ResourceManager
         return $this->container->get(sprintf('%s.factory', $name));
     }
 
-    public function getMetadata($name): MetadataInterface
+    private function dispatch($event, $eventName): void
     {
-        return $this->metadataRegistry->get(sprintf('%s.%s', $applicationName, $entityName));
-    }
-
-    private function dispatch($event, $eventName)
-    {
-        $this->eventDispatcher->dispatch($event, sprintf('enhavo_app.%s', $eventName));
+        $this->eventDispatcher->dispatch($event, sprintf('enhavo_resource.%s', $eventName));
     }
 }

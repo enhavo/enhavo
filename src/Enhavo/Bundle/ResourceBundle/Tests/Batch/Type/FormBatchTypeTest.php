@@ -8,44 +8,57 @@
 
 namespace Enhavo\Bundle\ResourceBundle\Tests\Batch\Type;
 
-use Batch;
+use Doctrine\ORM\EntityRepository;
+use Enhavo\Bundle\ResourceBundle\Batch\Batch;
+use Enhavo\Bundle\ResourceBundle\Batch\Type\FormBatchType;
+use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage;
+use Enhavo\Bundle\VueFormBundle\Form\VueForm;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Type\FormBatchType;
+use Symfony\Component\Form\FormFactoryInterface;
 
 class FormBatchTypeTest extends TestCase
 {
-    private function createDependencies()
+    private function createDependencies(): FormBatchTypeDependencies
     {
         $dependencies = new FormBatchTypeDependencies();
+        $dependencies->formFactory = $this->getMockBuilder(FormFactoryInterface::class)->getMock();
+        $dependencies->repository = $this->getMockBuilder(EntityRepository::class)->disableOriginalConstructor()->getMock();
+        $dependencies->vueForm = $this->getMockBuilder(VueForm::class)->disableOriginalConstructor()->getMock();
+        $dependencies->expressionLanguage = new ResourceExpressionLanguage();
         return $dependencies;
     }
 
-    private function createInstance(FormBatchTypeDependencies $dependencies)
+    private function createInstance(FormBatchTypeDependencies $dependencies): FormBatchType
     {
-        return new FormBatchType();
+        return new FormBatchType(
+            $dependencies->vueForm,
+            $dependencies->formFactory,
+            $dependencies->expressionLanguage,
+        );
     }
 
     public function testViewData()
     {
         $dependencies = $this->createDependencies();
+        $dependencies->vueForm->method('createData')->willReturn(['form' => 'data']);
+
         $type = $this->createInstance($dependencies);
 
         $batch = new Batch($type, [], [
-            'form_route' => 'my_form_route',
+            'form' => 'SampleForm'
         ]);
 
         $viewData = $batch->createViewData();
 
-        $this->assertEquals([
-            'modal' => [
-                'component' => 'ajax-form-modal',
-                'route' => 'my_form_route',
-            ]
-        ], $viewData);
+        $this->assertEquals(['form' => 'data'], $viewData['form']);
     }
 }
 
 class FormBatchTypeDependencies
 {
-
+    public EntityRepository|MockObject $repository;
+    public VueForm|MockObject $vueForm;
+    public FormFactoryInterface|MockObject $formFactory;
+    public ResourceExpressionLanguage|MockObject $expressionLanguage;
 }

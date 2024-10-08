@@ -6,8 +6,8 @@
 
 namespace Enhavo\Bundle\UserBundle\Tests\EventListener;
 
-use Enhavo\Bundle\AppBundle\Event\ResourceEvent;
-use Enhavo\Bundle\AppBundle\Event\ResourceEvents;
+use Enhavo\Bundle\ResourceBundle\Event\ResourceEvent;
+use Enhavo\Bundle\ResourceBundle\Event\ResourceEvents;
 use Enhavo\Bundle\UserBundle\EventListener\SaveUserSubscriber;
 use Enhavo\Bundle\UserBundle\Tests\Mocks\UserMock;
 use Enhavo\Bundle\UserBundle\User\UserManager;

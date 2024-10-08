@@ -85,7 +85,7 @@ class ResourceDuplicateEndpointType extends AbstractEndpointType
             throw new HttpException($event->getErrorCode(), $event->getMessage());
         }
 
-        $this->requestStack->getSession()->getFlashBag()->add('success', $this->translator->trans('form.message.success', [], 'EnhavoAppBundle'));
+        $this->requestStack->getSession()->getFlashBag()->add('success', $this->translator->trans('form.message.success', [], 'EnhavoResourceBundle'));
 
         $route = $configuration->getRedirectRoute(null);
 

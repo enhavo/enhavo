@@ -3,11 +3,11 @@
 namespace Enhavo\Bundle\MediaBundle\EventListener;
 
 use Doctrine\ORM\Event\PreRemoveEventArgs;
-use Enhavo\Bundle\AppBundle\Event\ResourcePostDeleteEvent;
 use Enhavo\Bundle\DoctrineExtensionBundle\Util\AssociationFinder;
 use Enhavo\Bundle\MediaBundle\Entity\Format;
 use Enhavo\Bundle\MediaBundle\GarbageCollection\GarbageCollector;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
+use Enhavo\Bundle\ResourceBundle\Event\ResourcePostDeleteEvent;
 use Enhavo\Bundle\ResourceBundle\Repository\EntityRepository;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 

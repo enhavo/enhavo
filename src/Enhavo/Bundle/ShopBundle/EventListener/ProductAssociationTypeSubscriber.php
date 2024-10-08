@@ -8,8 +8,8 @@
 
 namespace Enhavo\Bundle\ShopBundle\EventListener;
 
-use Enhavo\Bundle\AppBundle\Event\ResourceEvent;
-use Enhavo\Bundle\AppBundle\Event\ResourceEvents;
+use Enhavo\Bundle\ResourceBundle\Event\ResourceEvent;
+use Enhavo\Bundle\ResourceBundle\Event\ResourceEvents;
 use Enhavo\Bundle\ShopBundle\Manager\ProductManager;
 use Sylius\Component\Product\Model\ProductAssociationTypeInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;

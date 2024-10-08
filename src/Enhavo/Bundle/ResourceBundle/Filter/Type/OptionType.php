@@ -9,7 +9,7 @@
 namespace Enhavo\Bundle\ResourceBundle\Filter\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
-use Enhavo\Bundle\AppBundle\Exception\FilterException;
+use Enhavo\Bundle\ResourceBundle\Exception\FilterException;
 use Enhavo\Bundle\ResourceBundle\Filter\AbstractFilterType;
 use Enhavo\Bundle\ResourceBundle\Filter\FilterQuery;
 use Symfony\Component\OptionsResolver\OptionsResolver;

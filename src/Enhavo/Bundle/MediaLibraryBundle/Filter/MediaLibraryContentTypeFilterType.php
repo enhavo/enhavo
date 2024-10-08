@@ -3,7 +3,7 @@
 namespace Enhavo\Bundle\MediaLibraryBundle\Filter;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
-use Enhavo\Bundle\AppBundle\Exception\FilterException;
+use Enhavo\Bundle\ResourceBundle\Exception\FilterException;
 use Enhavo\Bundle\ResourceBundle\Filter\AbstractFilterType;
 use Enhavo\Bundle\ResourceBundle\Filter\FilterQuery;
 use Symfony\Component\OptionsResolver\OptionsResolver;

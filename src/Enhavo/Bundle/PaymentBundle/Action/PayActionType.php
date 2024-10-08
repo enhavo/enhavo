@@ -17,7 +17,7 @@ class PayActionType extends AbstractActionType
     {
     }
 
-    public function createViewData(array $options, Data $data, ResourceInterface $resource = null): void
+    public function createViewData(array $options, Data $data, object $resource = null): void
     {
         $data->set('url', $this->getUrl($options, $resource));
     }

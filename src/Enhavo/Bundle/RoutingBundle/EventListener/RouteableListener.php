@@ -8,10 +8,10 @@
 
 namespace Enhavo\Bundle\RoutingBundle\EventListener;
 
-use Enhavo\Bundle\AppBundle\Event\ResourceEvent;
-use Enhavo\Bundle\AppBundle\Event\ResourceEvents;
-use Enhavo\Bundle\RoutingBundle\Model\Routeable;
+use Enhavo\Bundle\ResourceBundle\Event\ResourceEvent;
+use Enhavo\Bundle\ResourceBundle\Event\ResourceEvents;
 use Enhavo\Bundle\RoutingBundle\Manager\RouteManager;
+use Enhavo\Bundle\RoutingBundle\Model\Routeable;
 use Enhavo\Bundle\RoutingBundle\Model\Slugable;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 

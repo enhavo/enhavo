@@ -1,7 +1,7 @@
 <?php
 namespace Enhavo\Bundle\SearchBundle\EventListener;
 
-use Enhavo\Bundle\AppBundle\Event\ResourceEvent;
+use Enhavo\Bundle\ResourceBundle\Event\ResourceEvent;
 use Enhavo\Bundle\SearchBundle\Engine\SearchEngineInterface;
 
 class DeleteListener

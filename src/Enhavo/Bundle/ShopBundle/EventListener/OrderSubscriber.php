@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\ShopBundle\EventListener;
 
-use Enhavo\Bundle\AppBundle\Event\ResourceEvent;
+use Enhavo\Bundle\ResourceBundle\Event\ResourceEvent;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;

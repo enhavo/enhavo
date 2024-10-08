@@ -25,7 +25,6 @@ class BaseBatchType extends AbstractBatchType
         $data->set('label', $this->getLabel($options));
         $data->set('confirmMessage', $this->getConfirmMessage($options));
         $data->set('position', $options['position']);
-        $data->set('component', $options['component']);
         $data->set('model', $options['model']);
         $data->set('url', $options['route'] ? $this->router->generate($options['route'], $options['route_parameters']) : null);
     }
@@ -61,7 +60,6 @@ class BaseBatchType extends AbstractBatchType
             'translation_domain' => null,
             'enabled' => true,
             'confirm_message' => null,
-            'component' => 'batch-url',
             'model' => 'UrlBatch',
             'route' => $this->routeResolver->getRoute('batch'),
             'route_parameters' => [],

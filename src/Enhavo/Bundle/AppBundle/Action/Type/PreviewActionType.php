@@ -11,7 +11,7 @@ namespace Enhavo\Bundle\AppBundle\Action\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
-use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
+use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage;
 use Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
@@ -19,23 +19,31 @@ use Symfony\Component\Routing\RouterInterface;
 class PreviewActionType extends AbstractActionType
 {
     public function __construct(
-        private RouterInterface $router,
-        private RouteResolverInterface $routeResolver,
+        private readonly RouterInterface $router,
+        private readonly RouteResolverInterface $routeResolver,
+        private readonly ResourceExpressionLanguage $expressionLanguage,
     )
     {
     }
 
-    public function createViewData(array $options, Data $data, ResourceInterface $resource = null): void
+    public function createViewData(array $options, Data $data, object $resource = null): void
     {
-        $apiRoute = $options['api_route'] ?? $this->routeResolver->getRoute('preview', ['api' => true]);
+        $apiRoute = $this->expressionLanguage->evaluate($options['api_route'], [
+            'resource' => $resource,
+        ]);
+
+        if ($apiRoute === null) {
+            $apiRoute = $this->routeResolver->getRoute('preview', ['api' => true]);
+        }
 
         if ($apiRoute === null) {
             throw new \Exception('Can\'t find an api route for preview, please provide a route over the "api_route" option');
         }
 
-        $data->set('apiUrl', $this->router->generate($apiRoute, [
-            'id' => $resource->getId()
-        ]));
+        $apiParameters = $this->expressionLanguage->evaluateArray($options['api_route_parameters'], [
+            'resource' => $resource,
+        ]);
+        $data->set('apiUrl', $this->router->generate($apiRoute, $apiParameters));
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -44,11 +52,13 @@ class PreviewActionType extends AbstractActionType
             'label' => 'label.preview',
             'translation_domain' => 'EnhavoAppBundle',
             'icon' => 'remove_red_eye',
-            'append_id' => true,
             'model' => 'PreviewAction',
             'component' => 'action-preview',
             'route' => 'enhavo_app_admin_resource_preview',
-            'api_route' => null
+            'api_route' => null,
+            'api_route_parameters' => [
+                'id' => 'expr:resource?.getId()'
+            ]
         ]);
     }
 

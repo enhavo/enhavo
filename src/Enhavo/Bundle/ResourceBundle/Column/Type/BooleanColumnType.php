@@ -18,7 +18,7 @@ class BooleanColumnType extends AbstractColumnType
 {
     public function createResourceViewData(array $options, ResourceInterface $resource, Data $data): void
     {
-        $propertyAccessor= new PropertyAccessor;
+        $propertyAccessor = new PropertyAccessor;
         $value = $propertyAccessor->getValue($resource, $options['property']);
         $data->set('value', (boolean) $value);
     }
