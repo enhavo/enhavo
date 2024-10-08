@@ -9,7 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SendActionType extends AbstractActionType
 {
-    public function createViewData(array $options, Data $data, ResourceInterface $resource = null): void
+    public function createViewData(array $options, Data $data, object $resource = null): void
     {
         $data->set('resourceId', $resource->getId());
     }

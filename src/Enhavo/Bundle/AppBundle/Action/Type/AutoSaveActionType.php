@@ -16,7 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AutoSaveActionType extends AbstractActionType
 {
-    public function createViewData(array $options, Data $data, ResourceInterface $resource = null): void
+    public function createViewData(array $options, Data $data, object $resource = null): void
     {
         $data->set('timeout', $options['timeout']);
         $data->set('iconInactive', $options['icon_inactive']);

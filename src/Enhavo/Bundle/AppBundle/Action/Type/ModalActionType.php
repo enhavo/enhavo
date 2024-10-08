@@ -10,7 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ModalActionType extends AbstractActionType implements ActionTypeInterface
 {
-    public function createViewData(array $options, Data $data, ResourceInterface $resource = null): void
+    public function createViewData(array $options, Data $data, object $resource = null): void
     {
         $data['modal'] = $options['modal'];
     }

@@ -4,25 +4,13 @@ namespace Enhavo\Bundle\AppBundle\Action\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
-use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class OutputStreamActionType extends AbstractActionType
 {
-    public function __construct(
-        private readonly TranslatorInterface $translator
-    )
+    public function createViewData(array $options, Data $data, object $resource = null): void
     {
-    }
-
-    public function createViewData(array $options, Data $data, ResourceInterface $resource = null): void
-    {
-        $data->set('modal', [
-            'modal' => $options['modal_component'],
-            'url' => $data['url'],
-            'closeLabel' => $this->translator->trans('label.close', [], 'EnhavoAppBundle')
-        ]);
+        $data->set('modalComponent', $options['modal_component']);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

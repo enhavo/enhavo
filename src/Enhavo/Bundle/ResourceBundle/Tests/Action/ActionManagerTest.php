@@ -8,188 +8,129 @@
 
 namespace Enhavo\Bundle\ResourceBundle\Tests\Action;
 
-use Enhavo\Bundle\AppBundle\Type\TypeCollector;
+use Enhavo\Bundle\ResourceBundle\Action\Action;
 use Enhavo\Bundle\ResourceBundle\Action\ActionManager;
-use Enhavo\Bundle\ResourceBundle\Action\ActionTypeInterface;
+use Enhavo\Component\Type\FactoryInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class ActionManagerTest extends TestCase
 {
-    private function createDependencies()
+    private function createDependencies(): ActionManagerDependencies
     {
-        $dependencies = new \Enhavo\Bundle\AppBundle\Tests\Action\Dependencies();
-        $dependencies->collector = $this->getMockBuilder(TypeCollector::class)->disableOriginalConstructor()->getMock();
+        $dependencies = new ActionManagerDependencies();
+        $dependencies->factory = $this->getMockBuilder(FactoryInterface::class)->getMock();
         $dependencies->checker = $this->getMockBuilder(AuthorizationCheckerInterface::class)->getMock();
         return $dependencies;
     }
 
-    private function createInstance(\Enhavo\Bundle\AppBundle\Tests\Action\Dependencies $dependencies)
+    private function createInstance(ActionManagerDependencies $dependencies): ActionManager
     {
-        return new ActionManager($dependencies->collector, $dependencies->checker);
+        return new ActionManager(
+            $dependencies->checker,
+            $dependencies->factory,
+        );
     }
 
     public function testGetActions()
     {
         $dependencies = $this->createDependencies();
         $dependencies->checker->method('isGranted')->willReturn(true);
-        $dependencies->collector->method('getType')->willReturn(new \Enhavo\Bundle\AppBundle\Tests\Action\TestActionType());
-        $manager = $this->createInstance($dependencies);
-
-        $actions = $manager->getActions([
-            'create' => [
-                'type' => 'test',
-                'option_key' => 'option_value'
-            ]
-        ]);
-
-        $this->assertArrayHasKey('create', $actions);
-        $this->assertCount(1, $actions);
-        $this->assertEquals('test_value', $actions['create']->createViewData()['data']);
-    }
-
-    public function testCreateActionsViewData()
-    {
-        $dependencies = $this->createDependencies();
-        $dependencies->checker->method('isGranted')->willReturn(true);
-        $dependencies->collector->method('getType')->willReturnCallback(function ($type) {
-            if ($type === 'test') {
-                return new \Enhavo\Bundle\AppBundle\Tests\Action\TestActionType();
-            } elseif ($type === 'other_test') {
-                return new \Enhavo\Bundle\AppBundle\Tests\Action\OtherTestActionType();
+        $dependencies->factory->method('create')->willReturnCallback(function ($options, $key) {
+            if ($options['type'] === 'test') {
+                $action = $this->getMockBuilder(Action::class)->disableOriginalConstructor()->getMock();
+                $action->method('isEnabled')->willReturn(true);
+                $action->method('getPermission')->willReturn(true);
+                $action->method('createViewData')->willReturn(['name' => 'test']);
+                return $action;
             }
-            return null;
         });
         $manager = $this->createInstance($dependencies);
 
-        $actions = $manager->createActionsViewData([
+        $actions = $manager->getActions([
             'create' => [
                 'type' => 'test',
-                'option_key' => 'option_value'
-            ],
-            'update' => [
-                'type' => 'other_test',
-                'option_key' => 'option_value'
             ]
         ]);
 
-        $this->assertCount(2, $actions);
-        $this->assertEquals('test_value', $actions[0]['data']);
-        $this->assertEquals('view_data', $actions[1]['view']);
+        $this->assertCount(1, $actions);
+        $this->assertEquals('test', $actions['create']->createViewData()['name']);
     }
 
-    public function testMissingType()
-    {
-        $this->expectException(\Enhavo\Bundle\AppBundle\Exception\TypeMissingException::class);
-        $dependencies = $this->createDependencies();
-        $manager = $this->createInstance($dependencies);
-
-        $actions = $manager->createActionsViewData([
-            'create' => [
-                'option_key' => 'option_value'
-            ],
-        ]);
-    }
-
-    public function testHiddenCheck()
+    public function testNotEnabled()
     {
         $dependencies = $this->createDependencies();
         $dependencies->checker->method('isGranted')->willReturn(true);
-        $dependencies->collector->method('getType')->willReturn(new \Enhavo\Bundle\AppBundle\Tests\Action\TestActionType(true));
+        $dependencies->factory->method('create')->willReturnCallback(function ($options, $key) {
+            if ($options['type'] === 'test') {
+                $action = $this->getMockBuilder(Action::class)->disableOriginalConstructor()->getMock();
+                $action->method('isEnabled')->willReturn(false);
+                $action->method('getPermission')->willReturn(true);
+                return $action;
+            }
+        });
         $manager = $this->createInstance($dependencies);
 
         $actions = $manager->getActions([
             'create' => [
                 'type' => 'test',
-                'option_key' => 'option_value'
             ]
         ]);
 
         $this->assertCount(0, $actions);
     }
 
-    public function testPermissionCheck()
+    public function testNoPermission()
     {
         $dependencies = $this->createDependencies();
         $dependencies->checker->method('isGranted')->willReturn(false);
-        $dependencies->collector->method('getType')->willReturn(new \Enhavo\Bundle\AppBundle\Tests\Action\TestActionType());
+        $dependencies->factory->method('create')->willReturnCallback(function ($options, $key) {
+            if ($options['type'] === 'test') {
+                $action = $this->getMockBuilder(Action::class)->disableOriginalConstructor()->getMock();
+                $action->method('isEnabled')->willReturn(true);
+                $action->method('getPermission')->willReturn(true);
+                return $action;
+            }
+        });
         $manager = $this->createInstance($dependencies);
 
         $actions = $manager->getActions([
             'create' => [
                 'type' => 'test',
-                'option_key' => 'option_value'
             ]
         ]);
 
         $this->assertCount(0, $actions);
     }
-}
 
-class Dependencies
-{
-    /** @var TypeCollector|\PHPUnit_Framework_MockObject_MockObject */
-    public $collector;
-    /** @var AuthorizationCheckerInterface|\PHPUnit_Framework_MockObject_MockObject */
-    public $checker;
-}
-
-class TestTabType implements ActionTypeInterface
-{
-    /** @var boolean */
-    private $hidden;
-    /** @var string */
-    private $role;
-
-    /**
-     * TestActionType constructor.
-     * @param bool $hidden
-     * @param string $role
-     */
-    public function __construct(bool $hidden = false, string $role = 'ROLE_TEST')
+    public function testEmptyPermission()
     {
-        $this->hidden = $hidden;
-        $this->role = $role;
-    }
+        $dependencies = $this->createDependencies();
+        $dependencies->checker->method('isGranted')->willReturn(false);
+        $dependencies->factory->method('create')->willReturnCallback(function ($options, $key) {
+            if ($options['type'] === 'test') {
+                $action = $this->getMockBuilder(Action::class)->disableOriginalConstructor()->getMock();
+                $action->method('isEnabled')->willReturn(true);
+                $action->method('getPermission')->willReturn(null);
+                return $action;
+            }
+        });
+        $manager = $this->createInstance($dependencies);
 
-    public function createViewData(array $options, $resource = null)
-    {
-        return ['data' => 'test_value'];
-    }
-
-    public function getPermission(array $options, $resource = null)
-    {
-        return $this->role;
-    }
-
-    public function isHidden(array $options, $resource = null)
-    {
-        return $this->hidden;
-    }
-
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults([
-            'option_key' => 'option_value'
+        $actions = $manager->getActions([
+            'create' => [
+                'type' => 'test',
+            ]
         ]);
+
+        $this->assertCount(1, $actions);
     }
 
-    public function getType()
-    {
-        return 'test';
-    }
 }
 
-class OtherTestActionType extends TestTabType
+class ActionManagerDependencies
 {
-    public function createViewData(array $options, $resource = null)
-    {
-        return ['view' => 'view_data'];
-    }
-
-    public function getType()
-    {
-        return 'other_test';
-    }
+    public FactoryInterface|MockObject $factory;
+    public AuthorizationCheckerInterface|MockObject $checker;
 }

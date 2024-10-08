@@ -24,7 +24,7 @@ class CommentsActionType extends AbstractActionType
     {
     }
 
-    public function createViewData(array $options, Data $data, ResourceInterface $resource = null): void
+    public function createViewData(array $options, Data $data, object $resource = null): void
     {
         if (!$resource instanceof CommentSubjectInterface) {
             throw CommentSubjectException::createTypeException($resource);

@@ -8,12 +8,12 @@
 
 namespace Enhavo\Bundle\CommentBundle\EventListener;
 
-use Enhavo\Bundle\AppBundle\Event\ResourceEvent;
-use Enhavo\Bundle\AppBundle\Event\ResourceEvents;
 use Enhavo\Bundle\CommentBundle\Comment\PublishStrategyInterface;
 use Enhavo\Bundle\CommentBundle\Event\PostPublishCommentEvent;
 use Enhavo\Bundle\CommentBundle\Event\PrePublishCommentEvent;
 use Enhavo\Bundle\CommentBundle\Model\CommentInterface;
+use Enhavo\Bundle\ResourceBundle\Event\ResourceEvent;
+use Enhavo\Bundle\ResourceBundle\Event\ResourceEvents;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;

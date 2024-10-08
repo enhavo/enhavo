@@ -9,7 +9,7 @@
 namespace Enhavo\Bundle\ResourceBundle\Filter\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
-use Enhavo\Bundle\AppBundle\Exception\FilterException;
+use Enhavo\Bundle\ResourceBundle\Exception\FilterException;
 use Enhavo\Bundle\ResourceBundle\Filter\AbstractFilterType;
 use Enhavo\Bundle\ResourceBundle\Filter\FilterQuery;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -96,7 +96,7 @@ class BooleanType extends AbstractFilterType
             'checkbox' => true,
             'label_true' => 'filter.boolean.label_true',
             'label_false' => 'filter.boolean.label_false',
-            'translation_domain' => 'EnhavoAppBundle',
+            'translation_domain' => 'EnhavoResourceBundle',
             'initial_value' => null,
         ]);
 

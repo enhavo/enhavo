@@ -1,6 +1,6 @@
 <?php
 
-namespace Endpoint;
+namespace Enhavo\Bundle\ApiBundle\Tests\Endpoint;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Documentation\Model\Path;

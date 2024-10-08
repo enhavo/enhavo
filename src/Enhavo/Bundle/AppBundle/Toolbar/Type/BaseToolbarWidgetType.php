@@ -16,7 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BaseToolbarWidgetType extends AbstractType implements ToolbarWidgetTypeInterface
 {
-    public function createViewData(array $options, Data $data, ResourceInterface $resource = null): void
+    public function createViewData(array $options, Data $data, object $resource = null): void
     {
         $data->set('component', $options['component']);
         $data->set('model', $options['model']);

@@ -20,7 +20,7 @@ class SendTestActionType extends AbstractActionType
     {
     }
 
-    public function createViewData(array $options, Data $data, ResourceInterface $resource = null): void
+    public function createViewData(array $options, Data $data, object $resource = null): void
     {
         $form = $this->formFactory->create(NewsletterEmailType::class);
         $data->set('form', $this->vueForm->createData($form->createView()));

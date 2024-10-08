@@ -25,7 +25,7 @@ class SaveActionType extends AbstractActionType
     {
     }
 
-    public function createViewData(array $options, Data $data, ResourceInterface $resource = null): void
+    public function createViewData(array $options, Data $data, object $resource = null): void
     {
         if ($options['route']) {
             $url = $this->getUrl($options['route'], $options['route_parameters'], $resource);
@@ -60,7 +60,7 @@ class SaveActionType extends AbstractActionType
     {
         $resolver->setDefaults([
             'label' => 'label.save',
-            'translation_domain' => 'EnhavoAppBundle',
+            'translation_domain' => 'EnhavoResourceBundle',
             'icon' => 'save',
             'route' => null,
             'route_parameters' => [],

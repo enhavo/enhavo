@@ -14,7 +14,7 @@ use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 
 interface ActionTypeInterface extends TypeInterface
 {
-    public function createViewData(array $options, Data $data, ResourceInterface $resource = null): void;
+    public function createViewData(array $options, Data $data, object $resource = null): void;
 
     public function getPermission(array $options, ResourceInterface $resource = null): mixed;
 

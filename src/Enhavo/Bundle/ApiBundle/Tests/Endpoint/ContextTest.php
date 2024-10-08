@@ -1,6 +1,6 @@
 <?php
 
-namespace Endpoint;
+namespace Enhavo\Bundle\ApiBundle\Tests\Endpoint;
 
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use PHPUnit\Framework\TestCase;

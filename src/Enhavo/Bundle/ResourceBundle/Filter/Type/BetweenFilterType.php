@@ -98,7 +98,7 @@ class BetweenFilterType extends AbstractFilterType
             'model' => 'BetweenFilter',
             'label_from' => 'filter.between.label.from',
             'label_to' => 'filter.between.label.to',
-            'translation_domain' => 'EnhavoAppBundle',
+            'translation_domain' => 'EnhavoResourceBundle',
             'label' => null,
             'initial_value' => null,
         ]);

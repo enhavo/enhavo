@@ -8,62 +8,59 @@
 
 namespace Enhavo\Bundle\ResourceBundle\Tests\Action\Type;
 
-use Enhavo\Bundle\AppBundle\Action\Action;
+use Enhavo\Bundle\ResourceBundle\Action\Action;
 use Enhavo\Bundle\ResourceBundle\Action\Type\SaveActionType;
-use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage;
+use Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SaveActionTypeTest extends TestCase
 {
-    private function createDependencies()
+    private function createDependencies(): SaveActionTypeDependencies
     {
         $dependencies = new SaveActionTypeDependencies();
-        $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
-        $dependencies->actionLanguageExpression = $this->getMockBuilder(ResourceExpressionLanguage::class)->disableOriginalConstructor()->getMock();
+        $dependencies->routeResolver = $this->getMockBuilder(RouteResolverInterface::class)->getMock();
         $dependencies->router = $this->getMockBuilder(RouterInterface::class)->getMock();
         return $dependencies;
     }
 
-    private function createInstance(SaveActionTypeDependencies $dependencies)
+    private function createInstance(SaveActionTypeDependencies $dependencies): SaveActionType
     {
         return new SaveActionType(
-            $dependencies->translator,
-            $dependencies->actionLanguageExpression,
-            $dependencies->router
+            $dependencies->router,
+            $dependencies->routeResolver,
         );
     }
 
     public function testCreateViewData()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->translator->method('trans')->willReturnCallback(function ($value) {return $value;});
-        $dependencies->router->method('generate')->willReturn('url');
-        $type = $this->createInstance($dependencies);
+        $dependencies->routeResolver->method('getRoute')->willReturn('save_route');
+        $dependencies->router->method('generate')->willReturnCallback(function($name) {
+            if ($name === 'save_route') {
+                return '/save?id=1';
+            }
+            return null;
+        });
 
-        $action = new Action($type, []);
+        $instance = $this->createInstance($dependencies);
+
+        $action = new Action($instance, [], []);
 
         $viewData = $action->createViewData();
 
-        $this->assertEquals('save-action', $viewData['component']);
-        $this->assertEquals('label.save', $viewData['label']);
+        $this->assertEquals('/save?id=1', $viewData['url']);
     }
 
-    public function testType()
+    public function testName()
     {
-        $dependencies = $this->createDependencies();
-        $type = $this->createInstance($dependencies);
-        $this->assertEquals('save', $type->getType());
+        $this->assertEquals('save', SaveActionType::getName());
     }
 }
 
 class SaveActionTypeDependencies
 {
-    /** @var TranslatorInterface|\PHPUnit_Framework_MockObject_MockObject */
-    public $translator;
-    /** @var ResourceExpressionLanguage|\PHPUnit_Framework_MockObject_MockObject */
-    public $actionLanguageExpression;
-    /** @var RouterInterface|\PHPUnit_Framework_MockObject_MockObject */
-    public $router;
+    public RouterInterface|MockObject $router;
+    public RouteResolverInterface|MockObject $routeResolver;
 }

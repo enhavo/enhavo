@@ -17,7 +17,7 @@ class DropdownActionType extends AbstractActionType
         $this->actionManager = $actionManager;
     }
 
-    public function createViewData(array $options, Data $data, ResourceInterface $resource = null): void
+    public function createViewData(array $options, Data $data, object $resource = null): void
     {
         $actions = $this->actionManager->getActions($options['items'], $resource);
         $items = [];

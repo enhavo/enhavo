@@ -8,9 +8,9 @@
 
 namespace Enhavo\Bundle\AppBundle\EventListener;
 
-use Enhavo\Bundle\AppBundle\Event\ResourceEvent;
-use Enhavo\Bundle\AppBundle\Event\ResourceEvents;
 use Enhavo\Bundle\AppBundle\Model\Timestampable;
+use Enhavo\Bundle\ResourceBundle\Event\ResourceEvent;
+use Enhavo\Bundle\ResourceBundle\Event\ResourceEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 

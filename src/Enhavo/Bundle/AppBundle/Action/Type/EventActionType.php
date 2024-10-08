@@ -9,25 +9,26 @@
 
 namespace Enhavo\Bundle\AppBundle\Action\Type;
 
+use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
 use Enhavo\Bundle\ResourceBundle\Action\ActionTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class EventActionType extends AbstractActionType implements ActionTypeInterface
 {
+    public function createViewData(array $options, Data $data, object $resource = null): void
+    {
+        $data['event'] = $options['event'];
+    }
+
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'translation_domain' => 'EnhavoAppBundle',
-            'confirm' => false,
-            'confirm_changes' => true,
-            'confirm_message' => 'message.close.confirm',
-            'confirm_label_ok' => 'label.ok',
-            'confirm_label_cancel' => 'label.cancel',
             'model' => 'EventAction',
         ]);
 
-        $resolver->setRequired(['icon', 'label', 'event']);
+        $resolver->setRequired(['event']);
     }
 
     public static function getName(): ?string

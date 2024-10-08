@@ -88,8 +88,8 @@ class SettingManagerDependencies
 
 class SettingMock extends Setting
 {
-    public $key;
-    public $config;
+    public ?string $key;
+    public array $config;
 
     public function __construct() {}
 

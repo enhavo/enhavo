@@ -32,7 +32,7 @@ class ColumnManager
                 continue;
             }
 
-            $columns[] = $column;
+            $columns[$key] = $column;
         }
 
         return $columns;

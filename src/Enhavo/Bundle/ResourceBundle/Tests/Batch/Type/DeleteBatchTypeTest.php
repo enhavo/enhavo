@@ -8,26 +8,31 @@
 
 namespace Enhavo\Bundle\ResourceBundle\Tests\Batch\Type;
 
-use Batch;
-use Enhavo\Bundle\AppBundle\Tests\Mock\ResourceMock;
+use Doctrine\ORM\EntityRepository;
+use Enhavo\Bundle\ApiBundle\Data\Data;
+use Enhavo\Bundle\ApiBundle\Endpoint\Context;
+use Enhavo\Bundle\ResourceBundle\Batch\Batch;
+use Enhavo\Bundle\ResourceBundle\Batch\Type\DeleteBatchType;
+use Enhavo\Bundle\ResourceBundle\Tests\Mock\ResourceMock;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
-use Type\DeleteBatchType;
+use Symfony\Component\HttpFoundation\Request;
 
 class DeleteBatchTypeTest extends TestCase
 {
-    private function createDependencies()
+    private function createDependencies(): DeleteBatchTypeDependencies
     {
         $dependencies = new DeleteBatchTypeDependencies();
         $dependencies->resourceManager = $this->getMockBuilder(ResourceManager::class)->disableOriginalConstructor()->getMock();
+        $dependencies->repository = $this->getMockBuilder(EntityRepository::class)->disableOriginalConstructor()->getMock();
         return $dependencies;
     }
 
-    private function createInstance(DeleteBatchTypeDependencies $dependencies)
+    private function createInstance(DeleteBatchTypeDependencies $dependencies): DeleteBatchType
     {
-        $type = new DeleteBatchType($dependencies->resourceManager);
-        return $type;
+        $instance = new DeleteBatchType($dependencies->resourceManager);
+        return $instance;
     }
 
     public function testExecute()
@@ -38,27 +43,18 @@ class DeleteBatchTypeTest extends TestCase
 
         $batch = new Batch($type, [], []);
 
-        $resources = [new ResourceMock(), new ResourceMock()];
+        $resources = [
+            1 => new ResourceMock(1),
+            2 => new ResourceMock(2),
+        ];
 
-        $batch->execute($resources);
-    }
+        $dependencies->repository->method('find')->willReturnCallback(function ($id) use ($resources) {
+            return $resources[$id];
+        });
 
-    public function testViewData()
-    {
-        $dependencies = $this->createDependencies();
-        $type = $this->createInstance($dependencies);
-
-        $batch = new Batch($type, [], [
-            'route' => 'some_route',
-            'route_parameters' => ['parameter' => 'value']
-        ]);
-
-        $viewData = $batch->createViewData();
-
-        $this->assertEquals([
-            'route' => 'some_route',
-            'routeParameters' => ['parameter' => 'value']
-        ], $viewData);
+        $data = new Data();
+        $context = new Context(new Request());
+        $batch->execute([1, 2], $dependencies->repository, $data, $context);
     }
 
     public function testGetName()
@@ -69,7 +65,6 @@ class DeleteBatchTypeTest extends TestCase
 
 class DeleteBatchTypeDependencies
 {
-    /** @var ResourceManager|MockObject */
-    public $resourceManager;
-
+    public ResourceManager|MockObject $resourceManager;
+    public EntityRepository|MockObject $repository;
 }

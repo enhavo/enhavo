@@ -28,12 +28,12 @@ class NumberDashboardWidgetType extends AbstractDashboardWidgetType
 
     public function createViewData(array $options, Data $data): void
     {
-        $value = call_user_func_array([$this->getRepository($options['repository']), $options['repository_method']], []);
+        $value = call_user_func_array([$this->getRepository($options['repository']), $options['repository_method']], $options['repository_arguments']);
 
         if (is_array($value) || $value instanceof \Countable) {
             $value = count($value);
         }
-        
+
         $data->set('value', $value);
         $data->set('label', $this->translator->trans($options['label'], [], $options['translation_domain']));
     }
@@ -57,6 +57,7 @@ class NumberDashboardWidgetType extends AbstractDashboardWidgetType
         $resolver->setDefaults([
             'component' => 'dashboard-widget-number',
             'translation_domain' => null,
+            'repository_arguments' => [],
         ]);
 
         $resolver->setRequired([

@@ -18,7 +18,7 @@ class DuplicateActionType extends AbstractActionType implements ActionTypeInterf
             'confirm_message' => 'message.duplicate.confirm',
             'confirm_label_ok' => 'label.ok',
             'confirm_label_cancel' => 'label.cancel',
-            'append_id' => true,
+            'route_parameters' => ['id' => 'expr:resource.getId()'],
             'model' => 'DuplicateAction',
         ]);
     }

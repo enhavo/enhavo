@@ -2,8 +2,8 @@
 
 namespace Enhavo\Bundle\UserBundle\EventListener;
 
-use Enhavo\Bundle\AppBundle\Event\ResourceEvent;
-use Enhavo\Bundle\AppBundle\Event\ResourceEvents;
+use Enhavo\Bundle\ResourceBundle\Event\ResourceEvent;
+use Enhavo\Bundle\ResourceBundle\Event\ResourceEvents;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Enhavo\Bundle\UserBundle\User\UserManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -22,9 +22,9 @@ class SaveUserSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function onSave(ResourceEvent $event)
+    public function onSave(ResourceEvent $event): void
     {
-        $user = $event->getSubject();
+        $user = $event->getResource();
         if ($user instanceof UserInterface) {
             $this->userManager->update($user);
         }

@@ -11,7 +11,7 @@ namespace Enhavo\Bundle\AppBundle\Action\Type;
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
 use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage;
-use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
+use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -24,22 +24,20 @@ class UrlActionType extends AbstractActionType
     {
     }
 
-    public function createViewData(array $options, Data $data, ResourceInterface $resource = null): void
+    public function createViewData(array $options, Data $data, object $resource = null): void
     {
-        $data->set('url', $this->getUrl($options, $resource));
+        $data->set('url', $options['url'] ?? $this->getUrl($options, $resource));
     }
 
-    private function getUrl(array $options, $resource = null): string
+    private function getUrl(array $options, object $resource = null): string
     {
-        $parameters = [];
+        $parameters = $this->expressionLanguage->evaluateArray($options['route_parameters'], [
+            'resource' => $resource
+        ]);
 
-        if ($options['append_id'] && $resource !== null && $resource->getId() !== null) {
-            $parameters[$options['append_key']] = $resource->getId();
-        }
-
-        $parameters = array_merge_recursive($parameters, $options['route_parameters']);
-
-        $route = $this->expressionLanguage->evaluate($options['route']);
+        $route = $this->expressionLanguage->evaluate($options['route'], [
+            'resource' => $resource
+        ]);
 
         return $this->router->generate($route, $parameters);
     }
@@ -48,12 +46,15 @@ class UrlActionType extends AbstractActionType
     {
         $resolver->setDefaults([
             'route_parameters' => [],
-            'append_id' => false,
-            'append_key' => 'id',
+            'route' => null,
+            'url' => null,
         ]);
 
-        $resolver->setRequired([
-            'route',
-        ]);
+        $resolver->setNormalizer('route', function($options, $value) {
+            if ($options['url'] === null && $value === null) {
+                throw new InvalidOptionsException('Need to configure "route" or "url" option');
+            }
+            return $value;
+        });
     }
 }

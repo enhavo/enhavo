@@ -11,7 +11,7 @@ namespace Enhavo\Bundle\ResourceBundle\Filter;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
-use Enhavo\Bundle\AppBundle\Exception\FilterException;
+use Enhavo\Bundle\ResourceBundle\Exception\FilterException;
 
 class FilterQuery
 {

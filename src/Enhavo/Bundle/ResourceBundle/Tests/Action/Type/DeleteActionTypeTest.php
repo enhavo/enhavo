@@ -8,75 +8,71 @@
 
 namespace Enhavo\Bundle\ResourceBundle\Tests\Action\Type;
 
-use Enhavo\Bundle\AppBundle\Action\Action;
-use Enhavo\Bundle\AppBundle\Tests\Mock\ResourceMock;
-use Enhavo\Bundle\AppBundle\Tests\Mock\RouterMock;
+use Enhavo\Bundle\ResourceBundle\Action\Action;
 use Enhavo\Bundle\ResourceBundle\Action\Type\DeleteActionType;
-use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage;
+use Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface;
+use Enhavo\Bundle\ResourceBundle\Tests\Mock\ResourceMock;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManager;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DeleteActionTypeTest extends TestCase
 {
     private function createDependencies()
     {
-        $dependencies = new \Enhavo\Bundle\AppBundle\Tests\Action\Type\DeleteActionTypeDependencies();
-        $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
-        $dependencies->actionLanguageExpression = $this->getMockBuilder(ResourceExpressionLanguage::class)->disableOriginalConstructor()->getMock();
-        $dependencies->router = new RouterMock();
+        $dependencies = new DeleteActionTypeDependencies();
+        $dependencies->router = $this->getMockBuilder(RouterInterface::class)->getMock();
         $dependencies->tokenManager = $this->getMockBuilder(CsrfTokenManager::class)->getMock();
+        $dependencies->routeResolver = $this->getMockBuilder(RouteResolverInterface::class)->getMock();
         return $dependencies;
     }
 
-    private function createInstance(\Enhavo\Bundle\AppBundle\Tests\Action\Type\DeleteActionTypeDependencies $dependencies)
+    private function createInstance(DeleteActionTypeDependencies $dependencies)
     {
         return new DeleteActionType(
-            $dependencies->translator,
-            $dependencies->actionLanguageExpression,
+            $dependencies->tokenManager,
             $dependencies->router,
-            $dependencies->tokenManager
+            $dependencies->routeResolver,
         );
     }
 
     public function testCreateViewData()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->translator->method('trans')->willReturnCallback(function ($value) {return $value;});
-        $dependencies->tokenManager->method('getToken')->willReturn(new \Enhavo\Bundle\AppBundle\Tests\Action\Type\TestCsrfToken());
-        $type = $this->createInstance($dependencies);
+        $dependencies->tokenManager->method('getToken')->willReturn(new TestCsrfToken());
+        $dependencies->routeResolver->method('getRoute')->willReturn('delete_route');
+        $dependencies->router->method('generate')->willReturnCallback(function($name) {
+            if ($name === 'delete_route') {
+                return '/delete_route?id=1';
+            }
+            return null;
+        });
+        $instance = $this->createInstance($dependencies);
 
-        $action = new Action($type, [
-            'route' => 'delete_route'
+        $action = new Action($instance, [], [
+            'icon' => 'test_icon',
+            'model' => 'TestModel',
+            'label' => 'Test',
         ]);
 
-        $viewData = $action->createViewData(new ResourceMock());
+        $viewData = $action->createViewData(new ResourceMock(1));
 
-        $this->assertEquals('delete-action', $viewData['component']);
-        $this->assertEquals('label.delete', $viewData['label']);
         $this->assertEquals('csrfTok3n', $viewData['token']);
         $this->assertEquals('/delete_route?id=1', $viewData['url']);
     }
 
-    public function testType()
+    public function testName()
     {
-        $dependencies = $this->createDependencies();
-        $type = $this->createInstance($dependencies);
-        $this->assertEquals('delete', $type->getType());
+        $this->assertEquals('delete', DeleteActionType::getName());
     }
 }
 
 class DeleteActionTypeDependencies
 {
-    /** @var TranslatorInterface|\PHPUnit_Framework_MockObject_MockObject */
-    public $translator;
-    /** @var ResourceExpressionLanguage|\PHPUnit_Framework_MockObject_MockObject */
-    public $actionLanguageExpression;
-    /** @var RouterInterface|\PHPUnit_Framework_MockObject_MockObject */
-    public $router;
-    /** @var CsrfTokenManager|\PHPUnit_Framework_MockObject_MockObject */
-    public $tokenManager;
+    public RouterInterface|MockObject $router;
+    public CsrfTokenManager|MockObject $tokenManager;
+    public RouteResolverInterface|MockObject $routeResolver;
 }
 
 class TestCsrfToken extends \Symfony\Component\Security\Csrf\CsrfToken
