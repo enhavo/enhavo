@@ -9,9 +9,9 @@ namespace Enhavo\Bundle\TranslationBundle\EventListener;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\PostFlushEventArgs;
 use Doctrine\ORM\Event\PreFlushEventArgs;
-use Doctrine\Persistence\Proxy;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
-use Enhavo\Bundle\TranslationBundle\Locale\LocaleResolver;
+use Doctrine\Persistence\Proxy;
+use Enhavo\Bundle\AppBundle\Locale\LocaleResolverInterface;
 use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
 use Enhavo\Component\Metadata\MetadataRepository;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
@@ -32,7 +32,7 @@ class DoctrineTranslationSubscriber implements EventSubscriber
     public function __construct(
         private AccessControl $accessControl,
         private MetadataRepository $metadataRepository,
-        private LocaleResolver $localeResolver,
+        private LocaleResolverInterface $localeResolver,
     )
     {
     }

@@ -17,7 +17,7 @@ services:
         arguments:
             - '@enhavo_translation.translation.access_control'
             - '@Enhavo\Component\Metadata\MetadataRepository[Translation]'
-            - '@Enhavo\Bundle\TranslationBundle\Locale\LocaleResolver'
+            - '@enhavo_app.locale_resolver'
         calls:
             - [setContainer, ['@service_container']]
         tags:
