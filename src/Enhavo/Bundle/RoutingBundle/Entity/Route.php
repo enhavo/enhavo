@@ -22,7 +22,7 @@ class Route extends BaseRouteModel implements RouteInterface, ResourceInterface
         return $this->contentClass;
     }
 
-    public function setContentClass(string $contentClass): void
+    public function setContentClass(?string $contentClass): void
     {
         $this->contentClass = $contentClass;
     }
