@@ -1,8 +1,8 @@
 import {AbstractBatch} from "@enhavo/app/batch/model/AbstractBatch";
 import axios from "axios";
-import { FlashMessenger, FlashMessage } from "@enhavo/app/flash-message/FlashMessenger";
-import Translator from "@enhavo/core/Translator";
-import View from "@enhavo/app/view/View";
+import {FlashMessenger, FlashMessage} from "@enhavo/app/flash-message/FlashMessenger";
+import {Translator} from "@enhavo/app/translation/Translator";
+import {UiManager} from "@enhavo/app/ui/UiManager";
 
 export class UrlBatch extends AbstractBatch
 {
@@ -11,11 +11,10 @@ export class UrlBatch extends AbstractBatch
 
     public constructor(
         protected readonly translator: Translator,
-        protected readonly view: View,
         protected readonly flashMessenger: FlashMessenger,
+        protected readonly uiManager: UiManager,
     ) {
         super();
-
     }
 
     async execute(ids: number[]): Promise<boolean>
@@ -26,31 +25,31 @@ export class UrlBatch extends AbstractBatch
         };
 
         return new Promise((resolve, reject) => {
-            this.getView().confirm(new Confirm(
-                this.confirmMessage,
-                () => {
-                    this.view.loading();
+            this.uiManager.confirm({
+                message: this.confirmMessage,
+                denyLabel: this.translator.trans('enhavo_app.view.label.cancel', {}, 'javascript'),
+                acceptLabel: this.translator.trans('enhavo_app.view.label.ok', {}, 'javascript'),
+            }).then((accept: boolean) => {
+                if (accept) {
+                    this.uiManager.loading(true);
                     axios.post(this.url, data)
                         .then((response) => {
-                            this.getView().loaded();
-                            this.flashMessenger.add(this.translator.trans('enhavo_app.batch.message.success'));
+                            this.uiManager.loading(false);
+                            this.flashMessenger.add(this.translator.trans('enhavo_app.batch.message.success', {}, 'javascript'));
                             resolve(true);
                         })
                         .catch((error) => {
-                            this.getView().loaded();
-                            this.flashMessenger.add(this.translator.trans('enhavo_app.batch.message.error'), FlashMessage.ERROR);
-                            reject();
+                            this.uiManager.loading(false);
+                            this.flashMessenger.add(this.translator.trans('enhavo_app.batch.message.error', {}, 'javascript'), FlashMessage.ERROR);
+                            resolve(false);
                         })
-                },
-                () => {},
-                this.translator.trans('enhavo_app.view.label.cancel'),
-                this.translator.trans('enhavo_app.view.label.ok'),
-            ))
+                } else {
+                    resolve(false);
+                }
+            }).catch((error) => {
+                this.flashMessenger.add(this.translator.trans('enhavo_app.batch.message.error', {}, 'javascript'), FlashMessage.ERROR);
+                resolve(false);
+            });
         });
-    }
-
-    private getView()
-    {
-        return this.view;
     }
 }

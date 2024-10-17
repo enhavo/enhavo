@@ -21,7 +21,7 @@ class FormActionType extends AbstractActionType
         $data['openRouteParameters'] = $options['open_route_parameters'];
         $data['openRouteMapping'] = $options['open_route_mapping'];
         $data['openType'] = $options['open_type'];
-        $data['viewKey'] = $options['view_key'];
+        $data['frameKey'] = $options['frame_key'];
         $data['target'] = $options['target'];
     }
 
@@ -29,8 +29,8 @@ class FormActionType extends AbstractActionType
     {
         $resolver->setDefaults([
             'icon' => 'file_document',
-            'view_key' => 'form-view',
-            'target' => '_view',
+            'frame_key' => 'form-view',
+            'target' => '_frame',
             'append_id' => true,
             'save_label' => 'enhavo_app.save',
             'open_route' => null,

@@ -1,6 +1,6 @@
 <template>
-    <form-compound-widget v-if="form.compound && !form.component" :form="form" v-show="form.visible" />
-    <component v-else :is="getComponent()" :form="form" v-show="form.visible" />
+    <form-compound-widget v-if="form.compound && !form.component" :form="form" />
+    <component v-else :is="getComponent()" :form="form" />
 </template>
 
 <script setup lang="ts">

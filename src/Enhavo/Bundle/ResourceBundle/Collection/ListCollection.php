@@ -57,23 +57,38 @@ class ListCollection extends AbstractCollection
             throw new \Exception();
         }
 
-        $filterQuery = $this->filterQueryFactory->create($this->repository->getClassName(), $this->filters, $this->options['criteria']);
-
-        if (isset($context['hydrate']) && $context['hydrate'] === 'id') {
-            $filterQuery->setHydrate('id');
-        }
-
         if ($this->options['repository_method'] !== null) {
             $callable = [$this->repository, $this->options['repository_method']];
             $request = $this->requestStack->getMainRequest();
+            $filterQuery = $this->createFilterQuery($context);
             $resources = call_user_func_array($callable, $this->getRepositoryArguments($this->options, $filterQuery, $request));
         } else if ($this->repository instanceof FilterRepositoryInterface) {
+            $filterQuery = $this->createFilterQuery($context);
             $resources = $this->repository->filter($filterQuery);
         } else {
             $resources = $this->repository->findBy($this->options['criteria'], $this->options['sorting'], $this->options['limit']);
         }
 
         return new ResourceItems($this->createItems($resources, $context));
+    }
+
+    private function createFilterQuery($context): FilterQuery
+    {
+        $filterQuery = $this->filterQueryFactory->create(
+            $this->repository->getClassName(),
+            $this->filters,
+            $context['filters'] ?? [],
+            $this->columns,
+            [],
+            $this->options['criteria'],
+            $this->options['sorting'],
+        );
+
+        if (isset($context['hydrate']) && $context['hydrate'] === 'id') {
+            $filterQuery->setHydrate('id');
+        }
+
+        return $filterQuery;
     }
 
     private function getRepositoryArguments(array $options, FilterQuery $filterQuery, ?Request $request): array

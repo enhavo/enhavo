@@ -1,8 +1,8 @@
 <template>
     <div class="view-table-filter-search">
-        <span class="label">{{ data.label }}</span>
+        <span class="label">&nbsp;</span>
         <div class="checkbox-container">
-            <input type="checkbox" v-on:change="change" :checked="data.value" />
+            <input type="checkbox" @change="change" :checked="data.value" />
             <span></span>
             <div class="label">{{ data.label }}</div>
         </div>
@@ -10,10 +10,10 @@
 </template>
 
 <script setup lang="ts">
-import AbstractFilter from "@enhavo/app/grid/filter/model/AbstractFilter";
+import {FilterInterface} from "@enhavo/app/filter/FilterInterface";
 
 const props = defineProps<{
-    data: AbstractFilter
+    data: FilterInterface
 }>()
 
 function change()
@@ -21,10 +21,3 @@ function change()
     props.data.value = !props.data.value;
 }
 </script>
-
-
-
-
-
-
-

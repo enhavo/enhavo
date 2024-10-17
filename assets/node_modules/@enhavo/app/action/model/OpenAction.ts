@@ -39,7 +39,7 @@ export class OpenAction extends AbstractAction
 
     private open()
     {
-        if (this.target == '_view') {
+        if (this.target == '_frame') {
             this.frameManager.openFrame({
                 url: this.url,
                 key: this.key,

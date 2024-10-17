@@ -2,7 +2,6 @@
 
 namespace Enhavo\Bundle\ShopBundle\View;
 
-use ApiViewType;
 use Enhavo\Bundle\AppBundle\View\AbstractViewType;
 use Enhavo\Bundle\AppBundle\View\ResourceMetadataHelperTrait;
 use Enhavo\Bundle\AppBundle\View\TemplateData;
@@ -66,7 +65,8 @@ class CheckoutViewType extends AbstractViewType
                     throw new HttpException($event->getErrorCode(), $event->getMessage());
                 }
 
-                $this->resourceManager->update($this->resource, $configuration->getStateMachineTransition(), $configuration->getStateMachineGraph());
+                $this->resourceManager->save($this->resource);
+                $this->resourceManager->applyTransition($this->resource, $configuration->getStateMachineTransition(), $configuration->getStateMachineGraph());
 
                 $event = $this->eventDispatcher->dispatchPostEvent(ResourceActions::UPDATE, $configuration, $this->resource);
                 if ($event->isStopped()) {

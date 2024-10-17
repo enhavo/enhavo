@@ -20,13 +20,13 @@ class TextColumnType extends AbstractColumnType
     {
         $propertyAccessor = new PropertyAccessor();
 
-        $property = $propertyAccessor->getValue($resource, $options['property']);
+        $value = $propertyAccessor->getValue($resource, $options['property']);
 
         if ($options['strip_tags']) {
-            $property = strip_tags($property);
+            $value = strip_tags($value);
         }
 
-        $data->set('value', $property);
+        $data->set('value', $value);
     }
 
     public function createColumnViewData(array $options, Data $data): void
@@ -40,7 +40,6 @@ class TextColumnType extends AbstractColumnType
         $resolver->setDefaults([
             'component' => 'column-text',
             'model' => 'TextColumn',
-            'sortingProperty' => null,
             'wrap' => true,
             'strip_tags' => false,
             'whitespace' => 'normal'

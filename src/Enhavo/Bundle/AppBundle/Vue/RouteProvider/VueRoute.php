@@ -20,6 +20,14 @@ class VueRoute
 
         if (isset($data['children'])) {
             foreach ($data['children'] as $child) {
+                if (!is_array($child)) {
+                    throw new \Exception(sprintf(
+                        'Can\'t create child component for "%s" with path "%s". Must be array, but got "%s"',
+                        $this->name,
+                        $this->path,
+                        gettype($child)
+                    ));
+                }
                 $this->children[] = new self($child);
             }
         }

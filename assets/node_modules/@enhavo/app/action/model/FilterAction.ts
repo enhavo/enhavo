@@ -1,28 +1,42 @@
-import {FilterManager} from "@enhavo/app/filter/FilterManager";
-import { DropdownAction } from "@enhavo/app/action/model/DropdownAction";
-// import SingleFilterActionFactory from "@enhavo/app/action/SingleFilterAction";
+import {AbstractAction} from "@enhavo/app/action/model/AbstractAction";
+import {ResourceIndexManager} from "@enhavo/app/manager/ResourceIndexManager"
+import {FilterInterface} from "@enhavo/app/filter/FilterInterface";
 
-export class FilterAction extends DropdownAction
+export class FilterAction extends AbstractAction
 {
-    private readonly filterManager: FilterManager;
-    // private readonly singleFilterActionFactory: SingleFilterActionFactory;
+    public loaded = false;
+    public open = false;
 
     constructor(
-        filterManager: FilterManager,
-        // singleFilterActionFactory: SingleFilterActionFactory
+        private resourceIndexManager: ResourceIndexManager
     ) {
         super();
-        // this.filterManager = filterManager;
-        // this.singleFilterActionFactory = singleFilterActionFactory;
-        // this.closeAfter = false;
-        // this.items = [];
-        //
-        // for (let i in this.filterManager.filters) {
-        //     let action = this.singleFilterActionFactory.createNew();
-        //     action.filterKey = this.filterManager.filters[i].key;
-        //     action.label = this.filterManager.filters[i].label;
-        //     action.setActive(this.filterManager.filters[i].active);
-        //     this.items.push(action);
-        // }
+    }
+
+    execute(): void
+    {
+        this.open = !this.open;
+    }
+
+    mounted()
+    {
+        this.resourceIndexManager.onLoaded().then(() => {
+            this.loaded = true;
+        })
+    }
+
+    getFilters()
+    {
+        return this.resourceIndexManager.filters;
+    }
+
+    toggleFilter(filter: FilterInterface)
+    {
+        filter.active = !filter.active;
+    }
+
+    toggleOpen()
+    {
+        this.open = !this.open;
     }
 }

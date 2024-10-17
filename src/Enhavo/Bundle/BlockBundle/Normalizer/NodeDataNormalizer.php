@@ -38,7 +38,7 @@ class NodeDataNormalizer extends AbstractDataNormalizer
         $nodeData = [];
         if ($object->getType() === NodeInterface::TYPE_BLOCK) {
             if (empty($object->getViewData())) {
-                $this->blockManager->createViewData($object, $this->blockManager->findRootResource($object->getBlock()));
+                $this->blockManager->createViewData($object, $object->getBlock() ? $this->blockManager->findRootResource($object->getBlock()) : null);
             }
 
             if ($object->getViewData()) {

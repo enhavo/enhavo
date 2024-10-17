@@ -101,7 +101,3 @@ services:
     Enhavo\Bundle\ContentBundle\Tab\MetaTabType:
         tags:
             - { name: enhavo_resource.tab }
-
-    Enhavo\Bundle\ContentBundle\Tab\ContentTabType:
-        tags:
-            - { name: enhavo_resource.tab }

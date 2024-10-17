@@ -4,6 +4,7 @@ namespace Enhavo\Bundle\ResourceBundle\Column;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ResourceBundle\Column\Type\BaseColumnType;
+use Enhavo\Bundle\ResourceBundle\Filter\FilterQuery;
 use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Enhavo\Component\Type\AbstractType;
 
@@ -20,6 +21,11 @@ abstract class AbstractColumnType extends AbstractType implements ColumnTypeInte
     public function createColumnViewData(array $options, Data $data): void
     {
 
+    }
+
+    public function buildSortingQuery($options, FilterQuery $query, string $direction): void
+    {
+        $this->parent->buildSortingQuery($options, $query, $direction);
     }
 
     public function getPermission(array $options): mixed

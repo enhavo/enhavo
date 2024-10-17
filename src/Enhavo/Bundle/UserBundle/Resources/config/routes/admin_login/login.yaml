@@ -1,0 +1,27 @@
+enhavo_user_admin_login:
+    options:
+        expose: true
+    path: /login
+    methods: [GET, POST]
+    defaults:
+        _expose: admin_login
+        _area: admin_login
+        _vue:
+            component: user-login
+            groups: admin_login
+        _endpoint:
+            type: admin
+
+enhavo_user_admin_logout:
+    options:
+        expose: true
+    path: /logout
+    methods: [GET, POST]
+    defaults:
+        _expose: admin_login
+        _area: admin_login
+        _vue:
+            component: user-logout
+            groups: admin_login
+        _endpoint:
+            type: admin

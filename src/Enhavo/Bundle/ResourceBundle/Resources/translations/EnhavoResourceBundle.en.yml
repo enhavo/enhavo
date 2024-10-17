@@ -1,3 +1,7 @@
+action:
+    label:
+        save: Save
+        delete: Delete
 tab:
   label:
     category: 'Category'

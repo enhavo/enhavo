@@ -18,7 +18,8 @@ class PaymentStateResolver
         $transition = $this->getTransition($status->getValue(), $payment->getState());
 
         if ($transition && $this->resourceManager->canApplyTransition($payment, $transition, 'enhavo_payment')) {
-            $this->resourceManager->update($payment, $transition,'enhavo_payment');
+            $this->resourceManager->save($payment);
+            $this->resourceManager->applyTransition($payment, $transition, 'enhavo_payment');
         }
     }
 

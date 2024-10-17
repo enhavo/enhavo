@@ -6,42 +6,39 @@
 </template>
 
 <script setup lang="ts">
-import AutoCompleteEntityFilter from "@enhavo/app/grid/filter/model/AutoCompleteEntityFilter";
+import {AutoCompleteEntityFilter} from "@enhavo/app/filter/model/AutoCompleteEntityFilter";
 import axios from 'axios';
 
 const props = defineProps<{
     data: AutoCompleteEntityFilter
 }>()
 
-const data = props.data;
-
-
 function change(value: any)
 {
     if (value == null) {
-        data.value = null;
+        props.data.value = null;
         return;
     }
-    data.value = value.code;
+    props.data.value = value.code;
 }
 
 function fetchOptions(search: string, loading: (value: boolean) => void)
 {
-    if (search.length < data.minimumInputLength) {
+    if (search.length < props.data.minimumInputLength) {
         return;
     }
     loading(true);
 
-    let uri = new URL(data.url, window.origin);
+    let uri = new URL(props.data.url, window.origin);
     uri.searchParams.set('q', search);
     uri.searchParams.set('page', '1');
 
     axios
         .get(uri.toString())
         .then((data) => {
-            data.choices = [];
+            props.data.choices = [];
             for (let result of data.data.results) {
-                data.choices.push({
+                props.data.choices.push({
                     label: result.text,
                     code: result.id
                 })

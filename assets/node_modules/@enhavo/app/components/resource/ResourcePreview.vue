@@ -4,7 +4,7 @@
         <flash-messages></flash-messages>
         <modal-stack></modal-stack>
         <action-bar :primary="manager.actions" :secondary="manager.actionsSecondary"></action-bar>
-        <div v-bind:class="{'preview-view': true, 'tablet': manager.frameClass === 'tablet', 'mobile': manager.frameClass === 'mobile', 'desktop': manager.frameClass === 'desktop'}">
+        <div :class="{'preview-view': true, 'tablet': manager.frameClass === 'tablet', 'mobile': manager.frameClass === 'mobile', 'desktop': manager.frameClass === 'desktop'}">
             <iframe class="iframe" name="preview" :ref="(el) => manager.iframe = el as HTMLIFrameElement" v-once></iframe>
         </div>
     </div>

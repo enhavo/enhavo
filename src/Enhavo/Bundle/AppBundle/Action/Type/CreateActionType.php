@@ -38,7 +38,7 @@ class CreateActionType extends AbstractActionType
         $routeParameters = $this->expressionLanguage->evaluateArray($options['route_parameters']);
 
         $data->set('url', $this->router->generate($route, $routeParameters));
-        $data->set('viewKey', $options['view_key']);
+        $data->set('frameKey', $options['frame_key']);
         $data->set('target', $options['target']);
     }
 
@@ -49,8 +49,8 @@ class CreateActionType extends AbstractActionType
             'icon' => 'add_circle_outline',
             'label' => 'label.create',
             'translation_domain' => 'EnhavoAppBundle',
-            'view_key' => 'edit-view',
-            'target' => '_view',
+            'frame_key' => 'edit-view',
+            'target' => '_frame',
             'route' => null,
             'route_parameters' => [],
             'model' => 'OpenAction',

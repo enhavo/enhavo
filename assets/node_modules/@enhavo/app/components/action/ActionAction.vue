@@ -16,20 +16,18 @@ const props = defineProps<{
     clickStop?: boolean,
 }>()
 
-const data = props.data;
-const clickStop = props.clickStop;
 
 function getIcon(): string
 {
-    return (data && data.icon) ? 'icon-' + data.icon : '';
+    return (props.data && props.data.icon) ? 'icon-' + props.data.icon : '';
 }
 
 function execute(event: Event)
 {
-    if (clickStop) {
+    if (props.clickStop) {
         event.stopPropagation();
     }
-    data.execute()
+    props.data.execute()
 }
 
 onMounted(() => {

@@ -9,8 +9,8 @@ import {ColumnManager} from "@enhavo/app/column/ColumnManager";
 import {CollectionFactory} from "@enhavo/app/collection/CollectionFactory";
 import {BatchManager} from "@enhavo/app/batch/BatchManager";
 import {BatchInterface} from "@enhavo/app/batch/BatchInterface";
-import {RouteContainer} from "../routing/RouteContainer";
-import {FrameManager} from "../frame/FrameManager";
+import {RouteContainer} from "@enhavo/app/routing/RouteContainer";
+import {FrameManager} from "@enhavo/app/frame/FrameManager";
 
 export class ResourceIndexManager
 {
@@ -21,6 +21,9 @@ export class ResourceIndexManager
     public batches: BatchInterface[];
     public collection: CollectionInterface;
     public routes: RouteContainer;
+
+    private loadedPromiseResolveCalls: Array<() => void> = [];
+    private loaded: boolean = false;
 
     constructor(
         private router: Router,
@@ -33,7 +36,7 @@ export class ResourceIndexManager
     ) {
     }
 
-    async loadIndex(route: string, parameters: object = {})
+    async load(route: string, parameters: object = {})
     {
         let url = this.router.generate(route, parameters);
 
@@ -49,6 +52,34 @@ export class ResourceIndexManager
         this.collection = this.collectionFactory.create(data.collection.model, data.collection, this.filters, this.columns, this.batches, this.routes);
         this.collection.init();
 
+        this.loaded = true
+        for (let promise of this.loadedPromiseResolveCalls) {
+            promise();
+        }
+
         this.frameManager.loaded();
+    }
+
+    onLoaded(): Promise<void>
+    {
+        return new Promise(resolve => {
+            if (this.loaded) {
+                resolve();
+            } else {
+                this.loadedPromiseResolveCalls.push(resolve);
+            }
+        })
+    }
+
+    applyFilters()
+    {
+        this.collection.load();
+    }
+
+    resetFilters()
+    {
+        for (let filter of this.filters) {
+            filter.reset();
+        }
     }
 }

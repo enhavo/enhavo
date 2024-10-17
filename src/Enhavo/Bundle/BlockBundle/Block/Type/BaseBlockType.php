@@ -13,9 +13,16 @@ use Enhavo\Bundle\BlockBundle\Block\BlockTypeInterface;
 use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
 use Enhavo\Component\Type\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class BaseBlockType extends AbstractType implements BlockTypeInterface
 {
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+    )
+    {
+    }
+
     public function createViewData(BlockInterface $block, ViewData $viewData, $resource, array $options)
     {
         $viewData['block'] = $block;
@@ -58,12 +65,7 @@ class BaseBlockType extends AbstractType implements BlockTypeInterface
 
     public function getLabel(array $options)
     {
-        return $options['label'];
-    }
-
-    public function getTranslationDomain(array $options)
-    {
-        return $options['translation_domain'];
+        return $this->translator->trans($options['label'], [], $options['translation_domain']);
     }
 
     public function configureOptions(OptionsResolver $resolver)

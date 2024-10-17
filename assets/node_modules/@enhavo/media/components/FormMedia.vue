@@ -51,7 +51,7 @@
             <div v-for="error of form.fileErrors">{{ error.message }} <span @click="form.removeError(error)">X</span></div>
         </div>
 
-        <input :id="form.id" type="file" class="upload-input" :multiple="form.multiple" :ref="(el) => form.setElement(el)" @change.prevent="form.change" style="display: none" />
+        <input :id="form.id" type="file" class="upload-input" :multiple="form.multiple" :ref="(el) => form.setElement(el as HTMLElement)" @change.prevent="form.change" style="display: none" />
     </div>
 </template>
 

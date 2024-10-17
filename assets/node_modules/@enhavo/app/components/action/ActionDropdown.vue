@@ -2,13 +2,13 @@
     <div class="action" :ref="(el) => element = el">
         <div @click="toggleOpen()">
             <div class="action-icon">
-                <i v-bind:class="['icon', 'icon-' + data.icon]"></i>
+                <i :class="['icon', 'icon-' + data.icon]"></i>
             </div>
             <div class="label">{{ data.label }}</div>
         </div>
         <ul class="dropdown-action-list" v-if="open" @click="itemClick()">
             <template v-for="action in data.items">
-                <component class="action-container" v-bind:is="action.component" v-bind:data="action" :data-action="action.key"></component>
+                <component class="action-container" :is="action.component" :data="action" :data-action="action.key"></component>
             </template>
         </ul>
     </div>
@@ -22,7 +22,6 @@ const props = defineProps<{
     data: DropdownAction
 }>()
 
-const data = props.data;
 let open: boolean = false;
 let element: HTMLElement = null;
 
@@ -33,7 +32,7 @@ function toggleOpen()
 
 function itemClick()
 {
-    if (data.closeAfter) {
+    if (props.data.closeAfter) {
         open = false;
     }
 }

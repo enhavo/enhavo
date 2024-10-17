@@ -16,7 +16,7 @@ export class FormAction extends AbstractAction
 
     private url: string;
     private saveLabel: string;
-    private viewKey: string;
+    private frameKey: string;
     private target: string;
     private openRoute: string;
     private openRouteParameters: object = {};
@@ -84,8 +84,8 @@ export class FormAction extends AbstractAction
 
         let url = this.router.generate(this.openRoute, openRouteParameters);
         if (this.openType === FormAction.OPEN) {
-            if (this.target === '_view') {
-                this.view.open(url, this.viewKey);
+            if (this.target === '_frame') {
+                this.view.open(url, this.frameKey);
             } else {
                 window.open(url, this.target);
             }

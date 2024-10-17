@@ -30,6 +30,4 @@ interface BlockTypeInterface extends TypeInterface
     public function getGroups(array $options);
 
     public function getLabel(array $options);
-
-    public function getTranslationDomain(array $options);
 }

@@ -11,9 +11,11 @@ export class UiManager
             this.confirmData = new Confirm(
                 options,
                 () => {
+                    this.confirmData = null;
                     resolve(false);
                 },
                 () => {
+                    this.confirmData = null;
                     resolve(true);
                 }
             )

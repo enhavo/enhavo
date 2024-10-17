@@ -19,8 +19,7 @@ const props = defineProps<{
     modal: OutputStreamModal
 }>()
 
-const modal = props.modal;
-const modalOutput = ref(modal.output);
+const modalOutput = ref(props.modal.output);
 let output: HTMLElement = null;
 
 watch(modalOutput, async() => {

@@ -1,7 +1,7 @@
 <template>
     <input
         type="radio"
-        :ref="(el) => form.setElement(el)"
+        :ref="(el) => form.setElement(el as HTMLElement)"
         :value="form.value"
         :checked="form.checked"
         :id="form.id"
@@ -9,6 +9,7 @@
         :disabled="form.disabled"
         :required="form.required"
         @change="form.checked = form.element.checked; form.dispatchChange()"
+        v-show="form.isVisible()"
     />
 </template>
 

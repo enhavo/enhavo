@@ -1,0 +1,309 @@
+{
+  "form": {
+    "disabled": false,
+    "label": null,
+    "labelFormat": null,
+    "rowAttr": [],
+    "attr": [],
+    "name": "article",
+    "value": [],
+    "compound": true,
+    "id": "article",
+    "required": true,
+    "fullName": "article",
+    "help": null,
+    "helpAttr": [],
+    "helpHtml": false,
+    "errors": [],
+    "component": null,
+    "componentModel": null,
+    "componentVisitors": [],
+    "componentVisibleCondition": null,
+    "rowComponent": "form-row",
+    "widgetComponent": "form-widget",
+    "visible": true,
+    "root": true,
+    "method": "POST",
+    "action": null,
+    "prototypes": "expr:load('admin/form/block_prototypes.json')",
+    "children": [
+      "expr:load('admin/form/block_empty.json')"
+    ]
+  },
+  "actions": ,
+  "actionsSecondary": [
+    {
+      "key": "delete",
+      "component": "action-action",
+      "model": "DeleteAction",
+      "icon": "delete",
+      "label": "L\u00f6schen",
+      "confirm": true,
+      "confirm_on_change": true,
+      "confirm_message": "message.delete.confirm",
+      "confirm_label_ok": "label.ok",
+      "confirm_label_cancel": "label.cancel",
+      "url": "\/admin\/api\/article\/article\/delete\/3",
+      "token": "96c9ffebbb9c42449f88804784d73.3Lx6JxgWeZEQd9IbaFw6QjNvwg_kYmFox1aSjCNeOxw.pvggSmxTNttjNZ9VLAVqO0cbsD2hN1g9jGTQ5lNrcXS01SNjdyEUoSY-vQ"
+    }
+  ],
+  "tabs": {
+    "main": {
+      "key": "main",
+      "component": "tab-form",
+      "model": "FormTab",
+      "label": "Artikel",
+      "arrangement": [
+        [
+          {
+            "key": "title",
+            "size": 1
+          }
+        ],
+        [
+          {
+            "key": "teaser",
+            "size": 1
+          }
+        ],
+        [
+          {
+            "key": "link",
+            "size": 1
+          }
+        ],
+        [
+          {
+            "key": "picture",
+            "size": 1
+          }
+        ],
+        [
+          {
+            "key": "categories",
+            "size": 1
+          }
+        ],
+        [
+          {
+            "key": "tags",
+            "size": 1
+          }
+        ],
+        [
+          {
+            "key": "publication_date",
+            "size": 6
+          },
+          {
+            "key": "published_until",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "key": "public",
+            "size": 1
+          }
+        ],
+        []
+      ]
+    },
+    "content": {
+      "key": "content",
+      "component": "tab-block",
+      "model": "BlockTab",
+      "label": "Inhalt",
+      "arrangement": [
+        []
+      ],
+      "property": "content"
+    },
+    "meta": {
+      "key": "meta",
+      "component": "tab-form",
+      "model": "FormTab",
+      "label": "Meta",
+      "arrangement": [
+        [
+          {
+            "key": "page_title",
+            "size": 1
+          }
+        ],
+        [
+          {
+            "key": "slug",
+            "size": 1
+          }
+        ],
+        [
+          {
+            "key": "route",
+            "size": 1
+          }
+        ],
+        [
+          {
+            "key": "meta_description",
+            "size": 1
+          }
+        ],
+        [
+          {
+            "key": "canonicalUrl",
+            "size": 1
+          }
+        ],
+        [
+          {
+            "key": "noIndex",
+            "size": 1
+          }
+        ],
+        [
+          {
+            "key": "noFollow",
+            "size": 1
+          }
+        ],
+        [
+          {
+            "key": "openGraphTitle",
+            "size": 1
+          }
+        ],
+        [
+          {
+            "key": "openGraphDescription",
+            "size": 1
+          }
+        ],
+        [
+          {
+            "key": "openGraphImage",
+            "size": 1
+          }
+        ]
+      ]
+    }
+  },
+  "resource": {
+    "picture": {
+      "id": 31,
+      "mimeType": "application\/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "extension": "xlsx",
+      "filename": "Master-Import-Moobly Event_Beispiel (2).xlsx",
+      "parameters": {
+        "alt": null,
+        "title": null
+      },
+      "md5Checksum": "7cfc7da576b58f2a6182e3202d34f41f"
+    },
+    "teaser": "\u003Cp\u003Etesthuhu bla 11 12 huhu\u003C\/p\u003E",
+    "content": {
+      "name": null,
+      "type": "root",
+      "template": null,
+      "component": null,
+      "children": [
+        {
+          "name": "picture",
+          "type": "block",
+          "template": "@EnhavoBlock\/theme\/block\/picture.html.twig",
+          "component": null,
+          "children": [],
+          "data": {
+            "block": {
+              "title": null,
+              "caption": null,
+              "file": {
+                "id": 29,
+                "mimeType": "application\/pdf",
+                "extension": "pdf",
+                "filename": "Rechnungvorlage Justine (2).pdf",
+                "parameters": {
+                  "alt": null,
+                  "title": null
+                },
+                "md5Checksum": "5d8f64f5a64b789a62380311c68d8211"
+              },
+              "id": 4
+            }
+          }
+        },
+        {
+          "name": "two_column",
+          "type": "block",
+          "template": "@EnhavoBlock\/theme\/block\/two-column.html.twig",
+          "component": null,
+          "children": [],
+          "data": {
+            "block": {
+              "columnOne": {
+                "name": null,
+                "type": "list",
+                "template": null,
+                "component": null,
+                "children": [
+                  {
+                    "name": "text",
+                    "type": "block",
+                    "template": "@EnhavoBlock\/theme\/block\/text.html.twig",
+                    "component": null,
+                    "children": [],
+                    "data": {
+                      "block": {
+                        "title": "asdasd",
+                        "text": "\u003Cp\u003Eadasd\u003C\/p\u003E",
+                        "id": 19
+                      }
+                    }
+                  }
+                ],
+                "data": []
+              },
+              "columnTwo": {
+                "name": null,
+                "type": "list",
+                "template": null,
+                "component": null,
+                "children": [],
+                "data": []
+              },
+              "width": "container",
+              "style": null,
+              "id": 2
+            }
+          }
+        }
+      ],
+      "data": []
+    },
+    "categories": [],
+    "tags": [
+      {
+        "id": 1,
+        "name": "asdsad",
+        "slug": "asdsad"
+      },
+      {
+        "id": 2,
+        "name": "huhu",
+        "slug": "huhu"
+      }
+    ],
+    "id": 3,
+    "title": "Das ist ein Test",
+    "metaDescription": null,
+    "pageTitle": null,
+    "noIndex": false,
+    "noFollow": false,
+    "openGraphImage": null,
+    "openGraphTitle": null,
+    "openGraphDescription": null,
+    "canonicalUrl": null,
+    "publicationDate": null,
+    "url": "\/article\/title"
+  }
+}

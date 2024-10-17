@@ -1,0 +1,76 @@
+enhavo_resource:
+    resources:
+        enhavo_user.user:
+            classes:
+                model: Enhavo\Bundle\UserBundle\Model\User
+                factory: Enhavo\Bundle\UserBundle\Factory\UserFactory
+                repository: Enhavo\Bundle\UserBundle\Repository\UserRepository
+
+    grids:
+        enhavo_user.user:
+            extends: enhavo_resource.grid
+            resource: enhavo_user.user
+            filters:
+                username:
+                    type: text
+                    property: email
+                    label: user.label.email
+                    translation_domain: EnhavoUserBundle
+                group:
+                    type: entity
+                    property: groups
+                    label: group.label.group
+                    resource: enhavo_user.group
+                    translation_domain: EnhavoUserBundle
+            columns:
+                email:
+                    type: text
+                    label: user.label.email
+                    property: email
+                    width: 6
+                    sortable: true
+                groups:
+                    type: list
+                    label: group.label.group
+                    property: groups
+                    item_property: name
+                    width: 6
+                    sortable: true
+            batches:
+                delete:
+                    type: delete
+
+    inputs:
+        enhavo_user.user.create:
+            extends: enhavo_resource.input
+            resource: enhavo_user.user
+            form: Enhavo\Bundle\UserBundle\Form\Type\UserType
+            form_options:
+                validation_groups: [create, unique_email]
+
+        enhavo_user.user.update:
+            extends: enhavo_resource.input
+            resource: enhavo_user.user
+            form: Enhavo\Bundle\UserBundle\Form\Type\UserType
+            form_options:
+                validation_groups: [update, unique_email]
+
+        enhavo_user.user.change_password:
+            resource: enhavo_user.user
+            form: Enhavo\Bundle\UserBundle\Form\Type\ChangePasswordType
+            form_options:
+                validation_groups: [change_password]
+            repository_method: find
+            repository_arguments:
+                - 'expr:user?.getId()'
+            actions:
+                save:
+                    type: save
+                    route: enhavo_user_admin_api_change_password
+            tabs:
+                main:
+                    type: form
+                    arrangement: |
+                        currentPassword
+                        plainPassword.first
+                        plainPassword.second

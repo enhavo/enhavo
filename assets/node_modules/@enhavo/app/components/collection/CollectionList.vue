@@ -60,16 +60,12 @@ const props = defineProps<{
     collection: ListCollection,
 }>()
 
-const collection = props.collection;
-
-console.log(collection);
-
 const resizeHandler = () => {
-    collection.resize();
+    props.collection.resize();
 }
 
 onMounted(() => {
-    collection.load();
+    props.collection.load();
     window.addEventListener('resize', resizeHandler);
 })
 
@@ -94,9 +90,9 @@ function getColumnStyle(column: any): object
 function save(event, parent)
 {
     if (event.added) {
-        collection.save(parent);
+        props.collection.save(parent);
     } else if(event.moved) {
-        collection.save(parent);
+        props.collection.save(parent);
     }
 }
 

@@ -59,22 +59,6 @@ user:
         email: 'Email'
 
 reset_password:
-    label:
-        login: 'Zur Anmeldung'
-    request:
-        username: 'Benutzername oder E-Mail-Adresse'
-        submit: 'Passwort zurücksetzen'
-        email: 'Bitte überprüfen Sie ihre Emails'
-    confirm:
-        submit: 'Passwort ändern'
-        invalid_token: 'Der Token ist nicht mehr gültig'
-        renew_request: 'Anfrage noch einmal stellen'
-    finish:
-        success: 'Das Passwort wurde erfolgreich zurückgesetzt'
-    flash:
-        message:
-            success: 'Das Passwort wurde erfolgreich zurückgesetzt.'
-            error: 'Der Benutzername existiert nicht.'
     mail:
         subject: 'Passwort zurücksetzen'
         text: |
@@ -117,14 +101,6 @@ confirmation:
 
             Mit besten Grüßen,
             das Team.
-
-security:
-    login:
-        username: 'Benutzername'
-        email: 'E-Mail'
-        password: 'Passwort'
-        remember_me: 'An mich erinnern'
-        submit: 'Anmelden'
 
 change_password:
     label:

@@ -3,6 +3,7 @@ services:
         arguments:
             - '@router'
             - '@Enhavo\Bundle\ResourceBundle\RouteResolver\RouteNameRouteResolver'
+            - '@Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage'
         tags:
             - { name: enhavo_resource.action }
 
@@ -51,6 +52,10 @@ services:
             - { name: enhavo_resource.action }
 
     Enhavo\Bundle\AppBundle\Action\Type\ModalActionType:
+        tags:
+            - { name: enhavo_resource.action }
+
+    Enhavo\Bundle\AppBundle\Action\Type\NullActionType:
         tags:
             - { name: enhavo_resource.action }
 

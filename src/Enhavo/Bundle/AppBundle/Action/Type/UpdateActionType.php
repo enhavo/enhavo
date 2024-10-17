@@ -21,7 +21,7 @@ class UpdateActionType extends AbstractActionType
             'label' => 'label.edit',
             'translation_domain' => 'EnhavoAppBundle',
             'frame_key' => 'edit-view',
-            'target' => '_view',
+            'target' => '_frame',
             'route_parameters' => [
                 'id' => 'expr:resource?.getId()'
             ]

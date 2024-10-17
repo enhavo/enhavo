@@ -19,8 +19,9 @@ class PaymentSubscriber implements EventSubscriberInterface
 
     public function create(ResourceEvent $event)
     {
-        if($event->getSubject() instanceof Payment) {
-            $event->getSubject()->setState(PaymentInterface::STATE_NEW);
+        $resource = $event->getSubject();
+        if ($resource instanceof Payment) {
+            $resource->setState(PaymentInterface::STATE_NEW);
         }
     }
 }

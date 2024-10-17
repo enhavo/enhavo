@@ -16,7 +16,7 @@ export class AutoCompleteForm extends Form
     public editable: boolean;
     public editRoute: string;
     public editRouteParameters: object;
-    public viewKey: string;
+    public frameKey: string;
     public border: boolean;
 
 

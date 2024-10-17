@@ -54,7 +54,7 @@ class DeleteActionType extends AbstractActionType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'label' => 'label.delete',
+            'label' => 'action.label.delete',
             'translation_domain' => 'EnhavoResourceBundle',
             'icon' => 'delete',
             'confirm' => true,

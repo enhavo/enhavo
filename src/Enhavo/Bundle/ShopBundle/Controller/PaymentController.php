@@ -48,7 +48,8 @@ class PaymentController extends AbstractController
         }
 
         if ($payment->getState() === PaymentInterface::STATE_CART) {
-            $this->resourceManager->update($payment, 'create', 'enhavo_payment');
+            $this->resourceManager->save($payment);
+            $this->resourceManager->applyTransition($payment, 'create', 'enhavo_payment');
         }
 
         return $this->redirectToRoute('sylius_payment_theme_authorize', [

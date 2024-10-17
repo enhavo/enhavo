@@ -14,8 +14,8 @@ class CreateAttributeActionType extends AbstractActionType
             'icon' => 'add_circle_outline',
             'label' => 'label.create',
             'translation_domain' => 'EnhavoAppBundle',
-            'view_key' => 'edit-view',
-            'target' => '_view',
+            'frame_key' => 'edit-view',
+            'target' => '_frame',
             'route' => null
         ]);
     }

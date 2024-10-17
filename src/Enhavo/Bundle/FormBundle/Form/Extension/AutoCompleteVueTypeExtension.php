@@ -26,7 +26,7 @@ class AutoCompleteVueTypeExtension extends AbstractVueTypeExtension
         $data['editable'] = $view->vars['auto_complete_data']['editable'];
         $data['editRoute'] = $view->vars['auto_complete_data']['edit_route'];
         $data['editRouteParameters'] = $view->vars['auto_complete_data']['edit_route_parameters'];
-        $data['viewKey'] = $view->vars['auto_complete_data']['view_key'];
+        $data['frameKey'] = $view->vars['auto_complete_data']['frame_key'];
     }
 
     public function configureOptions(OptionsResolver $resolver): void

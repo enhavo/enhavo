@@ -1,4 +1,3 @@
-import { Controller } from '@hotwired/stimulus';
 import {VueFactory} from "@enhavo/app/vue/VueFactory";
 import {FormFactory} from "@enhavo/vue-form/form/FormFactory";
 import {reactive} from "vue";

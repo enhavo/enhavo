@@ -2,12 +2,12 @@
     <div class="app-view">
         <view-view></view-view>
         <action-bar></action-bar>
-        <div v-bind:class="{'preview-view': true, 'tablet': iframeClass === 'tablet', 'mobile': iframeClass === 'mobile', 'desktop': iframeClass === 'desktop'}">
+        <div :class="{'preview-view': true, 'tablet': iframeClass === 'tablet', 'mobile': iframeClass === 'mobile', 'desktop': iframeClass === 'desktop'}">
             <iframe class="iframe" name="preview" v-once></iframe>
         </div>
-        <form v-bind:action="previewApp.data.url" method="post" target="preview">
+        <form :action="previewApp.data.url" method="post" target="preview">
             <template v-for="input in previewApp.data.inputs">
-                <input type="hidden" v-bind:name="input.name" v-bind:value="input.value" />
+                <input type="hidden" :name="input.name" :value="input.value" />
             </template>
         </form>
     </div>

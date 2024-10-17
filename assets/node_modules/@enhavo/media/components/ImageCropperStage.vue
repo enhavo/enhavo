@@ -3,10 +3,10 @@
         <loading-screen v-if="loading"></loading-screen>
         <img v-once :ref="(el) => cropperStage = el" v-show="!loading" />
         <form method="POST" v-show="false">
-            <input type="hidden" name="height" v-bind:value="imageCropper.data.height">
-            <input type="hidden" name="width" v-bind:value="imageCropper.data.width">
-            <input type="hidden" name="x" v-bind:value="imageCropper.data.x">
-            <input type="hidden" name="y" v-bind:value="imageCropper.data.y">
+            <input type="hidden" name="height" :value="imageCropper.data.height">
+            <input type="hidden" name="width" :value="imageCropper.data.width">
+            <input type="hidden" name="x" :value="imageCropper.data.x">
+            <input type="hidden" name="y" :value="imageCropper.data.y">
         </form>
     </div>
 </template>

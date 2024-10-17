@@ -46,7 +46,6 @@ class CurrencyType extends AbstractColumnType
     {
         $resolver->setDefaults([
             'component' => 'column-text',
-            'sortingProperty' => null,
             'wrap' => true,
             'currency' => 'Euro',
             'position' => 'right'

@@ -36,7 +36,6 @@ class SettingColumnType extends AbstractColumnType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'sortingProperty' => null,
             'component' => 'column-text',
             'property' => 'value',
             'model' => 'TextColumn'

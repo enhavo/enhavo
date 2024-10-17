@@ -2,7 +2,6 @@ enhavo_app:
     edit: 'Bearbeiten'
     create: 'Erstellen'
     preview: 'Vorschau'
-    save: 'Speichern'
     auto_save: 'Autosave'
     abort: 'Abbrechen'
     cancel: 'Abbrechen'
@@ -44,3 +43,9 @@ enhavo_app:
             delete: 'Löschen'
             cancel: 'Abbrechen'
             close: 'Schließen'
+    save:
+        message:
+            error: 'Ein Fehler ist aufgetreten'
+            not_valid: 'Bitte überprüfen Sie ihre Angaben'
+        label:
+            save: 'Speichern'

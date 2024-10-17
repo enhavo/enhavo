@@ -2,33 +2,40 @@
     <div class="view-table-pagination">
         <div class="pagination-select">
             <div class="label">{{ translator.trans('enhavo_app.grid.label.entry_per_page', {}, 'javascript') }}:</div>
-            <v-select v-model="collection.pagination" :options="getOptions()" :clearable="false" :searchable="false" :reduce="value => value.code"></v-select>
+            <v-select
+                v-model="collection.paginationStep"
+                :options="getPaginationStepOptions()"
+                :clearable="false"
+                :searchable="false"
+                :reduce="value => value.code"
+                @update:modelValue="changePagination">
+            </v-select>
         </div>
 
         <div class="pagination-nav">
-            <div v-if="collection.count" v-on:click="clickPrev" v-bind:class="['pagination-nav-item', 'button', 'button--prev', {'disabled': !hasPrevPage()}]">
+            <div v-if="collection.count" @click="clickPrev" :class="['pagination-nav-item', 'button', 'button--prev', {'disabled': !hasPrevPage()}]">
                 <i class="icon icon-navigate_before"></i>
             </div>
 
             <template v-if="!isFirstSegment()">
-                <div class="pagination-nav-item number" v-on:click="clickFirst">1</div>
+                <div class="pagination-nav-item number" @click="clickFirst">1</div>
                 <div class="pagination-nav-item spacer">...</div>
             </template>
 
             <div
                 v-for="page in collection.pages"
-                v-bind:key="page"
-                v-bind:class="['pagination-nav-item', 'number', {active: getCurrentPage() === page}]"
-                v-on:click="clickPage(page)">
+                :key="page"
+                :class="['pagination-nav-item', 'number', {active: getCurrentPage() === page}]"
+                @click="clickPage(page)">
                 {{ page }}
             </div>
 
             <template v-if="!isLastSegment()">
                 <div class="pagination-nav-item spacer">...</div>
-                <div class="pagination-nav-item number" v-on:click="clickLast">{{ getLastPage() }}</div>
+                <div class="pagination-nav-item number" @click="clickLast">{{ getLastPage() }}</div>
             </template>
 
-            <div v-if="collection.count" v-on:click="clickNext" v-bind:class="['pagination-nav-item', 'button', 'button--next', {'disabled': !hasNextPage()}]">
+            <div v-if="collection.count" @click="clickNext" :class="['pagination-nav-item', 'button', 'button--next', {'disabled': !hasNextPage()}]">
                 <i class="icon icon-navigate_next"></i>
             </div>
         </div>
@@ -37,7 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import { inject, watch, ref } from 'vue'
+import {inject} from 'vue'
 import {Translator} from "@enhavo/app/translation/Translator";
 import {TableCollection} from "../../collection/model/TableCollection";
 
@@ -45,19 +52,19 @@ const props = defineProps<{
     collection: TableCollection,
 }>()
 
-const collection = props.collection;
 const translator = inject<Translator>('translator');
 const itemsAround: number = 2;
-const paginationNumber = ref(collection.page);
 
-watch(paginationNumber, async (value: number) => {
-    collection.changePagination(value);
-});
 
-function getOptions() 
+function changePagination()
+{
+    props.collection.load();
+}
+
+function getPaginationStepOptions()
 {
     let steps = [];
-    for (let step of collection.paginationSteps) {
+    for (let step of props.collection.paginationSteps) {
         steps.push({
             label: step,
             code: step
@@ -68,15 +75,15 @@ function getOptions()
 
 function getCurrentPage(): number 
 {
-    return collection.page;
+    return props.collection.page;
 }
 
 function getLastPage(): number 
 {
-    if (!collection.count || !collection.paginated) {
+    if (!props.collection.count || !props.collection.paginated) {
         return 1;
     }
-    return Math.ceil(collection.count/collection.page);
+    return Math.ceil(props.collection.count/props.collection.paginationStep);
 }
 
 function isFirstPage(): boolean 
@@ -101,7 +108,7 @@ function hasNextPage(): boolean
 
 function getSegmentLength(): number 
 {
-    return itemsAround * 2 + 1; // 2 items each side plus the current page
+    return itemsAround * 2 + 1;
 }
 
 function isFirstSegment(): boolean 
@@ -142,7 +149,7 @@ function clickNext(): void
 
 function clickPage(page: number): void 
 {
-    collection.changePage(page);
+    props.collection.changePage(page);
 }
 
 </script>

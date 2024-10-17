@@ -21,9 +21,6 @@ const props = defineProps<{
     form: Form,
 }>()
 
-const tab = props.tab;
-const form = props.form;
-
 type Column = {
     size: number,
     key: string,

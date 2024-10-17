@@ -1,5 +1,5 @@
 <template>
-    <div :key="form.id">
+    <div :key="form.id" v-show="form.isVisible()">
         <input type="hidden"
             :name="form.fullName"
             :required="form.required"
@@ -22,13 +22,11 @@ const props = defineProps<{
     form: WysiwygForm
 }>()
 
-const form = props.form;
-
 onUpdated(() => {
-    form.initWysiwyg();
+    props.form.initWysiwyg();
 });
 
 onMounted(() => {
-    form.initWysiwyg();
+    props.form.initWysiwyg();
 });
 </script>

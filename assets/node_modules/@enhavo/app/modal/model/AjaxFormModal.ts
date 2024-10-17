@@ -17,7 +17,7 @@ export class AjaxFormModal extends AbstractModal
     public submitHandler: (modal: AjaxFormModal, data: any) => Promise<boolean>;
     public element: HTMLElement = null;
     public form: HTMLElement = null;
-    public saveLabel: string = 'enhavo_app.save';
+    public saveLabel: string = 'enhavo_app.save.label.save';
     public closeLabel: string = 'enhavo_app.abort';
     public loading: boolean = true;
     public data: any;

@@ -29,11 +29,11 @@ class TableCollection extends AbstractCollection
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'limit' => 50,
+            'limit' => 100,
             'paginated' => true,
             'repository_method' => null,
             'repository_arguments' => null,
-            'pagination_steps' => [5, 10, 50, 100, 500],
+            'pagination_steps' => [5, 10, 50, 100, 500, 1000],
             'component' => 'collection-table',
             'model' => 'TableCollection',
             'filters' => [],
@@ -62,18 +62,18 @@ class TableCollection extends AbstractCollection
             throw new \Exception();
         }
 
-        $filterQuery = $this->filterQueryFactory->create($this->repository->getClassName(), $this->filters, $this->options['criteria'], $this->options['sorting'], $this->isPaginated($context));
-
-        if (isset($context['hydrate']) && $context['hydrate'] === 'id') {
-            $filterQuery->setHydrate('id');
-        }
-
         if ($this->options['repository_method'] !== null) {
             $callable = [$this->repository, $this->options['repository_method']];
             $request = $this->requestStack->getMainRequest();
+            $filterQuery = $this->createFilterQuery($context);
             $resources = call_user_func_array($callable, $this->getRepositoryArguments($this->options, $filterQuery, $request));
         } else if ($this->repository instanceof FilterRepositoryInterface) {
+            $filterQuery = $this->createFilterQuery($context);
             $resources = $this->repository->filter($filterQuery);
+            if ($resources instanceof Pagerfanta) {
+                $resources->setMaxPerPage($context['limit'] ?? $this->options['limit']);
+                $resources->setCurrentPage($context['page'] ?? 1);
+            }
         } else if ($this->isPaginated($context)) {
             $paginator = $this->createPaginator($this->repository, $this->options['criteria'], $this->options['sorting']);
             $paginator->setMaxPerPage($context['limit'] ?? $this->options['limit']);
@@ -94,6 +94,26 @@ class TableCollection extends AbstractCollection
         return new ResourceItems($this->createItems($resources, $context));
     }
 
+    private function createFilterQuery($context): FilterQuery
+    {
+        $filterQuery = $this->filterQueryFactory->create(
+            $this->repository->getClassName(),
+            $this->filters,
+            $context['filters'] ?? [],
+            $this->columns,
+            $context['sorting'] ?? [],
+            $this->options['criteria'],
+            $this->options['sorting'],
+            $this->isPaginated($context)
+        );
+
+        if (isset($context['hydrate']) && $context['hydrate'] === 'id') {
+            $filterQuery->setHydrate('id');
+        }
+
+        return $filterQuery;
+    }
+
     private function createItems(iterable $resources, array $context): array
     {
         $items = [];
@@ -108,8 +128,8 @@ class TableCollection extends AbstractCollection
         $data = [];
 
         if ($this->isHydrate('data', $context)) {
-            foreach($this->columns as $key => $column) {
-                $data[$key] = $column->createResourceViewData($resource);
+            foreach($this->columns as $column) {
+                $data[] = $column->createResourceViewData($resource);
             }
         }
 

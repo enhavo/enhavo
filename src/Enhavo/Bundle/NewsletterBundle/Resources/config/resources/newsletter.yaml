@@ -33,7 +33,7 @@ enhavo_resource:
                     label: newsletter.label.createdAt
                     property: createdAt
                     width: 3
-                    condition: desktop
+                    visible_condition: desktop
             batches:
                 delete:
                     type: delete

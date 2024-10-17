@@ -1,0 +1,18 @@
+admin_form_block:
+    path: /form/block
+    defaults:
+        _endpoint:
+            type: template_admin
+            template: 'admin/base.html.twig'
+            component: resource-input
+            meta:
+                api: admin_form_block_api
+
+admin_form_block_api:
+    path: /api/form/block
+    defaults:
+        _format: json
+        _expose: template_admin
+        _endpoint:
+            type: template
+            load: admin/input/block.json

@@ -61,8 +61,9 @@ class PublishStrategySubscriber  implements EventSubscriberInterface
 
     public function preCreate(ResourceEvent $event)
     {
-        if ($event->getSubject() instanceof CommentInterface) {
-            $this->publishStrategy->preCreate($event->getSubject(), $this->options);
+        $resource = $event->getSubject();
+        if ($resource instanceof CommentInterface) {
+            $this->publishStrategy->preCreate($resource, $this->options);
         }
 
         $this->onPreSave($event);
@@ -70,8 +71,9 @@ class PublishStrategySubscriber  implements EventSubscriberInterface
 
     public function postCreate(ResourceEvent $event)
     {
-        if ($event->getSubject() instanceof CommentInterface) {
-            $this->publishStrategy->postCreate($event->getSubject(), $this->options);
+        $resource = $event->getSubject();
+        if ($resource instanceof CommentInterface) {
+            $this->publishStrategy->postCreate($resource, $this->options);
         }
 
         $this->onPostSave($event);

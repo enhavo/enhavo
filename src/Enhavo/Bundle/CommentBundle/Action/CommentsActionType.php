@@ -35,7 +35,7 @@ class CommentsActionType extends AbstractActionType
         ]);
 
         $data['url'] = $url;
-        $data['target'] = '_view';
+        $data['target'] = '_frame';
         $data['key'] = 'comment-view';
     }
 

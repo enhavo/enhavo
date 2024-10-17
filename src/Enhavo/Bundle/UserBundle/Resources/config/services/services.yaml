@@ -48,13 +48,13 @@ services:
 
     Enhavo\Bundle\UserBundle\Security\Authentication\FormLoginAuthenticator:
         arguments:
-            - '@enhavo_user.repository.user'
+            - '@enhavo_user.user.repository'
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
             - '@router'
             - '@event_dispatcher'
             - '@form.factory'
             - '@Enhavo\Component\Type\FactoryInterface[Endpoint]'
-            - '%enhavo_user.model.user.class%'
+            - '%enhavo_user.user.model.class%'
 
     Enhavo\Bundle\UserBundle\Security\UserChecker:
         arguments:
@@ -67,13 +67,13 @@ services:
 
     Enhavo\Bundle\UserBundle\Validator\Constraints\UserExistsValidator:
         arguments:
-            - '@enhavo_user.repository.user'
+            - '@enhavo_user.user.repository'
         tags:
             - { name: validator.constraint_validator }
 
     Enhavo\Bundle\UserBundle\Validator\Constraints\EmailNotExistsValidator:
         arguments:
-            - '@enhavo_user.repository.user'
+            - '@enhavo_user.user.repository'
         tags:
             - { name: validator.constraint_validator }
 

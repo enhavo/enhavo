@@ -1,18 +1,18 @@
 <template>
-    <div v-bind:class="{'menu-list': true, 'selected': data.selected}" v-click-outside="outside">
-        <div class="menu-child-title menu-list-child menu-list-title" v-on:click="toggle" >
+    <div :class="{'menu-list': true, 'selected': data.selected}" v-click-outside="outside">
+        <div class="menu-child-title menu-list-child menu-list-title" @click="toggle" >
             <div class="symbol-container">
-                <i v-bind:class="['icon', getIcon()]"></i>
+                <i :class="['icon', getIcon()]"></i>
             </div>
             <div class="label-container">
                 {{ getLabel() }}
             </div>
-            <menu-notification v-if="getNotification()" v-bind:data="getNotification()"></menu-notification>
-            <i v-bind:class="['open-indicator', 'icon', {'icon-keyboard_arrow_up': data.isOpen }, {'icon-keyboard_arrow_down': !data.isOpen }]"></i>
+            <menu-notification v-if="getNotification()" :data="getNotification()"></menu-notification>
+            <i :class="['open-indicator', 'icon', {'icon-keyboard_arrow_up': data.isOpen }, {'icon-keyboard_arrow_down': !data.isOpen }]"></i>
         </div>
         <div class="menu-list-child menu-list-items" v-show="data.isOpen">
             <template v-for="item in data.children()">
-                <component v-bind:is="item.component" v-bind:data="item"></component>
+                <component :is="item.component" :data="item"></component>
             </template>
         </div>
     </div>
@@ -25,39 +25,37 @@ const props = defineProps<{
     data: ListMenuItem
 }>()
 
-const data = props.data;
-
 function getLabel(): string|boolean
 {
-    return (data && data.label) ? data.label : false;
+    return (props.data && props.data.label) ? props.data.label : false;
 }
 
 function getIcon(): string|boolean
 {
-    return (data && data.icon) ? 'icon-' + data.icon : false;
+    return (props.data && props.data.icon) ? 'icon-' + props.data.icon : false;
 }
 
 function getNotification(): object
 {
-    return (data && data.notification) ? data.notification : false;
+    return (props.data && props.data.notification) ? props.data.notification : false;
 }
 
 function toggle(): void
 {
-    data.isOpen = !data.isOpen;
-    if(data.isOpen) {
-        data.open();
-        data.closeOtherMenus();
+    props.data.isOpen = !props.data.isOpen;
+    if (props.data.isOpen) {
+        props.data.open();
+        props.data.closeOtherMenus();
     } else {
-        data.close();
+        props.data.close();
     }
 }
 
 function outside(): void
 {
     window.setTimeout(() => {
-        if(!data.isMainMenuOpen()) {
-            data.isOpen = false
+        if (!props.data.isMainMenuOpen()) {
+            props.data.isOpen = false
         }
     }, 100)
 }

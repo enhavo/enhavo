@@ -1,5 +1,5 @@
 <template>
-    <div class="form-list-item" :ref="(el) => form.setElement(el)">
+    <div class="form-list-item" :ref="(el) => form.setElement(el as HTMLElement)" v-show="form.isVisible()">
         <ul class="form-list-item-buttons-row" v-if="sortable || deletable">
             <slot name="buttons">
                 <slot name="down-button">

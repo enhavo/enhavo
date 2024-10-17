@@ -1,0 +1,48 @@
+{
+  "form": {
+    "disabled": false,
+    "label": null,
+    "labelFormat": null,
+    "rowAttr": [],
+    "attr": [],
+    "name": "article",
+    "value": [],
+    "compound": true,
+    "id": "article",
+    "required": true,
+    "fullName": "article",
+    "help": null,
+    "helpAttr": [],
+    "helpHtml": false,
+    "errors": [],
+    "component": null,
+    "componentModel": null,
+    "componentVisitors": [],
+    "componentVisibleCondition": null,
+    "rowComponent": "form-row",
+    "widgetComponent": "form-widget",
+    "visible": true,
+    "root": true,
+    "method": "POST",
+    "action": null,
+    "prototypes": "expr:load('admin/form/block_prototypes.json')",
+    "children": [
+      "expr:load('admin/form/block_empty.json')"
+    ]
+  },
+  "actions": "expr:load('admin/action/actions_default.json')",
+  "actionsSecondary": "expr:load('admin/action/actions_secondary_default.json')",
+  "tabs": {
+    "content": {
+      "key": "content",
+      "component": "tab-block",
+      "model": "BlockTab",
+      "label": "Inhalt",
+      "arrangement": [
+        []
+      ],
+      "property": "content"
+    }
+  },
+  "resource": {}
+}

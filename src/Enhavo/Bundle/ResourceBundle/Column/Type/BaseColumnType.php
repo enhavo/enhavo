@@ -9,8 +9,10 @@
 namespace Enhavo\Bundle\ResourceBundle\Column\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
+use Enhavo\Bundle\ResourceBundle\Column\Column;
 use Enhavo\Bundle\ResourceBundle\Column\ColumnTypeInterface;
 use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage;
+use Enhavo\Bundle\ResourceBundle\Filter\FilterQuery;
 use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Enhavo\Component\Type\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -25,6 +27,15 @@ class BaseColumnType extends AbstractType implements ColumnTypeInterface
     {
     }
 
+    public function buildSortingQuery($options, FilterQuery $query, string $direction): void
+    {
+        if ($options['sortable'] && isset($options['property']) && in_array($direction, [Column::SORTING_DIRECTION_ASC, Column::SORTING_DIRECTION_DESC])) {
+            $propertyPath = explode('.', $options['property']);
+            $topProperty = array_pop($propertyPath);
+            $query->addOrderBy($topProperty, $direction, $propertyPath);
+        }
+    }
+
     public function createResourceViewData(array $options, ResourceInterface $resource, Data $data): void
     {
 
@@ -37,7 +48,8 @@ class BaseColumnType extends AbstractType implements ColumnTypeInterface
         $data->set('component',  $options['component']);
         $data->set('model',  $options['model']);
         $data->set('sortable', $options['sortable'] ?? false);
-        $data->set('condition', $options['condition']);
+        $data->set('visibleCondition', $options['visible_condition']);
+        $data->set('visible', $options['visible']);
     }
 
     public function getPermission(array $options): mixed
@@ -57,7 +69,8 @@ class BaseColumnType extends AbstractType implements ColumnTypeInterface
             'translation_domain' => null,
             'width' => 1,
             'sortable' => false,
-            'condition' => null,
+            'visible_condition' => null,
+            'visible' => null,
             'permission' => null,
             'enabled' => true,
         ]);

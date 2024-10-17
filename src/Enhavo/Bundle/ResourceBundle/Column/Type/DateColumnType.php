@@ -28,15 +28,13 @@ class DateColumnType extends AbstractColumnType
 
     public function createColumnViewData(array $options, Data $data): void
     {
-        $data->set('property', $options['property']);
-        $data->set('sortingProperty', $options['sortingProperty'] ? : $options['property']);
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'format' => 'd.m.Y',
-            'sortingProperty' => null,
             'component' => 'column-text',
             'model' => 'TextColumn',
         ]);

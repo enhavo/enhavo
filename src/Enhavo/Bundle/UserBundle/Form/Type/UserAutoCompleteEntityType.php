@@ -33,7 +33,7 @@ class UserAutoCompleteEntityType extends AbstractType
     {
         $resolver->setDefaults([
             'class' => $this->dataClass,
-            'route' => 'enhavo_user_user_auto_complete',
+            'route' => 'enhavo_user_admin_api_user_auto_complete',
             'label' => 'user.label.user',
             'translation_domain' => 'EnhavoUserBundle',
         ]);

@@ -1,5 +1,12 @@
 <template>
-    <select :multiple="form.multiple" v-model="form.value" :name="form.fullName" :ref="(el) => form.setElement(el)" @change="form.dispatchChange()">
+    <select
+        :multiple="form.multiple"
+        v-model="form.value"
+        :name="form.fullName"
+        :ref="(el) => form.setElement(el as HTMLElement)"
+        @change="form.dispatchChange()"
+        v-show="form.isVisible()"
+    >
         <option v-if="form.placeholder" value="" >{{ form.placeholder }}</option>
         <component v-if="size(form.preferredChoices) > 0" :is="getChoiceComponent(choice)" v-for="choice of form.preferredChoices" :choice="choice" :key="choice.label + '_preferred'" :preferredChoices="true" />
         <option v-if="size(form.preferredChoices) > 0" :disabled="true">{{ form.separator }}</option>
@@ -14,7 +21,6 @@ import * as _ from "lodash";
 const props = defineProps<{
     form: ChoiceForm
 }>()
-let form = props.form;
 
 function size(object: object)
 {
@@ -24,18 +30,18 @@ function size(object: object)
 function isRequired()
 {
     return !(
-        form.required &&
-        form.placeholder === null &&
-        !form.placeholderInChoices &&
-        !form.multiple && isSizeOneOrLess()
+        props.form.required &&
+        props.form.placeholder === null &&
+        !props.form.placeholderInChoices &&
+        !props.form.multiple && isSizeOneOrLess()
     );
 }
 
 function isSizeOneOrLess(): boolean
 {
     let size: number = null;
-    if (form.attr.hasOwnProperty('size')) {
-        size = form.attr['size'];
+    if (props.form.attr.hasOwnProperty('size')) {
+        size = props.form.attr['size'];
     }
 
     return size === null || size <= 1;

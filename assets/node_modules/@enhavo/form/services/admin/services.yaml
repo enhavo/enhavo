@@ -1,0 +1,9 @@
+imports:
+    - path: '../*'
+
+services:
+    '@enhavo/form/controllers/FormStyleController':
+        chunk: controller
+        static: true
+        tags:
+            - { name: stimulus.controller, key: 'form-style' }

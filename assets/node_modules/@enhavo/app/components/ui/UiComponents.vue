@@ -35,6 +35,6 @@ function getLabel()
         return uiManager.alertData.acceptLabel;
     }
 
-    return translator.trans('enhavo_app.view.label.ok');
+    return translator.trans('enhavo_app.view.label.ok', {}, 'javascript');
 }
 </script>

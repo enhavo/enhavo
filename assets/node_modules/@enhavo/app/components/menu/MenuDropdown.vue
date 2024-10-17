@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import DropdownMenu from '@enhavo/app/menu/model/MenuDropdown';
+import {DropdownMenu} from '@enhavo/app/menu/model/DropdownMenu';
 
 const props = defineProps<{
     data: DropdownMenu

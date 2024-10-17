@@ -1,12 +1,12 @@
 <template>
-    <a :href="data.getMainUrl()" v-bind:class="{'menu-child-title menu-item': true, 'selected': data.isActive()}" @click="open($event)">
+    <a :href="data.getMainUrl()" :class="{'menu-child-title menu-item': true, 'selected': data.isActive()}" @click="open($event)">
         <div class="symbol-container">
-            <i v-bind:class="['icon', getIcon()]"></i>
+            <i :class="['icon', getIcon()]"></i>
         </div>
         <div class="label-container">
             {{ getLabel() }}
         </div>
-        <menu-notification v-if="getNotification()" v-bind:data="getNotification()"></menu-notification>
+        <menu-notification v-if="getNotification()" :data="getNotification()"></menu-notification>
     </a>
 </template>
 
@@ -17,27 +17,25 @@ const props = defineProps<{
     data: BaseMenuItem
 }>()
 
-const data = props.data;
-
 function getLabel(): string|boolean
 {
-    return (data && data.label) ? data.label : false;
+    return (props.data && props.data.label) ? props.data.label : false;
 }
 
 function getIcon(): string
 {
-    return (data && data.icon) ? 'icon-' + data.icon : '';
+    return (props.data && props.data.icon) ? 'icon-' + props.data.icon : '';
 }
 
 function getNotification(): object
 {
-    return (data && data.notification) ? data.notification : false;
+    return (props.data && props.data.notification) ? props.data.notification : false;
 }
 
 function open(event: Event): void
 {
     event.preventDefault();
-    data.open()
+    props.data.open()
 }
 
 </script>

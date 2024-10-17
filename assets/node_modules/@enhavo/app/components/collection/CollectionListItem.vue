@@ -1,7 +1,7 @@
 <template>
     <div class="view-table-list-row">
         <div :class="{'view-table-row': true, 'active': data.active, 'has-children': data.children && data.children.length > 0,'hide-children':!data.expand}" @click="open()">
-            <div v-if="data.parentProperty && data.children && data.children.length > 0" @click="toggleExpand()" v-on:click.stop>
+            <div v-if="data.parentProperty && data.children && data.children.length > 0" @click="toggleExpand()" @click.stop>
                 <i v-if="data.expand" class="icon icon-unfold_more"></i>
                 <i v-if="!data.expand" class="icon icon-unfold_less"></i>
             </div>
@@ -21,7 +21,7 @@
                 v-model="data.children"
                 group="list"
                 item-key="id"
-                v-on:change="save($event, null)"
+                @change="save($event, null)"
                 @start="data.dragging = true"
                 @end="data.dragging = false"
                 :class="{'dragging':data.dragging == true}"
@@ -44,13 +44,10 @@ const props = defineProps<{
     collection: TableCollection,
 }>()
 
-const data = props.data;
-const collection = props.collection;
-
 
 function open() 
 {
-    collection.open(data);
+    props.collection.open(props.data);
 }
 
 function calcColumnWidth(parts: number): string 
@@ -60,7 +57,7 @@ function calcColumnWidth(parts: number): string
 
 function toggleExpand()
 {
-    data.expand = !data.expand;
+    props.data.expand = !props.data.expand;
 }
 
 function getColumnStyle(column: any): object
@@ -74,7 +71,7 @@ function getColumnStyle(column: any): object
 
 function getColumnData(column: string): object
 {
-    for (let field of data.data) {
+    for (let field of props.data.data) {
         if (field.key === column) {
             return field.value;
         }
@@ -85,9 +82,9 @@ function getColumnData(column: string): object
 function save(event, parent)
 {
     if (event.added) {
-        collection.save(parent);
+        props.collection.save(parent);
     } else if(event.moved) {
-        collection.save(parent);
+        props.collection.save(parent);
     }
 }
 </script>

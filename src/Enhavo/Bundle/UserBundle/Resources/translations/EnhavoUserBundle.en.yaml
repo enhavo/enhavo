@@ -59,20 +59,6 @@ user:
         email: 'Email'
 
 reset_password:
-    label:
-        login: 'Login'
-    request:
-        username: 'Username or email address'
-        submit: 'Reset password'
-        email: 'Please Check your Emails'
-    confirm:
-        submit: 'Change password'
-        invalid_token: 'The token is invalid'
-        renew_request: 'Renew request'
-    flash:
-        message:
-            success: 'The password has been reset successfully.'
-            error: 'Request failed'
     mail:
         subject: 'Reset Password'
         text: |
@@ -122,7 +108,6 @@ security:
         email: 'E-Mail'
         password: 'Password'
         remember_me: 'Remember me'
-        submit: 'Log in'
 
 change_password:
     label:

@@ -8,8 +8,8 @@
 
 namespace Enhavo\Bundle\ResourceBundle\Filter;
 
-
 use Doctrine\ORM\EntityManagerInterface;
+use Enhavo\Bundle\ResourceBundle\Column\Column;
 
 class FilterQueryFactory
 {
@@ -19,15 +19,13 @@ class FilterQueryFactory
     {
     }
 
-    public function create($class, array $filters = [], $criteria = [], $sorting = [], $paginated = false)
+    /**
+     * @param Filter[] $filters
+     * @param Column[] $columns
+     */
+    public function create($class, array $filters = [], array $filterValues = [], array $columns = [], array $sortingValues = [], $criteria = [], $sorting = [], $paginated = false): FilterQuery
     {
         $filterQuery = new FilterQuery($this->em, $class);
-
-        foreach ($sorting as $property => $order) {
-            $propertyPath = explode('.', $property);
-            $topProperty = array_pop($propertyPath);
-            $filterQuery->addOrderBy($topProperty, $order, $propertyPath);
-        }
 
         foreach ($criteria as $property => $value) {
             if (is_array($value)) {
@@ -37,8 +35,17 @@ class FilterQueryFactory
             }
         }
 
-        foreach ($filters as $filter) {
+        foreach ($filters as $key => $filter) {
+            if (array_key_exists($key, $filterValues)) {
+                $filter->setFilterValue($filterValues[$key]);
+            }
             $filter->buildQuery($filterQuery);
+        }
+
+        foreach ($columns as $key => $column) {
+            if (array_key_exists($key, $sortingValues)) {
+                $column->buildSortingQuery($filterQuery, $sortingValues[$key]);
+            }
         }
 
         $filterQuery->setHydrate(FilterQuery::HYDRATE_OBJECT);
@@ -46,5 +53,4 @@ class FilterQueryFactory
 
         return $filterQuery;
     }
-
 }

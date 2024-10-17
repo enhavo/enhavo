@@ -5,7 +5,6 @@ namespace Enhavo\Bundle\ResourceBundle\Tests\DependencyInjection;
 use Enhavo\Bundle\ResourceBundle\DependencyInjection\Configuration;
 use Enhavo\Bundle\ResourceBundle\DependencyInjection\Merge\ConfigMergeInterface;
 use Enhavo\Bundle\ResourceBundle\DependencyInjection\Merge\GridConfigurationMerger;
-use Enhavo\Bundle\ResourceBundle\Grid\GridMergeInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\Processor;
 

@@ -28,7 +28,6 @@ class AdminMainEndpointType extends AbstractEndpointType
         $data->set('toolbarWidgetsPrimary', $this->getToolbarWidgetViewData($this->toolbarConfigurationPrimary));
         $data->set('toolbarWidgetsSecondary', $this->getToolbarWidgetViewData($this->toolbarConfigurationSecondary));
         $data->set('branding', $this->getBrandingData());
-        $data->set('viewStack', $this->getViewStackData($request));
         $data->set('menu', $this->getMenuData());
     }
 
@@ -52,58 +51,6 @@ class AdminMainEndpointType extends AbstractEndpointType
             'text' => $this->brandingConfiguration['text'],
             'version' => $this->brandingConfiguration['version'],
             'backgroundImage' => $this->brandingConfiguration['background_image']
-        ];
-    }
-
-    private function getViewStackData(Request $request): array
-    {
-        $state = $this->getState($request);
-        return [
-            'width' => 0,
-            'views' => $state['views'],
-            'storage' => $state['storage'],
-        ];
-    }
-
-    private function getState(Request $request): array
-    {
-        $default = [
-            'views' => [],
-            'storage' => [],
-        ];
-
-        if(!$request->query->has('state')) {
-            return $default;
-        }
-        $state = $request->query->get('state');
-        $state = StateEncoder::decode($state);
-        if($state === null) {
-            return $default;
-        }
-
-        $views = [];
-        if(isset($state['views'])) {
-            $views = $state['views'];
-            $id = 1;
-            foreach($views as &$view) {
-                if(!isset($view['component'])) {
-                    $view['component'] = 'iframe-view';
-                }
-                if(!isset($view['id'])) {
-                    $view['id'] = $id++;
-                }
-                $view['loaded'] = false;
-            }
-        }
-
-        $storage = [];
-        if(isset($state['storage'])) {
-            $storage = $state['storage'];
-        }
-
-        return [
-            'views' => $views,
-            'storage' => $storage
         ];
     }
 

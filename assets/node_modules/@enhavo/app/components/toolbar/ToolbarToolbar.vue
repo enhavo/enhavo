@@ -1,7 +1,7 @@
 <template>
-    <div class="app-toolbar" v-bind:class="{ 'menu-collapsed':!menuOpen}">
+    <div class="app-toolbar" :class="{ 'menu-collapsed':!menuOpen}">
         <div class="toolbar-item branding">
-            <div class="branding-container" v-bind:style="getBrandingImageStyles()" @click="home"></div>
+            <div class="branding-container" :style="getBrandingImageStyles()" @click="home"></div>
         </div>
 
         <div class="toolbar-item" @click="emit('toggleMenu')">
@@ -21,13 +21,13 @@
 
         <div class="toolbar-item left">
             <template v-for="widget in primary">
-                <component class="widget-container" v-bind:is="widget.component" v-bind:data="widget"></component>
+                <component class="widget-container" :is="widget.component" :data="widget"></component>
             </template>
         </div>
 
         <div class="toolbar-item right">
             <template v-for="widget in secondary">
-                <component class="widget-container" v-bind:is="widget.component" v-bind:data="widget"></component>
+                <component class="widget-container" :is="widget.component" :data="widget"></component>
             </template>
         </div>
     </div>

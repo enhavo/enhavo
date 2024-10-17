@@ -75,7 +75,7 @@ class ResourceDuplicateEndpointType extends AbstractEndpointType
             throw new HttpException($event->getErrorCode(), $event->getMessage());
         }
 
-        $this->resourceManager->create($newResource);
+        $this->resourceManager->save($newResource);
 
         $event = $this->eventDispatcher->dispatchPostEvent(ResourceActions::DELETE, $configuration, $this->resource);
         if ($event->isStopped()) {

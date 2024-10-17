@@ -1,30 +1,28 @@
 <template>
-    <div class="view-table-filter-search">
+    <div class="view-table-filter-search view-table-filter">
         <span class="label">{{ data.label }}</span>
-        <v-select :placeholder="data.label" :options="data.choices" @update:modelValue="change" v-model="data.selected" v-bind:class="[{'has-value': getHasValue()}]"></v-select>
+        <v-select :placeholder="data.label" :options="data.choices" @update:modelValue="change" v-model="data.selected" :class="[{'has-value': getHasValue()}]"></v-select>
     </div>
 </template>
 
 <script setup lang="ts">
-import OptionFilter from "@enhavo/app/grid/filter/model/OptionFilter";
+import {OptionFilter} from "@enhavo/app/filter/model/OptionFilter";
 
 const props = defineProps<{
     data: OptionFilter
 }>()
 
-const data = props.data;
-
 function change(value: any)
 {
     if (value == null) {
-        data.value = null;
+        props.data.value = null;
         return;
     }
-    data.value = value.code;
+    props.data.value = value.code;
 }
 
 function getHasValue(): boolean
 {
-    return !!data.value;
+    return !!props.data.value;
 }
 </script>

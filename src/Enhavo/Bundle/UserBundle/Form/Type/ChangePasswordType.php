@@ -25,7 +25,7 @@ class ChangePasswordType extends AbstractType
             $constraintsOptions['groups'] = array(reset($options['validation_groups']));
         }
 
-        $builder->add('current_password', PasswordType::class, array(
+        $builder->add('currentPassword', PasswordType::class, array(
             'label' => 'form.current_password',
             'translation_domain' => 'EnhavoUserBundle',
             'mapped' => false,

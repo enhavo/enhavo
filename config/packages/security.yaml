@@ -39,10 +39,11 @@ security:
 
     access_control:
         - { path: ^/admin/login$, role: PUBLIC_ACCESS }
-        - { path: ^/admin/api/login$, role: PUBLIC_ACCESS }
+        - { path: ^/admin/logout$, role: PUBLIC_ACCESS }
         - { path: ^/admin/reset-password/.+, role: PUBLIC_ACCESS }
+        - { path: ^/admin/api/login/.+, role: PUBLIC_ACCESS }
         - { path: ^/admin/api/reset-password/.+, role: PUBLIC_ACCESS }
-        - { path: ^/admin/, role: ROLE_ADMIN }
+        - { path: ^/admin, role: ROLE_ADMIN }
 
         - { path: ^/user/login$, role: PUBLIC_ACCESS }
         - { path: ^/user/login/check$, role: PUBLIC_ACCESS }

@@ -1,5 +1,0 @@
-message:
-    'hello world template!!!'
-test: expr:load(["hello2.php", "hello_variant_1.yaml"])
-
-

@@ -1,14 +1,15 @@
 <template>
-    <input v-once
+    <input
+        v-show="form.isVisible()"
         type="radio"
-        :ref="(el) => updateElement(el)"
+        :ref="(el) => updateElement(el as HTMLElement)"
         :value="form.value"
         :checked="form.checked"
         :id="form.id"
         :name="form.fullName"
         :disabled="form.disabled"
         :required="form.required"
-        @change="form.checked = form.element.checked; form.dispatchChange()"
+        @change="form.checked = form.element.checked; form.dispatchChange();"
     />
 </template>
 
@@ -16,36 +17,36 @@
 import {RadioForm} from "@enhavo/vue-form/model/RadioForm";
 import $ from "jquery";
 import 'icheck'
+import {watch} from "vue";
 
 const props = defineProps<{
     form: RadioForm
 }>()
 
-const form = props.form;
-
+watch(() => props.form, () => {
+    if (props.form.checked && !props.form.element.checked) {
+        $(props.form.element).iCheck('check');
+    } else if (!props.form.checked && props.form.element.checked) {
+        $(props.form.element).iCheck('uncheck');
+    }
+})
 
 function updateElement(el)
 {
-    form.element = el;
+    props.form.element = el;
 
-    let iCheck = $(form.element).iCheck({
+    let iCheck = $(props.form.element).iCheck({
         checkboxClass: 'icheckbox',
         radioClass: 'icheckbox'
     });
 
-    let $formRow = $(form.element).closest('[data-form-row]');
-    let $count = $formRow.find('[data-selected-count]');
+    iCheck.on('ifChanged', (event: any) => {
+        props.form.checked = event.target.checked;
+        props.form.dispatchChange();
+    });
 
-    if ($count.length) { // if there is a data-selected-count element, then multiple must have been true
-        iCheck.on('ifChanged', (event: any) => {
-            let checked = $formRow.find('input:checked');
-            let count = checked.length;
-            $count.text('(' + count + ')');
-        });
-    }
-
-    if ($(form.element).attr('readonly')) {
-        $(form.element).closest('.icheckbox').addClass('readonly');
+    if ($(props.form.element).attr('readonly')) {
+        $(props.form.element).closest('.icheckbox').addClass('readonly');
     }
 }
 

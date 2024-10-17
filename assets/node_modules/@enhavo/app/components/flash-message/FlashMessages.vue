@@ -1,7 +1,7 @@
 <template>
     <div class="flash-message-container" v-if="flashMessenger.messages && flashMessenger.messages.length > 0">
         <template v-for="message in flashMessenger.messages">
-            <flash-message v-bind:message="message"></flash-message>
+            <flash-message :message="message"></flash-message>
         </template>
     </div>
 </template>

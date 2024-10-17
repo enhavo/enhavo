@@ -15,20 +15,17 @@ const props = defineProps<{
     column: any,
 }>()
 
-const data = props.data;
-const column = props.column;
-
 function getRows(): object {
-    if (column.hasOwnProperty('rows') ) {
-        return column['rows'];
+    if (props.column.hasOwnProperty('rows') ) {
+        return props.column['rows'];
     }
     return null;
 }
 
 function getRowData(row: string): any
 {
-    if (data.hasOwnProperty(row) ) { // TODO check if clause
-        return data[row];
+    if (props.data.hasOwnProperty(row) ) { // TODO check if clause
+        return props.data[row];
     }
     return null;
 }

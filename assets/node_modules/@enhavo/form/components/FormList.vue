@@ -1,5 +1,5 @@
 <template>
-    <div class="form-list" :ref="(el) => form.setElement(el)">
+    <div class="form-list" :ref="(el) => form.setElement(el as HTMLElement)" v-show="form.isVisible()">
         <slot name="list">
             <ul>
                 <draggable

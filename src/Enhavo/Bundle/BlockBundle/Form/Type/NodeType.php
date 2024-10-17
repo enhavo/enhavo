@@ -28,7 +28,8 @@ class NodeType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => Node::class,
-            'block_type_options' => []
+            'block_type_options' => [],
+            'component' => 'form-block-node',
         ));
 
         $resolver->setRequired(['block_type']);

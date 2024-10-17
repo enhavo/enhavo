@@ -98,7 +98,7 @@ class TaxonomyFilterType extends AbstractFilterType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'component' => 'filter-entity',
+            'component' => 'filter-dropdown',
             'initial_value_method' => 'findOneByNameAndTaxonomy',
             'initial_value_arguments' => null,
             'model' => 'OptionFilter',

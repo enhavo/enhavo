@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-show="form.isVisible()">
         <select style="width: 100%" :name="form.fullName" :ref="(el) => form.setElement(el as HTMLElement)" :multiple="form.multiple">
             <option selected v-for="item in form.value" :value="item.id">{{ item.text }}</option>
         </select>
@@ -17,11 +17,9 @@ const props = defineProps<{
     form: AutoCompleteForm
 }>()
 
-const form = props.form;
-
 function applySortable()
 {
-    let $list = $(form.element).find('ul.select2-selection__rendered');
+    let $list = $(props.form.element).find('ul.select2-selection__rendered');
     let listElement = <HTMLElement>$list.get(0);
     Sortable.create(listElement, {
         draggable: ".select2-search-choice",
@@ -48,15 +46,15 @@ function buildConfig()
         },
         debug: true,
         templateSelection: function (state: any) {
-            if (form.multiple && form.editable) {
+            if (props.form.multiple && props.form.editable) {
                 return "<span class=\"icon icon-edit\" data-auto-complete-edit=\"" + state.id + "\"></span> " + state.text;
             } else {
                 return state.text;
             }
         },
-        minimumInputLength: form.minimumInputLength,
+        minimumInputLength: props.form.minimumInputLength,
         ajax: {
-            url: form.url,
+            url: props.form.url,
             delay: 500,
             data: function (searchTerm: Select2QueryOptions, page: number) {
                 return {
@@ -69,17 +67,17 @@ function buildConfig()
             },
             cache: true,
         },
-        tags: form.multiple,
-        placeholder: form.placeholder,
-        allowClear: form.placeholder != null,
+        tags: props.form.multiple,
+        placeholder: props.form.placeholder,
+        allowClear: props.form.placeholder != null,
     };
 }
 
 onMounted(() => {
     select2($);
-    $(form.element).select2(buildConfig());
+    $(props.form.element).select2(buildConfig());
 
-    if (form.sortable) {
+    if (props.form.sortable) {
         applySortable();
     }
 });

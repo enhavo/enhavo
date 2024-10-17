@@ -2,36 +2,36 @@ services:
     Enhavo\Bundle\UserBundle\Command\CreateUserCommand:
         arguments:
             - '@enhavo_user.user.manager'
-            - '@enhavo_user.repository.user'
+            - '@enhavo_user.user.repository'
             - '@Enhavo\Bundle\UserBundle\UserIdentifier\UserIdentifierProviderResolver'
-            - '%enhavo_user.model.user.class%'
-            - '@enhavo_user.factory.user'
+            - '%enhavo_user.user.model.class%'
+            - '@enhavo_user.user.factory'
         tags:
             - { name: console.command }
 
     Enhavo\Bundle\UserBundle\Command\ActivateUserCommand:
         arguments:
             - '@enhavo_user.user.manager'
-            - '@enhavo_user.repository.user'
+            - '@enhavo_user.user.repository'
             - '@Enhavo\Bundle\UserBundle\UserIdentifier\UserIdentifierProviderResolver'
-            - '%enhavo_user.model.user.class%'
+            - '%enhavo_user.user.model.class%'
         tags:
             - { name: console.command }
 
     Enhavo\Bundle\UserBundle\Command\ChangePasswordCommand:
         arguments:
             - '@enhavo_user.user.manager'
-            - '@enhavo_user.repository.user'
+            - '@enhavo_user.user.repository'
             - '@Enhavo\Bundle\UserBundle\UserIdentifier\UserIdentifierProviderResolver'
-            - '%enhavo_user.model.user.class%'
+            - '%enhavo_user.user.model.class%'
         tags:
             - { name: console.command }
 
     Enhavo\Bundle\UserBundle\Command\RoleCommand:
         arguments:
             - '@enhavo_user.user.manager'
-            - '@enhavo_user.repository.user'
+            - '@enhavo_user.user.repository'
             - '@Enhavo\Bundle\UserBundle\UserIdentifier\UserIdentifierProviderResolver'
-            - '%enhavo_user.model.user.class%'
+            - '%enhavo_user.user.model.class%'
         tags:
             - { name: console.command }

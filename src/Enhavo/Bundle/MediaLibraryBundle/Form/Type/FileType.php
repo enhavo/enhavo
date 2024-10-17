@@ -49,7 +49,7 @@ class FileType extends AbstractType
                 'translation_domain' => 'EnhavoMediaLibraryBundle',
                 'create_route' => 'enhavo_media_library_tag_create',
                 'edit_route' => 'enhavo_media_library_tag_update',
-                'view_key' => 'media_library_tags'
+                'frame_key' => 'media_library_tags'
             ])
             ->add('parameters', $this->formConfiguration['parameters_type'])
         ;
