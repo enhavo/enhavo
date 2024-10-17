@@ -5,24 +5,22 @@
 </template>
 
 <script setup lang="ts">
-import IconWidget from "@enhavo/app/toolbar/widget/model/IconWidget";
+import {IconWidget} from "@enhavo/app/toolbar/model/IconWidget";
 
 const props = defineProps<{
     data: IconWidget
 }>()
 
-const data = props.data;
-
 function getIcon()
 {
-    if (data.icon) {
-        return 'icon icon-' + data.icon;
+    if (props.data.icon) {
+        return 'icon icon-' + props.data.icon;
     }
     return ''
 }
 
 function open()
 {
-    data.open();
+    props.data.open();
 }
 </script>

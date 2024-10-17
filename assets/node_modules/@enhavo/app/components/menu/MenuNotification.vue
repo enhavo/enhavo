@@ -1,5 +1,5 @@
 <template>
-    <span v-bind:class="['menu-notification', getCSSClass()]">
+    <span :class="['menu-notification', getCSSClass()]">
         {{ getLabel() }}
     </span>
 </template>
@@ -9,16 +9,14 @@ const props = defineProps<{
     data: Object
 }>()
 
-const data = props.data;
-
 function getLabel(): string
 {
-    return (data && data.label) ? data.label : '';
+    return (props.data && props.data.label) ? props.data.label : '';
 }
 
 function getCSSClass(): string
 {
-    return (data && data.class) ? data.class : '';
+    return (props.data && props.data.class) ? data.class : '';
 }
 </script>
 

@@ -6,8 +6,12 @@ abstract class AbstractConfigurationMerger
 {
     abstract public function performMerge(array $configs): array;
 
-    protected function mergeConfigs(array $configs, array $allConfigs, string $name): array
+    protected function mergeConfigs(array $configs, array $allConfigs, string $name, array &$cachedConfigs): array
     {
+        if (isset($cachedConfigs[$name])) {
+            return $cachedConfigs[$name];
+        }
+
         usort($configs, function ($a, $b) {
             $aPriority = $a['priority'] ?? 0;
             $bPriority = $b['priority'] ?? 0;
@@ -24,15 +28,11 @@ abstract class AbstractConfigurationMerger
 
             $config = $this->sanitizeConfig($config);
 
-            if ($beforeConfig === null) {
-                $beforeConfig = $config;
-            }
-
             if (isset($extends)) {
                 if (!array_key_exists($extends, $allConfigs)) {
                     throw new \Exception(sprintf('Try to extend from "%s" in "%s" but "%s" doesn\'t exist.', $extends, $name, $extends));
                 }
-                $parentGridConfig = $this->mergeConfigs($allConfigs[$extends], $allConfigs, $extends);
+                $parentGridConfig = $this->mergeConfigs($allConfigs[$extends], $allConfigs, $extends, $cachedConfigs);
                 $config['class'] = $config['class'] ?? $parentGridConfig['class'];
                 if ($this->isCallable($config, $overwrite)) {
                     $config = $config['class']::mergeConfigs($parentGridConfig, $config);
@@ -41,12 +41,14 @@ abstract class AbstractConfigurationMerger
                 }
             }
 
-            if ($this->isCallable($config, $overwrite) && $beforeConfig != $config) {
-                $beforeConfig = $config['class']::mergeConfigs($beforeConfig, $config);
-            } else {
-                $beforeConfig = $config;
+            if ($this->isCallable($config, $overwrite) && $beforeConfig !== null) {
+                $config = $config['class']::mergeConfigs($beforeConfig, $config);
             }
+
+            $beforeConfig = $config;
         }
+
+        $cachedConfigs[$name] = $beforeConfig;
 
         return $beforeConfig;
     }

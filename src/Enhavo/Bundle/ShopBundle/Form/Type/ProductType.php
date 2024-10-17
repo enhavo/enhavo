@@ -222,7 +222,7 @@ class ProductType extends AbstractType
             'translation_domain' => 'EnhavoShopBundle',
             'create_route' => 'enhavo_shop_tag_create',
             'edit_route' => 'enhavo_shop_tag_update',
-            'view_key' => 'shop_tags'
+            'frame_key' => 'shop_tags'
         ]);
     }
 

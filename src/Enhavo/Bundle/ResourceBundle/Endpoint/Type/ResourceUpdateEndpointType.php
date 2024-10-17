@@ -48,7 +48,7 @@ class ResourceUpdateEndpointType extends AbstractEndpointType
 
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
-                    $this->resourceManager->create($resource);
+                    $this->resourceManager->save($resource);
                     $context->setStatusCode(200);
                 } else {
                     $context->setStatusCode(400);

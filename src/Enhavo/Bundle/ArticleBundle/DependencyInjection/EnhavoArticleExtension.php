@@ -30,7 +30,8 @@ class EnhavoArticleExtension extends Extension implements PrependExtensionInterf
     protected function prependFiles(): array
     {
         return [
-            __DIR__.'/../Resources/config/app/config.yaml'
+            __DIR__.'/../Resources/config/app/config.yaml',
+            __DIR__.'/../Resources/config/resources/article.yaml'
         ];
     }
 }

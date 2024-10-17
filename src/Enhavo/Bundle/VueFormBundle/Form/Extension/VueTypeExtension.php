@@ -24,10 +24,9 @@ class VueTypeExtension extends AbstractVueTypeExtension
         $data->set('component', $options['component']);
         $data->set('componentModel', $options['component_model']);
         $data->set('componentVisitors', is_string($options['component_visitors']) ? [$options['component_visitors']] : $options['component_visitors']);
+        $data->set('visibleCondition', $options['component_visible_condition']);
         $data->set('rowComponent', $options['row_component']);
         $data->set('widgetComponent', $options['widget_component']);
-
-        $data->set('visible', true);
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -36,6 +35,7 @@ class VueTypeExtension extends AbstractVueTypeExtension
             'component' => null,
             'component_model' => null,
             'component_visitors' => [],
+            'component_visible_condition' => null,
             'row_component' => null,
             'widget_component' => 'form-widget',
         ]);

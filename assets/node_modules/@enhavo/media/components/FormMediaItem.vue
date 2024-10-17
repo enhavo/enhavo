@@ -1,5 +1,5 @@
 <template>
-    <div class="form-media-item" :ref="(el) => form.setElement(el)">
+    <div class="form-media-item" :ref="(el) => form.setElement(el as HTMLElement)">
         <div class="thumb" @click="toggleEdit">
             <img v-if="isImage(form.file)" :src="form.path('enhavoPreviewThumb')" />
             <div v-else><span class="icon" :class="'icon-'+getIcon(form.file)"></span></div>

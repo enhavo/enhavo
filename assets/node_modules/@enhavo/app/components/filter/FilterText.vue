@@ -1,26 +1,25 @@
 <template>
-    <div class="view-table-filter-search">
+    <div class="view-table-filter-search view-table-filter">
         <span class="label">{{ data.label }}</span>
         <input @keyup="keyup" type="text" v-model="data.value" :class="['filter-form-field', {'has-value': getHasValue()}]">
     </div>
 </template>
 
 <script setup lang="ts">
-import AbstractFilter from "@enhavo/app/grid/filter/model/AbstractFilter";
+import {TextFilter} from "@enhavo/app/filter/model/TextFilter";
 
 const props = defineProps<{
-    data: AbstractFilter
+    data: TextFilter
 }>()
 
-const data = props.data;
 
 const emit = defineEmits(['apply']);
 
 function getHasValue(): boolean
 {
-    if (data.value == "") {
+    if (props.data.value == "") {
         return false;
-    } else if (data.value == null) {
+    } else if (props.data.value == null) {
         return false;
     }
 

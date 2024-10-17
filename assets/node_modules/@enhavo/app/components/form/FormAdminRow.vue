@@ -1,6 +1,6 @@
 <template>
     <component v-if="form.rowComponent !== 'form-admin-row'" :form="form" :is="form.rowComponent" />
-    <div v-else v-show="form.visible" class="form-row">
+    <div v-else v-show="form.isVisible()" class="form-row">
         <form-label :form="form"></form-label>
         <form-errors :form="form"></form-errors>
         <div class="formwidget-container">

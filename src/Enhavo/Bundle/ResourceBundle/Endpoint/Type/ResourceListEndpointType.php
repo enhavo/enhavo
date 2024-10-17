@@ -34,7 +34,14 @@ class ResourceListEndpointType extends AbstractEndpointType
             $grid->handleAction($request->getPayload()->get('action'), $request->getPayload()->all());
         }
 
-        $items = $grid->getItems($request->query->all());
+        $context = $request->query->all();
+        if ($request->isMethod(Request::METHOD_POST)) {
+            foreach ($request->getPayload() as $key => $value) {
+                $context[$key] = $value;
+            }
+        }
+
+        $items = $grid->getItems($context);
 
         $data->add($items->normalize());
     }

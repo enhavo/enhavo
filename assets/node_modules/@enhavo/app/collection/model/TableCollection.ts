@@ -1,11 +1,11 @@
 import {CollectionInterface} from "../CollectionInterface";
 import {ColumnInterface} from "../../column/ColumnInterface";
+import {AbstractColumn} from "../../column/model/AbstractColumn";
 import {FilterInterface} from "../../filter/FilterInterface";
 import {RouteContainer} from "../../routing/RouteContainer";
 import {Router} from "../../routing/Router";
 import {FilterManager} from "../../filter/FilterManager";
 import {ColumnManager} from "../../column/ColumnManager";
-import jexl from "jexl";
 import {CollectionResourceItem} from "../CollectionResourceItem";
 import {BatchInterface} from "../../batch/BatchInterface";
 import {FrameManager} from "../../frame/FrameManager";
@@ -54,6 +54,10 @@ export class TableCollection implements CollectionInterface
         this.frameManager.on('frame_removed', (event: Event) => {
             this.checkActiveRow();
         });
+
+        this.frameManager.on('input_save', (event: Event) => {
+            this.load();
+        });
     }
 
     async load(): Promise<boolean>
@@ -68,7 +72,6 @@ export class TableCollection implements CollectionInterface
         }
 
         let data = await this.fetch(parameters);
-
 
         this.rows = this.createRowData(data.items);
         this.loading = false;
@@ -130,33 +133,6 @@ export class TableCollection implements CollectionInterface
 
     }
 
-    private checkColumnCondition(column: ColumnInterface): boolean
-    {
-        let context = {
-            mobile: window.innerWidth <= 360,
-            tablet: window.innerWidth > 360 && window.innerWidth <= 768,
-            desktop: window.innerWidth > 768,
-            width: window.innerWidth,
-            this: column
-        };
-        if (column.condition) {
-            return jexl.evalSync(column.condition, context);
-        }
-        return true;
-    }
-
-    private checkColumnConditions()
-    {
-        for(let column of this.columns) {
-            column.display = this.checkColumnCondition(column);
-        }
-    }
-
-    public resize()
-    {
-        this.checkColumnConditions();
-    }
-
     private checkSelectedRows()
     {
         for (let currentRow of this.rows) {
@@ -185,7 +161,7 @@ export class TableCollection implements CollectionInterface
 
     private trimPages(maxLength: number = 5)
     {
-        this.pages.length = 0; // empty array but keep reference
+        this.pages = [];
         let numberOfPages = Math.ceil(this.count / this.paginationStep);
         for (let i = 1; i <= numberOfPages; i++) {
             this.pages.push(i);
@@ -302,6 +278,31 @@ export class TableCollection implements CollectionInterface
                 url: row.url,
                 key: 'edit',
             });
+        }
+    }
+    changePage(page: number)
+    {
+        this.page = page;
+        this.load();
+    }
+
+    changeSortDirection(column: ColumnInterface)
+    {
+        if (column.sortable) {
+            let sortingState = column.sortingDirection;
+
+            for (let item of this.columns) {
+                item.sortingDirection = null;
+            }
+
+            if (sortingState === AbstractColumn.SORTING_DIRECTION_ASC) {
+                column.sortingDirection = AbstractColumn.SORTING_DIRECTION_DESC;
+            } else if (sortingState === AbstractColumn.SORTING_DIRECTION_DESC) {
+                column.sortingDirection = null;
+            } else if (sortingState === null) {
+                column.sortingDirection = AbstractColumn.SORTING_DIRECTION_ASC;
+            }
+            this.load();
         }
     }
 }

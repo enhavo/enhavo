@@ -1,6 +1,6 @@
 <template>
     <div class="filter-bar">
-        <div class="view-table-filter filter-headline" v-if="hasActiveFilter(filters)">{{ translator.trans('enhavo_app.grid.label.filter') }}</div>
+        <div class="view-table-filter filter-headline" v-if="hasActiveFilter(filters)">{{ translator.trans('enhavo_app.grid.label.filter', {}, 'javascript') }}</div>
         <template v-for="filter in filterManager.getActiveFilters(filters)">
             <component
                 :is="filter.component"
@@ -17,9 +17,9 @@
 
 <script setup lang="ts">
 import {inject} from "vue";
-import Translator from "@enhavo/core/Translator";
-import {FilterInterface} from "../../filter/FilterInterface";
-import {FilterManager} from "../../filter/FilterManager";
+import {Translator} from "@enhavo/app/translation/Translator";
+import {FilterInterface} from "@enhavo/app/filter/FilterInterface";
+import {FilterManager} from "@enhavo/app/filter/FilterManager";
 
 const translator = inject<Translator>('translator');
 const filterManager = inject<FilterManager>('filterManager');
@@ -29,15 +29,16 @@ const props = defineProps<{
 }>()
 
 
+const emit = defineEmits(['apply', 'reset']);
+
 function apply()
 {
-    // grid.applyFilter();
+    emit('apply');
 }
 
 function reset()
 {
-    // grid.resetFilter();
-    // apply()
+    emit('reset');
 }
 
 function hasActiveFilter(filters: FilterInterface[]): boolean

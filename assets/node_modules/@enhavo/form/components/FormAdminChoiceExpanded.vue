@@ -1,5 +1,5 @@
 <template>
-    <div class="choice-list">
+    <div class="choice-list" v-show="form.isVisible()">
         <div class="choice-input-container">
             <template v-for="child of form.children">
                 <span class="choice-input-with-label">

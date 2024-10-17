@@ -22,9 +22,10 @@ class GridConfigurationMerger extends AbstractConfigurationMerger
         }
 
         $newGridConfig = [];
+        $cachedConfigs = [];
         foreach ($grids as $name => $gridConfigs) {
             try {
-                $newGridConfig[$name] = $this->mergeConfigs($gridConfigs, $grids, $name);
+                $newGridConfig[$name] = $this->mergeConfigs($gridConfigs, $grids, $name, $cachedConfigs);
             } catch (\Exception $exception) {
                 throw new \Exception(sprintf('Error merging grid configs: %s', $exception->getMessage()), 0, $exception);
             }

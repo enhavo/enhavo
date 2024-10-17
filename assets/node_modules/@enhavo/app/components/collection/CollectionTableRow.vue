@@ -1,19 +1,19 @@
 <template>
-    <div :class="{'view-table-row': true, 'active': data.active, 'selected': data.selected, 'clickable': data.open}" @click="open()">
+    <div :class="{'view-table-row': true, 'active': data.active, 'selected': data.selected, 'clickable': !!data.url}" @click="open()">
         <div class="checkbox-container" v-if="collection.batches.length > 0">
-            <input type="checkbox" v-on:change="changeSelect" v-on:click.stop :checked="data.selected" />
+            <input type="checkbox" @change="changeSelect" @click.stop :checked="data.selected" />
             <span></span>
         </div>
         <div class="view-table-row-columns">
-            <template v-for="column in collection.columns">
+            <template v-for="column in collection.columns" :key="column.key + '-' + data.id">
                 <component
+                    v-if="column.isVisible()"
                     class="view-table-col"
-                    v-if="column.display"
-                    v-bind:is="column.component"
-                    v-bind:key="column.key"
-                    v-bind:column="column"
-                    v-bind:style="getColumnStyle(column)"
-                    v-bind:data="getColumnData(column.key)"></component>
+                    :is="column.component"
+                    :column="column"
+                    :style="getColumnStyle(column)"
+                    :data="getColumnData(column.key)">
+                </component>
             </template>
         </div>
     </div>
@@ -28,24 +28,21 @@ const props = defineProps<{
     collection: TableCollection,
 }>()
 
-const data = props.data;
-const collection = props.collection;
-
 function changeSelect()
 {
-    collection.changeSelect(data, !data.selected);
+    props.collection.changeSelect(props.data, !props.data.selected);
 }
 
 function open()
 {
-    collection.open(data);
+    props.collection.open(props.data);
 }
 
 function calcColumnWidth(parts: number): string
 {
     let totalWidth = 0;
-    for (let column of collection.columns) {
-        if (column.display) {
+    for (let column of props.collection.columns) {
+        if (column.isVisible()) {
             totalWidth += column.width;
         }
     }
@@ -63,7 +60,7 @@ function getColumnStyle(column: any): object
 
 function getColumnData(column: string): object
 {
-    for (let field of data.data) {
+    for (let field of props.data.data) {
         if (field.key === column) {
             return field.value;
         }

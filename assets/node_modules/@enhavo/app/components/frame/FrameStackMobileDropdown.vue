@@ -1,5 +1,5 @@
 <template>
-    <div class="viewstack-dropdown-container" v-if="getHasMoreThanOneView()" v-click-outside="close" v-bind:class="{'selected': isOpen}">
+    <div class="viewstack-dropdown-container" v-if="getHasMoreThanOneView()" v-click-outside="close" :class="{'selected': isOpen}">
         <div class="dropdown-trigger" @click="toggle()">
             <span class="icon icon-more_horiz"></span>
         </div>

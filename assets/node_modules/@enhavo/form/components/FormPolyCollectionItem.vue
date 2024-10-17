@@ -1,5 +1,5 @@
 <template>
-    <div class="form-list-item" :ref="(el) => form.setElement(el)">
+    <div class="form-list-item" :ref="(el) => form.setElement(el as HTMLElement)" v-show="form.isVisible()">
         <div class="buttons-label-container" v-if="blockName || sortable || deletable">
             <div class="form-list-item-label" v-if="blockName || form.label">{{ blockName ?? form.label }}</div>
             <div class="form-list-item-buttons" v-if="sortable || deletable">

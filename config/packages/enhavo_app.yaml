@@ -56,3 +56,32 @@ enhavo_app:
             label: Table
             route: app_table_index
             icon: view_comfy
+
+    area:
+        theme:
+            firewall: main
+            options:
+                routes: ['api', 'theme']
+                vue_routes: ['theme']
+                navigation: true
+        api:
+            path: ^/api/
+        admin_login:
+            path:
+                - /admin/reset-password/.+
+                - /admin/login$
+            options:
+                routes: ['admin_login', 'admin_login_api']
+                vue_routes: ['admin_login']
+                translations: ['javascript']
+        admin:
+            firewall: admin
+            path:
+                - ^/admin/reset-password/.+
+                - ^/admin/login$
+            options:
+                routes: ['admin', 'admin_api']
+                vue_routes: ['admin']
+                translations: ['javascript']
+        admin_api:
+            path: ^/admin/api/

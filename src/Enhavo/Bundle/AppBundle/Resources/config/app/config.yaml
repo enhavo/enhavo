@@ -30,23 +30,4 @@ enhavo_app:
 #        form_mapping:
 #            form-row: form-admin-row
 #            form-widget': form-admin-widget
-    area:
-        theme:
-            firewall: main
-            options:
-                routes: ['api', 'theme']
-                vue_routes: ['theme']
-                navigation: true
-        api:
-            path: ^/api/
-        admin:
-            firewall: admin
-            path:
-                - ^/admin/reset-password/.+
-                - ^/admin/login$
-            options:
-                routes: ['admin', 'admin_api']
-                vue_routes: ['admin']
-                translations: ['messages', 'javascript']
-        admin_api:
-            path: ^/admin/api/
+

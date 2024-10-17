@@ -15,11 +15,9 @@ const props = defineProps<{
     format: any
 }>()
 
-const format = props.format;
-
 onMounted(() => {
     $(document).on('change', ':input', () => {
-        format.changed = true;
+        props.format.changed = true;
     });
 })
 

@@ -18,6 +18,13 @@ services:
             - { name: enhavo_api.endpoint }
             - { name: container.service_subscriber }
 
+    Enhavo\Bundle\AppBundle\Endpoint\Type\TemplateAdminEndpointType:
+        calls:
+            - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
     Enhavo\Bundle\AppBundle\Endpoint\Extension\RouterEndpointExtensionType:
         arguments:
             - '@Enhavo\Bundle\AppBundle\Twig\TwigRouter'

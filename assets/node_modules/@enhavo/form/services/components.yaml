@@ -76,3 +76,9 @@ services:
         static: true
         tags:
             - { name: vue.component, component: 'form-auto-complete' }
+
+    '@enhavo/form/components/FormHtmlTag.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'form-html-tag' }

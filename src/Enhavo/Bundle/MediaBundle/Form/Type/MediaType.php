@@ -86,7 +86,7 @@ class MediaType extends AbstractType
         });
 
         $resolver->setNormalizer('entry_options', function ($options, $value) {
-            if(isset($options['extensions']) && is_array($options['extensions'])) {
+            if (isset($options['extensions']) && is_array($options['extensions'])) {
                 if(is_array($value)) {
                     return array_merge($value, [
                         'extensions' => $options['extensions']

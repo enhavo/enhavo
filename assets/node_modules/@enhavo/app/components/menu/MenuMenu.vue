@@ -1,7 +1,7 @@
 <template>
     <div class="menu style-compact" :class="{ 'menu-collapsed':!menuManager.menuOpen}">
         <template v-for="item in menuManager.menuItems">
-            <component class="menu-child" v-bind:is="item.component" v-bind:data="item"></component>
+            <component class="menu-child" :is="item.component" :data="item"></component>
         </template>
     </div>
 </template>

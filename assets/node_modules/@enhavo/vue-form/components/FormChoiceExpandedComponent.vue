@@ -1,5 +1,5 @@
 <template>
-    <div :id="form.id" :ref="(el) => form.setElement(el)">
+    <div :id="form.id" :ref="(el) => form.setElement(el as HTMLElement)" v-show="form.isVisible()">
         <template v-for="child of form.children">
             <form-widget :form="child"></form-widget>
             <form-label :form="child"></form-label>

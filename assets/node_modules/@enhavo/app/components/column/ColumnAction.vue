@@ -1,6 +1,6 @@
 <template>
     <div class="view-table-col-text">
-        <component class="action-container" v-bind:is="getAction().component" v-bind:data="getAction()" :click-stop="true"></component>
+        <component class="action-container" :is="getAction().component" :data="getAction()" :click-stop="true"></component>
     </div>
 </template>
 

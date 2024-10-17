@@ -34,8 +34,8 @@ class VariantActionType extends AbstractActionType
     {
         $resolver->setDefaults([
             'icon' => 'texture',
-            'target' => '_view',
-            'view_key' => 'variants',
+            'target' => '_frame',
+            'frame_key' => 'variants',
             'route' => 'sylius_product_variant_index',
             'translation_domain' => 'EnhavoShopBundle',
             'label' => 'product.label.variants'

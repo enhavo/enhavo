@@ -15,14 +15,13 @@ class RouteResolverExpressionFunctionProvider implements ResourceExpressionFunct
 
     public function getFunction(): ExpressionFunction
     {
-        $routeResolver = $this->routeResolver;
         return new ExpressionFunction(
             'resolve_route',
             function () {
                 return '$routeResolver->resolve()';
             },
-            function ($args, string $name, array $context = []) use ($routeResolver) {
-                return $routeResolver->getRoute($name, $context);
+            function ($args, string $name, array $context = []) {
+                return $this->routeResolver->getRoute($name, $context);
             }
         );
     }

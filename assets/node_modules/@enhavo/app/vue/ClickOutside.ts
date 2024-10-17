@@ -1,7 +1,6 @@
 import { VNode } from "vue"
 import { DirectiveBinding } from "vue/types/options";
 import {FrameManager} from "../frame/FrameManager";
-
 export class ClickOutside
 {
     private static clickHandlers: ClickHandler[] = [];
@@ -32,7 +31,6 @@ export class ClickOutside
 
         clickHandler.element = el;
         clickHandler.handler = (event: Event) => {
-            event.stopPropagation();
             if (event.target == el) {
                 return;
             }

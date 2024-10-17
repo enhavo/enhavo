@@ -35,28 +35,26 @@ const props = defineProps<{
     collection: MediaLibraryCollection,
 }>()
 
-const collection = props.collection;
-
 
 function onSort(column: Column)
 {
-    //collection.setSortColumn(column);
+    //props.collection.setSortColumn(column);
 }
 
 function isSorted(column: Column)
 {
-    //return collection.isSortedColumn(column);
+    //return props.collection.isSortedColumn(column);
 }
 
 function sortClass(column: Column)
 {
-    //if (collection.isSortedColumn(column)) {
-    //    return collection.data.sortColumn.direction === 'asc' ? 'icon-arrow_upward' : 'icon-arrow_downward';
+    //if (props.collection.isSortedColumn(column)) {
+    //    return props.collection.data.sortColumn.direction === 'asc' ? 'icon-arrow_upward' : 'icon-arrow_downward';
     //}
 }
 
 function open(data)
 {
-    collection.open(data);
+    props.collection.open(data);
 }
 </script>

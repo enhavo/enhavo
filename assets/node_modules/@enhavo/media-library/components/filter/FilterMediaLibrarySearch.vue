@@ -13,15 +13,13 @@ const props = defineProps<{
     data: AbstractFilter
 }>()
 
-const data = props.data;
-
 const emit = defineEmits(['apply']);
 
 function getHasValue(): boolean
 {
-    if (data.value == "") {
+    if (props.data.value == "") {
         return false;
-    } else if (data.value == null) {
+    } else if (props.data.value == null) {
         return false;
     }
 

@@ -17,8 +17,8 @@ class StatsActionType extends AbstractActionType
             'translation_domain' => 'EnhavoNewsletterBundle',
             'icon' => 'assessment',
             'route' => 'enhavo_newsletter_admin_newsletter_stats',
-            'view_key' => 'stats-view',
-            'target' => '_view',
+            'frame_key' => 'stats-view',
+            'target' => '_frame',
             'append_id' => true
         ]);
     }

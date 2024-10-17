@@ -39,18 +39,16 @@ const props = defineProps<{
     frame: Frame,
 }>()
 
-const frame = props.frame;
-
 async function close()
 {
-    await frameStack.removeFrame(frame);
+    await frameStack.removeFrame(props.frame);
     frameStateManager.saveState();
     frameArrangeManager.arrange();
 }
 
 function open()
 {
-    let dataString = FrameUtil.getState([frame]);
+    let dataString = FrameUtil.getState([props.frame]);
     let uri = new URL(window.location.href);
     uri.searchParams.set('frames',  dataString);
     window.open(uri.toString(), '_blank');
@@ -58,21 +56,21 @@ function open()
 
 function minimize()
 {
-    frame.minimize = true;
-    frame.keepMinimized = true;
+    props.frame.minimize = true;
+    props.frame.keepMinimized = true;
     frameArrangeManager.arrange();
 }
 
 function maximize()
 {
-    frame.minimize = false;
-    frame.keepMinimized = true;
+    props.frame.minimize = false;
+    props.frame.keepMinimized = true;
     frameArrangeManager.arrange();
 }
 
 function getUrl(): string
 {
-    let uri = new URL(frame.url, window.origin);
+    let uri = new URL(props.frame.url, window.origin);
     return uri.toString();
 }
 

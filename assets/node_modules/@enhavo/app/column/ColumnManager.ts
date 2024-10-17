@@ -10,15 +10,12 @@ export class ColumnManager
     }
 
 
-    getSortingParameters(columns: ColumnInterface[])
+    getSortingParameters(columns: ColumnInterface[]): object
     {
-        let parameters = [];
+        let parameters = {};
         for (let column of columns) {
-            if(column.directionDesc != null) {
-                parameters.push({
-                   property: column.sortingProperty,
-                   direction:  column.directionDesc ? 'desc' : 'asc'
-                });
+            if (column.sortingDirection != null) {
+                parameters[column.key] = column.sortingDirection;
             }
         }
         return parameters;

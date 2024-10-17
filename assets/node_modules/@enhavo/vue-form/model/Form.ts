@@ -7,6 +7,7 @@ export class Form
     element: HTMLElement;
     key: string;
     visible: boolean;
+    visibleCondition: string;
     parent: Form;
     children: Form[] = [];
     value: string;
@@ -34,6 +35,7 @@ export class Form
     type: string;
 
     private morphStartValue: any;
+    private visibleValue: boolean = null;
 
     public get(name: string): Form
     {
@@ -138,8 +140,54 @@ export class Form
         this.dispatchChange();
     }
 
+    public isVisible(): boolean
+    {
+        if (this.visibleValue === null) {
+            this.checkVisibility()
+        }
+        return this.visibleValue;
+    }
+
+    public checkVisibility(recursive: boolean = false): void
+    {
+        if (this.visible === true) {
+            this.visibleValue = true;
+        } else if (typeof this.visibleCondition === 'string') {
+            const scope = {
+                form: this
+            }
+
+            this.visibleValue = this.evaluate(this.visibleCondition, scope);
+        } else {
+            this.visibleValue = this.visible !== false;
+        }
+
+        if (recursive) {
+            for (let child of this.children) {
+                child.checkVisibility();
+            }
+        }
+    }
+
+    private evaluate(code: string, args: object = {})
+    {
+        // Call is used to define where "this" within the evaluated code should reference.
+        // eval does not accept the likes of eval.call(...) or eval.apply(...) and cannot
+        // be an arrow function
+        return function evaluateEval() {
+            // Create an args definition list e.g. "arg1 = this.arg1, arg2 = this.arg2"
+            const argsStr = Object.keys(args)
+                .map(key => `${key} = this.${key}`)
+                .join(',');
+            const argsDef = argsStr ? `let ${argsStr};` : '';
+
+            return eval(`${argsDef}${code}`);
+        }.call(args);
+    }
+
     public dispatchChange()
     {
+        this.getRoot().checkVisibility(true);
         this.eventDispatcher.dispatchEvent(new ChangeEvent(this, this.getValue()), 'change');
     }
 
@@ -169,6 +217,8 @@ export class Form
             fullName += '[' + name + ']';
         }
         this.fullName = fullName;
+
+        this.checkVisibility();
 
         if (recursive) {
             for (let child of this.children) {

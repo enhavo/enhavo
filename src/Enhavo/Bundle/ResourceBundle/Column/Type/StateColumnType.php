@@ -51,7 +51,6 @@ class StateColumnType extends AbstractColumnType
             'component' => 'column-state',
             'model' => 'StateColumn',
             'states' => [],
-            'sortingProperty' => null,
         ]);
         $resolver->setRequired(['property']);
     }

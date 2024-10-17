@@ -63,11 +63,6 @@ abstract class AbstractBlockType extends AbstractType implements BlockTypeInterf
         return $this->parent->getLabel($options);
     }
 
-    public function getTranslationDomain(array $options)
-    {
-        return $this->parent->getTranslationDomain($options);
-    }
-
     public static function getParentType(): ?string
     {
         return BaseBlockType::class;

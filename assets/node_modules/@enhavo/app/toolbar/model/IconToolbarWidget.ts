@@ -38,7 +38,7 @@ export class IconToolbarWidget extends AbstractToolbarWidget
 
     public open()
     {
-        if(this.target == '_view') {
+        if(this.target == '_frame') {
             this.openView(this.url, this.label);
         } else if(this.target == '_self') {
             window.location.href = this.url;

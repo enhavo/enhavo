@@ -4,12 +4,13 @@ import { ModelAwareInterface } from "@enhavo/app/model/ModelAwareInterface";
 export interface ColumnInterface extends ComponentAwareInterface, ModelAwareInterface
 {
     sortable: boolean;
-    directionDesc: boolean;
+    sortingDirection: string;
     key: string;
-    property?: string;
-    sortingProperty?: string;
-    condition: string;
-    display: boolean;
+    visibleCondition: string;
+    visible: boolean;
     width: number;
     label: string;
+
+    isVisible(): boolean;
+    checkVisibility(): void
 }

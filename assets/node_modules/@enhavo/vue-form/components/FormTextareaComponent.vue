@@ -7,8 +7,9 @@
         :disabled="form.disabled"
         :title="getTitle()"
         v-model="form.value"
-        :ref="(el) => form.setElement(el)"
+        :ref="(el) => form.setElement(el as HTMLElement)"
         @change="form.dispatchChange()"
+        v-show="form.isVisible()"
     >{{ form.value }}</textarea>
 </template>
 
@@ -19,12 +20,10 @@ const props = defineProps<{
     form: Form
 }>()
 
-const form = props.form;
-
 function getTitle()
 {
-    if (form.attr.hasOwnProperty('title')) {
-        return form.attr['title'];
+    if (props.form.attr.hasOwnProperty('title')) {
+        return props.form.attr['title'];
     }
     return null;
 }

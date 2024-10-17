@@ -24,7 +24,7 @@ class SaveUserSubscriber implements EventSubscriberInterface
 
     public function onSave(ResourceEvent $event): void
     {
-        $user = $event->getResource();
+        $user = $event->getSubject();
         if ($user instanceof UserInterface) {
             $this->userManager->update($user);
         }

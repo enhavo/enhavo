@@ -7,11 +7,7 @@ enhavo_user_theme_login:
         _format: html
         _config: theme
         _endpoint:
-            type: user_login_app
-            translations: EnhavoUserBundle
-        _vue:
-            component: user-login
-            groups: theme
+            type: view
 
 enhavo_user_theme_logout:
     options:
@@ -21,5 +17,4 @@ enhavo_user_theme_logout:
     defaults:
         _config: admin
         _endpoint:
-            type: user_login_app
-
+            type: view

@@ -1,43 +1,28 @@
 import {AbstractToolbarWidget} from "@enhavo/app/toolbar/model/AbstractToolbarWidget";
-import {FrameEventDispatcher} from "@enhavo/app/frame/FrameEventDispatcher";
-import MenuManager from "@enhavo/app/menu/MenuManager";
+import {FrameManager} from "@enhavo/app/frame/FrameManager";
 
 export class QuickMenuToolbarWidget extends AbstractToolbarWidget
 {
     public menu: Menu[];
     public icon: string;
 
-    private readonly eventDispatcher: FrameEventDispatcher;
-    private readonly menuManager: MenuManager;
-
-    constructor(eventDispatcher: FrameEventDispatcher, menuManager: MenuManager) {
-        super();
-        this.eventDispatcher = eventDispatcher;
-        this.menuManager = menuManager;
-    }
-
-    private openView(url: string, label: string)
+    constructor(
+        private readonly frameManager: FrameManager,
+    )
     {
-        this.eventDispatcher.dispatch(new ClearEvent())
-            .then(() => {
-                this.eventDispatcher
-                    .dispatch(new CreateEvent({
-                        label: label,
-                        component: 'iframe-view',
-                        url: url
-                    }))
-                    .then(() => {
-                        this.menuManager.clearSelections();
-                    });
-            })
-            .catch(() => {})
-        ;
+        super();
     }
 
     public open(menu: Menu)
     {
-        if(menu.target == '_view') {
-            this.openView(menu.url, menu.label);
+        if (menu.target == '_frame') {
+            this.frameManager.clearFrames().then(() => {
+                this.frameManager.addFrame({
+                    url: menu.url,
+                    label: menu.label,
+                    clear: true,
+                })
+            })
         } else if(menu.target == '_self') {
             window.location.href = menu.url;
         } else if(menu.target == '_blank') {

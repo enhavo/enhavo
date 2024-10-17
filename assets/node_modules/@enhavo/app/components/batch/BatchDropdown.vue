@@ -19,16 +19,12 @@ const props = defineProps<{
 
 const emit = defineEmits(['executed']);
 
-const batches = props.batches;
-
-const ids = props.ids;
 let currentBatch: BatchInterface = null;
-
 
 function getOptions()
 {
     let options = [];
-    for (let batch of batches) {
+    for (let batch of props.batches) {
         options.push({
             label: batch.label,
             code: batch.key
@@ -44,16 +40,18 @@ function getPlaceholder()
 
 async function executeBatch()
 {
-    if (ids) {
-        await currentBatch.execute(ids);
-        emit('executed');
+    if (props.ids && currentBatch) {
+        let success = await currentBatch.execute(props.ids);
+        if (success) {
+            emit('executed');
+        }
     }
 }
 
 function change(value: any)
 {
     if (value != null) {
-        for (let batch of batches) {
+        for (let batch of props.batches) {
             if (value.code === batch.key) {
                 currentBatch = batch;
                 break;

@@ -1,5 +1,5 @@
 <template>
-    <div class="app" v-bind:class="{ 'menu-collapsed':!menuManager.menuOpen}" v-if="!mainManager.loading">
+    <div class="app" :class="{ 'menu-collapsed':!menuManager.menuOpen}" v-if="!mainManager.loading">
         <flash-messages></flash-messages>
         <toolbar-toolbar
             :primary="mainManager.primaryToolbarWidgets"
@@ -9,11 +9,11 @@
             @toggle-menu="menuManager.toggleMenu()"
         />
         <frame-stack-mobile-dropdown></frame-stack-mobile-dropdown>
-        <div class="sidebar" v-bind:class="{ 'menu-collapsed':!menuManager.menuOpen}">
-            <div class="mobile-branding-container" v-bind:style="getBrandingImageStyles()" @click="home"></div>
+        <div class="sidebar" :class="{ 'menu-collapsed':!menuManager.menuOpen}">
+            <div class="mobile-branding-container" :style="getBrandingImageStyles()" @click="home"></div>
             <menu-menu></menu-menu>
         </div>
-        <div class="toolbar-viewstack-container" v-bind:class="{ 'menu-collapsed':!menuManager.menuOpen}">
+        <div class="toolbar-viewstack-container" :class="{ 'menu-collapsed':!menuManager.menuOpen}">
             <frame-stack></frame-stack>
         </div>
     </div>

@@ -15,6 +15,7 @@ class FilterActionType extends AbstractActionType implements ActionTypeInterface
             'translation_domain' => 'EnhavoAppBundle',
             'icon' => 'filter_list',
             'model' => 'FilterAction',
+            'component' => 'action-filter',
         ]);
     }
 

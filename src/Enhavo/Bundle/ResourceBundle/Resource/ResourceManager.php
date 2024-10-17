@@ -69,7 +69,7 @@ class ResourceManager
         $this->dispatch(new ResourcePostTransitionEvent($resource, $transition, $graph), 'post_transition');
     }
 
-    public function canApplyTransition(ResourceInterface $resource, ?string $transition = null, ?string $graph = null): bool
+    public function canApplyTransition(object $resource, ?string $transition = null, ?string $graph = null): bool
     {
         return $this->stateMachineFactory->get($resource, $graph)->can($transition);
     }
@@ -84,7 +84,7 @@ class ResourceManager
         return $this->validator->validate($resource, $constraints, $groups)->count() === 0;
     }
 
-    public function delete(ResourceInterface $resource): void
+    public function delete(object $resource): void
     {
         $this->dispatch(new ResourcePreDeleteEvent($resource), 'pre_delete');
 

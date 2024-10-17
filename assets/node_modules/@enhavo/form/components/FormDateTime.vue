@@ -1,6 +1,6 @@
 <template>
-    <div class="input-container date-type">
-        <input :class="getClass()" :value="form.value" type="text" :ref="(el) => form.setElement(el as HTMLElement)" />
+    <div class="input-container date-type" v-show="form.isVisible()">
+        <input :class="getClass()" :name="form.fullName" :value="form.value" type="text" :ref="(el) => form.setElement(el as HTMLElement)" />
         <span v-if="form.allowClear" class="clear-button" @click="clear"><i class="icon icon-clear"></i></span>
     </div>
 </template>
@@ -16,28 +16,26 @@ const props = defineProps<{
     form: DateTimeForm
 }>()
 
-const form = props.form;
-
 function getClass()
 {
-    return form.timepicker ? 'datetimepicker' : 'datepicker'
+    return props.form.timepicker ? 'datetimepicker' : 'datepicker'
 }
 
 function clear()
 {
-    $(form.element).val('');
+    $(props.form.element).val('');
 }
 
 let options = {
-    format: 'd.m.Y',
-    timepicker: form.timepicker,
+    format: props.form.timepicker ? 'd.m.Y H:i' : 'd.m.Y',
+    timepicker: props.form.timepicker,
     dayOfWeekStart: 1,
     scrollInput: false,
 };
 
 onMounted(() => {
     $.datetimepicker.setLocale('de');
-    $(form.element).datetimepicker(options);
+    $(props.form.element).datetimepicker(options);
 });
 
 </script>

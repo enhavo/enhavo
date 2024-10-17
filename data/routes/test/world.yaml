@@ -1,0 +1,18 @@
+template_hello:
+    path: /world.{_format}
+    defaults:
+        _format: 'html'
+        _endpoint:
+            type: template
+            load: [test/hello.yaml, test/hello2.php]
+            template: 'theme/endpoint/hello.html.twig'
+            vue_routes: template
+            routes: template
+            description: This is the hello endpoint
+            variants:
+                'variant=1':
+                    load: 'test/hello_variant_1.yaml'
+                    description: First Variant
+                'variant=2':
+                    load: 'test/hello_variant_2.yaml'
+                    description: Second Variant

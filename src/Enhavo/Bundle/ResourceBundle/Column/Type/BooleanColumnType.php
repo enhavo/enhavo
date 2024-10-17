@@ -25,14 +25,13 @@ class BooleanColumnType extends AbstractColumnType
 
     public function createColumnViewData(array $options, Data $data): void
     {
-        $data->set('sortingProperty', $options['sortingProperty'] ? : $options['property']);
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'format' => 'd.m.Y H:i',
-            'sortingProperty' => null,
             'component' => 'column-boolean',
             'model' => 'BooleanColumn',
         ]);

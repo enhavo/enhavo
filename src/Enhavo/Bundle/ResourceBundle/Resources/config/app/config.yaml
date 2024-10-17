@@ -16,7 +16,7 @@ enhavo_resource:
                     width: 2
                     type: text
                     sortable: true
-                    condition: "desktop"
+                    visible_condition: "desktop"
             batches:
                 delete:
                     type: delete

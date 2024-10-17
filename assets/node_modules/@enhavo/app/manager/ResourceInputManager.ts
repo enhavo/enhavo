@@ -76,7 +76,7 @@ export class ResourceInputManager
         })
     }
 
-    async save(url: string, morph: boolean  = false)
+    async save(url: string, morph: boolean  = false): Promise<boolean>
     {
         this.form.morphStart();
 
@@ -110,6 +110,8 @@ export class ResourceInputManager
 
             this.frameManager.save();
         }
+
+        return response.ok;
     }
 
     async sendForm(url: string, signal: AbortSignal = null): Promise<Response>
@@ -198,3 +200,4 @@ export class ResourceInputManager
         }
     }
 }
+

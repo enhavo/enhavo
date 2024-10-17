@@ -2,18 +2,9 @@
 
 namespace Enhavo\Bundle\ResourceBundle\Event;
 
-use Symfony\Contracts\EventDispatcher\Event;
+use Symfony\Component\EventDispatcher\GenericEvent;
 
-class ResourceEvent extends Event
+class ResourceEvent extends GenericEvent
 {
-    public function __construct(
-        private object $resource,
-    )
-    {
-    }
 
-    public function getResource(): object
-    {
-        return $this->resource;
-    }
 }

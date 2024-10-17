@@ -1,0 +1,42 @@
+[
+  {
+    "key": "duplicate",
+    "component": "action-action",
+    "model": "DuplicateAction",
+    "icon": "content_copy",
+    "label": "Duplizieren",
+    "confirm": true,
+    "confirm_on_change": true,
+    "confirm_message": "Warnung: Das aktuelle Formular wird ohne Speichern geschlossen. Wollen Sie wirklich fortfahren?",
+    "confirm_label_ok": "Ok",
+    "confirm_label_cancel": "Abbrechen",
+    "url": "expr:url('/admin/api/article/article/duplicate/3')"
+  },
+  {
+    "key": "preview",
+    "component": "action-preview",
+    "model": "PreviewAction",
+    "icon": "remove_red_eye",
+    "label": "Vorschau",
+    "confirm": false,
+    "confirm_on_change": true,
+    "confirm_message": "Warning: Sie dieses Doument wirklich schlie\u00dfen? Alle \u00c4nderungen gehen verloren",
+    "confirm_label_ok": "Ok",
+    "confirm_label_cancel": "Abbrechen",
+    "url": "\/admin\/enhavo\/app\/resource\/preview",
+    "apiUrl": "\/admin\/api\/article\/article\/preview\/3"
+  },
+  {
+    "key": "save",
+    "component": "action-action",
+    "model": "SaveAction",
+    "icon": "save",
+    "label": "Speichern",
+    "confirm": false,
+    "confirm_on_change": true,
+    "confirm_message": "message.close.confirm",
+    "confirm_label_ok": "label.ok",
+    "confirm_label_cancel": "label.cancel",
+    "url": "\/admin\/api\/article\/article\/update\/3"
+  }
+]

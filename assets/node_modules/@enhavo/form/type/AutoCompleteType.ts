@@ -13,7 +13,7 @@ export default class AutoCompleteType extends FormType
 {
     private idProperty: string;
     private labelProperty: string;
-    private viewKey: string;
+    private frameKey: string;
     private eventDispatcher: FrameEventDispatcher;
     private router: Router;
     private view: View;
@@ -24,13 +24,13 @@ export default class AutoCompleteType extends FormType
         this.eventDispatcher = eventDispatcher;
         this.router = router;
         this.view = view;
-        //this.initListener(this.viewKey);
+        //this.initListener(this.frameKey);
     }
 
-    private initListener(viewKey: string)
+    private initListener(frameKey: string)
     {
         this.eventDispatcher.on('updated', (event: UpdatedEvent) => {
-            this.eventDispatcher.dispatch(new LoadDataEvent(viewKey))
+            this.eventDispatcher.dispatch(new LoadDataEvent(frameKey))
                 .then((data: DataStorageEntry) => {
                     if(data) {
                         if(event.id == data.value && event.data != null) {
@@ -47,7 +47,7 @@ export default class AutoCompleteType extends FormType
         let data = this.$element.data('auto-complete-entity');
         this.idProperty = data.id_property;
         this.labelProperty = data.label_property;
-        this.viewKey = data.view_key;
+        this.frameKey = data.view_key;
 
         let config: Select2Options = {
             initSelection: ($element: JQuery) => {
@@ -136,7 +136,7 @@ export default class AutoCompleteType extends FormType
                     let id = $(event.target).data('auto-complete-edit');
                     // open edit view
                     let url = self.router.generate(route, {id: id});
-                    self.view.open(url, self.viewKey);
+                    self.view.open(url, self.frameKey);
                 });
             }
         })

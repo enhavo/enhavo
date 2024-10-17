@@ -23,12 +23,9 @@ export class FilterManager
 
     public getFilterParameters(filters: FilterInterface[])
     {
-        let data = [];
+        let data = {};
         for(let filter of filters) {
-            data.push({
-                name: filter.getKey(),
-                value: filter.getValue(),
-            });
+            data[filter.key] = filter.value;
         }
         return data;
     }
@@ -43,8 +40,8 @@ export class FilterManager
     public setFilterActive(filters: FilterInterface[], filterKey: string, active: boolean)
     {
         for (let filter of filters) {
-            if (filter.getKey() === filterKey) {
-                filter.setActive(active);
+            if (filter.key === filterKey) {
+                filter.active = active;
                 break;
             }
         }
@@ -54,7 +51,7 @@ export class FilterManager
     {
         let data = [];
         for (let filter of filters) {
-            if (filter.getActive()) {
+            if (filter.active) {
                 data.push(filter);
             }
         }

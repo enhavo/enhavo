@@ -55,11 +55,11 @@ class BaseTabType extends AbstractType implements TabTypeInterface
             'permission' => null,
             'enabled' => true,
             'model' => 'BaseTab',
+            'label' => null,
         ]);
 
         $resolver->setRequired([
             'component',
-            'label'
         ]);
     }
 }

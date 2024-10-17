@@ -44,8 +44,8 @@ class IconToolbarWidgetType extends AbstractToolbarWidgetType
 
     private function getTarget($config)
     {
-        if(!in_array($config['target'], ['_view', '_blank', '_self'])) {
-            throw new \InvalidArgumentException(sprintf('Target must be _view, _blank or _self, but "%s" given', $config['target']));
+        if(!in_array($config['target'], ['_frame', '_blank', '_self'])) {
+            throw new \InvalidArgumentException(sprintf('Target must be _frame, _blank or _self, but "%s" given', $config['target']));
         }
 
         return $config['target'];
@@ -65,7 +65,7 @@ class IconToolbarWidgetType extends AbstractToolbarWidgetType
             'url' => null,
             'route_parameters' => [],
             'translation_domain' => null,
-            'target' => '_view',
+            'target' => '_frame',
             'label' => null,
             'model' => 'IconToolbarWidget',
         ]);

@@ -127,7 +127,7 @@ class AutoCompleteEntityType extends AbstractType
             'editable' => $options['editable'],
             'edit_route' => $options['edit_route'],
             'edit_route_parameters' => $options['edit_route_parameters'],
-            'view_key' => $options['view_key'],
+            'frame_key' => $options['frame_key'],
         ];
         $view->vars['multiple'] = $options['multiple'];
         $view->vars['count'] = $options['count'];
@@ -169,7 +169,7 @@ class AutoCompleteEntityType extends AbstractType
             'edit_route_parameters' => [],
             'create_route' => null,
             'create_route_parameters' => [],
-            'view_key' => uniqid(),
+            'frame_key' => uniqid(),
         ]);
 
         $resolver->setNormalizer('actions', function(Options $options, $value) {
@@ -179,7 +179,7 @@ class AutoCompleteEntityType extends AbstractType
                         'type' => 'create',
                         'route' => $options['create_route'],
                         'route_parameters' => $options['create_route_parameters'],
-                        'view_key' => $options['view_key']
+                        'frame_key' => $options['frame_key']
                     ]
                 ], $value);
             }

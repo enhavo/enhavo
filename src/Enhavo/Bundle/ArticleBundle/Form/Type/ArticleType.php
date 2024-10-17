@@ -52,7 +52,7 @@ class ArticleType extends AbstractResourceType
             'translation_domain' => 'EnhavoArticleBundle',
             'create_route' => 'enhavo_article_tag_create',
             'edit_route' => 'enhavo_article_tag_update',
-            'view_key' => 'article_tags'
+            'frame_key' => 'article_tags',
         ]);
     }
 

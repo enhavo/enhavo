@@ -1,12 +1,12 @@
 <template>
-    <div v-bind:class="['grid', list.data.cssClass]">
+    <div :class="['grid', list.data.cssClass]">
         <div class="view-table">
             <div class="view-table-head">
                 <div class="view-table-head-columns">
                     <div
                         v-for="column in columnManager.columns"
-                        v-bind:key="column.key"
-                        v-bind:style="getColumnStyle(column)"
+                        :key="column.key"
+                        :style="getColumnStyle(column)"
                         class="view-table-col"
                         >
                         {{ column.label }}
@@ -20,21 +20,21 @@
                         v-model="list.data.items"
                         group="list"
                         item-key="id"
-                        v-on:change="save($event, null)"
+                        @change="save($event, null)"
                         @start="list.data.dragging = true"
                         @end="list.data.dragging = false"
                         :class="{'dragging': list.data.dragging}"
                     >
                         <template #item="{ element }">
                             <div class="list-group-item">
-                                <list-item v-bind:data="element"></list-item>
+                                <list-item :data="element"></list-item>
                             </div>
                         </template>
                     </draggable>
                 </template>
                 <template v-else>
                     <template v-for="item in list.data.items">
-                        <list-item v-bind:data="item"></list-item>
+                        <list-item :data="item"></list-item>
                     </template>
                 </template>
             </template>

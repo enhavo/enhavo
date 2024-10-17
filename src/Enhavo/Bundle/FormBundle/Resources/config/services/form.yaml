@@ -71,6 +71,10 @@ services:
         tags:
             - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 
+    Enhavo\Bundle\FormBundle\Form\Extension\HtmlTagVueTypeExtension:
+        tags:
+            - { name: form.type_extension }
+
     Enhavo\Bundle\FormBundle\Form\Extension\AutoCompleteVueTypeExtension:
         tags:
             - { name: form.type_extension }

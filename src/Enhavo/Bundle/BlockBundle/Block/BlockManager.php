@@ -61,7 +61,7 @@ class BlockManager
         /** @var BlockManager $manager */
         $manager = $this;
         $this->walk($node, function (NodeInterface $node) use ($manager, $resource) {
-            if($node->getType() === NodeInterface::TYPE_BLOCK) {
+            if ($node->getType() === NodeInterface::TYPE_BLOCK) {
                 $node->setResource($resource);
                 $viewData = $manager->getBlock($node->getName())->createViewData($node->getBlock(), $resource);
                 $node->setViewData($viewData);
@@ -69,7 +69,7 @@ class BlockManager
         });
 
         $this->walk($node, function (NodeInterface $node) use ($manager, $resource) {
-            if($node->getType() === NodeInterface::TYPE_BLOCK) {
+            if ($node->getType() === NodeInterface::TYPE_BLOCK) {
                 $viewData = $manager->getBlock($node->getName())->finishViewData($node->getBlock(), $node->getViewData(), $resource);
                 $node->setViewData($viewData);
             }

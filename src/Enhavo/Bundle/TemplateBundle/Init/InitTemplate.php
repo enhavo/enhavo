@@ -81,7 +81,7 @@ class InitTemplate implements InitInterface
                 $io->writeln(sprintf('Add template "%s"', $code));
                 $newTemplate = $this->templateFactory->createByTemplate($template);
                 $newTemplate->setCode($code);
-                $this->resourceManager->create($newTemplate);
+                $this->resourceManager->save($newTemplate);
             }
         }
 

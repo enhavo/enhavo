@@ -91,7 +91,7 @@ class BooleanType extends AbstractFilterType
     {
         $resolver->setDefaults([
             'equals' => true,
-            'component' => 'filter-boolean',
+            'component' => 'filter-checkbox',
             'model' => 'BooleanFilter',
             'checkbox' => true,
             'label_true' => 'filter.boolean.label_true',

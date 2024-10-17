@@ -56,11 +56,11 @@ class QuickMenuToolbarWidgetType extends AbstractToolbarWidgetType
     private function getMenuTarget($config)
     {
         if(!isset($config['target'])) {
-            return '_view';
+            return '_frame';
         }
 
-        if(!in_array($config['target'], ['_view', '_blank', '_self'])) {
-            throw new \InvalidArgumentException(sprintf('Target of menu from quick menu must be _view, _blank or _self, but "%s" given', $config['target']));
+        if(!in_array($config['target'], ['_frame', '_blank', '_self'])) {
+            throw new \InvalidArgumentException(sprintf('Target of menu from quick menu must be _frame, _blank or _self, but "%s" given', $config['target']));
         }
 
         return $config['target'];

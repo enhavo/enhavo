@@ -13,7 +13,7 @@ class GenerateVariantActionType extends AbstractActionType
     {
         $resolver->setDefaults([
             'icon' => 'autorenew',
-            'target' => '_view',
+            'target' => '_frame',
             'route' => 'sylius_product_variant_generate',
             'translation_domain' => 'EnhavoShopBundle',
             'label' => 'product_variant.action.label.generate'

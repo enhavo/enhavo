@@ -1,5 +1,12 @@
 <template>
-    <select :multiple="form.multiple" v-model="form.value" :name="form.fullName" :ref="(el) => form.setElement(el)" @change="form.dispatchChange()">
+    <select
+        :multiple="form.multiple"
+        v-model="form.value"
+        :name="form.fullName"
+        :ref="(el) => form.setElement(el as HTMLElement)"
+        @change="form.dispatchChange()"
+        v-show="form.isVisible()"
+    >
         <option v-if="form.placeholder" value="" >{{ form.placeholder }}</option>
         <component v-if="size(form.preferredChoices) > 0" :is="getChoiceComponent(choice)" v-for="choice of form.preferredChoices" :choice="choice" :key="choice.label + '_preferred'" :preferredChoices="true" />
         <option v-if="size(form.preferredChoices) > 0" :disabled="true">{{ form.separator }}</option>-->
@@ -18,8 +25,6 @@ const props = defineProps<{
     form: ChoiceForm
 }>()
 
-const form = props.form;
-
 function size(object: object)
 {
     return _.size((object));
@@ -35,6 +40,6 @@ function getChoiceComponent(choice: any)
 
 onMounted(() => {
     select2($);
-    $(form.element).select2();
+    $(props.form.element).select2();
 });
 </script>

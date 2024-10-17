@@ -1,5 +1,5 @@
 <template>
-    <div v-if="false">
+    <div v-if="false" v-show="form.isVisible()">
         Help
     </div>
 </template>

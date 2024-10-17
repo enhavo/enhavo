@@ -1,15 +1,16 @@
 imports:
-    - path: '@enhavo/app/services/enhavo/*'
-    - path: '@enhavo/dashboard/services/enhavo/*'
-    - path: '@enhavo/form/services/enhavo/*'
-    - path: '@enhavo/media/services/enhavo/*'
-    - path: '@enhavo/media-library/services/enhavo/*'
-    - path: '@enhavo/multi-tenancy/services/enhavo/*'
-    - path: '@enhavo/newsletter/services/enhavo/*'
-    - path: '@enhavo/shop/services/enhavo/*'
-    - path: '@enhavo/translation/services/enhavo/*'
-    - path: '@enhavo/user/services/enhavo/*'
-    - path: '@enhavo/payment/services/enhavo/*'
+    - path: '@enhavo/app/services/admin/*'
+    - path: '@enhavo/dashboard/services/admin/*'
+    - path: '@enhavo/form/services/admin/*'
+    - path: '@enhavo/block/services/admin/*'
+    - path: '@enhavo/media/services/admin/*'
+    - path: '@enhavo/media-library/services/admin/*'
+    - path: '@enhavo/multi-tenancy/services/admin/*'
+    - path: '@enhavo/newsletter/services/admin/*'
+    - path: '@enhavo/shop/services/admin/*'
+    - path: '@enhavo/translation/services/admin/*'
+    - path: '@enhavo/user/services/admin/*'
+    - path: '@enhavo/payment/services/admin/*'
 
 compiler_pass:
     vue_components:
@@ -25,3 +26,4 @@ services:
             - '@enhavo/app/frame/FrameManager'
         tags:
             - { name: vue.service, service: frameTestManager, reactive: true }
+

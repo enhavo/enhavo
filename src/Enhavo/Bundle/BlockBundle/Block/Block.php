@@ -52,11 +52,6 @@ class Block extends AbstractContainerType
         return $this->type->getLabel($this->options);
     }
 
-    public function getTranslationDomain()
-    {
-        return $this->type->getTranslationDomain($this->options);
-    }
-
     public function createViewData(BlockInterface $block, $resource = null)
     {
         $viewData = new ViewData();

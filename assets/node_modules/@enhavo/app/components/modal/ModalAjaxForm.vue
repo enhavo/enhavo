@@ -23,37 +23,36 @@ const props = defineProps<{
     modal: AjaxFormModal
 }>()
 
-const modal = props.modal;
 let container: HTMLElement = null;
 
-watch(modal.element, async() => {
+watch(() => props.modal.element, async() => {
     const initializer = new FormInitializer();
-    initializer.setElement(modal.element);
+    initializer.setElement(props.modal.element);
     $(container).html("");
     initializer.append(container);
-    modal.form = container;
+    props.modal.form = container;
 });
 
 onMounted(() => {
-    modal.loadForm().then(() => {});
+    props.modal.loadForm().then(() => {});
 });
 
 function save() 
 {
-    modal.submit().then((close: boolean) => {
+    props.modal.submit().then((close: boolean) => {
         if (close) {
-            modal.close();
+            props.modal.close();
         }
     }).catch((close: boolean) => {
         if (close) {
-            modal.close();
+            props.modal.close();
         }
     });
 }
 
 function close()
 {
-    modal.close();
+    props.modal.close();
 }
 
 function trans(text: string)

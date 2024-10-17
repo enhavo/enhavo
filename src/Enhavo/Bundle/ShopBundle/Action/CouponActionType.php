@@ -34,8 +34,8 @@ class CouponActionType extends AbstractActionType
     {
         $resolver->setDefaults([
             'icon' => 'featured_play_list',
-            'target' => '_view',
-            'view_key' => 'coupons',
+            'target' => '_frame',
+            'frame_key' => 'coupons',
             'route' => 'sylius_promotion_coupon_index',
             'translation_domain' => 'EnhavoShopBundle',
             'label' => 'promotion.label.coupons'
