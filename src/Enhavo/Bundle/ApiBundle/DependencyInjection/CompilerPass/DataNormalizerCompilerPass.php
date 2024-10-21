@@ -15,10 +15,20 @@ class DataNormalizerCompilerPass implements CompilerPassInterface
         $dataNormalizer = $container->findDefinition(DataNormalizer::class);
 
         $services = [];
-        foreach ($container->findTaggedServiceIds('enhavo_api.data_normalizer') as $id => $tag) {
+        foreach ($container->findTaggedServiceIds('enhavo_api.data_normalizer') as $id => $tagAttributes) {
+            $priority = null;
+            foreach ($tagAttributes as $attributes) {
+                if (isset($attributes['priority'])) {
+                    $priority = intval($attributes['priority']);
+                }
+            }
             $services[$id] = new Reference($id);
             $definition = $container->findDefinition($id);
-            $dataNormalizer->addMethodCall('register', [$definition->getClass()]);
+            $arguments = [$definition->getClass()];
+            if ($priority !== null) {
+                $arguments[] = $priority;
+            }
+            $dataNormalizer->addMethodCall('register', $arguments);
         }
 
         $dataNormalizer->addMethodCall('setContainer', [ServiceLocatorTagPass::register($container, $services)]);
