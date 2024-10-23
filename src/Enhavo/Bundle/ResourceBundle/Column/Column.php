@@ -10,7 +10,6 @@ namespace Enhavo\Bundle\ResourceBundle\Column;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ResourceBundle\Filter\FilterQuery;
-use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Enhavo\Component\Type\AbstractContainerType;
 
 /**
@@ -42,7 +41,7 @@ class Column extends AbstractContainerType
         return $data->normalize();
     }
 
-    public function createResourceViewData(ResourceInterface $resource): array
+    public function createResourceViewData(object $resource): array
     {
         $data = new Data();
         $data->set('key', $this->key);

@@ -1,0 +1,76 @@
+enhavo_comment_admin_api_comment_index:
+    path: /comment/index
+    methods:
+        - GET
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_index
+            grid: enhavo_comment.comment
+
+enhavo_comment_admin_api_comment_list:
+    path: /comment/list
+    methods:
+        - GET
+        - POST
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_list
+            grid: enhavo_comment.comment
+
+enhavo_comment_admin_api_comment_create:
+    path: /comment/create
+    methods:
+        - GET
+        - POST
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_create
+            input: enhavo_comment.comment
+
+enhavo_comment_admin_api_comment_update:
+    path: '/comment/update/{id}'
+    methods:
+        - GET
+        - POST
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_update
+            input: enhavo_comment.comment
+
+enhavo_comment_admin_api_comment_delete:
+    path: '/comment/delete/{id}'
+    methods:
+        - DELETE
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_delete
+            input: enhavo_comment.comment
+
+enhavo_comment_admin_api_comment_batch:
+    path: /comment/batch
+    methods:
+        - POST
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_batch
+            grid: enhavo_comment.comment
+
+enhavo_comment_admin_api_preview:
+    path: /comment/preview/{id}
+    methods: [GET, POST]
+    defaults:
+        _expose: admin_api
+        _area: theme
+        _endpoint:
+            type: preview
+            input: enhavo_comment.comment
+            endpoint:
+                type: Enhavo\Bundle\CommentBundle\Endpoint\CommentEndpointType
+                resource: expr:resource
+                preview: true

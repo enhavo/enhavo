@@ -8,9 +8,7 @@
 
 namespace Enhavo\Bundle\NavigationBundle\Entity;
 
-use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
-
-class Navigation implements ResourceInterface
+class Navigation
 {
     /**
      * @var integer

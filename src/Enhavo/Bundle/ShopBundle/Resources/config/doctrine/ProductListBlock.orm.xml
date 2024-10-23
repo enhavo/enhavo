@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
-    <entity name="Enhavo\Bundle\ShopBundle\Entity\ProductListBlock" table="shop_product_list_block">
-    </entity>
-</doctrine-mapping>

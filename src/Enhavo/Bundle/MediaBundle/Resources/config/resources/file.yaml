@@ -1,0 +1,7 @@
+enhavo_resource:
+    resources:
+        enhavo_media.file:
+            classes:
+                model: Enhavo\Bundle\MediaLibraryBundle\Entity\File
+                factory: Enhavo\Bundle\MediaLibraryBundle\Factory\FileFactory
+                repository: Enhavo\Bundle\MediaBundle\Repository\FormatRepository

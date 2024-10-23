@@ -13,7 +13,6 @@ use Enhavo\Bundle\ResourceBundle\Event\ResourcePreDeleteEvent;
 use Enhavo\Bundle\ResourceBundle\Event\ResourcePreTransitionEvent;
 use Enhavo\Bundle\ResourceBundle\Event\ResourcePreUpdateEvent;
 use Enhavo\Bundle\ResourceBundle\Factory\FactoryInterface;
-use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Psr\Container\ContainerInterface;
 use SM\Factory\FactoryInterface as SMFactoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -92,6 +91,11 @@ class ResourceManager
         $this->em->flush();
 
         $this->dispatch(new ResourcePostDeleteEvent($resource), 'post_delete');
+    }
+
+    public function duplicate(object $resource): object
+    {
+        return clone $resource;
     }
 
     public function getRepository($name): EntityRepository

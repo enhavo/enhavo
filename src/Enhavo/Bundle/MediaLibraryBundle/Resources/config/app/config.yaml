@@ -4,8 +4,6 @@ enhavo_app:
             alias: EnhavoMediaLibrary
             path: '@EnhavoMediaLibraryBundle/Resources/views'
             priority: 10
-    apps:
-        - 'media/Extension/MediaLibrary'
     roles:
         enhavo_media_library_file_index:
             role: ROLE_ENHAVO_MEDIA_LIBRARY_FILE_INDEX
@@ -81,15 +79,15 @@ enhavo_media_library:
             mime_types:
                 - ^video/.+
 
-enhavo_media:
+enhavo_resource:
     resources:
-        file:
+        enhavo_media.file:
             classes:
                 model: Enhavo\Bundle\MediaLibraryBundle\Entity\File
                 repository: Enhavo\Bundle\MediaLibraryBundle\Repository\FileRepository
                 factory: Enhavo\Bundle\MediaLibraryBundle\Factory\FileFactory
-                form: Enhavo\Bundle\MediaLibraryBundle\Form\Type\FileType
 
+enhavo_media:
     formats:
         enhavoMediaLibraryImage:
             type: image

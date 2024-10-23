@@ -5,7 +5,6 @@ namespace Enhavo\Bundle\NewsletterBundle\Column;
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 use Enhavo\Bundle\ResourceBundle\Column\AbstractColumnType;
-use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -17,7 +16,7 @@ class NewsletterStateColumnType extends AbstractColumnType
     {
     }
 
-    public function createResourceViewData(array $options, ResourceInterface $resource, Data $data): void
+    public function createResourceViewData(array $options, object $resource, Data $data): void
     {
         if(!$resource instanceof NewsletterInterface) {
             throw new \InvalidArgumentException;

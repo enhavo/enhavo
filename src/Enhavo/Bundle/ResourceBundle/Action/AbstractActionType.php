@@ -10,7 +10,6 @@ namespace Enhavo\Bundle\ResourceBundle\Action;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ResourceBundle\Action\Type\BaseActionType;
-use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Enhavo\Component\Type\AbstractType;
 
 /**
@@ -23,12 +22,12 @@ abstract class AbstractActionType extends AbstractType implements ActionTypeInte
 
     }
 
-    public function getPermission(array $options, ResourceInterface $resource = null): mixed
+    public function getPermission(array $options, object $resource = null): mixed
     {
         return $this->parent->getPermission($options, $resource);
     }
 
-    public function isEnabled(array $options, ResourceInterface $resource = null): bool
+    public function isEnabled(array $options, object $resource = null): bool
     {
         return $this->parent->isEnabled($options, $resource);
     }

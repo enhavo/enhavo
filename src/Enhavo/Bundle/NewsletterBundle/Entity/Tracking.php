@@ -8,9 +8,7 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Entity;
 
-use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
-
-class Tracking implements ResourceInterface
+class Tracking
 {
     const TRACKING_OPEN = 'open';
     const TRACKING_BOUNCE = 'bounce';

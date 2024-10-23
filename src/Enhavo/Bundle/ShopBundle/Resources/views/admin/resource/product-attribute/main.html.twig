@@ -1,9 +1,0 @@
-{% if form.type is defined %}{{ form_row(form.type) }}{% endif %}
-{% if form.name is defined %}{{ form_row(form.name) }}{% endif %}
-{% if form.code is defined %}{{ form_row(form.code) }}{% endif %}
-{% if form.configuration is defined %}
-<div class="form-row">
-    {{ form_widget(form.configuration) }}
-</div>
-{% endif %}
-{% if form._token is defined %}{{ form_row(form._token) }}{% endif %}

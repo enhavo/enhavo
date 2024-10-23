@@ -3,9 +3,8 @@
 namespace Enhavo\Bundle\RoutingBundle\Tests\Mock;
 
 use Enhavo\Bundle\RoutingBundle\Model\Slugable;
-use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 
-class SluggableMock implements ResourceInterface, Slugable
+class SluggableMock implements Slugable
 {
     public $id;
 

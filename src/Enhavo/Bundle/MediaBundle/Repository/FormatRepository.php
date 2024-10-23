@@ -10,7 +10,7 @@ namespace Enhavo\Bundle\MediaBundle\Repository;
 
 use Enhavo\Bundle\MediaBundle\Media\FormatManager;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
-use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
+use Enhavo\Bundle\ResourceBundle\Repository\EntityRepository;
 
 class FormatRepository extends EntityRepository
 {

@@ -6,12 +6,12 @@ services:
         tags:
             - { name: enhavo_app.menu }
 
-    Enhavo\Bundle\MultiTenancyBundle\Controller\MultiTenancyController:
+    Enhavo\Bundle\MultiTenancyBundle\Endpoint\Type\SwitchTenantEndpointType:
         arguments:
             - '@Enhavo\Bundle\MultiTenancyBundle\Tenant\TenantManager'
             - '%enhavo_multi_tenancy.tenant_switch_menu.session_key%'
         calls:
-            - [setContainer, ['@Psr\Container\ContainerInterface']]
+            - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
         tags:
-            - { name: controller.service_arguments }
+            - { name: enhavo_api.endpoint }
             - { name: container.service_subscriber }

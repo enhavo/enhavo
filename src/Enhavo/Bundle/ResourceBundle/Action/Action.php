@@ -3,7 +3,6 @@
 namespace Enhavo\Bundle\ResourceBundle\Action;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
-use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Enhavo\Component\Type\AbstractContainerType;
 
 /**

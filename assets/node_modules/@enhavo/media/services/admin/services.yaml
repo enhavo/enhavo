@@ -12,29 +12,34 @@ services:
         tags:
             - 'enhavo_app.form'
 
-    '@enhavo/media/image-cropper/ImageCropperApp':
+    '@enhavo/media/manager/ImageCropperManager':
+        import: ImageCropperManager
         chunk: 'image-cropper'
         arguments:
-            - 'param:data.format'
-            - '@enhavo/app/frame/FrameEventDispatcher'
             - '@enhavo/app/frame/FrameManager'
             - '@enhavo/app/action/ActionManager'
             - '@enhavo/app/flash-message/FlashMessenger'
             - '@enhavo/app/translation/Translator'
-            - '@enhavo/app/vue/VueRegistry'
+            - '@enhavo/app/routing/Router'
+        tags:
+            - { name: vue.service, service: 'imageCropperManager', reactive: true }
 
-    '@enhavo/media/components/ImageCropper.vue':
-        chunk: 'image-cropper'
-        static: true
-
-    '@enhavo/media/components/ImageCropperStage.vue':
+    '@enhavo/media/components/MediaImageCropper.vue':
         chunk: 'vue'
         static: true
         tags:
-            - { name: vue.component, component: 'image-cropper' }
+            - { name: vue.component, component: 'media-image-cropper' }
 
     '@enhavo/media/controllers/MediaStyleController':
         chunk: controller
         static: true
         tags:
             - { name: stimulus.controller, key: 'media-style' }
+
+    '@enhavo/media/action/MediaCropAction':
+        import: MediaCropAction
+        chunk: 'image-cropper'
+        arguments:
+            - '@enhavo/media/manager/ImageCropperManager'
+        tags:
+            - { name: enhavo_app.action }

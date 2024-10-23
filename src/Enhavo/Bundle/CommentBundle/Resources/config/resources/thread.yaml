@@ -1,0 +1,23 @@
+enhavo_resource:
+    resources:
+        enhavo_comment.thread:
+            classes:
+                model: Enhavo\Bundle\CommentBundle\Entity\Thread
+                factory: Enhavo\Bundle\ResourceBundle\Factory\Factory
+                repository: Enhavo\Bundle\CommentBundle\Repository\ThreadRepository
+    grids:
+        enhavo_comment.thread:
+            extends: enhavo_resource.grid
+            resource: enhavo_comment.thread
+            actions: {  }
+            filters: {  }
+            columns: {  }
+            batches: {  }
+    inputs:
+        enhavo_comment.thread:
+            extends: enhavo_resource.input
+            resource: enhavo_comment.thread
+            form: Enhavo\Bundle\CommentBundle\Form\Type\ThreadType
+            form_options: {  }
+            actions: {  }
+            tabs: {  }

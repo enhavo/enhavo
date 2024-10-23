@@ -1,12 +1,15 @@
 enhavo_media_admin:
     resource: "@EnhavoMediaBundle/Resources/config/routes/admin/*"
-    prefix: /admin
+    prefix: /admin/media
+
+enhavo_media_api_admin:
+    resource: "@EnhavoMediaBundle/Resources/config/routes/admin_api/*"
+    prefix: /admin/api/media
+
+enhavo_media_api:
+    resource: "@EnhavoMediaBundle/Resources/config/routes/api/*"
+    prefix: /api/media
 
 enhavo_media_theme:
     resource: "@EnhavoMediaBundle/Resources/config/routes/theme/*"
     prefix: /
-
-enhavo_media_theme_upload:
-    path: /file/add
-    defaults:
-        _controller: enhavo_media.controller.upload::uploadAction

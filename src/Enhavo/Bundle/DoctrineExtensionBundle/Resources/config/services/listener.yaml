@@ -4,10 +4,12 @@ services:
             - '@Enhavo\Component\Metadata\MetadataRepository[DoctrineExtension]'
             - '@Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface'
         tags:
-            - { name: doctrine.event_subscriber }
+            - { name: doctrine.event_listener, event: postLoad, method: postLoad }
+            - { name: doctrine.event_listener, event: preFlush, method: preFlush }
+            - { name: doctrine.event_listener, event: postFlush, method: postFlush }
 
     Enhavo\Bundle\DoctrineExtensionBundle\EventListener\ExtendSubscriber:
         arguments:
             - '@Enhavo\Component\Metadata\MetadataRepository[DoctrineExtension]'
         tags:
-            - { name: doctrine.event_subscriber, priority: 1000 }
+            - { name: doctrine.event_listener, event: loadClassMetadata, method: loadClassMetadata, priority: 1000 }

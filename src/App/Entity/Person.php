@@ -14,7 +14,6 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\TaxonomyBundle\Entity\Term;
-use Sylius\Component\Resource\Model\ResourceInterface;
 
 /**
  * Class Person
@@ -24,7 +23,7 @@ use Sylius\Component\Resource\Model\ResourceInterface;
  */
 #[ORM\Entity(repositoryClass: PersonRepository::class)]
 #[ORM\Table(name: 'app_person')]
-class Person implements ResourceInterface
+class Person
 {
     /**
      * @ORM\Id()

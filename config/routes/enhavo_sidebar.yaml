@@ -1,3 +1,0 @@
-enhavo_sidebar_admin:
-    resource: "@EnhavoSidebarBundle/Resources/config/routes/admin/*"
-    prefix: /admin

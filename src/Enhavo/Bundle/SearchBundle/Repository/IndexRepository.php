@@ -3,13 +3,13 @@
 namespace Enhavo\Bundle\SearchBundle\Repository;
 
 use Doctrine\ORM\AbstractQuery;
+use Enhavo\Bundle\ResourceBundle\Repository\EntityRepository;
 use Enhavo\Bundle\SearchBundle\Engine\DatabaseSearch\SearchFilter;
 use Enhavo\Bundle\SearchBundle\Engine\Filter\BetweenQuery;
 use Enhavo\Bundle\SearchBundle\Engine\Filter\MatchQuery;
 use Enhavo\Bundle\SearchBundle\Engine\Filter\QueryInterface;
 use Enhavo\Bundle\SearchBundle\Model\Database\DataSet;
 use Enhavo\Bundle\SearchBundle\Model\Database\Filter;
-use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 use Enhavo\Bundle\SearchBundle\Model\Database\Total;
 
 class IndexRepository extends EntityRepository

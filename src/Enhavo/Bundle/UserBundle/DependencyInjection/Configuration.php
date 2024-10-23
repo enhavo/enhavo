@@ -13,7 +13,6 @@ use Enhavo\Bundle\UserBundle\Form\Type\RegistrationType;
 use Enhavo\Bundle\UserBundle\Form\Type\ResetPasswordRequestType;
 use Enhavo\Bundle\UserBundle\Form\Type\ResetPasswordType;
 use Enhavo\Bundle\UserBundle\User\UserManager;
-use Sylius\Bundle\ResourceBundle\SyliusResourceBundle;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -34,21 +33,11 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder('enhavo_user');
         $rootNode = $treeBuilder->getRootNode();
 
-        $this->addResourceSection($rootNode);
         $this->addParametersSection($rootNode);
         $this->addUserIdentifierSection($rootNode);
         $this->addConfigNode($rootNode);
 
         return $treeBuilder;
-    }
-
-    private function addResourceSection(ArrayNodeDefinition $node)
-    {
-        $node
-            ->addDefaultsIfNotSet()
-            ->children()
-                ->scalarNode('driver')->defaultValue(SyliusResourceBundle::DRIVER_DOCTRINE_ORM)->end()
-            ->end();
     }
 
     private function addParametersSection(ArrayNodeDefinition $node)

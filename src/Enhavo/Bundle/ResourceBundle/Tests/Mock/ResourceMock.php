@@ -2,9 +2,7 @@
 
 namespace Enhavo\Bundle\ResourceBundle\Tests\Mock;
 
-use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
-
-class ResourceMock implements ResourceInterface
+class ResourceMock
 {
     public ?int $id = null;
     public ?string $name = null;

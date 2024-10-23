@@ -38,7 +38,3 @@ Thu: Thu
 Fri: Fri
 Sat: Sat
 Sun: Sun
-
-sylius:
-    resource:
-        delete: 'Successfully deleted'

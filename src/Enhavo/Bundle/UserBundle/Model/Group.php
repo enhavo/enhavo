@@ -4,12 +4,11 @@ namespace Enhavo\Bundle\UserBundle\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 
 /**
  * Group
  */
-class Group implements GroupInterface, ResourceInterface
+class Group implements GroupInterface
 {
     /**
      * @var int|null

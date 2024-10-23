@@ -15,7 +15,6 @@ use Enhavo\Bundle\ResourceBundle\Exception\GridException;
 use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage;
 use Enhavo\Bundle\ResourceBundle\Filter\Filter;
 use Enhavo\Bundle\ResourceBundle\Filter\FilterManager;
-use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
 use Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface;
 use Psr\Container\ContainerInterface;
@@ -60,7 +59,7 @@ abstract class AbstractGrid implements GridInterface, ServiceSubscriberInterface
      * @return Action[]
      * @throws GridException
      */
-    protected function createActions($configuration, ResourceInterface $resource = null): array
+    protected function createActions($configuration, object $resource = null): array
     {
         if (!$this->container->has(ActionManager::class)) {
             throw GridException::missingService(ActionManager::class);

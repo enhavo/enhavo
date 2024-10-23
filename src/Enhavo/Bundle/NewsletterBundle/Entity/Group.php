@@ -14,9 +14,8 @@ use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\NewsletterBundle\Model\GroupInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\LocalSubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\Subscriber;
-use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 
-class Group implements GroupInterface, ResourceInterface
+class Group implements GroupInterface
 {
     /**
      * @var integer

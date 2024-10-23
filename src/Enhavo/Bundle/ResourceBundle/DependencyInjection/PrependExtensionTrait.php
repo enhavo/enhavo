@@ -16,9 +16,11 @@ trait PrependExtensionTrait
         foreach ($files as $file) {
             $container->addResource(new FileResource($file));
             $configs = Yaml::parse(file_get_contents($file));
-            foreach ($configs as $name => $config) {
-                if (is_array($config)) {
-                    $container->prependExtensionConfig($name, $config);
+            if (is_array($configs)) {
+                foreach ($configs as $name => $config) {
+                    if (is_array($config)) {
+                        $container->prependExtensionConfig($name, $config);
+                    }
                 }
             }
         }

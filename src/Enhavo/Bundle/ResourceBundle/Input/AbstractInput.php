@@ -8,7 +8,6 @@ use Enhavo\Bundle\ResourceBundle\Action\ActionManager;
 use Enhavo\Bundle\ResourceBundle\Exception\InputException;
 use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage;
 use Enhavo\Bundle\ResourceBundle\Factory\FactoryInterface;
-use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
 use Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface;
 use Enhavo\Bundle\ResourceBundle\Tab\TabManager;
@@ -55,7 +54,7 @@ abstract class AbstractInput implements InputInterface, ServiceSubscriberInterfa
      * @return Action[]
      * @throws InputException
      */
-    protected function createActions($configuration, ResourceInterface $resource = null): array
+    protected function createActions($configuration, object $resource = null): array
     {
         if (!$this->container->has(ActionManager::class)) {
             throw InputException::missingService(ActionManager::class);

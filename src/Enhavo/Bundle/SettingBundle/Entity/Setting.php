@@ -3,9 +3,8 @@
 namespace Enhavo\Bundle\SettingBundle\Entity;
 
 use Enhavo\Bundle\SettingBundle\Model\ValueAccessInterface;
-use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 
-class Setting implements ResourceInterface
+class Setting
 {
     /** @var integer|null */
     private $id;

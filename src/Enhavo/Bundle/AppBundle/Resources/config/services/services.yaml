@@ -19,14 +19,6 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
 
-    enhavo_app.factory.duplicate_resource_factory:
-        class: Enhavo\Bundle\AppBundle\Controller\DuplicateResourceFactory
-
-    enhavo_app.security.default_authorization_checker:
-        class: Enhavo\Bundle\AppBundle\Security\AuthorizationChecker\SymfonyAuthorizationChecker
-        arguments:
-            - '@security.authorization_checker'
-
     enhavo_app.util.secure_url_token_generator:
         class: Enhavo\Bundle\AppBundle\Util\SecureUrlTokenGenerator
 

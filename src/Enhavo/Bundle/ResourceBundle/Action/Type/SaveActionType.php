@@ -11,7 +11,6 @@ namespace Enhavo\Bundle\ResourceBundle\Action\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
-use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
@@ -46,7 +45,7 @@ class SaveActionType extends AbstractActionType
         $data->set('url', $url);
     }
 
-    private function getUrl(string $route, array $routeParameters = [], ResourceInterface $resource = null): string
+    private function getUrl(string $route, array $routeParameters = [], object $resource = null): string
     {
         $parameters = [];
         if ($resource !== null && $resource->getId() !== null) {

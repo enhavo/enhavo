@@ -10,7 +10,6 @@ namespace Enhavo\Bundle\ResourceBundle\Column\Type;
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ResourceBundle\Action\ActionManager;
 use Enhavo\Bundle\ResourceBundle\Column\AbstractColumnType;
-use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ActionColumnType extends AbstractColumnType
@@ -21,7 +20,7 @@ class ActionColumnType extends AbstractColumnType
     {
     }
 
-    public function createResourceViewData(array $options, ResourceInterface $resource, Data $data): void
+    public function createResourceViewData(array $options, object $resource, Data $data): void
     {
         $data->set('actions', $this->actionManager->createActionsData([$options['action']], $resource));
     }

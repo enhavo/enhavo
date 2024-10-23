@@ -1,8 +1,0 @@
-{% extends template('theme/base.html.twig') %}
-
-{% block main %}
-    <h1>You order has been confirmed</h1>
-    <div>
-        <a href="{{ path('enhavo_shop_theme_payment_do_purchase', {token: order.token}) }}">Pay now</a>
-    </div>
-{% endblock %}

@@ -28,6 +28,7 @@ export class FrameStackSubscriber
             this.addFrameUpdateListener();
             this.addFrameClearListener();
             this.addFrameRemoveListener();
+            this.addFrameCloseListener();
             this.addFrameSaveListener();
             this.addFrameArrangeListener();
             this.addFrameClickListener();
@@ -94,7 +95,22 @@ export class FrameStackSubscriber
     private addFrameRemoveListener()
     {
         this.dispatcher.on('frame_remove', async (event: Event) => {
-            const success = await this.frameStack.removeFrame((event as FrameRemove).frame);
+            const frame = this.frameStack.getFrame((event as FrameRemove).frame.id);
+            const success = await this.frameStack.removeFrame(frame, (event as FrameRemove).force);
+            event.resolve(success);
+        });
+    }
+
+    private addFrameCloseListener()
+    {
+        this.dispatcher.on('frame_close', async (event: Event) => {
+            const frame = this.frameStack.getFrame((event as FrameClose).id);
+            const success = await this.frameStack.removeFrame(frame, (event as FrameRemove).force);
+            if (success) {
+                // The frame itself can't trigger save and arrange because it's already removed at this point
+                this.frameStateManager.saveState();
+                this.frameArrangeManager.arrange();
+            }
             event.resolve(success);
         });
     }
@@ -184,6 +200,17 @@ export class FrameRemove extends Event
     )
     {
         super('frame_remove');
+    }
+}
+
+export class FrameClose extends Event
+{
+    constructor(
+        public id: string,
+        public force: boolean = false,
+    )
+    {
+        super('frame_close');
     }
 }
 

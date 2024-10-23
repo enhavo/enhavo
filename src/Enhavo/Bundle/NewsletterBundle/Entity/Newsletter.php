@@ -10,12 +10,11 @@ use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 use Enhavo\Bundle\RoutingBundle\Model\Slugable;
-use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 
 /**
  * Newsletter
  */
-class Newsletter implements ResourceInterface, Slugable, NewsletterInterface, Timestampable
+class Newsletter implements Slugable, NewsletterInterface, Timestampable
 {
     use TimestampableTrait;
     private ?int $id = null;

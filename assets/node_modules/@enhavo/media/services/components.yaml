@@ -10,3 +10,4 @@ services:
         static: true
         tags:
             - { name: vue.component, component: 'form-media-item' }
+

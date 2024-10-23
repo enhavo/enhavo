@@ -11,7 +11,6 @@ namespace Enhavo\Bundle\AppBundle\Action\Type;
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
 use Enhavo\Bundle\ResourceBundle\Action\ActionTypeInterface;
-use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class NullActionType extends AbstractActionType implements ActionTypeInterface
@@ -21,7 +20,7 @@ class NullActionType extends AbstractActionType implements ActionTypeInterface
 
     }
 
-    public function isEnabled(array $options, ResourceInterface $resource = null): bool
+    public function isEnabled(array $options, object $resource = null): bool
     {
         return false;
     }

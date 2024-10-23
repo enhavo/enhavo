@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\ArticleBundle\Block;
 
-use Enhavo\Bundle\AppBundle\View\ViewData;
+use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ArticleBundle\Entity\ArticleListBlock;
 use Enhavo\Bundle\ArticleBundle\Factory\ArticleListFactory;
 use Enhavo\Bundle\ArticleBundle\Form\Type\ArticleListBlockType as ArticleListFormType;
@@ -27,11 +27,11 @@ class ArticleListBlockType extends AbstractBlockType
     {
     }
 
-    public function createViewData(BlockInterface $block, ViewData $viewData, $resource, array $options)
+    public function createViewData(BlockInterface $block, Data $data, $resource, array $options)
     {
         /** @var ArticleListBlock $block */
         $articles = $this->repository->findByCategoriesAndTags([], [], $block->getPagination(), $block->getLimit());
-        $viewData->set('articles', $this->normalizer->normalize($articles, null, ['groups' => 'endpoint']));
+        $data->set('articles', $this->normalizer->normalize($articles, null, ['groups' => 'endpoint']));
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -6,6 +6,7 @@ import {
     FrameLoaded,
     FrameLabel,
     FrameRemove,
+    FrameClose,
     FrameUpdate,
     FrameSave,
     FrameArrange,
@@ -188,6 +189,12 @@ export class FrameManager
     public arrange(): void
     {
         this.eventDispatcher.dispatch(new FrameArrange());
+    }
+
+    public async close(force: boolean = false): Promise<boolean>
+    {
+        const frame = await this.getFrame()
+        return await this.eventDispatcher.request(new FrameClose(this.getId(), force)) as boolean;
     }
 
     /**

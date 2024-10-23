@@ -2,7 +2,7 @@ services:
     Enhavo\Bundle\MediaBundle\GarbageCollection\GarbageCollector:
         arguments:
             - '@doctrine.orm.entity_manager'
-            - '@enhavo_media.repository.file'
+            - '@enhavo_media.file.repository'
             - '%enhavo_media.garbage_collection.enabled%'
             - '%enhavo_media.garbage_collection.max_items_per_run%'
 
@@ -23,7 +23,7 @@ services:
         arguments:
             - '@enhavo_media.garbage_collector'
             - '@Enhavo\Bundle\DoctrineExtensionBundle\Util\AssociationFinder'
-            - '@enhavo_media.repository.file'
+            - '@enhavo_media.file.repository'
             - '%enhavo_media.garbage_collection.enable_listener%'
         tags:
             - { name: doctrine.event_listener, event: preRemove, method: preRemove }

@@ -1,20 +1,20 @@
 services:
     Enhavo\Bundle\CommentBundle\Form\Type\CommentType:
         arguments:
-            - '%enhavo_comment.model.comment.class%'
+            - '%enhavo_comment.comment.model.class%'
         tags:
             { name: form.type }
 
     Enhavo\Bundle\CommentBundle\Form\Type\CommentSubmitType:
         arguments:
-            - '%enhavo_comment.model.comment.class%'
+            - '%enhavo_comment.comment.model.class%'
             - '%enhavo_comment.submit_form.validation_groups%'
         tags:
             { name: form.type }
 
     Enhavo\Bundle\CommentBundle\Form\Type\ThreadType:
         arguments:
-            - '%enhavo_comment.model.thread.class%'
+            - '%enhavo_comment.thread.model.class%'
         tags:
             { name: form.type }
 
@@ -27,7 +27,7 @@ services:
         calls:
             - [setContainer, ['@service_container']]
         arguments:
-            - '@enhavo_comment.repository.comment'
+            - '@enhavo_comment.comment.repository'
             - '@request_stack'
             - '@Enhavo\Bundle\CommentBundle\Comment\CommentManager'
         tags:
@@ -35,11 +35,11 @@ services:
 
     Enhavo\Bundle\CommentBundle\Comment\CommentManager:
         arguments:
-            - '@enhavo_comment.factory.comment'
+            - '@enhavo_comment.comment.factory'
             - '@doctrine.orm.entity_manager'
             - '@form.factory'
             - '%enhavo_comment.submit_form.form%'
-            - '@enhavo_comment.factory.comment'
+            - '@enhavo_comment.comment.factory'
             - '@event_dispatcher'
             - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
 
@@ -61,7 +61,7 @@ services:
             - '@twig'
             - '@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface'
             - '@translator'
-            - '@enhavo_comment.repository.comment'
+            - '@enhavo_comment.comment.repository'
             - '%enhavo_app.mailer.defaults%'
 
     Enhavo\Bundle\CommentBundle\Action\CommentsActionType:
@@ -70,13 +70,13 @@ services:
         tags:
             - { name: enhavo_resource.action }
 
-    enhavo_comment.factory.comment:
+    enhavo_comment.comment.factory:
         public: true
-        class: '%enhavo_comment.factory.comment.class%'
+        class: '%enhavo_comment.comment.factory.class%'
         arguments:
-            - '%enhavo_comment.model.comment.class%'
+            - '%enhavo_comment.comment.model.class%'
         calls:
-            - [setThreadRepository, ['@enhavo_comment.repository.thread']]
+            - [setThreadRepository, ['@enhavo_comment.thread.repository']]
 
     Enhavo\Bundle\CommentBundle\Comment\AdminConfirmUrlGenerator:
         arguments:

@@ -8,11 +8,13 @@ use Enhavo\Bundle\VueFormBundle\Form\AbstractVueTypeExtension;
 use Enhavo\Bundle\VueFormBundle\Form\VueData;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\RouterInterface;
 
 class MediaVueTypeExtension extends AbstractVueTypeExtension
 {
     public function __construct(
         private MediaManager $mediaManager,
+        private RouterInterface $router,
     )
     {
     }
@@ -25,6 +27,7 @@ class MediaVueTypeExtension extends AbstractVueTypeExtension
         $data['buttons'] = null;
         $data['maxUploadSize'] = $this->mediaManager->getMaxUploadSize();
         $data['editable'] = true;
+        $data['uploadUrl'] = $this->router->generate($options['route']);
     }
 
     public function configureOptions(OptionsResolver $resolver)

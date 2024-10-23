@@ -1,7 +1,5 @@
 <?php
 /**
- * ResourcePreviewViewer.php
- *
  * @since 18/11/15
  * @author gseidel
  */

@@ -2,7 +2,7 @@ services:
     Enhavo\Bundle\MultiTenancyBundle\AutoGenerator\Generator\TenantPrefixGenerator:
         public: true
         arguments:
-            - '@enhavo_routing.repository.route'
+            - '@enhavo_routing.route.repository'
             - '@enhavo_multi_tenancy.resolver'
         calls:
             - [setContainer, ['@service_container']]

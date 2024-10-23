@@ -16,11 +16,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TwoColumnBlockType extends AbstractBlockType
 {
-    public function configureOptions(OptionsResolver $optionsResolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        parent::configureOptions($optionsResolver);
-
-        $optionsResolver->setDefaults([
+        $resolver->setDefaults([
             'model' => TwoColumnBlock::class,
             'form' => TwoColumnBlockFormType::class,
             'factory' => TwoColumnBlockFactory::class,

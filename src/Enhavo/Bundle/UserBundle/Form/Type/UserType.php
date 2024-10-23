@@ -9,31 +9,24 @@
 namespace Enhavo\Bundle\UserBundle\Form\Type;
 
 use Enhavo\Bundle\FormBundle\Form\Type\BooleanType;
-use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-class UserType extends AbstractResourceType
+class UserType extends AbstractType
 {
-    /**
-     * @var AuthorizationCheckerInterface
-     */
-    private $authorizationChecker;
-
-    /**
-     * @var string
-     */
-    private $groupDataClass;
-
-    public function __construct(string $dataClass, string $groupDataClass, AuthorizationCheckerInterface $authorizationChecker, array $validationGroups = [])
+    public function __construct(
+        private readonly string $dataClass,
+        private readonly string $groupDataClass,
+        private readonly AuthorizationCheckerInterface $authorizationChecker,
+        private readonly array $validationGroups = [],
+    )
     {
-        parent::__construct($dataClass, $validationGroups);
-        $this->groupDataClass = $groupDataClass;
-        $this->authorizationChecker = $authorizationChecker;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -98,5 +91,13 @@ class UserType extends AbstractResourceType
     public function getBlockPrefix()
     {
         return 'enhavo_user_user';
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => $this->dataClass,
+            'validation_groups' => $this->validationGroups,
+        ]);
     }
 }

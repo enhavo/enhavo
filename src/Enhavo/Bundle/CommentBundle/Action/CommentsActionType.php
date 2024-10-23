@@ -12,7 +12,6 @@ use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\CommentBundle\Exception\CommentSubjectException;
 use Enhavo\Bundle\CommentBundle\Model\CommentSubjectInterface;
 use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
-use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -44,7 +43,7 @@ class CommentsActionType extends AbstractActionType
         $resolver->setDefaults([
             'component' => 'open-action',
             'model' => 'OpenAction',
-            'route' => 'enhavo_comment_comment_index',
+            'route' => 'enhavo_comment_admin_comment_index',
             'label' => 'comment.label.comments',
             'translation_domain' => 'EnhavoCommentBundle',
             'icon' => 'comment'

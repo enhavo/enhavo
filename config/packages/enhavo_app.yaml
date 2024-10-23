@@ -14,28 +14,16 @@ enhavo_app:
             type: article
         page:
             type: page
-        slider:
-            type: slider
         newsletter:
             type: newsletter
         calendar:
             type: calendar
-        shop_catalog:
-            type: shop_catalog
-        shop_sales:
-            type: shop_sales
-        shop_configuration:
-            type: shop_configuration
-        shop_promotion:
-            type: shop_promotion
         navigation:
             type: navigation
         redirect:
             type: redirect
         media_library:
             type: media_library
-        sidebar:
-            type: sidebar
         template:
             type: template
         settings:

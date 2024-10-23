@@ -2,9 +2,8 @@
 namespace Enhavo\Bundle\TaxonomyBundle\Entity;
 
 use Enhavo\Bundle\TaxonomyBundle\Model\TaxonomyInterface;
-use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 
-class Taxonomy implements ResourceInterface, TaxonomyInterface
+class Taxonomy implements TaxonomyInterface
 {
     /**
      * @var integer

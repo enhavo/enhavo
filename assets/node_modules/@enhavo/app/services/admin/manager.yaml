@@ -35,6 +35,7 @@ services:
             - '@enhavo/vue-form/form/FormFactory'
             - '@enhavo/app/frame/FrameManager'
             - '@enhavo/app/vue/VueRouterFactory'
+            - '@enhavo/app/ui/UiManager'
             - '@enhavo/vue-form/form/FormEventDispatcher'
         tags:
             - { name: vue.service, service: 'resourceInputManager', reactive: true }

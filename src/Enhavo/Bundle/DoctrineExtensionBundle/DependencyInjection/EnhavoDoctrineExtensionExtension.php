@@ -16,9 +16,6 @@ class EnhavoDoctrineExtensionExtension extends Extension
 {
     const CONFIG_DIR = __DIR__.'/../Resources/config';
 
-    /**
-     * {@inheritdoc}
-     */
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();
@@ -28,6 +25,7 @@ class EnhavoDoctrineExtensionExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(self::CONFIG_DIR));
         $loader->load('services/resolver.yaml');
+        $loader->load('services/command.yaml');
         $loader->load('services/metadata.yaml');
         $loader->load('services/listener.yaml');
         $loader->load('services/util.yaml');

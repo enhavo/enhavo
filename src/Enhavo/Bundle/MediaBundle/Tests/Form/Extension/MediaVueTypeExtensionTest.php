@@ -15,11 +15,12 @@ use Enhavo\Bundle\VueFormBundle\Form\VueForm;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class MediaVueTypeExtensionTest extends TypeTestCase
 {
-    protected function getTypeExtensions()
+    protected function getTypeExtensions(): array
     {
         $mediaManagerMock = $this->getMockBuilder(MediaManager::class)->disableOriginalConstructor()->getMock();
         $mediaManagerMock->method('getMaxUploadSize')->willReturn(1);
@@ -27,11 +28,11 @@ class MediaVueTypeExtensionTest extends TypeTestCase
         return [
             new VueTypeExtension(),
             new ListVueTypeExtension(new VueForm()),
-            new MediaVueTypeExtension($mediaManagerMock),
+            new MediaVueTypeExtension($mediaManagerMock, $this->getMockBuilder(RouterInterface::class)->getMock()),
         ];
     }
 
-    protected function getExtensions()
+    protected function getExtensions(): array
     {
         $extensionManager = $this->getMockBuilder(ExtensionManager::class)->disableOriginalConstructor()->getMock();
         $repository = $this->getMockBuilder(EntityRepository::class)->disableOriginalConstructor()->getMock();

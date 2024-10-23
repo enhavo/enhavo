@@ -13,9 +13,8 @@ use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\CommentBundle\Model\CommentInterface;
 use Enhavo\Bundle\CommentBundle\Model\CommentSubjectInterface;
 use Enhavo\Bundle\CommentBundle\Model\ThreadInterface;
-use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 
-class Thread implements ThreadInterface, ResourceInterface
+class Thread implements ThreadInterface
 {
     /**
      * @var integer

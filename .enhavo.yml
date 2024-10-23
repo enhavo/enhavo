@@ -67,10 +67,6 @@ subtrees:
         url: 'git@github.com:enhavo/EnhavoPageBundle.git'
         prefix: src/Enhavo/Bundle/PageBundle
         package: enhavo/page-bundle
-    PaymentBundle:
-        url: 'git@github.com:enhavo/EnhavoPaymentBundle.git'
-        prefix: src/Enhavo/Bundle/PaymentBundle
-        package: enhavo/payment-bundle
     RedirectBundle:
         url: 'git@github.com:enhavo/EnhavoRedirectBundle.git'
         prefix: src/Enhavo/Bundle/RedirectBundle
@@ -91,18 +87,6 @@ subtrees:
         url: 'git@github.com:enhavo/EnhavoSettingBundle.git'
         prefix: src/Enhavo/Bundle/SettingBundle
         package: enhavo/setting-bundle
-    ShopBundle:
-        url: 'git@github.com:enhavo/EnhavoShopBundle.git'
-        prefix: src/Enhavo/Bundle/ShopBundle
-        package: enhavo/shop-bundle
-    SidebarBundle:
-        url: 'git@github.com:enhavo/EnhavoSidebarBundle.git'
-        prefix: src/Enhavo/Bundle/SidebarBundle
-        package: enhavo/sidebar-bundle
-    SliderBundle:
-        url: 'git@github.com:enhavo/EnhavoSliderBundle.git'
-        prefix: src/Enhavo/Bundle/SliderBundle
-        package: enhavo/slider-bundle
     TaxonomyBundle:
         url: 'git@github.com:enhavo/EnhavoTaxonomyBundle.git'
         prefix: src/Enhavo/Bundle/TaxonomyBundle

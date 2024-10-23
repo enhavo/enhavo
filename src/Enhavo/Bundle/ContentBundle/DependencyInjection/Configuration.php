@@ -53,16 +53,6 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end()
-
-            ->children()
-                ->scalarNode('driver')->defaultValue('doctrine/orm')->end()
-            ->end()
-
-            ->children()
-                ->arrayNode('resources')
-                    ->addDefaultsIfNotSet()
-                ->end()
-            ->end()
         ;
 
         return $treeBuilder;

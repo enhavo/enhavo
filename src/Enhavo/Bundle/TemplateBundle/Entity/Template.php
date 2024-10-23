@@ -12,9 +12,8 @@ use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 use Enhavo\Bundle\RoutingBundle\Entity\Route;
 use Enhavo\Bundle\RoutingBundle\Model\Routeable;
 use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
-use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 
-class Template implements ResourceInterface, Routeable
+class Template implements Routeable
 {
     /**
      * @var int
