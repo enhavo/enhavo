@@ -16,9 +16,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ThreeColumnBlockType extends AbstractBlockType
 {
-    public function configureOptions(OptionsResolver $optionsResolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $optionsResolver->setDefaults([
+        $resolver->setDefaults([
             'model' => ThreeColumnBlock::class,
             'form' => ThreeColumnBlockFormType::class,
             'factory' => ThreeColumnBlockFactory::class,

@@ -8,13 +8,19 @@
 
 namespace Enhavo\Bundle\NavigationBundle\Form\Type;
 
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class NavigationType extends AbstractResourceType
+class NavigationType extends AbstractType
 {
+    public function __construct(
+        private readonly string $dataClass,
+    )
+    {
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name', TextType::class, [
@@ -33,8 +39,9 @@ class NavigationType extends AbstractResourceType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-           'items' => [],
-           'item_groups' => []
+            'items' => [],
+            'item_groups' => [],
+            'data_class' => $this->dataClass
         ]);
     }
 }

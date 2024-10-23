@@ -2,8 +2,8 @@
 
 namespace Enhavo\Bundle\SearchBundle\Repository;
 
+use Enhavo\Bundle\ResourceBundle\Repository\EntityRepository;
 use Enhavo\Bundle\SearchBundle\Model\Database\Index;
-use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 
 class TotalRepository extends EntityRepository
 {

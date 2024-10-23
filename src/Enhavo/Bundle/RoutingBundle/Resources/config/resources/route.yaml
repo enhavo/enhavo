@@ -1,0 +1,7 @@
+enhavo_resource:
+    resources:
+        enhavo_routing.route:
+            classes:
+                model: Enhavo\Bundle\RoutingBundle\Entity\Route
+                factory: Enhavo\Bundle\RoutingBundle\Factory\RouteFactory
+                repository: Enhavo\Bundle\RoutingBundle\Repository\RouteRepository

@@ -11,7 +11,6 @@ namespace Enhavo\Bundle\ResourceBundle\Action\Type;
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ResourceBundle\Action\ActionTypeInterface;
 use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage;
-use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Enhavo\Component\Type\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -39,7 +38,7 @@ class BaseActionType extends AbstractType implements ActionTypeInterface
         $data->set('confirm_label_cancel', $this->translator->trans($options['confirm_label_cancel'], [], $options['translation_domain']));
     }
 
-    public function isEnabled(array $options, ResourceInterface $resource = null): bool
+    public function isEnabled(array $options, object $resource = null): bool
     {
         return $this->expressionLanguage->evaluate($options['enabled'], [
             'resource' => $resource,
@@ -47,7 +46,7 @@ class BaseActionType extends AbstractType implements ActionTypeInterface
         ]);
     }
 
-    public function getPermission(array $options, ResourceInterface $resource = null): mixed
+    public function getPermission(array $options, object $resource = null): mixed
     {
         return $this->expressionLanguage->evaluate($options['permission'], [
             'resource' => $resource,

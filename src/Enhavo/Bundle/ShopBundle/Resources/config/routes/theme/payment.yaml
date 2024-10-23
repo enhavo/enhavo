@@ -1,9 +1,0 @@
-enhavo_shop_theme_payment_purchase:
-    path: /payment/purchase/{token}
-    defaults:
-        _controller: enhavo_shop.controller.payment::purchaseAction
-
-enhavo_shop_theme_payment_do_purchase:
-    path: /payment/do-purchase/{token}
-    defaults:
-        _controller: enhavo_shop.controller.payment::doPurchaseAction

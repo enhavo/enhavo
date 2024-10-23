@@ -5,9 +5,8 @@ namespace Enhavo\Bundle\RedirectBundle\Entity;
 use Enhavo\Bundle\RoutingBundle\Entity\Route;
 use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
 use Enhavo\Bundle\RedirectBundle\Model\RedirectInterface;
-use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 
-class Redirect implements RedirectInterface, ResourceInterface
+class Redirect implements RedirectInterface
 {
     private ?int $id = null;
     private ?string $from  = null;

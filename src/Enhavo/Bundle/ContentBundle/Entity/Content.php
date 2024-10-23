@@ -18,9 +18,8 @@ use Enhavo\Bundle\ContentBundle\Content\Publishable;
 use Enhavo\Bundle\ContentBundle\Content\PublishableTrait;
 use Enhavo\Bundle\ContentBundle\Sitemap\SitemapInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
-use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 
-abstract class Content implements Publishable, Routeable, Slugable, SitemapInterface, ResourceInterface, Timestampable
+abstract class Content implements Publishable, Routeable, Slugable, SitemapInterface, Timestampable
 {
     use PublishableTrait;
     use TimestampableTrait;

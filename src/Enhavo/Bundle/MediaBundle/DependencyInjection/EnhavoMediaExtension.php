@@ -2,28 +2,21 @@
 
 namespace Enhavo\Bundle\MediaBundle\DependencyInjection;
 
+use Enhavo\Bundle\ResourceBundle\DependencyInjection\PrependExtensionTrait;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
-use Sylius\Bundle\ResourceBundle\DependencyInjection\Extension\AbstractResourceExtension;
-use Symfony\Component\Yaml\Yaml;
 
-/**
- * This is the class that loads and manages your bundle configuration
- *
- * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
- */
-class EnhavoMediaExtension extends AbstractResourceExtension implements PrependExtensionInterface
+class EnhavoMediaExtension extends Extension implements PrependExtensionInterface
 {
-    /**
-     * {@inheritDoc}
-     */
-    public function load(array $config, ContainerBuilder $container)
+    use PrependExtensionTrait;
+
+    public function load(array $configs, ContainerBuilder $container)
     {
-        $config = $this->processConfiguration(new Configuration(), $config);
+        $config = $this->processConfiguration(new Configuration(), $configs);
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $this->registerResources('enhavo_media', $config['driver'], $config['resources'], $container);
 
         $container->setParameter('enhavo_media.formats', $config['formats']);
         $container->setParameter('enhavo_media.provider', $config['provider']);
@@ -48,6 +41,7 @@ class EnhavoMediaExtension extends AbstractResourceExtension implements PrependE
 
         $configFiles = array(
             'services/command.yaml',
+            'services/endpoint.yaml',
             'services/media.yaml',
             'services/extension.yaml',
             'services/filter.yaml',
@@ -60,16 +54,12 @@ class EnhavoMediaExtension extends AbstractResourceExtension implements PrependE
         }
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function prepend(ContainerBuilder $container)
+    protected function prependFiles(): array
     {
-        $configs = Yaml::parse(file_get_contents(__DIR__.'/../Resources/config/app/config.yaml'));
-        foreach($configs as $name => $config) {
-            if (is_array($config)) {
-                $container->prependExtensionConfig($name, $config);
-            }
-        }
+        return [
+            __DIR__.'/../Resources/config/app/config.yaml',
+            __DIR__.'/../Resources/config/resources/file.yaml',
+            __DIR__.'/../Resources/config/resources/format.yaml',
+        ];
     }
 }

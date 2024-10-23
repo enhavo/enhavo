@@ -33,7 +33,7 @@ enhavo_app:
             filter: 'Filter'
     list:
         message:
-            save: 'Successfully saved'
+            save: 'Save successful'
             error: 'Error occurred'
     delete:
         message:
@@ -45,6 +45,7 @@ enhavo_app:
             close: 'Close'
     save:
         message:
+            save: 'Save successful'
             error: 'An error occured'
             not_valid: 'Please check your input'
         label:

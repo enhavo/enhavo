@@ -12,7 +12,6 @@ use Enhavo\Bundle\MultiTenancyBundle\DependencyInjection\Compiler\ConditionUrlMa
 use Enhavo\Bundle\MultiTenancyBundle\DependencyInjection\Compiler\ProviderCompilerPass;
 use Enhavo\Bundle\MultiTenancyBundle\DependencyInjection\Compiler\ResolverCompilerPass;
 use Enhavo\Bundle\MultiTenancyBundle\DependencyInjection\Compiler\RolesProviderCompilerPass;
-use Enhavo\Bundle\MultiTenancyBundle\DependencyInjection\Compiler\SyliusCompilerPass;
 use Enhavo\Bundle\MultiTenancyBundle\DependencyInjection\Compiler\TenantResolverAwareCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -23,7 +22,6 @@ class EnhavoMultiTenancyBundle extends Bundle
     {
         parent::build($container);
 
-        $container->addCompilerPass(new SyliusCompilerPass());
         $container->addCompilerPass(new ProviderCompilerPass());
         $container->addCompilerPass(new ResolverCompilerPass());
         $container->addCompilerPass(new TenantResolverAwareCompilerPass());

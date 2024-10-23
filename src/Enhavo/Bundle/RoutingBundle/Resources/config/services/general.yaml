@@ -3,7 +3,7 @@ services:
         public: true
         arguments:
             - '@enhavo_routing.auto_generator'
-            - '@enhavo_routing.factory.route'
+            - '@enhavo_routing.route.factory'
             - '@doctrine.orm.entity_manager'
 
     enhavo_routing.listener.routeable_listener:
@@ -29,6 +29,6 @@ services:
 
     Enhavo\Bundle\RoutingBundle\Vue\RoutingVueRouteProviderType:
         arguments:
-            - '@enhavo_routing.repository.route'
+            - '@enhavo_routing.route.repository'
         tags:
             - { name: enhavo_app.vue_route_provider }

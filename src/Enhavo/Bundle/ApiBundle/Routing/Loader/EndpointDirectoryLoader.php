@@ -2,55 +2,11 @@
 
 namespace Enhavo\Bundle\ApiBundle\Routing\Loader;
 
-use Symfony\Component\Config\Resource\DirectoryResource;
-use Symfony\Component\Routing\Loader\AnnotationFileLoader;
-use Symfony\Component\Routing\RouteCollection;
+use Symfony\Component\Routing\Loader\AttributeDirectoryLoader;
 
-class EndpointDirectoryLoader extends AnnotationFileLoader
+class EndpointDirectoryLoader extends AttributeDirectoryLoader
 {
-    public function load($path, string $type = null): RouteCollection
-    {
-        if (!is_dir($dir = $this->locator->locate($path))) {
-            return parent::supports($path, $type) ? parent::load($path, $type) : new RouteCollection();
-        }
-
-        $collection = new RouteCollection();
-        $collection->addResource(new DirectoryResource($dir, '/\.php$/'));
-        $files = iterator_to_array(new \RecursiveIteratorIterator(
-            new \RecursiveCallbackFilterIterator(
-                new \RecursiveDirectoryIterator($dir, \FilesystemIterator::SKIP_DOTS | \FilesystemIterator::FOLLOW_SYMLINKS),
-                function (\SplFileInfo $current) {
-                    return '.' !== substr($current->getBasename(), 0, 1);
-                }
-            ),
-            \RecursiveIteratorIterator::LEAVES_ONLY
-        ));
-        usort($files, function (\SplFileInfo $a, \SplFileInfo $b) {
-            return (string) $a > (string) $b ? 1 : -1;
-        });
-
-        foreach ($files as $file) {
-            if (!$file->isFile() || !str_ends_with($file->getFilename(), '.php')) {
-                continue;
-            }
-
-            if ($class = $this->findClass($file)) {
-                $refl = new \ReflectionClass($class);
-                if ($refl->isAbstract()) {
-                    continue;
-                }
-
-                $collection->addCollection($this->loader->load($class, $type));
-            }
-        }
-
-        return $collection;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function supports($resource, string $type = null): bool
+    public function supports(mixed $resource, ?string $type = null): bool
     {
         if ('endpoint' === $type) {
             return true;

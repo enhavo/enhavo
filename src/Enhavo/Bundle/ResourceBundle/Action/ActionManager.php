@@ -8,7 +8,6 @@
 
 namespace Enhavo\Bundle\ResourceBundle\Action;
 
-use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Enhavo\Component\Type\FactoryInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
@@ -24,7 +23,7 @@ class ActionManager
     /**
      * @return Action[]
      */
-    public function getActions(array $configuration, ResourceInterface $resource = null): array
+    public function getActions(array $configuration, object $resource = null): array
     {
         $actions = [];
         foreach($configuration as $key => $options) {

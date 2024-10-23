@@ -1,7 +1,9 @@
-enhavo_media_image_cropper_index:
-    path:  /media/image/cropper/{token}/{format}/index
-    options:
-        expose: true
-    methods: [GET, POST]
+enhavo_media_admin_image_cropper:
+    path: /image-cropper/{token}/{format}
     defaults:
-        _controller: enhavo_media.controller.image_cropper::indexAction
+        _expose: admin
+        _vue:
+            component: media-image-cropper
+            groups: admin
+        _endpoint:
+            type: admin

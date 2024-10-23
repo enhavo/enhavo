@@ -38,7 +38,7 @@ services:
         arguments:
             - '%enhavo_page.page.model.class%'
             - '@enhavo_block.factory.node'
-            - '@enhavo_routing.factory.route'
+            - '@enhavo_routing.route.factory'
 
     Enhavo\Bundle\PageBundle\Page\PageManager:
         arguments:
@@ -82,3 +82,12 @@ services:
             - '%kernel.debug%'
         calls:
             - [setEndpointFactory, ['@Enhavo\Component\Type\FactoryInterface[Endpoint]']]
+
+    Enhavo\Bundle\PageBundle\Controller\PageController:
+        arguments:
+            - '@Enhavo\Component\Type\FactoryInterface[Endpoint]'
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: controller.service_arguments }
+            - { name: container.service_subscriber }

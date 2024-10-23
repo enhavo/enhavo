@@ -45,6 +45,7 @@ enhavo_app:
             close: 'Schließen'
     save:
         message:
+            save: 'Erfolgreich gespeichert'
             error: 'Ein Fehler ist aufgetreten'
             not_valid: 'Bitte überprüfen Sie ihre Angaben'
         label:

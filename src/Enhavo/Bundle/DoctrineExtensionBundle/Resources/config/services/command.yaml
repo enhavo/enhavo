@@ -1,0 +1,6 @@
+services:
+    Enhavo\Bundle\DoctrineExtensionBundle\Command\DebugDoctrineMappingInfoCommand:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: console.command }

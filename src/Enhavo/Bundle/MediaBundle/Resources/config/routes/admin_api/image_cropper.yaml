@@ -1,0 +1,7 @@
+enhavo_media_admin_api_image_cropper:
+    path:  /image-cropper/{token}/{format}
+    methods: [GET, POST]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: media_image_cropper

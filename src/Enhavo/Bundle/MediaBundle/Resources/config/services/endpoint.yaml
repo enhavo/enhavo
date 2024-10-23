@@ -1,0 +1,67 @@
+services:
+    Enhavo\Bundle\MediaBundle\Endpoint\Type\FileEndpointType:
+        arguments:
+            - '%enhavo_media.cache_control.max_age%'
+            - '%enhavo_media.streaming.disabled%'
+            - '%enhavo_media.streaming.threshold%'
+            - '@Enhavo\Bundle\MediaBundle\Media\MediaManager'
+            - '@security.authorization_checker'
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\MediaBundle\Endpoint\Type\FileReplaceEndpointType:
+        arguments:
+            - '@enhavo_media.factory.file'
+            - '@Enhavo\Bundle\MediaBundle\Media\MediaManager'
+            - '@validator'
+            - '%enhavo_media.upload_validation.groups%'
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\MediaBundle\Endpoint\Type\FileUploadEndpointType:
+        arguments:
+            - '@enhavo_media.factory.file'
+            - '@Enhavo\Bundle\MediaBundle\Media\MediaManager'
+            - '@validator'
+            - '%enhavo_media.upload_validation.groups%'
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\MediaBundle\Endpoint\Type\FormatEndpointType:
+        arguments:
+            - '%enhavo_media.cache_control.max_age%'
+            - '%enhavo_media.streaming.disabled%'
+            - '%enhavo_media.streaming.threshold%'
+            - '@Enhavo\Bundle\MediaBundle\Media\MediaManager'
+            - '@security.authorization_checker'
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\MediaBundle\Endpoint\Type\ImageCropperEndpointType:
+        arguments:
+            - '@security.authorization_checker'
+            - '@Enhavo\Bundle\MediaBundle\Media\MediaManager'
+            - '@enhavo_media.media.format_manager'
+            - '@translator'
+            - '@doctrine.orm.entity_manager'
+            - '@Enhavo\Bundle\ResourceBundle\Action\ActionManager'
+            - '@router'
+            - '@enhavo_media.media.image_cropper_manager'
+            - '@security.csrf.token_manager'
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }

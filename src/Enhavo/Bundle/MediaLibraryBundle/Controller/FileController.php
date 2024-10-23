@@ -2,22 +2,20 @@
 
 namespace Enhavo\Bundle\MediaLibraryBundle\Controller;
 
-use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
-use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\MediaBundle\Controller\FileControllerTrait;
 use Enhavo\Bundle\MediaLibraryBundle\Entity\File;
 use Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryManager;
 use Enhavo\Bundle\MediaLibraryBundle\Repository\FileRepository;
-use Enhavo\Bundle\MediaLibraryBundle\View\Type\MediaLibraryViewType;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 
-class FileController extends ResourceController
+class FileController extends AbstractController
 {
     use FileControllerTrait;
 
@@ -38,7 +36,7 @@ class FileController extends ResourceController
      */
     private function getFileRepository(): FileRepository
     {
-        return $this->container->get('enhavo_media.repository.file');
+        return $this->container->get('enhavo_media.file.repository');
     }
 
     /**

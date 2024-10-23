@@ -1,8 +1,0 @@
-services:
-    Enhavo\Bundle\ShopBundle\Block\ProductListBlockType:
-        arguments:
-            - '@sylius.repository.product'
-            - '@enhavo_shop.product_manager'
-            - '@request_stack'
-        tags:
-            - { name: enhavo_block.block }

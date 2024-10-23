@@ -3,10 +3,8 @@
 namespace Enhavo\Bundle\NewsletterBundle\Action;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
-use Enhavo\Bundle\AppBundle\Action\Type\ModalActionType;
 use Enhavo\Bundle\NewsletterBundle\Form\Type\NewsletterEmailType;
 use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
-use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Enhavo\Bundle\VueFormBundle\Form\VueForm;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;

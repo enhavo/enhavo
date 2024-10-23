@@ -1,119 +1,35 @@
-enhavo_comment_comment_index:
-    options:
-        expose: true
-    path: /enhavo/comment/thread/{id}/comment/index
-    methods: [GET]
+enhavo_comment_admin_comment_index:
+    path: /comment/index
     defaults:
-        _controller: enhavo_comment.controller.comment::listAction
-        _sylius:
-            viewer:
-                data_route_parameters:
-                    id: $id
-                actions:
-                    create:
-                        type: create
-                        route: enhavo_comment_comment_create
-                        route_parameters:
-                            id: $id
+        _expose: admin
+        _vue:
+            component: resource-index
+            groups: admin
+            meta:
+                api: enhavo_comment_admin_api_comment_index
+        _endpoint:
+            type: admin
 
-enhavo_comment_comment_create:
-    options:
-        expose: true
-    path: /enhavo/comment/comment/create
-    methods: [GET,POST]
+enhavo_comment_admin_comment_create:
+    path: /comment/create
     defaults:
-        _controller: enhavo_comment.controller.comment::createAction
-        _sylius:
-            redirect: enhavo_comment_comment_update
-            factory:
-                method: createWithThreadId
-                arguments: [$id]
-            viewer:
+        _expose: admin
+        _vue:
+            component: resource-input
+            groups: admin
+            meta:
+                api: enhavo_comment_admin_api_comment_create
+        _endpoint:
+            type: admin
 
-enhavo_comment_comment_update:
-    options:
-        expose: true
-    path: /enhavo/comment/comment/update/{id}
-    methods: [GET,POST]
+enhavo_comment_admin_comment_update:
+    path: '/comment/update/{id}'
     defaults:
-        _controller: enhavo_comment.controller.comment::updateAction
-        _sylius:
-            viewer:
-
-enhavo_comment_comment_data:
-    options:
-        expose: true
-    path: /enhavo/comment/comment/data
-    methods: [GET,POST]
-    defaults:
-        _controller: enhavo_comment.controller.comment::listDataAction
-        _sylius:
-            repository:
-                method: findByThreadId
-                arguments:
-                    - $id
-            viewer:
-                children_property: children
-                parent_property: parent
-                columns:
-                    title:
-                        type: text
-                        property: comment
-                        width: 8
-                    createdAt:
-                        type: datetime
-                        property: createdAt
-                        width: 4
-                    state:
-                        type: comment_state
-                        width: 4
-
-enhavo_comment_comment_delete:
-    options:
-        expose: true
-    path: /enhavo/comment/comment/delete/{id}
-    methods: [POST]
-    defaults:
-        _controller: enhavo_comment.controller.comment::deleteAction
-        _sylius:
-            redirect: enhavo_comment_comment_data # BugFix: any route to generate url, because index route need id parameter
-
-
-enhavo_comment_comment_batch:
-    options:
-        expose: true
-    path: /enhavo/comment/comment/batch
-    methods: [POST]
-    defaults:
-        _controller: enhavo_comment.controller.comment::batchAction
-        _sylius:
-            paginate: false
-            criteria:
-                id: $ids
-            batches:
-                delete:
-                    type: delete
-
-enhavo_comment_comment_preview:
-    options:
-        expose: true
-    path: /enhavo/comment/comment/preview
-    methods: [GET]
-    defaults:
-        _controller: enhavo_comment.controller.comment::previewAction
-        _sylius:
-            viewer:
-
-enhavo_comment_comment_resource_preview:
-    options:
-        expose: true
-    path: /enhavo/comment/comment/resource/preview
-    methods: [POST]
-    defaults:
-        _controller: enhavo_comment.controller.comment::previewResourceAction
-        _area: theme
-        _sylius:
-            viewer:
-                strategy_options:
-                    service: enhavo_article.controller.article:showResourceAction
-
+        _expose: admin
+        _vue:
+            component: resource-input
+            groups: admin
+            meta:
+                api: enhavo_comment_admin_api_comment_update
+        _endpoint:
+            type: admin

@@ -8,18 +8,14 @@
 
 namespace Enhavo\Bundle\RedirectBundle\Controller;
 
-use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\RedirectBundle\Model\RedirectInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-class RedirectController extends ResourceController
+class RedirectController extends AbstractController
 {
-    /**
-     * @param $contentDocument RedirectInterface
-     * @return Response
-     */
-    public function redirectAction($contentDocument)
+    public function redirectAction(RedirectInterface $contentDocument): Response
     {
         return new RedirectResponse($contentDocument->getTo(), $contentDocument->getCode());
     }

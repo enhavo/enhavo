@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\TaxonomyBundle\Repository;
 
-use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
+use Enhavo\Bundle\ResourceBundle\Repository\EntityRepository;
 
 class TaxonomyRepository extends EntityRepository
 {

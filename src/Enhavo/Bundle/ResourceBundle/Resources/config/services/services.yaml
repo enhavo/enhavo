@@ -3,7 +3,7 @@ services:
         arguments:
             - '@event_dispatcher'
             - '@doctrine.orm.entity_manager'
-            - '@sm.factory'
+            - '@SM\Factory\FactoryInterface'
             - '@validator'
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
@@ -39,5 +39,17 @@ services:
     Enhavo\Bundle\ResourceBundle\Command\DebugGridCommand:
         arguments:
             - '%enhavo_resources.grids%'
+        tags:
+            - { name: console.command }
+
+    Enhavo\Bundle\ResourceBundle\Command\DebugResourceCommand:
+        arguments:
+            - '%enhavo_resources.resources%'
+        tags:
+            - { name: console.command }
+
+    Enhavo\Bundle\ResourceBundle\Command\DebugInputCommand:
+        arguments:
+            - '%enhavo_resources.inputs%'
         tags:
             - { name: console.command }

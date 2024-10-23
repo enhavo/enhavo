@@ -1,8 +1,0 @@
-{% extends template('theme/base.html.twig') %}
-
-{% block main %}
-    <section>
-        {{ component('shop_cart_summary') }}
-    </section>
-    <a href="{{ path('sylius_shop_checkout_start') }}">Checkout</a>
-{% endblock %}

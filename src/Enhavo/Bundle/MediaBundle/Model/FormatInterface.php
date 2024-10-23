@@ -10,9 +10,8 @@
 namespace Enhavo\Bundle\MediaBundle\Model;
 
 use Enhavo\Bundle\MediaBundle\Content\ContentInterface;
-use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 
-interface FormatInterface extends ResourceInterface, FileContentInterface
+interface FormatInterface extends FileContentInterface
 {
     /**
      * Get id

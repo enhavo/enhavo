@@ -35,7 +35,6 @@ jobs:
             -   name: Validate composer.json
                 run: |
                     composer validate --strict
-                    composer validate --strict src/Enhavo/Bundle/ShopBundle/composer.json
                     composer validate --strict src/Enhavo/Bundle/AppBundle/composer.json
                     composer validate --strict src/Enhavo/Bundle/ArticleBundle/composer.json
                     composer validate --strict src/Enhavo/Bundle/BlockBundle/composer.json
@@ -52,14 +51,10 @@ jobs:
                     composer validate --strict src/Enhavo/Bundle/NavigationBundle/composer.json
                     composer validate --strict src/Enhavo/Bundle/NewsletterBundle/composer.json
                     composer validate --strict src/Enhavo/Bundle/PageBundle/composer.json
-                    composer validate --strict src/Enhavo/Bundle/PaymentBundle/composer.json
                     composer validate --strict src/Enhavo/Bundle/RedirectBundle/composer.json
                     composer validate --strict src/Enhavo/Bundle/RoutingBundle/composer.json
                     composer validate --strict src/Enhavo/Bundle/SearchBundle/composer.json
                     composer validate --strict src/Enhavo/Bundle/SettingBundle/composer.json
-                    composer validate --strict src/Enhavo/Bundle/ShopBundle/composer.json
-                    composer validate --strict src/Enhavo/Bundle/SidebarBundle/composer.json
-                    composer validate --strict src/Enhavo/Bundle/SliderBundle/composer.json
                     composer validate --strict src/Enhavo/Bundle/TaxonomyBundle/composer.json
                     composer validate --strict src/Enhavo/Bundle/TemplateBundle/composer.json
                     composer validate --strict src/Enhavo/Bundle/TranslationBundle/composer.json

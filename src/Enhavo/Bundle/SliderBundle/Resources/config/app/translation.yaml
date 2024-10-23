@@ -1,8 +1,0 @@
-enhavo_translation:
-    metadata:
-        Enhavo\Bundle\SliderBundle\Entity\Slide:
-            properties:
-                title:
-                    type: text
-                text:
-                    type: text

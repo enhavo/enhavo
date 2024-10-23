@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\BlockBundle\Block\Type;
 
-use Enhavo\Bundle\AppBundle\View\ViewData;
+use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\BlockBundle\Block\BlockTypeInterface;
 use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
 use Enhavo\Component\Type\AbstractType;
@@ -23,12 +23,12 @@ class BaseBlockType extends AbstractType implements BlockTypeInterface
     {
     }
 
-    public function createViewData(BlockInterface $block, ViewData $viewData, $resource, array $options)
+    public function createViewData(BlockInterface $block, Data $data, $resource, array $options)
     {
-        $viewData['block'] = $block;
+        $data['block'] = $block;
     }
 
-    public function finishViewData(BlockInterface $block, ViewData $viewData, $resource, array $options)
+    public function finishViewData(BlockInterface $block, Data $data, $resource, array $options)
     {
 
     }

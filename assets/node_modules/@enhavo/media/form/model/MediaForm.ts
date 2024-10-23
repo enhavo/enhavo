@@ -10,6 +10,7 @@ import {MediaItemForm} from "@enhavo/media/form/model/MediaItemForm";
 export class MediaForm extends ListForm
 {
     upload: boolean;
+    uploadUrl: string;
     uploadLabel: string;
     loading: boolean = false;
     buttons: MediaFormButton[];
@@ -107,8 +108,6 @@ export class MediaForm extends ListForm
 
     private uploadFile(file: File): (callback: any) => void
     {
-        let url = '/file/add';
-
         return (callback) => {
 
             const CancelToken = axios.CancelToken;
@@ -124,7 +123,7 @@ export class MediaForm extends ListForm
             let data = new FormData();
             data.append('files', file);
 
-            axios.post(url, data, {
+            axios.post(this.uploadUrl, data, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 },

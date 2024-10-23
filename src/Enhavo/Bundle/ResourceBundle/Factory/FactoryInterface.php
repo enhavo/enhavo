@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\ResourceBundle\Factory;
 
-interface FactoryInterface extends \Sylius\Component\Resource\Factory\FactoryInterface
+interface FactoryInterface
 {
     public function createNew();
 }

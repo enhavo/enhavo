@@ -26,8 +26,6 @@ enhavo_block:
 #            type: article_list
 #        article_teaser:
 #            type: article_teaser
-        sidebar_column:
-            type: sidebar_column
         template:
             type: template
         resource:
@@ -36,8 +34,8 @@ enhavo_block:
             type: contact
         calendar:
             type: calendar
-        slider:
-            type: slider
+#        slider:
+#            type: slider
         newsletter_subscribe:
             type: newsletter_subscribe
         comment:

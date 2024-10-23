@@ -25,40 +25,30 @@ use Enhavo\Component\Metadata\MetadataRepository;
  */
 class ExtendSubscriber implements EventSubscriber
 {
-    /**
-     * @var MetadataRepository
-     */
-    private $metadataRepository;
-
-    public function __construct(MetadataRepository $metadataRepository)
+    public function __construct(
+        private readonly MetadataRepository $metadataRepository
+    )
     {
-        $this->metadataRepository = $metadataRepository;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getSubscribedEvents()
+    public function getSubscribedEvents(): array
     {
-        return array(
+        return [
             Events::loadClassMetadata,
-        );
+        ];
     }
 
-    /**
-     * @param LoadClassMetadataEventArgs $eventArgs
-     */
-    public function loadClassMetadata(LoadClassMetadataEventArgs $eventArgs)
+    public function loadClassMetadata(LoadClassMetadataEventArgs $eventArgs): void
     {
         /** @var ClassMetadata $metadata */
         $metadata = $eventArgs->getClassMetadata();
 
         $extensionMetadata = $this->getMetadata($metadata->getName());
-        if($extensionMetadata !== null && $extensionMetadata->getExtends()) {
+        if ($extensionMetadata !== null && $extensionMetadata->getExtends()) {
             return;
         }
 
-        $extendedMetadata  = [];
+        $extendedMetadata = [];
         $this->collectExtendedMetadata($metadata->getName(), $extendedMetadata);
 
         if (count($extendedMetadata) === 0) {
@@ -78,11 +68,7 @@ class ExtendSubscriber implements EventSubscriber
         }
     }
 
-    /**
-     * @param $className
-     * @param $extendedMetadata
-     */
-    private function collectExtendedMetadata($className, &$extendedMetadata)
+    private function collectExtendedMetadata(string $className, array &$extendedMetadata): void
     {
         $data = $this->metadataRepository->getAllMetadata();
         /** @var Metadata $metadata */
@@ -94,11 +80,7 @@ class ExtendSubscriber implements EventSubscriber
         }
     }
 
-    /*
-     * @param $className
-     * @return Metadata|null
-     */
-    private function getMetadata($className)
+    private function getMetadata($className): ?Metadata
     {
         /** @var Metadata $metadata */
         $metadata = $this->metadataRepository->getMetadata($className);

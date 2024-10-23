@@ -12,6 +12,7 @@ import {Theme} from "@enhavo/vue-form/form/Theme";
 import {FrameManager} from "@enhavo/app/frame/FrameManager";
 import {VueRouterFactory} from "@enhavo/app/vue/VueRouterFactory";
 import {FormEventDispatcher} from "@enhavo/vue-form/form/FormEventDispatcher";
+import {UiManager} from "@enhavo/app/ui/UiManager";
 
 export class ResourceInputManager
 {
@@ -32,6 +33,7 @@ export class ResourceInputManager
         private formFactory: FormFactory,
         private frameManager: FrameManager,
         private vueRouterFactory: VueRouterFactory,
+        private uiManager: UiManager,
         private eventDispatcher: FormEventDispatcher,
     ) {
     }
@@ -47,6 +49,14 @@ export class ResourceInputManager
         let url = this.router.generate(route, parameters);
 
         const response = await fetch(url);
+        if (!response.ok) {
+            this.frameManager.loaded();
+            this.uiManager.alert({ message: 'Error occured' }).then(() => {
+                this.frameManager.close(true);
+            });
+            return;
+        }
+
         const data = await response.json();
 
         this.routes = new RouteContainer(data.routes);

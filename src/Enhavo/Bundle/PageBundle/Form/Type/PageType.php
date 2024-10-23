@@ -4,7 +4,6 @@ namespace Enhavo\Bundle\PageBundle\Form\Type;
 
 use Enhavo\Bundle\ContentBundle\Form\Type\ContentType;
 use Enhavo\Bundle\BlockBundle\Form\Type\BlockNodeType;
-use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -47,7 +46,7 @@ class PageType extends AbstractType
                 'placeholder' => '---',
                 'query_builder' => function (EntityRepository $er) use ($data) {
                     $query =  $er->createQueryBuilder('p');
-                    if($data instanceof ResourceInterface && $data->getId()) {
+                    if ($data->getId()) {
                         $query->where('p.id != :id');
                         $query->setParameter('id', $data->getId());
                     }
@@ -74,7 +73,7 @@ class PageType extends AbstractType
                 'placeholder' => '---',
                 'query_builder' => function (EntityRepository $er) use ($data) {
                     $query =  $er->createQueryBuilder('p');
-                    if($data instanceof ResourceInterface && $data->getId()) {
+                    if ($data->getId()) {
                         $query->where('p.id != :id');
                         $query->setParameter('id', $data->getId());
                     }

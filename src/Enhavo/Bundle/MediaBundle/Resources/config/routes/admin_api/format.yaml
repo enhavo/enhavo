@@ -1,0 +1,10 @@
+enhavo_media_admin_api_file_format:
+    path:  /format/{token}/{format}
+    methods: [GET]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: media_format
+            find_by: [token]
+            checksum_test: false
+            filename_test: false

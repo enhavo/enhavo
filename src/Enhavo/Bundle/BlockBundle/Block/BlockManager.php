@@ -14,36 +14,30 @@ use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 use Enhavo\Bundle\DoctrineExtensionBundle\Util\AssociationFinder;
 use Enhavo\Component\Type\FactoryInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Psr\Container\ContainerInterface;
 
 class BlockManager
 {
-    use ContainerAwareTrait;
+    protected ?ContainerInterface $container = null;
 
-    /**
-     * @var AssociationFinder
-     */
-    private $associationFinder;
+    /** @var Block[] */
+    private array $blocks = [];
 
-    /**
-     * @var Cleaner
-     */
-    private $cleaner;
-
-    /**
-     * @var Block[]
-     */
-    private $blocks = [];
-
-    public function __construct(FactoryInterface $factory, AssociationFinder $associationFinder, Cleaner $cleaner, $configurations)
+    public function __construct(
+        FactoryInterface $factory,
+        private readonly AssociationFinder $associationFinder,
+        private readonly Cleaner $cleaner,
+        $configurations
+    )
     {
-        $this->associationFinder = $associationFinder;
-        $this->cleaner = $cleaner;
-
-        foreach($configurations as $name => $options) {
+        foreach ($configurations as $name => $options) {
             $this->blocks[$name] = $factory->create($options);
         }
+    }
+
+    public function setContainer(ContainerInterface $container): void
+    {
+        $this->container = $container;
     }
 
     public function getBlocks()
@@ -56,21 +50,21 @@ class BlockManager
         return $this->blocks[$name];
     }
 
-    public function createViewData(NodeInterface $node, $resource = null)
+    public function createViewData(NodeInterface $node, $resource = null): void
     {
         /** @var BlockManager $manager */
         $manager = $this;
         $this->walk($node, function (NodeInterface $node) use ($manager, $resource) {
             if ($node->getType() === NodeInterface::TYPE_BLOCK) {
                 $node->setResource($resource);
-                $viewData = $manager->getBlock($node->getName())->createViewData($node->getBlock(), $resource);
+                $viewData = $node->getBlock() ? $manager->getBlock($node->getName())->createViewData($node->getBlock(), $resource) : [];
                 $node->setViewData($viewData);
             }
         });
 
         $this->walk($node, function (NodeInterface $node) use ($manager, $resource) {
             if ($node->getType() === NodeInterface::TYPE_BLOCK) {
-                $viewData = $manager->getBlock($node->getName())->finishViewData($node->getBlock(), $node->getViewData(), $resource);
+                $viewData = $node->getBlock() ? $manager->getBlock($node->getName())->finishViewData($node->getBlock(), $node->getViewData(), $resource) : [];
                 $node->setViewData($viewData);
             }
         });
@@ -79,7 +73,7 @@ class BlockManager
     private function walk(NodeInterface $node, $callback)
     {
         $callback($node);
-        foreach($node->getChildren() as $child) {
+        foreach ($node->getChildren() as $child) {
             $this->walk($child, $callback);
         }
     }
@@ -88,15 +82,12 @@ class BlockManager
     {
         $block = $this->getBlock($name);
         $factoryClass = $block->getFactory();
-        if($factoryClass) {
+        if ($factoryClass) {
             if ($this->container->has($factoryClass)) {
                 $factory = $this->container->get($factoryClass);
             } else {
                 /** @var AbstractBlockFactory $factory */
                 $factory = new $factoryClass($block->getModel());
-                if($factory instanceof ContainerAwareInterface) {
-                    $factory->setContainer($this->container);
-                }
             }
             return $factory;
         }

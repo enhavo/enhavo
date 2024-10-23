@@ -3,7 +3,6 @@ enhavo_resource:
         enhavo_user.group:
             classes:
                 model: Enhavo\Bundle\UserBundle\Model\Group
-                factory: Sylius\Component\Resource\Factory\Factory
                 repository: Enhavo\Bundle\UserBundle\Repository\GroupRepository
 
     grids:

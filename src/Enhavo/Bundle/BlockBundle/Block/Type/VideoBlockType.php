@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\BlockBundle\Block\Type;
 
-use Enhavo\Bundle\AppBundle\View\ViewData;
+use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\BlockBundle\Block\AbstractBlockType;
 use Enhavo\Bundle\BlockBundle\Factory\VideoBlockFactory;
 use Enhavo\Bundle\BlockBundle\Form\Type\VideoBlockType as VideoBlockFormType;
@@ -24,9 +24,9 @@ class VideoBlockType extends AbstractBlockType
         $this->container = $container;
     }
 
-    public function configureOptions(OptionsResolver $optionsResolver): void
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        $optionsResolver->setDefaults([
+        $resolver->setDefaults([
             'model' => VideoBlock::class,
             'form' => VideoBlockFormType::class,
             'factory' => VideoBlockFactory::class,
@@ -40,7 +40,7 @@ class VideoBlockType extends AbstractBlockType
     /**
      * @throws Exception
      */
-    public function createViewData(BlockInterface $block, ViewData $viewData, $resource, array $options): void
+    public function createViewData(BlockInterface $block, Data $data, $resource, array $options): void
     {
         if (!$this->container->has('Enhavo\Bundle\ContentBundle\Factory\VideoFactory')) {
             throw new Exception('You have to use the "enhavo/content-bundle" to use the video block');
@@ -50,10 +50,10 @@ class VideoBlockType extends AbstractBlockType
 
         /** @var $block VideoBlock */
         try {
-            $viewData->set('video', $videoFactory->create($block->getUrl()));
+            $data->set('video', $videoFactory->create($block->getUrl()));
         } catch (Exception $e) {
             if (get_class($e) === 'Enhavo\Bundle\ContentBundle\Exception\VideoException') {
-                $viewData->set('video', null);
+                $data->set('video', null);
             } else {
                 throw $e;
             }

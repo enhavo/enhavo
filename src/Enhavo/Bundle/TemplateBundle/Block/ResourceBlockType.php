@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\TemplateBundle\Block;
 
-use Enhavo\Bundle\AppBundle\View\ViewData;
+use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\BlockBundle\Block\AbstractBlockType;
 use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
 use Enhavo\Bundle\TemplateBundle\Entity\ResourceBlock;
@@ -18,17 +18,15 @@ use Enhavo\Bundle\TemplateBundle\Form\Type\ResourceBlockType as ResourceBlockFor
 
 class ResourceBlockType extends AbstractBlockType
 {
-    public function createViewData(BlockInterface $block, ViewData $viewData, $resource, array $options)
+    public function createViewData(BlockInterface $block, Data $data, $resource, array $options)
     {
         /** @var ResourceBlock $block */
-        $viewData['template'] = $block->getTemplate();
+        $data['template'] = $block->getTemplate();
     }
 
-    public function configureOptions(OptionsResolver $optionsResolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        parent::configureOptions($optionsResolver);
-
-        $optionsResolver->setDefaults([
+        $resolver->setDefaults([
             'model' => ResourceBlock::class,
             'form' => ResourceBlockFormType::class,
             'factory' => ResourceBlockFactory::class,

@@ -14,7 +14,6 @@ use Enhavo\Bundle\MediaBundle\Exception\FileException;
 use Enhavo\Bundle\MediaBundle\Media\UrlGeneratorInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\ResourceBundle\Column\AbstractColumnType;
-use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
 
@@ -26,7 +25,7 @@ class MediaColumn extends AbstractColumnType
     {
     }
 
-    public function createResourceViewData(array $options, ResourceInterface $resource, Data $data): void
+    public function createResourceViewData(array $options, object $resource, Data $data): void
     {
         $propertyAccessor = new PropertyAccessor();
 

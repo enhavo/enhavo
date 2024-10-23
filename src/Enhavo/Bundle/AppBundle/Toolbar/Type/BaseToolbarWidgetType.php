@@ -10,7 +10,6 @@ namespace Enhavo\Bundle\AppBundle\Toolbar\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\AppBundle\Toolbar\ToolbarWidgetTypeInterface;
-use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Enhavo\Component\Type\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -22,12 +21,12 @@ class BaseToolbarWidgetType extends AbstractType implements ToolbarWidgetTypeInt
         $data->set('model', $options['model']);
     }
 
-    public function getPermission(array $options, ResourceInterface $resource = null): mixed
+    public function getPermission(array $options, object $resource = null): mixed
     {
         return $options['permission'];
     }
 
-    public function isEnabled(array $options, ResourceInterface $resource = null): bool
+    public function isEnabled(array $options, object $resource = null): bool
     {
         return $options['enabled'];
     }

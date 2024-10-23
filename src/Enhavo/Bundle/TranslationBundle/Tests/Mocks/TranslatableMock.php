@@ -3,13 +3,10 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Tests\Mocks;
 
-
-
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\RoutingBundle\Model\Slugable;
-use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 
-class TranslatableMock implements ResourceInterface, Slugable
+class TranslatableMock implements Slugable
 {
     public $id;
 

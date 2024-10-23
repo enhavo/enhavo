@@ -8,18 +8,20 @@
 
 namespace Enhavo\Bundle\MultiTenancyBundle\DependencyInjection;
 
-use Sylius\Bundle\ResourceBundle\DependencyInjection\Extension\AbstractResourceExtension;
+use Enhavo\Bundle\ResourceBundle\DependencyInjection\PrependExtensionTrait;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
-use Symfony\Component\Yaml\Yaml;
 
-class EnhavoMultiTenancyExtension extends AbstractResourceExtension implements PrependExtensionInterface
+class EnhavoMultiTenancyExtension extends Extension implements PrependExtensionInterface
 {
-    public function load(array $config, ContainerBuilder $container)
+    use PrependExtensionTrait;
+
+    public function load(array $configs, ContainerBuilder $container)
     {
-        $config = $this->processConfiguration(new Configuration(), $config);
+        $config = $this->processConfiguration(new Configuration(), $configs);
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
         $container->setParameter('enhavo_multi_tenancy.provider', $config['provider']);
@@ -43,27 +45,10 @@ class EnhavoMultiTenancyExtension extends AbstractResourceExtension implements P
         }
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function prepend(ContainerBuilder $container)
+    protected function prependFiles(): array
     {
-        $path = __DIR__ . '/../Resources/config/app/';
-        $files = scandir($path);
-
-        foreach ($files as $file) {
-            if (preg_match('/\.yaml$/', $file)) {
-                $settings = Yaml::parse(file_get_contents($path . $file));
-                if (is_array($settings)) {
-                    if (is_array($settings)) {
-                        foreach ($settings as $name => $value) {
-                            if (is_array($value)) {
-                                $container->prependExtensionConfig($name, $value);
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        return [
+            __DIR__ . '/../Resources/config/app/config.yaml',
+        ];
     }
 }

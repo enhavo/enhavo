@@ -36,7 +36,7 @@ services:
         calls:
             - [ setContainer, ['@service_container']]
         tags:
-            - { name: doctrine.event_subscriber, connection: default }
+            - { name: doctrine.event_listener, event: postLoad, method: postLoad }
 
     Enhavo\Bundle\TemplateBundle\Router\TemplateStrategy:
         public: true

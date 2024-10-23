@@ -30,11 +30,11 @@ use Doctrine\ORM\UnitOfWork;
  */
 class ReferenceSubscriber implements EventSubscriber
 {
-    private $scheduleDeleted = [];
+    private array $scheduleDeleted = [];
 
     public function __construct(
-        private MetadataRepository $metadataRepository,
-        private EntityResolverInterface $entityResolver
+        private readonly MetadataRepository $metadataRepository,
+        private readonly EntityResolverInterface $entityResolver,
     )
     {
     }

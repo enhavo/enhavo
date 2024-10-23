@@ -1,6 +1,0 @@
-enhavo_translation:
-    metadata:
-        Enhavo\Bundle\ShopBundle\Entity\Product:
-            properties:
-                title:
-                    type: text

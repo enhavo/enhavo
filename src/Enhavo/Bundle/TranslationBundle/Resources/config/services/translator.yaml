@@ -21,7 +21,10 @@ services:
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: doctrine.event_subscriber }
+            - { name: doctrine.event_listener, event: preRemove, method: preRemove }
+            - { name: doctrine.event_listener, event: postLoad, method: postLoad }
+            - { name: doctrine.event_listener, event: preFlush, method: preFlush }
+            - { name: doctrine.event_listener, event: postFlush, method: postFlush }
 
     Enhavo\Bundle\TranslationBundle\Locale\LocalePathResolver:
         arguments:

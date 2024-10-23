@@ -60,13 +60,13 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
-    Enhavo\Bundle\ContentBundle\Controller\SitemapController:
+    Enhavo\Bundle\ContentBundle\Endpoint\Type\SitemapEndpointType:
         arguments:
             - '@enhavo_content.sitemap.generator'
         calls:
-            - [setContainer, ['@Psr\Container\ContainerInterface']]
+            - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
         tags:
-            - { name: controller.service_arguments }
+            - { name: enhavo_api.endpoint }
             - { name: container.service_subscriber }
 
     Enhavo\Bundle\ContentBundle\Command\SitemapDumpCommand:

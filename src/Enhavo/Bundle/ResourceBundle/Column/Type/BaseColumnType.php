@@ -13,7 +13,6 @@ use Enhavo\Bundle\ResourceBundle\Column\Column;
 use Enhavo\Bundle\ResourceBundle\Column\ColumnTypeInterface;
 use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage;
 use Enhavo\Bundle\ResourceBundle\Filter\FilterQuery;
-use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Enhavo\Component\Type\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -36,7 +35,7 @@ class BaseColumnType extends AbstractType implements ColumnTypeInterface
         }
     }
 
-    public function createResourceViewData(array $options, ResourceInterface $resource, Data $data): void
+    public function createResourceViewData(array $options, object $resource, Data $data): void
     {
 
     }

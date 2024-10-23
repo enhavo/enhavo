@@ -4,7 +4,6 @@ namespace Enhavo\Bundle\NewsletterBundle\Action;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
-use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SendActionType extends AbstractActionType

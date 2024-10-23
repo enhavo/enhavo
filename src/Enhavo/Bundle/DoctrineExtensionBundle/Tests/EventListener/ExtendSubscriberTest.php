@@ -9,7 +9,6 @@
 namespace Enhavo\Bundle\DoctrineExtensionBundle\Tests\EventListener;
 
 use Enhavo\Bundle\DoctrineExtensionBundle\EventListener\ExtendSubscriber;
-use Enhavo\Bundle\DoctrineExtensionBundle\Tests\EventListener\SubscriberTest;
 use Enhavo\Bundle\DoctrineExtensionBundle\Tests\Fixtures\Entity\Extend\Child;
 use Enhavo\Bundle\DoctrineExtensionBundle\Tests\Fixtures\Entity\Extend\Entity;
 use Enhavo\Bundle\DoctrineExtensionBundle\Tests\Fixtures\Entity\Extend\Root;

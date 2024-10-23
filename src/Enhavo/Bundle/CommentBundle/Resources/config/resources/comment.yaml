@@ -1,0 +1,51 @@
+enhavo_resource:
+    resources:
+        enhavo_comment.comment:
+            classes:
+                model: Enhavo\Bundle\CommentBundle\Entity\Comment
+                factory: Enhavo\Bundle\CommentBundle\Factory\CommentFactory
+                repository: Enhavo\Bundle\CommentBundle\Repository\CommentRepository
+    grids:
+        enhavo_comment.comment:
+            extends: enhavo_resource.grid
+            resource: enhavo_comment.comment
+            actions:
+                create:
+                    type: create
+                    route: enhavo_comment_comment_create
+                    route_parameters:
+                        id: $id
+            repository_method: findByThreadId
+            repository_arguments:
+                - expr:request.get('id')
+            filters: {  }
+            columns:
+                title:
+                    type: text
+                    property: comment
+                    width: 8
+                createdAt:
+                    type: datetime
+                    property: createdAt
+                    width: 4
+                state:
+                    type: comment_state
+                    width: 4
+            batches:
+                delete:
+                    type: delete
+            collection:
+                class: Enhavo\Bundle\ResourceBundle\Collection\ListCollection
+                parent_property: parent
+                children_property: children
+    inputs:
+        enhavo_comment.comment:
+            extends: enhavo_resource.input
+            resource: enhavo_comment.comment
+            form: Enhavo\Bundle\CommentBundle\Form\Type\CommentType
+            form_options: {  }
+            factory_method: createWithThreadId
+            factory_arguments:
+                - expr:request.get('id')
+            actions: {  }
+            tabs: {  }

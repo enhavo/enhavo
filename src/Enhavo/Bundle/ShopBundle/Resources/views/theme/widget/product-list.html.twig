@@ -1,9 +1,0 @@
-{% for product in products %}
-    <div>
-        <a href="{{ resolve_theme_url(product) }}">{{ product.title }}</a>
-
-        {% if product.picture %}
-            <img src="{{ media_url(product.picture) }}" />
-        {% endif %}
-    </div>
-{% endfor %}

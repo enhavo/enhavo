@@ -115,7 +115,7 @@ class MediaType extends AbstractType
             'item_template' => '@EnhavoMedia/admin/form/media/item.html.twig',
             'upload' => $this->formConfiguration['default_upload_enabled'],
             'extensions' => [],
-            'route' => 'enhavo_media_upload',
+            'route' => 'enhavo_media_admin_api_file_upload',
             'error_bubbling' => false,
         ));
     }

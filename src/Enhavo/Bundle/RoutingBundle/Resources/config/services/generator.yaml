@@ -14,7 +14,7 @@ services:
     Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator\PrefixGenerator:
         public: true
         arguments:
-            - '@enhavo_routing.repository.route'
+            - '@enhavo_routing.route.repository'
         calls:
             - [setContainer, ['@service_container']]
         tags:

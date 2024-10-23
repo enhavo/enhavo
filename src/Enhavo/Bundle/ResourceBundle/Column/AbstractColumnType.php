@@ -5,7 +5,6 @@ namespace Enhavo\Bundle\ResourceBundle\Column;
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ResourceBundle\Column\Type\BaseColumnType;
 use Enhavo\Bundle\ResourceBundle\Filter\FilterQuery;
-use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Enhavo\Component\Type\AbstractType;
 
 /**
@@ -13,7 +12,7 @@ use Enhavo\Component\Type\AbstractType;
  */
 abstract class AbstractColumnType extends AbstractType implements ColumnTypeInterface
 {
-    public function createResourceViewData(array $options, ResourceInterface $resource, Data $data): void
+    public function createResourceViewData(array $options, object $resource, Data $data): void
     {
 
     }

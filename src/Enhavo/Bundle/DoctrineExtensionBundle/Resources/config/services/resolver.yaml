@@ -4,14 +4,13 @@ services:
 
     Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\ChainResolver:
         calls:
-            - [addResolver, ['@Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\SyliusResourceResolver', 200]]
+            - [addResolver, ['@Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EnhavoResourceResolver', 200]]
             - [addResolver, ['@Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\ClassNameResolver', 100]]
 
-    Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\SyliusResourceResolver:
+    Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EnhavoResourceResolver:
         arguments:
-            - '%sylius.resources%'
-        calls:
-            - [setContainer, ['@service_container']]
+            - '%enhavo_resources.resources%'
+            - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
 
     Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\ClassNameResolver:
         arguments:

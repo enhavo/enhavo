@@ -8,8 +8,7 @@
 
 namespace Enhavo\Bundle\BlockBundle\Tests\Block;
 
-
-use Enhavo\Bundle\AppBundle\View\ViewData;
+use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\BlockBundle\Block\AbstractBlockType;
 use Enhavo\Bundle\BlockBundle\Block\Block;
 use Enhavo\Bundle\BlockBundle\Block\BlockManager;
@@ -21,6 +20,7 @@ use Enhavo\Bundle\DoctrineExtensionBundle\Util\AssociationFinder;
 use Enhavo\Component\Type\Factory;
 use Enhavo\Component\Type\FactoryInterface;
 use Enhavo\Component\Type\Tests\Mock\RegistryMock;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class BlockManagerTest extends TestCase
@@ -107,16 +107,11 @@ class BlockManagerTest extends TestCase
 
 class BlockManagerTestDependencies
 {
-    /** @var FactoryInterface|\PHPUnit_Framework_MockObject_MockObject */
-    public $factory;
-    /** @var AssociationFinder|\PHPUnit_Framework_MockObject_MockObject */
-    public $associationFinder;
-    /** @var Cleaner|\PHPUnit_Framework_MockObject_MockObject */
-    public $cleaner;
-    /** @var array */
-    public $configurations;
-    /** @var RegistryMock */
-    public $registry;
+    public FactoryInterface|MockObject $factory;
+    public AssociationFinder|MockObject $associationFinder;
+    public Cleaner|MockObject $cleaner;
+    public array $configurations;
+    public RegistryMock|MockObject $registry;
 }
 
 class BlockManagerTextBlockType extends AbstractBlockType
@@ -126,14 +121,14 @@ class BlockManagerTextBlockType extends AbstractBlockType
         return null;
     }
 
-    public function createViewData(BlockInterface $block, ViewData $viewData, $resource, array $options)
+    public function createViewData(BlockInterface $block, Data $data, $resource, array $options)
     {
-        $viewData['foo'] = 'bar';
+        $data['foo'] = 'bar';
     }
 
-    public function finishViewData(BlockInterface $block, ViewData $viewData, $resource, array $options)
+    public function finishViewData(BlockInterface $block, Data $data, $resource, array $options)
     {
-        $viewData['hello'] = 'world';
+        $data['hello'] = 'world';
     }
 }
 

@@ -33,16 +33,16 @@ services:
         tags:
             - { name: enhavo.widget, alias: search }
 
-    enhavo_search.controller.search:
-        class: Enhavo\Bundle\SearchBundle\Controller\SearchController
-        public: true
+    Enhavo\Bundle\SearchBundle\Endpoint\Type\SearchEndpointType:
         arguments:
             - '@enhavo_search.result.result_converter'
             - '@enhavo_search.search.engine'
-            - '@Enhavo\Bundle\AppBundle\Template\TemplateResolver'
-            - '@sylius.expression_language'
+            - '@Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage'
         calls:
-            - [setContainer, ['@service_container']]
+            - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
 
     enhavo_search.result.result_converter:
         class: Enhavo\Bundle\SearchBundle\Result\ResultConverter

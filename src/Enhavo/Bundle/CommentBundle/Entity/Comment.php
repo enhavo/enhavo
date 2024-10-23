@@ -13,7 +13,6 @@ use Enhavo\Bundle\CommentBundle\Model\CommentInterface;
 use Enhavo\Bundle\CommentBundle\Model\CommentSubjectInterface;
 use Enhavo\Bundle\CommentBundle\Model\ThreadInterface;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
-use Enhavo\Bundle\ResourceBundle\Model\ResourceInterface;
 use Symfony\Component\Validator\Constraints\Collection;
 
 class Comment implements CommentInterface
