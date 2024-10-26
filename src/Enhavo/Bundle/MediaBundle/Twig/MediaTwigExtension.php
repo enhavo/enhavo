@@ -38,14 +38,14 @@ class MediaTwigExtension extends AbstractExtension
         } else if ($format !== null) {
             return $this->twigRouter->generate('enhavo_media_file_format', [
                 'id' => $file['id'],
-                'shortMd5Checksum' => substr($file['md5Checksum'], 0, 6),
+                'shortChecksum' => substr($file['checksum'], 0, 6),
                 'filename' => $file['filename'],
                 'format' => $format,
             ], $referenceType);
         } else {
             return $this->twigRouter->generate('enhavo_media_file_show', [
                 'id' => $file['id'],
-                'shortMd5Checksum' => substr($file['md5Checksum'], 0, 6),
+                'shortChecksum' => substr($file['checksum'], 0, 6),
                 'filename' => $file['filename'],
             ], $referenceType);
         }

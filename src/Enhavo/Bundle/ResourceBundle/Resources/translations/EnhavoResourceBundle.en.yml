@@ -46,3 +46,9 @@ filter:
   boolean:
     label_true: 'Yes'
     label_false: 'No'
+delete:
+    message:
+        confirm: 'Do you really want to delete this resource?'
+    action:
+        ok: 'Delete'
+        cancel: 'Cancel'

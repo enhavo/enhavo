@@ -16,12 +16,15 @@ use Enhavo\Bundle\ResourceBundle\Input\InputFactory;
 use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Csrf\CsrfToken;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class ResourceDeleteEndpointType extends AbstractEndpointType
 {
     public function __construct(
         private readonly InputFactory $inputFactory,
         private readonly ResourceManager $resourceManager,
+        private readonly CsrfTokenManagerInterface $csrfTokenManager,
     )
     {
     }
@@ -37,7 +40,12 @@ class ResourceDeleteEndpointType extends AbstractEndpointType
             throw $this->createNotFoundException();
         }
 
-        // check csrf token
+        if (!$this->csrfTokenManager->isTokenValid(new CsrfToken('resource_delete', $request->getPayload()->get('token')))) {
+            $context->setStatusCode(400);
+            $data['success'] = false;
+            $data['message'] = 'Invalid token';
+            return;
+        }
 
         $this->resourceManager->delete($resource);
     }

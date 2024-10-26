@@ -1,14 +1,8 @@
 enhavo_resource:
-    resources:
-        enhavo_media_library.file:
-            classes:
-                model: Enhavo\Bundle\MediaLibraryBundle\Entity\File
-                factory: Enhavo\Bundle\MediaLibraryBundle\Factory\FileFactory
-                repository: Enhavo\Bundle\MediaLibraryBundle\Repository\FileRepository
     grids:
         enhavo_media_library.file:
             extends: enhavo_resource.grid
-            resource: enhavo_media_library.file
+            resource: enhavo_media.file
             actions:
                 create:
                     type: create
@@ -49,7 +43,7 @@ enhavo_resource:
     inputs:
         enhavo_media_library.file:
             extends: enhavo_resource.input
-            resource: enhavo_media_library.file
+            resource: enhavo_media.file
             form: Enhavo\Bundle\MediaLibraryBundle\Form\Type\FileType
             form_options: {  }
             actions: {  }

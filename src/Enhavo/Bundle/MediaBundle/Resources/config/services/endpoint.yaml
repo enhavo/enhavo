@@ -4,8 +4,9 @@ services:
             - '%enhavo_media.cache_control.max_age%'
             - '%enhavo_media.streaming.disabled%'
             - '%enhavo_media.streaming.threshold%'
-            - '@Enhavo\Bundle\MediaBundle\Media\MediaManager'
+            - '@enhavo_media.file.repository'
             - '@security.authorization_checker'
+            - '@Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage'
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:
@@ -14,10 +15,9 @@ services:
 
     Enhavo\Bundle\MediaBundle\Endpoint\Type\FileReplaceEndpointType:
         arguments:
-            - '@enhavo_media.factory.file'
+            - '@enhavo_media.file.factory'
             - '@Enhavo\Bundle\MediaBundle\Media\MediaManager'
             - '@validator'
-            - '%enhavo_media.upload_validation.groups%'
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:
@@ -26,10 +26,9 @@ services:
 
     Enhavo\Bundle\MediaBundle\Endpoint\Type\FileUploadEndpointType:
         arguments:
-            - '@enhavo_media.factory.file'
-            - '@Enhavo\Bundle\MediaBundle\Media\MediaManager'
+            - '@enhavo_media.file.factory'
+            - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
             - '@validator'
-            - '%enhavo_media.upload_validation.groups%'
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:
@@ -42,7 +41,9 @@ services:
             - '%enhavo_media.streaming.disabled%'
             - '%enhavo_media.streaming.threshold%'
             - '@Enhavo\Bundle\MediaBundle\Media\MediaManager'
+            - '@enhavo_media.file.repository'
             - '@security.authorization_checker'
+            - '@Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage'
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:
@@ -58,8 +59,9 @@ services:
             - '@doctrine.orm.entity_manager'
             - '@Enhavo\Bundle\ResourceBundle\Action\ActionManager'
             - '@router'
-            - '@enhavo_media.media.image_cropper_manager'
+            - '@Enhavo\Bundle\MediaBundle\Media\ImageCropperManager'
             - '@security.csrf.token_manager'
+            - '@enhavo_media.file.repository'
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:

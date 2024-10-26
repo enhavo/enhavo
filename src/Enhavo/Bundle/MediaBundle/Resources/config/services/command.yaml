@@ -25,11 +25,3 @@ services:
             - '@enhavo_media.media.format_manager'
         tags:
             - { name: console.command }
-
-    Enhavo\Bundle\MediaBundle\Command\UpdateFileCommand:
-        arguments:
-            - '@enhavo_media.media.media_manager'
-            - '@enhavo_app.util.secure_url_token_generator'
-            - '@doctrine.orm.entity_manager'
-        tags:
-            - { name: console.command }

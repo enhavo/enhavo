@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\Validator\ConstraintViolation;
 
 trait FileTrait
 {
@@ -25,8 +26,9 @@ trait FileTrait
                     'token' => $file->getToken(),
                     'filename' => $file->getFilename(),
                     'extension' => $file->getExtension(),
+                    'basename' => $file->getBasename(),
                     'mimeType' => $file->getMimeType(),
-                    'md5Checksum' => $file->getMd5Checksum()
+                    'shortChecksum' => $file->getShortChecksum()
                 ];
             }
         }
@@ -36,9 +38,10 @@ trait FileTrait
                 'id' => $files->getId(),
                 'token' => $files->getToken(),
                 'filename' => $files->getFilename(),
+                'basename' => $files->getBasename(),
                 'extension' => $files->getExtension(),
                 'mimeType' => $files->getMimeType(),
-                'md5Checksum' => $files->getMd5Checksum()
+                'checksum' => $files->getChecksum()
             ];
         }
 
@@ -73,5 +76,18 @@ trait FileTrait
         }
 
         return $uploadedFile;
+    }
+
+    protected function getErrors($options, UploadedFile $uploadedFile): array
+    {
+        $result = [];
+
+        $errors = $this->validator->validate($uploadedFile, null, $options['validation_groups']);
+        /** @var ConstraintViolation $error */
+        foreach ($errors as $error) {
+            $result[] = $error->getMessage();
+        }
+
+        return $result;
     }
 }

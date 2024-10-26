@@ -33,7 +33,7 @@ class PrivateUrlGenerator implements UrlGeneratorInterface
         $formatObj = $this->mediaManager->getFormat($file, $format);
         return $this->router->generate('enhavo_media_file_format', [
             'id' => $file->getId(),
-            'shortMd5Checksum' => substr($file->getMd5Checksum(), 0, 6),
+            'shortChecksum' => substr($file->getChecksum(), 0, 6),
             'filename' => $formatObj->getFilename(),
             'format' => $format,
         ], $referenceType);

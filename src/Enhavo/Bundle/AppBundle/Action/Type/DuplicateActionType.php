@@ -2,12 +2,26 @@
 
 namespace Enhavo\Bundle\AppBundle\Action\Type;
 
+use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
 use Enhavo\Bundle\ResourceBundle\Action\ActionTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class DuplicateActionType extends AbstractActionType implements ActionTypeInterface
 {
+    public function __construct(
+        private readonly CsrfTokenManagerInterface $tokenManager,
+    )
+    {
+    }
+
+    public function createViewData(array $options, Data $data, object $resource = null): void
+    {
+        $data->set('token', $this->tokenManager->getToken('resource_delete')->getValue());
+    }
+
+
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

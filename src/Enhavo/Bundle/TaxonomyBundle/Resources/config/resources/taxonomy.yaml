@@ -1,6 +1,7 @@
 enhavo_resource:
     resources:
         enhavo_taxonomy.taxonomy:
+            priority: -10
             classes:
                 model: Enhavo\Bundle\TaxonomyBundle\Entity\Taxonomy
                 factory: Enhavo\Bundle\ResourceBundle\Factory\Factory

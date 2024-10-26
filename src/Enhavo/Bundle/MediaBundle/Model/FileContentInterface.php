@@ -6,20 +6,15 @@ use Enhavo\Bundle\MediaBundle\Content\ContentInterface;
 
 interface FileContentInterface
 {
-    /**
-     * @return ?string
-     */
-    public function getFilename();
+    public function getFilename(): string;
 
-    /**
-     * Get mimeType
-     *
-     * @return ?string
-     */
-    public function getMimeType();
+    public function getBasename(): string;
 
-    /**
-     * @return ContentInterface
-     */
-    public function getContent();
+    public function getExtension(): ?string;
+
+    public function getMimeType(): string;
+
+    public function getContent(): ContentInterface;
+
+    public function getChecksum(): string;
 }

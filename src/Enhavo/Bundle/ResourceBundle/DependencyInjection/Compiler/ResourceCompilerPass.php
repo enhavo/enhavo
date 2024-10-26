@@ -34,7 +34,7 @@ class ResourceCompilerPass implements CompilerPassInterface
 
         $serviceId = sprintf('%s.repository', $name);
 
-        if ($container->hasDefinition($serviceId)) {
+        if ($container->hasDefinition($serviceId) || $container->hasAlias($serviceId)) {
             return;
         }
 
@@ -53,7 +53,7 @@ class ResourceCompilerPass implements CompilerPassInterface
     {
         $serviceId = sprintf('%s.factory', $name);
 
-        if ($container->hasDefinition($serviceId)) {
+        if ($container->hasDefinition($serviceId) || $container->hasAlias($serviceId)) {
             return;
         }
 

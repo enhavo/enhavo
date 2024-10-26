@@ -30,7 +30,7 @@ class ResourceExpressionLanguage
         foreach ($array as $key => $item) {
             if (is_string($item)) {
                 $array[$key] = $this->evaluate($item, $values);
-            } else if (is_array($array) && $recursive) {
+            } else if (is_array($item) && $recursive) {
                 $array[$key] = $this->evaluateArray($item, $values, $recursive);
             }
         }

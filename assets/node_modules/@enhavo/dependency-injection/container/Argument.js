@@ -6,6 +6,7 @@ const TYPE_STRING = 'string';
 const TYPE_NUMBER = 'number';
 const TYPE_BOOLEAN = 'boolean';
 const TYPE_PARAM = 'param';
+const TYPE_JSON = 'json';
 const TYPE_CONTAINER = 'container';
 
 export default class Argument
@@ -16,10 +17,6 @@ export default class Argument
             this.value = null;
             this.type = TYPE_NULL;
             return;
-        }
-
-        if (typeof expression === 'object') {
-            throw new ContainerException('Argument expression should be type of object "'+(typeof expression)+'" given.');
         }
 
         if (type !== null) {
@@ -39,6 +36,9 @@ export default class Argument
     }
 
     _getValue(expression) {
+        if (typeof expression == 'object') {
+            return JSON.stringify(expression);
+        }
         let parts = expression.split(':');
         if(parts.length === 1) {
             return parts[0];
@@ -49,11 +49,15 @@ export default class Argument
     }
 
     _getType(expression) {
+        if (typeof expression == 'object') {
+            return 'json';
+        }
+
         let parts = expression.split(':');
         if(parts.length === 1) {
             return TYPE_SERVICE;
         } else if(parts.length === 2)  {
-            let types = [TYPE_SERVICE, TYPE_STRING, TYPE_NUMBER, TYPE_PARAM, TYPE_CONTAINER, TYPE_BOOLEAN];
+            let types = [TYPE_SERVICE, TYPE_STRING, TYPE_NUMBER, TYPE_PARAM, TYPE_CONTAINER, TYPE_BOOLEAN, TYPE_JSON];
             if(!types.includes(parts[0])) {
                 throw new ContainerException('Argument expression type not valid. Should be one of ['+types.join(',')+'] but got "'+parts[0]+'"');
             }

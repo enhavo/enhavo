@@ -12,24 +12,15 @@ use Enhavo\Bundle\MediaBundle\Model\FormatInterface;
 
 class ImageCropperManager
 {
-    /**
-     * @var array
-     */
-    private $formats;
-
-    public function __construct($formats)
+    public function __construct(
+        private readonly array $formats
+    )
     {
-        $this->formats = $formats;
     }
 
-    /**
-     * @param string|FormatInterface $format
-     * @return float|null
-     */
-    public function getFormatRatio($format)
+    public function getFormatRatio(string|FormatInterface $format): float|null
     {
-        $name = null;
-        if($format instanceof FormatInterface) {
+        if ($format instanceof FormatInterface) {
             $name = $format->getName();
         } else {
             $name = $format;
@@ -37,33 +28,33 @@ class ImageCropperManager
         return $this->findFormatRatio($name);
     }
 
-    private function findFormatRatio($name)
+    private function findFormatRatio(string $formatName): float|null
     {
         $width = null;
         $height = null;
 
-        if(isset($this->formats[$name])) {
-            $format = $this->formats[$name];
-            if(isset($format[0])) {
-                foreach($format as $filter) {
-                    if(isset($filter['width'])) {
+        if (isset($this->formats[$formatName])) {
+            $format = $this->formats[$formatName];
+            if (isset($format[0])) {
+                foreach ($format as $filter) {
+                    if (isset($filter['width'])) {
                         $width = $filter['width'];
                     }
-                    if(isset($filter['height'])) {
+                    if (isset($filter['height'])) {
                         $height = $filter['height'];
                     }
                 }
             } else {
-                if(isset($format['width'])) {
+                if (isset($format['width'])) {
                     $width = $format['width'];
                 }
-                if(isset($format['height'])) {
+                if (isset($format['height'])) {
                     $height = $format['height'];
                 }
             }
         }
 
-        if($width !== null && $height !== null) {
+        if ($width !== null && $height !== null) {
             return $width / $height;
         }
         return null;

@@ -39,7 +39,7 @@ services:
             - '%enhavo_article.article.model.class%'
             - '@enhavo_block.factory.node'
             - '@enhavo_routing.route.factory'
-            - '@enhavo_media.factory.file'
+            - '@enhavo_media.file.factory'
 
     Enhavo\Bundle\ArticleBundle\Vue\ArticleVueRouteProviderType:
         tags:

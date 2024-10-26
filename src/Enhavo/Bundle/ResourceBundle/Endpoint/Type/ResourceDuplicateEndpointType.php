@@ -10,12 +10,15 @@ use Enhavo\Bundle\ResourceBundle\Input\InputFactory;
 use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Csrf\CsrfToken;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class ResourceDuplicateEndpointType extends AbstractEndpointType
 {
     public function __construct(
         private readonly InputFactory $inputFactory,
         private readonly ResourceManager $resourceManager,
+        private readonly CsrfTokenManagerInterface $csrfTokenManager,
     )
     {
     }
@@ -31,7 +34,12 @@ class ResourceDuplicateEndpointType extends AbstractEndpointType
             throw $this->createNotFoundException();
         }
 
-        // check csrf token
+        if (!$this->csrfTokenManager->isTokenValid(new CsrfToken('resource_duplicate', $request->getPayload()->get('token')))) {
+            $context->setStatusCode(400);
+            $data['success'] = false;
+            $data['message'] = 'Invalid token';
+            return;
+        }
 
         $duplicate = $this->resourceManager->duplicate($resource);
         $this->resourceManager->save($duplicate);

@@ -4,12 +4,12 @@ namespace Enhavo\Bundle\ResourceBundle\DependencyInjection;
 
 use Enhavo\Bundle\ResourceBundle\DependencyInjection\Merge\GridConfigurationMerger;
 use Enhavo\Bundle\ResourceBundle\DependencyInjection\Merge\InputConfigurationMerger;
+use Enhavo\Bundle\ResourceBundle\DependencyInjection\Merge\ResourceMerger;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-use Symfony\Component\Yaml\Yaml;
 
 class EnhavoResourceExtension extends Extension implements PrependExtensionInterface
 {
@@ -24,6 +24,9 @@ class EnhavoResourceExtension extends Extension implements PrependExtensionInter
 
         $inputConfigurationMerger = new InputConfigurationMerger();
         $configs = $inputConfigurationMerger->performMerge($configs);
+
+        $resourceMerger = new ResourceMerger();
+        $configs = $resourceMerger->performMerge($configs);
 
         $config = $this->processConfiguration($configuration, $configs);
 

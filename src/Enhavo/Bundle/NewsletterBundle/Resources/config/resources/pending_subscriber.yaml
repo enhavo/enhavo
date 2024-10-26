@@ -1,6 +1,7 @@
 enhavo_resource:
     resources:
         enhavo_newsletter.pending_subscriber:
+            priority: -10
             classes:
                 model: Enhavo\Bundle\NewsletterBundle\Entity\PendingSubscriber
                 repository: Enhavo\Bundle\NewsletterBundle\Repository\PendingSubscriberRepository

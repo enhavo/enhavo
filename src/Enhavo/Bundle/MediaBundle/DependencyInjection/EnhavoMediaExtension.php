@@ -19,8 +19,8 @@ class EnhavoMediaExtension extends Extension implements PrependExtensionInterfac
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
         $container->setParameter('enhavo_media.formats', $config['formats']);
-        $container->setParameter('enhavo_media.provider', $config['provider']);
         $container->setParameter('enhavo_media.storage', $config['storage']);
+        $container->setParameter('enhavo_media.checksum_generator', $config['checksum_generator']);
         $container->setParameter('enhavo_media.filter.video_image', $config['filter']['video_image']);
         $container->setParameter('enhavo_media.filter.image_compression', $config['filter']['image_compression']);
         $container->setParameter('enhavo_media.form', $config['form']);
@@ -28,8 +28,7 @@ class EnhavoMediaExtension extends Extension implements PrependExtensionInterfac
         $container->setParameter('enhavo_media.cache_control.class', $config['cache_control']['class']);
         $container->setParameter('enhavo_media.streaming.disabled', $config['streaming']['disabled']);
         $container->setParameter('enhavo_media.streaming.threshold', $config['streaming']['threshold']);
-        $container->setParameter('enhavo_media.upload_validation.groups', $config['upload_validation']['groups']);
-        $container->setParameter('enhavo_media.upload_validation.clamav', $config['upload_validation']['clamav']);
+        $container->setParameter('enhavo_media.clam_av', $config['clam_av']);
         $container->setParameter('enhavo_media.garbage_collection.enabled', $config['garbage_collection']['enabled']);
         $container->setParameter('enhavo_media.garbage_collection.enable_listener', $config['garbage_collection']['enable_listener']);
         $container->setParameter('enhavo_media.garbage_collection.enable_delete_unreferenced', $config['garbage_collection']['enable_delete_unreferenced']);
@@ -43,7 +42,6 @@ class EnhavoMediaExtension extends Extension implements PrependExtensionInterfac
             'services/command.yaml',
             'services/endpoint.yaml',
             'services/media.yaml',
-            'services/extension.yaml',
             'services/filter.yaml',
             'services/garbage_collection.yaml',
             'services/file_not_found.yaml',

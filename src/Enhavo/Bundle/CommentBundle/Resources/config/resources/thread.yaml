@@ -1,6 +1,7 @@
 enhavo_resource:
     resources:
         enhavo_comment.thread:
+            priority: -10
             classes:
                 model: Enhavo\Bundle\CommentBundle\Entity\Thread
                 factory: Enhavo\Bundle\ResourceBundle\Factory\Factory

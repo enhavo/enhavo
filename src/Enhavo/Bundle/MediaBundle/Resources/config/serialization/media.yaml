@@ -10,5 +10,5 @@ Enhavo\Bundle\MediaBundle\Entity\File:
             groups: ['endpoint', 'endpoint.block']
         parameters:
             groups: ['endpoint', 'endpoint.block']
-        md5Checksum:
+        checksum:
             groups: ['endpoint', 'endpoint.block']

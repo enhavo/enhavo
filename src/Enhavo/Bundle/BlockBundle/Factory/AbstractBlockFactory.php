@@ -36,6 +36,6 @@ abstract class AbstractBlockFactory implements ContainerAwareInterface, FactoryI
 
     public function getFileFactory()
     {
-        return $this->container->get('enhavo_media.factory.file');
+        return $this->container->get('enhavo_media.file.factory');
     }
 }

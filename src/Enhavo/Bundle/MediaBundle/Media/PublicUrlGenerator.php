@@ -24,7 +24,7 @@ class PublicUrlGenerator implements UrlGeneratorInterface
     {
         return $this->router->generate('enhavo_media_file_show', [
             'id' => $file->getId(),
-            'shortMd5Checksum' => substr($file->getMd5Checksum(), 0, 6),
+            'shortChecksum' => substr($file->getChecksum(), 0, 6),
             'filename' => $file->getFilename()
         ], $referenceType);
     }
@@ -33,7 +33,7 @@ class PublicUrlGenerator implements UrlGeneratorInterface
     {
         return $this->router->generate('enhavo_media_file_format', [
             'id' => $file->getId(),
-            'shortMd5Checksum' => substr($file->getMd5Checksum(), 0, 6),
+            'shortChecksum' => substr($file->getChecksum(), 0, 6),
             'filename' => $file->getFilename(),
             'format' => $format,
         ], $referenceType);

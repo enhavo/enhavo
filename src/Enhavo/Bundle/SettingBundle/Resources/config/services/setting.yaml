@@ -25,7 +25,7 @@ services:
 
     Enhavo\Bundle\SettingBundle\Setting\Type\MediaSettingType:
         arguments:
-            - '@enhavo_media.factory.file'
+            - '@enhavo_media.file.factory'
         tags:
             - enhavo_setting.setting
 

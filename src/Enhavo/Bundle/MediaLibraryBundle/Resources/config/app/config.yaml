@@ -82,10 +82,10 @@ enhavo_media_library:
 enhavo_resource:
     resources:
         enhavo_media.file:
+            priority: -5
             classes:
                 model: Enhavo\Bundle\MediaLibraryBundle\Entity\File
                 repository: Enhavo\Bundle\MediaLibraryBundle\Repository\FileRepository
-                factory: Enhavo\Bundle\MediaLibraryBundle\Factory\FileFactory
 
 enhavo_media:
     formats:

@@ -10,7 +10,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 class Configuration implements ConfigurationInterface
 {
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('enhavo_resource');
         $rootNode = $treeBuilder->getRootNode();
@@ -31,6 +31,7 @@ class Configuration implements ConfigurationInterface
                         ->children()
                             ->scalarNode('label')->defaultValue(null)->end()
                             ->scalarNode('translation_domain')->defaultValue(null)->end()
+                            ->scalarNode('priority')->defaultValue(0)->end()
                             ->arrayNode('classes')
                                 ->children()
                                     ->scalarNode('model')->end()

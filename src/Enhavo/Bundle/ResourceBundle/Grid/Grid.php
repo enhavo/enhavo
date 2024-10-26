@@ -64,12 +64,12 @@ class Grid extends AbstractGrid implements ConfigMergeInterface
         foreach ($current as $key => $value) {
             if (in_array($key, $mergeKeys)) {
                 if (array_key_exists($key, $before) && is_array($before[$key])) {
-                    $before[$key] = array_merge($before[$key], $current[$key]);
+                    $before[$key] = array_merge($before[$key], $value);
                 } else {
-                    $before[$key] = $current[$key];
+                    $before[$key] = $value;
                 }
             } else {
-                $before[$key] = $current[$key];
+                $before[$key] = $value;
             }
         }
 

@@ -1,6 +1,7 @@
 enhavo_resource:
     resources:
         enhavo_setting.setting:
+            priority: -10
             classes:
                 model: Enhavo\Bundle\SettingBundle\Entity\Setting
                 factory: Enhavo\Bundle\ResourceBundle\Factory\Factory

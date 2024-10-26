@@ -44,7 +44,7 @@
 
         <div class="related-buttons-row">
             <button class="btn has-symbol" v-if="form.upload" @click.prevent="form.startUpload()">{{ form.uploadLabel }} <span class="icon icon-cloud_upload"></span></button>
-            <button class="btn has-symbol" v-for="button of form.buttons">{{ button.label }}</button>
+            <component v-for="action of form.getActions()" :is="action.component" :data="action"></component>
         </div>
 
         <div class="messages">
@@ -63,4 +63,5 @@ const draggable = draggableComponent;
 const props = defineProps<{
     form: MediaForm
 }>()
+
 </script>

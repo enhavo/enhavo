@@ -69,6 +69,7 @@ enhavo_navigation:
 enhavo_resource:
     resources:
         enhavo_page.page:
+            priority: -10
             classes:
                 model: Enhavo\Bundle\PageBundle\Entity\Page
                 factory: Enhavo\Bundle\PageBundle\Factory\PageFactory

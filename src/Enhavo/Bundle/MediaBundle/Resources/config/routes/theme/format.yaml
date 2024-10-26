@@ -1,10 +1,12 @@
 enhavo_media_theme_format:
-    path:  /media/format/{id}/{format}/{shortMd5Checksum}/{filename}
+    path:  /media/format/{id}/{format}/{shortChecksum}/{filename}.{extension}
     methods: [GET]
     defaults:
         _expose: [theme, admin]
         _endpoint:
             type: media_format
-            find_by: [id, filename]
-            checksum_test: true
-            checksum_parameter: shortMd5Checksum
+            repository_arguments:
+                - id: expr:request.get("id")
+                  filename: expr:request.get("filename")
+                  extension: expr:request.get("extension")
+                  shortChecksum: expr:request.get("shortChecksum")

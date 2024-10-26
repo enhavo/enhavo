@@ -8,7 +8,7 @@
         </div>
         <ul class="dropdown-action-list" v-if="open" @click="itemClick()">
             <template v-for="action in data.items">
-                <component class="action-container" :is="action.component" :data="action" :data-action="action.key"></component>
+                <component class="action-container" :is="action.component" :data="action"></component>
             </template>
         </ul>
     </div>

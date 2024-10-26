@@ -1,6 +1,7 @@
 enhavo_resource:
     resources:
         enhavo_user.user:
+            priority: -10
             classes:
                 model: Enhavo\Bundle\UserBundle\Model\User
                 factory: Enhavo\Bundle\UserBundle\Factory\UserFactory

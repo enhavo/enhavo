@@ -1,11 +1,12 @@
 <?php
 namespace Enhavo\Bundle\MediaBundle\Factory;
 
+use Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface;
+use Enhavo\Bundle\MediaBundle\Checksum\ChecksumGeneratorInterface;
 use Enhavo\Bundle\MediaBundle\Content\Content;
 use Enhavo\Bundle\MediaBundle\Content\PathContent;
 use Enhavo\Bundle\MediaBundle\Exception\FileException;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
-use Enhavo\Bundle\MediaBundle\Provider\ProviderInterface;
 use Enhavo\Bundle\ResourceBundle\Factory\Factory;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\HttpFoundation\File\File;
@@ -16,15 +17,14 @@ class FileFactory extends Factory
 {
     use GuessTrait;
 
-    /**
-     * @var ProviderInterface
-     */
-    private $provider;
-
-    public function __construct($className, ProviderInterface $provider, private HttpClientInterface $client)
+    public function __construct(
+        string $className,
+        private readonly TokenGeneratorInterface $tokenGenerator,
+        private readonly ChecksumGeneratorInterface $checksumGenerator,
+        private readonly HttpClientInterface $client,
+    )
     {
         parent::__construct($className);
-        $this->provider = $provider;
     }
 
     public function createNew()
@@ -36,87 +36,33 @@ class FileFactory extends Factory
         return $file;
     }
 
-    public function createTemp()
+    public function createTemp(): FileInterface
     {
-        /** @var FileInterface $file */
         $file = $this->createNew();
 
         $file->setMimeType('application/octet-stream');
-        $file->setExtension(null);
 
         $content = new Content('');
         $file->setContent($content);
-        $file->setFilename(basename($content->getFilePath()));
+        $file->setBasename(basename($content->getFilePath()));
 
-        $this->provider->updateFile($file);
+        $this->updateFile($file);
         return $file;
     }
 
-    /**
-     * @param FileInterface $originalResource
-     * @return FileInterface
-     */
-    public function duplicate(FileInterface $originalResource)
+    public function createFromUploadedFile(UploadedFile $uploadedFile): FileInterface
     {
-        /** @var FileInterface $file */
-        $file = $this->createNew();
-
-        $file->setMimeType($originalResource->getMimeType());
-        $file->setExtension($originalResource->getExtension());
-        $file->setOrder($originalResource->getOrder());
-        $file->setFilename($originalResource->getFilename());
-        $file->setParameters($originalResource->getParameters());
-        $file->setLibrary($originalResource->isLibrary());
-
-        $content = new Content($originalResource->getContent()->getContent());
-        $file->setContent($content);
-
-        $this->provider->updateFile($file);
-        return $file;
-    }
-
-    /**
-     * @param UploadedFile $uploadedFile
-     * @return FileInterface
-     */
-    public function createFromUploadedFile(UploadedFile $uploadedFile)
-    {
-        /** @var File $newFile */
         $file = $this->createNew();
 
         $file->setMimeType($uploadedFile->getMimeType());
-        $file->setExtension($uploadedFile->guessClientExtension());
-        $file->setFilename($uploadedFile->getClientOriginalName());
+        $file->setBasename($uploadedFile->getClientOriginalName());
         $file->setContent(new PathContent($uploadedFile->getRealPath()));
 
-        $this->provider->updateFile($file);
+        $this->updateFile($file);
         return $file;
     }
 
-    /**
-     * @param File $file
-     * @return FileInterface
-     */
-    public function createFromFile(File $file)
-    {
-        return $this->createFromPath($file->getRealPath());
-    }
-
-    /**
-     * @param SplFileInfo $file
-     * @return FileInterface
-     */
-    public function createFromSplFileInfo(SplFileInfo $file)
-    {
-        return $this->createFromPath($file->getRealPath());
-    }
-
-    /**
-     * @param string $path
-     * @return FileInterface
-     * @throws FileException
-     */
-    public function createFromPath($path)
+    public function createFromPath(string $path): FileInterface
     {
         if (!is_readable($path)) {
             throw new FileException(sprintf('File "%s" not found or not readable.', $path));
@@ -124,60 +70,50 @@ class FileFactory extends Factory
 
         $fileInfo = pathinfo($path);
 
-        /** @var FileInterface $file */
         $file = $this->createNew();
 
         $file->setMimeType($this->guessMimeType($path));
-        $file->setExtension(array_key_exists('extension', $fileInfo) ? $fileInfo['extension'] : $this->guessExtension($path));
-        $file->setFilename($fileInfo['basename']);
+        $file->setBasename($fileInfo['basename']);
         $file->setContent(new PathContent($path));
 
-        $this->provider->updateFile($file);
+        $this->updateFile($file);
         return $file;
     }
 
-    public function createFromContent($content)
+    public function createFromContent(mixed $content): FileInterface
     {
-        /** @var FileInterface $file */
         $file = $this->createNew();
 
         $content = new Content($content);
 
-        $file->setFilename(basename($content->getFilePath()));
-        $file->setExtension($this->guessExtension($content->getFilePath()));
+        $file->setBasename(basename($content->getFilePath()));
         $file->setMimeType($this->guessMimeType($content->getFilePath()));
         $file->setContent($content);
 
-        $this->provider->updateFile($file);
+        $this->updateFile($file);
         return $file;
     }
 
-    /**
-     * @param string $uri
-     * @param string $filename
-     * @return FileInterface
-     */
-    public function createFromUri($uri, $filename = null)
+    public function createFromUri(string $uri, string $filename = null): FileInterface
     {
         $response = $this->client->request('GET', $uri);
-        if($response->getStatusCode() != 200) {
+        if ($response->getStatusCode() != 200) {
             throw new FileException(sprintf('File could not be download from uri "%s".', $uri));
         }
 
-        /** @var FileInterface $file */
         $file = $this->createNew();
 
         $file->setMimeType('application/octet-stream');
         $headers = $response->getHeaders();
         $contentType = $headers['content-type'];
-        if(!empty($contentType)) {
+        if (!empty($contentType)) {
             $parsedHeader = $this->parse($contentType[count($contentType)-1]);
             if(!empty($parsedHeader) && isset($parsedHeader[0]) && isset($parsedHeader[0][0])) {
                 $file->setMimeType($parsedHeader[0][0]);
             }
         }
 
-        if($filename === null) {
+        if ($filename === null) {
             $contentDisposition = $headers['content-disposition'];
             if(!empty($contentDisposition)) {
                 if (preg_match('/.*?filename="(.+?)"/', $contentDisposition[0], $matches)) {
@@ -194,22 +130,19 @@ class FileFactory extends Factory
             }
         }
 
-        if($filename === null) {
+        if ($filename === null) {
             throw new FileException(sprintf('Can\'t resolve filename from uri "%s".', $uri));
         }
 
-        $file->setFilename($filename);
-        $extension = pathinfo($filename, PATHINFO_EXTENSION);
-        $file->setExtension($extension);
-
+        $file->setBasename($filename);
         $file->setGarbage(true);
         $file->setContent(new Content((string)$response->getContent()));
 
-        $this->provider->updateFile($file);
+        $this->updateFile($file);
         return $file;
     }
 
-    private function parse($header)
+    private function parse($header): array
     {
         $trimmed = "\"'  \n\t\r";
         $params = $matches = [];
@@ -234,7 +167,7 @@ class FileFactory extends Factory
         return $params;
     }
 
-    private function normalize($header)
+    private function normalize($header): array
     {
         if (!is_array($header)) {
             return array_map('trim', explode(',', $header));
@@ -254,5 +187,11 @@ class FileFactory extends Factory
         }
 
         return $result;
+    }
+
+    private function updateFile(FileInterface $file): void
+    {
+        $file->setToken($this->tokenGenerator->generateToken(10));
+        $file->setChecksum($this->checksumGenerator->getChecksum($file->getContent()));
     }
 }

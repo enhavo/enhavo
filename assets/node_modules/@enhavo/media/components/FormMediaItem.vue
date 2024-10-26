@@ -9,8 +9,7 @@
             <form-row :form="form.get('filename')" />
             <form-widget :form="form.get('parameters')" />
             <div class="button-row">
-                <button class="btn has-symbol">Herunterladen <i class="icon icon-cloud_download"></i></button>
-                <button class="btn has-symbol">Format <i class="icon icon-crop"></i></button>
+                <component v-for="action of form.getActions()" :is="action.component" :data="action"></component>
             </div>
             <form-widget :form="form.get('order')" />
             <form-widget :form="form.get('id')" />

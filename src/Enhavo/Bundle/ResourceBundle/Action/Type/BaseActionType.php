@@ -32,10 +32,9 @@ class BaseActionType extends AbstractType implements ActionTypeInterface
         $data->set('label', $this->getLabel($options));
 
         $data->set('confirm', $options['confirm']);
-        $data->set('confirm_on_change', $options['confirm_changes']);
-        $data->set('confirm_message', $this->translator->trans($options['confirm_message'], [], $options['translation_domain']));
-        $data->set('confirm_label_ok', $this->translator->trans($options['confirm_label_ok'], [], $options['translation_domain']));
-        $data->set('confirm_label_cancel', $this->translator->trans($options['confirm_label_cancel'], [], $options['translation_domain']));
+        $data->set('confirmMessage', $this->translator->trans($options['confirm_message'], [], $options['translation_domain']));
+        $data->set('confirmLabelOk', $this->translator->trans($options['confirm_label_ok'], [], $options['translation_domain']));
+        $data->set('confirmLabelCancel', $this->translator->trans($options['confirm_label_cancel'], [], $options['translation_domain']));
     }
 
     public function isEnabled(array $options, object $resource = null): bool
@@ -66,7 +65,6 @@ class BaseActionType extends AbstractType implements ActionTypeInterface
             'permission' => null,
             'enabled' => true,
             'confirm' => false,
-            'confirm_changes' => true,
             'confirm_message' => 'message.close.confirm',
             'confirm_label_ok' => 'label.ok',
             'confirm_label_cancel' => 'label.cancel',

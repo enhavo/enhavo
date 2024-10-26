@@ -6,6 +6,7 @@ enhavo_app:
     abort: 'Close'
     cancel: 'Cancel'
     error: 'Error occurred'
+    close: 'Close'
     input:
         message:
             save_success: 'Save successful'

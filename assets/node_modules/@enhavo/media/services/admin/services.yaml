@@ -43,3 +43,20 @@ services:
             - '@enhavo/media/manager/ImageCropperManager'
         tags:
             - { name: enhavo_app.action }
+
+    '@enhavo/media/action/MediaDownloadAction':
+        import: MediaDownloadAction
+        chunk: 'action'
+        arguments:
+            - '@enhavo/media/resolver/FileResolver'
+        tags:
+            - { name: enhavo_app.action }
+
+    '@enhavo/media/action/MediaFormatAction':
+        import: MediaFormatAction
+        chunk: 'action'
+        arguments:
+            - '@enhavo/app/frame/FrameManager'
+            - '@enhavo/app/routing/Router'
+        tags:
+            - { name: enhavo_app.action }

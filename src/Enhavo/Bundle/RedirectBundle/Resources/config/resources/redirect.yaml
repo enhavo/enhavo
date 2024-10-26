@@ -1,6 +1,7 @@
 enhavo_resource:
     resources:
         enhavo_redirect.redirect:
+            priority: -10
             classes:
                 model: Enhavo\Bundle\RedirectBundle\Entity\Redirect
                 factory: Enhavo\Bundle\ResourceBundle\Factory\Factory

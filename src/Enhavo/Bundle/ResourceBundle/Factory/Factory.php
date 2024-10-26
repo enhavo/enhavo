@@ -13,7 +13,7 @@ namespace Enhavo\Bundle\ResourceBundle\Factory;
 class Factory implements FactoryInterface
 {
     public function __construct(
-        private string $className
+        private readonly string $className
     )
     {
     }

@@ -60,7 +60,7 @@ class FileFactoryTest extends TestCase
 
         $file = $instance->createFromUri('http://127.0.0.1:1234/create/from/uri');
 
-        $this->assertEquals("test.txt", $file->getFilename());
+        $this->assertEquals("test.txt", $file->getBasename());
     }
 
     public function testCreateFromUriWithFileName()
@@ -70,7 +70,7 @@ class FileFactoryTest extends TestCase
 
         $file = $instance->createFromUri('http://127.0.0.1:1234/create/from/uri', "filename.txt");
 
-        $this->assertEquals("filename.txt", $file->getFilename());
+        $this->assertEquals("filename.txt", $file->getBasename());
     }
 
     public function testCreateFromUriWithMimeType()
