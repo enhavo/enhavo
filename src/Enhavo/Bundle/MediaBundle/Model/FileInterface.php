@@ -13,173 +13,53 @@ use Enhavo\Bundle\MediaBundle\Content\ContentInterface;
 
 interface FileInterface extends FileContentInterface
 {
-    /**
-     * Get id
-     *
-     * @return integer
-     */
     public function getId();
 
-    /**
-     * @return string
-     */
-    public function getToken();
+    public function getToken(): ?string;
 
-    /**
-     * @param $token string
-     */
-    public function setToken($token);
+    public function setToken(string $token);
 
-    /**
-     * Set mimeType
-     *
-     * @param string $mimeType
-     * @return FileInterface
-     */
-    public function setMimeType($mimeType);
+    public function setMimeType(string $mimeType);
 
-    /**
-     * Get mimeType
-     *
-     * @return string
-     */
-    public function getMimeType();
+    public function getMimeType(): string;
 
-    /**
-     * Set extension
-     *
-     * @param string $extension
-     * @return FileInterface
-     */
-    public function setExtension($extension);
+    public function setExtension(?string $extension);
 
-    /**
-     * Get extension
-     *
-     * @return string
-     */
-    public function getExtension();
+    public function setOrder(?int $order);
 
-    /**
-     * Set order
-     *
-     * @param integer $order
-     * @return FileInterface
-     */
-    public function setOrder($order);
+    public function getOrder(): ?int;
 
-    /**
-     * Get order
-     *
-     * @return integer
-     */
-    public function getOrder();
+    public function setFilename(string $filename);
 
-    /**
-     * @return string
-     */
-    public function getFilename();
+    public function setBasename(string $basename);
 
-    /**
-     * @param string $filename
-     *
-     * @return FileInterface
-     */
-    public function setFilename($filename);
+    public function setParameter(string $key, mixed $value);
 
-    /**
-     * Sets the parameter $key to value $value
-     *
-     * @param string $key
-     * @param string $value
-     * @return FileInterface
-     */
-    public function setParameter($key, $value);
+    public function getParameter(string $key): mixed;
 
-    /**
-     * Returns the parameter value for $key.
-     * If no value is set for $key, returns null.
-     *
-     * @param string $key
-     * @return string|null
-     */
-    public function getParameter($key);
+    public function getParameters(): array;
 
-    /**
-     * @return array
-     */
-    public function getParameters();
+    public function setParameters(array $parameters);
 
-    /**
-     * @param array $parameters
-     * @return FileInterface
-     */
-    public function setParameters($parameters);
+    public function isGarbage(): bool;
 
-    /**
-     * @return boolean
-     */
-    public function isGarbage();
+    public function setGarbage(bool $garbage, \DateTime $garbageTimestamp = null);
 
-    /**
-     * @param boolean $garbage
-     * @param \DateTime $garbageTimestamp
-     *
-     * @return FileInterface
-     */
-    public function setGarbage($garbage, \DateTime $garbageTimestamp = null);
+    public function getGarbageTimestamp(): ?\DateTime;
 
-    /**
-     * @return \DateTime
-     */
-    public function getGarbageTimestamp();
+    public function setGarbageTimestamp(?\DateTime $garbageTimestamp);
 
-    /**
-     * @param \DateTime $garbageTimestamp
-     *
-     * @return FileInterface
-     */
-    public function setGarbageTimestamp($garbageTimestamp);
+    public function isImage(): bool;
 
-    /**
-     * Returns if this file is an image based on the mime type
-     *
-     * @return bool
-     */
-    public function isImage();
-
-    /**
-     * @return ContentInterface
-     */
-    public function getContent();
-
-    /**
-     * @param ContentInterface $content
-     */
     public function setContent(ContentInterface $content);
 
-    /**
-     * @return string
-     */
-    public function getMd5Checksum();
+    public function getShortChecksum(): string;
 
-    /**
-     * @param string $md5Checksum
-     */
-    public function setMd5Checksum($md5Checksum);
+    public function setChecksum(string $checksum);
 
-    /**
-     * @return bool
-     */
-    public function isLibrary();
+    public function isLibrary(): bool;
 
-    /**
-     * @param bool $library
-     */
-    public function setLibrary($library);
+    public function setLibrary(bool $library);
 
-    /**
-     * @param \DateTime|null $garbageCheckedAt
-     */
     public function setGarbageCheckedAt(?\DateTime $garbageCheckedAt);
 }

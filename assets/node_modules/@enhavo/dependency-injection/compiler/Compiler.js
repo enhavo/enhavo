@@ -173,6 +173,8 @@ export default class Compiler
             return argument.getValue() ? 'true' : 'false';
         } else if (argument.getType() === 'number') {
             return `parseInt("`+argument.getValue()+`")`;
+        } else if (argument.getType() === 'json') {
+            return `JSON.parse('`+argument.getValue()+`')`;
         } else if (argument.getType() === 'param') {
             return `this.getParameter("`+argument.getValue()+`")`;
         } else if (argument.getType() === 'container') {

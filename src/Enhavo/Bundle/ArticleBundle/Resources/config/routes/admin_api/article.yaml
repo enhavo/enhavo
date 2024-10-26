@@ -36,7 +36,7 @@ enhavo_article_admin_api_article_update:
 
 enhavo_article_admin_api_article_delete:
     path: /article/delete/{id}
-    methods: [DELETE]
+    methods: [DELETE, POST]
     defaults:
         _expose: admin_api
         _endpoint:

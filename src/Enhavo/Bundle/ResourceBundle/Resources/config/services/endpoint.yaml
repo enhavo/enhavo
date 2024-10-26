@@ -49,3 +49,25 @@ services:
         tags:
             - { name: enhavo_api.endpoint }
             - { name: container.service_subscriber }
+
+    Enhavo\Bundle\ResourceBundle\Endpoint\Type\ResourceDeleteEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\ResourceBundle\Input\InputFactory'
+            - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
+            - '@Symfony\Component\Security\Csrf\CsrfTokenManagerInterface'
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\ResourceBundle\Endpoint\Type\ResourceDuplicateEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\ResourceBundle\Input\InputFactory'
+            - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
+            - '@Symfony\Component\Security\Csrf\CsrfTokenManagerInterface'
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }

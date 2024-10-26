@@ -11,6 +11,7 @@ namespace Enhavo\Bundle\MediaBundle\Media;
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Type\TypeCollector;
 use Enhavo\Bundle\MediaBundle\Cache\CacheInterface;
+use Enhavo\Bundle\MediaBundle\Checksum\ChecksumGeneratorInterface;
 use Enhavo\Bundle\MediaBundle\Entity\Format;
 use Enhavo\Bundle\MediaBundle\Exception\FormatException;
 use Enhavo\Bundle\MediaBundle\Factory\FormatFactory;
@@ -18,68 +19,34 @@ use Enhavo\Bundle\MediaBundle\Filter\FilterInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\MediaBundle\Model\FilterSetting;
 use Enhavo\Bundle\MediaBundle\Model\FormatInterface;
-use Enhavo\Bundle\MediaBundle\Provider\ProviderInterface;
 use Enhavo\Bundle\MediaBundle\Repository\FormatRepository;
-use Enhavo\Bundle\MediaBundle\Storage\StorageInterface;
+use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
 
 class FormatManager
 {
-    const LOCK_TIMEOUT = 60; // 3 minutes
-
-    /** @var array */
-    private $formats;
-
-    /** @var StorageInterface */
-    private $storage;
-
-    /** @var FormatRepository */
-    private $formatRepository;
-
-    /** @var FormatFactory */
-    private $formatFactory;
-
-    /** @var TypeCollector */
-    private $filterCollector;
-
-    /** @var EntityManagerInterface */
-    private $em;
-
-    /** @var ProviderInterface */
-    private $provider;
-
-    /** @var CacheInterface */
-    private $cache;
+    const LOCK_TIMEOUT = 60; // seconds
 
     public function __construct(
-        $formats,
-        StorageInterface $storage,
-        FormatRepository $repository,
-        FormatFactory $formatFactory,
-        TypeCollector $filterCollector,
-        EntityManagerInterface $em,
-        ProviderInterface $provider,
-        CacheInterface $cache
+        private readonly array $formats,
+        private readonly ResourceManager $resourceManager,
+        private readonly FormatRepository $formatRepository,
+        private readonly FormatFactory $formatFactory,
+        private readonly TypeCollector $filterCollector,
+        private readonly EntityManagerInterface $em,
+        private readonly CacheInterface $cache,
+        private readonly ChecksumGeneratorInterface $checksumGenerator,
     )
     {
-        $this->formats = $formats;
-        $this->storage = $storage;
-        $this->formatRepository = $repository;
-        $this->formatFactory = $formatFactory;
-        $this->filterCollector = $filterCollector;
-        $this->em = $em;
-        $this->provider = $provider;
-        $this->cache = $cache;
     }
 
-    private function createFormat(FileInterface $file, $format, $parameters = [])
+    private function createFormat(FileInterface $file, string $name, $parameters = []): FormatInterface
     {
-        $fileFormat = $this->formatFactory->createFromMediaFile($file);
-        $fileFormat->setName($format);
-        $this->em->persist($fileFormat);
-        return $fileFormat;
+        $format = $this->formatFactory->createFromMediaFile($name, $file);
+        $format->setParameters($parameters);
+        return $format;
     }
 
-    public function getFormat(FileInterface $file, $format, $parameters = [])
+    public function getFormat(FileInterface $file, $format, $parameters = []): FormatInterface
     {
         if (!$this->existsFormat($format)) {
             throw new FormatException(sprintf('Format "%s" not exists', $format));
@@ -113,7 +80,7 @@ class FormatManager
         return $fileFormat;
     }
 
-    public function applyFormat(FileInterface $file, $format, $parameters = [])
+    public function applyFormat(FileInterface $file, $format, $parameters = []): FormatInterface
     {
         if (!$this->existsFormat($format)) {
             throw new FormatException(sprintf('Format "%s" not exists', $format));
@@ -143,7 +110,7 @@ class FormatManager
         return $fileFormat;
     }
 
-    public function applyFormats(FileInterface $file)
+    public function applyFormats(FileInterface $file): void
     {
         /** @var Format[] $fileFormats */
         $fileFormats = $this->formatRepository->findBy([
@@ -155,34 +122,32 @@ class FormatManager
         }
     }
 
-    /**
-     * @param $type
-     * @return FilterInterface
-     */
-    public function getFilter($type)
+
+    public function getFilter(string $type): FilterInterface
     {
         /** @var FilterInterface $filter */
         $filter = $this->filterCollector->getType($type);
         return $filter;
     }
 
-    private function applyFilter(FormatInterface $fileFormat, $parameters)
+    private function applyFilter(FormatInterface $fileFormat, $parameters): FormatInterface
     {
         $parameters = array_merge($fileFormat->getParameters(), $parameters);
         $settings = $this->getFormatSettings($fileFormat->getName(), $parameters);
 
-        $newFileFormat = $this->formatFactory->createFromMediaFile($fileFormat->getFile());
+        $newFileFormat = $this->formatFactory->createFromMediaFile($fileFormat->getName(), $fileFormat->getFile());
         $fileFormat->setContent($newFileFormat->getContent());
 
 
-        foreach($settings as $setting) {
+        foreach ($settings as $setting) {
             $filter = $this->getFilter($setting->getType());
             $filter->apply($fileFormat, $setting);
         }
 
-        $this->storage->saveFile($fileFormat);
+        $this->resourceManager->save($fileFormat);
 
         $this->cache->refresh($fileFormat->getFile(), $fileFormat->getName());
+        $fileFormat->setChecksum($this->checksumGenerator->getChecksum($fileFormat->getContent()));
 
         return $fileFormat;
     }
@@ -193,7 +158,7 @@ class FormatManager
      * @param FormatInterface|null $fileFormat
      * @return bool
      */
-    private function waitForLock(?FormatInterface $fileFormat)
+    private function waitForLock(?FormatInterface $fileFormat): bool
     {
         $timeoutThreshold = new \DateTime(self::LOCK_TIMEOUT . ' seconds ago');
 
@@ -240,44 +205,22 @@ class FormatManager
         $this->em->flush();
     }
 
-    public function deleteFormats(FileInterface $file, bool $flush = true)
-    {
-        $formats = $this->formatRepository->findBy([
-            'file' => $file
-        ]);
-        foreach($formats as $format) {
-            $this->deleteFormat($format, $flush);
-        }
-    }
-
-    public function saveFormat(FormatInterface $format)
-    {
-        $this->em->persist($format);
-        $this->em->flush();
-        $this->storage->saveFile($format);
-    }
-
-    public function deleteFormat(FormatInterface $format, bool $flush = true)
+    public function deleteFormat(FormatInterface $format, bool $flush = true): void
     {
         $this->em->remove($format);
         if ($flush) {
             $this->em->flush();
         }
-        $this->storage->deleteFile($format);
+        $this->resourceManager->delete($format);
     }
 
-    public function existsFormat($formatName)
+    public function existsFormat(string $formatName): bool
     {
         return in_array($formatName, array_keys($this->formats));
     }
 
-    /**
-     * @param string $format format name
-     * @param array $parameters
-     * @return FilterSetting[]
-     * @throws \Exception
-     */
-    public function getFormatSettings($format, $parameters = [])
+    /** @return FilterSetting[] */
+    public function getFormatSettings(string $format, array $parameters = []): array
     {
         if(!is_array($this->formats) || !isset($this->formats[$format])) {
             throw new \Exception(sprintf('format "%s" not available', $format));
@@ -287,9 +230,9 @@ class FormatManager
         $formatSettings = $this->formats[$format];
 
         // look for chain
-        if(isset($formatSettings[0]) && is_array($formatSettings[0])) {
+        if (isset($formatSettings[0]) && is_array($formatSettings[0])) {
             foreach($formatSettings as $index => $chainSettings) {
-                if(!isset($chainSettings['type'])) {
+                if (!isset($chainSettings['type'])) {
                     throw new FormatException(sprintf('No filter type was set for format "%s" in chain with index "%s"', $format, $index));
                 }
                 $formatSetting = new FilterSetting();
@@ -299,7 +242,7 @@ class FormatManager
             }
         } else {
             // add single filter
-            if(!isset($formatSettings['type'])) {
+            if (!isset($formatSettings['type'])) {
                 throw new FormatException(sprintf('No filter type was set for format "%s"', $format));
             }
             $formatSetting = new FilterSetting();
@@ -311,10 +254,10 @@ class FormatManager
         return $settings;
     }
 
-    private function cleanUpTimedOutLockFormats()
+    private function cleanUpTimedOutLockFormats(): void
     {
         $timedOutFormats = $this->formatRepository->findByTimedOutLock(self::LOCK_TIMEOUT);
-        foreach($timedOutFormats as $format) {
+        foreach ($timedOutFormats as $format) {
             $this->em->remove($format);
             $this->em->flush();
             // Associated files are NOT deleted, since they might be part of a later format creation that did not timeout

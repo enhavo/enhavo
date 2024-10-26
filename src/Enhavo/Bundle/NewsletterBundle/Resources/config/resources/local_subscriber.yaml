@@ -1,6 +1,7 @@
 enhavo_resource:
     resources:
         enhavo_newsletter.local_subscriber:
+            priority: -10
             classes:
                 model: Enhavo\Bundle\NewsletterBundle\Entity\LocalSubscriber
                 factory: Enhavo\Bundle\NewsletterBundle\Factory\LocalSubscriberFactory

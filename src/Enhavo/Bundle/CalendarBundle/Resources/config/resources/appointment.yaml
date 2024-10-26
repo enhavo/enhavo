@@ -1,6 +1,7 @@
 enhavo_resource:
     resources:
         enhavo_calendar.appointment:
+            priority: -10
             classes:
                 model: Enhavo\Bundle\CalendarBundle\Entity\Appointment
                 repository: Enhavo\Bundle\CalendarBundle\Repository\AppointmentRepository

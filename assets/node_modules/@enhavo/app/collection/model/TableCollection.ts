@@ -55,7 +55,7 @@ export class TableCollection implements CollectionInterface
             this.checkActiveRow();
         });
 
-        this.frameManager.on('input_save', (event: Event) => {
+        this.frameManager.on('input_changed', (event: Event) => {
             this.load();
         });
     }

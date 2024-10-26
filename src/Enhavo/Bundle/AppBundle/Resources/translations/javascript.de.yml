@@ -6,6 +6,7 @@ enhavo_app:
     abort: 'Abbrechen'
     cancel: 'Abbrechen'
     error: 'Ein Fehler ist aufgetreten'
+    close: 'Schließen'
     input:
         message:
             save_success: 'Erfolgreich gespeichert'

@@ -11,3 +11,14 @@ services:
         tags:
             - { name: vue.component, component: 'form-media-item' }
 
+    '@enhavo/media/components/ActionMediaForm.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'action-media-form' }
+
+    '@enhavo/media/components/ActionMediaFormat.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'action-media-format' }

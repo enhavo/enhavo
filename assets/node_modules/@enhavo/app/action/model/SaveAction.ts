@@ -27,7 +27,7 @@ export class SaveAction extends AbstractAction
             const success = await this.resourceInputManager.save(this.url, true);
             if (success) {
                 this.flashMessenger.add(this.translator.trans('enhavo_app.input.message.save_success', {}, 'javascript'));
-                this.frameManager.dispatch(new Event('input_save'));
+                this.frameManager.dispatch(new Event('input_changed'));
             } else {
                 this.flashMessenger.error(this.translator.trans('enhavo_app.save.message.not_valid', {}, 'javascript'));
             }

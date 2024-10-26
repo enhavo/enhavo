@@ -22,6 +22,11 @@ export class Router
         return this.routes[name];
     }
 
+    hasRoute(name: string): boolean
+    {
+        return name in this.routes;
+    }
+
     generate(name: string, parameters?: RouteParams, absolute?: boolean): string
     {
         let route = this.getRoute(name);
@@ -98,6 +103,14 @@ export class Router
             }
 
             url = url + '?' + queryParams.join('&').replace(/%20/g, '+');
+        }
+
+        if (absolute) {
+            let prefix = location.protocol + '//' + location.host;
+            if (location.port) {
+                prefix = prefix + ':' + location.port;
+            }
+            return prefix + url;
         }
 
         return url;

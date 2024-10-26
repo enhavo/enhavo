@@ -1,6 +1,7 @@
 enhavo_resource:
     resources:
         enhavo_navigation.node:
+            priority: -10
             classes:
                 model: Enhavo\Bundle\NavigationBundle\Entity\Node
                 repository: Enhavo\Bundle\NavigationBundle\Repository\NodeRepository

@@ -1,6 +1,7 @@
 enhavo_resource:
     resources:
         enhavo_template.template:
+            priority: -10
             classes:
                 model: Enhavo\Bundle\TemplateBundle\Entity\Template
                 factory: Enhavo\Bundle\TemplateBundle\Factory\TemplateFactory

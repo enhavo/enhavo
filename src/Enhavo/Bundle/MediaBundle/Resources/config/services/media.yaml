@@ -2,21 +2,20 @@ parameters:
     enhavo_media.file_storage_path: '%kernel.project_dir%/var/media'
 
 services:
-    enhavo_media.form.file:
-        class: Enhavo\Bundle\MediaBundle\Form\Type\FileType
+    Enhavo\Bundle\MediaBundle\Form\Type\FileType:
         arguments:
             - '@form.factory'
             - '@enhavo_media.file.repository'
-            - '@enhavo_media.extension_manager'
             - '@serializer'
             - '%enhavo_media.form%'
+            - '%enhavo_media.file.model.class%'
+            - '@Enhavo\Bundle\ResourceBundle\Action\ActionManager'
         tags:
             - { name: form.type, alias: enhavo_file }
 
-    enhavo_media.form.media:
-        class: Enhavo\Bundle\MediaBundle\Form\Type\MediaType
+    Enhavo\Bundle\MediaBundle\Form\Type\MediaType:
         arguments:
-            - '@enhavo_media.extension_manager'
+            - '@Enhavo\Bundle\ResourceBundle\Action\ActionManager'
             - '%enhavo_media.form%'
         tags:
             - { name: form.type, alias: enhavo_media }
@@ -25,6 +24,7 @@ services:
         arguments:
             - '@Enhavo\Bundle\MediaBundle\Media\MediaManager'
             - '@router'
+            - '@translator'
         tags:
             - { name: form.type_extension, priority: 99 }
 
@@ -32,62 +32,42 @@ services:
         tags:
             - { name: form.type_extension, priority: 99 }
 
-    enhavo_media.form.extension.image_cropper:
-        class: Enhavo\Bundle\MediaBundle\Form\Extension\ImageCropperMediaExtension
-        tags:
-            - { name: form.type_extension, extended_type: Enhavo\Bundle\MediaBundle\Form\Type\MediaType }
-
-    enhavo_media.form.extension.media:
-        class: Enhavo\Bundle\MediaBundle\Form\Extension\MediaExtension
-        arguments:
-            - '%enhavo_media.form%'
-        tags:
-            - { name: form.type_extension, extended_type: Enhavo\Bundle\MediaBundle\Form\Type\MediaType }
-
     enhavo_media.media.media_manager:
         public: true
         alias: Enhavo\Bundle\MediaBundle\Media\MediaManager
 
     Enhavo\Bundle\MediaBundle\Media\MediaManager:
-        public: true
         arguments:
-            - '@enhavo_media.storage'
             - '@enhavo_media.media.format_manager'
             - '@enhavo_media.file.repository'
-            - '@enhavo_media.provider'
             - '@Enhavo\Bundle\DoctrineExtensionBundle\Util\AssociationFinder'
             - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
             - '@Enhavo\Bundle\MediaBundle\FileNotFound\FileNotFoundHandlerInterface'
             - '%enhavo_media.file_not_found.parameters%'
 
     enhavo_media.media.format_manager:
-        class: Enhavo\Bundle\MediaBundle\Media\FormatManager
         public: true
+        alias: Enhavo\Bundle\MediaBundle\Media\FormatManager
+    
+    Enhavo\Bundle\MediaBundle\Media\FormatManager:
         arguments:
             - '%enhavo_media.formats%'
-            - '@enhavo_media.storage'
+            - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
             - '@enhavo_media.format.repository'
             - '@enhavo_media.factory.format'
             - '@enhavo_media.filter_collector'
             - '@doctrine.orm.entity_manager'
-            - '@enhavo_media.provider'
             - '@enhavo_media.cache'
+            - '@Enhavo\Bundle\MediaBundle\Checksum\ChecksumGeneratorInterface'
 
-    enhavo_media.media.image_cropper_manager:
-        class: Enhavo\Bundle\MediaBundle\Media\ImageCropperManager
+    Enhavo\Bundle\MediaBundle\Media\ImageCropperManager:
         arguments:
             - '%enhavo_media.formats%'
 
-    enhavo_media.storage.local_file_storage:
-        class: Enhavo\Bundle\MediaBundle\Storage\LocalFileStorage
+    Enhavo\Bundle\MediaBundle\Storage\LocalChecksumFileStorage:
         arguments:
             - '%enhavo_media.file_storage_path%'
             - '@filesystem'
-
-    enhavo_media.provider.default_provider:
-        class: Enhavo\Bundle\MediaBundle\Provider\DefaultProvider
-        arguments:
-            - '@enhavo_app.util.secure_url_token_generator'
             - '@enhavo_media.file.repository'
 
     Enhavo\Bundle\MediaBundle\Twig\MediaTwigExtension:
@@ -96,21 +76,14 @@ services:
         tags:
             - { name: twig.extension }
 
-    Enhavo\Bundle\MediaBundle\Twig\MediaFormTwigExtension:
-        calls:
-            - [setContainer, ['@service_container']]
-        tags:
-            - { name: twig.extension }
-
-    enhavo_media.listener.doctrine_subscriber:
-        class: Enhavo\Bundle\MediaBundle\EventListener\DoctrineSubscriber
+    Enhavo\Bundle\MediaBundle\EventListener\DoctrineContentSubscriber:
         arguments:
-            - '@enhavo_media.storage'
+            - '@Enhavo\Bundle\MediaBundle\Storage\StorageInterface'
         tags:
             - { name: doctrine.event_listener, event: postLoad, method: postLoad }
             - { name: doctrine.event_listener, event: postUpdate, method: postUpdate }
             - { name: doctrine.event_listener, event: postPersist, method: postPersist }
-            - { name: doctrine.event_listener, event: preRemove, method: preRemove }
+            - { name: doctrine.event_listener, event: postRemove, method: postRemove }
 
     Enhavo\Bundle\MediaBundle\Column\MediaColumn:
         arguments:
@@ -118,7 +91,7 @@ services:
         tags:
             - { name: enhavo.column }
 
-    enhavo_media.factory.file:
+    enhavo_media.file.factory:
         public: true
         alias: Enhavo\Bundle\MediaBundle\Factory\FileFactory
 
@@ -126,13 +99,15 @@ services:
         public: true
         arguments:
             - '%enhavo_media.file.model.class%'
-            - '@enhavo_media.provider'
+            - '@enhavo_app.util.secure_url_token_generator'
+            - '@Enhavo\Bundle\MediaBundle\Checksum\ChecksumGeneratorInterface'
             - '@http_client'
 
     enhavo_media.factory.format:
         class: Enhavo\Bundle\MediaBundle\Factory\FormatFactory
         arguments:
             - '%enhavo_media.format.model.class%'
+            - '@Enhavo\Bundle\MediaBundle\Checksum\ChecksumGeneratorInterface'
 
     enhavo_media.media.public_url_generator:
         class: Enhavo\Bundle\MediaBundle\Media\PublicUrlGenerator
@@ -158,14 +133,14 @@ services:
 
     Enhavo\Bundle\MediaBundle\Validator\Constraints\ClamAvValidator:
         arguments:
-            - '%enhavo_media.upload_validation.clamav%'
+            - '%enhavo_media.clam_av%'
         tags:
             - { name: validator.constraint_validator }
 
     Enhavo\Bundle\MediaBundle\Endpoint\Type\TemplateFileEndpointType:
         arguments:
             - '%kernel.project_dir%/data/media'
-            - '@enhavo_media.factory.file'
+            - '@enhavo_media.file.factory'
             - '@filesystem'
         tags:
             - { name: enhavo_api.endpoint }
@@ -182,3 +157,15 @@ services:
     Enhavo\Bundle\MediaBundle\Action\MediaCropActionType:
         tags:
             - { name: enhavo_resource.action }
+
+    Enhavo\Bundle\MediaBundle\Action\MediaDownloadActionType:
+        tags:
+            - { name: enhavo_resource.action }
+
+    Enhavo\Bundle\MediaBundle\Action\MediaFormatActionType:
+        tags:
+            - { name: enhavo_resource.action }
+
+    Enhavo\Bundle\MediaBundle\Checksum\Md5ChecksumGenerator:
+
+    Enhavo\Bundle\MediaBundle\Checksum\Sha256ChecksumGenerator:

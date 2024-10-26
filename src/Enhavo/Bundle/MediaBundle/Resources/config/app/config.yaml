@@ -21,3 +21,11 @@ enhavo_media:
             type: image
             width: 72
             height: 72
+    form:
+        default:
+            route: enhavo_media_admin_api_file_upload
+            actions_file:
+                download:
+                    type: media_download
+                format:
+                    type: media_format

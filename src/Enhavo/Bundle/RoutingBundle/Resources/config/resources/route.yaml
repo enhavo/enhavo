@@ -1,6 +1,7 @@
 enhavo_resource:
     resources:
         enhavo_routing.route:
+            priority: -10
             classes:
                 model: Enhavo\Bundle\RoutingBundle\Entity\Route
                 factory: Enhavo\Bundle\RoutingBundle\Factory\RouteFactory

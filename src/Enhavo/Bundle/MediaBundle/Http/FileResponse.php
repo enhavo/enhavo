@@ -22,7 +22,7 @@ class FileResponse extends Response
         $this->headers->set('Content-Type', $file->getMimeType());
 
         if ($disposition === self::DISPOSITION_ATTACHMENT) {
-            $this->headers->set('Content-Disposition', sprintf('%s; filename="%s"', $disposition, $file->getFilename()));
+            $this->headers->set('Content-Disposition', sprintf('%s; filename="%s"', $disposition, $file->getBasename()));
         } else {
             $this->headers->set('Content-Disposition', sprintf('%s', $disposition));
         }

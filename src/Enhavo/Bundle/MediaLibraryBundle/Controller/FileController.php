@@ -149,6 +149,7 @@ class FileController extends AbstractController
         return new JsonResponse([
             'id' => $file->getId(),
             'filename' => $file->getFilename(),
+            'basename' => $file->getBasename(),
             'mimeType' => $file->getMimeType(),
             'token' => $file->getToken(),
             'parameters' => $file->getParameters(),

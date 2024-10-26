@@ -2,7 +2,7 @@ Enhavo\Bundle\MediaBundle\Entity\File:
     attributes:
         id:
             groups: ['media']
-        md5Checksum:
+        checksum:
             groups: ['media']
         filename:
             groups: ['media']

@@ -9,7 +9,6 @@ use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader;
 
-
 class EnhavoMediaLibraryExtension extends Extension implements PrependExtensionInterface
 {
     use PrependExtensionTrait;

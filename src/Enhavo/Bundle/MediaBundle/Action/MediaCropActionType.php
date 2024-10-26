@@ -16,7 +16,7 @@ class MediaCropActionType extends AbstractActionType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'model' => 'MediaCropAction'
+            'model' => 'MediaCropAction',
         ]);
 
         $resolver->setRequired([

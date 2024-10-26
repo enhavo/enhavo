@@ -46,7 +46,7 @@ trait FileContentTrait
         } else if ($request->get('disposition') === 'attachment'){
             $response = new FileResponse($file);
             $response->headers->set('Content-Type', 'application/octet-stream');
-            $response->headers->set('Content-Disposition', sprintf('attachment; filename="%s"', $file->getFilename()));
+            $response->headers->set('Content-Disposition', sprintf('attachment; filename="%s"', $file->getBasename()));
         } else {
             $response = new FileResponse($file);
             if ($file->getMimeType()) {

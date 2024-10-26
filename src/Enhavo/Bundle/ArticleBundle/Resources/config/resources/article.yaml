@@ -1,6 +1,7 @@
 enhavo_resource:
     resources:
         enhavo_article.article:
+            priority: -10
             classes:
                 model: Enhavo\Bundle\ArticleBundle\Entity\Article
     grids:

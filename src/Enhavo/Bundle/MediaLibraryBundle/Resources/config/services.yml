@@ -55,13 +55,6 @@ services:
         tags:
             - { name: form.type }
 
-    enhavo_media_library.file.factory:
-        class: Enhavo\Bundle\MediaLibraryBundle\Factory\FileFactory
-        arguments:
-            - '%enhavo_media_library.file.model.class%'
-            - '@enhavo_media.provider'
-            - '@http_client'
-
     Enhavo\Bundle\MediaLibraryBundle\Filter\MediaLibraryContentTypeFilterType:
         arguments:
             - '@translator'
@@ -102,7 +95,7 @@ services:
     Enhavo\Bundle\MediaLibraryBundle\Endpoint\MediaLibraryUploadEndpointType:
         arguments:
             - '@enhavo_media.media.media_manager'
-            - '@enhavo_media.factory.file'
+            - '@enhavo_media.file.factory'
             - '@validator'
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]

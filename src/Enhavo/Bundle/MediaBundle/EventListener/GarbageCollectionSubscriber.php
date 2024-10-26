@@ -16,10 +16,10 @@ class GarbageCollectionSubscriber
     private array $filesToScan = [];
 
     public function __construct(
-        private GarbageCollector  $garbageCollector,
+        private GarbageCollector $garbageCollector,
         private AssociationFinder $associationFinder,
-        private EntityRepository  $fileRepository,
-        protected bool            $enableGarbageCollectionListener,
+        private EntityRepository $fileRepository,
+        protected bool $enableGarbageCollectionListener,
     ) {}
 
     public function preRemove(PreRemoveEventArgs $event): void

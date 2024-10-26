@@ -23,8 +23,9 @@ services:
         import: DeleteAction
         chunk: 'action'
         arguments:
+            - '@enhavo/app/ui/UiManager'
+            - '@enhavo/app/flash-message/FlashMessenger'
             - '@enhavo/app/frame/FrameManager'
-            - '@enhavo/app/frame/FrameEventDispatcher'
             - '@enhavo/app/translation/Translator'
         tags:
             - { name: 'enhavo_app.action', class: 'DeleteAction' }

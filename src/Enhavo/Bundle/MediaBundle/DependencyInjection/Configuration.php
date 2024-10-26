@@ -3,65 +3,105 @@
 namespace Enhavo\Bundle\MediaBundle\DependencyInjection;
 
 use Enhavo\Bundle\MediaBundle\Cache\NoCache;
-use Enhavo\Bundle\MediaBundle\Controller\FileController;
-use Enhavo\Bundle\MediaBundle\Entity\File;
-use Enhavo\Bundle\MediaBundle\Factory\FileFactory;
+use Enhavo\Bundle\MediaBundle\Checksum\Sha256ChecksumGenerator;
 use Enhavo\Bundle\MediaBundle\FileNotFound\ExceptionFileNotFoundHandler;
 use Enhavo\Bundle\MediaBundle\Form\Type\FileParametersType;
-use Enhavo\Bundle\MediaBundle\Form\Type\FileType;
 use Enhavo\Bundle\MediaBundle\GarbageCollection\GarbageCollector;
-use Enhavo\Bundle\MediaBundle\Repository\FileRepository;
+use Enhavo\Bundle\MediaBundle\Storage\LocalChecksumFileStorage;
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
-/**
- * This is the class that validates and merges configuration from your app/config files
- *
- * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html#cookbook-bundles-extension-config-class}
- */
 class Configuration implements ConfigurationInterface
 {
-    /**
-     * {@inheritDoc}
-     */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('enhavo_media');
         $rootNode = $treeBuilder->getRootNode();
-        $rootNode
-            ->children()
-                ->arrayNode('upload_validation')
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->variableNode('groups')->defaultValue(['file_upload'])->end()
-                        ->arrayNode('clamav')
-                            ->addDefaultsIfNotSet()
-                            ->children()
-                                ->scalarNode('clamscan_path')->defaultValue('/usr/bin/clamscan')->end()
-                            ->end()
-                        ->end()
-                    ->end()
-                ->end()
-            ->end()
+
+        $this->addFormatSection($rootNode);
+        $this->addStorageSection($rootNode);
+        $this->addChecksumSection($rootNode);
+        $this->addFormSection($rootNode);
+        $this->addCacheControlSection($rootNode);
+        $this->addFilterSection($rootNode);
+        $this->addStreamingSection($rootNode);
+        $this->addGarbageCollectionSection($rootNode);
+        $this->addFileNotFoundSection($rootNode);
+        $this->addClamAvSection($rootNode);
+
+        return $treeBuilder;
+    }
+
+    private function addFormatSection(ArrayNodeDefinition $node): void
+    {
+        $node
             ->children()
                 ->arrayNode('formats')
                     ->useAttributeAsKey('name')
                     ->prototype('variable')->end()
                 ->end()
-                ->scalarNode('provider')->defaultValue('enhavo_media.provider.default_provider')->end()
-                ->scalarNode('storage')->defaultValue('enhavo_media.storage.local_file_storage')->end()
             ->end()
+        ;
+    }
 
+    private function addStorageSection(ArrayNodeDefinition $node): void
+    {
+        $node
+            ->children()
+                ->scalarNode('storage')->defaultValue(LocalChecksumFileStorage::class)->end()
+            ->end()
+        ;
+    }
+
+    private function addChecksumSection(ArrayNodeDefinition $node): void
+    {
+        $node
+            ->children()
+                ->scalarNode('checksum_generator')->defaultValue(Sha256ChecksumGenerator::class)->end()
+            ->end()
+        ;
+    }
+
+
+    private function addFormSection(ArrayNodeDefinition $node): void
+    {
+        $node
             ->children()
                 ->arrayNode('form')
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->scalarNode('parameters_type')->defaultValue(FileParametersType::class)->end()
-                        ->booleanNode('default_upload_enabled')->defaultValue(true)->end()
+                    ->useAttributeAsKey('key')
+                    ->prototype('array')
+                        ->children()
+                            ->variableNode('upload')->defaultValue(true)->end()
+                            ->variableNode('actions')->defaultValue([])->end()
+                            ->variableNode('actions_file')->defaultValue([])->end()
+                            ->scalarNode('parameters_type')->defaultValue(FileParametersType::class)->end()
+                            ->scalarNode('parameters_options')->defaultValue([])->end()
+                            ->scalarNode('route')->isRequired()->end()
+                        ->end()
                     ->end()
                 ->end()
             ->end()
+        ;
+    }
 
+    private function addCacheControlSection(ArrayNodeDefinition $node): void
+    {
+        $node
+            ->children()
+                ->arrayNode('cache_control')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('max_age')->defaultValue(null)->end()
+                        ->scalarNode('class')->defaultValue(NoCache::class)->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+    }
+    private function addFilterSection(ArrayNodeDefinition $node): void
+    {
+        $node
             ->children()
                 ->arrayNode('filter')
                     ->addDefaultsIfNotSet()
@@ -88,16 +128,12 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end()
-            ->children()
-                ->arrayNode('cache_control')
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->scalarNode('max_age')->defaultValue(null)->end()
-                        ->scalarNode('class')->defaultValue(NoCache::class)->end()
-                    ->end()
-                ->end()
-            ->end()
+        ;
+    }
 
+    private function addStreamingSection(ArrayNodeDefinition $node): void
+    {
+        $node
             ->children()
                 ->arrayNode('streaming')
                     ->addDefaultsIfNotSet()
@@ -107,8 +143,13 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end()
+        ;
+    }
 
-            ->children()
+    private function addGarbageCollectionSection(ArrayNodeDefinition $node): void
+    {
+        $node
+           ->children()
                 ->arrayNode('garbage_collection')
                     ->addDefaultsIfNotSet()
                     ->children()
@@ -121,7 +162,12 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end()
+        ;
+    }
 
+    private function addFileNotFoundSection(ArrayNodeDefinition $node): void
+    {
+        $node
             ->children()
                 ->arrayNode('file_not_found')
                     ->addDefaultsIfNotSet()
@@ -136,6 +182,20 @@ class Configuration implements ConfigurationInterface
                 ->end()
             ->end()
         ;
-        return $treeBuilder;
+    }
+
+    private function addClamAvSection(ArrayNodeDefinition $node): void
+    {
+        $node
+            ->children()
+                ->arrayNode('clam_av')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('clamscan_path')->defaultValue('/usr/bin/clamscan')->end()
+                        ->scalarNode('enabled')->defaultValue(false)->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
     }
 }

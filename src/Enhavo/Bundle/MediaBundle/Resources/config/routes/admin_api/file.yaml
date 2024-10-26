@@ -5,8 +5,6 @@ enhavo_media_admin_api_file:
         _expose: admin_api
         _endpoint:
             type: media_file
-            find_by: [token]
-            checksum_test: false
 
 enhavo_media_admin_api_file_replace:
     path:  /file/replace/{token}

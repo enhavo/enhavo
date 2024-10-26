@@ -1,5 +1,5 @@
 <template>
-    <div @click="execute($event)" class="action" :class="data.class">
+    <div @click="execute($event)" class="action" :class="data.class" :data-action="data.key">
         <div class="action-icon">
             <i :class="['icon', getIcon()]"></i>
         </div>

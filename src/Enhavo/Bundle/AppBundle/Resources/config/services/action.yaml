@@ -32,6 +32,8 @@ services:
             - { name: enhavo_resource.action }
 
     Enhavo\Bundle\AppBundle\Action\Type\DuplicateActionType:
+        arguments:
+            - '@security.csrf.token_manager'
         tags:
             - { name: enhavo_resource.action }
 

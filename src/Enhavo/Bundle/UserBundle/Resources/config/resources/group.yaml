@@ -1,6 +1,7 @@
 enhavo_resource:
     resources:
         enhavo_user.group:
+            priority: -10
             classes:
                 model: Enhavo\Bundle\UserBundle\Model\Group
                 repository: Enhavo\Bundle\UserBundle\Repository\GroupRepository

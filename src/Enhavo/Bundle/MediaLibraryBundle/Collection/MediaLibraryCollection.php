@@ -31,7 +31,7 @@ class MediaLibraryCollection extends TableCollection
         $item = parent::createItem($resource, $context);
         $item['previewImageUrl'] = $this->urlGenerator->generateFormat($resource, 'enhavoMediaLibraryThumb');
         $item['icon'] = $this->mediaLibraryManager->getContentTypeIcon($resource->getContentType());
-        $item['label'] = $resource->getFilename();
+        $item['label'] = $resource->getBasename();
         $item['suffix'] = $resource->getExtension();
         $item['type'] = $resource->getContentType();
         $item['date'] = $resource->getCreatedAt() ? $resource->getCreatedAt()->format('Y-m-d') : '';

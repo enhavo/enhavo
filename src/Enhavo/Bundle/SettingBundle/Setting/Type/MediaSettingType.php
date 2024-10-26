@@ -56,13 +56,13 @@ class MediaSettingType extends AbstractSettingType
             $data = [];
             /** @var FileInterface $file */
             foreach($value->getValue() as $file) {
-                $data[] = $file->getFilename();
+                $data[] = $file->getBasename();
             }
             return join(', ', $data);
         } else {
             $file = $value->getValue();
             if ($file !== null) {
-                return $file->getFilename();
+                return $file->getBasename();
             }
         }
         return '';

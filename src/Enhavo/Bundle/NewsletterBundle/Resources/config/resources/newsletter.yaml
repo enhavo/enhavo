@@ -1,6 +1,7 @@
 enhavo_resource:
     resources:
         enhavo_newsletter.newsletter:
+            priority: -10
             classes:
                 model: Enhavo\Bundle\NewsletterBundle\Entity\Newsletter
                 factory: Enhavo\Bundle\NewsletterBundle\Factory\NewsletterFactory

@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\MediaBundle\Endpoint\Type;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ObjectRepository;
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
@@ -32,6 +33,7 @@ class ImageCropperEndpointType extends AbstractEndpointType
         private readonly RouterInterface $router,
         private readonly ImageCropperManager $imageCropperManager,
         private readonly CsrfTokenManagerInterface $csrfTokenManager,
+        private readonly ObjectRepository $fileRepository,
     ) {
     }
 
@@ -164,7 +166,7 @@ class ImageCropperEndpointType extends AbstractEndpointType
         $token = $request->get('token');
         $format = $request->get('format');
 
-        $file = $this->mediaManager->findOneBy([
+        $file = $this->fileRepository->findOneBy([
             'token' => $token
         ]);
 

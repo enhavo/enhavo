@@ -1,6 +1,7 @@
 enhavo_resource:
     resources:
         enhavo_media.format:
+            priority: -10
             classes:
                 model: Enhavo\Bundle\MediaBundle\Entity\Format
                 factory: Enhavo\Bundle\MediaBundle\Factory\FormatFactory

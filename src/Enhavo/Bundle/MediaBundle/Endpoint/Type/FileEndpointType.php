@@ -2,11 +2,12 @@
 
 namespace Enhavo\Bundle\MediaBundle\Endpoint\Type;
 
+use Doctrine\ORM\EntityRepository;
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
-use Enhavo\Bundle\MediaBundle\Media\MediaManager;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
+use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -19,8 +20,9 @@ class FileEndpointType extends AbstractEndpointType
         private readonly ?string $maxAge,
         private readonly ?string $streamingDisabled,
         private readonly ?string $streamingThreshold,
-        private readonly MediaManager $mediaManager,
+        private readonly EntityRepository $fileRepository,
         private readonly AuthorizationCheckerInterface $authorizationChecker,
+        private readonly ResourceExpressionLanguage $expressionLanguage,
     )
     {
     }
@@ -38,25 +40,11 @@ class FileEndpointType extends AbstractEndpointType
 
     private function getFile($options, Request $request): FileInterface
     {
-        $findBy = [];
-        foreach ($options['find_by'] as $key => $value) {
-            if (is_string($key)) {
-                $findBy[$key] = $request->get($value);
-            } else {
-                $findBy[$value] = $request->get($value);
-            }
-        }
-        $file = $this->mediaManager->findOneBy($findBy);
+        $arguments = $this->expressionLanguage->evaluateArray($options['repository_arguments'], [], true);
+        $file = call_user_func_array([$this->fileRepository, $options['repository_method']], $arguments);
 
         if ($file === null) {
             throw $this->createNotFoundException();
-        }
-
-        if ($options['checksum_test']) {
-            $shortChecksum = $request->get($options['checksum_parameter']);
-            if ($shortChecksum != substr($file->getMd5Checksum(), 0, $options['checksum_length'])) {
-                throw $this->createNotFoundException();
-            }
         }
 
         if ($options['permission'] && !$this->authorizationChecker->isGranted($options['permission'], $file)) {
@@ -69,11 +57,11 @@ class FileEndpointType extends AbstractEndpointType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'find_by' => ['id', 'filename'],
-            'checksum_test' => true,
-            'checksum_parameter' => 'shortMd5Checksum',
-            'checksum_length' => 6,
-            'permission' => 'ROLE_ENHAVO_MEDIA_FILE_SHOW'
+            'repository_method' => 'findFileBy',
+            'repository_arguments' => [
+                ['token' => 'expr:request.get("token")'],
+            ],
+            'permission' => 'ROLE_ENHAVO_MEDIA_FILE_SHOW',
         ]);
     }
 

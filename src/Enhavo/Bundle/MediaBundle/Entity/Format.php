@@ -12,185 +12,114 @@ use Enhavo\Bundle\MediaBundle\Content\ContentInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\MediaBundle\Model\FormatInterface;
 
-/**
- * Format
- */
 class Format implements FormatInterface
 {
-    /**
-     * @var string
-     */
-    private $id;
+    private ?int $id = null;
+    private string $name;
+    private array $parameters = [];
+    private string $mimeType;
+    private ?string $extension;
+    private FileInterface $file;
+    private ContentInterface $content;
+    private ?\DateTime $lockAt = null;
+    private string $checksum;
 
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var array
-     */
-    private $parameters;
-
-    /**
-     * @var string
-     */
-    private $mimeType;
-
-    /**
-     * @var string
-     */
-    private $extension;
-
-    /**
-     * @var FileInterface
-     */
-    private $file;
-
-    /**
-     * @var ContentInterface
-     */
-    private $content;
-
-    /**
-     * @var \DateTime|null
-     */
-    private $lockAt;
-
-
-    /**
-     * @inheritdoc
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = $name;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getParameters()
+    public function getParameters(): array
     {
         return $this->parameters;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function setParameters($parameters)
+    public function setParameters(array $parameters): void
     {
         $this->parameters = $parameters;
-        return;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getMimeType()
+    public function getMimeType(): string
     {
         return $this->mimeType;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function setMimeType($mimeType)
+    public function setMimeType(string $mimeType): void
     {
         $this->mimeType = $mimeType;
-        return;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getExtension()
+    public function getExtension(): ?string
     {
         return $this->extension;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function setExtension($extension)
+    public function setExtension(?string $extension): void
     {
         $this->extension = $extension;
-        return;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getFilename()
+    public function getFilename(): string
+    {
+        return $this->getFile()->getFilename();
+    }
+
+    public function getBasename(): string
     {
         $filename = $this->getFile()->getFilename();
-        $pathInfo = pathinfo($filename);
-        if(isset($pathInfo['extension'])) {
-            return sprintf('%s.%s', $pathInfo['filename'], $this->getExtension());
+        if ($this->getExtension()) {
+            return sprintf('%s.%s', $filename, $this->getExtension());
         }
-        return $pathInfo['filename'];
+        return $filename;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getFile()
+    public function getFile(): FileInterface
     {
         return $this->file;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function setFile(FileInterface $file)
+    public function setFile(FileInterface $file): void
     {
         $this->file = $file;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getContent()
+    public function getContent(): ContentInterface
     {
         return $this->content;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function setContent(ContentInterface $content)
+    public function setContent(ContentInterface $content): void
     {
         $this->content = $content;
     }
 
-    /**
-     * @return \DateTime|null
-     */
-    public function getLockAt()
+    public function getLockAt(): ?\DateTime
     {
         return $this->lockAt;
     }
 
-    /**
-     * @param \DateTime|null $lockAt
-     */
-    public function setLockAt($lockAt)
+    public function setLockAt(?\DateTime $lockAt): void
     {
         $this->lockAt = $lockAt;
+    }
+
+    public function getChecksum(): string
+    {
+        return $this->checksum;
+    }
+
+    public function setChecksum(string $checksum): void
+    {
+        $this->checksum = $checksum;
     }
 }

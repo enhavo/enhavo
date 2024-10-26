@@ -6,6 +6,10 @@ import {Form} from "@enhavo/vue-form/model/Form";
 import {DeleteEvent} from "@enhavo/form/form/event/DeleteEvent";
 import {ChangeEvent} from "@enhavo/vue-form/event/ChangeEvent";
 import {MediaItemForm} from "@enhavo/media/form/model/MediaItemForm";
+import {ActionInterface} from "@enhavo/app/action/ActionInterface";
+import {FormFactory} from "@enhavo/vue-form/form/FormFactory";
+import {ActionManager} from "@enhavo/app/action/ActionManager";
+import {ActionMediaInterface} from "@enhavo/media/action/ActionMediaInterface";
 
 export class MediaForm extends ListForm
 {
@@ -23,6 +27,16 @@ export class MediaForm extends ListForm
     highlight: boolean;
     uploads: FileUpload[] = [];
     fileErrors: FileError[] = [];
+    actions: ActionInterface[] = [];
+
+    private _actions: ActionInterface[] = null;
+
+    constructor(
+        formFactory: FormFactory,
+        private readonly actionManager: ActionManager,
+    ) {
+        super(formFactory);
+    }
 
     startUpload()
     {
@@ -79,6 +93,18 @@ export class MediaForm extends ListForm
         $(window).on('dragleave', () => {
             this.highlight = false;
         });
+    }
+    getActions()
+    {
+        if (this._actions !== null) {
+            return this._actions
+        }
+
+        this._actions =  this.actionManager.createActions(this.actions);
+        for (let action of this._actions) {
+            (action as ActionMediaInterface).form = this;
+        }
+        return this._actions;
     }
 
     private uploadFiles(files: any): Promise<void>
