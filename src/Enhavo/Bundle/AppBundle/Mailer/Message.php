@@ -14,7 +14,7 @@ class Message
     public function __construct(
         private ?string $from = null,
         private ?string $senderName = null,
-        private ?string $to = null,
+        private string|array|null $to = null,
         private ?string $subject = null,
         private ?string $template = null,
         private array $context = [],
@@ -61,7 +61,7 @@ class Message
     /**
      * @return string
      */
-    public function getTo(): ?string
+    public function getTo(): string|array|null
     {
         return $this->to;
     }
@@ -69,7 +69,7 @@ class Message
     /**
      * @param string $to
      */
-    public function setTo(?string $to): void
+    public function setTo(string|array|null $to): void
     {
         $this->to = $to;
     }

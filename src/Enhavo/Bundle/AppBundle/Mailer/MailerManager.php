@@ -115,8 +115,15 @@ class MailerManager
         $email = new Email();
         $email->subject($message->getSubject())
             ->from(new Address($message->getFrom(), $message->getSenderName()))
-            ->to(new Address($message->getTo()))
         ;
+
+        if (is_array($message->getTo())) {
+            foreach ($message->getTo() as $address) {
+                $email->addTo(new Address($address));
+            }
+        } elseif (is_string($message->getTo())) {
+            $email->to(new Address($message->getTo()));
+        }
 
         foreach ($message->getCc() as $cc) {
             $email->addCc(new Address($cc));
