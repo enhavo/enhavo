@@ -1,0 +1,18 @@
+enhavo_resource:
+    delete:
+        handler: Enhavo\Bundle\RevisionBundle\Delete\SoftDeleteHandler
+
+
+enhavo_doctrine_extension:
+    metadata:
+        Enhavo\Bundle\RevisionBundle\Entity\Bin:
+            reference:
+                subject:
+                    idField: subjectId
+                    nameField: subjectClass
+
+        Enhavo\Bundle\RevisionBundle\Entity\Archive:
+            reference:
+                subject:
+                    idField: subjectId
+                    nameField: subjectClass

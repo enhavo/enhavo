@@ -4,6 +4,8 @@ namespace Enhavo\Bundle\ResourceBundle\Resource;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Enhavo\Bundle\ResourceBundle\Delete\DeleteHandlerInterface;
+use Enhavo\Bundle\ResourceBundle\Duplicate\DuplicateFactory;
 use Enhavo\Bundle\ResourceBundle\Event\ResourcePreCreateEvent;
 use Enhavo\Bundle\ResourceBundle\Event\ResourcePostCreateEvent;
 use Enhavo\Bundle\ResourceBundle\Event\ResourcePostDeleteEvent;
@@ -32,6 +34,9 @@ class ResourceManager
         private readonly EntityManagerInterface $em,
         private readonly SMFactoryInterface $stateMachineFactory,
         private readonly ValidatorInterface $validator,
+        private readonly DuplicateFactory $duplicateFactory,
+        private readonly DeleteHandlerInterface $deleteHandler,
+        private readonly array $resources,
     ) {
         $this->propertyAccessor = new PropertyAccessor();
     }
@@ -87,15 +92,14 @@ class ResourceManager
     {
         $this->dispatch(new ResourcePreDeleteEvent($resource), 'pre_delete');
 
-        $this->em->remove($resource);
-        $this->em->flush();
+        $this->deleteHandler->delete($resource);
 
         $this->dispatch(new ResourcePostDeleteEvent($resource), 'post_delete');
     }
 
-    public function duplicate(object $resource): object
+    public function duplicate(object $resource, array $context = []): object
     {
-        return clone $resource;
+        return $this->duplicateFactory->duplicate($resource, $context);
     }
 
     public function getRepository($name): EntityRepository
@@ -106,6 +110,20 @@ class ResourceManager
     public function getFactory($name): FactoryInterface
     {
         return $this->container->get(sprintf('%s.factory', $name));
+    }
+
+    public function getMetadata(string|object $value): ?Metadata
+    {
+        foreach ($this->resources as $key => $config) {
+            if (is_string($value) && $key === $value ||
+                is_string($value) && $config['classes']['model'] === $value ||
+                is_object($value) && $config['classes']['model'] === get_class($value)
+            ) {
+                return new Metadata($key, $config);
+            }
+        }
+
+        return null;
     }
 
     private function dispatch($event, $eventName): void

@@ -49,20 +49,14 @@ class Newsletter implements Slugable, NewsletterInterface, Timestampable
     /**
      * @return string
      */
-    public function getSlug()
+    public function getSlug(): ?string
     {
         return $this->slug;
     }
 
-    /**
-     * @param string $slug
-     * @return Newsletter
-     */
-    public function setSlug($slug)
+    public function setSlug(?string $slug): void
     {
         $this->slug = $slug;
-
-        return $this;
     }
 
     /**

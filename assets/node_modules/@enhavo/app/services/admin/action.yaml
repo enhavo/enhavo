@@ -48,8 +48,11 @@ services:
         import: DuplicateAction
         chunk: 'action'
         arguments:
+            - '@enhavo/app/ui/UiManager'
+            - '@enhavo/app/flash-message/FlashMessenger'
             - '@enhavo/app/frame/FrameManager'
-            - '@enhavo/app/frame/FrameEventDispatcher'
+            - '@enhavo/app/translation/Translator'
+            - '@enhavo/app/manager/ResourceInputManager'
         tags:
             - { name: 'enhavo_app.action', class: 'DuplicateAction' }
 
@@ -137,3 +140,25 @@ services:
             - '@enhavo/app/manager/ResourcePreviewManager'
         tags:
             - { name: 'enhavo_app.action', class: 'PreviewModeAction' }
+
+    '@enhavo/app/action/model/RevisionAwareRestoreAction':
+        import: RevisionAwareRestoreAction
+        chunk: 'action'
+        arguments:
+            - '@enhavo/app/ui/UiManager'
+            - '@enhavo/app/flash-message/FlashMessenger'
+            - '@enhavo/app/frame/FrameManager'
+            - '@enhavo/app/translation/Translator'
+        tags:
+            - { name: 'enhavo_app.action' }
+
+    '@enhavo/app/action/model/ArchiveAction':
+        import: ArchiveAction
+        chunk: 'action'
+        arguments:
+            - '@enhavo/app/ui/UiManager'
+            - '@enhavo/app/flash-message/FlashMessenger'
+            - '@enhavo/app/frame/FrameManager'
+            - '@enhavo/app/translation/Translator'
+        tags:
+            - { name: 'enhavo_app.action' }

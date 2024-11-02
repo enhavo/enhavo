@@ -15,14 +15,16 @@ import '@enhavo/app/assets/styles/view.scss'
 import {inject} from "vue";
 import {useRoute} from 'vue-router'
 import {ResourcePreviewManager} from "../../manager/ResourcePreviewManager";
+import {Router} from "@enhavo/app/routing/Router";
 
 const manager = inject<ResourcePreviewManager>('resourcePreviewManager');
 const route = useRoute();
+const router = inject<Router>('router');
 
 if (!route.meta.api) {
     manager.loadDefaults();
 } else {
-    manager.load(route.meta.api as string);
+    manager.load(router.generate(route.meta.api as string));
 }
 
 </script>

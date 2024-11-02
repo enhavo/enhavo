@@ -10,6 +10,8 @@ import {CollectionResourceItem} from "../CollectionResourceItem";
 import {BatchInterface} from "../../batch/BatchInterface";
 import {FrameManager} from "../../frame/FrameManager";
 import {Event} from "../../frame/FrameEventDispatcher";
+import {FlashMessenger} from "@enhavo/app/flash-message/FlashMessenger";
+import {Translator} from "@enhavo/app/translation/Translator";
 
 
 export class TableCollection implements CollectionInterface
@@ -37,6 +39,8 @@ export class TableCollection implements CollectionInterface
         private filterManager: FilterManager,
         private columnManager: ColumnManager,
         private frameManager: FrameManager,
+        private flashMessenger: FlashMessenger,
+        private translator: Translator,
     ) {
     }
 
@@ -72,6 +76,10 @@ export class TableCollection implements CollectionInterface
         }
 
         let data = await this.fetch(parameters);
+        if (data === false) {
+            this.loading = false;
+            return;
+        }
 
         this.rows = this.createRowData(data.items);
         this.loading = false;
@@ -113,6 +121,11 @@ export class TableCollection implements CollectionInterface
             signal: this.abortController.signal,
         });
         this.abortController = null;
+
+        if (!response.ok) {
+            this.flashMessenger.error(this.translator.trans('enhavo_app.error', {}, 'javascript'));
+            return false;
+        }
 
         return await response.json();
     }
@@ -263,6 +276,10 @@ export class TableCollection implements CollectionInterface
         };
 
         let data = await this.fetch(parameters);
+        if (data === false) {
+            this.loading = false;
+            return;
+        }
 
         for (let item of data.items) {
             this.selectedIds.push(item.id);

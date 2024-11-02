@@ -22,7 +22,7 @@ class ActionColumnType extends AbstractColumnType
 
     public function createResourceViewData(array $options, object $resource, Data $data): void
     {
-        $data->set('actions', $this->actionManager->createActionsData([$options['action']], $resource));
+        $data->set('actions', $this->actionManager->createViewData($options['actions'], $resource));
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -31,7 +31,7 @@ class ActionColumnType extends AbstractColumnType
             'component' => 'column-action',
             'model' => 'ActionColumn',
         ]);
-        $resolver->setRequired(['action']);
+        $resolver->setRequired(['actions']);
     }
 
     public static function getName(): ?string

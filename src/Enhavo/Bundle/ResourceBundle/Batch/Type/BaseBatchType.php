@@ -8,6 +8,7 @@ use Enhavo\Bundle\ResourceBundle\Batch\AbstractBatchType;
 use Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class BaseBatchType extends AbstractBatchType
@@ -16,6 +17,7 @@ class BaseBatchType extends AbstractBatchType
         private readonly TranslatorInterface $translator,
         private readonly RouteResolverInterface $routeResolver,
         private readonly RouterInterface $router,
+        private readonly CsrfTokenManagerInterface $tokenManager,
     )
     {
     }
@@ -27,6 +29,7 @@ class BaseBatchType extends AbstractBatchType
         $data->set('position', $options['position']);
         $data->set('model', $options['model']);
         $data->set('url', $options['route'] ? $this->router->generate($options['route'], $options['route_parameters']) : null);
+        $data->set('token', $this->tokenManager->getToken('resource_batch')->getValue());
     }
 
     private function getLabel($options): string

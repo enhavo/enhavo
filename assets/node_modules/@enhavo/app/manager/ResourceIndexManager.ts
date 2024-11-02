@@ -1,4 +1,3 @@
-import {Router} from "@enhavo/app/routing/Router";
 import {ActionManager} from "@enhavo/app/action/ActionManager";
 import {ActionInterface} from "@enhavo/app/action/ActionInterface";
 import {FilterManager} from "@enhavo/app/filter/FilterManager";
@@ -11,6 +10,7 @@ import {BatchManager} from "@enhavo/app/batch/BatchManager";
 import {BatchInterface} from "@enhavo/app/batch/BatchInterface";
 import {RouteContainer} from "@enhavo/app/routing/RouteContainer";
 import {FrameManager} from "@enhavo/app/frame/FrameManager";
+import {UiManager} from "@enhavo/app/ui/UiManager";
 
 export class ResourceIndexManager
 {
@@ -26,21 +26,28 @@ export class ResourceIndexManager
     private loaded: boolean = false;
 
     constructor(
-        private router: Router,
         private frameManager: FrameManager,
         private actionManager: ActionManager,
         private filterManager: FilterManager,
         private columnManager: ColumnManager,
         private batchManager: BatchManager,
         private collectionFactory: CollectionFactory,
+        private uiManager: UiManager,
     ) {
     }
 
-    async load(route: string, parameters: object = {})
+    async load(url: string)
     {
-        let url = this.router.generate(route, parameters);
-
         const response = await fetch(url);
+
+        if (!response.ok) {
+            this.frameManager.loaded();
+            this.uiManager.alert({ message: 'Error occured' }).then(() => {
+                this.frameManager.close(true);
+            });
+            return;
+        }
+
         const data = await response.json();
 
         this.actions = this.actionManager.createActions(data.actions);

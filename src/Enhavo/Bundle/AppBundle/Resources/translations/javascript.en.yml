@@ -51,3 +51,10 @@ enhavo_app:
             not_valid: 'Please check your input'
         label:
             save: 'Save'
+    revision:
+        message:
+            restored: 'The version was restored'
+            archived: 'The resource was archived'
+        action:
+            restore: 'Restore'
+            close: 'Close'

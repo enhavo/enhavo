@@ -1,0 +1,27 @@
+restore:
+    message:
+        confirm: 'Wollen Sie diese Version wirklich wiederherstellen?'
+    action:
+        restore: Wiederherstellen
+        cancel: Abbrechen
+revision_aware:
+    label:
+        type: Typ
+archive:
+    label:
+        archive: Archiv
+        title: Titel
+        date: Datum
+    message:
+        confirm: Wollen Sie diese Resource wieder aus dem Archive holen?
+        archive: Wollen Sie diese Resource archivieren?
+    action:
+        archive: Archivieren
+        cancel: Abbrechen
+bin:
+    label:
+        bin: Papierkorb
+        title: Titel
+        date: Datum
+    message:
+        confirm: Wollen sie diese Resource wieder aus dem Papierkorb holen?

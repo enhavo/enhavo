@@ -1,0 +1,11 @@
+enhavo_revision_admin_archive_index:
+    path: /archiv/index
+    defaults:
+        _expose: admin
+        _vue:
+            component: resource-index
+            groups: admin
+            meta:
+                api: enhavo_revision_admin_api_archive_index
+        _endpoint:
+            type: admin

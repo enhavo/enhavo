@@ -25,4 +25,36 @@ export class TabManager
 
         return this.factory.createWithData(tab['model'], tab);
     }
+
+    morphTabs(targets: TabInterface[], sources: TabInterface[]): TabInterface[]
+    {
+        for (let target of targets) {
+            let found = false;
+            for (let source of sources) {
+                if (target.key && source.key === target.key) {
+                    target.morph(source);
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                targets.splice(targets.indexOf(target), 1);
+            }
+        }
+
+        for (let source of sources) {
+            let found = false;
+            for (let target of targets) {
+                if (source.key && source.key === target.key) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                targets.push(source);
+            }
+        }
+
+        return targets;
+    }
 }

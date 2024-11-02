@@ -10,128 +10,124 @@ namespace App\Entity;
 
 use App\Repository\PersonRepository;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
+use Enhavo\Bundle\ResourceBundle\Attribute\Duplicate;
+use Enhavo\Bundle\RevisionBundle\Attribute\Restore;
+use Enhavo\Bundle\RevisionBundle\Model\RevisionInterface;
+use Enhavo\Bundle\RevisionBundle\Model\RevisionTrait;
 use Enhavo\Bundle\TaxonomyBundle\Entity\Term;
 
-/**
- * Class Person
- * @package App\Entity
- * @ORM\Entity(repositoryClass="App\Repository\PersonRepository")
- * @ORM\Table(name="app_person")
- */
 #[ORM\Entity(repositoryClass: PersonRepository::class)]
 #[ORM\Table(name: 'app_person')]
-class Person
+class Person implements RevisionInterface
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    use RevisionTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: Types::INTEGER)]
-    private ?int $id;
+    private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?DateTime $birthday;
+    #[Duplicate('clone', ['group' => ['duplicate']])]
+    private ?DateTime $birthday = null;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
     #[ORM\Column(type: Types::STRING, nullable: true)]
-    private ?string $name;
+    #[Duplicate('string', ['postfix' => ' Copy!!', 'group' => ['duplicate']])]
+    #[Duplicate('string', ['group' => ['revision']])]
+    #[Restore('property')]
+    private ?string $name = null;
 
-    /**
-     * @ORM\ManyToOne (targetEntity="Enhavo\Bundle\TaxonomyBundle\Entity\Term", cascade={"persist", "remove", "refresh"})
-     */
     #[ORM\ManyToOne(
         targetEntity: Term::class,
         cascade: ['persist', 'remove', 'refresh']
     )]
-    private ?Term $occupation;
+    #[Duplicate('model', [
+        'group' => ['duplicate']
+    ])]
+    private ?Term $occupation = null;
 
-    /**
-     * @ORM\ManyToOne (targetEntity="Enhavo\Bundle\MediaBundle\Model\FileInterface", cascade={"persist", "remove", "refresh"})
-     */
     #[ORM\ManyToOne(
         targetEntity: FileInterface::class,
         cascade: ['persist', 'remove', 'refresh']
     )]
-    private ?FileInterface $picture;
+    private ?FileInterface $picture = null;
 
-    /**
-     * @return int|null
-     */
+    #[ORM\ManyToOne(
+        targetEntity: Person::class,
+    )]
+    private ?RevisionInterface $revisionSubject = null;
+
+    #[ORM\OneToMany(
+        mappedBy: 'revisionSubject',
+        targetEntity: Person::class,
+        cascade: ['persist', 'refresh'],
+    )]
+    private Collection $revisions;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTime $revisionDate = null;
+
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    private ?string $revisionState = null;
+
+    #[ORM\Column(type: Types::JSON, nullable: true)]
+    private array $revisionParameters = [];
+
+    public function __construct()
+    {
+        $this->revisions = new ArrayCollection();
+    }
+
+    public function getRevisionTitle(): ?string
+    {
+        return $this->getName();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return DateTime|null
-     */
     public function getBirthday(): ?DateTime
     {
         return $this->birthday;
     }
 
-    /**
-     * @param DateTime|null $birthday
-     */
     public function setBirthday(?DateTime $birthday): void
     {
         $this->birthday = $birthday;
     }
 
-    /**
-     * @return string|null
-     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @param string|null $name
-     */
     public function setName(?string $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * @return Term|null
-     */
     public function getOccupation(): ?Term
     {
         return $this->occupation;
     }
 
-    /**
-     * @param Term|null $occupation
-     */
     public function setOccupation(?Term $occupation): void
     {
         $this->occupation = $occupation;
     }
 
-    /**
-     * @return FileInterface|null
-     */
     public function getPicture(): ?FileInterface
     {
         return $this->picture;
     }
 
-    /**
-     * @param FileInterface|null $picture
-     */
     public function setPicture(?FileInterface $picture): void
     {
         $this->picture = $picture;

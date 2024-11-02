@@ -8,4 +8,4 @@ services:
 
     Enhavo\Bundle\ResourceBundle\Input\InputFactory:
         arguments:
-            - '%enhavo_resources.inputs%'
+            - '%enhavo_resource.inputs%'

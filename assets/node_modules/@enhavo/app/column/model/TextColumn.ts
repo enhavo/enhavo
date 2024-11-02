@@ -6,3 +6,9 @@ export class TextColumn extends AbstractColumn
     wrap: boolean;
     whitespace: string;
 }
+
+export class TextColumnData
+{
+    key: string;
+    value: string|number|null;
+}

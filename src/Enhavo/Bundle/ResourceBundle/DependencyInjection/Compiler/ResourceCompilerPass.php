@@ -13,7 +13,7 @@ class ResourceCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {
-        $resources = $container->getParameter('enhavo_resources');
+        $resources = $container->getParameter('enhavo_resource.resources');
         foreach ($resources as $key => $resource)
         {
             $container->setParameter(sprintf('%s.model.class', $key), $resource['classes']['model']);

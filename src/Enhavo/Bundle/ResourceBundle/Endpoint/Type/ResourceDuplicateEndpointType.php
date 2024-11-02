@@ -8,6 +8,7 @@ use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Bundle\ResourceBundle\Input\Input;
 use Enhavo\Bundle\ResourceBundle\Input\InputFactory;
 use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
+use Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Csrf\CsrfToken;
@@ -19,6 +20,7 @@ class ResourceDuplicateEndpointType extends AbstractEndpointType
         private readonly InputFactory $inputFactory,
         private readonly ResourceManager $resourceManager,
         private readonly CsrfTokenManagerInterface $csrfTokenManager,
+        private readonly RouteResolverInterface $routeResolver,
     )
     {
     }
@@ -41,12 +43,25 @@ class ResourceDuplicateEndpointType extends AbstractEndpointType
             return;
         }
 
-        $duplicate = $this->resourceManager->duplicate($resource);
-        $this->resourceManager->save($duplicate);
+        $duplicateResource = $this->resourceManager->duplicate($resource);
+        $this->resourceManager->save($duplicateResource);
+
+        $redirectRoute = $this->routeResolver->getRoute('update', ['api' => false]) ?? $options['update_route'];
+        $apiRoute = $this->routeResolver->getRoute('update', ['api' => true])  ?? $options['update_api_route'];
+
+        $data->set('url', $this->generateUrl($apiRoute, ['id' => $duplicateResource->getId()]));
+        if ($redirectRoute) {
+            $data->set('redirect', $this->generateUrl($redirectRoute, ['id' => $duplicateResource->getId()]));
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
+        $resolver->setDefaults([
+            'update_route' => null,
+            'update_api_route' => null,
+        ]);
+
         $resolver->setRequired('input');
     }
 
@@ -54,4 +69,6 @@ class ResourceDuplicateEndpointType extends AbstractEndpointType
     {
         return 'resource_duplicate';
     }
+
+
 }

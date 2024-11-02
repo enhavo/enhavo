@@ -21,3 +21,15 @@ services:
         chunk: 'tab'
         tags:
             - { name: 'enhavo_app.tab' }
+
+    '@enhavo/app/tab/model/RevisionTab':
+        import: RevisionTab
+        chunk: 'tab'
+        arguments:
+            - '@enhavo/app/ui/UiManager'
+            - '@enhavo/app/flash-message/FlashMessenger'
+            - '@enhavo/app/frame/FrameManager'
+            - '@enhavo/app/translation/Translator'
+            - '@enhavo/app/manager/ResourceInputManager'
+        tags:
+            - { name: 'enhavo_app.tab' }

@@ -29,16 +29,20 @@
 <script setup lang="ts">
 import '@enhavo/app/assets/styles/view.scss'
 import {inject, onMounted} from "vue";
-import {useRoute, useRouter} from 'vue-router'
+import {useRoute} from 'vue-router'
 import {ResourceInputManager} from "../../manager/ResourceInputManager";
 import {TabInterface} from "../../tab/TabInterface";
 import {FrameManager} from "@enhavo/app/frame/FrameManager";
 import {Frame} from "@enhavo/app/frame/Frame";
+import {Router} from "@enhavo/app/routing/Router";
 
 const manager = inject<ResourceInputManager>('resourceInputManager');
 const frameManager = inject<FrameManager>('frameManager');
+const router = inject<Router>('router');
 const route = useRoute();
-manager.load(route.meta.api as string, route.params.id as number);
+
+
+manager.load(generateUrl(route.meta.api as string, route.params.id as number));
 
 async function selectTab(tab: TabInterface)
 {
@@ -58,5 +62,14 @@ onMounted( async () => {
         }
     });
 })
+
+function generateUrl(route: string, id: number = null): string
+{
+    let parameters = {};
+    if (route) {
+        parameters['id'] = id;
+    }
+    return router.generate(route, parameters);
+}
 
 </script>

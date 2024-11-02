@@ -11,8 +11,13 @@ export class ActionColumn extends AbstractColumn
         super();
     }
 
-    getAction(data: any): ActionInterface
+    getActions(actions: []): ActionInterface[]
     {
-        return this.actionManager.createAction(data);
+        return this.actionManager.createActions(actions);
     }
+}
+
+export class ActionColumnData
+{
+    actions: ActionInterface[];
 }

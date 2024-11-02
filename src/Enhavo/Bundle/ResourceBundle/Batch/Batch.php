@@ -13,7 +13,7 @@ use Enhavo\Bundle\ApiBundle\Data\Data;
  */
 class Batch extends AbstractContainerType
 {
-    public function execute($ids, EntityRepository $repository, Data $data, Context $context): void
+    public function execute(array $ids, EntityRepository $repository, Data $data, Context $context): void
     {
         $this->type->execute($this->options, $ids, $repository, $data, $context);
     }

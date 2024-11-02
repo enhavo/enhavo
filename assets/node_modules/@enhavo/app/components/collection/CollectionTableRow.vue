@@ -62,7 +62,7 @@ function getColumnData(column: string): object
 {
     for (let field of props.data.data) {
         if (field.key === column) {
-            return field.value;
+            return field;
         }
     }
     return null;

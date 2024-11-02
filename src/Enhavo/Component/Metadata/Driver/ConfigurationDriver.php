@@ -12,28 +12,23 @@ use Enhavo\Component\Metadata\DriverInterface;
 
 class ConfigurationDriver implements DriverInterface
 {
-    /**
-     * @var array
-     */
-    private $configuration;
-
-    public function __construct(array $configuration)
+    public function __construct(
+        private readonly array $configuration
+    )
     {
-        $this->configuration = $configuration;
     }
 
-    public function load()
+    public function loadClass($className): array|null|false
     {
+        if (array_key_exists($className, $this->configuration)) {
+            return $this->configuration[$className];
+        }
 
+        return false;
     }
 
-    public function getAllClasses()
+    public function getAllClasses(): array
     {
         return array_keys($this->configuration);
-    }
-
-    public function getNormalizedData()
-    {
-        return $this->configuration;
     }
 }

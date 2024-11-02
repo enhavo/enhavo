@@ -11,6 +11,8 @@ services:
             - '@enhavo/app/filter/FilterManager'
             - '@enhavo/app/column/ColumnManager'
             - '@enhavo/app/frame/FrameManager'
+            - '@enhavo/app/flash-message/FlashMessenger'
+            - '@enhavo/app/translation/Translator'
         tags:
             - { name: enhavo_app.collection }
 

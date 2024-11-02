@@ -43,4 +43,14 @@ class ActionManager
 
         return $actions;
     }
+
+    public function createViewData(array $configuration, object $resource = null): array
+    {
+        $data = [];
+        $actions = $this->getActions($configuration, $resource);
+        foreach ($actions as $action) {
+            $data[] = $action->createViewData($resource);
+        }
+        return $data;
+    }
 }

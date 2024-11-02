@@ -22,8 +22,4 @@ class EnhavoNewsletterBundle extends Bundle
         $container->addCompilerPass(new ProviderCompilerPass());
     }
 
-    public static function getSupportedDrivers()
-    {
-        return array('doctrine/orm');
-    }
 }

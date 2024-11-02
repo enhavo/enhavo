@@ -102,6 +102,8 @@ class BetweenFilterType extends AbstractFilterType
             'label' => null,
             'initial_value' => null,
         ]);
+
+        $resolver->setRequired('property');
     }
 
     public static function getName(): ?string

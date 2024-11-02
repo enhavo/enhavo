@@ -55,6 +55,7 @@ class ResourceUpdateEndpointType extends AbstractEndpointType
                 }
             }
             $data->set('form', $this->vueForm->createData($form->createView()));
+            $data->set('url', $request->getPathInfo());
         }
 
         $viewData = $input->getViewData($resource);
