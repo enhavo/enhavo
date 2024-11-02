@@ -1,0 +1,49 @@
+services:
+    Enhavo\Component\Metadata\MetadataRepository[Duplicate]:
+        class: Enhavo\Component\Metadata\MetadataRepository
+        arguments:
+            - '@Enhavo\Component\Metadata\MetadataFactory[Duplicate]'
+            - true
+            - false
+
+    Enhavo\Component\Metadata\MetadataFactory[Duplicate]:
+        class: Enhavo\Component\Metadata\MetadataFactory
+        arguments:
+            - 'Enhavo\Bundle\ResourceBundle\Duplicate\Metadata\Metadata'
+        calls:
+            - [addDriver, ['@Enhavo\Component\Metadata\Driver\ConfigurationDriver[Duplicate]']]
+            - [addDriver, ['@Enhavo\Bundle\ResourceBundle\Duplicate\Metadata\DuplicateAttributeDriver']]
+            - [addProvider, ['@Enhavo\Bundle\ResourceBundle\Duplicate\Metadata\DuplicateProvider']]
+
+    Enhavo\Component\Metadata\Driver\ConfigurationDriver[Duplicate]:
+        class: Enhavo\Component\Metadata\Driver\ConfigurationDriver
+        arguments:
+            - '%enhavo_resource.duplicate%'
+
+    Enhavo\Bundle\ResourceBundle\Duplicate\Metadata\DuplicateAttributeDriver:
+
+
+    Enhavo\Bundle\ResourceBundle\Duplicate\Metadata\DuplicateProvider:
+
+    Enhavo\Bundle\ResourceBundle\Duplicate\DuplicateFactory:
+        arguments:
+            - '@Enhavo\Component\Metadata\MetadataRepository[Duplicate]'
+            - '@Enhavo\Component\Type\FactoryInterface[Duplicate]'
+
+    Enhavo\Bundle\ResourceBundle\Duplicate\Type\PropertyDuplicateType:
+        tags:
+            - { name: enhavo_resource.duplicate }
+
+    Enhavo\Bundle\ResourceBundle\Duplicate\Type\CloneDuplicateType:
+        tags:
+            - { name: enhavo_resource.duplicate }
+
+    Enhavo\Bundle\ResourceBundle\Duplicate\Type\StringDuplicateType:
+        tags:
+            - { name: enhavo_resource.duplicate }
+
+    Enhavo\Bundle\ResourceBundle\Duplicate\Type\ModelDuplicateType:
+        arguments:
+            - '@Enhavo\Bundle\ResourceBundle\Duplicate\DuplicateFactory'
+        tags:
+            - { name: enhavo_resource.duplicate }

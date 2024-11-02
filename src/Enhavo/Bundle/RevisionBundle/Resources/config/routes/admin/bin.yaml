@@ -1,0 +1,11 @@
+enhavo_revision_admin_bin_index:
+    path: /bin/index
+    defaults:
+        _expose: admin
+        _vue:
+            component: resource-index
+            groups: admin
+            meta:
+                api: enhavo_revision_admin_api_bin_index
+        _endpoint:
+            type: admin

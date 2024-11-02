@@ -11,9 +11,9 @@ namespace Enhavo\Component\Metadata;
 
 interface DriverInterface
 {
-    public function getAllClasses();
+    /** Get all FQCN as array */
+    public function getAllClasses(): array;
 
-    public function load();
-
-    public function getNormalizedData();
+    /** Get normalized data of a class or null, and if no data exists false */
+    public function loadClass($className): array|null|false;
 }

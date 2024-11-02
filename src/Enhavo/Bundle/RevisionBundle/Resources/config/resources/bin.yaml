@@ -1,0 +1,45 @@
+enhavo_resource:
+    resources:
+        enhavo_revision.bin:
+            priority: -10
+            classes:
+                model: Enhavo\Bundle\RevisionBundle\Entity\Bin
+    grids:
+        enhavo_revision.bin:
+            resource: enhavo_revision.bin
+            filters:
+                title:
+                    type: text
+                    property: title
+                    label: Text
+            columns:
+                type:
+                    type: Enhavo\Bundle\RevisionBundle\Column\Type\RevisionAwareColumnType
+                    width: 4
+                title:
+                    type: text
+                    label: bin.label.title
+                    translation_domain: EnhavoRevisionBundle
+                    property: title
+                    width: 6
+                    sortable: true
+                date:
+                    label: bin.label.date
+                    translation_domain: EnhavoRevisionBundle
+                    property: date
+                    type: datetime
+                    width: 4
+                    sortable: true
+                actions:
+                    width: 1
+                    type: action
+                    actions:
+                        restore:
+                            type: Enhavo\Bundle\RevisionBundle\Action\Type\RevisionAwareRestoreActionType
+                            route: enhavo_revision_admin_api_bin_restore
+                            confirm_message: bin.message.confirm
+            batches:
+                delete:
+                    type: delete
+
+

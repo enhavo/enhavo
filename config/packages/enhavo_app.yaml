@@ -28,16 +28,20 @@ enhavo_app:
             type: template
         settings:
             type: setting
+        bin:
+            type: revision_bin
+        archive:
+            type: revision_archive
         person:
             type: base
             label: Person
-            route: app_person_index
+            route: app_admin_person_index
             icon: accessibility
         frame_test:
             type: base
             label: Frame Test
             route: app_admin_frame_test
-            icon: accessibility
+            icon: video_label
             clear: false
         list:
             type: base

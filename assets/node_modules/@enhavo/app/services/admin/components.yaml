@@ -318,6 +318,12 @@ services:
         tags:
             - { name: vue.component, component: 'tab-form' }
 
+    '@enhavo/app/components/tab/TabRevision.vue':
+        chunk: 'tab'
+        static: true
+        tags:
+            - { name: vue.component, component: 'tab-revision' }
+
     '@enhavo/app/components/tab/TabBase.vue':
         chunk: 'tab'
         static: true

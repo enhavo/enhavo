@@ -28,17 +28,6 @@ interface NewsletterInterface
     public function getId();
 
     /**
-     * @return string
-     */
-    public function getSlug();
-
-    /**
-     * @param string $slug
-     * @return NewsletterInterface
-     */
-    public function setSlug($slug);
-
-    /**
      * Set subject
      *
      * @param string $subject

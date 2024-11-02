@@ -18,7 +18,7 @@ class DuplicateActionType extends AbstractActionType implements ActionTypeInterf
 
     public function createViewData(array $options, Data $data, object $resource = null): void
     {
-        $data->set('token', $this->tokenManager->getToken('resource_delete')->getValue());
+        $data->set('token', $this->tokenManager->getToken('resource_duplicate')->getValue());
     }
 
 
@@ -30,7 +30,7 @@ class DuplicateActionType extends AbstractActionType implements ActionTypeInterf
             'icon' => 'content_copy',
             'confirm' => true,
             'confirm_message' => 'message.duplicate.confirm',
-            'confirm_label_ok' => 'label.ok',
+            'confirm_label_ok' => 'action.duplicate',
             'confirm_label_cancel' => 'label.cancel',
             'route_parameters' => ['id' => 'expr:resource.getId()'],
             'model' => 'DuplicateAction',

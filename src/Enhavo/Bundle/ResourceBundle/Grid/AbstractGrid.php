@@ -21,6 +21,7 @@ use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Contracts\Service\ServiceSubscriberInterface;
 
 abstract class AbstractGrid implements GridInterface, ServiceSubscriberInterface
@@ -51,6 +52,7 @@ abstract class AbstractGrid implements GridInterface, ServiceSubscriberInterface
             CollectionFactory::class,
             RouteResolverInterface::class,
             RequestStack::class,
+            CsrfTokenManagerInterface::class,
             'router',
         ];
     }
@@ -192,5 +194,14 @@ abstract class AbstractGrid implements GridInterface, ServiceSubscriberInterface
         /** @var RequestStack $requestStack */
         $requestStack = $this->container->get(RequestStack::class);
         return $requestStack->getMainRequest();
+    }
+
+    protected function getCsrfTokenManager(): CsrfTokenManagerInterface
+    {
+        if (!$this->container->get(CsrfTokenManagerInterface::class)) {
+            throw GridException::missingService(CsrfTokenManagerInterface::class);
+        }
+
+        return $this->container->get(CsrfTokenManagerInterface::class);
     }
 }

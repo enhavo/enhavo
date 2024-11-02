@@ -57,6 +57,8 @@ class AgeFilterType extends AbstractFilterType
             'label_from' => 'filter.age.label.from',
             'label_to' => 'filter.age.label.to',
         ]);
+
+        $resolver->setRequired('property');
     }
 
     public static function getParentType(): ?string

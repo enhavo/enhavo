@@ -14,16 +14,13 @@ export class ResourcePreviewManager
     public actionsSecondary: ActionInterface[];
 
     constructor(
-        private router: Router,
         private actionManager: ActionManager,
         private frameManager: FrameManager,
     ) {
     }
 
-    async load(route: string)
+    async load(url: string)
     {
-        let url = this.router.generate(route);
-
         const response = await fetch(url);
         const data = await response.json();
 

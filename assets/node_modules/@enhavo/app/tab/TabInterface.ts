@@ -7,4 +7,6 @@ export interface TabInterface extends ComponentAwareInterface, ModelAwareInterfa
     key: string;
     active: boolean;
     error: boolean;
+
+    morph(source: TabInterface): void
 }

@@ -27,6 +27,8 @@ class ResourceMerger
             $newResourceConfig[$name] = $this->mergeConfigs($resourceConfigs);
         }
 
+        $this->validateResources($newResourceConfig);
+
         $configs[] = [
             'resources' => $newResourceConfig,
         ];
@@ -66,5 +68,22 @@ class ResourceMerger
         }
 
         return $before;
+    }
+
+    private function validateResources($resources): void
+    {
+        $models = [];
+        foreach ($resources as $name => $resourceConfig) {
+            $model = $resourceConfig['classes']['model'];
+            if (array_key_exists($model, $models)) {
+                throw new \InvalidArgumentException(sprintf(
+                    'A model class can have only one resource alias. Trying to apply model "%s on "%s", but alias "%s" already use it.',
+                    $model,
+                    $name,
+                    $models[$model],
+                ));
+            }
+            $models[$model] = $name;
+        }
     }
 }

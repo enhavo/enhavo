@@ -10,14 +10,7 @@ namespace Enhavo\Bundle\RoutingBundle\Model;
 
 interface Slugable
 {
-    /**
-     * @return string
-     */
-    public function getSlug();
+    public function getSlug(): ?string;
 
-    /**
-     * @param string $slug
-     * @return void
-     */
-    public function setSlug($slug);
+    public function setSlug(?string $slug);
 }

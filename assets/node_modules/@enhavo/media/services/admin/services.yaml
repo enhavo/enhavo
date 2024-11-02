@@ -2,16 +2,6 @@ imports:
     - path: '../*'
 
 services:
-    '@enhavo/media/loader/MediaLoader':
-        chunk: 'form'
-        arguments:
-            - '@enhavo/app/frame/FrameManager'
-            - '@enhavo/core/Router'
-            - '@enhavo/app/flash-message/FlashMessenger'
-            - '@enhavo/app/translation/Translator'
-        tags:
-            - 'enhavo_app.form'
-
     '@enhavo/media/manager/ImageCropperManager':
         import: ImageCropperManager
         chunk: 'image-cropper'

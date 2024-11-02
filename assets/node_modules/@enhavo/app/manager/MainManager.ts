@@ -7,6 +7,7 @@ import {FrameStackSubscriber} from "@enhavo/app/frame/FrameStackSubscriber";
 import {FrameStateManager} from "@enhavo/app/frame/FrameStateManager";
 import {FrameManager} from "@enhavo/app/frame/FrameManager";
 import {FlashMessenger} from "@enhavo/app/flash-message/FlashMessenger";
+import {UiManager} from "@enhavo/app/ui/UiManager";
 
 export class MainManager
 {
@@ -23,6 +24,7 @@ export class MainManager
         private widgetManager: ToolbarWidgetManager,
         private router: Router,
         private flashMessenger: FlashMessenger,
+        private uiManager: UiManager,
     ) {
     };
 
@@ -38,6 +40,15 @@ export class MainManager
         let url = this.router.generate('enhavo_app_admin_api_main');
 
         const response = await fetch(url);
+
+        if (!response.ok) {
+            this.uiManager.alert({
+                message: 'Error Loading'
+            });
+            alert('Error Loading');
+            return;
+        }
+
         const data = await response.json();
 
         this.primaryToolbarWidgets = this.widgetManager.createToolbarWidgets(data['toolbarWidgetsPrimary']);

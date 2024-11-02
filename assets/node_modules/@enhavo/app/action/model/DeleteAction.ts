@@ -60,7 +60,7 @@ export class DeleteAction extends AbstractAction
             })
         } else {
             this.uiManager.loading(false);
-            this.flashMessenger.error(this.translator.trans('enhavo_app.error', {}, 'javascript'),);
+            this.flashMessenger.error(this.translator.trans('enhavo_app.error', {}, 'javascript'));
         }
     }
 }

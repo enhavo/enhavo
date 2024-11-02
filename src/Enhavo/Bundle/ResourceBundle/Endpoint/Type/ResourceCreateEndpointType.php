@@ -40,12 +40,16 @@ class ResourceCreateEndpointType extends AbstractEndpointType
             $context->set('form', $form);
             $context->set('resource', $resource);
 
+            $data->set('url', $request->getPathInfo());
+
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
                     $this->resourceManager->save($resource);
                     $context->setStatusCode(201);
 
-                    $redirectRoute = $this->routeResolver->getRoute('update', ['api' => false]);
+                    $redirectRoute = $this->routeResolver->getRoute('update', ['api' => false]) ?? $options['update_route'];
+                    $apiRoute = $this->routeResolver->getRoute('update', ['api' => true])  ?? $options['update_api_route'];
+                    $data->set('url', $this->generateUrl($apiRoute, ['id' => $resource->getId()]));
                     if ($redirectRoute) {
                         $data->set('redirect', $this->generateUrl($redirectRoute, ['id' => $resource->getId()]));
                     }
@@ -63,6 +67,11 @@ class ResourceCreateEndpointType extends AbstractEndpointType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
+        $resolver->setDefaults([
+            'update_route' => null,
+            'update_api_route' => null,
+        ]);
+
         $resolver->setRequired('input');
     }
 

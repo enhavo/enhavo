@@ -30,9 +30,11 @@ class EnhavoResourceExtension extends Extension implements PrependExtensionInter
 
         $config = $this->processConfiguration($configuration, $configs);
 
-        $container->setParameter('enhavo_resources.grids', $config['grids']);
-        $container->setParameter('enhavo_resources.inputs', $config['inputs']);
-        $container->setParameter('enhavo_resources', $config['resources']);
+        $container->setParameter('enhavo_resource.grids', $config['grids']);
+        $container->setParameter('enhavo_resource.inputs', $config['inputs']);
+        $container->setParameter('enhavo_resource.duplicate', $config['duplicate']);
+        $container->setParameter('enhavo_resource.resources', $config['resources']);
+        $container->setParameter('enhavo_resource.delete.handler', $config['delete']['handler']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
@@ -40,6 +42,7 @@ class EnhavoResourceExtension extends Extension implements PrependExtensionInter
         $loader->load('services/batch.yaml');
         $loader->load('services/column.yaml');
         $loader->load('services/endpoint.yaml');
+        $loader->load('services/duplicate.yaml');
         $loader->load('services/filter.yaml');
         $loader->load('services/grid.yaml');
         $loader->load('services/services.yaml');

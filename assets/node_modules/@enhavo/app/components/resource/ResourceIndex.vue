@@ -28,12 +28,14 @@ import {useRoute} from 'vue-router'
 import {ResourceIndexManager} from "@enhavo/app/manager/ResourceIndexManager";
 import {ExpressionLanguage} from "@enhavo/app/expression-language/ExpressionLanguage";
 import {HtmlEntities} from '@enhavo/app/util/HtmlEntities';
+import {Router} from "@enhavo/app/routing/Router";
 
 const manager = inject<ResourceIndexManager>('resourceIndexManager');
 const expressionLanguage = inject<ExpressionLanguage>('expressionLanguage');
 const route = useRoute();
 const parameters = expressionLanguage.evaluateObject(HtmlEntities.encodeObject(route.meta.api_parameters as Object));
+const router = inject<Router>('router');
 
-manager.load(route.meta.api as string, parameters);
+manager.load(router.generate(route.meta.api as string, parameters));
 
 </script>

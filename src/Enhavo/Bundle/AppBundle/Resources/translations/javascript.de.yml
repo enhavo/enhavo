@@ -51,3 +51,10 @@ enhavo_app:
             not_valid: 'Bitte überprüfen Sie ihre Angaben'
         label:
             save: 'Speichern'
+    revision:
+        message:
+            restored: 'Die Version wurde wiederhergestellt!'
+            archived: 'Die Resource wurde archiviert'
+        action:
+            restore: 'Wiederherstellen'
+            close: 'Schließen'

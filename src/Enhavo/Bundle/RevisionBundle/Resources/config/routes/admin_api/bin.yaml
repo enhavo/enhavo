@@ -1,0 +1,45 @@
+enhavo_revision_admin_api_bin_index:
+    path: /bin/index
+    methods: [GET]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_index
+            grid: enhavo_revision.bin
+
+enhavo_revision_admin_api_bin_list:
+    path: /bin/list
+    methods: [GET,POST]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_list
+            grid: enhavo_revision.bin
+
+enhavo_revision_admin_api_bin_delete:
+    path: /bin/delete/{id}
+    methods: [DELETE, POST]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_delete
+            input: enhavo_revision.bin
+
+enhavo_revision_admin_api_bin_batch:
+    path: /bin/batch
+    methods: [POST]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_batch
+            grid: enhavo_revision.bin
+
+enhavo_revision_admin_api_bin_restore:
+    path: /bin/restore/{id}
+    methods: [POST]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: Enhavo\Bundle\RevisionBundle\Endpoint\Type\RevisionAwareRestoreType
+            resource: enhavo_revision.bin
+            method: undelete

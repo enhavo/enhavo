@@ -11,130 +11,110 @@ namespace Enhavo\Component\Metadata;
 
 class MetadataFactory
 {
-    /** @var  */
-    private $metaDataClass;
-
     /** @var DriverInterface[] */
-    private $drivers;
+    private array $drivers = [];
 
     /** @var ProviderInterface[] */
-    private $providers;
+    private array $providers = [];
 
-    /** @var array */
-    private $configurations = [];
+    /** @var Metadata[] */
+    private array $metadata = [];
 
-    /** @var bool  */
-    private $loaded = false;
+    private array $loadedData = [];
 
-    /**
-     * MetadataFactory constructor.
-     * @param $metaDataClass
-     */
-    public function __construct($metaDataClass)
+    private ?array $classes = null;
+
+    public function __construct(
+        private readonly string $metaDataClass
+    )
     {
-        $this->metaDataClass = $metaDataClass;
     }
 
-    public function getAllClasses()
+    /** @retrun string[] */
+    public function getAllClasses(): array
     {
-        $this->load();
-
-        return array_keys($this->configurations);
-    }
-
-    public function createMetadata($className, $force = false): ?Metadata
-    {
-        $this->load();
-
-        if($force === false && !array_key_exists($className, $this->configurations)) {
-            return null;
+        if ($this->classes !== null) {
+            return $this->classes;
         }
-
-        $metadata = new $this->metaDataClass($className);
-        return $metadata;
-    }
-
-    public function loadMetadata($className, Metadata $metadata): bool
-    {
-        $this->load();
-
-        if (array_key_exists($className, $this->configurations)) {
-            foreach ($this->providers as $provider) {
-                $provider->provide($metadata, $this->configurations[$className]);
-            }
-            return true;
-        }
-        return false;
-    }
-
-    private function load()
-    {
-        if($this->loaded) {
-            return;
-        }
-
-        foreach($this->drivers as $driver) {
-            $driver->load();
-            $data = $driver->getNormalizedData();
-            foreach($data as $className => $configuration) {
-                if(array_key_exists($className, $this->configurations)) {
-                    $this->configurations[$className] = array_merge($this->configurations[$className], $configuration);
-                } else {
-                    $this->configurations[$className] = $configuration;
+        $this->classes = [];
+        foreach ($this->drivers as $driver) {
+            foreach ($driver->getAllClasses() as $class) {
+                if (!in_array($class, $this->classes)) {
+                    $this->classes[] = $class;
                 }
             }
         }
 
-        $this->loaded = true;
+        return $this->classes;
     }
 
-    /**
-     * @param ProviderInterface $provider
-     */
-    public function addProvider(ProviderInterface $provider)
+    public function createMetadata($className, bool $force = false): ?Metadata
+    {
+        if (array_key_exists($className, $this->metadata)) {
+            return $this->metadata[$className];
+        }
+
+        $metadata = new $this->metaDataClass($className);
+
+        $hasMetadata = $this->loadMetadata($className, $metadata);
+
+        $this->metadata[$className] = $hasMetadata || $force ? $metadata : null;
+        return $this->metadata[$className];
+    }
+
+    public function loadMetadata($className, Metadata $metadata): bool
+    {
+        if (!array_key_exists($className, $this->loadedData)) {
+            $this->loadedData[$className] = [];
+
+            foreach ($this->drivers as $driver) {
+                $this->loadedData[$className][] = $driver->loadClass($className);
+            }
+        }
+
+        $hasMetadata = false;
+        foreach ($this->loadedData[$className] as $normalizedData) {
+            if ($normalizedData !== false) {
+                $hasMetadata = true;
+            }
+            foreach ($this->providers as $provider) {
+                $provider->provide($metadata, is_array($normalizedData) ? $normalizedData : []);
+            }
+        }
+
+        return $hasMetadata;
+    }
+
+    public function addProvider(ProviderInterface $provider): void
     {
         $this->providers[] = $provider;
     }
 
-    /**
-     * @param ProviderInterface $provider
-     */
-    public function removeProvider(ProviderInterface $provider)
+
+    public function removeProvider(ProviderInterface $provider): void
     {
         if (false !== $key = array_search($provider, $this->providers, true)) {
             array_splice($this->providers, $key, 1);
         }
     }
 
-    /**
-     * @param DriverInterface $driver
-     */
-    public function addDriver(DriverInterface $driver)
+    public function addDriver(DriverInterface $driver): void
     {
         $this->drivers[] = $driver;
     }
 
-    /**
-     * @param DriverInterface $driver
-     */
-    public function removeDriver(DriverInterface $driver)
+    public function removeDriver(DriverInterface $driver): void
     {
         if (false !== $key = array_search($driver, $this->drivers, true)) {
             array_splice($this->drivers, $key, 1);
         }
     }
 
-    /**
-     * @return DriverInterface[]
-     */
     public function getDrivers(): array
     {
         return $this->drivers;
     }
 
-    /**
-     * @return ProviderInterface[]
-     */
     public function getProviders(): array
     {
         return $this->providers;

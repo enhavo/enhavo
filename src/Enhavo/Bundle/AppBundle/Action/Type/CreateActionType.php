@@ -19,9 +19,9 @@ use Symfony\Component\Routing\RouterInterface;
 class CreateActionType extends AbstractActionType
 {
     public function __construct(
-        private RouterInterface $router,
-        private RouteResolverInterface $routeResolver,
-        private ResourceExpressionLanguage $expressionLanguage,
+        private readonly RouterInterface $router,
+        private readonly RouteResolverInterface $routeResolver,
+        private readonly ResourceExpressionLanguage $expressionLanguage,
     )
     {
     }
@@ -37,7 +37,7 @@ class CreateActionType extends AbstractActionType
         $routeParameters = $this->expressionLanguage->evaluateArray($options['route_parameters']);
 
         $data->set('url', $this->router->generate($route, $routeParameters));
-        $data->set('frameKey', $options['frame_key']);
+        $data->set('key', $options['frame_key']);
         $data->set('target', $options['target']);
     }
 
@@ -48,7 +48,7 @@ class CreateActionType extends AbstractActionType
             'icon' => 'add_circle_outline',
             'label' => 'label.create',
             'translation_domain' => 'EnhavoAppBundle',
-            'frame_key' => 'edit-view',
+            'frame_key' => 'edit',
             'target' => '_frame',
             'route' => null,
             'route_parameters' => [],

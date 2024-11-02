@@ -9,7 +9,7 @@ services:
 
     Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EnhavoResourceResolver:
         arguments:
-            - '%enhavo_resources.resources%'
+            - '%enhavo_resource.resources%'
             - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
 
     Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\ClassNameResolver:

@@ -1,0 +1,7 @@
+enhavo_revision_admin:
+    resource: "@EnhavoRevisionBundle/Resources/config/routes/admin/*"
+    prefix: /admin/revision
+
+enhavo_revision_admin_api:
+    resource: "@EnhavoRevisionBundle/Resources/config/routes/admin_api/*"
+    prefix: /admin/api/revision

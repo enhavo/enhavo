@@ -1,5 +1,6 @@
 action:
   changePassword: 'Change password'
+  duplicate: 'Duplicate'
   batch:
     submit: 'Execute'
     delete: 'Delete'
@@ -53,7 +54,7 @@ label:
   open_homepage: 'Open Homepage'
 message:
   duplicate:
-    confirm: 'Warning: This form will be closed without saving. Do you really want to continue?'
+    confirm: 'The resource will be duplicated. This form will be closed without saving. Do you really want to continue?'
     success: 'The element has been duplicated successfully'
   delete:
     confirm: 'Warning: Do you really want to delete this document?'

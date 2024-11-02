@@ -65,9 +65,9 @@ class BaseActionType extends AbstractType implements ActionTypeInterface
             'permission' => null,
             'enabled' => true,
             'confirm' => false,
-            'confirm_message' => 'message.close.confirm',
-            'confirm_label_ok' => 'label.ok',
-            'confirm_label_cancel' => 'label.cancel',
+            'confirm_message' => null,
+            'confirm_label_ok' => null,
+            'confirm_label_cancel' => null,
             'component' => 'action-action'
         ]);
 

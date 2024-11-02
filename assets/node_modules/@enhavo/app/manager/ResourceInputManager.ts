@@ -1,4 +1,3 @@
-import {Router} from "@enhavo/app/routing/Router";
 import {ActionManager} from "@enhavo/app/action/ActionManager";
 import {ActionInterface} from "@enhavo/app/action/ActionInterface";
 import {RouteContainer} from "../routing/RouteContainer";
@@ -11,11 +10,11 @@ import {FormVisitorInterface} from "@enhavo/vue-form/form/FormVisitor";
 import {Theme} from "@enhavo/vue-form/form/Theme";
 import {FrameManager} from "@enhavo/app/frame/FrameManager";
 import {VueRouterFactory} from "@enhavo/app/vue/VueRouterFactory";
-import {FormEventDispatcher} from "@enhavo/vue-form/form/FormEventDispatcher";
 import {UiManager} from "@enhavo/app/ui/UiManager";
 
 export class ResourceInputManager
 {
+    public url: string;
     public actions: ActionInterface[];
     public actionsSecondary: ActionInterface[];
     public tabs: TabInterface[] = null;
@@ -27,27 +26,17 @@ export class ResourceInputManager
     private loaded: boolean = false;
 
     constructor(
-        private router: Router,
         private actionManager: ActionManager,
         private tabManager: TabManager,
         private formFactory: FormFactory,
         private frameManager: FrameManager,
         private vueRouterFactory: VueRouterFactory,
         private uiManager: UiManager,
-        private eventDispatcher: FormEventDispatcher,
     ) {
     }
 
-    async load(route: string, id: number = null)
+    async load(url: string)
     {
-        let parameters = {};
-
-        if (id) {
-            parameters['id'] = id;
-        }
-
-        let url = this.router.generate(route, parameters);
-
         const response = await fetch(url);
         if (!response.ok) {
             this.frameManager.loaded();
@@ -59,6 +48,7 @@ export class ResourceInputManager
 
         const data = await response.json();
 
+        this.url = data.url;
         this.routes = new RouteContainer(data.routes);
         this.form = this.formFactory.create(data.form, this.visitors);
         this.tabs = this.tabManager.createTabs(data.tabs);
@@ -93,35 +83,46 @@ export class ResourceInputManager
         const response = await this.sendForm(url);
         const data = await response.json();
 
+        this.url = data.url;
         this.routes = new RouteContainer(data.routes);
 
         if (morph) {
             let newForm = this.formFactory.create(data.form, this.visitors);
             this.form.morphMerge(newForm);
             this.form.morphFinish();
+
+            this.actionManager.morphActions(this.actions, this.actionManager.createActions(data.actions));
+            this.actionManager.morphActions(this.actionsSecondary, this.actionManager.createActions(data.actionsSecondary));
+
+            this.tabManager.morphTabs(this.tabs, this.tabManager.createTabs(data.tabs));
         } else {
             this.form.destroy();
             this.form = this.formFactory.create(data.form, this.visitors);
-        }
 
-        if (morph) {
-            this.actionManager.morphActions(this.actions, this.actionManager.createActions(data.actions));
-            this.actionManager.morphActions(this.actionsSecondary, this.actionManager.createActions(data.actionsSecondary));
-        } else {
             this.actions = this.actionManager.createActions(data.actions);
             this.actionsSecondary = this.actionManager.createActions(data.actionsSecondary);
+
+            // ToDo: Overwrite Tabs, but keep active state
+            // this.tabs = this.tabManager.createTabs(data.tabs);
         }
 
         if (data.redirect) {
-            await this.vueRouterFactory.getRouter().push({
-                path: data.redirect,
-                query: {tab: this.getActiveTab().key}
-            });
-
-            this.frameManager.save();
+            await this.redirect(data.redirect);
         }
 
         return response.ok;
+    }
+
+    public async redirect(url: string)
+    {
+        await this.vueRouterFactory.getRouter().push({
+            path: url,
+            query: {tab: this.getActiveTab().key}
+        });
+
+        const frame = await this.frameManager.getFrame();
+        frame.url = url;
+        this.frameManager.save();
     }
 
     async sendForm(url: string, signal: AbortSignal = null): Promise<Response>
@@ -210,4 +211,3 @@ export class ResourceInputManager
         }
     }
 }
-

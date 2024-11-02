@@ -4,6 +4,8 @@ enhavo_resource:
             priority: -10
             classes:
                 model: Enhavo\Bundle\ArticleBundle\Entity\Article
+            label: article.label.article
+            translation_domain: EnhavoArticleBundle
     grids:
         enhavo_article.article:
             extends: enhavo_resource.grid

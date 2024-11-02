@@ -3,7 +3,6 @@
 namespace Enhavo\Bundle\ResourceBundle\Collection;
 
 use Doctrine\ORM\EntityRepository;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 interface CollectionInterface

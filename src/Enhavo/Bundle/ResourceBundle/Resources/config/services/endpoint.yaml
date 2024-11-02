@@ -44,6 +44,7 @@ services:
         arguments:
             - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
             - '@Enhavo\Bundle\ResourceBundle\Grid\GridFactory'
+            - '@Symfony\Component\Security\Csrf\CsrfTokenManagerInterface'
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:
@@ -66,6 +67,7 @@ services:
             - '@Enhavo\Bundle\ResourceBundle\Input\InputFactory'
             - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
             - '@Symfony\Component\Security\Csrf\CsrfTokenManagerInterface'
+            - '@Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface'
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:

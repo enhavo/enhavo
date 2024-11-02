@@ -1,0 +1,91 @@
+services:
+    Enhavo\Bundle\RevisionBundle\Revision\RevisionManager:
+        arguments:
+            - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
+            - '@doctrine.orm.entity_manager'
+            - '@Enhavo\Bundle\RevisionBundle\Restore\Restorer'
+            - '@enhavo_revision.bin.factory'
+            - '@enhavo_revision.archive.factory'
+
+    Enhavo\Bundle\RevisionBundle\Delete\SoftDeleteHandler:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+        calls:
+            - [setRevisionManager, ['@Enhavo\Bundle\RevisionBundle\Revision\RevisionManager']]
+
+    Enhavo\Bundle\RevisionBundle\Tab\Type\RevisionTabType:
+        arguments:
+            - '@Enhavo\Bundle\RevisionBundle\Revision\RevisionManager'
+            - '@serializer'
+            - '@security.csrf.token_manager'
+            - '@router'
+            - '@Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface'
+            - '@Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage'
+            - '@translator'
+        tags:
+            - { name: enhavo_resource.tab }
+
+    Enhavo\Bundle\RevisionBundle\Endpoint\Type\RestoreEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\ResourceBundle\Input\InputFactory'
+            - '@Enhavo\Bundle\RevisionBundle\Revision\RevisionManager'
+            - '@security.csrf.token_manager'
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\RevisionBundle\Endpoint\Type\ArchiveEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\ResourceBundle\Input\InputFactory'
+            - '@Enhavo\Bundle\RevisionBundle\Revision\RevisionManager'
+            - '@security.csrf.token_manager'
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\RevisionBundle\Endpoint\Type\RevisionAwareRestoreType:
+        arguments:
+            - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
+            - '@Enhavo\Bundle\RevisionBundle\Revision\RevisionManager'
+            - '@security.csrf.token_manager'
+            - '@doctrine.orm.entity_manager'
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\RevisionBundle\Menu\ArchiveMenuType:
+        tags:
+            - { name: enhavo_app.menu }
+
+    Enhavo\Bundle\RevisionBundle\Menu\BinMenuType:
+        tags:
+            - { name: enhavo_app.menu }
+
+    Enhavo\Bundle\RevisionBundle\Action\Type\RevisionAwareRestoreActionType:
+        arguments:
+            - '@router'
+            - '@security.csrf.token_manager'
+        tags:
+            - { name: enhavo_resource.action }
+
+    Enhavo\Bundle\RevisionBundle\Action\Type\ArchiveActionType:
+        arguments:
+            - '@router'
+            - '@security.csrf.token_manager'
+            - '@Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage'
+            - '@Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface'
+        tags:
+            - { name: enhavo_resource.action }
+
+    Enhavo\Bundle\RevisionBundle\Column\Type\RevisionAwareColumnType:
+        arguments:
+            - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
+            - '@translator'
+        tags:
+            - { name: enhavo_resource.column }

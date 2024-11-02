@@ -5,6 +5,9 @@ services:
             - '@doctrine.orm.entity_manager'
             - '@SM\Factory\FactoryInterface'
             - '@validator'
+            - '@Enhavo\Bundle\ResourceBundle\Duplicate\DuplicateFactory'
+            - '@Enhavo\Bundle\ResourceBundle\Delete\DeleteHandlerInterface'
+            - '%enhavo_resources.resources%'
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
 
@@ -38,18 +41,22 @@ services:
 
     Enhavo\Bundle\ResourceBundle\Command\DebugGridCommand:
         arguments:
-            - '%enhavo_resources.grids%'
+            - '%enhavo_resource.grids%'
         tags:
             - { name: console.command }
 
     Enhavo\Bundle\ResourceBundle\Command\DebugResourceCommand:
         arguments:
-            - '%enhavo_resources.resources%'
+            - '%enhavo_resource.resources%'
         tags:
             - { name: console.command }
 
     Enhavo\Bundle\ResourceBundle\Command\DebugInputCommand:
         arguments:
-            - '%enhavo_resources.inputs%'
+            - '%enhavo_resource.inputs%'
         tags:
             - { name: console.command }
+
+    Enhavo\Bundle\ResourceBundle\Delete\DoctrineDeleteHandler:
+        arguments:
+            - '@doctrine.orm.entity_manager'
