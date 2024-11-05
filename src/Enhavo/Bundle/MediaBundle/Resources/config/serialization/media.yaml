@@ -6,9 +6,13 @@ Enhavo\Bundle\MediaBundle\Entity\File:
             groups: ['endpoint', 'endpoint.block']
         extension:
             groups: ['endpoint', 'endpoint.block']
+        basename:
+            groups: ['endpoint', 'endpoint.block']
         filename:
             groups: ['endpoint', 'endpoint.block']
         parameters:
             groups: ['endpoint', 'endpoint.block']
         checksum:
+            groups: ['endpoint', 'endpoint.block']
+        token:
             groups: ['endpoint', 'endpoint.block']

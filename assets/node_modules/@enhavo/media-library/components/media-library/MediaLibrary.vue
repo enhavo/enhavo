@@ -10,7 +10,7 @@
         <modal-stack></modal-stack>
         <action-bar :primary="manager.actions" :secondary="manager.actionsSecondary"></action-bar>
 
-        <input v-show="false" v-once :ref="(el) => manager.uploadElement = el" multiple type="file" />
+        <input v-show="false" v-once :ref="(el) => manager.uploadElement = el as HTMLElement" multiple type="file" @change.prevent="change"/>
 
         <div class="media-library-overlay" v-if="!manager.loading">
             <div class="inner-content">
@@ -27,6 +27,17 @@
                         :data="getFilter('tags')"
                         @apply="applyFilter()"
                     ></component>
+
+                    <div class="headline"><i class="icon icon-filter_list"></i>
+                        Attributes
+                    </div>
+                    <ul>
+                        <component
+                            :is="getFilter('unusedFile').component"
+                            :data="getFilter('unusedFile')"
+                            @apply="applyFilter()"
+                        ></component>
+                    </ul>
                 </div>
 
                 <div class="result-search">
@@ -88,5 +99,10 @@ function getFilter(key: string): FilterInterface
 function applyFilter()
 {
     manager.collection.load();
+}
+
+function change(event)
+{
+    manager.change(event);
 }
 </script>

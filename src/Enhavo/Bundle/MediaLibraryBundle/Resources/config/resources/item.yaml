@@ -1,0 +1,94 @@
+enhavo_resource:
+    resources:
+        enhavo_media_library.item:
+            priority: -10
+            classes:
+                model: Enhavo\Bundle\MediaLibraryBundle\Entity\Item
+                repository: Enhavo\Bundle\MediaLibraryBundle\Repository\ItemRepository
+    grids:
+        enhavo_media_library.item:
+            resource: enhavo_media_library.item
+            actions:
+                select:
+                    type: media_library_select
+                    enabled: "expr:request.get('mode') === 'select'"
+                upload:
+                    type: media_library_upload
+            collection:
+                class: Enhavo\Bundle\MediaLibraryBundle\Collection\MediaLibraryCollection
+                component: collection-media-library
+                model: MediaLibraryCollection
+                sorting:
+                    file.createdAt: desc
+            filters:
+                filename:
+                    type: media_library_text
+                    component: filter-media-library-search
+                    label: Name
+                    translation_domain: EnhavoMediaLibraryBundle
+                content_type:
+                    type: media_library_content_type
+                    label: Content Type
+                    translation_domain: EnhavoMediaLibraryBundle
+                tags:
+                    type: entity
+                    component: filter-media-library-choice
+                    property: tags
+                    label: Tags
+                    resource: enhavo_taxonomy.term
+                    translation_domain: EnhavoMediaLibraryBundle
+                unusedFile:
+                    type: media_library_unused_file
+                    label: Unused File
+                    translation_domain: EnhavoMediaLibraryBundle
+            batches:
+                delete:
+                    type: delete
+                    enabled: "expr:request.get('mode') !== 'select'"
+                select:
+                    type: Enhavo\Bundle\MediaLibraryBundle\Batch\Type\MediaLibrarySelectBatchType
+                    enabled: "expr:request.get('mode') === 'select'"
+            columns:
+                name:
+                    type: multiple_property
+                    label: Name
+                    properties: [file.filename, file.extension]
+                    separator: '.'
+                    sortable: true
+                    width: 8
+                content_type:
+                    type: text
+                    label: Content Type
+                    property: contentType
+                    sortable: true
+                    width: 2
+                date:
+                    type: datetime
+                    label: Date
+                    property: file.createdAt
+                    sortable: true
+                    width: 2
+
+    inputs:
+        enhavo_media_library.item:
+            extends: enhavo_resource.input
+            resource: enhavo_media_library.item
+            form: Enhavo\Bundle\MediaLibraryBundle\Form\Type\ItemType
+            form_options: {  }
+            actions:
+                download:
+                    type: download
+                    route: enhavo_media_admin_api_file
+                    route_parameters:
+                        token: expr:resource.getFile().getToken()
+                        disposition: attachment
+            tabs:
+                main:
+                    label: null
+                    translation_domain: EnhavoMediaLibraryBundle
+                    type: form
+                    arrangement:
+                        - file.basename
+                        - file.parameters.alt
+                        - file.parameters.title
+                        - tags

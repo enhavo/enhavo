@@ -57,9 +57,5 @@ interface FileInterface extends FileContentInterface
 
     public function setChecksum(string $checksum);
 
-    public function isLibrary(): bool;
-
-    public function setLibrary(bool $library);
-
     public function setGarbageCheckedAt(?\DateTime $garbageCheckedAt);
 }

@@ -46,7 +46,6 @@ class FileUploadEndpointType extends AbstractEndpointType
                     $file = $this->fileFactory->createFromUploadedFile($uploadedFile);
 
                     $file->setGarbage($options['garbage']);
-                    $file->setLibrary($options['library']);
 
                     $this->resourceManager->save($file);
                     $storedFiles[] = $file;
@@ -67,7 +66,6 @@ class FileUploadEndpointType extends AbstractEndpointType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'library' => false,
             'garbage' => true,
             'validation_groups' => ['media_upload']
         ]);

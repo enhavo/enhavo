@@ -10,11 +10,23 @@ namespace Enhavo\Bundle\ResourceBundle\Column\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ResourceBundle\Column\AbstractColumnType;
+use Enhavo\Bundle\ResourceBundle\Filter\FilterQuery;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
 
 class MultiplePropertyColumnType extends AbstractColumnType
 {
+    public function buildSortingQuery($options, FilterQuery $query, string $direction): void
+    {
+        if ($options['sortable']) {
+            foreach ($options['properties'] as $property) {
+                $propertyPath = explode('.', $property);
+                $topProperty = array_pop($propertyPath);
+                $query->addOrderBy($topProperty, $direction, $propertyPath);
+            }
+        }
+    }
+
     public function createResourceViewData(array $options, object $resource, Data $data): void
     {
         $propertyAccessor= new PropertyAccessor();
@@ -41,5 +53,4 @@ class MultiplePropertyColumnType extends AbstractColumnType
     {
         return 'multiple_property';
     }
-
 }

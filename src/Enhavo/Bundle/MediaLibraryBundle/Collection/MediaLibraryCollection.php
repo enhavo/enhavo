@@ -4,6 +4,7 @@ namespace Enhavo\Bundle\MediaLibraryBundle\Collection;
 
 use Enhavo\Bundle\MediaBundle\Media\UrlGeneratorInterface;
 use Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryManager;
+use Enhavo\Bundle\MediaLibraryBundle\Model\ItemInterface;
 use Enhavo\Bundle\ResourceBundle\Collection\ResourceItem;
 use Enhavo\Bundle\ResourceBundle\Collection\TableCollection;
 use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage;
@@ -28,13 +29,16 @@ class MediaLibraryCollection extends TableCollection
 
     protected function createItem($resource, array $context): ResourceItem
     {
+        /** @var ItemInterface $resource */
+        $file = $resource->getFile();
+
         $item = parent::createItem($resource, $context);
-        $item['previewImageUrl'] = $this->urlGenerator->generateFormat($resource, 'enhavoMediaLibraryThumb');
+        $item['previewImageUrl'] = $this->urlGenerator->generateFormat($resource->getFile(), 'enhavoMediaLibraryThumb');
         $item['icon'] = $this->mediaLibraryManager->getContentTypeIcon($resource->getContentType());
-        $item['label'] = $resource->getBasename();
-        $item['suffix'] = $resource->getExtension();
+        $item['label'] = $file->getBasename();
+        $item['suffix'] = $file->getExtension();
         $item['type'] = $resource->getContentType();
-        $item['date'] = $resource->getCreatedAt() ? $resource->getCreatedAt()->format('Y-m-d') : '';
+        $item['date'] = $file->getCreatedAt() ? $resource->getFile()->getCreatedAt()->format('Y-m-d') : '';
         return $item;
     }
 }

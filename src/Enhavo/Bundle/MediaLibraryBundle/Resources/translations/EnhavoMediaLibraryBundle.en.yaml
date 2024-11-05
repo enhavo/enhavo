@@ -9,7 +9,10 @@ media_library:
         id: 'ID'
         title: 'Title'
         upload: 'Upload'
-        confirm_selection: 'Confirm Selection'
+        select: 'Select'
+    filter:
+        label:
+            unused: Unused
     form:
         label:
             create_tag: 'Create tag'
@@ -43,3 +46,7 @@ media_library:
         text: 'Text'
         image: 'Image'
         video: 'Video'
+upload:
+    error:
+        unique_basename: The filename "basename" already exists
+        unique_checksum: The file already exists with name "basename"

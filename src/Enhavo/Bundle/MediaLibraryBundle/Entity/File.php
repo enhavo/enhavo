@@ -2,64 +2,20 @@
 
 namespace Enhavo\Bundle\MediaLibraryBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Enhavo\Bundle\TaxonomyBundle\Model\TermInterface;
+use Enhavo\Bundle\MediaLibraryBundle\Model\ItemInterface;
+use Enhavo\Bundle\MediaLibraryBundle\Model\LibraryFileInterface;
 
-class File extends \Enhavo\Bundle\MediaBundle\Entity\File
+class File extends \Enhavo\Bundle\MediaBundle\Entity\File implements LibraryFileInterface
 {
-    private ?string $contentType;
-    private Collection $tags;
+    private ?ItemInterface $item;
 
-    /**
-     * Constructor
-     */
-    public function __construct()
+    public function getItem(): ?ItemInterface
     {
-        $this->tags = new ArrayCollection();
+        return $this->item;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getContentType(): ?string
+    public function setItem(?ItemInterface $item): void
     {
-        return $this->contentType;
-    }
-
-    /**
-     * @param string|null $contentType
-     */
-    public function setContentType(?string $contentType): void
-    {
-        $this->contentType = $contentType;
-    }
-
-    /**
-     * @param TermInterface $tag
-     * @return void
-     */
-    public function addTag(TermInterface $tag): void
-    {
-        $this->tags[] = $tag;
-    }
-
-    /**
-     * @param TermInterface $tag
-     * @return void
-     */
-    public function removeTag(TermInterface $tag): void
-    {
-        $this->tags->removeElement($tag);
-    }
-
-    /**
-     * Get tags
-     *
-     * @return ArrayCollection|Collection
-     */
-    public function getTags()
-    {
-        return $this->tags;
+        $this->item = $item;
     }
 }

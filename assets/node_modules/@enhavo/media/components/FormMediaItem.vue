@@ -6,7 +6,7 @@
         </div>
         <div v-if="deletable" class="delete-button" @click="$emit('delete', form)"><i class="icon icon-close"></i></div>
         <div class="edit-container" ref="editContainer">
-            <form-row :form="form.get('filename')" />
+            <form-row :form="form.get('basename')" />
             <form-widget :form="form.get('parameters')" />
             <div class="button-row">
                 <component v-for="action of form.getActions()" :is="action.component" :data="action"></component>

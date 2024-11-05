@@ -10,8 +10,9 @@ class MediaLibraryUploadActionType extends AbstractActionType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'icon' => 'upload',
-            'label' => 'Upload',
+            'icon' => 'cloud_upload',
+            'label' => 'media_library.label.upload',
+            'translation_domain' => 'EnhavoMediaLibraryBundle',
             'model' => 'MediaLibraryUploadAction'
         ]);
     }

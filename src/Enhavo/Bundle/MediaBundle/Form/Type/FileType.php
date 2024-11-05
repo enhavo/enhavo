@@ -79,7 +79,7 @@ class FileType extends AbstractType
             ]);
         });
 
-        $builder->add('filename', TextType::class, [
+        $builder->add('basename', TextType::class, [
             'required' => true,
             'attr' => ['data-media-item-filename' => true],
         ]);

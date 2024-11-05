@@ -10,21 +10,28 @@
 </template>
 
 <script setup lang="ts">
-import {AbstractFilter} from "@enhavo/app/filter/model/AbstractFilter";
+import {OptionFilter, Choice} from "@enhavo/app/filter/model/OptionFilter";
 
 const emit = defineEmits(['apply']);
 
 const props = defineProps<{
-    data: AbstractFilter
+    data: OptionFilter
 }>()
 
-function isSelected(choice)
+function isSelected(choice: Choice)
 {
-    return false;
+    return props.data.selected === choice;
 }
 
-function select(choice)
+function select(choice: Choice)
 {
+    if (props.data.selected == choice) {
+        props.data.value = null;
+        props.data.selected = null;
+    } else {
+        props.data.value = choice.code;
+        props.data.selected = choice;
+    }
     emit('apply');
 }
 

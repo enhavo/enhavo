@@ -1,22 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
-    <entity name="Enhavo\Bundle\MediaLibraryBundle\Entity\File" repository-class="Enhavo\Bundle\MediaLibraryBundle\Repository\FileRepository">
-
-        <field name="contentType" length="50" nullable="true" />
-
-        <many-to-many field="tags" target-entity="Enhavo\Bundle\TaxonomyBundle\Model\TermInterface">
+    <entity name="Enhavo\Bundle\MediaLibraryBundle\Entity\File" repository-class="Enhavo\Bundle\MediaBundle\Repository\FileRepository">
+        <many-to-one field="item" inversed-by="usedFiles" target-entity="Enhavo\Bundle\MediaLibraryBundle\Model\ItemInterface">
             <cascade>
-                <cascade-persist/>
                 <cascade-refresh/>
             </cascade>
-            <join-table name="media_library_file_tag">
-                <join-columns>
-                    <join-column name="file_id" on-delete="CASCADE" />
-                </join-columns>
-                <inverse-join-columns>
-                    <join-column name="term_id" on-delete="CASCADE" />
-                </inverse-join-columns>
-            </join-table>
-        </many-to-many>
+        </many-to-one>
     </entity>
 </doctrine-mapping>

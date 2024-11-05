@@ -3,8 +3,6 @@
 namespace Enhavo\Bundle\ResourceBundle\DependencyInjection;
 
 use Enhavo\Bundle\ResourceBundle\Delete\DoctrineDeleteHandler;
-use Enhavo\Bundle\ResourceBundle\Factory\Factory;
-use Enhavo\Bundle\ResourceBundle\Repository\EntityRepository;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -38,8 +36,8 @@ class Configuration implements ConfigurationInterface
                             ->arrayNode('classes')
                                 ->children()
                                     ->scalarNode('model')->end()
-                                    ->scalarNode('repository')->defaultValue(EntityRepository::class)->end()
-                                    ->scalarNode('factory')->defaultValue(Factory::class)->end()
+                                    ->scalarNode('repository')->end()
+                                    ->scalarNode('factory')->end()
                                 ->end()
                         ->end()
                     ->end()

@@ -1,0 +1,25 @@
+enhavo_media_library_admin_item_index:
+    path: /item/index
+    defaults:
+        _expose: admin
+        _vue:
+            component: media-library
+            groups: admin
+            meta:
+                api: enhavo_media_library_admin_api_item_index
+                api_parameters:
+                    mode: expr:query.get("mode")
+        _endpoint:
+            type: admin
+
+enhavo_media_library_admin_item_update:
+    path: '/item/update/{id}'
+    defaults:
+        _expose: admin
+        _vue:
+            component: resource-input
+            groups: admin
+            meta:
+                api: enhavo_media_library_admin_api_item_update
+        _endpoint:
+            type: admin

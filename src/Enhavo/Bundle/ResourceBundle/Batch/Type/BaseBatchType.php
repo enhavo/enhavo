@@ -5,6 +5,7 @@ namespace Enhavo\Bundle\ResourceBundle\Batch\Type;
 use Doctrine\ORM\EntityRepository;
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ResourceBundle\Batch\AbstractBatchType;
+use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage;
 use Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
@@ -18,6 +19,7 @@ class BaseBatchType extends AbstractBatchType
         private readonly RouteResolverInterface $routeResolver,
         private readonly RouterInterface $router,
         private readonly CsrfTokenManagerInterface $tokenManager,
+        private readonly ResourceExpressionLanguage $expressionLanguage,
     )
     {
     }
@@ -47,12 +49,17 @@ class BaseBatchType extends AbstractBatchType
 
     public function getPermission(array $options, EntityRepository $repository): mixed
     {
-        return $options['permission'];
+        return $this->expressionLanguage->evaluate($options['permission'], [
+            'repository' => $repository,
+            'batch' => $this
+        ]);
     }
 
     public function isEnabled(array $options): bool
     {
-        return $options['enabled'];
+        return $this->expressionLanguage->evaluate($options['enabled'], [
+            'batch' => $this
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

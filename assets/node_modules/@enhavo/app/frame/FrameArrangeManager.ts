@@ -12,7 +12,7 @@ export class FrameArrangeManager
     
     arrange()
     {
-        let frames = this.frameStack.getFrames();
+        let frames = this.getFrames()
 
         if (!this.menuManager.isCustomChange()) {
             if (frames.length >= 2) {
@@ -119,5 +119,33 @@ export class FrameArrangeManager
                 }
             }
         }
+    }
+
+    private getFrames(): Frame[]
+    {
+        let frames = [];
+        for (let frame of this.frameStack.getFrames()) {
+            if (frame.parent == null) {
+                frames.push(frame);
+                for (let descendant of this.getFrameDescendants(frame)) {
+                    frames.push(descendant);
+                }
+            }
+        }
+        return frames;
+    }
+
+    private getFrameDescendants(parent: Frame): Frame[]
+    {
+        let frames = [];
+        for (let frame of this.frameStack.getFrames()) {
+            if (parent.id === frame.parent) {
+                frames.push(frame)
+                for (let descendant of this.getFrameDescendants(frame)) {
+                    frames.push(descendant);
+                }
+            }
+        }
+        return frames;
     }
 }

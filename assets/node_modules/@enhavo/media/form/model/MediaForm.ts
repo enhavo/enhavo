@@ -10,6 +10,7 @@ import {ActionInterface} from "@enhavo/app/action/ActionInterface";
 import {FormFactory} from "@enhavo/vue-form/form/FormFactory";
 import {ActionManager} from "@enhavo/app/action/ActionManager";
 import {ActionMediaInterface} from "@enhavo/media/action/ActionMediaInterface";
+import {File as MediaFile} from "@enhavo/media/model/File";
 
 export class MediaForm extends ListForm
 {
@@ -180,7 +181,7 @@ export class MediaForm extends ListForm
         }
     }
 
-    private addFile(file: MediaFile)
+    public addFile(file: MediaFile)
     {
         let updated = false;
 
@@ -284,16 +285,6 @@ export class MediaFormButton
 {
     label: string;
     type: string;
-}
-
-export class MediaFile
-{
-    extension: string;
-    filename: string;
-    id: number;
-    md5Checksum: string;
-    mimeType: string;
-    token: string;
 }
 
 export class FileUpload

@@ -20,7 +20,6 @@ class File implements FileInterface
     private ?ContentInterface $content = null;
     private ?string $token = null;
     private ?string $checksum = null;
-    private bool $library = false;
     private ?\DateTime $createdAt = null;
     private ?\DateTime $garbageCheckedAt = null;
     private Collection $formats;
@@ -90,11 +89,7 @@ class File implements FileInterface
 
     public function getBasename(): string
     {
-        $basename =  $this->filename;
-        if ($this->extension) {
-            $basename = '.' . $this->extension;
-        }
-        return $basename;
+        return $this->extension ? $this->filename . '.' . $this->extension : $this->filename;
     }
 
     public function setParameter(string $key, mixed $value): void
@@ -188,16 +183,6 @@ class File implements FileInterface
     public function setChecksum(string $checksum): void
     {
         $this->checksum = $checksum;
-    }
-
-    public function isLibrary(): bool
-    {
-        return $this->library;
-    }
-
-    public function setLibrary(bool $library): void
-    {
-        $this->library = $library;
     }
 
     public function getCreatedAt(): ?\DateTime

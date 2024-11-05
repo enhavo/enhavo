@@ -17,7 +17,7 @@ export class OptionFilter extends AbstractFilter
     }
 }
 
-class Choice {
+export class Choice {
     code: string;
     label: string;
 }
