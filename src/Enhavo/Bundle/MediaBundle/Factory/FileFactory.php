@@ -94,6 +94,18 @@ class FileFactory extends Factory
         return $file;
     }
 
+    public function createFromFile(FileInterface $file): FileInterface
+    {
+        $newFile = $this->createNew();
+        $newFile->setContent(new Content($file->getContent()->getContent()));
+        $newFile->setMimeType($file->getMimeType());
+        $newFile->setFilename($file->getFilename());
+        $newFile->setExtension($file->getExtension());
+
+        $this->updateFile($newFile);
+        return $newFile;
+    }
+
     public function createFromUri(string $uri, string $filename = null): FileInterface
     {
         $response = $this->client->request('GET', $uri);

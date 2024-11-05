@@ -2,7 +2,6 @@ import {Event, FrameEventDispatcher} from "@enhavo/app/frame/FrameEventDispatche
 import {Frame} from '@enhavo/app/frame/Frame';
 import generateId from "uuid/v4";
 
-
 export class FrameStack
 {
     private frames: Frame[] = [];
@@ -57,7 +56,11 @@ export class FrameStack
     {
         if (options['key'] !== undefined && options['parent'] !== undefined) {
             for (let frame of this.frames) {
-                if (frame.parent == options['parent'] && frame.key == options['key']) {
+                if (frame.key == options['key'] && frame.keepAlive) {
+                    this.activateKeepAliveFrame(frame, options)
+                    this.eventDispatcher.dispatch(new FrameAdded(frame));
+                    return;
+                } else if (frame.parent == options['parent'] && frame.key == options['key']) {
                     await this.removeFrame(frame);
                     //options.width = frame.width;
                     break;
@@ -74,6 +77,17 @@ export class FrameStack
         this.frames.push(frame);
         this.eventDispatcher.dispatch(new FrameAdded(frame));
         return frame;
+    }
+
+    private activateKeepAliveFrame(frame: Frame, options: object): void
+    {
+        frame.parent = options['parent'];
+        frame.display = true;
+        frame.minimize = false;
+        frame.label = options['label'] ? options['label'] : frame.label;
+        frame.parameters = options['parameters'];
+        frame.minimize = false;
+        frame.position = options['position'];
     }
 
     private createFrame(options: object): Frame
@@ -111,7 +125,7 @@ export class FrameStack
     {
         let frames = [];
         for (let frame of this.frames) {
-            if (!frame.removed) {
+            if (!frame.removed && frame.display) {
                 if ((parentId != undefined && frame.parent == parentId) || parentId == undefined) {
                     frames.push(frame);
                 }

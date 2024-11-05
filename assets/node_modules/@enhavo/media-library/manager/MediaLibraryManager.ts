@@ -15,13 +15,19 @@ import {FilterManager} from "@enhavo/app/filter/FilterManager";
 import {ColumnManager} from "@enhavo/app/column/ColumnManager";
 import {BatchManager} from "@enhavo/app/batch/BatchManager";
 import {CollectionFactory} from "@enhavo/app/collection/CollectionFactory";
+import {UiManager} from "@enhavo/app/ui/UiManager";
+import {MediaFileSelectEvent} from "@enhavo/media-library/event/MediaFileSelectEvent";
+import {MediaLibraryCollection} from "@enhavo/media-library/collection/MediaLibraryCollection";
+import $ from "jquery";
 
 export class MediaLibraryManager
 {
     public mode: string;
     public loading: boolean = true;
 
+    public token: string;
     public uploadUrl: string;
+    public selectUrl: string;
     public maxUploadSize: number;
 
     public dragOver: boolean = false;
@@ -48,6 +54,7 @@ export class MediaLibraryManager
         private readonly columnManager: ColumnManager,
         private readonly batchManager: BatchManager,
         private readonly collectionFactory: CollectionFactory,
+        private readonly uiManager: UiManager,
     ) {
 
     }
@@ -57,9 +64,20 @@ export class MediaLibraryManager
         let url = this.router.generate(route, parameters);
 
         const response = await fetch(url);
+
+        if (!response.ok) {
+            this.frameManager.loaded();
+            this.uiManager.alert({ message: 'Error occured' }).then(() => {
+                this.frameManager.close(true);
+            });
+            return;
+        }
+
         const data = await response.json();
 
         this.uploadUrl = data.uploadUrl;
+        this.selectUrl = data.selectUrl;
+        this.token = data.token;
         this.maxUploadSize = data.maxUploadSize;
         this.actions = this.actionManager.createActions(data.actions);
         this.actionsSecondary = this.actionManager.createActions(data.actionsSecondary);
@@ -183,9 +201,15 @@ export class MediaLibraryManager
                 if (axios.isCancel(error)) {
                     resolve(false); // no error
                 } else {
-                    this.flashMessenger.error('An error occurred')
-                    console.error(error);
-                    resolve(false);
+                    if (error.response.status === 400 && error.response.data.success === false) {
+                        for (let message of error.response.data.errors) {
+                            this.flashMessenger.error(message)
+                        }
+                    } else {
+                        this.flashMessenger.error('An error occurred')
+                        console.error(error);
+                        resolve(false);
+                    }
                 }
             });
         });
@@ -214,6 +238,39 @@ export class MediaLibraryManager
         const i = Math.floor(Math.log(bytes) / Math.log(k))
 
         return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
+    }
+
+    public async select()
+    {
+        this.uiManager.loading(true);
+
+        const ids = this.collection.getIds()
+
+        const response = await fetch(this.selectUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                ids: ids,
+                token: this.token
+            }),
+        });
+
+        this.uiManager.loading(false);
+
+        if (!response.ok) {
+            this.uiManager.alert({ message: 'Error occured' });
+            return;
+        }
+
+        const data = await response.json();
+
+        let frame = await this.frameManager.getFrame()
+        this.frameManager.dispatch(new MediaFileSelectEvent(data.files, frame.parameters['fullName'], frame.parent));
+        (this.collection as MediaLibraryCollection).resetIds();
+
+        this.frameManager.close(true);
     }
 }
 

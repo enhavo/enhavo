@@ -141,11 +141,6 @@ export class TableCollection implements CollectionInterface
         return rows;
     }
 
-    public selectAll()
-    {
-
-    }
-
     private checkSelectedRows()
     {
         for (let currentRow of this.rows) {

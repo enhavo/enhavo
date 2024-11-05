@@ -9,7 +9,6 @@
 namespace Enhavo\Bundle\MediaBundle\Media;
 
 use Enhavo\Bundle\DoctrineExtensionBundle\Util\AssociationFinder;
-use Enhavo\Bundle\MediaBundle\Checksum\ChecksumGeneratorInterface;
 use Enhavo\Bundle\MediaBundle\Entity\Format;
 use Enhavo\Bundle\MediaBundle\FileNotFound\FileNotFoundHandlerInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileContentInterface;

@@ -6,7 +6,7 @@
 
 namespace Enhavo\Bundle\MediaLibraryBundle\EventListener;
 
-use Enhavo\Bundle\MediaLibraryBundle\Entity\File;
+use Enhavo\Bundle\MediaLibraryBundle\Entity\Item;
 use Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryManager;
 use Enhavo\Bundle\ResourceBundle\Event\ResourceEvent;
 use Enhavo\Bundle\ResourceBundle\Event\ResourceEvents;
@@ -31,8 +31,8 @@ class ContentTypeSubscriber implements EventSubscriberInterface
     {
         $resource = $event->getSubject();
 
-        if ($resource instanceof File) {
-            $resource->setContentType($this->mediaLibraryManager->matchContentType($resource));
+        if ($resource instanceof Item) {
+            $resource->setContentType($this->mediaLibraryManager->matchContentType($resource->getFile()));
         }
     }
 }

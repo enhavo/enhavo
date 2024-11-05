@@ -20,7 +20,11 @@ enhavo_media:
             type: image
             width: 500
             height: 500
-
+    form:
+        default:
+            actions:
+                media_library:
+                    type: media_library_open_select
 when@dev:
     enhavo_media:
         file_not_found:

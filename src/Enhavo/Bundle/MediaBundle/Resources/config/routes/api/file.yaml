@@ -6,4 +6,3 @@ enhavo_media_api_file_upload:
         _endpoint:
             type: media_file_upload
             garbage: true
-            library: false

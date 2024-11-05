@@ -10,8 +10,11 @@ export class DownloadAction extends AbstractAction
 
     execute(): void
     {
-        if(this.ajax) {
-            window.open(this.url, '_self');
+        if (!this.ajax) {
+            var anchor = document.createElement('a');
+            anchor.href = this.url;
+            anchor.download = '';
+            anchor.click();
             return;
         }
 

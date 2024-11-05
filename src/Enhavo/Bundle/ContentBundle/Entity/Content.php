@@ -23,18 +23,18 @@ abstract class Content implements Publishable, Routeable, Slugable, SitemapInter
     use PublishableTrait;
     use TimestampableTrait;
 
-    protected ?int $id;
-    protected ?string $title;
-    protected ?string $slug;
-    protected ?string $metaDescription;
-    protected ?string $pageTitle;
+    protected ?int $id = null;
+    protected ?string $title = null;
+    protected ?string $slug = null;
+    protected ?string $metaDescription = null;
+    protected ?string $pageTitle = null;
     protected bool $noIndex = false;
     protected bool $noFollow = false;
-    protected ?FileInterface $openGraphImage;
-    protected ?string $openGraphTitle;
-    protected ?string $openGraphDescription;
-    protected ?RouteInterface $route;
-    protected ?string $canonicalUrl;
+    protected ?FileInterface $openGraphImage = null;
+    protected ?string $openGraphTitle = null;
+    protected ?string $openGraphDescription = null;
+    protected ?RouteInterface $route = null;
+    protected ?string $canonicalUrl = null;
 
     public function getId(): ?int
     {

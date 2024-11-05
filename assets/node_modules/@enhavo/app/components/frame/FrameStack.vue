@@ -2,7 +2,7 @@
     <div class="frame">
         <div class="view-container" :class="{'has-viewstack-dropdown': getHasMoreThanOneView()}">
             <template v-for="frame in frameStack.getRenderFrames()">
-                <frame-stack-frame :frame="frame" v-if="!frame.removed" :key="frame.id"></frame-stack-frame>
+                <frame-stack-frame v-show="frame.display" :frame="frame" v-if="!frame.removed" :key="frame.id"></frame-stack-frame>
             </template>
         </div>
     </div>

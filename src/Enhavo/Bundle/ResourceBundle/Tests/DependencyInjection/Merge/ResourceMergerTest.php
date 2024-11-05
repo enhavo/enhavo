@@ -3,6 +3,8 @@
 namespace Enhavo\Bundle\ResourceBundle\Tests\DependencyInjection\Merge;
 
 use Enhavo\Bundle\ResourceBundle\DependencyInjection\Merge\ResourceMerger;
+use Enhavo\Bundle\ResourceBundle\Factory\Factory;
+use Enhavo\Bundle\ResourceBundle\Repository\EntityRepository;
 use PHPUnit\Framework\TestCase;
 
 class ResourceMergerTest extends TestCase
@@ -69,6 +71,36 @@ class ResourceMergerTest extends TestCase
         $this->assertEquals([
             'classes' => [
                 'model' => 'OneHello10'
+            ],
+        ], $config);
+    }
+
+    public function testSetDefaultRepositoryAndFactory()
+    {
+        $dependencies = $this->createDependencies();
+        $instance = $this->createInstance($dependencies);
+
+        $configs = [];
+
+        $configs[] = [
+            'resources' => [
+                'enhavo_one.hello' => [
+                    'classes' => [
+                        'model' => 'OneHello',
+                    ],
+                ],
+            ],
+        ];
+
+        $configs = $instance->performMerge($configs);
+
+        $this->assertCount(2, $configs);
+        $config = $configs[1]['resources']['enhavo_one.hello'];
+        $this->assertEquals([
+            'classes' => [
+                'model' => 'OneHello',
+                'repository' => EntityRepository::class,
+                'factory' => Factory::class,
             ],
         ], $config);
     }

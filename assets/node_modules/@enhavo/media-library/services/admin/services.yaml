@@ -13,6 +13,7 @@ services:
             - '@enhavo/app/column/ColumnManager'
             - '@enhavo/app/batch/BatchManager'
             - '@enhavo/app/collection/CollectionFactory'
+            - '@enhavo/app/ui/UiManager'
         tags:
             - { name: vue.service, service: 'mediaLibraryManager', reactive: true }
 
@@ -28,6 +29,26 @@ services:
     '@enhavo/media-library/action/MediaLibraryUploadAction':
         import: MediaLibraryUploadAction
         chunk: 'action'
+        arguments:
+            - '@enhavo/media-library/manager/MediaLibraryManager'
+        tags:
+            - 'enhavo_app.action'
+
+    '@enhavo/media-library/action/MediaLibraryOpenSelectAction':
+        import: MediaLibraryOpenSelectAction
+        chunk: 'action'
+        arguments:
+            - '@enhavo/app/frame/FrameManager'
+            - '@enhavo/app/translation/Translator'
+            - '@enhavo/app/flash-message/FlashMessenger'
+        tags:
+            - 'enhavo_app.action'
+
+    '@enhavo/media-library/action/MediaLibrarySelectAction':
+        import: MediaLibrarySelectAction
+        chunk: 'action'
+        arguments:
+            - '@enhavo/media-library/manager/MediaLibraryManager'
         tags:
             - 'enhavo_app.action'
 
@@ -41,3 +62,11 @@ services:
             - '@enhavo/app/frame/FrameManager'
         tags:
             - { name: enhavo_app.collection }
+
+    '@enhavo/media-library/batch/MediaLibrarySelectBatch':
+        import: MediaLibrarySelectBatch
+        chunk: 'batch'
+        arguments:
+            - '@enhavo/media-library/manager/MediaLibraryManager'
+        tags:
+            - { name: enhavo_app.batch }

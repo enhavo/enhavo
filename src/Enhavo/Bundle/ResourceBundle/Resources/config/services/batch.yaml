@@ -24,6 +24,7 @@ services:
             - '@Enhavo\Bundle\ResourceBundle\RouteResolver\RouteNameRouteResolver'
             - '@router'
             - '@security.csrf.token_manager'
+            - '@Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage'
         tags:
             - { name: enhavo_resource.batch }
 

@@ -3,7 +3,7 @@ services:
         public: true
         arguments:
             - '%enhavo_media_library.content_type%'
-            - '@enhavo_media.file.repository'
+            - '@enhavo_media_library.item.repository'
             - '@enhavo_taxonomy.term.repository'
             - '@translator'
 
@@ -49,8 +49,15 @@ services:
 
     Enhavo\Bundle\MediaLibraryBundle\Form\Type\FileType:
         arguments:
+            - '%enhavo_media.form%'
+            - '%enhavo_media.file.model.class%'
+        tags:
+            - { name: form.type }
+
+    Enhavo\Bundle\MediaLibraryBundle\Form\Type\ItemType:
+        arguments:
             - '@Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryManager'
-            - '@enhavo_media.media.public_url_generator'
+            - '%enhavo_media_library.item.model.class%'
             - '%enhavo_media.form%'
         tags:
             - { name: form.type }
@@ -62,11 +69,27 @@ services:
         tags:
             - { name: enhavo_resource.filter }
 
+    Enhavo\Bundle\MediaLibraryBundle\Filter\MediaLibraryTextFilterType:
+        tags:
+            - { name: enhavo_resource.filter }
+
     Enhavo\Bundle\MediaLibraryBundle\Filter\MediaLibraryUnusedFileFilterType:
         tags:
             - { name: enhavo_resource.filter }
 
     Enhavo\Bundle\MediaLibraryBundle\Action\MediaLibraryUploadActionType:
+        tags:
+            - { name: enhavo_resource.action }
+
+    Enhavo\Bundle\MediaLibraryBundle\Action\MediaLibrarySelectActionType:
+        arguments:
+            - '@router'
+        tags:
+            - { name: enhavo_resource.action }
+
+    Enhavo\Bundle\MediaLibraryBundle\Action\MediaLibraryOpenSelectActionType:
+        arguments:
+            - '@router'
         tags:
             - { name: enhavo_resource.action }
 
@@ -84,7 +107,6 @@ services:
 
     Enhavo\Bundle\MediaLibraryBundle\Endpoint\MediaLibraryEndpointType:
         arguments:
-            - '@router'
             - '@enhavo_media.media.media_manager'
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
@@ -94,11 +116,42 @@ services:
 
     Enhavo\Bundle\MediaLibraryBundle\Endpoint\MediaLibraryUploadEndpointType:
         arguments:
-            - '@enhavo_media.media.media_manager'
             - '@enhavo_media.file.factory'
+            - '@enhavo_media_library.item.factory'
             - '@validator'
+            - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
+            - '%enhavo_media_library.constraints%'
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:
             - { name: enhavo_api.endpoint }
             - { name: container.service_subscriber }
+
+    Enhavo\Bundle\MediaLibraryBundle\Endpoint\MediaLibrarySelectEndpointType:
+        arguments:
+            - '@enhavo_media.file.factory'
+            - '@enhavo_media_library.item.repository'
+            - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\MediaLibraryBundle\Batch\Type\MediaLibrarySelectBatchType:
+        tags:
+            - { name: enhavo_resource.batch }
+
+    Enhavo\Bundle\MediaLibraryBundle\Validator\Constraints\UniqueBasenameValidator:
+        arguments:
+            - '@enhavo_media_library.item.repository'
+            - '@translator'
+        tags:
+            - { name: validator.constraint_validator }
+
+    Enhavo\Bundle\MediaLibraryBundle\Validator\Constraints\UniqueChecksumValidator:
+        arguments:
+            - '@enhavo_media_library.item.repository'
+            - '@translator'
+        tags:
+            - { name: validator.constraint_validator }

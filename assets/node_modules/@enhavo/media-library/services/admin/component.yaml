@@ -28,3 +28,9 @@ services:
         static: true
         tags:
             - { name: vue.component, component: 'filter-media-library-choice' }
+
+    '@enhavo/media-library/components/filter/FilterMediaLibraryCheckbox.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'filter-media-library-checkbox' }

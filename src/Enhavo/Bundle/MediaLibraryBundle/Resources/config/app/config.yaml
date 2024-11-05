@@ -39,14 +39,19 @@ enhavo_app:
             translation_domain: EnhavoMediaLibraryBundle
 
 enhavo_media_library:
+    constraints:
+        -   Enhavo\Bundle\MediaLibraryBundle\Validator\Constraints\UniqueBasename: ~
+        -   Enhavo\Bundle\MediaLibraryBundle\Validator\Constraints\UniqueChecksum: ~
     content_type:
         audio:
             label: 'media_library.content_type.audio'
+            translation_domain: EnhavoMediaLibraryBundle
             icon: 'icon-file_audio'
             mime_types:
                 - ^audio/.+
         archive:
             label: 'media_library.content_type.archive'
+            translation_domain: EnhavoMediaLibraryBundle
             icon: 'icon-archive'
             mime_types:
                 - application/gzip
@@ -55,6 +60,7 @@ enhavo_media_library:
                 - application/x-gtar
         document:
             label: 'media_library.content_type.document'
+            translation_domain: EnhavoMediaLibraryBundle
             icon: 'icon-file_document'
             mime_types:
                 - application/pdf
@@ -65,27 +71,22 @@ enhavo_media_library:
                 - ^application/vnd.+
         text:
             label: 'media_library.content_type.text'
+            translation_domain: EnhavoMediaLibraryBundle
             icon: 'icon-file_text'
             mime_types:
                 - ^text/.+
         image:
             label: 'media_library.content_type.image'
+            translation_domain: EnhavoMediaLibraryBundle
             icon: 'icon-image'
             mime_types:
                 - ^image/.+
         video:
             label: 'media_library.content_type.video'
+            translation_domain: EnhavoMediaLibraryBundle
             icon: 'icon-file_video'
             mime_types:
                 - ^video/.+
-
-enhavo_resource:
-    resources:
-        enhavo_media.file:
-            priority: -5
-            classes:
-                model: Enhavo\Bundle\MediaLibraryBundle\Entity\File
-                repository: Enhavo\Bundle\MediaLibraryBundle\Repository\FileRepository
 
 enhavo_media:
     formats:
@@ -134,3 +135,4 @@ doctrine:
     orm:
         resolve_target_entities:
             Enhavo\Bundle\MediaBundle\Model\FileInterface: Enhavo\Bundle\MediaLibraryBundle\Entity\File
+            Enhavo\Bundle\MediaLibraryBundle\Model\ItemInterface: Enhavo\Bundle\MediaLibraryBundle\Entity\Item

@@ -1,6 +1,3 @@
-parameters:
-    enhavo_media.file_storage_path: '%kernel.project_dir%/var/media'
-
 services:
     Enhavo\Bundle\MediaBundle\Form\Type\FileType:
         arguments:
@@ -66,7 +63,7 @@ services:
 
     Enhavo\Bundle\MediaBundle\Storage\LocalChecksumFileStorage:
         arguments:
-            - '%enhavo_media.file_storage_path%'
+            - '%kernel.project_dir%/var/media'
             - '@filesystem'
             - '@enhavo_media.file.repository'
 

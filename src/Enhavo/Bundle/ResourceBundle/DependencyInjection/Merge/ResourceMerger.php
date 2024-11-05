@@ -2,6 +2,9 @@
 
 namespace Enhavo\Bundle\ResourceBundle\DependencyInjection\Merge;
 
+use Enhavo\Bundle\ResourceBundle\Factory\Factory;
+use Enhavo\Bundle\ResourceBundle\Repository\EntityRepository;
+
 class ResourceMerger
 {
     public function performMerge(array $configs): array
@@ -25,6 +28,7 @@ class ResourceMerger
 
         foreach ($resources as $name => $resourceConfigs) {
             $newResourceConfig[$name] = $this->mergeConfigs($resourceConfigs);
+            $newResourceConfig[$name] = $this->setDefaults($newResourceConfig[$name]);
         }
 
         $this->validateResources($newResourceConfig);
@@ -85,5 +89,18 @@ class ResourceMerger
             }
             $models[$model] = $name;
         }
+    }
+
+    private function setDefaults($config): array
+    {
+        if (!isset($config['classes']['repository'])) {
+            $config['classes']['repository'] = EntityRepository::class;
+        }
+
+        if (!isset($config['classes']['factory'])) {
+            $config['classes']['factory'] = Factory::class;
+        }
+
+        return $config;
     }
 }

@@ -2,7 +2,7 @@ services:
     Enhavo\Bundle\MediaBundle\Command\CleanUpCommand:
         arguments:
             - '@filesystem'
-            - '%enhavo_media.file_storage_path%'
+            - '%kernel.project_dir%/var/media'
             - '@enhavo_media.media.media_manager'
             - '@doctrine.orm.entity_manager'
             - '@enhavo_media.file.repository'
