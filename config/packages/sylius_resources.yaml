@@ -6,3 +6,9 @@ sylius_resource:
                 controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
                 form: App\Form\Type\PersonType
                 repository: App\Repository\PersonRepository
+
+        app.table:
+            classes:
+                model: App\Entity\Table
+                controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
+                form: App\Form\Type\TableType

@@ -45,3 +45,8 @@ enhavo_app:
             label: Person
             route: app_person_index
             icon: accessibility
+        list:
+            type: base
+            label: Table
+            route: app_table_index
+            icon: view_comfy
