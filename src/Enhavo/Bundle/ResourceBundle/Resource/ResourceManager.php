@@ -62,7 +62,7 @@ class ResourceManager
         }
     }
 
-    public function applyTransition(object $resource, string $transition = null, string $graph = null): void
+    public function applyTransition(object $resource, string $transition, string $graph): void
     {
         $this->dispatch(new ResourcePreTransitionEvent($resource, $transition, $graph), 'pre_transition');
 
