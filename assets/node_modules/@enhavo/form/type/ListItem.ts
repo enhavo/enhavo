@@ -54,6 +54,15 @@ export default class ListItem
 
     public setPosition(number: number)
     {
-        this.$element.find('[data-position]').val(number);
+        let fields: JQuery = this.$element.find('[data-position]');
+        let designatedField: JQuery = fields.first();
+        fields.each((index: number, field: JQuery) => {
+            let $field: JQuery = $(field);
+            if ($field.parents().length < designatedField.parents().length) {
+                designatedField = $field;
+            }
+        });
+
+        designatedField.val(number);
     }
 }
