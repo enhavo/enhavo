@@ -1,0 +1,101 @@
+app_table_index:
+    options:
+        expose: true
+    path: /app/table/index
+    methods: [GET]
+    defaults:
+        _controller: app.controller.table::indexAction
+        _sylius:
+            viewer:
+                open_clickable: true
+
+app_table_create:
+    options:
+        expose: true
+    path: /app/table/create
+    methods: [GET,POST]
+    defaults:
+        _controller: app.controller.table::createAction
+        _sylius:
+            redirect: app_table_update
+            viewer:
+
+app_table_update:
+    options:
+        expose: true
+    path: /app/table/update/{id}
+    methods: [GET,POST]
+    defaults:
+        _controller: app.controller.table::updateAction
+        _sylius:
+            viewer:
+
+app_table_table:
+    options:
+        expose: true
+    path: /app/table/table
+    methods: [GET,POST]
+    defaults:
+        _controller: app.controller.table::tableAction
+        _sylius:
+            filters:
+                age:
+                    label: Age
+                    type: age
+                    property: birthday
+                between:
+                    label: Children
+                    type: between
+                    property: children
+                    label_from: Children from
+                    label_to: to
+                date_between:
+                    label: Date Between
+                    type: date_between
+                    property: birthday
+                    label_from: Date from
+                    label_to: to
+            viewer:
+                columns:
+                    id:
+                        property: id
+                        width: 1
+                        label: id
+                        type: property
+                    name:
+                        property: name
+                        width: 11
+                        label: Name
+                        type: property
+app_table_delete:
+    options:
+        expose: true
+    path: /app/table/delete/{id}
+    methods: [POST]
+    defaults:
+        _controller: app.controller.table::deleteAction
+
+app_table_batch:
+    options:
+        expose: true
+    path: /app/table/batch
+    methods: [POST]
+    defaults:
+        _controller: app.controller.table::batchAction
+        _sylius:
+            paginate: false
+            criteria:
+                id: $ids
+            batches:
+                delete:
+                    type: delete
+
+app_table_preview:
+    options:
+        expose: true
+    path: /app/table/preview
+    methods: [GET]
+    defaults:
+        _controller: app.controller.table::previewAction
+        _sylius:
+            viewer:
