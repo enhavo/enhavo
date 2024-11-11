@@ -53,6 +53,8 @@ jobs:
                     composer validate --strict src/Enhavo/Bundle/PageBundle/composer.json
                     composer validate --strict src/Enhavo/Bundle/RedirectBundle/composer.json
                     composer validate --strict src/Enhavo/Bundle/RoutingBundle/composer.json
+                    composer validate --strict src/Enhavo/Bundle/ResourceBundle/composer.json
+                    composer validate --strict src/Enhavo/Bundle/RevisionBundle/composer.json
                     composer validate --strict src/Enhavo/Bundle/SearchBundle/composer.json
                     composer validate --strict src/Enhavo/Bundle/SettingBundle/composer.json
                     composer validate --strict src/Enhavo/Bundle/TaxonomyBundle/composer.json

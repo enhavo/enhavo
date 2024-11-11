@@ -1,4 +1,4 @@
-![alt text](assets/enhavo/images/enhavo.svg "enhavo")
+![alt text](assets/admin/images/enhavo.svg "enhavo")
 <br/>
 <br/>
 
@@ -8,7 +8,7 @@
 [![Code Coverage](https://scrutinizer-ci.com/g/enhavo/enhavo/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/enhavo/enhavo/?branch=master)
 [![Version](https://img.shields.io/packagist/v/enhavo/enhavo.svg)](https://packagist.org/packages/enhavo/enhavo)
 
-The enhavo CMS is a open source PHP project on top of the fullstack Symfony framework and uses awesome Sylius components
+The enhavo CMS is a open source PHP project on top of the fullstack Symfony framework,
 to serve a very flexible software, that can handle most of complex data structure with a clean and usability interface.
 
 Enhavo is still under heavy development and we can't guarantee for backward compatibility or security issues nor is our documentation up to date. 
@@ -56,8 +56,7 @@ Execute following commands on your shell:
 ```bash
 $ composer install
 $ yarn install
-$ yarn encore dev
-$ yarn routes:dump
+$ yarn build
 $ bin/console doctrine:database:create
 $ bin/console doctrine:database:create --env=test
 $ bin/console doctrine:migrations:migrate
@@ -71,8 +70,7 @@ Make your changes and run the tests.
 ```bash
 $ bin/phpunit
 $ bin/behat
-$ bin/mocha
-$ bin/karma
+$ yarn test
 ```
 
 **Testing stack**
@@ -81,9 +79,8 @@ Depending on what you are going to test, choose the right tool.
 
 ```
 <----------------------------- Behat ---------------------------------------->
-<------------- PHPUnit ---------------->
-                                        <------------- Karma ---------------->
-                                        <------ Mocha --->
+                    <----  PHPUnit ---->
+                                        <------------- Vitest --------------->
 [**** Database ****][**** PHP File ****][**** JS File ****][**** Browser ****]
 ```
 
@@ -95,17 +92,11 @@ The documentation is available at [docs.enhavo.com](http://docs.enhavo.com).
 
 ----------------------
 
-If you want to contribute to the documentation you need `sphinx`. 
-Read [sphinx-doc.org](https://www.sphinx-doc.org/en/master/usage/installation.html) to install it.
-For the ```--watch``` option you have to [install](https://pypi.org/project/sphinx-autobuild/) `sphinx-autobuild`.
+If you want to contribute, fork and clone this repository and make your changes under `docs`.
 
-Fork and clone this repository and make your changes under `docs/source`. After each change run following command
-and open the `build/docs/index.html` in your browser to see and valid your changes.
+We are using `vitepress`, which comes already with `yarn install`. To see the docs run `yarn docs:dev`
 
-```bash
-$ bin/docs
-$ bin/docs --watch
-```
+Read more about the docs syntax [here](https://vitepress.dev/guide/markdown)
 
 MIT License
 -----------

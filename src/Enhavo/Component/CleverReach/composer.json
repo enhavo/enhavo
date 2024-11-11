@@ -20,17 +20,6 @@
         "symfony/http-client": "^6.4",
         "psr/log": "^1.1"
     },
-    "require-dev": {
-        "monolog/monolog": "^1.24",
-        "phpunit/phpunit": "^7.5",
-        "symfony/dotenv": "^4.2"
-    },
-    "config": {
-        "preferred-install": {
-            "*": "dist"
-        },
-        "sort-packages": true
-    },
     "autoload": {
         "psr-4": {
             "Enhavo\\Component\\CleverReach\\": ""

@@ -14,7 +14,8 @@
     "theme:build": "vite build --config assets/theme/vite.config.js",
     "theme:di": "node ./assets/node_modules/@enhavo/dependency-injection/bin/dependency-injection.js --file assets/theme/container.di.yaml",
     "build": "vite build --config assets/admin/vite.config.js && vite build --config assets/theme/vite.config.js",
-    "clean": "rm -rf ./node_modules/.vite && rm -rf ./public/build/admin && rm -rf ./public/build/theme"
+    "clean": "rm -rf ./node_modules/.vite && rm -rf ./public/build/admin && rm -rf ./public/build/theme",
+    "test": "vitest"
   },
   "dependencies": {
     "@fullcalendar/core": "^4.2.0",
@@ -97,6 +98,7 @@
     "@types/uuid": "^3.4.4",
     "@types/vue-select": "^2.5.0",
     "acorn": "^7.3.1",
-    "vitepress": "^1.0.0-rc.35"
+    "vitepress": "^1.5.0",
+    "vitest": "^2.1.4"
   }
 }

@@ -1,7 +1,7 @@
 {
-  "name": "enhavo/content-bundle",
+  "name": "enhavo/revision-bundle",
   "type": "symfony-bundle",
-  "description": "EnhavoContentBundle",
+  "description": "EnhavoRevisionBundle",
   "keywords": ["framework"],
   "homepage": "https://enhavo.com",
   "license": "MIT",
@@ -13,10 +13,11 @@
   ],
   "require": {
     "php": "^8.2",
+    "enhavo/api-bundle": "dev-master",
     "enhavo/app-bundle": "dev-master",
-    "league/uri": "^6.4"
+    "enhavo/resource-bundle": "dev-master"
   },
   "autoload": {
-    "psr-4": { "Enhavo\\Bundle\\ContentBundle\\": "" }
+    "psr-4": { "Enhavo\\Bundle\\RevisionBundle\\": "" }
   }
 }
