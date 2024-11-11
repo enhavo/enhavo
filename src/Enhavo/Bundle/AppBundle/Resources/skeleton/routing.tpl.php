@@ -89,5 +89,5 @@
         _sylius:
             viewer:
                 strategy_options:
-                    service: enhavo_article.controller.article:showResourceAction
+                    service: <?= $app ?>.controller.<?= $resource ?>:showResourceAction
 
