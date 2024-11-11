@@ -83,7 +83,7 @@ services:
         chunk: 'action'
         arguments:
             - '@enhavo/app/frame/FrameManager'
-            - '@enhavo/core/Router'
+            - '@enhavo/app/routing/Router'
             - '@enhavo/app/modal/ModalManager'
             - '@enhavo/app/translation/Translator'
         tags:

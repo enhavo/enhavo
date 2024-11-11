@@ -52,25 +52,23 @@ class BlockManager
 
     public function createViewData(NodeInterface $node, $resource = null): void
     {
-        /** @var BlockManager $manager */
-        $manager = $this;
-        $this->walk($node, function (NodeInterface $node) use ($manager, $resource) {
+        $this->walk($node, function (NodeInterface $node) use ($resource) {
             if ($node->getType() === NodeInterface::TYPE_BLOCK) {
                 $node->setResource($resource);
-                $viewData = $node->getBlock() ? $manager->getBlock($node->getName())->createViewData($node->getBlock(), $resource) : [];
+                $viewData = $node->getBlock() ? $this->getBlock($node->getName())->createViewData($node->getBlock(), $resource) : [];
                 $node->setViewData($viewData);
             }
         });
 
-        $this->walk($node, function (NodeInterface $node) use ($manager, $resource) {
+        $this->walk($node, function (NodeInterface $node) use ($resource) {
             if ($node->getType() === NodeInterface::TYPE_BLOCK) {
-                $viewData = $node->getBlock() ? $manager->getBlock($node->getName())->finishViewData($node->getBlock(), $node->getViewData(), $resource) : [];
+                $viewData = $node->getBlock() ? $this->getBlock($node->getName())->finishViewData($node->getBlock(), $node->getViewData(), $resource) : [];
                 $node->setViewData($viewData);
             }
         });
     }
 
-    private function walk(NodeInterface $node, $callback)
+    private function walk(NodeInterface $node, $callback): void
     {
         $callback($node);
         foreach ($node->getChildren() as $child) {

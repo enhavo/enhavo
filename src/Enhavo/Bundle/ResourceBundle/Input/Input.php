@@ -29,7 +29,7 @@ class Input extends AbstractInput implements ConfigMergeInterface
             'factory_arguments' => [],
             'repository_method' => 'find',
             'repository_arguments' => [
-                'expr:request.get("id")'
+                'expr:request.get("id", 0)'
             ],
             'serialization_groups' => 'endpoint'
         ]);

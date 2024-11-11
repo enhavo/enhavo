@@ -34,9 +34,9 @@ class RevisionTabType extends AbstractTabType
         $resource = $input->getResource();
         $route = $this->getRoute($options);
 
-        $revisions = null;
+        $revisions = [];
         if ($resource instanceof RevisionInterface) {
-            $revisions = [];
+
             $revisionData = $this->revisionManager->getRevisions($resource);
 
             foreach ($revisionData as $revision) {

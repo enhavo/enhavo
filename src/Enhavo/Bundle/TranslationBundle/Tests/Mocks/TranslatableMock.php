@@ -58,7 +58,7 @@ class TranslatableMock implements Slugable
     /**
      * @return string|null
      */
-    public function getSlug()
+    public function getSlug(): ?string
     {
         return $this->slug;
     }
@@ -66,7 +66,7 @@ class TranslatableMock implements Slugable
     /**
      * @param string|null $slug
      */
-    public function setSlug($slug)
+    public function setSlug($slug): void
     {
         $this->slug = $slug;
     }

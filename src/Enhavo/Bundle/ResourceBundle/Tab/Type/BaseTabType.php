@@ -34,7 +34,7 @@ class BaseTabType extends AbstractType implements TabTypeInterface
 
     public function isEnabled(array $options, InputInterface $input): bool
     {
-        return $this->expressionLanguage->evaluate($options['enabled'], [
+        return !!$this->expressionLanguage->evaluate($options['enabled'], [
             'input' => $input,
             'tab' => $this
         ]);

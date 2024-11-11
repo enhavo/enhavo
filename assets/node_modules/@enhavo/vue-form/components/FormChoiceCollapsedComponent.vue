@@ -8,9 +8,9 @@
         v-show="form.isVisible()"
     >
         <option v-if="form.placeholder" value="" >{{ form.placeholder }}</option>
-        <component v-if="size(form.preferredChoices) > 0" :is="getChoiceComponent(choice)" v-for="choice of form.preferredChoices" :choice="choice" :key="choice.label + '_preferred'" :preferredChoices="true" />
+        <component v-if="size(form.preferredChoices) > 0" :is="getChoiceComponent(choice)" v-for="choice of form.preferredChoices" :choice="choice" :preferredChoices="true" />
         <option v-if="size(form.preferredChoices) > 0" :disabled="true">{{ form.separator }}</option>
-        <component :is="getChoiceComponent(choice)" v-for="choice of form.choices" :choice="choice" :key="choice.label" :preferredChoices="false" />
+        <component :is="getChoiceComponent(choice)" v-for="choice of form.choices" :choice="choice" :preferredChoices="false" />
     </select>
 </template>
 

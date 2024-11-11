@@ -162,7 +162,7 @@ class MetadataRepositoryTest extends TestCase
 
         $dependencies = $this->createDependencies();
         $repository = $this->createInstance($dependencies);
-        $repository->getMetadata(1234);
+        $repository->getMetadata("1234");
     }
 }
 

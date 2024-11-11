@@ -4,7 +4,6 @@
             <div class="view-table-head-columns">
                 <div
                     v-for="column in collection.columns"
-                    :key="column.key"
                     :style="getColumnStyle(column)"
                     class="view-table-col"
                 >
@@ -13,41 +12,38 @@
             </div>
         </div>
 
-        <template v-if="!collection.loading">
-            <template v-if="collection.sortable">
-                <draggable
-                    v-model="collection.items"
-                    group="list"
-                    item-key="id"
-                    @change="save($event, null)"
-                    @start="collection.dragging = true"
-                    @end="collection.dragging = false"
-                    :class="{'dragging': collection.dragging}"
-                >
-                    <template #item="{ element }">
-                        <div class="list-group-item">
-                            <collection-list-item :data="element" :collection="collection"></collection-list-item>
-                        </div>
-                    </template>
-                </draggable>
-            </template>
-            <template v-else>
-                <template v-for="item in collection.items">
-                    <collection-list-item :data="item" :collection="collection"></collection-list-item>
+
+        <template v-if="collection.sortable">
+            <draggable
+                v-model="collection.items"
+                group="list"
+                item-key="id"
+                @change="save($event, null)"
+                @start="collection.dragging = true"
+                @end="collection.dragging = false"
+                :class="{'dragging': collection.dragging}"
+            >
+                <template #item="{ element }">
+                    <div class="list-group-item">
+                        <collection-list-item :data="element" :collection="collection"></collection-list-item>
+                    </div>
                 </template>
+            </draggable>
+        </template>
+        <template v-else>
+            <template v-for="item in collection.items">
+                <collection-list-item :data="item" :collection="collection"></collection-list-item>
             </template>
         </template>
 
-        <template v-else>
-            <div class="loading-placeholder">
-                <div class="loading-indicator">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </div>
+        <div class="loading-placeholder" v-if="collection.loading">
+            <div class="loading-indicator">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
             </div>
-        </template>
+        </div>
     </div>
 </template>
 

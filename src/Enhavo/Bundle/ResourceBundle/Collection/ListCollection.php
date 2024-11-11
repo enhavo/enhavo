@@ -43,6 +43,7 @@ class ListCollection extends AbstractCollection
             'csrf_protection' => true,
             'filters' => [],
             'criteria' => [],
+            'sorting' => [],
             'component' => 'collection-list',
             'sortable' => false,
             'model' => 'ListCollection',
@@ -69,7 +70,8 @@ class ListCollection extends AbstractCollection
             $resources = $this->repository->findBy($this->options['criteria'], $this->options['sorting'], $this->options['limit']);
         }
 
-        return new ResourceItems($this->createItems($resources, $context));
+        $items = new ResourceItems($this->createItems($resources, $context));
+        return $items;
     }
 
     private function createFilterQuery($context): FilterQuery
@@ -110,17 +112,19 @@ class ListCollection extends AbstractCollection
 
     private function createItems(iterable $resources, array $context): array
     {
+        $propertyAccessor = PropertyAccess::createPropertyAccessor();
+
         $items = [];
         foreach ($resources as $resource) {
             $data = [];
 
             if ($this->isHydrate('data', $context)) {
-                foreach($this->columns as $key => $column) {
-                    $data[$key] = $column->createResourceViewData($resource);
+                foreach($this->columns as $column) {
+                    $data[] = $column->createResourceViewData($resource);
                 }
             }
 
-            $item = new ResourceItem($data, $resource);
+            $item = new ListResourceItem($data, $resource);
 
             if ($this->isHydrate('id', $context)) {
                 $item['id'] = is_array($resource) ? $resource['id'] : $resource->getId();
@@ -128,6 +132,14 @@ class ListCollection extends AbstractCollection
 
             if ($this->isHydrate('url', $context)) {
                 $item['url'] = $this->generateUrl($resource);
+            }
+
+            $item['children'] = [];
+            if ($this->options['children_property']) {
+                $children = $propertyAccessor->getValue($resource, $this->options['children_property']);
+                if (count($children)) {
+                    $item['children'] = $this->createItems($children, $context);
+                }
             }
 
             $items[] = $item;
@@ -177,6 +189,7 @@ class ListCollection extends AbstractCollection
             'component' => $this->options['component'],
             'model' => $this->options['model'],
             'sortable' => $this->options['sortable'],
+            'treeable' => $this->options['parent_property'] !== null && $this->options['children_property'],
         ];
 
         if ($this->options['csrf_protection']) {

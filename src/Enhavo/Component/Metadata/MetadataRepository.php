@@ -67,6 +67,10 @@ class MetadataRepository
 
     private function getParents($className, array &$parents): void
     {
+        if (!class_exists($className)) {
+            throw InvalidMetadataException::classNotExists($className);
+        }
+
         $parentClass = get_parent_class($className);
         if ($parentClass !== false) {
             $parents[] = $parentClass;

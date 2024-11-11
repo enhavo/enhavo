@@ -29,5 +29,9 @@ services:
             - { name: enhavo_resource.batch }
 
     Enhavo\Bundle\ResourceBundle\Batch\Type\FormBatchType:
+        arguments:
+            - '@Enhavo\Bundle\VueFormBundle\Form\VueForm'
+            - '@form.factory'
+            - '@Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage'
         tags:
             - { name: enhavo_resource.batch }

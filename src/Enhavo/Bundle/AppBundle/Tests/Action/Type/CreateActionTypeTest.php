@@ -48,7 +48,7 @@ class CreateActionTypeTest extends TestCase
         $viewData = $action->createViewData();
 
         $this->assertEquals('http://localhost/create', $viewData['url']);
-        $this->assertEquals('edit-view', $viewData['frameKey']);
+        $this->assertEquals('edit', $viewData['frameKey']);
         $this->assertEquals('_frame', $viewData['target']);
     }
 

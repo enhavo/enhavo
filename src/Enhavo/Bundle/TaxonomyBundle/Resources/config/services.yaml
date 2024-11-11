@@ -78,3 +78,10 @@ services:
             - '@enhavo_taxonomy.term.repository'
         tags:
             - { name: validator.constraint_validator, alias: term_unique }
+
+    Enhavo\Bundle\TaxonomyBundle\Endpoint\Type\TermAutoCompleteEndpointType:
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }

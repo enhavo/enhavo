@@ -13,7 +13,7 @@ class CategoryMenuType extends AbstractMenuType
             'icon' => 'bookmark',
             'label' => 'article.label.category',
             'translation_domain' => 'EnhavoArticleBundle',
-            'route' => 'enhavo_article_category_index',
+            'route' => 'enhavo_article_admin_category_index',
             'role' => 'ROLE_ENHAVO_ARTICLE_CATEGORY_INDEX'
         ]);
     }

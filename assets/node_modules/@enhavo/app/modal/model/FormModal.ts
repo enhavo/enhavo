@@ -1,45 +1,63 @@
 import { AbstractModal } from "@enhavo/app/modal/model/AbstractModal";
 import axios from "axios";
-import * as _ from "lodash";
-import { ModalManager } from "@enhavo/app/modal/ModalManager";
 import Router from "@enhavo/core/Router";
-import {AxiosResponseHandler} from "@enhavo/app/util/AxiosResponseHandler";
+import {FormFactory} from "@enhavo/vue-form/form/FormFactory";
+import {Form} from "@enhavo/vue-form/model/Form";
+import {FormUtil} from "@enhavo/vue-form/form/FormUtil";
 
-export class AjaxFormModal extends AbstractModal
+export class FormModal extends AbstractModal
 {
-    public route: string;
-    public routeParameters: object;
-    public url: string;
+    public loading: boolean = true;
+    public form: Form = null;
+
+    public formRoute: string;
+    public formRouteParameters: object;
+    public formUrl: string;
+    public formParameter: string = 'form';
+
     public actionRoute: string;
     public actionRouteParameters: object;
     public actionUrl: string;
-    public actionHandler: (modal: AjaxFormModal, data: any, error: string) => Promise<boolean>;
-    public submitHandler: (modal: AjaxFormModal, data: any) => Promise<boolean>;
-    public element: HTMLElement = null;
-    public form: HTMLElement = null;
+    public actionFormParameter: string = 'form';
+
+    public actionHandler: (modal: FormModal, data: any, error: string) => Promise<boolean>;
+    public submitHandler: (modal: FormModal, data: any) => Promise<boolean>;
+
     public saveLabel: string = 'enhavo_app.save.label.save';
     public closeLabel: string = 'enhavo_app.abort';
-    public loading: boolean = true;
-    public data: any;
 
-    protected readonly router: Router;
-
-    constructor(modalManager: ModalManager, router: Router)
+    constructor(
+        protected readonly router: Router,
+        protected readonly formFactory: FormFactory,
+    )
     {
-        super(modalManager);
-        this.router = router;
+        super();
     }
 
-    async loadForm(): Promise<void>
+    onInit()
     {
-        let url = this.getUrl();
+        if (!this.component) {
+            this.component = 'modal-form'
+        }
+
+        // check if form already created
+        if (!this.form.key) {
+            this.form = this.formFactory.create(this.form);
+            this.loading = false;
+        } else {
+            this.loadForm();
+        }
+    }
+
+    private async loadForm(): Promise<void>
+    {
+        let url = this.getFormUrl();
 
         this.loading = true;
 
         return new Promise((resolve, reject) => {
             axios.get(url).then((data) => {
-                let html = data.data.trim();
-                this.element = <HTMLElement>$.parseHTML(html)[0];
+                this.form = this.formFactory.create(data.data[this.actionFormParameter]);
                 this.loading = false;
                 resolve();
             }).catch(() => {
@@ -48,30 +66,26 @@ export class AjaxFormModal extends AbstractModal
         });
     }
 
-    private getUrl(): string
+    private getFormUrl(): string
     {
-        return this.url ? this.url : this.router.generate(this.route, this.routeParameters);
+        return this.formUrl ? this.formUrl : this.router.generate(this.formRoute, this.formRouteParameters);
     }
 
     async submit(): Promise<boolean>
     {
-        let data = this.getFormData();
         if (this.submitHandler) {
+            let data = this.getFormData();
             return this.submitHandler(this, data);
         } else {
-            return this.sendForm(data);
+            return this.sendForm();
         }
     }
 
-    private sendForm(data: any): Promise<boolean>
+    private sendForm(): Promise<boolean>
     {
         this.loading = true;
         return new Promise((resolve, reject) => {
-            if (this.data) {
-                data = _.extend(data, this.data);
-            }
-
-            axios.post(this.getActionUrl(), data, {
+            axios.post(this.getActionUrl(), this.getFormData(), {
                 headers: {'Content-Type': 'application/x-www-form-urlencoded' },
                 responseType: 'arraybuffer'
             }).then((responseData) => {
@@ -84,7 +98,7 @@ export class AjaxFormModal extends AbstractModal
 
     private receiveForm(responseData: any, resolve: (data?: any) => void, reject: () => void)
     {
-        if(this.actionHandler) {
+        if (this.actionHandler) {
             this.actionHandler(this, responseData, null)
                 .then((value) => {
                     resolve(value);
@@ -94,8 +108,10 @@ export class AjaxFormModal extends AbstractModal
                     reject();
                 });
         } else {
-            let html = AxiosResponseHandler.getBody(responseData).trim();
-            this.element = <HTMLElement>$.parseHTML(html)[0];
+            let form = this.formFactory.create(responseData.data[this.actionFormParameter]);
+            this.form.morphStart();
+            this.form.morphMerge(form);
+            this.form.morphFinish();
             resolve();
         }
         this.loading = false;
@@ -111,12 +127,11 @@ export class AjaxFormModal extends AbstractModal
             return this.router.generate(this.actionRoute, this.actionRouteParameters);
         }
 
-        return this.getUrl();
+        return this.getFormUrl();
     }
 
     public getFormData(): FormData
     {
-        let formData = new FormData(<HTMLFormElement>this.form);
-        return formData;
+        return FormUtil.serializeForm(this.form);
     }
 }

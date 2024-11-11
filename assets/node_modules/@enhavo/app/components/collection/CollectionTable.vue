@@ -10,7 +10,6 @@
                 <template v-for="column in collection.columns">
                     <div
                         v-if="column.isVisible()"
-                        :key="column.key"
                         :style="getColumnStyle(column)"
                         :class="['view-table-col', {'sortable': column.sortable}, {'sorted': column.sortingDirection !== null}]"
                         @click="() => collection.changeSortDirection(column)"

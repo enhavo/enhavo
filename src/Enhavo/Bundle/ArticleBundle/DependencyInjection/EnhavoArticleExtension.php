@@ -31,7 +31,9 @@ class EnhavoArticleExtension extends Extension implements PrependExtensionInterf
     {
         return [
             __DIR__.'/../Resources/config/app/config.yaml',
-            __DIR__.'/../Resources/config/resources/article.yaml'
+            __DIR__.'/../Resources/config/resources/article.yaml',
+            __DIR__.'/../Resources/config/resources/category.yaml',
+            __DIR__.'/../Resources/config/resources/tag.yaml',
         ];
     }
 }

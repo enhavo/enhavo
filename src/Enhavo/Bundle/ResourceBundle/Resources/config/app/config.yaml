@@ -8,15 +8,6 @@ enhavo_resource:
                     route: 'expr:resolve_route("create", {api: false})'
                 filter:
                     type: filter
-            columns:
-                id:
-                    label: id
-                    translation_domain: EnhavoResourceBundle
-                    property: id
-                    width: 2
-                    type: text
-                    sortable: true
-                    visible_condition: "desktop"
             batches:
                 delete:
                     type: delete

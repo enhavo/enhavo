@@ -80,6 +80,7 @@ enhavo_article_admin_api_article_auto_complete:
         expose: true
     path: /article/article/article/auto-complete
     defaults:
+        _expose: admin_api
         _endpoint:
             type: auto_complete
             resource: enhavo_article.article

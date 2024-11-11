@@ -28,6 +28,7 @@ class EnhavoMediaLibraryExtension extends Extension implements PrependExtensionI
             __DIR__.'/../Resources/config/app/config.yaml',
             __DIR__.'/../Resources/config/resources/file.yaml',
             __DIR__.'/../Resources/config/resources/item.yaml',
+            __DIR__.'/../Resources/config/resources/tag.yaml',
         ];
     }
 }

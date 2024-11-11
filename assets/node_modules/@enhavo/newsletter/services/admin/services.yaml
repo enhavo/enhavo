@@ -27,5 +27,7 @@ services:
             - '@enhavo/app/flash-message/FlashMessenger'
             - '@enhavo/app/translation/Translator'
             - '@enhavo/app/modal/ModalManager'
+            - '@enhavo/app/manager/ResourceInputManager'
+            - '@enhavo/vue-form/form/FormFactory'
         tags:
             - { name: 'enhavo_app.action' }

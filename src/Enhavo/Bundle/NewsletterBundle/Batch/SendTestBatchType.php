@@ -46,7 +46,7 @@ class SendTestBatchType extends AbstractBatchType
             'label' => 'newsletter.batch.action.send_test',
             'translation_domain' => 'EnhavoNewsletterBundle',
             'permission' => 'ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_SEND_TEST',
-            'form_route' => 'enhavo_newsletter_newsletter_test_form',
+            'form' => NewsletterEmailType::class,
         ]);
     }
 

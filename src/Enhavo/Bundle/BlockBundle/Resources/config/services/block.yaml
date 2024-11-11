@@ -2,6 +2,7 @@ services:
     Enhavo\Bundle\BlockBundle\Block\Type\BaseBlockType:
         arguments:
             - '@translator'
+            - '@serializer'
         tags:
             - { name: enhavo_block.block }
 

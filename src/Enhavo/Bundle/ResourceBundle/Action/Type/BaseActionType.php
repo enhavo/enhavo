@@ -32,14 +32,14 @@ class BaseActionType extends AbstractType implements ActionTypeInterface
         $data->set('label', $this->getLabel($options));
 
         $data->set('confirm', $options['confirm']);
-        $data->set('confirmMessage', $this->translator->trans($options['confirm_message'], [], $options['translation_domain']));
-        $data->set('confirmLabelOk', $this->translator->trans($options['confirm_label_ok'], [], $options['translation_domain']));
-        $data->set('confirmLabelCancel', $this->translator->trans($options['confirm_label_cancel'], [], $options['translation_domain']));
+        $data->set('confirmMessage', $this->translator->trans($options['confirm_message'] ?? '', [], $options['translation_domain']));
+        $data->set('confirmLabelOk', $this->translator->trans($options['confirm_label_ok'] ?? '', [], $options['translation_domain']));
+        $data->set('confirmLabelCancel', $this->translator->trans($options['confirm_label_cancel'] ?? '', [], $options['translation_domain']));
     }
 
     public function isEnabled(array $options, object $resource = null): bool
     {
-        return $this->expressionLanguage->evaluate($options['enabled'], [
+        return !!$this->expressionLanguage->evaluate($options['enabled'], [
             'resource' => $resource,
             'action' => $this
         ]);

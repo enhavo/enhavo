@@ -13,9 +13,8 @@ use Enhavo\Bundle\ResourceBundle\Repository\EntityRepository;
 
 class TermRepository extends EntityRepository
 {
-    public function findByTaxonomyName($name, ?FilterQuery $filterQuery = null)
+    public function findByTaxonomyName($name, ?FilterQuery $filterQuery = null, $pagination = true)
     {
-        $pagination = false;
         if ($filterQuery) {
             $query = $this->buildFilterQuery($filterQuery);
             $pagination = $filterQuery->isPaginated();
@@ -27,13 +26,13 @@ class TermRepository extends EntityRepository
         $query->andWhere('ta.name = :name');
         $query->setParameter('name', $name);
 
-        if($pagination) {
+        if ($pagination) {
             return $this->getPaginator($query);
         }
         return $query->getQuery()->getResult();
     }
 
-    public function findRootsByTaxonomyName($name, ?FilterQuery $filterQuery = null)
+    public function findRootsByTaxonomyName($name, ?FilterQuery $filterQuery = null, $pagination = true)
     {
         $pagination = true;
         if ($filterQuery) {
@@ -47,7 +46,7 @@ class TermRepository extends EntityRepository
         $query->andWhere('a.parent IS NULL');
         $query->setParameter('name', $name);
 
-        if($pagination) {
+        if ($pagination) {
             return $this->getPaginator($query);
         }
         return $query->getQuery()->getResult();

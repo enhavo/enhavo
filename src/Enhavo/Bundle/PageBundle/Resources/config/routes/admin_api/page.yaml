@@ -36,7 +36,7 @@ enhavo_page_admin_api_page_update:
 
 enhavo_page_admin_api_page_delete:
     path: /page/delete/{id}
-    methods: [DELETE]
+    methods: [DELETE, POST]
     defaults:
         _expose: admin_api
         _endpoint:
@@ -78,7 +78,7 @@ enhavo_page_admin_api_preview:
 enhavo_page_admin_api_page_auto_complete:
     options:
         expose: true
-    path: /page/page/page/auto-complete
+    path: /page/auto-complete
     defaults:
         _endpoint:
             type: auto_complete

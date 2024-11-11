@@ -14,16 +14,11 @@ use Doctrine\ORM\EntityRepository;
 
 class PageType extends AbstractType
 {
-    /** @var string */
-    private $dataClass;
-
-    /** @var array */
-    private $specialPages;
-
-    public function __construct($dataClass, $specialPages)
+    public function __construct(
+        private readonly string $dataClass,
+        private readonly array $specialPages,
+    )
     {
-        $this->dataClass = $dataClass;
-        $this->specialPages = $specialPages;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -34,8 +29,7 @@ class PageType extends AbstractType
             'item_groups' => ['layout'],
         ));
 
-        $specialPages = $this->specialPages;
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) use ($specialPages) {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
             $form = $event->getForm();
             $data = $event->getData();
 
@@ -54,7 +48,7 @@ class PageType extends AbstractType
                 }
             ));
 
-            if (count($specialPages)) {
+            if (count($this->specialPages)) {
                 $form->add('code', SpecialPageType::class, array(
                     'label' => 'page.label.special_page',
                     'translation_domain' => 'EnhavoPageBundle',
@@ -83,7 +77,7 @@ class PageType extends AbstractType
         });
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults( array(
             'data_class' => $this->dataClass,
@@ -91,13 +85,8 @@ class PageType extends AbstractType
         ));
     }
 
-    public function getParent()
+    public function getParent(): ?string
     {
         return ContentType::class;
-    }
-
-    public function getBlockPrefix()
-    {
-        return 'enhavo_page_page';
     }
 }

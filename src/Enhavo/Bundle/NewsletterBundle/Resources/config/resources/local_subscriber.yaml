@@ -26,6 +26,7 @@ enhavo_resource:
                 email:
                     type: text
                     label: subscriber.label.email
+                    translation_domain: EnhavoNewsletterBundle
                     property: email
                     width: 10
             batches:

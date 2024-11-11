@@ -35,7 +35,7 @@ services:
             - '@enhavo/app/translation/Translator'
             - '@enhavo/app/frame/FrameManager'
             - '@enhavo/app/flash-message/FlashMessenger'
-            - '@enhavo/core/Router'
+            - '@enhavo/app/routing/Router'
             - '@enhavo/app/modal/ModalManager'
         tags:
             - { name: enhavo_app.batch }

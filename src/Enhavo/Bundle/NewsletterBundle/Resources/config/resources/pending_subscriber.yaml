@@ -23,20 +23,23 @@ enhavo_resource:
                 email:
                     type: text
                     label: subscriber.label.email
+                    translation_domain: EnhavoNewsletterBundle
                     property: email
                     width: 10
                 subscription:
                     type: text
                     property: subscription
                     label: subscriber.label.subscription
+                    translation_domain: EnhavoNewsletterBundle
                     width: 4
                 activate:
                     width: 4
                     label: subscriber.label.activate
                     translation_domain: EnhavoNewsletterBundle
                     type: action
-                    action:
-                        type: newsletter_subscriber_activate
+                    actions:
+                        activate:
+                            type: newsletter_subscriber_activate
             batches:
                 delete:
                     type: delete

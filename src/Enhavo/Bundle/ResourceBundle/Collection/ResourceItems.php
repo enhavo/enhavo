@@ -28,7 +28,7 @@ class ResourceItems implements \Iterator
     public function normalize(): array
     {
         $items = [];
-        foreach ($this->getItems()  as $item) {
+        foreach ($this->getItems() as $item) {
             $items[] = $item->normalize();
         }
 

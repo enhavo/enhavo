@@ -27,7 +27,7 @@ export class DownloadAction extends AbstractAction
         })
         .catch(function (response) {
             //handle error
-            console.log(response);
+            console.error(response);
         });
     }
 }

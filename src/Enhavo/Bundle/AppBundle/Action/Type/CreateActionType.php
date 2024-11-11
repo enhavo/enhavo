@@ -37,7 +37,7 @@ class CreateActionType extends AbstractActionType
         $routeParameters = $this->expressionLanguage->evaluateArray($options['route_parameters']);
 
         $data->set('url', $this->router->generate($route, $routeParameters));
-        $data->set('key', $options['frame_key']);
+        $data->set('frameKey', $options['frame_key']);
         $data->set('target', $options['target']);
     }
 

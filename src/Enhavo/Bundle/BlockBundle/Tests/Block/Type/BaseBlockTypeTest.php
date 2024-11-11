@@ -13,6 +13,7 @@ use Enhavo\Bundle\BlockBundle\Block\Type\BaseBlockType;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class BaseBlockTypeTest extends TestCase
@@ -24,7 +25,10 @@ class BaseBlockTypeTest extends TestCase
 
     private function createInstance()
     {
-        return new BaseBlockType($this->getMockBuilder(TranslatorInterface::class)->getMock());
+        return new BaseBlockType(
+            $this->getMockBuilder(TranslatorInterface::class)->getMock(),
+            $this->getMockBuilder(NormalizerInterface::class)->getMock(),
+        );
     }
 
     public function testConfigureOption()

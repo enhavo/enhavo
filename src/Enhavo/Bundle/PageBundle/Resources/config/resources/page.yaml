@@ -15,6 +15,10 @@ enhavo_resource:
                 parent_property: parent
                 position_property: position
                 sortable: true
+                sorting:
+                    position: ASC
+                criteria:
+                    parent: ~
             filters:
                 title:
                     type: text
@@ -64,28 +68,23 @@ enhavo_resource:
 
     inputs:
         enhavo_page.page:
-            class: Enhavo\Bundle\ResourceBundle\Input\Input
+            extends: enhavo_resource.input
             resource: enhavo_page.page
             form: Enhavo\Bundle\PageBundle\Form\Type\PageType
-            form_options:
-                component_theme: admin
             tabs:
                 main:
                     type: form
                     label: page.label.page
                     translation_domain: EnhavoPageBundle
                     arrangement: |
-                        link
                         title
-                        teaser
-                        picture
-                        categories
-                        tags
+                        parent
                         publication_date
                         published_until
                         public
                 content:
-                    type: content
+                    type: block
+                    property: content
                 meta:
                     type: meta
             actions:

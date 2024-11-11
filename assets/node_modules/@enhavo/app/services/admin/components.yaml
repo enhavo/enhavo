@@ -53,11 +53,11 @@ services:
         tags:
             - { name: vue.component, component: 'modal-stack' }
 
-    '@enhavo/app/components/modal/ModalAjaxForm.vue':
+    '@enhavo/app/components/modal/ModalForm.vue':
         chunk: 'vue'
         static: true
         tags:
-            - { name: vue.component, component: 'modal-ajax-form' }
+            - { name: vue.component, component: 'modal-form' }
 
     '@enhavo/app/components/modal/ModalIframe.vue':
         chunk: 'vue'

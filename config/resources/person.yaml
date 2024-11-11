@@ -58,6 +58,7 @@ enhavo_resource:
                 revision:
                     label: Revision
                     type: revision
+                    enabled: 'expr:input.getResource()?.getId()'
 
             actions:
                 duplicate:
@@ -66,6 +67,7 @@ enhavo_resource:
                     enabled: 'expr:resource && resource.getId()'
                 archive:
                     type: revision_archive
+                    enabled: 'expr:resource && resource.getId()'
 
 #                export:
 #                    type: form
