@@ -104,7 +104,7 @@ class TableCollection extends AbstractCollection
             $context['sorting'] ?? [],
             $this->options['criteria'],
             $this->options['sorting'],
-            $this->isPaginated($context)
+            $this->isPaginated($context),
         );
 
         if (isset($context['hydrate']) && $context['hydrate'] === 'id') {

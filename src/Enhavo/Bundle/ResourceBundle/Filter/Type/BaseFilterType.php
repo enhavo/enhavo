@@ -46,7 +46,7 @@ class BaseFilterType extends AbstractType implements FilterTypeInterface
 
     public function isEnabled($options): bool
     {
-        return $this->expressionLanguage->evaluate($options['enabled'], [
+        return !!$this->expressionLanguage->evaluate($options['enabled'], [
             'options' => $options
         ]);
     }

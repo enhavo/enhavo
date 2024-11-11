@@ -20,8 +20,9 @@ enhavo_resource:
             columns:
                 subject:
                     sortable: true
-                    type: property
+                    type: text
                     label: newsletter.form.label.subject
+                    translation_domain: EnhavoNewsletterBundle
                     property: subject
                     width: 6
                 state:
@@ -32,6 +33,7 @@ enhavo_resource:
                     sortable: true
                     type: datetime
                     label: newsletter.label.createdAt
+                    translation_domain: EnhavoNewsletterBundle
                     property: createdAt
                     width: 3
                     visible_condition: desktop
@@ -74,9 +76,8 @@ enhavo_resource:
                 content:
                     label: newsletter.label.content
                     translation_domain: EnhavoNewsletterBundle
-                    type: form
-                    arrangement:
-                        - content
+                    type: block
+                    property: content
                 meta:
                     label: newsletter.label.meta
                     translation_domain: EnhavoNewsletterBundle

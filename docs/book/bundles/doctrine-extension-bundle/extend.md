@@ -1,4 +1,4 @@
-##Extend
+## Extend
 
 Time by time you have to extend a entity. Doctrine is a powerful ORM and
 of course this case is covered at all. Doctrine comes with several type

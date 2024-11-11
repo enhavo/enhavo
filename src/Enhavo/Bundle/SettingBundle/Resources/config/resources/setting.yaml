@@ -13,21 +13,24 @@ enhavo_resource:
                     group: expr:request.get("group")
             extends: enhavo_resource.grid
             resource: enhavo_setting.setting
-            criteria:
-                group: expr:request.get("group")
+            collection:
+                criteria:
+                    group: expr:request.get("group")
             actions:
                 create:
                     type: create
                     enabled: false
             columns:
                 label:
-                    type: label
+                    type: text
                     property: label
                     label: setting.label.label
+                    translation_domain: EnhavoSettingBundle
                     width: 6
                 value:
                     type: setting
                     label: setting.label.value
+                    translation_domain: EnhavoSettingBundle
                     width: 6
     inputs:
         enhavo_setting.setting:

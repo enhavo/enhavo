@@ -2,11 +2,11 @@
 
 namespace Enhavo\Bundle\FormBundle\Endpoint;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage;
+use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,7 +16,7 @@ class AutoCompleteEndpointType extends AbstractEndpointType
 {
     public function __construct(
         private readonly ResourceExpressionLanguage $resourceExpressionLanguage,
-        private readonly EntityManagerInterface $em,
+        private readonly ResourceManager $resourceManager,
     )
     {
     }
@@ -49,7 +49,6 @@ class AutoCompleteEndpointType extends AbstractEndpointType
             $arguments = $options['repository_arguments'];
             foreach ($arguments as $key => $argument) {
                 $arguments[$key] = $this->resourceExpressionLanguage->evaluate($argument, [
-                    'request' => $request,
                     'options' => $options
                 ]);
             }
@@ -58,7 +57,7 @@ class AutoCompleteEndpointType extends AbstractEndpointType
             $arguments[] = $options['limit'];
         }
 
-        $repository = $this->em->getRepository($options['class']);
+        $repository = $this->resourceManager->getRepository($options['resource']);
         return call_user_func_array([$repository, $options['repository_method']], $arguments);
     }
 
@@ -97,7 +96,7 @@ class AutoCompleteEndpointType extends AbstractEndpointType
             'term_key' => 'q',
         ]);
 
-        $resolver->setRequired(['class', 'repository_method']);
+        $resolver->setRequired(['resource', 'repository_method']);
     }
 
     public static function getName(): ?string

@@ -1,7 +1,7 @@
 <template>
     <div class="modal">
         <div class="modal-form-container" v-show="!modal.loading">
-            <form v-once :ref="(el) => container = el"></form>
+            <form-form :form="modal.form"></form-form>
             <div class="buttons">
                 <button @click="save" class="modal-btn primary">{{ trans(modal.saveLabel) }}</button>
                 <button @click="close" class="modal-btn">{{ trans(modal.closeLabel) }}</button>
@@ -12,30 +12,14 @@
 </template>
 
 <script setup lang="ts">
-import { inject, watch, onMounted, ref } from 'vue'
-import AjaxFormModal from "@enhavo/app/modal/model/AjaxFormModal"
-import FormInitializer from "@enhavo/app/form/FormInitializer";
-import Translator from "@enhavo/core/Translator";
+import { inject } from 'vue'
+import {Translator} from "@enhavo/app/translation/Translator";
+import {FormModal} from "@enhavo/app/modal/model/FormModal";
 
 const translator = inject<Translator>('translator');
-
 const props = defineProps<{
-    modal: AjaxFormModal
+    modal: FormModal
 }>()
-
-let container: HTMLElement = null;
-
-watch(() => props.modal.element, async() => {
-    const initializer = new FormInitializer();
-    initializer.setElement(props.modal.element);
-    $(container).html("");
-    initializer.append(container);
-    props.modal.form = container;
-});
-
-onMounted(() => {
-    props.modal.loadForm().then(() => {});
-});
 
 function save() 
 {

@@ -57,7 +57,7 @@ class BaseBatchType extends AbstractBatchType
 
     public function isEnabled(array $options): bool
     {
-        return $this->expressionLanguage->evaluate($options['enabled'], [
+        return !!$this->expressionLanguage->evaluate($options['enabled'], [
             'batch' => $this
         ]);
     }

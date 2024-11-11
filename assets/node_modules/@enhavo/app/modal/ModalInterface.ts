@@ -1,7 +1,9 @@
 import { ComponentAwareInterface } from "@enhavo/app/model/ComponentAwareInterface";
 import { ModelAwareInterface } from "@enhavo/app/model/ModelAwareInterface";
+import {ModalManager} from "@enhavo/app/modal/ModalManager";
 
 export interface ModalInterface extends ComponentAwareInterface, ModelAwareInterface
 {
-    init(): void;
+    modalManager: ModalManager;
+    close() :void;
 }

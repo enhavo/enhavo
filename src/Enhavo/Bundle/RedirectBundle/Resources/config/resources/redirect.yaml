@@ -35,16 +35,19 @@ enhavo_resource:
                     type: text
                     property: from
                     label: form.label.from
+                    translation_domain: EnhavoRedirectBundle
                     width: 5
                 to:
                     type: text
                     property: to
                     label: form.label.to
+                    translation_domain: EnhavoRedirectBundle
                     width: 6
                 code:
                     type: text
                     property: code
                     label: form.label.code
+                    translation_domain: EnhavoRedirectBundle
                     width: 1
             batches:
                 delete:

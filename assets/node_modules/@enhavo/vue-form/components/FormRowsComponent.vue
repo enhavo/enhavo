@@ -1,5 +1,5 @@
 <template>
-    <component :is="child.rowComponent" v-for="child of form.children" :form="child" :key="child.name" />
+    <component :is="child.rowComponent" v-for="child of form.children" :form="child" />
 </template>
 
 <script setup lang="ts">

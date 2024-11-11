@@ -6,7 +6,7 @@ export class OpenAction extends AbstractAction
 {
     public url: string;
     public target: string;
-    public key: string;
+    public frameKey: string;
 
     public confirm: boolean;
     public confirmMessage: string;
@@ -42,7 +42,7 @@ export class OpenAction extends AbstractAction
         if (this.target == '_frame') {
             this.frameManager.openFrame({
                 url: this.url,
-                key: this.key,
+                key: this.frameKey,
             }).then();
         } else {
             window.open(this.url, this.target);

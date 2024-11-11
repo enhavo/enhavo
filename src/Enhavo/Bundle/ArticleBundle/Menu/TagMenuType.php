@@ -13,7 +13,7 @@ class TagMenuType extends AbstractMenuType
             'icon' => 'label_outline',
             'label' => 'article.label.tag',
             'translation_domain' => 'EnhavoArticleBundle',
-            'route' => 'enhavo_article_tag_index',
+            'route' => 'enhavo_article_admin_tag_index',
             'role' => 'ROLE_ENHAVO_ARTICLE_TAG_INDEX'
         ]);
     }

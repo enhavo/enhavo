@@ -7,7 +7,7 @@ use Enhavo\Component\Metadata\Tests\Fixtures\AttributeClass;
 use Enhavo\Component\Metadata\Tests\Fixtures\AttributeTestClass;
 use PHPUnit\Framework\TestCase;
 
-class AttributeDriverTest extends TestCase
+class PropertyAttributeTypeDriverTest extends TestCase
 {
     public function createDependencies()
     {
@@ -32,7 +32,10 @@ class AttributeDriverTest extends TestCase
 
         $values = $instance->loadClass(AttributeTestClass::class);
 
-        $this->assertEquals();
+        $this->assertEquals([
+            'option1' => 'valueOption1',
+            'type' => 'myType',
+        ], $values['property']);
     }
 }
 

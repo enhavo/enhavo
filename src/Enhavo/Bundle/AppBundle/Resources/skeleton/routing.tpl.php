@@ -43,7 +43,7 @@
                         property: id
                         width: 12
                         label: id
-                        type: property
+                        type: text
 
 <?= $app ?>_<?= $resource ?>_delete:
     options:

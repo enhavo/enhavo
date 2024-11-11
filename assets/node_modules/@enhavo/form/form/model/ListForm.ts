@@ -256,4 +256,15 @@ export class ListForm extends Form
             child.update();
         }
     }
+
+    public morphMerge(form: Form)
+    {
+        super.morphMerge(form);
+        let index = 0;
+        for (let child of this.children)
+        {
+            child.name = index.toString();
+            index++;
+        }
+    }
 }

@@ -5,7 +5,7 @@
             <span></span>
         </div>
         <div class="view-table-row-columns">
-            <template v-for="column in collection.columns" :key="column.key + '-' + data.id">
+            <template v-for="column in collection.columns">
                 <component
                     v-if="column.isVisible()"
                     class="view-table-col"

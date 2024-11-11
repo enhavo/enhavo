@@ -8,7 +8,11 @@
             <join-column on-delete="SET NULL" />
         </many-to-one>
 
-        <one-to-many field="children" target-entity="Enhavo\Bundle\PageBundle\Model\PageInterface" mapped-by="parent" />
+        <one-to-many field="children" target-entity="Enhavo\Bundle\PageBundle\Model\PageInterface" mapped-by="parent">
+            <order-by>
+                <order-by-field name="position" direction="ASC" />
+            </order-by>
+        </one-to-many>
 
         <one-to-one field="content" target-entity="Enhavo\Bundle\BlockBundle\Model\NodeInterface">
             <cascade>

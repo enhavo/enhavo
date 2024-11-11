@@ -1,5 +1,5 @@
 <template>
-    <div class="view-table-pagination">
+    <div class="view-table-pagination" v-if="collection.count">
         <div class="pagination-select">
             <div class="label">{{ translator.trans('enhavo_app.grid.label.entry_per_page', {}, 'javascript') }}:</div>
             <v-select
@@ -24,7 +24,6 @@
 
             <div
                 v-for="page in collection.pages"
-                :key="page"
                 :class="['pagination-nav-item', 'number', {active: getCurrentPage() === page}]"
                 @click="clickPage(page)">
                 {{ page }}

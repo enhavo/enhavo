@@ -31,10 +31,9 @@ class ResourceCreateEndpointType extends AbstractEndpointType
 
         $resource = $input->createResource();
 
-        $form = $input->getForm();
+        $form = $input->getForm($resource);
 
         if ($form) {
-            $form->setData($resource);
             $form->handleRequest($request);
 
             $context->set('form', $form);

@@ -1,0 +1,61 @@
+enhavo_article_admin_api_tag_index:
+    path: /tag/index
+    methods: [GET]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_index
+            grid: enhavo_article.tag
+
+enhavo_article_admin_api_tag_list:
+    path: /tag/list
+    methods: [GET,POST]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_list
+            grid: enhavo_article.tag
+
+enhavo_article_admin_api_tag_create:
+    path: /tag/create
+    methods: [GET, POST]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_create
+            input: enhavo_article.tag
+
+enhavo_article_admin_api_tag_update:
+    path: /tag/update/{id}
+    methods: [GET, POST]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_update
+            input: enhavo_article.tag
+
+enhavo_article_admin_api_tag_delete:
+    path: /tag/delete/{id}
+    methods: [DELETE, POST]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_delete
+            input: enhavo_article.tag
+
+enhavo_article_admin_api_tag_batch:
+    path: /tag/batch
+    methods: [POST]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_batch
+            grid: enhavo_article.tag
+
+enhavo_article_admin_api_tag_auto_complete:
+    path: /tag/auto-complete
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: term_auto_complete
+            taxonomy: article_tag

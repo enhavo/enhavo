@@ -19,7 +19,7 @@ enhavo_resource:
                 component: collection-media-library
                 model: MediaLibraryCollection
                 sorting:
-                    file.createdAt: desc
+                    id: desc
             filters:
                 filename:
                     type: media_library_text
@@ -31,11 +31,11 @@ enhavo_resource:
                     label: Content Type
                     translation_domain: EnhavoMediaLibraryBundle
                 tags:
-                    type: entity
+                    type: taxonomy
                     component: filter-media-library-choice
+                    taxonomy: media_library_tag
                     property: tags
                     label: Tags
-                    resource: enhavo_taxonomy.term
                     translation_domain: EnhavoMediaLibraryBundle
                 unusedFile:
                     type: media_library_unused_file

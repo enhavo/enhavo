@@ -1,0 +1,13 @@
+enhavo_resource:
+    grids:
+        enhavo_article.category:
+            extends: enhavo_taxonomy.term_list
+            collection:
+                repository_arguments:
+                    - 'article_category'
+
+    inputs:
+        enhavo_article.category:
+            extends: enhavo_taxonomy.term
+            factory_arguments:
+                - 'article_category'

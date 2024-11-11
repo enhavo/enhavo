@@ -20,6 +20,7 @@ export class ListCollection
     routes: RouteContainer;
     loading: boolean = false;
     selectedIds: number[] = [];
+    expandedIds: number[] = [];
     columns: ColumnInterface[];
     filters: FilterInterface[];
     batches: BatchInterface[];
@@ -28,6 +29,7 @@ export class ListCollection
 
     sortable: boolean = false;
     dragging: boolean = false;
+    treeable: boolean = false;
 
     constructor(
         private router: Router,
@@ -47,6 +49,10 @@ export class ListCollection
 
         this.frameManager.on('frame_removed', (event: Event) => {
             this.checkActiveRow();
+        });
+
+        this.frameManager.on('input_changed', (event: Event) => {
+            this.load();
         });
     }
 
@@ -214,5 +220,18 @@ export class ListCollection
                     FlashMessage.ERROR,
                 );
             })
+    }
+
+    public changeSelect(item: CollectionResourceItem, value: boolean)
+    {
+        item.selected = value;
+
+        let index = this.selectedIds.indexOf(item.id);
+
+        if (value && index === -1) {
+            this.selectedIds.push(item.id);
+        } else if (false == value && index !== -1) {
+            this.selectedIds.splice(index, 1);
+        }
     }
 }

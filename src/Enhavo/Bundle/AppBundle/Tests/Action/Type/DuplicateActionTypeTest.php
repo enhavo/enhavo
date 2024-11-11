@@ -12,7 +12,10 @@ use Enhavo\Bundle\AppBundle\Action\Type\DuplicateActionType;
 use Enhavo\Bundle\ResourceBundle\Tests\Mock\ResourceMock;
 use Enhavo\Bundle\ResourceBundle\Action\Action;
 use Enhavo\Bundle\ResourceBundle\Tests\Action\Type\BaseActionTypeFactoryTrait;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Security\Csrf\CsrfToken;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class DuplicateActionTypeTest extends TestCase
 {
@@ -22,17 +25,19 @@ class DuplicateActionTypeTest extends TestCase
     private function createDependencies()
     {
         $dependencies = new DuplicateActionTypeDependencies();
+        $dependencies->tokenManager = $this->getMockBuilder(CsrfTokenManagerInterface::class)->getMock();
         return $dependencies;
     }
 
     private function createInstance(DuplicateActionTypeDependencies $dependencies)
     {
-        return new DuplicateActionType();
+        return new DuplicateActionType($dependencies->tokenManager);
     }
 
     public function testCreateViewData()
     {
         $dependencies = $this->createDependencies();
+        $dependencies->tokenManager->method('getToken')->willReturn(new CsrfToken('id123', 'value123'));
         $type = $this->createInstance($dependencies);
 
         $action = new Action($type, [
@@ -47,6 +52,7 @@ class DuplicateActionTypeTest extends TestCase
 
         $this->assertEquals('label.duplicate.translated', $viewData['label']);
         $this->assertEquals('/duplicate_route?id=1', $viewData['url']);
+        $this->assertEquals('value123', $viewData['token']);
     }
 
     public function testName()
@@ -57,4 +63,5 @@ class DuplicateActionTypeTest extends TestCase
 
 class DuplicateActionTypeDependencies
 {
+    public CsrfTokenManagerInterface|MockObject $tokenManager;
 }

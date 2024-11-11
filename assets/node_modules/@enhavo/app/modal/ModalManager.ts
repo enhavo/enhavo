@@ -17,15 +17,11 @@ export class ModalManager
             throw 'The modal data needs a "model" property!';
         }
 
-        if (!data.hasOwnProperty('component')) {
-            throw 'The modal data needs a "component" property!';
-        }
-
-
         let model = data['model'];
 
         let modal = this.modalFactory.createWithData(model, data);
-        modal.init();
+        modal.modalManager = this;
+
         this.modals.push(modal);
     }
 

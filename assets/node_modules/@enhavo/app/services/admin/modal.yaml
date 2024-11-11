@@ -8,7 +8,7 @@ services:
         arguments:
             - '@enhavo/app/modal/ModalFactory'
         tags:
-            - { name: vue.service, service: 'modalManager' }
+            - { name: vue.service, service: 'modalManager', reactive: true }
 
     '@enhavo/app/modal/model/IframeModal':
         import: IframeModal
@@ -18,13 +18,12 @@ services:
         tags:
             - { name: enhavo_app.modal }
 
-
-    '@enhavo/app/modal/model/AjaxFormModal':
-        import: AjaxFormModal
+    '@enhavo/app/modal/model/FormModal':
+        import: FormModal
         chunk: 'modal'
         arguments:
-            - '@enhavo/app/modal/ModalManager'
-            - '@enhavo/core/Router'
+            - '@enhavo/app/routing/Router'
+            - '@enhavo/vue-form/form/FormFactory'
         tags:
             - { name: enhavo_app.modal }
 

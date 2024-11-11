@@ -10,22 +10,18 @@ enhavo_resource:
         enhavo_navigation.navigation:
             extends: enhavo_resource.grid
             resource: enhavo_navigation.navigation
-            actions: {  }
-            filters: {  }
             columns:
                 name:
                     type: text
                     property: name
                     label: navigation.label.name
+                    translation_domain: EnhavoNavigationBundle
                     width: 10
-            batches: {  }
     inputs:
         enhavo_navigation.navigation:
             extends: enhavo_resource.input
             resource: enhavo_navigation.navigation
             form: Enhavo\Bundle\NavigationBundle\Form\Type\NavigationType
-            form_options: {  }
-            actions: {  }
             tabs:
                 main:
                     label: navigation.label.navigation

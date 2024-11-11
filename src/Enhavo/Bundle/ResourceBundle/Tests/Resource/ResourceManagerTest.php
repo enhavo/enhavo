@@ -4,6 +4,8 @@
 namespace Enhavo\Bundle\ResourceBundle\Tests\Resource;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Enhavo\Bundle\ResourceBundle\Delete\DeleteHandlerInterface;
+use Enhavo\Bundle\ResourceBundle\Duplicate\DuplicateFactory;
 use Enhavo\Bundle\ResourceBundle\Event\ResourceEvent;
 use Enhavo\Bundle\ResourceBundle\Event\ResourceEvents;
 use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
@@ -25,6 +27,8 @@ class ResourceManagerTest extends TestCase
         $dependencies->em = $this->getMockBuilder(EntityManagerInterface::class)->getMock();
         $dependencies->stateMachineFactory = $this->getMockBuilder(FactoryInterface::class)->getMock();
         $dependencies->validator = $this->getMockBuilder(ValidatorInterface::class)->getMock();
+        $dependencies->duplicateFactory = $this->getMockBuilder(DuplicateFactory::class)->disableOriginalConstructor()->getMock();
+        $dependencies->deleteHandler = $this->getMockBuilder(DeleteHandlerInterface::class)->getMock();
         $dependencies->container = new ContainerMock();
         return $dependencies;
     }
@@ -36,6 +40,9 @@ class ResourceManagerTest extends TestCase
             $dependencies->em,
             $dependencies->stateMachineFactory,
             $dependencies->validator,
+            $dependencies->duplicateFactory,
+            $dependencies->deleteHandler,
+            $dependencies->resources,
         );
         $manager->setContainer($dependencies->container);
         return $manager;
@@ -49,8 +56,7 @@ class ResourceManagerTest extends TestCase
         ];
 
         $dependencies = $this->createDependencies();
-        $dependencies->em->expects($this->exactly(1))->method('remove');
-        $dependencies->em->expects($this->once())->method('flush');
+        $dependencies->deleteHandler->expects($this->exactly(1))->method('delete');
         $dependencies->eventDispatcher->method('dispatch')->willReturnCallback(function ($event, $eventName) use (&$expectedEvents) {
             $expectedEventName = array_shift($expectedEvents);
             $this->assertEquals($expectedEventName, $eventName);
@@ -112,4 +118,7 @@ class ResourceManagerTestDependencies
     public FactoryInterface|MockObject $stateMachineFactory;
     public ValidatorInterface|MockObject $validator;
     public ContainerInterface|MockObject $container;
+    public DuplicateFactory|MockObject $duplicateFactory;
+    public DeleteHandlerInterface|MockObject $deleteHandler;
+    public array $resources = [];
 }

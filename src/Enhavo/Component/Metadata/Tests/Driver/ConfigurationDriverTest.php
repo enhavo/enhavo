@@ -28,7 +28,7 @@ class ConfigurationDriverTest extends TestCase
         $this->assertEquals(['TestClass', 'ParentClass'], $driver->getAllClasses());
     }
 
-    public function testGetNormalizedData()
+    public function testLoadClass()
     {
         $config = [
             'TestClass' => [
@@ -40,6 +40,12 @@ class ConfigurationDriverTest extends TestCase
         ];
 
         $driver = new ConfigurationDriver($config);
-        $this->assertEquals($config, $driver->getNormalizedData());
+        $this->assertEquals([
+            'name' => 'test'
+        ], $driver->loadClass('TestClass'));
+
+        $this->assertEquals([
+            'name' => 'parent'
+        ], $driver->loadClass('ParentClass'));
     }
 }

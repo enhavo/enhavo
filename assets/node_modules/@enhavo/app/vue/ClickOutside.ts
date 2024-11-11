@@ -1,6 +1,6 @@
-import { VNode } from "vue"
-import { DirectiveBinding } from "vue/types/options";
+import { VNode, DirectiveBinding } from "vue"
 import {FrameManager} from "../frame/FrameManager";
+
 export class ClickOutside
 {
     private static clickHandlers: ClickHandler[] = [];

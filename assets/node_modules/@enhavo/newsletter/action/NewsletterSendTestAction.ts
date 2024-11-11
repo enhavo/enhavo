@@ -22,10 +22,9 @@ export class NewsletterSendTestAction extends AbstractAction
 
     execute(): void
     {
-        let form = this.formFactory.create(this.form);
-
         this.modalManager.push({
             model: 'FormModal',
+            form: this.form,
             actionHandler: (modal: AjaxFormModal, data: any, error: string) => {
                 return new Promise((resolve, reject) => {
                     if (data.status == 400) {
@@ -42,7 +41,5 @@ export class NewsletterSendTestAction extends AbstractAction
                 })
             }
         });
-
-        this.modalManager.push(this.modal);
     }
 }

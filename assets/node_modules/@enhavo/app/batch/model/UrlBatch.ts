@@ -8,6 +8,7 @@ export class UrlBatch extends AbstractBatch
 {
     public url: string;
     public confirmMessage: string;
+    public token: string;
 
     public constructor(
         protected readonly translator: Translator,
@@ -21,7 +22,8 @@ export class UrlBatch extends AbstractBatch
     {
         let data = {
             type: this.key,
-            ids: ids
+            ids: ids,
+            token: this.token,
         };
 
         return new Promise((resolve, reject) => {

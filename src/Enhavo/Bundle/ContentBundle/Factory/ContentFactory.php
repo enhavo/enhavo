@@ -18,30 +18,4 @@ class ContentFactory extends Factory
 
         return $resource;
     }
-
-    /**
-     * @param Content|null $originalResource
-     * @return Content
-     */
-    public function duplicate($originalResource)
-    {
-        if (!$originalResource) {
-            return null;
-        }
-
-        /** @var Content $newResource */
-        $newResource = $this->createNew();
-
-        $newResource->setTitle($originalResource->getTitle());
-        $newResource->setSlug($originalResource->getSlug());
-        $newResource->setMetaDescription($originalResource->getMetaDescription());
-        $newResource->setPageTitle($originalResource->getPageTitle());
-        $newResource->setPublic($originalResource->isPublic());
-        $newResource->setPublicationDate($originalResource->getPublicationDate());
-        $newResource->setPublishedUntil($originalResource->getPublishedUntil());
-        $newResource->setCreatedAt(new \DateTime());
-        $newResource->setUpdatedAt(new \DateTime());
-
-        return $newResource;
-    }
 }

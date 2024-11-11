@@ -58,7 +58,7 @@ class BaseColumnType extends AbstractType implements ColumnTypeInterface
 
     public function isEnabled(array $options): bool
     {
-        return $this->expressionLanguage->evaluate($options['enabled']);
+        return !!$this->expressionLanguage->evaluate($options['enabled']);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

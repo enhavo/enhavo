@@ -19,7 +19,7 @@ services:
             - '@Enhavo\Bundle\BlockBundle\Block\Cleaner'
             - '%enhavo_block.blocks%'
         calls:
-            - [setContainer, ['@service_container']]
+            - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
 
     Enhavo\Bundle\BlockBundle\Block\Cleaner:
         arguments:

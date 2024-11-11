@@ -70,7 +70,9 @@ class ResourceMergerTest extends TestCase
         $config = $configs[3]['resources']['enhavo_one.hello'];
         $this->assertEquals([
             'classes' => [
-                'model' => 'OneHello10'
+                'model' => 'OneHello10',
+                'repository' => EntityRepository::class,
+                'factory' => Factory::class,
             ],
         ], $config);
     }

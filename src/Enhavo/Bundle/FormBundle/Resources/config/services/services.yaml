@@ -53,7 +53,7 @@ services:
     Enhavo\Bundle\FormBundle\Endpoint\AutoCompleteEndpointType:
         arguments:
             - '@Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage'
-            - '@doctrine.orm.entity_manager'
+            - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:

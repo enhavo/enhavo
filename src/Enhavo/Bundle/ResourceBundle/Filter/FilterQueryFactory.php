@@ -48,6 +48,10 @@ class FilterQueryFactory
             }
         }
 
+        foreach ($sorting as $property => $direction) {
+            $filterQuery->addOrderBy($property, $direction);
+        }
+
         $filterQuery->setHydrate(FilterQuery::HYDRATE_OBJECT);
         $filterQuery->setPaginated($paginated);
 

@@ -22,7 +22,7 @@ class SluggableMock implements Slugable
     /**
      * @return string|null
      */
-    public function getSlug()
+    public function getSlug(): ?string
     {
         return $this->slug;
     }
@@ -30,7 +30,7 @@ class SluggableMock implements Slugable
     /**
      * @param string|null $slug
      */
-    public function setSlug($slug)
+    public function setSlug($slug): void
     {
         $this->slug = $slug;
     }
@@ -38,7 +38,7 @@ class SluggableMock implements Slugable
     /**
      * @return string|null
      */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -46,7 +46,7 @@ class SluggableMock implements Slugable
     /**
      * @param string|null $name
      */
-    public function setName($name)
+    public function setName($name): void
     {
         $this->name = $name;
     }

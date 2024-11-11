@@ -4,6 +4,7 @@ namespace Enhavo\Bundle\BlockBundle;
 
 use Doctrine\ORM\Mapping\Driver\XmlDriver;
 use Enhavo\Bundle\BlockBundle\Block\Block;
+use Enhavo\Bundle\BlockBundle\DependencyInjection\CompilerPass\BlockManagerCompilerPass;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Enhavo\Component\Type\TypeCompilerPass;
@@ -30,9 +31,11 @@ class EnhavoBlockBundle extends Bundle
         $container->addCompilerPass(
             new TypeCompilerPass('Block', 'enhavo_block.block', Block::class)
         );
+
+        $container->addCompilerPass(new BlockManagerCompilerPass());
     }
 
-    private function buildDoctrineBlockCompilerPass($configDir, $namespace, $enableParameter)
+    private function buildDoctrineBlockCompilerPass($configDir, $namespace, $enableParameter): DoctrineOrmMappingsPass
     {
         $arguments = array(array(realpath(sprintf('%s/Resources/config/%s', __DIR__, $configDir))), '.orm.xml');
         $locator = new Definition(DefaultFileLocator::class, $arguments);

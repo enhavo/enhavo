@@ -8,24 +8,23 @@ enhavo_resource:
         enhavo_newsletter.group:
             extends: enhavo_resource.grid
             resource: enhavo_newsletter.group
-            actions: { }
-            filters: { }
             columns:
                 name:
                     sortable: true
                     property: name
                     width: 8
                     label: group.label.name
-                    type: property
+                    type: text
                     translation_domain: EnhavoNewsletterBundle
                 action:
                     width: 4
                     label: label.edit
                     translation_domain: EnhavoAppBundle
                     type: action
-                    action:
-                        type: update
-                        route: enhavo_newsletter_group_update
+                    actions:
+                        update:
+                            type: update
+                            route: enhavo_newsletter_group_update
             batches:
                 delete:
                     type: delete
@@ -35,6 +34,3 @@ enhavo_resource:
             extends: enhavo_resource.input
             resource: enhavo_newsletter.group
             form: Enhavo\Bundle\NewsletterBundle\Form\Type\GroupType
-            form_options: {  }
-            actions: {  }
-            tabs: {  }

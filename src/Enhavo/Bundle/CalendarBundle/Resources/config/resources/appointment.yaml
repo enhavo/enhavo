@@ -21,11 +21,13 @@ enhavo_resource:
                     label: appointment.label.title
                     property: title
                     width: 7
+                    translation_domain: EnhavoCalendarBundle
                 date:
                     type: datetime
                     label: appointment.label.date
                     property: dateFrom
                     width: 5
+                    translation_domain: EnhavoCalendarBundle
             batches:
                 delete:
                     type: delete
@@ -34,8 +36,6 @@ enhavo_resource:
             extends: enhavo_resource.input
             resource: enhavo_calendar.appointment
             form: Enhavo\Bundle\CalendarBundle\Form\Type\AppointmentType
-            form_options: {  }
-            actions: {  }
             tabs:
                 main:
                     label: appointment.label.appointment

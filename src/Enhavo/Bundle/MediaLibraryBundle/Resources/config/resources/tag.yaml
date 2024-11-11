@@ -1,0 +1,14 @@
+enhavo_resource:
+    grids:
+        enhavo_media_library.tag:
+            extends: enhavo_taxonomy.term_table
+            collection:
+                repository_arguments:
+                    - 'media_library_tag'
+
+
+    inputs:
+        enhavo_media_library.tag:
+            extends: enhavo_taxonomy.term
+            factory_arguments:
+                - 'media_library_tag'

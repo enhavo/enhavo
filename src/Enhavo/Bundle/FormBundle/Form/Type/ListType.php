@@ -21,10 +21,7 @@ use Symfony\Component\Form\FormEvent;
 
 class ListType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $data = null;
 
@@ -66,10 +63,8 @@ class ListType extends AbstractType
             return;
         });
     }
-    /**
-     * {@inheritdoc}
-     */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['border'] = $options['border'];
         $view->vars['sortable'] = $options['sortable'];
@@ -85,7 +80,8 @@ class ListType extends AbstractType
         if ($array instanceof Collection) {
             $array = $array->toArray();
         }
-        if($array != null) {
+
+        if ($array != null) {
             end($array);
             $lastIndex = intval(key($array));
         } else {
@@ -96,22 +92,12 @@ class ListType extends AbstractType
         $view->vars['prototype_name'] = $options['prototype_name'];
     }
 
-    public function getBlockPrefix()
-    {
-        return 'enhavo_list';
-    }
-
-    public function getParent()
+    public function getParent(): ?string
     {
         return CollectionType::class;
     }
 
-    /**
-     * Configures the options for this type.
-     *
-     * @param OptionsResolver $resolver The resolver for the options.
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(array(
             'border' => false,

@@ -1,6 +1,6 @@
 <template>
     <optgroup :label="choice.label">
-        <component :is="getChoiceComponent(subChoice)" v-for="subChoice of choice.choices" :choice="subChoice" :key="subChoice.label" />
+        <component :is="getChoiceComponent(subChoice)" v-for="subChoice of choice.choices" :choice="subChoice" />
     </optgroup>
 </template>
 

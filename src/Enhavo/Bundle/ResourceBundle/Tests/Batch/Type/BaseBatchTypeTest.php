@@ -11,12 +11,14 @@ namespace Enhavo\Bundle\ResourceBundle\Tests\Batch\Type;
 use Doctrine\ORM\EntityRepository;
 use Enhavo\Bundle\ResourceBundle\Batch\Batch;
 use Enhavo\Bundle\ResourceBundle\Batch\Type\BaseBatchType;
+use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage;
 use Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface;
 use Enhavo\Bundle\ResourceBundle\Tests\Mock\RouterMock;
 use Enhavo\Bundle\ResourceBundle\Tests\Mock\TranslatorMock;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class BaseBatchTypeTest extends TestCase
@@ -28,6 +30,8 @@ class BaseBatchTypeTest extends TestCase
         $dependencies->routeResolver = $this->getMockBuilder(RouteResolverInterface::class)->getMock();
         $dependencies->router = new RouterMock();
         $dependencies->repository = $this->getMockBuilder(EntityRepository::class)->disableOriginalConstructor()->getMock();
+        $dependencies->tokenManager = $this->getMockBuilder(CsrfTokenManagerInterface::class)->getMock();
+        $dependencies->expressionLanguage = new ResourceExpressionLanguage();
         return $dependencies;
     }
 
@@ -37,6 +41,8 @@ class BaseBatchTypeTest extends TestCase
             $dependencies->translator,
             $dependencies->routeResolver,
             $dependencies->router,
+            $dependencies->tokenManager,
+            $dependencies->expressionLanguage,
         );
     }
 
@@ -94,4 +100,6 @@ class BaseBatchTypeDependencies
     public RouteResolverInterface|MockObject $routeResolver;
     public RouterInterface|MockObject $router;
     public EntityRepository|MockObject $repository;
+    public CsrfTokenManagerInterface|MockObject $tokenManager;
+    public ResourceExpressionLanguage $expressionLanguage;
 }

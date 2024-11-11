@@ -1,9 +1,13 @@
 <template>
     <div class="view-table-list-row">
-        <div :class="{'view-table-row': true, 'active': data.active, 'has-children': data.children && data.children.length > 0,'hide-children':!data.expand}" @click="open()">
-            <div v-if="data.parentProperty && data.children && data.children.length > 0" @click="toggleExpand()" @click.stop>
-                <i v-if="data.expand" class="icon icon-unfold_more"></i>
-                <i v-if="!data.expand" class="icon icon-unfold_less"></i>
+        <div class="checkbox-container" v-if="collection.batches.length > 0">
+            <input type="checkbox" @change="changeSelect" @click.stop :checked="data.selected" />
+            <span></span>
+        </div>
+        <div :class="{'view-table-row': true, 'active': data.active, 'has-children': data.children && data.children.length > 0,'hide-children':!isExpanded()}" @click="open()">
+            <div v-if="collection.treeable && data.children && data.children.length > 0" @click="toggleExpand()" @click.stop>
+                <i v-if="isExpanded()" class="icon icon-unfold_more"></i>
+                <i v-if="!isExpanded()" class="icon icon-unfold_less"></i>
             </div>
             <div class="view-table-row-columns">
                 <template v-for="column in collection.columns">
@@ -16,15 +20,15 @@
                 </template>
             </div>
         </div>
-        <div class="view-table-list-row-children" v-if="data.expand && data.parentProperty" :class="{ 'has-children': data.children && data.children.length > 0 }">
+        <div class="view-table-list-row-children" v-if="isExpanded() && collection.treeable" :class="{ 'has-children': data.children && data.children.length > 0 }">
             <draggable
                 v-model="data.children"
                 group="list"
                 item-key="id"
-                @change="save($event, null)"
-                @start="data.dragging = true"
-                @end="data.dragging = false"
-                :class="{'dragging':data.dragging == true}"
+                @change="save($event, data)"
+                @start="collection.dragging = true"
+                @end="collection.dragging = false"
+                :class="{'dragging':collection.dragging == true}"
             >
                 <template #item="{ element }">
                     <collection-list-item :data="element" :collection="collection"></collection-list-item>
@@ -35,15 +39,14 @@
 </template>
 
 <script setup lang="ts">
-import {CollectionResourceItem} from "@enhavo/app/collection/CollectionResourceItem";
-import {TableCollection} from "@enhavo/app/collection/model/TableCollection";
+import {ListCollection} from "@enhavo/app/collection/model/ListCollection";
 import draggable from 'vuedraggable'
+import {ListCollectionResourceItem} from "@enhavo/app/collection/ListCollectionResourceItem";
 
 const props = defineProps<{
-    data: CollectionResourceItem,
-    collection: TableCollection,
+    data: ListCollectionResourceItem,
+    collection: ListCollection,
 }>()
-
 
 function open() 
 {
@@ -57,7 +60,12 @@ function calcColumnWidth(parts: number): string
 
 function toggleExpand()
 {
-    props.data.expand = !props.data.expand;
+    if (isExpanded()) {
+        let index = props.collection.expandedIds.indexOf(props.data.id);
+        props.collection.expandedIds.splice(index, 1);
+    } else {
+        props.collection.expandedIds.push(props.data.id)
+    }
 }
 
 function getColumnStyle(column: any): object
@@ -73,7 +81,7 @@ function getColumnData(column: string): object
 {
     for (let field of props.data.data) {
         if (field.key === column) {
-            return field.value;
+            return field;
         }
     }
     return null;
@@ -87,6 +95,17 @@ function save(event, parent)
         props.collection.save(parent);
     }
 }
+
+function changeSelect()
+{
+    props.collection.changeSelect(props.data, !props.data.selected);
+}
+
+function isExpanded(): boolean
+{
+    return props.collection.expandedIds.includes(props.data.id);
+}
+
 </script>
 
 
