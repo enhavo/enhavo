@@ -43,8 +43,10 @@ class NodeFactory
             $node->setBlock($this->blockFactory->duplicate($original->getBlock()));
         }
         foreach($original->getChildren() as $child) {
-            $newChild = $this->duplicate($child);
-            $node->addChild($newChild);
+            if ($child->getType() !== NodeInterface::TYPE_LIST) {
+                $newChild = $this->duplicate($child);
+                $node->addChild($newChild);
+            }
         }
         return $node;
     }
