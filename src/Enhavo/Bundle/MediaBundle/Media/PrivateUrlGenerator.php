@@ -23,7 +23,7 @@ class PrivateUrlGenerator implements UrlGeneratorInterface
 
     public function generate(FileInterface $file, $referenceType = UrlGenerator::ABSOLUTE_PATH): string
     {
-        return $this->router->generate('enhavo_media_file_resolve', [
+        return $this->router->generate('enhavo_media_admin_api_file', [
             'token' => $file->getToken()
         ], $referenceType);
     }
@@ -31,10 +31,8 @@ class PrivateUrlGenerator implements UrlGeneratorInterface
     public function generateFormat(FileInterface $file, string $format, $referenceType = UrlGenerator::ABSOLUTE_PATH): string
     {
         $formatObj = $this->mediaManager->getFormat($file, $format);
-        return $this->router->generate('enhavo_media_file_format', [
-            'id' => $file->getId(),
-            'shortMd5Checksum' => substr($file->getMd5Checksum(), 0, 6),
-            'filename' => $formatObj->getFilename(),
+        return $this->router->generate('enhavo_media_admin_api_file_format', [
+            'token' => $formatObj->getFile()->getToken(),
             'format' => $format,
         ], $referenceType);
     }

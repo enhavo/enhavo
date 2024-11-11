@@ -6,3 +6,6 @@ enhavo_media_library:
             message: 'Datei erfolgreich hinzugefügt.'
         fail:
             message: 'Upload fehlgeschlagen. Vielleicht ist die Datei zu groß.'
+    select:
+        message:
+            file_selected: 'Datei(en) ausgewählt'

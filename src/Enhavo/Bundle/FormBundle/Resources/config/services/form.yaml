@@ -44,7 +44,6 @@ services:
             - '@router'
             - '@doctrine.orm.entity_manager'
             - '@property_accessor'
-            - '@enhavo_app.action_manager'
         tags:
             - { name: form.type, alias: 'enhavo_auto_complete_entity' }
 
@@ -72,9 +71,25 @@ services:
         tags:
             - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 
+    Enhavo\Bundle\FormBundle\Form\Extension\HtmlTagVueTypeExtension:
+        tags:
+            - { name: form.type_extension }
+
+    Enhavo\Bundle\FormBundle\Form\Extension\AutoCompleteVueTypeExtension:
+        tags:
+            - { name: form.type_extension }
+
+    Enhavo\Bundle\FormBundle\Form\Extension\DateTimeVueTypeExtension:
+        tags:
+            - { name: form.type_extension }
+
+    Enhavo\Bundle\FormBundle\Form\Extension\DateVueTypeExtension:
+        tags:
+            - { name: form.type_extension }
+
     Enhavo\Bundle\FormBundle\Form\Extension\ActionExtension:
         arguments:
-            - '@enhavo_app.action_manager'
+            - '@Enhavo\Bundle\ResourceBundle\Action\ActionManager'
         tags:
             - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 

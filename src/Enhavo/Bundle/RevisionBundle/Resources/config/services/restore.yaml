@@ -1,0 +1,44 @@
+services:
+    Enhavo\Component\Metadata\MetadataRepository[Restore]:
+        class: Enhavo\Component\Metadata\MetadataRepository
+        arguments:
+            - '@Enhavo\Component\Metadata\MetadataFactory[Restore]'
+            - true
+            - false
+
+    Enhavo\Component\Metadata\MetadataFactory[Restore]:
+        class: Enhavo\Component\Metadata\MetadataFactory
+        arguments:
+            - 'Enhavo\Bundle\RevisionBundle\Restore\Metadata\Metadata'
+        calls:
+            - [addDriver, ['@Enhavo\Component\Metadata\Driver\ConfigurationDriver[Restore]']]
+            - [addDriver, ['@Enhavo\Bundle\RevisionBundle\Restore\Metadata\RestoreAttributeDriver']]
+            - [addProvider, ['@Enhavo\Bundle\RevisionBundle\Restore\Metadata\RestoreProvider']]
+
+    Enhavo\Component\Metadata\Driver\ConfigurationDriver[Restore]:
+        class: Enhavo\Component\Metadata\Driver\ConfigurationDriver
+        arguments:
+            - '%enhavo_revision.restore%'
+
+    Enhavo\Bundle\RevisionBundle\Restore\Metadata\RestoreAttributeDriver:
+
+    Enhavo\Bundle\RevisionBundle\Restore\Metadata\RestoreProvider:
+
+    Enhavo\Bundle\RevisionBundle\Restore\Restorer:
+        arguments:
+            - '@Enhavo\Component\Metadata\MetadataRepository[Restore]'
+            - '@Enhavo\Component\Type\FactoryInterface[Restore]'
+
+    Enhavo\Bundle\RevisionBundle\Restore\Type\DuplicateRestoreType:
+        tags:
+            - { name: enhavo_revision.restore }
+
+    Enhavo\Bundle\RevisionBundle\Restore\Type\PropertyRestoreType:
+        tags:
+            - { name: enhavo_revision.restore }
+
+    Enhavo\Bundle\RevisionBundle\Restore\Type\ModelRestoreType:
+        arguments:
+            - '@Enhavo\Bundle\RevisionBundle\Restore\Restorer'
+        tags:
+            - { name: enhavo_resource.restore }

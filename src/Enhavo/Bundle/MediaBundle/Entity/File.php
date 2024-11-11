@@ -7,9 +7,6 @@ use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\MediaBundle\Content\ContentInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 
-/**
- * File
- */
 class File implements FileInterface
 {
     private ?int $id = null;
@@ -22,8 +19,7 @@ class File implements FileInterface
     private ?\DateTime $garbageTimestamp;
     private ?ContentInterface $content = null;
     private ?string $token = null;
-    private ?string $md5Checksum = null;
-    private bool $library = false;
+    private ?string $checksum = null;
     private ?\DateTime $createdAt = null;
     private ?\DateTime $garbageCheckedAt = null;
     private Collection $formats;
@@ -33,58 +29,27 @@ class File implements FileInterface
         $this->formats = new ArrayCollection();
     }
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * Set mimeType
-     *
-     * @param string $mimeType
-     * @return File
-     */
-    public function setMimeType($mimeType)
+    public function setMimeType(string $mimeType)
     {
         $this->mimeType = $mimeType;
-
-        return $this;
     }
 
-    /**
-     * Get mimeType
-     *
-     * @return string
-     */
-    public function getMimeType()
+    public function getMimeType(): string
     {
         return $this->mimeType;
     }
 
-    /**
-     * Set extension
-     *
-     * @param string $extension
-     * @return File
-     */
-    public function setExtension($extension)
+    public function setExtension(?string $extension): void
     {
         $this->extension = $extension;
-
-        return $this;
     }
 
-    /**
-     * Get extension
-     *
-     * @return string
-     */
-    public function getExtension()
+    public function getExtension(): ?string
     {
         return $this->extension;
     }
@@ -94,92 +59,58 @@ class File implements FileInterface
         return (string)$this->id;
     }
 
-    public function __equals()
-    {
-
-    }
-
-    /**
-     * Set order
-     *
-     * @param integer $order
-     * @return File
-     */
-    public function setOrder($order)
+    public function setOrder(?int$order): void
     {
         $this->order = $order;
-
-        return $this;
     }
 
-    /**
-     * Get order
-     *
-     * @return integer
-     */
-    public function getOrder()
+    public function getOrder(): ?int
     {
         return $this->order;
     }
 
-    /**
-     * @return string
-     */
-    public function getFilename()
+    public function getFilename(): string
     {
         return $this->filename;
     }
 
-    /**
-     * @param string $filename
-     *
-     * @return File
-     */
-    public function setFilename($filename)
+    public function setFilename(string $filename): void
     {
         $this->filename = $filename;
-
-        return $this;
     }
 
-    /**
-     * Sets the parameter $key to value $value
-     *
-     * @param string $key
-     * @param string $value
-     * @return File
-     */
-    public function setParameter($key, $value)
+    public function setBasename(string $basename): void
+    {
+        $info = pathinfo($basename);
+        $this->setFilename($info['filename']);
+
+        $this->setExtension($info['extension'] ?? null);
+    }
+
+    public function getBasename(): string
+    {
+        return $this->extension ? $this->filename . '.' . $this->extension : $this->filename;
+    }
+
+    public function setParameter(string $key, mixed $value): void
     {
         if (!$this->parameters) {
             $this->parameters = array();
         }
 
         $this->parameters[$key] = $value;
-
-        return $this;
     }
 
-    /**
-     * Returns the parameter value for $key.
-     * If no value is set for $key, returns null.
-     *
-     * @param string $key
-     * @return string|null
-     */
-    public function getParameter($key)
+    public function getParameter(string $key): mixed
     {
         if (!$this->parameters) {
             $this->parameters = array();
         }
 
-        return isset($this->parameters[$key]) ? $this->parameters[$key] : null;
+        return $this->parameters[$key] ?? null;
     }
 
-    /**
-     * @return array
-     */
-    public function getParameters()
+    public function getParameters(): array
     {
         if (!$this->parameters) {
             $this->parameters = array();
@@ -188,35 +119,17 @@ class File implements FileInterface
         return $this->parameters;
     }
 
-    /**
-     * @param array $parameters
-     * @return File
-     */
-    public function setParameters($parameters)
+    public function setParameters(array $parameters): void
     {
-        if(is_array($this->parameters) && is_array($parameters)) {
-            $this->parameters = array_merge($this->parameters, $parameters);
-        } else {
-            $this->parameters = $parameters;
-        }
-        return $this;
+        $this->parameters = array_merge($this->parameters, $parameters);
     }
 
-    /**
-     * @return boolean
-     */
-    public function isGarbage()
+    public function isGarbage(): bool
     {
         return $this->garbage;
     }
 
-    /**
-     * @param boolean $garbage
-     * @param \DateTime $garbageTimestamp
-     *
-     * @return File
-     */
-    public function setGarbage($garbage, \DateTime $garbageTimestamp = null)
+    public function setGarbage(bool $garbage, \DateTime $garbageTimestamp = null): void
     {
         $this->garbage = $garbage;
 
@@ -225,167 +138,92 @@ class File implements FileInterface
             $garbageTimestamp = new \DateTime();
         }
         $this->setGarbageTimestamp($garbageTimestamp);
-
-        return $this;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getGarbageTimestamp()
+    public function getGarbageTimestamp(): ?\DateTime
     {
         return $this->garbageTimestamp;
     }
 
-    /**
-     * @param \DateTime $garbageTimestamp
-     *
-     * @return File
-     */
-    public function setGarbageTimestamp($garbageTimestamp)
+    public function setGarbageTimestamp(?\DateTime $garbageTimestamp): void
     {
         $this->garbageTimestamp = $garbageTimestamp;
-
-        return $this;
     }
 
-    /**
-     * Returns if this file is an image based on the mime type
-     *
-     * @return bool
-     */
-    public function isImage()
+    public function isImage(): bool
     {
         return strtolower(substr($this->getMimeType(), 0, 5)) == 'image';
     }
 
-    /**
-     * @param string $format
-     */
-    public function setFormat($format)
-    {
-        $this->format = $format;
-    }
-
-    /**
-     * @return ContentInterface
-     */
-    public function getContent()
+    public function getContent(): ContentInterface
     {
         return $this->content;
     }
 
-    /**
-     * @param ContentInterface $content
-     */
-    public function setContent(ContentInterface $content)
+    public function setContent(ContentInterface $content): void
     {
         $this->content = $content;
     }
 
-    /**
-     * @return string
-     */
-    public function getToken()
+    public function getToken(): ?string
     {
         return $this->token;
     }
 
-    /**
-     * @param string $token
-     */
-    public function setToken($token)
+    public function setToken(string $token): void
     {
         $this->token = $token;
     }
 
-    /**
-     * @return string
-     */
-    public function getMd5Checksum()
+    public function getChecksum(): string
     {
-        return $this->md5Checksum;
+        return $this->checksum;
     }
 
-    /**
-     * @param string $md5Checksum
-     */
-    public function setMd5Checksum($md5Checksum)
+    public function setChecksum(string $checksum): void
     {
-        $this->md5Checksum = $md5Checksum;
+        $this->checksum = $checksum;
     }
 
-    /**
-     * @return bool
-     */
-    public function isLibrary()
-    {
-        return $this->library;
-    }
-
-    /**
-     * @param bool $library
-     */
-    public function setLibrary($library)
-    {
-        $this->library = $library;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getCreatedAt()
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
 
-    /**
-     * @param \DateTime $createdAt
-     */
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt(?\DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
 
-    /**
-     * @return \DateTime|null
-     */
     public function getGarbageCheckedAt(): ?\DateTime
     {
         return $this->garbageCheckedAt;
     }
 
-    /**
-     * @param \DateTime|null $garbageCheckedAt
-     */
     public function setGarbageCheckedAt(?\DateTime $garbageCheckedAt): void
     {
         $this->garbageCheckedAt = $garbageCheckedAt;
     }
 
-    /**
-     * @return Collection|Format[]
-     */
-    public function getFormats()
+    public function getFormats(): ArrayCollection|Collection
     {
         return $this->formats;
     }
 
-    /**
-     * @param Format $format
-     */
-    public function addFormat(Format $format)
+    public function addFormat(Format $format): void
     {
         $this->formats->add($format);
         $format->setFile($this);
     }
 
-    /**
-     * @param Format $format
-     */
-    public function removeFormat(Format $format)
+    public function removeFormat(Format $format): void
     {
         $this->formats->removeElement($format);
         $format->setFile(null);
+    }
+
+    public function getShortChecksum(): string
+    {
+        return substr($this->checksum, 0, 8);
     }
 }

@@ -6,6 +6,7 @@ import {FormUtil} from "@enhavo/vue-form/form/FormUtil";
 export class UserManager
 {
     public loading: boolean;
+    public loadingData: boolean = true;
 
     public loginForm: Form
 
@@ -13,8 +14,9 @@ export class UserManager
     public resetPasswordConfirmForm: Form
     public resetPasswordConfirmTokenError: boolean
 
+    public branding: Branding;
+
     constructor(
-        public branding: Branding,
         private router: Router,
         private formFactory: FormFactory,
     ) {
@@ -23,8 +25,9 @@ export class UserManager
 
     public loadLogin()
     {
+        this.loginForm = null;
         this.loading = true;
-        const url = this.router.generate('enhavo_user_admin_api_login');
+        const url = this.router.generate('enhavo_user_admin_api_login_form');
         fetch(url).then((response) => {
             response.json().then((data: any) => {
                 this.loading = false;
@@ -33,10 +36,26 @@ export class UserManager
         });
     }
 
+    public loadLoginData()
+    {
+        if (this.branding) {
+            return;
+        }
+
+        this.loadingData = true;
+        const url = this.router.generate('enhavo_user_admin_api_login_data');
+        fetch(url).then((response) => {
+            response.json().then((data: any) => {
+                this.branding = data.branding;
+                this.loadingData = false;
+            });
+        });
+    }
+
     public login()
     {
         this.loading = true;
-        const url = this.router.generate('enhavo_user_admin_api_login');
+        const url = this.router.generate('enhavo_user_admin_api_login_form');
         const data = FormUtil.serializeForm(this.loginForm);
 
         fetch(url, {
@@ -59,6 +78,7 @@ export class UserManager
     public loadResetPasswordRequest()
     {
         this.loading = true;
+        this.resetPasswordRequestForm = null;
 
         const url = this.router.generate('enhavo_user_admin_api_reset_password_request');
         fetch(url).then((response) => {
@@ -96,6 +116,7 @@ export class UserManager
     public loadResetPasswordConfirm(token: string)
     {
         this.loading = true;
+        this.resetPasswordConfirmForm = null;
         this.resetPasswordConfirmTokenError = false;
 
         const url = this.router.generate('enhavo_user_admin_api_reset_password_confirm', {

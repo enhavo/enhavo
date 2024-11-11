@@ -2,39 +2,33 @@
 
 namespace Enhavo\Bundle\AppBundle\Action\Type;
 
-use Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType;
-use Enhavo\Bundle\AppBundle\Action\ActionTypeInterface;
+use Enhavo\Bundle\ApiBundle\Data\Data;
+use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class OutputStreamActionType extends AbstractUrlActionType implements ActionTypeInterface
+class OutputStreamActionType extends AbstractActionType
 {
-    public function createViewData(array $options, $resource = null)
+    public function createViewData(array $options, Data $data, object $resource = null): void
     {
-        $data = parent::createViewData($options, $resource);
-
-        $data = array_merge($data, [
-            'modal' => [
-                'component' => 'output-stream',
-                'url' => $data['url'],
-                'closeLabel' => $this->translator->trans('label.close', [], 'EnhavoAppBundle')
-            ]
-        ]);
-
-        return $data;
+        $data->set('modalComponent', $options['modal_component']);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        parent::configureOptions($resolver);
-
         $resolver->setDefaults([
-            'component' => 'modal-action',
+            'modal_component' => 'modal-output-stream',
+            'model' => 'OutputStreamAction',
         ]);
 
         $resolver->setRequired(['route']);
     }
 
-    public function getType()
+    public static function getParentType(): ?string
+    {
+        return UrlActionType::class;
+    }
+
+    public static function getName(): ?string
     {
         return 'output_stream';
     }

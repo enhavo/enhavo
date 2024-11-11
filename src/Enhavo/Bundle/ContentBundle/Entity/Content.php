@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Content.php
  *
@@ -18,268 +17,134 @@ use Enhavo\Bundle\ContentBundle\Content\Publishable;
 use Enhavo\Bundle\ContentBundle\Content\PublishableTrait;
 use Enhavo\Bundle\ContentBundle\Sitemap\SitemapInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
-use Sylius\Component\Resource\Model\ResourceInterface;
 
-abstract class Content implements Publishable, Routeable, Slugable, SitemapInterface, ResourceInterface, Timestampable
+abstract class Content implements Publishable, Routeable, Slugable, SitemapInterface, Timestampable
 {
     use PublishableTrait;
     use TimestampableTrait;
 
-    /** @var integer */
-    protected $id;
+    protected ?int $id = null;
+    protected ?string $title = null;
+    protected ?string $slug = null;
+    protected ?string $metaDescription = null;
+    protected ?string $pageTitle = null;
+    protected bool $noIndex = false;
+    protected bool $noFollow = false;
+    protected ?FileInterface $openGraphImage = null;
+    protected ?string $openGraphTitle = null;
+    protected ?string $openGraphDescription = null;
+    protected ?RouteInterface $route = null;
+    protected ?string $canonicalUrl = null;
 
-    /** @var string */
-    protected $title;
-
-    /** @var string */
-    protected $slug;
-
-    /** @var string */
-    protected $metaDescription;
-
-    /** @var string */
-    protected $pageTitle;
-
-    /** @var boolean */
-    protected $noIndex = false;
-
-    /** @var boolean */
-    protected $noFollow = false;
-
-    /** @var FileInterface */
-    protected $openGraphImage;
-
-    /** @var string */
-    protected $openGraphTitle;
-
-    /** @var string */
-    protected $openGraphDescription;
-
-    /** @var RouteInterface */
-    protected $route;
-
-    /** @var string */
-    protected $canonicalUrl;
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Set title
-     *
-     * @param string $title
-     * @return Content
-     */
-    public function setTitle($title)
+    public function setTitle(?string $title)
     {
         $this->title = $title;
-
         return $this;
     }
 
-    /**
-     * Get title
-     *
-     * @return string
-     */
-    public function getTitle()
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    /**
-     * @return string
-     */
-    public function getSlug()
+    public function getSlug(): ?string
     {
         return $this->slug;
     }
 
-    /**
-     * @param string $slug
-     */
-    public function setSlug($slug)
+    public function setSlug(?string $slug)
     {
         $this->slug = $slug;
     }
 
-    /**
-     * Set meta_description
-     *
-     * @param string $metaDescription
-     * @return Content
-     */
-    public function setMetaDescription($metaDescription)
+    public function setMetaDescription(?string $metaDescription)
     {
         $this->metaDescription = $metaDescription;
-
-        return $this;
     }
 
-    /**
-     * Get meta_description
-     *
-     * @return string
-     */
-    public function getMetaDescription()
+    public function getMetaDescription(): ?string
     {
         return $this->metaDescription;
     }
 
-    /**
-     * Set page_title
-     *
-     * @param string $pageTitle
-     * @return Content
-     */
-    public function setPageTitle($pageTitle)
+    public function setPageTitle(?string $pageTitle)
     {
         $this->pageTitle = $pageTitle;
-
-        return $this;
     }
 
-    /**
-     * Get page_title
-     *
-     * @return string
-     */
-    public function getPageTitle()
+    public function getPageTitle(): ?string
     {
         return $this->pageTitle;
     }
 
-    /**
-     * @return bool
-     */
-    public function isNoIndex()
+    public function isNoIndex(): bool
     {
         return $this->noIndex;
     }
 
-    /**
-     * @param bool $noIndex
-     */
-    public function setNoIndex($noIndex)
+    public function setNoIndex(bool $noIndex)
     {
         $this->noIndex = $noIndex;
     }
 
-    /**
-     * @return bool
-     */
-    public function isNoFollow()
+    public function isNoFollow(): bool
     {
         return $this->noFollow;
     }
 
-    /**
-     * @param bool $noFollow
-     */
-    public function setNoFollow($noFollow)
+    public function setNoFollow(bool $noFollow)
     {
         $this->noFollow = $noFollow;
     }
 
-    /**
-     * @return RouteInterface
-     */
-    public function getRoute()
+    public function getRoute(): ?RouteInterface
     {
         return $this->route;
     }
 
-    /**
-     * @param RouteInterface $route
-     * @return void
-     */
     public function setRoute(?RouteInterface $route)
     {
         $this->route = $route;
     }
 
-    /**
-     * Get public
-     *
-     * @return boolean
-     */
-    public function getPublic()
+    public function getPublic(): ?bool
     {
         return $this->public;
     }
 
-    /**
-     * Set openGraphTitle
-     *
-     * @param string $openGraphTitle
-     * @return Content
-     */
-    public function setOpenGraphTitle($openGraphTitle)
+    public function setOpenGraphTitle(?string $openGraphTitle): void
     {
         $this->openGraphTitle = $openGraphTitle;
-
-        return $this;
     }
 
-    /**
-     * Get openGraphTitle
-     *
-     * @return string
-     */
-    public function getOpenGraphTitle()
+    public function getOpenGraphTitle(): ?string
     {
         return $this->openGraphTitle;
     }
 
-    /**
-     * Set openGraphDescription
-     *
-     * @param string $openGraphDescription
-     * @return Content
-     */
-    public function setOpenGraphDescription($openGraphDescription)
+    public function setOpenGraphDescription(?string $openGraphDescription)
     {
         $this->openGraphDescription = $openGraphDescription;
 
         return $this;
     }
 
-    /**
-     * Get openGraphDescription
-     *
-     * @return string
-     */
-    public function getOpenGraphDescription()
+    public function getOpenGraphDescription(): ?string
     {
         return $this->openGraphDescription;
     }
 
-    /**
-     * Set openGraphImage
-     *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File $openGraphImage
-     * @return Content
-     */
-    public function setOpenGraphImage(\Enhavo\Bundle\MediaBundle\Entity\File $openGraphImage = null)
+    public function setOpenGraphImage(?FileInterface $openGraphImage = null)
     {
         $this->openGraphImage = $openGraphImage;
-
-        return $this;
     }
 
-    /**
-     * Get openGraphImage
-     *
-     * @return \Enhavo\Bundle\MediaBundle\Model\FileInterface
-     */
-    public function getOpenGraphImage()
+    public function getOpenGraphImage(): ?FileInterface
     {
         return $this->openGraphImage;
     }
@@ -289,17 +154,11 @@ abstract class Content implements Publishable, Routeable, Slugable, SitemapInter
         return (string)$this->getTitle();
     }
 
-    /**
-     * @return string|null
-     */
     public function getCanonicalUrl(): ?string
     {
         return $this->canonicalUrl;
     }
 
-    /**
-     * @param string|null $canonicalUrl
-     */
     public function setCanonicalUrl(?string $canonicalUrl): void
     {
         $this->canonicalUrl = $canonicalUrl;

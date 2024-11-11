@@ -55,7 +55,7 @@ class NewsletterType extends AbstractType
             'translation_domain' => 'EnhavoNewsletterBundle',
             'multiple' => true,
             'class' => GroupInterface::class,
-            'route' => "enhavo_newsletter_group_auto_complete",
+            'route' => "enhavo_newsletter_admin_api_group_auto_complete",
         ]);
 
         $builder->add('content', BlockNodeType::class, [

@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\NavigationBundle\Factory;
 
-use Enhavo\Bundle\AppBundle\Factory\Factory;
+use Enhavo\Bundle\ResourceBundle\Factory\Factory;
 
 class NavigationFactory extends Factory
 {

@@ -24,13 +24,12 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder('enhavo_app');
         $rootNode = $treeBuilder->getRootNode();
 
-        $this->addViewerSectionSection($rootNode);
         $this->addVueSection($rootNode);
         $this->addViteSection($rootNode);
         $this->addAreaSection($rootNode);
         $this->addEndpointSection($rootNode);
         $this->addMailSectionSection($rootNode);
-        $this->addFormThemesSection($rootNode);
+        $this->addAdminSection($rootNode);
         $this->addTemplatePathsSection($rootNode);
         $this->addLoginSection($rootNode);
         $this->addToolbarWidgetSection($rootNode);
@@ -40,29 +39,6 @@ class Configuration implements ConfigurationInterface
         $this->addRolesSection($rootNode);
 
         return $treeBuilder;
-    }
-
-    private function addViewerSectionSection(ArrayNodeDefinition $node)
-    {
-        $node
-            ->children()
-                ->arrayNode('stylesheets')
-                    ->prototype('scalar')->end()
-                ->end()
-            ->end()
-
-            ->children()
-                ->arrayNode('javascripts')
-                    ->prototype('scalar')->end()
-                ->end()
-            ->end()
-
-            ->children()
-                ->arrayNode('apps')
-                    ->prototype('scalar')->end()
-                ->end()
-            ->end()
-        ;
     }
 
     private function addVueSection(ArrayNodeDefinition $node)
@@ -156,12 +132,17 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
-    private function addFormThemesSection(ArrayNodeDefinition $node)
+    private function addAdminSection(ArrayNodeDefinition $node)
     {
         $node
             ->children()
-                ->arrayNode('form_themes')
-                    ->prototype('scalar')->end()
+                ->arrayNode('admin')
+                    ->children()
+                        ->arrayNode('form_mapping')
+                            ->normalizeKeys(false)
+                            ->variablePrototype()
+                            ->end()
+                    ->end()
                 ->end()
             ->end();
     }
@@ -228,7 +209,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('enable_version')->defaultValue(true)->end()
                         ->scalarNode('enable_created_by')->defaultValue(true)->end()
                         ->scalarNode('logo')->defaultValue(null)->end()
-                        ->scalarNode('text')->defaultValue('enhavo is an open source content-management-system based on symfony and sylius.')->end()
+                        ->scalarNode('text')->defaultValue('enhavo is an open source content-management-system based on symfony.')->end()
                         ->scalarNode('version')->defaultValue(EnhavoAppBundle::VERSION)->end()
                         ->scalarNode('background_image')->defaultValue(null)->end()
                     ->end()

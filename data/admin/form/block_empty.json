@@ -1,0 +1,134 @@
+{
+  "disabled": false,
+  "label": "Inhalt",
+  "labelFormat": null,
+  "rowAttr": [],
+  "attr": [],
+  "name": "content",
+  "value": [],
+  "compound": true,
+  "id": "article_content",
+  "required": true,
+  "fullName": "article[content]",
+  "help": null,
+  "helpAttr": [],
+  "helpHtml": false,
+  "errors": [],
+  "component": null,
+  "componentModel": null,
+  "componentVisitors": [],
+  "componentVisibleCondition": null,
+  "rowComponent": "form-row",
+  "widgetComponent": "form-widget",
+  "visible": true,
+  "root": false,
+  "children": [
+    {
+      "disabled": false,
+      "label": "block.label.blocks",
+      "labelFormat": null,
+      "rowAttr": [],
+      "attr": [],
+      "name": "children",
+      "value": [
+        [],
+        []
+      ],
+      "compound": true,
+      "id": "article_content_children",
+      "required": true,
+      "fullName": "article[content][children]",
+      "help": null,
+      "helpAttr": [],
+      "helpHtml": false,
+      "errors": [],
+      "allowDelete": true,
+      "allowAdd": true,
+      "entryLabels": [
+        {
+          "key": "picture",
+          "label": "picture.label.picture"
+        },
+        {
+          "key": "gallery",
+          "label": "gallery.label.gallery"
+        },
+        {
+          "key": "text",
+          "label": "text.label.text"
+        },
+        {
+          "key": "text_picture",
+          "label": "textPicture.label.textPicture"
+        },
+        {
+          "key": "blockquote",
+          "label": "blockquoteText.label.blockquoteText"
+        },
+        {
+          "key": "video",
+          "label": "video.label.video"
+        },
+        {
+          "key": "one_column",
+          "label": "one_column.label.one_column"
+        },
+        {
+          "key": "two_column",
+          "label": "two_column.label.two_column"
+        },
+        {
+          "key": "three_column",
+          "label": "three_column.label.three_column"
+        },
+        {
+          "key": "sidebar_column",
+          "label": "sidebar_column.label.sidebar_column"
+        },
+        {
+          "key": "template",
+          "label": "template.label.template"
+        },
+        {
+          "key": "resource",
+          "label": "resource.label.resource"
+        },
+        {
+          "key": "contact",
+          "label": "Contact"
+        },
+        {
+          "key": "calendar",
+          "label": "Calendar"
+        },
+        {
+          "key": "slider",
+          "label": "Slider"
+        },
+        {
+          "key": "newsletter_subscribe",
+          "label": "Newsletter Subscribe"
+        },
+        {
+          "key": "comment",
+          "label": "comment.label.comment"
+        }
+      ],
+      "sortable": true,
+      "index": null,
+      "prototypeStorage": "enhavo_block",
+      "collapsed": false,
+      "confirmDelete": false,
+      "itemComponent": "form-poly-collection-item",
+      "component": "form-poly-collection",
+      "componentModel": "PolyCollectionForm",
+      "componentVisitors": [],
+      "componentVisibleCondition": null,
+      "rowComponent": "form-block-collection-row",
+      "widgetComponent": "form-widget",
+      "visible": true,
+      "root": false,
+      "children": []
+    }
+  ]
+}

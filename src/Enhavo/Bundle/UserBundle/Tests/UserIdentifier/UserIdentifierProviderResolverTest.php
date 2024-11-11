@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\UserBundle\Tests\UserIdentifier;
 
-use Enhavo\Bundle\AppBundle\Tests\Mock\ContainerMock;
+use Enhavo\Bundle\ResourceBundle\Tests\Mock\ContainerMock;
 use Enhavo\Bundle\UserBundle\UserIdentifier\UserIdentifierProviderInterface;
 use Enhavo\Bundle\UserBundle\UserIdentifier\UserIdentifierProviderResolver;
 use PHPUnit\Framework\TestCase;

@@ -1,0 +1,100 @@
+enhavo_resource:
+    resources:
+        enhavo_article.article:
+            priority: -10
+            classes:
+                model: Enhavo\Bundle\ArticleBundle\Entity\Article
+            label: article.label.article
+            translation_domain: EnhavoArticleBundle
+    grids:
+        enhavo_article.article:
+            extends: enhavo_resource.grid
+            resource: enhavo_article.article
+            filters:
+                title:
+                    type: text
+                    property: title
+                    label: Text
+                public:
+                    type: boolean
+                    label: article.label.public
+                    translation_domain: EnhavoArticleBundle
+                    property: public
+                    equals: true
+                category:
+                    type: taxonomy
+                    label: article.label.category
+                    translation_domain: EnhavoArticleBundle
+                    taxonomy: article_category
+                    property: categories
+            columns:
+                public:
+                    label: article.label.public
+                    translation_domain: EnhavoArticleBundle
+                    property: public
+                    width: 2
+                    type: boolean
+                    sortable: true
+                    visible_condition: "desktop"
+                title:
+                    type: text
+                    label: article.label.title
+                    translation_domain: EnhavoArticleBundle
+                    property: title
+                    width: 7
+                    sortable: true
+                publicationDate:
+                    label: article.label.publicationDate
+                    translation_domain: EnhavoArticleBundle
+                    property: publicationDate
+                    type: date
+                    width: 3
+                    sortable: true
+                    visible_condition: "desktop || tablet"
+            batches:
+                delete:
+                    type: delete
+                publish:
+                    type: publish
+
+    inputs:
+        enhavo_article.article:
+            extends: enhavo_resource.input
+            resource: enhavo_article.article
+            form: Enhavo\Bundle\ArticleBundle\Form\Type\ArticleType
+            form_options:
+                component_theme: admin
+            tabs:
+                main:
+                    type: form
+                    label: article.label.article
+                    translation_domain: EnhavoArticleBundle
+                    arrangement: |
+                        title
+                        teaser
+                        link
+                        picture
+                        categories
+                        tags
+                        publication_date{6} | published_until{6}
+                        public
+                content:
+                    type: block
+                    property: content
+                meta:
+                    type: meta
+            actions:
+                duplicate:
+                    type: duplicate
+                    route: enhavo_article_admin_api_duplicate
+                    permission: ROLE_ENHAVO_ARTICLE_ARTICLE_CREATE
+                    enabled: 'expr:resource && resource.getId()'
+                preview:
+                    type: preview
+                    api_route: enhavo_article_admin_api_preview
+                    enabled: 'expr:resource && resource.getId()'
+                comments:
+                    type: comments
+                    enabled: 'expr:resource && resource.getId()'
+#                auto_save:
+#                    type: auto_save

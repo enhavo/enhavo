@@ -2,38 +2,29 @@
 
 namespace Enhavo\Bundle\MultiTenancyBundle\Menu;
 
-use Enhavo\Bundle\AppBundle\Menu\Menu\DropdownMenu;
+use Enhavo\Bundle\ApiBundle\Data\Data;
+use Enhavo\Bundle\AppBundle\Menu\AbstractMenuType;
+use Enhavo\Bundle\AppBundle\Menu\Type\DropdownMenuType;
 use Enhavo\Bundle\MultiTenancyBundle\Model\Tenant;
 use Enhavo\Bundle\MultiTenancyBundle\Tenant\TenantManager;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
-class SwitchTenantMenu extends DropdownMenu
+class SwitchTenantMenu extends AbstractMenuType
 {
-    /** @var TenantManager */
-    protected $tenantManager;
-
-    /** @var AuthorizationCheckerInterface */
-    protected $authorizationChecker;
-
-    /**
-     * TenantMenu constructor.
-     * @param TranslatorInterface $translator
-     * @param RouterInterface $router
-     * @param TenantManager $tenantManager
-     * @param AuthorizationCheckerInterface $authorizationChecker
-     */
-    public function __construct(TranslatorInterface $translator, RouterInterface $router, TenantManager $tenantManager, AuthorizationCheckerInterface $authorizationChecker)
+    public function __construct(
+        private readonly TenantManager $tenantManager,
+        private readonly AuthorizationCheckerInterface $authorizationChecker,
+    )
     {
-        parent::__construct($translator, $router);
-        $this->tenantManager = $tenantManager;
-        $this->authorizationChecker = $authorizationChecker;
     }
 
+    public function createViewData(array $options, Data $data): void
+    {
+        $data->set('choices' , $this->getChoices($options));
+    }
 
-    protected function getChoices($options)
+    private function getChoices($options): array
     {
         $result = [];
         $tenants = $this->getTenants();
@@ -44,7 +35,7 @@ class SwitchTenantMenu extends DropdownMenu
         return $result;
     }
 
-    protected function getValue(array $options)
+    private function getValue(array $options): string
     {
         return $this->tenantManager->getTenant()->getKey();
     }
@@ -52,7 +43,7 @@ class SwitchTenantMenu extends DropdownMenu
     /**
      * @return Tenant[]
      */
-    protected function getTenants()
+    private function getTenants(): array
     {
         $result = [];
 
@@ -70,25 +61,19 @@ class SwitchTenantMenu extends DropdownMenu
         return $result;
     }
 
-    public function isHidden(array $options)
+    public function isEnabled(array $options): bool
     {
-        if ($this->getOption('hidden', $options, null)) {
-            return true;
+        if (!$options['enabled']) {
+            return false;
+        } else if (count($this->getTenants()) <= 1) {
+            return false;
         }
-        if(count($this->getTenants()) <= 1) {
-            return true;
-        }
-        return false;
+
+        return true;
     }
 
-    public function isActive(array $options)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        return false;
-    }
-
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        parent::configureOptions($resolver);
         $resolver->setDefaults([
             'event' => 'tenantChange',
             'role' => 'ROLE_ADMIN',
@@ -97,7 +82,12 @@ class SwitchTenantMenu extends DropdownMenu
         $resolver->remove(['value', 'choices']);
     }
 
-    public function getType()
+    public static function getParentType(): ?string
+    {
+        return DropdownMenuType::class;
+    }
+
+    public static function getName(): ?string
     {
         return 'switch_tenant';
     }

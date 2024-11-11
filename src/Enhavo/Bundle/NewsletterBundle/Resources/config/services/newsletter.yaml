@@ -3,16 +3,15 @@ services:
         arguments:
             - '@Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager'
         tags:
-            - { name: enhavo_app.batch }
+            - { name: enhavo_resource.batch }
 
     Enhavo\Bundle\NewsletterBundle\Batch\SendTestBatchType:
         arguments:
             - '@Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager'
-            - '@request_stack'
             - '@translator'
             - '@form.factory'
         tags:
-            - { name: enhavo_app.batch }
+            - { name: enhavo_resource.batch }
 
     Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager:
         public: true
@@ -25,6 +24,7 @@ services:
           - '@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface'
           - '@Enhavo\Bundle\NewsletterBundle\Newsletter\ParameterParser'
           - '@enhavo_newsletter.newsletter.provider'
+          - '@serializer'
           - '%enhavo_newsletter.newsletter.mail.from%'
           - '%enhavo_newsletter.newsletter.templates%'
 
@@ -32,16 +32,15 @@ services:
 
     Enhavo\Bundle\NewsletterBundle\Form\Type\NewsletterType:
         arguments:
-            - '%enhavo_newsletter.model.newsletter.class%'
+            - '%enhavo_newsletter.newsletter.model.class%'
             - '%enhavo_newsletter.newsletter.templates%'
             - '@translator'
         tags:
             - { name: form.type, alias: enhavo_newsletter_newsletter }
 
     Enhavo\Bundle\NewsletterBundle\Menu\NewsletterMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: newsletter_newsletter }
+            - { name: enhavo_app.menu }
 
     Enhavo\Bundle\NewsletterBundle\Command\SendNewsletterCommand:
         arguments:
@@ -52,15 +51,13 @@ services:
             - { name: console.command }
 
     Enhavo\Bundle\NewsletterBundle\Column\NewsletterStateColumnType:
-        public: true
-        tags:
-            - { name: enhavo.column, alias: 'newsletter_state' }
-        calls:
-            - [setContainer, ['@service_container']]
-
-    enhavo_newsletter.factory.newsletter:
-        public: true
-        class: '%enhavo_newsletter.factory.newsletter.class%'
         arguments:
-            - '%enhavo_newsletter.model.newsletter.class%'
+            - '@translator'
+        tags:
+            - { name: enhavo_resource.column }
+
+    enhavo_newsletter.newsletter.factory:
+        class: '%enhavo_newsletter.newsletter.factory.class%'
+        arguments:
+            - '%enhavo_newsletter.newsletter.model.class%'
             - '@enhavo_block.factory.node'

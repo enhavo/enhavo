@@ -1,12 +1,11 @@
 services:
     Enhavo\Bundle\TemplateBundle\Menu\TemplateMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: template }
+            - { name: enhavo_app.menu }
 
     Enhavo\Bundle\TemplateBundle\Form\Type\TemplateType:
         arguments:
-            - '%enhavo_template.model.template.class%'
+            - '%enhavo_template.template.model.class%'
         tags:
             - { name: form.type, alias: enhavo_template_template }
 
@@ -37,12 +36,12 @@ services:
         calls:
             - [ setContainer, ['@service_container']]
         tags:
-            - { name: doctrine.event_subscriber, connection: default }
+            - { name: doctrine.event_listener, event: postLoad, method: postLoad }
 
     Enhavo\Bundle\TemplateBundle\Router\TemplateStrategy:
         public: true
         arguments:
-            - '@enhavo_template.repository.template'
+            - '@enhavo_template.template.repository'
         calls:
             - [ setContainer, ['@service_container']]
         tags:
@@ -53,9 +52,9 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@Enhavo\Bundle\TemplateBundle\Template\TemplateManager'
-            - '@enhavo_template.factory.template'
-            - '@enhavo_template.repository.template'
-            - '@Enhavo\Bundle\AppBundle\Resource\ResourceManager'
+            - '@enhavo_template.template.factory'
+            - '@enhavo_template.template.repository'
+            - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
         calls:
             - [ setContainer, ['@service_container']]
         tags:

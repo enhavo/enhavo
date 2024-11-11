@@ -1,0 +1,81 @@
+enhavo_resource:
+    resources:
+        app.person:
+            priority: -10
+            classes:
+                model: App\Entity\Person
+            label: Person
+    grids:
+        app.person:
+            extends: enhavo_resource.grid
+            resource: app.person
+            filters:
+                age:
+                    label: Age
+                    type: age
+                    property: birthday
+                between:
+                    label: Children
+                    type: between
+                    property: children
+                    label_from: Children from
+                    label_to: to
+                date_between:
+                    label: Date Between
+                    type: date_between
+                    property: birthday
+                    label_from: Date from
+                    label_to: to
+            columns:
+                id:
+                    property: id
+                    width: 1
+                    label: id
+                    type: text
+                name:
+                    property: name
+                    width: 11
+                    label: Name
+                    type: text
+            batches:
+                delete:
+                    type: delete
+
+    inputs:
+        app.person:
+            extends: enhavo_resource.input
+            resource: app.person
+            form: App\Form\Type\PersonType
+            tabs:
+                main:
+                    label: Person
+                    type: form
+                    arrangement: |
+                        name
+                        birthday
+                        occupation
+                        picture
+                revision:
+                    label: Revision
+                    type: revision
+                    enabled: 'expr:input.getResource()?.getId()'
+
+            actions:
+                duplicate:
+                    type: duplicate
+                    route: app_admin_api_person_duplicate
+                    enabled: 'expr:resource && resource.getId()'
+                archive:
+                    type: revision_archive
+                    enabled: 'expr:resource && resource.getId()'
+
+#                export:
+#                    type: form
+#                    icon: file_download
+#                    label: Export
+#                    route: app_person_modal_export_form
+#                    open_route: app_person_modal_export
+#                    open_type: download
+#                    open_route_mapping:
+#                        from: "person_export[from]"
+#                        to: "person_export[to]"

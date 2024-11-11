@@ -9,7 +9,10 @@ media_library:
         id: 'ID'
         title: 'Titel'
         upload: 'Hochladen'
-        confirm_selection: 'Auswählen'
+        select: 'Auswählen'
+    filter:
+        label:
+            unused: Nicht verwendet
     form:
         label:
             create_tag: 'Tag erstellen'
@@ -43,3 +46,7 @@ media_library:
         text: 'Text'
         image: 'Bild'
         video: 'Video'
+upload:
+    error:
+        unique_basename: Der Dateiname "basename" wird bereits verwendet
+        unique_checksum: Die Datei existiert bereits mit dem Namen "basename"

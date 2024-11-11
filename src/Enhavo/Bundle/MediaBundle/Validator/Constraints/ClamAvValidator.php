@@ -9,9 +9,6 @@ use Symfony\Component\Process\Process;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
-/**
- *
- */
 class ClamAvValidator extends ConstraintValidator
 {
     const RESULT_OK = 0;

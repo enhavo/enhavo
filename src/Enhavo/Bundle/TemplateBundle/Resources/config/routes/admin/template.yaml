@@ -1,108 +1,36 @@
-enhavo_template_template_index:
-    options:
-        expose: true
-    path: /enhavo/template/template/index
-    methods: [GET]
-    defaults:
-        _controller: enhavo_template.controller.template::indexAction
-        _sylius:
-            viewer:
-                label: template.label.template
-                translation_domain: EnhavoTemplateBundle
-                actions:
-                    create:
-                        hidden: true
-                        type: create
-                        route: ~
-                    filter:
-                        type: filter
 
-enhavo_template_template_create:
-    options:
-        expose: true
-    path: /enhavo/template/template/create
-    methods: [GET,POST]
+enhavo_template_admin_template_index:
+    path: /template/index
     defaults:
-        _controller: enhavo_template.controller.template::createAction
-        _sylius:
-            redirect: enhavo_template_template_update
-            viewer:
-                tabs:
-                    main:
-                        label: template.label.template
-                        translation_domain: EnhavoTemplateBundle
-                        template: admin/resource/template/template.html.twig
-                    content:
-                        label: template.label.content
-                        translation_domain: EnhavoTemplateBundle
-                        template: admin/resource/content/content.html.twig
-                        full_width: true
+        _expose: admin
+        _vue:
+            component: resource-index
+            groups: admin
+            meta:
+                api: enhavo_template_admin_api_template_index
+        _endpoint:
+            type: admin
 
-enhavo_template_template_update:
-    options:
-        expose: true
-    path: /enhavo/template/template/update/{id}
-    methods: [GET,POST]
+enhavo_template_admin_template_create:
+    path: /template/create
     defaults:
-        _controller: enhavo_template.controller.template::updateAction
-        _sylius:
-            viewer:
-                tabs:
-                    main:
-                        label: template.label.template
-                        translation_domain: EnhavoTemplateBundle
-                        template: admin/resource/template/template.html.twig
-                    content:
-                        label: template.label.content
-                        translation_domain: EnhavoTemplateBundle
-                        template: admin/resource/content/content.html.twig
-                        full_width: true
+        _expose: admin
+        _vue:
+            component: resource-input
+            groups: admin
+            meta:
+                api: enhavo_template_admin_api_template_create
+        _endpoint:
+            type: admin
 
-enhavo_template_template_table:
-    options:
-        expose: true
-    path: /enhavo/template/template/table
+enhavo_template_admin_template_update:
+    path: '/template/update/{id}'
     defaults:
-        sorting:
-            position: desc
-        _controller: enhavo_template.controller.template::tableAction
-        _sylius:
-            filters:
-                name:
-                    type: text
-                    label: template.label.template
-                    translation_domain: EnhavoTemplateBundle
-                    property: name
-            viewer:
-                translation_domain: EnhavoTemplateBundle
-                columns:
-                    name:
-                        type: text
-                        label: template.label.name
-                        property: template.name
-                        translation_domain: EnhavoTemplateBundle
-                        width: 12
-
-enhavo_template_template_delete:
-    options:
-        expose: true
-    path: /enhavo/template/template/delete/{id}
-    methods: [DELETE]
-    defaults:
-        _controller: enhavo_template.controller.template::deleteAction
-
-enhavo_template_template_batch:
-    options:
-        expose: true
-    path: /enhavo/template/template/batch
-    methods: [POST]
-    defaults:
-        _controller: enhavo_template.controller.template::batchAction
-        _sylius:
-            paginate: false
-            criteria:
-                id: $ids
-            batches:
-                delete:
-                    type: delete
-
+        _expose: admin
+        _vue:
+            component: resource-input
+            groups: admin
+            meta:
+                api: enhavo_template_admin_api_template_update
+        _endpoint:
+            type: admin

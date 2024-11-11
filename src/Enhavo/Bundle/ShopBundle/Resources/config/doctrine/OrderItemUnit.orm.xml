@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
-    <entity name="Enhavo\Bundle\ShopBundle\Entity\OrderItemUnit" table="shop_order_item_unit">
-        <many-to-one field="shipment" target-entity="Sylius\Component\Shipping\Model\ShipmentInterface" inversed-by="units" />
-    </entity>
-</doctrine-mapping>

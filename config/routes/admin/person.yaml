@@ -1,140 +1,35 @@
-app_person_index:
-    options:
-        expose: true
-    path: /app/person/index
-    methods: [GET]
+app_admin_person_index:
+    path: /person/index
     defaults:
-        _controller: app.controller.person::indexAction
-        _sylius:
-            viewer:
-                open_clickable: true
-                actions:
-                    export:
-                        type: form
-                        icon: file_download
-                        label: Export
-                        route: app_person_modal_export_form
-                        open_route: app_person_modal_export
-                        open_type: download
-                        open_route_mapping:
-                            from: "person_export[from]"
-                            to: "person_export[to]"
+        _expose: admin
+        _vue:
+            component: resource-index
+            groups: admin
+            meta:
+                api: app_admin_api_person_index
+        _endpoint:
+            type: admin
 
-app_person_create:
-    options:
-        expose: true
-    path: /app/person/create
-    methods: [GET,POST]
+app_admin_person_create:
+    path: /person/create
     defaults:
-        _controller: app.controller.person::createAction
-        _sylius:
-            redirect: app_person_update
-            viewer:
+        _expose: admin
+        _vue:
+            component: resource-input
+            groups: admin
+            meta:
+                api: app_admin_api_person_create
+        _endpoint:
+            type: admin
 
-app_person_update:
-    options:
-        expose: true
-    path: /app/person/update/{id}
-    methods: [GET,POST]
+app_admin_person_update:
+    path: /person/update/{id}
     defaults:
-        _controller: app.controller.person::updateAction
-        _sylius:
-            viewer:
-
-app_person_table:
-    options:
-        expose: true
-    path: /app/person/table
-    methods: [GET,POST]
-    defaults:
-        _controller: app.controller.person::tableAction
-        _sylius:
-            filters:
-                age:
-                    label: Age
-                    type: age
-                    property: birthday
-                between:
-                    label: Children
-                    type: between
-                    property: children
-                    label_from: Children from
-                    label_to: to
-                date_between:
-                    label: Date Between
-                    type: date_between
-                    property: birthday
-                    label_from: Date from
-                    label_to: to
-            viewer:
-                columns:
-                    id:
-                        property: id
-                        width: 1
-                        label: id
-                        type: property
-                    name:
-                        property: name
-                        width: 11
-                        label: Name
-                        type: property
-app_person_delete:
-    options:
-        expose: true
-    path: /app/person/delete/{id}
-    methods: [POST]
-    defaults:
-        _controller: app.controller.person::deleteAction
-
-app_person_batch:
-    options:
-        expose: true
-    path: /app/person/batch
-    methods: [POST]
-    defaults:
-        _controller: app.controller.person::batchAction
-        _sylius:
-            paginate: false
-            criteria:
-                id: $ids
-            batches:
-                delete:
-                    type: delete
-
-app_person_preview:
-    options:
-        expose: true
-    path: /app/person/preview
-    methods: [GET]
-    defaults:
-        _controller: app.controller.person::previewAction
-        _sylius:
-            viewer:
-
-app_person_resource_preview:
-    options:
-        expose: true
-    path: /app/person/resource/preview
-    methods: [POST]
-    defaults:
-        _controller: app.controller.person::previewResourceAction
-        _area: theme
-        _sylius:
-            viewer:
-                strategy_options:
-                    service: enhavo_article.controller.article:showResourceAction
-
-app_person_modal_export_form:
-    options:
-        expose: true
-    path: /app/person/modal/export/form
-    controller: enhavo_app.controller.modal:formAction
-    defaults:
-        _config:
-            form: App\Form\Type\PersonExportType
-
-app_person_modal_export:
-    options:
-        expose: true
-    path: /app/person/modal/export/{from}/{to}
-    controller: App\Controller\PersonController::exportAction
+        _expose: admin
+        _vue:
+            component: resource-input
+            groups: admin
+            meta:
+                api: app_admin_api_person_update
+        _endpoint:
+            type: admin

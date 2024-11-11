@@ -9,8 +9,8 @@
 namespace Enhavo\Bundle\MediaBundle\Form\Type;
 
 use Enhavo\Bundle\FormBundle\Form\Type\ListType;
-use Enhavo\Bundle\MediaBundle\Media\ExtensionManager;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
+use Enhavo\Bundle\ResourceBundle\Action\ActionManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -22,8 +22,8 @@ use Symfony\Component\Form\FormInterface;
 class MediaType extends AbstractType
 {
     public function __construct(
-        private ExtensionManager $extensionManager,
-        private array $formConfiguration,
+        private readonly ActionManager $actionManager,
+        private readonly array $formConfigurations,
     )
     {
     }
@@ -57,45 +57,45 @@ class MediaType extends AbstractType
         $view->vars['multiple'] = $options['multiple'];
         $view->vars['edit'] = $options['edit'];
         $view->vars['sortable'] = $options['multiple']  ? $options['sortable'] : false;
-        $view->vars['item_template'] = $options['item_template'];
-        $view->vars['upload'] = $options['upload'];
-        $view->vars['extensionManager'] = $this->extensionManager;
-        $view->vars['extensions'] = $options['extensions'];
-        $view->vars['route'] = $options['route'];
-        $view->vars['mediaConfig'] = [
-            'multiple' => $options['multiple'],
-            'sortable' =>  $options['multiple'] ? $options['sortable'] : false,
-            'extensions' => $view->vars['extensions'],
-            'upload' => $options['upload'],
-            'edit' => $options['edit'],
-            'prototypeName' => $options['prototype_name'],
-        ];
+        $view->vars['actions'] = $this->getActions($options);
+        $view->vars['route'] = $options['route'] ?? $this->formConfigurations[$options['config']]['route'];
+        $view->vars['upload'] = $options['upload'] ?? $this->formConfigurations[$options['config']]['upload'];
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    private function getActions($options): array
+    {
+        $configuration = $options['actions'] ?? $this->formConfigurations[$options['config']]['actions'];
+        $actions = $this->actionManager->getActions($configuration);
+
+        $viewData = [];
+        foreach ($actions as $action) {
+            $viewData[] = $action->createViewData();
+        }
+        return $viewData;
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
     {
         /*
          * If by_reference is set to false, the model data will be cloned. We need to avoid this behaviour in
          * order do keep doctrine references synchronized.
          */
         $resolver->setNormalizer('by_reference', function ($options, $value) {
-            if($options['multiple'] === false) {
+            if ($options['multiple'] === false) {
                 return true;
             }
             return $value;
         });
 
         $resolver->setNormalizer('entry_options', function ($options, $value) {
-            if(isset($options['extensions']) && is_array($options['extensions'])) {
-                if(is_array($value)) {
-                    return array_merge($value, [
-                        'extensions' => $options['extensions']
-                    ]);
-                }
-                return [
-                    'extensions' => $options['extensions']
-                ];
+            if (!isset($value['config'])) {
+                $value['config'] = $options['config'];
             }
+
+            if (!isset($value['formats'])) {
+                $value['formats'] = $options['formats'];
+            }
+
             return $value;
         });
 
@@ -112,12 +112,16 @@ class MediaType extends AbstractType
             'prototype' => true,
             'prototype_data' => null,
             'prototype_name' => '__name__',
-            'item_template' => '@EnhavoMedia/admin/form/media/item.html.twig',
-            'upload' => $this->formConfiguration['default_upload_enabled'],
-            'extensions' => [],
-            'route' => 'enhavo_media_upload',
+            'config' => 'default',
             'error_bubbling' => false,
+            'route' => null,
+            'actions' => null,
+            'actions_file' => null,
+            'upload' => null,
+            'formats' => [],
         ));
+
+        $resolver->setAllowedValues('config', array_keys($this->formConfigurations));
     }
 
     public function getBlockPrefix()

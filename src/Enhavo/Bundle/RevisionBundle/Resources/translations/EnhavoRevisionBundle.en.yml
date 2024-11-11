@@ -1,0 +1,27 @@
+restore:
+    message:
+        confirm: 'Do you want to restore this version?'
+    action:
+        restore: Restore
+        cancel: Cancel
+revision_aware:
+    label:
+        type: Type
+archive:
+    label:
+        archive: Archive
+        title: Title
+        date: Date
+    message:
+        confirm: Do you really want to restore it from archive?
+        archive: Do you want to archive this resource?
+    action:
+        archive: Archive
+        cancel: Cancel
+bin:
+    label:
+        bin: Bin
+        title: Title
+        date: Date
+    message:
+        confirm: Do you really want to restore it from bin?

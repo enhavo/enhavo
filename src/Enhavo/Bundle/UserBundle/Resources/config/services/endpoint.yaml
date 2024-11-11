@@ -15,9 +15,9 @@ services:
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
             - '@enhavo_user.user.manager'
             - '@translator'
-            - '@enhavo_user.repository.user'
+            - '@enhavo_user.user.repository'
         calls:
-            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
+#            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
             - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
             - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
         tags:
@@ -40,7 +40,7 @@ services:
             - '@enhavo_user.user.manager'
             - '@translator'
         calls:
-            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
+#            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
             - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
             - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
         tags:
@@ -54,7 +54,7 @@ services:
             - '@enhavo_user.user.manager'
             - '@translator'
         calls:
-            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
+#            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
             - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
             - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
         tags:
@@ -68,7 +68,7 @@ services:
             - '@enhavo_user.user.manager'
             - '@translator'
         calls:
-            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
+#            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
             - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
             - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
         tags:
@@ -92,7 +92,7 @@ services:
             - '@enhavo_user.user.manager'
             - '@translator'
         calls:
-            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
+#            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
             - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
             - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
         tags:
@@ -114,7 +114,7 @@ services:
         arguments:
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
             - '@enhavo_user.user.manager'
-            - '@enhavo_user.repository.user'
+            - '@enhavo_user.user.repository'
         calls:
             - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
             - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
@@ -136,9 +136,9 @@ services:
         arguments:
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
             - '@enhavo_user.user.manager'
-            - '@enhavo_user.factory.user'
+            - '@enhavo_user.user.factory'
         calls:
-            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
+#            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
             - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
             - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
         tags:
@@ -159,10 +159,10 @@ services:
         arguments:
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
             - '@enhavo_user.user.manager'
-            - '@enhavo_user.repository.user'
+            - '@enhavo_user.user.repository'
             - '@translator'
         calls:
-            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
+#            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
             - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
             - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
         tags:
@@ -183,10 +183,10 @@ services:
         arguments:
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
             - '@enhavo_user.user.manager'
-            - '@enhavo_user.repository.user'
+            - '@enhavo_user.user.repository'
             - '@translator'
         calls:
-            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
+#            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
             - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
             - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
         tags:
@@ -198,7 +198,7 @@ services:
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
             - '@security.firewall.map'
         calls:
-            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
+#            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
             - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
             - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
         tags:
@@ -225,7 +225,7 @@ services:
         arguments:
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
             - '@enhavo_user.user.manager'
-            - '@enhavo_user.repository.user'
+            - '@enhavo_user.user.repository'
         calls:
             - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
             - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
@@ -233,7 +233,7 @@ services:
             - { name: enhavo_api.endpoint }
             - { name: container.service_subscriber }
 
-    Enhavo\Bundle\UserBundle\Endpoint\Type\LoginAppEndpointType:
+    Enhavo\Bundle\UserBundle\Endpoint\Type\Login\LoginDataEndpointType:
         arguments:
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
             - '%enhavo_app.branding%'

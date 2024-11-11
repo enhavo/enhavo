@@ -14,6 +14,10 @@ media:
       download: "Herunterladen"
     message:
       upload_error: "Fehler beim hochladen der Datei"
+    action:
+        format: 'Format'
+        download: 'Download'
+        upload: 'Upload'
   image_cropper:
     action:
       open_image_cropper: "Bild bearbeiten"

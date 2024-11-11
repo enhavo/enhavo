@@ -2,24 +2,23 @@
 
 namespace Enhavo\Bundle\MediaLibraryBundle\Menu;
 
-use Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu;
+use Enhavo\Bundle\AppBundle\Menu\AbstractMenuType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TagMenuType extends BaseMenu
+class TagMenuType extends AbstractMenuType
 {
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        parent::configureOptions($resolver);
         $resolver->setDefaults([
             'icon' => 'label_outline',
             'label' => 'media_library.label.tag',
             'translation_domain' => 'EnhavoMediaLibraryBundle',
-            'route' => 'enhavo_media_library_tag_index',
+            'route' => 'enhavo_media_library_admin_tag_index',
             'role' => 'ROLE_ENHAVO_MEDIA_LIBRARY_TAG_INDEX'
         ]);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'media_library_tag';
     }

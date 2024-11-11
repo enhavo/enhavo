@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\NewsletterBundle\Storage\Type;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Enhavo\Bundle\NewsletterBundle\Entity\Group;
 use Enhavo\Bundle\NewsletterBundle\Entity\LocalSubscriber;
 use Enhavo\Bundle\NewsletterBundle\Entity\Newsletter;
@@ -16,43 +17,17 @@ use Enhavo\Bundle\NewsletterBundle\Model\LocalSubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Storage\AbstractStorageType;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class LocalStorageType extends AbstractStorageType
 {
-
-    /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
-
-    /**
-     * @var RepositoryInterface
-     */
-    private $subscriberRepository;
-
-    /**
-     * @var RepositoryInterface
-     */
-    private $groupRepository;
-
-    /** @var LocalSubscriberFactoryInterface */
-    private $subscriberFactory;
-
-    /**
-     * LocalStorageType constructor.
-     * @param EntityManagerInterface $entityManager
-     * @param RepositoryInterface $subscriberRepository
-     * @param RepositoryInterface $groupRepository
-     * @param LocalSubscriberFactoryInterface $subscriberFactory
-     */
-    public function __construct(EntityManagerInterface $entityManager, RepositoryInterface $subscriberRepository, RepositoryInterface $groupRepository, LocalSubscriberFactoryInterface $subscriberFactory)
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+        private readonly EntityRepository $subscriberRepository,
+        private readonly EntityRepository $groupRepository,
+        private readonly LocalSubscriberFactoryInterface $subscriberFactory,
+    )
     {
-        $this->entityManager = $entityManager;
-        $this->subscriberRepository = $subscriberRepository;
-        $this->groupRepository = $groupRepository;
-        $this->subscriberFactory = $subscriberFactory;
     }
 
     public function getReceivers(NewsletterInterface $newsletter, array $options): array
@@ -252,5 +227,4 @@ class LocalStorageType extends AbstractStorageType
             sprintf('Group with code "%s" does not exists.', $code)
         );
     }
-
 }

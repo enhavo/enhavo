@@ -1,5 +1,5 @@
 <template>
-    <div :id="form.id">
+    <div :id="form.id" v-show="form.isVisible()">
         <form-rows :form="form" />
     </div>
 </template>

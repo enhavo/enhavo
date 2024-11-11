@@ -15,6 +15,7 @@
 * [Newsletter](/book/bundles/newsletter-bundle/index)
 * [Page](/book/bundles/page-bundle/index)
 * [Redirect](/book/bundles/redirect-bundle/index)
+* [Resource](/book/bundles/resource-bundle/index)
 * [Revision](/book/bundles/revision-bundle/index)
 * [Routing](/book/bundles/routing-bundle/index)
 * [Search](/book/bundles/search-bundle/index)

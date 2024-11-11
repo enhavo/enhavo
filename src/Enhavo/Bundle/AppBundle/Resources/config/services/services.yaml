@@ -19,14 +19,6 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
 
-    enhavo_app.factory.duplicate_resource_factory:
-        class: Enhavo\Bundle\AppBundle\Controller\DuplicateResourceFactory
-
-    enhavo_app.security.default_authorization_checker:
-        class: Enhavo\Bundle\AppBundle\Security\AuthorizationChecker\SymfonyAuthorizationChecker
-        arguments:
-            - '@security.authorization_checker'
-
     enhavo_app.util.secure_url_token_generator:
         class: Enhavo\Bundle\AppBundle\Util\SecureUrlTokenGenerator
 
@@ -38,7 +30,6 @@ services:
 
     Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface:
         alias: enhavo_app.util.secure_url_token_generator
-
 
     Enhavo\Bundle\AppBundle\Template\TemplateResolver:
         arguments:
@@ -77,18 +68,6 @@ services:
             - '%enhavo_app.mailer.mails%'
             - '%enhavo_app.mailer.model%'
             - '@translator'
-
-    enhavo_app.manager.resource:
-        alias: Enhavo\Bundle\AppBundle\Resource\ResourceManager
-
-    Enhavo\Bundle\AppBundle\Resource\ResourceManager:
-        arguments:
-            - '@event_dispatcher'
-            - '@doctrine.orm.entity_manager'
-            - '@sylius.resource_registry'
-            - '@sm.factory'
-        calls:
-            - [setContainer, ['@service_container']]
 
     Enhavo\Bundle\AppBundle\EventListener\ComponentSubscriber:
         arguments:
@@ -162,3 +141,9 @@ services:
         arguments:
             - '%enhavo_app.vite.builds%'
             - '%kernel.project_dir%/public'
+
+    Enhavo\Bundle\AppBundle\Form\ThemeVueTypeExtension:
+        arguments:
+            - '%enhavo_app.form_mapping%'
+        tags:
+            - { name: 'form.type_extension', priority: 0 }

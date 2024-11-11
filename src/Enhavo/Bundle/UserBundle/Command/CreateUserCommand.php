@@ -7,7 +7,7 @@ use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Enhavo\Bundle\UserBundle\Repository\UserRepository;
 use Enhavo\Bundle\UserBundle\User\UserManager;
 use Enhavo\Bundle\UserBundle\UserIdentifier\UserIdentifierProviderResolver;
-use Sylius\Component\Resource\Factory\FactoryInterface;
+use Enhavo\Bundle\ResourceBundle\Factory\FactoryInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

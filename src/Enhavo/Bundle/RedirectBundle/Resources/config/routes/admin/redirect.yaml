@@ -1,98 +1,35 @@
-enhavo_redirect_redirect_index:
-    options:
-        expose: true
-    path: /enhavo/redirect/redirect/index
-    methods: [GET]
+enhavo_redirect_admin_redirect_index:
+    path: /redirect/index
     defaults:
-        _controller: enhavo_redirect.controller.redirect::indexAction
-        _sylius:
-            viewer:
-                label: redirect.label.redirect
-                translation_domain: EnhavoRedirectBundle
+        _expose: admin
+        _vue:
+            component: resource-index
+            groups: admin
+            meta:
+                api: enhavo_redirect_admin_api_redirect_index
+        _endpoint:
+            type: admin
 
-enhavo_redirect_redirect_create:
-    options:
-        expose: true
-    path: /enhavo/redirect/redirect/create
-    methods: [GET,POST]
+enhavo_redirect_admin_redirect_create:
+    path: /redirect/create
     defaults:
-        _controller: enhavo_redirect.controller.redirect::createAction
-        _sylius:
-            redirect: enhavo_redirect_redirect_update
+        _expose: admin
+        _vue:
+            component: resource-input
+            groups: admin
+            meta:
+                api: enhavo_redirect_admin_api_redirect_create
+        _endpoint:
+            type: admin
 
-enhavo_redirect_redirect_update:
-    options:
-        expose: true
-    path: /enhavo/redirect/redirect/update/{id}
-    methods: [GET,POST]
+enhavo_redirect_admin_redirect_update:
+    path: '/redirect/update/{id}'
     defaults:
-        _controller: enhavo_redirect.controller.redirect::updateAction
-
-enhavo_redirect_redirect_table:
-    options:
-        expose: true
-    path: /enhavo/redirect/redirect/table
-    defaults:
-        _controller: enhavo_redirect.controller.redirect::tableAction
-        _sylius:
-            filters:
-                from:
-                    type: text
-                    property: from
-                    label: form.label.from
-                    translation_domain: EnhavoRedirectBundle
-                to:
-                    type: text
-                    property: to
-                    label: form.label.to
-                    translation_domain: EnhavoRedirectBundle
-                code:
-                    type: option
-                    property: code
-                    options:
-                        301: 301
-                        302: 302
-                    label: form.label.code
-                    translation_domain: EnhavoRedirectBundle
-
-            viewer:
-                translation_domain: EnhavoRedirectBundle
-                columns:
-                    from:
-                        type: text
-                        property: from
-                        label: form.label.from
-                        width: 5
-                    to:
-                        type: text
-                        property: to
-                        label: form.label.to
-                        width: 6
-                    code:
-                        type: text
-                        property: code
-                        label: form.label.code
-                        width: 1
-
-enhavo_redirect_redirect_delete:
-    options:
-        expose: true
-    path: /enhavo/redirect/redirect/delete/{id}
-    methods: [POST]
-    defaults:
-        _controller: enhavo_redirect.controller.redirect::deleteAction
-
-enhavo_redirect_redirect_batch:
-    options:
-        expose: true
-    path: /enhavo/redirect/redirect/batch
-    methods: [POST]
-    defaults:
-        _controller: enhavo_redirect.controller.redirect::batchAction
-        _sylius:
-            paginate: false
-            criteria:
-                id: $ids
-            batches:
-                delete:
-                    type: delete
+        _expose: admin
+        _vue:
+            component: resource-input
+            groups: admin
+            meta:
+                api: enhavo_redirect_admin_api_redirect_update
+        _endpoint:
+            type: admin

@@ -20,11 +20,7 @@ class RoutingVueRouteProviderType extends AbstractType implements VueRouteProvid
 
     public function getRoutes($options, array|string|null $groups = null): array
     {
-        if (!$this->isGroupSelected($options, $groups)) {
-            return [];
-        }
-
-        $this->load($options);
+        $this->load($options, $groups);
         return $this->routes;
     }
 
@@ -34,11 +30,11 @@ class RoutingVueRouteProviderType extends AbstractType implements VueRouteProvid
             return null;
         }
 
-        $this->load($options);
+        $this->load($options, $groups);
         return $this->search($path, $this->routes);
     }
 
-    private function load($options): void
+    private function load($options, array|string|null $groups = null): void
     {
         if ($this->routes !== null) {
             return;
@@ -51,7 +47,7 @@ class RoutingVueRouteProviderType extends AbstractType implements VueRouteProvid
             $defaults = $route->getDefaults();
             if (isset($defaults['_vue'])) {
                 $vueGroups = $defaults['_vue']['groups'] ?? null;
-                if ($this->isGroupSelected($options, $vueGroups)) {
+                if ($this->isGroupSelected($options, $vueGroups) && $this->inGroup($vueGroups, $groups)) {
                     $vueRoute = new VueRoute($defaults['_vue']);
 
                     if ($vueRoute->getName() === null) {
@@ -68,6 +64,35 @@ class RoutingVueRouteProviderType extends AbstractType implements VueRouteProvid
         }
     }
 
+    private function inGroup($vueGroups, $groups): bool
+    {
+        if ($vueGroups === null && $groups === null) {
+            return true;
+        }
+
+        if ($groups === true) {
+            return true;
+        }
+
+        if (!is_array($groups)) {
+            $groups = [$groups];
+        }
+
+        if (!is_array($vueGroups)) {
+            $vueGroups = [$vueGroups];
+        }
+
+        foreach ($vueGroups as $vueGroup) {
+            foreach ($groups as $group) {
+                if ($group === $vueGroup) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     public static function getName(): ?string
     {
         return 'routing';
@@ -76,7 +101,7 @@ class RoutingVueRouteProviderType extends AbstractType implements VueRouteProvid
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'groups' => null,
+            'groups' => true,
         ]);
     }
 }

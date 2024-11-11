@@ -1,0 +1,49 @@
+enhavo_resource:
+    resources:
+        enhavo_taxonomy.term:
+            priority: -10
+            classes:
+                model: Enhavo\Bundle\TaxonomyBundle\Entity\Term
+                factory: Enhavo\Bundle\TaxonomyBundle\Factory\TermFactory
+                repository: Enhavo\Bundle\TaxonomyBundle\Repository\TermRepository
+    grids:
+        enhavo_taxonomy.term_table:
+            extends: enhavo_resource.grid
+            resource: enhavo_taxonomy.term
+            filters:
+                name:
+                    type: text
+                    label: term.label.name
+                    translation_domain: EnhavoTaxonomyBundle
+                    property: name
+            columns:
+                name:
+                    type: text
+                    width: 12
+                    label: term.label.name
+                    translation_domain: EnhavoTaxonomyBundle
+                    property: name
+            collection:
+                repository_method: findByTaxonomyName
+
+        enhavo_taxonomy.term_list:
+            extends: enhavo_taxonomy.term_table
+            resource: enhavo_taxonomy.term
+            collection:
+                class: Enhavo\Bundle\ResourceBundle\Collection\ListCollection
+                repository_method: findRootsByTaxonomyName
+                children_property: children
+                parent_property: parent
+    inputs:
+        enhavo_taxonomy.term:
+            extends: enhavo_resource.input
+            resource: enhavo_taxonomy.term
+            form: Enhavo\Bundle\TaxonomyBundle\Form\Type\TermType
+            factory_method: createNewOnTaxonomy
+            tabs:
+                main:
+                    type: form
+                    arrangement: |
+                        name
+                        text
+                        slug

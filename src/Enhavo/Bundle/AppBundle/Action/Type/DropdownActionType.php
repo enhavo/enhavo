@@ -2,55 +2,37 @@
 
 namespace Enhavo\Bundle\AppBundle\Action\Type;
 
-use Enhavo\Bundle\AppBundle\Action\AbstractActionType;
-use Enhavo\Bundle\AppBundle\Action\ActionLanguageExpression;
-use Enhavo\Bundle\AppBundle\Action\ActionManager;
-use Enhavo\Bundle\AppBundle\Action\ActionTypeInterface;
+use Enhavo\Bundle\ApiBundle\Data\Data;
+use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
+use Enhavo\Bundle\ResourceBundle\Action\ActionManager;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
-class DropdownActionType extends AbstractActionType implements ActionTypeInterface
+class DropdownActionType extends AbstractActionType
 {
-    /** @var ActionManager */
-    private $actionManager;
+    private ActionManager $actionManager;
 
-    /**
-     * DropdownActionType constructor.
-     * @param TranslatorInterface $translator
-     * @param ActionLanguageExpression $actionLanguageExpression
-     * @param ActionManager $actionManager
-     */
-    public function __construct(TranslatorInterface $translator, ActionLanguageExpression $actionLanguageExpression, ActionManager $actionManager)
+    public function setActionManager(ActionManager $actionManager): void
     {
-        parent::__construct($translator, $actionLanguageExpression);
         $this->actionManager = $actionManager;
     }
 
-    public function createViewData(array $options, $resource = null)
+    public function createViewData(array $options, Data $data, object $resource = null): void
     {
-        $data = parent::createViewData($options, $resource);
-
         $actions = $this->actionManager->getActions($options['items'], $resource);
         $items = [];
         foreach($actions as $action) {
             $items[] = $action->createViewData($resource);
         }
 
-        $data = array_merge($data, [
-            'items' => $items,
-            'closeAfter' => $options['close_after']
-        ]);
-
-        return $data;
+        $data->set('items', $items);
+        $data->set('closeAfter', $options['close_after']);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        parent::configureOptions($resolver);
-
         $resolver->setDefaults([
-            'component' => 'dropdown-action',
             'close_after' => true,
+            'model' => 'DropdownAction',
         ]);
 
         $resolver->setRequired([
@@ -58,10 +40,7 @@ class DropdownActionType extends AbstractActionType implements ActionTypeInterfa
         ]);
     }
 
-    /**
-     * @return string
-     */
-    public function getType()
+    public static function getName(): ?string
     {
         return 'dropdown';
     }

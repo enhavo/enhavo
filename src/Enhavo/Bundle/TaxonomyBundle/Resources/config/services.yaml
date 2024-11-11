@@ -8,34 +8,33 @@ services:
     Enhavo\Bundle\TaxonomyBundle\Filter\TaxonomyFilterType:
         public: true
         arguments:
-            - '@translator'
             - '@doctrine.orm.entity_manager'
         tags:
-            - { name: 'enhavo.filter', alias: 'taxonomy' }
+            - { name: enhavo_resource.filter }
 
     Enhavo\Bundle\TaxonomyBundle\Form\Type\TermAutoCompleteChoiceType:
         arguments:
-            - '%enhavo_taxonomy.model.term.class%'
+            - '%enhavo_taxonomy.term.model.class%'
         tags:
             - { name: form.type }
 
     Enhavo\Bundle\TaxonomyBundle\Form\Type\TermChoiceType:
         arguments:
-            - '%enhavo_taxonomy.model.term.class%'
-            - '@enhavo_taxonomy.repository.term'
+            - '%enhavo_taxonomy.term.model.class%'
+            - '@enhavo_taxonomy.term.repository'
         tags:
             - { name: form.type }
 
     Enhavo\Bundle\TaxonomyBundle\Form\Type\TermTreeChoiceType:
         arguments:
-            - '%enhavo_taxonomy.model.term.class%'
-            - '@enhavo_taxonomy.repository.term'
+            - '%enhavo_taxonomy.term.model.class%'
+            - '@enhavo_taxonomy.term.repository'
         tags:
             - { name: form.type }
 
     Enhavo\Bundle\TaxonomyBundle\Form\Type\TermType:
         arguments:
-            - '%enhavo_taxonomy.model.term.class%'
+            - '%enhavo_taxonomy.term.model.class%'
         tags:
             - { name: form.type }
 
@@ -43,29 +42,29 @@ services:
         public: true
         arguments:
             - '@doctrine.orm.entity_manager'
-            - '@enhavo_taxonomy.repository.taxonomy'
-            - '@enhavo_taxonomy.factory.taxonomy'
+            - '@enhavo_taxonomy.taxonomy.repository'
+            - '@enhavo_taxonomy.taxonomy.factory'
             - '%enhavo_taxonomy.taxonomies%'
         tags:
             - { name: 'enhavo.init', alias: 'taxonomy'}
 
-    enhavo_taxonomy.factory.term:
+    enhavo_taxonomy.term.factory:
         public: true
-        class: '%enhavo_taxonomy.factory.term.class%'
+        class: '%enhavo_taxonomy.term.factory.class%'
         arguments:
-            - '%enhavo_taxonomy.model.term.class%'
-            - '@enhavo_taxonomy.repository.taxonomy'
+            - '%enhavo_taxonomy.term.model.class%'
+            - '@enhavo_taxonomy.taxonomy.repository'
 
     Enhavo\Bundle\TaxonomyBundle\Form\Type\TermAutoSuggestionEntityType:
         arguments:
-            - '%enhavo_taxonomy.model.term.class%'
-            - '@enhavo_taxonomy.factory.term'
+            - '%enhavo_taxonomy.term.model.class%'
+            - '@enhavo_taxonomy.term.factory'
         tags:
             - { name: form.type }
 
     Enhavo\Bundle\TaxonomyBundle\Taxonomy\TaxonomyManager:
         arguments:
-            - '@enhavo_taxonomy.repository.taxonomy'
+            - '@enhavo_taxonomy.taxonomy.repository'
 
     Enhavo\Bundle\TaxonomyBundle\EventListener\TermSubscriber:
         arguments:
@@ -76,6 +75,13 @@ services:
     validator.term_unique:
         class:  Enhavo\Bundle\TaxonomyBundle\Validator\Constraints\TermUniqueValidator
         arguments:
-            - '@enhavo_taxonomy.repository.term'
+            - '@enhavo_taxonomy.term.repository'
         tags:
             - { name: validator.constraint_validator, alias: term_unique }
+
+    Enhavo\Bundle\TaxonomyBundle\Endpoint\Type\TermAutoCompleteEndpointType:
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }

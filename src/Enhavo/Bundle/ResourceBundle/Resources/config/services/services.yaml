@@ -1,0 +1,62 @@
+services:
+    Enhavo\Bundle\ResourceBundle\Resource\ResourceManager:
+        arguments:
+            - '@event_dispatcher'
+            - '@doctrine.orm.entity_manager'
+            - '@SM\Factory\FactoryInterface'
+            - '@validator'
+            - '@Enhavo\Bundle\ResourceBundle\Duplicate\DuplicateFactory'
+            - '@Enhavo\Bundle\ResourceBundle\Delete\DeleteHandlerInterface'
+            - '%enhavo_resources.resources%'
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+
+    Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage:
+
+    Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface:
+        alias: Enhavo\Bundle\ResourceBundle\RouteResolver\RouteNameRouteResolver
+
+    Enhavo\Bundle\ResourceBundle\ExpressionLanguage\RouteResolverExpressionFunctionProvider:
+        arguments:
+            - '@Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface'
+        tags:
+            - { name: enhavo_resource.expression_language_function_provider }
+
+    Enhavo\Bundle\ResourceBundle\ExpressionLanguage\RequestResourceExpressionVariableProvider:
+        arguments:
+            - '@request_stack'
+        tags:
+            - { name: enhavo_resource.expression_language_variable_provider }
+
+    Enhavo\Bundle\ResourceBundle\ExpressionLanguage\UserResourceExpressionVariableProvider:
+        arguments:
+            - '@security.token_storage'
+        tags:
+            - { name: enhavo_resource.expression_language_variable_provider }
+
+    Enhavo\Bundle\ResourceBundle\RouteResolver\RouteNameRouteResolver:
+        arguments:
+            - '@request_stack'
+            - '@router'
+
+    Enhavo\Bundle\ResourceBundle\Command\DebugGridCommand:
+        arguments:
+            - '%enhavo_resource.grids%'
+        tags:
+            - { name: console.command }
+
+    Enhavo\Bundle\ResourceBundle\Command\DebugResourceCommand:
+        arguments:
+            - '%enhavo_resource.resources%'
+        tags:
+            - { name: console.command }
+
+    Enhavo\Bundle\ResourceBundle\Command\DebugInputCommand:
+        arguments:
+            - '%enhavo_resource.inputs%'
+        tags:
+            - { name: console.command }
+
+    Enhavo\Bundle\ResourceBundle\Delete\DoctrineDeleteHandler:
+        arguments:
+            - '@doctrine.orm.entity_manager'

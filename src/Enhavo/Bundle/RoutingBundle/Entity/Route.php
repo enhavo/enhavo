@@ -9,10 +9,9 @@
 namespace Enhavo\Bundle\RoutingBundle\Entity;
 
 use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
-use Sylius\Component\Resource\Model\ResourceInterface;
 use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Orm\Route as BaseRouteModel;
 
-class Route extends BaseRouteModel implements RouteInterface, ResourceInterface
+class Route extends BaseRouteModel implements RouteInterface
 {
     private ?string $contentClass = null;
     private ?int $contentId = null;

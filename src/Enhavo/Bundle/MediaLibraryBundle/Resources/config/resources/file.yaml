@@ -1,0 +1,6 @@
+enhavo_resource:
+    resources:
+        enhavo_media.file:
+            priority: -5
+            classes:
+                model: Enhavo\Bundle\MediaLibraryBundle\Entity\File

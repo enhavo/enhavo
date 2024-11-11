@@ -1,45 +1,12 @@
-enhavo_media_file_resolve:
-    path:  /file/resolve/{token}
+enhavo_media_theme_file:
+    path:  /media/file/{id}/{shortChecksum}/{filename}.{extension}
     methods: [GET]
     defaults:
-        _controller: enhavo_media.controller.file::resolveAction
-    options:
-        expose: true
-
-enhavo_media_file_resolve_format:
-    path:  /file/resolve/{token}/{format}
-    methods: [GET]
-    defaults:
-        _controller: enhavo_media.controller.file::resolveFormatAction
-    options:
-        expose: true
-
-enhavo_media_file_download:
-    path:  /file/download/{id}/{shortMd5Checksum}/{filename}
-    defaults:
-        _controller: enhavo_media.controller.file::downloadAction
-        _method: GET
-        filename: ~
-    options:
-        expose: true
-
-enhavo_media_file_show:
-    path:  /file/show/{id}/{shortMd5Checksum}/{filename}
-    defaults:
-        _controller: enhavo_media.controller.file::showAction
-        width: ~
-        height: ~
-        filename: ~
-        _method: GET
-        _expose: [theme, admin]
-    options:
-        expose: true
-
-enhavo_media_file_format:
-    path:  /file/format/{id}/{format}/{shortMd5Checksum}/{filename}
-    defaults:
-        _controller: enhavo_media.controller.file::showFormatAction
-        _method: GET
-        _expose: [theme, admin]
-    options:
-        expose: true
+        _expose: [theme]
+        _endpoint:
+            type: media_file
+            repository_arguments:
+                - id: expr:request.get("id")
+                  filename: expr:request.get("filename")
+                  extension: expr:request.get("extension")
+                  shortChecksum: expr:request.get("shortChecksum")

@@ -7,30 +7,19 @@
 namespace Enhavo\Bundle\MediaLibraryBundle\Media;
 
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
-use Enhavo\Bundle\MediaLibraryBundle\Repository\FileRepository;
+use Enhavo\Bundle\MediaLibraryBundle\Repository\ItemRepository;
 use Enhavo\Bundle\TaxonomyBundle\Repository\TermRepository;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class MediaLibraryManager
 {
-    private array $contentTypes;
-    private FileRepository $fileRepository;
-    private TermRepository $termRepository;
-
-    private TranslatorInterface $translator;
-
-    /**
-     * @param array $contentTypes
-     * @param FileRepository $fileRepository
-     * @param TermRepository $termRepository
-     * @param TranslatorInterface $translator
-     */
-    public function __construct(array $contentTypes, FileRepository $fileRepository, TermRepository $termRepository, TranslatorInterface $translator)
+    public function __construct(
+        private readonly array $contentTypes,
+        private readonly ItemRepository $itemRepository,
+        private readonly TermRepository $termRepository,
+        private readonly TranslatorInterface $translator
+    )
     {
-        $this->contentTypes = $contentTypes;
-        $this->fileRepository = $fileRepository;
-        $this->termRepository = $termRepository;
-        $this->translator = $translator;
     }
 
 
@@ -49,7 +38,8 @@ class MediaLibraryManager
         return $contentTypes;
     }
 
-    public function getContentTypeIcon(?string $key) {
+    public function getContentTypeIcon(?string $key)
+    {
         if ($key && isset($this->contentTypes[$key]) && isset($this->contentTypes[$key]['icon'])) {
             return $this->contentTypes[$key]['icon'];
         }

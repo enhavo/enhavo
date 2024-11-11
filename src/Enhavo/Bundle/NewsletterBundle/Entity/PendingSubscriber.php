@@ -3,13 +3,12 @@
 namespace Enhavo\Bundle\NewsletterBundle\Entity;
 
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
-use Sylius\Component\Resource\Model\ResourceInterface;
 
 /**
  * Class PendingSubscriber
  * @package Enhavo\Bundle\NewsletterBundle\Entity
  */
-class PendingSubscriber implements ResourceInterface
+class PendingSubscriber
 {
     /**
      * @var integer

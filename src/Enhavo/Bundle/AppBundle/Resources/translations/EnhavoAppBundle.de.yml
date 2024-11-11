@@ -1,5 +1,6 @@
 action:
   changePassword: 'Passwort ändern'
+  duplicate: 'Duplizieren'
   batch:
     submit: 'Ausführen'
     delete: 'Löschen'
@@ -31,6 +32,7 @@ label:
   cancel: 'Abbrechen'
   close: 'Schließen'
   save: 'Speichern'
+  auto_save: 'Autosave'
   delete: 'Löschen'
   preview: 'Vorschau'
   create: 'Erstellen'
@@ -58,7 +60,7 @@ message:
       yes: 'Ja'
       no: 'Nein'
   duplicate:
-    confirm: 'Warnung: Das aktuelle Formular wird ohne Speichern geschlossen. Wollen Sie wirklich fortfahren?'
+    confirm: 'Die Resource wird dupliziert. Das aktuelle Formular wird ohne Speichern geschlossen. Wollen Sie wirklich fortfahren?'
     success: 'Das Element wurde erfolgreich dupliziert'
   delete:
     confirm: 'Warnung: Wollen Sie dieses Doument wirklich löschen?'

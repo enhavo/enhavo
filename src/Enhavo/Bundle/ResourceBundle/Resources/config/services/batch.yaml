@@ -1,0 +1,37 @@
+services:
+    Enhavo\Bundle\ResourceBundle\Batch\BatchManager:
+        arguments:
+            - '@Enhavo\Component\Type\FactoryInterface[Batch]'
+            - '@security.authorization_checker'
+
+    Enhavo\Bundle\ResourceBundle\Batch\Type\DeleteBatchType:
+        arguments:
+            - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
+        tags:
+            - { name: enhavo_resource.batch }
+
+    Enhavo\Bundle\ResourceBundle\Batch\Type\AssignBatchType:
+        arguments:
+            - '@form.factory'
+            - '@translator'
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: enhavo_resource.batch }
+
+    Enhavo\Bundle\ResourceBundle\Batch\Type\BaseBatchType:
+        arguments:
+            - '@translator'
+            - '@Enhavo\Bundle\ResourceBundle\RouteResolver\RouteNameRouteResolver'
+            - '@router'
+            - '@security.csrf.token_manager'
+            - '@Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage'
+        tags:
+            - { name: enhavo_resource.batch }
+
+    Enhavo\Bundle\ResourceBundle\Batch\Type\FormBatchType:
+        arguments:
+            - '@Enhavo\Bundle\VueFormBundle\Form\VueForm'
+            - '@form.factory'
+            - '@Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage'
+        tags:
+            - { name: enhavo_resource.batch }

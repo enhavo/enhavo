@@ -1,0 +1,58 @@
+services:
+    Enhavo\Bundle\ResourceBundle\Column\ColumnManager:
+        arguments:
+            - '@Enhavo\Component\Type\FactoryInterface[Column]'
+            - '@security.authorization_checker'
+
+    Enhavo\Bundle\ResourceBundle\Column\Type\BaseColumnType:
+        arguments:
+            - '@translator'
+            - '@Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage'
+        tags:
+            - { name: enhavo_resource.column }
+
+    Enhavo\Bundle\ResourceBundle\Column\Type\ListColumnType:
+        tags:
+            - { name: enhavo_resource.column }
+
+    Enhavo\Bundle\ResourceBundle\Column\Type\MultiplePropertyColumnType:
+        tags:
+            - { name: enhavo_resource.column }
+
+    Enhavo\Bundle\ResourceBundle\Column\Type\StateColumnType:
+        arguments:
+            - '@translator'
+        tags:
+            - { name: enhavo_resource.column }
+
+    Enhavo\Bundle\ResourceBundle\Column\Type\PositionColumnType:
+        tags:
+            - { name: enhavo_resource.column }
+
+    Enhavo\Bundle\ResourceBundle\Column\Type\DateColumnType:
+        tags:
+            - { name: enhavo_resource.column }
+
+    Enhavo\Bundle\ResourceBundle\Column\Type\DateTimeColumnType:
+        tags:
+            - { name: enhavo_resource.column }
+
+    Enhavo\Bundle\ResourceBundle\Column\Type\BooleanColumnType:
+        tags:
+            - { name: enhavo_resource.column }
+
+    Enhavo\Bundle\ResourceBundle\Column\Type\UrlColumnType:
+        arguments:
+            - '@Enhavo\Bundle\RoutingBundle\Router\Router'
+        tags:
+            - { name: enhavo_resource.column }
+
+    Enhavo\Bundle\ResourceBundle\Column\Type\TextColumnType:
+        tags:
+            - { name: enhavo_resource.column }
+
+    Enhavo\Bundle\ResourceBundle\Column\Type\ActionColumnType:
+        arguments:
+            - '@Enhavo\Bundle\ResourceBundle\Action\ActionManager'
+        tags:
+            - { name: enhavo_resource.column }

@@ -8,9 +8,11 @@
 
 namespace Enhavo\Bundle\MediaBundle\DependencyInjection\Compiler;
 
+use Enhavo\Bundle\MediaBundle\Checksum\ChecksumGeneratorInterface;
 use Enhavo\Bundle\MediaBundle\FileNotFound\FileNotFoundHandlerInterface;
 use Enhavo\Bundle\MediaBundle\GarbageCollection\GarbageCollector;
 use Enhavo\Bundle\MediaBundle\GarbageCollection\GarbageCollectorInterface;
+use Enhavo\Bundle\MediaBundle\Storage\StorageInterface;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -18,7 +20,7 @@ class MediaCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        $this->createProviderAlias($container);
+        $this->createChecksumGeneratorAlias($container);
         $this->createStorageAlias($container);
         $this->createCacheAlias($container);
         $this->injectGarbageCollectorVoters($container);
@@ -26,16 +28,16 @@ class MediaCompilerPass implements CompilerPassInterface
         $this->addFileNotFoundHandlerAlias($container);
     }
 
-    private function createProviderAlias(ContainerBuilder $container): void
+    private function createChecksumGeneratorAlias(ContainerBuilder $container): void
     {
-        $providerServiceName = $container->getParameter('enhavo_media.provider');
-        $container->setAlias('enhavo_media.provider', $providerServiceName);
+        $providerServiceName = $container->getParameter('enhavo_media.checksum_generator');
+        $container->setAlias(ChecksumGeneratorInterface::class, $providerServiceName);
     }
 
     private function createStorageAlias(ContainerBuilder $container): void
     {
         $providerServiceName = $container->getParameter('enhavo_media.storage');
-        $container->setAlias('enhavo_media.storage', $providerServiceName);
+        $container->setAlias(StorageInterface::class, $providerServiceName);
     }
 
     private function createCacheAlias(ContainerBuilder $container): void

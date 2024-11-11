@@ -1,0 +1,6 @@
+services:
+    '@enhavo/app/expression-language/ExpressionLanguage':
+        import: ExpressionLanguage
+        chunk: 'expression-language'
+        tags:
+            - { name: vue.service, service: 'expressionLanguage' }

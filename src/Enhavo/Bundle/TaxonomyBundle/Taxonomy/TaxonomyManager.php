@@ -2,14 +2,14 @@
 
 namespace Enhavo\Bundle\TaxonomyBundle\Taxonomy;
 
+use Doctrine\ORM\EntityRepository;
 use Enhavo\Bundle\RoutingBundle\Slugifier\Slugifier;
 use Enhavo\Bundle\TaxonomyBundle\Entity\Term;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 class TaxonomyManager
 {
     public function __construct(
-        private RepositoryInterface $taxonomyRepository,
+        private EntityRepository $taxonomyRepository,
     )
     {
     }

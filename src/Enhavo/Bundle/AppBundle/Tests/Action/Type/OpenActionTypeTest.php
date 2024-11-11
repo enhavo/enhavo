@@ -8,69 +8,47 @@
 
 namespace Enhavo\Bundle\AppBundle\Tests\Action\Type;
 
-use Enhavo\Bundle\AppBundle\Action\Action;
-use Enhavo\Bundle\AppBundle\Action\ActionLanguageExpression;
 use Enhavo\Bundle\AppBundle\Action\Type\OpenActionType;
+use Enhavo\Bundle\ResourceBundle\Action\Action;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Routing\RouterInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class OpenActionTypeTest extends TestCase
 {
-    private function createDependencies()
+    private function createDependencies(): OpenActionTypeDependencies
     {
         $dependencies = new OpenActionTypeDependencies();
-        $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
-        $dependencies->actionLanguageExpression = $this->getMockBuilder(ActionLanguageExpression::class)->disableOriginalConstructor()->getMock();
-        $dependencies->router = $this->getMockBuilder(RouterInterface::class)->getMock();
         return $dependencies;
     }
 
-    private function createInstance(OpenActionTypeDependencies $dependencies)
+    private function createInstance(OpenActionTypeDependencies $dependencies): OpenActionType
     {
         return new OpenActionType(
-            $dependencies->translator,
-            $dependencies->actionLanguageExpression,
-            $dependencies->router
         );
     }
 
     public function testCreateViewData()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->translator->method('trans')->willReturnCallback(function ($value) {return $value;});
-        $dependencies->router->method('generate')->willReturn('http://localhost/open');
         $type = $this->createInstance($dependencies);
 
-        $action = new Action($type, [
+        $action = new Action($type, [], [
             'route' => 'open_route',
             'target' => '_blank',
-            'view_key' => 'edit'
+            'frame_key' => 'edit'
         ]);
 
         $viewData = $action->createViewData();
 
-        $this->assertEquals('open-action', $viewData['component']);
-        $this->assertEquals('label.open', $viewData['label']);
-        $this->assertEquals('http://localhost/open', $viewData['url']);
         $this->assertEquals('_blank', $viewData['target']);
-        $this->assertEquals('edit', $viewData['key']);
+        $this->assertEquals('edit', $viewData['frameKey']);
     }
 
-    public function testType()
+    public function testName()
     {
-        $dependencies = $this->createDependencies();
-        $type = $this->createInstance($dependencies);
-        $this->assertEquals('open', $type->getType());
+        $this->assertEquals('open', OpenActionType::getName());
     }
 }
 
 class OpenActionTypeDependencies
 {
-    /** @var TranslatorInterface|\PHPUnit_Framework_MockObject_MockObject */
-    public $translator;
-    /** @var ActionLanguageExpression|\PHPUnit_Framework_MockObject_MockObject */
-    public $actionLanguageExpression;
-    /** @var RouterInterface|\PHPUnit_Framework_MockObject_MockObject */
-    public $router;
 }

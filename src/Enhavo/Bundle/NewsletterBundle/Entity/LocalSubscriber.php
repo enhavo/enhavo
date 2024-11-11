@@ -6,12 +6,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\NewsletterBundle\Model\GroupInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\LocalSubscriberInterface;
-use Sylius\Component\Resource\Model\ResourceInterface;
 
 /**
  * Subscriber
  */
-class LocalSubscriber implements ResourceInterface, LocalSubscriberInterface
+class LocalSubscriber implements LocalSubscriberInterface
 {
     /**
      * @var integer

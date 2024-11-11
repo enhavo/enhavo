@@ -1,18 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 03.09.17
- * Time: 14:37
- */
 
 namespace Enhavo\Bundle\MediaBundle\Form\Type;
 
+use Doctrine\ORM\EntityRepository;
 use Enhavo\Bundle\FormBundle\Form\Type\PositionType;
-use Enhavo\Bundle\MediaBundle\Entity\File;
-use Enhavo\Bundle\MediaBundle\Media\ExtensionManager;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
+use Enhavo\Bundle\ResourceBundle\Action\ActionManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -29,33 +22,31 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 class FileType extends AbstractType
 {
     public function __construct(
-        private FormFactory $formFactory,
-        private RepositoryInterface $repository,
-        private ExtensionManager $extensionManager,
-        private NormalizerInterface $serializer,
-        private array $formConfiguration,
+        private readonly FormFactory $formFactory,
+        private readonly EntityRepository $repository,
+        private readonly NormalizerInterface $serializer,
+        private readonly array $formConfigurations,
+        private readonly string $dataClass,
+        private readonly ActionManager $actionManager,
     )
     {
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $submitData = null;
-        $repository = $this->repository;
-        $formFactory = $this->formFactory;
 
         $type = get_class($builder->getType()->getInnerType());
 
-        $builder->addModelTransformer(new CallbackTransformer(
+        $transformer = new CallbackTransformer(
             function ($originalDescription) {
                 return $originalDescription;
             },
-            function ($submittedDescription) use (&$submitData, $repository, $formFactory, $options, $type) {
+            function ($submittedDescription) use (&$submitData, $options, $type) {
                 if($submittedDescription instanceof FileInterface && $submittedDescription->getId() === null) {
-                    $file = $repository->find($submitData['id']);
+                    $file = $this->repository->find($submitData['id']);
 
-                    /** @var FormFactory $formFactory */
-                    $form = $formFactory->create($type, $file, $options);
+                    $form = $this->formFactory->create($type, $file, $options);
                     $form->submit($submitData);
                     /** @var FileInterface $file */
                     $file = $form->getData();
@@ -66,29 +57,10 @@ class FileType extends AbstractType
                 }
                 return $submittedDescription;
             }
-        ));
+        );
 
-        $builder->addViewTransformer(new CallbackTransformer(
-            function ($originalDescription) {
-                return $originalDescription;
-            },
-            function ($submittedDescription) use (&$submitData, $repository, $formFactory, $options, $type) {
-                if($submittedDescription instanceof FileInterface && $submittedDescription->getId() === null) {
-                    $file = $repository->find($submitData['id']);
-
-                    /** @var FormFactory $formFactory */
-                    $form = $formFactory->create($type, $file, $options);
-                    $form->submit($submitData);
-                    /** @var FileInterface $file */
-                    $file = $form->getData();
-                    $file->setGarbage(false);
-                    $file->setGarbageTimestamp(null);
-
-                    return $file;
-                }
-                return $submittedDescription;
-            }
-        ));
+        $builder->addModelTransformer($transformer);
+        $builder->addViewTransformer($transformer);
 
         $builder->addEventListener(FormEvents::PRE_SUBMIT, function(FormEvent $event) use (&$submitData)
         {
@@ -103,14 +75,11 @@ class FileType extends AbstractType
 
             $form->add('id', HiddenType::class, [
                 'required' => true,
-                'attr' => [
-                    'data-media-item-id' => $data instanceof FileInterface ? $data->getId() : true
-                ],
                 'mapped' => false,
             ]);
         });
 
-        $builder->add('filename', TextType::class, [
+        $builder->add('basename', TextType::class, [
             'required' => true,
             'attr' => ['data-media-item-filename' => true],
         ]);
@@ -119,14 +88,14 @@ class FileType extends AbstractType
             'required' => true
         ]);
 
-        if($options['parameters_type']) {
-            $builder->add('parameters', $options['parameters_type'], $options['parameters_options']);
+        $parameterType = $options['parameters_type'] ?? $this->formConfigurations[$options['config']]['parameters_type'];
+        $parameterOptions = $options['parameters_options'] ?? $this->formConfigurations[$options['config']]['parameters_options'];
+        if ($parameterType) {
+            $builder->add('parameters', $parameterType, $parameterOptions);
         }
-
-        $this->extensionManager->buildForm($builder, $options);
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $vueData = $view->vars['vue_data'];
         if ($vueData) {
@@ -136,29 +105,35 @@ class FileType extends AbstractType
             } else if (!isset($vueData['componentModel'])) {
                 $vueData['componentModel'] = 'MediaItemForm';
             }
+
+            $vueData['actions'] = $this->getActions($options, $form);
+            $vueData['formats'] = $options['formats'];
         }
     }
 
-    public function finishView(FormView $view, FormInterface $form, array $options)
+    private function getActions($options, FormInterface $form): array
     {
-        if (isset($view->children['parameters'])) {
-            foreach ($view->children['parameters'] as $child) {
-                $child->vars['attr'] = $child->vars['attr'] ?: [];
-                $child->vars['attr']['data-parameter-key'] = $child->vars['name'];
-            }
+        $configuration = $options['actions_file'] ?? $this->formConfigurations[$options['config']]['actions_file'];
+        $actions = $this->actionManager->getActions($configuration);
+
+        $viewData = [];
+        foreach ($actions as $action) {
+            $viewData[] = $action->createViewData();
         }
+        return $viewData;
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'parameters_type' => $this->formConfiguration['parameters_type'],
-            'parameters_options' => [],
-            'data_class' => File::class,
-            'extensions' => []
+            'parameters_type' => null,
+            'parameters_options' => null,
+            'data_class' => $this->dataClass,
+            'formats' => [],
+            'config' => 'default',
+            'actions' => null,
         ]);
+
+        $resolver->setAllowedValues('config', array_keys($this->formConfigurations));
     }
 }

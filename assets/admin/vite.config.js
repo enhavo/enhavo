@@ -24,13 +24,16 @@ export default defineConfig({
             'select2',
             'icheck',
             'tinymce',
+            'html-entities',
             'tinymce/plugins/advlist',
+            'tinymce/plugins/autolink',
             'tinymce/plugins/code',
             'tinymce/plugins/emoticons',
             'tinymce/plugins/emoticons/js/emojis',
             'tinymce/plugins/link',
             'tinymce/plugins/lists',
             'tinymce/plugins/table',
+            'expression-language/lib/index',
         ],
     },
     plugins: [
@@ -92,6 +95,7 @@ export default defineConfig({
         origin: 'http://localhost:' + process.env.VITE_ADMIN_PORT
     },
     resolve: {
+        preserveSymlinks: true,
         alias: {
             vue: 'vue/dist/vue.esm-bundler.js'
         }

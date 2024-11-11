@@ -22,21 +22,7 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->arrayNode('widgets')
-                    ->useAttributeAsKey('name')
-                    ->arrayPrototype()
-                        ->children()
-                            ->scalarNode('type')->isRequired()->end()
-                            ->scalarNode('label')->end()
-                            ->arrayNode('provider')
-                                ->children()
-                                    ->scalarNode('type')->isRequired()->end()
-                                    ->scalarNode('repository')->end()
-                                    ->scalarNode('method')->end()
-                                ->end()
-                            ->end()
-                        ->end()
-                    ->end()
+                ->variableNode('widgets')
                 ->end()
             ->end();
 

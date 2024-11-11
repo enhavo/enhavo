@@ -1,7 +1,0 @@
-services:
-    Enhavo\Bundle\UserBundle\View\Type\ChangePasswordViewType:
-        parent: Enhavo\Bundle\AppBundle\View\Type\UpdateViewType
-        arguments:
-            $tokenStorage: '@security.token_storage'
-        tags:
-            - { name: enhavo_app.view }

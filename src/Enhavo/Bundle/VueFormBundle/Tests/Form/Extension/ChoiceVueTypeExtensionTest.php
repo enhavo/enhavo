@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\VueFormBundle\Test\Form\Extension;
 
-use Enhavo\Bundle\AppBundle\Tests\Mock\TranslatorMock;
+use Enhavo\Bundle\ResourceBundle\Tests\Mock\TranslatorMock;
 use Enhavo\Bundle\VueFormBundle\Form\Extension\ChoiceVueTypeExtension;
 use Enhavo\Bundle\VueFormBundle\Form\Extension\FormVueTypeExtension;
 use Enhavo\Bundle\VueFormBundle\Form\Extension\VueTypeExtension;

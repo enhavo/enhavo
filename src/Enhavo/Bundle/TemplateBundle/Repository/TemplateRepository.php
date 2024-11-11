@@ -8,8 +8,7 @@
 
 namespace Enhavo\Bundle\TemplateBundle\Repository;
 
-use Enhavo\Bundle\AppBundle\Repository\EntityRepository;
-use Enhavo\Bundle\SliderBundle\Entity\Slider;
+use Enhavo\Bundle\ResourceBundle\Repository\EntityRepository;
 
 class TemplateRepository extends EntityRepository
 {

@@ -2,7 +2,9 @@
 <html>
     <head>
         {% block head %}{% endblock %}
-        {% block stylesheets %}{% endblock %}
+        {% block stylesheets %}
+            {{ vite_css_tags('entrypoints/application.js', 'admin') }}
+        {% endblock %}
     </head>
     <body>
         {% block body %}
@@ -15,8 +17,30 @@
             <hr>
             <pre id="data">{{ data|json_encode(constant('JSON_PRETTY_PRINT')) }}</pre>
         {% endblock %}
+
+        {% block routes %}
+            {% if routes is defined %}
+                <script id="routes" type="application/json">{{ routes|json_encode|e }}</script>
+            {% else %}
+                <script id="routes" type="application/json">{"base_url":"","routes":{}}</script>
+            {% endif %}
+        {% endblock %}
+
+        {% block translations %}
+            {% if translations is defined %}
+                <script id="translations" type="application/json">{{ translations|json_encode|e }}</script>
+            {% endif %}
+        {% endblock %}
+
+        {% block vue_routes %}
+            {% if vue_routes is defined %}
+                <script id="vue_routes" type="application/json">{{ vue_routes|json_encode|e }}</script>
+            {% endif %}
+        {% endblock %}
+
         {% block javascripts %}
-            {{ encore_entry_script_tags('base', null, webpack_build()) }}
+            {{ vite_js_tags('entrypoints/application.js', 'theme') }}
+            {{ vite_js_preload_tags('entrypoints/application.js', 'theme') }}
         {% endblock %}
     </body>
 </html>

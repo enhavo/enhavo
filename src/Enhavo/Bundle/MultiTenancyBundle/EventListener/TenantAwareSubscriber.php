@@ -8,10 +8,10 @@
 
 namespace Enhavo\Bundle\MultiTenancyBundle\EventListener;
 
-use Enhavo\Bundle\AppBundle\Event\ResourceEvent;
-use Enhavo\Bundle\AppBundle\Event\ResourceEvents;
 use Enhavo\Bundle\MultiTenancyBundle\Model\TenantAwareInterface;
 use Enhavo\Bundle\MultiTenancyBundle\Tenant\TenantManager;
+use Enhavo\Bundle\ResourceBundle\Event\ResourceEvent;
+use Enhavo\Bundle\ResourceBundle\Event\ResourceEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class TenantAwareSubscriber implements EventSubscriberInterface

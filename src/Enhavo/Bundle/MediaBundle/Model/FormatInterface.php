@@ -10,102 +10,30 @@
 namespace Enhavo\Bundle\MediaBundle\Model;
 
 use Enhavo\Bundle\MediaBundle\Content\ContentInterface;
-use Sylius\Component\Resource\Model\ResourceInterface;
 
-interface FormatInterface extends ResourceInterface, FileContentInterface
+interface FormatInterface extends FileContentInterface
 {
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId();
+    public function getId(): ?int;
 
-    /**
-     * Set mimeType
-     *
-     * @param string $mimeType
-     * @return FileInterface
-     */
-    public function setMimeType($mimeType);
+    public function setMimeType(string $mimeType);
 
-    /**
-     * Get mimeType
-     *
-     * @return string
-     */
-    public function getMimeType();
+    public function setExtension(?string $extension): void;
 
-    /**
-     * Set extension
-     *
-     * @param string $extension
-     * @return FileInterface
-     */
-    public function setExtension($extension);
+    public function getName(): string;
 
-    /**
-     * Get extension
-     *
-     * @return string
-     */
-    public function getExtension();
+    public function setName(string $filename);
 
-    /**
-     * @return string
-     */
-    public function getName();
+    public function getParameters(): array;
 
-    /**
-     * @param string $filename
-     *
-     * @return FileInterface
-     */
-    public function setName($filename);
+    public function setParameters(array $parameters): void;
 
-    /**
-     * @return array
-     */
-    public function getParameters();
-
-    /**
-     * @param array $parameters
-     * @return FileInterface
-     */
-    public function setParameters($parameters);
-
-    /**
-     * @return ContentInterface
-     */
-    public function getContent();
-
-    /**
-     * @param ContentInterface $content
-     */
     public function setContent(ContentInterface $content);
 
-    /**
-     * @param FileInterface $file
-     */
     public function setFile(FileInterface $file);
 
-    /**
-     * @return FileInterface
-     */
-    public function getFile();
+    public function getFile(): FileInterface;
 
-    /**
-     * @return string
-     */
-    public function getFilename();
+    public function getLockAt(): ?\DateTime;
 
-    /**
-     * @return \DateTime|null
-     */
-    public function getLockAt();
-
-    /**
-     * @param \DateTime|null $lockAt
-     */
-    public function setLockAt($lockAt);
+    public function setLockAt(?\DateTime $lockAt);
 }

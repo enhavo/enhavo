@@ -3,7 +3,7 @@
 namespace <?= $namespace; ?>;
 
 use Enhavo\Bundle\AppBundle\Action\AbstractActionType;
-use Enhavo\Bundle\AppBundle\Action\ActionTypeInterface;
+use Enhavo\Bundle\ResourceBundle\Action\ActionTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class <?= $class_name; ?> extends AbstractActionType implements ActionTypeInterface

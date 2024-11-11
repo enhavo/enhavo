@@ -9,13 +9,12 @@
 namespace Enhavo\Bundle\TemplateBundle\Init;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Enhavo\Bundle\AppBundle\Factory\Factory;
 use Enhavo\Bundle\AppBundle\Init\InitInterface;
 use Enhavo\Bundle\AppBundle\Init\Output;
-use Enhavo\Bundle\AppBundle\Repository\EntityRepository;
-use Enhavo\Bundle\AppBundle\Resource\ResourceManager;
+use Enhavo\Bundle\ResourceBundle\Factory\Factory;
+use Enhavo\Bundle\ResourceBundle\Repository\EntityRepository;
+use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
 use Enhavo\Bundle\TemplateBundle\Entity\Template;
-use Enhavo\Bundle\TemplateBundle\Factory\TemplateFactory;
 use Enhavo\Bundle\TemplateBundle\Template\TemplateManager;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
@@ -82,7 +81,7 @@ class InitTemplate implements InitInterface
                 $io->writeln(sprintf('Add template "%s"', $code));
                 $newTemplate = $this->templateFactory->createByTemplate($template);
                 $newTemplate->setCode($code);
-                $this->resourceManager->create($newTemplate);
+                $this->resourceManager->save($newTemplate);
             }
         }
 

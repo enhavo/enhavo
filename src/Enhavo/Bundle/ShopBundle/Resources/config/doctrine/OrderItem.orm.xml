@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
-    <entity name="Enhavo\Bundle\ShopBundle\Entity\OrderItem" table="shop_order_item">
-        <field name="name" nullable="true" />
-
-        <many-to-one field="product" target-entity="Sylius\Component\Product\Model\ProductVariantInterface" />
-    </entity>
-</doctrine-mapping>

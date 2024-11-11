@@ -2,14 +2,14 @@
 
 namespace Enhavo\Bundle\MultiTenancyBundle\AutoGenerator\Generator;
 
-use Enhavo\Bundle\AppBundle\Repository\EntityRepositoryInterface;
 use Enhavo\Bundle\MultiTenancyBundle\Resolver\ResolverInterface;
+use Enhavo\Bundle\ResourceBundle\Repository\FilterRepositoryInterface;
 use Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator\PrefixGenerator;
 
 class TenantPrefixGenerator extends PrefixGenerator
 {
     /**
-     * @var EntityRepositoryInterface
+     * @var FilterRepositoryInterface
      */
     private $routeRepository;
 

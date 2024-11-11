@@ -1,5 +1,5 @@
 <template>
-    <button type="submit">{{ form.label }}</button>
+    <button type="submit" v-show="form.isVisible()">{{ form.label }}</button>
 </template>
 
 <script setup lang="ts">

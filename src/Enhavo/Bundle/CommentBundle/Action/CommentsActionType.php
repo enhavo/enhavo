@@ -8,30 +8,24 @@
 
 namespace Enhavo\Bundle\CommentBundle\Action;
 
-use Enhavo\Bundle\AppBundle\Action\AbstractActionType;
-use Enhavo\Bundle\AppBundle\Action\ActionLanguageExpression;
+use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\CommentBundle\Exception\CommentSubjectException;
 use Enhavo\Bundle\CommentBundle\Model\CommentSubjectInterface;
+use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CommentsActionType extends AbstractActionType
 {
-    /**
-     * @var RouterInterface
-     */
-    private $router;
-
-    public function __construct(TranslatorInterface $translator, ActionLanguageExpression $actionLanguageExpression, RouterInterface $router)
+    public function __construct(
+        private readonly RouterInterface $router,
+    )
     {
-        parent::__construct($translator, $actionLanguageExpression);
-        $this->router = $router;
     }
 
-    public function createViewData(array $options, $resource = null)
+    public function createViewData(array $options, Data $data, object $resource = null): void
     {
-        if(!$resource instanceof CommentSubjectInterface) {
+        if (!$resource instanceof CommentSubjectInterface) {
             throw CommentSubjectException::createTypeException($resource);
         }
 
@@ -39,26 +33,24 @@ class CommentsActionType extends AbstractActionType
             'id' => $resource->getThread()->getId()
         ]);
 
-        $data = parent::createViewData($options, $resource);
         $data['url'] = $url;
-        $data['target'] = '_view';
+        $data['target'] = '_frame';
         $data['key'] = 'comment-view';
-        return $data;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        parent::configureOptions($resolver);
         $resolver->setDefaults([
             'component' => 'open-action',
-            'route' => 'enhavo_comment_comment_index',
+            'model' => 'OpenAction',
+            'route' => 'enhavo_comment_admin_comment_index',
             'label' => 'comment.label.comments',
             'translation_domain' => 'EnhavoCommentBundle',
             'icon' => 'comment'
         ]);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'comments';
     }

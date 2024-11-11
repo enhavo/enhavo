@@ -8,22 +8,22 @@
 
 namespace Enhavo\Bundle\BlockBundle\Block;
 
-use Enhavo\Bundle\AppBundle\View\ViewData;
+use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\BlockBundle\Block\Type\BaseBlockType;
 use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
-use Enhavo\Component\Type\AbstractType ;
+use Enhavo\Component\Type\AbstractType;
 
+/**
+ * @property BlockTypeInterface $parent
+ */
 abstract class AbstractBlockType extends AbstractType implements BlockTypeInterface
 {
-    /** @var BlockTypeInterface */
-    protected $parent;
-
-    public function createViewData(BlockInterface $block, ViewData $viewData, $resource, array $options)
+    public function createViewData(BlockInterface $block, Data $data, $resource, array $options)
     {
 
     }
 
-    public function finishViewData(BlockInterface $block, ViewData $viewData, $resource, array $options)
+    public function finishViewData(BlockInterface $block, Data $data, $resource, array $options)
     {
 
     }
@@ -61,11 +61,6 @@ abstract class AbstractBlockType extends AbstractType implements BlockTypeInterf
     public function getLabel(array $options)
     {
         return $this->parent->getLabel($options);
-    }
-
-    public function getTranslationDomain(array $options)
-    {
-        return $this->parent->getTranslationDomain($options);
     }
 
     public static function getParentType(): ?string

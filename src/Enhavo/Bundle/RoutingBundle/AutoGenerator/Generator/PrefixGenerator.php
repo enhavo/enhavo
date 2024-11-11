@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator;
 
-use Enhavo\Bundle\AppBundle\Repository\EntityRepositoryInterface;
+use Enhavo\Bundle\ResourceBundle\Repository\FilterRepositoryInterface;
 use Enhavo\Bundle\RoutingBundle\AutoGenerator\AbstractGenerator;
 use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
 use Enhavo\Bundle\RoutingBundle\Slugifier\Slugifier;
@@ -17,7 +17,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class PrefixGenerator extends AbstractGenerator
 {
     /**
-     * @var EntityRepositoryInterface
+     * @var FilterRepositoryInterface
      */
     private $routeRepository;
 

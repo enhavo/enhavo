@@ -13,7 +13,7 @@ use Doctrine\ORM\EntityRepository;
 use Enhavo\Bundle\AppBundle\Init\InitInterface;
 use Enhavo\Bundle\AppBundle\Init\Output;
 use Enhavo\Bundle\TaxonomyBundle\Entity\Taxonomy;
-use Sylius\Component\Resource\Factory\FactoryInterface;
+use Enhavo\Bundle\ResourceBundle\Factory\FactoryInterface;
 
 class InitTaxonomy implements InitInterface
 {

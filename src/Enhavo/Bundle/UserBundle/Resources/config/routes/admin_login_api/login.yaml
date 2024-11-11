@@ -1,0 +1,26 @@
+enhavo_user_admin_api_login_form:
+    options:
+        expose: true
+    path: /login/form
+    methods: [GET, POST]
+    defaults:
+        _format: json
+        _config: admin
+        _expose: admin_login
+        _endpoint:
+            type: Enhavo\Bundle\UserBundle\Endpoint\Type\Login\LoginEndpointType
+
+enhavo_user_admin_api_login_data:
+    options:
+        expose: true
+    path: /login/data
+    methods: [GET]
+    defaults:
+        _expose: admin_login
+        _area: admin_login
+        _config: admin
+        _vue:
+            component: user-logout
+            groups: admin_login
+        _endpoint:
+            type: Enhavo\Bundle\UserBundle\Endpoint\Type\Login\LoginDataEndpointType

@@ -1,0 +1,38 @@
+enhavo_resource:
+    resources:
+        enhavo_navigation.navigation:
+            priority: -10
+            classes:
+                model: Enhavo\Bundle\NavigationBundle\Entity\Navigation
+                factory: Enhavo\Bundle\NavigationBundle\Factory\NavigationFactory
+                repository: Enhavo\Bundle\NavigationBundle\Repository\NavigationRepository
+    grids:
+        enhavo_navigation.navigation:
+            extends: enhavo_resource.grid
+            resource: enhavo_navigation.navigation
+            columns:
+                name:
+                    type: text
+                    property: name
+                    label: navigation.label.name
+                    translation_domain: EnhavoNavigationBundle
+                    width: 10
+    inputs:
+        enhavo_navigation.navigation:
+            extends: enhavo_resource.input
+            resource: enhavo_navigation.navigation
+            form: Enhavo\Bundle\NavigationBundle\Form\Type\NavigationType
+            tabs:
+                main:
+                    label: navigation.label.navigation
+                    translation_domain: EnhavoNavigationBundle
+                    type: form
+                    arrangement:
+                        - name
+                        - code
+                nodes:
+                    label: navigation.label.items
+                    translation_domain: EnhavoNavigationBundle
+                    type: form
+                    arrangement:
+                        - nodes

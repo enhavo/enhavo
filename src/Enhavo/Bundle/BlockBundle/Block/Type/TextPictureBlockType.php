@@ -16,9 +16,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TextPictureBlockType extends AbstractBlockType
 {
-    public function configureOptions(OptionsResolver $optionsResolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $optionsResolver->setDefaults([
+        $resolver->setDefaults([
             'model' => TextPictureBlock::class,
             'form' => TextPictureBlockFormType::class,
             'factory' => TextPictureBlockFactory::class,

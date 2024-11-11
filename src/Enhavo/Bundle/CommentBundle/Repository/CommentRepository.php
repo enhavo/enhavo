@@ -8,10 +8,10 @@
 
 namespace Enhavo\Bundle\CommentBundle\Repository;
 
-use Enhavo\Bundle\AppBundle\Filter\FilterQuery;
-use Enhavo\Bundle\AppBundle\Repository\EntityRepository;
 use Enhavo\Bundle\CommentBundle\Model\CommentInterface;
 use Enhavo\Bundle\CommentBundle\Model\ThreadInterface;
+use Enhavo\Bundle\ResourceBundle\Filter\FilterQuery;
+use Enhavo\Bundle\ResourceBundle\Repository\EntityRepository;
 
 class CommentRepository extends EntityRepository
 {

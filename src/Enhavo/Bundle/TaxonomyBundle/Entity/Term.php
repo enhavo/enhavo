@@ -6,9 +6,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\TaxonomyBundle\Model\TaxonomyInterface;
 use Enhavo\Bundle\TaxonomyBundle\Model\TermInterface;
-use Sylius\Component\Resource\Model\ResourceInterface;
 
-class Term implements TermInterface, ResourceInterface
+class Term implements TermInterface
 {
     private ?int $id = null;
     private ?string $name = null;

@@ -1,135 +1,83 @@
 services:
-    enhavo_app.action_collector:
-        class: Enhavo\Bundle\AppBundle\Type\TypeCollector
-        arguments:
-            - '@service_container'
-            - 'Action'
-
-    enhavo_app.action_manager:
-        alias: Enhavo\Bundle\AppBundle\Action\ActionManager
-
-    Enhavo\Bundle\AppBundle\Action\ActionManager:
-        arguments:
-            - '@enhavo_app.action_collector'
-            - '@security.authorization_checker'
-
-    enhavo_app.action_language_expression:
-        class: Enhavo\Bundle\AppBundle\Action\ActionLanguageExpression
-        arguments:
-            - '@sylius.expression_language'
-        calls:
-            - [ 'addVariable', [ 'authorizationChecker', '@security.authorization_checker' ] ]
-            - [ 'addVariable', [ 'tokenStorage', '@security.token_storage' ] ]
-            - [ 'addVariable', [ 'requestStack', '@request_stack' ] ]
-
-    Enhavo\Bundle\AppBundle\Action\AbstractActionType:
-        abstract: true
-        arguments:
-            - '@translator'
-            - '@enhavo_app.action_language_expression'
-
-    Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType:
-        parent: Enhavo\Bundle\AppBundle\Action\AbstractActionType
-        abstract: true
+    Enhavo\Bundle\AppBundle\Action\Type\PreviewActionType:
         arguments:
             - '@router'
+            - '@Enhavo\Bundle\ResourceBundle\RouteResolver\RouteNameRouteResolver'
+            - '@Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage'
+        tags:
+            - { name: enhavo_resource.action }
+
+    Enhavo\Bundle\AppBundle\Action\Type\AutoSaveActionType:
+        tags:
+            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\AppBundle\Action\Type\CreateActionType:
-        parent: Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType
-        public: true
+        arguments:
+            - '@router'
+            - '@Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface'
+            - '@Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage'
         tags:
-            - { name: enhavo.action, alias: create }
+            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\AppBundle\Action\Type\DownloadActionType:
-        parent: Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType
-        public: true
         tags:
-            - { name: enhavo.action, alias: download }
+            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\AppBundle\Action\Type\OpenActionType:
-        parent: Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType
-        public: true
         tags:
-            - { name: enhavo.action, alias: open }
-              
-    Enhavo\Bundle\AppBundle\Action\Type\DeleteActionType:
-        parent: Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType
-        arguments:
-            - '@security.csrf.token_manager'
-        public: true
-        tags:
-            - { name: enhavo.action, alias: delete }
+            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\AppBundle\Action\Type\CloseActionType:
-        parent: Enhavo\Bundle\AppBundle\Action\AbstractActionType
-        public: true
         tags:
-            - { name: enhavo.action, alias: close }
-
-    Enhavo\Bundle\AppBundle\Action\Type\PreviewActionType:
-        parent: Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType
-        public: true
-        tags:
-            - { name: enhavo.action, alias: preview }
-
-    Enhavo\Bundle\AppBundle\Action\Type\SaveActionType:
-        parent: Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType
-        public: true
-        tags:
-            - { name: enhavo.action, alias: save }
+            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\AppBundle\Action\Type\DuplicateActionType:
-        parent: Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType
-        public: true
+        arguments:
+            - '@security.csrf.token_manager'
         tags:
-            - { name: enhavo.action, alias: duplicate }
+            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\AppBundle\Action\Type\EventActionType:
-        parent: Enhavo\Bundle\AppBundle\Action\AbstractActionType
-        public: true
         tags:
-            - { name: enhavo.action, alias: event }
+            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\AppBundle\Action\Type\FormActionType:
-        parent: Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType
-        public: true
         tags:
-            - { name: enhavo.action, alias: form }
-
-    Enhavo\Bundle\AppBundle\Action\Type\FilterActionType:
-        parent: Enhavo\Bundle\AppBundle\Action\AbstractActionType
-        public: true
-        tags:
-            - { name: enhavo.action, alias: filter }
+            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\AppBundle\Action\Type\UpdateActionType:
-        parent: Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType
-        public: true
         tags:
-            - { name: enhavo.action, alias: update }
+            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\AppBundle\Action\Type\TransitionActionType:
-        parent: Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType
-        public: true
         tags:
-            - { name: enhavo.action, alias: transition }
+            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\AppBundle\Action\Type\ModalActionType:
-        parent: Enhavo\Bundle\AppBundle\Action\AbstractActionType
-        public: true
         tags:
-            - { name: enhavo.action, alias: modal }
+            - { name: enhavo_resource.action }
+
+    Enhavo\Bundle\AppBundle\Action\Type\NullActionType:
+        tags:
+            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\AppBundle\Action\Type\OutputStreamActionType:
-        parent: Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType
-        public: true
         tags:
-            - { name: enhavo.action, alias: output_stream }
+            - { name: enhavo_resource.action }
 
-    Enhavo\Bundle\AppBundle\Action\Type\DropdownActionType:
-        parent: Enhavo\Bundle\AppBundle\Action\AbstractActionType
-        arguments:
-            - '@enhavo_app.action_manager'
-        public: true
+#    Enhavo\Bundle\AppBundle\Action\Type\DropdownActionType:
+#        calls:
+#            - [setActionManager, ['@Enhavo\Bundle\ResourceBundle\Action\ActionManager']]
+#        tags:
+#            - { name: enhavo_resource.action }
+
+    Enhavo\Bundle\AppBundle\Action\Type\FilterActionType:
         tags:
-            - { name: enhavo.action, alias: dropdown }
+            - { name: enhavo_resource.action }
+
+    Enhavo\Bundle\AppBundle\Action\Type\UrlActionType:
+        arguments:
+            - '@router'
+            - '@Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage'
+        tags:
+            - { name: enhavo_resource.action }

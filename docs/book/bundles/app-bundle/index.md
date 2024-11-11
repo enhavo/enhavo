@@ -1,11 +1,9 @@
 # App bundle
 
-::: warning
-This article is outdated and may contain information that are not in use anymore
-:::
-
 <!--@include: ./introduction.md -->
 <!--@include: ./installation.md -->
 <!--@include: ./menu.md -->
-<!--@include: ./routing.md -->
-<!--@include: ./template.md -->
+<!--@include: ./frame-manager.md -->
+<!--@include: ./route-generator.md -->
+<!--@include: ./template-resolver.md -->
+<!--@include: ./mailer-manager.md -->

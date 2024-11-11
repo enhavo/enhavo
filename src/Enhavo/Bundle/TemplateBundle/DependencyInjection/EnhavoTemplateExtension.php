@@ -8,28 +8,21 @@
 
 namespace Enhavo\Bundle\TemplateBundle\DependencyInjection;
 
-use Sylius\Bundle\ResourceBundle\DependencyInjection\Extension\AbstractResourceExtension;
+use Enhavo\Bundle\ResourceBundle\DependencyInjection\PrependExtensionTrait;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
-use Symfony\Component\Yaml\Yaml;
 
-/**
- * This is the class that loads and manages your bundle configuration
- *
- * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
- */
-class EnhavoTemplateExtension extends AbstractResourceExtension implements PrependExtensionInterface
+class EnhavoTemplateExtension extends Extension implements PrependExtensionInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function load(array $config, ContainerBuilder $container)
+    use PrependExtensionTrait;
+
+    public function load(array $configs, ContainerBuilder $container)
     {
-        $config = $this->processConfiguration(new Configuration(), $config);
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $this->registerResources('enhavo_template', $config['driver'], $config['resources'], $container);
+        $config = $this->processConfiguration(new Configuration(), $configs);
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
 
         $container->setParameter('enhavo_template.template', $config['template']);
 
@@ -41,16 +34,11 @@ class EnhavoTemplateExtension extends AbstractResourceExtension implements Prepe
         }
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function prepend(ContainerBuilder $container)
+    protected function prependFiles(): array
     {
-        $configs = Yaml::parse(file_get_contents(__DIR__.'/../Resources/config/app/config.yaml'));
-        foreach($configs as $name => $config) {
-            if (is_array($config)) {
-                $container->prependExtensionConfig($name, $config);
-            }
-        }
+        return [
+            __DIR__.'/../Resources/config/app/config.yaml',
+            __DIR__.'/../Resources/config/resources/template.yaml',
+        ];
     }
 }

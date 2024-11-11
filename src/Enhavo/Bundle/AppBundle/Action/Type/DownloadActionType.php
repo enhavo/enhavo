@@ -2,33 +2,34 @@
 
 namespace Enhavo\Bundle\AppBundle\Action\Type;
 
-use Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType;
-use Enhavo\Bundle\AppBundle\Action\ActionTypeInterface;
+use Enhavo\Bundle\ApiBundle\Data\Data;
+use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class DownloadActionType extends AbstractUrlActionType implements ActionTypeInterface
+class DownloadActionType extends AbstractActionType
 {
-    public function createViewData(array $options, $resource = null)
+    public function createViewData(array $options, Data $data, object $resource = null): void
     {
-        $data = parent::createViewData($options, $resource);
-        $data['ajax'] = $options['ajax'];
-        return $data;
+        $data->set('ajax', $options['ajax']);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        parent::configureOptions($resolver);
-
         $resolver->setDefaults([
-            'component' => 'download-action',
             'label' => 'label.download',
             'translation_domain' => 'EnhavoAppBundle',
             'icon' => 'file_download',
-            'ajax' => false
+            'ajax' => false,
+            'model' => 'DownloadAction',
         ]);
     }
 
-    public function getType()
+    public static function getParentType(): ?string
+    {
+        return UrlActionType::class;
+    }
+
+    public static function getName(): ?string
     {
         return 'download';
     }

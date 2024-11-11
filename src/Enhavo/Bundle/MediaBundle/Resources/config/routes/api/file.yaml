@@ -1,0 +1,8 @@
+enhavo_media_api_file_upload:
+    path:  /file/upload
+    methods: [POST]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: media_file_upload
+            garbage: true

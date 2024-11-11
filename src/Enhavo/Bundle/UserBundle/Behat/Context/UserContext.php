@@ -133,7 +133,7 @@ class UserContext implements Context, ClientAwareContext, KernelAwareContext
 
     private function findOrCreateUser($username, $email)
     {
-        $user = $this->get('enhavo_user.repository.user')->findOneBy([
+        $user = $this->get('enhavo_user.user.repository')->findOneBy([
             'username' => $username
         ]);
 
@@ -148,7 +148,7 @@ class UserContext implements Context, ClientAwareContext, KernelAwareContext
 
     private function findUser($username): ?UserInterface
     {
-        return $this->get('enhavo_user.repository.user')->findOneBy([
+        return $this->get('enhavo_user.user.repository')->findOneBy([
             'username' => $username
         ]);
     }

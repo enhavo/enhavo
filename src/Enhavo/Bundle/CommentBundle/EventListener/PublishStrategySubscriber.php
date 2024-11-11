@@ -8,12 +8,12 @@
 
 namespace Enhavo\Bundle\CommentBundle\EventListener;
 
-use Enhavo\Bundle\AppBundle\Event\ResourceEvent;
-use Enhavo\Bundle\AppBundle\Event\ResourceEvents;
 use Enhavo\Bundle\CommentBundle\Comment\PublishStrategyInterface;
 use Enhavo\Bundle\CommentBundle\Event\PostPublishCommentEvent;
 use Enhavo\Bundle\CommentBundle\Event\PrePublishCommentEvent;
 use Enhavo\Bundle\CommentBundle\Model\CommentInterface;
+use Enhavo\Bundle\ResourceBundle\Event\ResourceEvent;
+use Enhavo\Bundle\ResourceBundle\Event\ResourceEvents;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -61,8 +61,9 @@ class PublishStrategySubscriber  implements EventSubscriberInterface
 
     public function preCreate(ResourceEvent $event)
     {
-        if ($event->getSubject() instanceof CommentInterface) {
-            $this->publishStrategy->preCreate($event->getSubject(), $this->options);
+        $resource = $event->getSubject();
+        if ($resource instanceof CommentInterface) {
+            $this->publishStrategy->preCreate($resource, $this->options);
         }
 
         $this->onPreSave($event);
@@ -70,8 +71,9 @@ class PublishStrategySubscriber  implements EventSubscriberInterface
 
     public function postCreate(ResourceEvent $event)
     {
-        if ($event->getSubject() instanceof CommentInterface) {
-            $this->publishStrategy->postCreate($event->getSubject(), $this->options);
+        $resource = $event->getSubject();
+        if ($resource instanceof CommentInterface) {
+            $this->publishStrategy->postCreate($resource, $this->options);
         }
 
         $this->onPostSave($event);

@@ -1,0 +1,49 @@
+enhavo_resource:
+    resources:
+        enhavo_user.group:
+            priority: -10
+            classes:
+                model: Enhavo\Bundle\UserBundle\Model\Group
+                repository: Enhavo\Bundle\UserBundle\Repository\GroupRepository
+
+    grids:
+        enhavo_user.group:
+            extends: enhavo_resource.grid
+            resource: enhavo_user.group
+            actions: {  }
+            filters:
+                title:
+                    type: text
+                    property: name
+                    label: group.label.name
+                    translation_domain: EnhavoUserBundle
+            columns:
+                name:
+                    type: text
+                    label: group.label.name
+                    property: name
+                    width: 12
+            batches:
+                delete:
+                    type: delete
+
+    inputs:
+        enhavo_user.group:
+            extends: enhavo_resource.input
+            resource: enhavo_user.group
+            form: Enhavo\Bundle\UserBundle\Form\Type\GroupType
+            form_options: {  }
+            actions: {  }
+            tabs:
+                main:
+                    label: group.label.group
+                    translation_domain: EnhavoUserBundle
+                    type: form
+                    arrangement:
+                        - name
+                permission:
+                    label: group.label.permission
+                    translation_domain: EnhavoUserBundle
+                    type: form
+                    arrangement:
+                        - roles

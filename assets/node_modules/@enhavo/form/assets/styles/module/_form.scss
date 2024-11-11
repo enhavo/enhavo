@@ -9,10 +9,6 @@
 
     .btn-secondary {@extend %btn-secondary;}
 
-    .related-buttons-row {margin:2px -3px -3px -3px;
-        .btn-secondary {margin:3px;}
-    }
-
     .entity-tree-children {padding-left:30px;position:relative;
         &:before {content:"";position:absolute;top: 6px;left: 10px;border-left: 1px solid #ccc;border-bottom: 1px solid #ccc;width: 8px;height: 8px;}
         .entity-tree-children {
@@ -24,8 +20,8 @@
         + .choice-row {margin-top:3px;}
     }
 
-    .choice-input-container {padding-top:3px;
-        .choice-input-with-label {display: inline-block;white-space:nowrap;margin-right:20px;}
+    .choice-input-container {padding-top:3px;display:flex;flex-wrap:wrap;gap:20px;
+        .choice-input-with-label {display:flex;gap:6px;}
     }
 
     .html-tag-widget { position:relative;

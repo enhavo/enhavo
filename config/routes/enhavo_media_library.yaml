@@ -1,3 +1,8 @@
 enhavo_media_library_admin:
     resource: "@EnhavoMediaLibraryBundle/Resources/config/routes/admin/*"
-    prefix: /admin
+    prefix: /admin/media-library
+
+enhavo_media_library_admin_api:
+    resource: "@EnhavoMediaLibraryBundle/Resources/config/routes/admin_api/*"
+    prefix: /admin/api/media-library
+

@@ -3,9 +3,8 @@
 namespace Enhavo\Bundle\RoutingBundle\Tests\Mock;
 
 use Enhavo\Bundle\RoutingBundle\Model\Slugable;
-use Sylius\Component\Resource\Model\ResourceInterface;
 
-class SluggableMock implements ResourceInterface, Slugable
+class SluggableMock implements Slugable
 {
     public $id;
 
@@ -23,7 +22,7 @@ class SluggableMock implements ResourceInterface, Slugable
     /**
      * @return string|null
      */
-    public function getSlug()
+    public function getSlug(): ?string
     {
         return $this->slug;
     }
@@ -31,7 +30,7 @@ class SluggableMock implements ResourceInterface, Slugable
     /**
      * @param string|null $slug
      */
-    public function setSlug($slug)
+    public function setSlug($slug): void
     {
         $this->slug = $slug;
     }
@@ -39,7 +38,7 @@ class SluggableMock implements ResourceInterface, Slugable
     /**
      * @return string|null
      */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -47,7 +46,7 @@ class SluggableMock implements ResourceInterface, Slugable
     /**
      * @param string|null $name
      */
-    public function setName($name)
+    public function setName($name): void
     {
         $this->name = $name;
     }

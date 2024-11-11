@@ -9,7 +9,7 @@ results depend not only on a search term but also on other attributes
 <?php
 namespace App\Repository;
 
-use Enhavo\Bundle\AppBundle\Repository\EntityRepository;
+use Enhavo\Bundle\ResourceBundle\Repository\EntityRepository;
 
 class ProductRepository extends EntityRepository
 {

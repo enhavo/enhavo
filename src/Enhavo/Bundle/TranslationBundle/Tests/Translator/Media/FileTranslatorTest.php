@@ -73,10 +73,10 @@ class FileTranslatorTest extends TestCase
 
         /** @var FileInterface|MockObject $file */
         $file = new File();
-        $file->setFilename('file-a');
+        $file->setBasename('file-a');
         /** @var FileInterface|MockObject $file */
         $file2 = new File();
-        $file2->setFilename('file-b');
+        $file2->setBasename('file-b');
 
         $dependencies->repository->method('findOneBy')->willReturnCallback(function () use ($file) {
             $translation = new TranslationFile();
@@ -161,10 +161,10 @@ class FileTranslatorTest extends TestCase
 
         /** @var FileInterface|MockObject $file */
         $file = new File();
-        $file->setFilename('file-a');
+        $file->setBasename('file-a');
         /** @var FileInterface|MockObject $file2 */
         $file2 = new File();
-        $file2->setFilename('file-b');
+        $file2->setBasename('file-b');
 
         $entity = new TranslatableMock();
         $entity->setFile($file);
@@ -182,10 +182,10 @@ class FileTranslatorTest extends TestCase
 
         /** @var FileInterface|MockObject $file */
         $file = new File();
-        $file->setFilename('file');
+        $file->setBasename('file');
         /** @var FileInterface|MockObject $file */
         $fileEn = new File();
-        $fileEn->setFilename('file-en');
+        $fileEn->setBasename('file-en');
 
         $entity = new TranslatableMock();
         $entity->setName('filed');

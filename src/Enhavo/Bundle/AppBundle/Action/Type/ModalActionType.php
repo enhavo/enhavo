@@ -2,31 +2,28 @@
 
 namespace Enhavo\Bundle\AppBundle\Action\Type;
 
-use Enhavo\Bundle\AppBundle\Action\AbstractActionType;
-use Enhavo\Bundle\AppBundle\Action\ActionTypeInterface;
+use Enhavo\Bundle\ApiBundle\Data\Data;
+use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
+use Enhavo\Bundle\ResourceBundle\Action\ActionTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ModalActionType extends AbstractActionType implements ActionTypeInterface
 {
-    public function createViewData(array $options, $resource = null)
+    public function createViewData(array $options, Data $data, object $resource = null): void
     {
-        $data = parent::createViewData($options, $resource);
         $data['modal'] = $options['modal'];
-        return $data;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        parent::configureOptions($resolver);
-
         $resolver->setDefaults([
-            'component' => 'modal-action',
+            'model' => 'ModalAction',
         ]);
 
         $resolver->setRequired(['modal']);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'modal';
     }

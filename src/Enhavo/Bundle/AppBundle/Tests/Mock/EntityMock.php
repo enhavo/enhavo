@@ -8,9 +8,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Tests\Mock;
 
-use Sylius\Component\Resource\Model\ResourceInterface;
-
-class EntityMock implements ResourceInterface
+class EntityMock
 {
     /**
      * @var string

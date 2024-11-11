@@ -3,47 +3,33 @@
 namespace Enhavo\Bundle\ContentBundle\Batch;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Enhavo\Bundle\AppBundle\Batch\AbstractBatchType;
+use Doctrine\ORM\EntityRepository;
+use Enhavo\Bundle\ApiBundle\Data\Data;
+use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Bundle\ContentBundle\Content\Publishable;
-use Sylius\Component\Resource\Model\ResourceInterface;
-use Symfony\Component\HttpFoundation\Response;
+use Enhavo\Bundle\ResourceBundle\Batch\AbstractBatchType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-/**
- * PublishType.php
- *
- * @since 04/07/16
- * @author gseidel
- */
 class PublishBatchType extends AbstractBatchType
 {
-    /** @var EntityManagerInterface */
-    private $em;
-
-    /**
-     * PublishBatchType constructor.
-     * @param EntityManagerInterface $em
-     */
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(
+        private EntityManagerInterface $em
+    )
     {
-        $this->em = $em;
     }
 
-    /**
-     * @param array $options
-     * @param Publishable[] $resources
-     * @return Response|null
-     */
-    public function execute(array $options, array $resources, ?ResourceInterface $resource = null): ?Response
+    public function execute(array $options, array $ids, EntityRepository $repository, Data $data, Context $context): void
     {
-        foreach($resources as $resource) {
-            $resource->setPublic(true);
+        foreach ($ids as $id) {
+            $resource = $repository->find($id);
+            if ($resource instanceof Publishable) {
+                $resource->setPublic(true);
+            }
         }
         $this->em->flush();
-        return null;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'label' => 'batch.publish.label',

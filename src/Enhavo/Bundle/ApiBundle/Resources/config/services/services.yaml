@@ -17,13 +17,13 @@ services:
     Enhavo\Bundle\ApiBundle\Routing\Loader\EndpointDirectoryLoader:
         arguments:
             - '@file_locator'
-            - '@Enhavo\Bundle\ApiBundle\Routing\Loader\AnnotatedRouteEndpointLoader'
+            - '@Enhavo\Bundle\ApiBundle\Routing\Loader\AttributeRouteEndpointLoader'
         tags:
             - { name: routing.loader }
 
-    Enhavo\Bundle\ApiBundle\Routing\Loader\AnnotatedRouteEndpointLoader:
+    Enhavo\Bundle\ApiBundle\Routing\Loader\AttributeRouteEndpointLoader:
         arguments:
-            - '@annotation_reader'
+            - '%kernel.environment%'
 
     Enhavo\Bundle\ApiBundle\Documentation\DocumentationCollector:
         arguments:
@@ -50,3 +50,7 @@ services:
     Enhavo\Bundle\ApiBundle\Twig\ApiProfilerExtension:
         tags:
             - { name: twig.extension }
+
+    Enhavo\Bundle\ApiBundle\Normalizer\DataDataNormalizer:
+        tags:
+            - { name: enhavo_api.data_normalizer }

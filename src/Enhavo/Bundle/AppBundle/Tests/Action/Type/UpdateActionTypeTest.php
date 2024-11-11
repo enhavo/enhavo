@@ -8,70 +8,54 @@
 
 namespace Enhavo\Bundle\AppBundle\Tests\Action\Type;
 
-use Enhavo\Bundle\AppBundle\Action\Action;
-use Enhavo\Bundle\AppBundle\Action\ActionLanguageExpression;
 use Enhavo\Bundle\AppBundle\Action\Type\UpdateActionType;
-use Enhavo\Bundle\AppBundle\Tests\Mock\ResourceMock;
-use Enhavo\Bundle\AppBundle\Tests\Mock\RouterMock;
+use Enhavo\Bundle\ResourceBundle\Tests\Mock\ResourceMock;
+use Enhavo\Bundle\ResourceBundle\Action\Action;
+use Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
-use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class UpdateActionTypeTest extends TestCase
 {
-    private function createDependencies()
+    use UrlActionTypeFactoryTrait;
+
+    private function createDependencies(): UpdateActionTypeDependencies
     {
         $dependencies = new UpdateActionTypeDependencies();
-        $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
-        $dependencies->actionLanguageExpression = $this->getMockBuilder(ActionLanguageExpression::class)->disableOriginalConstructor()->getMock();
-        $dependencies->router = new RouterMock();
+        $dependencies->routeResolver = $this->getMockBuilder(RouteResolverInterface::class)->getMock();
         return $dependencies;
     }
 
-    private function createInstance(UpdateActionTypeDependencies $dependencies)
+    private function createInstance(UpdateActionTypeDependencies $dependencies): UpdateActionType
     {
         return new UpdateActionType(
-            $dependencies->translator,
-            $dependencies->actionLanguageExpression,
-            $dependencies->router
+            $dependencies->routeResolver,
         );
     }
 
     public function testCreateViewData()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->translator->method('trans')->willReturnCallback(function ($value) {return $value;});
         $type = $this->createInstance($dependencies);
 
         $action = new Action($type, [
-            'route' => 'edit_route'
+            $this->createUrlActionType($this->createUrlActionTypeDependencies()),
+        ], [
+            'route' => 'edit_route',
         ]);
 
-        $viewData = $action->createViewData(new ResourceMock());
+        $viewData = $action->createViewData(new ResourceMock(1));
 
-        $this->assertEquals('open-action', $viewData['component']);
-        $this->assertEquals('label.edit', $viewData['label']);
         $this->assertEquals('/edit_route?id=1', $viewData['url']);
     }
 
-    public function testType()
+    public function testName()
     {
-        $dependencies = $this->createDependencies();
-        $type = $this->createInstance($dependencies);
-        $this->assertEquals('update', $type->getType());
+        $this->assertEquals('update', UpdateActionType::getName());
     }
 }
 
 class UpdateActionTypeDependencies
 {
-    /** @var TranslatorInterface|\PHPUnit_Framework_MockObject_MockObject */
-    public $translator;
-    /** @var ActionLanguageExpression|\PHPUnit_Framework_MockObject_MockObject */
-    public $actionLanguageExpression;
-    /** @var RouterInterface|\PHPUnit_Framework_MockObject_MockObject */
-    public $router;
+    public RouteResolverInterface|MockObject $routeResolver;
 }

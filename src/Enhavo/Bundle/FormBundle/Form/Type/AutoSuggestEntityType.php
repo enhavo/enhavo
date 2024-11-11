@@ -74,7 +74,7 @@ class AutoSuggestEntityType extends AbstractType
         $resolver->setDefaults([
             'query_builder' => null,
             'route' => null,
-            'factory' => null
+            'factory' => null,
         ]);
 
         $resolver->setRequired('property');

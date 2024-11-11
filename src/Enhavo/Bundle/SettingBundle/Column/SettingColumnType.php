@@ -8,44 +8,41 @@
 
 namespace Enhavo\Bundle\SettingBundle\Column;
 
-use Enhavo\Bundle\AppBundle\Column\AbstractColumnType;
+use Enhavo\Bundle\ApiBundle\Data\Data;
+use Enhavo\Bundle\ResourceBundle\Column\AbstractColumnType;
 use Enhavo\Bundle\SettingBundle\Entity\Setting;
 use Enhavo\Bundle\SettingBundle\Setting\SettingManager;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 
 class SettingColumnType extends AbstractColumnType
 {
-    /** @var SettingManager */
-    private $settingManager;
-
-    /**
-     * SettingColumnType constructor.
-     * @param SettingManager $settingManager
-     */
-    public function __construct(SettingManager $settingManager)
+    public function __construct(
+        private readonly SettingManager $settingManager
+    )
     {
-        $this->settingManager = $settingManager;
     }
 
-    public function createResourceViewData(array $options, $resource)
+    public function createResourceViewData(array $options, object $resource, Data $data): void
     {
-        /** @var $resource Setting */
-        $value = $this->getProperty($resource, $options['property']);
-        return $this->settingManager->getViewValue($resource->getKey(), $value);
+        if ($resource instanceof Setting) {
+            $propertyAccessor = new PropertyAccessor();
+            $value = $propertyAccessor->getValue($resource, $options['property']);
+            $data->set('value', $this->settingManager->getViewValue($resource->getKey(), $value));
+        }
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        parent::configureOptions($resolver);
         $resolver->setDefaults([
-            'sortingProperty' => null,
             'component' => 'column-text',
-            'property' => 'value'
+            'property' => 'value',
+            'model' => 'TextColumn'
         ]);
         $resolver->setRequired(['property']);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'setting';
     }

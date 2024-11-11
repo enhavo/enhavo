@@ -11,3 +11,11 @@ enhavo_media_file_format:
         _expose: template
         _endpoint:
             type: template_file
+
+enhavo_admin:
+    resource: "admin/*"
+    prefix: /admin
+
+enhavo_test:
+    resource: "test/*"
+    prefix: /test

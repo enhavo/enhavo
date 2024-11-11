@@ -1,9 +1,0 @@
-{% extends template('theme/base.html.twig') %}
-
-{% block main %}
-    {% for order in orders %}
-        <div>
-            <a href="{{ path('enhavo_shop_theme_user_order_detail', {number: order.number}) }}">{{ order.number }}</a>
-        </div>
-    {% endfor %}
-{% endblock %}

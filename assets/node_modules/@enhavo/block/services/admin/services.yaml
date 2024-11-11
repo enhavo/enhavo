@@ -1,0 +1,25 @@
+services:
+    '@enhavo/block/tab/BlockTab':
+        import: BlockTab
+        chunk: 'tab'
+        tags:
+            - { name: 'enhavo_app.tab' }
+
+    '@enhavo/block/components/tab/TabBlock.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'tab-block' }
+
+
+    '@enhavo/block/components/form/FormBlockCollectionRow.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'form-block-collection-row' }
+
+    '@enhavo/block/components/form/FormBlockNode.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'form-block-node' }

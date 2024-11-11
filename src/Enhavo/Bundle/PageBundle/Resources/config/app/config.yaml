@@ -55,7 +55,7 @@ enhavo_content:
         collectors:
             page:
                 type: publish
-                repository: enhavo_page.repository.page
+                repository: enhavo_page.page.repository
 
 enhavo_navigation:
     nav_items:
@@ -65,3 +65,4 @@ enhavo_navigation:
             translation_domain: EnhavoPageBundle
             content_form: Enhavo\Bundle\PageBundle\Form\Type\PageChoiceType
             template: theme/navigation/page.html.twig
+

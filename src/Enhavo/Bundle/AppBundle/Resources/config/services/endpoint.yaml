@@ -18,6 +18,13 @@ services:
             - { name: enhavo_api.endpoint }
             - { name: container.service_subscriber }
 
+    Enhavo\Bundle\AppBundle\Endpoint\Type\TemplateAdminEndpointType:
+        calls:
+            - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
     Enhavo\Bundle\AppBundle\Endpoint\Extension\RouterEndpointExtensionType:
         arguments:
             - '@Enhavo\Bundle\AppBundle\Twig\TwigRouter'
@@ -39,9 +46,50 @@ services:
             - { name: enhavo_api.endpoint }
             - { name: container.service_subscriber }
 
+    Enhavo\Bundle\AppBundle\Endpoint\Type\PreviewEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\ResourceBundle\Input\InputFactory'
+            - '@Enhavo\Component\Type\FactoryInterface[Endpoint]'
+            - '@Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage'
+        calls:
+            - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\AppBundle\Endpoint\Type\AdminEndpointType:
+        calls:
+            - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\AppBundle\Endpoint\Type\AdminMainEndpointType:
+        arguments:
+            - '%enhavo_app.toolbar_widget.primary%'
+            - '%enhavo_app.toolbar_widget.secondary%'
+            - '@Enhavo\Bundle\AppBundle\Toolbar\ToolbarManager'
+            - '%enhavo_app.branding%'
+            - '%enhavo_app.menu%'
+            - '@Enhavo\Bundle\AppBundle\Menu\MenuManager'
+        calls:
+            - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
     Enhavo\Bundle\AppBundle\Endpoint\Type\VueRoutesEndpointType:
         arguments:
             - '@Enhavo\Bundle\AppBundle\Vue\RouteProvider\VueRouteProviderInterface'
+        calls:
+            - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\AppBundle\Endpoint\Type\RoutesEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\AppBundle\Routing\RouteCollectorInterface'
         calls:
             - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
         tags:
@@ -107,4 +155,14 @@ services:
             - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
         tags:
             - { name: enhavo_api.endpoint_extension }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\AppBundle\Endpoint\Type\ModalFormEndpointType:
+        arguments:
+            - '@form.factory'
+            - '@Enhavo\Bundle\VueFormBundle\Form\VueForm'
+        calls:
+            - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
+        tags:
+            - { name: enhavo_api.endpoint }
             - { name: container.service_subscriber }

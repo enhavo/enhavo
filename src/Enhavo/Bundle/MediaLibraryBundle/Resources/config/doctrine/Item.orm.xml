@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="Enhavo\Bundle\MediaLibraryBundle\Entity\Item" table="media_library_item" repository-class="Enhavo\Bundle\MediaLibraryBundle\Repository\ItemRepository">
+        <id name="id" type="integer" column="id">
+            <generator />
+        </id>
+
+        <field name="contentType" length="50" nullable="true" />
+
+        <one-to-many field="usedFiles" target-entity="Enhavo\Bundle\MediaLibraryBundle\Entity\File" mapped-by="item" />
+        <many-to-one field="file" target-entity="Enhavo\Bundle\MediaBundle\Model\FileInterface">
+            <cascade>
+                <cascade-persist/>
+                <cascade-remove/>
+                <cascade-refresh/>
+            </cascade>
+        </many-to-one>
+        <many-to-many field="tags" target-entity="Enhavo\Bundle\TaxonomyBundle\Model\TermInterface">
+            <cascade>
+                <cascade-persist/>
+                <cascade-refresh/>
+            </cascade>
+            <join-table name="media_library_file_tag">
+                <join-columns>
+                    <join-column name="file_id" on-delete="CASCADE" />
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="term_id" on-delete="CASCADE" />
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
+    </entity>
+</doctrine-mapping>

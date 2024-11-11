@@ -8,25 +8,23 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Menu;
 
-use Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu;
+use Enhavo\Bundle\AppBundle\Menu\AbstractMenuType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class GroupMenu extends BaseMenu
+class GroupMenu extends AbstractMenuType
 {
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        parent::configureOptions($resolver);
-
         $resolver->setDefaults([
             'icon' => 'add_box',
             'label' => 'group.label.group',
             'translation_domain' => 'EnhavoNewsletterBundle',
-            'route' => 'enhavo_newsletter_group_index',
+            'route' => 'enhavo_newsletter_admin_group_index',
             'role' => 'ROLE_ENHAVO_NEWSLETTER_GROUP_INDEX',
         ]);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'newsletter_group';
     }

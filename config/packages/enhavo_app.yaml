@@ -14,39 +14,66 @@ enhavo_app:
             type: article
         page:
             type: page
-        slider:
-            type: slider
         newsletter:
             type: newsletter
         calendar:
             type: calendar
-        shop_catalog:
-            type: shop_catalog
-        shop_sales:
-            type: shop_sales
-        shop_configuration:
-            type: shop_configuration
-        shop_promotion:
-            type: shop_promotion
         navigation:
             type: navigation
         redirect:
             type: redirect
         media_library:
             type: media_library
-        sidebar:
-            type: sidebar
         template:
             type: template
         settings:
             type: setting
+        bin:
+            type: revision_bin
+        archive:
+            type: revision_archive
         person:
             type: base
             label: Person
-            route: app_person_index
+            route: app_admin_person_index
             icon: accessibility
+        frame_test:
+            type: base
+            label: Frame Test
+            route: app_admin_frame_test
+            icon: video_label
+            clear: false
         list:
             type: base
             label: Table
             route: app_table_index
             icon: view_comfy
+
+    area:
+        theme:
+            firewall: main
+            options:
+                routes: ['api', 'theme']
+                vue_routes: ['theme']
+                navigation: true
+        api:
+            path: ^/api/
+        admin_login:
+            path:
+                - /admin/reset-password/.+
+                - /admin/login$
+            options:
+                routes: ['admin_login', 'admin_login_api']
+                vue_routes: ['admin_login']
+                translations: ['javascript']
+        admin:
+            firewall: admin
+            path:
+                - ^/admin/reset-password/.+
+                - ^/admin/login$
+            options:
+                routes: ['admin', 'admin_api']
+                vue_routes: ['admin']
+                translations: ['javascript']
+        admin_api:
+            path: ^/admin/api/

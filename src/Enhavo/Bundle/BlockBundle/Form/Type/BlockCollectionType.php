@@ -19,15 +19,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BlockCollectionType extends AbstractType
 {
-    /** @var BlockManager */
-    private $blockManager;
-
-    public function __construct(BlockManager $blockManager)
+    public function __construct(
+        private readonly BlockManager $blockManager
+    )
     {
-        $this->blockManager = $blockManager;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'label' => 'block.label.blocks',
@@ -44,6 +42,7 @@ class BlockCollectionType extends AbstractType
             'item_groups' => [],
             'items' => [],
             'prototype_storage' => 'enhavo_block',
+            'row_component' => 'form-block-collection-row',
             'custom_name_property' => function (NodeInterface $node) {
                 if ($node instanceof CustomNameInterface) {
                     return $node->getCustomName();
@@ -54,19 +53,19 @@ class BlockCollectionType extends AbstractType
 
         $resolver->setNormalizer('entry_type_filter', function (Options $options, $value)
         {
-            if($value !== null) {
+            if ($value !== null) {
                 return $value;
             }
 
-            if(count($options['item_groups']) === 0 && count($options['items']) === 0) {
+            if (count($options['item_groups']) === 0 && count($options['items']) === 0) {
                 return null;
             }
 
             $keys = [];
-            if(count($options['item_groups']) > 0) {
+            if (count($options['item_groups']) > 0) {
                 foreach ($this->blockManager->getBlocks() as $key => $block) {
                     foreach ($block->getGroups() as $group) {
-                        if(in_array($group, $options['item_groups'])) {
+                        if (in_array($group, $options['item_groups'])) {
                             $keys[] = $key;
                             break;
                         }
@@ -74,9 +73,9 @@ class BlockCollectionType extends AbstractType
                 }
             }
 
-            if(count($options['items']) > 0) {
+            if (count($options['items']) > 0) {
                 foreach ($this->blockManager->getBlocks() as $key => $block) {
-                    if(in_array($key, $options['items'])) {
+                    if (in_array($key, $options['items'])) {
                         $keys[] = $key;
                     }
                 }
@@ -104,7 +103,6 @@ class BlockCollectionType extends AbstractType
             $types[$key] = [
                 'block_type' => $block->getForm(),
                 'label' => $block->getLabel(),
-                'translation_domain' => $block->getTranslationDomain(),
             ];
         }
         return $types;
@@ -115,6 +113,7 @@ class BlockCollectionType extends AbstractType
         $data = [];
         foreach($this->blockManager->getBlocks() as $key => $block) {
             $node = new Node();
+            $node->setName($key);
             $modelClass = $block->getModel();
             $node->setBlock(new $modelClass);
             $data[$key] = $node;

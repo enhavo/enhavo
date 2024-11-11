@@ -1,6 +1,6 @@
-import AbstractModal from "@enhavo/app/modal/model/AbstractModal";
+import { AbstractModal } from "@enhavo/app/modal/model/AbstractModal";
 
-export default class IframeModal extends AbstractModal
+export class IframeModal extends AbstractModal
 {
     public route: string;
     public routeParameters: object;

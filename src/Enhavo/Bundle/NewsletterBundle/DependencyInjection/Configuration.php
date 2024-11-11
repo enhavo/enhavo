@@ -2,26 +2,9 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\DependencyInjection;
 
-use Enhavo\Bundle\AppBundle\Controller\ResourceController;
-use Enhavo\Bundle\NewsletterBundle\Controller\NewsletterController;
-use Enhavo\Bundle\NewsletterBundle\Entity\Group;
-use Enhavo\Bundle\NewsletterBundle\Entity\LocalSubscriber;
-use Enhavo\Bundle\NewsletterBundle\Entity\Newsletter;
-use Enhavo\Bundle\NewsletterBundle\Entity\PendingSubscriber;
-use Enhavo\Bundle\NewsletterBundle\Factory\LocalSubscriberFactory;
-use Enhavo\Bundle\NewsletterBundle\Factory\NewsletterFactory;
-use Enhavo\Bundle\NewsletterBundle\Form\Type\GroupType;
-use Enhavo\Bundle\NewsletterBundle\Form\Type\LocalSubscriberType;
-use Enhavo\Bundle\NewsletterBundle\Form\Type\NewsletterType;
-use Enhavo\Bundle\NewsletterBundle\Form\Type\PendingSubscriberType;
 use Enhavo\Bundle\NewsletterBundle\Form\Type\SubscriberType;
 use Enhavo\Bundle\NewsletterBundle\Model\Subscriber;
 use Enhavo\Bundle\NewsletterBundle\Provider\GroupProvider;
-use Enhavo\Bundle\NewsletterBundle\Repository\GroupRepository;
-use Enhavo\Bundle\NewsletterBundle\Repository\LocalSubscriberRepository;
-use Enhavo\Bundle\NewsletterBundle\Repository\NewsletterRepository;
-use Enhavo\Bundle\NewsletterBundle\Repository\PendingSubscriberRepository;
-use Sylius\Component\Resource\Factory\Factory;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -41,7 +24,6 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder('enhavo_newsletter');
         $rootNode = $treeBuilder->getRootNode();
 
-        $this->addResourcesSection($rootNode);
         $this->addNewsletterSection($rootNode);
 
         return $treeBuilder;
@@ -107,85 +89,6 @@ class Configuration implements ConfigurationInterface
                 ->end()
             ->end()
         ->end()
-        ;
-    }
-
-    private function addResourcesSection(ArrayNodeDefinition $node)
-    {
-        $node
-            ->children()
-                ->scalarNode('driver')->defaultValue('doctrine/orm')->end()
-                ->arrayNode('resources')
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->arrayNode('newsletter')
-                            ->addDefaultsIfNotSet()
-                            ->children()
-                                ->variableNode('options')->end()
-                                ->arrayNode('classes')
-                                    ->addDefaultsIfNotSet()
-                                    ->children()
-                                        ->scalarNode('model')->defaultValue(Newsletter::class)->end()
-                                        ->scalarNode('controller')->defaultValue(NewsletterController::class)->end()
-                                        ->scalarNode('repository')->defaultValue(NewsletterRepository::class)->end()
-                                        ->scalarNode('factory')->defaultValue(NewsletterFactory::class)->end()
-                                        ->scalarNode('form')->defaultValue(NewsletterType::class)->cannotBeEmpty()->end()
-                                    ->end()
-                                ->end()
-                            ->end()
-                        ->end()
-                        ->arrayNode('local_subscriber')
-                            ->addDefaultsIfNotSet()
-                            ->children()
-                                ->variableNode('options')->end()
-                                ->arrayNode('classes')
-                                    ->addDefaultsIfNotSet()
-                                    ->children()
-                                        ->scalarNode('model')->defaultValue(LocalSubscriber::class)->end()
-                                        ->scalarNode('controller')->defaultValue(ResourceController::class)->end()
-                                        ->scalarNode('repository')->defaultValue(LocalSubscriberRepository::class)->end()
-                                        ->scalarNode('factory')->defaultValue(LocalSubscriberFactory::class)->end()
-                                        ->scalarNode('form')->defaultValue(LocalSubscriberType::class)->cannotBeEmpty()->end()
-                                    ->end()
-                                ->end()
-                            ->end()
-                        ->end()
-                        ->arrayNode('pending_subscriber')
-                            ->addDefaultsIfNotSet()
-                            ->children()
-                                ->variableNode('options')->end()
-                                ->arrayNode('classes')
-                                    ->addDefaultsIfNotSet()
-                                    ->children()
-                                        ->scalarNode('model')->defaultValue(PendingSubscriber::class)->end()
-                                        ->scalarNode('controller')->defaultValue(ResourceController::class)->end()
-                                        ->scalarNode('repository')->defaultValue(PendingSubscriberRepository::class)->end()
-                                        ->scalarNode('factory')->defaultValue(Factory::class)->end()
-                                        ->scalarNode('form')->defaultValue(PendingSubscriberType::class)->cannotBeEmpty()->end()
-                                    ->end()
-                                ->end()
-                            ->end()
-                        ->end()
-
-                        ->arrayNode('group')
-                            ->addDefaultsIfNotSet()
-                            ->children()
-                                ->variableNode('options')->end()
-                                ->arrayNode('classes')
-                                    ->addDefaultsIfNotSet()
-                                    ->children()
-                                        ->scalarNode('model')->defaultValue(Group::class)->end()
-                                        ->scalarNode('controller')->defaultValue(ResourceController::class)->end()
-                                        ->scalarNode('repository')->defaultValue(GroupRepository::class)->end()
-                                        ->scalarNode('factory')->defaultValue(Factory::class)->end()
-                                        ->scalarNode('form')->defaultValue(GroupType::class)->cannotBeEmpty()->end()
-                                    ->end()
-                                ->end()
-                            ->end()
-                        ->end()
-                    ->end()
-                ->end()
-            ->end()
         ;
     }
 }

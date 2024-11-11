@@ -10,15 +10,13 @@ use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 use Enhavo\Bundle\RoutingBundle\Model\Slugable;
-use Sylius\Component\Resource\Model\ResourceInterface;
 
 /**
  * Newsletter
  */
-class Newsletter implements ResourceInterface, Slugable, NewsletterInterface, Timestampable
+class Newsletter implements Slugable, NewsletterInterface, Timestampable
 {
     use TimestampableTrait;
-
     private ?int $id = null;
     private ?string $slug = null;
     private ?string $subject = null;
@@ -51,20 +49,14 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface, Ti
     /**
      * @return string
      */
-    public function getSlug()
+    public function getSlug(): ?string
     {
         return $this->slug;
     }
 
-    /**
-     * @param string $slug
-     * @return Newsletter
-     */
-    public function setSlug($slug)
+    public function setSlug(?string $slug): void
     {
         $this->slug = $slug;
-
-        return $this;
     }
 
     /**

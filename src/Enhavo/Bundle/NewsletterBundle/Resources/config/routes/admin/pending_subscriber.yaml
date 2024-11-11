@@ -1,107 +1,35 @@
-enhavo_newsletter_pending_subscriber_index:
-    options:
-        expose: true
-    path: /enhavo/newsletter/pending-subscriber/index
-    methods: [GET]
+enhavo_newsletter_admin_pending_subscriber_index:
+    path: /pending_subscriber/index
     defaults:
-        _controller: enhavo_newsletter.controller.pending_subscriber::indexAction
-        _sylius:
-            viewer:
-                label: subscriber.label.subscribers
-                translation_domain: EnhavoNewsletterBundle
-                table_route_parameters:
-                    group: $id
-                actions:
-                    create:
-                        type: create
-                        hidden: true
+        _expose: admin
+        _vue:
+            component: resource-index
+            groups: admin
+            meta:
+                api: enhavo_newsletter_admin_api_pending_subscriber_index
+        _endpoint:
+            type: admin
 
-enhavo_newsletter_pending_subscriber_update:
-    options:
-        expose: true
-    path: /enhavo/newsletter/pending-subscriber/update/{id}
-    methods: [GET,POST]
+enhavo_newsletter_admin_pending_subscriber_create:
+    path: /pending_subscriber/create
     defaults:
-        _controller: enhavo_newsletter.controller.pending_subscriber::updateAction
-        _sylius:
-            viewer:
-                label: subscriber.label.update
-                translation_domain: EnhavoNewsletterBundle
-                actions:
-                    activate:
-                        type: newsletter_subscriber_activate
+        _expose: admin
+        _vue:
+            component: resource-input
+            groups: admin
+            meta:
+                api: enhavo_newsletter_admin_api_pending_subscriber_create
+        _endpoint:
+            type: admin
 
-enhavo_newsletter_pending_subscriber_table:
-    options:
-        expose: true
-    path: /enhavo/newsletter/pending-subscriber/table
+enhavo_newsletter_admin_pending_subscriber_update:
+    path: '/pending_subscriber/update/{id}'
     defaults:
-        _controller: enhavo_newsletter.controller.pending_subscriber::tableAction
-        _sylius:
-            filters:
-                email:
-                    type: text
-                    property: email
-                    label: subscriber.label.email
-                    translation_domain: EnhavoNewsletterBundle
-            viewer:
-                translation_domain: EnhavoNewsletterBundle
-                columns:
-                    email:
-                        type: text
-                        label: subscriber.label.email
-                        property: email
-                        width: 10
-                    subscription:
-                        type: text
-                        property: subscription
-                        label: subscriber.label.subscription
-                        width: 4
-                    activate:
-                        width: 4
-                        label: subscriber.label.activate
-                        translation_domain: EnhavoNewsletterBundle
-                        type: action
-                        action:
-                            type: newsletter_subscriber_activate
-
-enhavo_newsletter_pending_subscriber_delete:
-    options:
-        expose: true
-    path: /enhavo/newsletter/pending-subscriber/delete/{id}
-    methods: [POST]
-    defaults:
-        _controller: enhavo_newsletter.controller.pending_subscriber::deleteAction
-
-enhavo_newsletter_pending_subscriber_batch:
-    options:
-        expose: true
-    path: /enhavo/newsletter/pending-subscriber/batch
-    methods: [POST]
-    defaults:
-        _controller: enhavo_newsletter.controller.pending_subscriber::batchAction
-        _sylius:
-            paginate: false
-            criteria:
-                id: $ids
-            batches:
-                delete:
-                    type: delete
-
-enhavo_newsletter_pending_subscriber_preview:
-    options:
-        expose: true
-    path: /enhavo/newsletter/pending-subscriber/preview
-    methods: [POST]
-    defaults:
-        _controller: enhavo_newsletter.controller.pending_subscriber::previewAction
-        _sylius:
-            viewer:
-
-enhavo_newsletter_pending_subscriber_activate:
-    options:
-        expose: true
-    path: /enhavo/newsletter/pending-subscriber/activate/{id}
-    methods: [GET,POST]
-    defaults:
-        _controller: Enhavo\Bundle\NewsletterBundle\Controller\PendingSubscriberController::activateAction
+        _expose: admin
+        _vue:
+            component: resource-input
+            groups: admin
+            meta:
+                api: enhavo_newsletter_admin_api_pending_subscriber_update
+        _endpoint:
+            type: admin

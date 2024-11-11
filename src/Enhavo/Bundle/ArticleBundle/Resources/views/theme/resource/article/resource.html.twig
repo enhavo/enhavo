@@ -1,7 +1,8 @@
 <section>
+    <h1>{{ resource.title }}</h1>
+    <h1>{{ resource.teaser|html_sanitize }}</h1>
     <article class="container page-article">
         <div class="article-date">{{ resource.publicationDate|date('d.m.y') }}</div>
         {{ block_render(resource.content) }}
     </article>
-{#    {{ widget('comments', { subject: resource, form: commentForm }) }}#}
 </section>

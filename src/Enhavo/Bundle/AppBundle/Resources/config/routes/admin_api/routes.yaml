@@ -1,0 +1,6 @@
+enhavo_app_routes:
+    path: /routes
+    defaults:
+        _endpoint:
+            type: routes
+            groups: admin

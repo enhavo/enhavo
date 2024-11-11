@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
-    <entity name="Enhavo\Bundle\MediaBundle\Entity\Format" table="media_format">
+    <entity name="Enhavo\Bundle\MediaBundle\Entity\Format" table="media_format" repository-class="Enhavo\Bundle\MediaBundle\Repository\FormatRepository">
         <id name="id" type="integer" column="id">
             <generator />
         </id>
@@ -10,6 +10,7 @@
         <field name="extension" length="255" nullable="true" />
         <field name="parameters" type="json" nullable="true" />
         <field name="lockAt" type="datetime" nullable="true" />
+        <field name="checksum" nullable="true" />
 
         <many-to-one field="file" target-entity="Enhavo\Bundle\MediaBundle\Model\FileInterface" inversed-by="formats">
             <join-column on-delete="CASCADE" />

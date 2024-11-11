@@ -21,7 +21,7 @@ class FormVueTypeExtension extends AbstractVueTypeExtension
 
     public function buildVueData(FormView $view, VueData $data, array $options)
     {
-        $data['name'] = $view->vars['name'];
+        $data['name'] = (string)$view->vars['name'];
         $data['value'] = $this->normalizer->normalize($view->vars['value'], null, ['groups' => ['vue-form']]);
         $data['compound'] = $view->vars['compound'];
         $data['id'] = $view->vars['id'];
@@ -44,6 +44,7 @@ class FormVueTypeExtension extends AbstractVueTypeExtension
     {
         $resolver->setDefaults([
             'row_component' => 'form-row',
+            'widget_component' => 'form-widget',
         ]);
     }
 

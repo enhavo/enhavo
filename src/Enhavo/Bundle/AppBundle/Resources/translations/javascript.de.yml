@@ -2,10 +2,14 @@ enhavo_app:
     edit: 'Bearbeiten'
     create: 'Erstellen'
     preview: 'Vorschau'
-    save: 'Speichern'
+    auto_save: 'Autosave'
     abort: 'Abbrechen'
     cancel: 'Abbrechen'
     error: 'Ein Fehler ist aufgetreten'
+    close: 'Schließen'
+    input:
+        message:
+            save_success: 'Erfolgreich gespeichert'
     batch:
         label:
             placeholder: 'Batch wählen'
@@ -39,4 +43,18 @@ enhavo_app:
         label:
             delete: 'Löschen'
             cancel: 'Abbrechen'
+            close: 'Schließen'
+    save:
+        message:
+            save: 'Erfolgreich gespeichert'
+            error: 'Ein Fehler ist aufgetreten'
+            not_valid: 'Bitte überprüfen Sie ihre Angaben'
+        label:
+            save: 'Speichern'
+    revision:
+        message:
+            restored: 'Die Version wurde wiederhergestellt!'
+            archived: 'Die Resource wurde archiviert'
+        action:
+            restore: 'Wiederherstellen'
             close: 'Schließen'

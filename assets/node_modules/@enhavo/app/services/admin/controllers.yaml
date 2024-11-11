@@ -1,0 +1,6 @@
+services:
+    '@enhavo/app/controllers/VueController':
+        chunk: main
+        static: true
+        tags:
+            - { name: stimulus.controller, key: 'vue' }

@@ -1,4 +1,3 @@
-import ContainerBuilder from '@enhavo/dependency-injection/container/ContainerBuilder.js'
 import Definition from '@enhavo/dependency-injection/container/Definition.js'
 import Call from '@enhavo/dependency-injection/container/Call.js'
 import Argument from '@enhavo/dependency-injection/container/Argument.js'

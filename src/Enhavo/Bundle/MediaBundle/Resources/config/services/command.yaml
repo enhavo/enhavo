@@ -2,11 +2,11 @@ services:
     Enhavo\Bundle\MediaBundle\Command\CleanUpCommand:
         arguments:
             - '@filesystem'
-            - '%enhavo_media.file_storage_path%'
+            - '%kernel.project_dir%/var/media'
             - '@enhavo_media.media.media_manager'
             - '@doctrine.orm.entity_manager'
-            - '@enhavo_media.repository.file'
-            - '@enhavo_media.repository.format'
+            - '@enhavo_media.file.repository'
+            - '@enhavo_media.format.repository'
             - '%enhavo_media.garbage_collection.enable_delete_unreferenced%'
         tags:
             - { name: console.command }
@@ -19,17 +19,9 @@ services:
 
     Enhavo\Bundle\MediaBundle\Command\RefreshFormatCommand:
         arguments:
-            - '@enhavo_media.repository.format'
-            - '@enhavo_media.repository.file'
+            - '@enhavo_media.format.repository'
+            - '@enhavo_media.file.repository'
             - '@enhavo_media.media.media_manager'
             - '@enhavo_media.media.format_manager'
-        tags:
-            - { name: console.command }
-
-    Enhavo\Bundle\MediaBundle\Command\UpdateFileCommand:
-        arguments:
-            - '@enhavo_media.media.media_manager'
-            - '@enhavo_app.util.secure_url_token_generator'
-            - '@doctrine.orm.entity_manager'
         tags:
             - { name: console.command }

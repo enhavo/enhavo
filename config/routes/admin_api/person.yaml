@@ -1,0 +1,102 @@
+app_admin_api_person_index:
+    path: /person/index
+    methods: [GET]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_index
+            grid: app.person
+
+app_admin_api_person_list:
+    path: /person/list
+    methods: [GET,POST]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_list
+            grid: app.person
+
+app_admin_api_person_create:
+    path: /person/create
+    methods: [GET, POST]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_create
+            input: app.person
+
+app_admin_api_person_update:
+    path: /person/update/{id}
+    methods: [GET, POST]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_update
+            input: app.person
+
+app_admin_api_person_delete:
+    path: /person/delete/{id}
+    methods: [DELETE, POST]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_delete
+            input: app.person
+
+app_admin_api_person_batch:
+    path: /person/batch
+    methods: [POST]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_batch
+            grid: app.person
+
+app_admin_api_person_duplicate:
+    path: /person/duplicate/{id}
+    methods: [POST]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_duplicate
+            input: app.person
+
+app_admin_api_preview:
+    path: /person/preview/{id}
+    methods: [GET, POST]
+    defaults:
+        _expose: admin_api
+        _area: theme
+        _endpoint:
+            type: preview
+            input: app.person
+            endpoint:
+                type: Enhavo\Bundle\ArticleBundle\Endpoint\ArticleEndpointType
+                resource: expr:resource
+                preview: true
+
+app_admin_api_person_auto_complete:
+    path: /person/auto-complete
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: auto_complete
+            resource: app.person
+            repository_method: findByTerm
+            choice_label: title
+
+app_admin_api_person_revision_restore:
+    path: /person/revision/restore/{id}/{revisionId}
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: revision_restore
+            input: app.person
+
+app_admin_api_person_revision_archive:
+    path: /person/revision/archive/{id}
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: revision_archive
+            input: app.person

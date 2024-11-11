@@ -1,0 +1,16 @@
+[
+  {
+    "key": "delete",
+    "component": "action-action",
+    "model": "DeleteAction",
+    "icon": "delete",
+    "label": "L\u00f6schen",
+    "confirm": true,
+    "confirm_on_change": true,
+    "confirm_message": "message.delete.confirm",
+    "confirm_label_ok": "label.ok",
+    "confirm_label_cancel": "label.cancel",
+    "url": "\/admin\/api\/article\/article\/delete\/3",
+    "token": "96c9ffebbb9c42449f88804784d73.3Lx6JxgWeZEQd9IbaFw6QjNvwg_kYmFox1aSjCNeOxw.pvggSmxTNttjNZ9VLAVqO0cbsD2hN1g9jGTQ5lNrcXS01SNjdyEUoSY-vQ"
+  }
+]

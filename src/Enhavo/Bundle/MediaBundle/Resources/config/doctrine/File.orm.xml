@@ -11,8 +11,7 @@
         <field name="filename" length="255" nullable="true" />
         <field name="parameters" type="array" nullable="true" />
         <field name="token" nullable="true" />
-        <field name="md5Checksum" nullable="true" />
-        <field name="library" type="boolean" nullable="true" />
+        <field name="checksum" nullable="true" />
         <field name="garbage" type="boolean" />
         <field name="garbageTimestamp" type="datetime" nullable="true" />
         <field name="createdAt" type="datetime" />

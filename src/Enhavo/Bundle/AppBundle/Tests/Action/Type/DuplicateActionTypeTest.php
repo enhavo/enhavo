@@ -8,66 +8,60 @@
 
 namespace Enhavo\Bundle\AppBundle\Tests\Action\Type;
 
-use Enhavo\Bundle\AppBundle\Action\Action;
-use Enhavo\Bundle\AppBundle\Action\ActionLanguageExpression;
 use Enhavo\Bundle\AppBundle\Action\Type\DuplicateActionType;
-use Enhavo\Bundle\AppBundle\Tests\Mock\ResourceMock;
-use Enhavo\Bundle\AppBundle\Tests\Mock\RouterMock;
+use Enhavo\Bundle\ResourceBundle\Tests\Mock\ResourceMock;
+use Enhavo\Bundle\ResourceBundle\Action\Action;
+use Enhavo\Bundle\ResourceBundle\Tests\Action\Type\BaseActionTypeFactoryTrait;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Routing\RouterInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Security\Csrf\CsrfToken;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class DuplicateActionTypeTest extends TestCase
 {
+    use UrlActionTypeFactoryTrait;
+    use BaseActionTypeFactoryTrait;
+
     private function createDependencies()
     {
         $dependencies = new DuplicateActionTypeDependencies();
-        $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
-        $dependencies->actionLanguageExpression = $this->getMockBuilder(ActionLanguageExpression::class)->disableOriginalConstructor()->getMock();
-        $dependencies->router = new RouterMock();
+        $dependencies->tokenManager = $this->getMockBuilder(CsrfTokenManagerInterface::class)->getMock();
         return $dependencies;
     }
 
     private function createInstance(DuplicateActionTypeDependencies $dependencies)
     {
-        return new DuplicateActionType(
-            $dependencies->translator,
-            $dependencies->actionLanguageExpression,
-            $dependencies->router
-        );
+        return new DuplicateActionType($dependencies->tokenManager);
     }
 
     public function testCreateViewData()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->translator->method('trans')->willReturnCallback(function ($value) {return $value;});
+        $dependencies->tokenManager->method('getToken')->willReturn(new CsrfToken('id123', 'value123'));
         $type = $this->createInstance($dependencies);
 
         $action = new Action($type, [
+            $this->createBaseActionType($this->createBaseActionTypeDependencies()),
+            $this->createUrlActionType($this->createUrlActionTypeDependencies()),
+
+        ], [
             'route' => 'duplicate_route'
         ]);
 
-        $viewData = $action->createViewData(new ResourceMock());
+        $viewData = $action->createViewData(new ResourceMock(1));
 
-        $this->assertEquals('duplicate-action', $viewData['component']);
-        $this->assertEquals('label.duplicate', $viewData['label']);
+        $this->assertEquals('label.duplicate.translated', $viewData['label']);
         $this->assertEquals('/duplicate_route?id=1', $viewData['url']);
+        $this->assertEquals('value123', $viewData['token']);
     }
 
-    public function testType()
+    public function testName()
     {
-        $dependencies = $this->createDependencies();
-        $type = $this->createInstance($dependencies);
-        $this->assertEquals('duplicate', $type->getType());
+        $this->assertEquals('duplicate', DuplicateActionType::getName());
     }
 }
 
 class DuplicateActionTypeDependencies
 {
-    /** @var TranslatorInterface|\PHPUnit_Framework_MockObject_MockObject */
-    public $translator;
-    /** @var ActionLanguageExpression|\PHPUnit_Framework_MockObject_MockObject */
-    public $actionLanguageExpression;
-    /** @var RouterInterface|\PHPUnit_Framework_MockObject_MockObject */
-    public $router;
+    public CsrfTokenManagerInterface|MockObject $tokenManager;
 }

@@ -1,0 +1,27 @@
+services:
+    Enhavo\Bundle\ResourceBundle\Action\ActionManager:
+        arguments:
+            - '@security.authorization_checker'
+            - '@Enhavo\Component\Type\FactoryInterface[Action]'
+
+    Enhavo\Bundle\ResourceBundle\Action\Type\BaseActionType:
+        arguments:
+            - '@translator'
+            - '@Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage'
+        tags:
+            - { name: enhavo_resource.action }
+
+    Enhavo\Bundle\ResourceBundle\Action\Type\SaveActionType:
+        arguments:
+            - '@router'
+            - '@Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface'
+        tags:
+            - { name: enhavo_resource.action }
+
+    Enhavo\Bundle\ResourceBundle\Action\Type\DeleteActionType:
+        arguments:
+            - '@security.csrf.token_manager'
+            - '@router'
+            - '@Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface'
+        tags:
+            - { name: enhavo_resource.action }

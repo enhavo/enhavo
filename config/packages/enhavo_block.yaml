@@ -22,12 +22,10 @@ enhavo_block:
             type: two_column
         three_column:
             type: three_column
-        article_list:
-            type: article_list
-        article_teaser:
-            type: article_teaser
-        sidebar_column:
-            type: sidebar_column
+#        article_list:
+#            type: article_list
+#        article_teaser:
+#            type: article_teaser
         template:
             type: template
         resource:
@@ -36,8 +34,8 @@ enhavo_block:
             type: contact
         calendar:
             type: calendar
-        slider:
-            type: slider
+#        slider:
+#            type: slider
         newsletter_subscribe:
             type: newsletter_subscribe
         comment:

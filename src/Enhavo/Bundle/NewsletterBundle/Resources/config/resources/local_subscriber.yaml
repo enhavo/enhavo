@@ -1,0 +1,43 @@
+enhavo_resource:
+    resources:
+        enhavo_newsletter.local_subscriber:
+            priority: -10
+            classes:
+                model: Enhavo\Bundle\NewsletterBundle\Entity\LocalSubscriber
+                factory: Enhavo\Bundle\NewsletterBundle\Factory\LocalSubscriberFactory
+                repository: Enhavo\Bundle\NewsletterBundle\Repository\LocalSubscriberRepository
+    grids:
+        enhavo_newsletter.local_subscriber:
+            extends: enhavo_resource.grid
+            resource: enhavo_newsletter.local_subscriber
+            actions:
+                create:
+                    type: create
+                    route: enhavo_newsletter_local_subscriber_create
+                    route_parameters:
+                        group: $id
+            filters:
+                email:
+                    type: text
+                    property: email
+                    label: subscriber.label.email
+                    translation_domain: EnhavoNewsletterBundle
+            columns:
+                email:
+                    type: text
+                    label: subscriber.label.email
+                    translation_domain: EnhavoNewsletterBundle
+                    property: email
+                    width: 10
+            batches:
+                delete:
+                    type: delete
+
+    inputs:
+        enhavo_newsletter.local_subscriber:
+            extends: enhavo_resource.input
+            resource: enhavo_newsletter.local_subscriber
+            form: Enhavo\Bundle\NewsletterBundle\Form\Type\LocalSubscriberType
+            form_options: {  }
+            actions: {  }
+            tabs: {  }

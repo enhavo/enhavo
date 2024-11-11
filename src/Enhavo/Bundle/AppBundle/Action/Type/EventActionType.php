@@ -9,46 +9,29 @@
 
 namespace Enhavo\Bundle\AppBundle\Action\Type;
 
-use Enhavo\Bundle\AppBundle\Action\AbstractActionType;
-use Enhavo\Bundle\AppBundle\Action\ActionTypeInterface;
+use Enhavo\Bundle\ApiBundle\Data\Data;
+use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
+use Enhavo\Bundle\ResourceBundle\Action\ActionTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class EventActionType extends AbstractActionType implements ActionTypeInterface
 {
-    public function createViewData(array $options, $resource = null)
+    public function createViewData(array $options, Data $data, object $resource = null): void
     {
-        $data = parent::createViewData($options, $resource);
-
-        $data = array_merge($data, [
-            'confirm' => $options['confirm'],
-            'confirm_on_change' => $options['confirm_changes'],
-            'event' => $options['event'],
-            'confirm_message' => $this->translator->trans($options['confirm_message'], [], $options['translation_domain']),
-            'confirm_label_ok' => $this->translator->trans($options['confirm_label_ok'], [], $options['translation_domain']),
-            'confirm_label_cancel' => $this->translator->trans($options['confirm_label_cancel'], [], $options['translation_domain']),
-        ]);
-
-        return $data;
+        $data['event'] = $options['event'];
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        parent::configureOptions($resolver);
-
         $resolver->setDefaults([
-            'component' => 'event-action',
             'translation_domain' => 'EnhavoAppBundle',
-            'confirm' => false,
-            'confirm_changes' => true,
-            'confirm_message' => 'message.close.confirm',
-            'confirm_label_ok' => 'label.ok',
-            'confirm_label_cancel' => 'label.cancel',
+            'model' => 'EventAction',
         ]);
 
-        $resolver->setRequired(['icon', 'label', 'event']);
+        $resolver->setRequired(['event']);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'event';
     }

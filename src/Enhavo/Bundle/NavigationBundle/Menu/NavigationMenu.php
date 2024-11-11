@@ -8,25 +8,23 @@
 
 namespace Enhavo\Bundle\NavigationBundle\Menu;
 
-use Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu;
+use Enhavo\Bundle\AppBundle\Menu\AbstractMenuType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class NavigationMenu extends BaseMenu
+class NavigationMenu extends AbstractMenuType
 {
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        parent::configureOptions($resolver);
-
         $resolver->setDefaults([
             'icon' => 'layers',
             'label' => 'navigation.label.navigation',
             'translation_domain' => 'EnhavoNavigationBundle',
-            'route' => 'enhavo_navigation_navigation_index',
+            'route' => 'enhavo_navigation_admin_navigation_index',
             'role' => 'ROLE_ENHAVO_NAVIGATION_NAVIGATION_INDEX',
         ]);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'navigation';
     }

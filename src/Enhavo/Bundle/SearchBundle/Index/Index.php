@@ -4,14 +4,12 @@ namespace Enhavo\Bundle\SearchBundle\Index;
 
 use Enhavo\Component\Type\AbstractContainerType;
 
+/**
+ * @property $type IndexTypeInterface
+ * @property $parents IndexTypeInterface[]
+ */
 class Index extends AbstractContainerType
 {
-    /** @var IndexTypeInterface */
-    protected $type;
-
-    /** @var IndexTypeInterface[] */
-    protected $parents;
-
     /** @return IndexData[] */
     public function getIndexData($model): array
     {

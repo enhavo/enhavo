@@ -1,0 +1,95 @@
+services:
+    Enhavo\Bundle\NewsletterBundle\Endpoint\NewsletterEndpointType:
+        arguments:
+            - '@enhavo_newsletter.newsletter.repository'
+            - '@enhavo_newsletter.receiver.repository'
+            - '@Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager'
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\NewsletterBundle\Endpoint\NewsletterSendEndpointType:
+        arguments:
+            - '@enhavo_newsletter.newsletter.repository'
+            - '@Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager'
+            - '@translator'
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\NewsletterBundle\Endpoint\NewsletterStatsEndpointType:
+        arguments:
+            - '@enhavo_newsletter.newsletter.repository'
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\NewsletterBundle\Endpoint\NewsletterTestEndpointType:
+        arguments:
+            - '@enhavo_newsletter.newsletter.repository'
+            - '@enhavo_newsletter.newsletter.factory'
+            - '@Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager'
+            - '@Enhavo\Bundle\ResourceBundle\Input\InputFactory'
+            - '@translator'
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\NewsletterBundle\Endpoint\PendingSubscriberActiveEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager'
+            - '@Enhavo\Bundle\NewsletterBundle\Pending\PendingSubscriberManager'
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\NewsletterBundle\Endpoint\SubscriptionActivateEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager'
+            - '@Enhavo\Bundle\NewsletterBundle\Pending\PendingSubscriberManager'
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\NewsletterBundle\Endpoint\SubscriptionAddEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager'
+            - '@translator'
+            - '@Enhavo\Bundle\VueFormBundle\Form\VueForm'
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\NewsletterBundle\Endpoint\SubscriptionUnsubscribeEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager'
+            - '@translator'
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\NewsletterBundle\Endpoint\TrackingTrackEndpointType:
+        arguments:
+            - '@enhavo_newsletter.receiver.repository'
+            - '@doctrine.orm.entity_manager'
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }

@@ -8,9 +8,7 @@
 
 namespace Enhavo\Bundle\CommentBundle\Model;
 
-use Sylius\Component\Resource\Model\ResourceInterface;
-
-interface CommentInterface extends ResourceInterface
+interface CommentInterface
 {
     const STATE_PENDING = 'pending';
     const STATE_PUBLISH = 'publish';

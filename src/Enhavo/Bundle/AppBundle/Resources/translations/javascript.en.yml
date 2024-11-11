@@ -2,10 +2,14 @@ enhavo_app:
     edit: 'Edit'
     create: 'Create'
     preview: 'Preview'
-    save: 'Save'
+    auto_save: 'Autosave'
     abort: 'Close'
     cancel: 'Cancel'
     error: 'Error occurred'
+    close: 'Close'
+    input:
+        message:
+            save_success: 'Save successful'
     batch:
         label:
             placeholder: 'Choose Batch'
@@ -30,7 +34,7 @@ enhavo_app:
             filter: 'Filter'
     list:
         message:
-            save: 'Successfully saved'
+            save: 'Save successful'
             error: 'Error occurred'
     delete:
         message:
@@ -39,4 +43,18 @@ enhavo_app:
         label:
             delete: 'Delete'
             cancel: 'Cancel'
+            close: 'Close'
+    save:
+        message:
+            save: 'Save successful'
+            error: 'An error occured'
+            not_valid: 'Please check your input'
+        label:
+            save: 'Save'
+    revision:
+        message:
+            restored: 'The version was restored'
+            archived: 'The resource was archived'
+        action:
+            restore: 'Restore'
             close: 'Close'

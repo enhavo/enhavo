@@ -1,5 +1,5 @@
 <template>
-    <form :name="getName()" :method="getMethod()" :action="getAction()" :ref="(el) => form.setElement(<HTMLElement>el)">
+    <form :name="getName()" :method="getMethod()" :action="getAction()" :ref="(el) => form.setElement(<HTMLElement>el)" v-show="form.isVisible()">
         <slot name="form-before"></slot>
         <input v-if="getDifferentMethod()" type="hidden" name="_method" :value="getDifferentMethod()" />
         <slot>
@@ -11,17 +11,16 @@
 
 <script setup lang="ts">
 import {Form} from "@enhavo/vue-form/model/Form";
+import {onUpdated} from "vue";
 
 const props = defineProps<{
     form: Form
 }>()
 
-const form = props.form;
-
 function getMethod()
 {
-    if (typeof form.method === 'string') {
-        let method = form.method.toLowerCase();
+    if (typeof props.form.method === 'string') {
+        let method = props.form.method.toLowerCase();
         if (['get', 'post'].indexOf(method) >= 0) {
             return method;
         }
@@ -31,8 +30,8 @@ function getMethod()
 
 function getDifferentMethod()
 {
-    if (typeof form.method === 'string') {
-        let method = form.method.toLowerCase();
+    if (typeof props.form.method === 'string') {
+        let method = props.form.method.toLowerCase();
         if (['get', 'post'].indexOf(method) == -1) {
             return method;
         }
@@ -42,16 +41,16 @@ function getDifferentMethod()
 
 function getAction()
 {
-    if (typeof form.action === 'string') {
-        return form.action;
+    if (typeof props.form.action === 'string') {
+        return props.form.action;
     }
     return null;
 }
 
 function getName()
 {
-    if (typeof form.name === 'string') {
-        return form.name;
+    if (typeof props.form.name === 'string') {
+        return props.form.name;
     }
     return null;
 }

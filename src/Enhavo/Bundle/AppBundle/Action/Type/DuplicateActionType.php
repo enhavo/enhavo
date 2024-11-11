@@ -1,45 +1,48 @@
 <?php
+
 namespace Enhavo\Bundle\AppBundle\Action\Type;
 
-use Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType;
-use Enhavo\Bundle\AppBundle\Action\ActionTypeInterface;
-use Enhavo\Bundle\AppBundle\Security\Roles\RoleUtil;
+use Enhavo\Bundle\ApiBundle\Data\Data;
+use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
+use Enhavo\Bundle\ResourceBundle\Action\ActionTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
-class DuplicateActionType extends AbstractUrlActionType implements ActionTypeInterface
+class DuplicateActionType extends AbstractActionType implements ActionTypeInterface
 {
-    public function createViewData(array $options, $resource = null)
+    public function __construct(
+        private readonly CsrfTokenManagerInterface $tokenManager,
+    )
     {
-        $data = parent::createViewData($options, $resource);
-
-        $data = array_merge($data, [
-            'confirm' => $options['confirm'],
-            'confirmMessage' => $this->translator->trans($options['confirm_message'], [], $options['translation_domain']),
-            'confirmLabelOk' => $this->translator->trans($options['confirm_label_ok'], [], $options['translation_domain']),
-            'confirmLabelCancel' => $this->translator->trans($options['confirm_label_cancel'], [], $options['translation_domain']),
-        ]);
-
-        return $data;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function createViewData(array $options, Data $data, object $resource = null): void
     {
-        parent::configureOptions($resolver);
+        $data->set('token', $this->tokenManager->getToken('resource_duplicate')->getValue());
+    }
 
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
         $resolver->setDefaults([
-            'component' => 'duplicate-action',
             'label' => 'label.duplicate',
             'translation_domain' => 'EnhavoAppBundle',
             'icon' => 'content_copy',
             'confirm' => true,
             'confirm_message' => 'message.duplicate.confirm',
-            'confirm_label_ok' => 'label.ok',
+            'confirm_label_ok' => 'action.duplicate',
             'confirm_label_cancel' => 'label.cancel',
-            'append_id' => true
+            'route_parameters' => ['id' => 'expr:resource.getId()'],
+            'model' => 'DuplicateAction',
         ]);
     }
 
-    public function getType()
+    public static function getParentType(): ?string
+    {
+        return UrlActionType::class;
+    }
+
+    public static function getName(): ?string
     {
         return 'duplicate';
     }

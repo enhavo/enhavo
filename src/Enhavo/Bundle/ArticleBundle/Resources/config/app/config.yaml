@@ -8,7 +8,7 @@ enhavo_content:
         collectors:
             article:
                 type: publish
-                repository: enhavo_article.repository.article
+                repository: enhavo_article.article.repository
 
 enhavo_routing:
     classes:
@@ -65,7 +65,7 @@ enhavo_taxonomy:
 enhavo_template:
     template:
         article:
-            repository: enhavo_article.repository.article
+            repository: enhavo_article.article.repository
             label: article.label.article
             translation_domain: EnhavoArticleBundle
             resource_template: theme/resource/article/resource.html.twig

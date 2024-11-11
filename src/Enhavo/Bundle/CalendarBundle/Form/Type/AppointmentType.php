@@ -6,14 +6,20 @@ use Enhavo\Bundle\BlockBundle\Form\Type\BlockNodeType;
 use Enhavo\Bundle\ContentBundle\Form\Type\ContentType;
 use Enhavo\Bundle\FormBundle\Form\Type\DateTimeType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
-use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class AppointmentType extends AbstractResourceType
+class AppointmentType extends AbstractType
 {
+    public function __construct(
+        private readonly string $dataClass,
+    )
+    {
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('teaser', TextareaType::class, array(
@@ -98,9 +104,9 @@ class AppointmentType extends AbstractResourceType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        parent::configureOptions($resolver);
         $resolver->setDefaults(array(
-            'slugable' => true
+            'slugable' => true,
+            'data_class' => $this->dataClass,
         ));
     }
 

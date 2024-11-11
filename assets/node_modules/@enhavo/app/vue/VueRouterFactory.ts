@@ -19,16 +19,7 @@ export class VueRouterFactory
     {
         const routes = [];
 
-        for (let routeName in this.routes) {
-            routes.push({
-                path: this.routes[routeName]["path"],
-                name: this.routes[routeName]["name"],
-                meta: this.routes[routeName]["meta"],
-                component: this.vueFactory.getComponent(
-                    this.routes[routeName]["component"],
-                ),
-            });
-        }
+        this.createRoutes(this.routes, routes);
 
         this.router = VueRouter.createRouter({
             history: VueRouter.createWebHistory(),
@@ -36,5 +27,27 @@ export class VueRouterFactory
         });
 
         return this.router;
+    }
+
+    private createRoutes(routesConfig, routes)
+    {
+        for (let routeName in routesConfig) {
+
+            let route = {
+                path: routesConfig[routeName]["path"],
+                name: routesConfig[routeName]["name"],
+                meta: routesConfig[routeName]["meta"],
+                children: [],
+                component: this.vueFactory.getComponent(
+                    routesConfig[routeName]["component"],
+                ),
+            }
+
+            if (typeof routesConfig[routeName]["children"] === 'object') {
+                this.createRoutes(routesConfig[routeName]["children"], route.children);
+            }
+
+            routes.push(route);
+        }
     }
 }

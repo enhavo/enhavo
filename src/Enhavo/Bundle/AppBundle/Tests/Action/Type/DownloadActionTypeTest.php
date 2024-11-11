@@ -8,65 +8,51 @@
 
 namespace Enhavo\Bundle\AppBundle\Tests\Action\Type;
 
-use Enhavo\Bundle\AppBundle\Action\Action;
-use Enhavo\Bundle\AppBundle\Action\ActionLanguageExpression;
 use Enhavo\Bundle\AppBundle\Action\Type\DownloadActionType;
+use Enhavo\Bundle\ResourceBundle\Action\Action;
+use Enhavo\Bundle\ResourceBundle\Tests\Action\Type\BaseActionTypeFactoryTrait;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Routing\RouterInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DownloadActionTypeTest extends TestCase
 {
-    private function createDependencies()
+    use UrlActionTypeFactoryTrait;
+    use BaseActionTypeFactoryTrait;
+
+    private function createDependencies(): DownloadActionTypeDependencies
     {
         $dependencies = new DownloadActionTypeDependencies();
-        $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
-        $dependencies->actionLanguageExpression = $this->getMockBuilder(ActionLanguageExpression::class)->disableOriginalConstructor()->getMock();
-        $dependencies->router = $this->getMockBuilder(RouterInterface::class)->getMock();
         return $dependencies;
     }
 
-    private function createInstance(DownloadActionTypeDependencies $dependencies)
+    private function createInstance(DownloadActionTypeDependencies $dependencies): DownloadActionType
     {
-        return new DownloadActionType(
-            $dependencies->translator,
-            $dependencies->actionLanguageExpression,
-            $dependencies->router
-        );
+        return new DownloadActionType();
     }
 
     public function testCreateViewData()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->translator->method('trans')->willReturnCallback(function ($value) {return $value;});
-        $dependencies->router->method('generate')->willReturn('http://localhost/download');
         $type = $this->createInstance($dependencies);
 
         $action = new Action($type, [
-            'route' => 'download_route'
+            $this->createBaseActionType($this->createBaseActionTypeDependencies()),
+            $this->createUrlActionType($this->createUrlActionTypeDependencies()),
+        ], [
+            'route' => 'download_route',
         ]);
 
         $viewData = $action->createViewData();
 
-        $this->assertEquals('download-action', $viewData['component']);
-        $this->assertEquals('label.download', $viewData['label']);
-        $this->assertEquals('http://localhost/download', $viewData['url']);
+        $this->assertFalse($viewData['ajax']);
+        $this->assertEquals('/download_route', $viewData['url']);
     }
 
-    public function testType()
+    public function testName()
     {
-        $dependencies = $this->createDependencies();
-        $type = $this->createInstance($dependencies);
-        $this->assertEquals('download', $type->getType());
+        $this->assertEquals('download', DownloadActionType::getName());
     }
 }
 
 class DownloadActionTypeDependencies
 {
-    /** @var TranslatorInterface|\PHPUnit_Framework_MockObject_MockObject */
-    public $translator;
-    /** @var ActionLanguageExpression|\PHPUnit_Framework_MockObject_MockObject */
-    public $actionLanguageExpression;
-    /** @var RouterInterface|\PHPUnit_Framework_MockObject_MockObject */
-    public $router;
 }

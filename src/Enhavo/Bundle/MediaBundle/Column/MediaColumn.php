@@ -9,26 +9,36 @@
 namespace Enhavo\Bundle\MediaBundle\Column;
 
 use Doctrine\Common\Collections\Collection;
-use Enhavo\Bundle\AppBundle\Column\AbstractColumnType;
+use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\MediaBundle\Exception\FileException;
+use Enhavo\Bundle\MediaBundle\Media\UrlGeneratorInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
+use Enhavo\Bundle\ResourceBundle\Column\AbstractColumnType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 
 class MediaColumn extends AbstractColumnType
 {
-    public function createResourceViewData(array $options, $item)
+    public function __construct(
+        private readonly UrlGeneratorInterface $urlGenerator,
+    )
     {
+    }
+
+    public function createResourceViewData(array $options, object $resource, Data $data): void
+    {
+        $propertyAccessor = new PropertyAccessor();
+
         $property = $options['property'];
         $format = $options['format'];
         $height = $options['height'];
 
-        $file = $this->getProperty($item, $property);
+        $file = $propertyAccessor->getValue($resource, $property);
 
-        if($file == null) {
-            return [
-                'height' => $height,
-                'url' => null
-            ];
+        if ($file == null) {
+            $data->set('height', $height);
+            $data->set('url', null);
+            return;
         }
 
         if ($file instanceof Collection && $file->first() instanceof FileInterface) {
@@ -54,17 +64,15 @@ class MediaColumn extends AbstractColumnType
             ));
         }
 
-        $url = $this->container->get('enhavo_media.media.public_url_generator')->generateFormat($file, $format);
+        $url = $this->urlGenerator->generateFormat($file, $format);
 
-        return [
-            'height' => $height,
-            'url' => $url
-        ];
+
+        $data->set('height', $height);
+        $data->set('url', $url);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        parent::configureOptions($resolver);
         $resolver->setDefaults([
             'height' => 60,
             'format' => 'enhavoTableThumb',
@@ -74,7 +82,7 @@ class MediaColumn extends AbstractColumnType
         $resolver->remove(['sortable']);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'media';
     }

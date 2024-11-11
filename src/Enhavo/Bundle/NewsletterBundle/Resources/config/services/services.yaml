@@ -19,54 +19,48 @@ services:
         tags:
             - { name: validator.constraint_validator, alias: subscriber_exists }
 
-    Enhavo\Bundle\NewsletterBundle\Menu\NewsletterMainMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\ListMenu
+    Enhavo\Bundle\NewsletterBundle\Menu\NewsletterMainMenuType:
         tags:
-            - { name: enhavo.menu, alias: newsletter }
+            - { name: enhavo_app.menu }
 
     Enhavo\Bundle\NewsletterBundle\Action\SendActionType:
-        parent: Enhavo\Bundle\AppBundle\Action\AbstractActionType
-        public: true
         tags:
-            - { name: enhavo.action, alias: newsletter_send }
+            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\NewsletterBundle\Action\SendTestActionType:
-        parent: Enhavo\Bundle\AppBundle\Action\Type\ModalActionType
-        public: true
+        arguments:
+            - '@form.factory'
+            - '@Enhavo\Bundle\VueFormBundle\Form\VueForm'
         tags:
-            - { name: enhavo.action, alias: newsletter_send_test }
+            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\NewsletterBundle\Action\StatsActionType:
-        parent: Enhavo\Bundle\AppBundle\Action\Type\OpenActionType
-        public: true
         tags:
-            - { name: enhavo.action, alias: newsletter_stats }
+            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\NewsletterBundle\Action\ActivateActionType:
-        parent: Enhavo\Bundle\AppBundle\Action\Type\UpdateActionType
-        public: true
         tags:
-            - { name: enhavo.action, alias: newsletter_subscriber_activate }
+            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\NewsletterBundle\Block\SubscribeBlockType:
         tags:
             - { name: enhavo_block.block }
 
-    enhavo_newsletter.factory.subscriber:
+    enhavo_newsletter.subscriber.factory:
         class: Enhavo\Bundle\AppBundle\Factory\Factory
         arguments:
             - 'Enhavo\Bundle\NewsletterBundle\Model\Subscriber'
 
-    enhavo_newsletter.factory.local_subscriber:
+    enhavo_newsletter.local_subscriber.factory:
         class: Enhavo\Bundle\NewsletterBundle\Factory\LocalSubscriberFactory
         arguments:
-            - '%enhavo_newsletter.model.local_subscriber.class%'
-            - '@enhavo_newsletter.repository.group'
+            - '%enhavo_newsletter.local_subscriber.model.class%'
+            - '@enhavo_newsletter.group.repository'
 
     Enhavo\Bundle\NewsletterBundle\Pending\PendingSubscriberManager:
         arguments:
             - '@doctrine.orm.entity_manager'
-            - '@enhavo_newsletter.factory.pending_subscriber'
+            - '@enhavo_newsletter.pending_subscriber.factory'
             - '@enhavo_app.util.secure_url_token_generator'
 
     Enhavo\Bundle\NewsletterBundle\Twig\SubscribeFormRenderer:
@@ -80,19 +74,16 @@ services:
             - { name: twig.extension }
 
     Enhavo\Bundle\NewsletterBundle\Menu\SubscriberMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: newsletter_subscriber }
+            - { name: enhavo_app.menu }
 
     Enhavo\Bundle\NewsletterBundle\Menu\PendingMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: newsletter_pending }
+            - { name: enhavo_app.menu }
 
     Enhavo\Bundle\NewsletterBundle\Menu\GroupMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: newsletter_group }
+            - { name: enhavo_app.menu }
 
     Enhavo\Bundle\NewsletterBundle\Form\Type\SubscriberType:
         arguments:
@@ -116,7 +107,7 @@ services:
     Enhavo\Bundle\NewsletterBundle\Form\Type\PendingSubscriberType:
         arguments:
             - '@Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager'
-            - '@enhavo_newsletter.repository.group'
+            - '@enhavo_newsletter.group.repository'
         tags:
             - { name: form.type }
 
@@ -128,31 +119,6 @@ services:
             - '@form.factory'
             - '@event_dispatcher'
             - '%enhavo_newsletter.subscription%'
-
-    Enhavo\Bundle\NewsletterBundle\Controller\SubscriptionController:
-        arguments:
-            - '@Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager'
-            - '@Enhavo\Bundle\NewsletterBundle\Pending\PendingSubscriberManager'
-            - '@translator'
-            - '@Enhavo\Bundle\FormBundle\Error\FormErrorResolver'
-            - '@serializer'
-        calls:
-            - [setContainer, ['@Psr\Container\ContainerInterface']]
-            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
-        tags:
-            - { name: controller.service_arguments }
-            - { name: container.service_subscriber }
-
-    Enhavo\Bundle\NewsletterBundle\Controller\PendingSubscriberController:
-        arguments:
-            - '@Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager'
-            - '@Enhavo\Bundle\NewsletterBundle\Pending\PendingSubscriberManager'
-            - '@translator'
-        calls:
-            - [setContainer, ['@Psr\Container\ContainerInterface']]
-        tags:
-            - { name: controller.service_arguments }
-            - { name: container.service_subscriber }
 
     Enhavo\Bundle\NewsletterBundle\Provider\GroupProvider:
         arguments:

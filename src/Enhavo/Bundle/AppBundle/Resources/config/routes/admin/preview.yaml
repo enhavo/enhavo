@@ -1,0 +1,12 @@
+enhavo_app_admin_resource_preview:
+    options:
+        expose: true
+    path: /enhavo/app/resource/preview
+    methods: [GET]
+    defaults:
+        _expose: admin
+        _vue:
+            component: resource-preview
+            groups: admin
+        _endpoint:
+            type: admin

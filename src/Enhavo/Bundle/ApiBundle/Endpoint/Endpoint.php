@@ -10,21 +10,19 @@ use Enhavo\Component\Type\TypeInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @property EndpointTypeInterface $type
+ * @property EndpointTypeInterface[] $parents
+ */
 class Endpoint extends AbstractContainerType
 {
-    /** @var EndpointTypeInterface */
-    protected $type;
-
-    /** @var EndpointTypeInterface[] */
-    protected $parents;
-
     public function __construct(
         TypeInterface $type,
         array $parents,
         array $options,
         string $key = null,
-        array $extensions,
-        private readonly EndpointDataCollector $endpointDataCollector,
+        array $extensions = [],
+        private readonly ?EndpointDataCollector $endpointDataCollector = null,
     )
     {
         parent::__construct($type, $parents, $options, $key, $extensions);
@@ -33,20 +31,20 @@ class Endpoint extends AbstractContainerType
     public function getResponse(Request $request): Response
     {
         $data = new Data();
-        $context = new Context();
+        $context = new Context($request);
 
-        $this->endpointDataCollector->setOptions($this->options);
+        $this->endpointDataCollector?->setOptions($this->options);
 
         foreach ($this->parents as $parent) {
             $parent->handleRequest($this->options, $request, $data, $context);
-            $this->endpointDataCollector->addParent($parent);
+            $this->endpointDataCollector?->addParent($parent);
             if ($context->isStopped()) {
                 return $context->getResponse() ?? $this->type->getResponse($this->options, $request, $data, $context);
             }
             foreach ($this->extensions as $extension) {
                 if ($this->isExtendable($parent, $extension)) {
                     $extension->handleRequest($this->options, $request, $data, $context);
-                    $this->endpointDataCollector->addExtension($extension);
+                    $this->endpointDataCollector?->addExtension($extension);
                     if ($context->isStopped()) {
                         return $context->getResponse() ?? $this->type->getResponse($this->options, $request, $data, $context);
                     }
@@ -55,28 +53,28 @@ class Endpoint extends AbstractContainerType
         }
 
         $this->type->handleRequest($this->options, $request, $data, $context);
-        $this->endpointDataCollector->addType($this->type);
+        $this->endpointDataCollector?->addType($this->type);
 
         if ($context->isStopped()) {
-            $this->endpointDataCollector->setContext($context);
-            $this->endpointDataCollector->setData($data);
+            $this->endpointDataCollector?->setContext($context);
+            $this->endpointDataCollector?->setData($data);
             return $context->getResponse() ?? $this->type->getResponse($this->options, $request, $data, $context);
         }
 
         foreach ($this->extensions as $extension) {
             if ($this->isExtendable($this->type, $extension)) {
                 $extension->handleRequest($this->options, $request, $data, $context);
-                $this->endpointDataCollector->addExtension($extension);
+                $this->endpointDataCollector?->addExtension($extension);
                 if ($context->isStopped()) {
-                    $this->endpointDataCollector->setContext($context);
-                    $this->endpointDataCollector->setData($data);
+                    $this->endpointDataCollector?->setContext($context);
+                    $this->endpointDataCollector?->setData($data);
                     return $context->getResponse() ?? $this->type->getResponse($this->options, $request, $data, $context);
                 }
             }
         }
 
-        $this->endpointDataCollector->setContext($context);
-        $this->endpointDataCollector->setData($data);
+        $this->endpointDataCollector?->setContext($context);
+        $this->endpointDataCollector?->setData($data);
 
         if ($context->getResponse()) {
             return $context->getResponse();

@@ -1,7 +1,7 @@
 services:
     Enhavo\Bundle\UserBundle\Form\Type\RegistrationType:
         arguments:
-            - '%enhavo_user.model.user.class%'
+            - '%enhavo_user.user.model.class%'
         tags:
             - { name: form.type }
 
@@ -15,8 +15,8 @@ services:
 
     Enhavo\Bundle\UserBundle\Form\Type\UserType:
         arguments:
-            - '%enhavo_user.model.user.class%'
-            - '%enhavo_user.model.group.class%'
+            - '%enhavo_user.user.model.class%'
+            - '%enhavo_user.group.model.class%'
             - '@security.authorization_checker'
             - [default]
         tags:
@@ -24,7 +24,7 @@ services:
 
     Enhavo\Bundle\UserBundle\Form\Type\ProfileType:
         arguments:
-            - '%enhavo_user.model.user.class%'
+            - '%enhavo_user.user.model.class%'
         tags:
             - { name: form.type, alias: 'enhavo_user_profile' }
 
@@ -32,7 +32,7 @@ services:
         tags:
             - { name: form.type, alias: 'enhavo_user_group' }
         arguments:
-            - '%enhavo_user.model.group.class%'
+            - '%enhavo_user.group.model.class%'
             - [default]
 
     Enhavo\Bundle\UserBundle\Form\Type\PermissionType:
@@ -45,7 +45,7 @@ services:
         tags:
             - { name: form.type }
         arguments:
-            - '%enhavo_user.model.user.class%'
+            - '%enhavo_user.user.model.class%'
 
     Enhavo\Bundle\UserBundle\Form\Type\LoginType:
         tags:

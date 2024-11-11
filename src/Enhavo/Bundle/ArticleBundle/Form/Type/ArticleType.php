@@ -9,12 +9,18 @@ use Enhavo\Bundle\FormBundle\Form\Type\WysiwygType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Enhavo\Bundle\TaxonomyBundle\Form\Type\TermAutoCompleteChoiceType;
 use Enhavo\Bundle\TaxonomyBundle\Form\Type\TermTreeChoiceType;
-use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ArticleType extends AbstractResourceType
+class ArticleType extends AbstractType
 {
+    public function __construct(
+        private readonly string $dataClass,
+    )
+    {
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('teaser', WysiwygType::class, array(
@@ -52,7 +58,7 @@ class ArticleType extends AbstractResourceType
             'translation_domain' => 'EnhavoArticleBundle',
             'create_route' => 'enhavo_article_tag_create',
             'edit_route' => 'enhavo_article_tag_update',
-            'view_key' => 'article_tags'
+            'frame_key' => 'article_tags',
         ]);
     }
 

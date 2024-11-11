@@ -15,6 +15,14 @@ use Symfony\Component\Form\Test\TypeTestCase;
 
 class RedirectFormTypeTest extends TypeTestCase
 {
+    protected function getTypes()
+    {
+        return [
+            new RedirectType(Redirect::class)
+        ];
+    }
+
+
     public function testSubmitValidData()
     {
         $formData = [

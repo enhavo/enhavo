@@ -1,0 +1,64 @@
+enhavo_user_admin_api_user_index:
+    path: /user/index
+    methods:
+        - GET
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_index
+            grid: enhavo_user.user
+
+enhavo_user_admin_api_user_list:
+    path: /user/list
+    methods:
+        - GET
+        - POST
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_list
+            grid: enhavo_user.user
+
+enhavo_user_admin_api_user_create:
+    path: /user/create
+    methods:
+        - GET
+        - POST
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_create
+            input: enhavo_user.user.create
+
+enhavo_user_admin_api_user_update:
+    path: '/user/update/{id}'
+    methods:
+        - GET
+        - POST
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_update
+            input: enhavo_user.user.update
+
+enhavo_user_admin_api_user_delete:
+    path: '/user/delete/{id}'
+    methods:
+        - DELETE
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_delete
+            input: enhavo_user.user
+
+enhavo_user_admin_api_user_auto_complete:
+    options:
+        expose: true
+    path: '/user/auto-complete'
+    methods: [GET]
+    defaults:
+        _controller: enhavo_form.controller.auto_complete::searchAction
+        _config:
+            class: '%enhavo_user.user.model.class%'
+            repository:
+                method: findByTerm

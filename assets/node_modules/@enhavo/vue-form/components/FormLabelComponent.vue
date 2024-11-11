@@ -3,8 +3,7 @@
         v-if="form.label !== false"
         :for="getFor()"
         :is="getComponent()"
-        v-show="form.visible"
-        :ref="(el) => form.setElement(el)">
+        :ref="(el) => form.setElement(el as HTMLElement)">
         {{ getLabel() }}
     </component>
 </template>
@@ -18,40 +17,37 @@ const props = defineProps<{
     element?: string
 }>()
 
-const form = props.form;
-const element = props.element;
-
 function getComponent(): string
 {
-    if (typeof element === 'string') {
-        return element;
+    if (typeof props.element === 'string') {
+        return props.element;
     }
     return 'label';
 }
 
 function getLabel(): string|boolean
 {
-    if (form.label) {
-        return form.label;
+    if (props.form.label) {
+        return props.form.label;
     }
-    if (form.labelFormat) {
+    if (props.form.labelFormat) {
         return format()
     }
-    return FormUtil.humanize(form.name);
+    return FormUtil.humanize(props.form.name);
 }
 
 function getFor(): string|boolean
 {
-    if (!form.compound) {
-        return form.id
+    if (!props.form.compound) {
+        return props.form.id
     }
     return false;
 }
 
 function format(): string
 {
-    let label = form.labelFormat.replace('%id%', form.id);
-    label = label.replace('%name%', form.name);
+    let label = props.form.labelFormat.replace('%id%', props.form.id);
+    label = label.replace('%name%', props.form.name);
     return label;
 }
 </script>

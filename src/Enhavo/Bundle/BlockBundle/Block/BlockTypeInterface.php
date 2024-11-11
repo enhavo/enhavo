@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\BlockBundle\Block;
 
-use Enhavo\Bundle\AppBundle\View\ViewData;
+use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
 use Enhavo\Component\Type\TypeInterface;
 
@@ -13,9 +13,9 @@ use Enhavo\Component\Type\TypeInterface;
  */
 interface BlockTypeInterface extends TypeInterface
 {
-    public function createViewData(BlockInterface $block, ViewData $viewData, $resource, array $options);
+    public function createViewData(BlockInterface $block, Data $data, $resource, array $options);
 
-    public function finishViewData(BlockInterface $block, ViewData $viewData, $resource, array $options);
+    public function finishViewData(BlockInterface $block, Data $data, $resource, array $options);
 
     public function getModel(array $options);
 
@@ -30,6 +30,4 @@ interface BlockTypeInterface extends TypeInterface
     public function getGroups(array $options);
 
     public function getLabel(array $options);
-
-    public function getTranslationDomain(array $options);
 }

@@ -2,23 +2,14 @@ doctrine:
     orm:
         resolve_target_entities:
             Enhavo\Bundle\MediaBundle\Model\FileInterface: Enhavo\Bundle\MediaBundle\Entity\File
-
-twig:
-    form_themes: ['@EnhavoMedia/theme/form.html.twig']
+            Enhavo\Bundle\MediaBundle\Model\FormatInterface: Enhavo\Bundle\MediaBundle\Entity\Format
 
 enhavo_app:
-    form_themes:
-        - '@EnhavoMedia/admin/form/media/media.html.twig'
-        - '@EnhavoMedia/admin/form/media/image-cropper.html.twig'
-        - '@EnhavoMedia/admin/form/media/download.html.twig'
     template_paths:
         enhavo_media:
             path: '@EnhavoMediaBundle/Resources/views'
             alias: EnhavoMedia
             priority: 10
-    apps:
-        - 'media/Adapter/EnhavoAdapter'
-        - 'media/Extension/ImageCropper'
 
 enhavo_media:
     formats:
@@ -30,3 +21,11 @@ enhavo_media:
             type: image
             width: 72
             height: 72
+    form:
+        default:
+            route: enhavo_media_admin_api_file_upload
+            actions_file:
+                download:
+                    type: media_download
+                format:
+                    type: media_format

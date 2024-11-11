@@ -8,25 +8,23 @@
 
 namespace Enhavo\Bundle\TemplateBundle\Menu;
 
-use Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu;
+use Enhavo\Bundle\AppBundle\Menu\AbstractMenuType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TemplateMenu extends BaseMenu
+class TemplateMenu extends AbstractMenuType
 {
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        parent::configureOptions($resolver);
-
         $resolver->setDefaults([
             'icon' => 'chrome_reader_mode',
             'label' => 'template.label.template',
             'translation_domain' => 'EnhavoTemplateBundle',
-            'route' => 'enhavo_template_template_index',
+            'route' => 'enhavo_template_admin_template_index',
             'role' => 'ROLE_ENHAVO_TEMPLATE_TEMPLATE_INDEX',
         ]);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'template';
     }

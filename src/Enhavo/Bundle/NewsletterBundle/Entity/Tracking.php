@@ -8,9 +8,7 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Entity;
 
-use Sylius\Component\Resource\Model\ResourceInterface;
-
-class Tracking implements ResourceInterface
+class Tracking
 {
     const TRACKING_OPEN = 'open';
     const TRACKING_BOUNCE = 'bounce';

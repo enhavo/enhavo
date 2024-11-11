@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityManager;
 use Enhavo\Bundle\RoutingBundle\Entity\Route;
 use Enhavo\Bundle\RoutingBundle\Model\Routeable;
 use Enhavo\Bundle\RoutingBundle\AutoGenerator\AutoGenerator;
-use Sylius\Component\Resource\Factory\FactoryInterface;
+use Enhavo\Bundle\ResourceBundle\Factory\FactoryInterface;
 
 class RouteManager
 {

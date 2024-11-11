@@ -2,14 +2,13 @@
 
 namespace Enhavo\Bundle\AppBundle\Action\Type;
 
+use Enhavo\Bundle\ResourceBundle\Action\Type\SaveActionType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TransitionActionType extends SaveActionType
 {
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        parent::configureOptions($resolver);
-
         $resolver->setDefaults([
             'graph' => null,
         ]);
@@ -25,7 +24,12 @@ class TransitionActionType extends SaveActionType
         $resolver->setRequired(['transition']);
     }
 
-    public function getType()
+    public static function getParentType(): ?string
+    {
+        return SaveActionType::class;
+    }
+
+    public static function getName(): ?string
     {
         return 'transition';
     }

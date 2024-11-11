@@ -8,56 +8,49 @@
 
 namespace Enhavo\Bundle\AppBundle\Tests\Action\Type;
 
-use Enhavo\Bundle\AppBundle\Action\Action;
-use Enhavo\Bundle\AppBundle\Action\ActionLanguageExpression;
 use Enhavo\Bundle\AppBundle\Action\Type\ModalActionType;
+use Enhavo\Bundle\ResourceBundle\Action\Action;
+use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage;
+use Enhavo\Bundle\ResourceBundle\Tests\Action\Type\BaseActionTypeFactoryTrait;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ModalActionTypeTest extends TestCase
 {
-    private function createDependencies()
+    use BaseActionTypeFactoryTrait;
+
+    private function createDependencies(): ModalActionTypeDependencies
     {
         $dependencies = new ModalActionTypeDependencies();
-        $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
-        $dependencies->actionLanguageExpression = $this->getMockBuilder(ActionLanguageExpression::class)->disableOriginalConstructor()->getMock();
         return $dependencies;
     }
 
-    private function createInstance(ModalActionTypeDependencies $dependencies)
+    private function createInstance(ModalActionTypeDependencies $dependencies): ModalActionType
     {
         return new ModalActionType(
-            $dependencies->translator,
-            $dependencies->actionLanguageExpression
         );
     }
 
     public function testCreateViewData()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->translator->method('trans')->willReturnCallback(function ($value) {return $value;});
         $type = $this->createInstance($dependencies);
 
-        $action = new Action($type, [
-            'label' => 'my_label',
+        $action = new Action($type, [], [
             'modal' => [
-                'type' => 'modal-type',
-                'option' => 'option-value'
+                'model' => 'TestModal'
             ]
         ]);
         $viewData = $action->createViewData();
 
-        $this->assertEquals('modal-action', $viewData['component']);
-        $this->assertEquals('my_label', $viewData['label']);
-        $this->assertEquals('modal-type', $viewData['modal']['type']);
-        $this->assertEquals('option-value', $viewData['modal']['option']);
+        $this->assertEquals([
+            'model' => 'TestModal'
+        ], $viewData['modal']);
     }
 
-    public function testType()
+    public function testName()
     {
-        $dependencies = $this->createDependencies();
-        $type = $this->createInstance($dependencies);
-        $this->assertEquals('modal', $type->getType());
+        $this->assertEquals('modal', ModalActionType::getName());
     }
 }
 
@@ -65,6 +58,6 @@ class ModalActionTypeDependencies
 {
     /** @var TranslatorInterface|\PHPUnit_Framework_MockObject_MockObject */
     public $translator;
-    /** @var ActionLanguageExpression|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var ResourceExpressionLanguage|\PHPUnit_Framework_MockObject_MockObject */
     public $actionLanguageExpression;
 }

@@ -1,7 +1,12 @@
 enhavo_newsletter_admin:
     resource: "@EnhavoNewsletterBundle/Resources/config/routes/admin/*"
-    prefix: /admin
+    prefix: /admin/newsletter
+
+enhavo_user_admin_api:
+    resource: "@EnhavoNewsletterBundle/Resources/config/routes/admin_api/*"
+    prefix: /admin/api/newsletter
 
 enhavo_newsletter_theme:
     resource: "@EnhavoNewsletterBundle/Resources/config/routes/theme/*"
     prefix: /
+

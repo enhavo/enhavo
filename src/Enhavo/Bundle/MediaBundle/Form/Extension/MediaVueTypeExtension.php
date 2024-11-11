@@ -8,26 +8,30 @@ use Enhavo\Bundle\VueFormBundle\Form\AbstractVueTypeExtension;
 use Enhavo\Bundle\VueFormBundle\Form\VueData;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class MediaVueTypeExtension extends AbstractVueTypeExtension
 {
     public function __construct(
-        private MediaManager $mediaManager,
+        private readonly MediaManager $mediaManager,
+        private readonly RouterInterface $router,
+        private readonly TranslatorInterface $translator,
     )
     {
     }
-
-    public function buildVueData(FormView $view, VueData $data, array $options)
+    public function buildVueData(FormView $view, VueData $data, array $options): void
     {
-        $data['upload'] = $view->vars['upload'];
         $data['multiple'] = $view->vars['multiple'];
-        $data['uploadLabel'] = 'Upload';
-        $data['buttons'] = null;
+        $data['actions'] = $view->vars['actions'];
+        $data['upload'] = $view->vars['upload'];
+        $data['uploadLabel'] = $this->translator->trans('media.form.action.upload', [], 'EnhavoMediaBundle');
         $data['maxUploadSize'] = $this->mediaManager->getMaxUploadSize();
         $data['editable'] = true;
+        $data['uploadUrl'] = $this->router->generate($view->vars['route']);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'component' => 'form-media',

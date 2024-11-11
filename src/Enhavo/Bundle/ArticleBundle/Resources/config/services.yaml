@@ -1,39 +1,31 @@
 services:
     Enhavo\Bundle\ArticleBundle\Form\Type\ArticleType:
         arguments:
-            - '%enhavo_article.model.article.class%'
+            - '%enhavo_article.article.model.class%'
             - [default]
         tags:
             - { name: form.type, alias: enhavo_article_article }
 
     Enhavo\Bundle\ArticleBundle\Menu\ArticleRootMenuType:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\ListMenu
         tags:
-            - { name: enhavo.menu, alias: article }
+            - { name: enhavo_app.menu }
 
     Enhavo\Bundle\ArticleBundle\Menu\ArticleMenuType:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: article_article }
+            - { name: enhavo_app.menu }
 
     Enhavo\Bundle\ArticleBundle\Menu\TagMenuType:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: article_tag }
+            - { name: enhavo_app.menu }
 
     Enhavo\Bundle\ArticleBundle\Menu\CategoryMenuType:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: article_category }
-
-    enhavo_article.statistic.article:
-        class: Enhavo\Bundle\ArticleBundle\Statistic\ArticleStatistic
-        calls:
-          - [setContainer, ['@service_container']]
-        tags:
-            - { name: enhavo.statistic, alias: article }
+            - { name: enhavo_app.menu }
 
     Enhavo\Bundle\ArticleBundle\Block\ArticleListBlockType:
+        arguments:
+            - '@enhavo_article.article.repository'
+            - '@serializer'
         tags:
             - { name: enhavo_block.block }
 
@@ -41,29 +33,13 @@ services:
         tags:
             - { name: enhavo_block.block }
 
-    Enhavo\Bundle\ArticleBundle\Widget\ArticleListType:
-        public: true
+    enhavo_article.article.factory:
+        class: '%enhavo_article.article.factory.class%'
         arguments:
-            - '@enhavo_article.repository.article'
-            - '@request_stack'
-        tags:
-            - { name: enhavo.widget, alias: article_list }
-
-    enhavo_article.factory.article:
-        public: true
-        class: '%enhavo_article.factory.article.class%'
-        arguments:
-            - '%enhavo_article.model.article.class%'
+            - '%enhavo_article.article.model.class%'
             - '@enhavo_block.factory.node'
-            - '@enhavo_routing.factory.route'
-            - '@enhavo_media.factory.file'
-
-    Enhavo\Bundle\ArticleBundle\Provider\TotalProvider:
-        public: true
-        arguments:
-            - '@enhavo_article.repository.article'
-        tags:
-            - { name: enhavo.provider, alias: article.total }
+            - '@enhavo_routing.route.factory'
+            - '@enhavo_media.file.factory'
 
     Enhavo\Bundle\ArticleBundle\Vue\ArticleVueRouteProviderType:
         tags:
@@ -71,10 +47,28 @@ services:
 
     Enhavo\Bundle\ArticleBundle\Endpoint\ArticleEndpointType:
         arguments:
-            - '@enhavo_article.repository.article'
+            - '@enhavo_article.article.repository'
             - '@Enhavo\Bundle\CommentBundle\Comment\CommentManager'
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:
             - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\ArticleBundle\Endpoint\ArticleListEndpointType:
+        arguments:
+            - '@enhavo_article.article.repository'
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\ArticleBundle\Controller\ArticleController:
+        arguments:
+            - '@Enhavo\Component\Type\FactoryInterface[Endpoint]'
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: controller.service_arguments }
             - { name: container.service_subscriber }

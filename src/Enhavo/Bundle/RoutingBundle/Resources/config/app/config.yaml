@@ -31,5 +31,5 @@ enhavo_routing:
                     type: route
 
 enhavo_app:
-    form_themes:
-        - '@EnhavoRouting/admin/form/route/fields.html.twig'
+#    form_themes:
+#        - '@EnhavoRouting/admin/form/route/fields.html.twig'

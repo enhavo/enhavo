@@ -1,6 +1,10 @@
 enhavo_calendar_admin:
     resource: "@EnhavoCalendarBundle/Resources/config/routes/admin/*"
-    prefix: /admin
+    prefix: /admin/calendar
+
+enhavo_calendar_admin_api:
+    resource: "@EnhavoCalendarBundle/Resources/config/routes/admin_api/*"
+    prefix: /admin/api/calendar
 
 enhavo_calendar_theme:
     resource: "@EnhavoCalendarBundle/Resources/config/routes/theme/*"

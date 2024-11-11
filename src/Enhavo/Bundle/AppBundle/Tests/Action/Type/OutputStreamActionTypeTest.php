@@ -8,67 +8,51 @@
 
 namespace Enhavo\Bundle\AppBundle\Tests\Action\Type;
 
-use Enhavo\Bundle\AppBundle\Action\Action;
-use Enhavo\Bundle\AppBundle\Action\ActionLanguageExpression;
 use Enhavo\Bundle\AppBundle\Action\Type\OutputStreamActionType;
+use Enhavo\Bundle\ResourceBundle\Action\Action;
+use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class OutputStreamActionTypeTest extends TestCase
 {
-    private function createDependencies()
+    use UrlActionTypeFactoryTrait;
+
+    private function createDependencies(): OutputStreamActionTypeDependencies
     {
         $dependencies = new OutputStreamActionTypeDependencies();
-        $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
-        $dependencies->actionLanguageExpression = $this->getMockBuilder(ActionLanguageExpression::class)->disableOriginalConstructor()->getMock();
-        $dependencies->router = $this->getMockBuilder(RouterInterface::class)->getMock();
         return $dependencies;
     }
 
-    private function createInstance(OutputStreamActionTypeDependencies $dependencies)
+    private function createInstance(OutputStreamActionTypeDependencies $dependencies): OutputStreamActionType
     {
         return new OutputStreamActionType(
-            $dependencies->translator,
-            $dependencies->actionLanguageExpression,
-            $dependencies->router
         );
     }
 
     public function testCreateViewData()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->translator->method('trans')->willReturnCallback(function ($value) {return $value;});
-        $dependencies->router->method('generate')->willReturn('http://localhost/stream');
         $type = $this->createInstance($dependencies);
 
         $action = new Action($type, [
+            $this->createUrlActionType($this->createUrlActionTypeDependencies()),
+        ], [
             'route' => 'stream_route',
-            'label' => 'my Label'
         ]);
 
         $viewData = $action->createViewData();
 
-        $this->assertEquals('modal-action', $viewData['component']);
-        $this->assertEquals('my Label', $viewData['label']);
-        $this->assertEquals('http://localhost/stream', $viewData['url']);
-        $this->assertEquals('output-stream', $viewData['modal']['component']);
+        $this->assertEquals('modal-output-stream', $viewData['modalComponent']);
     }
 
-    public function testType()
+    public function testName()
     {
-        $dependencies = $this->createDependencies();
-        $type = $this->createInstance($dependencies);
-        $this->assertEquals('output_stream', $type->getType());
+        $this->assertEquals('output_stream', OutputStreamActionType::getName());
     }
 }
 
 class OutputStreamActionTypeDependencies
 {
-    /** @var TranslatorInterface|\PHPUnit_Framework_MockObject_MockObject */
-    public $translator;
-    /** @var ActionLanguageExpression|\PHPUnit_Framework_MockObject_MockObject */
-    public $actionLanguageExpression;
-    /** @var RouterInterface|\PHPUnit_Framework_MockObject_MockObject */
-    public $router;
+
 }

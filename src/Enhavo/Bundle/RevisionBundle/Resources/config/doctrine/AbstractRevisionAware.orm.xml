@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <mapped-superclass name="Enhavo\Bundle\RevisionBundle\Entity\AbstractRevisionAware">
+        <id name="id" type="integer" column="id">
+            <generator />
+        </id>
+        <field name="subjectId" length="255" nullable="true" />
+        <field name="subjectClass" length="255" nullable="true" />
+        <field name="resourceAlias" length="255" nullable="true" />
+        <field name="title" type="text" nullable="true" />
+        <field name="date" type="datetime" nullable="true" />
+    </mapped-superclass>
+</doctrine-mapping>

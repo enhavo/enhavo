@@ -84,8 +84,6 @@ class LoginEndpointType extends AbstractFormEndpointType
         } else if ($data->has('redirect')) {
             $data->set('redirect', null);
         }
-
-        $data->set('viewId', $request->getSession()->get('enhavo.view_id'));
     }
 
     public static function getParentType(): ?string

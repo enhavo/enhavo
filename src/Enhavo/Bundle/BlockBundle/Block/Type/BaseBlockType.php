@@ -8,20 +8,29 @@
 
 namespace Enhavo\Bundle\BlockBundle\Block\Type;
 
-use Enhavo\Bundle\AppBundle\View\ViewData;
+use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\BlockBundle\Block\BlockTypeInterface;
 use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
 use Enhavo\Component\Type\AbstractType;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class BaseBlockType extends AbstractType implements BlockTypeInterface
 {
-    public function createViewData(BlockInterface $block, ViewData $viewData, $resource, array $options)
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+        private readonly NormalizerInterface $normalizer,
+    )
     {
-        $viewData['block'] = $block;
     }
 
-    public function finishViewData(BlockInterface $block, ViewData $viewData, $resource, array $options)
+    public function createViewData(BlockInterface $block, Data $data, $resource, array $options)
+    {
+        $data['block'] = $this->normalizer->normalize($block, null, ['groups' => $options['serialization_groups']]);
+    }
+
+    public function finishViewData(BlockInterface $block, Data $data, $resource, array $options)
     {
 
     }
@@ -58,12 +67,7 @@ class BaseBlockType extends AbstractType implements BlockTypeInterface
 
     public function getLabel(array $options)
     {
-        return $options['label'];
-    }
-
-    public function getTranslationDomain(array $options)
-    {
-        return $options['translation_domain'];
+        return $this->translator->trans($options['label'], [], $options['translation_domain']);
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -73,6 +77,7 @@ class BaseBlockType extends AbstractType implements BlockTypeInterface
             'translation_domain' => null,
             'template' => null,
             'component' => null,
+            'serialization_groups' => ['endpoint'],
         ]);
 
         $resolver->setRequired([

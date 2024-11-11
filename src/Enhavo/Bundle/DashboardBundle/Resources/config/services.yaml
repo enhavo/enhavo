@@ -1,65 +1,32 @@
 services:
     Enhavo\Bundle\DashboardBundle\Menu\DashboardMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: dashboard }
+            - { name: enhavo_app.menu }
 
-    enhavo_dashboard.statistic_collector:
-        class: Enhavo\Bundle\AppBundle\Type\TypeCollector
-        arguments:
-          - '@service_container'
-          - 'Statistic'
-
-    Enhavo\Bundle\DashboardBundle\Block\StatisticBlock:
-        public: true
-        calls:
-            - [setContainer, ['@service_container']]
-        tags:
-            - { name: enhavo.block, alias: statistic }
-
-    Enhavo\Bundle\DashboardBundle\Controller\DashboardController:
-        arguments:
-            - '@Enhavo\Component\Type\FactoryInterface[View]'
-        calls:
-            - [setContainer, ['@Psr\Container\ContainerInterface']]
-        tags:
-            - { name: controller.service_arguments }
-            - { name: container.service_subscriber }
-
-    Enhavo\Bundle\DashboardBundle\View\DashboardViewType:
-        arguments:
-            - '@Enhavo\Bundle\DashboardBundle\Widget\WidgetManager'
-        tags:
-            - { name: enhavo_app.view }
-
-    Enhavo\Bundle\DashboardBundle\Widget\WidgetManager:
+    Enhavo\Bundle\DashboardBundle\Dashboard\DashboardManager:
         arguments:
             - '@Enhavo\Component\Type\FactoryInterface[DashboardWidget]'
             - '@security.authorization_checker'
             - '%enhavo_dashboard.widgets%'
 
-    Enhavo\Bundle\DashboardBundle\Widget\Type\NumberWidgetType:
-        arguments:
-            - '@Enhavo\Component\Type\FactoryInterface[DashboardProvider]'
-        tags:
-            - { name: enhavo_dashboard.widget }
-
-    Enhavo\Bundle\DashboardBundle\Widget\Type\WidgetType:
+    Enhavo\Bundle\DashboardBundle\Dashboard\Type\NumberDashboardWidgetType:
         arguments:
             - '@translator'
+            - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
+        calls:
+            - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
         tags:
             - { name: enhavo_dashboard.widget }
 
-    Enhavo\Bundle\DashboardBundle\Provider\Type\DashboardProviderType:
+    Enhavo\Bundle\DashboardBundle\Dashboard\Type\BaseDashboardWidgetType:
+        tags:
+            - { name: enhavo_dashboard.widget }
+
+    Enhavo\Bundle\DashboardBundle\Endpoint\DashboardEndpointType:
         arguments:
-            - '@service_container'
+            - '@Enhavo\Bundle\DashboardBundle\Dashboard\DashboardManager'
+        calls:
+            - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
         tags:
-            - { name: enhavo_dashboard.provider }
-
-    Enhavo\Bundle\DashboardBundle\Provider\Type\TotalDashboardProviderType:
-        tags:
-            - { name: enhavo_dashboard.provider }
-
-    Enhavo\Bundle\DashboardBundle\Provider\Type\RepositoryDashboardProviderType:
-        tags:
-            - { name: enhavo_dashboard.provider }
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }

@@ -2,34 +2,28 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Action;
 
-use Enhavo\Bundle\AppBundle\Action\AbstractActionType;
-use Enhavo\Bundle\AppBundle\Action\ActionTypeInterface;
+use Enhavo\Bundle\ApiBundle\Data\Data;
+use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SendActionType extends AbstractActionType implements ActionTypeInterface
+class SendActionType extends AbstractActionType
 {
-    public function createViewData(array $options, $resource = null)
+    public function createViewData(array $options, Data $data, object $resource = null): void
     {
-        $data = parent::createViewData($options, $resource);
-        $data = array_merge($data, [
-            'resourceId' => $resource->getId(),
-        ]);
-        return $data;
+        $data->set('resourceId', $resource->getId());
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        parent::configureOptions($resolver);
-
         $resolver->setDefaults([
-            'component' => 'newsletter-send',
             'label' => 'newsletter.action.send.label',
             'translation_domain' => 'EnhavoNewsletterBundle',
             'icon' => 'send',
+            'model' => 'NewsletterSendAction',
         ]);
     }
 
-    public function getType()
+    public static function getName(): ?string
     {
         return 'newsletter_send';
     }

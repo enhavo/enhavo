@@ -1,0 +1,54 @@
+enhavo_resource:
+    resources:
+        enhavo_template.template:
+            priority: -10
+            classes:
+                model: Enhavo\Bundle\TemplateBundle\Entity\Template
+                factory: Enhavo\Bundle\TemplateBundle\Factory\TemplateFactory
+                repository: Enhavo\Bundle\TemplateBundle\Repository\TemplateRepository
+    grids:
+        enhavo_template.template:
+            extends: enhavo_resource.grid
+            resource: enhavo_template.template
+            actions:
+                create:
+                    enabled: false
+                    type: create
+                filter:
+                    type: filter
+            filters:
+                name:
+                    type: text
+                    label: template.label.template
+                    translation_domain: EnhavoTemplateBundle
+                    property: name
+            columns:
+                name:
+                    type: text
+                    label: template.label.name
+                    property: template.name
+                    translation_domain: EnhavoTemplateBundle
+                    width: 12
+            batches:
+                delete:
+                    type: delete
+    inputs:
+        enhavo_template.template:
+            extends: enhavo_resource.input
+            resource: enhavo_template.template
+            form: Enhavo\Bundle\TemplateBundle\Form\Type\TemplateType
+            form_options: {  }
+            actions: {  }
+            tabs:
+                main:
+                    label: template.label.template
+                    translation_domain: EnhavoTemplateBundle
+                    type: form
+                    arrangement:
+                        - route
+                content:
+                    label: template.label.content
+                    translation_domain: EnhavoTemplateBundle
+                    type: form
+                    arrangement:
+                        - content

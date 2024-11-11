@@ -2,10 +2,12 @@
 
 namespace Enhavo\Bundle\AppBundle\Tests\Mock;
 
-use Sylius\Component\Resource\Model\ResourceInterface;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
 
-class EntityRepositoryMock implements RepositoryInterface
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Mapping\ClassMetadata;
+
+class EntityRepositoryMock extends EntityRepository
 {
     public $find;
     public $findAll;
@@ -16,7 +18,13 @@ class EntityRepositoryMock implements RepositoryInterface
     public $add;
     public $remove;
 
-    public function find($id)
+    public function __construct(EntityManagerInterface $em, ClassMetadata $class)
+    {
+        parent::__construct($em, $class);
+    }
+
+
+    public function find($id, $lockMode = null, $lockVersion = null)
     {
         return is_callable($this->find) ? call_user_func($this->find, $id) : $this->find;
     }
@@ -31,7 +39,7 @@ class EntityRepositoryMock implements RepositoryInterface
         return is_callable($this->findBy) ? call_user_func($this->findBy, $criteria, $orderBy, $limit, $offset) : $this->findBy;
     }
 
-    public function findOneBy(array $criteria)
+    public function findOneBy(array $criteria, ?array $orderBy = null)
     {
         return is_callable($this->findOneBy) ? call_user_func($this->findOneBy, $criteria) : $this->findOneBy;
     }
@@ -44,15 +52,5 @@ class EntityRepositoryMock implements RepositoryInterface
     public function createPaginator(array $criteria = [], array $sorting = []): iterable
     {
         return is_callable($this->createPaginator) ? call_user_func($this->createPaginator, $criteria, $sorting) : $this->createPaginator;
-    }
-
-    public function add(ResourceInterface $resource): void
-    {
-        is_callable($this->add) ? call_user_func($this->add, $resource) : null;
-    }
-
-    public function remove(ResourceInterface $resource): void
-    {
-        is_callable($this->remove) ? call_user_func($this->remove, $resource) : null;
     }
 }

@@ -8,57 +8,51 @@
 
 namespace Enhavo\Bundle\AppBundle\Tests\Action\Type;
 
-use Enhavo\Bundle\AppBundle\Action\Action;
-use Enhavo\Bundle\AppBundle\Action\ActionLanguageExpression;
 use Enhavo\Bundle\AppBundle\Action\Type\CloseActionType;
+use Enhavo\Bundle\ResourceBundle\Action\Action;
+use Enhavo\Bundle\ResourceBundle\Action\Type\BaseActionType;
+use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CloseActionTypeTest extends TestCase
 {
-    private function createDependencies()
+    private function createDependencies(): CloseActionTypeTestDependencies
     {
         $dependencies = new CloseActionTypeTestDependencies();
         $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
-        $dependencies->actionLanguageExpression = $this->getMockBuilder(ActionLanguageExpression::class)->disableOriginalConstructor()->getMock();
+        $dependencies->resourceExpressionLanguage = $this->getMockBuilder(ResourceExpressionLanguage::class)->disableOriginalConstructor()->getMock();
         return $dependencies;
     }
 
-    private function createInstance(CloseActionTypeTestDependencies $dependencies)
+    private function createInstance(CloseActionTypeTestDependencies $dependencies): CloseActionType
     {
-        return new CloseActionType(
-            $dependencies->translator,
-            $dependencies->actionLanguageExpression
-        );
+        return new CloseActionType();
     }
 
     public function testCreateViewData()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->translator->method('trans')->willReturnCallback(function ($value) {return $value;});
         $type = $this->createInstance($dependencies);
 
-        $action = new Action($type, []);
+
+        $baseType = new BaseActionType($dependencies->translator, $dependencies->resourceExpressionLanguage);
+        $action = new Action($type, [$baseType], []);
 
         $viewData = $action->createViewData();
 
-        $this->assertEquals('close-action', $viewData['component']);
-        $this->assertEquals('label.close', $viewData['label']);
-        $this->assertEquals('close', $viewData['icon']);
+        $this->assertEquals('CloseAction', $viewData['model']);
     }
 
-    public function testType()
+    public function testName()
     {
-        $dependencies = $this->createDependencies();
-        $type = $this->createInstance($dependencies);
-        $this->assertEquals('close', $type->getType());
+        $this->assertEquals('close', CloseActionType::getName());
     }
 }
 
 class CloseActionTypeTestDependencies
 {
-    /** @var TranslatorInterface|\PHPUnit_Framework_MockObject_MockObject */
-    public $translator;
-    /** @var ActionLanguageExpression|\PHPUnit_Framework_MockObject_MockObject */
-    public $actionLanguageExpression;
+    public ResourceExpressionLanguage|MockObject $resourceExpressionLanguage;
+    public TranslatorInterface|MockObject $translator;
 }

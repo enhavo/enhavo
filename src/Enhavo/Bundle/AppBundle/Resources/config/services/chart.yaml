@@ -1,8 +1,0 @@
-parameters:
-
-services:
-    enhavo_app.chart_provider_collector:
-        class: Enhavo\Bundle\AppBundle\Type\TypeCollector
-        arguments:
-            - '@service_container'
-            - 'ChartProvider'

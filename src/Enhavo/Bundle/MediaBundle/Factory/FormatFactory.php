@@ -8,25 +8,28 @@
 
 namespace Enhavo\Bundle\MediaBundle\Factory;
 
+use Enhavo\Bundle\MediaBundle\Checksum\ChecksumGeneratorInterface;
 use Enhavo\Bundle\MediaBundle\Content\Content;
 use Enhavo\Bundle\MediaBundle\Content\PathContent;
 use Enhavo\Bundle\MediaBundle\Exception\FileException;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\MediaBundle\Model\FormatInterface;
-use Enhavo\Bundle\AppBundle\Factory\Factory;
+use Enhavo\Bundle\ResourceBundle\Factory\Factory;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\Finder\SplFileInfo;
 
 class FormatFactory extends Factory
 {
     use GuessTrait;
 
-    /**
-     * @param UploadedFile $uploadedFile
-     * @return FormatInterface
-     */
-    public function createFromUploadedFile(UploadedFile $uploadedFile)
+    public function __construct(
+        string $className,
+        private readonly ChecksumGeneratorInterface $checksumGenerator,
+    )
+    {
+        parent::__construct($className);
+    }
+
+    public function createFromUploadedFile(string $name, FileInterface $file, UploadedFile $uploadedFile): FormatInterface
     {
         /** @var FormatInterface $newFile */
         $format = $this->createNew();
@@ -35,33 +38,12 @@ class FormatFactory extends Factory
         $format->setExtension($uploadedFile->guessClientExtension());
         $format->setContent(new PathContent($uploadedFile->getRealPath()));
 
+        $this->updateFile($name, $file, $format);
+
         return $format;
     }
 
-    /**
-     * @param File $file
-     * @return FormatInterface
-     */
-    public function createFromFile(File $file)
-    {
-        return $this->createFromPath($file->getRealPath());
-    }
-
-    /**
-     * @param SplFileInfo $file
-     * @return FormatInterface
-     */
-    public function createFromSplFileInfo(SplFileInfo $file)
-    {
-        return $this->createFromPath($file->getRealPath());
-    }
-
-    /**
-     * @param string $path
-     * @return FormatInterface
-     * @throws FileException
-     */
-    public function createFromPath($path)
+    public function createFromPath(string $name, FileInterface $file, string $path): FormatInterface
     {
         if (!is_readable($path)) {
             throw new FileException(sprintf('File "%s" not found or not readable.', $path));
@@ -73,13 +55,15 @@ class FormatFactory extends Factory
         $format = $this->createNew();
 
         $format->setMimeType($this->guessMimeType($path));
-        $format->setExtension(array_key_exists('extension', $fileInfo) ? $fileInfo['extension'] : $this->guessExtension($path));
+        $format->setExtension($fileInfo['extension'] ?? null);
         $format->setContent(new PathContent($path));
+
+        $this->updateFile($name, $file, $format);
 
         return $format;
     }
 
-    public function createFromMediaFile(FileInterface $file)
+    public function createFromMediaFile(string $name, FileInterface $file): FormatInterface
     {
         /** @var FormatInterface $format */
         $format = $this->createNew();
@@ -92,6 +76,15 @@ class FormatFactory extends Factory
         $content = new Content($file->getContent()->getContent());
         $format->setContent($content);
 
+        $this->updateFile($name, $file, $format);
+
         return $format;
+    }
+
+    private function updateFile(string $name, FileInterface $file, FormatInterface $format): void
+    {
+        $format->setChecksum($this->checksumGenerator->getChecksum($format->getContent()));
+        $format->setName($name);
+        $format->setFile($file);
     }
 }

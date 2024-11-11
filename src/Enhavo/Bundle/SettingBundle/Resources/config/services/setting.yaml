@@ -17,15 +17,15 @@ services:
 
     Enhavo\Bundle\SettingBundle\Setting\Type\BaseSettingType:
         arguments:
-            - '@enhavo_setting.repository.setting'
-            - '@enhavo_setting.factory.setting'
+            - '@enhavo_setting.setting.repository'
+            - '@enhavo_setting.setting.factory'
             - '@doctrine.orm.entity_manager'
         tags:
             - enhavo_setting.setting
 
     Enhavo\Bundle\SettingBundle\Setting\Type\MediaSettingType:
         arguments:
-            - '@enhavo_media.factory.file'
+            - '@enhavo_media.file.factory'
         tags:
             - enhavo_setting.setting
 

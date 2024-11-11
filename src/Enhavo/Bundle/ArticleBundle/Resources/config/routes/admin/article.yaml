@@ -1,195 +1,35 @@
-enhavo_article_article_index:
-    options:
-        expose: true
-    path: /enhavo/article/article/index
-    methods: [GET]
+enhavo_article_admin_article_index:
+    path: /article/index
     defaults:
-        _controller: enhavo_article.controller.article::indexAction
-        _sylius:
-            viewer:
-                label: article.label.article
-                translation_domain: EnhavoArticleBundle
+        _expose: admin
+        _vue:
+            component: resource-index
+            groups: admin
+            meta:
+                api: enhavo_article_admin_api_article_index
+        _endpoint:
+            type: admin
 
-enhavo_article_article_create:
-    options:
-        expose: true
-    path: /enhavo/article/article/create
-    methods: [GET,POST]
+enhavo_article_admin_article_create:
+    path: /article/create
     defaults:
-        _controller: enhavo_article.controller.article::createAction
-        _sylius:
-            redirect: enhavo_article_article_update
-            viewer:
-                tabs:
-                    main:
-                        label: article.label.article
-                        translation_domain: EnhavoArticleBundle
-                        template: admin/resource/article/article.html.twig
-                    content:
-                        label: article.label.content
-                        translation_domain: EnhavoArticleBundle
-                        template: admin/resource/content/content.html.twig
-                        full_width: true
-                    meta:
-                        label: article.label.meta
-                        translation_domain: EnhavoArticleBundle
-                        template: admin/resource/content/meta.html.twig
-                actions:
-                    preview:
-                        type: preview
-                        route: enhavo_article_article_preview
+        _expose: admin
+        _vue:
+            component: resource-input
+            groups: admin
+            meta:
+                api: enhavo_article_admin_api_article_create
+        _endpoint:
+            type: admin
 
-enhavo_article_article_update:
-    options:
-        expose: true
-    path: /enhavo/article/article/update/{id}
-    methods: [GET,POST]
+enhavo_article_admin_article_update:
+    path: /article/update/{id}
     defaults:
-        _controller: enhavo_article.controller.article::updateAction
-        _sylius:
-            serialization_groups: ['form']
-            viewer:
-                tabs:
-                    main:
-                        label: article.label.article
-                        translation_domain: EnhavoArticleBundle
-                        template: admin/resource/article/article.html.twig
-                    content:
-                        label: article.label.content
-                        translation_domain: EnhavoArticleBundle
-                        template: admin/resource/content/content.html.twig
-                        full_width: true
-                    meta:
-                        label: article.label.meta
-                        translation_domain: EnhavoArticleBundle
-                        template: admin/resource/content/meta.html.twig
-                actions:
-                    duplicate:
-                        type: duplicate
-                        route: enhavo_article_article_duplicate
-                        permission: ROLE_ENHAVO_ARTICLE_ARTICLE_CREATE
-                    preview:
-                        type: preview
-                        route: enhavo_article_article_preview
-                    comments:
-                        type: comments
-
-enhavo_article_article_table:
-    options:
-        expose: true
-    path: /enhavo/article/article/table
-    defaults:
-        _controller: enhavo_article.controller.article::tableAction
-        _sylius:
-            sorting:
-                publicationDate: desc
-            filters:
-                title:
-                    type: text
-                    label: article.label.title
-                    translation_domain: EnhavoArticleBundle
-                    property: title
-                public:
-                    type: boolean
-                    label: article.label.public
-                    translation_domain: EnhavoArticleBundle
-                    property: public
-                    equals: true
-                category:
-                    type: taxonomy
-                    label: article.label.category
-                    translation_domain: EnhavoArticleBundle
-                    taxonomy: article_category
-                    property: categories
-            viewer:
-                translation_domain: EnhavoArticleBundle
-                columns:
-                    public:
-                        label: article.label.public
-                        property: public
-                        width: 2
-                        type: boolean
-                        sortable: true
-                        condition: "desktop"
-                    title:
-                        type: text
-                        label: article.label.title
-                        property: title
-                        width: 7
-                        sortable: true
-                    publicationDate:
-                        label: article.label.publicationDate
-                        property: publicationDate
-                        type: date
-                        width: 3
-                        sortable: true
-                        condition: "desktop || tablet"
-
-enhavo_article_article_delete:
-    options:
-        expose: true
-    path: /enhavo/article/article/delete/{id}
-    methods: [POST]
-    defaults:
-        _controller: enhavo_article.controller.article::deleteAction
-
-enhavo_article_article_duplicate:
-    options:
-        expose: true
-    path: /enhavo/article/article/duplicate/{id}
-    defaults:
-        _controller: enhavo_article.controller.article::duplicateAction
-        _sylius:
-            redirect: enhavo_article_article_update
-
-enhavo_article_article_batch:
-    options:
-        expose: true
-    path: /enhavo/article/article/batch
-    methods: [POST]
-    defaults:
-        _controller: enhavo_article.controller.article::batchAction
-        _sylius:
-            paginate: false
-            criteria:
-                id: $ids
-            batches:
-                delete:
-                    type: delete
-                publish:
-                    type: publish
-
-enhavo_article_article_preview:
-    options:
-        expose: true
-    path: /enhavo/article/article/preview
-    methods: [GET]
-    defaults:
-        _controller: enhavo_article.controller.article::previewAction
-        _sylius:
-            viewer:
-
-enhavo_article_article_resource_preview:
-    options:
-        expose: true
-    path: /enhavo/article/article/resource/preview
-    methods: [POST]
-    defaults:
-        _controller: enhavo_article.controller.article::previewResourceAction
-        _area: theme
-        _sylius:
-            viewer:
-                strategy_options:
-                    service: Enhavo\Bundle\ArticleBundle\Controller\ArticleController:showResourceAction
-
-enhavo_article_article_auto_complete:
-    options:
-        expose: true
-    path: /enhavo/article/article/auto-complete
-    defaults:
-        _controller: enhavo_form.controller.auto_complete::searchAction
-        _config:
-            class: '%enhavo_article.model.article.class%'
-            repository:
-                method: findByTerm
-            choice_label: title
+        _expose: admin
+        _vue:
+            component: resource-input
+            groups: admin
+            meta:
+                api: enhavo_article_admin_api_article_update
+        _endpoint:
+            type: admin

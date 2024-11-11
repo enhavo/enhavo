@@ -1,0 +1,8 @@
+services:
+    '@enhavo/app/flash-message/FlashMessenger':
+        import: FlashMessenger
+        chunk: 'flash-message'
+        arguments:
+            - '@enhavo/app/frame/FrameManager'
+        tags:
+            - { name: vue.service, service: 'flashMessenger', reactive: true }

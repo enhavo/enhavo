@@ -1,7 +1,7 @@
 services:
     Enhavo\Bundle\CalendarBundle\Form\Type\AppointmentType:
         arguments:
-            - '%enhavo_calendar.model.appointment.class%'
+            - '%enhavo_calendar.appointment.model.class%'
             - [default]
         tags:
             - { name: form.type, alias: enhavo_calendar_appointment }
@@ -14,9 +14,8 @@ services:
             - { name: validator.constraint_validator, alias: valid_appointment_date }
 
     Enhavo\Bundle\CalendarBundle\Menu\CalendarMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: calendar }
+            - { name: enhavo_app.menu }
 
     enhavo_calendar.import_manager:
         class: Enhavo\Bundle\CalendarBundle\Import\ImportManager
@@ -43,6 +42,6 @@ services:
 
     Enhavo\Bundle\CalendarBundle\Block\CalendarBlockType:
         arguments:
-            - '@enhavo_calendar.repository.appointment'
+            - '@enhavo_calendar.appointment.repository'
         tags:
             - { name: enhavo_block.block }

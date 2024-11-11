@@ -67,7 +67,7 @@
                 width: 12
                 columns:
                     name:
-                        type: property
+                        type: text
                         width: 12
                         label: term.label.name
                         translation_domain: EnhavoTaxonomyBundle
@@ -91,7 +91,7 @@
                 parent_property: parent
                 columns:
                     name:
-                        type: property
+                        type: text
                         width: 12
                         label: term.label.name
                         translation_domain: EnhavoTaxonomyBundle

@@ -5,9 +5,8 @@ services:
             - '%enhavo_setting.settings%'
 
     Enhavo\Bundle\SettingBundle\Menu\SettingMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: setting }
+            - { name: enhavo_app.menu }
 
     Enhavo\Bundle\SettingBundle\Init\InitSetting:
         public: true
@@ -30,13 +29,10 @@ services:
             - { name: form.type }
 
     Enhavo\Bundle\SettingBundle\Column\SettingColumnType:
-        public: true
         arguments:
             - '@Enhavo\Bundle\SettingBundle\Setting\SettingManager'
-        calls:
-            - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.column, alias: setting }
+            - { name: enhavo_resource.column }
 
     Enhavo\Bundle\SettingBundle\Twig\TwigExtension:
         arguments:

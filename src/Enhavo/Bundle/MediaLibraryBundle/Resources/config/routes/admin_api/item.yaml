@@ -1,0 +1,80 @@
+enhavo_media_library_admin_api_item_index:
+    path: /item/index
+    methods:
+        - GET
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: media_library_index
+            grid: enhavo_media_library.item
+
+enhavo_media_library_admin_api_item_list:
+    path: /item/list
+    methods:
+        - GET
+        - POST
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_list
+            grid: enhavo_media_library.item
+
+enhavo_media_library_admin_api_item_create:
+    path: /item/create
+    methods:
+        - GET
+        - POST
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_create
+            input: enhavo_media_library.item
+
+enhavo_media_library_admin_api_item_update:
+    path: '/item/update/{id}'
+    methods:
+        - GET
+        - POST
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_update
+            input: enhavo_media_library.item
+
+enhavo_media_library_admin_api_item_delete:
+    path: '/item/delete/{id}'
+    methods:
+        - DELETE
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_delete
+            input: enhavo_media_library.item
+
+enhavo_media_library_admin_api_item_batch:
+    path: /item/batch
+    methods:
+        - POST
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_batch
+            grid: enhavo_media_library.item
+
+enhavo_media_library_admin_api_upload:
+    path: /item/upload
+    methods:
+        - POST
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: media_library_upload
+
+enhavo_media_library_admin_api_select:
+    path: /item/select
+    methods:
+        - POST
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: media_library_select

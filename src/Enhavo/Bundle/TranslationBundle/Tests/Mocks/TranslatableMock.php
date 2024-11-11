@@ -3,13 +3,10 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Tests\Mocks;
 
-
-
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\RoutingBundle\Model\Slugable;
-use Sylius\Component\Resource\Model\ResourceInterface;
 
-class TranslatableMock implements ResourceInterface, Slugable
+class TranslatableMock implements Slugable
 {
     public $id;
 
@@ -61,7 +58,7 @@ class TranslatableMock implements ResourceInterface, Slugable
     /**
      * @return string|null
      */
-    public function getSlug()
+    public function getSlug(): ?string
     {
         return $this->slug;
     }
@@ -69,7 +66,7 @@ class TranslatableMock implements ResourceInterface, Slugable
     /**
      * @param string|null $slug
      */
-    public function setSlug($slug)
+    public function setSlug($slug): void
     {
         $this->slug = $slug;
     }

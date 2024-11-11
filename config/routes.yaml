@@ -2,6 +2,10 @@ admin:
     prefix: /admin
     resource: routes/admin/*
 
+admin_api:
+    prefix: /admin/api
+    resource: routes/admin_api/*
+
 app:
     resource: ../src/App/Controller
     type: annotation

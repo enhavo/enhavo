@@ -2,28 +2,23 @@
 
 namespace Enhavo\Bundle\RedirectBundle\DependencyInjection;
 
-use Sylius\Bundle\ResourceBundle\DependencyInjection\Extension\AbstractResourceExtension;
+
+use Enhavo\Bundle\ResourceBundle\DependencyInjection\PrependExtensionTrait;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
-use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
-/**
- * This is the class that loads and manages your bundle configuration
- *
- * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
- */
-class EnhavoRedirectExtension extends AbstractResourceExtension implements PrependExtensionInterface
+
+class EnhavoRedirectExtension extends Extension implements PrependExtensionInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function load(array $config, ContainerBuilder $container)
+    use PrependExtensionTrait;
+
+    public function load(array $configs, ContainerBuilder $container): void
     {
-        $config = $this->processConfiguration(new Configuration(), $config);
+        $config = $this->processConfiguration(new Configuration(), $configs);
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $this->registerResources('enhavo_redirect', $config['driver'], $config['resources'], $container);
 
         $configFiles = array(
             'services.yaml',
@@ -34,16 +29,11 @@ class EnhavoRedirectExtension extends AbstractResourceExtension implements Prepe
         }
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function prepend(ContainerBuilder $container)
+    protected function prependFiles(): array
     {
-        $configs = Yaml::parse(file_get_contents(__DIR__.'/../Resources/config/app/config.yaml'));
-        foreach($configs as $name => $config) {
-            if (is_array($config)) {
-                $container->prependExtensionConfig($name, $config);
-            }
-        }
+        return [
+            __DIR__.'/../Resources/config/app/config.yaml',
+            __DIR__.'/../Resources/config/resources/redirect.yaml',
+        ];
     }
 }

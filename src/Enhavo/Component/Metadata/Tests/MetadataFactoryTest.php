@@ -68,11 +68,19 @@ class MetadataFactoryTest extends TestCase
         $metadata = $factory->createMetadata(MetadataFactoryResource::class);
         $this->assertEquals(MetadataFactoryResource::class, $metadata->getClassName());
 
-        $metadata = $factory->createMetadata(MetadataFactoryOtherResource::class, true);
-        $this->assertEquals(MetadataFactoryOtherResource::class, $metadata->getClassName());
-
         $metadata = $factory->createMetadata(MetadataFactoryOtherResource::class);
         $this->assertNull($metadata);
+    }
+
+    public function testCreateMetadataWithForce()
+    {
+        $dependencies = $this->createDependencies();
+        $factory = $this->createInstance($dependencies);
+
+        $factory->addDriver(new MetadataFactoryDriver());
+
+        $metadata = $factory->createMetadata(MetadataFactoryOtherResource::class, true);
+        $this->assertEquals(MetadataFactoryOtherResource::class, $metadata->getClassName());
     }
 
     public function testLoadMetadata()
@@ -134,7 +142,7 @@ class MetadataFactoryNameProvider implements ProviderInterface
 
 class MetadataFactoryDriver implements DriverInterface
 {
-    public function getAllClasses()
+    public function getAllClasses(): array
     {
         return [MetadataFactoryResource::class];
     }
@@ -144,12 +152,13 @@ class MetadataFactoryDriver implements DriverInterface
 
     }
 
-    public function getNormalizedData()
+    public function loadClass($className): array|null|false
     {
-        return [
-            MetadataFactoryResource::class => [
+        if ($className === MetadataFactoryResource::class) {
+            return [
                 'names' => ['Peter']
-            ]
-        ];
+            ];
+        }
+        return false;
     }
 }

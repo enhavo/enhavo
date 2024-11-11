@@ -39,12 +39,12 @@ class ClassNameResolver implements EntityResolverInterface
         return $className;
     }
 
-    public function getEntity(int $id, string $class): ?object
+    public function getEntity(int $id, string $name): ?object
     {
-        if(!class_exists($class)) {
+        if(!class_exists($name)) {
             return null;
         }
 
-        return $this->em->getRepository($class)->find($id);
+        return $this->em->getRepository($name)->find($id);
     }
 }

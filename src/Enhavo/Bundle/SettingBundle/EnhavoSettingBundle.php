@@ -9,11 +9,6 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class EnhavoSettingBundle extends Bundle
 {
-    public static function getSupportedDrivers()
-    {
-        return array('doctrine/orm');
-    }
-
     public function build(ContainerBuilder $container): void
     {
         parent::build($container);

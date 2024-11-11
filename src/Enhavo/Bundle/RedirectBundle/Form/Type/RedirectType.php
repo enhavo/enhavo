@@ -12,10 +12,17 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class RedirectType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function __construct(
+        private readonly string $model,
+    )
+    {
+    }
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('from', TextType::class, [
             'label' => 'form.label.from',
@@ -37,8 +44,10 @@ class RedirectType extends AbstractType
         ]);
     }
 
-    public function getBlockPrefix()
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        return 'enhavo_redirect_redirect';
+        $resolver->setDefaults([
+            'data_class' => $this->model
+        ]);
     }
 }

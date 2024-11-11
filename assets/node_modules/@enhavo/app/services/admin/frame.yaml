@@ -1,0 +1,48 @@
+services:
+    '@enhavo/app/frame/FrameStack':
+        import: FrameStack
+        chunk: 'frame'
+        arguments:
+            - '@enhavo/app/frame/FrameEventDispatcher'
+        tags:
+            - { name: vue.service, service: 'frameStack', reactive: true }
+
+    '@enhavo/app/frame/FrameStackSubscriber':
+        import: FrameStackSubscriber
+        chunk: 'frame'
+        arguments:
+            - '@enhavo/app/frame/FrameEventDispatcher'
+            - '@enhavo/app/frame/FrameStack'
+            - '@enhavo/app/frame/FrameStateManager'
+            - '@enhavo/app/frame/FrameArrangeManager'
+
+    '@enhavo/app/frame/FrameEventDispatcher':
+        import: FrameEventDispatcher
+        chunk: 'frame'
+
+    '@enhavo/app/frame/FrameManager':
+        import: FrameManager
+        chunk: 'frame'
+        arguments:
+            - '@enhavo/app/frame/FrameEventDispatcher'
+        tags:
+            - { name: vue.service, service: 'frameManager', reactive: true }
+
+    '@enhavo/app/frame/FrameArrangeManager':
+         import: FrameArrangeManager
+         chunk: 'frame'
+         arguments:
+             - '@enhavo/app/frame/FrameStack'
+             - '@enhavo/app/menu/MenuManager'
+         tags:
+             - { name: vue.service, service: 'frameArrangeManager', reactive: true }
+
+    '@enhavo/app/frame/FrameStateManager':
+        import: FrameStateManager
+        chunk: 'frame'
+        arguments:
+            - '@enhavo/app/frame/FrameStack'
+            - '@enhavo/app/frame/FrameArrangeManager'
+            - '@enhavo/app/menu/MenuManager'
+        tags:
+            - { name: vue.service, service: 'frameStateManager' }

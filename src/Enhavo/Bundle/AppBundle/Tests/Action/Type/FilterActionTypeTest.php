@@ -8,55 +8,48 @@
 
 namespace Enhavo\Bundle\AppBundle\Tests\Action\Type;
 
-use Enhavo\Bundle\AppBundle\Action\Action;
-use Enhavo\Bundle\AppBundle\Action\ActionLanguageExpression;
 use Enhavo\Bundle\AppBundle\Action\Type\FilterActionType;
+use Enhavo\Bundle\ResourceBundle\Action\Action;
+use Enhavo\Bundle\ResourceBundle\Tests\Action\Type\BaseActionTypeFactoryTrait;
 use PHPUnit\Framework\TestCase;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class FilterActionTypeTest extends TestCase
 {
-    private function createDependencies()
+    use BaseActionTypeFactoryTrait;
+
+    private function createDependencies(): FilterActionTypeDependencies
     {
         $dependencies = new FilterActionTypeDependencies();
-        $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
-        $dependencies->actionLanguageExpression = $this->getMockBuilder(ActionLanguageExpression::class)->disableOriginalConstructor()->getMock();
         return $dependencies;
     }
 
-    private function createInstance(FilterActionTypeDependencies $dependencies)
+    private function createInstance(FilterActionTypeDependencies $dependencies): FilterActionType
     {
         return new FilterActionType(
-            $dependencies->translator,
-            $dependencies->actionLanguageExpression
         );
     }
 
     public function testCreateViewData()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->translator->method('trans')->willReturnCallback(function ($value) {return $value;});
         $type = $this->createInstance($dependencies);
 
-        $action = new Action($type, []);
+        $action = new Action($type, [
+            $this->createBaseActionType($this->createBaseActionTypeDependencies()),
+        ], [
+
+        ]);
         $viewData = $action->createViewData();
 
-        $this->assertEquals('filter-action', $viewData['component']);
-        $this->assertEquals('label.filter', $viewData['label']);
+        $this->assertEquals('FilterAction', $viewData['model']);
     }
 
-    public function testType()
+    public function testName()
     {
-        $dependencies = $this->createDependencies();
-        $type = $this->createInstance($dependencies);
-        $this->assertEquals('filter', $type->getType());
+        $this->assertEquals('filter', FilterActionType::getName());
     }
 }
 
 class FilterActionTypeDependencies
 {
-    /** @var TranslatorInterface|\PHPUnit_Framework_MockObject_MockObject */
-    public $translator;
-    /** @var ActionLanguageExpression|\PHPUnit_Framework_MockObject_MockObject */
-    public $actionLanguageExpression;
 }

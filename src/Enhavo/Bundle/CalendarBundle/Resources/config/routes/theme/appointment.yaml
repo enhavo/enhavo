@@ -1,0 +1,13 @@
+enhavo_calendar_appointment_export:
+    path: /calendar/export.ics
+    methods: [GET]
+    defaults:
+        _endpoint:
+            type: Enhavo\Bundle\CalendarBundle\Endpoint\AppointmentExportEndpointType
+
+enhavo_calendar_feed:
+    path: /calendar/feed
+    methods: [GET]
+    defaults:
+        _endpoint:
+            type: Enhavo\Bundle\CalendarBundle\Endpoint\AppointmentFeedEndpointType

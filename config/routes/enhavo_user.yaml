@@ -1,6 +1,22 @@
 enhavo_user_admin:
     resource: "@EnhavoUserBundle/Resources/config/routes/admin/*"
+    prefix: /admin/user
+
+enhavo_user_admin_api:
+    resource: "@EnhavoUserBundle/Resources/config/routes/admin_api/*"
+    prefix: /admin/api/user
+
+enhavo_user_admin_login:
+    resource: "@EnhavoUserBundle/Resources/config/routes/admin_login/*"
     prefix: /admin
+
+enhavo_user_admin_login_api:
+    resource: "@EnhavoUserBundle/Resources/config/routes/admin_login_api/*"
+    prefix: /admin/api
+
+enhavo_user_api:
+    resource: "@EnhavoUserBundle/Resources/config/routes/api/*"
+    prefix: /api/user
 
 enhavo_user_user:
     resource: "@EnhavoUserBundle/Resources/config/routes/user/*"

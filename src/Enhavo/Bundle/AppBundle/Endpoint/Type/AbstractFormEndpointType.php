@@ -5,15 +5,11 @@ namespace Enhavo\Bundle\AppBundle\Endpoint\Type;
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
-use Enhavo\Bundle\VueFormBundle\Form\VueFormAwareInterface;
-use Enhavo\Bundle\VueFormBundle\Form\VueFormAwareTrait;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-abstract class AbstractFormEndpointType extends AbstractEndpointType implements VueFormAwareInterface
+abstract class AbstractFormEndpointType extends AbstractEndpointType
 {
-    use VueFormAwareTrait;
-
     public function handleRequest($options, Request $request, Data $data, Context $context): void
     {
         $this->init($options, $request, $data, $context);
@@ -62,8 +58,7 @@ abstract class AbstractFormEndpointType extends AbstractEndpointType implements 
             $data->set('redirect', $url);
         }
 
-        $data->set('form', $this->createVueForm($form));
-
+        $data->set('form', $this->normalize($form));
         $this->final($options, $request, $data, $context, $form);
     }
 
