@@ -79,6 +79,10 @@ subtrees:
         url: 'git@github.com:enhavo/EnhavoRoutingBundle.git'
         prefix: src/Enhavo/Bundle/RoutingBundle
         package: enhavo/routing-bundle
+    ResourceBundle:
+        url: 'git@github.com:enhavo/EnhavoResourceBundle.git'
+        prefix: src/Enhavo/Bundle/ResourceBundle
+        package: enhavo/resource-bundle
     SearchBundle:
         url: 'git@github.com:enhavo/EnhavoSearchBundle.git'
         prefix: src/Enhavo/Bundle/SearchBundle
@@ -164,18 +168,6 @@ subtrees:
         url: 'git@github.com:enhavo/search-assets'
         prefix: 'assets/node_modules/@enhavo/search'
         package: '@enhavo/search'
-    shop-assets:
-        url: 'git@github.com:enhavo/shop-assets'
-        prefix: 'assets/node_modules/@enhavo/shop'
-        package: '@enhavo/shop'
-    slider-assets:
-        url: 'git@github.com:enhavo/slider-assets'
-        prefix: 'assets/node_modules/@enhavo/slider'
-        package: '@enhavo/slider'
-    payment-assets:
-        url: 'git@github.com:enhavo/payment-assets'
-        prefix: 'assets/node_modules/@enhavo/payment'
-        package: '@enhavo/payment'
     translation-assets:
         url: 'git@github.com:enhavo/translation-assets'
         prefix: 'assets/node_modules/@enhavo/translation'
