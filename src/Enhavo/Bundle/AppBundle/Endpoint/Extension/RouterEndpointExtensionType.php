@@ -31,7 +31,7 @@ class RouterEndpointExtensionType extends AbstractEndpointTypeExtension
             $data->set('routes', $this->normalize($routesCollection, null, ['groups' => 'endpoint']));
         }
 
-        if ($context->get('routes') && (!$request->get('_format') || $request->get('_format') === 'html')) {
+        if ($context->get('routes')) {
             $this->twigRouter->addRouteCollection($context->get('routes'));
         }
     }
