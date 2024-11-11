@@ -18,6 +18,7 @@ use Enhavo\Bundle\ResourceBundle\Tests\Mock\TranslatorMock;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -49,6 +50,8 @@ class BaseBatchTypeTest extends TestCase
     public function testViewData()
     {
         $dependencies = $this->createDependencies();
+        $dependencies->tokenManager->method('getToken')->willReturn(new CsrfToken('id', 'value123'));
+
         $type = $this->createInstance($dependencies);
 
         $batch = new Batch($type, [], [
@@ -64,6 +67,7 @@ class BaseBatchTypeTest extends TestCase
         $this->assertEquals('Base Label.trans', $viewData['label']);
         $this->assertEquals('Confirm Message.trans', $viewData['confirmMessage']);
         $this->assertEquals('/batch_route?key=value', $viewData['url']);
+        $this->assertEquals('value123', $viewData['token']);
         $this->assertEquals(3, $viewData['position']);
     }
 

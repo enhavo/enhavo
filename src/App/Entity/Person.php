@@ -59,6 +59,7 @@ class Person implements RevisionInterface
 
     #[ORM\ManyToOne(
         targetEntity: Person::class,
+        inversedBy: "revisions",
     )]
     private ?RevisionInterface $revisionSubject = null;
 
