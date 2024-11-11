@@ -63,6 +63,9 @@ class TranslationType extends AbstractType
             }
         }
 
+        $help = $form->get($this->translationManager->getDefaultLocale())->getConfig()->getOption('help');
+        $view->vars['help'] = $help;
+
         $view->vars['errors'] = new FormErrorIterator($errors->getForm(), $newErrors);
         $view->vars['translation_locales'] = $this->translationManager->getLocales();
     }
