@@ -1,7 +1,0 @@
-services:
-    Enhavo\Bundle\UserBundle\Behat\Controller\SecurityController:
-        arguments:
-            - '@Enhavo\Bundle\UserBundle\User\UserManager'
-            - '@enhavo_user.repository.user'
-        tags:
-            - {name: controller.service_arguments }
