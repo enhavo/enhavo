@@ -212,7 +212,6 @@ jobs:
             -   name: Setup enhavo
                 run: |
                     yarn install
-                    yarn routes:dump
                     yarn build
                     bin/console enhavo:init
 

@@ -4,7 +4,6 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "routes:dump": "bin/console fos:js-routing:dump --format=json --target=public/js/fos_js_routes.json",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
