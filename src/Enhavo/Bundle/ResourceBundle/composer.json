@@ -1,7 +1,7 @@
 {
-  "name": "enhavo/doctrine-extension-bundle",
-  "type": "library",
-  "description": "DoctrineExtension",
+  "name": "enhavo/resource-bundle",
+  "type": "symfony-bundle",
+  "description": "EnhavoResourceBundle",
   "keywords": ["framework"],
   "homepage": "https://enhavo.com",
   "license": "MIT",
@@ -13,9 +13,10 @@
   ],
   "require": {
     "php": "^8.2",
-    "enhavo/metadata": "dev-master"
+    "enhavo/api-bundle": "dev-master",
+    "pagerfanta/doctrine-orm-adapter": "^4.2"
   },
   "autoload": {
-    "psr-4": { "Enhavo\\Bundle\\DoctrineExtensionBundle\\": "" }
+    "psr-4": { "Enhavo\\Bundle\\ResourceBundle\\": "" }
   }
 }

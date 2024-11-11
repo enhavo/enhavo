@@ -12,7 +12,7 @@
     }
   ],
   "require": {
-    "php": "^8.0",
+    "php": "^8.2",
     "ext-ctype": "*",
     "ext-json": "*",
     "ext-zlib": "*",
@@ -23,8 +23,8 @@
     "enhavo/vue-form-bundle": "dev-master",
     "enhavo/type": "dev-master",
     "enhavo/api-bundle": "dev-master",
+    "enhavo/resource-bundle": "dev-master",
     "nikic/php-parser": "^5.0",
-    "pagerfanta/doctrine-orm-adapter": "^4.2",
     "symfony/asset": "^6.4",
     "symfony/console": "^6.4",
     "symfony/expression-language": "^6.4",
@@ -43,9 +43,6 @@
     "symfony/validator": "^6.4",
     "symfony/yaml": "^6.4",
     "twig/twig": "^3.14"
-  },
-  "require-dev": {
-    "phpunit/phpunit": "^9.5"
   },
   "autoload": {
     "psr-4": { "Enhavo\\Bundle\\AppBundle\\": "" }
