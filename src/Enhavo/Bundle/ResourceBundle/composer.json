@@ -14,7 +14,8 @@
   "require": {
     "php": "^8.2",
     "enhavo/api-bundle": "dev-master",
-    "pagerfanta/doctrine-orm-adapter": "^4.2"
+    "pagerfanta/doctrine-orm-adapter": "^4.2",
+    "winzou/state-machine-bundle": "^0.6.2"
   },
   "autoload": {
     "psr-4": { "Enhavo\\Bundle\\ResourceBundle\\": "" }

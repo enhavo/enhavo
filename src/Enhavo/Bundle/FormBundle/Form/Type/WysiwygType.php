@@ -16,44 +16,20 @@ use Symfony\Component\Form\FormInterface;
 
 class WysiwygType extends AbstractType
 {
-    public function __construct(
-        private $entrypoint,
-        private $entrypointBuild
-    )
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['config'] = $options['config'];
-
-        $editorEntrypoint = $options['editor_entrypoint'] === null ? $this->entrypoint : $options['editor_entrypoint'];
-        $editorEntrypointBuild = $options['editor_entrypoint_build'] === null ? $this->entrypointBuild : $options['editor_entrypoint_build'];
-        $view->vars['editor_css'] = null;
-        if ($editorEntrypoint) {
-            //$view->vars['editor_css'] = $this->entrypointManager->getCssFiles($editorEntrypoint, $editorEntrypointBuild);
-        }
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(array(
-            'config' => 'default',
-            'editor_entrypoint' => null,
-            'editor_entrypoint_build' => null
-        ));
+        $resolver->setDefaults([
+            'component' => 'form-wysiwyg',
+            'component_model' => 'WysiwygForm',
+        ]);
     }
 
     public function getParent()
     {
         return TextareaType::class;
-    }
-
-    public function getBlockPrefix()
-    {
-        return 'enhavo_wysiwyg';
     }
 }
