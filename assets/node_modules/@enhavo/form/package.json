@@ -10,6 +10,9 @@
   },
   "dependencies": {
     "@enhavo/app": "https://github.com/enhavo/app-assets.git",
+    "@tiptap/pm": "^2.9.1",
+    "@tiptap/starter-kit": "^2.9.1",
+    "@tiptap/vue-3": "^2.9.1",
     "icheck": "~1.0.2",
     "jquery": "^3.4.1",
     "jquery-datetimepicker": "^2.5.21",
@@ -17,7 +20,6 @@
     "moment": "^2.18.1",
     "select2": "~3.5.1",
     "sortablejs": "^1.10.2",
-    "vuedraggable": "^4.1.0",
-    "tinymce": "^7.2.1"
+    "vuedraggable": "^4.1.0"
   }
 }

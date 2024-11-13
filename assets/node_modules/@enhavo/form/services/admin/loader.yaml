@@ -19,11 +19,6 @@ services:
         tags:
             - 'enhavo_app.form'
 
-    '@enhavo/form/loader/WysiwygLoader':
-        chunk: 'form'
-        tags:
-            - 'enhavo_app.form'
-
     '@enhavo/form/loader/ListLoader':
         chunk: 'form'
         tags:

@@ -301,7 +301,7 @@ class ElasticSearchEngine implements SearchEngineInterface
         $search->addIndex($index);
         $search->setQuery($this->createSuggestQuery($filter));
 
-        $cannonicalTerm = strtolower($filter->getTerm());
+        $canonicalTerm = strtolower($filter->getTerm());
 
         // build a map with all words and add their weights
         $suggestionMap = [];
@@ -311,18 +311,18 @@ class ElasticSearchEngine implements SearchEngineInterface
                 $text = join(' ', $value);
                 $weight = intval(substr($key, 6));
 
-                $token = $index->analyze([
+                $tokens = $index->analyze([
                     "analyzer" => "standard",
                     "text" => $text
                 ]);
 
-                foreach ($token as $token) {
-                    $cannonicalToken = strtolower($token['token']);
-                    if (str_starts_with($cannonicalToken, $cannonicalTerm)) {
-                        if (!isset($suggestionMap[$cannonicalToken])) {
-                            $suggestionMap[$cannonicalToken] = [];
+                foreach ($tokens as $token) {
+                    $canonicalToken = strtolower($token['token']);
+                    if (str_starts_with($canonicalToken, $canonicalTerm)) {
+                        if (!isset($suggestionMap[$canonicalToken])) {
+                            $suggestionMap[$canonicalToken] = [];
                         }
-                        $suggestionMap[$cannonicalToken][] = $weight;
+                        $suggestionMap[$canonicalToken][] = $weight;
                     }
                 }
             }
@@ -330,9 +330,9 @@ class ElasticSearchEngine implements SearchEngineInterface
 
         $suggestionScore = [];
         foreach ($suggestionMap as $key => $value) {
-            $max = $suggestionMap[$key] = max($value);
-            $total = $suggestionMap[$key] = array_sum($value);
-            $occur = $suggestionMap[$key] = count($value);
+            $max = max($value);
+            $total = array_sum($value);
+            $occur = count($value);
 
             // we want the maximum score to count as most important, but we have to rank the words against each other,
             // so we use the average weight, but give them less impact to the result
@@ -350,7 +350,7 @@ class ElasticSearchEngine implements SearchEngineInterface
 
         $suggestions = [];
         foreach ($suggestionScore as $suggestion) {
-            $suggestions[] = $filter->getTerm() . substr($suggestion['term'], strlen($cannonicalTerm));
+            $suggestions[] = $filter->getTerm() . substr($suggestion['term'], strlen($canonicalTerm));
         }
         return $suggestions;
     }
