@@ -46,10 +46,6 @@ services:
         tags:
             - 'form.type_extension'
 
-    Enhavo\Bundle\FormBundle\Form\Extension\WysiwygVueTypeExtension:
-        tags:
-            - 'form.type_extension'
-
     Enhavo\Bundle\FormBundle\Endpoint\AutoCompleteEndpointType:
         arguments:
             - '@Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage'

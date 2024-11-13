@@ -24,7 +24,7 @@ class EnhavoDashboardExtension extends Extension implements PrependExtensionInte
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $container->setParameter('enhavo_dashboard.widgets', $config['widgets']);
+        $container->setParameter('enhavo_dashboard.widgets', $config['widgets'] ?? []);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yaml');

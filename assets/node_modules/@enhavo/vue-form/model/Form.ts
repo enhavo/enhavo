@@ -34,8 +34,8 @@ export class Form
     errors: FormErrors[] = [];
     type: string;
 
-    private morphStartValue: any;
-    private visibleValue: boolean = null;
+    protected morphStartValue: any;
+    protected visibleValue: boolean = null;
 
     public get(name: string): Form
     {
