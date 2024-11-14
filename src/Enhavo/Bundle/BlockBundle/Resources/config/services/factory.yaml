@@ -1,23 +1,16 @@
 services:
-    enhavo_block.factory.node:
+    enhavo_block.node.factory:
         public: true
         class: Enhavo\Bundle\BlockBundle\Factory\NodeFactory
         arguments:
-            - '@enhavo_block.factory.block'
+            - '@enhavo_block.block.factory'
         calls:
             - [setContainer, ['@service_container']]
 
-    enhavo_block.factory.block:
+    enhavo_block.block.factory:
         public: true
         class: Enhavo\Bundle\BlockBundle\Factory\BlockFactory
         arguments:
             - '@Enhavo\Bundle\BlockBundle\Block\BlockManager'
-        calls:
-            - [setContainer, ['@service_container']]
-
-    enhavo_block.factory.abstract_block:
-        class: Enhavo\Bundle\BlockBundle\Factory\AbstractBlockFactory
-        abstract: true
-        public: true
         calls:
             - [setContainer, ['@service_container']]
