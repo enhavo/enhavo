@@ -10,12 +10,6 @@
 
         <title>{% block meta_title %}{% endblock %}</title>
 
-        <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/ico">
-        <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/ico">
-        <link rel="apple-touch-icon" href="{{ asset('favicon.ico') }}">
-        <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('favicon.ico') }}">
-        <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('favicon.ico') }}">
-
         {% block stylesheets %}
             {{ vite_css_tags('entrypoints/base.js', 'admin') }}
         {% endblock %}
