@@ -12,15 +12,22 @@ services:
         tags:
             - { name: console.command }
 
-    Enhavo\Bundle\AppBundle\Command\DebugEndpointTemplate:
+    Enhavo\Bundle\AppBundle\Command\DebugEndpointTemplateCommand:
         arguments:
             - '@Enhavo\Bundle\AppBundle\Endpoint\Template\TemplateEndpointCollector'
         tags:
             - { name: console.command }
 
-    Enhavo\Bundle\AppBundle\Command\DebugTemplate:
+    Enhavo\Bundle\AppBundle\Command\DebugTemplateCommand:
         arguments:
             - '@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface'
+        tags:
+            - { name: console.command }
+
+    Enhavo\Bundle\AppBundle\Command\DebugVueRoutesCommand:
+        arguments:
+            - '@Enhavo\Bundle\AppBundle\Vue\RouteProvider\VueRouteProviderInterface'
+            - '@serializer'
         tags:
             - { name: console.command }
 

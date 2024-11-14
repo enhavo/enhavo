@@ -31,12 +31,6 @@ enhavo_resource:
                     translation_domain: EnhavoArticleBundle
                     property: public
                     equals: true
-                category:
-                    type: taxonomy
-                    label: article.label.category
-                    translation_domain: EnhavoArticleBundle
-                    taxonomy: article_category
-                    property: categories
             columns:
                 public:
                     label: article.label.public
