@@ -20,14 +20,15 @@ class ResourceCompilerPass implements CompilerPassInterface
             $container->setParameter(sprintf('%s.repository.class', $key), $resource['classes']['repository']);
             $container->setParameter(sprintf('%s.factory.class', $key), $resource['classes']['factory']);
 
-
             $this->addResourceParameter($key, $resource, $container);
             $this->addRepository($key, $resource['classes']['model'], $resource['classes']['repository'], $container);
             $this->addFactory($key, $resource['classes']['model'], $resource['classes']['factory'], $container);
+            $this->addRepositoryBindings($key, $resource['classes']['repository'], $container);
+            $this->addFactoryBindings($key, $resource['classes']['factory'], $container);
         }
     }
 
-    protected function addRepository($name, $modelClass, $repositoryClass, ContainerBuilder $container): void
+    private function addRepository($name, $modelClass, $repositoryClass, ContainerBuilder $container): void
     {
         $definition = new Definition();
         $definition->setClass($repositoryClass);
@@ -49,7 +50,7 @@ class ResourceCompilerPass implements CompilerPassInterface
         }
     }
 
-    protected function addFactory($name, $modelClass, $factoryClass, ContainerBuilder $container): void
+    private function addFactory($name, $modelClass, $factoryClass, ContainerBuilder $container): void
     {
         $serviceId = sprintf('%s.factory', $name);
 
@@ -77,5 +78,35 @@ class ResourceCompilerPass implements CompilerPassInterface
         $resources = $container->getParameter('enhavo_resources.resources');
         $resources[$key] = $resource;
         $container->setParameter('enhavo_resources.resources', $resources);
+    }
+
+    private function addRepositoryBindings($name, $repositoryClass, ContainerBuilder $container): void
+    {
+        $names = $this->getNames($name);
+        $serviceId = sprintf('%s.repository', $name);
+        foreach ($names as $name) {
+            $container->registerAliasForArgument($serviceId, $repositoryClass, $name.'_repository');
+        }
+    }
+
+    private function addFactoryBindings($name, $factoryClass, ContainerBuilder $container): void
+    {
+        $names = $this->getNames($name);
+        $serviceId = sprintf('%s.factory', $name);
+        foreach ($names as $name) {
+            $container->registerAliasForArgument($serviceId, $factoryClass, $name.'_factory');
+        }
+    }
+
+    private function getNames(string $name): array
+    {
+        $parts = explode('.', $name);
+
+        $names = [];
+        while ($name = array_pop($parts)) {
+            $names[] = count($names) > 0 ? $name.'_'.implode('_', $names) : $name;
+        }
+
+        return $names;
     }
 }

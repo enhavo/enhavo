@@ -37,7 +37,7 @@ services:
         class: '%enhavo_page.page.factory.class%'
         arguments:
             - '%enhavo_page.page.model.class%'
-            - '@enhavo_block.factory.node'
+            - '@enhavo_block.node.factory'
             - '@enhavo_routing.route.factory'
 
     Enhavo\Bundle\PageBundle\Page\PageManager:

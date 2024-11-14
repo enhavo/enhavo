@@ -1,6 +1,5 @@
 import { defineConfig, splitVendorChunkPlugin } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import liveReload from 'vite-plugin-live-reload'
 import path from 'node:path'
 import 'dotenv/config'
 import containerDIPlugin from '@enhavo/app/vite/rollup-plugin-container-di'
@@ -29,9 +28,6 @@ export default defineConfig({
     },
     plugins: [
         vue(),
-        liveReload([
-            __dirname + '/../../templates/admin/*.twig',
-        ]),
         splitVendorChunkPlugin(),
         containerDIPlugin(),
         fantasticon(fantasticonSetting({

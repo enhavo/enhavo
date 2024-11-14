@@ -17,11 +17,11 @@ services:
     Enhavo\Bundle\BlockBundle\Maker\MakeBlockEndpointData:
         arguments:
             - '@Enhavo\Bundle\BlockBundle\Block\BlockManager'
-            - '@enhavo_block.factory.block'
+            - '@enhavo_block.block.factory'
             - '@kernel'
             - '@filesystem'
             - '@Enhavo\Bundle\ApiBundle\Normalizer\DataNormalizer'
-            - '@enhavo_block.factory.node'
+            - '@enhavo_block.node.factory'
         tags:
             - { name: 'maker.command' }
 

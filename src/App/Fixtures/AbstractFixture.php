@@ -145,7 +145,7 @@ abstract class AbstractFixture implements FixtureInterface, OrderedFixtureInterf
     protected function createContent($container)
     {
         /** @var NodeFactory $nodeFactory */
-        $nodeFactory = $this->container->get('enhavo_block.factory.node');
+        $nodeFactory = $this->container->get('enhavo_block.node.factory');
         $containerEntity = $nodeFactory->createNew();
 
         $position = 0;
@@ -186,7 +186,7 @@ abstract class AbstractFixture implements FixtureInterface, OrderedFixtureInterf
     protected function createNodes(NodeInterface $parent, array $container)
     {
         /** @var NodeFactory $nodeFactory */
-        $nodeFactory = $this->container->get('enhavo_block.factory.node');
+        $nodeFactory = $this->container->get('enhavo_block.node.factory');
         $nodes = [];
         $position = 0;
         foreach($container as $fields) {
@@ -221,7 +221,7 @@ abstract class AbstractFixture implements FixtureInterface, OrderedFixtureInterf
     protected function createBlockType($type, $fields)
     {
         /** @var BlockFactory $factory */
-        $factory = $this->container->get('enhavo_block.factory.block');
+        $factory = $this->container->get('enhavo_block.block.factory');
         $itemType = $factory->createNew($type);
 
         $this->setFields($type, $itemType, $fields);

@@ -60,4 +60,4 @@ services:
         class: '%enhavo_newsletter.newsletter.factory.class%'
         arguments:
             - '%enhavo_newsletter.newsletter.model.class%'
-            - '@enhavo_block.factory.node'
+            - '@enhavo_block.node.factory'

@@ -5,6 +5,7 @@ enhavo_resource:
             classes:
                 model: Enhavo\Bundle\PageBundle\Entity\Page
                 factory: Enhavo\Bundle\PageBundle\Factory\PageFactory
+                repository: Enhavo\Bundle\PageBundle\Repository\PageRepository
     grids:
         enhavo_page.page:
             extends: enhavo_resource.grid

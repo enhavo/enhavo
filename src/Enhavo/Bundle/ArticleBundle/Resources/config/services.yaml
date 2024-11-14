@@ -37,7 +37,7 @@ services:
         class: '%enhavo_article.article.factory.class%'
         arguments:
             - '%enhavo_article.article.model.class%'
-            - '@enhavo_block.factory.node'
+            - '@enhavo_block.node.factory'
             - '@enhavo_routing.route.factory'
             - '@enhavo_media.file.factory'
 

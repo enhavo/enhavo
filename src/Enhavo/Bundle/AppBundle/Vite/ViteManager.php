@@ -4,7 +4,7 @@ namespace Enhavo\Bundle\AppBundle\Vite;
 
 use Symfony\Component\HttpClient\Exception\TransportException;
 use Symfony\Component\HttpClient\HttpClient;
-use  Symfony\Component\Filesystem\Path;
+use Symfony\Component\Filesystem\Path;
 
 class ViteManager
 {
