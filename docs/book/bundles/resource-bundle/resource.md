@@ -26,7 +26,8 @@ to any other service if necessary. If you don't define a factory or repository,
 a default ones with these classes `Enhavo\Bundle\ResourceBundle\Factory\Factory` and `Enhavo\Bundle\ResourceBundle\Repository\EntityRepository` will be created.
 
 ::: warning
-A model can only applied once to a resource name!
+A model can applied only once to a resource name and the repository class will always overwrite the repository class
+in your doctrine meta configuration!
 :::
 
 If more configurations for the same resources name are defined, the one with higher `priority` will overwrite lower ones.
