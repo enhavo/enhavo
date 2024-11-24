@@ -6,7 +6,7 @@
  * Time: 13:09
  */
 
-namespace Enhavo\Bundle\MediaBundle\Media;
+namespace Enhavo\Bundle\MediaBundle\Routing;
 
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Symfony\Component\Routing\Generator\UrlGenerator;

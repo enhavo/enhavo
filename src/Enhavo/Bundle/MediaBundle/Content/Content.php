@@ -16,10 +16,10 @@ class Content extends AbstractContent
      */
     private $path;
 
-    public function __construct($content)
+    public function __construct(string $content = null)
     {
         $tempPath = tempnam(sys_get_temp_dir(), 'Content');
-        file_put_contents($tempPath, $content);
+        file_put_contents($tempPath, $content ?? '');
         $this->path = $tempPath;
     }
 

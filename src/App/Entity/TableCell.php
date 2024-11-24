@@ -11,11 +11,10 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
-use Sylius\Resource\Model\ResourceInterface;
 
 #[Entity]
 #[ORM\Table(name: 'app_table_cell')]
-class TableCell implements ResourceInterface
+class TableCell
 {
     #[Column,Id,GeneratedValue]
     private ?int $id = null;

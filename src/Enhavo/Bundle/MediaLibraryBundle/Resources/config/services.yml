@@ -100,7 +100,7 @@ services:
             - '@request_stack'
             - '@router'
             - '@Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryManager'
-            - '@enhavo_media.media.private_url_generator'
+            - '@Enhavo\Bundle\MediaBundle\Routing\UrlGeneratorInterface'
         tags:
             - { name: enhavo_resource.collection }
 

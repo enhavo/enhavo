@@ -8,10 +8,10 @@
 
 namespace Enhavo\Bundle\MediaBundle\Cache;
 
-use Enhavo\Bundle\MediaBundle\Media\UrlGeneratorInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Enhavo\Bundle\MediaBundle\Routing\UrlGeneratorInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class HttpCache implements CacheInterface
 {

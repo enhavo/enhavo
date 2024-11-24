@@ -12,6 +12,7 @@ use Enhavo\Bundle\MediaBundle\Checksum\ChecksumGeneratorInterface;
 use Enhavo\Bundle\MediaBundle\FileNotFound\FileNotFoundHandlerInterface;
 use Enhavo\Bundle\MediaBundle\GarbageCollection\GarbageCollector;
 use Enhavo\Bundle\MediaBundle\GarbageCollection\GarbageCollectorInterface;
+use Enhavo\Bundle\MediaBundle\Routing\UrlGeneratorInterface;
 use Enhavo\Bundle\MediaBundle\Storage\StorageInterface;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -22,6 +23,7 @@ class MediaCompilerPass implements CompilerPassInterface
     {
         $this->createChecksumGeneratorAlias($container);
         $this->createStorageAlias($container);
+        $this->createUrlGeneratorAlias($container);
         $this->createCacheAlias($container);
         $this->injectGarbageCollectorVoters($container);
         $this->addGarbageCollectorAlias($container);
@@ -38,6 +40,12 @@ class MediaCompilerPass implements CompilerPassInterface
     {
         $providerServiceName = $container->getParameter('enhavo_media.storage');
         $container->setAlias(StorageInterface::class, $providerServiceName);
+    }
+
+    private function createUrlGeneratorAlias(ContainerBuilder $container): void
+    {
+        $providerServiceName = $container->getParameter('enhavo_media.routing.url_generator');
+        $container->setAlias(UrlGeneratorInterface::class, $providerServiceName);
     }
 
     private function createCacheAlias(ContainerBuilder $container): void

@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\MediaLibraryBundle\Collection;
 
-use Enhavo\Bundle\MediaBundle\Media\UrlGeneratorInterface;
+use Enhavo\Bundle\MediaBundle\Routing\UrlGeneratorInterface;
 use Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryManager;
 use Enhavo\Bundle\MediaLibraryBundle\Model\ItemInterface;
 use Enhavo\Bundle\ResourceBundle\Collection\ResourceItem;

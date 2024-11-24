@@ -30,8 +30,8 @@ class MediaRoutesEndpointExtensionType extends AbstractEndpointTypeExtension
                 ]);
             }
 
-            if (!isset($routes['enhavo_media_file_format'])) {
-                $routes['enhavo_media_file_format'] = $this->templateExpressionLanguageEvaluator->evaluate([
+            if (!isset($routes['enhavo_media_theme_format'])) {
+                $routes['enhavo_media_theme_format'] = $this->templateExpressionLanguageEvaluator->evaluate([
                     'path' => 'expr:url("/file/format/{id}/{format}")',
                 ]);
             }

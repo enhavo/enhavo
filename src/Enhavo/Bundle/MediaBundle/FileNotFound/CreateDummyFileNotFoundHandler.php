@@ -2,7 +2,12 @@
 
 namespace Enhavo\Bundle\MediaBundle\FileNotFound;
 
+use Enhavo\Bundle\MediaBundle\Content\Content;
+use Enhavo\Bundle\MediaBundle\Content\ContentInterface;
+use Enhavo\Bundle\MediaBundle\Exception\FileNotFoundException;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
+use Enhavo\Bundle\MediaBundle\Model\FormatInterface;
+use Enhavo\Bundle\MediaBundle\Storage\StorageInterface;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
 use Imagine\Image\Fill\Gradient\Vertical;
@@ -11,16 +16,37 @@ use Imagine\Image\Point;
 
 class CreateDummyFileNotFoundHandler implements FileNotFoundHandlerInterface
 {
-    public function handleFileNotFound(FileInterface $file, array $parameters = []): void
+    public function setParameters(array $parameters)
     {
-        if ($file->isImage()) {
-            $this->createRandomImage($file);
-        } else {
-            $this->createBlankFile($file);
-        }
+        // do nothing
     }
 
-    private function createRandomImage(FileInterface $file): void
+    public function handleSave(FormatInterface|FileInterface $file, StorageInterface $storage, FileNotFoundException $exception): void
+    {
+        // do nothing
+    }
+
+    public function handleLoad(FormatInterface|FileInterface $file, StorageInterface $storage, FileNotFoundException $exception): void
+    {
+        if ($file instanceof FormatInterface) {
+            $file = $file->getFile();
+        }
+
+        if ($file->isImage()) {
+            $content = $this->createRandomImage($file);
+        } else {
+            $content = $this->createBlankFile($file);
+        }
+
+        $file->setContent($content);
+    }
+
+    public function handleDelete(FormatInterface|FileInterface $file, StorageInterface $storage, FileNotFoundException $exception): void
+    {
+        // do nothing
+    }
+
+    private function createRandomImage(FileInterface $file): ContentInterface
     {
         $imagine = new Imagine();
 
@@ -42,9 +68,11 @@ class CreateDummyFileNotFoundHandler implements FileNotFoundHandlerInterface
 
         $image->paste($box, new Point(150, 150));
 
-        $image->save($file->getContent()->getFilePath(), [
+        $content = new Content();
+        $image->save($content->getFilePath(), [
             'format' => 'jpg',
         ]);
+        return $content;
     }
 
     private function generateColors($randomSeed): array
@@ -102,8 +130,8 @@ class CreateDummyFileNotFoundHandler implements FileNotFoundHandlerInterface
         return '#' . dechex(floor($red * 255)) . dechex(floor($green * 255)) . dechex(floor($blue * 255));
     }
 
-    private function createBlankFile(FileInterface $file): void
+    private function createBlankFile(FileInterface $file): ContentInterface
     {
-        file_put_contents('', $file->getContent()->getFilePath());
+        return new Content();
     }
 }

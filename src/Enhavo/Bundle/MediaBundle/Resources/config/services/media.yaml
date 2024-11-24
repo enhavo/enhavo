@@ -76,6 +76,7 @@ services:
     Enhavo\Bundle\MediaBundle\EventListener\DoctrineContentSubscriber:
         arguments:
             - '@Enhavo\Bundle\MediaBundle\Storage\StorageInterface'
+            - '@Enhavo\Bundle\MediaBundle\FileNotFound\FileNotFoundHandlerInterface'
         tags:
             - { name: doctrine.event_listener, event: postLoad, method: postLoad }
             - { name: doctrine.event_listener, event: postUpdate, method: postUpdate }
@@ -84,7 +85,7 @@ services:
 
     Enhavo\Bundle\MediaBundle\Column\MediaColumn:
         arguments:
-            - '@enhavo_media.media.public_url_generator'
+            - '@Enhavo\Bundle\MediaBundle\Routing\UrlGeneratorInterface'
         tags:
             - { name: enhavo.column }
 
@@ -106,25 +107,12 @@ services:
             - '%enhavo_media.format.model.class%'
             - '@Enhavo\Bundle\MediaBundle\Checksum\ChecksumGeneratorInterface'
 
-    enhavo_media.media.public_url_generator:
-        class: Enhavo\Bundle\MediaBundle\Media\PublicUrlGenerator
-        public: true
-        arguments:
-            - '@router'
-
-    enhavo_media.media.private_url_generator:
-        class: Enhavo\Bundle\MediaBundle\Media\PrivateUrlGenerator
-        public: true
-        arguments:
-            - '@enhavo_media.media.media_manager'
-            - '@router'
-
     Enhavo\Bundle\MediaBundle\Cache\HttpCache:
         arguments:
             - '@request_stack'
             - '@http_client'
         calls:
-            - [setUrlGenerator, ['@enhavo_media.media.public_url_generator']]
+            - [setUrlGenerator, ['@Enhavo\Bundle\MediaBundle\Routing\UrlGeneratorInterface']]
 
     Enhavo\Bundle\MediaBundle\Cache\NoCache:
 
@@ -166,3 +154,19 @@ services:
     Enhavo\Bundle\MediaBundle\Checksum\Md5ChecksumGenerator:
 
     Enhavo\Bundle\MediaBundle\Checksum\Sha256ChecksumGenerator:
+
+    Enhavo\Bundle\MediaBundle\Routing\AdminUrlGenerator:
+        arguments:
+            - '@router'
+
+    Enhavo\Bundle\MediaBundle\Routing\ThemeUrlGenerator:
+        arguments:
+            - '@router'
+            - '@enhavo_media.format.repository'
+
+    Enhavo\Bundle\MediaBundle\Routing\UrlGenerator:
+        arguments:
+            - '@security.firewall.map'
+            - '@request_stack'
+            - '@Enhavo\Bundle\MediaBundle\Routing\AdminUrlGenerator'
+            - '@Enhavo\Bundle\MediaBundle\Routing\ThemeUrlGenerator'

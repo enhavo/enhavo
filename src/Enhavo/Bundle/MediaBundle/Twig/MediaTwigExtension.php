@@ -36,7 +36,7 @@ class MediaTwigExtension extends AbstractExtension
         if ($file === null) {
             return null;
         } else if ($format !== null) {
-            return $this->twigRouter->generate('enhavo_media_file_format', [
+            return $this->twigRouter->generate('enhavo_media_theme_format', [
                 'id' => $file['id'],
                 'shortChecksum' => substr($file['checksum'], 0, 6),
                 'filename' => $file['filename'],

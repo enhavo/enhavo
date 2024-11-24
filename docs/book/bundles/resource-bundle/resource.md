@@ -25,6 +25,11 @@ This will create us a factory service with name `app.book.factory` and a reposit
 to any other service if necessary. If you don't define a factory or repository, 
 a default ones with these classes `Enhavo\Bundle\ResourceBundle\Factory\Factory` and `Enhavo\Bundle\ResourceBundle\Repository\EntityRepository` will be created.
 
+To autowire repositories and factories, default binds are created as well. For the `app.book` example, 
+you need to name the parameter `$bookRepository`, `$bookFactory` or `$appBookRepository`, `$appBookFactory`. 
+The parameter type must match the configured ones.
+
+
 ::: warning
 A model can applied only once to a resource name and the repository class will always overwrite the repository class
 in your doctrine meta configuration!

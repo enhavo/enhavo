@@ -7,6 +7,7 @@ use Enhavo\Bundle\MediaBundle\Checksum\Sha256ChecksumGenerator;
 use Enhavo\Bundle\MediaBundle\FileNotFound\ExceptionFileNotFoundHandler;
 use Enhavo\Bundle\MediaBundle\Form\Type\FileParametersType;
 use Enhavo\Bundle\MediaBundle\GarbageCollection\GarbageCollector;
+use Enhavo\Bundle\MediaBundle\Routing\UrlGenerator;
 use Enhavo\Bundle\MediaBundle\Storage\LocalChecksumFileStorage;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -22,6 +23,7 @@ class Configuration implements ConfigurationInterface
         $this->addFormatSection($rootNode);
         $this->addStorageSection($rootNode);
         $this->addChecksumSection($rootNode);
+        $this->addRoutingSection($rootNode);
         $this->addFormSection($rootNode);
         $this->addCacheControlSection($rootNode);
         $this->addFilterSection($rootNode);
@@ -50,6 +52,20 @@ class Configuration implements ConfigurationInterface
         $node
             ->children()
                 ->scalarNode('storage')->defaultValue(LocalChecksumFileStorage::class)->end()
+            ->end()
+        ;
+    }
+
+    private function addRoutingSection(ArrayNodeDefinition $node): void
+    {
+        $node
+            ->children()
+                ->arrayNode('routing')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('url_generator')->defaultValue(UrlGenerator::class)->end()
+                    ->end()
+                ->end()
             ->end()
         ;
     }

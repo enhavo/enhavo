@@ -25,3 +25,11 @@ services:
             - '@enhavo_media.media.format_manager'
         tags:
             - { name: console.command }
+
+    Enhavo\Bundle\MediaBundle\Command\MigrateCommand:
+        arguments:
+            - '%kernel.project_dir%/var/media'
+            - '@Enhavo\Bundle\MediaBundle\Checksum\ChecksumGeneratorInterface'
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: console.command }

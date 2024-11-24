@@ -20,9 +20,9 @@
                 <cascade-persist/>
                 <cascade-refresh/>
             </cascade>
-            <join-table name="media_library_file_tag">
+            <join-table name="media_library_item_tag">
                 <join-columns>
-                    <join-column name="file_id" on-delete="CASCADE" />
+                    <join-column name="item_id" on-delete="CASCADE" />
                 </join-columns>
                 <inverse-join-columns>
                     <join-column name="term_id" on-delete="CASCADE" />

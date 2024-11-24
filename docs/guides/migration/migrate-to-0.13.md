@@ -1,3 +1,3 @@
 ## Migrate to 0.13
 
-tbc.
+Search metadata: index instead of property

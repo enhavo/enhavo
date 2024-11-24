@@ -3,23 +3,11 @@
 namespace Enhavo\Bundle\CalendarBundle\Tests\Import;
 
 use Enhavo\Bundle\CalendarBundle\Import\ICSImporter;
-use Enhavo\Bundle\MediaBundle\Content\ContentInterface;
-use Enhavo\Bundle\MediaBundle\Entity\File;
-use Enhavo\Bundle\MediaBundle\Factory\FileFactory;
-use Enhavo\Bundle\MediaBundle\FileNotFound\RemoteFileNotFoundHandler;
-use Enhavo\Bundle\MediaBundle\Media\UrlGeneratorInterface;
-use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\MediaBundle\Provider\ProviderInterface;
-use Enhavo\Component\CleverReach\Exception\AuthorizeException;
-use Enhavo\Component\CleverReach\Exception\RequestException;
-use Enhavo\Component\CleverReach\Http\SymfonyAdapter;
-use Enhavo\Component\CleverReach\Tests\Http\SymfonyAdapterTest;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientInterface;
 use Symfony\Component\HttpClient\CurlHttpClient;
-use Symfony\Component\HttpClient\HttpClient;
-use Symfony\Component\HttpClient\Psr18Client;
 use Symfony\Component\Panther\ProcessManager\WebServerManager;
 
 class ICSIImporterTest extends TestCase
