@@ -31,11 +31,3 @@ services:
         tags:
             - { name: console.command }
 
-    Enhavo\Bundle\AppBundle\Command\EnhavoMigrateResourceCommand:
-        arguments:
-            - '%sylius.resources%'
-            - '@router'
-            - '@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface'
-            - '@twig'
-        tags:
-            - { name: console.command }

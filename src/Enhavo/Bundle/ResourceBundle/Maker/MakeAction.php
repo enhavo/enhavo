@@ -6,38 +6,20 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AppBundle\Maker;
+namespace Enhavo\Bundle\ResourceBundle\Maker;
 
-use Enhavo\Bundle\AppBundle\Util\NameTransformer;
-use Symfony\Bundle\MakerBundle\InputConfiguration;
-use Symfony\Bundle\MakerBundle\Maker\AbstractMaker;
 use Symfony\Bundle\MakerBundle\ConsoleStyle;
 use Symfony\Bundle\MakerBundle\DependencyBuilder;
 use Symfony\Bundle\MakerBundle\Generator;
+use Symfony\Bundle\MakerBundle\InputConfiguration;
+use Symfony\Bundle\MakerBundle\Maker\AbstractMaker;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 
 class MakeAction extends AbstractMaker
 {
-    /**
-     * @var MakerUtil
-     */
-    private $util;
-
-    /**
-     * @var NameTransformer
-     */
-    private $nameTransformer;
-
-    public function __construct(MakerUtil $util)
-    {
-        $this->util = $util;
-        $this->nameTransformer = new NameTransformer();
-
-    }
-
-    public function configureCommand(Command $command, InputConfiguration $inputConf)
+    public function configureCommand(Command $command, InputConfiguration $inputConfig)
     {
         $command
             ->setDescription('Creates a new menu')
