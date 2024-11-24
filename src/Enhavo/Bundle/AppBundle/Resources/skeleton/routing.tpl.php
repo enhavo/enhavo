@@ -1,93 +1,38 @@
-<?= $app; ?>_<?= $resource; ?>_index:
-    options:
-        expose: true
-    path: /<?= $app_url ?>/<?= $resource_url ?>/index
+<?= $route_prefix ?>_index:
+    path: <?= $path_prefix ?>/index
     methods: [GET]
     defaults:
-        _controller: <?= $app ?>.controller.<?= $resource ?>:indexAction
-        _sylius:
-            viewer:
+        _expose: <?= $area."\n" ?>
+        _vue:
+            component: resource-index
+            groups: <?= $area."\n" ?>
+            meta:
+                api: <?= $route_api_prefix ?>_index
+        _endpoint:
+            type: admin
 
-<?= $app ?>_<?= $resource ?>_create:
-    options:
-        expose: true
-    path: /<?= $app_url ?>/<?= $resource_url ?>/create
-    methods: [GET,POST]
-    defaults:
-        _controller: <?= $app ?>.controller.<?= $resource ?>:createAction
-        _sylius:
-            redirect: <?= $app ?>_<?= $resource ?>_update
-            viewer:
-
-<?= $app ?>_<?= $resource ?>_update:
-    options:
-        expose: true
-    path: /<?= $app_url ?>/<?= $resource_url ?>/update/{id}
-    methods: [GET,POST]
-    defaults:
-        _controller: <?= $app ?>.controller.<?= $resource ?>:updateAction
-        _sylius:
-            viewer:
-
-<?= $app ?>_<?= $resource ?>_table:
-    options:
-        expose: true
-    path: /<?= $app_url ?>/<?= $resource_url ?>/table
-    methods: [GET,POST]
-    defaults:
-        _controller: <?= $app ?>.controller.<?= $resource ?>:tableAction
-        _sylius:
-            viewer:
-                columns:
-                    id:
-                        property: id
-                        width: 12
-                        label: id
-                        type: text
-
-<?= $app ?>_<?= $resource ?>_delete:
-    options:
-        expose: true
-    path: /<?= $app_url ?>/<?= $resource_url ?>/delete/{id}
-    methods: [POST]
-    defaults:
-        _controller: <?= $app ?>.controller.<?= $resource ?>:deleteAction
-
-<?= $app ?>_<?= $resource ?>_batch:
-    options:
-        expose: true
-    path: /<?= $app_url ?>/<?= $resource_url ?>/batch
-    methods: [POST]
-    defaults:
-        _controller: <?= $app ?>.controller.<?= $resource ?>:batchAction
-        _sylius:
-            paginate: false
-            criteria:
-                id: $ids
-            batches:
-                delete:
-                    type: delete
-
-<?= $app ?>_<?= $resource ?>_preview:
-    options:
-        expose: true
-    path: /<?= $app_url ?>/<?= $resource_url ?>/preview
+<?= $route_prefix; ?>_create:
+    path: <?= $path_prefix ?>/create
     methods: [GET]
     defaults:
-        _controller: <?= $app ?>.controller.<?= $resource ?>:previewAction
-        _sylius:
-            viewer:
+        _expose: <?= $area."\n" ?>
+        _vue:
+            component: resource-input
+            groups: <?= $area."\n" ?>
+            meta:
+                api: <?= $route_api_prefix ?>_create
+        _endpoint:
+            type: admin
 
-<?= $app ?>_<?= $resource ?>_resource_preview:
-    options:
-        expose: true
-    path: /<?= $app_url ?>/<?= $resource_url ?>/resource/preview
-    methods: [POST]
+<?= $route_prefix; ?>_update:
+    path: <?= $path_prefix ?>/update/{id}
+    methods: [GET]
     defaults:
-        _controller: <?= $app ?>.controller.<?= $resource ?>:previewResourceAction
-        _area: theme
-        _sylius:
-            viewer:
-                strategy_options:
-                    service: <?= $app ?>.controller.<?= $resource ?>:showResourceAction
-
+        _expose: <?= $area."\n" ?>
+        _vue:
+            component: resource-input
+            groups: <?= $area."\n" ?>
+            meta:
+                api: <?= $route_api_prefix ?>_update
+        _endpoint:
+            type: admin

@@ -9,40 +9,36 @@
 namespace Enhavo\Bundle\AppBundle\Maker;
 
 use Enhavo\Bundle\AppBundle\Util\NameTransformer;
-use Symfony\Bundle\MakerBundle\InputConfiguration;
-use Symfony\Bundle\MakerBundle\Maker\AbstractMaker;
 use Symfony\Bundle\MakerBundle\ConsoleStyle;
 use Symfony\Bundle\MakerBundle\DependencyBuilder;
 use Symfony\Bundle\MakerBundle\Generator;
+use Symfony\Bundle\MakerBundle\InputConfiguration;
+use Symfony\Bundle\MakerBundle\Maker\AbstractMaker;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 
 class MakeRouting extends AbstractMaker
 {
-    /**
-     * @var MakerUtil
-     */
-    private $util;
+    private NameTransformer $nameTransformer;
 
-    /**
-     * @var NameTransformer
-     */
-    private $nameTransformer;
-
-    public function __construct(MakerUtil $util)
+    public function __construct(
+        private readonly MakerUtil $util
+    )
     {
-        $this->util = $util;
         $this->nameTransformer = new NameTransformer();
     }
 
-    public function configureCommand(Command $command, InputConfiguration $inputConf)
+    public function configureCommand(Command $command, InputConfiguration $inputConfig): void
     {
         $command
-            ->setDescription('Creates a new routing file')
+            ->setDescription('Creates routing files')
             ->addArgument('resource', InputArgument::REQUIRED, 'What is the name of the resource?')
-            ->addArgument('bundle', InputArgument::OPTIONAL, 'What is the bundle name? Type "no" if no bundle is needed')
-            ->addArgument('sortable', InputArgument::OPTIONAL, 'Is the resource sortable? [yes/no]')
+            ->addOption('bundle', null, InputOption::VALUE_NONE, 'Generate into bundle')
+            ->addOption('grid', 'g', InputOption::VALUE_REQUIRED, 'Alternative grid name')
+            ->addOption('input', 'i', InputOption::VALUE_REQUIRED, 'Alternative input name')
+            ->addOption('area', null, InputOption::VALUE_REQUIRED, 'Area name (default: admin)', 'admin')
         ;
     }
 
@@ -56,27 +52,54 @@ class MakeRouting extends AbstractMaker
 
     }
 
-    public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator)
+    public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator): void
     {
-        $resource = $input->getArgument('resource');
-        $bundle = $input->getArgument('bundle');
+        $resourceName = $input->getArgument('resource');
+        $bundle = $input->getOption('bundle');
+        $gridName = $input->getOption('grid') ?? $resourceName;
+        $inputName = $input->getOption('input') ?? $resourceName;
+        $areaName = $input->getOption('area');
 
-        if($bundle == 'no') {
-            $app = 'app';
-            $path = sprintf('%s/config/routes/admin/%s.yaml', $this->util->getProjectPath(), $this->nameTransformer->snakeCase($resource));
+        $split = explode('.', $resourceName);
+        $namespace = strtolower($split[0]);
+        $resource = strtolower($split[1]);
+
+        if (!$bundle) {
+            $routingPath = sprintf('%s/config/routes/%s/%s.yaml', $this->util->getProjectPath(), $areaName, $this->nameTransformer->snakeCase($resource));
+            $routingApiPath = sprintf('%s/config/routes/%s_api/%s.yaml', $this->util->getProjectPath(), $areaName, $this->nameTransformer->snakeCase($resource));
         } else {
-            $app = $this->util->getBundleNameWithoutPostfix($bundle);
-            $path = sprintf('%s/Resources/config/routing/admin/%s.yaml', $this->util->getBundlePath($bundle), $this->nameTransformer->snakeCase($resource));
+            $routingPath = sprintf('%s/Resources/config/routing/%s/%s.yaml', $this->util->getBundlePath($bundle), $areaName, $this->nameTransformer->snakeCase($resource));
+            $routingApiPath = sprintf('%s/Resources/config/routing/%s_api/%s.yaml', $this->util->getBundlePath($bundle), $areaName, $this->nameTransformer->snakeCase($resource));
         }
 
+        $routePrefix = $namespace . '_' . $areaName . '_' . $resource;
+        $routeApiPrefix = $namespace . '_' . $areaName . '_api_' . $resource;
+        $pathPrefix = $this->getUrl('/'. $namespace . '/' . $resource);
+        $pathApiPrefix = $this->getUrl('/'. $namespace . '/' . $resource);
+
         $generator->generateFile(
-            $path,
-            $this->util->getRealpath('@EnhavoAppBundle/Resources/skeleton/routing.tpl.php'),
+            $routingPath,
+            __DIR__ . '/../Resources/skeleton/routing.tpl.php',
             [
-                'app' => $this->nameTransformer->snakeCase($app),
-                'resource' => $this->nameTransformer->snakeCase($resource),
-                'app_url' => $this->getUrl($app),
-                'resource_url' => $this->getUrl($resource)
+                'route_prefix' => $routePrefix,
+                'route_api_prefix' => $routeApiPrefix,
+                'path_prefix' => $pathPrefix,
+                'resource' => $resource,
+                'area' => $areaName,
+            ]
+        );
+
+        $generator->generateFile(
+            $routingApiPath,
+            __DIR__ . '/../Resources/skeleton/routing_api.tpl.php',
+            [
+                'route_prefix' => $routePrefix,
+                'route_api_prefix' => $routeApiPrefix,
+                'path_prefix' => $pathPrefix,
+                'resource' => $resource,
+                'area' => $areaName,
+                'grid_name' => $gridName,
+                'input_name' => $inputName,
             ]
         );
 
@@ -85,6 +108,6 @@ class MakeRouting extends AbstractMaker
 
     private function getUrl($input)
     {
-        return preg_replace('/_/', '/',  $this->nameTransformer->snakeCase($input));
+        return preg_replace('/_/', '-',  $this->nameTransformer->snakeCase($input));
     }
 }

@@ -66,3 +66,11 @@ services:
             - '%enhavo_resource.resources%'
         tags:
             - { name: doctrine.event_listener, event: loadClassMetadata, method: loadClassMetadata }
+
+    Enhavo\Bundle\ResourceBundle\Maker\MakeFilter:
+        tags:
+            - { name: 'maker.command' }
+
+    Enhavo\Bundle\ResourceBundle\Maker\MakeAction:
+        tags:
+            - { name: 'maker.command' }

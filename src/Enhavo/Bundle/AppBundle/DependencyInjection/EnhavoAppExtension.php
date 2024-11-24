@@ -38,10 +38,6 @@ class EnhavoAppExtension extends Extension implements PrependExtensionInterface
         $container->setParameter('enhavo_app.vite.builds', $config['vite']['builds'] ?? []);
         $container->setParameter('enhavo_app.form_mapping', ['admin' => $config['admin']['form_mapping'] ?? []]);
 
-        if (!class_exists('\Sylius\Bundle\ResourceBundle\SyliusResourceBundle')) {
-            $container->setParameter('sylius.resources', []);
-        }
-
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
         $loader->load('services/action.yaml');
