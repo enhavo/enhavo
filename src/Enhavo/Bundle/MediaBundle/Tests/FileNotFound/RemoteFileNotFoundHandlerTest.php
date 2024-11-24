@@ -3,14 +3,17 @@
 namespace Enhavo\Bundle\MediaBundle\Tests\FileNotFound;
 
 use Enhavo\Bundle\MediaBundle\Content\ContentInterface;
+use Enhavo\Bundle\MediaBundle\Entity\File;
+use Enhavo\Bundle\MediaBundle\Exception\FileNotFoundException;
 use Enhavo\Bundle\MediaBundle\FileNotFound\RemoteFileNotFoundHandler;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\MediaBundle\Routing\UrlGeneratorInterface;
+use Enhavo\Bundle\MediaBundle\Storage\StorageInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Psr\Http\Client\ClientInterface;
 use Symfony\Component\HttpClient\CurlHttpClient;
 use Symfony\Component\Panther\ProcessManager\WebServerManager;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class RemoteFileNotFoundHandlerTest extends TestCase
 {
@@ -37,7 +40,9 @@ class RemoteFileNotFoundHandlerTest extends TestCase
     {
         $dependencies = new RemoteFileNotFoundHandlerTestDependecies();
         $dependencies->urlGenerator = $this->getMockBuilder(UrlGeneratorInterface::class)->getMock();
+        $dependencies->storage = $this->getMockBuilder(StorageInterface::class)->getMock();
         $dependencies->client = new CurlHttpClient();
+        $dependencies->exception = new FileNotFoundException();
 
         return $dependencies;
     }
@@ -57,25 +62,21 @@ class RemoteFileNotFoundHandlerTest extends TestCase
         $dependencies = $this->createDependencies();
         $dependencies->urlGenerator->method('generate')->willReturn('/file-not-found');
         $instance = $this->createInstance($dependencies);
-        $file = $this->getMockBuilder(FileInterface::class)->getMock();
-        $content = $this->getMockBuilder(ContentInterface::class)->getMock();
-        $tmpFile = tmpfile();
-        $meta_data = stream_get_meta_data($tmpFile);
-        $content->method('getFilePath')->willReturn($meta_data['uri']);
+        $file = new File();
 
-        $file->method('getContent')->willReturn($content);
+        $instance->setParameters([
+            RemoteFileNotFoundHandler::SERVER_URL_PARAMETER => 'http://127.0.0.1:1234'
+        ]);
+        $instance->handleLoad($file, $dependencies->storage, $dependencies->exception);
 
-        $instance->handleFileNotFound($file, [RemoteFileNotFoundHandler::SERVER_URL_PARAMETER => 'http://127.0.0.1:1234']);
-
-        $this->assertEquals("File could not be found.", file_get_contents($meta_data['uri']));
+        $this->assertEquals("File could not be found.", $file->getContent()->getContent());
     }
 }
 
 class RemoteFileNotFoundHandlerTestDependecies
 {
-    /** @var UrlGeneratorInterface|MockObject */
-    public $urlGenerator;
-
-    /** @var ClientInterface|MockObject */
-    public $client;
+    public UrlGeneratorInterface|MockObject $urlGenerator;
+    public HttpClientInterface|MockObject $client;
+    public StorageInterface|MockObject $storage;
+    public FileNotFoundException $exception;
 }
