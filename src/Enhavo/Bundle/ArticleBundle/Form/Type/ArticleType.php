@@ -54,9 +54,9 @@ class ArticleType extends AbstractType
 
         $builder->add('tags', TermAutoCompleteChoiceType::class, [
             'multiple' => true,
-            'route' => 'enhavo_article_tag_auto_complete',
+            'route' => 'enhavo_article_admin_api_tag_auto_complete',
             'translation_domain' => 'EnhavoArticleBundle',
-            'create_route' => 'enhavo_article_tag_create',
+            'create_route' => 'enhavo_article_admin_tag_create',
             'edit_route' => 'enhavo_article_tag_update',
             'frame_key' => 'article_tags',
         ]);

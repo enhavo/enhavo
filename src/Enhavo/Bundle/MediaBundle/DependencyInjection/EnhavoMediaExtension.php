@@ -37,6 +37,7 @@ class EnhavoMediaExtension extends Extension implements PrependExtensionInterfac
         $container->setParameter('enhavo_media.garbage_collection.max_items_per_run', $config['garbage_collection']['max_items_per_run']);
         $container->setParameter('enhavo_media.file_not_found.handler', $config['file_not_found']['handler']);
         $container->setParameter('enhavo_media.file_not_found.parameters', $config['file_not_found']['parameters']);
+        $container->setParameter('enhavo_media.routing.url_generator', $config['routing']['url_generator']);
 
         $configFiles = array(
             'services/command.yaml',

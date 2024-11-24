@@ -8,13 +8,11 @@ namespace Enhavo\Bundle\BlockBundle\Maker;
 
 use Enhavo\Bundle\AppBundle\Maker\MakerUtil;
 use Enhavo\Bundle\AppBundle\Util\NameTransformer;
-use Enhavo\Bundle\BlockBundle\Entity\AbstractBlock;
 use Enhavo\Bundle\BlockBundle\Maker\Generator\DoctrineOrmYaml;
 use Enhavo\Bundle\BlockBundle\Maker\Generator\FormType;
 use Enhavo\Bundle\BlockBundle\Maker\Generator\PhpClass;
 use Exception;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Yaml\Yaml;

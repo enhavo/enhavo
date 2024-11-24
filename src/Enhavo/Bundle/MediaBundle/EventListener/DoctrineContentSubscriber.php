@@ -14,6 +14,9 @@ use Doctrine\ORM\Event\PostPersistEventArgs;
 use Doctrine\ORM\Event\PostRemoveEventArgs;
 use Doctrine\ORM\Event\PostUpdateEventArgs;
 use Doctrine\ORM\Events;
+use Enhavo\Bundle\MediaBundle\Exception\FileNotFoundException;
+use Enhavo\Bundle\MediaBundle\Exception\StorageException;
+use Enhavo\Bundle\MediaBundle\FileNotFound\FileNotFoundHandlerInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\MediaBundle\Model\FormatInterface;
 use Enhavo\Bundle\MediaBundle\Storage\StorageInterface;
@@ -22,6 +25,7 @@ class DoctrineContentSubscriber implements EventSubscriber
 {
     public function __construct(
         private readonly StorageInterface $storage,
+        private readonly FileNotFoundHandlerInterface $handler,
     ) {}
 
     public function getSubscribedEvents(): array
@@ -38,7 +42,11 @@ class DoctrineContentSubscriber implements EventSubscriber
     {
         $object = $args->getObject();
         if ($object instanceof FileInterface || $object instanceof FormatInterface) {
-            $object->setContent($this->storage->saveContent($object));
+            try {
+                $object->setContent($this->storage->saveContent($object));
+            } catch (FileNotFoundException $exception) {
+                $this->handler->handleSave($object, $this->storage, $exception);
+            }
         }
     }
 
@@ -46,7 +54,11 @@ class DoctrineContentSubscriber implements EventSubscriber
     {
         $object = $args->getObject();
         if ($object instanceof FileInterface || $object instanceof FormatInterface) {
-            $object->setContent($this->storage->saveContent($object));
+            try {
+                $object->setContent($this->storage->saveContent($object));
+            } catch (FileNotFoundException $exception) {
+                $this->handler->handleSave($object, $this->storage, $exception);
+            }
         }
     }
 
@@ -54,7 +66,11 @@ class DoctrineContentSubscriber implements EventSubscriber
     {
         $object = $args->getObject();
         if ($object instanceof FileInterface || $object instanceof FormatInterface) {
-            $object->setContent($this->storage->getContent($object));
+            try {
+                $object->setContent($this->storage->getContent($object));
+            } catch (FileNotFoundException $exception) {
+                $this->handler->handleLoad($object, $this->storage, $exception);
+            }
         }
     }
 
@@ -62,7 +78,11 @@ class DoctrineContentSubscriber implements EventSubscriber
     {
         $object = $args->getObject();
         if ($object instanceof FileInterface || $object instanceof FormatInterface) {
-            $this->storage->deleteContent($object);
+            try {
+                $this->storage->deleteContent($object);
+            } catch (FileNotFoundException $exception) {
+                $this->handler->handleDelete($object, $this->storage, $exception);
+            }
         }
     }
 }

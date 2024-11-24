@@ -10,6 +10,9 @@ namespace Enhavo\Component\Type;
 
 use Enhavo\Bundle\AppBundle\Exception\PropertyNotExistsException;
 
+/**
+ * @deprecated Use PropertyAccessor
+ */
 class Property
 {
     /**

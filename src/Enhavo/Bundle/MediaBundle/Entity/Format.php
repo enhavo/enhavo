@@ -22,7 +22,7 @@ class Format implements FormatInterface
     private FileInterface $file;
     private ContentInterface $content;
     private ?\DateTime $lockAt = null;
-    private string $checksum;
+    private ?string $checksum = null;
 
     public function getId(): ?int
     {

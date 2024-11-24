@@ -1,6 +1,8 @@
 enhavo_media_theme_format:
     path:  /media/format/{id}/{format}/{shortChecksum}/{filename}.{extension}
     methods: [GET]
+    requirements:
+        filename: .+
     defaults:
         _expose: [theme, admin]
         _endpoint:

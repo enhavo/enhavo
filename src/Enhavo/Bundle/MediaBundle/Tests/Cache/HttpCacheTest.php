@@ -3,9 +3,8 @@
 namespace Enhavo\Bundle\MediaBundle\Tests\Cache;
 
 use Enhavo\Bundle\MediaBundle\Cache\HttpCache;
-use Enhavo\Bundle\MediaBundle\Content\UrlContent;
-use Enhavo\Bundle\MediaBundle\Media\UrlGeneratorInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
+use Enhavo\Bundle\MediaBundle\Routing\UrlGeneratorInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientInterface;

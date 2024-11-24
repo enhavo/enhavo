@@ -9,11 +9,10 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Sylius\Resource\Model\ResourceInterface;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'app_table')]
-class Table implements ResourceInterface
+class Table
 {
     #[ORM\Column,ORM\Id,ORM\GeneratedValue]
     private ?int $id = null;

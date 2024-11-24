@@ -65,6 +65,10 @@ class ListMenuType extends AbstractType implements MenuTypeInterface
             'enabled' => true,
             'role' => null,
         ]);
+
+        $resolver->setRequired([
+            'label',
+        ]);
     }
 
     public function getPermission(array $options): mixed
