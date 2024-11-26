@@ -2,11 +2,9 @@
 
 namespace Enhavo\Bundle\MediaBundle\Tests\FileNotFound;
 
-use Enhavo\Bundle\MediaBundle\Content\ContentInterface;
 use Enhavo\Bundle\MediaBundle\Entity\File;
 use Enhavo\Bundle\MediaBundle\Exception\FileNotFoundException;
 use Enhavo\Bundle\MediaBundle\FileNotFound\RemoteFileNotFoundHandler;
-use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\MediaBundle\Routing\UrlGeneratorInterface;
 use Enhavo\Bundle\MediaBundle\Storage\StorageInterface;
 use PHPUnit\Framework\MockObject\MockObject;

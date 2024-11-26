@@ -53,6 +53,7 @@ export class MainManager
 
         this.primaryToolbarWidgets = this.widgetManager.createToolbarWidgets(data['toolbarWidgetsPrimary']);
         this.secondaryToolbarWidgets = this.widgetManager.createToolbarWidgets(data['toolbarWidgetsSecondary']);
+        this.branding = data['branding'];
 
         let menuItems = this.menuManager.createMenuItems(data['menu']);
         this.menuManager.setMenuItems(menuItems);

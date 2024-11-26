@@ -142,6 +142,13 @@ services:
             - '%enhavo_app.vite.builds%'
             - '%kernel.project_dir%/public'
 
+    Enhavo\Bundle\AppBundle\Vite\ViteAssetPackage:
+        arguments:
+            - '@Enhavo\Bundle\AppBundle\Vite\ViteManager'
+            - '%enhavo_app.vite.builds%'
+        tags:
+            - { name: assets.package, package: vite }
+
     Enhavo\Bundle\AppBundle\Form\ThemeVueTypeExtension:
         arguments:
             - '%enhavo_app.form_mapping%'

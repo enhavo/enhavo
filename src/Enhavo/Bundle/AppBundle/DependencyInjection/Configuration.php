@@ -266,7 +266,7 @@ class Configuration implements ConfigurationInterface
                                     ->scalarNode('host')->defaultValue('localhost')->end()
                                     ->scalarNode('port')->defaultValue('5200')->end()
                                     ->scalarNode('manifest')->end()
-                                    ->scalarNode('base')->end()
+                                    ->scalarNode('base')->defaultValue('/')->end()
                                 ->end()
                             ->end()
                         ->end()

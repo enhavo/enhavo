@@ -35,6 +35,11 @@ class ViewEndpointType extends AbstractEndpointType
         throw new NotFoundHttpException('No format found. Check your route configuration');
     }
 
+    public static function getName(): ?string
+    {
+        return 'view';
+    }
+
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

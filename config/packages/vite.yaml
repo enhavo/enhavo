@@ -10,7 +10,6 @@ enhavo_app:
                 manifest: '%kernel.project_dir%/public/build/theme/.vite/manifest.json'
                 base: '/build/theme'
 
-
 when@prod:
     enhavo_app:
         vite:

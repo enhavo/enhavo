@@ -71,7 +71,7 @@ class ViteManager
         throw new \Exception(sprintf('Vite build with name "%s" doesn\'t exists', $build));
     }
 
-    private function isDev(string $entrypoint, string $build): bool
+    public function isDev(string $file, string $build): bool
     {
         if ($this->mode === self::MODE_BUILD) {
             return false;
@@ -85,17 +85,27 @@ class ViteManager
             return $this->testedBuilds[$build];
         }
 
-        try {
-            $client = HttpClient::create();
-            $response = $client->request('GET', $this->getHost($build) . $this->getBase($build) . '/' . $entrypoint);
-
-            $success = in_array($response->getStatusCode(), [200,500]);
-        } catch (TransportException $e) {
-            $success = false;
-        }
+        $success = $this->testDev($build, $file);
 
         $this->testedBuilds[$build] = $success;
         return $success;
+    }
+
+    public function testDev(string $build, string $file): bool
+    {
+        if (!str_starts_with($file, '/')) {
+            $file = '/' . $file;
+        }
+
+        try {
+            $client = HttpClient::create();
+            $url = $this->getHost($build) . $this->getBase($build) . $file;
+            $response = $client->request('GET', $url);
+
+            return in_array($response->getStatusCode(), [200,500]);
+        } catch (TransportException $e) {
+            return false;
+        }
     }
 
     private function getAssetUrl(string $entrypoint, string $build)
