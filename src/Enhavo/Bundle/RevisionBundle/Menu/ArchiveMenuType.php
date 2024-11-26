@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\RevisionBundle\Menu;
 
 use Enhavo\Bundle\AppBundle\Menu\AbstractMenuType;
+use Enhavo\Bundle\AppBundle\Menu\Type\LinkMenuType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ArchiveMenuType extends AbstractMenuType
@@ -20,12 +21,17 @@ class ArchiveMenuType extends AbstractMenuType
             'label' => 'archive.label.archive',
             'translation_domain' => 'EnhavoRevisionBundle',
             'route' => 'enhavo_revision_admin_archive_index',
-            'role' => 'ROLE_ENHAVO_REVISION_ARCHIVE_INDEX'
+            'permission' => 'ROLE_ENHAVO_REVISION_ARCHIVE_INDEX'
         ]);
     }
 
     public static function getName(): ?string
     {
         return 'revision_archive';
+    }
+
+    public static function getParentType(): ?string
+    {
+        return LinkMenuType::class;
     }
 }

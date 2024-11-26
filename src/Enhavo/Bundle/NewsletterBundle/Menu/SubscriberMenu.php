@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\NewsletterBundle\Menu;
 
 use Enhavo\Bundle\AppBundle\Menu\AbstractMenuType;
+use Enhavo\Bundle\AppBundle\Menu\Type\LinkMenuType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SubscriberMenu extends AbstractMenuType
@@ -20,12 +21,17 @@ class SubscriberMenu extends AbstractMenuType
             'label' => 'subscriber.label.subscriber',
             'translation_domain' => 'EnhavoNewsletterBundle',
             'route' => 'enhavo_newsletter_admin_local_subscriber_index',
-            'role' => 'ROLE_ENHAVO_NEWSLETTER_LOCAL_SUBSCRIBER_INDEX',
+            'permission' => 'ROLE_ENHAVO_NEWSLETTER_LOCAL_SUBSCRIBER_INDEX',
         ]);
     }
 
     public static function getName(): ?string
     {
         return 'newsletter_subscriber';
+    }
+
+    public static function getParentType(): ?string
+    {
+        return LinkMenuType::class;
     }
 }

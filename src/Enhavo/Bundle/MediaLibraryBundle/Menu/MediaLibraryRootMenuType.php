@@ -14,7 +14,7 @@ class MediaLibraryRootMenuType extends AbstractMenuType
             'icon' => 'image',
             'label' => 'media_library.label.media_library',
             'translation_domain' => 'EnhavoMediaLibraryBundle',
-            'children' => [
+            'items' => [
                 'library' => [
                     'type' => 'media_library_library'
                 ],

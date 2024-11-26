@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\SettingBundle\Menu;
 
 use Enhavo\Bundle\AppBundle\Menu\AbstractMenuType;
+use Enhavo\Bundle\AppBundle\Menu\Type\LinkMenuType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SettingMenu extends AbstractMenuType
@@ -20,7 +21,7 @@ class SettingMenu extends AbstractMenuType
             'label' => 'label.setting',
             'translation_domain' => 'EnhavoSettingBundle',
             'route' => 'enhavo_setting_admin_setting_index',
-            'role' => 'ROLE_ENHAVO_SETTING_SETTING_INDEX',
+            'permission' => 'ROLE_ENHAVO_SETTING_SETTING_INDEX',
             'group' => null,
             'setting' => null,
             'key' => null,
@@ -46,5 +47,10 @@ class SettingMenu extends AbstractMenuType
     public static function getName(): ?string
     {
         return 'setting';
+    }
+
+    public static function getParentType(): ?string
+    {
+        return LinkMenuType::class;
     }
 }

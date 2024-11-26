@@ -3,6 +3,7 @@ services:
         arguments:
             - '@Enhavo\Bundle\MultiTenancyBundle\Tenant\TenantManager'
             - '@security.authorization_checker'
+            - '@router'
         tags:
             - { name: enhavo_app.menu }
 

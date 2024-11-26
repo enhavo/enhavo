@@ -15,10 +15,10 @@
 </template>
 
 <script setup lang="ts">
-import {DropdownMenu} from '@enhavo/app/menu/model/DropdownMenu';
+import {DropdownMenuItem} from '@enhavo/app/menu/model/DropdownMenuItem';
 
 const props = defineProps<{
-    data: DropdownMenu
+    data: DropdownMenuItem
 }>()
 
 function change(value: any)

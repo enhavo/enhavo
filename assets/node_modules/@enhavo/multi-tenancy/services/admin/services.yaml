@@ -1,5 +1,6 @@
 services:
-    '@enhavo/multi-tenancy/menu/MenuSwitchTenantEventListener':
+    '@enhavo/multi-tenancy/menu/SwitchTenantMenuItem':
+        import: SwitchTenantMenuItem
         chunk: 'main'
-        arguments:
-            - '@enhavo/core/Router'
+        tags:
+            - { name: 'enhavo_app.menu_item' }

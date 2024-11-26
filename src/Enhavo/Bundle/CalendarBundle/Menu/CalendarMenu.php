@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\CalendarBundle\Menu;
 
 use Enhavo\Bundle\AppBundle\Menu\AbstractMenuType;
+use Enhavo\Bundle\AppBundle\Menu\Type\LinkMenuType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CalendarMenu extends AbstractMenuType
@@ -20,12 +21,17 @@ class CalendarMenu extends AbstractMenuType
             'label' => 'label.calendar',
             'translation_domain' => 'EnhavoCalendarBundle',
             'route' => 'enhavo_calendar_admin_appointment_index',
-            'role' => 'ROLE_ENHAVO_CALENDAR_APPOINTMENT_INDEX'
+            'permission' => 'ROLE_ENHAVO_CALENDAR_APPOINTMENT_INDEX'
         ]);
     }
 
     public static function getName(): ?string
     {
         return 'calendar';
+    }
+
+    public static function getParentType(): ?string
+    {
+        return LinkMenuType::class;
     }
 }

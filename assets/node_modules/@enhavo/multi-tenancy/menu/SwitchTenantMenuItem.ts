@@ -1,0 +1,36 @@
+import {DropdownMenuItem} from "@enhavo/app/menu/model/DropdownMenuItem";
+import {Router} from "@enhavo/app/routing/Router";
+
+export class SwitchTenantMenuItem extends DropdownMenuItem
+{
+    private alreadyRunning = false;
+    private url: string;
+
+    constructor(
+        private readonly router: Router
+    ) {
+        super();
+    }
+
+    public execute(value: string): void
+    {
+        if (this.alreadyRunning) {
+            return;
+        }
+
+        if (value === null) {
+            return;
+        }
+
+        let uri = new URL(this.url, window.origin);
+        uri.searchParams.set('tenant', value);
+        uri.searchParams.set('redirect', window.location.href);
+
+        fetch(uri).then(async (result) => {
+            let data = await result.json();
+
+            document.location.href = data.redirect;
+            this.alreadyRunning = true;
+        });
+    }
+}
