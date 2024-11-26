@@ -23,23 +23,18 @@ class DropdownMenuType extends AbstractMenuType
 
     public function createViewData(array $options, Data $data): void
     {
-        $value = $this->getValue($options);
-        $choices = $this->getChoices($options);
-
         $data->add([
-            'info' => $this->translator->trans($options['info'], [], $options['translation_domain']),
-            'choices' => $this->formatChoices($choices, $options['translation_domain']),
+            'choices' => $this->formatChoices($options['choices'], $options['translation_domain']),
             'label' => $this->translator->trans($options['label'], [], $options['translation_domain']),
-            'value' => $value,
-            'event' => $options['event'],
-            'selectedValue' => $this->getInitialValue($value, $choices, $options['translation_domain']),
+            'value' => $options['value'],
+            'selectedValue' => $this->getInitialValue($options['value'], $options['choices'], $options['translation_domain']),
         ]);
     }
 
     private function formatChoices(array $choices, $translationDomain): array
     {
         $data = [];
-        foreach($choices as $value => $label) {
+        foreach ($choices as $value => $label) {
             $data[] = [
                 'label' => $this->translator->trans($label, [], $translationDomain),
                 'code' => $value,
@@ -50,7 +45,7 @@ class DropdownMenuType extends AbstractMenuType
 
     private function getInitialValue($value, array $choices, $translationDomain): ?array
     {
-        foreach($choices as $code => $label) {
+        foreach ($choices as $code => $label) {
             if ($value == $code) {
                 return [
                     'label' => $this->translator->trans($label, [], $translationDomain),
@@ -61,32 +56,18 @@ class DropdownMenuType extends AbstractMenuType
         return null;
     }
 
-    protected function getChoices($options)
-    {
-        return $options['choices'];
-    }
-
-    protected function getValue(array $options)
-    {
-        return $options['value'];
-    }
-
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'label' => '',
             'model' => 'DropdownMenuItem',
             'translation_domain' => null,
-            'class' => '',
             'component' => 'menu-dropdown',
-            'info' => null,
             'value' => null,
+            'label' => null,
         ]);
 
-        $resolver->remove(['icon', 'route']);
         $resolver->setRequired([
             'choices',
-            'event'
         ]);
     }
 

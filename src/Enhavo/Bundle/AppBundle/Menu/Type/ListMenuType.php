@@ -9,13 +9,12 @@
 namespace Enhavo\Bundle\AppBundle\Menu\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
+use Enhavo\Bundle\AppBundle\Menu\AbstractMenuType;
 use Enhavo\Bundle\AppBundle\Menu\MenuManager;
-use Enhavo\Bundle\AppBundle\Menu\MenuTypeInterface;
-use Enhavo\Component\Type\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class ListMenuType extends AbstractType implements MenuTypeInterface
+class ListMenuType extends AbstractMenuType
 {
     public function __construct(
         private readonly TranslatorInterface $translator,
@@ -26,20 +25,15 @@ class ListMenuType extends AbstractType implements MenuTypeInterface
 
     public function createViewData(array $options, Data $data): void
     {
-        $items = $this->menuManager->getMenuItems($options['children']);
-
-        $children = [];
-        foreach ($items as $menu) {
-            $children[] = $menu->createViewData();
+        $items = [];
+        foreach ($this->menuManager->getMenuItems($options['items']) as $item) {
+            $items[] = $item->createViewData();
         }
 
         $data->add([
             'label' => $this->translator->trans($options['label'], [], $options['translation_domain']),
             'icon' => $options['icon'],
-            'component' => $options['component'],
-            'model' => $options['model'],
-            'class' => $options['class'],
-            'items' => $children
+            'items' => $items
         ]);
     }
 
@@ -47,7 +41,7 @@ class ListMenuType extends AbstractType implements MenuTypeInterface
     {
         $enabled = $options['enabled'];
         if ($enabled) {
-            $items = $this->menuManager->getMenuItems($options['children']);
+            $items = $this->menuManager->getMenuItems($options['items']);
             return count($items) > 0;
         }
         return false;
@@ -60,20 +54,12 @@ class ListMenuType extends AbstractType implements MenuTypeInterface
             'model' => 'ListMenuItem',
             'translation_domain' => null,
             'icon' => null,
-            'children' => [],
-            'class' => null,
-            'enabled' => true,
-            'role' => null,
         ]);
 
         $resolver->setRequired([
             'label',
+            'items',
         ]);
-    }
-
-    public function getPermission(array $options): mixed
-    {
-        return $options['role'];
     }
 
     public static function getName(): ?string

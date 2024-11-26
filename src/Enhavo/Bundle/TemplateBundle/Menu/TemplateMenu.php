@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\TemplateBundle\Menu;
 
 use Enhavo\Bundle\AppBundle\Menu\AbstractMenuType;
+use Enhavo\Bundle\AppBundle\Menu\Type\LinkMenuType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TemplateMenu extends AbstractMenuType
@@ -20,12 +21,17 @@ class TemplateMenu extends AbstractMenuType
             'label' => 'template.label.template',
             'translation_domain' => 'EnhavoTemplateBundle',
             'route' => 'enhavo_template_admin_template_index',
-            'role' => 'ROLE_ENHAVO_TEMPLATE_TEMPLATE_INDEX',
+            'permission' => 'ROLE_ENHAVO_TEMPLATE_TEMPLATE_INDEX',
         ]);
     }
 
     public static function getName(): ?string
     {
         return 'template';
+    }
+
+    public static function getParentType(): ?string
+    {
+        return LinkMenuType::class;
     }
 }

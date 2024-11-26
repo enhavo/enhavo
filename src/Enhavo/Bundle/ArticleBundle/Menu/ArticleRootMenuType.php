@@ -20,7 +20,7 @@ class ArticleRootMenuType extends AbstractMenuType
             'icon' => 'book',
             'label' => 'article.label.article',
             'translation_domain' => 'EnhavoArticleBundle',
-            'children' => [
+            'items' => [
                 'article' => [
                     'type' => 'article_article'
                 ],

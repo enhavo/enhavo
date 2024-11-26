@@ -20,7 +20,7 @@ class NewsletterMainMenuType extends AbstractMenuType
             'icon' => 'markunread',
             'label' => 'newsletter.label.newsletter',
             'translation_domain' => 'EnhavoNewsletterBundle',
-            'children' => [
+            'items' => [
                 'newsletter_newsletter' => [
                     'type' => 'newsletter_newsletter'
                 ],

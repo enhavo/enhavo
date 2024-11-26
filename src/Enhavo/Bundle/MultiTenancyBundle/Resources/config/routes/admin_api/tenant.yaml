@@ -1,0 +1,7 @@
+enhavo_multi_tenancy_admin_api_tenant_switch:
+    options:
+        expose: true
+    path:  /tenant/switch
+    defaults:
+        _endpoint:
+            type: Enhavo\Bundle\MultiTenancyBundle\Endpoint\Type\SwitchTenantEndpointType

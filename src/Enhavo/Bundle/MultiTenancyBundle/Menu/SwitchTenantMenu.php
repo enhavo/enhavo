@@ -8,6 +8,7 @@ use Enhavo\Bundle\AppBundle\Menu\Type\DropdownMenuType;
 use Enhavo\Bundle\MultiTenancyBundle\Model\Tenant;
 use Enhavo\Bundle\MultiTenancyBundle\Tenant\TenantManager;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class SwitchTenantMenu extends AbstractMenuType
@@ -15,34 +16,33 @@ class SwitchTenantMenu extends AbstractMenuType
     public function __construct(
         private readonly TenantManager $tenantManager,
         private readonly AuthorizationCheckerInterface $authorizationChecker,
+        private readonly RouterInterface $router,
     )
     {
     }
 
     public function createViewData(array $options, Data $data): void
     {
-        $data->set('choices' , $this->getChoices($options));
+        $data['url'] = $this->router->generate($options['route']);
     }
 
-    private function getChoices($options): array
+    private function getChoices(): array
     {
         $result = [];
         $tenants = $this->getTenants();
-        foreach($tenants as $tenant) {
+        foreach ($tenants as $tenant) {
             $result[$tenant->getKey()] = $tenant->getName();
         }
 
         return $result;
     }
 
-    private function getValue(array $options): string
+    private function getValue(): ?string
     {
-        return $this->tenantManager->getTenant()->getKey();
+        return $this->tenantManager->getTenant()?->getKey();
     }
 
-    /**
-     * @return Tenant[]
-     */
+    /** @return Tenant[] */
     private function getTenants(): array
     {
         $result = [];
@@ -75,11 +75,12 @@ class SwitchTenantMenu extends AbstractMenuType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'event' => 'tenantChange',
-            'role' => 'ROLE_ADMIN',
-            'component' => 'menu-switch-tenant',
+            'permission' => 'ROLE_ADMIN',
+            'model' => 'SwitchTenantMenuItem',
+            'choices' =>  $this->getChoices(),
+            'value' => $this->getValue(),
+            'route' => 'enhavo_multi_tenancy_admin_api_tenant_switch'
         ]);
-        $resolver->remove(['value', 'choices']);
     }
 
     public static function getParentType(): ?string

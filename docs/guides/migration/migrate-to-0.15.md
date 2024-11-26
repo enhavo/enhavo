@@ -10,7 +10,12 @@
 
 - Action
 - Filter
-- Menu
+
+#### Menu
+
+Menu config `children` change to `items`
+Menu config `role` change to `permission`
+Menu config `type: base` change to `type: link`
 
 ### Migrate sylius resources
 
@@ -28,7 +33,6 @@
 * add `config/packages/vue.yaml`
 * update `access_control` in `config/packages/security.yaml`
 * update `config/packages/assets.yaml`
-
 
 ### Vite
 

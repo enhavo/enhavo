@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\UserBundle\Menu;
 
 use Enhavo\Bundle\AppBundle\Menu\AbstractMenuType;
+use Enhavo\Bundle\AppBundle\Menu\Type\LinkMenuType;
 use Enhavo\Bundle\AppBundle\Menu\Type\ListMenuType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -20,7 +21,7 @@ class UserMainMenuType extends AbstractMenuType
             'icon' => 'people',
             'label' => 'user.label.user',
             'translation_domain' => 'EnhavoUserBundle',
-            'children' => [
+            'items' => [
                 'user_user' => [
                     'type' => 'user_user'
                 ],

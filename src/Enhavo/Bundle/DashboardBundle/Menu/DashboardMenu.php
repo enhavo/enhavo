@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\DashboardBundle\Menu;
 
 use Enhavo\Bundle\AppBundle\Menu\AbstractMenuType;
+use Enhavo\Bundle\AppBundle\Menu\Type\LinkMenuType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DashboardMenu extends AbstractMenuType
@@ -20,12 +21,17 @@ class DashboardMenu extends AbstractMenuType
             'label' => 'dashboard.label.dashboard',
             'translation_domain' => 'EnhavoDashboardBundle',
             'route' => 'enhavo_dashboard_admin_index',
-            'role' => 'ROLE_ENHAVO_DASHBOARD_DASHBOARD_INDEX',
+            'permission' => 'ROLE_ENHAVO_DASHBOARD_DASHBOARD_INDEX',
         ]);
     }
 
     public static function getName(): ?string
     {
         return 'dashboard';
+    }
+
+    public static function getParentType(): ?string
+    {
+        return LinkMenuType::class;
     }
 }

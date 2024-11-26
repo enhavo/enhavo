@@ -9,6 +9,9 @@
     "type": "git",
     "url": "https://github.com/enhavo/enhavo.git"
   },
+  "engines": {
+    "node": ">=20.11.0"
+  },
   "dependencies": {
     "@enhavo/core": "https://github.com/enhavo/core-assets.git",
     "@hotwired/stimulus": "^3.0.1",
