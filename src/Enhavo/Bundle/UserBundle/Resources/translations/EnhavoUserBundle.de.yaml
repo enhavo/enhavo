@@ -102,6 +102,13 @@ confirmation:
             Mit besten Grüßen,
             das Team.
 
+security:
+    login:
+        username: 'Username'
+        email: 'E-Mail'
+        password: 'Password'
+        remember_me: 'Remember me'
+
 change_password:
     label:
         edit: 'Passwort ändern'

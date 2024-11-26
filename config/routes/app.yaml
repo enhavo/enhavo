@@ -1,0 +1,6 @@
+app_assets_test:
+    path: /assets/test
+    defaults:
+        _endpoint:
+            type: view
+            template: theme/assets/test.html.twig

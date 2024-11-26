@@ -9,13 +9,8 @@
         </div>
 
         <div class="branding" v-if="userManager.branding.enable">
-            <div class="text">
-                {{ userManager.branding.text }}
-                <template v-if="userManager.branding.enableCreatedBy">
-                    Created and launched by <a href="https://www.weareindeed.com" target="_blank">weareindeed.com</a>
-                </template>
-            </div>
-            <div class="version" v-if=" userManager.branding.enableVersion">
+            <div class="text" v-html="getBrandingText()"></div>
+            <div class="version" v-if="userManager.branding.enableVersion">
                 {{ userManager.branding.version }}
             </div>
         </div>
@@ -49,4 +44,12 @@ function brandingLogo()
     return defaultLogo;
 }
 
+function getBrandingText()
+{
+    let text = userManager.branding.text;
+    if (userManager.branding.enableCreatedBy) {
+        text += ' Created and launched by <a href="https://www.weareindeed.com" target="_blank">weareindeed.com</a>'
+    }
+    return text;
+}
 </script>
