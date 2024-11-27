@@ -87,7 +87,7 @@ services:
         arguments:
             - '@Enhavo\Bundle\MediaBundle\Routing\UrlGeneratorInterface'
         tags:
-            - { name: enhavo.column }
+            - { name: enhavo_resource.column }
 
     enhavo_media.file.factory:
         public: true
