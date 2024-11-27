@@ -77,6 +77,7 @@ class MediaColumn extends AbstractColumnType
             'height' => 60,
             'format' => 'enhavoTableThumb',
             'component' => 'column-media',
+            'model' => 'MediaColumn',
         ]);
         $resolver->setRequired(['property']);
         $resolver->remove(['sortable']);
