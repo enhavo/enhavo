@@ -224,7 +224,7 @@ class LocalStorageType extends AbstractStorageType
         }
 
         throw new MappingException(
-            sprintf('Group with code "%s" does not exists.', $code)
+            sprintf('Group with code "%s" does not exist.', $code)
         );
     }
 }

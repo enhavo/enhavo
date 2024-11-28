@@ -1,3 +1,6 @@
+@use "../import/variables";
+@use "../import/blueprints";
+
 .filter-bar {display:flex;margin-bottom:40px;flex-wrap:wrap;
   .filter-buttons { width: 100%; text-align: right;
     .apply-button {@extend %iconButton;}
@@ -8,7 +11,7 @@
     &.filter-headline { width: 100%; padding-left: 0; font-weight: 600; font-size: 0.875rem; line-height: 1.1em; }
     .label { display: block; font-size:0.85rem;line-height:1.1em;margin-bottom:1px; }
     input[type="text"] {@extend %textfield;
-      &.has-value {border-color:$color1;}
+      &.has-value {border-color: variables.$color1;}
     }
     .v-select { flex: none; width: 100%;
       .vs__selected {  }

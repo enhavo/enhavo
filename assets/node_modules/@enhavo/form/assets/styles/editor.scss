@@ -1,5 +1,6 @@
-@import '@enhavo/app/assets/styles/core/variables.scss';
-body {font-family:Arial, Helvetica, sans-serif;font-size:14px;line-height:1.5em;padding:10px 10px 50px 10px!important;background:$grey1;margin:0;
+@use '@enhavo/app/assets/styles/import/variables';
+
+body {font-family:Arial, Helvetica, sans-serif;font-size:14px;line-height:1.5em;padding:10px 10px 50px 10px!important;background: variables.$grey1;margin:0;
   p {margin:0 0 1em 0;}
   ul, ol {padding-left:23px;margin-bottom:1em;
   	li {

@@ -1,29 +1,31 @@
-@import "base";
-@import "components";
+@use "base";
+@use "components";
+@use "import/variables";
+@use "import/mixins";
 
 // fix: since vite is not rewriting a css url, if we have nested imports, we have to define the url here atm
 .app-toolbar .branding-container { background-image: url("../images/enhavo_white.svg"); }
 
 .app-view {padding-top:60px;
-  .actions {height:60px;position:fixed;top:0;left:0;width:100%;background:$grey1;z-index:3;
-    .action {text-align:center;flex:1 1 100px;min-width:90px;padding:8px 3px;cursor:pointer; color:$grey3;transition:all .2s;position:relative;
-      &:hover {color:$color1;
-        .action-icon {color:$color1;}
+  .actions {height:60px;position:fixed;top:0;left:0;width:100%;background: variables.$grey1;z-index:3;
+    .action {text-align:center;flex:1 1 100px;min-width:90px;padding:8px 3px;cursor:pointer; color: variables.$grey3;transition:all .2s;position:relative;
+      &:hover {color: variables.$color1;
+        .action-icon {color: variables.$color1;}
         .dropdown-action-list {
-          .action {color:$grey3;
-            .action-icon {color:$grey3;}
-            &:hover {color: $color1;
-              .action-icon {color: $color1;}
+          .action {color: variables.$grey3;
+            .action-icon {color: variables.$grey3;}
+            &:hover {color: variables.$color1;
+              .action-icon {color: variables.$color1;}
             }
           }
         }
       }
-      &:active { background:$grey1;}
-      .action-icon {color:$grey3;margin-bottom:6px;transition:all .2s;
+      &:active { background: variables.$grey1;}
+      .action-icon {color: variables.$grey3;margin-bottom:6px;transition:all .2s;
         .icon {font-size:1.5rem;}
       }
-      .label {font-size:0.75rem;line-height:1em;font-family:$fontFamily2;font-weight:600;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
-      .dropdown-action-list {background:#fff;border:1px solid $grey5;padding:5px;position:absolute;top:59px;
+      .label {font-size:0.75rem;line-height:1em;font-family: variables.$fontFamily2;font-weight:600;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+      .dropdown-action-list {background:#fff;border:1px solid variables.$grey5;padding:5px;position:absolute;top:59px;
         .action {align-items:baseline;display:flex;padding:5px;text-align:left;
           .action-icon {display:inline;margin-right:5px;margin-bottom:0;
             .icon {font-size:1rem;}
@@ -36,15 +38,15 @@
   .btn {@extend %btn-primary;}
   .checkbox-container {@extend %checkboxContainer;}
   .loading-screen {position:fixed;}
-  .modal-confirm {position:fixed;top:0;left:0;width:100%;height:100%;z-index:11;background:rgba($color2,0.9);text-align:center;display:flex;align-items:center;justify-content: center;flex-direction:column;
+  .modal-confirm {position:fixed;top:0;left:0;width:100%;height:100%;z-index:11;background:rgba(variables.$color2,0.9);text-align:center;display:flex;align-items:center;justify-content: center;flex-direction:column;
     .buttons {display:flex;justify-content:center;
       .modal-btn {@extend %modal-btn;margin:0 10px;
         &.primary {@extend %modal-btn-primary;}
       }
     }
-    .message {margin-bottom:30px;color:$grey5;font-size:2rem;line-height:2.5rem}
+    .message {margin-bottom:30px;color: variables.$grey5;font-size:2rem;line-height:2.5rem}
   }
-  .preview-view {border:1px solid $grey3;box-shadow:3px 3px 11px rgba(#ccc, 0.4);height:calc(100vh - 80px);margin:10px;
+  .preview-view {border:1px solid variables.$grey3;box-shadow:3px 3px 11px rgba(#ccc, 0.4);height:calc(100vh - 80px);margin:10px;
     &.tablet {width:768px;height:1024px;}
     &.mobile {width:375px;height:667px;}
     > iframe {width:100%;height:100%;}
@@ -58,16 +60,16 @@
         .vs__dropdown-toggle {border-bottom-left-radius:0;border-bottom-right-radius:0;}
       }
       .vs__actions {padding:0;}
-      .vs__search {margin:0;border:0;padding:0;line-height:28px;cursor:pointer;width:auto;max-width:187px;@include placeholder {color:$grey3;}}
+      .vs__search {margin:0;border:0;padding:0;line-height:28px;cursor:pointer;width:auto;max-width:187px;@include mixins.placeholder {color: variables.$grey3;}}
       .vs__selected {margin:0;padding:0;border:0;border-radius:0;line-height:28px;display:inline;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;
         + .vs__search {width:20px;}
       }
       .vs__selected-options {padding:0;display:flex;flex-wrap:nowrap;min-width:0;}
-      .vs__dropdown-toggle {cursor:pointer;border-radius:10px;border:1px solid $grey5;background:$grey1;color:$grey3;padding:4px 9px 4px 14px;flex-wrap:nowrap;}
-      .vs__open-indicator {fill:$grey3;}
-      .vs__dropdown-menu {border:1px solid $grey5;color:$grey3;background:$grey1;border-bottom-right-radius:10px;border-bottom-left-radius:10px;box-shadow:none;
+      .vs__dropdown-toggle {cursor:pointer;border-radius:10px;border:1px solid variables.$grey5;background: variables.$grey1;color: variables.$grey3;padding:4px 9px 4px 14px;flex-wrap:nowrap;}
+      .vs__open-indicator {fill: variables.$grey3;}
+      .vs__dropdown-menu {border:1px solid variables.$grey5;color: variables.$grey3;background: variables.$grey1;border-bottom-right-radius:10px;border-bottom-left-radius:10px;box-shadow:none;
         .vs__dropdown-option {color:#000;padding:4px 10px;margin:0 1px;
-          &:hover,&.vs__dropdown-option--highlight {background:$grey1;color:$color1b;}
+          &:hover,&.vs__dropdown-option--highlight {background: variables.$grey1;color: variables.$color1b;}
         }
       }
     }

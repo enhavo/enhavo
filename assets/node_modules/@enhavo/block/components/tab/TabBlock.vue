@@ -1,11 +1,12 @@
 <template>
     <div class="tab-container">
 
-        <div class="poly-collection-actions" data-poly-collection-action="">
-            <div class="button" data-poly-collection-action-collapse-all="">
+        <div class="poly-collection-actions">
+            <!-- TODO: Replace true/false with condition for all collapsed -->
+            <div class="button" v-if="true">
                 <i class="icon icon-unfold_less"></i>
             </div>
-            <div class="button" data-poly-collection-action-expand-all="" style="display: none;">
+            <div class="button" v-if="false">
                 <i class="icon icon-unfold_more"></i>
             </div>
         </div>

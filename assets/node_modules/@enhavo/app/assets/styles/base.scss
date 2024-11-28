@@ -1,14 +1,14 @@
-@import "compass-mixins/lib/_animate.scss";
-@import "compass-mixins/lib/_compass.scss";
-@import "@ibm/plex/css/ibm-plex.css";
-@import "core/_index";
-@import 'vue-select/dist/vue-select.css';
+@use "@ibm/plex/css/ibm-plex.css";
+@use "import/variables";
+@use "import/mixins";
+@use "core/_index";
+@use 'vue-select/dist/vue-select.css';
 
 *:focus {outline:none;}
 
-html {font-size:$fontSize;line-height:$lineHeight;}
-body {font-family:$fontFamily;font-weight:$fontRegular;margin:0;padding:0;line-height:$lineHeight;-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;}
+html {font-size: variables.$fontSize;line-height: variables.$lineHeight;}
+body {font-family: variables.$fontFamily;font-weight: variables.$fontRegular;margin:0;padding:0;line-height: variables.$lineHeight;-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;}
 
 .icon { line-height: 1;display: inline-block;font-size:1rem; }
 
-@include grid(12,5px,"-form");
+@include mixins.grid(12,5px,"-form");

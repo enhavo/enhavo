@@ -1,10 +1,12 @@
+@use "../import/variables";
+
 .toolbar-dropdown {position:relative;z-index:1;
-  &.selected {background:$color2b;}
-  .toolbar-dropdown-item {height: $toolbarHeight; padding: 10px 20px; box-sizing: border-box; display: flex; align-items: center; justify-content: flex-start;cursor:pointer;
-    &:hover {color:#fff;background:$color2;}
+  &.selected {background: variables.$color2b;}
+  .toolbar-dropdown-item {height: variables.$toolbarHeight; padding: 10px 20px; box-sizing: border-box; display: flex; align-items: center; justify-content: flex-start;cursor:pointer;
+    &:hover {color:#fff;background: variables.$color2;}
   }
   .toolbar-dropdown-menu { background-color: inherit; }
-  .toolbar-dropdown-title {height: $toolbarHeight; padding: 10px; box-sizing: border-box; display: flex; align-items: center; justify-content: flex-end; cursor: pointer;
+  .toolbar-dropdown-title {height: variables.$toolbarHeight; padding: 10px; box-sizing: border-box; display: flex; align-items: center; justify-content: flex-end; cursor: pointer;
     &:hover {color:#fff;}
     i {
       + i {margin-left:5px;}

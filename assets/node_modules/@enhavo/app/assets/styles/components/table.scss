@@ -1,3 +1,5 @@
+@use "sass:list";
+
 $tableColor1:#212529;
 $tableColor2:#dee2e6;
 $tableColor3:#343a40;
@@ -13,28 +15,28 @@ $tableStyleLight:#fdfdfe,#fbfcfc,#ececf6;
 $tableStyleDark:#c6c8ca,#95999c,#b9bbbe;
 
 @mixin customTableStyle($affix,$colorList) {
-  .table-#{$affix} {background-color:nth($colorList,1);
+  .table-#{$affix} {background-color: list.nth($colorList,1);
     tbody {
-      + tbody {border-color:nth($colorList,2);}
+      + tbody {border-color: list.nth($colorList,2);}
     }
-    td,th {border-color:nth($colorList,2);}
-    >td,>th {background-color:nth($colorList,1);}
+    td,th {border-color: list.nth($colorList,2);}
+    >td,>th {background-color: list.nth($colorList,1);}
     thead {
-      th {border-color:nth($colorList,2);}
+      th {border-color: list.nth($colorList,2);}
     }
   }
 
   .table-hover {
     .table-#{$affix} {
-      &:hover {background-color:nth($colorList,3);
-        >td,>th {background-color:nth($colorList,3);}
+      &:hover {background-color: list.nth($colorList,3);
+        >td,>th {background-color: list.nth($colorList,3);}
       }
     }
   }
 
   .table-bordered {
-    &.border-#{$affix} {border-color:nth($colorList, 1);
-      td,th {border-color:nth($colorList, 1);}
+    &.border-#{$affix} {border-color: list.nth($colorList, 1);
+      td,th {border-color: list.nth($colorList, 1);}
     }
   }
 }

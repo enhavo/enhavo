@@ -18,7 +18,8 @@ export class ClickOutside
         let clickHandler = new ClickHandler();
         let executed = false;
         clickHandler.subscriber = ClickOutside.frameManager.on('click', (event) => {
-            if (ClickOutside.frameManager.getId() != event.origin) {
+            const currentId = ClickOutside.frameManager.getId() === '' ? null : ClickOutside.frameManager.getId();
+            if (currentId != event.origin) {
                 if (!executed) {
                     binding.value();
                     executed = true;

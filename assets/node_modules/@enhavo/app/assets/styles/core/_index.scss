@@ -1,6 +1,3 @@
-@import "variables";
-@import "reset";
-@import "blueprints";
-@import "mixins";
-@import "custom_animations";
-@import "form";
+@use "reset";
+@use "custom_animations";
+@use "form";

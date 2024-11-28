@@ -25,7 +25,7 @@ class TypeNotValidException extends \InvalidArgumentException
 
     public static function extendedTypeNotExists(string $extensionClass, array $extendedTypes)
     {
-        return new self(sprintf('Type "%s" does not exists for extension "%s"', join(',', $extendedTypes), $extensionClass));
+        return new self(sprintf('Type "%s" does not exist for extension "%s"', join(',', $extendedTypes), $extensionClass));
     }
 
     public static function nameExists($name, $namespace, $class)
@@ -62,7 +62,7 @@ class TypeNotValidException extends \InvalidArgumentException
     public static function parentNotFound($class, $parentClass)
     {
         return new self(sprintf(
-            'The parent class "%s" referenced by "%s" does not exists', $parentClass, $class
+            'The parent class "%s" referenced by "%s" does not exist', $parentClass, $class
         ));
     }
 }

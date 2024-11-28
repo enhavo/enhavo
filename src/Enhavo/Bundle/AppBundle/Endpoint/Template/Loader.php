@@ -66,7 +66,7 @@ class Loader
         }
 
         if (!file_exists($path)) {
-            throw new \Exception(sprintf('File "%s" not exists', $file));
+            throw new \Exception(sprintf('File "%s" does not exist', $file));
         }
 
         $ext = pathinfo($path, PATHINFO_EXTENSION);

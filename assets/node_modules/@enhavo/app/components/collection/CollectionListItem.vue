@@ -1,13 +1,16 @@
 <template>
     <div class="view-table-list-row">
-        <div class="checkbox-container" v-if="collection.batches.length > 0">
-            <input type="checkbox" @change="changeSelect" @click.stop :checked="data.selected" />
-            <span></span>
-        </div>
         <div :class="{'view-table-row': true, 'active': data.active, 'has-children': data.children && data.children.length > 0,'hide-children':!isExpanded()}" @click="open()">
-            <div v-if="collection.treeable && data.children && data.children.length > 0" @click="toggleExpand()" @click.stop>
-                <i v-if="isExpanded()" class="icon icon-unfold_more"></i>
-                <i v-if="!isExpanded()" class="icon icon-unfold_less"></i>
+            <template v-if="collection.treeable">
+                <div v-if="data.children && data.children.length > 0" @click="toggleExpand()" @click.stop class="view-table-list-expand-icon">
+                    <i v-if="isExpanded()" class="icon icon-unfold_more"></i>
+                    <i v-if="!isExpanded()" class="icon icon-unfold_less"></i>
+                </div>
+                <div v-else class="view-table-list-expand-icon"></div>
+            </template>
+            <div class="checkbox-container" v-if="collection.batches.length > 0">
+                <input type="checkbox" @change="changeSelect" @click.stop :checked="data.selected" />
+                <span></span>
             </div>
             <div class="view-table-row-columns">
                 <template v-for="column in collection.columns">

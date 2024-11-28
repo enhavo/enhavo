@@ -1,46 +1,57 @@
+@use "@enhavo/app/assets/styles/import/variables";
+
+.tab-container {
+  .poly-collection-actions {
+    margin-bottom: 10px;
+    .button {cursor: pointer;z-index:1;top:0;text-align:center;width:33px;background: variables.$grey1;border-radius:3px;color: variables.$grey3;padding:4px 0;
+      &:hover {color:#fff;background: variables.$color1;}
+    }
+  }
+}
+
 .enhavo-poly-collection {position: relative;padding:20px;
   .addItem {cursor: pointer;}
   .add-enhavo_poly-collection-button {font-size:14px;line-height:19px;}
   .poly-collection-actions {
-    .button {cursor: pointer;z-index:1;top:0;text-align:center;width:33px;background:$grey1;border-radius:3px;color:$grey3;padding:4px 0;
-      &:hover {color:#fff;background:$color1;}
+    .button {cursor: pointer;z-index:1;top:0;text-align:center;width:33px;background: variables.$grey1;border-radius:3px;color: variables.$grey3;padding:4px 0;
+      &:hover {color:#fff;background: variables.$color1;}
     }
   }
   .poly-collection-container {
-    .poly-collection-item-add-button-row {margin:10px 0;position:relative;cursor:pointer;z-index:1;text-align:center; background:$color1; padding:5px 10px;transition:all 300ms;border-radius:10px;color:#fff;display:inline-block;
-      &:hover { background:$color1b;}
+    .poly-collection-item-add-button-row {margin:10px 0;position:relative;cursor:pointer;z-index:1;text-align:center; background: variables.$color1; padding:5px 10px;transition:all 300ms;border-radius:10px;color:#fff;display:inline-block;
+      &:hover { background: variables.$color1b;}
       .label {margin-left: 5px;position: relative;top: 1px;padding-right: 4px;}
     }
     .poly-collection-nested-container {padding-left: 10px;padding-right: 10px;}
-    .poly-collection-item {background:#fff;overflow:hidden;border:1px solid $grey5;
+    .poly-collection-item {background:#fff;overflow:hidden;border:1px solid variables.$grey5;
       &.collapsed {
         .button-container {border-bottom:0;}
         .poly-collection-item-content-container {display:none;}
       }
-      .button-container {border-bottom: 1px solid $grey5;padding:6px;display:flex;align-items:center;
-        .button {cursor: pointer;height:100%;z-index:1;top:0;text-align:center;width:33px;background:#FFF;border-radius:3px;color:$grey3;padding:4px 0;
-          &:hover {color:#fff;background:$color1;}
+      .button-container {border-bottom: 1px solid variables.$grey5;padding:6px;display:flex;align-items:center;
+        .button {cursor: pointer;height:100%;z-index:1;top:0;text-align:center;width:33px;background:#FFF;border-radius:3px;color: variables.$grey3;padding:4px 0;
+          &:hover {color:#fff;background: variables.$color1;}
         }
-        .button-delete {order:5;background:rgba($color6b,0.1);
-          &:hover {background:$color6b;}
+        .button-delete {order:5;background:rgba(variables.$color6b,0.1);
+          &:hover {background: variables.$color6b;}
         }
         .button-down {order:2;}
         .button-up {order:1;}
         .button-expand {order:3;}
         .button-collapse {order:3;}
         .label {font-weight: 700;order: 0;margin-right:auto;letter-spacing: 0.5px;padding:1px 0 0 9px;
-          .custom { font-weight:normal;color:$grey6;text-overflow:ellipsis;margin-left:5px; }
+          .custom { font-weight:normal;color: variables.$grey6;text-overflow:ellipsis;margin-left:5px; }
         }
       }
       .poly-collection-item-content-container {padding:15px;}
-      .poly-collection-item {box-shadow:none;border: 1px solid $grey5;}
+      .poly-collection-item {box-shadow:none;border: 1px solid variables.$grey5;}
     }
   }
 
-  .poly-collection-menu-dialogue {display:none;margin:0 0 25px 0;padding:8px 13px;background:#FFF;border:1px solid $color1;border-radius:19px;
+  .poly-collection-menu-dialogue {display:none;margin:0 0 25px 0;padding:8px 13px;background:#FFF;border:1px solid variables.$color1;border-radius:19px;
     .item-list {display:flex;flex-wrap:wrap;margin:0 -4px;
-      li {width:150px;margin:4px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;padding:7px;border-radius:10px;text-align:center;cursor:pointer;flex:1 1 auto;background:$grey1;font-size:0.875rem;line-height:1.3em;
-        &:hover {background:$color1;color:#fff;}
+      li {width:150px;margin:4px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;padding:7px;border-radius:10px;text-align:center;cursor:pointer;flex:1 1 auto;background: variables.$grey1;font-size:0.875rem;line-height:1.3em;
+        &:hover {background: variables.$color1;color:#fff;}
       }
     }
     .label {font-weight:600;padding:10px;}

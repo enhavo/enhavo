@@ -24,7 +24,7 @@ class DocumentationCollector implements EndpointFactoryAwareInterface
     public function collect($section = self::DEFAULT): array
     {
         if (!$this->hasSection($section)) {
-            throw new \Exception(sprintf('Section "%s" does not exists. Maybe you forgot to add it to the configuration. Available sections: "%s"',
+            throw new \Exception(sprintf('Section "%s" does not exist. Maybe you forgot to add it to the configuration. Available sections: "%s"',
                 $section,
                 join(',', $this->getSections()
             )));

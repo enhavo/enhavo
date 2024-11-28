@@ -53,7 +53,7 @@ class Property
         }
 
         throw new PropertyNotExistsException(sprintf(
-            'Trying to call "get%s" or "is%s" on class "%s", but method does not exists. Maybe you spelled it wrong or you didn\'t add the getter for property "%s"',
+            'Trying to call "get%s" or "is%s" on class "%s", but method does not exist. Maybe you spelled it wrong or you didn\'t add the getter for property "%s"',
             ucfirst($property),
             ucfirst($property),
             get_class($resource),

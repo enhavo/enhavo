@@ -1,8 +1,5 @@
-@import 'compass-mixins/lib/_compass.scss';
-@import '@enhavo/app/assets/styles/core/variables.scss';
-@import "@enhavo/app/assets/styles/core/blueprints.scss";
-@import 'image_cropper';
-@import 'form';
-@import 'media';
-@import 'upload';
-@import 'theme';
+@use 'image_cropper';
+@use 'form';
+@use 'media';
+@use 'upload';
+@use 'theme';

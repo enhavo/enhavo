@@ -1,44 +1,43 @@
-@import "compass-mixins/lib/_animate.scss";
-@import "compass-mixins/lib/_compass.scss";
-@import 'module/vars';
-@import "@ibm/plex/css/ibm-plex.css";
+@use 'import/variables';
+@use "@ibm/plex/css/ibm-plex.css";
+@use "@enhavo/app/assets/styles/import/mixins";
 
 .bundle-user-login {position:fixed;top:0;left:0;width:100%;height:100%;color:#fff;
     a {text-decoration: none;color:#fff;}
     .background {position:absolute;top:0;left:0;width:100%;height:100%;z-index:-1;background-image:url(../images/background/enhavo-13-bg.jpg);background-size:cover;}
-    .branding {position:absolute;bottom:0;left:0;width:100%;text-align:center;background:$color1;font-size:0.875rem;line-height:$lineHeight;padding:8px 65px;
+    .branding {position:absolute;bottom:0;left:0;width:100%;text-align:center;background: variables.$color1;font-size:0.875rem;line-height: variables.$lineHeight;padding:8px 65px;
         a {font-weight:500;}
-        .version {position:absolute;right:10px;top:5px;text-align: right;background:$color2;border-radius:3px;padding:3px 6px 2px 6px;}
+        .version {position:absolute;right:10px;top:5px;text-align: right;background: variables.$color2;border-radius:3px;padding:3px 6px 2px 6px;}
     }
-    .login-box {position:absolute;top:50%;left:50%;width:calc(100% - 20px);max-width:420px;@include transform(translate(-50%, -50%));background:$color1;padding:30px 33px 40px 33px;border-radius:3px;z-index:1;font-size:0.875rem;line-height:$lineHeight;
+    .login-box {position:absolute;top:50%;left:50%;width:calc(100% - 20px);max-width:420px;@include mixins.transform(translate(-50%, -50%));background: variables.$color1;padding:30px 33px 40px 33px;border-radius:3px;z-index:1;font-size:0.875rem;line-height: variables.$lineHeight;
         label {cursor:pointer;}
-        .button-row {width:calc(100% + 66px);display:flex;align-items:center;margin:30px -33px 0 -33px;padding:25px 33px 0 33px;border-top:1px solid $color2;
+        .button-row {width:calc(100% + 66px);display:flex;align-items:center;margin:30px -33px 0 -33px;padding:25px 33px 0 33px;border-top:1px solid variables.$color2;
             .checkbox-container {position:relative;padding-left:30px;
                 input {opacity:0;z-index:1;cursor:pointer;margin:0;
                     &:checked {
-                        + span {background:$color4;
+                        + span {background: variables.$color4;
                             .indicator {display:block;}
                         }
                     }
                 }
                 input,span {position:absolute;top:0;left:0;width:20px;height:20px;}
-                span {border-radius:3px;background:$color2;display:flex;justify-content: center;align-items: center;
+                span {border-radius:3px;background: variables.$color2;display:flex;justify-content: center;align-items: center;
                     .indicator {display:none;}
                 }
             }
-            .login-button {margin-left:auto;background:$color5;font-weight:600;border-radius:20px;padding:6px 20px 4px 20px;border:0;@include transition(none);}
+            .login-button {margin-left:auto;background: variables.$color5;font-weight:600;border-radius:20px;padding:6px 20px 4px 20px;border:0;@include mixins.transition(none);}
         }
         .feedback-messages {margin-top:15px;}
-        .feedback-message {padding:6px 10px 4px 10px;background:$color2;
-            &.error {background:$color6;}
-            &.success {background:$color7;}
-            &.info {background:$color5;}
+        .feedback-message {padding:6px 10px 4px 10px;background: variables.$color2;
+            &.error {background: variables.$color6;}
+            &.success {background: variables.$color7;}
+            &.info {background: variables.$color5;}
             + .feedback-message {margin-top:5px;}
         }
         .input-container {position:relative;
             label {margin-bottom:1px;display:block;}
-            .reset-pw-link {position:absolute;top:0;right:0;color:$color3;font-size:0.75rem;line-height:$lineHeight;}
-            .textfield {display:block;border-radius:10px;border:0;margin:0;padding:12px;background:$color2;line-height:$lineHeight;color:#fff;width:100%;font-family:$fontFamily;}
+            .reset-pw-link {position:absolute;top:0;right:0;color: variables.$color3;font-size:0.75rem;line-height: variables.$lineHeight;}
+            .textfield {display:block;border-radius:10px;border:0;margin:0;padding:12px;background: variables.$color2;line-height: variables.$lineHeight;color:#fff;width:100%;font-family: variables.$fontFamily;}
         }
         .login-form {padding-top:15px;
             .form-row {

@@ -1,8 +1,11 @@
+@use "../import/variables";
+@use "../import/mixins";
+
 .app {min-height:100vh;display:flex;
-  .sidebar {width:$sidebarWidth;background:$color2;@include transition(width 300ms);height:calc(100vh - #{$toolbarHeight});flex:0 0 auto;position: relative; z-index:21;
-    &.menu-collapsed {min-width:50px;width:auto;@include animation(firefoxBug 1ms normal linear forwards);}
+  .sidebar {width: variables.$sidebarWidth;background: variables.$color2;@include mixins.transition(width 300ms);height:calc(100vh - #{variables.$toolbarHeight});flex:0 0 auto;position: relative; z-index:21;
+    &.menu-collapsed {min-width:50px;width:auto;@include mixins.animation(firefoxBug 1ms normal linear forwards);}
   }
-  .toolbar-viewstack-container {width:100%;display:flex;flex-direction:column;background:#fff;@include transition(width 300ms);}
+  .toolbar-viewstack-container {width:100%;display:flex;flex-direction:column;background:#fff;@include mixins.transition(width 300ms);}
   .viewstack-dropdown-container {display:none;}
 }
 
@@ -17,22 +20,22 @@
 @media screen and (max-width:767px) {
   .app {overflow:hidden;
     &.menu-collapsed {overflow-x:hidden;overflow-y:auto;
-      .viewstack-dropdown-container {@include transform(translate3d(0,0,0));@include transition(all 300ms);}
+      .viewstack-dropdown-container {@include mixins.transform(translate3d(0,0,0));@include mixins.transition(all 300ms);}
     }
-    .sidebar {position:fixed;top:0;left:0;width:230px;height:100vh;@include transform(translate3d(0,0,0));@include transition(all 300ms);display:flex;flex-direction:column;
-      &.menu-collapsed {min-width:0;width:230px;overflow:hidden;@include animation(none);@include transform(translate3d(-100%,0,0));}
-      .mobile-branding-container {height:$toolbarHeight;flex:0 0 auto;width:100%;background:url('../../images/enhavo_white.svg');background-size:auto 50%;background-position:10px 52%;background-repeat:no-repeat;position:relative;@include transition(all 300ms);cursor:pointer;}
+    .sidebar {position:fixed;top:0;left:0;width:230px;height:100vh;@include mixins.transform(translate3d(0,0,0));@include mixins.transition(all 300ms);display:flex;flex-direction:column;
+      &.menu-collapsed {min-width:0;width:230px;overflow:hidden;@include mixins.animation(none);@include mixins.transform(translate3d(-100%,0,0));}
+      .mobile-branding-container {height: variables.$toolbarHeight;flex:0 0 auto;width:100%;background:url('../../images/enhavo_white.svg');background-size:auto 50%;background-position:10px 52%;background-repeat:no-repeat;position:relative;@include mixins.transition(all 300ms);cursor:pointer;}
     }
-    .toolbar-viewstack-container {@include transform(translate3d(230px,0,0));@include transition(all 300ms);
-      &.menu-collapsed {@include transform(translate3d(0,0,0));}
+    .toolbar-viewstack-container {@include mixins.transform(translate3d(230px,0,0));@include mixins.transition(all 300ms);
+      &.menu-collapsed {@include mixins.transform(translate3d(0,0,0));}
     }
-    .viewstack-dropdown-container {position:fixed;top:$toolbarHeight;left:0;display:block;@include transform(translate3d(230px,0,0));z-index:12;
-      .dropdown-trigger {height:30px;width:45px;justify-content: center;display: flex; align-items: center; cursor: pointer;background:$color1b;color:#fff;
-        &:hover {background:$color1;}
+    .viewstack-dropdown-container {position:fixed;top: variables.$toolbarHeight;left:0;display:block;@include mixins.transform(translate3d(230px,0,0));z-index:12;
+      .dropdown-trigger {height:30px;width:45px;justify-content: center;display: flex; align-items: center; cursor: pointer;background: variables.$color1b;color:#fff;
+        &:hover {background: variables.$color1;}
         .icon {font-size:1.4rem;}
       }
-      .viewstack-dropdown {background:$color2;
-        li {padding:10px;color:$grey2;
+      .viewstack-dropdown {background: variables.$color2;
+        li {padding:10px;color: variables.$grey2;
           &:hover {color:#fff;cursor:pointer;}
         }
       }

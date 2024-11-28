@@ -1,10 +1,11 @@
-@import "base";
-@import "components/_index";
+@use "import/variables";
+@use "base";
+@use "components/_index";
 
 // fix: since vite is not rewriting a css url, if we have nested imports, we have to define the url here atm
 .app-toolbar .branding-container { background-image: url("../images/enhavo_white.svg"); }
 
-.app {padding-top:$toolbarHeight;
+.app {padding-top: variables.$toolbarHeight;
   .checkbox-container {@extend %checkboxContainer;}
 }
 

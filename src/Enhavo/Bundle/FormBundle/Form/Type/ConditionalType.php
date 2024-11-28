@@ -96,7 +96,7 @@ class ConditionalType extends AbstractVueType implements DataMapperInterface
         }
 
         if (!array_key_exists($key, $options['entry_types'])) {
-            throw new \Exception(sprintf('Key "%s" not exists in entry types "%s"', $key, join(',', $options['entry_types'])));
+            throw new \Exception(sprintf('Key "%s" does not exist in entry types "%s"', $key, join(',', $options['entry_types'])));
         }
 
         $type = $options['entry_types'][$key];

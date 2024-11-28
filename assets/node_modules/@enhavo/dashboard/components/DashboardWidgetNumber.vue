@@ -1,7 +1,11 @@
 <template>
-    <div>
-        <div class="label">{{ widget.label }}</div>
-        <div class="value">{{ widget.value }}</div>
+    <div class="dashboard-widget"
+         :class="'width-' + widget.width"
+    >
+        <div class="widget-content">
+            <div class="label">{{ widget.label }}</div>
+            <div class="value">{{ widget.value }}</div>
+        </div>
     </div>
 </template>
 

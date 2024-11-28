@@ -1,11 +1,14 @@
-.app-toolbar {height: $toolbarHeight; background-color:$color2; color: #9da9ad; font-size:1rem; font-weight: 500; display: flex;width:100%;position:fixed;top:0;left:0;z-index:21;
+@use "../import/variables";
+@use "../import/mixins";
+
+.app-toolbar {height: variables.$toolbarHeight; background-color: variables.$color2; color: #9da9ad; font-size:1rem; font-weight: 500; display: flex;width:100%;position:fixed;top:0;left:0;z-index:21;
   &.menu-collapsed {
-    .branding-container {background-position:13px 52%;width:$collapsedMenuWidth;}
+    .branding-container {background-position:13px 52%;width: variables.$collapsedMenuWidth;}
   }
-  .branding-container {height:$toolbarHeight;width:$sidebarWidth;background:url("../../images/enhavo_white.svg");background-size:auto 60%;background-position:13px 52%;background-repeat:no-repeat;position:relative;@include transition(all 300ms);cursor:pointer;}
-  .menu-toggle {height:100%;width:30px;position:relative;color:#fff;font-size:2rem;cursor:pointer; border-left:1px solid $color2b;
-    &:hover {background:$color2b;}
-    * {position:absolute;top:50%;left:50%;@include transform(translate(-50%,-50%));}
+  .branding-container {height: variables.$toolbarHeight;width: variables.$sidebarWidth;background:url("../../images/enhavo_white.svg");background-size:auto 60%;background-position:13px 52%;background-repeat:no-repeat;position:relative;@include mixins.transition(all 300ms);cursor:pointer;}
+  .menu-toggle {height:100%;width:30px;position:relative;color:#fff;font-size:2rem;cursor:pointer; border-left:1px solid variables.$color2b;
+    &:hover {background: variables.$color2b;}
+    * {position:absolute;top:50%;left:50%;@include mixins.transform(translate(-50%,-50%));}
   }
   .toolbar-item {height: 100%; display: flex; align-items: flex-start; justify-content: flex-start; background-color: inherit;
     &.right {margin-left:auto;
@@ -14,7 +17,7 @@
   }
   //.toolbar-link {display: inline-block;padding: 17px 26px 18px;transition:all .2s;
   //  &:hover { color:#FFF}
-  //  &:active {background:$color2b;}
+  //  &:active {background: variables.$color2b;}
   //}
 }
 
@@ -25,13 +28,13 @@
 }
 
 @media screen and (max-width:767px) {
-  .app-toolbar {@include transition(all 300ms);@include transform(translate3d(230px,0,0));
-    &.menu-collapsed {@include transform(translate3d(0,0,0));}
+  .app-toolbar {@include mixins.transition(all 300ms);@include mixins.transform(translate3d(230px,0,0));
+    &.menu-collapsed {@include mixins.transform(translate3d(0,0,0));}
     .branding-container {display:none;}
     .menu-toggle {display:none;}
     .mobile-menu-toggle {height:100%;width:46px;position:relative;color:#fff;font-size:2rem;cursor:pointer;
-      &:hover {background:$color2b;}
-      * {position:absolute;top:50%;left:50%;@include transform(translate(-50%,-50%));}
+      &:hover {background: variables.$color2b;}
+      * {position:absolute;top:50%;left:50%;@include mixins.transform(translate(-50%,-50%));}
       .icon {font-size:1.4rem;}
     }
     .toolbar-item {

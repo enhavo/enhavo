@@ -90,7 +90,7 @@ class RefreshFormatCommand extends Command
         $output->writeln('');
 
         foreach ($notExistingFormats as $formatName) {
-            $output->writeln(sprintf('<comment>Warning: Format "%s" not exists</comment>', $formatName));
+            $output->writeln(sprintf('<comment>Warning: Format "%s" does not exist</comment>', $formatName));
         }
 
         foreach ($errors as $error) {

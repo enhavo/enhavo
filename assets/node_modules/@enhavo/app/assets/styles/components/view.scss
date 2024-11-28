@@ -1,29 +1,25 @@
+@use "../import/variables";
+
 .view-component {transition:all 100ms, transform;height:100%;flex:1 0 0;position:relative;
-  &:last-child {
-    .view-resizer {display:none;}
-  }
-  &.minimized {flex:0;height:100%;transition:background .2s;background:$grey1;min-width: 30px;
-    &:hover {background:$grey5;}
-    &:last-child {
-      .view-resizer {display:block;}
-    }
+  &.minimized {flex:0;height:100%;transition:background .2s;background: variables.$grey1;min-width: 30px;
+    &:hover {background: variables.$grey5;}
     .toolbar {padding:0;height:30px;position:relative;width: 30px;
       .actions {align-items:initial;
         .action {padding: 0 8px;}
       }
     }
-    .view-resizer {width:100%;border:0;cursor:pointer;border-right: 1px solid $grey5;
+    .view-resizer {width:100%;border:0;cursor:pointer;border-right: 1px solid variables.$grey5;
       &:hover {
       }
-      &:before { position:absolute;top:50%; left:7px; content:''; width:8px; height:11px;border-width:1px 0;border-style:solid; border-color:$color2; margin-top:-5px;}
-      &:after { position:absolute;top:50%; left:7px; content:''; width:8px; height:3px;border-width:1px 0;border-style:solid; border-color:$color2; margin-top:-1px;}
+      &:before { position:absolute;top:50%; left:7px; content:''; width:8px; height:11px;border-width:1px 0;border-style:solid; border-color: variables.$color2; margin-top:-5px;}
+      &:after { position:absolute;top:50%; left:7px; content:''; width:8px; height:3px;border-width:1px 0;border-style:solid; border-color: variables.$color2; margin-top:-1px;}
 
       // testing
       &:before, &:after { left:11px;}
-      .view-label {position:absolute;top:200px;left:0;z-index:1;color:$color2;text-transform:uppercase;text-align:right;font-size:0.75rem;transform: rotate(-90deg);transform-origin: top left;min-width: 200px;line-height: 10px;letter-spacing: 0.05em;padding: 10px;}
+      .view-label {position:absolute;top:200px;left:0;z-index:1;color: variables.$color2;text-transform:uppercase;text-align:right;font-size:0.75rem;transform: rotate(-90deg);transform-origin: top left;min-width: 200px;line-height: 10px;letter-spacing: 0.05em;padding: 10px;}
     }
   }
-  .toolbar {background-image:linear-gradient(to right, $color1b, $color1);color:#fff;font-size:0.875rem;padding:0 6px 0 11px;font-weight:$fontMedium;height:30px;line-height:30px;position:relative;display:flex;
+  .toolbar {background-image:linear-gradient(to right, variables.$color1b, variables.$color1);color:#fff;font-size:0.875rem;padding:0 6px 0 11px;font-weight: variables.$fontMedium;height:30px;line-height:30px;position:relative;display:flex;
     .actions {display:flex;margin-left:auto;align-items:center;flex:0;
       .action {padding:0 5px;cursor:pointer;
         &:hover {background:rgba(#000,0.1);}
@@ -33,8 +29,8 @@
   .view-component-inner {height:calc(100% - 30px);position:relative;
     iframe {display:block;}
   }
-  .view-resizer {position:absolute;top:30px;right:0;width:10px;height:calc(100% - 30px);border-right:1px solid $grey5;/*cursor:col-resize;border-left:1px solid $grey5;background:$grey1;
-    &:before {font-family:"icons";position:absolute;top:50%;transform:translateY(-50%);color:$grey2;font-size:0.6rem;left:0;content:"\f28e";}
+  .view-resizer {position:absolute;top:30px;right:0;width:10px;height:calc(100% - 30px);border-right:1px solid variables.$grey5;/*cursor:col-resize;border-left:1px solid variables.$grey5;background: variables.$grey1;
+    &:before {font-family:"icons";position:absolute;top:50%;transform:translateY(-50%);color: variables.$grey2;font-size:0.6rem;left:0;content:"\f28e";}
     UNCOMMENT STYLES WHEN THIS ELEMENT HAS A FUNCTION
   */}
 }

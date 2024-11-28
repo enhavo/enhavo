@@ -1,8 +1,10 @@
-.flash-message-container {position:fixed;top:85px;left:0;z-index:12;display:flex; flex-direction:column; gap:8px;
-  .flash-message {background:$grey3;color:#fff;padding:12px 20px; font-weight:$fontSemibold;white-space:nowrap;animation:flashMessage 350ms ease-out forwards;
-    &.error {background:$color4;}
-    &.success {background:$color5;}
-    &.warning {background:$color3;}
+@use "../import/variables";
+
+.flash-message-container {position:fixed;top:85px;left:0;z-index:1010;display:flex; flex-direction:column; gap:8px;
+  .flash-message {background: variables.$grey3;color:#fff;padding:12px 20px; font-weight: variables.$fontSemibold;white-space:nowrap;animation:flashMessage 350ms ease-out forwards;
+    &.error {background: variables.$color4;}
+    &.success {background: variables.$color5;}
+    &.warning {background: variables.$color3;}
   }
 }
 

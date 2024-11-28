@@ -15,7 +15,7 @@ export class Container
 
     async get(name) {
         if(typeof this._hashes[name] === 'undefined') {
-            throw 'Service "'+name+'" does not exists';
+            throw 'Service "'+name+'" does not exist';
         }
 
         let service = this._findService(name);

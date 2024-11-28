@@ -1,5 +1,5 @@
 <template>
-    <div class="toolbar-dropdown" v-click-outside="close" :class="{'selected': isOpen}">
+    <div class="toolbar-dropdown blubb" v-click-outside="close" :class="{'selected': isOpen}">
         <div class="toolbar-dropdown-title" @click="toggle">
             <i :class="getIcon()"></i>
             <i :class="['open-indicator', 'icon icon-keyboard_arrow_down', {'icon-keyboard_arrow_up': isOpen }]"></i>
@@ -13,11 +13,11 @@
 </template>
 
 <script setup lang="ts">
-import QuickMenuWidget from "@enhavo/app/toolbar/widget/model/QuickMenuWidget";
+import {QuickMenuToolbarWidget} from "@enhavo/app/toolbar/model/QuickMenuToolbarWidget";
 import {ref} from "vue";
 
 const props = defineProps<{
-    data: QuickMenuWidget
+    data: QuickMenuToolbarWidget
 }>()
 
 let isOpen = ref<boolean>(false);

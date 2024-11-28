@@ -13,6 +13,7 @@ class BaseDashboardWidgetType extends AbstractType implements DashboardWidgetTyp
     {
         $data->set('model', $options['model']);
         $data->set('component', $options['component']);
+        $data->set('width', $options['width']);
     }
 
     public function isEnabled(array $options): bool
@@ -30,6 +31,7 @@ class BaseDashboardWidgetType extends AbstractType implements DashboardWidgetTyp
         $resolver->setDefaults([
             'enabled' => true,
             'permission' => null,
+            'width' => 4,
             'model' => 'BaseDashboardWidget'
         ]);
 
