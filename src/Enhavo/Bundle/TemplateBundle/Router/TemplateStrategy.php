@@ -34,7 +34,7 @@ class TemplateStrategy extends AbstractStrategy
         ]);
 
         if(!$template instanceof Template) {
-            throw new UrlResolverException(sprintf('The template to generate url for class "%s" not exists. Maybe you forgot to run enhavo:init or didn\'t add the template "%s" to config', get_class($resource), $options['template']));
+            throw new UrlResolverException(sprintf('The template to generate url for class "%s" does not exist. Maybe you forgot to run enhavo:init or didn\'t add the template "%s" to config', get_class($resource), $options['template']));
         }
 
         $slug = $this->getProperty($resource, 'slug');

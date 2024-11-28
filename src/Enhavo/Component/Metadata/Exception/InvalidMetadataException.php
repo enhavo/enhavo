@@ -18,6 +18,6 @@ class InvalidMetadataException extends \InvalidArgumentException
 
     public static function classNotExists($className)
     {
-        return new self(sprintf('The class "%s" does not exists', gettype($className)));
+        return new self(sprintf('The class "%s" does not exist', gettype($className)));
     }
 }

@@ -73,7 +73,7 @@ class MediaLibraryContentTypeFilterType extends AbstractFilterType
         }
 
         if (!$findPossibleValue) {
-            throw new FilterException('Value does not exists in options');
+            throw new FilterException('Value does not exist in options');
         }
 
         $query->addWhere('contentType', FilterQuery::OPERATOR_EQUALS, $value);

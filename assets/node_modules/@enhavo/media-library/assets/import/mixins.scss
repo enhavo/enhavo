@@ -1,3 +1,5 @@
+@forward "@enhavo/app/assets/styles/import/mixins";
+
 @mixin placeholder {
   &.placeholder { @content; }
   &:-moz-placeholder { @content; }

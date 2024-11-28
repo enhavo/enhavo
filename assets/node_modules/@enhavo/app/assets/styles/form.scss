@@ -1,5 +1,2 @@
-@import 'compass-mixins/lib/_compass.scss';
-@import '@enhavo/app/assets/styles/core/variables.scss';
-@import '@enhavo/app/assets/styles/core/blueprints';
-@import 'bootstrap/dist/css/bootstrap-grid.css';
-@import 'core/form.scss';
+@use 'bootstrap/dist/css/bootstrap-grid.css';
+@use 'core/form.scss';

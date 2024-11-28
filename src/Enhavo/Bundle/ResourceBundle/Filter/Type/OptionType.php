@@ -76,7 +76,7 @@ class OptionType extends AbstractFilterType
         }
 
         if (!$findPossibleValue) {
-            throw new FilterException('Value does not exists in options');
+            throw new FilterException('Value does not exist in options');
         }
 
         $propertyPath = explode('.', $options['property']);

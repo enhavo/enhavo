@@ -6,6 +6,7 @@
         :ref="(el) => form.setElement(el as HTMLElement)"
         @change="form.dispatchChange()"
         v-show="form.isVisible()"
+        class="select2-base-select"
     >
         <option v-if="form.placeholder" value="" >{{ form.placeholder }}</option>
         <component v-if="size(form.preferredChoices) > 0" :is="getChoiceComponent(choice)" v-for="choice of form.preferredChoices" :choice="choice" :preferredChoices="true" />

@@ -37,7 +37,7 @@ export default class Validator
             let dependencies = this._getServiceNameDependencies(definition, true);
             for (let dependency of dependencies) {
                 if(!builder.hasDefinition(dependency)) {
-                    throw 'Service "'+dependency+'" not exists. Defined in "'+definition.getName()+'"';
+                    throw 'Service "'+dependency+'" does not exist. Defined in "'+definition.getName()+'"';
                 }
             }
         }

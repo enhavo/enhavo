@@ -1,21 +1,21 @@
+@use '@enhavo/app/assets/styles/import/variables.scss';
+
 .translation {position: relative;
-  .translation-switcher {height:24px; padding:0px 6px; background:$grey1;color:$color2b;min-width:45px;border-radius:10px;font-size: 0.85rem; font-weight:$fontMedium;
-      position: absolute; right: 1px; top: -26px; cursor: pointer; border:1px solid $grey1;transition: all .2s;
-      &:after {font-family: "icon";content: "\f2bc"; position:absolute; right:6px; top:2px;color:$color1}
+  .translation-switcher {height:24px; padding:0px 6px; background: variables.$grey1;color: variables.$color2b;min-width:45px;border-radius:10px;font-size: 0.85rem; font-weight: variables.$fontMedium;
+      position: absolute; right: 1px; top: -26px; cursor: pointer; border:1px solid variables.$grey1;transition: all .2s;
+      &:after {font-family: "icon";content: "\f2bc"; position:absolute; right:6px; top:2px;color: variables.$color1}
     .active {display:none;}
     .translation-switcher-current {padding-right:14px;
       img { display: none;
         &.active { display: block; }
       }
     }
-    &:hover {border-radius:10px 10px 0 0;border-color:$grey5;
+    &:hover {border-radius:10px 10px 0 0;border-color: variables.$grey5;
       .translation-switcher-menu {display: block; border-top:0;}
     }
-    .translation-switcher-menu {display: none; position: absolute; z-index: 100; top: 22px; left: -1px; width:calc(100% + 2px); background-color: #FFF;padding:0 6px;border-width:1px;border-style: solid;border-color: $grey5;border-radius:0 0 10px 10px; background:$grey1; color:$grey2;
-      .translation-switcher-item:hover {color:$color1}
+    .translation-switcher-menu {display: none; position: absolute; z-index: 100; top: 22px; left: -1px; width:calc(100% + 2px); background-color: #FFF;padding:0 6px;border-width:1px;border-style: solid;border-color: variables.$grey5;border-radius:0 0 10px 10px; background: variables.$grey1; color: variables.$grey2;
+      .translation-switcher-item:hover {color: variables.$color1}
       .flag-container {padding:3px;line-height:0;}
     }
   }
 }
-
-

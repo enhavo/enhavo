@@ -1,24 +1,40 @@
-.tab-header {height:42px;font-size:0.75rem;line-height:1.1em;letter-spacing:0.06em;text-transform: uppercase;display:flex;align-items:center; background:$grey1;
+@use "../import/variables";
+
+.tab-header {height:42px;font-size:0.75rem;line-height:1.1em;letter-spacing:0.06em;text-transform: uppercase;display:flex;align-items:center; background: variables.$grey1;
   .tab-head {height:100%;padding:0 12px;display:flex;align-items:center;cursor:pointer; flex:1;max-width:180px;justify-content:center; transition:all .3s;
-    +.tab-head {border-left:1px solid $grey5;
+    +.tab-head {border-left:1px solid variables.$grey5;
       &.selected {border-left-color:transparent}
     }
     &:first-child {border-left-color:transparent}
-    &:last-child {border-right:1px solid $grey5;
+    &:last-child {border-right:1px solid variables.$grey5;
       &.selected {border-right-color:transparent}
     }
-    &.selected {color:$color1; background:#FFF;border-left:1px solid transparent;
+    &.selected {color: variables.$color1; background:#FFF;border-left:1px solid transparent;
       +.tab-head {border-left:1px solid transparent;}
     }
     &.has-error {
-      &:after {content:"*";color:$color4;padding-left:2px;}
+      &:after {content:"*";color: variables.$color4;padding-left:2px;}
     }
-    &:hover { color:$color1;}
+    &:hover { color: variables.$color1;}
   }
 }
 
 .form-container {
   .tab-container {margin:15px;padding:15px;
     &.tab-full-width {margin:0; padding:0}
+  }
+}
+
+.revisions {
+  .revision-icon-placeholder {
+    color: transparent;
+  }
+
+  .revision-col {
+    flex: 0 0 33.333333%;
+  }
+  .revision-col-actions {
+    margin-left: auto;
+    cursor: pointer;
   }
 }

@@ -32,7 +32,7 @@ class FileRepository extends EntityRepository
     public function countByChecksum(string $checksum): int
     {
         $query = $this->createQueryBuilder('f')
-            ->select('count(*) as count')
+            ->select('count(f.id) as count')
             ->where('f.checksum = :checksum')
             ->setParameter('checksum', $checksum)
             ->getQuery();

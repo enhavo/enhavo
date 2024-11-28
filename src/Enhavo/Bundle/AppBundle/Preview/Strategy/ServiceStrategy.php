@@ -73,7 +73,7 @@ class ServiceStrategy implements StrategyInterface
         if(!method_exists($invokeService, $invokeFunction)) {
             throw new PreviewException(
                 sprintf(
-                    'The defined function "%s " in service "%s" for preview route does not exists, check your service config "%s"',
+                    'The defined function "%s " in service "%s" for preview route does not exist, check your service config "%s"',
                     $invokeFunction,
                     $serviceName,
                     $service

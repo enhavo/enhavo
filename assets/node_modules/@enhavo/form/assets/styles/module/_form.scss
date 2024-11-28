@@ -1,10 +1,13 @@
+@use "@enhavo/app/assets/styles/import/variables";
+@use "@enhavo/app/assets/styles/import/blueprints";
+
 .form-row {
     .autocomplete-create-button {display:inline-block;@extend %btn-secondary;text-decoration: none;
-        &:after {font-family:"icon";content:"\f10d";position:absolute;top:5px; right:10px; font-weight:$fontRegular;}
+        &:after {font-family:"icon";content:"\f10d";position:absolute;top:5px; right:10px; font-weight: variables.$fontRegular;}
     }
 
     .autocomplete-action-button {display:inline-block;@extend %btn-secondary;text-decoration: none;
-        i { position:absolute;top:5px; right:10px; font-weight:$fontRegular; }
+        i { position:absolute;top:5px; right:10px; font-weight: variables.$fontRegular; }
     }
 
     .btn-secondary {@extend %btn-secondary;}

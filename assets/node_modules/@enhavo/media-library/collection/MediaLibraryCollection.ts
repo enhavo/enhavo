@@ -44,7 +44,7 @@ export class MediaLibraryCollection extends TableCollection
         super.changeSelectAll(false);
     }
 
-    private isSelectMode()
+    public isSelectMode()
     {
         const urlParams = new URLSearchParams(window.location.search);
         return urlParams.get('mode') === 'select';

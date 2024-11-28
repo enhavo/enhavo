@@ -49,7 +49,7 @@ class FormatManager
     public function getFormat(FileInterface $file, $format, $parameters = []): FormatInterface
     {
         if (!$this->existsFormat($format)) {
-            throw new FormatException(sprintf('Format "%s" not exists', $format));
+            throw new FormatException(sprintf('Format "%s" does not exist', $format));
         }
 
         /** @var FormatInterface|null $fileFormat */
@@ -83,7 +83,7 @@ class FormatManager
     public function applyFormat(FileInterface $file, $format, $parameters = []): FormatInterface
     {
         if (!$this->existsFormat($format)) {
-            throw new FormatException(sprintf('Format "%s" not exists', $format));
+            throw new FormatException(sprintf('Format "%s" does not exist', $format));
         }
 
         /** @var Format $fileFormat */

@@ -9,12 +9,12 @@ class GridException extends \Exception
 {
     public static function missingService($service): self
     {
-        return new self(sprintf('Service "%s" not exists in container!', $service));
+        return new self(sprintf('Service "%s" does not exist in container!', $service));
     }
 
     public static function configurationNotExits($key): self
     {
-        return new self(sprintf('Grid configuration with key "%s" not exists!', $key));
+        return new self(sprintf('Grid configuration with key "%s" does not exist!', $key));
     }
 
     public static function notImplementGridInterface($class): self

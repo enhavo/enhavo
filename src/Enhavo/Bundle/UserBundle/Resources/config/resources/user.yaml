@@ -30,6 +30,7 @@ enhavo_resource:
                     property: email
                     width: 6
                     sortable: true
+                    translation_domain: EnhavoUserBundle
                 groups:
                     type: list
                     label: group.label.group
@@ -37,6 +38,7 @@ enhavo_resource:
                     item_property: name
                     width: 6
                     sortable: true
+                    translation_domain: EnhavoUserBundle
             batches:
                 delete:
                     type: delete
@@ -48,6 +50,18 @@ enhavo_resource:
             form: Enhavo\Bundle\UserBundle\Form\Type\UserType
             form_options:
                 validation_groups: [create, unique_email]
+            tabs:
+                main:
+                    type: form
+                    label: user.label.user
+                    translation_domain: EnhavoUserBundle
+                    arrangement: |
+                        email
+                        plainPassword.first | plainPassword.second
+                        firstName | lastName
+                        enabled | verified
+                        admin | superAdmin
+                        groups
 
         enhavo_user.user.update:
             extends: enhavo_resource.input
@@ -55,6 +69,18 @@ enhavo_resource:
             form: Enhavo\Bundle\UserBundle\Form\Type\UserType
             form_options:
                 validation_groups: [update, unique_email]
+            tabs:
+                main:
+                    type: form
+                    label: user.label.user
+                    translation_domain: EnhavoUserBundle
+                    arrangement: |
+                        email
+                        plainPassword.first | plainPassword.second
+                        firstName | lastName
+                        enabled | verified
+                        admin | superAdmin
+                        groups
 
         enhavo_user.user.change_password:
             resource: enhavo_user.user

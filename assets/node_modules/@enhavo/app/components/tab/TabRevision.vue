@@ -1,8 +1,37 @@
 <template>
     <div class="tab-container">
-        <div v-for="revision in tab.revisions">
-            {{ formatDate(revision.date) }}
-            <button @click.prevent="tab.activateRevision(revision)">{{ translator.trans('enhavo_app.revision.action.restore', {}, 'javascript') }}</button>
+        <div class="revisions view-table">
+            <div class="view-table-head">
+                <i class="icon icon-library_books revision-icon-placeholder"></i>
+                <div class="view-table-head-columns">
+                    <div class="view-table-col revision-col">
+                        Date
+                    </div>
+                    <div class="view-table-col revision-col">
+                        User
+                    </div>
+                </div>
+            </div>
+            <div v-for="revision in tab.revisions" class="view-table-row">
+                <i class="icon icon-library_books"></i>
+                <div class="view-table-row-columns">
+                    <div class="view-table-col view-table-col-text revision-col">
+                        {{ formatDate(revision.date) }}
+                    </div>
+                    <div class="view-table-col view-table-col-text revision-col">
+                        TODO: User
+                    </div>
+                    <div class="view-table-col view-table-col-text revision-col-actions">
+                        <div class="action action-container" @click="tab.activateRevision(revision)">
+                            <div class="action-icon">
+                                <i class="icon icon-restore"></i>
+                            </div>
+                            <div class="label">{{ translator.trans('enhavo_app.revision.action.restore', {}, 'javascript') }}</div>
+                        </div>
+                    </div>
+                </div>
+<!--                <button @click.prevent="tab.activateRevision(revision)">{{ translator.trans('enhavo_app.revision.action.restore', {}, 'javascript') }}</button>-->
+            </div>
         </div>
     </div>
 </template>

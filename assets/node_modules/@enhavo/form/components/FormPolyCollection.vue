@@ -18,6 +18,7 @@
                         :form="element"
                         :deletable="form.allowDelete"
                         :sortable="form.sortable"
+                        :collapsable="true"
                         :block-name="form.blockName"
                         @delete="event => { form.deleteItem(event) }"
                         @up="event => { form.moveItemUp(event) }"

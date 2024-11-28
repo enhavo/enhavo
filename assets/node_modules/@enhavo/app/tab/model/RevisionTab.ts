@@ -74,6 +74,6 @@ export class RevisionTab extends AbstractTab
 export class Revision
 {
     id: number;
-    data: string;
+    date: string;
     url: string;
 }

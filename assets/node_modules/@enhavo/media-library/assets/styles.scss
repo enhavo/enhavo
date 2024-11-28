@@ -1,15 +1,14 @@
-@import 'compass-mixins/lib/_compass.scss';
-@import '@enhavo/app/assets/styles/core/variables.scss';
-@import "vars";
-@import "mixins";
-@import "blueprints";
+@use "sass:color";
+@use "import/variables";
+@use "import/mixins";
+@use "import/blueprints";
 
 .media-library-overlay {
   padding: 25px 0 40px 25px;
   z-index: 12;
   background: #fff;
   font-size: 0.875em;
-  line-height: $lineHeight;
+  line-height: variables.$lineHeight;
 
   &.adding {
     .button-row {
@@ -52,7 +51,7 @@
   }
 
   > .title {
-    background: $color1;
+    background: variables.$color1;
     color: #fff;
     text-transform: uppercase;
     padding: 10px 15px;
@@ -72,7 +71,7 @@
     padding: 15px 35px;
 
     .add-button {
-      background: $color1;
+      background: variables.$color1;
       color: #fff;
       float: right;
       padding: 7px 10px 7px 25px;
@@ -91,7 +90,7 @@
   .tag-list {
     flex: 0 0 230px;
     border-radius: 2px;
-    border: 1px solid $color4;
+    border: 1px solid variables.$color4;
     overflow: hidden;
 
     ul {
@@ -99,12 +98,12 @@
 
       li {
         + li {
-          border-top: 1px solid $color4;
+          border-top: 1px solid variables.$color4;
           margin-top: 0;
         }
 
         &.active {
-          background: $grey1;
+          background: variables.$grey1;
         }
       }
 
@@ -149,7 +148,7 @@
 
           &.active {
             &:before {
-              @include transform(rotate(90deg));
+              @include mixins.transform(rotate(90deg));
             }
 
             + ul {
@@ -165,7 +164,7 @@
       position: relative;
       background: #f3f3f3;
       font-weight: 500;
-      border-bottom: 1px solid $color4;
+      border-bottom: 1px solid variables.$color4;
 
       i {
         margin-right: 4px;
@@ -199,11 +198,11 @@
       border: 4px solid transparent;
 
       &.active {
-        border: 4px solid $color1;
-        box-shadow: 1px 1px 6px rgba($color1, 0.5);
+        border: 4px solid variables.$color1;
+        box-shadow: 1px 1px 6px rgba(variables.$color1, 0.5);
 
         span {
-          background: $color1;
+          background: variables.$color1;
           color: #fff;
           padding: 5px 0;
           position: absolute;
@@ -232,7 +231,7 @@
           z-index: 1;
           width: 100%;
           height: 100%;
-          @include background-size(contain);
+          background-size: contain;
           background-position: center top;
           position: absolute;
           background-repeat: no-repeat;
@@ -251,11 +250,18 @@
           transform: translateX(-50%) translateY(-50%);
           top: 50%;
         }
+
+        .checkbox-click-wrapper {
+          position: absolute; left: 0; bottom: 0;
+          z-index: 2;
+          padding: 5px;
+          cursor: pointer;
+        }
       }
 
       .title {
         padding: 5px;
-        min-height: 2*$lineHeight;
+        min-height: 2*variables.$lineHeight;
         word-break: break-word;
         overflow: hidden;
       }
@@ -276,7 +282,7 @@
   }
 
   .media-types {
-    border-bottom: 1px solid $color4;
+    border-bottom: 1px solid variables.$color4;
     margin-bottom: 20px;
 
     ul {
@@ -295,7 +301,7 @@
             left: 0;
             width: 100%;
             height: 3px;
-            background: $color1;
+            background: variables.$color1;
           }
         }
       }
@@ -323,7 +329,7 @@
 
         &.active {
           color: white;
-          background: $color1;
+          background: variables.$color1;
         }
       }
     }
@@ -339,7 +345,7 @@
     margin: 0;
     border-radius: 15px;
     color: white;
-    background: $color1
+    background: variables.$color1
   }
 
   .media-library-sort {
@@ -360,7 +366,7 @@
 
         &.sorted {
           color: white;
-          background: $color1
+          background: variables.$color1
         }
       }
     }
@@ -383,7 +389,7 @@
         font-size: 26px;
 
         &:not(.active) {
-          color: $color6
+          color: variables.$color6
         }
       }
 
@@ -391,6 +397,10 @@
 
     text-align: right;
     font-size: 20px;
+  }
+
+  .media-library-view-table {
+    padding-top: 51px;
   }
 
   .result-search {
@@ -405,11 +415,11 @@
       input {
         width: 100%;
         background: #fff;
-        color: $color3;
-        @include border-radius(35px);
-        border: 1px solid $color4;
+        color: variables.$color3;
+        border-radius: 35px;
+        border: 1px solid variables.$color4;
         padding: 14px 90px 14px 20px;
-        font-size: $fontSize;
+        font-size: variables.$fontSize;
         transition: all .6s;
 
         &:hover, &:focus {
@@ -424,7 +434,7 @@
         top: 0;
         height: 100%;
         width: 40px;
-        color: $color3;
+        color: variables.$color3;
         line-height: 32px;
         font-size: 18px;
         cursor: pointer;
@@ -433,7 +443,7 @@
         transition: all .2s;
 
         &:hover {
-          color: $color2;
+          color: variables.$color2;
         }
       }
 
@@ -447,7 +457,7 @@
         font-size: 18px;
         cursor: pointer;
         text-align: center;
-        background: $color1;
+        background: variables.$color1;
         font-size: 1em;
         padding: 6px 0;
         width: 40px;
@@ -456,7 +466,7 @@
         transition: all .2s;
 
         &:hover {
-          background: lighten($color1, 5%);
+          background: color.adjust(variables.$color1, $lightness: 5%);
         }
       }
     }
@@ -478,7 +488,7 @@
     width: 11px;
     height: 11px;
     border-radius: 50%;
-    background: $color1;
+    background: variables.$color1;
     animation-timing-function: cubic-bezier(0, 1, 1, 0);
   }
 

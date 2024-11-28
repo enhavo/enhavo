@@ -4,12 +4,15 @@
                 <i class="icon icon-account_box" :class="collection.view == 'thumbnail' ? 'active' : ''" @click="collection.view = 'thumbnail'"></i>
                 <i class="icon icon-format_list_bulleted" :class="collection.view == 'table' ? 'active' : ''" @click="collection.view = 'table'"></i>
             </div>
-            <collection-table
-                v-if="collection.view === 'table'"
-                :collection="collection"
-                :load="false"
+            <div class="media-library-view-table"
+                 v-if="collection.view === 'table'"
             >
-            </collection-table>
+                <collection-table
+                    :collection="collection"
+                    :load="false"
+                >
+                </collection-table>
+            </div>
             <collection-media-library-thumbnail
                 v-if="collection.view === 'thumbnail'"
                 :collection="collection">

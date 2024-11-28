@@ -1,13 +1,15 @@
-.icheckbox { display: inline-block;vertical-align: middle;background:#FFF;border:1px solid $color1;padding: 3px 3px 3px 3px;height: 22px;width: 22px;font-size: 15px;line-height: 16px;cursor: pointer;text-align:center;font-family: "icon";font-weight: normal;font-style: normal;text-decoration: inherit;-webkit-font-smoothing: antialiased;border-radius:50%;position: relative;transition:border .3s;
-  &:hover { font-weight:$fontMedium;border-width:1px;background:rgba($color1,0.8);}
-  &.checked{ background:$color1;
+@use "@enhavo/app/assets/styles/import/variables";
+
+.icheckbox { display: inline-block;vertical-align: middle;background:#FFF;border:1px solid variables.$color1;padding: 3px 3px 3px 3px;height: 22px;width: 22px;font-size: 15px;line-height: 16px;cursor: pointer;text-align:center;font-family: "icon";font-weight: normal;font-style: normal;text-decoration: inherit;-webkit-font-smoothing: antialiased;border-radius:50%;position: relative;transition:border .3s;
+  &:hover { font-weight: variables.$fontMedium;border-width:1px;background:rgba(variables.$color1,0.8);}
+  &.checked{ background: variables.$color1;
     &:after {transform:scale(1);transition:all .3s;pointer-events:none; opacity:1;}
   }
-  &:after { background:$color1b;position:absolute; top:calc(50% - 5px); left:calc(50% - 5px); width:10px; height:10px;border-radius:50%; content:'';transform:scale(0); opacity:0;}
+  &:after { background: variables.$color1b;position:absolute; top:calc(50% - 5px); left:calc(50% - 5px); width:10px; height:10px;border-radius:50%; content:'';transform:scale(0); opacity:0;}
   + label {display: inline-block;vertical-align: middle; margin-left:5px;cursor:pointer;}
   input {top:0;left:0;width:100%;height:100%;margin:0;padding:0;}
-  &.readonly, &.disabled { pointer-events: none; background: $grey2; border-color: $grey3;
-    &:after { background: $grey3; }
+  &.readonly, &.disabled { pointer-events: none; background: variables.$grey2; border-color: variables.$grey3;
+    &:after { background: variables.$grey3; }
     + label { pointer-events: none; }
   }
 }

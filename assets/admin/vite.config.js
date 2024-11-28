@@ -88,4 +88,11 @@ export default defineConfig({
             vue: 'vue/dist/vue.esm-bundler.js'
         }
     },
+    css: {
+        preprocessorOptions: {
+            scss: {
+                api: 'modern-compiler' // or "modern"
+            }
+        }
+    }
 })

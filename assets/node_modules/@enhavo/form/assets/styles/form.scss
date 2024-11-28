@@ -1,14 +1,11 @@
-@import 'compass-mixins/lib/_compass.scss';
-@import '@enhavo/app/assets/styles/core/variables.scss';
-@import '@enhavo/app/assets/styles/core/blueprints';
-@import 'bootstrap/dist/css/bootstrap-grid.css';
+@use 'bootstrap/dist/css/bootstrap-grid.css';
 
-@import '@enhavo/app/assets/styles/form';
+@use '@enhavo/app/assets/styles/form' as app-form;
 
-@import 'module/date';
-@import 'module/form';
-@import 'module/icheck';
-@import 'module/list';
-@import 'module/poly-collection';
-@import 'module/select2';
-@import 'module/wysiwyg';
+@use 'module/date';
+@use 'module/form';
+@use 'module/icheck';
+@use 'module/list';
+@use 'module/poly-collection';
+@use 'module/select2';
+@use 'module/wysiwyg';
